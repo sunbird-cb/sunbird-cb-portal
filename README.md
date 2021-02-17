@@ -1,2 +1,4 @@
 # Installation 
-`yarn`
+
+//First step is to install all the dependencies
+`yarn` 
