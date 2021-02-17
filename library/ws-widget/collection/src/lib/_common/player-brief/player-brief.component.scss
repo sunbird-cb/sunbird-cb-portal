@@ -1,0 +1,44 @@
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.info-container {
+  padding: $size-s $size-m;
+  margin-bottom: $size-m;
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    padding: $size-xs 0;
+    box-sizing: border-box;
+
+    h3 {
+      margin: 0;
+    }
+
+    .item-heading {
+      width: 40%;
+      min-width: 80px;
+      max-width: 140px;
+    }
+
+    .item-icon {
+      $icon-size: 20px;
+      width: $icon-size;
+      height: $icon-size;
+      font-size: $icon-size;
+      margin-left: $size-xs;
+    }
+  }
+}
+
+.author {
+  padding: $size-s 0;
+  display: flex;
+
+  .author-image {
+    margin-right: $size-s;
+    $size: 44px;
+    height: $size;
+    width: $size;
+  }
+}

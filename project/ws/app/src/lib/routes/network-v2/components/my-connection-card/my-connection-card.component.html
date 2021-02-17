@@ -1,0 +1,17 @@
+<div class="flex flex-1 items-center card-container ws-mat-primary-tags cursor-pointer" (click)="goToUserProfile(user)">
+    <a href="javascript:void(0)" class="flex flex-1 items-center ws-mat-primary-tags cursor-pointer" i18n-aria-label
+        role="link" aria-label="click on it to visit user profile">
+        <div class="mr-3">
+            <ws-widget-avatar-photo [name]="getUseravatarName()" [photoUrl]="user?.photo" size="m">
+            </ws-widget-avatar-photo>
+        </div>
+        <div class="flex flex-col flex-1 ">
+            <div class="name truncate ws-mat-black-text ">
+                {{user?.name}}
+            </div>
+            <div class="designation truncate ws-mat-black60-text">
+                {{user?.departmentName}}
+            </div>
+        </div>
+    </a>
+</div>
