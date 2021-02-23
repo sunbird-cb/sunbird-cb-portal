@@ -54,6 +54,8 @@ export class CompetenceAllComponent implements OnInit {
         this.myCompetencies = []
       }
       this.currentProfile = this.route.snapshot.data.profile.data[0]
+    } else {
+      this.getProfile()
     }
   }
   ngOnInit() {
@@ -70,6 +72,15 @@ export class CompetenceAllComponent implements OnInit {
       if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
         this.allCompetencies = reponse.responseData
         this.resetcomp()
+      }
+    })
+  }
+
+  getProfile() {
+    this.competencySvc.fetchProfile().subscribe(response => {
+      if (response) {
+        this.myCompetencies = response.result.UserProfile[0].competencies
+        this.currentProfile = response.result.UserProfile[0]
       }
     })
   }
