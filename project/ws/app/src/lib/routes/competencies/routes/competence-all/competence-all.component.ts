@@ -79,7 +79,7 @@ export class CompetenceAllComponent implements OnInit {
   getProfile() {
     this.competencySvc.fetchProfile().subscribe(response => {
       if (response) {
-        this.myCompetencies = response.result.UserProfile[0].competencies
+        this.myCompetencies = response.result.UserProfile[0].competencies || []
         this.currentProfile = response.result.UserProfile[0]
       }
     })
