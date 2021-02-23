@@ -49,10 +49,10 @@ export class TelemetryService {
   start(type: string, mode: string, id: string) {
     if (this.telemetryConfig) {
       $t.start(this.telemetryConfig, id, '1.0', {
-        id,
+        // id,
         type,
         mode,
-        stageid: '',
+        pageid: id,
       })
     } else {
       this.logger.error('Error Initializing Telemetry. Config missing.')
@@ -64,7 +64,7 @@ export class TelemetryService {
       {
         type,
         mode,
-        contentId: id,
+        pageid: id,
       },
       {
         context: {
@@ -83,6 +83,8 @@ export class TelemetryService {
         type,
         props,
         data,
+        state: '', // Optional. Current State
+        prevstate: '', // Optional. Previous State
       },
       {
         context: {
@@ -115,6 +117,9 @@ export class TelemetryService {
         },
         object: {
           id: page.objectId,
+          pageid: page.pageid, // Required. Unique page id
+          type: '', // Required. Impression type (list, detail, view, edit, workflow, search)
+          uri: page.pageUrl,
         },
       }
       $t.impression(page, config)
@@ -125,6 +130,11 @@ export class TelemetryService {
             ...this.pData,
             id: this.pData.id,
           },
+        },
+        object: {
+          pageid: page.pageid, // Required. Unique page id
+          type: '', // Required. Impression type (list, detail, view, edit, workflow, search)
+          uri: page.pageUrl,
         },
       })
     }
@@ -143,6 +153,9 @@ export class TelemetryService {
         },
         object: {
           id: page.objectId,
+          pageid: page.objectId, // Required. Unique page id
+          type: '', // Required. Impression type (list, detail, view, edit, workflow, search)
+          uri: page.pageUrl,
         },
       } : {
           context: {
@@ -246,9 +259,10 @@ export class TelemetryService {
             {
               type: event.data.type,
               subtype: event.data.subType,
-              object: event.data.object,
+              // object: event.data.object,
+              id: event.data.object,
               pageid: page.pageid,
-              target: { page },
+              // target: { page },
             },
             {
               context: {
