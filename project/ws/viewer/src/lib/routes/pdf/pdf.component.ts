@@ -172,14 +172,15 @@ export class PdfComponent implements OnInit, OnDestroy {
           batchId: this.batchId,
           courseId: collectionId || '',
           contentIds: [],
+          fields: ['progressdetails']
         },
       }
       this.contentSvc.fetchContentHistoryV2(req).subscribe(
         data => {
           if (data && data.result && data.result.contentList.length) {
             for (const content of data.result.contentList) {
-              if (content.contentId === pdfId && content.progressDetails && content.progressDetails.current) {
-                this.widgetResolverPdfData.widgetData.resumePage = Number(content.progressDetails.current.pop())
+              if (content.contentId === pdfId && content.progressdetails && content.progressdetails.current) {
+                this.widgetResolverPdfData.widgetData.resumePage = Number(content.progressdetails.current.pop())
               }
             }
           }

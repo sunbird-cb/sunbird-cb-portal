@@ -48,7 +48,7 @@ export class ViewerUtilService {
               status: 2,
               courseId: collectionId,
               lastAccessTime: dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss:SSSZZ'),
-              progressDetails: {
+              progressdetails: {
                 max_size: request.max_size,
                 current: request.current,
                 mimeType: request.mime_type,

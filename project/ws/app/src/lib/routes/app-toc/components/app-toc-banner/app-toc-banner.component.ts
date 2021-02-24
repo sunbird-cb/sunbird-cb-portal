@@ -334,7 +334,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     const lastItem = this.resumeData && this.resumeData.pop()
     return {
       identifier: lastItem.contentId,
-      mimeType: lastItem.progressDetails && lastItem.progressDetails.mimeType,
+      mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,
 
     }
   }

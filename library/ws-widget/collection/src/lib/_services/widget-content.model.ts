@@ -9,6 +9,7 @@ export namespace NsContent {
       courseId: string,
       contentIds: string[],
       batchId: string | undefined | null
+      fields?:string[]
     }
   }
 
