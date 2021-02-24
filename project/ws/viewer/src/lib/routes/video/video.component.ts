@@ -242,7 +242,7 @@ export class VideoComponent implements OnInit, OnDestroy {
           batchId: this.batchId,
           courseId: collectionId || '',
           contentIds: [],
-          fields: ['progressdetails']
+          fields: ['progressdetails'],
         },
       }
       this.contentSvc.fetchContentHistoryV2(req).subscribe(

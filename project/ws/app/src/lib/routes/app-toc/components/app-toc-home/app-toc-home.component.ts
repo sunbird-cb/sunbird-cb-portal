@@ -285,7 +285,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         userId,
         courseId: contentId || '',
         contentIds: [],
-        fields: ['progressdetails']
+        fields: ['progressdetails'],
       },
     }
     this.contentSvc.fetchContentHistoryV2(req).subscribe(
