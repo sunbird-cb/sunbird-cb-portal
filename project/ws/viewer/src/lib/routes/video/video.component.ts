@@ -242,6 +242,7 @@ export class VideoComponent implements OnInit, OnDestroy {
           batchId: this.batchId,
           courseId: collectionId || '',
           contentIds: [],
+          fields: ['progressdetails'],
         },
       }
       this.contentSvc.fetchContentHistoryV2(req).subscribe(
@@ -250,12 +251,12 @@ export class VideoComponent implements OnInit, OnDestroy {
             for (const content of data.result.contentList) {
               if (
                 content.contentId === videoId &&
-                content.progressDetails &&
-                content.progressDetails.current &&
+                content.progressdetails &&
+                content.progressdetails.current &&
                 this.widgetResolverVideoData
               ) {
                 this.widgetResolverVideoData.widgetData.resumePoint = Number(
-                  content.progressDetails.current.pop(),
+                  content.progressdetails.current.pop(),
                 )
               }
             }
