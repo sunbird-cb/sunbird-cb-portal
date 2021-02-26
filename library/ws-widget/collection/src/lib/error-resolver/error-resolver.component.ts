@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '../../../../resolver/src/public-api'
+import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
 import { NsError } from './error-resolver.model'
-import { ConfigurationsService } from '../../../../utils/src/public-api'
+import { ConfigurationsService } from '@ws-widget/utils'
 import { ErrorResolverService } from './error-resolver.service'
 import { ActivatedRoute } from '@angular/router'
 @Component({

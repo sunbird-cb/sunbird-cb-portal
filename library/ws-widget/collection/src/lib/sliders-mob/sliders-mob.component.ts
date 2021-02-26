@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
 import { interval, Subscription } from 'rxjs'
-import { EventService } from '../../../../utils/src/public-api'
+import { EventService } from '@ws-widget/utils'
 import { ICarousel } from '../sliders/sliders.model'
 
 @Component({

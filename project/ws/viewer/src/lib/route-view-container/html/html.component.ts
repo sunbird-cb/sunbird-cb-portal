@@ -3,8 +3,8 @@ import { NsContent, NsDiscussionForum } from '@ws-widget/collection'
 import { NsWidgetResolver } from '@ws-widget/resolver'
 import { ActivatedRoute } from '@angular/router'
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser'
-import { PipeLimitToPipe } from '@ws-widget/utils/src/lib/pipes/pipe-limit-to/pipe-limit-to.pipe'
 import { ValueService, ConfigurationsService } from '@ws-widget/utils'
+// import { PipeLimitToPipe } from '@ws-widget/utils/lib/pipes/pipe-limit-to/pipe-limit-to.pipe'
 @Component({
   selector: 'viewer-html-container',
   templateUrl: './html.component.html',
@@ -30,7 +30,7 @@ export class HtmlComponent implements OnInit, OnChanges {
     private activatedRoute: ActivatedRoute,
     private domSanitizer: DomSanitizer,
     // private contentSvc: WidgetContentService,
-    private pipeLimitTo: PipeLimitToPipe,
+    // private pipeLimitTo: PipeLimitToPipe,
     private valueSvc: ValueService,
     private configSvc: ConfigurationsService,
 
@@ -72,7 +72,7 @@ export class HtmlComponent implements OnInit, OnChanges {
           )
         }
         if (this.htmlData && this.htmlData.description) {
-          const description = this.pipeLimitTo.transform(this.htmlData.description, 450)
+          const description = this.htmlData.description // this.pipeLimitTo.transform(this.htmlData.description, 450)
           this.description = this.domSanitizer.bypassSecurityTrustHtml(description)
         }
 

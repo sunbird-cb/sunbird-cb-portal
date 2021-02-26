@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { MatCardModule, MatDividerModule, MatIconModule, MatButtonModule } from '@angular/material'
 import { RouterModule } from '@angular/router'
-import { BtnSocialVoteModule, BtnSocialLikeModule } from '../../../../../../../../../../library/ws-widget/collection/src/public-api'
+import { BtnSocialVoteModule, BtnSocialLikeModule } from '@ws-widget/collection'
 import { ForumPostViewComponent } from './components/forum-post-view.component'
 import { ForumCardModule } from '../forum-card/forum-card.module'
 

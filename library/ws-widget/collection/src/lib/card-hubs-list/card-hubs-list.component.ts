@@ -2,7 +2,7 @@ import { trigger, transition, style, animate } from '@angular/animations'
 import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
-import { ConfigurationsService, NsInstanceConfig, ValueService } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService, NsInstanceConfig, ValueService } from '@ws-widget/utils'
 import { Subscription } from 'rxjs'
 @Component({
   selector: 'ws-widget-card-hubs-list',

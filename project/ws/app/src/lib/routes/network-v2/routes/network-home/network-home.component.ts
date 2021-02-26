@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { NetworkV2Service } from '../../services/network-v2.service'
-import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@ws-widget/utils'
 import { CardNetWorkService } from '@ws-widget/collection/src/lib/card-network/card-network.service'
 
 @Component({

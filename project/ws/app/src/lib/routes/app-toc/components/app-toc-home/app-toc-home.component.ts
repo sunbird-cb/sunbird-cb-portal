@@ -8,7 +8,7 @@ import { share } from 'rxjs/operators'
 import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser'
-import { AccessControlService } from '@ws/author/src/public-api'
+import { AccessControlService } from '@ws/author'
 import { WidgetUserService } from '@ws-widget/collection/src/lib/_services/widget-user.service'
 
 export enum ErrorType {

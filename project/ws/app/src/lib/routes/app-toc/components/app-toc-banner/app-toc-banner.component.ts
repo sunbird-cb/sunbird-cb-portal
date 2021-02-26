@@ -10,19 +10,18 @@ import {
   viewerRouteGenerator,
   WidgetContentService,
 } from '@ws-widget/collection'
-import { ConfigurationsService, TFetchStatus } from '@ws-widget/utils'
-import { UtilityService } from '@ws-widget/utils/src/lib/services/utility.service'
+import { ConfigurationsService, TFetchStatus, UtilityService } from '@ws-widget/utils'
 import { AccessControlService } from '@ws/author'
 import { Subscription } from 'rxjs'
 import { NsAnalytics } from '../../models/app-toc-analytics.model'
 import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
 import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
-import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import { FormControl, Validators } from '@angular/forms'
 import * as dayjs from 'dayjs'
 import * as  lodash from 'lodash'
 import { CreateBatchDialogComponent } from '../create-batch-dialog/create-batch-dialog.component'
+import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 
 @Component({
   selector: 'ws-app-toc-banner',

@@ -17,7 +17,7 @@ import {
   LoggerService,
   NsAppsConfig,
   NsInstanceConfig,
-  NsUser,
+  // NsUser,
   UserPreferenceService,
 } from '@ws-widget/utils'
 import { environment } from '../../environments/environment'
@@ -247,10 +247,10 @@ export class InitService {
   private async fetchStartUpDetails(): Promise<IDetailsResponse> {
     const userRoles: string[] = []
     if (this.configSvc.instanceConfig && !Boolean(this.configSvc.instanceConfig.disablePidCheck)) {
-      let userPidProfile: NsUser.IUserPidProfileV2 | null = null
+      let userPidProfile: any | null = null
       try {
         userPidProfile = await this.http
-          .get<NsUser.IUserPidProfileV2>(endpoint.profilePid)
+          .get<any>(endpoint.profilePid)
           .toPromise()
       } catch (e) {
         this.configSvc.userProfile = null
@@ -321,18 +321,18 @@ export class InitService {
   private async fetchUserProfileV2(): Promise<any> {
     // const userRoles: string[] = []
     if (this.configSvc.instanceConfig && !Boolean(this.configSvc.instanceConfig.disablePidCheck)) {
-      let userPidProfileV2: NsUser.IUserPidProfileVer2 | null = null
+      let userPidProfileV2: any | null = null
       try {
         userPidProfileV2 = await this.http
-          .get<NsUser.IUserPidProfileVer2>(endpoint.profileV2)
+          .get<any>(endpoint.profileV2)
           .toPromise()
       } catch (e) {
-        this.configSvc.userProfileV2 = null
+        this.configSvc.userProfile = null
         throw new Error('Invalid user')
       }
       if (userPidProfileV2) {
         const userData: any = _.first(userPidProfileV2.result.UserProfile)
-        this.configSvc.userProfileV2 = {
+        this.configSvc.userProfile = {
           userId: userData.userId,
           firstName: userData.personalDetails.firstname,
           surName: userData.personalDetails.surname,

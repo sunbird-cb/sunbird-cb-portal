@@ -9,7 +9,7 @@ import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
 import { FILE_MAX_SIZE } from '@ws/author/src/lib/constants/upload'
 import { UploadService } from '@ws/author/src/lib/routing/modules/editor/shared/services/upload.service'
 import { CONTENT_BASE_WEBHOST_ASSETS, AUTHORING_CONTENT_BASE } from '@ws/author/src/lib/constants/apiEndpoints'
-import { ICarousel } from '@ws-widget/collection/src/public-api'
+import { ICarousel } from '@ws-widget/collection'
 
 @Component({
   selector: 'ws-auth-slider',

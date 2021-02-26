@@ -4,7 +4,7 @@ import {
   ConfigurationsService,
   NsInstanceConfig,
   UserPreferenceService,
-} from '../../../../../../../../../library/ws-widget/utils/src/public-api'
+} from '@ws-widget/utils'
 import { FormControl, Validators } from '@angular/forms'
 
 @Component({

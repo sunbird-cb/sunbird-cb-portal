@@ -9,7 +9,7 @@ import { NotificationComponent } from '@ws/author/src/lib/modules/shared/compone
 import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
 import { UploadService } from '@ws/author/src/lib/routing/modules/editor/shared/services/upload.service'
 import { LoaderService } from '@ws/author/src/lib/services/loader.service'
-import { ConfigurationsService } from 'library/ws-widget/utils/src/lib/services/configurations.service'
+import { ConfigurationsService } from '@ws-widget/utils'
 import { Subscription } from 'rxjs'
 
 declare const CKEDITOR: any

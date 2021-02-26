@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
-import { NsGalleryView } from '@ws-widget/collection/src/public-api'
+import { NsGalleryView } from '@ws-widget/collection'
 import { NsWidgetResolver } from '@ws-widget/resolver'
 import {
   AUTHORING_CONTENT_BASE,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@ws-widget/utils'
 
 @Component({
   selector: 'ws-app-profile-settings',

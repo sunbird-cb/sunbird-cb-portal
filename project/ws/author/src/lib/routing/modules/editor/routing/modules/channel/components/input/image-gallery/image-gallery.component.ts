@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { ISelectorResponsiveUnit, NsGalleryView } from '@ws-widget/collection/src/public-api'
+import { ISelectorResponsiveUnit, NsGalleryView } from '@ws-widget/collection'
 import { NsWidgetResolver } from '@ws-widget/resolver'
 import { WIDGET_LIBRARY } from '../../../constants/widet'
 

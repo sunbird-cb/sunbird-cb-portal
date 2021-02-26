@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { UserContentRatingComponent } from './user-content-rating.component'
 import { MatCardModule, MatIconModule, MatButtonModule } from '@angular/material'
-import { InViewPortModule } from '../../../../../utils/src/lib/directives/in-view-port/in-view-port.module'
+import { InViewPortModule } from '@ws-widget/utils'
 
 @NgModule({
   declarations: [UserContentRatingComponent],

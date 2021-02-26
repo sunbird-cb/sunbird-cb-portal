@@ -31,7 +31,7 @@ import { TabDirective } from './components/user-profile/tab.directive'
 import { SharedModule } from '@ws/author/src/lib/modules/shared/shared.module'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { UserProfileService } from './services/user-profile.service'
-import { LoaderService } from '@ws/author/src/public-api'
+import { LoaderService } from '@ws/author'
 import { BtnPageBackModule } from '@ws-widget/collection'
 
 @NgModule({

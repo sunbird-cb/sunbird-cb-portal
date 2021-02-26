@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { NsContent } from '../../_services/widget-content.model'
-import { ConfigurationsService, UtilityService } from '../../../../../utils'
+import { ConfigurationsService, UtilityService } from '@ws-widget/utils'
 import { Router } from '@angular/router'
 import { WidgetContentService } from '../../_services/widget-content.service'
 

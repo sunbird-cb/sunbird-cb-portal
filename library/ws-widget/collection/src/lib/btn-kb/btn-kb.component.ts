@@ -1,6 +1,6 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material'
-import { ConfigurationsService } from '../../../../utils/src/public-api'
+import { ConfigurationsService } from '@ws-widget/utils'
 import { NsContent } from '../_services/widget-content.model'
 import { BtnKbDialogComponent } from './btn-kb-dialog/btn-kb-dialog.component'
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { CanActivate, Router, UrlTree } from '@angular/router'
-import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@ws-widget/utils'
 import { Observable } from 'rxjs'
 
 @Injectable({

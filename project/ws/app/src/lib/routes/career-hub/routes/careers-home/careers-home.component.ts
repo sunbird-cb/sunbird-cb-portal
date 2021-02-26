@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, NavigationEnd, Router, Event, NavigationError } from '@angular/router'
-import { NsWidgetResolver } from 'library/ws-widget/resolver/src/public-api'
+import { NsWidgetResolver } from '@ws-widget/resolver'
 
 @Component({
   selector: 'ws-app-careers-home',

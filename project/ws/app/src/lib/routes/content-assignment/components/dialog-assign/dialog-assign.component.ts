@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
-import { ConfigurationsService } from '../../../../../../../../../library/ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@ws-widget/utils'
 
 @Component({
   selector: 'ws-app-dialog-assign',

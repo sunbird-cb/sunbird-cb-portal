@@ -4,7 +4,7 @@ import { NSProfileDataV2 } from '../../models/profile-v2.model'
 import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute } from '@angular/router'
 import { DiscussService } from '../../../discuss/services/discuss.service'
-import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@ws-widget/utils'
 // import { ProfileV2Service } from '../../services/profile-v2.servive'
 /* tslint:disable */
 import _ from 'lodash'

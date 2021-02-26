@@ -5,10 +5,10 @@ import { Subscription, Observable } from 'rxjs'
 import { startWith, map, debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { MatSnackBar, MatChipInputEvent, DateAdapter, MAT_DATE_FORMATS, MatDialog } from '@angular/material'
 import { AppDateAdapter, APP_DATE_FORMATS, changeformat } from '../../services/format-datepicker'
-import { ImageCropComponent } from '@ws-widget/utils/src/public-api'
+import { ImageCropComponent } from '@ws-widget/utils'
 import { IMAGE_MAX_SIZE, IMAGE_SUPPORT_TYPES } from '@ws/author/src/lib/constants/upload'
 import { UserProfileService } from '../../services/user-profile.service'
-import { ConfigurationsService } from '../../../../../../../../../library/ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@ws-widget/utils'
 import { Router, ActivatedRoute } from '@angular/router'
 import {
   INationality,
@@ -25,7 +25,7 @@ import { NsUserProfileDetails } from '@ws/app/src/lib/routes/user-profile/models
 import { NotificationComponent } from '@ws/author/src/lib/modules/shared/components/notification/notification.component'
 import { Notify } from '@ws/author/src/lib/constants/notificationMessage'
 import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
-import { LoaderService } from '@ws/author/src/public-api'
+import { LoaderService } from '@ws/author'
 
 export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {

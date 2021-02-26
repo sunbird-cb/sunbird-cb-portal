@@ -1,5 +1,5 @@
 import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
-import { ValueService } from '@ws-widget/utils/src/public-api'
+import { ValueService } from '@ws-widget/utils'
 import {
   Component,
   EventEmitter,

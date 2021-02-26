@@ -3,7 +3,7 @@ import { IFilterUnitResponse } from '../../models/search.model'
 import { Router, ActivatedRoute } from '@angular/router'
 import { SearchServService } from '../../services/search-serv.service'
 import { Subscription } from 'rxjs'
-import { ValueService } from '@ws-widget/utils/src/public-api'
+import { ValueService } from '@ws-widget/utils'
 import { NsWidgetResolver } from '@ws-widget/resolver'
 import { NsError, ROOT_WIDGET_CONFIG } from '@ws-widget/collection'
 

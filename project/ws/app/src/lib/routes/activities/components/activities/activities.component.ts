@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivitiesService } from '../../services/activities.service'
 import { IActivity, IActivityCard, IChallenges } from '../../interfaces/activities.model'
-import { ConfigurationsService } from '@ws-widget/utils/src/lib/services/configurations.service'
+import { ConfigurationsService } from '@ws-widget/utils'
 import { MatSnackBar } from '@angular/material'
 import { ActivatedRoute } from '@angular/router'
 

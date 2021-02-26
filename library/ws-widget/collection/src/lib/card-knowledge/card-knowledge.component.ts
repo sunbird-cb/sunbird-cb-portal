@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { Subscription } from 'rxjs'
-import { ConfigurationsService, EventService, UtilityService } from '../../../../utils/src/public-api'
+import { ConfigurationsService, EventService, UtilityService } from '@ws-widget/utils'
 import { NsContent } from '../_services/widget-content.model'
 import { IKBContentCard } from './card-knowledge.model'
 

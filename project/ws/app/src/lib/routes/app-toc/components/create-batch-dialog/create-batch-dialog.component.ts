@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { DateAdapter, MAT_DATE_FORMATS, MatSnackBar } from '@angular/material'
 import { AppDateAdapter, APP_DATE_FORMATS, startWithYearformat } from '@ws/app'
-import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@ws-widget/utils'
 import { AppTocService } from '../../services/app-toc.service'
 @Component({
   selector: 'ws-app-create-batch-dialog',

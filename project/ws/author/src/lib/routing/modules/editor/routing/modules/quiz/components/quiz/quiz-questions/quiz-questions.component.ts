@@ -37,7 +37,7 @@ import { NSContent } from '@ws/author/src/lib/interface/content'
 import { NSApiRequest } from '@ws/author/src/lib/interface/apiRequest'
 
 import { CONTENT_BASE_WEBHOST } from '@ws/author/src/lib/constants/apiEndpoints'
-import { VIEWER_ROUTE_FROM_MIME } from '@ws-widget/collection/src/public-api'
+import { VIEWER_ROUTE_FROM_MIME } from '@ws-widget/collection'
 import { FormGroup } from '@angular/forms'
 import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper'

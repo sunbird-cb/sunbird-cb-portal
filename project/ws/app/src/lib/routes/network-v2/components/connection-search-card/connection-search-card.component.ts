@@ -3,7 +3,7 @@ import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { NetworkV2Service } from '../../services/network-v2.service'
 import { MatSnackBar } from '@angular/material'
 import { Router } from '@angular/router'
-import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@ws-widget/utils'
 
 @Component({
   selector: 'ws-app-connection-search-card',
@@ -41,8 +41,8 @@ export class ConnectionSearchCardComponent implements OnInit {
 
       const req = {
         connectionId: this.user.id,
-        userNameFrom: this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.userName : '',
-        userDepartmentFrom: this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.departmentName : 'iGOT',
+        userNameFrom: this.configSvc.userProfile ? this.configSvc.userProfile.userName : '',
+        userDepartmentFrom: this.configSvc.userProfile ? this.configSvc.userProfile.departmentName : 'iGOT',
         userIdTo: this.user.id,
         userNameTo: `${this.user.personalDetails.firstname}${this.user.personalDetails.surname}`,
         userDepartmentTo: this.user.employmentDetails.departmentName,

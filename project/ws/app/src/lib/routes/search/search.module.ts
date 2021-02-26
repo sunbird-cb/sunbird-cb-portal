@@ -38,7 +38,7 @@ import { WidgetResolverModule } from '@ws-widget/resolver'
 import {
   DefaultThumbnailModule,
   HorizontalScrollerModule, PipeDurationTransformModule, PipeLimitToModule, PipePartialContentModule,
-} from '@ws-widget/utils/src/public-api'
+} from '@ws-widget/utils'
 import { BlogsCardComponent } from './components/blogs-card/blogs-card.component'
 import { FilterDisplayComponent } from './components/filter-display/filter-display.component'
 import { ItemTileComponent } from './components/item-tile/item-tile.component'

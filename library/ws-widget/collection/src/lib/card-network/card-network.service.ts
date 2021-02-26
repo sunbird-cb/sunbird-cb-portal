@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { map, catchError } from 'rxjs/operators'
 import { Injectable } from '@angular/core'
-import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@ws-widget/utils'
 import { NSNetworkDataV2 } from '@ws/app/src/lib/routes/network-v2/models/network-v2.model'
 import { NetworkV2Service } from '@ws/app/src/lib/routes/network-v2/services/network-v2.service'
 import { of } from 'rxjs'

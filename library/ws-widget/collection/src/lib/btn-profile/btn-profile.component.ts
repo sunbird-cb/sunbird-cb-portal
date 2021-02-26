@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnDestroy, HostBinding } from '@angular/core'
 import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
-import { ConfigurationsService, LogoutComponent, NsPage } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService, LogoutComponent, NsPage } from '@ws-widget/utils'
 import { IBtnAppsConfig } from '../btn-apps/btn-apps.model'
 import { MatDialog } from '@angular/material'
 import { Subscription } from 'rxjs'
@@ -70,13 +70,13 @@ export class BtnProfileComponent extends WidgetBaseComponent
   }
 
   setPinnedApps() {
-    this.pinnedAppsSubs = this.configSvc.pinnedApps.subscribe(pinnedApps => {
+    this.pinnedAppsSubs = this.configSvc.pinnedApps.subscribe((pinnedApps: any) => {
       const appsConfig = this.configSvc.appsConfig
       if (!appsConfig) {
         return
       }
       this.pinnedApps = Array.from(pinnedApps)
-        .filter(id => id in appsConfig.features)
+        .filter((id: any) => id in appsConfig.features)
         .map(id => ({
           widgetType: ROOT_WIDGET_CONFIG.actionButton._type,
           widgetSubType: ROOT_WIDGET_CONFIG.actionButton.feature,
@@ -86,7 +86,7 @@ export class BtnProfileComponent extends WidgetBaseComponent
               type: 'feature-item',
               useShortName: true,
             },
-            actionBtn: appsConfig.features[id],
+            actionBtn: appsConfig.features[id as string],
           },
         }))
     })

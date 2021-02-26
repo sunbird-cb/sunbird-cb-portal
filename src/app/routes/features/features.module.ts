@@ -15,7 +15,7 @@ import { RouterModule } from '@angular/router'
 import { BtnFeatureModule, BtnPageBackModule } from '@ws-widget/collection'
 import { WidgetResolverModule } from '@ws-widget/resolver'
 import { LogoutModule } from '@ws-widget/utils'
-import { AccessControlService } from '../../../../project/ws/author/src/public-api'
+import { AccessControlService } from '@ws/author'
 
 @NgModule({
   declarations: [FeaturesComponent],

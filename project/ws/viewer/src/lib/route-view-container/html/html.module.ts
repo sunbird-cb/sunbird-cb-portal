@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
-import { PipeLimitToPipe } from '@ws-widget/utils/src/lib/pipes/pipe-limit-to/pipe-limit-to.pipe'
 
 import {
   MatCardModule,
@@ -40,6 +39,7 @@ import { WidgetResolverModule } from '@ws-widget/resolver'
 import { HtmlModule as HtmlPluginModule } from '../../plugins/html/html.module'
 
 import { HtmlComponent } from './html.component'
+// import { PipeLimitToPipe } from '@ws-widget/utils/lib/pipes/pipe-limit-to/pipe-limit-to.pipe'
 // import { ViewerCourseInfoModule } from '../../plugins/viewer-course-info/viewer-course-info.module'
 
 @NgModule({
@@ -73,7 +73,7 @@ import { HtmlComponent } from './html.component'
     PlayerBriefModule,
     // ViewerCourseInfoModule,
   ],
-  providers: [PipeLimitToPipe],
+  // providers: [PipeLimitToPipe],
   exports: [HtmlComponent],
 })
 export class HtmlModule { }

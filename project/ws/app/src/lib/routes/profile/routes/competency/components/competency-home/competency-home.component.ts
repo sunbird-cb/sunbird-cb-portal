@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { ConfigurationsService } from '../../../../../../../../../../../library/ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@ws-widget/utils'
 
 @Component({
   selector: 'ws-app-competency-home',

@@ -4,7 +4,7 @@ import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
 import { NsContent } from '../_services/widget-content.model'
 import { BtnGoalsDialogComponent } from './btn-goals-dialog/btn-goals-dialog.component'
 import { NsGoal } from './btn-goals.model'
-import { ConfigurationsService } from '../../../../utils/src/public-api'
+import { ConfigurationsService } from '@ws-widget/utils'
 
 const VALID_CONTENT_TYPES: NsContent.EContentTypes[] = [
   NsContent.EContentTypes.MODULE,

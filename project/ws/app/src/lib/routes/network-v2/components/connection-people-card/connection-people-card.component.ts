@@ -33,8 +33,8 @@ export class ConnectionPeopleCardComponent implements OnInit {
   connetToUser() {
     const req = {
       connectionId: this.user.id,
-      userNameFrom: this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.userName : '',
-      userDepartmentFrom: this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.departmentName : 'iGOT',
+      userNameFrom: this.configSvc.userProfile ? this.configSvc.userProfile.userName : '',
+      userDepartmentFrom: this.configSvc.userProfile ? this.configSvc.userProfile.departmentName : 'iGOT',
       userIdTo: this.user.id,
       userNameTo: `${this.user.personalDetails.firstname}${this.user.personalDetails.surname}`,
       userDepartmentTo: this.user.employmentDetails.departmentName,

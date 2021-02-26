@@ -6,7 +6,7 @@ import {
   ConfigurationsService,
   TFetchStatus,
   ValueService,
-} from '../../../../../../../../../../../library/ws-widget/utils/src/public-api'
+} from '@ws-widget/utils'
 import { SocialForum } from '../../models/SocialForumposts.model'
 import { ForumHandlerService } from '../../service/EmitterService/forum-handler.service'
 // import { ForumHandlerService } from '../../service/EmitterService/eventemitter.service'

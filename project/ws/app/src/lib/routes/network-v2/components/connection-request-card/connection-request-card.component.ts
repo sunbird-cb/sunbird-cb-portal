@@ -43,9 +43,9 @@ export class ConnectionRequestCardComponent implements OnInit {
     // const req = { connectionId: this.user.id, status: action }
     const req = {
       connectionId: this.user.id,
-      userIdFrom: this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.userId : '',
-      userNameFrom: this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.userName : '',
-      userDepartmentFrom: this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.departmentName : 'iGOT',
+      userIdFrom: this.configSvc.userProfile ? this.configSvc.userProfile.userId : '',
+      userNameFrom: this.configSvc.userProfile ? this.configSvc.userProfile.userName : '',
+      userDepartmentFrom: this.configSvc.userProfile ? this.configSvc.userProfile.departmentName : 'iGOT',
       userIdTo: this.user.identifier,
       userNameTo: `${this.user.name}`,
       userDepartmentTo: this.user.department,

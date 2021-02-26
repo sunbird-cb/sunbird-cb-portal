@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 
-import { ConfigurationsService } from '../../../../../../../../../../../library/ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@ws-widget/utils'
 import { SocialForum } from '../../../forums/models/SocialForumposts.model'
 import { FilterService } from '../../../forums/service/sub-services/filter.service'
 

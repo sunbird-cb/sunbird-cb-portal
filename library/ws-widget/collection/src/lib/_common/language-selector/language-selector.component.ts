@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core'
-import { ConfigurationsService, NsInstanceConfig } from '../../../../../utils/src/public-api'
+import { ConfigurationsService, NsInstanceConfig } from '@ws-widget/utils'
 import { MatSelectChange } from '@angular/material'
 
 @Component({

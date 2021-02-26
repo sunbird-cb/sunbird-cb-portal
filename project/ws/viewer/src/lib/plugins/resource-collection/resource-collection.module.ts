@@ -16,7 +16,7 @@ import {
 } from '@angular/material'
 import { ResourceCollectionComponent } from './resource-collection.component'
 import { ViewSubmissionComponent } from './components/view-submission/view-submission.component'
-import { PlayerPdfModule, PlayerVideoModule } from '../../../../../../../library/ws-widget/collection/src/public-api'
+import { PlayerPdfModule, PlayerVideoModule } from '@ws-widget/collection'
 
 @NgModule({
   declarations: [ResourceCollectionComponent, ViewSubmissionComponent],

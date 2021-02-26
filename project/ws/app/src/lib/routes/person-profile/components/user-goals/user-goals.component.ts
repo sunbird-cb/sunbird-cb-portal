@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core'
-import { TFetchStatus } from '@ws-widget/utils/src/public-api'
-import { NsGoal } from '@ws-widget/collection/src/public-api'
+import { TFetchStatus } from '@ws-widget/utils'
+import { NsGoal } from '@ws-widget/collection'
 import { PersonProfileService } from '../../services/person-profile.service'
 
 @Component({

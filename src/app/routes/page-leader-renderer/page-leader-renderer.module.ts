@@ -26,7 +26,7 @@ import {
   MatSnackBarModule,
   MatInputModule,
 } from '@angular/material'
-import { WidgetResolverModule } from '../../../../library/ws-widget/resolver/src/public-api'
+import { WidgetResolverModule } from '@ws-widget/resolver'
 
 @NgModule({
   declarations: [

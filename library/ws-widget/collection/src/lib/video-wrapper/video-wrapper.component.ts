@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { WidgetBaseComponent, NsWidgetResolver } from '../../../../resolver/src/public-api'
 import { IWidgetWrapperMedia } from './video-wrapper.model'
 import { Platform } from '@angular/cdk/platform'
+import { WidgetBaseComponent, NsWidgetResolver } from '@ws-widget/resolver'
 
 @Component({
   selector: 'ws-widget-video-wrapper',

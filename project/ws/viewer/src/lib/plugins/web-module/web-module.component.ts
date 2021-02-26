@@ -10,10 +10,9 @@ import {
 } from '@angular/core'
 import { Subscription, fromEvent } from 'rxjs'
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser'
-import { ValueService, ConfigurationsService } from '@ws-widget/utils'
+import { ValueService, ConfigurationsService, EventService } from '@ws-widget/utils'
 import { WidgetContentService, NsContent } from '@ws-widget/collection'
 import { ViewerUtilService } from '../../viewer-util.service'
-import { EventService } from '../../../../../../../library/ws-widget/utils/src/public-api'
 import { ActivatedRoute } from '@angular/router'
 @Component({
   selector: 'viewer-plugin-web-module',

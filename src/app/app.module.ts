@@ -27,7 +27,7 @@ import { BtnFeatureModule, ErrorResolverModule, TourModule, WIDGET_REGISTERED_MO
 import { StickyHeaderModule } from '@ws-widget/collection/src/lib/_common/sticky-header/sticky-header.module'
 import { WidgetResolverModule } from '@ws-widget/resolver'
 import { LoggerService, PipeSafeSanitizerModule } from '@ws-widget/utils'
-import { SearchModule } from '@ws/app/src/public-api'
+import { SearchModule } from '@ws/app'
 import 'hammerjs'
 import { KeycloakAngularModule } from 'keycloak-angular'
 import { AppRoutingModule } from './app-routing.module'

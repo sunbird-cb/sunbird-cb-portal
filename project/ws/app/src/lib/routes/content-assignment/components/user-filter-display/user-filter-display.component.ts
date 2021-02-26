@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router'
 import {
   IUserSearchRequestModel,
   IUserSearchUnitFilterModel,
-} from '../../../../../../../../../library/ws-widget/collection/src/lib/content-assign/content-assign.model'
-import { ContentAssignService } from '../../../../../../../../../library/ws-widget/collection/src/public-api'
-import { ConfigurationsService } from '../../../../../../../../../library/ws-widget/utils/src/public-api'
+} from '@ws-widget/collection/src/lib/content-assign/content-assign.model'
+import { ContentAssignService } from '@ws-widget/collection'
+import { ConfigurationsService } from '@ws-widget/utils'
 
 @Component({
   selector: 'ws-app-user-filter-display',

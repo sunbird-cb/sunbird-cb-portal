@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
-import { ConfigurationsService, getStringifiedQueryParams } from '../../../../../utils/src/public-api'
+import { ConfigurationsService, getStringifiedQueryParams } from '@ws-widget/utils'
 import { NsAutoComplete } from './user-autocomplete.model'
 
 // TODO: move this in some common place

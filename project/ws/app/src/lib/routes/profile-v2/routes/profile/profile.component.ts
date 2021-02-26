@@ -1,9 +1,9 @@
 
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Router, Event, NavigationEnd, NavigationError, ActivatedRoute } from '@angular/router'
-import { ValueService } from '@ws-widget/utils/src/public-api'
+import { ValueService } from '@ws-widget/utils'
 import { map } from 'rxjs/operators'
-import { NsWidgetResolver } from 'library/ws-widget/resolver/src/public-api'
+import { NsWidgetResolver } from '@ws-widget/resolver'
 /* tslint:disable */
 import _ from 'lodash'
 /* tslint:enable */

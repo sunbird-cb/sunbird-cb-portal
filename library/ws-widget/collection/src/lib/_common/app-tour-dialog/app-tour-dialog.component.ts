@@ -1,9 +1,8 @@
-import { ConfigurationsService } from '@ws-widget/utils'
+import { ConfigurationsService, NsPage } from '@ws-widget/utils'
 import { Component, OnInit, Inject, AfterViewInit, OnDestroy } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { CustomTourService } from '../tour-guide/tour-guide.service'
-import { NsPage } from '../../../../../utils/src/public-api'
-import { Router } from '@angular/router'
+ import { Router } from '@angular/router'
 
 @Component({
   selector: 'ws-widget-app-tour-dialog',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { AuthKeycloakService } from '@ws-widget/utils'
-import { NsContent } from '../../../library/ws-widget/collection/src/public-api'
+import { NsContent } from '@ws-widget/collection'
 // tslint:disable-next-line: max-line-length
 import {
   CHAT_BOT_VISIBILITY,

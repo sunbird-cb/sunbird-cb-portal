@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
-import { ConfigurationsService } from '../../../../../utils/src/public-api'
+import { ConfigurationsService } from '@ws-widget/utils'
 
 @Component({
   selector: 'ws-widget-btn-linkedin-share',

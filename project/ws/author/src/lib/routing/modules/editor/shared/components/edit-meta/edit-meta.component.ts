@@ -17,9 +17,8 @@ import { MatAutocompleteSelectedEvent } from '@angular/material'
 import { MatChipInputEvent } from '@angular/material/chips'
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { VIEWER_ROUTE_FROM_MIME } from '@ws-widget/collection/src/public-api'
-import { ConfigurationsService } from '@ws-widget/utils'
-import { ImageCropComponent } from '@ws-widget/utils/src/public-api'
+import { VIEWER_ROUTE_FROM_MIME } from '@ws-widget/collection'
+import { ConfigurationsService, ImageCropComponent } from '@ws-widget/utils'
 import { CONTENT_BASE_STATIC, CONTENT_BASE_STREAM } from '@ws/author/src/lib/constants/apiEndpoints'
 import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
 import { Notify } from '@ws/author/src/lib/constants/notificationMessage'
@@ -1386,17 +1385,17 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
     this.uploadService
       .upload(
         formdata, {
-        contentId: this.contentMeta.identifier,
-        contentType: CONTENT_BASE_STREAM,
-      }).subscribe(vtt => {
+          contentId: this.contentMeta.identifier,
+          contentType: CONTENT_BASE_STREAM,
+        }).subscribe(vtt => {
 
-        this.loader.changeLoad.next(false)
+          this.loader.changeLoad.next(false)
 
-        this.contentForm.controls.subTitles.setValue([{
-          url: vtt.artifactURL,
-        }])
+          this.contentForm.controls.subTitles.setValue([{
+            url: vtt.artifactURL,
+          }])
 
-      })
+        })
   }
 
 }

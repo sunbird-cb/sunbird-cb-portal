@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { ConfigurationsService, NsUser } from 'library/ws-widget/utils/src/public-api'
+import { ConfigurationsService, NsUser } from '@ws-widget/utils'
 import { Observable } from 'rxjs'
 
 const API_ENDPOINTS = {

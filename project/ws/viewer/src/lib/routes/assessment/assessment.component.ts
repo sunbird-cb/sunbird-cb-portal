@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-// import { WidgetContentService } from '@ws-widget/collection/src/public-api';
+// import { WidgetContentService } from '@ws-widget/collection';
 import { ViewerUtilService } from '../../viewer-util.service'
-// import { EventService, ConfigurationsService } from '@ws-widget/utils/src/public-api';
-import { AccessControlService } from '@ws/author/src/public-api'
+// import { EventService, ConfigurationsService } from '@ws-widget/utils';
+import { AccessControlService } from '@ws/author'
 import { Subscription } from 'rxjs'
-import { EventService } from '@ws-widget/utils/src/public-api'
+import { EventService } from '@ws-widget/utils'
 
 @Component({
     selector: 'viewer-assessment',

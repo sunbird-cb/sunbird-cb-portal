@@ -7,7 +7,7 @@ import { NsAppsConfig, ConfigurationsService, NsPage, LogoutComponent, Subapplic
 import { NsWidgetResolver } from '@ws-widget/resolver'
 import { ROOT_WIDGET_CONFIG, CustomTourService } from '@ws-widget/collection'
 import { MatDialog } from '@angular/material'
-import { AccessControlService } from '../../../../project/ws/author/src/public-api'
+import { AccessControlService } from '@ws/author'
 interface IGroupWithFeatureWidgets extends NsAppsConfig.IGroup {
   featureWidgets: NsWidgetResolver.IRenderConfigWithTypedData<NsPage.INavLink>[]
 }

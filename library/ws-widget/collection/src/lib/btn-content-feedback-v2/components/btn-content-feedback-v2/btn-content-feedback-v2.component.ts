@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material'
 import { IWidgetBtnContentFeedbackV2 } from '@ws-widget/collection'
 import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
 import { BtnContentFeedbackDialogV2Component } from '../btn-content-feedback-dialog-v2/btn-content-feedback-dialog-v2.component'
-import { ConfigurationsService } from '../../../../../../utils/src/public-api'
+import { ConfigurationsService } from '@ws-widget/utils'
 
 @Component({
   selector: 'ws-widget-btn-content-feedback-v2',

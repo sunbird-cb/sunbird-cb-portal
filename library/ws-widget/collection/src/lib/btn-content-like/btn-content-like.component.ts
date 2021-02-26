@@ -1,7 +1,7 @@
 import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core'
 import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
 import { Subscription } from 'rxjs'
-import { ConfigurationsService, EventService, WsEvents } from '../../../../utils'
+import { ConfigurationsService, EventService, WsEvents } from '@ws-widget/utils'
 import { BtnContentLikeService } from './btn-content-like.service'
 
 @Component({

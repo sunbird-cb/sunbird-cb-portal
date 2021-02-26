@@ -4,7 +4,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
 import { Router } from '@angular/router'
 import { NsContent } from '@ws-widget/collection'
 import { ConfigurationsService, EventService } from '@ws-widget/utils'
-import { TFetchStatus } from '@ws-widget/utils/src/public-api'
+import { TFetchStatus } from '@ws-widget/utils'
 import { MobileAppsService } from '../../../../../../../src/app/services/mobile-apps.service'
 import { SCORMAdapterService } from './SCORMAdapter/scormAdapter'
 /* tslint:disable */
