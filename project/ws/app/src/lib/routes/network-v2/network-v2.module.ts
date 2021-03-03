@@ -1,6 +1,12 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule } from '@sunbird-cb/utils'
+import {
+  PipeFilterModule,
+  PipeHtmlTagRemovalModule,
+  PipeOrderByModule,
+  PipeRelativeTimeModule,
+  PipeFilterSearchModule,
+} from '@sunbird-cb/utils'
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatDividerModule } from '@angular/material/divider'
@@ -36,7 +42,6 @@ import { RecommendedResolveService } from './resolvers/recommended-resolve.servi
 import { NetworkMyConnectionComponent } from './routes/network-my-connection/network-my-connection.component'
 import { MyConnectionResolveService } from './resolvers/my-connection-resolve.service'
 import { MyConnectionCardComponent } from './components/my-connection-card/my-connection-card.component'
-import { PipeFilterSearchModule } from '@sunbird-cb/utils'
 import { NetworkMyMdoComponent } from './routes/network-my-mdo/network-my-mdo.component'
 import { NetworkRecommendedComponent } from './routes/network-recommended/network-recommended.component'
 import { NetworkConnectionRequestsComponent } from './routes/network-connection-requests/network-connection-requests.component'
