@@ -27,9 +27,9 @@ import {
   PipeDurationTransformModule,
   PipeLimitToModule,
   PipePartialContentModule,
-} from '@ws-widget/utils'
+} from '@sunbird-cb/utils'
 
-import { WidgetResolverModule } from '@ws-widget/resolver'
+import { WidgetResolverModule } from '@sunbird-cb/resolver'
 
 import { WebModuleModule as PluginWebModuleModule } from '../../plugins/web-module/web-module.module'
 

@@ -12,7 +12,7 @@ import {
 import { NotificationRoutingModule } from './notification-routing.module'
 import { NotificationComponent } from './components/notification/notification.component'
 import { BtnPageBackModule } from '@ws-widget/collection'
-import { PipeLimitToModule } from '../../../../../../../library/ws-widget/utils/src/public-api'
+import { PipeLimitToModule } from '@sunbird-cb/utils'
 
 @NgModule({
   declarations: [NotificationComponent],

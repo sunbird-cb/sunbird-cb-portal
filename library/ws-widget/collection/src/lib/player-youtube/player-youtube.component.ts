@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
-import { EventService, ValueService } from '@ws-widget/utils'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { EventService, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import videoJs from 'video.js'
 import { ActivatedRoute } from '../../../../../../node_modules/@angular/router'

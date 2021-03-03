@@ -3,7 +3,7 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Observable, of } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
 import { } from '@ws-widget/collection'
-import { IResolveResponse } from '@ws-widget/utils'
+import { IResolveResponse } from '@sunbird-cb/utils'
 import { DiscussService } from '../services/discuss.service'
 import { NSDiscussData } from '../models/discuss.model'
 

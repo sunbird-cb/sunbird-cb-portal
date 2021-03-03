@@ -3,7 +3,7 @@ import { SafeUrl, DomSanitizer } from '@angular/platform-browser'
 import {
   ConfigurationsService,
   NsPage,
-} from '../../../../../../../../../library/ws-widget/utils/src/public-api'
+} from '@sunbird-cb/utils'
 import { MatDialog } from '@angular/material'
 import { AppTourDialogComponent } from '../../../../../../../../../library/ws-widget/collection/src/public-api'
 import { Router, ActivatedRoute } from '@angular/router'

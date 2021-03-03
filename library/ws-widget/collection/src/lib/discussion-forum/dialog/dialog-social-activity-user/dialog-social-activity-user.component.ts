@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA, MatTabChangeEvent } from '@angular/material'
 import { HttpErrorResponse } from '@angular/common/http'
 
-import { TFetchStatus, ConfigurationsService } from '@ws-widget/utils'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 import { WsDiscussionForumService } from '../../ws-discussion-forum.services'
 import { WsDiscussionForumUserService } from '../../ws-discussion-forum-user.service'
 import { NsDiscussionForum } from '../../ws-discussion-forum.model'

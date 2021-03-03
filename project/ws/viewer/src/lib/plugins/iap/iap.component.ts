@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
-import { LoggerService } from '@ws-widget/utils'
+import { LoggerService } from '@sunbird-cb/utils'
 import { NsContent } from '../../../../../../../library/ws-widget/collection/src/public-api'
 
 @Component({

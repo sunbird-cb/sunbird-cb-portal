@@ -1,7 +1,7 @@
 // import { ISelectorResponsive, NsGalleryView } from '@ws-widget/collection'
 import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material'
-import { NsWidgetResolver } from '@ws-widget/resolver/src/public-api'
+import { NsWidgetResolver } from '@sunbird-cb/resolver/src/public-api'
 import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
 import { Notify } from '@ws/author/src/lib/constants/notificationMessage'
 import { NotificationComponent } from '@ws/author/src/lib/modules/shared/components/notification/notification.component'

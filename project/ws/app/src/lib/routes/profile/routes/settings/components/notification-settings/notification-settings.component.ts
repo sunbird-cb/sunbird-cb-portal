@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { NsSettings } from '../../settings.model'
-import { TFetchStatus, ConfigurationsService } from '@ws-widget/utils'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 import { SettingsService } from '../../settings.service'
 import { MatSnackBar } from '@angular/material'
 

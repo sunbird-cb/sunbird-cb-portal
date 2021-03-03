@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { IReleaseNotes } from './release-notes.model'
 @Component({
   selector: 'ws-widget-release-notes',

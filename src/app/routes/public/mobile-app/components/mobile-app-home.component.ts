@@ -2,7 +2,7 @@ import { Platform } from '@angular/cdk/platform'
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute, Data } from '@angular/router'
-import { ConfigurationsService, NsPage } from '@ws-widget/utils'
+import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 

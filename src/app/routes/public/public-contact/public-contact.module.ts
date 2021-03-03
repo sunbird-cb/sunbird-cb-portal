@@ -9,7 +9,7 @@ import {
   MatExpansionModule,
 } from '@angular/material'
 import { BtnPageBackModule } from '@ws-widget/collection'
-import { PipeSafeSanitizerModule } from '@ws-widget/utils'
+import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 
 @NgModule({
   declarations: [PublicContactComponent],

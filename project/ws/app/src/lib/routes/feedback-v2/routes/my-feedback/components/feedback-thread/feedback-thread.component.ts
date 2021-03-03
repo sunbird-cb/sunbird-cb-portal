@@ -12,7 +12,7 @@ import {
   FeedbackSnackbarComponent,
   EFeedbackRole,
 } from '@ws-widget/collection'
-import { TFetchStatus, TSendStatus } from '@ws-widget/utils'
+import { TFetchStatus, TSendStatus } from '@sunbird-cb/utils'
 import { MyFeedbackService } from '../../services/my-feedback.service'
 
 @Component({

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule } from '@ws-widget/utils'
+import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule } from '@sunbird-cb/utils'
 import { CompetenceComponent } from './routes/competence-home/competence.component'
 import { CompetencieRoutingModule } from './competence.rounting.module'
 import { CompetenceCardComponent } from './components/competencies-card/competencies-card.component'
@@ -11,7 +11,7 @@ import { RightMenuComponent } from './components/right-menu/right-menu.component
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatDividerModule } from '@angular/material/divider'
-import { WidgetResolverModule } from '@ws-widget/resolver'
+import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import {
   MatIconModule,
   MatListModule,

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Router, ActivatedRoute, UrlTree, UrlSegmentGroup, UrlSegment } from '@angular/router'
 import { IFeatureSearchConfig } from '../../models/search.model'
-import { ConfigurationsService, NsPage } from '@ws-widget/utils'
+import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-search-root',

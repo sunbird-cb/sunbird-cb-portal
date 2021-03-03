@@ -6,7 +6,7 @@ import { } from '@ws-widget/collection'
 import {
   IResolveResponse,
   // ConfigurationsService
-} from '@ws-widget/utils'
+} from '@sunbird-cb/utils'
 import { NetworkV2Service } from '../services/network-v2.service'
 import { NSNetworkDataV2 } from '../models/network-v2.model'
 

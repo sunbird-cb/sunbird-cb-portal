@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
 import { NsGalleryView } from '@ws-widget/collection/src/public-api'
-import { NsWidgetResolver } from '@ws-widget/resolver'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import {
   AUTHORING_CONTENT_BASE,
   CONTENT_BASE_WEBHOST_ASSETS,

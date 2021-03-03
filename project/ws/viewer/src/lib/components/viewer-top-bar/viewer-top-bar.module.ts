@@ -9,7 +9,7 @@ import {
 import { ViewerTopBarComponent } from './viewer-top-bar.component'
 import { BtnFullscreenModule, BtnPageBackNavModule } from '@ws-widget/collection'
 import { RouterModule } from '@angular/router'
-import { ValueService } from '@ws-widget/utils'
+import { ValueService } from '@sunbird-cb/utils'
 @NgModule({
   declarations: [ViewerTopBarComponent],
   imports: [

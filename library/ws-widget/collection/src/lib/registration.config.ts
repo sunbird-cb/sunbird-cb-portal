@@ -1,4 +1,4 @@
-import { NsWidgetResolver } from '@ws-widget/resolver'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 // Components
 import { BtnAppsComponent } from './btn-apps/btn-apps.component'
 // Modules

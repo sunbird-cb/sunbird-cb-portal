@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
 import { NsContent, viewerRouteGenerator } from '@ws-widget/collection'
-import { ConfigurationsService } from '@ws-widget/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { NsAppToc } from '../../models/app-toc.model'
 
 @Component({

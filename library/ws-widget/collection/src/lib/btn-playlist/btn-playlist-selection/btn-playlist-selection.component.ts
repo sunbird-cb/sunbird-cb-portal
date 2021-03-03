@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core'
 import { FormControl, Validators } from '@angular/forms'
 import { MatListOption, MatSnackBar } from '@angular/material'
-import { EventService, TFetchStatus } from '@ws-widget/utils'
+import { EventService, TFetchStatus } from '@sunbird-cb/utils'
 import { NsPlaylist } from '../btn-playlist.model'
 import { BtnPlaylistService } from '../btn-playlist.service'
 

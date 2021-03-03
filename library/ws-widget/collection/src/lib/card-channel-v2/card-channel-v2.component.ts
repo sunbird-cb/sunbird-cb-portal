@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, Input } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { NsContent } from '../_services/widget-content.model'
 // import { widgetData } from '../../../../../../project/ws/app/src/lib/routes/learning-path/dynamic-network/utils/dynamic-network-data'
 

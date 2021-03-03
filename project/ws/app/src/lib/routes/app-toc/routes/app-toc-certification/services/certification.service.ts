@@ -5,7 +5,7 @@ import { throwError, of, Observable } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
 
 import { NsContent } from '@ws-widget/collection'
-import { IResolveResponse } from '@ws-widget/utils'
+import { IResolveResponse } from '@sunbird-cb/utils'
 
 import {
   ICertificationMeta,

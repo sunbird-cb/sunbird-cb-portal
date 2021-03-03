@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ContentStripVerticalService } from './content-strip-vertical.service'
 import { WidgetContentService } from '../_services/widget-content.service'
 import { NsContent } from '../_services/widget-content.model'
@@ -9,7 +9,7 @@ import {
   EventService,
   ConfigurationsService,
   UtilityService,
-} from '@ws-widget/utils'
+} from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
 import { SearchServService } from '@ws/app/src/lib/routes/search/services/search-serv.service'

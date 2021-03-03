@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
-import { ConfigurationsService, NsPage } from '@ws-widget/utils'
+import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 import { NsDiscussionForum } from '@ws-widget/collection'
 
 @Component({

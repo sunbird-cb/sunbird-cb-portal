@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Subscription } from 'rxjs'
-import { ValueService } from '@ws-widget/utils'
+import { ValueService } from '@sunbird-cb/utils'
 import { ActivatedRoute } from '@angular/router'
 import { AccessControlService } from '@ws/author'
 import {
@@ -10,7 +10,7 @@ import {
   WidgetContentService,
 } from '@ws-widget/collection'
 import { ViewerUtilService } from '../../viewer-util.service'
-import { NsWidgetResolver } from '@ws-widget/resolver'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 
 @Component({
   selector: 'viewer-audio',

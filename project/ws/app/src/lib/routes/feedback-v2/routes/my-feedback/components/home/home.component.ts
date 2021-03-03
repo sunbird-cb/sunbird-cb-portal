@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router'
 
 import { EFeedbackRole, IFeedbackSummary } from '@ws-widget/collection'
-import { IResolveResponse } from '@ws-widget/utils'
+import { IResolveResponse } from '@sunbird-cb/utils'
 import { Subject } from 'rxjs'
 import { filter, switchMap, takeUntil } from 'rxjs/operators'
 

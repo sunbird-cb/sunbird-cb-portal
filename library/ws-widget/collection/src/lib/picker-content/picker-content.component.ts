@@ -10,8 +10,8 @@ import {
   ViewChild,
 } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
-import { ConfigurationsService, TFetchStatus } from '@ws-widget/utils'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
 import { SearchServService } from '@ws/app/src/lib/routes/search/services/search-serv.service'
 import { BehaviorSubject, EMPTY, Subscription, timer } from 'rxjs'
 import { debounce, mergeMap } from 'rxjs/operators'

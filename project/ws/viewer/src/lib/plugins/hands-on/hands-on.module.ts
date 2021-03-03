@@ -13,7 +13,7 @@ import {
 
 import { AceEditorModule } from 'ng2-ace-editor'
 
-import { PipeSafeSanitizerModule, PipeDurationTransformModule } from '@ws-widget/utils'
+import { PipeSafeSanitizerModule, PipeDurationTransformModule } from '@sunbird-cb/utils'
 import { CompletionSpinnerModule } from '@ws-widget/collection'
 
 import { HandsOnComponent } from './hands-on.component'

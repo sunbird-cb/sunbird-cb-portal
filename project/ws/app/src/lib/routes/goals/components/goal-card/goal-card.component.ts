@@ -10,7 +10,7 @@ import {
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { Router } from '@angular/router'
 import { BtnGoalsService, NsGoal } from '@ws-widget/collection'
-import { TFetchStatus, ConfigurationsService } from '@ws-widget/utils'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 import { GoalDeleteDialogComponent } from '../goal-delete-dialog/goal-delete-dialog.component'
 import { GoalShareDialogComponent } from '../goal-share-dialog/goal-share-dialog.component'
 import { GoalSharedDeleteDialogComponent } from '../goal-shared-delete-dialog/goal-shared-delete-dialog.component'

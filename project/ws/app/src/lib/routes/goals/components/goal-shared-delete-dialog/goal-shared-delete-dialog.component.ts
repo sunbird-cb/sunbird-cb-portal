@@ -1,5 +1,5 @@
 import { Component, Inject, ViewChild, ElementRef } from '@angular/core'
-import { TFetchStatus } from '@ws-widget/utils'
+import { TFetchStatus } from '@sunbird-cb/utils'
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,

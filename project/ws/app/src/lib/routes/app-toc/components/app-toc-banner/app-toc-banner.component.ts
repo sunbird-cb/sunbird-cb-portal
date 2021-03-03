@@ -10,8 +10,8 @@ import {
   viewerRouteGenerator,
   WidgetContentService,
 } from '@ws-widget/collection'
-import { ConfigurationsService, TFetchStatus } from '@ws-widget/utils'
-import { UtilityService } from '@ws-widget/utils/src/lib/services/utility.service'
+import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
+import { UtilityService } from '@sunbird-cb/utils'
 import { AccessControlService } from '@ws/author'
 import { Subscription } from 'rxjs'
 import { NsAnalytics } from '../../models/app-toc-analytics.model'

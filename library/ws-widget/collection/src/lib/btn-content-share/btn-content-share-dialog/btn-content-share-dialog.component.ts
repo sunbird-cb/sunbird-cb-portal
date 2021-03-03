@@ -1,7 +1,7 @@
 import { COMMA, ENTER, SEMICOLON } from '@angular/cdk/keycodes'
 import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material'
-import { ConfigurationsService, EventService } from '@ws-widget/utils'
+import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
 import { NsAutoComplete } from '../../_common/user-autocomplete/user-autocomplete.model'
 import { WidgetContentShareService } from '../../_services/widget-content-share.service'
 import { NsContent } from '../../_services/widget-content.model'

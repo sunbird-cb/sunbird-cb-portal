@@ -5,7 +5,7 @@ import { Observable, Subscription } from 'rxjs'
 import { finalize, startWith, map, tap, switchMap } from 'rxjs/operators'
 
 import { NsContent } from '@ws-widget/collection'
-import { TFetchStatus, TSendStatus } from '@ws-widget/utils'
+import { TFetchStatus, TSendStatus } from '@sunbird-cb/utils'
 
 import {
   IAccLocation,

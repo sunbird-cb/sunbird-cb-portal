@@ -45,7 +45,7 @@ import { AppTocResolverService } from './resolvers/app-toc-resolver.service'
 import { AppTocService } from './services/app-toc.service'
 
 // custom modules
-import { WidgetResolverModule } from '@ws-widget/resolver'
+import { WidgetResolverModule } from '@sunbird-cb/resolver'
 
 import {
   PipeDurationTransformModule,
@@ -56,7 +56,7 @@ import {
   DefaultThumbnailModule,
   PipeNameTransformModule,
   PipeCountTransformModule,
-} from '@ws-widget/utils'
+} from '@sunbird-cb/utils'
 import {
   BtnCallModule,
   BtnContentDownloadModule,

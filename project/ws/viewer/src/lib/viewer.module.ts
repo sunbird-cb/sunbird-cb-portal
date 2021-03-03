@@ -23,7 +23,7 @@ import {
   PipeLimitToModule,
   DefaultThumbnailModule,
   PipePartialContentModule,
-} from '@ws-widget/utils'
+} from '@sunbird-cb/utils'
 
 import {
   ErrorResolverModule,
@@ -41,7 +41,7 @@ import {
   PlayerBriefModule,
 } from '@ws-widget/collection'
 
-import { WidgetResolverModule } from '@ws-widget/resolver'
+import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { ViewerComponent } from './viewer.component'
 import { ViewerTocComponent } from './components/viewer-toc/viewer-toc.component'
 import { ViewerTopBarModule } from './components/viewer-top-bar/viewer-top-bar.module'

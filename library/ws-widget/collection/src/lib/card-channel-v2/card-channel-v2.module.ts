@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common'
 import { CardChannelV2Component } from './card-channel-v2.component'
 import { MatCardModule, MatIconModule } from '@angular/material'
 import { RouterModule } from '@angular/router'
-import { PipeDurationTransformModule, DefaultThumbnailModule } from '@ws-widget/utils'
+import { PipeDurationTransformModule, DefaultThumbnailModule } from '@sunbird-cb/utils'
 
 @NgModule({
   declarations: [CardChannelV2Component],

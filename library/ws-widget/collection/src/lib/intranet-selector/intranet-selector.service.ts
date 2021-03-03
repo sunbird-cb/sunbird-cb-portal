@@ -1,4 +1,4 @@
-import { ConfigurationsService } from '@ws-widget/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 

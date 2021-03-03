@@ -1,7 +1,7 @@
 import { Component, ElementRef, Inject, TemplateRef, ViewChild, OnInit } from '@angular/core'
 import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material'
 import { BtnPlaylistService, NsAutoComplete, NsPlaylist } from '@ws-widget/collection'
-import { TFetchStatus, ConfigurationsService } from '@ws-widget/utils'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-playlist-share-dialog',

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router'
 import { MatSnackBar } from '@angular/material'
 
 import { BtnPlaylistService, NsPlaylist } from '@ws-widget/collection'
-import { TFetchStatus, ConfigurationsService, NsPage } from '@ws-widget/utils'
+import { TFetchStatus, ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-playlist-notification',

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { ErrorResolverComponent, PageComponent, PageModule } from '@ws-widget/collection'
-import { ExploreDetailResolve, PageResolve } from '@ws-widget/utils'
+import { ExploreDetailResolve, PageResolve } from '@sunbird-cb/utils'
 import { LearningGuard } from '../../project/ws/app/src/lib/routes/my-learning/guards/my-learning.guard'
 import { InvalidUserComponent } from './component/invalid-user/invalid-user.component'
 import { LoginRootComponent } from './component/login-root/login-root.component'

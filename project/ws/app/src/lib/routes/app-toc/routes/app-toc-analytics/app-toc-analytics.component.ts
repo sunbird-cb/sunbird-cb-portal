@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Subscription } from 'rxjs'
-import { TFetchStatus, ConfigurationsService } from '@ws-widget/utils'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 import { ActivatedRoute, Data } from '@angular/router'
 import { AppTocService } from '../../services/app-toc.service'
 import { NsContent, ROOT_WIDGET_CONFIG, IGraphWidget, NsError } from '@ws-widget/collection'
-import { NsWidgetResolver } from '@ws-widget/resolver'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { NsAnalytics, NsCourseAnalytics } from '../../models/app-toc-analytics.model'
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { ActivatedRoute, ParamMap, Router } from '@angular/router'
-import { ConfigurationsService } from '@ws-widget/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { IWsEmailUserId, IWsUserFollow } from '../../model/leadership-email.model'
 import { IWsLeaderData } from '../../model/leadership.model'
 import { LeadershipService } from '../../services/leadership.service'

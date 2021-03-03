@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
-import { TFetchStatus } from '@ws-widget/utils'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { TFetchStatus } from '@sunbird-cb/utils'
 import { NsContent } from '../_services/widget-content.model'
 import { WidgetContentService } from '../_services/widget-content.service'
 import { NsContentStripSingle } from './content-strip-single.model'

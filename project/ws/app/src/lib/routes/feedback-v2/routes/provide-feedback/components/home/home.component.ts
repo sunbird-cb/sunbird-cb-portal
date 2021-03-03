@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { MatTabChangeEvent } from '@angular/material'
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
 import { EFeedbackRole, EFeedbackType, IFeedbackSummary } from '@ws-widget/collection'
-import { IResolveResponse } from '@ws-widget/utils'
+import { IResolveResponse } from '@sunbird-cb/utils'
 import { Subject } from 'rxjs'
 import { filter, switchMap, takeUntil } from 'rxjs/operators'
 

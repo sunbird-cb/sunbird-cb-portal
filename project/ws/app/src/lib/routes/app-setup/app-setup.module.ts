@@ -21,7 +21,7 @@ import {
 } from '@angular/material'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { SettingsModule } from '../profile/routes/settings/settings.module'
-import { WidgetResolverModule } from '@ws-widget/resolver'
+import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import {
   LocaleTranslatorModule,
   LanguageSelectorModule,
@@ -33,7 +33,7 @@ import { HomeComponent } from './components/home/home.component'
 import { LangSelectComponent } from './components/lang-select/lang-select.component'
 import { TncComponent } from './components/tnc/tnc.component'
 import { TncRendererComponent } from './components/tnc-renderer/tnc-renderer.component'
-import { PipeSafeSanitizerModule } from '../../../../../../../library/ws-widget/utils/src/public-api'
+import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 import { TncAppResolverService } from '../../../../../../../src/app/services/tnc-app-resolver.service'
 import { SetupDoneComponent } from './components/setup-done/setup-done.component'
 import { InterestModules } from './module/interest/interest.module'

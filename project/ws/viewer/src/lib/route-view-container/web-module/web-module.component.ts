@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { NsContent, NsDiscussionForum } from '@ws-widget/collection'
-import { NsWidgetResolver } from '@ws-widget/resolver'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ActivatedRoute } from '@angular/router'
-import { ConfigurationsService } from '../../../../../../../library/ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'viewer-web-module-container',

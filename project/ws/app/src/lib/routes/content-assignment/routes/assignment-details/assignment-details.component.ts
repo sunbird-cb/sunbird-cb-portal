@@ -9,7 +9,7 @@ import {
   ConfigurationsService,
   NsPage,
   TFetchStatus,
-} from '../../../../../../../../../library/ws-widget/utils/src/public-api'
+} from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-assignment-details',

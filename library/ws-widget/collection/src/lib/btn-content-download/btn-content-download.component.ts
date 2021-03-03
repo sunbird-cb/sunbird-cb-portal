@@ -1,7 +1,7 @@
 import { Platform } from '@angular/cdk/platform'
 import { Component, HostBinding, Input, OnInit } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
-import { ConfigurationsService, EventService } from '@ws-widget/utils'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
 import { MobileAppsService } from '../../../../../../src/app/services/mobile-apps.service'
 import { NsContent } from '../_services/widget-content.model'
 

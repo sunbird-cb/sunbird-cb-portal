@@ -5,7 +5,7 @@ import {
   // NsDiscussionForum,
   WidgetContentService,
 } from '@ws-widget/collection'
-// import { NsWidgetResolver } from '@ws-widget/resolver'
+// import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ActivatedRoute } from '@angular/router'
 
 @Component({

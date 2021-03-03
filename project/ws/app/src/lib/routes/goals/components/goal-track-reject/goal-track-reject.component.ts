@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { BtnGoalsService } from '@ws-widget/collection'
-import { TFetchStatus } from '@ws-widget/utils'
+import { TFetchStatus } from '@sunbird-cb/utils'
 import { MatSnackBar } from '@angular/material'
 
 @Component({

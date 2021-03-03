@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http'
 import { NsContent, WidgetContentService } from '@ws-widget/collection'
 import { NSQuiz } from '../../plugins/quiz/quiz.model'
 import { ActivatedRoute } from '@angular/router'
-import { WsEvents, EventService } from '@ws-widget/utils'
+import { WsEvents, EventService } from '@sunbird-cb/utils'
 import { ViewerUtilService } from '../../viewer-util.service'
 
 @Component({

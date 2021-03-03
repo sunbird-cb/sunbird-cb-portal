@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
 
 import { FeedbackService, IFeedbackSummary } from '@ws-widget/collection'
-import { IResolveResponse } from '@ws-widget/utils'
+import { IResolveResponse } from '@sunbird-cb/utils'
 
 @Injectable()
 export class FeedbackSummaryResolver implements Resolve<IResolveResponse<IFeedbackSummary>> {

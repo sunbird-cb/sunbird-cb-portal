@@ -10,7 +10,7 @@ import {
   hasUnitPermission,
   NsWidgetResolver,
   WidgetResolverService,
-} from '@ws-widget/resolver'
+} from '@sunbird-cb/resolver'
 import {
   AuthKeycloakService,
   ConfigurationsService,
@@ -19,7 +19,7 @@ import {
   NsInstanceConfig,
   NsUser,
   UserPreferenceService,
-} from '@ws-widget/utils'
+} from '@sunbird-cb/utils'
 import { environment } from '../../environments/environment'
 /* tslint:disable */
 import _ from 'lodash'
@@ -331,7 +331,7 @@ export class InitService {
         throw new Error('Invalid user')
       }
       if (userPidProfileV2) {
-        const userData: any = _.first(userPidProfileV2.result.UserProfile)
+        const userData: any = _.first(endpoint.profileV2)
         this.configSvc.userProfileV2 = {
           userId: userData.userId,
           firstName: userData.personalDetails.firstname,

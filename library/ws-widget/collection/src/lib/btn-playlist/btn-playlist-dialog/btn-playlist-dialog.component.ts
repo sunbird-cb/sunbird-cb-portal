@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
-import { TFetchStatus } from '@ws-widget/utils'
+import { TFetchStatus } from '@sunbird-cb/utils'
 import { NsPlaylist } from '../btn-playlist.model'
 
 @Component({

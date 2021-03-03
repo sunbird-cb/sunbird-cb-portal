@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule } from '@ws-widget/utils'
+import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule } from '@sunbird-cb/utils'
 import { LeftMenuComponent } from './components/left-menu/left-menu.component'
 import { RightMenuComponent } from './components/right-menu/right-menu.component'
 // import { BasicCKEditorComponent } from './components/basic-ckeditor/basic-ckeditor.component'
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatDividerModule } from '@angular/material/divider'
-import { WidgetResolverModule } from '@ws-widget/resolver'
+import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import {
   MatIconModule,
   MatListModule,

@@ -3,7 +3,7 @@ import { throwError, Subscription, Subject } from 'rxjs'
 import { switchMap, takeWhile, tap } from 'rxjs/operators'
 
 import { NsContent } from '@ws-widget/collection'
-import { TFetchStatus, TSendStatus } from '@ws-widget/utils'
+import { TFetchStatus, TSendStatus } from '@sunbird-cb/utils'
 
 import { CertificationApiService } from '../../apis/certification-api.service'
 import { CertificationService } from '../../services/certification.service'

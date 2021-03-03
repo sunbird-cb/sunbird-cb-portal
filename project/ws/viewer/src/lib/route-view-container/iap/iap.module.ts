@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { IapComponent } from './iap.component'
 import { IapRoutingModule } from './iap-routing.module'
-import { WidgetResolverModule } from '@ws-widget/resolver'
+import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { IapModule as IapPluginModule } from '../../plugins/iap/iap.module'
 
 import {
@@ -32,7 +32,7 @@ import {
   PipeDurationTransformModule,
   PipeLimitToModule,
   PipePartialContentModule,
-} from '@ws-widget/utils'
+} from '@sunbird-cb/utils'
 @NgModule({
   declarations: [IapComponent],
   imports: [

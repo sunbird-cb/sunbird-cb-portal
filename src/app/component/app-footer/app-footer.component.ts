@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { ConfigurationsService, ValueService } from '@ws-widget/utils'
+import { ConfigurationsService, ValueService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-footer',

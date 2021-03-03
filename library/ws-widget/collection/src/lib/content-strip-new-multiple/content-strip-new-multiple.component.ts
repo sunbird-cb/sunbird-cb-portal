@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, HostBinding } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { NsContentStripNewMultiple } from './content-strip-new-multiple.model'
 import { ContentStripNewMultipleService } from './content-strip-new-multiple.service'
 import { WidgetContentService } from '../_services/widget-content.service'
@@ -10,7 +10,7 @@ import {
   EventService,
   ConfigurationsService,
   UtilityService,
-} from '@ws-widget/utils'
+} from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
 import { SearchServService } from '@ws/app/src/lib/routes/search/services/search-serv.service'

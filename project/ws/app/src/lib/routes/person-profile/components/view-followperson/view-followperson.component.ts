@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { BtnFollowService } from '@ws-widget/collection/src/public-api'
 import { PersonProfileService } from '../../services/person-profile.service'
-import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { IFollowDetails } from '../../person-profile.model'
 import { Router } from '@angular/router'
 import { MatSnackBar } from '@angular/material'

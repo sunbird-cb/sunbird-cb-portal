@@ -19,7 +19,7 @@ import {
   EditorQuillModule,
   BtnPageBackModule,
 } from '@ws-widget/collection'
-import { PipeSafeSanitizerModule } from '@ws-widget/utils'
+import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { BlogsReplyModule } from '../../blogs/blogs-reply/blogs-reply.module'
 @NgModule({

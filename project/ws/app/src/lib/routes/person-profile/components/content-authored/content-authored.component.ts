@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, EventEmitter, Output } from '@angular/core'
-import { ConfigurationsService, TFetchStatus } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
 import { MyContentService } from '../../../../../../../author/src/lib/routing/modules/my-content/services/my-content.service'
 import { ISearchResult, ISearchContent } from '../../../../../../../author/src/lib/interface/search'
 import { Subscription } from 'rxjs'

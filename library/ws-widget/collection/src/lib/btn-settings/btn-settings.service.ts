@@ -1,5 +1,5 @@
 import { Injectable, LOCALE_ID, Inject } from '@angular/core'
-import { ConfigurationsService, NsInstanceConfig, UserPreferenceService } from '@ws-widget/utils'
+import { ConfigurationsService, NsInstanceConfig, UserPreferenceService } from '@sunbird-cb/utils'
 
 @Injectable({
   providedIn: 'root',

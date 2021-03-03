@@ -8,7 +8,7 @@ import {
   ElementRef,
 } from '@angular/core'
 import { NsGoal, BtnGoalsService } from '@ws-widget/collection'
-import { TFetchStatus, EventService, ConfigurationsService } from '@ws-widget/utils'
+import { TFetchStatus, EventService, ConfigurationsService } from '@sunbird-cb/utils'
 import { Router } from '@angular/router'
 import { MatSnackBar } from '@angular/material'
 

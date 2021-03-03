@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnDestroy, HostBinding } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
-import { ConfigurationsService, LogoutComponent, NsPage } from '@ws-widget/utils/src/public-api'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { ConfigurationsService, LogoutComponent, NsPage } from '@sunbird-cb/utils'
 import { IBtnAppsConfig } from '../btn-apps/btn-apps.model'
 import { MatDialog } from '@angular/material'
 import { Subscription } from 'rxjs'

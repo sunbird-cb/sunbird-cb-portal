@@ -9,7 +9,7 @@ import {
 import { MatCardModule } from '@angular/material/card'
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { BtnPageBackModule, CardContentModule } from '@ws-widget/collection'
-import { WidgetResolverModule } from '@ws-widget/resolver'
+import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { MyLearningRoutingModule } from './my-learning-routing.module'
 import { HomeComponent } from './routes/home/home.component'
 @NgModule({

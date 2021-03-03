@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { IChannelHub, IChannelHubCard } from './channel-hub.model'
 import * as _moment from 'moment'
 // tslint:disable-next-line:no-duplicate-imports

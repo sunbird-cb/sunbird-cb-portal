@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { ConfigurationsService, NsPage } from '../../../../../../../../../library/ws-widget/utils/src/public-api'
+import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-my-dashboard-home',

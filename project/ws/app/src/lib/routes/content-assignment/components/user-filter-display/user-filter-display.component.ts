@@ -5,7 +5,7 @@ import {
   IUserSearchUnitFilterModel,
 } from '../../../../../../../../../library/ws-widget/collection/src/lib/content-assign/content-assign.model'
 import { ContentAssignService } from '../../../../../../../../../library/ws-widget/collection/src/public-api'
-import { ConfigurationsService } from '../../../../../../../../../library/ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-user-filter-display',

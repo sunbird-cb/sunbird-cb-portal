@@ -1,7 +1,7 @@
 import { ISearchResult } from './../../../../interface/search'
 import { HttpHeaders } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { ConfigurationsService } from '@ws-widget/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import {
   CONTENT_CREATE,
   CONTENT_DELETE,

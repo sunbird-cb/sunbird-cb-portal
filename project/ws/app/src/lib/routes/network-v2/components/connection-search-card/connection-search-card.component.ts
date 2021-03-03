@@ -3,7 +3,7 @@ import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { NetworkV2Service } from '../../services/network-v2.service'
 import { MatSnackBar } from '@angular/material'
 import { Router } from '@angular/router'
-import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-connection-search-card',

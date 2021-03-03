@@ -4,7 +4,7 @@ import { MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ContentAssignService, NsContent } from '@ws-widget/collection'
-import { ConfigurationsService, TFetchStatus, ValueService } from '@ws-widget/utils'
+import { ConfigurationsService, TFetchStatus, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import {
   IContentAssignModel,

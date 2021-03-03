@@ -13,8 +13,8 @@ import {
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 import { BtnFeatureModule, BtnPageBackModule } from '@ws-widget/collection'
-import { WidgetResolverModule } from '@ws-widget/resolver'
-import { LogoutModule } from '@ws-widget/utils'
+import { WidgetResolverModule } from '@sunbird-cb/resolver'
+import { LogoutModule } from '@sunbird-cb/utils'
 import { AccessControlService } from '../../../../project/ws/author/src/public-api'
 
 @NgModule({

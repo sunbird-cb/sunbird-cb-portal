@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ActivatedRoute, Data, Router } from '@angular/router'
 import { Subscription } from 'rxjs'
-import { TFetchStatus, ConfigurationsService, NsPage } from '@ws-widget/utils'
-import { NsWidgetResolver } from '@ws-widget/resolver'
+import { TFetchStatus, ConfigurationsService, NsPage } from '@sunbird-cb/utils'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { NsError, ROOT_WIDGET_CONFIG, NsDiscussionForum, WsDiscussionForumService } from '@ws-widget/collection'
 import { MatButtonToggleChange } from '@angular/material'
 

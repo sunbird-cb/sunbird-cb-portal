@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core'
 // import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser'
 // import { CertificationService } from './certification.service'
 import { NsContent } from '@ws-widget/collection'
-// import { ConfigurationsService } from '@ws-widget/utils';
+// import { ConfigurationsService } from '@sunbird-cb/utils';
 
 @Component({
   selector: 'viewer-plugin-certification',

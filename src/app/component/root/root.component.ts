@@ -22,7 +22,7 @@ import {
   TelemetryService,
   ValueService,
   WsEvents,
-} from '@ws-widget/utils'
+} from '@sunbird-cb/utils'
 import { delay } from 'rxjs/operators'
 import { MobileAppsService } from '../../services/mobile-apps.service'
 import { RootService } from './root.service'

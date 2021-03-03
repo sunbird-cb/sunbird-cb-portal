@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core'
 import { IFollowers, IFollowerId } from '../../person-profile.model'
 import { PersonProfileService } from '../../services/person-profile.service'
-import { TFetchStatus, ConfigurationsService } from '../../../../../../../../../library/ws-widget/utils/src/public-api'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-follow-list',

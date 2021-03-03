@@ -10,8 +10,8 @@ import {
   MatCardModule,
 } from '@angular/material'
 import { BtnPageBackNavModule } from '@ws-widget/collection'
-import { HorizontalScrollerModule, PipeSafeSanitizerModule } from '@ws-widget/utils'
-import { WidgetResolverModule } from '@ws-widget/resolver'
+import { HorizontalScrollerModule, PipeSafeSanitizerModule } from '@sunbird-cb/utils'
+import { WidgetResolverModule } from '@sunbird-cb/resolver'
 
 @NgModule({
   declarations: [AboutHomeComponent],

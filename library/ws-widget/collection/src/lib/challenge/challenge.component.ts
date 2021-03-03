@@ -3,7 +3,7 @@ import {
   IChallenges,
   IActivityCard,
 } from '../../../../../../project/ws/app/src/lib/routes/activities/interfaces/activities.model'
-import { ConfigurationsService } from '../../../../utils/src/lib/services/configurations.service'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Router, NavigationExtras } from '@angular/router'
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner'
 

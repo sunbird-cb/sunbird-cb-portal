@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
-import { WidgetResolverModule } from '@ws-widget/resolver'
+import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import {
   MatButtonToggleModule,
   MatButtonModule,
@@ -14,7 +14,7 @@ import {
   MatProgressSpinnerModule,
 } from '@angular/material'
 import { QnaHomeComponent } from './components/qna-home/qna-home.component'
-import { PipeLimitToModule, PipeCountTransformModule } from '@ws-widget/utils'
+import { PipeLimitToModule, PipeCountTransformModule } from '@sunbird-cb/utils'
 import { BtnPageBackModule, ErrorResolverModule, DialogSocialDeletePostModule } from '@ws-widget/collection'
 import { QnaItemComponent } from './components/qna-item/qna-item.component'
 

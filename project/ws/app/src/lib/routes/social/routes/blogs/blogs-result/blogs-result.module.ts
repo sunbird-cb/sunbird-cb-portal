@@ -9,7 +9,7 @@ import {
   MatButtonModule,
   MatProgressSpinnerModule,
 } from '@angular/material'
-import { PipeSafeSanitizerModule } from '@ws-widget/utils'
+import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 import { DialogSocialDeletePostModule, BtnPageBackModule } from '@ws-widget/collection'
 
 @NgModule({

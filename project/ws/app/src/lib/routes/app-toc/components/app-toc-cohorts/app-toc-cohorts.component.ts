@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { NsContent, NsAutoComplete } from '@ws-widget/collection'
-import { ConfigurationsService } from '@ws-widget/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { NsCohorts } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
 import { Router } from '@angular/router'

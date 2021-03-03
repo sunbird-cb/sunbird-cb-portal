@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { MatButtonModule, MatCardModule, MatChipsModule, MatDividerModule, MatExpansionModule, MatIconModule } from '@angular/material'
-import { HorizontalScrollerModule } from '@ws-widget/utils'
+import { HorizontalScrollerModule } from '@sunbird-cb/utils'
 import { ActivitiesService } from '../../../../../../project/ws/app/src/lib/routes/activities/services/activities.service'
 import { ActivityCardModule } from '../activity-card/activity-card.module'
 import { TourModule } from '../_common/tour-guide/tour-guide.module'

@@ -13,7 +13,7 @@ import {
   ConfigurationsService,
   UserPreferenceService,
   UtilityService,
-} from '@ws-widget/utils'
+} from '@sunbird-cb/utils'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { BtnSettingsService } from '@ws-widget/collection'
 import { FormControl } from '@angular/forms'

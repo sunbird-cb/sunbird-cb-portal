@@ -1,7 +1,7 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
-import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-widget-card-home-network',

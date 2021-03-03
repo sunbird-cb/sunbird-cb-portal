@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { PageResolve } from '@ws-widget/utils'
+import { PageResolve } from '@sunbird-cb/utils'
 import { GeneralGuard } from '../../../../../../../src/app/guards/general.guard'
 // import { AppTocCohortsComponent } from './components/app-toc-cohorts/app-toc-cohorts.component'
 import { AppTocDiscussionComponent } from './components/app-toc-discussion/app-toc-discussion.component'

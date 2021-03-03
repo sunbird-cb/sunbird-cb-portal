@@ -5,7 +5,7 @@ import {
   MatExpansionModule, MatIconModule, MatProgressSpinnerModule,
 } from '@angular/material'
 import { BrowserModule } from '@angular/platform-browser'
-import { PipeOrderByModule } from '@ws-widget/utils'
+import { PipeOrderByModule } from '@sunbird-cb/utils'
 
 @NgModule({
   declarations: [ProfileAcademicsComponent],

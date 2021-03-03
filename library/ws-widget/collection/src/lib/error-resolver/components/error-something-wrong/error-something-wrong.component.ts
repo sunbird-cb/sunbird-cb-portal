@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { debounceTime } from 'rxjs/operators'
 
-import { ConfigurationsService } from '@ws-widget/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 import { IWidgetErrorSomethingsWrong } from './error-something-wrong.model'
 @Component({

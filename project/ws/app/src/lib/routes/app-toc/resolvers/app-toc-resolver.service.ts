@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router'
 import { NsContent, PipeContentRoutePipe, WidgetContentService } from '@ws-widget/collection'
-import { IResolveResponse } from '@ws-widget/utils/src/public-api'
+import { IResolveResponse } from '@sunbird-cb/utils'
 import { Observable, of } from 'rxjs'
 import { catchError, map, tap } from 'rxjs/operators'
 

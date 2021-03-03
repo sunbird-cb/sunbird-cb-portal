@@ -5,8 +5,8 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { NsContent, viewerRouteGenerator, ROOT_WIDGET_CONFIG } from '@ws-widget/collection'
 import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
-import { ConfigurationsService } from '@ws-widget/utils'
-import { NsWidgetResolver } from '@ws-widget/resolver'
+import { ConfigurationsService } from '@sunbird-cb/utils'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 
 @Component({
   selector: 'ws-app-app-toc-contents',

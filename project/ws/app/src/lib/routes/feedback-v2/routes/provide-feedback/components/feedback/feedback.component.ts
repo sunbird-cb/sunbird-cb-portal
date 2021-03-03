@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
-import { TSendStatus, IResolveResponse, ConfigurationsService } from '@ws-widget/utils'
+import { TSendStatus, IResolveResponse, ConfigurationsService } from '@sunbird-cb/utils'
 import {
   FeedbackSnackbarComponent,
   FeedbackService,

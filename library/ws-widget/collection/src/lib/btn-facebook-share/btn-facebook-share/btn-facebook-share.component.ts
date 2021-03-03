@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
-import { ConfigurationsService } from '../../../../../utils/src/public-api'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-widget-btn-facebook-share',

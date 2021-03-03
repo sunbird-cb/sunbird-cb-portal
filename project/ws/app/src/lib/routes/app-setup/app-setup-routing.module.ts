@@ -6,7 +6,7 @@ import { LangSelectComponent } from './components/lang-select/lang-select.compon
 import { AboutVideoComponent } from '../info/about-video/about-video.component'
 import { TncAppResolverService } from '../../../../../../../src/app/services/tnc-app-resolver.service'
 import { TncComponent } from './components/tnc/tnc.component'
-import { PageResolve } from '../../../../../../../library/ws-widget/utils/src/public-api'
+import { PageResolve } from '@sunbird-cb/utils'
 import { InterestComponent } from './module/interest/interest/interest.component'
 
 const routes: Routes = []

@@ -32,8 +32,8 @@ import {
   UserImageModule,
   ContentPickerV2Module,
 } from '@ws-widget/collection'
-import { WidgetResolverModule } from '@ws-widget/resolver'
-import { DefaultThumbnailModule, PipeDurationTransformModule } from '@ws-widget/utils'
+import { WidgetResolverModule } from '@sunbird-cb/resolver'
+import { DefaultThumbnailModule, PipeDurationTransformModule } from '@sunbird-cb/utils'
 import { PlaylistCardComponent } from './components/playlist-card/playlist-card.component'
 import { PlaylistContentDeleteDialogComponent } from './components/playlist-content-delete-dialog/playlist-content-delete-dialog.component'
 import { PlaylistContentDeleteErrorDialogComponent } from './components/playlist-content-delete-error-dialog/playlist-content-delete-error-dialog.component'

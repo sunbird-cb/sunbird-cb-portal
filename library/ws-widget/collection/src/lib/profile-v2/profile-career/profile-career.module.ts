@@ -5,7 +5,7 @@ import {
   MatExpansionModule, MatIconModule, MatProgressSpinnerModule,
 } from '@angular/material'
 import { BrowserModule } from '@angular/platform-browser'
-import { PipeRelativeTimeModule } from '@ws-widget/utils'
+import { PipeRelativeTimeModule } from '@sunbird-cb/utils'
 
 @NgModule({
   declarations: [ProfileCareerComponent],

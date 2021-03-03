@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule, PipeListFilterModule } from '@ws-widget/utils'
+import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule, PipeListFilterModule } from '@sunbird-cb/utils'
 import { DiscussComponent } from './routes/discuss-home/discuss.component'
 import { DiscussCommetsComponent } from './components/discuss-comments/discuss-comments.component'
 import { DiscussCategoriesComponent } from './routes/discuss-categories/discuss-categories.component'
@@ -18,7 +18,7 @@ import { RightMenuComponent } from './components/right-menu/right-menu.component
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatDividerModule } from '@angular/material/divider'
-import { WidgetResolverModule } from '@ws-widget/resolver'
+import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import {
   MatIconModule,
   MatListModule,

@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
 import { MatSnackBar } from '@angular/material'
 
-import { TFetchStatus, NsPage, ConfigurationsService, EventService } from '@ws-widget/utils'
+import { TFetchStatus, NsPage, ConfigurationsService, EventService } from '@sunbird-cb/utils'
 import { NsPlaylist, IPickerContentData, BtnPlaylistService, NsContent, NsAutoComplete } from '@ws-widget/collection'
 import {
   PLAYLIST_TITLE_MIN_LENGTH, PLAYLIST_TITLE_MAX_LENGTH,

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { BtnPageBackNavService } from './btn-page-back-nav.service'
 type TUrl = undefined | 'none' | 'back' | string
 @Component({

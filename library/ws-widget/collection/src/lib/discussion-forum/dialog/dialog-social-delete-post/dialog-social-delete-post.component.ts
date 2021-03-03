@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
-import { ConfigurationsService } from '@ws-widget/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { WsDiscussionForumService } from '../../ws-discussion-forum.services'
 
 @Component({

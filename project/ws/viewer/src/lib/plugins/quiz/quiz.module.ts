@@ -6,7 +6,7 @@ import { OverviewComponent } from './components/overview/overview.component'
 import { QuestionComponent } from './components/question/question.component'
 import { SubmitQuizDialogComponent } from './components/submit-quiz-dialog/submit-quiz-dialog.component'
 
-import { PipeDurationTransformModule, PipeLimitToModule } from '@ws-widget/utils'
+import { PipeDurationTransformModule, PipeLimitToModule } from '@sunbird-cb/utils'
 
 import {
   MatCardModule,

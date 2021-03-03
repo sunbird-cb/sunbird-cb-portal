@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { ConfigurationsService } from '@ws-widget/utils/src/lib/services/configurations.service'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Observable, of } from 'rxjs'
 import { catchError, retry, map } from 'rxjs/operators'
 import { NsContentStripMultiple } from '../content-strip-multiple/content-strip-multiple.model'

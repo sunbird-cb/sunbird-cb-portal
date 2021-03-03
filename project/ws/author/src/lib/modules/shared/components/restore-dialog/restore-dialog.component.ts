@@ -11,7 +11,7 @@ import { MatDialog, MatSnackBar } from '@angular/material'
 import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
 import { NotificationComponent } from '@ws/author/src/lib/modules/shared/components/notification/notification.component'
 import { Notify } from '@ws/author/src/lib/constants/notificationMessage'
-import { ValueService } from '@ws-widget/utils/src/public-api'
+import { ValueService } from '@sunbird-cb/utils'
 import { mergeMap, catchError } from 'rxjs/operators'
 import { of } from 'rxjs'
 

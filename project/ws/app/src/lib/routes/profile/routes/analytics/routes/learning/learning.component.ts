@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { AnalyticsService } from '../../services/analytics.service'
 import { NSAnalyticsData } from '../../models/analytics.model'
-import { TFetchStatus } from '@ws-widget/utils'
+import { TFetchStatus } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-learning',

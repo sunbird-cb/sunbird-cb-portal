@@ -3,7 +3,7 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Observable, of } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
 import { BtnGoalsService, NsGoal } from '@ws-widget/collection'
-import { IResolveResponse } from '@ws-widget/utils'
+import { IResolveResponse } from '@sunbird-cb/utils'
 
 @Injectable()
 export class GoalsCommonResolve

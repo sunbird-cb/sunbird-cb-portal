@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/cor
 import { FormControl } from '@angular/forms'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { WidgetContentService } from '../../../../_services/widget-content.service'
-import { ConfigurationsService } from '@ws-widget/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { SearchServService } from '@ws/app/src/lib/routes/search/services/search-serv.service'
 import { Subscription } from 'rxjs'
 
