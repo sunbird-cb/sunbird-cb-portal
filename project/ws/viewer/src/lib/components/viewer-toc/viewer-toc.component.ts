@@ -8,7 +8,7 @@ import {
   NsContent,
   VIEWER_ROUTE_FROM_MIME,
   WidgetContentService,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import {
   // LoggerService,

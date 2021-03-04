@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
 import { ActivatedRoute, ParamMap, Router } from '@angular/router'
-import { GraphGeneralService } from '@ws-widget/collection'
+import { GraphGeneralService } from '@sunbird-cb/collection'
 import { ConfigurationsService, NsPage, ValueService, TFetchStatus } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { map } from 'rxjs/operators'

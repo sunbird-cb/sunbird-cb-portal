@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
-import { ROOT_WIDGET_CONFIG } from '@ws-widget/collection'
+import { ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 
 @Component({

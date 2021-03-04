@@ -19,8 +19,6 @@
     "noUnusedParameters": true,
     "outDir": "./dist/out-tsc",
     "paths": {
-      "@ws-widget/collection": ["library/ws-widget/collection"],
-      "@ws-widget/collection/*": ["library/ws-widget/collection/*"],
       "@ws/app": ["project/ws/app"],
       "@ws/app/*": ["project/ws/app/*"],
       "@ws/author": ["project/ws/author"],

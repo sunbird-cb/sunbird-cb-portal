@@ -10,7 +10,7 @@ import {
   WsDiscussionForumService,
   EditorQuillComponent,
   DialogSocialDeletePostComponent,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 import { TFetchStatus, ConfigurationsService, LoggerService, ValueService, NsPage } from '@sunbird-cb/utils'
 
 @Component({

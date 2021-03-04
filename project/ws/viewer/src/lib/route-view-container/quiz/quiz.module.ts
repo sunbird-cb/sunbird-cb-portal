@@ -25,7 +25,7 @@ import {
   BtnContentFeedbackV2Module,
   BtnPageBackModule,
   PlayerBriefModule,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 
 import {
   PipeDurationTransformModule,

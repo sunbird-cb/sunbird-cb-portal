@@ -1,11 +1,13 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core'
-import { NsPlaylist, BtnPlaylistService, NsContent } from '@ws-widget/collection'
+import { NsPlaylist, BtnPlaylistService, NsContent } from '@sunbird-cb/collection'
 import { TFetchStatus, NsPage, ConfigurationsService } from '@sunbird-cb/utils'
 import { ActivatedRoute, Router } from '@angular/router'
 import { MatSnackBar } from '@angular/material'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { PLAYLIST_TITLE_MIN_LENGTH, PLAYLIST_TITLE_MAX_LENGTH } from '../../constants/playlist.constant'
-
+// tslint: disable
+import _ from 'lodash'
+// tslint: enable
 @Component({
   selector: 'ws-app-playlist-edit',
   templateUrl: './playlist-edit.component.html',
@@ -47,7 +49,7 @@ export class PlaylistEditComponent implements OnInit {
       message: '',
     })
 
-    const children = this.playlist.children
+    const children = _.get(this.playlist, 'children')
     // let selectedIds = []
     // children.forEach((item: { identifier: string }) => {
     //   selectedIds.push(item.identifier)

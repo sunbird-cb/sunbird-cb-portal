@@ -1,4 +1,4 @@
-// import { ISelectorResponsive, NsGalleryView } from '@ws-widget/collection'
+// import { ISelectorResponsive, NsGalleryView } from '@sunbird-cb/collection'
 import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material'
 import { NsWidgetResolver } from '@sunbird-cb/resolver/src/public-api'

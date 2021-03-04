@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core'
-import { NsDiscussionForum, NsContent } from '@ws-widget/collection'
+import { NsDiscussionForum, NsContent } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ActivatedRoute } from '../../../../../../../../../node_modules/@angular/router'
 import { ConfigurationsService } from '@sunbird-cb/utils'

@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core'
 import { TFetchStatus } from '@sunbird-cb/utils'
 import { IWsDiscussionForumInput, IWsLeader } from '../../model/leadership.model'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { NsDiscussionForum } from '@ws-widget/collection'
+import { NsDiscussionForum } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-discuss',

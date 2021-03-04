@@ -15,7 +15,7 @@ import {
 } from '@angular/material'
 import { QnaHomeComponent } from './components/qna-home/qna-home.component'
 import { PipeLimitToModule, PipeCountTransformModule } from '@sunbird-cb/utils'
-import { BtnPageBackModule, ErrorResolverModule, DialogSocialDeletePostModule } from '@ws-widget/collection'
+import { BtnPageBackModule, ErrorResolverModule, DialogSocialDeletePostModule } from '@sunbird-cb/collection'
 import { QnaItemComponent } from './components/qna-item/qna-item.component'
 
 @NgModule({

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { noop, Subject, throwError, of } from 'rxjs'
 
-import { NsContent } from '@ws-widget/collection'
+import { NsContent } from '@sunbird-cb/collection'
 import { TFetchStatus } from '@sunbird-cb/utils'
 
 import { ICertificationMeta } from '../../models/certification.model'

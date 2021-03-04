@@ -30,7 +30,7 @@ import {
   STREAM_FILES,
   // AUTHORING_CONTENT_BASE,
 } from '@ws/author/src/lib/constants/apiEndpoints'
-import { VIEWER_ROUTE_FROM_MIME } from '@ws-widget/collection/src/public-api'
+import { VIEWER_ROUTE_FROM_MIME } from '@sunbird-cb/collection'
 import { NOTIFICATION_TIME, WEB_MODULE_JSON_FILE_NAME } from '../../../constant/web-module.constants'
 import { IAudioObj } from '../../../interface/page-interface'
 import { WebStoreService } from '../../../services/store.service'

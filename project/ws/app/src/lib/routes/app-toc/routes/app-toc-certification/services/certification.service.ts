@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms'
 import { throwError, of, Observable } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
 
-import { NsContent } from '@ws-widget/collection'
+import { NsContent } from '@sunbird-cb/collection'
 import { IResolveResponse } from '@sunbird-cb/utils'
 
 import {

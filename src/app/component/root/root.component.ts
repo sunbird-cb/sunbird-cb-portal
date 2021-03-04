@@ -15,7 +15,7 @@ import {
   Router,
 } from '@angular/router'
 // import { interval, concat, timer } from 'rxjs'
-import { BtnPageBackService } from '@ws-widget/collection'
+import { BtnPageBackService } from '@sunbird-cb/collection'
 import {
   AuthKeycloakService,
   ConfigurationsService,

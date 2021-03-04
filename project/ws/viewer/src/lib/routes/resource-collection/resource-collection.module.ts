@@ -18,7 +18,7 @@ import {
   UserImageModule,
   UserContentRatingModule,
   BtnContentFeedbackV2Module,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 
 import {
   PipeDurationTransformModule,

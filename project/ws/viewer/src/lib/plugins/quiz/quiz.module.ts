@@ -23,7 +23,7 @@ import {
 
 import {
   BtnFullscreenModule,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 
 @NgModule({
   declarations: [QuizComponent, OverviewComponent, QuestionComponent, SubmitQuizDialogComponent],

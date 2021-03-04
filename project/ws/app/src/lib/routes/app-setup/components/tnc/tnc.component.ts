@@ -5,7 +5,7 @@ import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import {
   NsError,
   ROOT_WIDGET_CONFIG,
-} from '../../../../../../../../../library/ws-widget/collection/src/public-api'
+} from '@sunbird-cb/collection'
 import { ActivatedRoute, Router, Data } from '@angular/router'
 import { HttpClient } from '@angular/common/http'
 import {

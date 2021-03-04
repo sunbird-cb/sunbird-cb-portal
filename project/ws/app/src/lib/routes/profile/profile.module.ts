@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { MatButtonModule, MatIconModule, MatListModule, MatSidenavModule, MatToolbarModule, MatTooltipModule } from '@angular/material'
 import { RouterModule } from '@angular/router'
-import { BtnPageBackModule } from '@ws-widget/collection'
+import { BtnPageBackModule } from '@sunbird-cb/collection'
 import { LogoutModule } from '@sunbird-cb/utils'
 // modules
 import { ProfileRoutingModule } from './profile-routing.module'

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
-import { NsGoal, NsContent, BtnGoalsService, NsAutoComplete } from '@ws-widget/collection'
+import { NsGoal, NsContent, BtnGoalsService, NsAutoComplete } from '@sunbird-cb/collection'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { TFetchStatus, EventService, ConfigurationsService } from '@sunbird-cb/utils'
 import { MatSnackBar } from '@angular/material'

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { IGridLayoutDataMain, ISelectorResponsive, NsContentStripMultiple, NsGalleryView, NsWidgetLayoutTab } from '@ws-widget/collection'
+import { IGridLayoutDataMain, ISelectorResponsive, NsContentStripMultiple, NsGalleryView, NsWidgetLayoutTab } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { IWidgetAuthor, tDimensions, tSize } from '../interface/widget'
 

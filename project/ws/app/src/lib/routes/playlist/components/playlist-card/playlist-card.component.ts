@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core'
-import { NsPlaylist, BtnPlaylistService, NsContent } from '@ws-widget/collection'
+import { NsPlaylist, BtnPlaylistService, NsContent } from '@sunbird-cb/collection'
 import { ActivatedRoute, Router } from '@angular/router'
 import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 import { MatDialog, MatSnackBar } from '@angular/material'

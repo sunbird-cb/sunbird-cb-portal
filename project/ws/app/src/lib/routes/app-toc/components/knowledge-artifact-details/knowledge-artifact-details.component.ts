@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ActivatedRoute, Data, Router } from '@angular/router'
-import { NsContent, WidgetContentService } from '@ws-widget/collection'
+import { NsContent, WidgetContentService } from '@sunbird-cb/collection'
 import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 import { Observable, Subscription } from 'rxjs'
 import { EditorService } from '../../../../../../../author/src/lib/routing/modules/editor/services/editor.service'

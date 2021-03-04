@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { ConfigurationsService } from '@sunbird-cb/utils'
-import { DialogSocialDeletePostComponent, NsDiscussionForum, WsDiscussionForumService } from '@ws-widget/collection'
+import { DialogSocialDeletePostComponent, NsDiscussionForum, WsDiscussionForumService } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-app-blog-reply',

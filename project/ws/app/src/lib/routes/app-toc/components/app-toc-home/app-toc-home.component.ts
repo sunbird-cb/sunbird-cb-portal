@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild } from '@angular/core'
 import { ActivatedRoute, Data, Router } from '@angular/router'
-import { NsContent, WidgetContentService } from '@ws-widget/collection'
+import { NsContent, WidgetContentService, WidgetUserService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, LoggerService, NsPage } from '@sunbird-cb/utils'
 import { Subscription, Observable } from 'rxjs'
@@ -9,7 +9,6 @@ import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser'
 import { AccessControlService } from '@ws/author/src/public-api'
-import { WidgetUserService } from '@ws-widget/collection/src/lib/_services/widget-user.service'
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -200,7 +199,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             enrolledCourse = courses.find(course => {
               const identifier = this.content && this.content.identifier || ''
               if (course.courseId !== identifier) {
-                return  undefined
+                return undefined
               }
               return course
             })

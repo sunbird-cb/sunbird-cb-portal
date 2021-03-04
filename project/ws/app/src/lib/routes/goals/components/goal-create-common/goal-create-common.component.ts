@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { NsGoal, BtnGoalsService } from '@ws-widget/collection'
+import { NsGoal, BtnGoalsService } from '@sunbird-cb/collection'
 import { ActivatedRoute } from '@angular/router'
 import { TFetchStatus, EventService } from '@sunbird-cb/utils'
 @Component({

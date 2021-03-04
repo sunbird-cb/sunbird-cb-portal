@@ -28,7 +28,7 @@ import {
   UserImageModule,
   DisplayContentTypeModule,
   BtnContentFeedbackV2Module,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 
 import { MyFeedbackRoutingModule } from './my-feedback-routing.module'
 import { HomeComponent } from './components/home/home.component'

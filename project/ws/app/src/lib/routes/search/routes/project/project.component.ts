@@ -5,7 +5,7 @@ import { SearchServService } from '../../services/search-serv.service'
 import { Subscription } from 'rxjs'
 import { ValueService } from '@sunbird-cb/utils'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { NsError, ROOT_WIDGET_CONFIG } from '@ws-widget/collection'
+import { NsError, ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-app-project',

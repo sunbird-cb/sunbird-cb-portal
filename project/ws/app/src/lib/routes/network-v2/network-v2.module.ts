@@ -25,9 +25,9 @@ import {
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
-import { AvatarPhotoModule, BtnPageBackModule } from '@ws-widget/collection'
+import { AvatarPhotoModule, BtnPageBackModule } from '@sunbird-cb/collection'
 import { EditorSharedModule } from '@ws/author/src/lib/routing/modules/editor/shared/shared.module'
-import { CkEditorModule } from 'library/ws-widget/collection/src/lib/_common/ck-editor/ck-editor.module'
+// import { CkEditorModule } from 'library/ws-widget/collection/src/lib/_common/ck-editor/ck-editor.module'
 import { LoaderService } from '@ws/author/src/lib/services/loader.service'
 import { InitResolveService } from './resolvers/init-resolve.service'
 import { RouterModule } from '@angular/router'
@@ -93,7 +93,7 @@ import { ConnectionRecommendedCardComponent } from './components/connection-reco
     PipeFilterSearchModule,
     AvatarPhotoModule,
     EditorSharedModule,
-    CkEditorModule,
+    // CkEditorModule,
     PipeOrderByModule,
     BtnPageBackModule,
     WidgetResolverModule,

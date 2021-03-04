@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
 import {
   ContentAssignService,
-} from '../../../../../../../../../library/ws-widget/collection/src/public-api'
+} from '@sunbird-cb/collection'
 import {
   ConfigurationsService,
   NsPage,

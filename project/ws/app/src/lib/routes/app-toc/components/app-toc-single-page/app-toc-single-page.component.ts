@@ -2,16 +2,16 @@ import { AccessControlService } from '@ws/author'
 import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ActivatedRoute, Data } from '@angular/router'
-import { NsContent } from '@ws-widget/collection'
+import { NsContent } from '@sunbird-cb/collection'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Observable, Subscription } from 'rxjs'
 import { share } from 'rxjs/operators'
 import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
-import { BtnMailUserDialogComponent } from '@ws-widget/collection/src/lib/btn-mail-user/btn-mail-user-dialog/btn-mail-user-dialog.component'
-import { IBtnMailUser } from '@ws-widget/collection/src/lib/btn-mail-user/btn-mail-user.component'
 import { MatDialog } from '@angular/material'
 import { TitleTagService } from '@ws/app/src/lib/routes/app-toc/services/title-tag.service'
+import { IBtnMailUser } from '@sunbird-cb/collection/lib/btn-mail-user/btn-mail-user.component'
+import { BtnMailUserDialogComponent } from '@sunbird-cb/collection/lib/btn-mail-user/btn-mail-user-dialog/btn-mail-user-dialog.component'
 
 @Component({
   selector: 'ws-app-app-toc-single-page',
@@ -65,7 +65,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
         this.tocConfig = data.pageData.data
       })
     }
-    if (this.configSvc && this.configSvc.userProfile &&  this.configSvc.userProfile.userId) {
+    if (this.configSvc && this.configSvc.userProfile && this.configSvc.userProfile.userId) {
       this.loggedInUserId = this.configSvc.userProfile.userId
     }
     this.routeQuerySubscription = this.route.queryParamMap.subscribe(qParamsMap => {

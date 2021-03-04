@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router'
-import { ContentAssignService } from '@ws-widget/collection'
+import { ContentAssignService } from '@sunbird-cb/collection'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Observable } from 'rxjs'
 

@@ -6,7 +6,7 @@ import {
   MatListOption,
   MatSnackBar,
 } from '@angular/material'
-import { NsGoal, BtnGoalsService } from '@ws-widget/collection'
+import { NsGoal, BtnGoalsService } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-app-goal-shared-delete-dialog',

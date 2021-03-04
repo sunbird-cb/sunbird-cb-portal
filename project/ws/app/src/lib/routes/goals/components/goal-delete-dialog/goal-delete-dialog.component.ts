@@ -1,5 +1,5 @@
 import { Component, Inject, ViewChild, ElementRef } from '@angular/core'
-import { NsGoal, BtnGoalsService } from '@ws-widget/collection'
+import { NsGoal, BtnGoalsService } from '@sunbird-cb/collection'
 import { TFetchStatus } from '@sunbird-cb/utils'
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material'
 

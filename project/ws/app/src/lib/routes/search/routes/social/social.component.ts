@@ -9,7 +9,7 @@ import {
   ISocialSearchResult,
   ISearchSocialSearchPartialRequest,
 } from '../../models/search.model'
-import { NsContent, NsError, ROOT_WIDGET_CONFIG } from '@ws-widget/collection'
+import { NsContent, NsError, ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection'
 import { ValueService } from '@sunbird-cb/utils'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 

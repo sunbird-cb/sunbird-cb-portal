@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { BtnFollowService, UserAutocompleteService, NsAutoComplete } from '@ws-widget/collection/src/public-api'
+import { BtnFollowService, UserAutocompleteService, NsAutoComplete } from '@sunbird-cb/collection'
 import { PersonProfileService } from '../../services/person-profile.service'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ConfigurationsService, ValueService, TFetchStatus } from '@sunbird-cb/utils'

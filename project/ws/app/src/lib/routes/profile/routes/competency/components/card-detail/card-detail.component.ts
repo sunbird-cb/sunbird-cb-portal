@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { ROOT_WIDGET_CONFIG } from '@ws-widget/collection'
+import { ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection'
 import { TFetchStatus } from '@sunbird-cb/utils'
 import { Chart } from 'chart.js'
 import { NSProfileData } from '../../../../models/profile.model'

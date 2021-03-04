@@ -10,7 +10,7 @@ import {
   MatProgressSpinnerModule,
 } from '@angular/material'
 import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
-import { DialogSocialDeletePostModule, BtnPageBackModule } from '@ws-widget/collection'
+import { DialogSocialDeletePostModule, BtnPageBackModule } from '@sunbird-cb/collection'
 
 @NgModule({
   declarations: [BlogResultComponent],

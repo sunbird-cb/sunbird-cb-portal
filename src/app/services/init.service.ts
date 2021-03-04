@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Inject, Injectable } from '@angular/core'
 import { MatIconRegistry } from '@angular/material'
 import { DomSanitizer } from '@angular/platform-browser'
-import { BtnSettingsService } from '@ws-widget/collection'
+import { BtnSettingsService } from '@sunbird-cb/collection'
 import {
   hasPermissions,
   hasUnitPermission,

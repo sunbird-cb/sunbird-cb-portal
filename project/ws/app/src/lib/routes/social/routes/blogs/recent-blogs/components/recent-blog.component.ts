@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Observable } from 'rxjs'
 import { TFetchStatus, ValueService, ConfigurationsService, NsPage } from '@sunbird-cb/utils'
-import { NsDiscussionForum, WsDiscussionForumService } from '@ws-widget/collection'
+import { NsDiscussionForum, WsDiscussionForumService } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-app-recent-blog',

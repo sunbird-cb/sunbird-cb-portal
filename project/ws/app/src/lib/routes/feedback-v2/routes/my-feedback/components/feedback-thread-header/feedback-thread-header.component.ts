@@ -8,7 +8,7 @@ import {
   FeedbackService,
   EFeedbackRole,
   NsContent,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 import { IResolveResponse, ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({

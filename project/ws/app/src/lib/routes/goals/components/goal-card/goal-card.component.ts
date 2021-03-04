@@ -9,7 +9,7 @@ import {
 } from '@angular/core'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { Router } from '@angular/router'
-import { BtnGoalsService, NsGoal } from '@ws-widget/collection'
+import { BtnGoalsService, NsGoal } from '@sunbird-cb/collection'
 import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 import { GoalDeleteDialogComponent } from '../goal-delete-dialog/goal-delete-dialog.component'
 import { GoalShareDialogComponent } from '../goal-share-dialog/goal-share-dialog.component'
@@ -90,6 +90,7 @@ export class GoalCardComponent implements OnInit {
   loadGoalData() {
     if (this.goal) {
       this.goalSvc
+        // .getGoalContent(this.goal.identifier)
         .getGoalContent(this.goal.identifier)
         .subscribe(data => {
             this.goalData = data

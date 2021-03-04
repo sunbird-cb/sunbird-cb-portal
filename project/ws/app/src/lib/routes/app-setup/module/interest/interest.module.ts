@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common'
 import { InterestComponent } from './interest/interest.component'
 import { HorizontalScrollerModule } from '@sunbird-cb/utils'
 import { MatCardModule, MatProgressSpinnerModule, MatCheckboxModule, MatButtonModule, MatIconModule, MatToolbarModule } from '@angular/material'
-import { BtnPageBackModule } from '../../../../../../../../../library/ws-widget/collection/src/public-api'
+import { BtnPageBackModule } from '@sunbird-cb/collection'
 import { InterestService } from '../../../profile/routes/interest/services/interest.service'
 
 @NgModule({

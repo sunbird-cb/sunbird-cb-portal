@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit, EventEmitter, Input, Outpu
 import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
 import { EditorContentService } from '@ws/author/src/lib/routing/modules/editor/services/editor-content.service'
 import { NSContent } from '@ws/author/src/lib/interface/content'
-import { NsContent } from '../../../../../../../../../../../library/ws-widget/collection/src/public-api'
+import { NsContent } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-auth-options',

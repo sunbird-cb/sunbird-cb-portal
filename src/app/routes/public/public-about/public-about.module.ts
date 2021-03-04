@@ -9,7 +9,7 @@ import {
   MatCardModule,
   MatButtonModule,
 } from '@angular/material'
-import { BtnPageBackModule } from '@ws-widget/collection'
+import { BtnPageBackModule } from '@sunbird-cb/collection'
 import { HorizontalScrollerModule, PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 
 @NgModule({

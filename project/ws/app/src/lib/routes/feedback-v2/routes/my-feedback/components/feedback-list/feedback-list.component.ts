@@ -12,7 +12,7 @@ import {
   EFeedbackRole,
   IFeedbackThread,
   IFeedbackSummary,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 import { TFetchStatus, IResolveResponse } from '@sunbird-cb/utils'
 import { MyFeedbackService } from '../../services/my-feedback.service'
 import { FeedbackFilterDialogComponent } from '../feedback-filter-dialog/feedback-filter-dialog.component'

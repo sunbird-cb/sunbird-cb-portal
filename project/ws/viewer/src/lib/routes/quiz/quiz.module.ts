@@ -22,7 +22,7 @@ import {
   UserContentRatingModule,
   BtnContentFeedbackV2Module,
   BtnPageBackModule,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 
 import {
   PipeDurationTransformModule,

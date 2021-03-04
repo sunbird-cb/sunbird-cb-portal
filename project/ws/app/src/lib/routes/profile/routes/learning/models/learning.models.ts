@@ -1,4 +1,4 @@
-import { NsContent } from '@ws-widget/collection'
+import { NsContent } from '@sunbird-cb/collection'
 
 export namespace NSLearningGraph {
   export interface ITrackWiseData {
