@@ -1176,10 +1176,10 @@
   dependencies:
     tslib "^1.9.0"
 
-"@sunbird-cb/utils@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/utils/-/utils-0.0.7.tgz#95e7f5d90bce08cb15db92bb39b084bca114218e"
-  integrity sha512-gvfTe6tgF3ac+/QffichD2bzfY9K/hmRf2JGvbE2MRMBE+0Tj2V0lWs2av0hNiIEavTl2i4AtUK1tAk0WBTtlw==
+"@sunbird-cb/utils@0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/utils/-/utils-0.0.8.tgz#07441646dda04a6b5fc469c7ea3031c3fbc0e245"
+  integrity sha512-JrLpRc0jXaW0wgog43KFjT1+lHoJ0p4mUxw0REAjNHxbcP5aV13pmeh3PesqsEJ/kYPd9K6sHNqNxmTFsFXByw==
   dependencies:
     tslib "^1.9.0"
 
