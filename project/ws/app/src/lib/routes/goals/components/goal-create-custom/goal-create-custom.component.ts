@@ -144,7 +144,6 @@ export class GoalCreateCustomComponent implements OnInit {
 
     const rawValues = this.createGoalForm.getRawValue()
     this.createGoalStatus = 'fetching'
-    this.raiseTelemetry(rawValues.type)
     if (this.editGoal) {
       this.goalsSvc
         .updateGoal(this.editGoal.identifier, {
@@ -177,6 +176,7 @@ export class GoalCreateCustomComponent implements OnInit {
               : this.snackbar.open(this.editGoalErrorMessage.nativeElement.value)
           },
         )
+      this.raiseTelemetry(this.editGoal.identifier)
     } else {
       this.goalsSvc
         .createGoal({
@@ -208,13 +208,13 @@ export class GoalCreateCustomComponent implements OnInit {
               : this.snackbar.open(this.editGoalErrorMessage.nativeElement.value)
           },
         )
-
+        this.raiseTelemetry(this.editGoal.identifier)
     }
   }
 
-  raiseTelemetry(goalType: NsGoal.EGoalTypes) {
+  raiseTelemetry(goalId: NsGoal.EGoalTypes) {
     this.events.raiseInteractTelemetry('goal', 'create', {
-      goalType,
+      goalId,
     })
   }
 }
