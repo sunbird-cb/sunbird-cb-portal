@@ -9,7 +9,7 @@ import {
   EFeedbackType,
   IFeedbackConfig,
   INotificationRequest,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 import { ActivatedRoute, Router } from '@angular/router'
 
 @Component({

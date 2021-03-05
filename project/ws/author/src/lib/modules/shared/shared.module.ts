@@ -1,7 +1,7 @@
 import { WorkFlowService } from './../../services/work-flow.service'
 import { NotificationService } from './../../services/notification.service'
 import { ConditionCheckService } from './services/condition-check.service'
-import { PipeContentRouteModule } from '@ws-widget/collection'
+import { PipeContentRouteModule } from '@sunbird-cb/collection'
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'

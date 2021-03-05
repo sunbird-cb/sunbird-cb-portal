@@ -11,7 +11,7 @@ import { LandingComponent } from './components/landing/landing.component'
 import { SendMailDialogComponent } from './components/send-mail-dialog/send-mail-dialog.component'
 import { TweetsComponent } from './components/tweets/tweets.component'
 import { FormsModule } from '@angular/forms'
-import { BtnPageBackModule, DiscussionForumModule } from '@ws-widget/collection'
+import { BtnPageBackModule, DiscussionForumModule } from '@sunbird-cb/collection'
 
 import {
   MatIconModule,

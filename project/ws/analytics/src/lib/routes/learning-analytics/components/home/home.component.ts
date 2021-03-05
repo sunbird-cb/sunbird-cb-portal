@@ -4,7 +4,7 @@ import {
   IGraphWidget,
   NsError,
   ROOT_WIDGET_CONFIG,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'

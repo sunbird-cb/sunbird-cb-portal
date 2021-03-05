@@ -19,7 +19,7 @@ import {
   MatTooltipModule,
 } from '@angular/material'
 
-import { CtrlFileUploadModule } from '@ws-widget/collection'
+import { CtrlFileUploadModule } from '@sunbird-cb/collection'
 import { PipeDateConcatModule } from '@sunbird-cb/utils'
 
 import { WINDOW_PROVIDERS } from './services/window.service'

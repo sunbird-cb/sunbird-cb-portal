@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material'
 import { Observable, Subscription } from 'rxjs'
 import { finalize, startWith, map, tap, switchMap } from 'rxjs/operators'
 
-import { NsContent } from '@ws-widget/collection'
+import { NsContent } from '@sunbird-cb/collection'
 import { TFetchStatus, TSendStatus } from '@sunbird-cb/utils'
 
 import {

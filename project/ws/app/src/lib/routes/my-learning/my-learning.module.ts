@@ -8,7 +8,7 @@ import {
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
 import { MatSidenavModule } from '@angular/material/sidenav'
-import { BtnPageBackModule, CardContentModule } from '@ws-widget/collection'
+import { BtnPageBackModule, CardContentModule } from '@sunbird-cb/collection'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { MyLearningRoutingModule } from './my-learning-routing.module'
 import { HomeComponent } from './routes/home/home.component'

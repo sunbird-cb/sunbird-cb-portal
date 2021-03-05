@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { AccessControlService } from '@ws/author'
-import { NsContent, NsDiscussionForum, WidgetContentService } from '@ws-widget/collection'
+import { NsContent, NsDiscussionForum, WidgetContentService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import {
   ConfigurationsService,

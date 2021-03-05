@@ -11,7 +11,7 @@ import {
   ROOT_WIDGET_CONFIG,
   viewerRouteGenerator,
   WidgetContentService,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, NsPage, TFetchStatus, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'

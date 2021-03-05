@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core'
-import { ContentProgressService } from '@ws-widget/collection'
+import { ContentProgressService } from '@sunbird-cb/collection'
 @Component({
   selector: 'ws-analytics-progress-radial',
   templateUrl: './progress-radial.component.html',

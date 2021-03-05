@@ -8,7 +8,7 @@ import {
   FeedbackSnackbarComponent,
   EFeedbackRole,
   EFeedbackType,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-app-service-request',

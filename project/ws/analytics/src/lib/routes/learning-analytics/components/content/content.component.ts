@@ -7,7 +7,7 @@ import { TFetchStatus, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { AnalyticsResolver } from '../../resolvers/learning-analytics-filters.resolver'
 import { ActivatedRoute } from '@angular/router'
-import { GraphGeneralService, IGraphWidget, ROOT_WIDGET_CONFIG } from '@ws-widget/collection'
+import { GraphGeneralService, IGraphWidget, ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-analytics-content',

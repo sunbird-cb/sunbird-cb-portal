@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs'
 import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 import { ActivatedRoute, Data } from '@angular/router'
 import { AppTocService } from '../../services/app-toc.service'
-import { NsContent, ROOT_WIDGET_CONFIG, IGraphWidget, NsError } from '@ws-widget/collection'
+import { NsContent, ROOT_WIDGET_CONFIG, IGraphWidget, NsError } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { NsAnalytics, NsCourseAnalytics } from '../../models/app-toc-analytics.model'
 

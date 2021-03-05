@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core'
-import { NsDiscussionForum } from '@ws-widget/collection'
+import { NsDiscussionForum } from '@sunbird-cb/collection'
 import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 import { PersonProfileService } from '../../services/person-profile.service'
 import { Subscription } from 'rxjs'

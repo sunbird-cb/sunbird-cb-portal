@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Subscription } from 'rxjs'
 import { ValueService, ConfigurationsService } from '@sunbird-cb/utils'
 import { ActivatedRoute } from '@angular/router'
-import { NsContent, NsDiscussionForum, WidgetContentService } from '@ws-widget/collection'
+import { NsContent, NsDiscussionForum, WidgetContentService } from '@sunbird-cb/collection'
 import { ViewerUtilService } from '../../viewer-util.service'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 

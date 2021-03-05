@@ -30,7 +30,7 @@ import {
   MatNativeDateModule,
 } from '@angular/material'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { BtnPageBackModule, PageModule } from '@ws-widget/collection'
+import { BtnPageBackModule, PageModule } from '@sunbird-cb/collection'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { ClientAnalyticsComponent } from './components/client-analytics/client-analytics.component'
 import { ContentComponent } from './components/content/content.component'

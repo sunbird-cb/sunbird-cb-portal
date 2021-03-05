@@ -4,7 +4,7 @@ import { IPreviewDevice } from '../../../modules/viewer/viewer.component'
 import { ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ActivatedRoute, Router } from '@angular/router'
-import { VIEWER_ROUTE_FROM_MIME } from '@ws-widget/collection/src/public-api'
+import { VIEWER_ROUTE_FROM_MIME } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-auth-card-viewer',

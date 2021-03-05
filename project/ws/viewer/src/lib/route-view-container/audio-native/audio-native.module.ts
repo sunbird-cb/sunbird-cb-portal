@@ -24,7 +24,7 @@ import {
   UserContentRatingModule,
   BtnContentFeedbackV2Module,
   PlayerBriefModule,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 
 import {
   PipeDurationTransformModule,

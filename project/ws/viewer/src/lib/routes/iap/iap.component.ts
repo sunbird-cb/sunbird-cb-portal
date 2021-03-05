@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { NsContent, NsDiscussionForum, WidgetContentService } from '@ws-widget/collection'
+import { NsContent, NsDiscussionForum, WidgetContentService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { EventService, SubapplicationRespondService, WsEvents } from '@sunbird-cb/utils'
 import { fromEvent, Subscription } from 'rxjs'

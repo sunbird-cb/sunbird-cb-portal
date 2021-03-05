@@ -15,7 +15,7 @@ import {
   MatFormFieldModule,
   MatAutocompleteModule,
 } from '@angular/material'
-import { BtnPageBackModule, EditorQuillModule } from '@ws-widget/collection'
+import { BtnPageBackModule, EditorQuillModule } from '@sunbird-cb/collection'
 import { QnaEditComponent } from './components/qna-edit/qna-edit.component'
 
 @NgModule({

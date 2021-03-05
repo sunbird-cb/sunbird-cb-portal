@@ -38,12 +38,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { TrendingTagsComponent } from './components/trending-tags/trending-tags.component'
 import { DiscussionComponent } from './routes/discussion/discussion.component'
 import { RelatedDiscussionComponent } from './components/related-discussion/related-discussion.component'
-import { AvatarPhotoModule, BtnPageBackModule } from '@ws-widget/collection'
+import { AvatarPhotoModule, BtnPageBackModule } from '@sunbird-cb/collection'
 import { EditorSharedModule } from '@ws/author/src/lib/routing/modules/editor/shared/shared.module'
-import { CkEditorModule } from 'library/ws-widget/collection/src/lib/_common/ck-editor/ck-editor.module'
+// import { CkEditorModule } from 'library/ws-widget/collection/src/lib/_common/ck-editor/ck-editor.module'
 import { LoaderService } from '@ws/author/src/lib/services/loader.service'
 import { InitResolver } from './resolvers/init-resolve.service'
-import { CKEditorService } from 'library/ws-widget/collection/src/lib/_common/ck-editor/ck-editor.service'
+// import { CKEditorService } from 'library/ws-widget/collection/src/lib/_common/ck-editor/ck-editor.service'
 import { PaginationComponent } from './components/pagination/pagination.component'
 
 @NgModule({
@@ -93,7 +93,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     PipeRelativeTimeModule,
     AvatarPhotoModule,
     EditorSharedModule,
-    CkEditorModule,
+    // CkEditorModule,
     PipeOrderByModule,
     PipeListFilterModule,
     BtnPageBackModule,
@@ -103,7 +103,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     DiscussStartComponent,
   ],
   providers: [
-    CKEditorService,
+    // CKEditorService,
     LoaderService,
     InitResolver,
   ],

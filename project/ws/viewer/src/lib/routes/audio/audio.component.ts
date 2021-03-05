@@ -8,7 +8,7 @@ import {
   IWidgetsPlayerMediaData,
   NsDiscussionForum,
   WidgetContentService,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 import { ViewerUtilService } from '../../viewer-util.service'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 

@@ -23,7 +23,7 @@ import {
   BtnSocialVoteModule,
   BtnSocialLikeModule,
   UserImageModule,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 import { PipeLimitToModule, PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 
 import { QnaViewComponent } from './components/qna-view/qna-view.component'

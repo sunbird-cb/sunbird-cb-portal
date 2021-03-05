@@ -1,8 +1,8 @@
 # widgets=("")
 # for widget in $widgets
 # do
-#   ng g m $widget --project=@ws-widget/collection
-#   ng g c $widget --project=@ws-widget/collection --entryComponent=true
+#   ng g m $widget --project=@sunbird-cb/collection
+#   ng g c $widget --project=@sunbird-cb/collection --entryComponent=true
 # done
 
 # directives=("")

@@ -22,8 +22,7 @@ import { CareersComponent } from './routes/careers/careers.component'
 import { LoaderService } from '@ws/author/src/public-api'
 import { InitResolver } from '@ws/author/src/lib/services/init-resolve.service'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
-import { BtnPageBackModule } from '@ws-widget/collection/src/public-api'
-import { AvatarPhotoModule } from '@ws-widget/collection/src/lib/_common/avatar-photo/avatar-photo.module'
+import { BtnPageBackModule, AvatarPhotoModule } from '@sunbird-cb/collection'
 import {
   PipeOrderByModule,
   PipeHtmlTagRemovalModule,

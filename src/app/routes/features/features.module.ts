@@ -12,7 +12,7 @@ import {
 } from '@angular/material'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
-import { BtnFeatureModule, BtnPageBackModule } from '@ws-widget/collection'
+import { BtnFeatureModule, BtnPageBackModule } from '@sunbird-cb/collection'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { LogoutModule } from '@sunbird-cb/utils'
 import { AccessControlService } from '../../../../project/ws/author/src/public-api'

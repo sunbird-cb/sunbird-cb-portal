@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { DashboardComponent } from './components/dashboard/dashboard.component'
 import { HorizontalScrollerModule, PipeDurationTransformModule, DefaultThumbnailModule } from '@sunbird-cb/utils'
-import { UserImageModule, CardKnowledgeModule } from '@ws-widget/collection'
+import { UserImageModule, CardKnowledgeModule } from '@sunbird-cb/collection'
 import {
   MatCardModule,
   MatChipsModule,

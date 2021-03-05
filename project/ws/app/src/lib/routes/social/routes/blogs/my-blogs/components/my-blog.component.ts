@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
-import { NsDiscussionForum } from '@ws-widget/collection'
+import { NsDiscussionForum } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-app-my-blog',

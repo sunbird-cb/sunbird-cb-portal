@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { NetworkV2Service } from '../../services/network-v2.service'
 import { ConfigurationsService } from '@sunbird-cb/utils'
-import { CardNetWorkService } from '@ws-widget/collection/src/lib/card-network/card-network.service'
+import { CardNetWorkService } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-app-network-home',

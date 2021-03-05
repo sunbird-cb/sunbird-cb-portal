@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
 import { LoggerService } from '@sunbird-cb/utils'
-import { NsContent } from '../../../../../../../library/ws-widget/collection/src/public-api'
+import { NsContent } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'viewer-plugin-iap',
@@ -83,36 +83,36 @@ export class IapComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit
 
   enterFullScreen() {
     this.proctoringWarning = false
-    const elem = document.getElementById('iap-iframe')
-    if (elem) {
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen()
-      } else if (elem.mozRequestFullScreen) {
-        /* Firefox */
-        elem.mozRequestFullScreen()
-      } else if (elem.webkitRequestFullscreen) {
-        /* Chrome, Safari and Opera */
-        elem.webkitRequestFullscreen()
-      } else if (elem.msRequestFullscreen) {
-        /* IE/Edge */
-        elem.msRequestFullscreen()
-      }
-    }
+    // const elem = document.getElementById('iap-iframe')
+    // if (elem) {
+    //   if (elem.requestFullscreen) {
+    //     elem.requestFullscreen()
+    //   } else if (elem.mozRequestFullScreen) {
+    //     /* Firefox */
+    //     elem.mozRequestFullScreen()
+    //   } else if (elem.webkitRequestFullscreen) {
+    //     /* Chrome, Safari and Opera */
+    //     elem.webkitRequestFullscreen()
+    //   } else if (elem.msRequestFullscreen) {
+    //     /* IE/Edge */
+    //     elem.msRequestFullscreen()
+    //   }
+    // }
   }
 
   private exitFullscreen() {
-    if (document.exitFullscreen) {
-      document.exitFullscreen()
-    } else if (document.mozCancelFullScreen) {
-      /* Firefox */
-      document.mozCancelFullScreen()
-    } else if (document.webkitExitFullscreen) {
-      /* Chrome, Safari and Opera */
-      document.webkitExitFullscreen()
-    } else if (document.msExitFullscreen) {
-      /* IE/Edge */
-      document.msExitFullscreen()
-    }
+    // if (document.exitFullscreen) {
+    //   document.exitFullscreen()
+    // } else if (document.mozCancelFullScreen) {
+    //   /* Firefox */
+    //   document.mozCancelFullScreen()
+    // } else if (document.webkitExitFullscreen) {
+    //   /* Chrome, Safari and Opera */
+    //   document.webkitExitFullscreen()
+    // } else if (document.msExitFullscreen) {
+    //   /* IE/Edge */
+    //   document.msExitFullscreen()
+    // }
   }
 
   private turnOffProctoring() {

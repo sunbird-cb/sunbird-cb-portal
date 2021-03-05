@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Subscription } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
-import { NsContent, WidgetContentService } from '@ws-widget/collection'
+import { NsContent, WidgetContentService } from '@sunbird-cb/collection'
 import { NSQuiz } from '../../plugins/quiz/quiz.model'
 import { ActivatedRoute } from '@angular/router'
 import { WsEvents, EventService } from '@sunbird-cb/utils'

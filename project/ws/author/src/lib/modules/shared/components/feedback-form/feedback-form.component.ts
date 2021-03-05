@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit, ViewChild, ElementRef } from '@angular/core'
-import { NsAutoComplete, UserAutocompleteService } from '@ws-widget/collection'
 import {
   MAT_DIALOG_DATA,
   MatSnackBar,
@@ -8,11 +7,14 @@ import {
   MatChipInputEvent,
 } from '@angular/material'
 import { FormControl } from '@angular/forms'
-import { FeedbackService } from '@ws-widget/collection/src/lib/btn-content-feedback-v2/services/feedback.service'
 import {
+  NsAutoComplete,
+  UserAutocompleteService,
+  FeedbackService,
   EFeedbackType,
   EFeedbackRole,
-} from '@ws-widget/collection/src/lib/btn-content-feedback-v2/models/feedback.model'
+} from '@sunbird-cb/collection'
+
 import { NotificationComponent } from '@ws/author/src/lib/modules/shared/components/notification/notification.component'
 import { Notify } from '@ws/author/src/lib/constants/notificationMessage'
 import {
@@ -49,7 +51,7 @@ export class FeedbackFormComponent implements OnInit {
     private feedbackApi: FeedbackService,
     private snackBar: MatSnackBar,
     private userAutoComplete: UserAutocompleteService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.userMessage = `Grant me the ${this.data} role`

@@ -27,7 +27,7 @@ import {
   LanguageSelectorModule,
   AppTourDialogModule,
   BtnPageBackModule,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 import { AboutVideoModule } from '../info/about-video/about-video.module'
 import { HomeComponent } from './components/home/home.component'
 import { LangSelectComponent } from './components/lang-select/lang-select.component'

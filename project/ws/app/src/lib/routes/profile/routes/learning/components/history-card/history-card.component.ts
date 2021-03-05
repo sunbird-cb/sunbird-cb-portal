@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { ROOT_WIDGET_CONFIG } from '@ws-widget/collection'
+import { ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection'
 import { NSProfileData } from '../../../../models/profile.model'
 @Component({
   selector: 'ws-app-history-card',

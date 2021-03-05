@@ -16,9 +16,8 @@ import { BadgesCardComponent } from './components/badges-card/badges-card.compon
 import { BadgesShareDialogComponent } from './components/badges-share-dialog/badges-share-dialog.component'
 import { BadgesNotEarnedComponent } from './components/badges-not-earned/badges-not-earned.component'
 import { HorizontalScrollerModule, DefaultThumbnailModule } from '@sunbird-cb/utils'
-import { BtnLinkedinShareModule } from '../../../../../../../../../library/ws-widget/collection/src/lib/btn-linkedin-share/btn-linkedin-share.module'
-import { BtnFacebookShareModule } from '../../../../../../../../../library/ws-widget/collection/src/lib/btn-facebook-share/btn-facebook-share.module'
-import { BtnTwitterShareModule } from '../../../../../../../../../library/ws-widget/collection/src/lib/btn-twitter-share/btn-twitter-share.module'
+import { BtnLinkedinShareModule, BtnFacebookShareModule, BtnTwitterShareModule } from '@sunbird-cb/collection'
+
 
 @NgModule({
   declarations: [BadgesComponent, BadgesCardComponent, BadgesNotEarnedComponent, BadgesShareDialogComponent],

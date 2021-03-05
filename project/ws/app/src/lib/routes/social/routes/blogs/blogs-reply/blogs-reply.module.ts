@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { BlogReplyComponent } from './components/blog-reply.component'
 import { MatCardModule, MatMenuModule, MatIconModule, MatButtonModule } from '@angular/material'
-import { UserImageModule, BtnSocialVoteModule, BtnSocialLikeModule, BtnPageBackModule, EditorQuillModule } from '@ws-widget/collection'
+import { UserImageModule, BtnSocialVoteModule, BtnSocialLikeModule, BtnPageBackModule, EditorQuillModule } from '@sunbird-cb/collection'
 import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 import { BtnFlagModule } from '../../forums/widgets/buttons/btn-flag/btn-flag.module'
 

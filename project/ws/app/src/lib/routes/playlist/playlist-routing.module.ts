@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 
-import { NsPlaylist } from '@ws-widget/collection'
+import { NsPlaylist } from '@sunbird-cb/collection'
 
 import { PlaylistHomeComponent } from './routes/playlist-home/playlist-home.component'
 import { PlaylistCreateComponent } from './routes/playlist-create/playlist-create.component'

@@ -31,7 +31,10 @@ import {
   UserAutocompleteModule,
   UserImageModule,
   ContentPickerV2Module,
-} from '@ws-widget/collection'
+  BtnLinkedinShareModule,
+  BtnFacebookShareModule,
+  BtnTwitterShareModule,
+} from '@sunbird-cb/collection'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { DefaultThumbnailModule, PipeDurationTransformModule } from '@sunbird-cb/utils'
 import { PlaylistCardComponent } from './components/playlist-card/playlist-card.component'
@@ -47,10 +50,6 @@ import { PlaylistEditComponent } from './routes/playlist-edit/playlist-edit.comp
 import { PlaylistHomeComponent } from './routes/playlist-home/playlist-home.component'
 import { PlaylistNotificationComponent } from './routes/playlist-notification/playlist-notification.component'
 import { DragDropModule } from '@angular/cdk/drag-drop'
-import { BtnLinkedinShareModule } from '../../../../../../../library/ws-widget/collection/src/lib/btn-linkedin-share/btn-linkedin-share.module'
-import { BtnFacebookShareModule } from '../../../../../../../library/ws-widget/collection/src/lib/btn-facebook-share/btn-facebook-share.module'
-import { BtnTwitterShareModule } from '../../../../../../../library/ws-widget/collection/src/lib/btn-twitter-share/btn-twitter-share.module'
-
 @NgModule({
   declarations: [
     PlaylistCardComponent,
