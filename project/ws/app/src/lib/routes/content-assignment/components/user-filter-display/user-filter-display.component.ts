@@ -36,7 +36,7 @@ export class UserFilterDisplayComponent implements OnInit, OnChanges {
       if (this.userType === 'admin') {
         this.applyLevelFilter()
       }
-    }, 10)
+    },         10)
   }
 
   ngOnChanges() {

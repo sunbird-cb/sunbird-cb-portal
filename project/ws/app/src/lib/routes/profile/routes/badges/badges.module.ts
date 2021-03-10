@@ -18,7 +18,6 @@ import { BadgesNotEarnedComponent } from './components/badges-not-earned/badges-
 import { HorizontalScrollerModule, DefaultThumbnailModule } from '@sunbird-cb/utils'
 import { BtnLinkedinShareModule, BtnFacebookShareModule, BtnTwitterShareModule } from '@sunbird-cb/collection'
 
-
 @NgModule({
   declarations: [BadgesComponent, BadgesCardComponent, BadgesNotEarnedComponent, BadgesShareDialogComponent],
   imports: [

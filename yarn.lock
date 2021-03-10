@@ -1169,10 +1169,10 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
   integrity sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==
 
-"@sunbird-cb/collection@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/collection/-/collection-0.0.3.tgz#205f76c96c4272439793c9d7c3820d4f4603ad77"
-  integrity sha512-/y00rv/kt2SePPqy0rBinEbPtOLdDTyP1KW5IpL8GdoiLd7VemtQjiiZOT9nVW5gVi55m6EX+F4yR196QVj/rg==
+"@sunbird-cb/collection@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/collection/-/collection-0.0.7.tgz#076153d2a2c66d01fd91b185468087bf13772919"
+  integrity sha512-SpmAE770RqhvUtSp7TL/0TS0oKBPwPztbpfmMhByLcCG7gV6vhXoLrjZonZqBuSY4WJ+wCCuvorKECVrrWuSTQ==
   dependencies:
     tslib "^1.9.0"
 

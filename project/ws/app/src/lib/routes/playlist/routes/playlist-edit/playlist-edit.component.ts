@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { PLAYLIST_TITLE_MIN_LENGTH, PLAYLIST_TITLE_MAX_LENGTH } from '../../constants/playlist.constant'
 // tslint: disable
-import _ from 'lodash'
+import lodash from 'lodash'
 // tslint: enable
 @Component({
   selector: 'ws-app-playlist-edit',

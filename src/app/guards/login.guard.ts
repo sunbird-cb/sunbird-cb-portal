@@ -1,4 +1,4 @@
-import { AuthKeycloakService } from '@sunbird-cb/utils'
+import { AuthKeycloakService, ConfigurationsService } from '@sunbird-cb/utils'
 import { Injectable } from '@angular/core'
 import {
   ActivatedRouteSnapshot,
@@ -8,7 +8,6 @@ import {
   Router,
 } from '@angular/router'
 import { Observable } from 'rxjs'
-import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +17,7 @@ export class LoginGuard implements CanActivate {
     private router: Router,
     private configSvc: ConfigurationsService,
     private authSvc: AuthKeycloakService,
-  ) {}
+  ) { }
   canActivate(
     next: ActivatedRouteSnapshot,
     _state: RouterStateSnapshot,
