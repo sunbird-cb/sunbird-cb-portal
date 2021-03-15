@@ -8,10 +8,10 @@ import { Observable, Subscription } from 'rxjs'
 import { share } from 'rxjs/operators'
 import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
-import { MatDialog } from '@angular/material'
+// import { MatDialog } from '@angular/material'
 import { TitleTagService } from '@ws/app/src/lib/routes/app-toc/services/title-tag.service'
-import { IBtnMailUser } from '@sunbird-cb/collection/lib/btn-mail-user/btn-mail-user.component'
-import { BtnMailUserDialogComponent } from '@sunbird-cb/collection/lib/btn-mail-user/btn-mail-user-dialog/btn-mail-user-dialog.component'
+// import { IBtnMailUser } from '@sunbird-cb/collection/lib/btn-mail-user/btn-mail-user.component'
+// import { BtnMailUserDialogComponent } from '@sunbird-cb/collection/lib/btn-mail-user/btn-mail-user-dialog/btn-mail-user-dialog.component'
 
 @Component({
   selector: 'ws-app-app-toc-single-page',
@@ -46,7 +46,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     public configSvc: ConfigurationsService,
     private domSanitizer: DomSanitizer,
     private authAccessControlSvc: AccessControlService,
-    private dialog: MatDialog,
+    // private dialog: MatDialog,
     private titleTagService: TitleTagService,
   ) {
     if (this.configSvc.restrictedFeatures) {
@@ -211,23 +211,23 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     }
   }
 
-  openQueryMailDialog(content: any, data: any) {
-    const emailArray = []
-    emailArray.push(data.email)
-    const dialogdata = {
-      content,
-      user: data,
-      emails: emailArray,
-    }
-    dialogdata.user.isAuthor = true
-    this.dialog.open<BtnMailUserDialogComponent, IBtnMailUser>(
-      BtnMailUserDialogComponent,
-      {
-        // width: '50vw',
-        minWidth: '40vw',
-        maxWidth: '80vw',
-        data: dialogdata,
-      }
-    )
-  }
+  // openQueryMailDialog(content: any, data: any) {
+  //   const emailArray = []
+  //   emailArray.push(data.email)
+  //   const dialogdata = {
+  //     content,
+  //     user: data,
+  //     emails: emailArray,
+  //   }
+  //   dialogdata.user.isAuthor = true
+  //   this.dialog.open<BtnMailUserDialogComponent, IBtnMailUser>(
+  //     BtnMailUserDialogComponent,
+  //     {
+  //       // width: '50vw',
+  //       minWidth: '40vw',
+  //       maxWidth: '80vw',
+  //       data: dialogdata,
+  //     }
+  //   )
+  // }
 }

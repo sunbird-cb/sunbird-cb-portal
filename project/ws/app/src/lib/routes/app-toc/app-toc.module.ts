@@ -80,7 +80,6 @@ import {
   PlayerBriefModule,
   CardContentModule,
   UserAutocompleteModule,
-  ProfileImageModule,
 } from '@sunbird-cb/collection'
 import { AppTocDialogIntroVideoComponent } from './components/app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { CertificationMetaResolver } from './routes/app-toc-certification/resolvers/certification-meta.resolver'
@@ -186,7 +185,6 @@ import { CreateBatchDialogComponent } from './components/create-batch-dialog/cre
     CardContentModule,
     BtnContentShareModule,
     UserAutocompleteModule,
-    ProfileImageModule,
   ],
   providers: [
     AppTocResolverService,

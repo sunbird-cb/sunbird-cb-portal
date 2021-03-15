@@ -1,12 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
-import {
-  PipeDurationTransformModule,
-  PipeLimitToModule,
-  PipePartialContentModule,
-  PipeLimitToPipe,
-} from '@sunbird-cb/utils'
 
 import {
   MatCardModule,
@@ -31,6 +25,13 @@ import {
   BtnContentFeedbackV2Module,
   PlayerBriefModule,
 } from '@sunbird-cb/collection'
+
+import {
+  PipeDurationTransformModule,
+  PipeLimitToModule,
+  PipePartialContentModule,
+  PipeLimitToPipe,
+} from '@sunbird-cb/utils'
 
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 

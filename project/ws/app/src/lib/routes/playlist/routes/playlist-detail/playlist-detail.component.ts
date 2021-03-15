@@ -151,7 +151,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
       this.changeName = changeName
       if (!this.changeName) {
         this.playlist.result.content.name = formValues.title
-        this.playlistSvc.patchPlaylist(this.playlist.result.content).subscribe()
+        // this.playlistSvc.patchPlaylist(this.playlist.result.content).subscribe()
       }
     }
   }
@@ -196,7 +196,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   drop(event: CdkDragDrop<string[]>) {
     if (this.playlist) {
       moveItemInArray(this.playlist.contents, event.previousIndex, event.currentIndex)
-      this.playlistSvc.patchPlaylist(this.playlist).subscribe()
+      // this.playlistSvc.patchPlaylist(this.playlist).subscribe()
     }
   }
 

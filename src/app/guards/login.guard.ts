@@ -17,7 +17,7 @@ export class LoginGuard implements CanActivate {
     private router: Router,
     private configSvc: ConfigurationsService,
     private authSvc: AuthKeycloakService,
-  ) { }
+  ) {}
   canActivate(
     next: ActivatedRouteSnapshot,
     _state: RouterStateSnapshot,
