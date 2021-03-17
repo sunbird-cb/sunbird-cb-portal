@@ -111,6 +111,10 @@ const routes: Routes = [
     },
   },
   {
+    path: 'certs',
+    loadChildren: () => import('./routes/route-cert.module').then(u => u.RouteCertificateModule),
+  },
+  {
     path: 'app/gamification',
     loadChildren: () =>
       import('./routes/route-gamification.module').then(u => u.RouteGamificationModule),

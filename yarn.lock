@@ -1169,10 +1169,10 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
   integrity sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==
 
-"@sunbird-cb/collection@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/collection/-/collection-0.0.6.tgz#11d43251a10c945f0b028cd841cf1c2549a5e889"
-  integrity sha512-4hW1avxh8PNIlBmbXCv9vU9zWC3YO19Pge1bivH4Tt2dJY2tfK7UDJt6k3uXVhkQ5AUBb8XeqnFraSM0GKvwFg==
+"@sunbird-cb/collection@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/collection/-/collection-0.0.7.tgz#076153d2a2c66d01fd91b185468087bf13772919"
+  integrity sha512-SpmAE770RqhvUtSp7TL/0TS0oKBPwPztbpfmMhByLcCG7gV6vhXoLrjZonZqBuSY4WJ+wCCuvorKECVrrWuSTQ==
   dependencies:
     tslib "^1.9.0"
 
@@ -1480,10 +1480,10 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.5.tgz#dcce4430e64b443ba8945f0290fb564ad5bac6dd"
   integrity sha512-7+2BITlgjgDhH0vvwZU/HZJVyk+2XUlvxXe8dFMedNX/aMkaOq++rMAFXc0tM7ij15QaWlbdQASBR9dihi+bDQ==
 
-"@types/lodash@^4.14.161":
-  version "4.14.161"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.161.tgz#a21ca0777dabc6e4f44f3d07f37b765f54188b18"
-  integrity sha512-EP6O3Jkr7bXvZZSZYlsgt5DIjiGr0dXP1/jVEwVLTFgg0d+3lWVQkRavYVQszV7dYUwvg0B8R0MBDpcmXg7XIA==
+"@types/lodash@^4.14.168":
+  version "4.14.168"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.168.tgz#fe24632e79b7ade3f132891afff86caa5e5ce008"
+  integrity sha512-oVfRvqHV/V6D1yifJbVRU3TMp8OT6o6BG+U9MkwuJ3U8/CsDHvalRpsxBqivn71ztOFZBTfJMvETbqHiaNSj7Q==
 
 "@types/minimatch@*":
   version "3.0.3"
