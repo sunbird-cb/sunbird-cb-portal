@@ -9,6 +9,8 @@ const urls = {
   HIERARCHY: 'course/v1/hierarchy',
   LEARNER_PREFIX: '/learner/',
   VALIDATE_CERTIFICATE: 'certreg/v1/certs/validate',
+  DOWNLOAD_CERTIFICATE: (id: string) => `certreg/v2/certs/download/${id}`,
+  SEARCH_CERTIFICATE: 'certreg/v1/certs/search',
 }
 
 @Injectable({
@@ -22,6 +24,35 @@ export class CertificateService {
     const option = {
       data,
       url: `${urls.LEARNER_PREFIX}${urls.VALIDATE_CERTIFICATE}`,
+    }
+    return this.apiService.post(option.url, option.data)
+  }
+
+  downloadCertificate(id: string): Observable<ServerResponse> {
+    const option = {
+      url: `${urls.LEARNER_PREFIX}${urls.DOWNLOAD_CERTIFICATE(id)}`,
+    }
+    return this.apiService.get(option.url)
+    // sample response
+    //  {"id":"api.certs.registry.download","ver":"v2","ts":"1615529580406","params":null,"responseCode":"OK",
+    // "result":{"printUri":"data:image/svg+xml
+  }
+  searchCertificate(recipientId: string): Observable<ServerResponse> {
+    const option = {
+      url: `${urls.LEARNER_PREFIX}${urls.SEARCH_CERTIFICATE}`,
+      data: {
+        request: {
+          _source: ['data.badge.issuer.name', 'pdfUrl', 'data.issuedOn', 'data.badge.name'],
+          query: {
+            bool: {
+              must: [{
+                match_phrase: { 'recipient.id': recipientId },
+              }],
+            },
+          },
+          size: 50,
+        },
+      },
     }
     return this.apiService.post(option.url, option.data)
 
