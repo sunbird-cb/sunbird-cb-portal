@@ -5,9 +5,12 @@ import { TFetchStatus, NsPage, ConfigurationsService } from '@sunbird-cb/utils'
 import { ActivatedRoute, Router } from '@angular/router'
 // import { MatSnackBar } from '@angular/material'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
-import { PLAYLIST_TITLE_MIN_LENGTH, PLAYLIST_TITLE_MAX_LENGTH } from '../../constants/playlist.constant'
+import {
+  PLAYLIST_TITLE_MIN_LENGTH,
+  PLAYLIST_TITLE_MAX_LENGTH,
+} from '../../constants/playlist.constant'
 // tslint: disable
-import lodash from 'lodash'
+// import lodash from 'lodash'
 // tslint: enable
 @Component({
   selector: 'ws-app-playlist-edit',
@@ -15,16 +18,18 @@ import lodash from 'lodash'
   styleUrls: ['./playlist-edit.component.scss'],
 })
 export class PlaylistEditComponent implements OnInit {
-
-  @ViewChild('editPlaylistError', { static: true }) editPlaylistErrorMessage!: ElementRef<any>
-  @ViewChild('editPlaylistSuccess', { static: true }) editPlaylistSuccess!: ElementRef<any>
+  @ViewChild('editPlaylistError', { static: true })
+  editPlaylistErrorMessage!: ElementRef<any>
+  @ViewChild('editPlaylistSuccess', { static: true })
+  editPlaylistSuccess!: ElementRef<any>
 
   @ViewChild('playlistForm', { static: true }) playlistForm!: ElementRef<any>
 
   editPlaylistForm: FormGroup
   createPlaylistStatus: TFetchStatus = 'none'
 
-  playlist: NsPlaylist.IPlaylist = this.route.snapshot.data.playlist.data.result.content
+  playlist: NsPlaylist.IPlaylist = this.route.snapshot.data.playlist.data.result
+    .content
   error = this.route.snapshot.data.playlist.error
   type = this.route.snapshot.data.type
   upsertPlaylistStatus: TFetchStatus = 'none'
@@ -39,33 +44,40 @@ export class PlaylistEditComponent implements OnInit {
     public router: Router,
     // private playlistSvc: BtnPlaylistService,
     // private snackBar: MatSnackBar,
-    private configurationSvc: ConfigurationsService,
+    private configurationSvc: ConfigurationsService
   ) {
     this.editPlaylistForm = this.fb.group({
       title: [
         this.playlist.name || '',
-        [Validators.required, Validators.minLength(PLAYLIST_TITLE_MIN_LENGTH), Validators.maxLength(PLAYLIST_TITLE_MAX_LENGTH)],
+        [
+          Validators.required,
+          Validators.minLength(PLAYLIST_TITLE_MIN_LENGTH),
+          Validators.maxLength(PLAYLIST_TITLE_MAX_LENGTH),
+        ],
       ],
       visibility: [NsPlaylist.EPlaylistVisibilityTypes.PRIVATE],
       message: '',
     })
 
-    const children = _.get(this.playlist, 'children')
+    // const children = _.get(this.playlist, 'children')
     // let selectedIds = []
     // children.forEach((item: { identifier: string }) => {
     //   selectedIds.push(item.identifier)
     // });
 
-    this.selectedContentIds = new Set<string>(
-      (children).map((content: { identifier: string }) => content.identifier),
-    )
-
+    // this.selectedContentIds = new Set<string>(
+    //   children.map((content: { identifier: string }) => content.identifier)
+    // )
   }
   ngOnInit(): void {
     this.editPlaylistForm = this.fb.group({
       title: [
         this.playlist.name || '',
-        [Validators.required, Validators.minLength(PLAYLIST_TITLE_MIN_LENGTH), Validators.maxLength(PLAYLIST_TITLE_MAX_LENGTH)],
+        [
+          Validators.required,
+          Validators.minLength(PLAYLIST_TITLE_MIN_LENGTH),
+          Validators.maxLength(PLAYLIST_TITLE_MAX_LENGTH),
+        ],
       ],
       visibility: [NsPlaylist.EPlaylistVisibilityTypes.PRIVATE],
       message: '',
@@ -74,7 +86,9 @@ export class PlaylistEditComponent implements OnInit {
 
   contentChanged(content: Partial<NsContent.IContent>, checked: boolean) {
     if (content && content.identifier) {
-      checked ? this.changedContentIds.add(content.identifier) : this.changedContentIds.delete(content.identifier)
+      checked
+        ? this.changedContentIds.add(content.identifier)
+        : this.changedContentIds.delete(content.identifier)
     }
   }
 
@@ -95,7 +109,9 @@ export class PlaylistEditComponent implements OnInit {
   }
 
   editName() {
-    const formValues: { [field: string]: string } = this.editPlaylistForm.getRawValue()
+    const formValues: {
+      [field: string]: string;
+    } = this.editPlaylistForm.getRawValue()
     if (formValues.title && this.playlist) {
       this.playlist.name = formValues.title
       // this.playlistSvc.patchPlaylist(this.playlist, Array.from(this.changedContentIds)).subscribe(() => {
@@ -110,7 +126,6 @@ export class PlaylistEditComponent implements OnInit {
       //   this.upsertPlaylistStatus = 'error'
       //   this.snackBar.open(this.editPlaylistErrorMessage.nativeElement.value)
       // }
-
     }
   }
 }

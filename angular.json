@@ -39,7 +39,6 @@
               "src/styles/mat-typography.scss",
               "src/styles/styles.scss",
               "node_modules/shepherd.js/dist/css/shepherd.css",
-              
               {
                 "input": "src/themes/theme-deep-purple.scss",
                 "bundleName": "theme-deep-purple",
@@ -85,7 +84,6 @@
                 "bundleName": "theme-igot",
                 "lazy": true
               },
-              
               "node_modules/pdfjs-dist/web/pdf_viewer.css",
               "src/fusion-assets/fonts/lato/stylesheet.css",
               "src/fusion-assets/fonts/montserrat/stylesheet.css"
@@ -188,41 +186,6 @@
             "production": {
               "devServerTarget": "fusion:serve:production"
             }
-          }
-        }
-      }
-    },
-    "@sunbird-cb/collection": {
-      "projectType": "library",
-      "root": "library/ws-widget/collection",
-      "sourceRoot": "library/ws-widget/collection/src",
-      "prefix": "ws-widget",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "library/ws-widget/collection/tsconfig.lib.json",
-            "project": "library/ws-widget/collection/ng-package.json"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "library/ws-widget/collection/src/test.ts",
-            "tsConfig": "library/ws-widget/collection/tsconfig.spec.json",
-            "karmaConfig": "library/ws-widget/collection/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "library/ws-widget/collection/tsconfig.lib.json",
-              "library/ws-widget/collection/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }
@@ -408,5 +371,8 @@
     "@schematics/angular:component": {
       "styleext": "scss"
     }
+  },
+  "cli": {
+    "analytics": "0960077c-cd40-4a38-a76c-e63878df5326"
   }
 }
