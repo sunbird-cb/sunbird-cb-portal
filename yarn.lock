@@ -1169,12 +1169,17 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
   integrity sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==
 
-"@sunbird-cb/collection@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/collection/-/collection-0.0.7.tgz#076153d2a2c66d01fd91b185468087bf13772919"
-  integrity sha512-SpmAE770RqhvUtSp7TL/0TS0oKBPwPztbpfmMhByLcCG7gV6vhXoLrjZonZqBuSY4WJ+wCCuvorKECVrrWuSTQ==
+"@sunbird-cb/collection@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/collection/-/collection-0.0.8.tgz#d2ec5f9bdd69688f73e4da090ca013ee65990721"
+  integrity sha512-qCd30bVzUTtrsT8+mGQiYFucEQYRti+Dx6fPx6cAYpEAZgjbJ69R5fhdCHWcrdacpGJFcrFFKTkpKmaCkJn/dw==
   dependencies:
     tslib "^1.9.0"
+
+"@sunbird-cb/design-system@0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/design-system/-/design-system-0.0.1.tgz#66795a90e6a3fe3609cd574e694ad296fdc9a1a5"
+  integrity sha512-GYfnfpNfzZjnU5Ss+xfSdVbvyek97Yq8cDVsfT4+R0MgsIYnI4gqx7G0Qvx9caZYgb3eoE6wlsyb0K2aWyO+UQ==
 
 "@sunbird-cb/resolver@^0.0.3":
   version "0.0.3"
