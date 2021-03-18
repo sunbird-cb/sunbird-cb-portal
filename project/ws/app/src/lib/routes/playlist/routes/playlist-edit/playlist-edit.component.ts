@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { PLAYLIST_TITLE_MIN_LENGTH, PLAYLIST_TITLE_MAX_LENGTH } from '../../constants/playlist.constant'
 // tslint: disable
-import lodash from 'lodash'
+import _ from 'lodash'
 // tslint: enable
 @Component({
   selector: 'ws-app-playlist-edit',
