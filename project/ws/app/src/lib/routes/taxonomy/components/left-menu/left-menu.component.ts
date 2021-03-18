@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core'
+import { Subscription } from 'rxjs/internal/Subscription'
 // import { BreakpointObserver } from '@angular/cdk/layout'
 // import { DomSanitizer } from '@angular/platform-browser'
 // import { ConfigurationsService } from '@sunbird-cb/utils'
-import { ActivatedRoute } from '@angular/router'
-import { Subscription } from 'rxjs'
-import { NSDiscussData } from '../../models/discuss.model'
 
 @Component({
   selector: 'app-discuss-left-menu',
@@ -12,26 +10,23 @@ import { NSDiscussData } from '../../models/discuss.model'
   styleUrls: ['./left-menu.component.scss'],
 })
 export class LeftMenuComponent implements OnInit, OnDestroy {
-  // tabs: any = []
-  // tabs: any = []
   @Input() unseen = 0
-  tabsData!: NSDiscussData.IDiscussJsonData
+  tabsData:any = []
   private tabs: Subscription | null = null
   constructor(
     // private breakpointObserver: BreakpointObserver,
     // private domSanitizer: DomSanitizer,
     // private configSvc: ConfigurationsService,
-    private activateRoute: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
-    this.tabs = this.activateRoute.data.subscribe(data => {
-      if (data && data.pageData) {
-        this.tabsData = data.pageData.data.tabs || []
-        console.log(this.tabsData)
-
-      }
-    })
+    this.tabsData = [{name: "Economics", enabled: true, routerLink:"/app/taxonomy/home"},
+    {name: "1st level  topic", enabled: true, routerLink:"/app/taxonomy/116"},
+    {name: "1st level  topic", enabled: true, routerLink:"/app/taxonomy/ll1"},
+    {name: "1st level  topic", enabled: true,  routerLink:"/app/taxonomy/ll2"},
+    {name: "1st level  topic", enabled: true, routerLink:"/app/taxonomy/ll3"},
+    {name: "1st level  topic", enabled: true, routerLink:"/app/taxonomy/ll4"},
+    {name: "1st level  topic", enabled: true,routerLink:"/app/taxonomy/ll5"},]
   }
   ngOnDestroy() {
     if (this.tabs) {

@@ -1,0 +1,18 @@
+<mat-card class="discuss-card cursor-pointer" >
+  <mat-card-content class="flex flex-1" >
+    <mat-chip-list
+  class="example-chip"
+  cdkDropList
+  cdkDropListOrientation="horizontal">
+  <mat-chip
+    class="example-box"
+    cdkDrag
+   *ngFor="let tag of tags">
+    {{tag}}
+  </mat-chip>
+</mat-chip-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <a mat-button (click)="getDiscussion()" *ngIf="showRem">SEE {{rem}} MORE SUB TOPICS </a>
+  </mat-card-actions>
+</mat-card>

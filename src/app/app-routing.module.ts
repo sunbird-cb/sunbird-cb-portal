@@ -111,6 +111,19 @@ const routes: Routes = [
     },
   },
   {
+    path: 'app/taxonomy',
+    loadChildren: () =>
+      import('./routes/route-taxonomy.module').then(u => u.RouteTaxonomyModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'taxonomy',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
+  {
     path: 'app/gamification',
     loadChildren: () =>
       import('./routes/route-gamification.module').then(u => u.RouteGamificationModule),
