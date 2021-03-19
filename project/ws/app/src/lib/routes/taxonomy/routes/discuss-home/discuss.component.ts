@@ -12,6 +12,7 @@ import { NsWidgetResolver } from '@sunbird-cb/resolver'
 export class DiscussComponent implements OnInit, OnDestroy {
   sideNavBarOpened = true
   panelOpenState = false
+  recommendedUsers = ["1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3"]
   titles = [{ title: 'DISCUSS', url: '/app/discuss/home', icon: 'forum' }]
   unread = 0
   currentRoute = 'home'
