@@ -52,10 +52,11 @@ export class PlaylistEditComponent implements OnInit {
     // children.forEach((item: { identifier: string }) => {
     //   selectedIds.push(item.identifier)
     // });
-
-    this.selectedContentIds = new Set<string>(
-      (children).map((content: { identifier: string }) => content.identifier),
-    )
+    if (children !== undefined) {
+      this.selectedContentIds = new Set<string>(
+        (children).map((content: { identifier: string }) => content.identifier),
+      )
+    }
 
   }
   ngOnInit(): void {
