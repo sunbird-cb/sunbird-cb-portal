@@ -17,7 +17,6 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
   unread = 0
   currentRoute = 'home'
   banner!: NsWidgetResolver.IWidgetData<any>
-  private bannerSubscription: any
   public screenSizeIsLtMedium = false
   isLtMedium$ = this.valueSvc.isLtMedium$
   mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
@@ -39,11 +38,11 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
         // console.log(event.error)
       }
     })
-    this.bannerSubscription = this.route.data.subscribe(data => {
-      if (data && data.pageData) {
-        this.banner = data.pageData.data.banner || []
-      }
-    })
+    // this.bannerSubscription = this.route.data.subscribe(data => {
+    //   if (data && data.pageData) {
+    //     this.banner = data.pageData.data.banner || []
+    //   }
+    // })
   }
   ngOnInit() {
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
@@ -55,9 +54,9 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
     if (this.defaultSideNavBarOpenedSubscription) {
       this.defaultSideNavBarOpenedSubscription.unsubscribe()
     }
-    if (this.bannerSubscription) {
-      this.bannerSubscription.unsubscribe()
-    }
+    // if (this.bannerSubscription) {
+    //   this.bannerSubscription.unsubscribe()
+    // }
   }
   gotoLeft(){
     console.log("Working")

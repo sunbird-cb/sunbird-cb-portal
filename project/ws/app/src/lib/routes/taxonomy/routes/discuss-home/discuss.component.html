@@ -1,61 +1,27 @@
-<ws-widget-btn-page-back [widgetData]="{ url: 'home',titles: titles }">
-</ws-widget-btn-page-back>
-
-<div *ngIf="currentRoute === 'home'" class="container-balanced-banner margin-top-s">
-  <ng-container [wsResolverWidget]="banner"></ng-container>
-</div>
-<mat-sidenav-container class="container-balanced" name="discuss-menu">
-
-  <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0">
-    <app-discuss-left-menu [unseen]="unread"></app-discuss-left-menu>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <div *ngIf="screenSizeIsLtMedium">
-      <button type="button" mat-icon-button (click)="sideNavBarOpened = !sideNavBarOpened"
-        id="ws-auth-root-home-btn-menu" name="ws-auth-root-home-btn-menu">
-        <mat-icon>menu</mat-icon>
-      </button>
-    </div>
-    <div class="flex flex-5">
-      <!-- <router-outlet></router-outlet> -->
-      <!-- <app-discuss-all></app-discuss-all> -->
-      <app-dicuss-card></app-dicuss-card>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
-  <!-- Tem component -->
   <div class="flex flex-1">
-    <mat-card class="flex-1 remove-botton-radius">
-      <mat-card-header class="flex items-baseline margin-fix">
-        <mat-card-title class="margin-l-0 f-medium  flex-1">
-          <span class="width-expand">
-            <h2>People you may know</h2>
-          </span>
-        </mat-card-title>
-        <span class="spacer"></span>
-        <button mat-button color="default" type="button" class=" flex-auto-display">
-          <span class="ws-mat-default-text" i18n>SEE ALL</span>
-        </button>
-      </mat-card-header>
-      <mat-card-content class="margin-left-m mb-0-imp flex flex-wrap">
+      <div class="margin-left-xll mb-1-imp flex flex-wrap">
           <ng-container *ngFor="let userObj of recommendedUsers" [ngTemplateOutlet]="userIndividualNew"
               [ngTemplateOutletContext]="{ user: userObj }">
             </ng-container>
           <!-- <ws-app-connection-people-card class="mr-4 mb-5" [user]="user"
             (connection)="connectionUpdatePeopleCard($event)"></ws-app-connection-people-card> -->
-      </mat-card-content>
-      <mat-card-actions align="end">
-      </mat-card-actions>
-    </mat-card>
+      </div>
   </div>
   <!-- Tem component -->
   <ng-template #userIndividualNew let-user="user">
-    <div class="unit-cohort sm:pr-8 md:pr-10">
-      <div class="width-expand padding-left-xs">
-        <div class="mat-body-strong cohorts-name">
-         Name dfsfsfsdfdsfsdfsfsfsfsf
-        </div>
-        <div class="mat-caption cohorts-desc">etst</div>
-      </div>
-    </div>
+    <mat-card class="network-card mr-9">
+      <mat-card-header>
+        <mat-card-title class="text-capitalize">
+          <a href="javascript:void(0)" role="link" i18n-aria-label>
+            <span class="mat-subheading-2"> Economic
+            </span></a>
+        </mat-card-title>
+        <mat-card-subtitle>
+          <span class="text-capitalize mat-body-2">gggg</span>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="content">
+      </mat-card-content>
+    </mat-card>
+
   </ng-template>

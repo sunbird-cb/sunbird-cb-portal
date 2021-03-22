@@ -4,8 +4,6 @@ import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRela
 import { DiscussComponent } from './routes/discuss-home/discuss.component'
 import { DiscussCommetsComponent } from './components/discuss-comments/discuss-comments.component'
 import { DiscussCategoriesComponent } from './routes/discuss-categories/discuss-categories.component'
-import { DiscussGroupsComponent } from './routes/discuss-groups/discuss-groups.component'
-import { DiscussLeaderboardComponent } from './routes/discuss-leaderboard/discuss-leaderboard.component'
 import { DiscussMyDiscussionsComponent } from './routes/discuss-my-discussions/discuss-my-discussions.component'
 import { DiscussTagsComponent } from './routes/discuss-tags/discuss-tags.component'
 import { TaxonomyRoutingModule } from './taxonomy.rounting.module'
@@ -42,9 +40,11 @@ import { AvatarPhotoModule, BtnPageBackModule } from '@sunbird-cb/collection'
 import { EditorSharedModule } from '@ws/author/src/lib/routing/modules/editor/shared/shared.module'
 // import { CkEditorModule } from 'library/ws-widget/collection/src/lib/_common/ck-editor/ck-editor.module'
 import { LoaderService } from '@ws/author/src/lib/services/loader.service'
-import { InitResolver } from './resolvers/init-resolve.service'
 // import { CKEditorService } from 'library/ws-widget/collection/src/lib/_common/ck-editor/ck-editor.service'
 import { PaginationComponent } from './components/pagination/pagination.component'
+
+import { DiscussTopicsComponent } from './routes/discuss-topics/discuss-topics.component'
+
 
 @NgModule({
   declarations: [
@@ -55,8 +55,6 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     DiscussCardComponent,
     DiscussCommetsComponent,
     DiscussCategoriesComponent,
-    DiscussGroupsComponent,
-    DiscussLeaderboardComponent,
     DiscussMyDiscussionsComponent,
     DiscussStartComponent,
     DiscussTagsComponent,
@@ -66,6 +64,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     RelatedDiscussionComponent,
     TrendingTagsComponent,
     PaginationComponent,
+    DiscussTopicsComponent
   ],
   imports: [
     CommonModule,
@@ -105,7 +104,6 @@ import { PaginationComponent } from './components/pagination/pagination.componen
   providers: [
     // CKEditorService,
     LoaderService,
-    InitResolver,
   ],
   exports: [
     PostCardComponent,
