@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { PLAYLIST_TITLE_MIN_LENGTH, PLAYLIST_TITLE_MAX_LENGTH } from '../../constants/playlist.constant'
 
-import _ from 'lodash'
+import lodash from 'lodash'
 
 @Component({
   selector: 'ws-app-playlist-edit',
@@ -49,7 +49,6 @@ export class PlaylistEditComponent implements OnInit {
       message: '',
     })
 
-
     const children = this.playlist.children
 
     // need to uncomment
@@ -68,7 +67,6 @@ export class PlaylistEditComponent implements OnInit {
     // this.selectedContentIds = new Set<string>(
     //   (children).map((content: { identifier: string }) => content.identifier),
     // )
-
 
   }
   ngOnInit(): void {

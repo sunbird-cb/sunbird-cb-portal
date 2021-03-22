@@ -7,7 +7,7 @@ export const mockResponseData = {
         type: [
           'Assertion',
           'Extension',
-          'extensions:CertificateExtension'
+          'extensions:CertificateExtension',
         ],
         issuedOn: '2019-08-31T12:52:25Z',
         recipient: {
@@ -16,7 +16,7 @@ export const mockResponseData = {
           endorsement: null,
           identity: '9845978851',
           type: [
-            'phone'
+            'phone',
           ],
           hashed: false,
           salt: null,
@@ -28,7 +28,7 @@ export const mockResponseData = {
           tag: null,
           urn: null,
           url: null,
-          '@context': 'http://localhost:8080/_schemas/context.json'
+          '@context': 'http://localhost:8080/_schemas/context.json',
         },
         badge: {
           related: null,
@@ -36,7 +36,7 @@ export const mockResponseData = {
           endorsement: null,
           id: 'http://localhost:8080/_schemas/Badge.json',
           type: [
-            'BadgeClass'
+            'BadgeClass',
           ],
           name: 'Sunbird installation',
           description: 'Certificate of Appreciation in National Level ITI Grading',
@@ -49,15 +49,15 @@ export const mockResponseData = {
             endorsement: null,
             id: 'http://localhost:8080/_schemas/Issuer.json',
             type: [
-              'Issuer'
+              'Issuer',
             ],
             name: 'NIIT',
             email: null,
             url: null,
-            publicKey: null
+            publicKey: null,
           },
           alignment: null,
-          '@context': 'http://localhost:8080/_schemas/context.json'
+          '@context': 'http://localhost:8080/_schemas/context.json',
         },
         image: null,
         evidence: {
@@ -68,7 +68,7 @@ export const mockResponseData = {
           type: [
             'Evidence',
             'Extension',
-            'extensions:AssessedEvidence'
+            'extensions:AssessedEvidence',
           ],
           narrative: null,
           name: null,
@@ -82,15 +82,15 @@ export const mockResponseData = {
             endorsement: null,
             type: [
               'Extension',
-              'extensions:Assessment'
+              'extensions:Assessment',
             ],
             value: 21.0,
-            '@context': 'http://localhost:8080/_schemas/context.json'
+            '@context': 'http://localhost:8080/_schemas/context.json',
           },
           assessedBy: '2019-2-14',
           assessedOn: null,
           signature: null,
-          '@context': 'http://localhost:8080/_schemas/extensions/AssessedEvidence/context.json'
+          '@context': 'http://localhost:8080/_schemas/extensions/AssessedEvidence/context.json',
         },
         expires: '2019-09-30T12:52:25Z',
         verification: {
@@ -98,12 +98,12 @@ export const mockResponseData = {
           version: null,
           endorsement: null,
           type: [
-            'SignedBadge'
+            'SignedBadge',
           ],
           verificationProperty: null,
           startsWith: null,
           allowedOrigins: null,
-          '@context': null
+          '@context': null,
         },
         narrative: null,
         revoked: false,
@@ -113,6 +113,6 @@ export const mockResponseData = {
         printUri: null,
         validFrom: '2019-06-21',
         signature: null,
-        '@context': 'http://localhost:8080/_schemas/context.json'
-      }
-};
+        '@context': 'http://localhost:8080/_schemas/context.json',
+      },
+}
