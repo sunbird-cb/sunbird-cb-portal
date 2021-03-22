@@ -48,6 +48,10 @@ import { NetworkConnectionRequestsComponent } from './routes/network-connection-
 import { ConnectionRequestResolveService } from './resolvers/connection-request-resolve.service'
 import { ConnectionSearchCardComponent } from './components/connection-search-card/connection-search-card.component'
 import { ConnectionRecommendedCardComponent } from './components/connection-recommended-card/connection-recommended-card.component'
+import { ConnectionHoverCardComponent } from './components/connection-hover-card/connection-hover-card.component'
+import { ConnectionHoverService } from './components/connection-name/connection-hover.servive'
+import { ConnectionNameComponent } from './components/connection-name/connection-name.component'
+import { TooltipDirective } from './directives/tooltip.directive'
 
 @NgModule({
   declarations: [
@@ -63,6 +67,9 @@ import { ConnectionRecommendedCardComponent } from './components/connection-reco
     NetworkConnectionRequestsComponent,
     ConnectionSearchCardComponent,
     ConnectionRecommendedCardComponent,
+    ConnectionHoverCardComponent,
+    ConnectionNameComponent,
+    TooltipDirective,
   ],
   imports: [
     CommonModule,
@@ -104,6 +111,7 @@ import { ConnectionRecommendedCardComponent } from './components/connection-reco
     RecommendedResolveService,
     ConnectionRequestResolveService,
     MyConnectionResolveService,
+    ConnectionHoverService,
   ],
 })
 export class NetworkV2Module { }
