@@ -6,8 +6,6 @@ import { MatSnackBar } from '@angular/material'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { PLAYLIST_TITLE_MIN_LENGTH, PLAYLIST_TITLE_MAX_LENGTH } from '../../constants/playlist.constant'
 
-import lodash from 'lodash'
-
 @Component({
   selector: 'ws-app-playlist-edit',
   templateUrl: './playlist-edit.component.html',
@@ -23,7 +21,7 @@ export class PlaylistEditComponent implements OnInit {
   editPlaylistForm: FormGroup
   createPlaylistStatus: TFetchStatus = 'none'
 
-  playlist: NsPlaylist.IPlaylist = this.route.snapshot.data.playlist.data.result.content
+  playlist: NsPlaylist.IPlaylist = this.route.snapshot.data.playlist.data
   error = this.route.snapshot.data.playlist.error
   type = this.route.snapshot.data.type
   upsertPlaylistStatus: TFetchStatus = 'none'
@@ -48,26 +46,9 @@ export class PlaylistEditComponent implements OnInit {
       visibility: [NsPlaylist.EPlaylistVisibilityTypes.PRIVATE],
       message: '',
     })
-
-    const children = this.playlist.children
-
-    // need to uncomment
-    // const children = _.get(this.playlist, 'children')
-
-    // let selectedIds = []
-    // children.forEach((item: { identifier: string }) => {
-    //   selectedIds.push(item.identifier)
-    // });
-
-    if (children !== undefined) {
-      this.selectedContentIds = new Set<string>(
-        (children).map((content: { identifier: string }) => content.identifier),
-      )
-    }
-    // this.selectedContentIds = new Set<string>(
-    //   (children).map((content: { identifier: string }) => content.identifier),
-    // )
-
+    this.selectedContentIds = new Set<string>(
+      (this.playlist && this.playlist.contents || []).map(content => content.identifier),
+    )
   }
   ngOnInit(): void {
     this.editPlaylistForm = this.fb.group({
