@@ -6,8 +6,7 @@ import { HorizontalScrollerModule } from '@sunbird-cb/utils'
 import { ActivitiesRoutingModule } from './activities-routing.module'
 import { ActivitiesComponent } from './components/activities/activities.component'
 import { ChallengeStripComponent } from './components/challenge-strip/challenge-strip.component'
-// import { ActivityCardModule } from '@sunbird-cb/collection/lib/activity-card/activity-card.module'
-// import { ActivityCardModule } from '@sunbird-cb/collection'
+import { ActivityCardModule } from '@sunbird-cb/collection'
 
 @NgModule({
   declarations: [ActivitiesComponent, ChallengeStripComponent],
@@ -19,7 +18,7 @@ import { ChallengeStripComponent } from './components/challenge-strip/challenge-
     MatIconModule,
     RouterModule,
     HorizontalScrollerModule,
-    // ActivityCardModule,
+    ActivityCardModule,
   ],
 })
 export class ActivitiesModule { }
