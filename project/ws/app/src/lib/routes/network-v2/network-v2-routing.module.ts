@@ -10,11 +10,15 @@ import { NetworkMyMdoComponent } from './routes/network-my-mdo/network-my-mdo.co
 import { NetworkRecommendedComponent } from './routes/network-recommended/network-recommended.component'
 import { MyMdoResolveService } from './resolvers/my-mdo-resolve.service'
 import { ConnectionRequestResolveService } from './resolvers/connection-request-resolve.service'
+import { MyProfileResolve } from './resolvers/my-profile.resolve'
 
 const routes: Routes = [
   {
     path: '',
     component: NetworkComponent,
+    resolve: {
+      me: MyProfileResolve,
+    },
     children: [
       {
         path: '',
@@ -65,5 +69,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
+  providers: [MyProfileResolve],
 })
 export class NetworkV2RoutingModule { }

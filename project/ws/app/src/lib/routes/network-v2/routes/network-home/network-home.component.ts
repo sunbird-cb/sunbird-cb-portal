@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { NetworkV2Service } from '../../services/network-v2.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { NsUser } from '@sunbird-cb/utils'
 import { CardNetWorkService } from '@sunbird-cb/collection'
 
 @Component({
@@ -22,14 +22,18 @@ export class NetworkHomeComponent implements OnInit {
   searchSpinner = false
   searchResultUserArray: any = []
   establishedConnections!: NSNetworkDataV2.INetworkUser[]
+  me!: NsUser.IUserProfile
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private networkV2Service: NetworkV2Service,
-    private configSvc: ConfigurationsService,
     private cardNetworkService: CardNetWorkService,
+    private activeRoute: ActivatedRoute,
   ) {
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
+    if (this.activeRoute.parent) {
+      this.me = this.activeRoute.parent.snapshot.data.me
+    }
     if (this.route.snapshot.data.recommendedUsers && this.route.snapshot.data.recommendedUsers.data.result) {
       this.recommendedUsers = this.route.snapshot.data.recommendedUsers.data.result.data.
       find((item: any) => item.field === 'employmentDetails.departmentName').results
@@ -41,7 +45,6 @@ export class NetworkHomeComponent implements OnInit {
       return v
     })
     this.connectionRequests = this.route.snapshot.data.connectionRequests.data.result.data
-
   }
 
   ngOnInit() {
@@ -75,9 +78,9 @@ export class NetworkHomeComponent implements OnInit {
 
   connectionUpdatePeopleCard(event: any) {
     if (event === 'connection-updated') {
-      let usrDept = 'iGOT'
-      if (this.configSvc.userProfile) {
-        usrDept = this.configSvc.userProfile.departmentName || 'iGOT'
+      let usrDept = 'igot'
+      if (this.me) {
+        usrDept = this.me.departmentName || 'igot'
       }
       let req: NSNetworkDataV2.IRecommendedUserReq
       req = {
@@ -102,6 +105,7 @@ export class NetworkHomeComponent implements OnInit {
   }
 
   searchUser() {
+
     if (this.nameFilter.length === 0) {
       this.enableFeature = true
     } else {
@@ -114,7 +118,7 @@ export class NetworkHomeComponent implements OnInit {
 
   getSearchResult() {
     this.cardNetworkService.fetchSearchUserInfo(this.nameFilter.trim()).subscribe(data => {
-      this.searchResultUserArray = data.result.UserProfile
+      this.searchResultUserArray = data
       this.networkV2Service.fetchAllConnectionRequests().subscribe(
         requests => {
           // Filter all the connection requests sent
@@ -166,8 +170,8 @@ export class NetworkHomeComponent implements OnInit {
       // // tslint:disable-next-line: align
       // }), 0)
       this.searchResultUserArray = this.searchResultUserArray.filter((el: any) => {
-        if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
-          if (el.wid === this.configSvc.userProfile.userId) {
+        if (this.me && this.me.userId) {
+          if (el.wid === this.me.userId) {
             return false
           }
         }
@@ -175,5 +179,4 @@ export class NetworkHomeComponent implements OnInit {
       })
     })
   }
-
 }

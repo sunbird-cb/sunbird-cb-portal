@@ -47,16 +47,16 @@ export class PlaylistEditComponent implements OnInit {
       visibility: [NsPlaylist.EPlaylistVisibilityTypes.PRIVATE],
       message: '',
     })
-
-    const children = _.get(this.playlist, 'children')
+    // need to uncomment
+    // const children = _.get(this.playlist, 'children')
     // let selectedIds = []
     // children.forEach((item: { identifier: string }) => {
     //   selectedIds.push(item.identifier)
     // });
 
-    this.selectedContentIds = new Set<string>(
-      (children).map((content: { identifier: string }) => content.identifier),
-    )
+    // this.selectedContentIds = new Set<string>(
+    //   (children).map((content: { identifier: string }) => content.identifier),
+    // )
 
   }
   ngOnInit(): void {
