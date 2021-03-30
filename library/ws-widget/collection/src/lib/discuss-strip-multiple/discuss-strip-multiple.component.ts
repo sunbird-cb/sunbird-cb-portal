@@ -4,14 +4,16 @@ import { NsDiscussStripNewMultiple } from './discuss-strip-multiple.model'
 import { ContentStripNewMultipleService } from './discuss-strip-multiple.service'
 import { WidgetContentService } from '../_services/widget-content.service'
 import { NsContent } from '../_services/widget-content.model'
+import { Router } from '@angular/router'
 import {
   TFetchStatus,
   LoggerService,
   // EventService,
-  // ConfigurationsService,
+  ConfigurationsService,
   UtilityService,
 } from '@ws-widget/utils'
 import { Subscription } from 'rxjs'
+import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 // import { filter } from 'rxjs/operators'
 // import { SearchServService } from '@ws/app/src/lib/routes/search/services/search-serv.service'
 
@@ -68,8 +70,10 @@ export class DiscussStripMultipleComponent extends WidgetBaseComponent
     private contentSvc: WidgetContentService,
     private loggerSvc: LoggerService,
     // private eventSvc: EventService,
-    // private configSvc: ConfigurationsService,
+    private configSvc: ConfigurationsService,
     protected utilitySvc: UtilityService,
+    private discussUtilitySvc: DiscussUtilsService,
+    public router: Router
     // private searchServSvc: SearchServService,
   ) {
     super()
@@ -83,6 +87,48 @@ export class DiscussStripMultipleComponent extends WidgetBaseComponent
     if (this.changeEventSubscription) {
       this.changeEventSubscription.unsubscribe()
     }
+  }
+
+  navigate() {
+    const req = {
+      request: {
+        username: (this.configSvc.userProfile && this.configSvc.userProfile.userName) || '',
+        identifier: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
+      },
+    }
+    this.contentStripSvc.createUser(req).subscribe(
+      results => {
+        if (results) {
+          this.discussUtilitySvc.setDiscussionConfig({
+            menuOptions: [
+              {
+                route: 'categories',
+                enable: true,
+              },
+              {
+                route: 'tags',
+                enable: true,
+              },
+              {
+                route: 'all-discussions',
+                enable: true,
+              },
+              {
+                route: 'my-discussion',
+                enable: true,
+              },
+            ],
+            userName: 'nptest',
+            context: {
+              id: 1,
+            },
+            categories: { result: [] },
+            routerSlug: '/app',
+          })
+          this.router.navigate(['/app/discussion-forum'])
+        }
+      }
+    )
   }
 
   private initData() {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, SkipSelf } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { NSDiscussData } from '../models/discuss.model'
 import { ConfigurationsService, NsUser } from 'library/ws-widget/utils/src/public-api'
@@ -29,8 +29,9 @@ const API_ENDPOINTS = {
 })
 export class DiscussService {
   usr: any
-  constructor(
-    private http: HttpClient, private configSvc: ConfigurationsService) {
+  constructor(@SkipSelf()
+    private http: HttpClient,
+              private configSvc: ConfigurationsService) {
     this.usr = this.configSvc.userProfile
   }
 

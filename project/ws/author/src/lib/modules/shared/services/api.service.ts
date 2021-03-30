@@ -1,12 +1,12 @@
 import { AUTHORING_BASE } from './../../../constants/apiEndpoints'
-import { Injectable } from '@angular/core'
+import { Injectable, SkipSelf } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 
 @Injectable()
 export class ApiService {
 
-  constructor(private http: HttpClient) { }
+  constructor(@SkipSelf() private http: HttpClient) { }
 
   public base64(url: string, body: any): any {
     if (url.startsWith(AUTHORING_BASE)) {
