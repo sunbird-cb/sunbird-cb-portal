@@ -6,6 +6,7 @@ import { GeneralGuard } from '../../../../../../../src/app/guards/general.guard'
 import { AppTocDiscussionComponent } from './components/app-toc-discussion/app-toc-discussion.component'
 import { KnowledgeArtifactDetailsComponent } from './components/knowledge-artifact-details/knowledge-artifact-details.component'
 import { AppTocResolverService } from './resolvers/app-toc-resolver.service'
+import { ConfigResolverService } from './resolvers/config-resolver.service'
 import { AppTocAnalyticsComponent } from './routes/app-toc-analytics/app-toc-analytics.component'
 import { CertificationMetaResolver } from './routes/app-toc-certification/resolvers/certification-meta.resolver'
 import { ContentCertificationResolver } from './routes/app-toc-certification/resolvers/content-certification.resolver'
@@ -25,6 +26,7 @@ const routes: Routes = [
     resolve: {
       pageData: PageResolve,
       content: AppTocResolverService,
+      configData: ConfigResolverService,
     },
     runGuardsAndResolvers: 'paramsChange',
     children: [
@@ -49,8 +51,9 @@ const routes: Routes = [
       {
         path: 'overview',
         component: AppTocSinglePageRootComponent,
-        // pathMatch: 'full',
-        // redirectTo: 'single-page-view',
+        resolve: {
+          configData: ConfigResolverService,
+        },
       },
       {
         path: 'discussion',
@@ -88,6 +91,7 @@ const routes: Routes = [
     component: KnowledgeArtifactDetailsComponent,
     resolve: {
       content: AppTocResolverService,
+      configData: ConfigResolverService,
     },
   },
 ]

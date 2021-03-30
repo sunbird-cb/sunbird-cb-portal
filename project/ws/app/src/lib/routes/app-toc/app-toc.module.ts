@@ -42,6 +42,7 @@ import { AppTocDiscussionComponent } from './components/app-toc-discussion/app-t
 
 // services
 import { AppTocResolverService } from './resolvers/app-toc-resolver.service'
+import { ConfigResolverService } from './resolvers/config-resolver.service'
 import { AppTocService } from './services/app-toc.service'
 
 // custom modules
@@ -196,6 +197,7 @@ import { CreateBatchDialogComponent } from './components/create-batch-dialog/cre
     EditorService,
     ApiService,
     AccessControlService,
+    ConfigResolverService,
   ],
   exports: [AppTocDiscussionComponent],
   entryComponents: [

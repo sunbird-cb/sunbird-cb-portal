@@ -18,7 +18,8 @@
     "e2e": "ng e2e",
     "i18n": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng xi18n --output-path locale",
     "tailwind": "./node_modules/.bin/tailwind build ./src/tailwind-build.scss  -o ./src/styles.scss",
-    "prestart": "npm run tailwind"
+    "prestart": "npm run tailwind",
+    "bundle-report": "webpack-bundle-analyzer dist/stats.json"
   },
   "private": true,
   "dependencies": {
@@ -39,10 +40,10 @@
     "@project-sunbird/sb-styles": "0.0.7",
     "@project-sunbird/sunbird-quml-player": "0.0.6",
     "@project-sunbird/telemetry-sdk": "0.0.26",
-    "@sunbird-cb/collection": "^0.0.11",
+    "@sunbird-cb/collection": "^0.0.12",
+    "@sunbird-cb/design-system": "0.0.1",
     "@sunbird-cb/resolver": "^0.0.3",
     "@sunbird-cb/utils": "0.0.8",
-    "@sunbird-cb/design-system": "0.0.1",
     "@types/file-saver": "^2.0.1",
     "@types/lodash": "^4.14.168",
     "bootstrap": "4.1.1",
@@ -123,6 +124,6 @@
     "tslint-config-airbnb": "^5.11.1",
     "typescript": "~3.5.3",
     "typescript-tslint-plugin": "^0.5.4",
-    "webpack-bundle-analyzer": "^3.4.1"
+    "webpack-bundle-analyzer": "^4.4.0"
   }
 }
