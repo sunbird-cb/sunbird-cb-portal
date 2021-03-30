@@ -38,10 +38,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.evaluateImmediateChildrenStructure()
-
     this.route.data.subscribe(data => {
-        console.log('Data :', data)
-
         this.defaultThumbnail = data.configData.data.logos.defaultContent
       }
     )

@@ -1,10 +1,9 @@
-import { Injectable, SkipSelf } from '@angular/core'
+import { Injectable } from '@angular/core'
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router'
 import { NsContent, PipeContentRoutePipe, WidgetContentService } from '@sunbird-cb/collection'
 import { IResolveResponse } from '@sunbird-cb/utils'
 import { Observable, of } from 'rxjs'
 import { catchError, map, tap } from 'rxjs/operators'
-import { ConfigurationsService } from '@sunbird-cb/utils'
 
 const ADDITIONAL_FIELDS_IN_CONTENT = [
   'averageRating',
@@ -61,7 +60,6 @@ export class AppTocResolverService
     private contentSvc: WidgetContentService,
     private routePipe: PipeContentRoutePipe,
     private router: Router,
-    @SkipSelf() private configSvc: ConfigurationsService
   ) { }
 
   resolve(
@@ -69,7 +67,6 @@ export class AppTocResolverService
     _state: RouterStateSnapshot,
   ): Observable<IResolveResponse<NsContent.IContent>> {
     const contentId = route.paramMap.get('id')
-    this.configSvc.instanceConfig
     const primaryCategory = route.queryParamMap.get('primaryCategory') || ''
     if (contentId) {
       const forPreview = window.location.href.includes('/author/')
