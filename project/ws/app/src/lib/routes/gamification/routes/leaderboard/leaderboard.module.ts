@@ -17,9 +17,9 @@ import {
 import { LeaderboardItemComponent } from '../leaderboard-item/leaderboard-item.component'
 import { CardListComponent } from '../card-list/card-list.component'
 import { CardListItemComponent } from '../card-list-item/card-list-item.component'
-import { UserImageModule } from '@ws-widget/collection'
+import { UserImageModule } from '@sunbird-cb/collection'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { PipeNameTransformModule, PipeCountTransformModule } from '@ws-widget/utils'
+import { PipeNameTransformModule, PipeCountTransformModule } from '@sunbird-cb/utils'
 
 @NgModule({
   declarations: [LeaderboardHomeComponent,

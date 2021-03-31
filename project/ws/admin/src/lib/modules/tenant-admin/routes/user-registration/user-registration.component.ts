@@ -3,7 +3,7 @@ import { TenantAdminService } from '../../tenant-admin.service'
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material'
 import { IResponseAllSources } from '../../models/userRegistration.model'
-import { NsAutoComplete } from '@ws-widget/collection/src/lib/_common/user-autocomplete/user-autocomplete.model'
+import { NsAutoComplete } from '@sunbird-cb/collection'
 @Component({
   selector: 'ws-admin-user-registration',
   templateUrl: './user-registration.component.html',

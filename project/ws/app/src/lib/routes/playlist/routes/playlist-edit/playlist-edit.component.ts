@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core'
-import { NsPlaylist, BtnPlaylistService, NsContent } from '@ws-widget/collection'
-import { TFetchStatus, NsPage, ConfigurationsService } from '@ws-widget/utils'
+import { NsPlaylist, BtnPlaylistService, NsContent } from '@sunbird-cb/collection'
+import { TFetchStatus, NsPage, ConfigurationsService } from '@sunbird-cb/utils'
 import { ActivatedRoute, Router } from '@angular/router'
 import { MatSnackBar } from '@angular/material'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
@@ -21,7 +21,7 @@ export class PlaylistEditComponent implements OnInit {
   editPlaylistForm: FormGroup
   createPlaylistStatus: TFetchStatus = 'none'
 
-  playlist: NsPlaylist.IPlaylist = this.route.snapshot.data.playlist.data.result.content
+  playlist: NsPlaylist.IPlaylist = this.route.snapshot.data.playlist.data
   error = this.route.snapshot.data.playlist.error
   type = this.route.snapshot.data.type
   upsertPlaylistStatus: TFetchStatus = 'none'
@@ -46,17 +46,9 @@ export class PlaylistEditComponent implements OnInit {
       visibility: [NsPlaylist.EPlaylistVisibilityTypes.PRIVATE],
       message: '',
     })
-
-    const children = this.playlist.children
-    // let selectedIds = []
-    // children.forEach((item: { identifier: string }) => {
-    //   selectedIds.push(item.identifier)
-    // });
-
     this.selectedContentIds = new Set<string>(
-      (children).map((content: { identifier: string }) => content.identifier),
+      (this.playlist && this.playlist.contents || []).map(content => content.identifier),
     )
-
   }
   ngOnInit(): void {
     this.editPlaylistForm = this.fb.group({

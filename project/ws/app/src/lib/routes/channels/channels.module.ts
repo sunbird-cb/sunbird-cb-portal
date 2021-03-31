@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common'
 
 import { ChannelsRoutingModule } from './channels-routing.module'
 import { ChannelsHomeComponent } from './routes/channels-home/channels-home.component'
-import { CardChannelModule, CardChannelModuleV2, CardContentModule, BtnPageBackModule } from '@ws-widget/collection'
+import { CardChannelModule, CardChannelModuleV2, CardContentModule, BtnPageBackModule } from '@sunbird-cb/collection'
 import { MatToolbarModule, MatExpansionModule, MatProgressSpinnerModule } from '@angular/material'
 @NgModule({
   declarations: [ChannelsHomeComponent],

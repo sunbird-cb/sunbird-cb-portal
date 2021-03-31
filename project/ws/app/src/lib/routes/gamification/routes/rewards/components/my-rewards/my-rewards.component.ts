@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
-import { ConfigurationsService } from '@ws-widget/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { GamificationService } from '../../../../services/gamification.service'
 import { Subscription } from 'rxjs'
 

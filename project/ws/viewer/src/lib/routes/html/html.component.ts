@@ -1,14 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { AccessControlService } from '@ws/author'
-import { NsContent, NsDiscussionForum, WidgetContentService } from '@ws-widget/collection'
-import { NsWidgetResolver } from '@ws-widget/resolver'
+import { NsContent, NsDiscussionForum, WidgetContentService } from '@sunbird-cb/collection'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import {
   ConfigurationsService,
   EventService,
   SubapplicationRespondService,
   WsEvents,
-} from '@ws-widget/utils'
+} from '@sunbird-cb/utils'
 import { fromEvent, Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
 import { ViewerUtilService } from '../../viewer-util.service'

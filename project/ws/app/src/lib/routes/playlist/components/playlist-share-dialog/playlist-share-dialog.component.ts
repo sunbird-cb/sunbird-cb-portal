@@ -1,7 +1,7 @@
 import { Component, ElementRef, Inject, TemplateRef, ViewChild, OnInit } from '@angular/core'
 import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material'
-import { BtnPlaylistService, NsAutoComplete, NsPlaylist } from '@ws-widget/collection'
-import { TFetchStatus, ConfigurationsService } from '@ws-widget/utils'
+import { BtnPlaylistService, NsAutoComplete, NsPlaylist } from '@sunbird-cb/collection'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-playlist-share-dialog',
@@ -42,12 +42,12 @@ export class PlaylistShareDialogComponent implements OnInit {
       this.playlistSvc
         .sharePlaylist(
           {
-            name: this.data.playlist.result.content.name,
-            versionKey: this.data.playlist.result.content.versionKey,
+            name: this.data.playlist.name,
+            // versionKey: this.data.playlist.versionKey,
             message: shareMsg,
-            users: this.users.map(user => user.userId),
+            users: this.users.map(user => user.wid),
           },
-          this.data.playlist.result.content.identifier,
+          this.data.playlist.id,
         )
         .subscribe(
           () => {

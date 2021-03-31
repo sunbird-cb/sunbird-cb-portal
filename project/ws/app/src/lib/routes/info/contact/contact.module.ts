@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ContactHomeComponent } from './components/contact-home.component'
 import { MatToolbarModule, MatCardModule, MatButtonModule } from '@angular/material'
-import { BtnPageBackModule } from '@ws-widget/collection'
+import { BtnPageBackModule } from '@sunbird-cb/collection'
 
 @NgModule({
   declarations: [ContactHomeComponent],

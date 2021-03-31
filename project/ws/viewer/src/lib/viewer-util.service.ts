@@ -1,8 +1,8 @@
-import { ConfigurationsService } from '@ws-widget/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { noop, Observable } from 'rxjs'
-import { NsContent } from '@ws-widget/collection'
+import { NsContent } from '@sunbird-cb/collection'
 import * as dayjs from 'dayjs'
 
 @Injectable({

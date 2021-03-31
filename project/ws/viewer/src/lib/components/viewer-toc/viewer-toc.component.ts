@@ -8,13 +8,13 @@ import {
   NsContent,
   VIEWER_ROUTE_FROM_MIME,
   WidgetContentService,
-} from '@ws-widget/collection'
-import { NsWidgetResolver } from '@ws-widget/resolver'
+} from '@sunbird-cb/collection'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import {
   // LoggerService,
   ConfigurationsService,
   UtilityService,
-} from '@ws-widget/utils'
+} from '@sunbird-cb/utils'
 import { of, Subscription } from 'rxjs'
 import { delay } from 'rxjs/operators'
 import { ViewerDataService } from '../../viewer-data.service'

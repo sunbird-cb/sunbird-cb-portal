@@ -22,7 +22,7 @@ import { MatTabsModule } from '@angular/material/tabs'
 // import { RecentForumPostComponent } from './recent-forum-post/components/recent-forum-post.component'
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { RouterModule } from '@angular/router'
-import { BtnPageBackModule } from '../../../../../../../../../library/ws-widget/collection/src/lib/btn-page-back/btn-page-back.module'
+import { BtnPageBackModule } from '@sunbird-cb/collection'
 
 import { ForumHomeRoutingModule } from './forum-home-routing.module'
 import { ForumHomeComponent } from './forum-home.component'

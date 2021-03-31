@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { LearningComponent } from './routes/learning/learning.component'
-import { WidgetResolverModule } from '@ws-widget/resolver'
+import { WidgetResolverModule } from '@sunbird-cb/resolver'
 // material modules
 import {
   MatButtonModule,
@@ -30,7 +30,7 @@ import {
   HorizontalScrollerModule,
   DefaultThumbnailModule,
   PipeLimitToModule,
-} from '@ws-widget/utils'
+} from '@sunbird-cb/utils'
 import { TileComponent } from './components/tile/tile.component'
 import { ProgressSpinnerComponent } from './components/progress-spinner/progress-spinner.component'
 import { PlansComponent } from './routes/plans/plans.component'

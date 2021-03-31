@@ -19,12 +19,6 @@
     "noUnusedParameters": true,
     "outDir": "./dist/out-tsc",
     "paths": {
-      "@ws-widget/resolver": ["library/ws-widget/resolver"],
-      "@ws-widget/resolver/*": ["library/ws-widget/resolver/*"],
-      "@ws-widget/collection": ["library/ws-widget/collection"],
-      "@ws-widget/collection/*": ["library/ws-widget/collection/*"],
-      "@ws-widget/utils": ["library/ws-widget/utils"],
-      "@ws-widget/utils/*": ["library/ws-widget/utils/*"],
       "@ws/app": ["project/ws/app"],
       "@ws/app/*": ["project/ws/app/*"],
       "@ws/author": ["project/ws/author"],

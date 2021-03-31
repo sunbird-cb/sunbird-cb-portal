@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
-import { ConfigurationsService } from '@ws-widget/utils'
-import { BtnGoalsService, NsGoal } from '@ws-widget/collection'
+import { ConfigurationsService } from '@sunbird-cb/utils'
+import { BtnGoalsService, NsGoal } from '@sunbird-cb/collection'
 import { ActivatedRoute } from '@angular/router'
 
 @Component({

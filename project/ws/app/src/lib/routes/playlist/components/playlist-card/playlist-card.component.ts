@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core'
-import { NsPlaylist, BtnPlaylistService, NsContent } from '@ws-widget/collection'
+import { NsPlaylist, BtnPlaylistService, NsContent } from '@sunbird-cb/collection'
 import { ActivatedRoute, Router } from '@angular/router'
-import { TFetchStatus, ConfigurationsService } from '@ws-widget/utils'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 import { MatDialog, MatSnackBar } from '@angular/material'
 // tslint:disable-next-line:max-line-length
 import { PlaylistContentDeleteDialogComponent } from '../../components/playlist-content-delete-dialog/playlist-content-delete-dialog.component'
@@ -74,10 +74,10 @@ export class PlaylistCardComponent implements OnInit {
     const dialogRef = this.dialog.open(PlaylistDeleteDialogComponent)
     let routeTo: string
     this.type === 'user' ? (routeTo = 'me') : (routeTo = 'shared')
-    dialogRef.afterClosed().subscribe(shouldDelete => {
+    dialogRef.afterClosed().subscribe((shouldDelete: any) => {
       if (shouldDelete && this.playlist) {
         this.deletePlaylistStatus = 'fetching'
-        this.playlistSvc.deletePlaylist(this.playlist.identifier, this.type).subscribe(
+        this.playlistSvc.deletePlaylist(this.playlist.id, this.type).subscribe(
           () => {
             this.deletePlaylistStatus = 'done'
             this.snackBar.open(this.playlistDeleteSuccessMessage.nativeElement.value, 'X')
@@ -115,7 +115,7 @@ export class PlaylistCardComponent implements OnInit {
     let routeTo: string
     this.type === 'user' ? (routeTo = 'me') : (routeTo = 'shared')
     if (this.playlist) {
-      this.router.navigate([`/app/playlist/${routeTo}/${this.playlist.identifier}/edit`])
+      this.router.navigate([`/app/playlist/${routeTo}/${this.playlist.id}/edit`])
     } else {
       this.snackBar.open(this.playlistEditFailedMessage.nativeElement.value, 'X')
     }

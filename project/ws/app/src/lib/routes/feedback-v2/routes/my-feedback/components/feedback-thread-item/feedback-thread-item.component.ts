@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { IFeedbackThread } from '@ws-widget/collection'
+import { IFeedbackThread } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-app-feedback-thread-item',

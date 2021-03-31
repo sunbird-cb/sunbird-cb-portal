@@ -18,15 +18,15 @@ import {
   UserImageModule,
   UserContentRatingModule,
   BtnContentFeedbackV2Module,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 
 import {
   PipeDurationTransformModule,
   PipeLimitToModule,
   PipePartialContentModule,
-} from '@ws-widget/utils'
+} from '@sunbird-cb/utils'
 
-import { WidgetResolverModule } from '@ws-widget/resolver'
+import { WidgetResolverModule } from '@sunbird-cb/resolver'
 
 import { ResourceCollectionRoutingModule } from './resource-collection-routing.module'
 

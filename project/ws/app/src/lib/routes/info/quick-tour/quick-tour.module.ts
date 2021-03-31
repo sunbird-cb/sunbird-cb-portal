@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
-import { WidgetResolverModule } from '@ws-widget/resolver'
+import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { QuickTourComponent } from './quick-tour.component'
 
 @NgModule({

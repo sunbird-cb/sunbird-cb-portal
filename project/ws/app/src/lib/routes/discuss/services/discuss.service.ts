@@ -1,7 +1,7 @@
 import { Injectable, SkipSelf } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { NSDiscussData } from '../models/discuss.model'
-import { ConfigurationsService, NsUser } from 'library/ws-widget/utils/src/public-api'
+import { ConfigurationsService, NsUser } from '@sunbird-cb/utils'
 
 const API_ENDPOINTS = {
   getAllCategories: '/apis/protected/v8/discussionHub/categories',

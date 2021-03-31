@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, ViewChild, ViewEncapsulation } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
-import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Observable } from 'rxjs'
 import { debounceTime, distinctUntilChanged, startWith, switchMap } from 'rxjs/operators'
 import { ISearchAutoComplete } from '../../models/search.model'

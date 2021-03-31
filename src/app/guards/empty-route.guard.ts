@@ -8,7 +8,7 @@ import {
   ActivatedRoute,
 } from '@angular/router'
 import { Observable } from 'rxjs'
-import { ConfigurationsService, AuthKeycloakService } from '@ws-widget/utils'
+import { ConfigurationsService, AuthKeycloakService } from '@sunbird-cb/utils'
 
 @Injectable({
   providedIn: 'root',

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { MatSnackBar, MatDialog } from '@angular/material'
-import { TFetchStatus, ConfigurationsService, NsPage } from '@ws-widget/utils'
-import { DialogSocialDeletePostComponent, NsDiscussionForum, WsDiscussionForumService } from '@ws-widget/collection'
+import { TFetchStatus, ConfigurationsService, NsPage } from '@sunbird-cb/utils'
+import { DialogSocialDeletePostComponent, NsDiscussionForum, WsDiscussionForumService } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-app-blog-view',

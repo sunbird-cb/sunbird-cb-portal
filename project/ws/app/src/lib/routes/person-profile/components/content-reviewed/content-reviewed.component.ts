@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnDestroy, EventEmitter, Output } from '@angu
 import { ISearchContent, ISearchResult } from '../../../../../../../author/src/lib/interface/search'
 import { Subscription } from 'rxjs'
 import { MyContentService } from '../../../../../../../author/src/lib/routing/modules/my-content/services/my-content.service'
-import { ConfigurationsService, TFetchStatus } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
 import { MatSnackBar } from '@angular/material'
 
 @Component({

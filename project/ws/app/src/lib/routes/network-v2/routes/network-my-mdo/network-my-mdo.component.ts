@@ -3,7 +3,7 @@ import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { NetworkV2Service } from '../../services/network-v2.service'
-import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-network-my-mdo',

@@ -1,7 +1,7 @@
 import { Injectable, LOCALE_ID, Inject } from '@angular/core'
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http'
 import { Observable } from 'rxjs'
-import { ConfigurationsService } from '@ws-widget/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Injectable({
   providedIn: 'root',

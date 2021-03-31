@@ -11,8 +11,8 @@ import {
   ROOT_WIDGET_CONFIG,
   TChartJsColorPalette,
   TChartJsGraphType,
-} from '@ws-widget/collection'
-import { ConfigurationsService, TFetchStatus, ValueService } from '@ws-widget/utils'
+} from '@sunbird-cb/collection'
+import { ConfigurationsService, TFetchStatus, ValueService } from '@sunbird-cb/utils'
 import { Chart } from 'chart.js'
 import { Subscription } from 'rxjs'
 import { NSProfileData } from '../../../../models/profile.model'

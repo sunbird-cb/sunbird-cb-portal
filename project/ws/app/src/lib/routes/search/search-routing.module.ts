@@ -7,7 +7,7 @@ import { ProjectComponent } from './routes/project/project.component'
 import { SocialComponent } from './routes/social/social.component'
 import { HomeComponent } from './routes/home/home.component'
 import { PeopleComponent } from './routes/people/people.component'
-import { PageResolve } from '@ws-widget/utils'
+import { PageResolve } from '@sunbird-cb/utils'
 import { GeneralGuard } from 'src/app/guards/general.guard'
 
 const routes: Routes = [

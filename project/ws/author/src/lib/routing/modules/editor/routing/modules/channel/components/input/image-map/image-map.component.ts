@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, ViewChild, ViewChildren } from '@angular/core'
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material'
-import { IWidgetImageMap, IWidgetMapMeta } from '@ws-widget/collection/src/lib/image-map-responsive/image-map-responsive.model'
+import { IWidgetImageMap, IWidgetMapMeta } from '@sunbird-cb/collection/src/lib/image-map-responsive/image-map-responsive.model'
 import { AUTHORING_CONTENT_BASE, CONTENT_BASE_WEBHOST_ASSETS } from '@ws/author/src/lib/constants/apiEndpoints'
 import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
 import { Notify } from '@ws/author/src/lib/constants/notificationMessage'

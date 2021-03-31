@@ -13,7 +13,7 @@ import {
 } from '@angular/material'
 import { BadgesCardComponent } from './components/badges-card/badges-card.component'
 import { BadgesNotEarnedComponent } from './components/badges-not-earned/badges-not-earned.component'
-import { HorizontalScrollerModule, DefaultThumbnailModule } from '@ws-widget/utils'
+import { HorizontalScrollerModule, DefaultThumbnailModule } from '@sunbird-cb/utils'
 @NgModule({
   declarations: [BadgeComponent, BadgesCardComponent, BadgesNotEarnedComponent],
   imports: [

@@ -8,8 +8,8 @@ import {
   FeedbackService,
   EFeedbackRole,
   NsContent,
-} from '@ws-widget/collection'
-import { IResolveResponse, ConfigurationsService } from '@ws-widget/utils'
+} from '@sunbird-cb/collection'
+import { IResolveResponse, ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-feedback-thread-header',

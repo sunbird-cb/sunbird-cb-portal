@@ -8,7 +8,7 @@ import {
   MatIconModule,
 } from '@angular/material'
 
-import { BtnPageBackModule } from '@ws-widget/collection'
+import { BtnPageBackModule } from '@sunbird-cb/collection'
 
 import { NotificationV2RoutingModule } from './notification-v2-routing.module'
 import { HomeComponent } from './components/home/home.component'

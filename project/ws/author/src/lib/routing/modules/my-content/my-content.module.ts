@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
-import { PipeContentRouteModule } from '@ws-widget/collection'
+import { PipeContentRouteModule } from '@sunbird-cb/collection'
 import { SharedModule } from '@ws/author/src/lib/modules/shared/shared.module'
 import { ContentCardComponent } from './components/content-card/content-card.component'
 import { MyContentComponent } from './components/my-content/my-content.component'

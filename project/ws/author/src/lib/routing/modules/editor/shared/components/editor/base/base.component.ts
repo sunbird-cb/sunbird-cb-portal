@@ -18,7 +18,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 // import { LoaderService } from '@ws/author/src/lib/services/loader.service'
 // import { of, Subscription } from 'rxjs'
 // import { mergeMap, tap } from 'rxjs/operators'
-// import { VIEWER_ROUTE_FROM_MIME } from '../../../../../../../../../../../../library/ws-widget/collection/src/public-api'
+// import { VIEWER_ROUTE_FROM_MIME } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-auth-base',

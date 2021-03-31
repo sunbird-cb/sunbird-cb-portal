@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { ValueService } from '@ws-widget/utils'
+import { ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 
 @Component({

@@ -23,10 +23,10 @@ import {
 } from '@angular/material'
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { BtnFeatureModule, ErrorResolverModule, TourModule, WIDGET_REGISTERED_MODULES, WIDGET_REGISTRATION_CONFIG, PipeContentRoutePipe } from '@ws-widget/collection'
-import { StickyHeaderModule } from '@ws-widget/collection/src/lib/_common/sticky-header/sticky-header.module'
-import { WidgetResolverModule } from '@ws-widget/resolver'
-import { LoggerService, PipeSafeSanitizerModule } from '@ws-widget/utils'
+import { BtnFeatureModule, ErrorResolverModule, TourModule, WIDGET_REGISTERED_MODULES, WIDGET_REGISTRATION_CONFIG, PipeContentRoutePipe,
+  StickyHeaderModule } from '@sunbird-cb/collection'
+import { WidgetResolverModule } from '@sunbird-cb/resolver'
+import { LoggerService, PipeSafeSanitizerModule, ConfigurationsService } from '@sunbird-cb/utils'
 import { SearchModule } from '@ws/app/src/public-api'
 import 'hammerjs'
 import { KeycloakAngularModule } from 'keycloak-angular'
@@ -159,6 +159,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     { provide: HTTP_INTERCEPTORS, useClass: AppRetryInterceptorService, multi: true },
     TncAppResolverService,
     TncPublicResolverService,
+    ConfigurationsService,
     PipeContentRoutePipe,
     AppTocResolverService,
     {

@@ -18,8 +18,8 @@ import {
   BtnSocialVoteModule,
   EditorQuillModule,
   BtnPageBackModule,
-} from '@ws-widget/collection'
-import { PipeSafeSanitizerModule } from '@ws-widget/utils'
+} from '@sunbird-cb/collection'
+import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { BlogsReplyModule } from '../../blogs/blogs-reply/blogs-reply.module'
 @NgModule({
