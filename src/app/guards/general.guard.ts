@@ -6,7 +6,7 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router'
-import { ConfigurationsService, AuthKeycloakService } from '../../../library/ws-widget/utils/src/public-api'
+import { ConfigurationsService, AuthKeycloakService } from '@sunbird-cb/utils'
 
 @Injectable({
   providedIn: 'root',

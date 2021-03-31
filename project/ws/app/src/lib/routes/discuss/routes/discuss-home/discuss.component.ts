@@ -1,9 +1,9 @@
 
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ActivatedRoute, Router, Event, NavigationEnd, NavigationError } from '@angular/router'
-import { ValueService } from '@ws-widget/utils/src/public-api'
+import { ValueService } from '@sunbird-cb/utils'
 import { map } from 'rxjs/operators'
-import { NsWidgetResolver } from 'library/ws-widget/resolver/src/public-api'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 @Component({
   selector: 'app-discuss',
   templateUrl: './discuss.component.html',

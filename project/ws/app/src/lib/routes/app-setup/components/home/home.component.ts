@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { ConfigurationsService } from '../../../../../../../../../library/ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { SafeUrl, DomSanitizer } from '@angular/platform-browser'
 import { Event, NavigationEnd, Router } from '@angular/router'
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { ConfigurationsService } from '@ws-widget/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Router } from '@angular/router'
 
 @Component({

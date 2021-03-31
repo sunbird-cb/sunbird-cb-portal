@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core'
-import { TFetchStatus, ConfigurationsService } from '@ws-widget/utils'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 import { MatSelectChange } from '@angular/material'
 import { GamificationService } from '../../../../services/gamification.service'
 import { ExcelService } from '../excel.service'

@@ -2,7 +2,7 @@
 // import { WsSharedUtilityService } from '@ws-shared/services'
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { NSSearch, TreeCatalogService } from '@ws-widget/collection'
+import { NSSearch, TreeCatalogService } from '@sunbird-cb/collection'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { ITopic, ITopicRecommended } from '../models/interest.model'

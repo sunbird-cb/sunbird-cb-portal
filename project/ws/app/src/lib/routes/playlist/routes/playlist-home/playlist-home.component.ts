@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { NsError, NsPlaylist, ROOT_WIDGET_CONFIG } from '@ws-widget/collection'
-import { NsWidgetResolver } from '@ws-widget/resolver'
-import { ConfigurationsService, NsPage } from '@ws-widget/utils'
+import { NsError, NsPlaylist, ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { SafeStyle, DomSanitizer } from '@angular/platform-browser'
 

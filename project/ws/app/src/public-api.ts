@@ -5,6 +5,7 @@
 // module exports
 export * from './lib/routes/app-setup/app-setup.module'
 export * from './lib/routes/app-toc/app-toc.module'
+export * from './lib/routes/certificate/certificate.module'
 export * from './lib/routes/channels/channels.module'
 export * from './lib/routes/competencies/competence.module'
 export * from './lib/routes/content-assignment/content-assignment.module'

@@ -1,9 +1,9 @@
 import { AccessControlService } from '@ws/author'
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Subscription } from 'rxjs'
-import { NsContent, NsDiscussionForum, WidgetContentService } from '@ws-widget/collection'
-import { WsEvents, EventService, ConfigurationsService } from '@ws-widget/utils'
-import { NsWidgetResolver } from '@ws-widget/resolver'
+import { NsContent, NsDiscussionForum, WidgetContentService } from '@sunbird-cb/collection'
+import { WsEvents, EventService, ConfigurationsService } from '@sunbird-cb/utils'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ActivatedRoute } from '@angular/router'
 import { ViewerUtilService } from '../../viewer-util.service'
 

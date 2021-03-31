@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { CanActivate, UrlTree, Router } from '@angular/router'
 import { Observable } from 'rxjs'
-import { ValueService } from '@ws-widget/utils'
+import { ValueService } from '@sunbird-cb/utils'
 
 @Injectable({
   providedIn: 'root',

@@ -15,7 +15,7 @@ import {
 
 import {
   BtnFullscreenModule,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 
 import { WebModuleComponent } from './web-module.component'
 

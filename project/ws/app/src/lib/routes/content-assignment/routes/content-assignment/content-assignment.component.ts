@@ -3,17 +3,15 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
 import { ActivatedRoute, Router } from '@angular/router'
-import { ContentAssignService, NsContent } from '@ws-widget/collection'
-import { ConfigurationsService, TFetchStatus, ValueService } from '@ws-widget/utils'
+import { ContentAssignService, NsContent } from '@sunbird-cb/collection'
+import { ConfigurationsService, TFetchStatus, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
-import {
-  IContentAssignModel,
-} from '../../../../../../../../../library/ws-widget/collection/src/lib/content-assign/content-assign.model'
 import { IFilterUnitResponse } from '../../../search/models/search.model'
 import { DialogAssignComponent } from '../../components/dialog-assign/dialog-assign.component'
 import {
   UserFilterDisplayComponent,
 } from '../../components/user-filter-display/user-filter-display.component'
+import { IContentAssignModel } from '@sunbird-cb/collection/lib/content-assign/content-assign.model'
 @Component({
   selector: 'ws-app-content-assignment',
   templateUrl: './content-assignment.component.html',

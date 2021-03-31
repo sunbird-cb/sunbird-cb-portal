@@ -3,7 +3,7 @@ import { Resolve } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
 import { HttpClient } from '@angular/common/http'
-import { IResolveResponse } from '@ws-widget/utils'
+import { IResolveResponse } from '@sunbird-cb/utils'
 import { NsTnc } from '../models/tnc.model'
 
 @Injectable()

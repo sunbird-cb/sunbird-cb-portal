@@ -11,9 +11,9 @@ import {
   ROOT_WIDGET_CONFIG,
   viewerRouteGenerator,
   WidgetContentService,
-} from '@ws-widget/collection'
-import { NsWidgetResolver } from '@ws-widget/resolver'
-import { ConfigurationsService, NsPage, TFetchStatus, ValueService } from '@ws-widget/utils'
+} from '@sunbird-cb/collection'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { ConfigurationsService, NsPage, TFetchStatus, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 // tslint:disable-next-line:max-line-length
 import { PlaylistContentDeleteDialogComponent } from '../../components/playlist-content-delete-dialog/playlist-content-delete-dialog.component'
@@ -151,7 +151,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
       this.changeName = changeName
       if (!this.changeName) {
         this.playlist.result.content.name = formValues.title
-        this.playlistSvc.patchPlaylist(this.playlist.result.content).subscribe()
+        // this.playlistSvc.patchPlaylist(this.playlist.result.content).subscribe()
       }
     }
   }
@@ -196,7 +196,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   drop(event: CdkDragDrop<string[]>) {
     if (this.playlist) {
       moveItemInArray(this.playlist.contents, event.previousIndex, event.currentIndex)
-      this.playlistSvc.patchPlaylist(this.playlist).subscribe()
+      // this.playlistSvc.patchPlaylist(this.playlist).subscribe()
     }
   }
 

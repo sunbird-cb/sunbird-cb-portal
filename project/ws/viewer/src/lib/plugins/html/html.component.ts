@@ -2,9 +2,8 @@ import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild, OnDestroy }
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
 import { Router } from '@angular/router'
-import { NsContent } from '@ws-widget/collection'
-import { ConfigurationsService, EventService } from '@ws-widget/utils'
-import { TFetchStatus } from '@ws-widget/utils/src/public-api'
+import { NsContent } from '@sunbird-cb/collection'
+import { ConfigurationsService, EventService, TFetchStatus } from '@sunbird-cb/utils'
 import { MobileAppsService } from '../../../../../../../src/app/services/mobile-apps.service'
 import { SCORMAdapterService } from './SCORMAdapter/scormAdapter'
 /* tslint:disable */

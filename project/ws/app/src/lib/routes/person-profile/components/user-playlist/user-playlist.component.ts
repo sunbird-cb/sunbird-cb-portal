@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter, OnChanges } from '@angular/core'
-import { NsPlaylist } from '@ws-widget/collection'
+import { NsPlaylist } from '@sunbird-cb/collection'
 import { Subscription } from 'rxjs'
-import { ConfigurationsService, TFetchStatus } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { PersonProfileService } from '../../services/person-profile.service'
 

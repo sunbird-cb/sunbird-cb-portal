@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
-import { NsWidgetResolver } from '@ws-widget/resolver/src/public-api'
+import { NsWidgetResolver } from '@sunbird-cb/resolver/src/public-api'
 import { BehaviorSubject } from 'rxjs'
 import { IWidgetAuthor } from '../interface/widget'
 import { EditorContentService } from './../../../../services/editor-content.service'

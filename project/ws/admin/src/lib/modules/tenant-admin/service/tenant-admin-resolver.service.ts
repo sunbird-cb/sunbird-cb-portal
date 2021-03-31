@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { Resolve, Router, ActivatedRouteSnapshot } from '@angular/router'
 import { HttpClient } from '@angular/common/http'
-import { ConfigurationsService } from '@ws-widget/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 interface IResolverResponse {
   data: any

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 
-import { NsPlaylist } from '@ws-widget/collection'
+import { NsPlaylist } from '@sunbird-cb/collection'
 
 import { PlaylistHomeComponent } from './routes/playlist-home/playlist-home.component'
 import { PlaylistCreateComponent } from './routes/playlist-create/playlist-create.component'
@@ -10,7 +10,7 @@ import { PlaylistDetailComponent } from './routes/playlist-detail/playlist-detai
 import { PlaylistResolve } from './resolvers/playlist.resolve'
 import { PlaylistEditComponent } from './routes/playlist-edit/playlist-edit.component'
 import { PlaylistNotificationComponent } from './routes/playlist-notification/playlist-notification.component'
-import { PageResolve } from '@ws-widget/utils'
+import { PageResolve } from '@sunbird-cb/utils'
 
 const routes: Routes = [
   {

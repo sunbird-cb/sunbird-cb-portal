@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
-import { TFetchStatus, LoggerService, ConfigurationsService } from '@ws-widget/utils'
+import { TFetchStatus, LoggerService, ConfigurationsService } from '@sunbird-cb/utils'
 import { IBadgeResponse } from './badges.model'
 import { ActivatedRoute } from '@angular/router'
 import { Subscription, fromEvent } from 'rxjs'

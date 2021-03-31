@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { NsDiscussionForum, DialogSocialDeletePostComponent } from '@ws-widget/collection'
-import { ConfigurationsService } from '@ws-widget/utils'
+import { NsDiscussionForum, DialogSocialDeletePostComponent } from '@sunbird-cb/collection'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { MatSnackBar, MatDialog } from '@angular/material'
 
 @Component({

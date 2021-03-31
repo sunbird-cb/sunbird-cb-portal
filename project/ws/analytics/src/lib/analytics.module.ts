@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common'
 import { AnalyticsComponent } from './analytics.component'
 import { AnalyticsRoutingModule } from './analytics-routing.module'
 
-import { BtnPageBackModule, PageModule } from '@ws-widget/collection'
+import { BtnPageBackModule, PageModule } from '@sunbird-cb/collection'
 
 import {
   MatToolbarModule,

@@ -1,4 +1,4 @@
-import { NsWidgetResolver } from '@ws-widget/resolver'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 
 export const isNotEmptyWidget = (widgetData: NsWidgetResolver.IRenderConfigWithAnyData): boolean => {
   switch (widgetData.widgetSubType) {

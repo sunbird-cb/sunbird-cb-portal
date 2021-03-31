@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { PageResolve } from '@ws-widget/utils'
+import { PageResolve } from '@sunbird-cb/utils'
 import { ProfileComponent } from './profile.component'
 import { LearningComponent } from './routes/analytics/routes/learning/learning.component'
 import { PlansComponent } from './routes/analytics/routes/plans/plans.component'

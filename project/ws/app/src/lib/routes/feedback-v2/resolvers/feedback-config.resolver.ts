@@ -3,8 +3,8 @@ import { Resolve } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
 
-import { IResolveResponse } from '@ws-widget/utils'
-import { IFeedbackConfig, FeedbackService } from '@ws-widget/collection'
+import { IResolveResponse } from '@sunbird-cb/utils'
+import { IFeedbackConfig, FeedbackService } from '@sunbird-cb/collection'
 
 @Injectable()
 export class FeedbackConfigResolver implements Resolve<IResolveResponse<IFeedbackConfig>> {

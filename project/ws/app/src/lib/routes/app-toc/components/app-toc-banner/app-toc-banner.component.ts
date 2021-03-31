@@ -9,9 +9,8 @@ import {
   NsPlaylist,
   viewerRouteGenerator,
   WidgetContentService,
-} from '@ws-widget/collection'
-import { ConfigurationsService, TFetchStatus } from '@ws-widget/utils'
-import { UtilityService } from '@ws-widget/utils/src/lib/services/utility.service'
+} from '@sunbird-cb/collection'
+import { ConfigurationsService, TFetchStatus, UtilityService } from '@sunbird-cb/utils'
 import { AccessControlService } from '@ws/author'
 import { Subscription } from 'rxjs'
 import { NsAnalytics } from '../../models/app-toc-analytics.model'
@@ -36,7 +35,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   @Input() resumeData: NsContent.IContinueLearningData | null = null
   @Input() analytics: NsAnalytics.IAnalytics | null = null
   @Input() forPreview = false
-  @Input() batchData: NsContent.IBatchListResponse | null = null
+  @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   batchControl = new FormControl('', Validators.required)
   contentProgress = 0
   bannerUrl: SafeStyle | null = null

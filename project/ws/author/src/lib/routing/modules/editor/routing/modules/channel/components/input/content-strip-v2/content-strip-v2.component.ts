@@ -7,8 +7,8 @@ import {
   IWidgetElementHtml,
   NsContent,
   NsContentStripMultiple,
-} from '@ws-widget/collection/src/public-api'
-import { NsWidgetResolver } from '@ws-widget/resolver/src/public-api'
+} from '@sunbird-cb/collection'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfirmDialogComponent } from '@ws/author/src/lib/modules/shared/components/confirm-dialog/confirm-dialog.component'
 import { Observable, of } from 'rxjs'
 import { debounceTime, distinctUntilChanged, startWith, switchMap } from 'rxjs/operators'
