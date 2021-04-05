@@ -23,9 +23,6 @@ import {
   ValueService,
   WsEvents,
 } from '@sunbird-cb/utils'
-
-// import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
-
 import { delay } from 'rxjs/operators'
 import { MobileAppsService } from '../../services/mobile-apps.service'
 import { RootService } from './root.service'
