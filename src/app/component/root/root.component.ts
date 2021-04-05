@@ -23,6 +23,9 @@ import {
   ValueService,
   WsEvents,
 } from '@sunbird-cb/utils'
+
+// import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+
 import { delay } from 'rxjs/operators'
 import { MobileAppsService } from '../../services/mobile-apps.service'
 import { RootService } from './root.service'
@@ -117,6 +120,48 @@ export class RootComponent implements OnInit, AfterViewInit {
     this.rootSvc.showNavbarDisplay$.pipe(delay(500)).subscribe(display => {
       this.showNavbar = display
     })
+  }
+
+  navigate() {
+    const req = {
+      request: {
+        username: (this.configSvc.userProfile && this.configSvc.userProfile.userName) || '',
+        identifier: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
+      },
+    }
+    this.rootSvc.createUser(req).subscribe(
+      results => {
+        if (results) {
+          this.rootSvc.setDiscussionConfig({
+            // menuOptions: [
+            //   {
+            //     route: 'categories',
+            //     enable: true,
+            //   },
+            //   {
+            //     route: 'tags',
+            //     enable: true,
+            //   },
+            //   {
+            //     route: 'all-discussions',
+            //     enable: true,
+            //   },
+            //   {
+            //     route: 'my-discussion',
+            //     enable: true,
+            //   },
+            // ],
+            userName: 'nptest',
+            context: {
+              id: 1,
+            },
+            categories: { result: [] },
+            routerSlug: '/app',
+          })
+          this.router.navigate(['/app/discussion-forum'])
+        }
+      }
+    )
   }
 
   ngAfterViewInit() {
