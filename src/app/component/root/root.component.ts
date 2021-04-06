@@ -134,24 +134,24 @@ export class RootComponent implements OnInit, AfterViewInit {
       results => {
         if (results) {
           this.rootSvc.setDiscussionConfig({
-            menuOptions: [
-              {
-                route: 'categories',
-                enable: true,
-              },
-              {
-                route: 'tags',
-                enable: true,
-              },
-              {
-                route: 'all-discussions',
-                enable: true,
-              },
-              {
-                route: 'my-discussion',
-                enable: true,
-              },
-            ],
+            // menuOptions: [
+            //   {
+            //     route: 'categories',
+            //     enable: true,
+            //   },
+            //   {
+            //     route: 'tags',
+            //     enable: true,
+            //   },
+            //   {
+            //     route: 'all-discussions',
+            //     enable: true,
+            //   },
+            //   {
+            //     route: 'my-discussion',
+            //     enable: true,
+            //   },
+            // ],
             userName: 'nptest',
             context: {
               id: 1,
