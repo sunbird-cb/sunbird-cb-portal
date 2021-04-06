@@ -1113,6 +1113,11 @@
     reflect-metadata "^0.1.13"
     whatwg-fetch "^3.1.0"
 
+"@project-sunbird/discussions-ui-v8@file:../discussions-UI/dist/discussion-ui":
+  version "2.0.20"
+  dependencies:
+    tslib "^1.9.0"
+
 "@project-sunbird/sb-styles@0.0.7":
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/@project-sunbird/sb-styles/-/sb-styles-0.0.7.tgz#b7e2440f79d34dc056dd8c5c7005fff0eefaf631"
@@ -6496,6 +6501,11 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
+lodash-es@^4.17.20:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
+  integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
+
 lodash.clonedeep@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
@@ -7152,10 +7162,25 @@ ng2-ckeditor@1.2.6:
   dependencies:
     tslib "^1.9.0"
 
+ng2-material-dropdown@0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/ng2-material-dropdown/-/ng2-material-dropdown-0.10.1.tgz#0120ce1bbabfb065c62610fe3b572cd09f61b1e1"
+  integrity sha512-dOmk4+T6Rbtk60Un7sxOOFU546z5JEYupSL+RiG0/rN4DmJvxPp297AvA2Qm9LSMNszUZMi55cRzj79zQYu85g==
+  dependencies:
+    tslib "^1.9.0"
+
 ngx-bootstrap@^5.6.2:
   version "5.6.2"
   resolved "https://registry.yarnpkg.com/ngx-bootstrap/-/ngx-bootstrap-5.6.2.tgz#e648f826d303c29255c16772676efd30695740d1"
   integrity sha512-6YHXtdXkGH3w0NQoaUgNYAcrj064Lv5RTO284ha/hvpNTrh55yQz2cVh0VvwBk3MjyY2tdmLH4SuCJDszYdYiw==
+
+ngx-chips@^2.7.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/ngx-chips/-/ngx-chips-2.0.2.tgz#bf1342d8d6a741d86e506f7ab51b0d49e9191416"
+  integrity sha512-r3XwfE9VCzdbXso1qWeR5AhWlluljOwef4MdpIIJ9wFVcTAHCAU11wO+K6dUVw7mNWeGOhLCMEmi2+tNrKOCpg==
+  dependencies:
+    ng2-material-dropdown "0.10.1"
+    tslib "^1.9.0"
 
 ngx-image-cropper@^3.0.3:
   version "3.2.1"

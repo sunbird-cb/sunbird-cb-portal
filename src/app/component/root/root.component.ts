@@ -26,6 +26,8 @@ import {
 import { delay } from 'rxjs/operators'
 import { MobileAppsService } from '../../services/mobile-apps.service'
 import { RootService } from './root.service'
+import { CsModule } from '@project-sunbird/client-services'
+
 // import { SwUpdate } from '@angular/service-worker'
 // import { environment } from '../../../environments/environment'
 // import { MatDialog } from '@angular/material'
@@ -63,6 +65,44 @@ export class RootComponent implements OnInit, AfterViewInit {
     private btnBackSvc: BtnPageBackService,
     private changeDetector: ChangeDetectorRef,
   ) {
+    CsModule.instance.init({
+      core: {
+        httpAdapter: 'HttpClientBrowserAdapter',
+        global: {
+          channelId: '', // required
+          producerId: '', // required
+          deviceId: '', // required
+        },
+        api: {
+          host: 'https://igot-sunbird.idc.tarento.com/apis/proxies/v8', // default host
+          authentication: {
+            // userToken: string; // optional
+            bearerToken: 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJVMkpUdlpERFY4eG83ZmtfNHd1Yy1kNVJmNjRPTG1oemlRRUhjR25Vc2hNIn0.eyJqdGkiOiI4YzQ1OWViZC04YzIzLTRjNDQtODljOC05NWQyZDBjYzI5ZWEiLCJleHAiOjE2MTU1NDY3MjUsIm5iZiI6MCwiaWF0IjoxNjE1NDYwMzI1LCJpc3MiOiJodHRwczovL2lnb3Qtc3VuYmlyZC5pZGMudGFyZW50by5jb20vYXV0aC9yZWFsbXMvc3VuYmlyZCIsImF1ZCI6InBvcnRhbCIsInN1YiI6ImY6OTIzYmRjMTgtNTIwZC00OGQ0LWE4NGUtM2NkZTFlNjU1ZWJkOjU1NzRiM2M1LTE2Y2EtNDlkOC04MDU5LTcwNTMwNGYyYzdmYiIsInR5cCI6IklEIiwiYXpwIjoicG9ydGFsIiwibm9uY2UiOiI0OWMxN2RhZS03NjE1LTRiZWYtODg0ZS04ZjU5OWExMWI2NjMiLCJhdXRoX3RpbWUiOjE2MTU0NTgzMjcsInNlc3Npb25fc3RhdGUiOiI1OGEwYjM3Yi1iOWFiLTQyNTctYWIyOS0wMzRjNWVkZDIwZDEiLCJhY3IiOiIxIiwibmFtZSI6Imlnb3QgZGVtbzEiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJpZ290ZGVtbzEiLCJnaXZlbl9uYW1lIjoiaWdvdCIsImZhbWlseV9uYW1lIjoiZGVtbzEifQ.Xb60e8KnXMk9OCNokVFcNYWnsZrjP-Cau3Z56Or6sC-lsJZLUgCa-9ARyuXhNvZZE3t1Rzy-7pYvbNh1ZsFPNBoo4jEpKmKZAvVrnbxjZN7lQBqtSXnKgqmcuWBg85c0WrTDiBkHq-qORWeHa85cTfUs4JryIorEb3sopQvsb26dP3g3MeUYTYiTftgT51nZTCZx_XMeOaFxIf6YFQWH_EmCI7W3kqMWQzvXMArLmZ8RNoLdvNNSyAQg9j99DHOuuVdt6a6jCIusFd7WsYGXICBwLkzGSlawDnOlP1VRdsSR4rcbZ7G3nifS1Xpxbfs3azQbtt2TX5olgXJjJypW1Q',
+          },
+        },
+      },
+      services: {
+        groupServiceConfig: {
+          apiPath: '/learner/group/v1',
+          dataApiPath: '/learner/data/v1/group',
+          updateGroupGuidelinesApiPath: '/learner/group/membership/v1',
+        },
+        userServiceConfig: {
+          apiPath: '/learner/user/v2',
+        },
+        formServiceConfig: {
+          apiPath: '/learner/data/v1/form',
+        },
+        courseServiceConfig: {
+          apiPath: '/learner/course/v1',
+          certRegistrationApiPath: '/learner/certreg/v2/certs',
+        },
+        discussionServiceConfig: {
+          apiPath: '/discussion',
+        },
+      },
+    })
+
     this.mobileAppsSvc.init()
   }
 

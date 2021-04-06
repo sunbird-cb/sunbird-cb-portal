@@ -45,6 +45,8 @@ import { LoaderService } from '@ws/author/src/lib/services/loader.service'
 import { InitResolver } from './resolvers/init-resolve.service'
 import { CKEditorService } from 'library/ws-widget/collection/src/lib/_common/ck-editor/ck-editor.service'
 import { PaginationComponent } from './components/pagination/pagination.component'
+import { DiscussionUiModule } from '@project-sunbird/discussions-ui-v8'
+import { ConfigService } from './services/config.service'
 
 @NgModule({
   declarations: [
@@ -98,6 +100,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     PipeListFilterModule,
     BtnPageBackModule,
     WidgetResolverModule,
+    DiscussionUiModule.forRoot(ConfigService),
   ],
   entryComponents: [
     DiscussStartComponent,

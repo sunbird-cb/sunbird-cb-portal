@@ -74,6 +74,10 @@ const routes: Routes = [
     },
   },
   {
+    path: 'discussion-forum',
+    loadChildren: () => import('@project-sunbird/discussions-ui-v8').then(u => u.DiscussionUiModule),
+  },
+  {
     path: 'app/channels',
     loadChildren: () => import('./routes/route-channels.module').then(u => u.RouteChannelsModule),
     canActivate: [GeneralGuard],

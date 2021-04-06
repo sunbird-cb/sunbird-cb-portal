@@ -12,6 +12,7 @@ import {
   UtilityService,
 } from '@ws-widget/utils'
 import { Subscription } from 'rxjs'
+import { Router } from '@angular/router'
 // import { filter } from 'rxjs/operators'
 // import { SearchServService } from '@ws/app/src/lib/routes/search/services/search-serv.service'
 
@@ -71,6 +72,7 @@ export class DiscussStripMultipleComponent extends WidgetBaseComponent
     // private configSvc: ConfigurationsService,
     protected utilitySvc: UtilityService,
     // private searchServSvc: SearchServService,
+    public router: Router
   ) {
     super()
   }
@@ -154,6 +156,20 @@ export class DiscussStripMultipleComponent extends WidgetBaseComponent
       return this.showAccordionData
     }
     return true
+  }
+
+  navigate() {
+
+    const config = {
+      userName: 'nptest',
+      context: {
+        id: 1,
+      },
+      categories: { result: [2] },
+    }
+    localStorage.setItem('home', JSON.stringify(config))
+    this.router.navigate(['/discussion-forum'], { queryParams: { userName: 'nptest',   categories: { result: [2] },
+  }, queryParamsHandling: 'merge' })
   }
 
   setHiddenForStrip(key: string) {

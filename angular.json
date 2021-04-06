@@ -20,7 +20,12 @@
             "assets": [
               "src/favicon.ico",
               "src/favicon.png",
-              "src/fusion-assets"
+              "src/fusion-assets",
+              {
+                "glob": "**/*.*",
+                "input": "./node_modules/@project-sunbird/discussions-ui-v8/assets",
+                "output": "./assets/discussion-ui"
+              }
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -39,7 +44,6 @@
               "src/styles/mat-typography.scss",
               "src/styles/styles.scss",
               "node_modules/shepherd.js/dist/css/shepherd.css",
-              
               {
                 "input": "src/themes/theme-deep-purple.scss",
                 "bundleName": "theme-deep-purple",
@@ -85,10 +89,10 @@
                 "bundleName": "theme-igot",
                 "lazy": true
               },
-              
               "node_modules/pdfjs-dist/web/pdf_viewer.css",
               "src/fusion-assets/fonts/lato/stylesheet.css",
-              "src/fusion-assets/fonts/montserrat/stylesheet.css"
+              "src/fusion-assets/fonts/montserrat/stylesheet.css",
+              "./node_modules/@project-sunbird/discussions-ui-v8/assets/styles/global.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -157,7 +161,12 @@
             "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
-              "src/fusion-assets"
+              "src/fusion-assets",
+              {
+                "glob": "**/*.*",
+                "input": "./node_modules/@project-sunbird/discussions-ui-v8/assets",
+                "output": "./assets/discussion-ui"
+              }
             ],
             "styles": [
               "src/styles.scss"
