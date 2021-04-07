@@ -102,10 +102,16 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         })
       }
     })
-    const instanceConfig = this.configSvc.instanceConfig
-    if (instanceConfig) {
-      this.defaultSLogo = instanceConfig.logos.defaultSourceLogo
-    }
+    // const instanceConfig = this.configSvc.instanceConfig
+    // if (instanceConfig) {
+    //   this.defaultSLogo = instanceConfig.logos.defaultSourceLogo
+    // }
+
+    this.route.data.subscribe(data => {
+        this.defaultSLogo = data.configData.data.logos.defaultContent
+      }
+    )
+
     if (this.configSvc.restrictedFeatures) {
       this.isGoalsEnabled = !this.configSvc.restrictedFeatures.has('goals')
     }
@@ -218,9 +224,14 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       this.disableEnrollBtn = true
       let userId = ''
       if (batch) {
-        if (this.configSvc.userProfile) {
-          userId = this.configSvc.userProfile.userId || ''
-        }
+          this.route.data.subscribe(data => {
+            userId = data.profileData.data.userId
+          }
+        )
+        // if (this.configSvc.userProfile) {
+        //   userId = this.configSvc.userProfile.userId || ''
+        // }
+
         const req = {
           request: {
             userId,

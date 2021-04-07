@@ -43,6 +43,7 @@ import { AppTocDiscussionComponent } from './components/app-toc-discussion/app-t
 // services
 import { AppTocResolverService } from './resolvers/app-toc-resolver.service'
 import { ConfigResolverService } from './resolvers/config-resolver.service'
+import { ProfileResolverService } from './resolvers/profile-resolver.service'
 import { AppTocService } from './services/app-toc.service'
 
 // custom modules
@@ -198,6 +199,7 @@ import { CreateBatchDialogComponent } from './components/create-batch-dialog/cre
     ApiService,
     AccessControlService,
     ConfigResolverService,
+    ProfileResolverService,
   ],
   exports: [AppTocDiscussionComponent],
   entryComponents: [
