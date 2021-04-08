@@ -21,24 +21,24 @@ export class DiscussConfigResolve
   ): Observable<any> {
 
     const config = {
-      menuOptions: [
-        {
-          route: 'categories',
-          enable: true,
-        },
-        {
-          route: 'tags',
-          enable: true,
-        },
-        {
-          route: 'all-discussions',
-          enable: true,
-        },
-        {
-          route: 'my-discussion',
-          enable: false,
-        },
-      ],
+      // menuOptions: [
+      //   {
+      //     route: 'categories',
+      //     enable: true,
+      //   },
+      //   {
+      //     route: 'tags',
+      //     enable: true,
+      //   },
+      //   {
+      //     route: 'all-discussions',
+      //     enable: true,
+      //   },
+      //   {
+      //     route: 'my-discussion',
+      //     enable: false,
+      //   },
+      // ],
       userName: 'nptest',
       context: {
         id: 1,
