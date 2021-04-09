@@ -8,6 +8,8 @@ import { TncAppResolverService } from '../../../../../../../src/app/services/tnc
 import { TncComponent } from './components/tnc/tnc.component'
 import { PageResolve } from '@sunbird-cb/utils'
 import { InterestComponent } from './module/interest/interest/interest.component'
+import { ConfigResolverService } from './resolvers/config-resolver.service'
+import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = []
 
@@ -26,18 +28,32 @@ const routes: Routes = []
           path: '',
           redirectTo: 'lang',
           pathMatch: 'full',
+          resolve: {
+            configData: ConfigResolverService,
+            profileData: ProfileResolverService,
+          },
         }, {
           path: 'lang',
           component: LangSelectComponent,
+          resolve: {
+            configData: ConfigResolverService,
+            profileData: ProfileResolverService,
+          },
         }, {
           path: 'tnc',
           component: TncComponent,
           resolve: {
             tnc: TncAppResolverService,
+            configData: ConfigResolverService,
+            profileData: ProfileResolverService,
           },
         }, {
           path: 'about-video',
           component: AboutVideoComponent,
+          resolve: {
+            configData: ConfigResolverService,
+            profileData: ProfileResolverService,
+          },
         }, {
           path: 'interest',
           component: InterestComponent,
@@ -47,6 +63,8 @@ const routes: Routes = []
           },
           resolve: {
             pageData: PageResolve,
+            configData: ConfigResolverService,
+            profileData: ProfileResolverService,
           },
         }],
 
