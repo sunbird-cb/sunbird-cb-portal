@@ -25,11 +25,14 @@ export class Profilev2BadgesResolve
         userId = _route.queryParams.userId
       }
 
-      if (!userId) {
-        userId = this.configSvc.userProfile && this.configSvc.userProfile.userId || ''
-      }
+      _route.data.subscribe((data: any) => {
+        userId = data.profileData.data.userId || ''
+      })
     } else {
-      userId = this.configSvc.userProfile && this.configSvc.userProfile.userId || ''
+
+      _route.data.subscribe((data: any) => {
+        userId = data.profileData.data.userId || ''
+      })
     }
     const data: any = ''
     return data

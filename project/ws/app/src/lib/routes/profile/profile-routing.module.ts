@@ -21,6 +21,8 @@ import { SettingsComponent } from './routes/settings/settings.component'
 // import { BadgeComponent } from '../gamification/routes/badges/components/badge/badge.component'
 import { BadgesComponent } from './routes/badges/badges.component'
 import { GeneralGuard } from '../../../../../../../src/app/guards/general.guard'
+import { ConfigResolverService } from './resolvers/config-resolver.service'
+import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = [
   {
@@ -37,6 +39,7 @@ const routes: Routes = [
     },
     resolve: {
       pageData: PageResolve,
+      profileData: ProfileResolverService,
     },
   },
   {
@@ -54,6 +57,7 @@ const routes: Routes = [
         component: BadgesComponent,
         resolve: {
           badges: BadgesResolver2,
+          profileData: ProfileResolverService,
         },
         canActivate: [GeneralGuard],
       },
@@ -62,6 +66,7 @@ const routes: Routes = [
         component: AchievementsComponent,
         resolve: {
           competencyData: CompetencyResolverService,
+          profileData: ProfileResolverService,
         },
       },
       {
@@ -75,6 +80,7 @@ const routes: Routes = [
     },
     resolve: {
       pageData: PageResolve,
+      profileData: ProfileResolverService,
     },
   },
   {
@@ -92,6 +98,7 @@ const routes: Routes = [
         resolve: {
           timeSpentData: LearningTimeResolver,
           pageData: PageResolve,
+          profileData: ProfileResolverService,
         },
         data: {
           pageType: 'feature',
@@ -109,6 +116,7 @@ const routes: Routes = [
         resolve: {
           learningHistory: LearningHistoryResolver,
           pageData: PageResolve,
+          profileData: ProfileResolverService,
         },
       },
     ],
@@ -125,6 +133,7 @@ const routes: Routes = [
     component: InterestComponent,
     resolve: {
       interests: InterestUserResolve,
+      profileData: ProfileResolverService,
     },
   },
   {
@@ -159,5 +168,6 @@ const routes: Routes = [
     ]),
   ],
   exports: [RouterModule],
+  providers: [ConfigResolverService, ProfileResolverService],
 })
 export class ProfileRoutingModule { }

@@ -10,6 +10,8 @@ import { RecentBlogComponent } from './routes/blogs/recent-blogs/components/rece
 import { QnaEditComponent } from './routes/qna/qna-edit/components/qna-edit/qna-edit.component'
 import { QnaHomeComponent } from './routes/qna/qna-home/components/qna-home/qna-home.component'
 import { QnaViewComponent } from './routes/qna/qna-view/components/qna-view/qna-view.component'
+import { ConfigResolverService } from './resolvers/config-resolver.service'
+import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = [
   {
@@ -19,6 +21,9 @@ const routes: Routes = [
       requiredFeatures: ['BLOGS'],
     },
     canActivate: [GeneralGuard],
+    resolve: {
+      profileData: ProfileResolverService,
+    },
   },
   {
     path: 'blogs/edit',
@@ -27,6 +32,9 @@ const routes: Routes = [
       requiredFeatures: ['BLOGS'],
     },
     canActivate: [GeneralGuard],
+    resolve: {
+      profileData: ProfileResolverService,
+    },
   },
   {
     path: 'blogs/edit/:id',
@@ -35,6 +43,9 @@ const routes: Routes = [
       requiredFeatures: ['BLOGS'],
     },
     canActivate: [GeneralGuard],
+    resolve: {
+      profileData: ProfileResolverService,
+    },
   },
   {
     path: 'blogs/me',
@@ -44,6 +55,9 @@ const routes: Routes = [
       requiredFeatures: ['BLOGS'],
     },
     canActivate: [GeneralGuard],
+    resolve: {
+      profileData: ProfileResolverService,
+    },
   },
   {
     path: 'blogs/me/:tab',
@@ -52,6 +66,9 @@ const routes: Routes = [
       requiredFeatures: ['BLOGS'],
     },
     canActivate: [GeneralGuard],
+    resolve: {
+      profileData: ProfileResolverService,
+    },
   },
   {
     path: 'blogs/:id',
@@ -60,12 +77,16 @@ const routes: Routes = [
       requiredFeatures: ['BLOGS'],
     },
     canActivate: [GeneralGuard],
+    resolve: {
+      profileData: ProfileResolverService,
+    },
   },
   {
     path: 'qna',
     component: QnaHomeComponent,
     resolve: {
       resolveData: SocialTimelineResolverService,
+      profileData: ProfileResolverService,
     },
     runGuardsAndResolvers: 'paramsOrQueryParamsChange',
     data: {
@@ -74,6 +95,7 @@ const routes: Routes = [
       requiredFeatures: ['QUESTION_AND_ANSWER'],
     },
     canActivate: [GeneralGuard],
+
   },
   {
     path: 'qna/edit',
@@ -88,6 +110,7 @@ const routes: Routes = [
     component: QnaEditComponent,
     resolve: {
       resolveData: PostFetchResolverService,
+      profileData: ProfileResolverService,
     },
     data: {
       requiredFeatures: ['QUESTION_AND_ANSWER'],
@@ -98,18 +121,25 @@ const routes: Routes = [
     path: 'forums',
     loadChildren: () => import('./routes/forums/forum-home.module').then(u => u.ForumHomeModule),
     // component: ForumHomeComponent
+    resolve: {
+      profileData: ProfileResolverService,
+    },
   },
   {
     path: 'socialSearch',
     loadChildren: () =>
       import('./routes/socialSearch/social-search.module').then(u => u.SocialSearchModule),
     // component: ForumHomeComponent
+    resolve: {
+      profileData: ProfileResolverService,
+    },
   },
   {
     path: 'qna/:id',
     component: QnaViewComponent,
     resolve: {
       resolveData: PostFetchResolverService,
+      profileData: ProfileResolverService,
     },
     data: {
       requiredFeatures: ['QUESTION_AND_ANSWER'],
@@ -121,5 +151,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
+  providers: [ConfigResolverService, ProfileResolverService]
 })
 export class SocialRoutingModule {}

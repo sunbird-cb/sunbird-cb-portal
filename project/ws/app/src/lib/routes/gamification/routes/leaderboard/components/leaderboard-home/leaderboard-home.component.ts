@@ -4,10 +4,12 @@ import {
   EventEmitter,
 } from '@angular/core'
 import { MatSelectChange, MatButtonToggleChange } from '@angular/material'
-import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
+import { TFetchStatus } from '@sunbird-cb/utils'
 import { GamificationService } from '../../../../services/gamification.service'
 import { FormControl } from '@angular/forms'
 import { DatePipe } from '@angular/common'
+import { ActivatedRoute } from '@angular/router'
+
 @Component({
   selector: 'ws-app-leaderboard',
   templateUrl: './leaderboard-home.component.html',
@@ -46,12 +48,15 @@ export class LeaderboardHomeComponent implements OnInit {
 
   constructor(
     private gamificationSvc: GamificationService,
-    private configSvc: ConfigurationsService,
+    private route: ActivatedRoute,
     private datePipe: DatePipe,
   ) {
-    if (this.configSvc.userProfile) {
-      this.userName = this.configSvc.userProfile.userName
-    }
+    
+    this.route.data.subscribe(data => {
+        this.userName = data.profileData.data.userName
+      }
+    )
+
     this.fetchStatus = 'none'
     this.maxDate = new Date()
   }

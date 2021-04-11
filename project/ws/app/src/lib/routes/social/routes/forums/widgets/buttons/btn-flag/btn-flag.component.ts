@@ -4,6 +4,7 @@ import { SocialForum } from '../../../models/SocialForumposts.model'
 import { DialogBoxModeratorComponent } from '../../Dialog-Box/dialog-box-moderator/dialog-box-moderator.component'
 import { BtnFlagService } from './btn-flag.service'
 import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'ws-app-btn-flag',
@@ -34,11 +35,12 @@ export class BtnFlagComponent implements OnInit {
 
   }
   constructor(private flagsvc: BtnFlagService, private snackBar: MatSnackBar, private configSvc: ConfigurationsService,
-              public dialog: MatDialog,
+              public dialog: MatDialog, private route: ActivatedRoute
   ) {
-    if (this.configSvc.userProfile) {
-      this.userId = this.configSvc.userProfile.userId || ''
-    }
+    
+    this.route.data.subscribe(data => {
+      this.userId = data.profileData.data.userId || ''
+    })
   }
 
   ngOnInit() {

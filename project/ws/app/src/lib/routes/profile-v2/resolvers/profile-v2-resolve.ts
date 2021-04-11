@@ -25,10 +25,16 @@ export class Profilev2Resolve
         userId = _route.queryParams.userId
       }
       if (!userId) {
-        userId = this.configSvc.userProfile && this.configSvc.userProfile.userId || ''
+        
+         _route.data.subscribe((data: any) => {
+          userId = data.profileData.data.userId || ''
+        })
       }
     } else {
-      userId = this.configSvc.userProfile && this.configSvc.userProfile.userId || ''
+      
+      _route.data.subscribe((data: any) => {
+        userId = data.profileData.data.userId || ''
+      })
     }
     return this.profileV2Svc.fetchProfile(userId).pipe(
       map(data =>  ({ data: data.result.UserProfile, error: null })),

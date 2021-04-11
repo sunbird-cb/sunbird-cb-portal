@@ -17,4 +17,3 @@ export class AppConfigurationsService implements Resolve<Observable<any>> {
     return of(result)
   }
 }
-

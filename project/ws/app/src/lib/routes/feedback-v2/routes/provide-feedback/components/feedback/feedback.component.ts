@@ -25,6 +25,7 @@ export class FeedbackComponent {
   singleFeedbackForm: FormGroup
   feedbackConfig!: IFeedbackConfig
   showImporveError = false
+  userId: any;
 
   constructor(
     private feedbackApi: FeedbackService,
@@ -132,6 +133,9 @@ export class FeedbackComponent {
         () => {
           this.singleFeedbackSendStatus = 'done'
           if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.rootOrg === 'RootOrg') {
+            this.route.data.subscribe(data => {
+              this.userId = data.profileData.data.userId
+            })
             const req: INotificationRequest = {
               'event-id': 'platform_feedback',
               'tag-value-pair': {
@@ -139,7 +143,7 @@ export class FeedbackComponent {
               },
               recipients: {
                 learner: [
-                  (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
+                  (this.userId) || '',
                 ],
               },
             }

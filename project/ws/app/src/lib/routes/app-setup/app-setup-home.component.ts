@@ -62,7 +62,7 @@ export class AppSetupHomeComponent implements OnInit, AfterViewInit {
         this.introVideos = data.configData.data.introVideo
       }
     )
-    
+
     this.widgetResolverData = {
       ...this.widgetResolverData,
       widgetData: {

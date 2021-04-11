@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router'
+import { ActivatedRoute, ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router'
 import { ContentAssignService } from '@sunbird-cb/collection'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Observable } from 'rxjs'
@@ -11,11 +11,14 @@ export class ContentAssignmentGuard implements CanActivate {
   userType = ''
   stateUrl = ''
   routeUrl: any
+  userId: any
+
   constructor(
     private configSvc: ConfigurationsService,
     private router: Router,
     private contentAssignSvc: ContentAssignService,
     private snackbar: MatSnackBar,
+    private route: ActivatedRoute,
   ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> {
@@ -23,12 +26,15 @@ export class ContentAssignmentGuard implements CanActivate {
     this.stateUrl = state.url
     this.routeUrl = route.url
     return new Observable<boolean>(observer => {
-      if (this.configSvc.userProfile && this.configSvc.org) {
+      if (this.configSvc.org) {
+        this.route.data.subscribe(data => {
+          this.userId = data.profileData.data.userId
+        })
         const reqBody = {
           pageSize: 10,
           orgs: this.configSvc.org,
           filters: {
-            wid: [this.configSvc.userProfile.userId],
+            wid: [this.userId],
           },
           requiredSources: ['is_manager'],
         }

@@ -16,6 +16,8 @@ import { GoalTrackRejectComponent } from './components/goal-track-reject/goal-tr
 import { GoalNotificationComponent } from './routes/goal-notification/goal-notification.component'
 import { GoalsPendingResolve } from './resolvers/goals-pending.resolve'
 import { GoalTrackPendingComponent } from './components/goal-track-pending/goal-track-pending.component'
+import { ConfigResolverService } from './resolvers/config-resolver.service'
+import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = [
   {
@@ -26,10 +28,16 @@ const routes: Routes = [
         path: '',
         pathMatch: 'full',
         redirectTo: 'me/all',
+        resolve: {
+          profileData: ProfileResolverService,
+        },
       },
       {
         path: 'me',
         redirectTo: 'me/all',
+        resolve: {
+          profileData: ProfileResolverService,
+        },
       },
       {
         path: 'me/all',
@@ -37,6 +45,7 @@ const routes: Routes = [
         data: { type: 'all' },
         resolve: {
           userGoals: GoalsUserResolve,
+          profileData: ProfileResolverService,
         },
       },
       {
@@ -44,6 +53,7 @@ const routes: Routes = [
         component: GoalOthersComponent,
         resolve: {
           othersGoals: GoalsOthersResolve,
+          profileData: ProfileResolverService,
         },
       },
       {
@@ -52,6 +62,7 @@ const routes: Routes = [
         data: { type: 'completed' },
         resolve: {
           userGoals: GoalsUserResolve,
+          profileData: ProfileResolverService,
         },
       },
     ],
@@ -121,6 +132,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [GoalsUserResolve, GoalsCommonResolve, GoalsOthersResolve, GoalTrackResolve, GoalsPendingResolve],
+  providers: [GoalsUserResolve, GoalsCommonResolve, GoalsOthersResolve, GoalTrackResolve, GoalsPendingResolve, ConfigResolverService, ProfileResolverService],
 })
 export class GoalsRoutingModule { }

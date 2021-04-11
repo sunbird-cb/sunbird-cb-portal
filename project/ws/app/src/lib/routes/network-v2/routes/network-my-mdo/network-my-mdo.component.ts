@@ -64,9 +64,13 @@ export class NetworkMyMdoComponent implements OnInit {
   connectionUpdate(event: any) {
     if (event === 'connection-updated') {
       let usrDept = 'iGOT'
-      if (this.configSvc.userProfile) {
-        usrDept = this.configSvc.userProfile.departmentName || 'iGOT'
-      }
+      this.route.data.subscribe(data => {
+        usrDept = data.profileData.data.departmentName || 'iGOT'
+        }
+      )
+      // if (this.configSvc.userProfile) {
+      //   usrDept = this.configSvc.userProfile.departmentName || 'iGOT'
+      // }
       let req: NSNetworkDataV2.IRecommendedUserReq
       req = {
         size: 50,

@@ -54,19 +54,17 @@ export class ProfileBlogComponent implements OnInit {
       this.startIndexBlogArray = 0
     })
     this.showSocialLike = (this.configSvc.restrictedFeatures && !this.configSvc.restrictedFeatures.has('socialLike')) || false
-    if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
-      this.requestBody = {
-        pgNo: 0,
-        pgSize: 24,
-        postKind: [NsDiscussionForum.EPostKind.BLOG],
-        sessionId: Date.now(),
-        type: NsDiscussionForum.ETimelineType.MY_TIMELINE,
-        userId: this.wid,
-      }
-      if (this.wid) {
-        this.fetchTimelineDataProfile(this.requestBody)
-      }
-
+    
+    this.requestBody = {
+      pgNo: 0,
+      pgSize: 24,
+      postKind: [NsDiscussionForum.EPostKind.BLOG],
+      sessionId: Date.now(),
+      type: NsDiscussionForum.ETimelineType.MY_TIMELINE,
+      userId: this.wid,
+    }
+    if (this.wid) {
+      this.fetchTimelineDataProfile(this.requestBody)
     }
   }
   blogSorting(result: NsDiscussionForum.ITimelineResult[]) {

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { DialogSocialDeletePostComponent, NsDiscussionForum, WsDiscussionForumService } from '@sunbird-cb/collection'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'ws-app-blog-reply',
@@ -22,10 +23,12 @@ export class BlogReplyComponent implements OnInit {
     private snackBar: MatSnackBar,
     private configSvc: ConfigurationsService,
     private discussionSvc: WsDiscussionForumService,
+    private route: ActivatedRoute,
   ) {
-    if (this.configSvc.userProfile) {
-      this.userId = this.configSvc.userProfile.userId || ''
-    }
+    
+    this.route.data.subscribe(data => {
+      this.userId = data.profileData.data.userId
+    })
   }
 
   ngOnInit() {
