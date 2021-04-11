@@ -27,11 +27,11 @@ const routes: Routes = [
         resolve: {
           configData: ConfigResolverService,
           profileData: ProfileResolverService,
-        }
+        },
       },
     ]),
   ],
   exports: [RouterModule],
-  providers: [ ConfigResolverService, ProfileResolverService],
+  providers: [ConfigResolverService, ProfileResolverService],
 })
 export class FeedbackV2RoutingModule {}

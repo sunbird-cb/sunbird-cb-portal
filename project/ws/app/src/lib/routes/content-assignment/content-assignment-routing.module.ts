@@ -43,6 +43,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [ConfigResolverService, ProfileResolverService]
+  providers: [ConfigResolverService, ProfileResolverService],
 })
 export class ContentAssignmentRoutingModule { }

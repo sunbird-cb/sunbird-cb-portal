@@ -43,7 +43,7 @@ export class AdminComponent implements OnInit {
         this.userName = data.profileData.data.userName
       }
     )
-    
+
     this.fetchStatus = 'none'
     this.excelService = excelService
   }

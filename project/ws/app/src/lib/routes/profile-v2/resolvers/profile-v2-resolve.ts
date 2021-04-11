@@ -25,13 +25,13 @@ export class Profilev2Resolve
         userId = _route.queryParams.userId
       }
       if (!userId) {
-        
+
          _route.data.subscribe((data: any) => {
           userId = data.profileData.data.userId || ''
         })
       }
     } else {
-      
+
       _route.data.subscribe((data: any) => {
         userId = data.profileData.data.userId || ''
       })

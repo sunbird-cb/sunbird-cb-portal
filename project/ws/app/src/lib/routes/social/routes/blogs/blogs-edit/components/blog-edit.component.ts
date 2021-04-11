@@ -74,7 +74,7 @@ export class BlogEditComponent implements OnInit {
     private discussionSvc: WsDiscussionForumService,
     private valueSvc: ValueService,
   ) {
-    
+
     this.route.data.subscribe(data => {
       this.userId = data.profileData.data.userId
     })

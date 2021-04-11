@@ -5,18 +5,18 @@ import { ConfigResolverService } from './resolvers/config-resolver.service'
 import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = [
-  {
+{
     path: 'details',
     component: UserProfileComponent,
     resolve: {
-    	profileData: ProfileResolverService,
-    }
-  },
+        profileData: ProfileResolverService,
+    },
+},
 ]
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-  providers: [ConfigResolverService, ProfileResolverService],
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
+    providers: [ConfigResolverService, ProfileResolverService],
 })
 export class UserProfileRoutingModule { }

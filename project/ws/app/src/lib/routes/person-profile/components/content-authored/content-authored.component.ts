@@ -49,7 +49,7 @@ export class ContentAuthoredComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    
+
     this.route.data.subscribe(data => {
         this.userWid = data.profileData.data.userId
       }

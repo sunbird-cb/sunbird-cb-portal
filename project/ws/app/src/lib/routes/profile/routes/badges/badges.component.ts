@@ -41,7 +41,7 @@ export class BadgesComponent implements OnInit {
       recent: [],
       totalPoints: [{ collaborative_points: 0, learning_points: 0 }],
     }
-    
+
     this.route.data.subscribe(data => {
         this.userName = data.profileData.data.userName
       }

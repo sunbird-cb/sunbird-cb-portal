@@ -93,7 +93,6 @@ export class QnaViewComponent implements OnInit, OnDestroy {
       this.userId = data.profileData.data.userId || ''
     })
 
-
     this.commentAddRequest.postCreator = this.userId
     this.commentAddRequest.source = {
       id: '',

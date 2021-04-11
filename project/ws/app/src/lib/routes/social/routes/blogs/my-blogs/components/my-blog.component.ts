@@ -36,7 +36,7 @@ export class MyBlogComponent implements OnInit {
     private route: ActivatedRoute,
     private configSvc: ConfigurationsService,
   ) {
-    
+
     this.route.data.subscribe(data => {
       this.userId = data.profileData.data.userId || ''
     })

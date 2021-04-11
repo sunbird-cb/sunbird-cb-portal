@@ -132,6 +132,7 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [GoalsUserResolve, GoalsCommonResolve, GoalsOthersResolve, GoalTrackResolve, GoalsPendingResolve, ConfigResolverService, ProfileResolverService],
+  providers: [GoalsUserResolve, GoalsCommonResolve, GoalsOthersResolve, GoalTrackResolve, GoalsPendingResolve,
+  ConfigResolverService, ProfileResolverService],
 })
 export class GoalsRoutingModule { }

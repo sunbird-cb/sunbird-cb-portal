@@ -29,6 +29,6 @@ const routes: Routes = []
     ]),
   ],
   exports: [RouterModule],
-  providers: [ConfigResolverService, ProfileResolverService,],
+  providers: [ConfigResolverService, ProfileResolverService],
 })
 export class PersonProfileRoutingModule { }

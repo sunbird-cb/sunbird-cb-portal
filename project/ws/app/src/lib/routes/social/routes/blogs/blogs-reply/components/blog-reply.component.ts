@@ -25,7 +25,7 @@ export class BlogReplyComponent implements OnInit {
     private discussionSvc: WsDiscussionForumService,
     private route: ActivatedRoute,
   ) {
-    
+
     this.route.data.subscribe(data => {
       this.userId = data.profileData.data.userId
     })

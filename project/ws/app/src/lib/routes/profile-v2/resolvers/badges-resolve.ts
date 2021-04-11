@@ -25,13 +25,13 @@ export class Profilev2BadgesResolve
         userId = _route.queryParams.userId
       }
 
-      _route.data.subscribe((data: any) => {
-        userId = data.profileData.data.userId || ''
+      _route.data.subscribe((key: any) => {
+        userId = key.profileData.data.userId || ''
       })
     } else {
 
-      _route.data.subscribe((data: any) => {
-        userId = data.profileData.data.userId || ''
+      _route.data.subscribe((key: any) => {
+        userId = key.profileData.data.userId || ''
       })
     }
     const data: any = ''

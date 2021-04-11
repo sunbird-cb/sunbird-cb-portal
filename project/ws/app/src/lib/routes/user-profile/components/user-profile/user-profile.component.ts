@@ -454,7 +454,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   getUserDetails() {
     if (this.configSvc.profileDetailsStatus) {
-      
+
         this.userProfileSvc.getUserdetailsFromRegistry().subscribe(
           (data: any) => {
             const userData = data.result.UserProfile
@@ -468,11 +468,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               this.userProfileData = userData[0]
             } else {
 
-              this.route.data.subscribe(data => {
+              this.route.data.subscribe(key => {
                 this.createUserForm.patchValue({
-                  firstname: data.profileData.data.firstName,
-                  surname: data.profileData.data.lastName,
-                  primaryEmail: data.profileData.data.email,
+                  firstname: key.profileData.data.firstName,
+                  surname: key.profileData.data.lastName,
+                  primaryEmail: key.profileData.data.email,
                 })
               })
             }
@@ -481,7 +481,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           (_err: any) => {
           })
     } else {
-      
+
       this.route.data.subscribe(data => {
         this.createUserForm.patchValue({
           firstname: data.profileData.data.firstName,

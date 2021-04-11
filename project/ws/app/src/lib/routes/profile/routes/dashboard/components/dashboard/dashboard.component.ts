@@ -101,7 +101,7 @@ export class DashboardComponent implements OnInit {
     private interestSvc: InterestService,
     private activatedRoute: ActivatedRoute,
   ) {
-    
+
     this.activatedRoute.data.subscribe(data => {
         this.userName = data.profileData.data.userName || ''
         this.userEmail = data.profileData.data.email || ''

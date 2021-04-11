@@ -34,7 +34,7 @@ export class MyRewardsComponent implements OnInit {
               private route: ActivatedRoute) {
     this.disablePrev = true
     this.disableNext = false
-    
+
     this.route.data.subscribe(data => {
         this.userName = data.profileData.data.userName
       }

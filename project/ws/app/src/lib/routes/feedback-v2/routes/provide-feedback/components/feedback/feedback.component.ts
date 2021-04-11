@@ -25,7 +25,7 @@ export class FeedbackComponent {
   singleFeedbackForm: FormGroup
   feedbackConfig!: IFeedbackConfig
   showImporveError = false
-  userId: any;
+  userId: any
 
   constructor(
     private feedbackApi: FeedbackService,

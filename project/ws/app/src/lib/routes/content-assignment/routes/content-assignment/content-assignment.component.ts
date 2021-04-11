@@ -135,14 +135,14 @@ export class ContentAssignmentComponent implements OnInit {
     if (this.configSvc.org) {
       this.orgs = this.configSvc.org
     }
-    
+
     if (this.configSvc.rootOrg) {
       this.rootOrg = this.configSvc.rootOrg
       if (this.rootOrg === 'RootOrg') {
         this.isMandatory = true
       }
     }
-    
+
     setTimeout(() => {
       this.userType = this.route.snapshot.queryParams.userType
       this.userAdminLevel = this.route.snapshot.queryParams.adminLevel

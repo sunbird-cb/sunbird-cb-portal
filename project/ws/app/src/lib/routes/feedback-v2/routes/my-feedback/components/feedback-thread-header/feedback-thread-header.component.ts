@@ -30,7 +30,7 @@ export class FeedbackThreadHeaderComponent implements OnInit {
     private feedbackApi: FeedbackService,
     private route: ActivatedRoute,
   ) {
-    
+
     this.route.data.subscribe(data => {
       this.userId = data.profileData.data.userId
     })

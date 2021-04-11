@@ -54,7 +54,7 @@ export class ProfileBlogComponent implements OnInit {
       this.startIndexBlogArray = 0
     })
     this.showSocialLike = (this.configSvc.restrictedFeatures && !this.configSvc.restrictedFeatures.has('socialLike')) || false
-    
+
     this.requestBody = {
       pgNo: 0,
       pgSize: 24,

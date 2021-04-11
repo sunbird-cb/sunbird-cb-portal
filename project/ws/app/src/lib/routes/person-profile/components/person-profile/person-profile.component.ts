@@ -64,7 +64,7 @@ export class PersonProfileComponent implements OnInit {
   // followingCount: any = ''
 
   ngOnInit() {
-    
+
     this.route.data.subscribe(data => {
         this.currentUserId = data.profileData.data.userId
         this.currentUserName = data.profileData.data.userName
@@ -92,7 +92,7 @@ export class PersonProfileComponent implements OnInit {
     })
     // this.fetchUserDetails(this.emailId)
     this.route.data.subscribe(data => {
-        if(this.emailId === data.profileData.data.email) {
+        if (this.emailId === data.profileData.data.email) {
           this.isFollowButtonEnabled = false
         }
       }
@@ -198,8 +198,8 @@ export class PersonProfileComponent implements OnInit {
           if (this.followers) {
             this.followers.forEach(person => {
 
-              this.route.data.subscribe(data => {
-                  if (person.identifier === data.profileData.data.userId) {
+              this.route.data.subscribe(key => {
+                  if (person.identifier === key.profileData.data.userId) {
                     this.statusFollowed = 'FOLLOWED'
                   }
                 }

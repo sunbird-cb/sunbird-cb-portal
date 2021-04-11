@@ -22,7 +22,7 @@ export class UserFilterDisplayComponent implements OnInit, OnChanges {
   userAdminLevel = ''
   userType = ''
   userFilterLevel = ''
-  UserId: any
+  userId: any
 
   constructor(
     private configSvc: ConfigurationsService,
@@ -77,13 +77,13 @@ export class UserFilterDisplayComponent implements OnInit, OnChanges {
   applyLevelFilter() {
     if (this.configSvc.org && this.userAdminLevel) {
       this.route.data.subscribe(data => {
-        this.UserId = data.profileData.data.userId
+        this.userId = data.profileData.data.userId
       })
       const reqBody = {
         pageSize: 10,
         orgs: this.configSvc.org,
         filters: {
-          wid: [this.UserId],
+          wid: [this.userId],
         },
         requiredSources: [this.userAdminLevel],
       }

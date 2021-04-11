@@ -37,7 +37,7 @@ export class BtnFlagComponent implements OnInit {
   constructor(private flagsvc: BtnFlagService, private snackBar: MatSnackBar, private configSvc: ConfigurationsService,
               public dialog: MatDialog, private route: ActivatedRoute
   ) {
-    
+
     this.route.data.subscribe(data => {
       this.userId = data.profileData.data.userId || ''
     })

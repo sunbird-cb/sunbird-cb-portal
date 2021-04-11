@@ -51,7 +51,7 @@ export class LeaderboardHomeComponent implements OnInit {
     private route: ActivatedRoute,
     private datePipe: DatePipe,
   ) {
-    
+
     this.route.data.subscribe(data => {
         this.userName = data.profileData.data.userName
       }

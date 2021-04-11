@@ -41,7 +41,7 @@ export class PostViewComponent implements OnInit {
     private router: Router,
     private discussionSvc: WsDiscussionForumService,
   ) {
-    
+
     this.route.data.subscribe(data => {
       this.userId = data.profileData.data.userId || ''
       this.userEmail = data.profileData.data.email || ''

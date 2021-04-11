@@ -51,7 +51,7 @@ export class PlaylistHomeComponent implements OnInit, OnDestroy {
         this.userName = (data.profileData.data.userName || '').split(' ')[0]
       }
     )
-    
+
   }
 
   ngOnInit() {

@@ -60,7 +60,7 @@ export class QnaReplyComponent implements OnInit {
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
   ) {
-    
+
     this.route.data.subscribe(data => {
       this.userId = data.profileData.data.userId || ''
     })
