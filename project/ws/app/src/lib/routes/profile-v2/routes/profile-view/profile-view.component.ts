@@ -51,10 +51,8 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute,
     private discussService: DiscussService,
     private networkV2Service: NetworkV2Service,
-    // private profileV2Svc: ProfileV2Service
   ) {
     this.Math = Math
-    this.currentUser = configSvc.userProfile && configSvc.userProfile.userId
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     this.tabs = this.route.data.subscribe(data => {
       this.portalProfile = data.profile
