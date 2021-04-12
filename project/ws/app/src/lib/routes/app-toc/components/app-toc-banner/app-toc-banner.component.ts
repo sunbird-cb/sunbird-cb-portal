@@ -10,7 +10,7 @@ import {
   viewerRouteGenerator,
   WidgetContentService,
 } from '@sunbird-cb/collection'
-import { ConfigurationsService, TFetchStatus, UtilityService } from '@sunbird-cb/utils'
+import { TFetchStatus, UtilityService } from '@sunbird-cb/utils'
 import { AccessControlService } from '@ws/author'
 import { Subscription } from 'rxjs'
 import { NsAnalytics } from '../../models/app-toc-analytics.model'
@@ -70,6 +70,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   tocConfig: any = null
   defaultSLogo = ''
   disableEnrollBtn = false
+  configSvc: any
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -77,15 +78,16 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private tocSvc: AppTocService,
-    private configSvc: ConfigurationsService,
     private progressSvc: ContentProgressService,
     private contentSvc: WidgetContentService,
     private utilitySvc: UtilityService,
     private mobileAppsSvc: MobileAppsService,
     private snackBar: MatSnackBar,
     public createBatchDialog: MatDialog,
-    // private authAccessService: AccessControlService,
-  ) { }
+  ) { 
+
+    this.configSvc = this.route.snapshot.data.profileData
+  }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
@@ -543,7 +545,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       width: '600px',
       data: { content },
     })
-
+    dialogRef.componentInstance.xyz = this.configSvc
     dialogRef.afterClosed().subscribe((_result: any) => {
     })
   }
