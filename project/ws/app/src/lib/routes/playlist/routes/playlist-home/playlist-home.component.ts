@@ -46,9 +46,12 @@ export class PlaylistHomeComponent implements OnInit, OnDestroy {
     private router: Router,
 
   ) {
-    if (this.configSvc.userProfile) {
-      this.userName = (this.configSvc.userProfile.userName || '').split(' ')[0]
-    }
+
+    this.route.data.subscribe(data => {
+        this.userName = (data.profileData.data.userName || '').split(' ')[0]
+      }
+    )
+
   }
 
   ngOnInit() {

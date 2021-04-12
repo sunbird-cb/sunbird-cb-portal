@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
-import { ConfigurationsService } from '@sunbird-cb/utils'
 import { GamificationService } from '../../../../services/gamification.service'
 import { Subscription } from 'rxjs'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'ws-app-my-rewards',
@@ -31,12 +31,15 @@ export class MyRewardsComponent implements OnInit {
     | undefined
 
   constructor(private gamificationSvc: GamificationService,
-              private configSvc: ConfigurationsService) {
+              private route: ActivatedRoute) {
     this.disablePrev = true
     this.disableNext = false
-    if (this.configSvc.userProfile) {
-      this.userName = this.configSvc.userProfile.userName
-    }
+
+    this.route.data.subscribe(data => {
+        this.userName = data.profileData.data.userName
+      }
+    )
+
   }
 
   ngOnInit() {

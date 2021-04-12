@@ -62,9 +62,6 @@ export class ModeratorTimelineComponent implements OnInit {
     public dialog: MatDialog,
   ) {
     this.isXSmall$ = this.valueSvc.isXSmall$
-    // if (this.configSvc.userProfile) {
-    //   this.moderatorTimelineRequest.userId = this.configSvc.userProfile.userId || ''
-    // }
     // console.log('Moderator timeline postcomop loaded')
     this._eventEmiter.sendFilterStatus(false)
     this._eventEmiter.sendStatusOfPredefinedFilter(false)

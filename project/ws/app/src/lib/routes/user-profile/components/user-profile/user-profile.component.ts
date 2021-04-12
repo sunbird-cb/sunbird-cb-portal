@@ -454,7 +454,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   getUserDetails() {
     if (this.configSvc.profileDetailsStatus) {
-      if (this.configSvc.userProfile) {
+
         this.userProfileSvc.getUserdetailsFromRegistry().subscribe(
           (data: any) => {
             const userData = data.result.UserProfile
@@ -465,41 +465,31 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               const organisations = this.populateOrganisationDetails(userData[0])
               this.constructFormFromRegistry(userData[0], academics, organisations)
               this.populateChips(userData[0])
-              // this.userProfileData = data[0]
               this.userProfileData = userData[0]
             } else {
-              if (this.configSvc.userProfile) {
-                this.createUserForm.patchValue({
-                  firstname: this.configSvc.userProfile.firstName,
-                  surname: this.configSvc.userProfile.lastName,
-                  primaryEmail: this.configSvc.userProfile.email,
-                  // departmentName: data[0].department_name,
-                })
-              }
 
+              this.route.data.subscribe(key => {
+                this.createUserForm.patchValue({
+                  firstname: key.profileData.data.firstName,
+                  surname: key.profileData.data.lastName,
+                  primaryEmail: key.profileData.data.email,
+                })
+              })
             }
             // this.handleFormData(data[0])
           },
           (_err: any) => {
           })
-      }
     } else {
-      if (this.configSvc.userProfile) {
-        this.userProfileSvc.getUserdetails(this.configSvc.userProfile.email).subscribe(
-          data => {
-            if (data && data.length) {
-              this.createUserForm.patchValue({
-                firstname: data[0].first_name,
-                surname: data[0].last_name,
-                primaryEmail: data[0].email,
-                departmentName: data[0].department_name,
-              })
-            }
-          },
-          () => {
-            // console.log('err :', err)
-          })
-      }
+
+      this.route.data.subscribe(data => {
+        this.createUserForm.patchValue({
+          firstname: data.profileData.data.firstName,
+          surname: data.profileData.data.lastName,
+          primaryEmail: data.profileData.data.email,
+          departmentName: data.profileData.data.department_name,
+        })
+      })
     }
   }
 
