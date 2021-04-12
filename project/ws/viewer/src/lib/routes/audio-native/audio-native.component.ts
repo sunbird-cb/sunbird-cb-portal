@@ -54,7 +54,7 @@ export class AudioNativeComponent implements OnInit, OnDestroy {
               : this.audioData.appIcon
           } else {
             if (this.configSvc.instanceConfig) {
-              this.defaultThumbnail = this.configSvc.instanceConfig.logos.defaultContent
+              this.defaultThumbnail = this.configSvc.instanceConfig.logos.defaultContent || ''
             }
           }
         }
