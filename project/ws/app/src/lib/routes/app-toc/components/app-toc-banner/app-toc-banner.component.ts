@@ -84,7 +84,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     private mobileAppsSvc: MobileAppsService,
     private snackBar: MatSnackBar,
     public createBatchDialog: MatDialog,
-  ) { 
+  ) {
 
     this.configSvc = this.route.snapshot.data.profileData
   }

@@ -22,7 +22,7 @@ export class CreateBatchDialogComponent implements OnInit {
   uploadSaveData = false
   @ViewChild('toastSuccess', { static: true }) toastSuccess!: ElementRef<any>
   @ViewChild('toastError', { static: true }) toastError!: ElementRef<any>
-  @Input() public xyz:any;  
+  @Input() public xyz: any
 
   constructor(
     public dialogRef: MatDialogRef<CreateBatchDialogComponent>,
