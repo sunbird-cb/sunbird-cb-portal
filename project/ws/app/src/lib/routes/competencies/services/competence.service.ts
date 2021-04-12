@@ -4,7 +4,8 @@ import { ConfigurationsService, NsUser } from '@sunbird-cb/utils'
 import { Observable } from 'rxjs'
 
 const API_ENDPOINTS = {
-  searchCompetency: '/apis/protected/v8/competency/searchCompetency',
+  searchCompetency: 'apis/protected/v8/frac/searchNodes',
+  // searchCompetency: '/apis/protected/v8/competency/searchCompetency',
   fetchProfileNyId: (id: string) => `/apis/protected/v8/user/profileDetails/getUserRegistryById${id}`,
   // fetchProfile: '/apis/protected/v8/user/profileDetails/getUserRegistry',
   fetchProfile: '/apis/protected/v8/user/profileRegistry/getUserRegistryById',
