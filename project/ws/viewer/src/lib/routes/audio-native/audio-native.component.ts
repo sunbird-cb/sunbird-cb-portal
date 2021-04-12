@@ -35,7 +35,7 @@ export class AudioNativeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.configSvc.instanceConfig) {
-      this.defaultThumbnail = this.configSvc.instanceConfig.logos.defaultContent
+      this.defaultThumbnail = this.configSvc.instanceConfig.logos.defaultContent || ''
     }
     this.screenSizeSubscription = this.valueSvc.isXSmall$.subscribe(data => {
       this.isScreenSizeSmall = data

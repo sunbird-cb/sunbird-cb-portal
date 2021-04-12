@@ -77,7 +77,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   ) {
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.defaultThumbnail = instanceConfig.logos.defaultContent
+      this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
     }
     this.editPlaylistForm = fb.group({
       title: [
