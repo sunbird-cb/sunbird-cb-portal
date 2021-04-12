@@ -19,7 +19,6 @@ import { YoutubeModule } from './routes/youtube/youtube.module'
 import { ConfigResolverService } from './resolvers/config-resolver.service'
 import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
-
 const routes: Routes = [
   {
     path: 'audio/:resourceId',
@@ -50,7 +49,7 @@ const routes: Routes = [
     data: {
       resourceType: 'certification',
     },
-    resolve:{
+    resolve: {
       configData: ConfigResolverService,
       profileData: ProfileResolverService,
     },
@@ -62,7 +61,7 @@ const routes: Routes = [
     data: {
       resourceType: 'class-diagram',
     },
-    resolve:{
+    resolve: {
       configData: ConfigResolverService,
       profileData: ProfileResolverService,
     },
@@ -74,7 +73,7 @@ const routes: Routes = [
     data: {
       resourceType: 'dnd-quiz',
     },
-    resolve:{
+    resolve: {
       configData: ConfigResolverService,
       profileData: ProfileResolverService,
     },
@@ -86,7 +85,7 @@ const routes: Routes = [
     data: {
       resourceType: 'hands-on',
     },
-    resolve:{
+    resolve: {
       configData: ConfigResolverService,
       profileData: ProfileResolverService,
     },

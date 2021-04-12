@@ -162,7 +162,7 @@ export class PdfComponent implements OnInit, OnDestroy {
       //   () => resolve(true),
       // )
       let userId
-      
+
       this.activatedRoute.data.subscribe(data => {
         userId = data.profileData.data.userId
       })

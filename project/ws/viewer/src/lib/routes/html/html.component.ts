@@ -51,7 +51,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    
+
     this.activatedRoute.data.subscribe(data => {
       this.uuid = data.profileData.data.userId
     })
