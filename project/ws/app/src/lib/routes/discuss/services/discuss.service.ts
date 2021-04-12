@@ -14,7 +14,8 @@ const API_ENDPOINTS = {
   recentPost: '/apis/protected/v8/discussionHub/topics/recent',
   popularPost: '/apis/protected/v8/discussionHub/topics/popular',
   unread: '/apis/protected/v8/discussionHub/topics/unread/total',
-  getTopic: '/apis/protected/v8/discussionHub/topics/',
+  // getTopic: '/apis/protected/v8/discussionHub/topics/',
+  getTopic: '/apis/proxies/v8/discussion/topic/',
   profile: '/apis/protected/v8/discussionHub/users/me',
   fetchProfile: (slug: string) => `/apis/protected/v8/discussionHub/users/${slug}/about`,
   listUpVote: (slug: string) => `/apis//protected/v8/discussionHub/users/${slug}/upvoted`,
@@ -105,8 +106,9 @@ export class DiscussService {
     return this.http.get<NSDiscussData.IDiscussionData>(url)
   }
 
-  fetchTopicById(topicId: number, page?: any) {
-    let url = API_ENDPOINTS.getTopic + topicId.toString()
+  fetchTopicById(topicId: number, topicName: any, page?: any) {
+    // tslint:disable-next-line:prefer-template
+    let url = API_ENDPOINTS.getTopic + topicId.toString() + '/' + topicName.toString()
     url = this.appendPage(page, url)
     return this.http.get<NSDiscussData.IDiscussionData>(url)
   }
