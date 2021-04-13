@@ -127,18 +127,22 @@ export class ContentAssignmentComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.configSvc.userProfile) {
-      this.userId = this.configSvc.userProfile.userId
-      if (this.configSvc.org) {
-        this.orgs = this.configSvc.org
-      }
-      if (this.configSvc.rootOrg) {
-        this.rootOrg = this.configSvc.rootOrg
-        if (this.rootOrg === 'RootOrg') {
-          this.isMandatory = true
-        }
+
+    this.route.data.subscribe(data => {
+      this.userId = data.profileData.data.userId
+    })
+
+    if (this.configSvc.org) {
+      this.orgs = this.configSvc.org
+    }
+
+    if (this.configSvc.rootOrg) {
+      this.rootOrg = this.configSvc.rootOrg
+      if (this.rootOrg === 'RootOrg') {
+        this.isMandatory = true
       }
     }
+
     setTimeout(() => {
       this.userType = this.route.snapshot.queryParams.userType
       this.userAdminLevel = this.route.snapshot.queryParams.adminLevel

@@ -10,7 +10,7 @@ import {
   viewerRouteGenerator,
   WidgetContentService,
 } from '@sunbird-cb/collection'
-import { ConfigurationsService, TFetchStatus, UtilityService } from '@sunbird-cb/utils'
+import { TFetchStatus, UtilityService } from '@sunbird-cb/utils'
 import { AccessControlService } from '@ws/author'
 import { Subscription } from 'rxjs'
 import { NsAnalytics } from '../../models/app-toc-analytics.model'
@@ -70,6 +70,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   tocConfig: any = null
   defaultSLogo = ''
   disableEnrollBtn = false
+  configSvc: any
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -77,15 +78,16 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private tocSvc: AppTocService,
-    private configSvc: ConfigurationsService,
     private progressSvc: ContentProgressService,
     private contentSvc: WidgetContentService,
     private utilitySvc: UtilityService,
     private mobileAppsSvc: MobileAppsService,
     private snackBar: MatSnackBar,
     public createBatchDialog: MatDialog,
-    // private authAccessService: AccessControlService,
-  ) { }
+  ) {
+
+    this.configSvc = this.route.snapshot.data.profileData
+  }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
@@ -102,10 +104,16 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         })
       }
     })
-    const instanceConfig = this.configSvc.instanceConfig
-    if (instanceConfig) {
-      this.defaultSLogo = instanceConfig.logos.defaultSourceLogo
-    }
+    // const instanceConfig = this.configSvc.instanceConfig
+    // if (instanceConfig) {
+    //   this.defaultSLogo = instanceConfig.logos.defaultSourceLogo
+    // }
+
+    this.route.data.subscribe(data => {
+        this.defaultSLogo = data.configData.data.logos.defaultContent
+      }
+    )
+
     if (this.configSvc.restrictedFeatures) {
       this.isGoalsEnabled = !this.configSvc.restrictedFeatures.has('goals')
     }
@@ -218,9 +226,14 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       this.disableEnrollBtn = true
       let userId = ''
       if (batch) {
-        if (this.configSvc.userProfile) {
-          userId = this.configSvc.userProfile.userId || ''
-        }
+          this.route.data.subscribe(data => {
+            userId = data.profileData.data.userId
+          }
+        )
+        // if (this.configSvc.userProfile) {
+        //   userId = this.configSvc.userProfile.userId || ''
+        // }
+
         const req = {
           request: {
             userId,
@@ -532,7 +545,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       width: '600px',
       data: { content },
     })
-
+    dialogRef.componentInstance.xyz = this.configSvc
     dialogRef.afterClosed().subscribe((_result: any) => {
     })
   }

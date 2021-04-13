@@ -18,7 +18,8 @@ export class CareerDetailResolve
     _state: RouterStateSnapshot,
   ): Observable<IResolveResponse<NSDiscussData.IDiscussionData>> {
     const topicId = _route.params.topicId
-    return this.discussionSvc.fetchTopicById(topicId).pipe(
+    const topicName = _route.params.topicName
+    return this.discussionSvc.fetchTopicById(topicId, topicName).pipe(
       map(data => ({ data, error: null })),
       catchError(error => of({ error, data: null })),
     )

@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { MatDialog, MatSnackBar } from '@angular/material'
-import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
+import { TFetchStatus } from '@sunbird-cb/utils'
 import { DialogSocialDeletePostComponent, WsDiscussionForumService, NsDiscussionForum } from '@sunbird-cb/collection'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'ws-app-blog-result',
@@ -23,11 +24,12 @@ export class BlogResultComponent implements OnInit {
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private discussionSvc: WsDiscussionForumService,
-    private configSvc: ConfigurationsService,
+    private route: ActivatedRoute,
   ) {
-    if (this.configSvc.userProfile) {
-      this.userId = this.configSvc.userProfile.userId || ''
-    }
+
+    this.route.data.subscribe(data => {
+      this.userId = data.profileData.data.userId
+    })
   }
 
   ngOnInit() {

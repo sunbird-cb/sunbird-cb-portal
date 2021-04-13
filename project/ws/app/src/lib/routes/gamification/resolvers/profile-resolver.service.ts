@@ -1,0 +1,19 @@
+import { Injectable, SkipSelf } from '@angular/core'
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router'
+import { Observable, of } from 'rxjs'
+import { NsUser, ConfigurationsService, IResolveResponse } from '@sunbird-cb/utils'
+
+@Injectable()
+export class ProfileResolverService implements Resolve<Observable<NsUser.IUserProfile>> {
+
+  constructor(@SkipSelf() private configSvc: ConfigurationsService) { }
+
+  resolve(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<any> {
+
+    const result: IResolveResponse<NsUser.IUserProfile> = {
+      data: this.configSvc.userProfile,
+      error: null,
+    }
+    return of(result)
+  }
+}

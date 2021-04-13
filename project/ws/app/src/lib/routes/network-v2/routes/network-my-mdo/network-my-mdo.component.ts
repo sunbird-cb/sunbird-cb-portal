@@ -3,7 +3,6 @@ import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { NetworkV2Service } from '../../services/network-v2.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-network-my-mdo',
@@ -23,7 +22,6 @@ export class NetworkMyMdoComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private networkV2Service: NetworkV2Service,
-    private configSvc: ConfigurationsService,
   ) {
     // console.log('this.route.snapshot.data.myMdoList.data :', this.route.snapshot.data.myMdoList.data)
     this.data = this.route.snapshot.data.myMdoList.data.result.data.
@@ -64,9 +62,10 @@ export class NetworkMyMdoComponent implements OnInit {
   connectionUpdate(event: any) {
     if (event === 'connection-updated') {
       let usrDept = 'iGOT'
-      if (this.configSvc.userProfile) {
-        usrDept = this.configSvc.userProfile.departmentName || 'iGOT'
-      }
+      this.route.data.subscribe(data => {
+        usrDept = data.profileData.data.departmentName || 'iGOT'
+        }
+      )
       let req: NSNetworkDataV2.IRecommendedUserReq
       req = {
         size: 50,

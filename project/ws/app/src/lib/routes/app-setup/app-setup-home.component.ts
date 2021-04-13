@@ -6,6 +6,7 @@ import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { InterestComponent } from '../profile/routes/interest/components/interest/interest.component'
 import { SettingsComponent } from '../profile/routes/settings/settings.component'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'ws-app-app-setup-home',
@@ -49,7 +50,7 @@ export class AppSetupHomeComponent implements OnInit, AfterViewInit {
     | SettingsComponent
     | undefined = undefined
 
-  constructor(private configSvc: ConfigurationsService, private matDialog: MatDialog) {}
+  constructor(private configSvc: ConfigurationsService, private matDialog: MatDialog, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     // if (this.configSvc.restrictedFeatures) {
@@ -57,10 +58,11 @@ export class AppSetupHomeComponent implements OnInit, AfterViewInit {
     // }
 
     this.appLanguage = (this.configSvc.activeLocale && this.configSvc.activeLocale.path) || ''
-    if (this.configSvc.instanceConfig) {
-      this.introVideos = this.configSvc.instanceConfig.introVideo
-      // //console.log('TYPE: ', this.introVideos)
-    }
+    this.route.data.subscribe(data => {
+        this.introVideos = data.configData.data.introVideo
+      }
+    )
+
     this.widgetResolverData = {
       ...this.widgetResolverData,
       widgetData: {

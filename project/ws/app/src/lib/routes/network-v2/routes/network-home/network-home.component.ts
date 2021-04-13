@@ -124,9 +124,10 @@ export class NetworkHomeComponent implements OnInit {
           // Filter all the connection requests sent
           if (requests && requests.result && requests.result.data) {
             requests.result.data.map(user => {
-              if (user.id) {
+              const userid = user.id || user.identifier
+              if (userid) {
                 this.searchResultUserArray.map((autoCompleteUser: any) => {
-                  if (autoCompleteUser.wid === user.id) {
+                  if (autoCompleteUser.wid === userid) {
                     autoCompleteUser['requestSent'] = true
                   }
                 })
@@ -134,11 +135,12 @@ export class NetworkHomeComponent implements OnInit {
             })
           }
           // Filter all the connection requests recieved
-          if (this.connectionRequests) {
+          if (this.connectionRequests && this.connectionRequests.length > 0) {
             this.connectionRequests.map((con: any) => {
-              if (con.id) {
+              const userid = con.id || con.identifier
+              if (userid) {
                 this.searchResultUserArray.map((autoCompleteUser: any) => {
-                  if (autoCompleteUser.wid === con.id) {
+                  if (autoCompleteUser.wid === userid) {
                     autoCompleteUser['requestRecieved'] = true
                   }
                 })
@@ -146,11 +148,12 @@ export class NetworkHomeComponent implements OnInit {
             })
           }
           // Filter all the estalished connections
-          if (this.establishedConnections) {
+          if (this.establishedConnections && this.establishedConnections.length > 0) {
             this.establishedConnections.map((con: any) => {
-              if (con.id) {
+              const userid = con.id || con.identifier
+              if (userid) {
                 this.searchResultUserArray.map((autoCompleteUser: any) => {
-                  if (autoCompleteUser.wid === con.id) {
+                  if (autoCompleteUser.wid === userid) {
                     autoCompleteUser['connectionEstablished'] = true
                   }
                 })

@@ -4,7 +4,6 @@ import { NSProfileDataV2 } from '../../models/profile-v2.model'
 import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute } from '@angular/router'
 import { DiscussService } from '../../../discuss/services/discuss.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
 // import { ProfileV2Service } from '../../services/profile-v2.servive'
 /* tslint:disable */
 import _ from 'lodash'
@@ -51,12 +50,9 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private discussService: DiscussService,
-    private configSvc: ConfigurationsService,
     private networkV2Service: NetworkV2Service,
-    // private profileV2Svc: ProfileV2Service
   ) {
     this.Math = Math
-    this.currentUser = configSvc.userProfile && configSvc.userProfile.userId
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     this.tabs = this.route.data.subscribe(data => {
       this.portalProfile = data.profile
@@ -71,11 +67,14 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       this.fetchUserDetails(this.portalProfile.id)
       this.fetchConnectionDetails(this.portalProfile.id)
     } else {
-      const me = this.configSvc.userProfile && this.configSvc.userProfile.userId || null
-      if (me) {
-        this.fetchUserDetails(me)
-        this.fetchConnectionDetails(me)
-      }
+
+       this.route.data.subscribe(data => {
+       const me = data.profileData.data.userId || ''
+       if (me) {
+          this.fetchUserDetails(me)
+          this.fetchConnectionDetails(me)
+        }
+      })
     }
   }
   ngOnDestroy() {

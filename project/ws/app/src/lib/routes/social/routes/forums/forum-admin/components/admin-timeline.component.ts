@@ -48,9 +48,6 @@ export class AdminTimelineComponent implements OnInit {
     private _eventEmiter: ForumHandlerService, private forumSvc: ForumService,
     private configSvc: ConfigurationsService, private valueSvc: ValueService) {
     this.isXSmall$ = this.valueSvc.isXSmall$
-    // if (this.configSvc.userProfile) {
-    //   this.moderatorTimelineRequest.userId = this.configSvc.userProfile.userId || ''
-    // }
     // console.log('Moderator timeline postcomop loaded')
     this._eventEmiter.sendFilterStatus(false)
     this._eventEmiter.sendStatusOfPredefinedFilter(false)

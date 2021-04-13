@@ -8,7 +8,7 @@ import {
   WidgetContentService,
 } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ValueService, ConfigurationsService } from '@sunbird-cb/utils'
+import { ValueService } from '@sunbird-cb/utils'
 import { ActivatedRoute } from '@angular/router'
 import { ViewerUtilService } from '../../viewer-util.service'
 import { Platform } from '@angular/cdk/platform'
@@ -41,7 +41,6 @@ export class VideoComponent implements OnInit, OnDestroy {
     private contentSvc: WidgetContentService,
     private platform: Platform,
     private accessControlSvc: AccessControlService,
-    private configSvc: ConfigurationsService,
   ) { }
 
   ngOnInit() {
@@ -233,9 +232,9 @@ export class VideoComponent implements OnInit, OnDestroy {
       //   () => resolve(true),
       // )
       let userId
-      if (this.configSvc.userProfile) {
-        userId = this.configSvc.userProfile.userId || ''
-      }
+      this.activatedRoute.data.subscribe(data => {
+        userId = data.profileData.data.userId
+      })
       const req: NsContent.IContinueLearningDataReq = {
         request: {
           userId,

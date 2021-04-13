@@ -64,9 +64,8 @@ export class AccessControlService {
   }
 
   get defaultLogo(): string {
-    return this.configService.instanceConfig
-      ? this.configService.instanceConfig.logos.defaultContent
-      : ''
+    const logo = this.configService.instanceConfig ?  this.configService.instanceConfig.logos.defaultContent : ''
+    return logo || ''
   }
 
   get appName(): string {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { Observable } from 'rxjs'
 import { TFetchStatus, ValueService, ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 import { NsDiscussionForum, WsDiscussionForumService } from '@sunbird-cb/collection'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'ws-app-recent-blog',
@@ -31,12 +32,12 @@ export class RecentBlogComponent implements OnInit {
     private discussionSvc: WsDiscussionForumService,
     private configSvc: ConfigurationsService,
     private valueSvc: ValueService,
-
+    private route: ActivatedRoute,
   ) {
     this.isXSmall$ = this.valueSvc.isXSmall$
-    if (this.configSvc.userProfile) {
-      this.timelineRequest.userId = this.configSvc.userProfile.userId || ''
-    }
+    this.route.data.subscribe(data => {
+      this.timelineRequest.userId = data.profileData.data.userId || ''
+    })
   }
 
   ngOnInit() {

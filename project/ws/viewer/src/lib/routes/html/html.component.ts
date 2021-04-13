@@ -4,7 +4,6 @@ import { AccessControlService } from '@ws/author'
 import { NsContent, NsDiscussionForum, WidgetContentService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import {
-  ConfigurationsService,
   EventService,
   SubapplicationRespondService,
   WsEvents,
@@ -47,13 +46,16 @@ export class HtmlComponent implements OnInit, OnDestroy {
     private contentSvc: WidgetContentService,
     private viewerSvc: ViewerUtilService,
     private respondSvc: SubapplicationRespondService,
-    private configSvc: ConfigurationsService,
     private eventSvc: EventService,
     private accessControlSvc: AccessControlService,
   ) { }
 
   ngOnInit() {
-    this.uuid = this.configSvc.userProfile ? this.configSvc.userProfile.userId : ''
+
+    this.activatedRoute.data.subscribe(data => {
+      this.uuid = data.profileData.data.userId
+    })
+
     this.isNotEmbed = !(
       window.location.href.includes('/embed/') ||
       this.activatedRoute.snapshot.queryParams.embed === 'true'

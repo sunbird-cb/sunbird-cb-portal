@@ -3,7 +3,7 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Observable } from 'rxjs'
 // import { map, catchError } from 'rxjs/operators'
 import { } from '@sunbird-cb/collection'
-import { ConfigurationsService, IResolveResponse } from '@sunbird-cb/utils'
+import { IResolveResponse } from '@sunbird-cb/utils'
 // import { ProfileV2UtillService } from '../services/profile-v2-utill.service'
 import { NSProfileDataV2 } from '../models/profile-v2.model'
 
@@ -11,7 +11,7 @@ import { NSProfileDataV2 } from '../models/profile-v2.model'
 export class Profilev2BadgesResolve
   implements
   Resolve<Observable<IResolveResponse<NSProfileDataV2.IBadgeResponse>> | IResolveResponse<NSProfileDataV2.IBadgeResponse>> {
-  constructor(private configSvc: ConfigurationsService) { }
+  constructor() { }
 
   resolve(
     _route: ActivatedRouteSnapshot,
@@ -25,11 +25,14 @@ export class Profilev2BadgesResolve
         userId = _route.queryParams.userId
       }
 
-      if (!userId) {
-        userId = this.configSvc.userProfile && this.configSvc.userProfile.userId || ''
-      }
+      _route.data.subscribe((key: any) => {
+        userId = key.profileData.data.userId || ''
+      })
     } else {
-      userId = this.configSvc.userProfile && this.configSvc.userProfile.userId || ''
+
+      _route.data.subscribe((key: any) => {
+        userId = key.profileData.data.userId || ''
+      })
     }
     const data: any = ''
     return data

@@ -11,6 +11,8 @@ import { PlaylistResolve } from './resolvers/playlist.resolve'
 import { PlaylistEditComponent } from './routes/playlist-edit/playlist-edit.component'
 import { PlaylistNotificationComponent } from './routes/playlist-notification/playlist-notification.component'
 import { PageResolve } from '@sunbird-cb/utils'
+import { ConfigResolverService } from './resolvers/config-resolver.service'
+import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = [
   {
@@ -29,6 +31,7 @@ const routes: Routes = [
     resolve: {
       pageData: PageResolve,
       playlists: PlaylistsResolve,
+      profileData: ProfileResolverService,
     },
     runGuardsAndResolvers: 'paramsChange',
   },
@@ -38,6 +41,7 @@ const routes: Routes = [
     data: { type: NsPlaylist.EPlaylistTypes.ME },
     resolve: {
       playlist: PlaylistResolve,
+      profileData: ProfileResolverService,
     },
   },
   {
@@ -46,6 +50,7 @@ const routes: Routes = [
     data: { type: NsPlaylist.EPlaylistTypes.ME },
     resolve: {
       playlist: PlaylistResolve,
+      profileData: ProfileResolverService,
     },
   },
   {
@@ -59,6 +64,7 @@ const routes: Routes = [
     resolve: {
       pageData: PageResolve,
       playlists: PlaylistsResolve,
+      profileData: ProfileResolverService,
     },
     runGuardsAndResolvers: 'paramsChange',
   },
@@ -68,6 +74,7 @@ const routes: Routes = [
     data: { type: NsPlaylist.EPlaylistTypes.SHARED },
     resolve: {
       playlist: PlaylistResolve,
+      profileData: ProfileResolverService,
     },
   },
   {
@@ -76,6 +83,7 @@ const routes: Routes = [
     data: { type: NsPlaylist.EPlaylistTypes.SHARED },
     resolve: {
       playlist: PlaylistResolve,
+      profileData: ProfileResolverService,
     },
   },
   {
@@ -88,6 +96,7 @@ const routes: Routes = [
     data: { type: NsPlaylist.EPlaylistTypes.PENDING },
     resolve: {
       playlists: PlaylistsResolve,
+      profileData: ProfileResolverService,
     },
     runGuardsAndResolvers: 'paramsChange',
   },
@@ -96,6 +105,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [PlaylistsResolve, PlaylistResolve],
+  providers: [PlaylistsResolve, PlaylistResolve, ProfileResolverService, ConfigResolverService],
 })
 export class PlaylistRoutingModule { }

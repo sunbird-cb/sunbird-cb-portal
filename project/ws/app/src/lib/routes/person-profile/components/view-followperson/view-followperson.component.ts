@@ -1,9 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { BtnFollowService } from '@sunbird-cb/collection'
 import { PersonProfileService } from '../../services/person-profile.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
 import { IFollowDetails } from '../../person-profile.model'
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { MatSnackBar } from '@angular/material'
 
 @Component({
@@ -25,9 +24,9 @@ export class ViewFollowpersonComponent implements OnInit {
   constructor(
     private followSvc: BtnFollowService,
     private personprofileSvc: PersonProfileService,
-    private configSvc: ConfigurationsService,
     private router: Router,
     private matSnackBar: MatSnackBar,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
@@ -41,11 +40,13 @@ export class ViewFollowpersonComponent implements OnInit {
 
   fetchUserDetails() {
     if (this.wid) {
-      if (this.configSvc.userProfile) {
-        if (this.wid === this.configSvc.userProfile.userId) {
-          this.isFollowAvailable = false
-        }
-      }
+
+        this.route.data.subscribe(data => {
+          if (this.wid === data.profileData.data.userId) {
+            this.isFollowAvailable = false
+          }
+        })
+
       this.personprofileSvc.fetchdetails(this.wid).subscribe(
         (data: any) => {
           if (data) {
