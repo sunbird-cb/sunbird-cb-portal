@@ -8,6 +8,7 @@ import { KnowledgeArtifactDetailsComponent } from './components/knowledge-artifa
 import { AppTocResolverService } from './resolvers/app-toc-resolver.service'
 import { ConfigResolverService } from './resolvers/config-resolver.service'
 import { ProfileResolverService } from './resolvers/profile-resolver.service'
+import { RestrictedFeaturesResolverService } from './resolvers/restricted-features-resolver.service'
 import { AppTocAnalyticsComponent } from './routes/app-toc-analytics/app-toc-analytics.component'
 import { CertificationMetaResolver } from './routes/app-toc-certification/resolvers/certification-meta.resolver'
 import { ContentCertificationResolver } from './routes/app-toc-certification/resolvers/content-certification.resolver'
@@ -29,6 +30,7 @@ const routes: Routes = [
       content: AppTocResolverService,
       configData: ConfigResolverService,
       profileData: ProfileResolverService,
+      restrictedData: RestrictedFeaturesResolverService,
     },
     runGuardsAndResolvers: 'paramsChange',
     children: [
@@ -55,6 +57,7 @@ const routes: Routes = [
         component: AppTocSinglePageRootComponent,
         resolve: {
           configData: ConfigResolverService,
+          restrictedData: RestrictedFeaturesResolverService,
         },
       },
       {
@@ -95,6 +98,7 @@ const routes: Routes = [
       content: AppTocResolverService,
       configData: ConfigResolverService,
       profileData: ProfileResolverService,
+      restrictedData: RestrictedFeaturesResolverService,
     },
   },
 ]
