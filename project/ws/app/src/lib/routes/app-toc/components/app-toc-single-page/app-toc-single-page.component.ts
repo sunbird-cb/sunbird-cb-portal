@@ -3,15 +3,13 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ActivatedRoute, Data } from '@angular/router'
 import { NsContent } from '@sunbird-cb/collection'
-import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Observable, Subscription } from 'rxjs'
 import { share } from 'rxjs/operators'
 import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
-// import { MatDialog } from '@angular/material'
+import { CreateBatchDialogComponent } from '../create-batch-dialog/create-batch-dialog.component'
 import { TitleTagService } from '@ws/app/src/lib/routes/app-toc/services/title-tag.service'
-// import { IBtnMailUser } from '@sunbird-cb/collection/lib/btn-mail-user/btn-mail-user.component'
-// import { BtnMailUserDialogComponent } from '@sunbird-cb/collection/lib/btn-mail-user/btn-mail-user-dialog/btn-mail-user-dialog.component'
+import { MatDialog } from '@angular/material'
 
 @Component({
   selector: 'ws-app-app-toc-single-page',
@@ -39,20 +37,28 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   loggedInUserId!: any
   private routeQuerySubscription: Subscription | null = null
   batchId!: string
+  configSvc: any
 
   constructor(
     private route: ActivatedRoute,
     private tocSharedSvc: AppTocService,
-    public configSvc: ConfigurationsService,
     private domSanitizer: DomSanitizer,
     private authAccessControlSvc: AccessControlService,
     // private dialog: MatDialog,
     private titleTagService: TitleTagService,
+    public createBatchDialog: MatDialog,
   ) {
-    if (this.configSvc.restrictedFeatures) {
-      this.askAuthorEnabled = !this.configSvc.restrictedFeatures.has('askAuthor')
-      this.trainingLHubEnabled = !this.configSvc.restrictedFeatures.has('trainingLHub')
+    // if (this.configSvc.restrictedFeatures) {
+    //   this.askAuthorEnabled = !this.configSvc.restrictedFeatures.has('askAuthor')
+    //   this.trainingLHubEnabled = !this.configSvc.restrictedFeatures.has('trainingLHub')
+    // }
+    if (this.route && this.route.parent) {
+      this.configSvc = this.route.parent.snapshot.data.profileData
     }
+    this.route.data.subscribe(data => {
+      this.askAuthorEnabled = !data.restrictedData.data.has('askAuthor')
+      this.trainingLHubEnabled = !data.restrictedData.data.has('trainingLHub')
+    })
   }
 
   ngOnInit() {
@@ -230,4 +236,15 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   //     }
   //   )
   // }
+
+  openDialog(content: any): void {
+    const dialogRef = this.createBatchDialog.open(CreateBatchDialogComponent, {
+      height: '400px',
+      width: '600px',
+      data: { content },
+    })
+    dialogRef.componentInstance.xyz = this.configSvc
+    dialogRef.afterClosed().subscribe((_result: any) => {
+    })
+  }
 }

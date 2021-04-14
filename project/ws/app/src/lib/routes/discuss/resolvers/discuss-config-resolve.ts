@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, SkipSelf } from '@angular/core'
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable } from 'rxjs'
 // import { map, catchError } from 'rxjs/operators'
@@ -7,13 +7,15 @@ import { } from '@sunbird-cb/collection'
 // import { DiscussService } from '../services/discuss.service'
 // import { NSDiscussData } from '../models/discuss.model'
 import { DiscussUtilsService } from '../services/discuss-utils.service'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 // import { DiscussUtilsService } from '../services/discuss-util.service'
 
 @Injectable()
 export class DiscussConfigResolve
   implements
   Resolve<any> {
-  constructor(private discussionSvc: DiscussUtilsService) { }
+  constructor(private discussionSvc: DiscussUtilsService,
+              @SkipSelf() public configSvc: ConfigurationsService) { }
 
   resolve(
     _route: ActivatedRouteSnapshot,
@@ -39,11 +41,11 @@ export class DiscussConfigResolve
       //     enable: false,
       //   },
       // ],
-      userName: 'nptest',
+      userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || 'RangabashyamKrishnamachari',
       context: {
         id: 1,
       },
-      categories: { result: [2, 8] },
+      categories: { result: [] },
       routerSlug: '/app',
     }
     return (this.discussionSvc.getDiscussionConfig() ? this.discussionSvc.getDiscussionConfig() : config)

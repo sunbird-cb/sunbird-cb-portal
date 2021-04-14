@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   OnInit,
+  SkipSelf,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core'
@@ -55,7 +56,7 @@ export class RootComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     public authSvc: AuthKeycloakService,
-    public configSvc: ConfigurationsService,
+    @SkipSelf() public configSvc: ConfigurationsService,
     private valueSvc: ValueService,
     private telemetrySvc: TelemetryService,
     private mobileAppsSvc: MobileAppsService,
@@ -152,7 +153,7 @@ export class RootComponent implements OnInit, AfterViewInit {
             //     enable: true,
             //   },
             // ],
-            userName: 'nptest',
+            userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
             context: {
               id: 1,
             },
