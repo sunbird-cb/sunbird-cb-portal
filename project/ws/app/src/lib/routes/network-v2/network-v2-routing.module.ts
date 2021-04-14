@@ -11,7 +11,7 @@ import { NetworkRecommendedComponent } from './routes/network-recommended/networ
 import { MyMdoResolveService } from './resolvers/my-mdo-resolve.service'
 import { ConnectionRequestResolveService } from './resolvers/connection-request-resolve.service'
 import { MyProfileResolve } from './resolvers/my-profile.resolve'
-import { ConfigResolverService } from './resolvers/config-resolver.service'
+// import { ConfigurationsService } from './resolvers/config-resolver.service'
 import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = [
@@ -77,6 +77,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [MyProfileResolve, ConfigResolverService, ProfileResolverService],
+  providers: [MyProfileResolve, ProfileResolverService],
 })
 export class NetworkV2RoutingModule { }

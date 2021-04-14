@@ -13,7 +13,7 @@ import {
 } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
-import { NSSearch } from '@sunbird-cb/utils/lib/services/widget-search.model'
+import { NSSearch } from '../_services/widget-search.model'
 
 interface IStripUnitContentData {
   key: string

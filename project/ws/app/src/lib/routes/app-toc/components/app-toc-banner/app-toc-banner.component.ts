@@ -105,13 +105,13 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     // if (instanceConfig && instanceConfig.logos && instanceConfig.logos.defaultSourceLogo) {
     //   this.defaultSLogo = instanceConfig.logos.defaultSourceLogo
     // }
-    this.route.data.subscribe(data => {
-      this.defaultSLogo = data.configData.data.logos.defaultContent
-      this.isGoalsEnabled = data.restrictedData.data.has('goals')
-      this.isRegistrationSupported = data.restrictedData.data.has('registrationExternal')
-      this.showIntranetMessage = data.restrictedData.data.has('showIntranetMessageDesktop')
-    }
-  )
+    // this.route.data.subscribe(data => {
+    //   // this.defaultSLogo = data.configData.data.logos.defaultContent
+    //   // this.isGoalsEnabled = data.restrictedData.data.has('goals')
+    //   // this.isRegistrationSupported = data.restrictedData.data.has('registrationExternal')
+    //   // this.showIntranetMessage = data.restrictedData.data.has('showIntranetMessageDesktop')
+    // }
+  // )
 
     // this.route.data.subscribe(data => {
     //     this.defaultSLogo = data.configData.data.logos.defaultContent

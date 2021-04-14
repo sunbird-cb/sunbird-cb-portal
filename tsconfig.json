@@ -33,6 +33,8 @@
       "@ws/learning-hub/*": ["project/ws/learning-hub/*"],
       "@sunbird-cb/collection": ["library/ws-widget/collection"],
       "@sunbird-cb/collection/*": ["library/ws-widget/collection/*"],
+      "@sunbird-cb/utils": ["library/ws-widget/utils"],
+      "@sunbird-cb/utils/*": ["library/ws-widget/utils/*"],
     },
     "removeComments": true,
     "sourceMap": true,

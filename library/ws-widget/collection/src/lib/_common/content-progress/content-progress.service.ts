@@ -24,25 +24,25 @@ export class ContentProgressService {
 
   getProgressFor(id: string): Observable<number> {
     if (this.shouldFetchProgress) {
-      this.fetchProgressHash()
+      // this.fetchProgressHash()
     }
     return this.progressHashSubject.pipe(map(hash => hash[id]))
   }
 
   getProgressHash(): Observable<{ [id: string]: number }> {
     if (this.shouldFetchProgress) {
-      this.fetchProgressHash()
+      // this.fetchProgressHash()
     }
     return this.progressHashSubject
   }
-  private fetchProgressHash() {
-    this.isFetchingProgress = true
-    this.http.get<{ [id: string]: number }>(API_END_POINTS.PROGRESS_HASH).subscribe(data => {
-      this.progressHash = data
-      this.isFetchingProgress = false
-      this.progressHashSubject.next(data)
-    })
-  }
+  // private fetchProgressHash() {
+  //   this.isFetchingProgress = true
+  //   this.http.get<{ [id: string]: number }>(API_END_POINTS.PROGRESS_HASH).subscribe(data => {
+  //     this.progressHash = data
+  //     this.isFetchingProgress = false
+  //     this.progressHashSubject.next(data)
+  //   })
+  // }
   private get shouldFetchProgress(): boolean {
     return Boolean(this.progressHash === null && !this.isFetchingProgress)
   }

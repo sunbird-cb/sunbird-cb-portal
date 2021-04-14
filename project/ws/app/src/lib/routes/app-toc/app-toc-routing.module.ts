@@ -6,7 +6,7 @@ import { GeneralGuard } from '../../../../../../../src/app/guards/general.guard'
 import { AppTocDiscussionComponent } from './components/app-toc-discussion/app-toc-discussion.component'
 import { KnowledgeArtifactDetailsComponent } from './components/knowledge-artifact-details/knowledge-artifact-details.component'
 import { AppTocResolverService } from './resolvers/app-toc-resolver.service'
-import { ConfigResolverService } from './resolvers/config-resolver.service'
+// import {  } from './resolvers/profile-resolver.service'
 import { ProfileResolverService } from './resolvers/profile-resolver.service'
 import { RestrictedFeaturesResolverService } from './resolvers/restricted-features-resolver.service'
 import { AppTocAnalyticsComponent } from './routes/app-toc-analytics/app-toc-analytics.component'
@@ -28,7 +28,7 @@ const routes: Routes = [
     resolve: {
       pageData: PageResolve,
       content: AppTocResolverService,
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
       restrictedData: RestrictedFeaturesResolverService,
     },
@@ -56,7 +56,7 @@ const routes: Routes = [
         path: 'overview',
         component: AppTocSinglePageRootComponent,
         resolve: {
-          configData: ConfigResolverService,
+          // configData: ConfigurationsService,
           restrictedData: RestrictedFeaturesResolverService,
         },
       },
@@ -96,7 +96,7 @@ const routes: Routes = [
     component: KnowledgeArtifactDetailsComponent,
     resolve: {
       content: AppTocResolverService,
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
       restrictedData: RestrictedFeaturesResolverService,
     },

@@ -4,7 +4,6 @@ import {
   Component,
   ElementRef,
   OnInit,
-  SkipSelf,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core'
@@ -56,7 +55,7 @@ export class RootComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     public authSvc: AuthKeycloakService,
-    @SkipSelf() public configSvc: ConfigurationsService,
+    public configSvc: ConfigurationsService,
     private valueSvc: ValueService,
     private telemetrySvc: TelemetryService,
     private mobileAppsSvc: MobileAppsService,

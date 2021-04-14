@@ -11,7 +11,6 @@ import { PlaylistResolve } from './resolvers/playlist.resolve'
 import { PlaylistEditComponent } from './routes/playlist-edit/playlist-edit.component'
 import { PlaylistNotificationComponent } from './routes/playlist-notification/playlist-notification.component'
 import { PageResolve } from '@sunbird-cb/utils'
-import { ConfigResolverService } from './resolvers/config-resolver.service'
 import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = [
@@ -105,6 +104,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [PlaylistsResolve, PlaylistResolve, ProfileResolverService, ConfigResolverService],
+  providers: [PlaylistsResolve, PlaylistResolve, ProfileResolverService],
 })
 export class PlaylistRoutingModule { }

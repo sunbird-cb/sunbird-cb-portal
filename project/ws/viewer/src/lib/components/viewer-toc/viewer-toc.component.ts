@@ -1,7 +1,7 @@
 import { NestedTreeControl } from '@angular/cdk/tree'
 import { Component, EventEmitter, OnDestroy, OnInit, Output, Input } from '@angular/core'
 import { MatTreeNestedDataSource } from '@angular/material'
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
+import {  SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router'
 import {
   ContentProgressService,
@@ -12,7 +12,7 @@ import {
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import {
   // LoggerService,
-  ConfigurationsService,
+  // ConfigurationsService,
   UtilityService,
 } from '@sunbird-cb/utils'
 import { of, Subscription } from 'rxjs'
@@ -54,13 +54,13 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private domSanitizer: DomSanitizer,
+    // private domSanitizer: DomSanitizer,
     // private logger: LoggerService,
     private contentSvc: WidgetContentService,
     private utilitySvc: UtilityService,
     private viewerDataSvc: ViewerDataService,
     private viewSvc: ViewerUtilService,
-    private configSvc: ConfigurationsService,
+    // private configSvc: ConfigurationsService,
     private contentProgressSvc: ContentProgressService,
   ) {
     this.nestedTreeControl = new NestedTreeControl<IViewerTocCard>(this._getChildren)
@@ -95,10 +95,10 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.logos) {
-      const logo = this.configSvc.instanceConfig.logos.defaultContent || ''
-      this.defaultThumbnail = this.domSanitizer.bypassSecurityTrustResourceUrl(logo)
-    }
+    // if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.logos) {
+    //   const logo = this.configSvc.instanceConfig.logos.defaultContent || ''
+    //   this.defaultThumbnail = this.domSanitizer.bypassSecurityTrustResourceUrl(logo)
+    // }
     this.paramSubscription = this.activatedRoute.queryParamMap.subscribe(async params => {
       const collectionId = params.get('collectionId')
       const collectionType = params.get('collectionType')

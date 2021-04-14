@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, SkipSelf } from '@angular/core'
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router'
-import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
+import {  ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ViewerDataService } from '../../viewer-data.service'
 
@@ -22,7 +22,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   collectionType: string | null = null
   prevResourceUrl: string | null = null
   nextResourceUrl: string | null = null
-  pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
+  // pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
   resourceId: string = (this.viewerDataSvc.resourceId as string) || ''
   resourceName: string | null = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.name : ''
   resourcePrimaryCategory: string | null = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.primaryCategory : ''
@@ -34,7 +34,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private domSanitizer: DomSanitizer,
     // private logger: LoggerService,
-    @SkipSelf() private configSvc: ConfigurationsService,
+    //  private configSvc: ConfigurationsService,
     private viewerDataSvc: ViewerDataService,
     private valueSvc: ValueService,
     private route: ActivatedRoute

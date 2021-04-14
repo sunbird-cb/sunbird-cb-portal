@@ -1,4 +1,4 @@
-import { Injectable, SkipSelf } from '@angular/core'
+import { Injectable,  } from '@angular/core'
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable } from 'rxjs'
 // import { map, catchError } from 'rxjs/operators'
@@ -15,7 +15,7 @@ export class DiscussConfigResolve
   implements
   Resolve<any> {
   constructor(private discussionSvc: DiscussUtilsService,
-              @SkipSelf() public configSvc: ConfigurationsService) { }
+               public configSvc: ConfigurationsService) { }
 
   resolve(
     _route: ActivatedRouteSnapshot,

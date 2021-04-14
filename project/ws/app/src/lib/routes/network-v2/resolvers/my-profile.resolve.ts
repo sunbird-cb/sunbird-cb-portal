@@ -1,4 +1,4 @@
-import { Injectable, SkipSelf } from '@angular/core'
+import { Injectable,  } from '@angular/core'
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable, of, EMPTY } from 'rxjs'
 import { } from '@sunbird-cb/collection'
@@ -8,7 +8,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 export class MyProfileResolve
     implements
     Resolve<any> {
-    constructor(@SkipSelf() private configSvc: ConfigurationsService) { }
+    constructor( private configSvc: ConfigurationsService) { }
     resolve(
         _route: ActivatedRouteSnapshot,
         _state: RouterStateSnapshot,

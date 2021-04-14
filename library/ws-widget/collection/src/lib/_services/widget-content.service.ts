@@ -80,6 +80,16 @@ export class WidgetContentService {
     // }
     return apiData
   }
+  fetchContentV3(
+    contentId: string,
+    // hierarchyType: 'all' | 'minimal' | 'detail' = 'detail',
+    additionalFields: string[] = [],
+  ): Observable<NsContent.IContent> {
+    const url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
+    return this.http
+      .post<NsContent.IContent>(url, { additionalFields })
+      .pipe(retry(1))
+  }
   fetchAuthoringContent(contentId: string): Observable<NsContent.IContent> {
     const url = `${API_END_POINTS.AUTHORING_CONTENT}/${contentId}`
     return this.http.get<NsContent.IContent>(url).pipe(retry(1))
