@@ -102,6 +102,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         })
       }
     })
+    const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig && instanceConfig.logos && instanceConfig.logos.defaultSourceLogo) {
       this.defaultSLogo = instanceConfig.logos.defaultSourceLogo
     }

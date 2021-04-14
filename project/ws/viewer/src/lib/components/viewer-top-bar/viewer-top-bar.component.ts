@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router'
-import {  ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ViewerDataService } from '../../viewer-data.service'
 
@@ -37,7 +37,6 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     private configSvc: ConfigurationsService,
     private viewerDataSvc: ViewerDataService,
     private valueSvc: ValueService,
-    private route: ActivatedRoute
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
