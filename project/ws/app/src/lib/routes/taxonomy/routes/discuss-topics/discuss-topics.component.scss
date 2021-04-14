@@ -7,13 +7,31 @@
   height: auto;
   min-height: 400px;
 }
-mat-sidenav{
+.search{
+  margin-top: 20px;
+  margin-left: 8.5%;
+}
+.bot{
+  margin-bottom: 40px;
+}
+.sidenav-align{
   overflow: auto;
   width: auto;
-  min-width: 240px;
+  min-width: 400px;
+}
+.sidenav-align-cont{
+  margin-left: 400px;
 }
 .container-balanced-banner {
-  @extend %page-center;
+  max-width: 1600px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  height: auto;
+}
+.container-balanced-local {
+  max-width: 1600px;
+  margin-left: auto !important;
+  margin-right: auto !important;
   height: auto;
 }
 .min-wid {

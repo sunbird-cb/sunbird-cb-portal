@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, Event, NavigationEnd, NavigationError } from '@
 import { ValueService } from '@sunbird-cb/utils'
 import { map } from 'rxjs/operators'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { TaxonomyService } from '../../services/taxonomy.service'
 @Component({
   selector: 'app-discuss',
   templateUrl: './discuss-topics.component.html',
@@ -12,8 +13,11 @@ import { NsWidgetResolver } from '@sunbird-cb/resolver'
 export class DiscussTopicsComponent implements OnInit, OnDestroy {
   sideNavBarOpened = true
   panelOpenState = false
-  recommendedUsers = ["1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3"]
+  nextLevelTopic:any
+  firstLevelTopic:any
+  currentTab:any
   titles = [{ title: 'DISCUSS', url: '/app/discuss/home', icon: 'forum' }]
+  relatedResource:any =[]
   unread = 0
   currentRoute = 'home'
   banner!: NsWidgetResolver.IWidgetData<any>
@@ -22,13 +26,17 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
   mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
   private defaultSideNavBarOpenedSubscription: any
 
-  constructor(private valueSvc: ValueService, private route: ActivatedRoute, private router: Router) {
+  constructor(private valueSvc: ValueService, private route: ActivatedRoute, private router: Router,  private _service:  TaxonomyService) {
     this.unread = this.route.snapshot.data.unread
+
+    this.currentTab = this.route.snapshot.url.toString().split('/').pop()
+    this.getAllTopics(this.currentTab)
+    this. getAllRelatedCourse()
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         // Hide loading indicator
         // console.log(event.url)
-        this.bindUrl(event.urlAfterRedirects.replace('/app/discuss/', ''))
+
       }
 
       if (event instanceof NavigationError) {
@@ -49,6 +57,20 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
       this.sideNavBarOpened = !isLtMedium
       this.screenSizeIsLtMedium = isLtMedium
     })
+    // this.firstLevelTopic =  [{name: "Economics", enabled: true, routerLink:"/app/taxonomy/test"},
+    // {name: "1st level  topic", enabled: true, routerLink:"/app/taxonomy/116"},
+    // {name: "1st level  topic", enabled: true, routerLink:"/app/taxonomy/ll1"},
+    // {name: "1st level  topic", enabled: true,  routerLink:"/app/taxonomy/ll2"},
+    // {name: "1st level  topic", enabled: true, routerLink:"/app/taxonomy/ll3"},
+    // {name: "1st level  topic", enabled: true, routerLink:"/app/taxonomy/ll4"},
+    // {name: "1st level  topic", enabled: true,routerLink:"/app/taxonomy/ll5"},]
+
+    // this.nextLevelTopic = ["2nd Level Topic",  "2nd Level Topic", "2nd Level Topic","small",
+    // "2nd Level Topic with large", "2nd Level Topic very large","2nd Level Topic","2nd Level Topic with Extra large",
+    // "2nd Level", "2nd Level Topic","2nd Level Topic","small",
+    // "2nd Level Topic with large", "2nd Level Topic very large","2nd Level Topic","2nd Level Topic with Extra large",
+    // "2nd Level Topic with large", "2nd Level Topic very large","2nd Level Topic","2nd Level Topic with Extra large" ]
+
   }
   ngOnDestroy() {
     if (this.defaultSideNavBarOpenedSubscription) {
@@ -61,32 +83,42 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
   gotoLeft(){
     console.log("Working")
   }
-  bindUrl(path: string) {
-    if (path) {
-      this.currentRoute = path
-      if (this.titles.length > 1) {
-        this.titles.pop()
-      }
-      switch (path) {
-        case 'home':
-          this.titles.push({ title: 'Discussion', icon: '', url: 'none' })
-          break
-        case 'categories':
-          this.titles.push({ title: 'Categories', icon: '', url: 'none' })
-          break
-        case 'tags':
-          this.titles.push({ title: 'Tags', icon: '', url: 'none' })
-          break
-        case 'leaderboard':
-          this.titles.push({ title: 'Leaderboard', icon: '', url: 'none' })
-          break
-        case 'my-discussions':
-          this.titles.push({ title: 'My Discussions', icon: '', url: 'none' })
-          break
+  getAllTopics(topic: string){
+    this._service.fetchAllTopics().subscribe(response => {
+      let firstLvlArray: any[] = [];
+      response.terms.forEach((term: any) => {
+        if(term.name===topic && term.children!==undefined){
 
-        default:
-          break
-      }
+            const obj = {
+              name: term.name,
+              enabled: true,
+              routerLink: "/app/taxonomy/"+term.name
+            }
+            firstLvlArray.push(obj)
+            this.firstLevelTopic = firstLvlArray
+            if(term){
+              let nextLevel: string[] = []
+              term.children.forEach((second: any) => {
+                nextLevel.push(second.name)
+              });
+
+              this.nextLevelTopic = nextLevel
+            }
+        }
+
+        })
+      })
     }
-  }
+  getAllRelatedCourse(){
+      this._service.fetchAllRelatedCourse().subscribe(response => {
+        var tempRequestParam: { content: any }[] = []
+        response.result.content.forEach((course: any) => {
+         const temobj= {
+           content: course
+         }
+         tempRequestParam.push(temobj)
+        });
+        this.relatedResource = tempRequestParam
+      })
+    }
 }

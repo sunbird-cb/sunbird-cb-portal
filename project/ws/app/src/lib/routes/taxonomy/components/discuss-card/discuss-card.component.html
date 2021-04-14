@@ -10,9 +10,10 @@
    *ngFor="let tag of tags">
     {{tag}}
   </mat-chip>
-</mat-chip-list>
+  </mat-chip-list>
+  <div *ngIf="!tags">No Topics Available</div>
   </mat-card-content>
-  <mat-card-actions>
+  <mat-card-actions *ngIf="tags.length>8">
     <a mat-button (click)="getDiscussion()" *ngIf="showRem">SEE {{rem}} MORE SUB TOPICS </a>
   </mat-card-actions>
 </mat-card>

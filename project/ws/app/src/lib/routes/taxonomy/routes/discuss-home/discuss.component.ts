@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, Event, NavigationEnd, NavigationError } from '@
 import { ValueService } from '@sunbird-cb/utils'
 import { map } from 'rxjs/operators'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { TaxonomyService } from '../../services/taxonomy.service'
 @Component({
   selector: 'app-discuss',
   templateUrl: './discuss.component.html',
@@ -12,7 +13,7 @@ import { NsWidgetResolver } from '@sunbird-cb/resolver'
 export class DiscussComponent implements OnInit, OnDestroy {
   sideNavBarOpened = true
   panelOpenState = false
-  recommendedUsers = ["1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3"]
+  termsTopicArray:any
   titles = [{ title: 'DISCUSS', url: '/app/discuss/home', icon: 'forum' }]
   unread = 0
   currentRoute = 'home'
@@ -23,13 +24,13 @@ export class DiscussComponent implements OnInit, OnDestroy {
   mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
   private defaultSideNavBarOpenedSubscription: any
 
-  constructor(private valueSvc: ValueService, private route: ActivatedRoute, private router: Router) {
+  constructor(private valueSvc: ValueService, private route: ActivatedRoute, private router: Router, private _service:  TaxonomyService) {
     this.unread = this.route.snapshot.data.unread
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         // Hide loading indicator
         // console.log(event.url)
-        this.bindUrl(event.urlAfterRedirects.replace('/app/discuss/', ''))
+
       }
 
       if (event instanceof NavigationError) {
@@ -45,7 +46,11 @@ export class DiscussComponent implements OnInit, OnDestroy {
       }
     })
   }
+  gotoNextLevel(topic: any){
+    this.router.navigate(['/app/taxonomy/'+topic.name])
+  }
   ngOnInit() {
+    this.getAllTopics()
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
       this.sideNavBarOpened = !isLtMedium
       this.screenSizeIsLtMedium = isLtMedium
@@ -59,32 +64,11 @@ export class DiscussComponent implements OnInit, OnDestroy {
       this.bannerSubscription.unsubscribe()
     }
   }
-  bindUrl(path: string) {
-    if (path) {
-      this.currentRoute = path
-      if (this.titles.length > 1) {
-        this.titles.pop()
-      }
-      switch (path) {
-        case 'home':
-          this.titles.push({ title: 'Discussion', icon: '', url: 'none' })
-          break
-        case 'categories':
-          this.titles.push({ title: 'Categories', icon: '', url: 'none' })
-          break
-        case 'tags':
-          this.titles.push({ title: 'Tags', icon: '', url: 'none' })
-          break
-        case 'leaderboard':
-          this.titles.push({ title: 'Leaderboard', icon: '', url: 'none' })
-          break
-        case 'my-discussions':
-          this.titles.push({ title: 'My Discussions', icon: '', url: 'none' })
-          break
-
-        default:
-          break
-      }
-    }
+  getAllTopics(){
+    this._service.fetchAllTopics().subscribe(response => {
+      console.log(response)
+      this.termsTopicArray =response.terms
+    })
   }
+
 }

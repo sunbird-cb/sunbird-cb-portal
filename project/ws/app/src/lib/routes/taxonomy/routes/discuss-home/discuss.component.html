@@ -1,23 +1,36 @@
+<div class="flex flex-2 search">
+  <h1>All Topics</h1>
+</div>
+<div class="flex flex-2 search">
+
+  <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'"  style="width: 27%">
+    <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+    <!-- <mat-placeholder>Search user</mat-placeholder> -->
+    <!-- <input [(ngModel)]="nameFilter" (ngModelChange)="searchUser()" matInput type="search"> -->
+    <mat-label>Search</mat-label>
+    <input type="search" #searchInput class="ml-2" matInput
+      type="search" [placeholder]="'Search'" />
+  </mat-form-field>
+</div>
+
   <div class="flex flex-1">
       <div class="margin-left-xll mb-1-imp flex flex-wrap">
-          <ng-container *ngFor="let userObj of recommendedUsers" [ngTemplateOutlet]="userIndividualNew"
-              [ngTemplateOutletContext]="{ user: userObj }">
+          <ng-container *ngFor="let topics of termsTopicArray" [ngTemplateOutlet]="userIndividualNew"
+              [ngTemplateOutletContext]="{ topic: topics }">
             </ng-container>
-          <!-- <ws-app-connection-people-card class="mr-4 mb-5" [user]="user"
-            (connection)="connectionUpdatePeopleCard($event)"></ws-app-connection-people-card> -->
       </div>
   </div>
   <!-- Tem component -->
-  <ng-template #userIndividualNew let-user="user">
-    <mat-card class="network-card mr-9">
+  <ng-template #userIndividualNew let-topic="topic">
+    <mat-card class="network-card mr-9" (click)="gotoNextLevel(topic)">
       <mat-card-header>
-        <mat-card-title class="text-capitalize">
+        <mat-card-title class="text-capitalize text-oneline">
           <a href="javascript:void(0)" role="link" i18n-aria-label>
-            <span class="mat-subheading-2"> Economic
+            <span class="mat-subheading-2"> {{topic.name}}
             </span></a>
         </mat-card-title>
         <mat-card-subtitle>
-          <span class="text-capitalize mat-body-2">gggg</span>
+          <span class="text-capitalize mat-body-2">{{topic.noOfHoursConsumed}} hours in last week</span>
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content class="content">

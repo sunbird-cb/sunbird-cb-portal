@@ -1,22 +1,37 @@
 <div *ngIf="currentRoute === 'home'" class="container-balanced-banner margin-top-s">
   <ng-container [wsResolverWidget]="banner"></ng-container>
 </div>
-<mat-sidenav-container class="container-balanced" name="discuss-menu">
-
-  <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0">
-    <app-discuss-left-menu [unseen]="unread"></app-discuss-left-menu>
+<div class="flex flex-2 search">
+  <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'"  style="width: 27%">
+    <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+    <!-- <mat-placeholder>Search user</mat-placeholder> -->
+    <!-- <input [(ngModel)]="nameFilter" (ngModelChange)="searchUser()" matInput type="search"> -->
+    <mat-label>Search</mat-label>
+    <input type="search" #searchInput class="ml-2" matInput
+      type="search" [placeholder]="'Search'" />
+  </mat-form-field>
+</div>
+<mat-sidenav-container class="container-balanced-local" name="discuss-menu">
+  <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 sidenav-align">
+    <app-discuss-left-menu [unseen]="unread" [tabsData] = "firstLevelTopic"></app-discuss-left-menu>
   </mat-sidenav>
-  <mat-sidenav-content>
+  <mat-sidenav-content class="sidenav-align-cont">
     <div *ngIf="screenSizeIsLtMedium">
       <button type="button" mat-icon-button (click)="sideNavBarOpened = !sideNavBarOpened"
         id="ws-auth-root-home-btn-menu" name="ws-auth-root-home-btn-menu">
         <mat-icon>menu</mat-icon>
       </button>
     </div>
-    <div class="flex flex-5">
-      <!-- <router-outlet></router-outlet> -->
-      <!-- <app-discuss-all></app-discuss-all> -->
-      <app-dicuss-card></app-dicuss-card>
+
+    <div class="flex flex-4 bot">
+      <app-dicuss-card *ngIf="nextLevelTopic"[tags]="nextLevelTopic"></app-dicuss-card>
+    </div>
+    <div class="flex flex-1">
+      <div class="margin-left-xll mb-1-imp flex flex-wrap">
+    <div *ngFor="let content of relatedResource" class="mb-8">
+      <ws-widget-card-content [widgetData]="content"></ws-widget-card-content>
+    </div>
+      </div>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

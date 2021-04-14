@@ -27,7 +27,6 @@ const routes: Routes = [
           badges: Profilev2BadgesResolve,
         },
       },
-
     ],
   },
 ]
