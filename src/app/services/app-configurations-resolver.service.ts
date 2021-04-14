@@ -1,4 +1,4 @@
-import { Injectable,  } from '@angular/core'
+import { Injectable  } from '@angular/core'
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router'
 import { ConfigurationsService, IResolveResponse } from '@sunbird-cb/utils'
 import { Observable, of } from 'rxjs'
@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs'
 @Injectable()
 export class AppConfigurationsResolverService implements Resolve<Observable<any>> {
 
-  constructor( private configSvc: ConfigurationsService) { }
+  constructor(private configSvc: ConfigurationsService) { }
 
   resolve(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<any> {
 

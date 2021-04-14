@@ -245,7 +245,7 @@ export class AppTocService {
     // return this.http.get<NsContent.IContentMinimal[]>(
     //   `${API_END_POINTS.CONTENT_PARENTS}/${contentId}`,
     // )
-    if(contentId){}
+    if (contentId) {}
     return EMPTY
   }
   fetchContentWhatsNext(

@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { DateAdapter, MAT_DATE_FORMATS, MatSnackBar } from '@angular/material'
 import { AppDateAdapter, APP_DATE_FORMATS, startWithYearformat } from '@ws/app'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { AppTocService } from '../../services/app-toc.service'
 
 @Component({
@@ -22,7 +23,6 @@ export class CreateBatchDialogComponent implements OnInit {
   uploadSaveData = false
   @ViewChild('toastSuccess', { static: true }) toastSuccess!: ElementRef<any>
   @ViewChild('toastError', { static: true }) toastError!: ElementRef<any>
-  @Input() public xyz: any
 
   constructor(
     public dialogRef: MatDialogRef<CreateBatchDialogComponent>,
@@ -54,9 +54,9 @@ export class CreateBatchDialogComponent implements OnInit {
     form.value.endDate = startWithYearformat(new Date(`${form.value.endDate}`))
     form.value.enrollmentEndDate = startWithYearformat(new Date(`${form.value.enrollmentEndDate}`))
     form.value.mentors = []
-    if (this.xyz.data) {
-      form.value.createdFor = [this.xyz.data.rootOrgId]
-      form.value.createdBy = this.xyz.data.userId
+    if (this.configSvc.userProfile) {
+      form.value.createdFor = [this.configSvc.userProfile.rootOrgId]
+      form.value.createdBy = this.configSvc.userProfile.userId
     }
     if (this.data && this.data.content) {
       form.value.courseId = this.data.content.identifier

@@ -30,6 +30,7 @@ export namespace NsPlaylist {
   }
 
   export interface IPlaylist {
+    [x: string]: any
     id: string
     name: string
     contents: NsContent.IContentMinimal[]
@@ -44,6 +45,7 @@ export namespace NsPlaylist {
     children?: NsContent.IContentMinimal[]
     identifier: string
     versionKey: string
+    result: any
   }
 
   export interface IPlaylistCreateRequest {

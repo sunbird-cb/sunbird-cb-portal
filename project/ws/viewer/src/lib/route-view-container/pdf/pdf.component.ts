@@ -39,7 +39,6 @@ export class PdfComponent implements OnInit {
     //   this.isRestricted =
     //     !this.configSvc.restrictedFeatures.has('disscussionForum')
     // }
-    console.log('widgetResolverPdfData: ', this.widgetResolverPdfData)
     this.isTypeOfCollection = this.activatedRoute.snapshot.queryParams.collectionType ? true : false
   }
 }

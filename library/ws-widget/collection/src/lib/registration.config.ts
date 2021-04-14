@@ -27,8 +27,8 @@ import { BtnFullscreenComponent } from './btn-fullscreen/btn-fullscreen.componen
 import { BtnFullscreenModule } from './btn-fullscreen/btn-fullscreen.module'
 import { BtnGoalsComponent } from './btn-goals/btn-goals.component'
 import { BtnGoalsModule } from './btn-goals/btn-goals.module'
-// import { BtnMailUserComponent } from './btn-mail-user/btn-mail-user.component'
-// import { BtnMailUserModule } from './btn-mail-user/btn-mail-user.module'
+import { BtnMailUserComponent } from './btn-mail-user/btn-mail-user.component'
+import { BtnMailUserModule } from './btn-mail-user/btn-mail-user.module'
 import { BtnPageBackComponent } from './btn-page-back/btn-page-back.component'
 import { BtnPageBackNavModule } from './btn-page-back-nav/btn-page-back-nav.module'
 import { BtnPageBackModule } from './btn-page-back/btn-page-back.module'
@@ -179,7 +179,7 @@ export const WIDGET_REGISTERED_MODULES = [
   BtnContentShareModule,
   BtnFullscreenModule,
   BtnGoalsModule,
-  // BtnMailUserModule,
+  BtnMailUserModule,
   BtnPageBackNavModule,
   BtnPageBackModule,
   BtnPlaylistModule,
@@ -307,11 +307,11 @@ export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] 
     widgetSubType: ROOT_WIDGET_CONFIG.actionButton.goals,
     component: BtnGoalsComponent,
   },
-  // {
-  //   widgetType: ROOT_WIDGET_CONFIG.actionButton._type,
-  //   widgetSubType: ROOT_WIDGET_CONFIG.actionButton.mailUser,
-  //   component: BtnMailUserComponent,
-  // },
+  {
+    widgetType: ROOT_WIDGET_CONFIG.actionButton._type,
+    widgetSubType: ROOT_WIDGET_CONFIG.actionButton.mailUser,
+    component: BtnMailUserComponent,
+  },
   {
     widgetType: ROOT_WIDGET_CONFIG.actionButton._type,
     widgetSubType: ROOT_WIDGET_CONFIG.actionButton.pageBack,

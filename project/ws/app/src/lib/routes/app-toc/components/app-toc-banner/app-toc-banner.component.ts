@@ -102,9 +102,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         })
       }
     })
-    // if (instanceConfig && instanceConfig.logos && instanceConfig.logos.defaultSourceLogo) {
-    //   this.defaultSLogo = instanceConfig.logos.defaultSourceLogo
-    // }
+    if (instanceConfig && instanceConfig.logos && instanceConfig.logos.defaultSourceLogo) {
+      this.defaultSLogo = instanceConfig.logos.defaultSourceLogo
+    }
     // this.route.data.subscribe(data => {
     //   // this.defaultSLogo = data.configData.data.logos.defaultContent
     //   // this.isGoalsEnabled = data.restrictedData.data.has('goals')
@@ -118,9 +118,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     //   }
     // )
 
-    // if (this.configSvc.restrictedFeatures) {
-    //   this.isGoalsEnabled = !this.configSvc.restrictedFeatures.has('goals')
-    // }
+    if (this.configSvc.restrictedFeatures) {
+      this.isGoalsEnabled = !this.configSvc.restrictedFeatures.has('goals')
+    }
     this.routeSubscription = this.route.queryParamMap.subscribe(qParamsMap => {
       const contextId = qParamsMap.get('contextId')
       const contextPath = qParamsMap.get('contextPath')
@@ -129,12 +129,12 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         this.contextPath = contextPath
       }
     })
-    // if (this.configSvc.restrictedFeatures) {
-    //   this.isRegistrationSupported = this.configSvc.restrictedFeatures.has('registrationExternal')
-    //   this.showIntranetMessage = !this.configSvc.restrictedFeatures.has(
-    //     'showIntranetMessageDesktop',
-    //   )
-    // }
+    if (this.configSvc.restrictedFeatures) {
+      this.isRegistrationSupported = this.configSvc.restrictedFeatures.has('registrationExternal')
+      this.showIntranetMessage = !this.configSvc.restrictedFeatures.has(
+        'showIntranetMessageDesktop',
+      )
+    }
 
     // if (this.authAccessService.hasAccess(this.content as any) && !this.isInIFrame) {
     //   const status: string = (this.content as any).status

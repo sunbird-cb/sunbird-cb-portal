@@ -65,6 +65,6 @@ import { RouterModule } from '@angular/router'
   exports: [
     PdfComponent,
   ],
-  providers:[ConfigurationsService]
+  providers: [ConfigurationsService],
 })
 export class PdfModule { }

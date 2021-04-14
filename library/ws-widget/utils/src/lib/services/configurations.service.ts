@@ -54,7 +54,7 @@ export class ConfigurationsService {
   unMappedUser: any
   isAuthenticated = false
   isNewUser = false
-  nodebbUserProfile:any
+
   // pinnedApps
   pinnedApps = new BehaviorSubject<Set<string>>(new Set())
 

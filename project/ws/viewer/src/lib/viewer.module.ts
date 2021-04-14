@@ -84,6 +84,6 @@ import { ViewerTopBarModule } from './components/viewer-top-bar/viewer-top-bar.m
     PlayerBriefModule,
     ViewerTopBarModule,
   ],
-  providers:[ConfigurationsService]
+  providers: [ConfigurationsService],
 })
 export class ViewerModule { }

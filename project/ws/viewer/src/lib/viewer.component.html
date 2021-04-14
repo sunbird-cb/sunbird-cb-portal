@@ -1,10 +1,10 @@
 <section *ngIf="isNotEmbed">
-  <!-- <viewer-viewer-top-bar *ngIf="fullScreenContainer" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
+  <viewer-viewer-top-bar *ngIf="fullScreenContainer" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
     (toggle)="toggleSideBar()">
   </viewer-viewer-top-bar>
   <viewer-viewer-top-bar *ngIf="!fullScreenContainer" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
     (toggle)="toggleSideBar()">
-  </viewer-viewer-top-bar> -->
+  </viewer-viewer-top-bar>
   <mat-sidenav-container autosize class="viewer-sidenav-container">
     <mat-sidenav [ngClass]="isTypeOfCollection?'viewer-sidenav':'viewer-sidenav-standalone'" position="end"
       [opened]="sideNavBarOpened" [mode]="mode">

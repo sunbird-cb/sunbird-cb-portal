@@ -50,15 +50,15 @@ export class SearchServService {
     return false
   }
 
-  searchAutoComplete(params: ISearchQuery): Promise<ISearchAutoComplete[]> {
+  searchAutoComplete(params: any): Promise<any[]> {
     params.q = params.q.toLowerCase()
-    if (params.l.split(',').length === 1 && params.l.toLowerCase() !== 'all') {
-      return this.searchApi.getSearchAutoCompleteResults(params).toPromise()
-    }
+    // if (params.l.split(',').length === 1 && params.l.toLowerCase() !== 'all') {
+    //   return this.searchApi.getSearchAutoCompleteResults(params).toPromise()
+    // }
     return Promise.resolve([])
   }
 
-  getLearning(request: ISearchRequestV2): Observable<NSSearch.ISearchV6ApiResultV2> {
+  getLearning(request: any): Observable<NSSearch.ISearchV6ApiResultV2> {
     // request.locale = (request.locale && request.locale.length && request.locale[0] !== 'all') ? request.locale : []
     return this.searchV6Wrapper(request)
   }
@@ -66,19 +66,19 @@ export class SearchServService {
   searchV6Wrapper(request: any): Observable<NSSearch.ISearchV6ApiResultV2> {
     const v6Request: NSSearch.ISearchV6RequestV2 = {
       request: {
-        query: request.request.query,
-        filters: request.request.filters,
+        query: request.query,
+        filters: request.filters,
         sort_by: {
-          lastUpdatedOn: request.request.sort_by.lastUpdatedOn,
+          lastUpdatedOn: request.lastUpdatedOn,
         },
         facets: Object.keys(this.searchConfig.search.visibleFiltersV2),
-        fields: request.request.fields,
+        fields: request.fields,
       },
     }
-    return this.searchApi.getSearchV6Results(v6Request)
+    return this.searchApi.getSearch(v6Request)
   }
-  fetchSocialSearchUsers(request: ISearchSocialSearchPartialRequest) {
-    const req: ISocialSearchRequest = {
+  fetchSocialSearchUsers(request: any) {
+    const req: any = {
       org: this.configSrv.activeOrg,
       rootOrg: this.configSrv.rootOrg,
       ...request,
@@ -92,7 +92,7 @@ export class SearchServService {
   }
   fetchSearchDataProjects(_request: any): Observable<any> {
     // return this.khubApiSvc.fetchSearchDataProject(request)
-    return  '' as any
+    return '' as any
   }
 
   updateSelectedFiltersSet(filters: { [key: string]: string[] }) {
@@ -141,14 +141,14 @@ export class SearchServService {
   }
 
   handleFilters(
-    filters: IFilterUnitResponse[],
+    filters: any[],
     selectedFilterSet: Set<string>,
     selectedFilters: { [key: string]: string[] },
     showContentType?: boolean,
   ) {
 
-    let concepts: IFilterUnitItem[] = []
-    const filtersResponse: IFilterUnitResponse[] = filters
+    let concepts: any[] = []
+    const filtersResponse: any[] = filters
       .filter(unitFilter => {
         if (unitFilter.type === 'concepts') {
           concepts = unitFilter.content.slice(0, 10)
@@ -163,14 +163,14 @@ export class SearchServService {
         return true
       })
       .map(
-        (unitFilter: IFilterUnitResponse): IFilterUnitResponse => ({
+        (unitFilter: any): any => ({
           ...unitFilter,
           checked:
             selectedFilters &&
             Array.isArray(selectedFilters[unitFilter.type]) &&
             Boolean(selectedFilters[unitFilter.type].length),
           content: unitFilter.content.map(
-            (unitFilterContent: IFilterUnitItem): IFilterUnitItem => ({
+            (unitFilterContent: any): any => ({
               ...unitFilterContent,
               checked: selectedFilters &&
                 Array.isArray(selectedFilters[unitFilter.type]) &&
@@ -178,7 +178,7 @@ export class SearchServService {
               children: !Array.isArray(unitFilterContent.children)
                 ? []
                 : unitFilterContent.children.map(
-                  (unitFilterSecondLevel: IFilterUnitItem): IFilterUnitItem => ({
+                  (unitFilterSecondLevel: any): any => ({
                     ...unitFilterSecondLevel,
                     children: [],
                     checked: selectedFilterSet.has(unitFilterSecondLevel.type || ''),
@@ -257,10 +257,10 @@ export class SearchServService {
 
   formatKhubFilters(filters: { [key: string]: any }) {
     try {
-      const returnArr: IFilterUnitResponse[] = []
+      const returnArr: any[] = []
       for (const key in filters) {
         if (key) {
-          const filterObj: IFilterUnitResponse = {
+          const filterObj: any = {
             type: key,
             displayName: this.getDisplayName(key),
             content: this.fetchContentOfFilter(filters[key]),
@@ -275,7 +275,7 @@ export class SearchServService {
   }
 
   fetchContentOfFilter(filter: any) {
-    const filterItemArr: IFilterUnitItem[] = []
+    const filterItemArr: any[] = []
     filter.map((cur: any) => {
       const obj = {
         count: cur.doc_count,

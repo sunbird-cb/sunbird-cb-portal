@@ -25,7 +25,7 @@ export class CardKnowledgeComponent implements OnInit, OnDestroy {
   isIntranetAllowedSettings = false
   constructor(private events: EventService, private configSvc: ConfigurationsService, private utilitySvc: UtilityService) {
     const instanceConfig = this.configSvc.instanceConfig
-    if (instanceConfig && instanceConfig.logos && instanceConfig.logos.defaultContent) {
+    if (instanceConfig) {
       this.defaultThumbnail = instanceConfig.logos.defaultContent
     }
   }
