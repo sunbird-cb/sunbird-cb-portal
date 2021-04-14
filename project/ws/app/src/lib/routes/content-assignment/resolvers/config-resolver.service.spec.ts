@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing'
 
-import { ConfigResolverService } from './config-resolver.service'
+import { ConfigurationsService } from './config-resolver.service'
 
-describe('ConfigResolverService', () => {
+describe('ConfigurationsService', () => {
   beforeEach(() => TestBed.configureTestingModule({}))
 
   it('should be created', () => {
-    const service: ConfigResolverService = TestBed.get(ConfigResolverService)
+    const service: ConfigurationsService = TestBed.get(ConfigurationsService)
     expect(service).toBeTruthy()
   })
 })

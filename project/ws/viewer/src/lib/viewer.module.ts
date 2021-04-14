@@ -23,6 +23,7 @@ import {
   PipeLimitToModule,
   DefaultThumbnailModule,
   PipePartialContentModule,
+  ConfigurationsService,
 } from '@sunbird-cb/utils'
 
 import {
@@ -83,5 +84,6 @@ import { ViewerTopBarModule } from './components/viewer-top-bar/viewer-top-bar.m
     PlayerBriefModule,
     ViewerTopBarModule,
   ],
+  providers:[ConfigurationsService]
 })
 export class ViewerModule { }

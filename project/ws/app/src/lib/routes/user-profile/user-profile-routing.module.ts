@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { UserProfileComponent } from './components/user-profile/user-profile.component'
-import { ConfigResolverService } from './resolvers/config-resolver.service'
 import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = [
@@ -17,6 +16,6 @@ const routes: Routes = [
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
-    providers: [ConfigResolverService, ProfileResolverService],
+    providers: [ProfileResolverService],
 })
 export class UserProfileRoutingModule { }

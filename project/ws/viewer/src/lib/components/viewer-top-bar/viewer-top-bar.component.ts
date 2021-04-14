@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router'
-import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
+import {  ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ViewerDataService } from '../../viewer-data.service'
 
@@ -22,7 +22,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   collectionType: string | null = null
   prevResourceUrl: string | null = null
   nextResourceUrl: string | null = null
-  pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
+  // pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
   resourceId: string = (this.viewerDataSvc.resourceId as string) || ''
   resourceName: string | null = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.name : ''
   resourcePrimaryCategory: string | null = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.primaryCategory : ''
@@ -34,9 +34,10 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private domSanitizer: DomSanitizer,
     // private logger: LoggerService,
-    private configSvc: ConfigurationsService,
+    //  private configSvc: ConfigurationsService,
     private viewerDataSvc: ViewerDataService,
-    private valueSvc: ValueService
+    private valueSvc: ValueService,
+    private route: ActivatedRoute
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
@@ -49,14 +50,17 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     }
     this.isTypeOfCollection = this.activatedRoute.snapshot.queryParams.collectionType ? true : false
     this.collectionType = this.activatedRoute.snapshot.queryParams.collectionType
-    // if (this.configSvc.rootOrg === EInstance.INSTANCE) {
-    // this.logo = false
+
+    // if (this.configSvc.instanceConfig) {
+    //   this.appIcon = this.domSanitizer.bypassSecurityTrustResourceUrl(
+    //     this.configSvc.instanceConfig.logos.app,
+    //   )
     // }
-    if (this.configSvc.instanceConfig) {
-      this.appIcon = this.domSanitizer.bypassSecurityTrustResourceUrl(
-        this.configSvc.instanceConfig.logos.app,
-      )
+    this.route.data.subscribe((data: any) => {
+      this.appIcon =
+      this.domSanitizer.bypassSecurityTrustResourceUrl(data.configData.data.logos.app)
     }
+  )
     this.viewerDataServiceSubscription = this.viewerDataSvc.tocChangeSubject.subscribe(data => {
       this.prevResourceUrl = data.prevResource
       this.nextResourceUrl = data.nextResource

@@ -11,7 +11,7 @@ import { DialogAssignComponent } from '../../components/dialog-assign/dialog-ass
 import {
   UserFilterDisplayComponent,
 } from '../../components/user-filter-display/user-filter-display.component'
-import { IContentAssignModel } from '@sunbird-cb/collection/lib/content-assign/content-assign.model'
+import { IContentAssignModel } from '@sunbird-cb/collection/src/lib/content-assign/content-assign.model'
 @Component({
   selector: 'ws-app-content-assignment',
   templateUrl: './content-assignment.component.html',

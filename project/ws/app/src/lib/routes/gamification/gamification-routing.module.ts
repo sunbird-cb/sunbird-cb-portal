@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { ConfigResolverService } from './resolvers/config-resolver.service'
 import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = [
@@ -8,7 +7,7 @@ const routes: Routes = [
     path: 'leaderboard',
     loadChildren: () => import('./routes/leaderboard/leaderboard.module').then(u => u.LeaderboardModule),
     resolve: {
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
   },
@@ -16,7 +15,7 @@ const routes: Routes = [
     path: 'badges',
     loadChildren: () => import('./routes/badges/badges.module').then(u => u.BadgesModule),
     resolve: {
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
   },
@@ -24,7 +23,7 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () => import('./routes/admin/admin.module').then(u => u.AdminModule),
     resolve: {
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
   },
@@ -32,7 +31,7 @@ const routes: Routes = [
     path: 'rewards',
     loadChildren: () => import('./routes/rewards/rewards.module').then(u => u.RewardsModule),
     resolve: {
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
   },
@@ -41,6 +40,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [ConfigResolverService, ProfileResolverService],
+  providers: [ProfileResolverService],
 })
 export class GamificationRoutingModule { }

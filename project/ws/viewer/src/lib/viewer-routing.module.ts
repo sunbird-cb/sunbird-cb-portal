@@ -16,7 +16,7 @@ import { VideoComponent } from './routes/video/video.component'
 import { VideoModule } from './routes/video/video.module'
 import { YoutubeComponent } from './routes/youtube/youtube.component'
 import { YoutubeModule } from './routes/youtube/youtube.module'
-import { ConfigResolverService } from './resolvers/config-resolver.service'
+// import { ConfigurationsService } from './resolvers/config-resolver.service'
 import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = [
@@ -28,7 +28,7 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
   },
@@ -40,7 +40,7 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
   },
@@ -50,7 +50,7 @@ const routes: Routes = [
       resourceType: 'certification',
     },
     resolve: {
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
     loadChildren: () =>
@@ -62,7 +62,7 @@ const routes: Routes = [
       resourceType: 'class-diagram',
     },
     resolve: {
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
     loadChildren: () =>
@@ -74,7 +74,7 @@ const routes: Routes = [
       resourceType: 'dnd-quiz',
     },
     resolve: {
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
     loadChildren: () =>
@@ -86,7 +86,7 @@ const routes: Routes = [
       resourceType: 'hands-on',
     },
     resolve: {
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
     loadChildren: () =>
@@ -100,7 +100,7 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
   },
@@ -119,7 +119,7 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
     component: ChannelComponent,
@@ -131,7 +131,7 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
     loadChildren: () =>
@@ -144,7 +144,7 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
     loadChildren: () =>
@@ -158,7 +158,7 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
   },
@@ -169,7 +169,7 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
     loadChildren: () =>
@@ -182,7 +182,7 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
     loadChildren: () =>
@@ -195,7 +195,7 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
     loadChildren: () =>
@@ -208,7 +208,7 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
     loadChildren: () => import('./routes/resource-collection/resource-collection.module')
@@ -222,7 +222,7 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
   },
@@ -233,7 +233,7 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
     loadChildren: () =>
@@ -247,7 +247,7 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
   },
@@ -259,7 +259,7 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
   },
@@ -270,7 +270,7 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
-      configData: ConfigResolverService,
+      // configData: ConfigurationsService,
       profileData: ProfileResolverService,
     },
   },
@@ -295,7 +295,7 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     ViewerResolve,
-    ConfigResolverService,
+    // ConfigurationsService,
     ProfileResolverService,
   ],
 })

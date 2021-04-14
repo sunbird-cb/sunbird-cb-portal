@@ -16,7 +16,6 @@ import { GoalTrackRejectComponent } from './components/goal-track-reject/goal-tr
 import { GoalNotificationComponent } from './routes/goal-notification/goal-notification.component'
 import { GoalsPendingResolve } from './resolvers/goals-pending.resolve'
 import { GoalTrackPendingComponent } from './components/goal-track-pending/goal-track-pending.component'
-import { ConfigResolverService } from './resolvers/config-resolver.service'
 import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = [
@@ -133,6 +132,6 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   providers: [GoalsUserResolve, GoalsCommonResolve, GoalsOthersResolve, GoalTrackResolve, GoalsPendingResolve,
-  ConfigResolverService, ProfileResolverService],
+  ProfileResolverService],
 })
 export class GoalsRoutingModule { }

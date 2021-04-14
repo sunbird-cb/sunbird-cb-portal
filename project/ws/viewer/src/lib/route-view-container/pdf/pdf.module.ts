@@ -25,6 +25,7 @@ import {
 } from '@sunbird-cb/collection'
 
 import {
+  ConfigurationsService,
   PipeDurationTransformModule,
   PipeLimitToModule,
   PipePartialContentModule,
@@ -64,5 +65,6 @@ import { RouterModule } from '@angular/router'
   exports: [
     PdfComponent,
   ],
+  providers:[ConfigurationsService]
 })
 export class PdfModule { }

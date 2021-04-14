@@ -10,8 +10,8 @@ import { RecentBlogComponent } from './routes/blogs/recent-blogs/components/rece
 import { QnaEditComponent } from './routes/qna/qna-edit/components/qna-edit/qna-edit.component'
 import { QnaHomeComponent } from './routes/qna/qna-home/components/qna-home/qna-home.component'
 import { QnaViewComponent } from './routes/qna/qna-view/components/qna-view/qna-view.component'
-import { ConfigResolverService } from './resolvers/config-resolver.service'
 import { ProfileResolverService } from './resolvers/profile-resolver.service'
+import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
 
 const routes: Routes = [
   {
@@ -151,6 +151,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [ConfigResolverService, ProfileResolverService],
+  providers: [ConfigurationsService, ProfileResolverService],
 })
 export class SocialRoutingModule {}
