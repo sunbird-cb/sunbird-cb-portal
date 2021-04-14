@@ -36,10 +36,13 @@ interface IFeaturePermissionConfigs {
   [id: string]: Omit<NsWidgetResolver.IPermissions, 'feature'>
 }
 
+const PROXY_CREATE_V8 = '/apis/proxies/v8'
+
 const endpoint = {
   profilePid: '/apis/proxies/v8/api/user/v2/read',
   profileV2: '/apis/protected/v8/user/profileRegistry/getUserRegistryById',
   details: `/apis/protected/v8/user/details?ts=${Date.now()}`,
+  CREATE_USER_API: `${PROXY_CREATE_V8}/discussion/user/v1/create`,
 }
 
 @Injectable({
@@ -137,6 +140,7 @@ export class InitService {
       //   this.configSvc.profileSettings = this.configSvc.userPreference.profileSettings
       // }
       await this.fetchUserProfileV2()
+      await this.createUserInNodebb()
       const appsConfigPromise = this.fetchAppsConfig()
       const instanceConfigPromise = this.fetchInstanceConfig() // config: depends only on details
       const widgetStatusPromise = this.fetchWidgetStatus() // widget: depends only on details & feature
@@ -378,6 +382,33 @@ export class InitService {
     this.configSvc.activeOrg = publicConfig.org[0]
     this.updateAppIndexMeta()
     return publicConfig
+  }
+
+  private async createUserInNodebb(): Promise<any> {
+    const req = {
+      request: {
+        username: (this.configSvc.userProfile && this.configSvc.userProfile.userName) || '',
+        identifier: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
+      },
+    }
+    let createUserRes: null
+
+    try {
+      createUserRes = await this.http
+        .post<any>(endpoint.CREATE_USER_API, req)
+        .toPromise()
+    } catch (e) {
+      this.configSvc.nodebbUserProfile = null
+      throw new Error('Invalid user')
+    }
+
+    const nodebbUserData: any = _.get(createUserRes, 'result')
+    if (createUserRes) {
+      this.configSvc.nodebbUserProfile = {
+        username: nodebbUserData.userName,
+        email: 'null',
+      }
+    }
   }
 
   private async fetchFeaturesStatus(): Promise<Set<string>> {
