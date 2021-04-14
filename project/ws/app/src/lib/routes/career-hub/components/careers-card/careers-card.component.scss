@@ -8,8 +8,10 @@
   height: 100%;
   // height: calc(100% - 2rem);
   &.mat-card{
-    flex-direction: column;
-    display: flex;
+    // flex-direction: column;
+    // display: flex;
+    display: inline-table;
+    width: 94%;
   }
   .mat-card-footer{
     justify-self: flex-end;

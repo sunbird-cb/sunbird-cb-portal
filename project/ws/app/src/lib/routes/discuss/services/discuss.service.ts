@@ -109,16 +109,17 @@ export class DiscussService {
     return this.http.get<NSDiscussData.IDiscussionData>(url)
   }
 
-  fetchTopicById(topicId: number, topicName: any, page?: any) {
+  fetchTopicById(topicId: number, topicName: any) {
     // tslint:disable-next-line:prefer-template
-    let url = API_ENDPOINTS.getTopic + topicId.toString() + '/' + topicName.toString()
-    url = this.appendPage(page, url)
+    const url = API_ENDPOINTS.getTopic + topicId.toString() + '/' + topicName.toString()
+    // url = this.appendPage(page, url)
     return this.http.get<NSDiscussData.IDiscussionData>(url)
   }
 
-  fetchTopicByIdSort(topicId: number, sort: any, page?: any) {
-    let url = API_ENDPOINTS.getTopic + topicId.toString()
-    url = this.appendPage(page, url)
+  fetchTopicByIdSort(topicId: number, topicName: any, sort: any) {
+    // tslint:disable-next-line:prefer-template
+    const url = API_ENDPOINTS.getTopic + topicId.toString()  + '/' + topicName.toString()
+    // url = this.appendPage(page, url)
     return this.http.get<NSDiscussData.IDiscussionData>(`${url}&sort=${sort}`)
   }
 
