@@ -22,7 +22,6 @@ import {
 } from '@sunbird-cb/collection'
 
 import {
-  ConfigurationsService,
   PipeDurationTransformModule,
   PipeLimitToModule,
   PipePartialContentModule,
@@ -59,6 +58,5 @@ import { PdfModule as PdfViewContainerModule } from '../../route-view-container/
     BtnContentFeedbackV2Module,
     PdfViewContainerModule,
   ],
-  providers: [ConfigurationsService],
 })
 export class PdfModule { }

@@ -23,7 +23,7 @@ export class ViewerResolve
     private router: Router,
     private accessControlSvc: AccessControlService,
     // private msAuthSvc: AuthMicrosoftService,
-    // private configSvc: ConfigurationsService,
+    private configSvc: ConfigurationsService,
     private platform: Platform,
   ) { }
 
@@ -60,9 +60,9 @@ export class ViewerResolve
           ])
         }
         if (content.ssoEnabled) {
-          // this.msAuthSvc.loginForSSOEnabledEmbed(
-          //   (this.configSvc.userProfile && this.configSvc.userProfile.email) || '',
-          // )
+          this.msAuthSvc.loginForSSOEnabledEmbed(
+            (this.configSvc.userProfile && this.configSvc.userProfile.email) || '',
+          )
         }
 
         if (resourceType === 'unknown') {
