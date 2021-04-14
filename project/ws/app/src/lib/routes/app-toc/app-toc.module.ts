@@ -57,7 +57,6 @@ import {
   DefaultThumbnailModule,
   PipeNameTransformModule,
   PipeCountTransformModule,
-  ConfigurationsService,
 } from '@sunbird-cb/utils'
 import {
   BtnCallModule,
@@ -198,7 +197,6 @@ import { CreateBatchDialogComponent } from './components/create-batch-dialog/cre
     EditorService,
     ApiService,
     AccessControlService,
-    ConfigurationsService,
     ProfileResolverService,
   ],
   exports: [AppTocDiscussionComponent],
