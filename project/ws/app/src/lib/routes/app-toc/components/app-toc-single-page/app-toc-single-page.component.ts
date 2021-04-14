@@ -10,6 +10,7 @@ import { AppTocService } from '../../services/app-toc.service'
 import { CreateBatchDialogComponent } from '../create-batch-dialog/create-batch-dialog.component'
 import { TitleTagService } from '@ws/app/src/lib/routes/app-toc/services/title-tag.service'
 import { MatDialog } from '@angular/material'
+import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 
 @Component({
   selector: 'ws-app-app-toc-single-page',
@@ -47,6 +48,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     // private dialog: MatDialog,
     private titleTagService: TitleTagService,
     public createBatchDialog: MatDialog,
+    private mobileAppsSvc: MobileAppsService,
   ) {
     // if (this.configSvc.restrictedFeatures) {
     //   this.askAuthorEnabled = !this.configSvc.restrictedFeatures.has('askAuthor')
@@ -118,6 +120,18 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
       return true
     }
     return this.tocSharedSvc.showDescription
+  }
+
+  get isResource() {
+    if (this.content) {
+      const isResource = this.content.contentType === NsContent.EContentTypes.KNOWLEDGE_ARTIFACT ||
+        this.content.contentType === NsContent.EContentTypes.RESOURCE || !this.content.children.length
+      if (isResource) {
+        this.mobileAppsSvc.sendViewerData(this.content)
+      }
+      return isResource
+    }
+    return false
   }
 
   setSocialMediaMetaTags(data: any) {
