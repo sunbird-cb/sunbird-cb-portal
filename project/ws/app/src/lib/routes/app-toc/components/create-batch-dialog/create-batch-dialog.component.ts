@@ -55,8 +55,8 @@ export class CreateBatchDialogComponent implements OnInit {
     form.value.enrollmentEndDate = startWithYearformat(new Date(`${form.value.enrollmentEndDate}`))
     form.value.mentors = []
     if (this.xyz.data) {
-      form.value.createdFor = [this.xyz.data.data.userProfile.rootOrgId]
-      form.value.createdBy = this.xyz.data.data.userProfile.userId
+      form.value.createdFor = [this.xyz.data.rootOrgId]
+      form.value.createdBy = this.xyz.data.userId
     }
     if (this.data && this.data.content) {
       form.value.courseId = this.data.content.identifier

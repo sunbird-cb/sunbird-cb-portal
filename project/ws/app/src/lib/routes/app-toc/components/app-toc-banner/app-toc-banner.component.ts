@@ -10,7 +10,7 @@ import {
   viewerRouteGenerator,
   WidgetContentService,
 } from '@sunbird-cb/collection'
-import { TFetchStatus, UtilityService } from '@sunbird-cb/utils'
+import { TFetchStatus, UtilityService, ConfigurationsService } from '@sunbird-cb/utils'
 import { AccessControlService } from '@ws/author'
 import { Subscription } from 'rxjs'
 import { NsAnalytics } from '../../models/app-toc-analytics.model'
@@ -21,7 +21,6 @@ import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import { FormControl, Validators } from '@angular/forms'
 import * as dayjs from 'dayjs'
 import * as  lodash from 'lodash'
-import { CreateBatchDialogComponent } from '../create-batch-dialog/create-batch-dialog.component'
 
 @Component({
   selector: 'ws-app-toc-banner',
@@ -70,7 +69,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   tocConfig: any = null
   defaultSLogo = ''
   disableEnrollBtn = false
-  configSvc: any
+  // configSvc: any
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -83,10 +82,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     private utilitySvc: UtilityService,
     private mobileAppsSvc: MobileAppsService,
     private snackBar: MatSnackBar,
-    public createBatchDialog: MatDialog,
+    public configSvc: ConfigurationsService,
   ) {
 
-    this.configSvc = this.route.snapshot.data.profileData
   }
 
   ngOnInit() {
@@ -104,19 +102,25 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         })
       }
     })
-    // const instanceConfig = this.configSvc.instanceConfig
-    // if (instanceConfig) {
+    // if (instanceConfig && instanceConfig.logos && instanceConfig.logos.defaultSourceLogo) {
     //   this.defaultSLogo = instanceConfig.logos.defaultSourceLogo
     // }
-
     this.route.data.subscribe(data => {
-        this.defaultSLogo = data.configData.data.logos.defaultContent
-      }
-    )
-
-    if (this.configSvc.restrictedFeatures) {
-      this.isGoalsEnabled = !this.configSvc.restrictedFeatures.has('goals')
+      this.defaultSLogo = data.configData.data.logos.defaultContent
+      this.isGoalsEnabled = data.restrictedData.data.has('goals')
+      this.isRegistrationSupported = data.restrictedData.data.has('registrationExternal')
+      this.showIntranetMessage = data.restrictedData.data.has('showIntranetMessageDesktop')
     }
+  )
+
+    // this.route.data.subscribe(data => {
+    //     this.defaultSLogo = data.configData.data.logos.defaultContent
+    //   }
+    // )
+
+    // if (this.configSvc.restrictedFeatures) {
+    //   this.isGoalsEnabled = !this.configSvc.restrictedFeatures.has('goals')
+    // }
     this.routeSubscription = this.route.queryParamMap.subscribe(qParamsMap => {
       const contextId = qParamsMap.get('contextId')
       const contextPath = qParamsMap.get('contextPath')
@@ -125,12 +129,12 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         this.contextPath = contextPath
       }
     })
-    if (this.configSvc.restrictedFeatures) {
-      this.isRegistrationSupported = this.configSvc.restrictedFeatures.has('registrationExternal')
-      this.showIntranetMessage = !this.configSvc.restrictedFeatures.has(
-        'showIntranetMessageDesktop',
-      )
-    }
+    // if (this.configSvc.restrictedFeatures) {
+    //   this.isRegistrationSupported = this.configSvc.restrictedFeatures.has('registrationExternal')
+    //   this.showIntranetMessage = !this.configSvc.restrictedFeatures.has(
+    //     'showIntranetMessageDesktop',
+    //   )
+    // }
 
     // if (this.authAccessService.hasAccess(this.content as any) && !this.isInIFrame) {
     //   const status: string = (this.content as any).status
@@ -537,16 +541,5 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     } catch (e) {
       return true
     }
-  }
-
-  openDialog(content: any): void {
-    const dialogRef = this.createBatchDialog.open(CreateBatchDialogComponent, {
-      height: '400px',
-      width: '600px',
-      data: { content },
-    })
-    dialogRef.componentInstance.xyz = this.configSvc
-    dialogRef.afterClosed().subscribe((_result: any) => {
-    })
   }
 }
