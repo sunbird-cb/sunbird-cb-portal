@@ -30,7 +30,9 @@
       "@ws/viewer": ["project/ws/viewer"],
       "@ws/viewer/*": ["project/ws/viewer/*"],
       "@ws/learning-hub": ["project/ws/learning-hub"],
-      "@ws/learning-hub/*": ["project/ws/learning-hub/*"]
+      "@ws/learning-hub/*": ["project/ws/learning-hub/*"],
+      "@sunbird-cb/collection": ["library/ws-widget/collection"],
+      "@sunbird-cb/collection/*": ["library/ws-widget/collection/*"],
     },
     "removeComments": true,
     "sourceMap": true,

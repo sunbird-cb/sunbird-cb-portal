@@ -1,0 +1,37 @@
+<div class="flex flex-1 flex-column margin-top-xs margin-left-xs margin-right-xs">
+  <mat-card class="flex-custom" [attr.id]='widgetData.key'>
+    <mat-card-content>
+      <span class="mat-subheading-1 flex-4 mobile-margin" role="link" tabindex="0">
+        {{widgetData.name}}
+      </span>
+      <!-- {{widgetData | json}} -->
+      <ng-container *ngIf="widgetData.data && widgetData.data[0]">
+        <ng-container *ngFor="let career of widgetData.data">
+          <mat-card class="mt-2 mat-list-item dark-card" *ngIf="career.designation" role="link" tabindex="0">
+            <div class="flex flex-1">
+              <span class="flex-1 mat-subheading-1"> {{career.designation}}
+              </span>
+              <span class="mat-subheading-2 ws-mat-black60-text"
+                *ngIf="career.doj && (paDate(career.doj) !== 'Invalid Date')">
+                Joined {{paDate(career.doj)}}</span>
+              <span class="mat-subheading-2 ws-mat-black60-text"
+                *ngIf=" career.doj && (paDate(career.doj) === 'Invalid Date')">
+                Joined {{career.doj}}</span>
+            </div>
+            <div class="mat-body-2 flex-1">
+              {{career.name}}
+            </div>
+            <div class="mat-body-2 flex-1 ws-mat-black60-text">
+              {{career.location}}
+            </div>
+          </mat-card>
+          <mat-card class="no-shadow mt-2 mat-list-item dark-card" *ngIf="!career.designation">
+            <div class="flex flex-1 mobile-margin margin-f" role="link" tabindex="0">
+              <span class="mat-body-2 flex-1 mobile-margin"> No career information available </span>
+            </div>
+          </mat-card>
+        </ng-container>
+      </ng-container>
+    </mat-card-content>
+  </mat-card>
+</div>
