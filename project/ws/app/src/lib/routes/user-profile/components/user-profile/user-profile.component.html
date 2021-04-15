@@ -461,7 +461,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="pinCode" #pincode type="text" matInput placeholder="123456" formControlName="pincode"
-                        i18n-aria-label aria-label="Pin Code inpput field">
+                        i18n-aria-label aria-label="Pin Code inpput field" autocomplete="off">
                       <mat-error [hidden]="false" i18n="Pin Code Error|Explains pincode is required"
                         *ngIf="createUserForm?.controls['pincode'].errors?.required" i18n-aria-label
                         aria-label="Pin Code Error|Explains pincode is required">
