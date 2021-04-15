@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
-import { ISocialSearchRequest, ISocialSearchResult, ISearchAutoComplete } from '../models/search.model'
+// import { ISocialSearchRequest, ISocialSearchResult, ISearchAutoComplete } from '../models/search.model'
 import { KeycloakService } from 'keycloak-angular'
-import { NSSearch } from '@ws-widget/collection'
+// import { NSSearch } from '@ws-widget/collection'
 import { map } from 'rxjs/operators'
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'
 const API_END_POINTS = {
   SOCIAL_VIEW_SEARCH_RESULT: `${PROTECTED_SLAG_V8}/social/post/search`,
-  SEARCH_AUTO_COMPLETE: `${PROTECTED_SLAG_V8}/content/searchAutoComplete`,
+  SEARCH_AUTO_COMPLETE: `/apis/proxies/v8/sunbirdigot/read`,
   SEARCH_V6: `/apis/proxies/v8/sunbirdigot/search`,
 }
 @Injectable({
@@ -16,12 +16,12 @@ const API_END_POINTS = {
 })
 export class SearchApiService {
   constructor(private http: HttpClient, private keycloakSvc: KeycloakService) { }
-  getSearchResults(request: ISocialSearchRequest): Observable<ISocialSearchResult> {
-    return this.http.post<ISocialSearchResult>(API_END_POINTS.SOCIAL_VIEW_SEARCH_RESULT, request)
+  getSearchResults(request: any): Observable<any> {
+    return this.http.post<any>(API_END_POINTS.SOCIAL_VIEW_SEARCH_RESULT, request)
   }
 
-  getSearchAutoCompleteResults(params: { q: string, l: string }): Observable<ISearchAutoComplete[]> {
-    return this.http.get<ISearchAutoComplete[]>(API_END_POINTS.SEARCH_AUTO_COMPLETE, { params })
+  getSearchAutoCompleteResults(params: { q: string, l: string }): Observable<any[]> {
+    return this.http.get<any[]>(API_END_POINTS.SEARCH_AUTO_COMPLETE, { params })
   }
 
   get userId(): string | undefined {
@@ -32,12 +32,12 @@ export class SearchApiService {
     return (kc.tokenParsed && kc.tokenParsed.sub) || (kc.idTokenParsed && kc.idTokenParsed.sub)
   }
 
-  getSearchV6Results(body: NSSearch.ISearchV6RequestV2): Observable<NSSearch.ISearchV6ApiResultV2> {
-    return this.http.post<NSSearch.ISearchV6ApiResultV2>(API_END_POINTS.SEARCH_V6, body).pipe(map((res: NSSearch.ISearchV6ApiResultV2) => {
+  getSearchV6Results(body: any): Observable<any> {
+    return this.http.post<any>(API_END_POINTS.SEARCH_V6, body).pipe(map((res: any) => {
       const tempArray = Array()
       if (res.result.facets.length > 0) {
-        res.result.facets.forEach(ele => {
-          const temp: NSSearch.IFacet = {
+        res.result.facets.forEach((ele: { name: any; values: { name: any; count: any }[] }) => {
+          const temp: any = {
             displayName: '',
             type: '',
             content: [],
@@ -46,7 +46,7 @@ export class SearchApiService {
           temp.displayName = ele.name
           temp.type = ele.name
           if (ele.values.length > 0) {
-            ele.values.forEach(subEle => {
+            ele.values.forEach((subEle: { name: any; count: any }) => {
               temp.content.push({
                 displayName: subEle.name,
                 type: subEle.name,
@@ -69,5 +69,37 @@ export class SearchApiService {
       }
       return res
     }))
+  }
+
+  getSearch(body: any): Observable<any> {
+    const data = {
+      locale: [
+        'en',
+      ],
+      query: '',
+      request: {
+        query: '',
+        filters: {
+          status: [
+            'Draft',
+            'Live',
+          ],
+          contentType: [
+            'Collection',
+            'Course',
+            'Learning Path',
+          ],
+        },
+        sort_by: {
+          lastUpdatedOn: 'desc',
+        },
+        facets: [
+          'primaryCategory',
+          'mimeType',
+        ],
+      },
+    }
+    data.request.query = body.request.query
+    return this.http.post<any>(API_END_POINTS.SEARCH_AUTO_COMPLETE, data)
   }
 }

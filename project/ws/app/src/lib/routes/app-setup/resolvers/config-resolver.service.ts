@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router'
-import { EMPTY, Observable} from 'rxjs'
+import { EMPTY, Observable } from 'rxjs'
 import { NsInstanceConfig } from '@sunbird-cb/utils'
 
 @Injectable()

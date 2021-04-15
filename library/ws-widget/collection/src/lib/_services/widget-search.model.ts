@@ -123,6 +123,7 @@ export namespace NSSearch {
     count: string
   }
   export interface ISearchV6ApiResultV2 {
+    totalHits: number
     id: string
     ver: string
     ts: string

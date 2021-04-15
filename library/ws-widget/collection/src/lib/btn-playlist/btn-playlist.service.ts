@@ -149,10 +149,10 @@ export class BtnPlaylistService {
       })
     }
 
-    return this.http.patch(`${API_END_POINTS.updatePlaylists(playlist.identifier)}`, {
+    return this.http.patch(`${API_END_POINTS.updatePlaylists(playlist.result.content.identifier)}`, {
       contentIds,
       playlist_title: playlist.name,
-      versionKey: playlist.versionKey,
+      versionKey: playlist.result.content.versionKey,
     })
   }
 

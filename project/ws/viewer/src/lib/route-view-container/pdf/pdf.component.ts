@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core'
 import { NsContent, NsDiscussionForum } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ActivatedRoute } from '@angular/router'
-// import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'viewer-pdf-container',
@@ -31,15 +31,14 @@ export class PdfComponent implements OnInit {
   isRestricted = false
   constructor(
     private activatedRoute: ActivatedRoute,
-    // private configSvc: ConfigurationsService
+    private configSvc: ConfigurationsService
   ) { }
 
   ngOnInit() {
-    // if (this.configSvc.restrictedFeatures) {
-    //   this.isRestricted =
-    //     !this.configSvc.restrictedFeatures.has('disscussionForum')
-    // }
-    console.log('widgetResolverPdfData: ', this.widgetResolverPdfData)
+    if (this.configSvc.restrictedFeatures) {
+      this.isRestricted =
+        !this.configSvc.restrictedFeatures.has('disscussionForum')
+    }
     this.isTypeOfCollection = this.activatedRoute.snapshot.queryParams.collectionType ? true : false
   }
 }

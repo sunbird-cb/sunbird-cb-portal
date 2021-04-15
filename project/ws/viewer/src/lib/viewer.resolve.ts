@@ -4,7 +4,7 @@ import { catchError, map, tap } from 'rxjs/operators'
 import { Observable, of } from 'rxjs'
 import { AccessControlService } from '@ws/author'
 import { WidgetContentService, NsContent, VIEWER_ROUTE_FROM_MIME } from '@sunbird-cb/collection'
-import { IResolveResponse } from '@sunbird-cb/utils'
+import { IResolveResponse, AuthMicrosoftService, ConfigurationsService } from '@sunbird-cb/utils'
 import { ViewerDataService } from './viewer-data.service'
 import { MobileAppsService } from '../../../../../src/app/services/mobile-apps.service'
 import { Platform } from '@angular/cdk/platform'
@@ -22,8 +22,8 @@ export class ViewerResolve
     private mobileAppsSvc: MobileAppsService,
     private router: Router,
     private accessControlSvc: AccessControlService,
-    // private msAuthSvc: AuthMicrosoftService,
-    // private configSvc: ConfigurationsService,
+    private msAuthSvc: AuthMicrosoftService,
+    private configSvc: ConfigurationsService,
     private platform: Platform,
   ) { }
 
@@ -51,18 +51,18 @@ export class ViewerResolve
         this.viewerDataSvc.primaryCategory,
       )
     ).pipe(
-      tap((response: any) => {
+      tap((content: any) => {
         // tslint:disable-next-line: no-parameter-reassignment
-        const content = response.result.content || response
+        content = content.result.content
         if (content.status === 'Deleted' || content.status === 'Expired') {
           this.router.navigate([
             `${forPreview ? '/author' : '/app'}/toc/${content.identifier}/overview?primaryCategory=${content.primaryCategory}`,
           ])
         }
         if (content.ssoEnabled) {
-          // this.msAuthSvc.loginForSSOEnabledEmbed(
-          //   (this.configSvc.userProfile && this.configSvc.userProfile.email) || '',
-          // )
+          this.msAuthSvc.loginForSSOEnabledEmbed(
+            (this.configSvc.userProfile && this.configSvc.userProfile.email) || '',
+          )
         }
 
         if (resourceType === 'unknown') {

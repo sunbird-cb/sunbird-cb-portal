@@ -48,7 +48,7 @@ export class ContentPickerV2Component implements OnInit, OnDestroy {
   ) {
     this.fetchStatus = 'none'
     const instanceConfig = this.configSvc.instanceConfig
-    if (instanceConfig && instanceConfig.logos && instanceConfig.logos.defaultContent) {
+    if (instanceConfig) {
       this.defaultThumbnail = instanceConfig.logos.defaultContent
     }
     this.searchReq = {
