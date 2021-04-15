@@ -141,8 +141,8 @@ export class BtnPlaylistService {
 
   // tslint: disable-next-line
   patchPlaylist(playlist: NsPlaylist.IPlaylist, newIDs?: string[]) {
-    // const contentIds = playlist ? .children ? .map((content: { identifier: any }) => content.identifier)
-    const contentIds: any[] = []
+    const contentIds = playlist.result.content.children.map((content: { identifier: any }) => content.identifier)
+    // const contentIds: any[] = []
     if (newIDs && newIDs.length > 0) {
       newIDs.forEach(content => {
         contentIds.push(content)

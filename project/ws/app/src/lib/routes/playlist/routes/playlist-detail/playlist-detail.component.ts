@@ -56,7 +56,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   }
   editPlaylistForm!: FormGroup
   changeName!: boolean
-  defaultThumbnail = ''
+  defaultThumbnail: string | undefined = ''
   deletedContents = new Set()
   prefChangeSubscription: Subscription | null = null
   isShareEnabled = false
@@ -77,7 +77,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   ) {
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
+      this.defaultThumbnail = instanceConfig.logos.defaultContent
     }
     this.editPlaylistForm = fb.group({
       title: [
@@ -151,7 +151,8 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
       this.changeName = changeName
       if (!this.changeName) {
         this.playlist.result.content.name = formValues.title
-        // this.playlistSvc.patchPlaylist(this.playlist.result.content).subscribe()
+        this.playlist.name = formValues.title
+        this.playlistSvc.patchPlaylist(this.playlist).subscribe()
       }
     }
   }

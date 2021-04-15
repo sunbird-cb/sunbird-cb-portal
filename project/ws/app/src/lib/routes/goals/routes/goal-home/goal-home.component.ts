@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
-import { Router, ActivatedRoute } from '@angular/router'
+import { Router } from '@angular/router'
 import { BtnGoalsService } from '@sunbird-cb/collection'
 
 @Component({
@@ -18,15 +18,12 @@ export class GoalHomeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
+    // private route: ActivatedRoute,
     private configSvc: ConfigurationsService,
     private goalsSvc: BtnGoalsService,
   ) {
     this.navBackground = this.configSvc.pageNavBar
-    this.route.data.subscribe(data => {
-        this.userName = (data.profileData.data.userName || '').split(' ')[0]
-      }
-    )
+    this.userName = (this.configSvc.userProfile) ? this.configSvc.userProfile.userName : undefined
   }
 
   ngOnInit() {
