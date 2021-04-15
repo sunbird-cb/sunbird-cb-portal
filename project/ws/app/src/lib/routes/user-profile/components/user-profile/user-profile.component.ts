@@ -865,7 +865,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     // Construct the request structure for open saber
     const profileRequest = this.constructReq(form)
-    this.userProfileSvc.updateProfileDetails(profileRequest).subscribe(
+    const userid = this.userProfileData.userId || this.userProfileData.id
+    this.userProfileSvc.updateProfileDetails(userid, profileRequest).subscribe(
       () => {
         form.reset()
         this.uploadSaveData = false

@@ -6,16 +6,15 @@
       </span>
       <!-- {{widgetData | json}} -->
       <!-- widgetData.data -->
-      <ng-container *ngFor="let academic of [1,2,3]">
+      <!-- <ng-container *ngFor="let academic of [1,2,3]">
         <mat-card class=" no-shadow mt-2 mat-list-item dark-card pad-0" role="link" tabindex="0">
           <mat-card-header>
             <img mat-card-avatar src="#" class="example-header-image" (error)="changeToDefaultImg($event)" />
             <div class="flex flex-1 flex-column mobile-margin margin-top-s margin-bottom-s">
-              <span class="flex-1 mat-title margin-0">
-                <!-- {{'No Information Available'}} -->
-                {{'Basics of Administrative Law'}}
+              <span class="flex-1 mat-title margin-0"> -->
+                <!-- {{'Basics of Administrative Law'}} -->
                 <!-- {{academic.nameOfQualification || (academic.type || '').replace("_"," ")}} -->
-              </span>
+              <!-- </span>
               <span class="mat-body-1 flex-1">
                 {{ 'Administrative Law'}}
               </span>
@@ -23,7 +22,7 @@
                 {{ 'Issued on May 2020'}}
               </span>
             </div>
-          </mat-card-header>
+          </mat-card-header> -->
           <!-- <div class="flex flex-1 mobile-margin margin-f"> -->
 
           <!-- <span *ngIf="academic.yearOfPassing"
@@ -34,8 +33,27 @@
             {{academic.location}}
           </div> -->
           <!-- </div> -->
+        <!-- </mat-card>
+      </ng-container> -->
+
+        <!-- <ng-container *ngFor="let career of widgetData.data"> -->
+          <mat-card role="link" tabindex="0" class="mt-2 mat-list-item dark-card"
+          *ngIf="widgetData.data && widgetData.data.additionalSkills">
+          <div class="flex flex-1 mobile-margin margin-f">
+            <span class="flex-1 mat-subheading-1"> {{widgetData?.data?.additionalSkills}}
+            </span>
+          </div>
+          <div class="mat-subtitle flex-1 mobile-margin">
+            {{widgetData?.data?.certificateDetails}}
+          </div>
         </mat-card>
-      </ng-container>
+        <mat-card role="link" tabindex="0" class="no-shadow mt-2 mat-list-item dark-card"
+          *ngIf="!widgetData?.data?.additionalSkills">
+          <div class="flex flex-1 mobile-margin margin-f">
+            <span class="mat-subtitle flex-1 mobile-margin"> No certification information available </span>
+          </div>
+        </mat-card>
+        <!-- </ng-container> -->
     </mat-card-content>
   </mat-card>
 </div>
