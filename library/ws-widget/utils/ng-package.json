@@ -1,20 +1,7 @@
 {
   "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../../dist/sunbird-cb/utils",
+  "dest": "../../../dist/ws-widget/utils",
   "lib": {
-    "entryFile": "src/public-api.ts",
-    "umdModuleIds": {
-      "lodash": "_",
-      "date-fns": "DateFns",
-      "moment": "moment",
-      "ngx-image-cropper": "ngxImageCropper",
-      "keycloak-angular": "keycloak-angular"
-    },
-    "styleIncludePaths": [
-      "~/src/styles/_theme.scss"
-    ]
-  },
-  "whitelistedNonPeerDependencies": [
-    "."
-  ]
+    "entryFile": "src/public-api.ts"
+  }
 }
