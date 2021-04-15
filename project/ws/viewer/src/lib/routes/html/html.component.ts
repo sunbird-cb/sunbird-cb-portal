@@ -7,6 +7,7 @@ import {
   EventService,
   SubapplicationRespondService,
   WsEvents,
+  ConfigurationsService,
 } from '@sunbird-cb/utils'
 import { fromEvent, Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
@@ -48,14 +49,15 @@ export class HtmlComponent implements OnInit, OnDestroy {
     private respondSvc: SubapplicationRespondService,
     private eventSvc: EventService,
     private accessControlSvc: AccessControlService,
+    private configSvc: ConfigurationsService
   ) { }
 
   ngOnInit() {
 
-    this.activatedRoute.data.subscribe(data => {
-      this.uuid = data.profileData.data.userId
-    })
-
+    // this.activatedRoute.data.subscribe(data => {
+    //   this.uuid = data.profileData.data.userId
+    // })
+    this.uuid = this.configSvc.userProfile ? this.configSvc.userProfile.userId : ''
     this.isNotEmbed = !(
       window.location.href.includes('/embed/') ||
       this.activatedRoute.snapshot.queryParams.embed === 'true'
