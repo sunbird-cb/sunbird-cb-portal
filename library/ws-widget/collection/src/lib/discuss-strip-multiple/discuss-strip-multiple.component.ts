@@ -8,10 +8,12 @@ import {
   TFetchStatus,
   LoggerService,
   // EventService,
-  // ConfigurationsService,
+  ConfigurationsService,
   UtilityService,
 } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
+import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+import { Router } from '@angular/router'
 // import { filter } from 'rxjs/operators'
 // import { SearchServService } from '@ws/app/src/lib/routes/search/services/search-serv.service'
 
@@ -70,8 +72,10 @@ export class DiscussStripMultipleComponent extends WidgetBaseComponent
     private contentSvc: WidgetContentService,
     private loggerSvc: LoggerService,
     // private eventSvc: EventService,
-    // private configSvc: ConfigurationsService,
+    private configSvc: ConfigurationsService,
     public utilitySvc: UtilityService,
+    private discussUtilitySvc: DiscussUtilsService,
+    public router: Router
     // private searchServSvc: SearchServService,
   ) {
     super()
@@ -89,6 +93,18 @@ export class DiscussStripMultipleComponent extends WidgetBaseComponent
 
   getLength(data: IStripUnitContentData) {
     return data.widgets ? data.widgets.length : 0
+  }
+
+  navigate() {
+    this.discussUtilitySvc.setDiscussionConfig({
+      userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
+      context: {
+        id: 1,
+      },
+      categories: { result: [] },
+      routerSlug: '/app',
+    })
+    this.router.navigate(['/app/discussion-forum'])
   }
 
   private initData() {

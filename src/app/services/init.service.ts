@@ -277,7 +277,8 @@ export class InitService {
           rootOrgId: userPidProfile.result.response.rootOrgId,
           rootOrgName: userPidProfile.result.response.rootOrgName,
           // tslint:disable-next-line: max-line-length
-          userName: `${userPidProfile.result.response.firstName ? userPidProfile.result.response.firstName : ' '}${userPidProfile.result.response.lastName ? userPidProfile.result.response.lastName : ' '}`,
+          // userName: `${userPidProfile.result.response.firstName ? userPidProfile.result.response.firstName : ' '}${userPidProfile.result.response.lastName ? userPidProfile.result.response.lastName : ' '}`,
+          userName: userPidProfile.result.response.userName,
           profileImage: userPidProfile.result.response.thumbnail,
           dealerCode: null,
           isManager: false,
