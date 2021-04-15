@@ -1,6 +1,6 @@
 import { Component, ElementRef, Inject, TemplateRef, ViewChild, OnInit } from '@angular/core'
 import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material'
-import { BtnPlaylistService, NsAutoComplete, NsPlaylist } from '@sunbird-cb/collection'
+import { BtnPlaylistService, NsAutoComplete } from '@sunbird-cb/collection'
 import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
@@ -22,7 +22,8 @@ export class PlaylistShareDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<PlaylistShareDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: {
-      playlist: NsPlaylist.IPlaylist
+      // TODO: Need to update  NsPlaylist.IPlaylist with proper response model
+      playlist: any
       deleted: string[]
     },
   ) { }
@@ -42,12 +43,12 @@ export class PlaylistShareDialogComponent implements OnInit {
       this.playlistSvc
         .sharePlaylist(
           {
-            name: this.data.playlist.name,
-            // versionKey: this.data.playlist.versionKey,
+            name: this.data.playlist.result.content.name,
+            versionKey: this.data.playlist.result.content.versionKey,
             message: shareMsg,
             users: this.users.map(user => user.wid),
           },
-          this.data.playlist.id,
+          this.data.playlist.result.content.identifier,
         )
         .subscribe(
           () => {

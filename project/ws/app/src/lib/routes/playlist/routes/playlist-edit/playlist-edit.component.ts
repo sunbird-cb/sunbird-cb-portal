@@ -46,8 +46,10 @@ export class PlaylistEditComponent implements OnInit {
       visibility: [NsPlaylist.EPlaylistVisibilityTypes.PRIVATE],
       message: '',
     })
+    const playlistData = this.playlist.result.content
     this.selectedContentIds = new Set<string>(
-      (this.playlist && this.playlist.contents || []).map(content => content.identifier),
+      (playlistData && playlistData.children || []).map((children: { identifier: string }) =>
+        children.identifier),
     )
   }
   ngOnInit(): void {

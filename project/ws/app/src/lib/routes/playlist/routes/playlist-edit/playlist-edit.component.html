@@ -12,7 +12,7 @@
       <mat-form-field class="width-1-1 margin-bottom-m" appearance="fill">
         <mat-label i18n>Title Name</mat-label>
         <mat-error i18n>Playlist title should be 1-100 characters</mat-error>
-        <input name="playlist-name-input-playlist-create" matInput formControlName="title" class="width-1-1"
+        <input value="{{playlist.result.content.name}}" name="playlist-name-input-playlist-create" matInput formControlName="title" class="width-1-1"
           autocomplete="off" required />
       </mat-form-field>
       <div class="flex flex-row-reverse">
