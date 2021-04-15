@@ -3,7 +3,7 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Observable } from 'rxjs'
 // import { map, catchError } from 'rxjs/operators'
 import { } from '@sunbird-cb/collection'
-// import { IResolveResponse } from '@ws-widget/utils'
+// import { IResolveResponse } from '@sunbird-cb/utils'
 // import { DiscussService } from '../services/discuss.service'
 // import { NSDiscussData } from '../models/discuss.model'
 import { DiscussUtilsService } from '../services/discuss-utils.service'
@@ -41,7 +41,7 @@ export class DiscussConfigResolve
       //     enable: false,
       //   },
       // ],
-      userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || 'RangabashyamKrishnamachari',
+      userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
       context: {
         id: 1,
       },

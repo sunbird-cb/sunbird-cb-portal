@@ -441,6 +441,41 @@
           }
         }
       }
+    },
+    "@ws-widget/resolver": {
+      "projectType": "library",
+      "root": "library/ws-widget/resolver",
+      "sourceRoot": "library/ws-widget/resolver/src",
+      "prefix": "ws-resolver",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "library/ws-widget/resolver/tsconfig.lib.json",
+            "project": "library/ws-widget/resolver/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "library/ws-widget/resolver/src/test.ts",
+            "tsConfig": "library/ws-widget/resolver/tsconfig.spec.json",
+            "karmaConfig": "library/ws-widget/resolver/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "library/ws-widget/resolver/tsconfig.lib.json",
+              "library/ws-widget/resolver/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "fusion",

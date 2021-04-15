@@ -1,4 +1,4 @@
-import { Injectable, SkipSelf } from '@angular/core'
+import { Injectable } from '@angular/core'
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
@@ -11,7 +11,7 @@ import { NSProfileDataV2 } from '../models/profile-v2.model'
 export class Profilev2Resolve
   implements
   Resolve<Observable<IResolveResponse<NSProfileDataV2.IProfile>> | IResolveResponse<NSProfileDataV2.IProfile>> {
-  constructor(private profileV2Svc: ProfileV2Service, @SkipSelf() private configSvc: ConfigurationsService) { }
+  constructor(private profileV2Svc: ProfileV2Service, private configSvc: ConfigurationsService) { }
 
   resolve(
     _route: ActivatedRouteSnapshot,
