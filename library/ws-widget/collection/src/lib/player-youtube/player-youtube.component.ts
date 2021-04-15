@@ -4,12 +4,12 @@ import { EventService, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import videoJs from 'video.js'
 import { ActivatedRoute } from '@angular/router'
-// import { ViewerUtilService } from '../../../../../../project/ws/viewer/src/lib/viewer-util.service'
 import { ROOT_WIDGET_CONFIG } from '../collection.config'
 import { IWidgetsPlayerMediaData } from '../_models/player-media.model'
 import { fireRealTimeProgressFunction, saveContinueLearningFunction, telemetryEventDispatcherFunction, videoJsInitializer, youtubeInitializer } from '../_services/videojs-util'
 import { NsContent } from '../_services/widget-content.model'
 import { WidgetContentService } from '../_services/widget-content.service'
+import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service';
 interface IYTOptions extends videoJs.PlayerOptions {
   youtube: {
     ytControls: 0 | 1 | 2
@@ -61,7 +61,7 @@ export class PlayerYoutubeComponent extends WidgetBaseComponent
   constructor(
     private eventSvc: EventService,
     private contentSvc: WidgetContentService,
-    // private viewerSvc: ViewerUtilService,
+    private viewerSvc: ViewerUtilService,
     private activatedRoute: ActivatedRoute,
     private valueSvc: ValueService,
   ) {
@@ -145,14 +145,15 @@ export class PlayerYoutubeComponent extends WidgetBaseComponent
     }
     const fireRProgress: fireRealTimeProgressFunction = (identifier, data) => {
       if (this.widgetData.identifier && identifier && data) {
-        // this.viewerSvc
-        //   .realTimeProgressUpdate(identifier, data)
+        this.viewerSvc
+          .realTimeProgressUpdate(identifier, data)
       }
     }
     let enableTelemetry = false
     if (!this.widgetData.disableTelemetry && typeof (this.widgetData.disableTelemetry) !== 'undefined') {
       enableTelemetry = true
     }
+    // this.widgetData.url = 'https://www.youtube.com/embed/3bwBkxiK3Aw'
     this.dispose = youtubeInitializer(
       this.youtubeTag.nativeElement,
       videoId,
@@ -214,8 +215,8 @@ export class PlayerYoutubeComponent extends WidgetBaseComponent
     }
     const fireRProgress: fireRealTimeProgressFunction = (identifier, data) => {
       if (this.widgetData.identifier && identifier && data) {
-        // this.viewerSvc
-        //   .realTimeProgressUpdate(identifier, data)
+        this.viewerSvc
+          .realTimeProgressUpdate(identifier, data)
       }
     }
     let enableTelemetry = false
@@ -223,6 +224,7 @@ export class PlayerYoutubeComponent extends WidgetBaseComponent
       enableTelemetry = true
     }
     if (this.widgetData.url) {
+      // this.widgetData.url = 'https://www.youtube.com/embed/3bwBkxiK3Aw'
       const initObj = videoJsInitializer(
         this.videoTag.nativeElement,
         {
