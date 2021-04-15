@@ -18,7 +18,7 @@ import { DiscussUnreadResolve } from './resolvers/discuss-unread-resolve'
 import { DiscussProfileResolve } from './resolvers/discuss-profile-resolve'
 import { DiscussConfigResolve } from './resolvers/discuss-config-resolve'
 // import { ConfigurationsService } from './resolvers/config-resolver.service'
-import { ProfileResolverService } from './resolvers/profile-resolver.service'
+// import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = [
   {
@@ -85,7 +85,7 @@ const routes: Routes = [
     resolve: {
       data: DiscussConfigResolve,
       // configData: ConfigurationsService,
-      profileData: ProfileResolverService,
+      // profileData: ProfileResolverService,
     },
   },
 ]
@@ -102,7 +102,7 @@ const routes: Routes = [
     DiscussProfileResolve,
     DiscussConfigResolve,
     // ConfigurationsService,
-    ProfileResolverService,
+    // ProfileResolverService,
   ],
 })
 export class DiscussRoutingModule { }

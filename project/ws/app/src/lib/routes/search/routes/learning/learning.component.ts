@@ -23,7 +23,7 @@ export class LearningComponent implements OnInit, OnDestroy {
   screenSizeIsLtMedium = false
   sideNavBarOpened = true
   searchRequestStatus: any = 'none'
-  searchResults: NSSearch.ISearchV6ApiResultV2 = {
+  searchResults: any = {
     id: '',
     ver: '',
     ts: '',

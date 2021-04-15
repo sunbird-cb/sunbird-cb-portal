@@ -3,8 +3,7 @@ import { RouterModule, Routes } from '@angular/router'
 import { ContentAssignmentGuard } from './guards/content-assignment.guard'
 import { AssignmentDetailsComponent } from './routes/assignment-details/assignment-details.component'
 import { ContentAssignmentComponent } from './routes/content-assignment/content-assignment.component'
-
-import { ProfileResolverService } from './resolvers/profile-resolver.service'
+// import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = [
   {
@@ -22,7 +21,7 @@ const routes: Routes = [
         component: ContentAssignmentComponent,
         resolve: {
           // configData: ConfigurationsService,
-          profileData: ProfileResolverService,
+          // profileData: ProfileResolverService,
         },
       },
       {
@@ -32,7 +31,7 @@ const routes: Routes = [
         component: AssignmentDetailsComponent,
         resolve: {
           // configData: ConfigurationsService,
-          profileData: ProfileResolverService,
+          // profileData: ProfileResolverService,
         },
       },
     ],
@@ -42,6 +41,5 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [ProfileResolverService],
 })
 export class ContentAssignmentRoutingModule { }

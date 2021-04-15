@@ -8,7 +8,7 @@ import { TncAppResolverService } from '../../../../../../../src/app/services/tnc
 import { TncComponent } from './components/tnc/tnc.component'
 import { ConfigurationsService, PageResolve } from '@sunbird-cb/utils'
 import { InterestComponent } from './module/interest/interest/interest.component'
-import { ProfileResolverService } from './resolvers/profile-resolver.service'
+// import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = []
 
@@ -28,30 +28,30 @@ const routes: Routes = []
           redirectTo: 'lang',
           pathMatch: 'full',
           resolve: {
-            configData: ConfigurationsService,
-            profileData: ProfileResolverService,
+            // configData: ConfigurationsService,
+            // profileData: ProfileResolverService,
           },
         }, {
           path: 'lang',
           component: LangSelectComponent,
           resolve: {
-            configData: ConfigurationsService,
-            profileData: ProfileResolverService,
+            // configData: ConfigurationsService,
+            // profileData: ProfileResolverService,
           },
         }, {
           path: 'tnc',
           component: TncComponent,
           resolve: {
             tnc: TncAppResolverService,
-            configData: ConfigurationsService,
-            profileData: ProfileResolverService,
+            // configData: ConfigurationsService,
+            // profileData: ProfileResolverService,
           },
         }, {
           path: 'about-video',
           component: AboutVideoComponent,
           resolve: {
-            configData: ConfigurationsService,
-            profileData: ProfileResolverService,
+            // configData: ConfigurationsService,
+            // profileData: ProfileResolverService,
           },
         }, {
           path: 'interest',
@@ -62,8 +62,8 @@ const routes: Routes = []
           },
           resolve: {
             pageData: PageResolve,
-            configData: ConfigurationsService,
-            profileData: ProfileResolverService,
+            // configData: ConfigurationsService,
+            // profileData: ProfileResolverService,
           },
         }],
 
@@ -71,5 +71,6 @@ const routes: Routes = []
     ]),
   ],
   exports: [RouterModule],
+  providers: [ConfigurationsService],
 })
 export class AppSetupRoutingModule { }

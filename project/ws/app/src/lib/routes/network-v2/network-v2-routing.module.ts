@@ -12,7 +12,7 @@ import { MyMdoResolveService } from './resolvers/my-mdo-resolve.service'
 import { ConnectionRequestResolveService } from './resolvers/connection-request-resolve.service'
 import { MyProfileResolve } from './resolvers/my-profile.resolve'
 // import { ConfigurationsService } from './resolvers/config-resolver.service'
-import { ProfileResolverService } from './resolvers/profile-resolver.service'
+// import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = [
   {
@@ -20,7 +20,7 @@ const routes: Routes = [
     component: NetworkComponent,
     resolve: {
       me: MyProfileResolve,
-      profileData: ProfileResolverService,
+      // profileData: ProfileResolverService,
     },
     children: [
       {
@@ -35,7 +35,7 @@ const routes: Routes = [
           recommendedUsers: MyMdoResolveService,
           connectionRequests: ConnectionRequestResolveService,
           myConnectionList: MyConnectionResolveService,
-          profileData: ProfileResolverService,
+          // profileData: ProfileResolverService,
         },
       },
       {
@@ -43,7 +43,7 @@ const routes: Routes = [
         component: NetworkMyConnectionComponent,
         resolve: {
           myConnectionList: MyConnectionResolveService,
-          profileData: ProfileResolverService,
+          // profileData: ProfileResolverService,
         },
       },
       {
@@ -51,7 +51,7 @@ const routes: Routes = [
         component: NetworkConnectionRequestsComponent,
         resolve: {
           connectionRequests: ConnectionRequestResolveService,
-          profileData: ProfileResolverService,
+          // profileData: ProfileResolverService,
         },
       },
       {
@@ -59,7 +59,7 @@ const routes: Routes = [
         component: NetworkMyMdoComponent,
         resolve: {
           myMdoList: MyMdoResolveService,
-          profileData: ProfileResolverService,
+          // profileData: ProfileResolverService,
         },
       },
       {
@@ -67,7 +67,7 @@ const routes: Routes = [
         component: NetworkRecommendedComponent,
         resolve: {
           recommendedList: RecommendedResolveService,
-          profileData: ProfileResolverService,
+          // profileData: ProfileResolverService,
         },
       },
     ],
@@ -77,6 +77,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [MyProfileResolve, ProfileResolverService],
+  providers: [MyProfileResolve],
 })
 export class NetworkV2RoutingModule { }

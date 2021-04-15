@@ -4,7 +4,7 @@ import { CompetenceComponent } from './routes/competence-home/competence.compone
 import { CompetenceAllComponent } from './routes/competence-all/competence-all.component'
 import { InitResolver } from './resolvers/init-resolve.service'
 import { ProfileResolve } from './resolvers/profile-fetch'
-import { ProfileResolverService } from './resolvers/profile-resolver.service'
+// import { ProfileResolverService } from './resolvers/profile-resolver.service'
 // import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
 
 const routes: Routes = [
@@ -18,7 +18,7 @@ const routes: Routes = [
         redirectTo: 'home',
         resolve: {
           // configData: ConfigurationsService,
-          profileData: ProfileResolverService,
+          // profileData: ProfileResolverService,
         },
       },
       {
@@ -27,7 +27,7 @@ const routes: Routes = [
         resolve: {
           profile: ProfileResolve,
           // configData: ConfigurationsService,
-          profileData: ProfileResolverService,
+          // profileData: ProfileResolverService,
         },
       },
     ],
@@ -41,7 +41,7 @@ const routes: Routes = [
     InitResolver,
     ProfileResolve,
     // ConfigurationsService,
-    ProfileResolverService,
+    // ProfileResolverService,
   ],
 })
 export class CompetencieRoutingModule { }

@@ -6,7 +6,7 @@ import { Profilev2Resolve } from './resolvers/profile-v2-resolve'
 import { ProfileViewComponent } from './routes/profile-view/profile-view.component'
 import { Profilev2BadgesResolve } from './resolvers/badges-resolve'
 // import { ConfigurationsService } from './resolvers/config-resolver.service'
-import { ProfileResolverService } from './resolvers/profile-resolver.service'
+// import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = [
   {
@@ -19,7 +19,7 @@ const routes: Routes = [
         resolve: {
           profile: Profilev2Resolve,
           badges: Profilev2BadgesResolve,
-          profileData: ProfileResolverService,
+          // profileData: ProfileResolverService,
         },
       },
       {
@@ -28,7 +28,7 @@ const routes: Routes = [
         resolve: {
           profile: Profilev2Resolve,
           badges: Profilev2BadgesResolve,
-          profileData: ProfileResolverService,
+          // profileData: ProfileResolverService,
         },
       },
 
@@ -43,7 +43,7 @@ const routes: Routes = [
     Profilev2Resolve,
     Profilev2BadgesResolve,
     // ConfigurationsService,
-    ProfileResolverService,
+    // ProfileResolverService,
   ],
 })
 export class ProfileV2RoutingModule { }

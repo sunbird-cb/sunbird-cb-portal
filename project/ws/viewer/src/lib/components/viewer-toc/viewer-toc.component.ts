@@ -1,7 +1,7 @@
 import { NestedTreeControl } from '@angular/cdk/tree'
 import { Component, EventEmitter, OnDestroy, OnInit, Output, Input } from '@angular/core'
 import { MatTreeNestedDataSource } from '@angular/material'
-import {  SafeUrl } from '@angular/platform-browser'
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router'
 import {
   ContentProgressService,
@@ -54,7 +54,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    // private domSanitizer: DomSanitizer,
+    private domSanitizer: DomSanitizer,
     // private logger: LoggerService,
     private contentSvc: WidgetContentService,
     private utilitySvc: UtilityService,

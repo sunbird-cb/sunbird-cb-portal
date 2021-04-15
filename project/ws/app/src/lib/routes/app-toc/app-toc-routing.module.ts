@@ -6,9 +6,6 @@ import { GeneralGuard } from '../../../../../../../src/app/guards/general.guard'
 import { AppTocDiscussionComponent } from './components/app-toc-discussion/app-toc-discussion.component'
 import { KnowledgeArtifactDetailsComponent } from './components/knowledge-artifact-details/knowledge-artifact-details.component'
 import { AppTocResolverService } from './resolvers/app-toc-resolver.service'
-// import {  } from './resolvers/profile-resolver.service'
-import { ProfileResolverService } from './resolvers/profile-resolver.service'
-import { RestrictedFeaturesResolverService } from './resolvers/restricted-features-resolver.service'
 import { AppTocAnalyticsComponent } from './routes/app-toc-analytics/app-toc-analytics.component'
 import { CertificationMetaResolver } from './routes/app-toc-certification/resolvers/certification-meta.resolver'
 import { ContentCertificationResolver } from './routes/app-toc-certification/resolvers/content-certification.resolver'
@@ -28,9 +25,6 @@ const routes: Routes = [
     resolve: {
       pageData: PageResolve,
       content: AppTocResolverService,
-      // configData: ConfigurationsService,
-      profileData: ProfileResolverService,
-      restrictedData: RestrictedFeaturesResolverService,
     },
     runGuardsAndResolvers: 'paramsChange',
     children: [
@@ -55,10 +49,6 @@ const routes: Routes = [
       {
         path: 'overview',
         component: AppTocSinglePageRootComponent,
-        resolve: {
-          // configData: ConfigurationsService,
-          restrictedData: RestrictedFeaturesResolverService,
-        },
       },
       {
         path: 'discussion',
@@ -94,18 +84,11 @@ const routes: Routes = [
   {
     path: 'knowledge-artifact/:id',
     component: KnowledgeArtifactDetailsComponent,
-    resolve: {
-      content: AppTocResolverService,
-      // configData: ConfigurationsService,
-      profileData: ProfileResolverService,
-      restrictedData: RestrictedFeaturesResolverService,
-    },
   },
 ]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [RestrictedFeaturesResolverService],
 })
 export class AppTocRoutingModule { }

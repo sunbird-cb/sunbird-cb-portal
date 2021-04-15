@@ -13,7 +13,7 @@ import {
 } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
-import { NSSearch } from '@sunbird-cb/utils/lib/services/widget-search.model'
+import { NSSearch } from '@sunbird-cb/utils/src/lib/services/widget-search.model'
 
 interface IStripUnitContentData {
   key: string
@@ -148,7 +148,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     const filters: any = {}
     v6filters.forEach((f => {
       if (f.andFilters) {
-        f.andFilters.forEach(andFilter => {
+        f.andFilters.forEach((andFilter: any) => {
           Object.keys(andFilter).forEach(key => {
             filters[key] = andFilter[key]
           })

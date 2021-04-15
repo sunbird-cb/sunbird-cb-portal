@@ -49,9 +49,9 @@ export class CardContentComponent extends WidgetBaseComponent
 
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.defaultThumbnail = instanceConfig.logos.defaultContent
+      this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
       this.sourceLogos = instanceConfig.sources
-      this.defaultSLogo = instanceConfig.logos.defaultSourceLogo
+      this.defaultSLogo = instanceConfig.logos.defaultSourceLogo || ''
     }
 
     if (this.widgetData) {

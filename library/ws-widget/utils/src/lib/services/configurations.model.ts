@@ -255,6 +255,12 @@ export namespace NsUser {
     dealerCode?: null | string
     isManager?: boolean
   }
+
+  export interface INodebbUserProfile {
+    username: string
+    email: string
+  }
+
   export interface IUserPidProfile {
     kid_updated: boolean
     user: IUser
