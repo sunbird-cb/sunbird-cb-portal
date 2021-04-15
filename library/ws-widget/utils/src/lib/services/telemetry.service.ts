@@ -211,8 +211,8 @@ export class TelemetryService {
         if (
           event.data.state === WsEvents.EnumTelemetrySubType.Loaded &&
           (!content ||
-            content.isIframeSupported.toLowerCase() === 'maybe' ||
-            content.isIframeSupported.toLowerCase() === 'yes')
+            (content.isIframeSupported || '').toLowerCase() === 'maybe' ||
+            (content.isIframeSupported || '').toLowerCase() === 'yes')
         ) {
           this.start(
             event.data.type || WsEvents.WsTimeSpentType.Player,
@@ -223,8 +223,8 @@ export class TelemetryService {
         if (
           event.data.state === WsEvents.EnumTelemetrySubType.Unloaded &&
           (!content ||
-            content.isIframeSupported.toLowerCase() === 'maybe' ||
-            content.isIframeSupported.toLowerCase() === 'yes')
+            (content.isIframeSupported || '').toLowerCase() === 'maybe' ||
+            (content.isIframeSupported || '').toLowerCase() === 'yes')
         ) {
           this.end(
             event.data.type || WsEvents.WsTimeSpentType.Player,

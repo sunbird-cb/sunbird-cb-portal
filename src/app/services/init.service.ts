@@ -331,7 +331,7 @@ export class InitService {
           .get<NsUser.IUserPidProfileVer2>(endpoint.profileV2)
           .toPromise()
       } catch (e) {
-        this.configSvc.userProfileV2 = null
+        // this.configSvc.userProfileV2 = null
         throw new Error('Invalid user')
       }
       if (userPidProfileV2) {

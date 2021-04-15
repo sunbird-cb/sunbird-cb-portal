@@ -263,4 +263,13 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((_result: any) => {
     })
   }
+
+  public parseJsonData(s: string) {
+    try {
+      const parsedString = JSON.parse(s)
+      return parsedString
+    } catch {
+      return []
+    }
+  }
 }

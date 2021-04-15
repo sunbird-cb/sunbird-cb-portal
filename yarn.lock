@@ -1129,10 +1129,10 @@
     reflect-metadata "^0.1.13"
     whatwg-fetch "^3.1.0"
 
-"@project-sunbird/discussions-ui-v8@2.0.27":
-  version "2.0.27"
-  resolved "https://registry.yarnpkg.com/@project-sunbird/discussions-ui-v8/-/discussions-ui-v8-2.0.27.tgz#57219cf07a8f8ce344fb79bfc87c54c4eb4830c4"
-  integrity sha512-ZCiXhgG3j63z53lRgrOH646w8Y0KMyL4QyXPcwOXgepCh6fEAxVEq1utGfrRRkSDvSUfQbWPdrqxnRUrDrAKjQ==
+"@project-sunbird/discussions-ui-v8@2.0.28":
+  version "2.0.28"
+  resolved "https://registry.yarnpkg.com/@project-sunbird/discussions-ui-v8/-/discussions-ui-v8-2.0.28.tgz#b57eb9b4351a18f00507da55f0a1ab079c13188c"
+  integrity sha512-IE65g7yy+uvmeSFx2zyF44ABeRp1XJLUFUimxEOubj0PUnbIg/D+3ifvZ+eVdGSYbzWNxbfnmLn3wjmJwE3qIA==
   dependencies:
     tslib "^1.9.0"
 
