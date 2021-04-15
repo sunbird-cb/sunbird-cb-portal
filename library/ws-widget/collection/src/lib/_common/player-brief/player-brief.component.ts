@@ -128,4 +128,13 @@ export class PlayerBriefComponent implements OnInit {
 
     // delete link;
   }
+
+  public parseJsonData(s: string) {
+    try {
+      const parsedString = JSON.parse(s)
+      return parsedString
+    } catch {
+      return []
+    }
+  }
 }

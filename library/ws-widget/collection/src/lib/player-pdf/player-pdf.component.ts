@@ -15,11 +15,11 @@ import { EventService, LoggerService, WsEvents, ValueService } from '@sunbird-cb
 import * as PDFJS from 'pdfjs-dist/webpack'
 import { fromEvent, interval, merge, Subject, Subscription } from 'rxjs'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
-// import { ViewerUtilService } from '../../../../../../project/ws/viewer/src/lib/viewer-util.service'
 import { ROOT_WIDGET_CONFIG } from '../collection.config'
 import { NsContent } from '../_services/widget-content.model'
 import { WidgetContentService } from '../_services/widget-content.service'
 import { IWidgetsPlayerPdfData } from './player-pdf.model'
+import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service';
 
 const pdfjsViewer = require('pdfjs-dist/web/pdf_viewer')
 @Component({
@@ -69,7 +69,7 @@ export class PlayerPdfComponent extends WidgetBaseComponent
     private eventSvc: EventService,
     private logger: LoggerService,
     private contentSvc: WidgetContentService,
-    // private viewerSvc: ViewerUtilService,
+    private viewerSvc: ViewerUtilService,
     private valueSvc: ValueService,
   ) {
     super()
@@ -266,16 +266,17 @@ export class PlayerPdfComponent extends WidgetBaseComponent
     }
   }
   fireRealTimeProgress(id: string) {
-    if (id) {
-
-    }
     if (this.totalPages > 0 && this.current.length > 0) {
-      // const realTimeProgressRequest = {
-      //   ...this.realTimeProgressRequest,
-      //   max_size: this.totalPages,
-      //   current: this.current,
-      // }
-      // this.viewerSvc.realTimeProgressUpdate(id, realTimeProgressRequest)
+      const realTimeProgressRequest = {
+        ...this.realTimeProgressRequest,
+        max_size: this.totalPages,
+        current: this.current,
+      }
+      const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+              this.activatedRoute.snapshot.queryParams.collectionId : this.widgetData.identifier
+      const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+              this.activatedRoute.snapshot.queryParams.batchId : this.widgetData.identifier
+      this.viewerSvc.realTimeProgressUpdate(id, realTimeProgressRequest, collectionId, batchId)
     }
     return
   }
