@@ -615,8 +615,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   private constructFormFromRegistry(data: any, academics: NsUserProfileDetails.IAcademics, organisation: any) {
     /* tslint:disable */
-
-    console.log('------------- data --------------', data)
     this.createUserForm.patchValue({
       firstname: data.personalDetails.firstname,
       middlename: data.personalDetails.middlename,
@@ -632,7 +630,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       countryCode: data.personalDetails.countryCode,
       mobile: data.personalDetails.mobile,
       telephone: data.personalDetails.telephone || '',
-      primaryEmail: data.personalDetails.primaryEmail,
+      primaryEmail: data.personalDetails.primaryEmail || '',
       secondaryEmail: data.personalDetails.personalEmail,
       primaryEmailType: this.filterPrimaryEmailType(data),
       residenceAddress: data.personalDetails.postalAddress,
@@ -651,17 +649,17 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       orgNameOther: organisation.orgNameOther,
       industryOther: organisation.industryOther,
       designationOther: organisation.designationOther,
-      service: _.get(data, 'employmentDetails.service') || undefined,
-      cadre: _.get(data, 'employmentDetails.cadre') || undefined,
-      allotmentYear: _.get(data, 'employmentDetails.allotmentYearOfService') || undefined,
-      otherDetailsDoj: this.getDateFromText(_.get(data, 'employmentDetails.dojOfService') || undefined),
-      payType: _.get(data, 'employmentDetails.payType') || undefined,
-      civilListNo: _.get(data, 'employmentDetails.civilListNo') || undefined,
-      employeeCode: _.get(data, 'employmentDetails.employeeCode') || undefined,
-      otherDetailsOfficeAddress: _.get(data, 'employmentDetails.officialPostalAddress') || undefined,
-      otherDetailsOfficePinCode: _.get(data, 'employmentDetails.pinCode') || undefined,
-      skillAquiredDesc: _.get(data, 'skills.additionalSkills') || undefined,
-      certificationDesc: _.get(data, 'skills.certificateDetails') || undefined,
+      service: _.get(data, 'employmentDetails.service') || '',
+      cadre: _.get(data, 'employmentDetails.cadre') || '',
+      allotmentYear: this.checkvalue(_.get(data, 'employmentDetails.allotmentYearOfService') || ''),
+      otherDetailsDoj: this.getDateFromText(_.get(data, 'employmentDetails.dojOfService') || ''),
+      payType: _.get(data, 'employmentDetails.payType') || '',
+      civilListNo: _.get(data, 'employmentDetails.civilListNo') || '',
+      employeeCode: _.get(data, 'employmentDetails.employeeCode') || '',
+      otherDetailsOfficeAddress: _.get(data, 'employmentDetails.officialPostalAddress') || '',
+      otherDetailsOfficePinCode: _.get(data, 'employmentDetails.pinCode') || '',
+      skillAquiredDesc: _.get(data, 'skills.additionalSkills') || '',
+      certificationDesc: _.get(data, 'skills.certificateDetails') || '',
     },
       {
         emitEvent: true,
@@ -671,6 +669,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.cd.markForCheck()
     this.setDropDownOther(organisation)
     this.setProfilePhotoValue(data)
+  }
+
+  checkvalue(value: any) {
+    if (value && value === 'undefined') {
+        // tslint:disable-next-line:no-parameter-reassignment
+        value = ''
+    }
   }
 
   setProfilePhotoValue(data: any) {
