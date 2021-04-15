@@ -19,7 +19,7 @@ import { ROOT_WIDGET_CONFIG } from '../collection.config'
 import { NsContent } from '../_services/widget-content.model'
 import { WidgetContentService } from '../_services/widget-content.service'
 import { IWidgetsPlayerPdfData } from './player-pdf.model'
-import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service';
+import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 
 const pdfjsViewer = require('pdfjs-dist/web/pdf_viewer')
 @Component({
