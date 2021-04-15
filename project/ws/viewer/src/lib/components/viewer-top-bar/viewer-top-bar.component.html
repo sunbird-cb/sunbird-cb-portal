@@ -12,6 +12,7 @@
         : {}
       : {primaryCategory: resourcePrimaryCategory}
     }"></ws-widget-btn-page-back-nav>
+
   <!-- <mat-toolbar [color]="pageNavbar.color" [ngStyle]="pageNavbar?.styles" class="mat-primary mat-elevation-z3">
   <ws-widget-btn-page-back *ngIf="!forChannel" [widgetData]="{
       url: isTypeOfCollection
@@ -42,8 +43,8 @@
     <span *ngIf="logo" class="finish">FINISH</span>
   </a>
   <!-- <a mat-icon-button> -->
-  <ws-widget-btn-fullscreen [widgetType]="'actionButton'" [widgetSubType]="'actionButtonFullscreen'"
-    [widgetData]="{ fsContainer: frameReference }"></ws-widget-btn-fullscreen>
+  <!-- <ws-widget-btn-fullscreen [widgetType]="'actionButton'" [widgetSubType]="'actionButtonFullscreen'"
+    [widgetData]="{ fsContainer: frameReference }"></ws-widget-btn-fullscreen> -->
   <!-- </a> -->
   <a href="javascript:void(0)" mat-icon-button *ngIf="isTypeOfCollection" role="link" class="width-auto"
     [ngClass]="{'xsmall': !logo}" (click)="toggleSideBar()" accesskey="M">

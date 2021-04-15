@@ -2,7 +2,7 @@ import { AccessControlService } from '@ws/author'
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Subscription } from 'rxjs'
 import { NsContent, NsDiscussionForum, WidgetContentService } from '@sunbird-cb/collection'
-import { WsEvents, EventService } from '@sunbird-cb/utils'
+import { WsEvents, EventService, ConfigurationsService } from '@sunbird-cb/utils'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ActivatedRoute } from '@angular/router'
 import { ViewerUtilService } from '../../viewer-util.service'
@@ -42,6 +42,7 @@ export class PdfComponent implements OnInit, OnDestroy {
     private viewerSvc: ViewerUtilService,
     private eventSvc: EventService,
     private accessControlSvc: AccessControlService,
+    private configSvc: ConfigurationsService,
   ) {}
 
   ngOnInit() {
@@ -162,10 +163,13 @@ export class PdfComponent implements OnInit, OnDestroy {
       //   () => resolve(true),
       // )
       let userId
+      if (this.configSvc.userProfile) {
+        userId = this.configSvc.userProfile.userId || ''
+      }
 
-      this.activatedRoute.data.subscribe(data => {
-        userId = data.profileData.data.userId
-      })
+      // this.activatedRoute.data.subscribe(data => {
+      //   userId = data.profileData.data.userId
+      // })
       const req: NsContent.IContinueLearningDataReq = {
         request: {
           userId,

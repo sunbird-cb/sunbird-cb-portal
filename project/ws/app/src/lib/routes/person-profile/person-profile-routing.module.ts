@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { PersonProfileComponent } from './components/person-profile/person-profile.component'
 import { ProfileSettingsComponent } from './module/profile-settings/profile-settings.component'
-import { ConfigResolverService } from './resolvers/config-resolver.service'
+// import { ConfigurationsService } from './resolvers/config-resolver.service'
 import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = []
@@ -29,6 +29,6 @@ const routes: Routes = []
     ]),
   ],
   exports: [RouterModule],
-  providers: [ConfigResolverService, ProfileResolverService],
+  providers: [ProfileResolverService],
 })
 export class PersonProfileRoutingModule { }

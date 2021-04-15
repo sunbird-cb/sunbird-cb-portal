@@ -21,7 +21,6 @@ import { SettingsComponent } from './routes/settings/settings.component'
 // import { BadgeComponent } from '../gamification/routes/badges/components/badge/badge.component'
 import { BadgesComponent } from './routes/badges/badges.component'
 import { GeneralGuard } from '../../../../../../../src/app/guards/general.guard'
-import { ConfigResolverService } from './resolvers/config-resolver.service'
 import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = [
@@ -168,6 +167,6 @@ const routes: Routes = [
     ]),
   ],
   exports: [RouterModule],
-  providers: [ConfigResolverService, ProfileResolverService],
+  providers: [ProfileResolverService],
 })
 export class ProfileRoutingModule { }

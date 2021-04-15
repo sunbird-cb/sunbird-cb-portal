@@ -1,4 +1,4 @@
-import { Injectable, SkipSelf } from '@angular/core'
+import { Injectable  } from '@angular/core'
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { NsInstanceConfig, ConfigurationsService, IResolveResponse } from '@sunbird-cb/utils'
@@ -6,9 +6,9 @@ import { NsInstanceConfig, ConfigurationsService, IResolveResponse } from '@sunb
 @Injectable()
 export class ConfigResolverService implements Resolve<Observable<NsInstanceConfig.IConfig>> {
 
-  constructor(@SkipSelf() private configSvc: ConfigurationsService) { }
+  constructor(private configSvc: ConfigurationsService) { }
 
-  resolve(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<any> {
+  resolve(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<NsInstanceConfig.IConfig> {
 
     const result: IResolveResponse<NsInstanceConfig.IConfig> = {
       data: this.configSvc.instanceConfig,

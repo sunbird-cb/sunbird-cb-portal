@@ -29,7 +29,10 @@ export class PdfComponent implements OnInit {
   > | null = null
   isTypeOfCollection = false
   isRestricted = false
-  constructor(private activatedRoute: ActivatedRoute, private configSvc: ConfigurationsService) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private configSvc: ConfigurationsService
+  ) { }
 
   ngOnInit() {
     if (this.configSvc.restrictedFeatures) {
