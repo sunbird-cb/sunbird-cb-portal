@@ -41,7 +41,7 @@ export class DiscussConfigResolve
       //     enable: false,
       //   },
       // ],
-      userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || 'RangabashyamKrishnamachari',
+      userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
       context: {
         id: 1,
       },
