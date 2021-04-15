@@ -25,7 +25,7 @@ export class ConnectionPeopleCardComponent implements OnInit {
     private router: Router,
     private activeRoute: ActivatedRoute,
     private connectionHoverService: ConnectionHoverService,
-    // @SkipSelf() private configSvc: ConfigurationsService,
+    //  private configSvc: ConfigurationsService,
   ) {
     if (this.activeRoute.parent) {
       this.me = this.activeRoute.parent.snapshot.data.me

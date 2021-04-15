@@ -9,6 +9,7 @@ import { DiscussService } from '../../../discuss/services/discuss.service'
 import _ from 'lodash'
 import { NetworkV2Service } from '../../../network-v2/services/network-v2.service'
 import { NSNetworkDataV2 } from '../../../network-v2/models/network-v2.model'
+import { ConfigurationsService } from '@sunbird-cb/utils';
 /* tslint:enable */
 
 @Component({
@@ -51,8 +52,10 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute,
     private discussService: DiscussService,
     private networkV2Service: NetworkV2Service,
+    private configSvc: ConfigurationsService,
   ) {
     this.Math = Math
+    this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     this.tabs = this.route.data.subscribe(data => {
       this.portalProfile = data.profile

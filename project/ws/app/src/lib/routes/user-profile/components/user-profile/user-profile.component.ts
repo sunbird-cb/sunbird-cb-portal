@@ -25,6 +25,9 @@ import { NotificationComponent } from '@ws/author/src/lib/modules/shared/compone
 import { Notify } from '@ws/author/src/lib/constants/notificationMessage'
 import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
 import { LoaderService } from '@ws/author/src/public-api'
+/* tslint:disable */
+import _ from 'lodash'
+/* tslint:enable */
 
 export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -628,7 +631,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       knownLanguages: data.personalDetails.knownLanguages,
       countryCode: data.personalDetails.countryCode,
       mobile: data.personalDetails.mobile,
-      telephone: data.personalDetails.telephone,
+      telephone: data.personalDetails.telephone || '',
       primaryEmail: data.personalDetails.primaryEmail,
       secondaryEmail: data.personalDetails.personalEmail,
       primaryEmailType: this.filterPrimaryEmailType(data),
@@ -648,17 +651,17 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       orgNameOther: organisation.orgNameOther,
       industryOther: organisation.industryOther,
       designationOther: organisation.designationOther,
-      service: data.employmentDetails.service,
-      cadre: data.employmentDetails.cadre,
-      allotmentYear: data.employmentDetails.allotmentYearOfService,
-      otherDetailsDoj: this.getDateFromText(data.employmentDetails.dojOfService),
-      payType: data.employmentDetails.payType,
-      civilListNo: data.employmentDetails.civilListNo,
-      employeeCode: data.employmentDetails.employeeCode,
-      otherDetailsOfficeAddress: data.employmentDetails.officialPostalAddress,
-      otherDetailsOfficePinCode: data.employmentDetails.pinCode,
-      skillAquiredDesc: data.skills.additionalSkills,
-      certificationDesc: data.skills.certificateDetails,
+      service: _.get(data, 'employmentDetails.service') || undefined,
+      cadre: _.get(data, 'employmentDetails.cadre') || undefined,
+      allotmentYear: _.get(data, 'employmentDetails.allotmentYearOfService') || undefined,
+      otherDetailsDoj: this.getDateFromText(_.get(data, 'employmentDetails.dojOfService') || undefined),
+      payType: _.get(data, 'employmentDetails.payType') || undefined,
+      civilListNo: _.get(data, 'employmentDetails.civilListNo') || undefined,
+      employeeCode: _.get(data, 'employmentDetails.employeeCode') || undefined,
+      otherDetailsOfficeAddress: _.get(data, 'employmentDetails.officialPostalAddress') || undefined,
+      otherDetailsOfficePinCode: _.get(data, 'employmentDetails.pinCode') || undefined,
+      skillAquiredDesc: _.get(data, 'skills.additionalSkills') || undefined,
+      certificationDesc: _.get(data, 'skills.certificateDetails') || undefined,
     },
       {
         emitEvent: true,

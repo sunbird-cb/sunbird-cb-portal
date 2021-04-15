@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 import { ActivatedRoute } from '@angular/router'
 import { ContentAssignService } from '@sunbird-cb/collection'
 import { ConfigurationsService } from '@sunbird-cb/utils'
-import { IUserSearchUnitFilterModel, IUserSearchRequestModel } from '@sunbird-cb/collection/lib/content-assign/content-assign.model'
+import { IUserSearchUnitFilterModel, IUserSearchRequestModel } from '@sunbird-cb/collection/src/lib/content-assign/content-assign.model'
 
 @Component({
   selector: 'ws-app-user-filter-display',

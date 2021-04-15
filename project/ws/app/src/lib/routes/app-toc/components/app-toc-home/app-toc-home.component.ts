@@ -188,13 +188,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     this.userEnrollmentList = null
     let userId
-    // if (this.configSvc.userProfile) {
-    //   userId = this.configSvc.userProfile.userId || ''
-    // }
-    this.route.data.subscribe(data => {
-      userId = data.profileData.data.userId
-      }
-    )
+    if (this.configSvc.userProfile) {
+      userId = this.configSvc.userProfile.userId || ''
+    }
+    // this.route.data.subscribe(data => {
+    //   userId = data.profileData.data.userId
+    //   }
+    // )
     this.userSvc.fetchUserBatchList(userId).subscribe(
       (courses: NsContent.ICourse[]) => {
         let enrolledCourse: NsContent.ICourse | undefined
@@ -279,12 +279,12 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   private getContinueLearningData(contentId: string, batchId?: string) {
     this.resumeData = null
     let userId
-    // if (this.configSvc.userProfile) {
-    //   userId = this.configSvc.userProfile.userId || ''
-    // }
-    this.route.data.subscribe(data => {
-      userId = data.profileData.data.userId
-    })
+    if (this.configSvc.userProfile) {
+      userId = this.configSvc.userProfile.userId || ''
+    }
+    // this.route.data.subscribe(data => {
+    //   userId = data.profileData.data.userId
+    // })
     const req: NsContent.IContinueLearningDataReq = {
       request: {
         batchId,

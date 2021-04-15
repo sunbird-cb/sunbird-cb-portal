@@ -3,6 +3,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ActivatedRoute, Data } from '@angular/router'
 import { NsContent } from '@sunbird-cb/collection'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Observable, Subscription } from 'rxjs'
 import { share } from 'rxjs/operators'
 import { NsAppToc } from '../../models/app-toc.model'
@@ -38,7 +39,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   loggedInUserId!: any
   private routeQuerySubscription: Subscription | null = null
   batchId!: string
-  configSvc: any
+  // configSvc: any
 
   constructor(
     private route: ActivatedRoute,
@@ -49,18 +50,19 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     private titleTagService: TitleTagService,
     public createBatchDialog: MatDialog,
     private mobileAppsSvc: MobileAppsService,
+    public configSvc: ConfigurationsService,
   ) {
-    // if (this.configSvc.restrictedFeatures) {
-    //   this.askAuthorEnabled = !this.configSvc.restrictedFeatures.has('askAuthor')
-    //   this.trainingLHubEnabled = !this.configSvc.restrictedFeatures.has('trainingLHub')
-    // }
-    if (this.route && this.route.parent) {
-      this.configSvc = this.route.parent.snapshot.data.profileData
+    if (this.configSvc.restrictedFeatures) {
+      this.askAuthorEnabled = !this.configSvc.restrictedFeatures.has('askAuthor')
+      this.trainingLHubEnabled = !this.configSvc.restrictedFeatures.has('trainingLHub')
     }
-    this.route.data.subscribe(data => {
-      this.askAuthorEnabled = !data.restrictedData.data.has('askAuthor')
-      this.trainingLHubEnabled = !data.restrictedData.data.has('trainingLHub')
-    })
+    // if (this.route && this.route.parent) {
+    //   this.configSvc = this.route.parent.snapshot.data.profileData
+    // }
+    // this.route.data.subscribe(data => {
+    //   this.askAuthorEnabled = !data.restrictedData.data.has('askAuthor')
+    //   this.trainingLHubEnabled = !data.restrictedData.data.has('trainingLHub')
+    // })
   }
 
   ngOnInit() {
@@ -257,8 +259,17 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
       width: '600px',
       data: { content },
     })
-    dialogRef.componentInstance.xyz = this.configSvc
+    // dialogRef.componentInstance.xyz = this.configSvc
     dialogRef.afterClosed().subscribe((_result: any) => {
     })
+  }
+
+  public parseJsonData(s: string) {
+    try {
+      const parsedString = JSON.parse(s)
+      return parsedString
+    } catch {
+      return []
+    }
   }
 }

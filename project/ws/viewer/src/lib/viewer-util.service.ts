@@ -1,5 +1,5 @@
 import { ConfigurationsService } from '@sunbird-cb/utils'
-import { Injectable, SkipSelf } from '@angular/core'
+import { Injectable  } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { noop, Observable } from 'rxjs'
 import { NsContent } from '@sunbird-cb/collection'
@@ -16,7 +16,7 @@ export class ViewerUtilService {
   }
   downloadRegex = new RegExp(`(/content-store/.*?)(\\\)?\\\\?['"])`, 'gm')
   authoringBase = '/apis/authContent/'
-  constructor(private http: HttpClient, @SkipSelf() private configservice: ConfigurationsService) { }
+  constructor(private http: HttpClient, private configservice: ConfigurationsService) { }
 
   async fetchManifestFile(url: string) {
     this.setS3Cookie(url)

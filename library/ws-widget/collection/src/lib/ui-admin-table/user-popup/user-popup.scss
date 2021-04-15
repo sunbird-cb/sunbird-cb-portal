@@ -1,0 +1,61 @@
+$size-xs: 8px;
+$size-s: 12px;
+$size-m: 16px;
+$size-l: 24px;
+$size-xl: 32px;
+$size-xxl: 40px;
+$card-standard-width: 268px;
+@mixin breakpoint-xs {
+  @media only screen and (max-width: 599px) {
+    @content;
+  }
+}
+.start-card {
+  // width: 40%;
+  min-width: 1200px;
+  margin: 0px 30px 30px 30px;
+  font-size: 16px;
+
+  mat-card-content {
+    margin-top: 20px;
+  }
+}
+.mat-dialog-actions{
+  padding: 9px 0;
+}
+.pad-fix {
+  padding: 0 0 0 24px;
+}
+.mat-dialog{
+  height: 90% !important;
+}
+.flex-4 {
+  flex: 4;
+}
+
+.flex-3 {
+  flex: 3;
+}
+
+.flex-2 {
+  flex: 2;
+}
+
+.mb-0-imp {
+  margin-bottom: 0 !important;
+}
+
+.w-full-imp {
+  width: 100% !important;
+}
+.score-red{
+    color: red;
+}
+.score-green{
+  color: green;
+}
+.parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

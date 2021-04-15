@@ -1,9 +1,9 @@
-import { Injectable, SkipSelf } from '@angular/core'
+import { Injectable  } from '@angular/core'
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable } from 'rxjs'
 // import { map, catchError } from 'rxjs/operators'
 import { } from '@sunbird-cb/collection'
-// import { IResolveResponse } from '@ws-widget/utils'
+// import { IResolveResponse } from '@sunbird-cb/utils'
 // import { DiscussService } from '../services/discuss.service'
 // import { NSDiscussData } from '../models/discuss.model'
 import { DiscussUtilsService } from '../services/discuss-utils.service'
@@ -15,7 +15,7 @@ export class DiscussConfigResolve
   implements
   Resolve<any> {
   constructor(private discussionSvc: DiscussUtilsService,
-              @SkipSelf() public configSvc: ConfigurationsService) { }
+              public configSvc: ConfigurationsService) { }
 
   resolve(
     _route: ActivatedRouteSnapshot,

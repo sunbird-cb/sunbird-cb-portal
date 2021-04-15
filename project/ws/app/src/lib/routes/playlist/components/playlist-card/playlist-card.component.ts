@@ -115,7 +115,7 @@ export class PlaylistCardComponent implements OnInit {
     let routeTo: string
     this.type === 'user' ? (routeTo = 'me') : (routeTo = 'shared')
     if (this.playlist) {
-      this.router.navigate([`/app/playlist/${routeTo}/${this.playlist.id}/edit`])
+      this.router.navigate([`/app/playlist/${routeTo}/${this.playlist.identifier}/edit`])
     } else {
       this.snackBar.open(this.playlistEditFailedMessage.nativeElement.value, 'X')
     }
