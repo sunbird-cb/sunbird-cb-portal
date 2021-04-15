@@ -75,7 +75,7 @@ export class PickerContentComponent extends WidgetBaseComponent
     super()
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.defaultThumbnail = instanceConfig.logos.defaultContent
+      this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
     }
   }
 
