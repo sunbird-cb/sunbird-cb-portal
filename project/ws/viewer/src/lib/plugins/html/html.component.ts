@@ -152,13 +152,13 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
           this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
             // `https://igot.blob.core.windows.net/content/content/html/${this.htmlContent.identifier}-latest/index.html`
             // tslint:disable-next-line: max-line-length
-            `${environment.azureHost}/content/${environment.azureBucket}/html/${this.htmlContent.identifier}-latest/index.html?timestamp='${new Date().getTime()}`
+            `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-latest/index.html?timestamp='${new Date().getTime()}`
           )
         } else {
           this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
             // `https://igot.blob.core.windows.net/content/content/html/${this.htmlContent.identifier}-snapshot/index.html`
             // tslint:disable-next-line: max-line-length
-            `${environment.azureHost}/content/${environment.azureBucket}/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
+            `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
           )
         }
       } else {
