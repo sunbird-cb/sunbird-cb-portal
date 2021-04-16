@@ -42,10 +42,10 @@ export class PostViewComponent implements OnInit {
     private discussionSvc: WsDiscussionForumService,
   ) {
 
-    this.route.data.subscribe(data => {
-      this.userId = data.profileData.data.userId || ''
-      this.userEmail = data.profileData.data.email || ''
-    })
+    if (this.configSvc.userProfile) {
+      this.userId = this.configSvc.userProfile.userId || ''
+      this.userEmail = this.configSvc.userProfile.email || ''
+    }
 
     this.conversationRequest.userId = this.userId
   }

@@ -4,6 +4,7 @@ import { Router } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
+import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 @Component({
   selector: 'ws-widget-card-hubs-list',
   templateUrl: './card-hubs-list.component.html',
@@ -41,7 +42,11 @@ export class CardHubsListComponent extends WidgetBaseComponent
   isMobile = false
   @HostBinding('id')
   public id = `hub_${Math.random()}`
-  constructor(private configSvc: ConfigurationsService, private router: Router, private valueSvc: ValueService) {
+
+  constructor(private configSvc: ConfigurationsService,
+              private discussUtilitySvc: DiscussUtilsService,
+              private router: Router,
+              private valueSvc: ValueService) {
     super()
   }
 
@@ -61,6 +66,19 @@ export class CardHubsListComponent extends WidgetBaseComponent
       this.defaultMenuSubscribe.unsubscribe()
     }
   }
+
+  navigate() {
+    this.discussUtilitySvc.setDiscussionConfig({
+      userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
+      context: {
+        id: 1,
+      },
+      categories: { result: [] },
+      routerSlug: '/app',
+    })
+    this.router.navigate(['/app/discussion-forum'])
+  }
+
   getUserFullName(user: any) {
     if (user && user.personalDetails.firstname && user.personalDetails.surname) {
       return `${user.personalDetails.firstname.trim()} ${user.personalDetails.surname.trim()}`

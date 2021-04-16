@@ -4,7 +4,6 @@ import { MyContentService } from '../../../../../../../author/src/lib/routing/mo
 import { ISearchResult, ISearchContent } from '../../../../../../../author/src/lib/interface/search'
 import { Subscription } from 'rxjs'
 import { MatSnackBar } from '@angular/material'
-import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'ws-app-content-authored',
@@ -40,7 +39,6 @@ export class ContentAuthoredComponent implements OnInit, OnDestroy {
     private configSvc: ConfigurationsService,
     private contentSvc: MyContentService,
     private matSnackBar: MatSnackBar,
-    private route: ActivatedRoute,
   ) {
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
@@ -50,10 +48,9 @@ export class ContentAuthoredComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.route.data.subscribe(data => {
-        this.userWid = data.profileData.data.userId
-      }
-    )
+    if (this.configSvc.userProfile) {
+      this.userWid = this.configSvc.userProfile.userId || ''
+    }
 
     if (this.wid) {
       this.fetchContentAuthored()

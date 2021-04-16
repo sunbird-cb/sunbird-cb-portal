@@ -75,9 +75,9 @@ export class BlogEditComponent implements OnInit {
     private valueSvc: ValueService,
   ) {
 
-    this.route.data.subscribe(data => {
-      this.userId = data.profileData.data.userId
-    })
+    if (this.configSvc.userProfile) {
+      this.userId = this.configSvc.userProfile.userId || ''
+    }
 
     this.postUpdateRequest.editor = this.userId
     this.postPublishRequest.postCreator = this.userId

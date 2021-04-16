@@ -9,8 +9,7 @@ import {
   EFeedbackRole,
   NsContent,
 } from '@sunbird-cb/collection'
-import { IResolveResponse } from '@sunbird-cb/utils'
-
+import { IResolveResponse, ConfigurationsService } from '@sunbird-cb/utils'
 @Component({
   selector: 'ws-app-feedback-thread-header',
   templateUrl: './feedback-thread-header.component.html',
@@ -29,11 +28,12 @@ export class FeedbackThreadHeaderComponent implements OnInit {
   constructor(
     private feedbackApi: FeedbackService,
     private route: ActivatedRoute,
+    private configSvc: ConfigurationsService
   ) {
 
-    this.route.data.subscribe(data => {
-      this.userId = data.profileData.data.userId
-    })
+    if (this.configSvc.userProfile) {
+      this.userId = this.configSvc.userProfile.userId || ''
+    }
 
     this.feedbackTypes = EFeedbackType
     this.feedbackRoles = EFeedbackRole

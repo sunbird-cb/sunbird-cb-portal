@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { NsUser } from '@sunbird-cb/utils'
 import { Observable } from 'rxjs'
-import { ActivatedRoute } from '@angular/router'
+import { ConfigurationsService } from 'library/ws-widget/utils/src/public-api'
 
 const API_ENDPOINTS = {
   searchCompetency: 'apis/protected/v8/frac/searchNodes',
@@ -20,10 +20,8 @@ const API_ENDPOINTS = {
 export class CompetenceService {
   usr: any
   constructor(
-    private http: HttpClient, private route: ActivatedRoute) {
-    this.route.data.subscribe(data => {
-      this.usr = data.profileData.data
-    })
+    private http: HttpClient, private configSvc: ConfigurationsService) {
+      this.usr = this.configSvc.userProfile
   }
 
   get getUserProfile(): NsUser.IUserProfile {

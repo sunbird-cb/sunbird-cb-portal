@@ -133,9 +133,10 @@ export class FeedbackComponent {
         () => {
           this.singleFeedbackSendStatus = 'done'
           if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.rootOrg === 'RootOrg') {
-            this.route.data.subscribe(data => {
-              this.userId = data.profileData.data.userId
-            })
+
+            if (this.configSvc.userProfile) {
+              this.userId = this.configSvc.userProfile.userId || ''
+            }
             const req: INotificationRequest = {
               'event-id': 'platform_feedback',
               'tag-value-pair': {

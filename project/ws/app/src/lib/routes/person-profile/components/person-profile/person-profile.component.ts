@@ -65,11 +65,10 @@ export class PersonProfileComponent implements OnInit {
 
   ngOnInit() {
 
-    this.route.data.subscribe(data => {
-        this.currentUserId = data.profileData.data.userId
-        this.currentUserName = data.profileData.data.userName
-      }
-    )
+    if (this.configSvc.userProfile) {
+      this.currentUserId = this.configSvc.userProfile.userId || ''
+      this.currentUserName = this.configSvc.userProfile.userName || ''
+    }
 
     this.isLtMediumSubscription = this.valueSvc.isLtMedium$.subscribe(isLtMedium => {
       if (isLtMedium) {
@@ -90,13 +89,12 @@ export class PersonProfileComponent implements OnInit {
       }
 
     })
-    // this.fetchUserDetails(this.emailId)
-    this.route.data.subscribe(data => {
-        if (this.emailId === data.profileData.data.email) {
-          this.isFollowButtonEnabled = false
-        }
+
+    if (this.configSvc.userProfile) {
+      if (this.emailId === this.configSvc.userProfile.email) {
+        this.isFollowButtonEnabled = false
       }
-    )
+    }
 
   }
   fetchInterest() {
@@ -144,12 +142,11 @@ export class PersonProfileComponent implements OnInit {
     this.followersCount = 0
     this.followers = []
 
-    this.route.data.subscribe(data => {
-        if (emailId === data.profileData.data.email) {
-          this.isFollowButtonEnabled = false
-        }
+    if (this.configSvc.userProfile) {
+      if (emailId === this.configSvc.userProfile.email) {
+        this.isFollowButtonEnabled = false
       }
-    )
+    }
 
     if (this.emailId) {
       this.fetchUser.fetchAutoComplete(emailId).subscribe(
