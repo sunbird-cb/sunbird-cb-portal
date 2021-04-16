@@ -8,6 +8,7 @@ import { MobileAppsService } from '../../../../../../../src/app/services/mobile-
 import { SCORMAdapterService } from './SCORMAdapter/scormAdapter'
 /* tslint:disable */
 import _ from 'lodash'
+import { environment } from 'src/environments/environment';
 /* tslint:enable */
 
 @Component({
@@ -146,14 +147,23 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       //   a.click()
       //   URL.revokeObjectURL(objectUrl)
       // })
-      if (this.htmlContent.status !== 'Live') {
-        this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
-          `https://igot.blob.core.windows.net/content/content/html/${this.htmlContent.identifier}-latest/index.html`
-        )
+      if (this.htmlContent.mimeType !== 'text/x-url' && this.htmlContent.mimeType !== 'video/x-youtube') {
+        if (this.htmlContent.status === 'Live') {
+          this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
+            // `https://igot.blob.core.windows.net/content/content/html/${this.htmlContent.identifier}-latest/index.html`
+            // tslint:disable-next-line: max-line-length
+            `${environment.azureHost}/content/${environment.azureBucket}/html/${this.htmlContent.identifier}-latest/index.html?timestamp='${new Date().getTime()}`
+          )
+        } else {
+          this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
+            // `https://igot.blob.core.windows.net/content/content/html/${this.htmlContent.identifier}-snapshot/index.html`
+            // tslint:disable-next-line: max-line-length
+            `${environment.azureHost}/content/${environment.azureBucket}/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
+          )
+        }
       } else {
-        this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
-          `https://igot.blob.core.windows.net/content/content/html/${this.htmlContent.identifier}-snapshot/index.html`
-        )
+        this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.htmlContent.artifactUrl)
+        // this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.htmlContent.artifactUrl)
       }
       // testing purpose only
       // setTimeout(
