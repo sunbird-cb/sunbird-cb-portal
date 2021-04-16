@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
-import { ActivatedRoute, ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router'
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router'
 import { ContentAssignService } from '@sunbird-cb/collection'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Observable } from 'rxjs'
@@ -18,7 +18,6 @@ export class ContentAssignmentGuard implements CanActivate {
     private router: Router,
     private contentAssignSvc: ContentAssignService,
     private snackbar: MatSnackBar,
-    private route: ActivatedRoute,
   ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> {

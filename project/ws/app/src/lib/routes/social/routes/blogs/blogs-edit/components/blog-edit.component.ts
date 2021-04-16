@@ -75,7 +75,6 @@ export class BlogEditComponent implements OnInit {
     private valueSvc: ValueService,
   ) {
 
-    
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId || ''
     }

@@ -1,9 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core'
-import { TFetchStatus } from '@sunbird-cb/utils'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 import { MatSelectChange } from '@angular/material'
 import { GamificationService } from '../../../../services/gamification.service'
 import { ExcelService } from '../excel.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-admin',

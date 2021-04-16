@@ -65,7 +65,6 @@ export class PersonProfileComponent implements OnInit {
 
   ngOnInit() {
 
-    
     if (this.configSvc.userProfile) {
       this.currentUserId = this.configSvc.userProfile.userId || ''
       this.currentUserName = this.configSvc.userProfile.userName || ''
@@ -90,7 +89,7 @@ export class PersonProfileComponent implements OnInit {
       }
 
     })
-    
+
     if (this.configSvc.userProfile) {
       if (this.emailId === this.configSvc.userProfile.email) {
         this.isFollowButtonEnabled = false
@@ -148,8 +147,6 @@ export class PersonProfileComponent implements OnInit {
         this.isFollowButtonEnabled = false
       }
     }
-
-    
 
     if (this.emailId) {
       this.fetchUser.fetchAutoComplete(emailId).subscribe(

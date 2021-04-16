@@ -76,7 +76,6 @@ export class UserFilterDisplayComponent implements OnInit, OnChanges {
 
   applyLevelFilter() {
     if (this.configSvc.org && this.userAdminLevel) {
-      
 
       if (this.configSvc.userProfile) {
         this.userId = this.configSvc.userProfile.userId || ''
