@@ -8,10 +8,19 @@
           <span class="margin-auto ws-mat-default-text mat-subheading-2">HUBS</span>
         </a>
         <ng-container *ngIf="!visible && !isMobile" [@enterAnimation]="visible">
-          <a *ngFor="let hub of hubsList" class="simple-hubs-link cursor-pointer" i18n-aria-label role="menuitem"
-            [routerLink]="hub.path" [attr.accesskey]="hub.accessKey">
-            <span class="mat-body-2 margin-0 text-uppercase"> {{hub.hubname}}</span>
-          </a>
+          <div *ngFor="let hub of hubsList">
+            <ng-container *ngIf="hub.hubname == 'Discuss'">
+              <a class="simple-hubs-link cursor-pointer" i18n-aria-label role="menuitem" (click)="navigate()">
+                <span class="mat-body-2 margin-0 text-uppercase"> {{hub.hubname}}</span>
+              </a>
+            </ng-container>
+            <ng-container *ngIf="hub.hubname != 'Discuss'">
+              <a class="simple-hubs-link cursor-pointer" i18n-aria-label role="menuitem" [routerLink]="hub.path"
+                [attr.accesskey]="hub.accessKey">
+                <span class="mat-body-2 margin-0 text-uppercase"> {{hub.hubname}}</span>
+              </a>
+            </ng-container>
+          </div>
         </ng-container>
 
       </div>
