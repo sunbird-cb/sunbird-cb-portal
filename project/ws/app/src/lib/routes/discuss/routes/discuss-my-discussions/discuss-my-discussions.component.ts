@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { NSDiscussData } from '../../models/discuss.model'
 import { DiscussService } from '../../services/discuss.service'
-
+import { ConfigurationsService } from '@sunbird-cb/utils'
 /* tslint:disable */
 import _ from 'lodash'
 /* tslint:enable */
@@ -20,15 +20,15 @@ export class DiscussMyDiscussionsComponent implements OnInit {
   department!: string | null
   location!: string | null
   profilePhoto!: string
-  constructor(private route: ActivatedRoute, private discussService: DiscussService) {
+  constructor(private route: ActivatedRoute, private discussService: DiscussService, private configSvc: ConfigurationsService) {
     this.fetchNetworkProfile()
   }
   fetchNetworkProfile() {
     this.discussService.fetchNetworkProfile().subscribe(response => {
       this.profilePhoto = _.get(_.first(response), 'photo')
-      this.route.data.subscribe(data => {
-        localStorage.setItem(data.profileData.data.userId, this.profilePhoto)
-      })
+        if (this.configSvc.userProfile) {
+          localStorage.setItem(this.configSvc.userProfile.userId, this.profilePhoto)
+        }
     },
       /* tslint:disable */
       () => {

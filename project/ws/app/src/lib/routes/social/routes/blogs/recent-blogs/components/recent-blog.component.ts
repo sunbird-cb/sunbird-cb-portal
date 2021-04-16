@@ -35,9 +35,9 @@ export class RecentBlogComponent implements OnInit {
     private route: ActivatedRoute,
   ) {
     this.isXSmall$ = this.valueSvc.isXSmall$
-    this.route.data.subscribe(data => {
-      this.timelineRequest.userId = data.profileData.data.userId || ''
-    })
+    if (this.configSvc.userProfile) {
+      this.timelineRequest.userId = this.configSvc.userProfile.userId || ''
+    }
   }
 
   ngOnInit() {

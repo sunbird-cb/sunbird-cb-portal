@@ -10523,7 +10523,7 @@ videojs-vtt.js@^0.15.2:
   dependencies:
     global "^4.3.1"
 
-videojs-youtube@^2.6.0:
+videojs-youtube@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/videojs-youtube/-/videojs-youtube-2.6.1.tgz#3f7cce15229509ea6d54582e28793df530254860"
   integrity sha512-qvwrkgXixbX8xzdkBa7o5r9KUITRISAy4bbyrpBgub3m0mhwz6WLXDIwJZ6/w4Z/JijWjLQqlg8W1jYhCEgHZw==

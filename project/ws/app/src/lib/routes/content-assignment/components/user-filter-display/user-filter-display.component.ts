@@ -76,9 +76,11 @@ export class UserFilterDisplayComponent implements OnInit, OnChanges {
 
   applyLevelFilter() {
     if (this.configSvc.org && this.userAdminLevel) {
-      this.route.data.subscribe(data => {
-        this.userId = data.profileData.data.userId
-      })
+      
+
+      if (this.configSvc.userProfile) {
+        this.userId = this.configSvc.userProfile.userId || ''
+      }
       const reqBody = {
         pageSize: 10,
         orgs: this.configSvc.org,

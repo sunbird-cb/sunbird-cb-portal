@@ -106,18 +106,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     if (instanceConfig && instanceConfig.logos && instanceConfig.logos.defaultSourceLogo) {
       this.defaultSLogo = instanceConfig.logos.defaultSourceLogo
     }
-    // this.route.data.subscribe(data => {
-    //   // this.defaultSLogo = data.configData.data.logos.defaultContent
-    //   // this.isGoalsEnabled = data.restrictedData.data.has('goals')
-    //   // this.isRegistrationSupported = data.restrictedData.data.has('registrationExternal')
-    //   // this.showIntranetMessage = data.restrictedData.data.has('showIntranetMessageDesktop')
-    // }
-  // )
-
-    // this.route.data.subscribe(data => {
-    //     this.defaultSLogo = data.configData.data.logos.defaultContent
-    //   }
-    // )
 
     if (this.configSvc.restrictedFeatures) {
       this.isGoalsEnabled = !this.configSvc.restrictedFeatures.has('goals')
@@ -231,13 +219,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       this.disableEnrollBtn = true
       let userId = ''
       if (batch) {
-          this.route.data.subscribe(data => {
-            userId = data.profileData.data.userId
-          }
-        )
-        // if (this.configSvc.userProfile) {
-        //   userId = this.configSvc.userProfile.userId || ''
-        // }
+        if (this.configSvc.userProfile) {
+          userId = this.configSvc.userProfile.userId || ''
+        }
 
         const req = {
           request: {

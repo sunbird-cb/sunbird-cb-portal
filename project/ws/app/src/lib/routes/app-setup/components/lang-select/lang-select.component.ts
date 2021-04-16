@@ -1,4 +1,4 @@
-import { Router, ActivatedRoute } from '@angular/router'
+import { Router } from '@angular/router'
 import { Component, OnInit } from '@angular/core'
 import {
   ConfigurationsService,
@@ -17,7 +17,6 @@ export class LangSelectComponent implements OnInit {
     private configSvc: ConfigurationsService,
     private router: Router,
     private userPrefSvc: UserPreferenceService,
-    private route: ActivatedRoute,
   ) {}
   userName = ''
   selectedLang = ''
@@ -26,13 +25,13 @@ export class LangSelectComponent implements OnInit {
   allowedLangCode: { [langCode: string]: NsInstanceConfig.ILocalsConfig } = {}
 
   ngOnInit() {
-    // if (this.configSvc.userProfile) {
-    //   this.userName = this.configSvc.userProfile.givenName || ''
-    // }
+    if (this.configSvc.userProfile) {
+      this.userName = this.configSvc.userProfile.givenName || ''
+    }
 
-    this.route.data.subscribe(data => {
-      this.userName = data.profileData.data.givenName
-    })
+    // this.route.data.subscribe(data => {
+    //   this.userName = data.profileData.data.givenName
+    // })
 
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {

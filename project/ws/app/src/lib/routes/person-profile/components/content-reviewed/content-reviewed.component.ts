@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs'
 import { MyContentService } from '../../../../../../../author/src/lib/routing/modules/my-content/services/my-content.service'
 import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
 import { MatSnackBar } from '@angular/material'
-import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'ws-app-content-reviewed',
@@ -41,7 +40,6 @@ export class ContentReviewedComponent implements OnInit, OnDestroy {
     private myContSvc: MyContentService,
     private configSvc: ConfigurationsService,
     private matSnackBar: MatSnackBar,
-    private route: ActivatedRoute,
   ) {
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
@@ -50,10 +48,9 @@ export class ContentReviewedComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.route.data.subscribe(data => {
-        this.userWid = data.profileData.data.userId
-      }
-    )
+    if (this.configSvc.userProfile) {
+      this.userWid = this.configSvc.userProfile.userId || ''
+    }
     if (this.wid) {
       this.fetchContentReviewed()
     }

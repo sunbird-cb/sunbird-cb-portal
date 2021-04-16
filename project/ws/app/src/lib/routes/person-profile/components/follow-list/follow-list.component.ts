@@ -65,10 +65,9 @@ export class FollowListComponent implements OnInit, OnChanges {
       this.fetchFollowers()
     }
 
-    this.route.data.subscribe(data => {
-        this.currentUserId = data.profileData.data.userId
-      }
-    )
+    if (this.configSvc.userProfile) {
+      this.currentUserId = this.configSvc.userProfile.userId || ''
+    }
     this.isInitialized = true
 
   }

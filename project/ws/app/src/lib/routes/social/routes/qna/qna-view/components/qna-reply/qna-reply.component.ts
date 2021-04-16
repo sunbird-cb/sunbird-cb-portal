@@ -4,7 +4,6 @@ import { DialogSocialDeletePostComponent, NsDiscussionForum, WsDiscussionForumSe
 import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
 import { NsSocial } from '../../../../../models/social.model'
 import { WsSocialService } from '../../../../../services/ws-social.service'
-import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'ws-app-qna-reply',
@@ -58,12 +57,11 @@ export class QnaReplyComponent implements OnInit {
     private socialSvc: WsSocialService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute,
   ) {
 
-    this.route.data.subscribe(data => {
-      this.userId = data.profileData.data.userId || ''
-    })
+    if (this.configSvc.userProfile) {
+      this.userId = this.configSvc.userProfile.userId || ''
+    }
     this.commentConversationRequest.userId = this.userId
     this.commentAddRequest.postCreator = this.userId
   }

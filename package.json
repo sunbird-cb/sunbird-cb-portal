@@ -82,7 +82,7 @@
     "videojs-contrib-quality-levels": "^2.0.9",
     "videojs-hls-quality-selector": "^1.0.5",
     "videojs-vr": "1.5.0",
-    "videojs-youtube": "^2.6.0",
+    "videojs-youtube": "^2.6.1",
     "vis-network": "^5.2.4",
     "vis-util": "^5.0.2",
     "xlsx": "^0.16.1",

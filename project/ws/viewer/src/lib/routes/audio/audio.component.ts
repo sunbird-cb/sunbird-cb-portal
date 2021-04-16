@@ -61,13 +61,16 @@ export class AudioComponent implements OnInit, OnDestroy {
             this.formDiscussionForumWidget(this.audioData)
           }
           this.widgetResolverAudioData = this.initWidgetResolverAudioData()
-          this.widgetResolverAudioData.widgetData.url = this.audioData
-            ? `/apis/authContent/${encodeURIComponent(this.audioData.artifactUrl)}`
-            : ''
+          // this.widgetResolverAudioData.widgetData.url = this.audioData
+          //   ? `/apis/authContent/${encodeURIComponent(this.audioData.artifactUrl)}`
+          //   : ''
+          if (this.audioData) {
+            this.widgetResolverAudioData.widgetData.url = this.audioData.artifactUrl
+          }
           this.widgetResolverAudioData.widgetData.disableTelemetry = true
           this.isFetchingDataComplete = true
 
-          if (this.audioData.subTitles) {
+          if (this.audioData && this.audioData.subTitles) {
 
             let subTitleUrl = ''
             if (this.audioData.subTitles.length > 0 && this.audioData.subTitles[0]) {
@@ -112,7 +115,7 @@ export class AudioComponent implements OnInit, OnDestroy {
             this.widgetResolverAudioData.widgetData.disableTelemetry = true
           }
 
-          if (data.content.data.subTitles[0]) {
+          if (data.content.data && data.content.data.subTitles && data.content.data.subTitles[0]) {
 
             let subTitlesUrl = ''
             if (data.content.data.subTitles[0].url.indexOf('/content-store/') > -1) {
@@ -128,11 +131,14 @@ export class AudioComponent implements OnInit, OnDestroy {
 
           }
 
-          this.widgetResolverAudioData.widgetData.url = this.audioData
-            ? this.forPreview
-              ? this.viewerSvc.getAuthoringUrl(this.audioData.artifactUrl)
-              : this.audioData.artifactUrl
-            : ''
+          // this.widgetResolverAudioData.widgetData.url = this.audioData
+          //   ? this.forPreview
+          //     ? this.viewerSvc.getAuthoringUrl(this.audioData.artifactUrl)
+          //     : this.audioData.artifactUrl
+          //   : ''
+          if (this.audioData) {
+            this.widgetResolverAudioData.widgetData.url = this.audioData.artifactUrl
+          }
           this.widgetResolverAudioData.widgetData.identifier = this.audioData
             ? this.audioData.identifier
             : ''

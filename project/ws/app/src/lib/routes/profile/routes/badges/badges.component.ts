@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
-import { TFetchStatus, LoggerService } from '@sunbird-cb/utils'
+import { TFetchStatus, LoggerService, ConfigurationsService } from '@sunbird-cb/utils'
 import { IBadgeResponse } from './badges.model'
 import { ActivatedRoute } from '@angular/router'
 import { Subscription, fromEvent } from 'rxjs'
@@ -32,6 +32,7 @@ export class BadgesComponent implements OnInit {
     private badgesSvc: BadgesService,
     private logger: LoggerService,
     private snackBar: MatSnackBar,
+    private configSvc: ConfigurationsService
   ) {
     this.badges = {
       canEarn: [],
@@ -42,10 +43,9 @@ export class BadgesComponent implements OnInit {
       totalPoints: [{ collaborative_points: 0, learning_points: 0 }],
     }
 
-    this.route.data.subscribe(data => {
-        this.userName = data.profileData.data.userName
-      }
-    )
+    if (this.configSvc.userProfile) {
+      this.userName = this.configSvc.userProfile.userName
+    }
 
     if (this.userName) {
       this.userName = this.userName.split(' ')[0]

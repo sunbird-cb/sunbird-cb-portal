@@ -26,9 +26,9 @@ export class BlogReplyComponent implements OnInit {
     private route: ActivatedRoute,
   ) {
 
-    this.route.data.subscribe(data => {
-      this.userId = data.profileData.data.userId
-    })
+    if (this.configSvc.userProfile) {
+      this.userId = this.configSvc.userProfile.userId || ''
+    }
   }
 
   ngOnInit() {

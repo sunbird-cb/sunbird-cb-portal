@@ -37,6 +37,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   tabsData: NSProfileDataV2.IProfileTab[]
   currentUser!: string | null
   connectionRequests!: NSNetworkDataV2.INetworkUser[]
+  currentUsername: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -56,6 +57,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {
     this.Math = Math
     this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
+    this.currentUsername = this.configSvc.userProfile && this.configSvc.userProfile.userName
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     this.tabs = this.route.data.subscribe(data => {
       this.portalProfile = data.profile
@@ -67,17 +69,18 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   decideAPICall() {
     if (this.portalProfile && this.portalProfile.id) {
-      this.fetchUserDetails(this.portalProfile.id)
+      this.fetchUserDetails(this.currentUsername)
       this.fetchConnectionDetails(this.portalProfile.id)
     } else {
-
-       this.route.data.subscribe(data => {
-       const me = data.profileData.data.userId || ''
-       if (me) {
-          this.fetchUserDetails(me)
-          this.fetchConnectionDetails(me)
-        }
-      })
+ 
+       if (this.configSvc.userProfile) {
+        const me = this.configSvc.userProfile.userId || ''
+          if (me) {
+            this.fetchUserDetails(me)
+            this.fetchConnectionDetails(me)
+          }
+      }
+      
     }
   }
   ngOnDestroy() {
@@ -91,9 +94,9 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
   }
-  fetchUserDetails(wid: string) {
-    if (wid) {
-      this.discussService.fetchProfileInfo(wid).subscribe((response: any) => {
+  fetchUserDetails(name: string) {
+    if (name) {
+      this.discussService.fetchProfileInfo(name).subscribe((response: any) => {
         if (response) {
           this.discussProfileData = response
           this.discussionList = _.uniqBy(_.filter(this.discussProfileData.posts, p => _.get(p, 'isMainPost') === true), 'tid') || []
