@@ -82,7 +82,6 @@ export class PostCreateComponent implements OnInit {
       this.userId = this.configSvc.userProfile.userId || ''
     }
 
-
     this.postPublishRequest.postCreator = this.userId
     this.isXSmall$ = this.valueSvc.isXSmall$
     this.tagsCtrl.valueChanges

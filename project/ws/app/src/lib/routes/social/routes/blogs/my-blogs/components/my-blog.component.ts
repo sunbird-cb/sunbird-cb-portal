@@ -40,7 +40,6 @@ export class MyBlogComponent implements OnInit {
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId || ''
     }
-    
 
     this.myDraftsRequest.userId = this.userId
     this.myTimelineRequest.userId = this.userId

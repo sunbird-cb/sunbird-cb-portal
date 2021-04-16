@@ -47,8 +47,6 @@ export class PostViewComponent implements OnInit {
       this.userEmail = this.configSvc.userProfile.email || ''
     }
 
-    
-
     this.conversationRequest.userId = this.userId
   }
 

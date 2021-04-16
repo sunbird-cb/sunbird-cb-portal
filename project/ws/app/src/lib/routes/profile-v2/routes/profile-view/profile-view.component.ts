@@ -72,7 +72,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       this.fetchUserDetails(this.currentUsername)
       this.fetchConnectionDetails(this.portalProfile.id)
     } else {
- 
+
        if (this.configSvc.userProfile) {
         const me = this.configSvc.userProfile.userId || ''
           if (me) {
@@ -80,7 +80,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
             this.fetchConnectionDetails(me)
           }
       }
-      
+
     }
   }
   ngOnDestroy() {

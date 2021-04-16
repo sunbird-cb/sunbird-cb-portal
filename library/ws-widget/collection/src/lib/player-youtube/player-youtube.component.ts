@@ -9,7 +9,7 @@ import { IWidgetsPlayerMediaData } from '../_models/player-media.model'
 import { fireRealTimeProgressFunction, saveContinueLearningFunction, telemetryEventDispatcherFunction, videoJsInitializer, youtubeInitializer } from '../_services/videojs-util'
 import { NsContent } from '../_services/widget-content.model'
 import { WidgetContentService } from '../_services/widget-content.service'
-import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service';
+import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 interface IYTOptions extends videoJs.PlayerOptions {
   youtube: {
     ytControls: 0 | 1 | 2

@@ -133,7 +133,7 @@ export class FeedbackComponent {
         () => {
           this.singleFeedbackSendStatus = 'done'
           if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.rootOrg === 'RootOrg') {
-            
+
             if (this.configSvc.userProfile) {
               this.userId = this.configSvc.userProfile.userId || ''
             }

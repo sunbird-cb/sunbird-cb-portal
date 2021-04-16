@@ -2,7 +2,6 @@ import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/cor
 import { IFollowers, IFollowerId } from '../../person-profile.model'
 import { PersonProfileService } from '../../services/person-profile.service'
 import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
-import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'ws-app-follow-list',
@@ -39,7 +38,6 @@ export class FollowListComponent implements OnInit, OnChanges {
   constructor(
     private personprofileSvc: PersonProfileService,
     public configSvc: ConfigurationsService,
-    private route: ActivatedRoute,
   ) {
     this.personprofileSvc.isfollowevent.subscribe((result: Boolean) => {
       if (result) {

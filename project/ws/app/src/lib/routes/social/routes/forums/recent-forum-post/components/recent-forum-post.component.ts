@@ -59,7 +59,7 @@ export class RecentForumPostComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
   ) {
     this.isXSmall$ = this.valueSvc.isXSmall$
-    
+
     if (this.configSvc.userProfile) {
       this.timelineRequest.userId = this.configSvc.userProfile.userId || ''
     }
