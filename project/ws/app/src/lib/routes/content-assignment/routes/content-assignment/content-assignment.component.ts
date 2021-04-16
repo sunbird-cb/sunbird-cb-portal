@@ -128,9 +128,9 @@ export class ContentAssignmentComponent implements OnInit {
 
   ngOnInit() {
 
-    this.route.data.subscribe(data => {
-      this.userId = data.profileData.data.userId
-    })
+    if (this.configSvc.userProfile) {
+      this.userId = this.configSvc.userProfile.userId || ''
+    }
 
     if (this.configSvc.org) {
       this.orgs = this.configSvc.org

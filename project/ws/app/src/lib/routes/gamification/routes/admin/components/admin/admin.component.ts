@@ -3,7 +3,7 @@ import { TFetchStatus } from '@sunbird-cb/utils'
 import { MatSelectChange } from '@angular/material'
 import { GamificationService } from '../../../../services/gamification.service'
 import { ExcelService } from '../excel.service'
-import { ActivatedRoute } from '@angular/router'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-admin',
@@ -36,13 +36,12 @@ export class AdminComponent implements OnInit {
   constructor(
     private gamificationSvc: GamificationService,
     private excelService: ExcelService,
-    private route: ActivatedRoute
+    private configSvc: ConfigurationsService
   ) {
 
-    this.route.data.subscribe(data => {
-        this.userName = data.profileData.data.userName
-      }
-    )
+    if (this.configSvc.userProfile) {
+      this.userName = this.configSvc.userProfile.userName || ''
+    }
 
     this.fetchStatus = 'none'
     this.excelService = excelService

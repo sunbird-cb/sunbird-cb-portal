@@ -70,14 +70,15 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       this.fetchUserDetails(this.portalProfile.id)
       this.fetchConnectionDetails(this.portalProfile.id)
     } else {
-
-       this.route.data.subscribe(data => {
-       const me = data.profileData.data.userId || ''
-       if (me) {
-          this.fetchUserDetails(me)
-          this.fetchConnectionDetails(me)
-        }
-      })
+ 
+       if (this.configSvc.userProfile) {
+        const me = this.configSvc.userProfile.userId || ''
+          if (me) {
+            this.fetchUserDetails(me)
+            this.fetchConnectionDetails(me)
+          }
+      }
+      
     }
   }
   ngOnDestroy() {

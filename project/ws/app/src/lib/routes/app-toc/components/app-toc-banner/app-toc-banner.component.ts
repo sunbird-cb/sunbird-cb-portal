@@ -222,7 +222,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         if (this.configSvc.userProfile) {
           userId = this.configSvc.userProfile.userId || ''
         }
-        
+
         const req = {
           request: {
             userId,

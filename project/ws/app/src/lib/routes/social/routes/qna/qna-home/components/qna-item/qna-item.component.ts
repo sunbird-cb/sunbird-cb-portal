@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core'
 import { NsDiscussionForum, DialogSocialDeletePostComponent } from '@sunbird-cb/collection'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { MatSnackBar, MatDialog } from '@angular/material'
-import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'ws-app-qna-item',
@@ -20,12 +19,11 @@ export class QnaItemComponent implements OnInit {
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private configSvc: ConfigurationsService,
-    private route: ActivatedRoute,
   ) {
 
-    this.route.data.subscribe(data => {
-      this.userId = data.profileData.data.userId || ''
-    })
+    if (this.configSvc.userProfile) {
+      this.userId = this.configSvc.userProfile.userId || ''
+    }
   }
 
   ngOnInit() {

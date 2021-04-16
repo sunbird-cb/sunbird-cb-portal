@@ -89,9 +89,9 @@ export class QnaViewComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private valueSvc: ValueService,
   ) {
-    this.activatedRoute.data.subscribe(data => {
-      this.userId = data.profileData.data.userId || ''
-    })
+    if (this.configSvc.userProfile) {
+      this.userId = this.configSvc.userProfile.userId || ''
+    }
 
     this.commentAddRequest.postCreator = this.userId
     this.commentAddRequest.source = {

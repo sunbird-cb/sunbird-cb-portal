@@ -83,9 +83,9 @@ export class QnaEditComponent implements OnInit, OnDestroy {
     private configSvc: ConfigurationsService,
     private matSnackBar: MatSnackBar
   ) {
-    this.activatedRoute.data.subscribe(data => {
-      this.userId = data.profileData.data.userId || ''
-    })
+    if (this.configSvc.userProfile) {
+      this.userId = this.configSvc.userProfile.userId || ''
+    }
 
     this.postPublishRequest.postCreator = this.userId
     this.postUpdateRequest.editor = this.userId

@@ -78,9 +78,10 @@ export class PostCreateComponent implements OnInit {
     private router: Router,
 
   ) {
-    this.route.data.subscribe(data => {
-      this.userId = data.profileData.data.userId || ''
-    })
+    if (this.configSvc.userProfile) {
+      this.userId = this.configSvc.userProfile.userId || ''
+    }
+
 
     this.postPublishRequest.postCreator = this.userId
     this.isXSmall$ = this.valueSvc.isXSmall$

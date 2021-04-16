@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { GamificationService } from '../../../../services/gamification.service'
 import { Subscription, fromEvent } from 'rxjs'
 import { debounceTime, throttleTime } from 'rxjs/operators'
-import { ActivatedRoute } from '@angular/router'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-badge',
@@ -24,14 +24,13 @@ export class BadgeComponent implements OnInit {
     | undefined
 
   constructor(private gamificationSvc: GamificationService,
-              private route: ActivatedRoute) {
+              private configSvc: ConfigurationsService) {
     this.disablePrev = true
     this.disableNext = false
 
-    this.route.data.subscribe(data => {
-        this.userName = data.profileData.data.userName
-      }
-    )
+    if (this.configSvc.userProfile) {
+      this.userName = this.configSvc.userProfile.userName || ''
+    }
     if (this.userName) {
       this.userName = this.userName.split(' ')[0]
       if (this.userName === '') {
