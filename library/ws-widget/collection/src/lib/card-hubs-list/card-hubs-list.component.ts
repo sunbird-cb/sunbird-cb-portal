@@ -42,8 +42,11 @@ export class CardHubsListComponent extends WidgetBaseComponent
   isMobile = false
   @HostBinding('id')
   public id = `hub_${Math.random()}`
-  constructor(private configSvc: ConfigurationsService, private discussUtilitySvc: DiscussUtilsService,
-              private router: Router, private valueSvc: ValueService) {
+
+  constructor(private configSvc: ConfigurationsService,
+              private discussUtilitySvc: DiscussUtilsService,
+              private router: Router,
+              private valueSvc: ValueService) {
     super()
   }
 
