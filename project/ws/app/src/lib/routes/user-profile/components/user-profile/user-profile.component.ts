@@ -638,7 +638,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       knownLanguages: data.personalDetails.knownLanguages,
       countryCode: data.personalDetails.countryCode,
       mobile: data.personalDetails.mobile,
-      telephone: data.personalDetails.telephone || '',
+      telephone: this.checkvalue(data.personalDetails.telephone),
       primaryEmail: data.personalDetails.primaryEmail || '',
       secondaryEmail: data.personalDetails.personalEmail,
       primaryEmailType: this.filterPrimaryEmailType(data),
