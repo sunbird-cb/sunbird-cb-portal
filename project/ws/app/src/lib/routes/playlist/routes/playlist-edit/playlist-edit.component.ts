@@ -40,7 +40,7 @@ export class PlaylistEditComponent implements OnInit {
   ) {
     this.editPlaylistForm = this.fb.group({
       title: [
-        this.playlist.name || '',
+        this.playlist.result.content.name ,
         [Validators.required, Validators.minLength(PLAYLIST_TITLE_MIN_LENGTH), Validators.maxLength(PLAYLIST_TITLE_MAX_LENGTH)],
       ],
       visibility: [NsPlaylist.EPlaylistVisibilityTypes.PRIVATE],
@@ -55,7 +55,7 @@ export class PlaylistEditComponent implements OnInit {
   ngOnInit(): void {
     this.editPlaylistForm = this.fb.group({
       title: [
-        this.playlist.name || '',
+        this.playlist.result.content.name || '',
         [Validators.required, Validators.minLength(PLAYLIST_TITLE_MIN_LENGTH), Validators.maxLength(PLAYLIST_TITLE_MAX_LENGTH)],
       ],
       visibility: [NsPlaylist.EPlaylistVisibilityTypes.PRIVATE],
@@ -70,7 +70,6 @@ export class PlaylistEditComponent implements OnInit {
   }
 
   editPlaylist() {
-    this.upsertPlaylistStatus = 'fetching'
     this.editName()
     // if (this.changedContentIds.size) {
     //   this.playlistSvc.addPlaylistContent(this.playlist, Array.from(this.changedContentIds)).subscribe(
@@ -87,7 +86,8 @@ export class PlaylistEditComponent implements OnInit {
 
   editName() {
     const formValues: { [field: string]: string } = this.editPlaylistForm.getRawValue()
-    if (formValues.title && this.playlist) {
+    if (formValues.title || this.changedContentIds.size && this.playlist) {
+      this.upsertPlaylistStatus = 'fetching'
       this.playlist.name = formValues.title
       this.playlistSvc.patchPlaylist(this.playlist, Array.from(this.changedContentIds)).subscribe(() => {
         // if (!this.changedContentIds.size) {

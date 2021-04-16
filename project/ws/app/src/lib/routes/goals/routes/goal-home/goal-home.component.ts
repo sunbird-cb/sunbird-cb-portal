@@ -23,7 +23,9 @@ export class GoalHomeComponent implements OnInit {
     private goalsSvc: BtnGoalsService,
   ) {
     this.navBackground = this.configSvc.pageNavBar
-    this.userName = (this.configSvc.userProfile) ? this.configSvc.userProfile.userName : undefined
+    this.userName =
+     (this.configSvc.userProfile) ?
+     `${this.configSvc.userProfile.firstName}  ${this.configSvc.userProfile.lastName}` : undefined
   }
 
   ngOnInit() {
