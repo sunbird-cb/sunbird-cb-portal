@@ -39,6 +39,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   loggedInUserId!: any
   private routeQuerySubscription: Subscription | null = null
   batchId!: string
+  isNotEditor = true
   // configSvc: any
 
   constructor(
@@ -78,6 +79,14 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     if (this.configSvc && this.configSvc.userProfile && this.configSvc.userProfile.userId) {
       this.loggedInUserId = this.configSvc.userProfile.userId
     }
+    // check if the user has role editor,
+    if (this.configSvc && this.configSvc.userRoles &&
+      this.configSvc.userRoles.has('editor')
+    ) {
+      // if editor, create batch button will be shown
+      this.isNotEditor = false
+    }
+
     this.routeQuerySubscription = this.route.queryParamMap.subscribe(qParamsMap => {
       const batchId = qParamsMap.get('batchId')
       if (batchId) {
