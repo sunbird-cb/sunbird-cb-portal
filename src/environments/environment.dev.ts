@@ -1,9 +1,9 @@
 export const environment = {
   production: true,
-  sitePath: 'karmayogi.nic.in',
+  sitePath: 'igot-sunbird.idc.tarento.com',
   organisation: 'igot-karmayogi',
   framework: 'igot',
   channelId: '0131397178949058560',
-  azureHost: 'https://karmayogi.nic.in',
-  azureBucket: 'content-store',
+  azureHost: 'https://igot.blob.core.windows.net',
+  azureBucket: 'content',
 }
