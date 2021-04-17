@@ -6,6 +6,7 @@ import { NSQuiz } from '../../plugins/quiz/quiz.model'
 import { ActivatedRoute } from '@angular/router'
 import { WsEvents, EventService } from '@sunbird-cb/utils'
 import { ViewerUtilService } from '../../viewer-util.service'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'viewer-quiz',
@@ -37,6 +38,9 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.dataSubscription = this.activatedRoute.data.subscribe(
       async data => {
         this.quizData = data.content.data
+        if (this.quizData) {
+          this.quizData.artifactUrl = this.generateUrl(this.quizData.artifactUrl)
+        }
         if (this.alreadyRaised && this.oldData) {
           this.raiseEvent(WsEvents.EnumTelemetrySubType.Unloaded, this.oldData)
         }
@@ -98,10 +102,28 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.eventSvc.dispatchEvent(event)
   }
 
+  generateUrl(oldUrl: string) {
+    const chunk = oldUrl.split('/')
+    const newChunk = environment.azureHost.split('/')
+    const newLink = []
+    for (let i = 0; i < chunk.length; i += 1) {
+      if (i === 2) {
+        newLink.push(newChunk[i])
+      } else if (i === 3) {
+        newLink.push(environment.azureBucket)
+      } else {
+        newLink.push(chunk[i])
+      }
+    }
+    const newUrl = newLink.join('/')
+    return newUrl
+  }
+
   private async transformQuiz(content: NsContent.IContent): Promise<NSQuiz.IQuiz> {
-    const artifactUrl = this.forPreview
-      ? this.viewSvc.getAuthoringUrl(content.artifactUrl)
-      : content.artifactUrl
+    // const artifactUrl = this.forPreview
+    //   ? this.viewSvc.getAuthoringUrl(content.artifactUrl)
+    //   : content.artifactUrl
+    const artifactUrl = this.generateUrl(content.artifactUrl)
     let quizJSON: NSQuiz.IQuiz = await this.http
       .get<any>(artifactUrl || '')
       .toPromise()

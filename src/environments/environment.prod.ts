@@ -6,4 +6,7 @@ export const environment = {
   channelId: '0131397178949058560',
   azureHost: 'https://karmayogi.nic.in',
   azureBucket: 'content-store',
+
+  azureOldHost: 'https://staas-bbs1.cloud.gov.in',
+  azureOldBuket: 'igot',
 }

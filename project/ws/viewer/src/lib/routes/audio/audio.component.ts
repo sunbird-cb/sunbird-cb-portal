@@ -11,6 +11,7 @@ import {
 } from '@sunbird-cb/collection'
 import { ViewerUtilService } from '../../viewer-util.service'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'viewer-audio',
@@ -64,9 +65,10 @@ export class AudioComponent implements OnInit, OnDestroy {
           // this.widgetResolverAudioData.widgetData.url = this.audioData
           //   ? `/apis/authContent/${encodeURIComponent(this.audioData.artifactUrl)}`
           //   : ''
-          if (this.audioData) {
-            this.widgetResolverAudioData.widgetData.url = this.audioData.artifactUrl
-          }
+          // if (this.audioData) {
+          //   this.widgetResolverAudioData.widgetData.url = this.audioData.artifactUrl
+          // }
+          this.widgetResolverAudioData.widgetData.url = this.generateUrl(this.audioData.artifactUrl)
           this.widgetResolverAudioData.widgetData.disableTelemetry = true
           this.isFetchingDataComplete = true
 
@@ -149,6 +151,23 @@ export class AudioComponent implements OnInit, OnDestroy {
         () => { },
       )
     }
+  }
+
+  generateUrl(oldUrl: string) {
+    const chunk = oldUrl.split('/')
+    const newChunk = environment.azureHost.split('/')
+    const newLink = []
+    for (let i = 0; i < chunk.length; i += 1) {
+      if (i === 2) {
+        newLink.push(newChunk[i])
+      } else if (i === 3) {
+        newLink.push(environment.azureBucket)
+      } else {
+        newLink.push(chunk[i])
+      }
+    }
+    const newUrl = newLink.join('/')
+    return newUrl
   }
 
   ngOnDestroy() {
