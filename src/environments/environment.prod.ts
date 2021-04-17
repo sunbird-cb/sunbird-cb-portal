@@ -4,6 +4,6 @@ export const environment = {
   organisation: 'igot-karmayogi',
   framework: 'igot',
   channelId: '0131397178949058560',
-  azureHost: 'https://igot.blob.core.windows.net',
-  azureBucket: 'content',
+  azureHost: 'https://karmayogi.nic.in',
+  azureBucket: 'content-store',
 }

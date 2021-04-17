@@ -33,6 +33,7 @@ export namespace NsContentStripMultiple {
       searchRegionRecommendation?: NSSearch.ISearchOrgRegionRecommendationRequest
       api?: IStripRequestApi
       ids?: string[]
+      enrollmentList?: any
     }
     searchV6Type?: 'KB' | 'Collections' | 'searchQuery' | null
     stripBackground?: string

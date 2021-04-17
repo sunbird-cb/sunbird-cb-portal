@@ -39,9 +39,12 @@ export class ConnectionNameComponent implements OnInit, AfterViewInit {
     if (this.hoverUser && !this.hoverUser.personalDetails) {
       name = `${this.hoverUser.name}`
     } else if (this.hoverUser && this.hoverUser.personalDetails) {
-      // tslint:disable-next-line: max-line-length
-      name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.middlename} ${this.hoverUser.personalDetails.surname}`
-
+      if (this.hoverUser.personalDetails.middlename) {
+        // tslint:disable-next-line: max-line-length
+        name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.middlename} ${this.hoverUser.personalDetails.surname}`
+      } else {
+        name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.surname}`
+      }
     }
     // if (this.hoverUser) {
     //   // tslint:disable-next-line: max-line-length

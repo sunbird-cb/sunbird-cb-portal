@@ -1,5 +1,6 @@
-<ng-container *ngIf="!contentAvailable && isFromAuthoring; then authoringTemplate; else otherTemplate"></ng-container>
 
+<!-- <ng-container *ngIf="!contentAvailable && isFromAuthoring; then authoringTemplate; else otherTemplate"></ng-container> -->
+<ng-container *ngIf="!contentAvailable; else otherTemplate"></ng-container>
 <ng-template #otherTemplate>
   <div *ngIf="showParentLoader" class="text-center my-2">
     <mat-spinner class="inline-block"></mat-spinner>
