@@ -20,6 +20,7 @@ export class WrapperModule {
         if (lastSaved) {
             this.processed = JSON.parse(lastSaved)
         }
+        const locationOrigin = location.origin
 
         CsModule.instance.init({
             core: {
@@ -31,7 +32,7 @@ export class WrapperModule {
                     sessionId: '',
                 },
                 api: {
-                    host: 'https://igot-sunbird.idc.tarento.com/apis/proxies/v8', // default host
+                    host: `${locationOrigin}/apis/proxies/v8`, // default host
                     // host: 'http://localhost:3004/proxies/v8', // default host
                     // host: 'http://localhost:3002', // default host
                     authentication: {
