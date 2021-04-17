@@ -27,11 +27,11 @@ export class ViewerUtilService {
     return manifestFile
   }
 
-  private async setS3Cookie(contentId: string) {
-    await this.http
-      .post(this.API_ENDPOINTS.setS3Cookie, { contentId })
-      .toPromise()
-      .catch((_err: any) => { })
+  private async setS3Cookie(_contentId: string) {
+    // await this.http
+    //   .post(this.API_ENDPOINTS.setS3Cookie, { contentId })
+    //   .toPromise()
+    //   .catch((_err: any) => { })
     return
   }
 
