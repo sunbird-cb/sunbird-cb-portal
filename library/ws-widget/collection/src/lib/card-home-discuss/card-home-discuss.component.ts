@@ -58,6 +58,6 @@ export class CardHomeDiscussComponent extends WidgetBaseComponent implements OnI
   }
 
   getDiscussion(discuss: any) {
-    this.router.navigate([`/app/discuss/home/${discuss.tid}`])
+    this.router.navigate([`/app/discussion-forum/topic/${_.trim(_.get(discuss.category, 'slug'))}`])
   }
 }
