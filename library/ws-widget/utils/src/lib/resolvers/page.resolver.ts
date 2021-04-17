@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Inject, Injectable, LOCALE_ID } from '@angular/core'
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router'
-import { forkJoin, Observable, of } from 'rxjs'
+import { forkJoin, Observable, of, EMPTY } from 'rxjs'
 import { catchError, map, mergeMap } from 'rxjs/operators'
 import { ConfigurationsService } from '../services/configurations.service'
 import { JSON_MAP } from './page.constant'
@@ -48,10 +48,11 @@ export class PageResolve implements Resolve<IResolveResponse<NsPage.IPage>> {
     }
   }
 
-  private setS3Cookie(contentId: string): Observable<any> {
-    return this.http.post(`/apis/protected/v8/content/setCookie`, { contentId }).pipe(
-      catchError(_err => of(true)),
-    )
+  private setS3Cookie(_contentId: string): Observable<any> {
+    // return this.http.post(`/apis/protected/v8/content/setCookie`, { contentId }).pipe(
+    //   catchError(_err => of(true)),
+    // )
+    return EMPTY
   }
 
   private getContent(id: string) {

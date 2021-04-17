@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { Observable, of } from 'rxjs'
+import { Observable, of, EMPTY } from 'rxjs'
 import { catchError, retry } from 'rxjs/operators'
 import { ConfigurationsService } from './configurations.service'
 import { NsContentStripMultiple } from './content-strip-multiple.model'
@@ -127,12 +127,13 @@ export class WidgetContentService {
   }
 
   setS3Cookie(
-    contentId: string,
+    _contentId: string,
     // _path: string,
   ): Observable<any> {
-    return this.http
-      .post(API_END_POINTS.SET_S3_COOKIE, { contentId })
-      .pipe(catchError(_err => of(true)))
+    // return this.http
+    //   .post(API_END_POINTS.SET_S3_COOKIE, { contentId })
+    //   .pipe(catchError(_err => of(true)))
+    return EMPTY
   }
 
   setS3ImageCookie(): Observable<any> {
