@@ -105,7 +105,6 @@ export class NetworkHomeComponent implements OnInit {
   }
 
   searchUser() {
-
     if (this.nameFilter.length === 0) {
       this.enableFeature = true
     } else {
@@ -113,73 +112,85 @@ export class NetworkHomeComponent implements OnInit {
       this.enableFeature = false
       this.getSearchResult()
     }
-
   }
 
   getSearchResult() {
-    this.cardNetworkService.fetchSearchUserInfo(this.nameFilter.trim()).subscribe(data => {
-      this.searchResultUserArray = data
-      this.networkV2Service.fetchAllConnectionRequests().subscribe(
-        requests => {
-          // Filter all the connection requests sent
-          if (requests && requests.result && requests.result.data) {
-            requests.result.data.map(user => {
-              const userid = user.id || user.identifier
-              if (userid) {
-                this.searchResultUserArray.map((autoCompleteUser: any) => {
-                  if (autoCompleteUser.wid === userid) {
-                    autoCompleteUser['requestSent'] = true
+    const val = this.nameFilter.trim()
+    if (val.length >= 3) {
+      this.searchResultUserArray = []
+      this.cardNetworkService.fetchSearchUserInfo(this.nameFilter.trim()).subscribe(data => {
+        const searchdata = data
+        searchdata.forEach((usr: any) => {
+          this.networkV2Service.fetchProfile(usr.wid).subscribe((res: any) => {
+            this.searchResultUserArray.push(res.result.UserProfile[0])
+            if (this.searchResultUserArray && this.searchResultUserArray.length > 0) {
+              this.networkV2Service.fetchAllConnectionRequests().subscribe(
+                requests => {
+                  // Filter all the connection requests sent
+                  if (requests && requests.result && requests.result.data) {
+                    requests.result.data.map(user => {
+                      const userid = user.id || user.identifier
+                      if (userid) {
+                        this.searchResultUserArray.map((autoCompleteUser: any) => {
+                          if (autoCompleteUser.userId === userid) {
+                            autoCompleteUser['requestSent'] = true
+                          }
+                        })
+                      }
+                    })
                   }
-                })
-              }
-            })
-          }
-          // Filter all the connection requests recieved
-          if (this.connectionRequests && this.connectionRequests.length > 0) {
-            this.connectionRequests.map((con: any) => {
-              const userid = con.id || con.identifier
-              if (userid) {
-                this.searchResultUserArray.map((autoCompleteUser: any) => {
-                  if (autoCompleteUser.wid === userid) {
-                    autoCompleteUser['requestRecieved'] = true
+                  // Filter all the connection requests recieved
+                  if (this.connectionRequests && this.connectionRequests.length > 0) {
+                    this.connectionRequests.map((con: any) => {
+                      const userid = con.id || con.identifier
+                      if (userid) {
+                        this.searchResultUserArray.map((autoCompleteUser: any) => {
+                          if (autoCompleteUser.userId === userid) {
+                            autoCompleteUser['requestRecieved'] = true
+                          }
+                        })
+                      }
+                    })
                   }
-                })
-              }
-            })
-          }
-          // Filter all the estalished connections
-          if (this.establishedConnections && this.establishedConnections.length > 0) {
-            this.establishedConnections.map((con: any) => {
-              const userid = con.id || con.identifier
-              if (userid) {
-                this.searchResultUserArray.map((autoCompleteUser: any) => {
-                  if (autoCompleteUser.wid === userid) {
-                    autoCompleteUser['connectionEstablished'] = true
+                  // Filter all the estalished connections
+                  if (this.establishedConnections && this.establishedConnections.length > 0) {
+                    this.establishedConnections.map((con: any) => {
+                      const userid = con.id || con.identifier
+                      if (userid) {
+                        this.searchResultUserArray.map((autoCompleteUser: any) => {
+                          if (autoCompleteUser.userId === userid) {
+                            autoCompleteUser['connectionEstablished'] = true
+                          }
+                        })
+                      }
+                    })
                   }
+                  this.searchSpinner = false
+                },
+                (_err: any) => {
+                  this.searchSpinner = false
                 })
-              }
-            })
-          }
-          this.searchSpinner = false
-        },
-        (_err: any) => {
-          this.searchSpinner = false
+                // this.searchResultUserArray.splice(this.searchResultUserArray.findIndex((el: any) => {
+                //   if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
+                //     return el.wid === this.configSvc.userProfile.userId
+                //   }
+                //   return -1
+                // // tslint:disable-next-line: align
+                // }), 0)
+                this.searchResultUserArray = this.searchResultUserArray.filter((el: any) => {
+                  if (this.me && this.me.userId) {
+                    if (el.wid === this.me.userId) {
+                      return false
+                    }
+                  }
+                  return el
+                })
+            } else {
+              this.searchSpinner = false
+            }
+          })
         })
-      // this.searchResultUserArray.splice(this.searchResultUserArray.findIndex((el: any) => {
-      //   if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
-      //     return el.wid === this.configSvc.userProfile.userId
-      //   }
-      //   return -1
-      // // tslint:disable-next-line: align
-      // }), 0)
-      this.searchResultUserArray = this.searchResultUserArray.filter((el: any) => {
-        if (this.me && this.me.userId) {
-          if (el.wid === this.me.userId) {
-            return false
-          }
-        }
-        return el
       })
-    })
+    }
   }
 }

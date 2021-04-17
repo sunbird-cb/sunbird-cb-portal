@@ -77,7 +77,7 @@ export class ConnectionSearchCardComponent implements OnInit {
   }
 
   goToUserProfile(user: any) {
-    this.router.navigate(['/app/person-profile', (user.wid)])
+    this.router.navigate(['/app/person-profile', (user.userId || user.id || user.wid)])
     // this.router.navigate(['/app/person-profile'], { queryParams: { emailId: } })
 
   }
