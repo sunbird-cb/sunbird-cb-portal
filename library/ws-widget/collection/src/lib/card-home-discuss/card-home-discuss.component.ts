@@ -44,6 +44,7 @@ export class CardHomeDiscussComponent extends WidgetBaseComponent implements OnI
           downvotes: d.downvotes,
           tags: d.tags,
           postcount: d.postcount,
+          slug: d.slug,
 
         }
       })[0]
@@ -58,6 +59,6 @@ export class CardHomeDiscussComponent extends WidgetBaseComponent implements OnI
   }
 
   getDiscussion(discuss: any) {
-    this.router.navigate([`/app/discussion-forum/topic/${_.trim(_.get(discuss.category, 'slug'))}`])
+    this.router.navigate([`/app/discussion-forum/topic/${_.trim(_.get(discuss, 'slug'))}`])
   }
 }
