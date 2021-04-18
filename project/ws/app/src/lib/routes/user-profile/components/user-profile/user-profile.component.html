@@ -734,7 +734,7 @@
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <mat-select #orgNameSelect formControlName="orgName" i18n-placeholder placeholder="--Select--"
                         (selectionChange)="otherDropDownChange(designation.value, 'orgname')">
-                        <mat-option [value]="org.name" *ngFor="let org of govtOrgMeta?.ministries">{{org.name}}
+                        <mat-option [value]="org" *ngFor="let org of allDept">{{org}}
                         </mat-option>
                         <mat-option [value]="'Other'">Other</mat-option>
                       </mat-select>

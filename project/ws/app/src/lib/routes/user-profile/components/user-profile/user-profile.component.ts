@@ -101,6 +101,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   photoUrl!: string | ArrayBuffer | null
   isForcedUpdate = false
   userProfileData!: any
+  allDept: any = []
 
   constructor(
     private snackBar: MatSnackBar,
@@ -209,6 +210,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       },
       (_err: any) => {
       })
+      this.userProfileSvc.getAllDepartments().subscribe(
+        (data: any) => {
+          this.allDept = data
+        },
+        (_err: any) => {
+        })
   }
   createDegree(): FormGroup {
     return this.fb.group({

@@ -16,6 +16,7 @@ const API_ENDPOINTS = {
   getMasterNationlity: '/apis/protected/v8/user/profileRegistry/getMasterNationalities',
   getMasterLanguages: '/apis/protected/v8/user/profileRegistry/getMasterLanguages',
   getProfilePageMeta: '/apis/protected/v8/user/profileRegistry/getProfilePageMeta',
+  getAllDepartments: '/apis/protected/v8/portal/listDeptNames',
 }
 
 @Injectable()
@@ -41,5 +42,8 @@ export class UserProfileService {
   }
   getUserdetailsFromRegistry(): Observable<[IUserProfileDetailsFromRegistry]> {
     return this.http.get<[IUserProfileDetailsFromRegistry]>(API_ENDPOINTS.getUserdetailsFromRegistry)
+  }
+  getAllDepartments() {
+    return this.http.get<INationalityApiData>(API_ENDPOINTS.getAllDepartments)
   }
 }
