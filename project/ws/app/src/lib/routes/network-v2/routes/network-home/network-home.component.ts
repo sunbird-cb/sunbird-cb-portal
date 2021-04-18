@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { NetworkV2Service } from '../../services/network-v2.service'
-import { NsUser } from '@sunbird-cb/utils'
+import { NsUser, ConfigurationsService } from '@sunbird-cb/utils'
 import { CardNetWorkService } from '@sunbird-cb/collection'
 
 @Component({
@@ -23,13 +23,16 @@ export class NetworkHomeComponent implements OnInit {
   searchResultUserArray: any = []
   establishedConnections!: NSNetworkDataV2.INetworkUser[]
   me!: NsUser.IUserProfile
+  currentUserDept: any
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private networkV2Service: NetworkV2Service,
     private cardNetworkService: CardNetWorkService,
     private activeRoute: ActivatedRoute,
+    private configSvc: ConfigurationsService,
   ) {
+    this.currentUserDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     if (this.activeRoute.parent) {
       this.me = this.activeRoute.parent.snapshot.data.me
@@ -78,10 +81,10 @@ export class NetworkHomeComponent implements OnInit {
 
   connectionUpdatePeopleCard(event: any) {
     if (event === 'connection-updated') {
-      let usrDept = 'igot'
-      if (this.me) {
-        usrDept = this.me.departmentName || 'igot'
-      }
+      // let usrDept = 'igot'
+      // if (this.me) {
+      //   usrDept = this.me.departmentName || 'igot'
+      // }
       let req: NSNetworkDataV2.IRecommendedUserReq
       req = {
         size: 50,
@@ -89,7 +92,7 @@ export class NetworkHomeComponent implements OnInit {
         search: [
           {
             field: 'employmentDetails.departmentName',
-            values: [usrDept],
+            values: [this.currentUserDept],
           },
         ],
       }

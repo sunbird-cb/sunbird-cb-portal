@@ -57,13 +57,18 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {
     this.Math = Math
     this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
-    this.currentUsername = this.configSvc.userProfile && this.configSvc.userProfile.userName
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     this.tabs = this.route.data.subscribe(data => {
       this.portalProfile = data.profile
         && data.profile.data
         && data.profile.data.length > 0
         && data.profile.data[0]
+
+      if (this.portalProfile.id === this.currentUser) {
+        this.currentUsername = this.configSvc.userProfile && this.configSvc.userProfile.userName
+      } else  {
+        this.currentUsername = this.portalProfile.personalDetails.userName
+      }
       this.decideAPICall()
     })
   }

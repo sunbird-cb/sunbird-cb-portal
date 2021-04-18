@@ -88,7 +88,7 @@
           </span>
         </mat-card-title>
         <span class="spacer"></span>
-        <button mat-button color="default" type="button" class=" flex-auto-display" (click)="goToMyMdo()">
+        <button mat-button color="default" type="button" class=" flex-auto-display" (click)="goToMyMdo()" *ngIf="recommendedUsers && recommendedUsers.length > 0">
           <span class="ws-mat-default-text" i18n>SEE ALL</span>
         </button>
       </mat-card-header>
@@ -97,6 +97,7 @@
           <ws-app-connection-people-card class="mr-4 mb-5" [user]="user"
             (connection)="connectionUpdatePeopleCard($event)"></ws-app-connection-people-card>
         </ng-container>
+        <h4 class="ws-mat-black60-text" *ngIf="recommendedUsers && recommendedUsers.length <= 0">No users found!</h4>
       </mat-card-content>
       <mat-card-actions align="end">
       </mat-card-actions>

@@ -275,7 +275,7 @@ export class InitService {
           firstName: userPidProfile.result.response.firstName,
           lastName: userPidProfile.result.response.lastName,
           rootOrgId: userPidProfile.result.response.rootOrgId,
-          rootOrgName: userPidProfile.result.response.rootOrgName,
+          rootOrgName: userPidProfile.result.response.channel,
           // tslint:disable-next-line: max-line-length
           // userName: `${userPidProfile.result.response.firstName ? userPidProfile.result.response.firstName : ' '}${userPidProfile.result.response.lastName ? userPidProfile.result.response.lastName : ' '}`,
           userName: userPidProfile.result.response.userName,
