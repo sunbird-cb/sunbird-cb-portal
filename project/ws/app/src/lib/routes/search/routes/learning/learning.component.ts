@@ -46,9 +46,6 @@ export class LearningComponent implements OnInit, OnDestroy {
     request: {
       filters: {
         visibility: ['Default'],
-        primaryCategory: [
-          'Course',
-        ],
       },
       query: '',
       sort_by: { lastUpdatedOn: 'desc' },
@@ -207,6 +204,7 @@ export class LearningComponent implements OnInit, OnDestroy {
     })
     if (queryMap.get('f')) {
       defaultFilters = JSON.parse(queryMap.get('f') || '{}')
+      // defaultFilters = queryMap.get('f') || '{}'
     }
     if (!Object.keys(defaultFilters).length && Object.keys(this.filtersFromConfig).length) {
       this.router.navigate([], {
