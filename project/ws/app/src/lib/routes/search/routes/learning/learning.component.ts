@@ -46,6 +46,9 @@ export class LearningComponent implements OnInit, OnDestroy {
     request: {
       filters: {
         visibility: ['Default'],
+        primaryCategory: [
+          'Course',
+        ],
       },
       query: '',
       sort_by: { lastUpdatedOn: 'desc' },
