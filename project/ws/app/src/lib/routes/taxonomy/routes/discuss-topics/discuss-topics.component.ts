@@ -176,27 +176,27 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
           }
           firstLvlArray.push(obj)
         // } else {
-          const firstObj = {
-            name: decodeURI(topic),
-            enabled: true,
-            routerLink: APP_TAXONOMY + decodeURI(topic),
-          }
+          // const firstObj = {
+          //   name: decodeURI(topic),
+          //   enabled: true,
+          //   routerLink: APP_TAXONOMY + decodeURI(topic),
+          // }
 
           // firstLvlArray.splice(0, 0, firstObj)
           this.router.navigate([APP_TAXONOMY + decodeURI(topic)])
         // }
-      
+
             if (term.name === topic && term.children) {
               const nextLevel: string[] = []
               term.children.forEach((second: any) => {
                 nextLevel.push(second.name)
               })
-              if(nextLevel.length>0){
+              if (nextLevel.length > 0) {
                 this.nextLevelTopic = nextLevel
-              }else{
+              } else {
                 this.nextLevelTopic = []
               }
-            
+
             }
           }
         })
