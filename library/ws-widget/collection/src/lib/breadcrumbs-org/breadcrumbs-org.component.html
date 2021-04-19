@@ -7,7 +7,7 @@
               <mat-icon class="margin-right-xs ws-mat-default-text">home</mat-icon>
               <span class="margin-auto ws-mat-default-text font-bold">Home</span>
             </a> -->
-  
+
           <ng-container *ngIf="widgetData.titles && widgetData.titles.length>0">
             <div class="flex" *ngFor="let title of widgetData.titles ; let i=index">
               <mat-icon class="main-back m-auto" *ngIf="i != 0">keyboard_arrow_right</mat-icon>
@@ -42,19 +42,34 @@
       </div>
     </mat-card-content>
   </mat-card>
-  
-  
+
+
   <ng-template #userIndividualNew let-hubs="hubs">
-    <a class="flex flex-wrap mb-4" [routerLink]="(hubs.path)" role="menuitem" i18n-aria-label
-      [attr.aria-label]="'Hubs | navigate to-' + hubs.path">
-      <div class="icon ws-mat-primary-tags">
-        <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon>
-      </div>
-      <div [ngClass]="{'cursor-pointer': enablePeopleSearch}" class="width-expand padding-left-xs">
-        <div class="mat-body-strong  margin-0">
-          {{hubs.hubname}}
+    <ng-container *ngIf="hubs.hubname == 'Discuss'">
+      <a class="flex flex-wrap mb-4" (click)="navigate()" role="menuitem" i18n-aria-label>
+        <div class="icon ws-mat-primary-tags">
+          <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon>
         </div>
-        <div class="mat-caption cohorts-desc ws-mat-black60-text">{{hubs.desc}}</div>
-      </div>
-    </a>
+        <div [ngClass]="{'cursor-pointer': enablePeopleSearch}" class="width-expand padding-left-xs">
+          <div class="margin-0 mat-subheading-2">
+            {{hubs.hubname}}
+          </div>
+          <div class="mat-caption cohorts-desc ws-mat-black60-text">{{hubs.desc}}</div>
+        </div>
+      </a>
+    </ng-container>
+
+    <ng-container *ngIf="hubs.hubname != 'Discuss'">
+      <a class="flex flex-wrap mb-4" [routerLink]="(hubs.path)" role="menuitem" i18n-aria-label>
+        <div class="icon ws-mat-primary-tags">
+          <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon>
+        </div>
+        <div [ngClass]="{'cursor-pointer': enablePeopleSearch}" class="width-expand padding-left-xs">
+          <div class="margin-0 mat-subheading-2">
+            {{hubs.hubname}}
+          </div>
+          <div class="mat-caption cohorts-desc ws-mat-black60-text">{{hubs.desc}}</div>
+        </div>
+      </a>
+    </ng-container>
   </ng-template>

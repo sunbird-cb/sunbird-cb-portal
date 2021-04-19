@@ -4,6 +4,7 @@ import { Router } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ConfigurationsService, NsInstanceConfig } from '@sunbird-cb/utils'
 import { BtnPageBackService } from './btn-page-back.service'
+import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 type TUrl = undefined | 'none' | 'back' | string
 @Component({
   selector: 'ws-widget-btn-page-back',
@@ -37,6 +38,7 @@ export class BtnPageBackComponent extends WidgetBaseComponent
     private btnBackSvc: BtnPageBackService,
     private router: Router,
     private configSvc: ConfigurationsService,
+    private discussUtilitySvc: DiscussUtilsService,
   ) {
     super()
   }
@@ -88,6 +90,18 @@ export class BtnPageBackComponent extends WidgetBaseComponent
       queryParams: undefined,
       routeUrl: this.widgetData.url ? this.widgetData.url : '/app/home',
     }
+  }
+
+  navigate() {
+    this.discussUtilitySvc.setDiscussionConfig({
+      userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
+      context: {
+        id: 1,
+      },
+      categories: { result: [] },
+      routerSlug: '/app',
+    })
+    this.router.navigate(['/app/discussion-forum'])
   }
 
   // get titleUrl(): { fragment?: string; routeUrl: string; queryParams: any } {
