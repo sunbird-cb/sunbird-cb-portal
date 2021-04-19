@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { NSDiscussData } from '../../models/discuss.model'
 import { Router } from '@angular/router'
+/* tslint:disable */
 import _ from 'lodash'
 @Component({
   selector: 'app-dicuss-post-card',

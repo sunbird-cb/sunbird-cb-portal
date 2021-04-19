@@ -121,17 +121,17 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       switch (key) {
         case 'timestamp':
           // this.discussionList = _.uniqBy(_.filter(this.discussProfileData.posts, p => _.get(p, 'isMainPost') === true), 'tid')
-          this.discussionList = this.discussProfileData.posts.filter((p: any) => (p.isMainPost === true));
+          this.discussionList = this.discussProfileData.posts.filter((p: any) => (p.isMainPost === true))
           break
         case 'best':
           // this.discussionList = _.uniqBy(this.discussProfileData.bestPosts, 'tid')
-          this.discussionList = this.discussProfileData.bestPosts;
+          this.discussionList = this.discussProfileData.bestPosts
           break
         case 'saved':
           this.discussService.fetchSaved(this.currentUsername).subscribe((response: any) => {
             if (response) {
               // this.discussionList = _.uniqBy(response.posts, 'tid')
-              this.discussionList = response['posts'];
+              this.discussionList = response['posts']
             } else {
               this.discussionList = []
             }
@@ -143,11 +143,10 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
           break
         default:
           // this.discussionList = _.uniqBy(this.discussProfileData.latestPosts, 'tid')
-          this.discussionList = this.discussProfileData.latestPosts;
+          this.discussionList = this.discussProfileData.latestPosts
           break
       }
     }
   }
-
 
 }
