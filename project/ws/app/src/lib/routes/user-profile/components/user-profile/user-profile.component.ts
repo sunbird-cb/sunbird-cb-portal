@@ -464,7 +464,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   getUserDetails() {
     if (this.configSvc.profileDetailsStatus) {
-
         this.userProfileSvc.getUserdetailsFromRegistry().subscribe(
           (data: any) => {
             const userData = data.result.UserProfile
@@ -477,13 +476,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               this.populateChips(userData[0])
               this.userProfileData = userData[0]
             } else {
-
               if (this.configSvc.userProfile) {
                 this.createUserForm.patchValue({
                   firstname: this.configSvc.userProfile.firstName,
                   surname: this.configSvc.userProfile.lastName,
                   primaryEmail: this.configSvc.userProfile.email,
-                  // departmentName: data[0].department_name,
+                  orgName: this.configSvc.userProfile.rootOrgName,
                 })
               }
             }
@@ -492,7 +490,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           (_err: any) => {
           })
     } else {
-
       if (this.configSvc.userProfile) {
         this.userProfileSvc.getUserdetails(this.configSvc.userProfile.email).subscribe(
           data => {
@@ -501,7 +498,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
                 firstname: data[0].first_name,
                 surname: data[0].last_name,
                 primaryEmail: data[0].email,
-                departmentName: data[0].department_name,
+                orgName: data[0].department_name,
               })
             }
           },
@@ -656,7 +653,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       schoolName12: academics.XII_STANDARD.schoolName12,
       yop12: academics.XII_STANDARD.yop12,
       isGovtOrg: organisation.isGovtOrg,
-      orgName: organisation.orgName,
+      // orgName: organisation.orgName,
       industry: organisation.industry,
       designation: organisation.designation,
       location: organisation.location,
@@ -665,6 +662,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       orgNameOther: organisation.orgNameOther,
       industryOther: organisation.industryOther,
       designationOther: organisation.designationOther,
+      orgName: _.get(data, 'employmentDetails.departmentName') || '',
       service: _.get(data, 'employmentDetails.service') || '',
       cadre: _.get(data, 'employmentDetails.cadre') || '',
       allotmentYear: this.checkvalue(_.get(data, 'employmentDetails.allotmentYearOfService') || ''),
@@ -757,7 +755,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         employeeCode: form.value.employeeCode,
         officialPostalAddress: form.value.otherDetailsOfficeAddress,
         pinCode: form.value.otherDetailsOfficePinCode,
-        departmentName: form.value.departmentName || 'iGOT',
+        departmentName: form.value.orgName || form.value.orgNameOther || '',
       },
       professionalDetails: [
         ...this.getOrganisationsHistory(form),
