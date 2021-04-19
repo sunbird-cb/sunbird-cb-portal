@@ -52,6 +52,11 @@ export class PlaylistCardComponent implements OnInit {
     if (this.configSvc.restrictedFeatures) {
       this.isShareEnabled = !this.configSvc.restrictedFeatures.has('share')
     }
+    if (this.playlist) {
+      this.playlistSvc.getPlaylist(this.playlist.identifier).subscribe(data => {
+        this.playlist = data ? data.result.content : this.playlist
+      })
+    }
   }
   getDuration(playlist: NsPlaylist.IPlaylist) {
     const totalDuration = 0
@@ -63,11 +68,13 @@ export class PlaylistCardComponent implements OnInit {
     }
     return totalDuration
   }
-  greyOut(content: NsContent.IContent) {
+  greyOut(_content: NsContent.IContent) {
     return (
-      this.isDeletedOrExpired(content) ||
-      this.hasNoAccess(content) ||
-      this.isInIntranetMobile(content)
+      // TODO: Need to make these once the all the data is available
+      // this.isDeletedOrExpired(content) ||
+      // this.hasNoAccess(content) ||
+      // this.isInIntranetMobile(content)
+      false
     )
   }
   deletePlaylist() {

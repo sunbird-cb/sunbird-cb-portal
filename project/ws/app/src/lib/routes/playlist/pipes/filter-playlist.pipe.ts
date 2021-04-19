@@ -6,12 +6,14 @@ import { NsPlaylist } from '@sunbird-cb/collection'
 })
 export class FilterPlaylistPipe implements PipeTransform {
   transform(playlists: any, searchPlaylistQuery: string): NsPlaylist.IPlaylist[] | undefined {
-    const playlistArr =  playlists.result.content
-    const filteredPlaylists = playlistArr.filter(
-      (playlist: NsPlaylist.IPlaylist) =>
-        playlist.name.toLowerCase().includes((searchPlaylistQuery || '').toLowerCase()),
-    )
-
-    return filteredPlaylists.length ? filteredPlaylists : undefined
+    const playlistArr = playlists.result.content
+    if (playlistArr) {
+      const filteredPlaylists = playlistArr.filter(
+        (playlist: NsPlaylist.IPlaylist) =>
+          playlist.name.toLowerCase().includes((searchPlaylistQuery || '').toLowerCase()),
+      )
+      return filteredPlaylists.length ? filteredPlaylists : undefined
+    }
+    return undefined
   }
 }
