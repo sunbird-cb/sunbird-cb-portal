@@ -103,7 +103,7 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
           firstLvlArray.push(obj)
           this.currentTab = term.name
             this.firstLevelTopic = firstLvlArray
-            if (term.name === topic && term.children !== undefined) {
+            if (term.name === decodeURI(topic) && term.children) {
               const nextLevel: string[] = []
               term.children.forEach((second: any) => {
                 nextLevel.push(second.name)
@@ -129,7 +129,7 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
           firstLvlArray.push(obj)
           this.currentTab = term.name
             this.firstLevelTopic = firstLvlArray
-            if (term.name === topic && term.children !== undefined) {
+            if (term.name === topic && term.children) {
               const nextLevel: string[] = []
               term.children.forEach((second: any) => {
                 nextLevel.push(second.name)
@@ -168,33 +168,39 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
           this.nextLvlObj = term.children
           }
         }
-        if (term.name !== decodeURI(topic)) {
+        // if (term.name !== decodeURI(topic)) {
           const obj = {
             name: term.name,
             enabled: true,
             routerLink: APP_TAXONOMY + term.name,
           }
           firstLvlArray.push(obj)
-        } else {
+        // } else {
           const firstObj = {
             name: decodeURI(topic),
             enabled: true,
             routerLink: APP_TAXONOMY + decodeURI(topic),
           }
 
-          firstLvlArray.splice(0, 0, firstObj)
+          // firstLvlArray.splice(0, 0, firstObj)
           this.router.navigate([APP_TAXONOMY + decodeURI(topic)])
-        }
-        this.firstLevelTopic = firstLvlArray
-            if (term.name === topic && term.children !== undefined) {
+        // }
+      
+            if (term.name === topic && term.children) {
               const nextLevel: string[] = []
               term.children.forEach((second: any) => {
                 nextLevel.push(second.name)
               })
-              this.nextLevelTopic = nextLevel
+              if(nextLevel.length>0){
+                this.nextLevelTopic = nextLevel
+              }else{
+                this.nextLevelTopic = []
+              }
+            
             }
           }
         })
+        this.firstLevelTopic = firstLvlArray
 
     }
   getAllRelatedCourse() {

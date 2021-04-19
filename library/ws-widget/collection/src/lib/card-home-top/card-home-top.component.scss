@@ -1,0 +1,13 @@
+@import '~@sunbird-cb/design-system/src/styles/ws-common';
+@import '~@sunbird-cb/design-system/src/styles/ws-vars';
+@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
+
+.flex-top {
+  display: flex;
+  margin: 30px 0 30px 0;
+}
+
+.flex-display {
+  display: flex;
+  flex: 1;
+}

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { HomeComponent } from './components/home/home.component'
+// import { ConfigurationsService } from './resolvers/config-resolver.service'
+import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = [
   {
@@ -22,9 +24,14 @@ const routes: Routes = [
         path: '',
         component: HomeComponent,
         children: routes,
+        resolve: {
+          // configData: ConfigurationsService,
+          profileData: ProfileResolverService,
+        },
       },
     ]),
   ],
   exports: [RouterModule],
+  providers: [ProfileResolverService],
 })
 export class FeedbackV2RoutingModule {}

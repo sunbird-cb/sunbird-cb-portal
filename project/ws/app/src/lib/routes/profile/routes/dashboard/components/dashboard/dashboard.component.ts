@@ -95,15 +95,16 @@ export class DashboardComponent implements OnInit {
   ongoingCertifications: NSLearningHistory.ILearningHistoryItem[] = []
   passedCertifications: NSLearningHistory.ILearningHistoryItem[] = []
   constructor(
-    private configSvc: ConfigurationsService,
     // private badgesSvc: BadgesService,
     private profileSvc: ProfileService,
     private learnHstSvc: LearningHistoryService,
     private interestSvc: InterestService,
     private activatedRoute: ActivatedRoute,
+    private configSvc: ConfigurationsService
   ) {
+
     if (this.configSvc.userProfile) {
-      this.userName = this.configSvc.userProfile.givenName || ''
+      this.userName = this.configSvc.userProfile.userName || ''
       this.userEmail = this.configSvc.userProfile.email || ''
       this.departmentName = this.configSvc.userProfile.departmentName || ''
     }

@@ -59,9 +59,11 @@ export class RecentForumPostComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
   ) {
     this.isXSmall$ = this.valueSvc.isXSmall$
+
     if (this.configSvc.userProfile) {
       this.timelineRequest.userId = this.configSvc.userProfile.userId || ''
     }
+
     // console.log('Recent forum postcomop loaded')
     this._eventEmiter.sendFilterStatus(true)
     this._eventEmiter.sendStatusOfPredefinedFilter(false)

@@ -25,6 +25,7 @@ export class BlogResultComponent implements OnInit {
     private discussionSvc: WsDiscussionForumService,
     private configSvc: ConfigurationsService,
   ) {
+
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId || ''
     }

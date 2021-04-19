@@ -64,10 +64,12 @@ export class PersonProfileComponent implements OnInit {
   // followingCount: any = ''
 
   ngOnInit() {
-    if (this.configSvc.userProfile && this.configSvc.userProfile.userName) {
-      this.currentUserId = this.configSvc.userProfile.userId
-      this.currentUserName = this.configSvc.userProfile.userName
+
+    if (this.configSvc.userProfile) {
+      this.currentUserId = this.configSvc.userProfile.userId || ''
+      this.currentUserName = this.configSvc.userProfile.userName || ''
     }
+
     this.isLtMediumSubscription = this.valueSvc.isLtMedium$.subscribe(isLtMedium => {
       if (isLtMedium) {
         this.isSmallScreen = true
@@ -87,7 +89,7 @@ export class PersonProfileComponent implements OnInit {
       }
 
     })
-    // this.fetchUserDetails(this.emailId)
+
     if (this.configSvc.userProfile) {
       if (this.emailId === this.configSvc.userProfile.email) {
         this.isFollowButtonEnabled = false
@@ -139,11 +141,13 @@ export class PersonProfileComponent implements OnInit {
     this.following = []
     this.followersCount = 0
     this.followers = []
+
     if (this.configSvc.userProfile) {
       if (emailId === this.configSvc.userProfile.email) {
         this.isFollowButtonEnabled = false
       }
     }
+
     if (this.emailId) {
       this.fetchUser.fetchAutoComplete(emailId).subscribe(
         (data: NsAutoComplete.IUserAutoComplete[]) => {
@@ -190,11 +194,14 @@ export class PersonProfileComponent implements OnInit {
           this.followersCount = data.person.count
           if (this.followers) {
             this.followers.forEach(person => {
-              if (this.configSvc.userProfile) {
-                if (person.identifier === this.configSvc.userProfile.userId) {
-                  this.statusFollowed = 'FOLLOWED'
+
+              this.route.data.subscribe(key => {
+                  if (person.identifier === key.profileData.data.userId) {
+                    this.statusFollowed = 'FOLLOWED'
+                  }
                 }
-              }
+              )
+
             })
             if (this.statusFollowed === 'PENDING') {
               this.statusFollowed = 'NOT_FOLLOWED'

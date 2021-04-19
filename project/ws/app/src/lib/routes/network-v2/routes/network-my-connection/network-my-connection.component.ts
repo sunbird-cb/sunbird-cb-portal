@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
-import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
+import { ConnectionHoverService } from '../../components/connection-name/connection-hover.servive'
 
 @Component({
   selector: 'ws-app-network-my-connection',
@@ -12,20 +12,30 @@ import { ActivatedRoute } from '@angular/router'
   /* tslint:enable */
 })
 export class NetworkMyConnectionComponent implements OnInit {
-  data!: NSNetworkDataV2.INetworkUser[]
   queryControl = new FormControl('')
   currentFilter = 'timestamp'
   currentFilterSort = 'desc'
   enableSearchFeature = false
+  data: any[] = []
   constructor(
     private route: ActivatedRoute,
+    private connectionHoverService: ConnectionHoverService,
   ) {
     // this.data = this.route.snapshot.data.myConnectionList.data.result.data
-    this.data = this.route.snapshot.data.myConnectionList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
-      if (v && v.personalDetails && v.personalDetails.firstname) {
-        v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
+    // this.data = this.route.snapshot.data.myConnectionList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
+    //   if (v && v.personalDetails && v.personalDetails.firstname) {
+    //     v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
+    //   }
+    //   return v
+    // })
+    const datalist = this.route.snapshot.data.myConnectionList.data.result.data
+    datalist.forEach((usr: any) => {
+      const userrId = usr.identifier || usr.id
+      if (userrId) {
+        this.connectionHoverService.fetchProfile(userrId).subscribe((res: any) => {
+          this.data.push(res)
+        })
       }
-      return v
     })
   }
 

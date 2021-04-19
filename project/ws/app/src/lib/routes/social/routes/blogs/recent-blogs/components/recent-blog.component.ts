@@ -31,7 +31,6 @@ export class RecentBlogComponent implements OnInit {
     private discussionSvc: WsDiscussionForumService,
     private configSvc: ConfigurationsService,
     private valueSvc: ValueService,
-
   ) {
     this.isXSmall$ = this.valueSvc.isXSmall$
     if (this.configSvc.userProfile) {

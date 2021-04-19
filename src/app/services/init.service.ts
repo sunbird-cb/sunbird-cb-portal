@@ -36,10 +36,13 @@ interface IFeaturePermissionConfigs {
   [id: string]: Omit<NsWidgetResolver.IPermissions, 'feature'>
 }
 
+const PROXY_CREATE_V8 = '/apis/proxies/v8'
+
 const endpoint = {
   profilePid: '/apis/proxies/v8/api/user/v2/read',
   profileV2: '/apis/protected/v8/user/profileRegistry/getUserRegistryById',
   details: `/apis/protected/v8/user/details?ts=${Date.now()}`,
+  CREATE_USER_API: `${PROXY_CREATE_V8}/discussion/user/v1/create`,
 }
 
 @Injectable({
@@ -137,6 +140,7 @@ export class InitService {
       //   this.configSvc.profileSettings = this.configSvc.userPreference.profileSettings
       // }
       await this.fetchUserProfileV2()
+      await this.createUserInNodebb()
       const appsConfigPromise = this.fetchAppsConfig()
       const instanceConfigPromise = this.fetchInstanceConfig() // config: depends only on details
       const widgetStatusPromise = this.fetchWidgetStatus() // widget: depends only on details & feature
@@ -253,7 +257,7 @@ export class InitService {
           .get<NsUser.IUserPidProfileV2>(endpoint.profilePid)
           .toPromise()
       } catch (e) {
-        this.configSvc.userProfile = null
+        // this.configSvc.userProfile = null
         throw new Error('Invalid user')
       }
       if (userPidProfile) {
@@ -271,9 +275,10 @@ export class InitService {
           firstName: userPidProfile.result.response.firstName,
           lastName: userPidProfile.result.response.lastName,
           rootOrgId: userPidProfile.result.response.rootOrgId,
-          rootOrgName: userPidProfile.result.response.rootOrgName,
+          rootOrgName: userPidProfile.result.response.channel,
           // tslint:disable-next-line: max-line-length
-          userName: `${userPidProfile.result.response.firstName ? userPidProfile.result.response.firstName : ' '}${userPidProfile.result.response.lastName ? userPidProfile.result.response.lastName : ' '}`,
+          // userName: `${userPidProfile.result.response.firstName ? userPidProfile.result.response.firstName : ' '}${userPidProfile.result.response.lastName ? userPidProfile.result.response.lastName : ' '}`,
+          userName: userPidProfile.result.response.userName,
           profileImage: userPidProfile.result.response.thumbnail,
           dealerCode: null,
           isManager: false,
@@ -327,7 +332,7 @@ export class InitService {
           .get<NsUser.IUserPidProfileVer2>(endpoint.profileV2)
           .toPromise()
       } catch (e) {
-        this.configSvc.userProfileV2 = null
+        // this.configSvc.userProfileV2 = null
         throw new Error('Invalid user')
       }
       if (userPidProfileV2) {
@@ -378,6 +383,33 @@ export class InitService {
     this.configSvc.activeOrg = publicConfig.org[0]
     this.updateAppIndexMeta()
     return publicConfig
+  }
+
+  private async createUserInNodebb(): Promise<any> {
+    const req = {
+      request: {
+        username: (this.configSvc.userProfile && this.configSvc.userProfile.userName) || '',
+        identifier: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
+      },
+    }
+    let createUserRes: null
+
+    try {
+      createUserRes = await this.http
+        .post<any>(endpoint.CREATE_USER_API, req)
+        .toPromise()
+    } catch (e) {
+      this.configSvc.nodebbUserProfile = null
+      throw new Error('Invalid user')
+    }
+
+    const nodebbUserData: any = _.get(createUserRes, 'result')
+    if (createUserRes) {
+      this.configSvc.nodebbUserProfile = {
+        username: nodebbUserData.userName,
+        email: 'null',
+      }
+    }
   }
 
   private async fetchFeaturesStatus(): Promise<Set<string>> {

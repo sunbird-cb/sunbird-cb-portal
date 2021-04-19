@@ -27,7 +27,7 @@ export class PlaylistNotificationComponent implements OnInit {
   ) {
     const instanceConfig = this.configurationSvc.instanceConfig
     if (instanceConfig) {
-      this.defaultThumbnail = instanceConfig.logos.defaultContent
+      this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
     }
   }
 

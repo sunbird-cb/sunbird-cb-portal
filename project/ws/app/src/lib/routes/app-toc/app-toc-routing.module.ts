@@ -49,8 +49,6 @@ const routes: Routes = [
       {
         path: 'overview',
         component: AppTocSinglePageRootComponent,
-        // pathMatch: 'full',
-        // redirectTo: 'single-page-view',
       },
       {
         path: 'discussion',
@@ -86,9 +84,6 @@ const routes: Routes = [
   {
     path: 'knowledge-artifact/:id',
     component: KnowledgeArtifactDetailsComponent,
-    resolve: {
-      content: AppTocResolverService,
-    },
   },
 ]
 

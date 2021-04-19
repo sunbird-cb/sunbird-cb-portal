@@ -37,7 +37,7 @@ export class FollowListComponent implements OnInit, OnChanges {
 
   constructor(
     private personprofileSvc: PersonProfileService,
-    public configSvc: ConfigurationsService
+    public configSvc: ConfigurationsService,
   ) {
     this.personprofileSvc.isfollowevent.subscribe((result: Boolean) => {
       if (result) {
@@ -62,8 +62,9 @@ export class FollowListComponent implements OnInit, OnChanges {
     if (this.wid) {
       this.fetchFollowers()
     }
-    if (this.configSvc.userProfile && this.configSvc.userProfile.userName) {
-      this.currentUserId = this.configSvc.userProfile.userId
+
+    if (this.configSvc.userProfile) {
+      this.currentUserId = this.configSvc.userProfile.userId || ''
     }
     this.isInitialized = true
 

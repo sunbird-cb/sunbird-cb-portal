@@ -95,10 +95,9 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (this.configSvc.instanceConfig) {
-      this.defaultThumbnail = this.domSanitizer.bypassSecurityTrustResourceUrl(
-        this.configSvc.instanceConfig.logos.defaultContent,
-      )
+    if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.logos) {
+      const logo = this.configSvc.instanceConfig.logos.defaultContent || ''
+      this.defaultThumbnail = this.domSanitizer.bypassSecurityTrustResourceUrl(logo)
     }
     this.paramSubscription = this.activatedRoute.queryParamMap.subscribe(async params => {
       const collectionId = params.get('collectionId')

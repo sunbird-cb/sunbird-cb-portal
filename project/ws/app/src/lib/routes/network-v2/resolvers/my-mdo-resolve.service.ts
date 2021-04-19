@@ -19,10 +19,10 @@ export class MyMdoResolveService implements
     _route: ActivatedRouteSnapshot,
     _state: RouterStateSnapshot,
   ): Observable<IResolveResponse<NSNetworkDataV2.IRecommendedUserResponse>> {
-    let usrDept = 'iGOT'
-    if (this.configSvc.userProfile) {
-      usrDept = this.configSvc.userProfile.departmentName || 'iGOT'
-    }
+    const usrDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName || ''
+    // if (this.configSvc.userProfile) {
+    //   usrDept = this.configSvc.userProfile.departmentName || 'iGOT'
+    // }
     let req: NSNetworkDataV2.IRecommendedUserReq
     req = {
       size: 50,

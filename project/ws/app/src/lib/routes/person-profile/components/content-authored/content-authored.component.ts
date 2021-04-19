@@ -42,14 +42,16 @@ export class ContentAuthoredComponent implements OnInit, OnDestroy {
   ) {
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.defaultThumbnail = instanceConfig.logos.defaultContent
+      this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
     }
   }
 
   ngOnInit() {
+
     if (this.configSvc.userProfile) {
-      this.userWid = this.configSvc.userProfile.userId
+      this.userWid = this.configSvc.userProfile.userId || ''
     }
+
     if (this.wid) {
       this.fetchContentAuthored()
     }

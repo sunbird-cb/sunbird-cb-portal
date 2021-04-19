@@ -39,17 +39,17 @@ export class ContentReviewedComponent implements OnInit, OnDestroy {
   constructor(
     private myContSvc: MyContentService,
     private configSvc: ConfigurationsService,
-    private matSnackBar: MatSnackBar
+    private matSnackBar: MatSnackBar,
   ) {
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.defaultThumbnail = instanceConfig.logos.defaultContent
+      this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
     }
   }
 
   ngOnInit() {
     if (this.configSvc.userProfile) {
-      this.userWid = this.configSvc.userProfile.userId
+      this.userWid = this.configSvc.userProfile.userId || ''
     }
     if (this.wid) {
       this.fetchContentReviewed()

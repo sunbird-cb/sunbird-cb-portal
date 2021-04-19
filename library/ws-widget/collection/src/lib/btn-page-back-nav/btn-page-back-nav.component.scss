@@ -1,0 +1,19 @@
+@import '~@sunbird-cb/design-system/src/styles/ws-common';
+@import '~@sunbird-cb/design-system/src/styles/ws-vars';
+@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
+
+
+.next-b {
+  width: $size-s;
+  height: $size-m;
+  transform: matrix(0, 1, -1, 0, 0, 0);
+  background: #00A9F4 0% 0% no-repeat padding-box;
+}
+
+.home-icon {
+  margin: auto 20px auto 20px;
+}
+
+.main-back {
+  font-size: $size-m;
+}

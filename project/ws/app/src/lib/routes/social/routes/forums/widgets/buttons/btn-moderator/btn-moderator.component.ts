@@ -49,9 +49,6 @@ export class BtnModeratorComponent implements OnInit {
   ngOnInit() {
     //// console.log("the type received is" + this.type)
 
-    // if (this.configSvc.userProfile) {
-    //   this.moderatorRequest.moderatorId = this.configSvc.userProfile.userId || ''
-    // }
     if (this.postIdReceived) {
       // console.log("The postId received is" + this.postIdReceived)
       this.moderatorRequest.postId = this.postIdReceived

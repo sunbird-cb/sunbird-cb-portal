@@ -46,10 +46,10 @@ export class PlaylistHomeComponent implements OnInit, OnDestroy {
     private router: Router,
 
   ) {
-    if (this.configSvc.userProfile) {
-      this.userName = (this.configSvc.userProfile.userName || '').split(' ')[0]
-    }
-  }
+    this.userName =
+    (this.configSvc.userProfile) ?
+    `${this.configSvc.userProfile.firstName}  ${this.configSvc.userProfile.lastName}` : undefined
+ }
 
   ngOnInit() {
     this.playListLogo = this.sanitizer.bypassSecurityTrustStyle(

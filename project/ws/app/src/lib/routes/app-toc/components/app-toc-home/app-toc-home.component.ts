@@ -191,6 +191,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (this.configSvc.userProfile) {
       userId = this.configSvc.userProfile.userId || ''
     }
+    // this.route.data.subscribe(data => {
+    //   userId = data.profileData.data.userId
+    //   }
+    // )
     this.userSvc.fetchUserBatchList(userId).subscribe(
       (courses: NsContent.ICourse[]) => {
         let enrolledCourse: NsContent.ICourse | undefined
@@ -278,6 +282,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (this.configSvc.userProfile) {
       userId = this.configSvc.userProfile.userId || ''
     }
+    // this.route.data.subscribe(data => {
+    //   userId = data.profileData.data.userId
+    // })
     const req: NsContent.IContinueLearningDataReq = {
       request: {
         batchId,

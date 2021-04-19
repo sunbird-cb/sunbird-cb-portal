@@ -2,8 +2,8 @@ import { Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter }
 import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { NetworkV2Service } from '../../services/network-v2.service'
 import { MatSnackBar } from '@angular/material'
-import { Router } from '@angular/router'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { Router, ActivatedRoute } from '@angular/router'
+import { NsUser } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-connection-search-card',
@@ -15,34 +15,45 @@ export class ConnectionSearchCardComponent implements OnInit {
   @Output() connection = new EventEmitter<string>()
   @ViewChild('toastSuccess', { static: true }) toastSuccess!: ElementRef<any>
   @ViewChild('toastError', { static: true }) toastError!: ElementRef<any>
+  me!: NsUser.IUserProfile
 
   constructor(
     private networkV2Service: NetworkV2Service,
     private snackBar: MatSnackBar,
     private router: Router,
-    private configSvc: ConfigurationsService
-  ) { }
+    // private configSvc: ConfigurationsService
+    private activeRoute: ActivatedRoute,
+  ) {
+    if (this.activeRoute.parent) {
+      this.me = this.activeRoute.parent.snapshot.data.me
+    }
+  }
 
   ngOnInit() {
   }
 
   getUseravatarName() {
     if (this.user) {
-      return `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
+      if (this.user.personalDetails) {
+        return `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
+      }
+      if (!this.user.personalDetails && this.user.first_name) {
+        return `${this.user.first_name} ${this.user.last_name}`
+      }
     }
-      return ''
+    return ''
   }
 
   connetToUser() {
-    if (this.configSvc.userProfile && this.configSvc.userProfile.userId === this.user.wid) {
+    if (this.me && this.me.userId === this.user.wid) {
       this.openSnackbar('Cannot send request to yourself')
     } else {
       // const req = { connectionId: this.user.wid }
 
       const req = {
         connectionId: this.user.id,
-        userNameFrom: this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.userName : '',
-        userDepartmentFrom: this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.departmentName : 'iGOT',
+        userNameFrom: this.me ? this.me.userName : '',
+        userDepartmentFrom: this.me ? this.me.departmentName : 'iGOT',
         userIdTo: this.user.id,
         userNameTo: `${this.user.personalDetails.firstname}${this.user.personalDetails.surname}`,
         userDepartmentTo: this.user.employmentDetails.departmentName,
@@ -66,7 +77,7 @@ export class ConnectionSearchCardComponent implements OnInit {
   }
 
   goToUserProfile(user: any) {
-    this.router.navigate(['/app/person-profile', (user.wid)])
+    this.router.navigate(['/app/person-profile', (user.userId || user.id || user.wid)])
     // this.router.navigate(['/app/person-profile'], { queryParams: { emailId: } })
 
   }

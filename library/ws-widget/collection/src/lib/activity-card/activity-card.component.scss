@@ -1,0 +1,82 @@
+@import '~@sunbird-cb/design-system/src/styles/ws-common';
+@import '~@sunbird-cb/design-system/src/styles/ws-vars';
+@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
+
+.activity-card {
+  min-width: 240px !important;
+  max-width: 240px !important;
+  max-height: 200px !important;
+  min-height: 200px !important;
+  box-shadow: 0px 10px 30px #99999933 !important;
+  border-radius: 8px;
+  text-align: center;
+  align-items: center;
+  margin-right: 1.7rem;
+  margin-top: 1rem;
+  margin-left: 0.5rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+
+}
+
+.activity-learning-card {
+  min-width: 257px !important;
+  max-width: 257px !important;
+  max-height: 150px !important;
+  min-height: 150px !important;
+  box-shadow: 0px 10px 30px #99999933 !important;
+  border-radius: 8px;
+  text-align: center;
+  align-items: center;
+  margin-right: 1.7rem;
+  margin-top: 1rem;
+  margin-left: 0.5rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+
+  @include breakpoint-xs {
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+  }
+
+}
+
+.description {
+  color: #9BAEBD !important;
+  position: relative;
+  overflow: hidden;
+  height: 3.8em;
+  line-height: 1.3em;
+  padding-bottom: 0px;
+}
+
+.icon {
+  color: #05a7c9 !important;
+}
+
+.visible {
+  visibility: hidden;
+}
+
+.title {
+  font-weight: 500 !important;
+  margin-bottom: 8px !important;
+}
+
+.footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0%;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  min-height: 34px;
+
+}
+
+.explore {
+  text-align: center;
+  display: grid;
+  color: #222222;
+}

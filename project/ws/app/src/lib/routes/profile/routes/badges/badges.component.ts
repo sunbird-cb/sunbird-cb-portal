@@ -32,7 +32,7 @@ export class BadgesComponent implements OnInit {
     private badgesSvc: BadgesService,
     private logger: LoggerService,
     private snackBar: MatSnackBar,
-    private configSvc: ConfigurationsService,
+    private configSvc: ConfigurationsService
   ) {
     this.badges = {
       canEarn: [],
@@ -42,9 +42,11 @@ export class BadgesComponent implements OnInit {
       recent: [],
       totalPoints: [{ collaborative_points: 0, learning_points: 0 }],
     }
+
     if (this.configSvc.userProfile) {
       this.userName = this.configSvc.userProfile.userName
     }
+
     if (this.userName) {
       this.userName = this.userName.split(' ')[0]
     }
