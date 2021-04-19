@@ -41,10 +41,12 @@ export class PostViewComponent implements OnInit {
     private router: Router,
     private discussionSvc: WsDiscussionForumService,
   ) {
+
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId || ''
       this.userEmail = this.configSvc.userProfile.email || ''
     }
+
     this.conversationRequest.userId = this.userId
   }
 

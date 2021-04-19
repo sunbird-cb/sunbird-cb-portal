@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { NSDiscussData } from '../models/discuss.model'
 import { ConfigurationsService, NsUser } from '@sunbird-cb/utils'
-
+// import { ActivatedRoute } from '@angular/router'
 const API_ENDPOINTS = {
   getAllCategories: '/apis/protected/v8/discussionHub/categories',
   getSingleCategoryDetails: (cid: number) => `/apis/protected/v8/discussionHub/categories/${cid}`,
@@ -14,9 +14,11 @@ const API_ENDPOINTS = {
   recentPost: '/apis/protected/v8/discussionHub/topics/recent',
   popularPost: '/apis/protected/v8/discussionHub/topics/popular',
   unread: '/apis/protected/v8/discussionHub/topics/unread/total',
-  getTopic: '/apis/protected/v8/discussionHub/topics/',
+  // getTopic: '/apis/protected/v8/discussionHub/topics/',
+  getTopic: '/apis/proxies/v8/discussion/topic/',
   profile: '/apis/protected/v8/discussionHub/users/me',
-  fetchProfile: (slug: string) => `/apis/protected/v8/discussionHub/users/${slug}/about`,
+  // fetchProfile: (slug: string) => `/apis/protected/v8/discussionHub/users/${slug}/about`,
+  fetchProfile: (name: string) => `/apis/proxies/v8/discussion/user/${name}`,
   listUpVote: (slug: string) => `/apis//protected/v8/discussionHub/users/${slug}/upvoted`,
   listDownVoted: (slug: string) => `/apis/protected/v8/discussionHub/users/${slug}/downvoted`,
   listSaved: (slug: string) => `/apis/protected/v8/discussionHub/users/${slug}/bookmarks`,
@@ -33,6 +35,13 @@ export class DiscussService {
     private http: HttpClient, private configSvc: ConfigurationsService) {
     this.usr = this.configSvc.userProfile
   }
+
+  // constructor(
+  //   private http: HttpClient, private route: ActivatedRoute) {
+  //   this.route.data.subscribe(data => {
+  //     this.usr = data.profileData.data
+  //   })
+  // }
 
   get getUserProfile(): NsUser.IUserProfile {
     return this.usr
@@ -105,15 +114,17 @@ export class DiscussService {
     return this.http.get<NSDiscussData.IDiscussionData>(url)
   }
 
-  fetchTopicById(topicId: number, page?: any) {
-    let url = API_ENDPOINTS.getTopic + topicId.toString()
-    url = this.appendPage(page, url)
+  fetchTopicById(topicId: number, topicName: any) {
+    // tslint:disable-next-line:prefer-template
+    const url = API_ENDPOINTS.getTopic + topicId.toString() + '/' + topicName.toString()
+    // url = this.appendPage(page, url)
     return this.http.get<NSDiscussData.IDiscussionData>(url)
   }
 
-  fetchTopicByIdSort(topicId: number, sort: any, page?: any) {
-    let url = API_ENDPOINTS.getTopic + topicId.toString()
-    url = this.appendPage(page, url)
+  fetchTopicByIdSort(topicId: number, topicName: any, sort: any) {
+    // tslint:disable-next-line:prefer-template
+    const url = API_ENDPOINTS.getTopic + topicId.toString()  + '/' + topicName.toString()
+    // url = this.appendPage(page, url)
     return this.http.get<NSDiscussData.IDiscussionData>(`${url}&sort=${sort}`)
   }
 

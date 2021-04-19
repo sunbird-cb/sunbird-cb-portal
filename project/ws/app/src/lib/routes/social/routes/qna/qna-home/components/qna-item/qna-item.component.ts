@@ -20,6 +20,7 @@ export class QnaItemComponent implements OnInit {
     private snackBar: MatSnackBar,
     private configSvc: ConfigurationsService,
   ) {
+
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId || ''
     }

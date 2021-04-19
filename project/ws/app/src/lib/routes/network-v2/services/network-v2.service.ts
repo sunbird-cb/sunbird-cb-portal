@@ -10,6 +10,7 @@ const API_ENDPOINTS = {
   connectionRequestsReceived : `/apis/protected/v8/connections/connections/requests/received`,
   connectionEstablished: `/apis/protected/v8/connections/connections/established`,
   getSuggestedUsers: `/apis/protected/v8/connections/connections/suggests`,
+  getUserdetailsV2FromRegistry: '/apis/protected/v8/user/profileRegistry/getUserRegistryByUser',
 }
 
 @Injectable({
@@ -19,6 +20,11 @@ export class NetworkV2Service {
 
   constructor(
     private http: HttpClient) {
+  }
+
+  fetchProfile(userId: string) {
+    return this.http.get<NSNetworkDataV2.IProfile>(`${API_ENDPOINTS.getUserdetailsV2FromRegistry}/${userId}`)
+
   }
 
   fetchAllConnectionRequests() {

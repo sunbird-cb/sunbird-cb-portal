@@ -8,6 +8,7 @@ import { MobileAppsService } from '../../../../../../../src/app/services/mobile-
 import { SCORMAdapterService } from './SCORMAdapter/scormAdapter'
 /* tslint:disable */
 import _ from 'lodash'
+import { environment } from 'src/environments/environment';
 /* tslint:enable */
 
 @Component({
@@ -146,14 +147,23 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       //   a.click()
       //   URL.revokeObjectURL(objectUrl)
       // })
-      if (this.htmlContent.status !== 'Live') {
-        this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
-          `https://igot.blob.core.windows.net/content/content/html/${this.htmlContent.identifier}-latest/index.html`
-        )
+      if (this.htmlContent.mimeType !== 'text/x-url' && this.htmlContent.mimeType !== 'video/x-youtube') {
+        if (this.htmlContent.status === 'Live') {
+          this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
+            // `https://igot.blob.core.windows.net/content/content/html/${this.htmlContent.identifier}-latest/index.html`
+            // tslint:disable-next-line: max-line-length
+            `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-latest/index.html?timestamp='${new Date().getTime()}`
+          )
+        } else {
+          this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
+            // `https://igot.blob.core.windows.net/content/content/html/${this.htmlContent.identifier}-snapshot/index.html`
+            // tslint:disable-next-line: max-line-length
+            `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
+          )
+        }
       } else {
-        this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
-          `https://igot.blob.core.windows.net/content/content/html/${this.htmlContent.identifier}-snapshot/index.html`
-        )
+        this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.htmlContent.artifactUrl)
+        // this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.htmlContent.artifactUrl)
       }
       // testing purpose only
       // setTimeout(
@@ -257,5 +267,22 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         ...data,
       })
     }
+  }
+
+  generateUrl(oldUrl: string) {
+    const chunk = oldUrl.split('/')
+    const newChunk = environment.azureHost.split('/')
+    const newLink = []
+    for (let i = 0; i < chunk.length; i += 1) {
+      if (i === 2) {
+        newLink.push(newChunk[i])
+      } else if (i === 3) {
+        newLink.push(environment.azureBucket)
+      } else {
+        newLink.push(chunk[i])
+      }
+    }
+    const newUrl = newLink.join('/')
+    return newUrl
   }
 }

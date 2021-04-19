@@ -74,9 +74,11 @@ export class BlogEditComponent implements OnInit {
     private discussionSvc: WsDiscussionForumService,
     private valueSvc: ValueService,
   ) {
+
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId || ''
     }
+
     this.postUpdateRequest.editor = this.userId
     this.postPublishRequest.postCreator = this.userId
     this.isXSmall$ = this.valueSvc.isXSmall$

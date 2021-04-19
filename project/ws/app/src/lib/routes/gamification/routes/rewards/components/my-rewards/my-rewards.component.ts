@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
-import { ConfigurationsService } from '@sunbird-cb/utils'
 import { GamificationService } from '../../../../services/gamification.service'
 import { Subscription } from 'rxjs'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-my-rewards',
@@ -34,9 +34,11 @@ export class MyRewardsComponent implements OnInit {
               private configSvc: ConfigurationsService) {
     this.disablePrev = true
     this.disableNext = false
+
     if (this.configSvc.userProfile) {
-      this.userName = this.configSvc.userProfile.userName
+      this.userName = this.configSvc.userProfile.userName || ''
     }
+
   }
 
   ngOnInit() {

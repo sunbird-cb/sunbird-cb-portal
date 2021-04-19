@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 import { ActivatedRoute } from '@angular/router'
 import { ContentAssignService } from '@sunbird-cb/collection'
 import { ConfigurationsService } from '@sunbird-cb/utils'
-import { IUserSearchUnitFilterModel, IUserSearchRequestModel } from '@sunbird-cb/collection/lib/content-assign/content-assign.model'
+import { IUserSearchUnitFilterModel, IUserSearchRequestModel } from '@sunbird-cb/collection/src/lib/content-assign/content-assign.model'
 
 @Component({
   selector: 'ws-app-user-filter-display',
@@ -22,6 +22,7 @@ export class UserFilterDisplayComponent implements OnInit, OnChanges {
   userAdminLevel = ''
   userType = ''
   userFilterLevel = ''
+  userId: any
 
   constructor(
     private configSvc: ConfigurationsService,
@@ -74,12 +75,16 @@ export class UserFilterDisplayComponent implements OnInit, OnChanges {
   }
 
   applyLevelFilter() {
-    if (this.configSvc.userProfile && this.configSvc.org && this.userAdminLevel) {
+    if (this.configSvc.org && this.userAdminLevel) {
+
+      if (this.configSvc.userProfile) {
+        this.userId = this.configSvc.userProfile.userId || ''
+      }
       const reqBody = {
         pageSize: 10,
         orgs: this.configSvc.org,
         filters: {
-          wid: [this.configSvc.userProfile.userId],
+          wid: [this.userId],
         },
         requiredSources: [this.userAdminLevel],
       }

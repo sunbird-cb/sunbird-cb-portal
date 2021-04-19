@@ -36,9 +36,11 @@ export class MyBlogComponent implements OnInit {
     private route: ActivatedRoute,
     private configSvc: ConfigurationsService,
   ) {
+
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId || ''
     }
+
     this.myDraftsRequest.userId = this.userId
     this.myTimelineRequest.userId = this.userId
   }

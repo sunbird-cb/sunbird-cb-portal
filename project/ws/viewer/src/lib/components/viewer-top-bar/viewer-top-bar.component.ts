@@ -36,7 +36,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     // private logger: LoggerService,
     private configSvc: ConfigurationsService,
     private viewerDataSvc: ViewerDataService,
-    private valueSvc: ValueService
+    private valueSvc: ValueService,
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
@@ -49,14 +49,17 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     }
     this.isTypeOfCollection = this.activatedRoute.snapshot.queryParams.collectionType ? true : false
     this.collectionType = this.activatedRoute.snapshot.queryParams.collectionType
-    // if (this.configSvc.rootOrg === EInstance.INSTANCE) {
-    // this.logo = false
-    // }
+
     if (this.configSvc.instanceConfig) {
       this.appIcon = this.domSanitizer.bypassSecurityTrustResourceUrl(
         this.configSvc.instanceConfig.logos.app,
       )
     }
+  //   this.route.data.subscribe((data: any) => {
+  //     this.appIcon =
+  //     this.domSanitizer.bypassSecurityTrustResourceUrl(data.configData.data.logos.app)
+  //   }
+  // )
     this.viewerDataServiceSubscription = this.viewerDataSvc.tocChangeSubject.subscribe(data => {
       this.prevResourceUrl = data.prevResource
       this.nextResourceUrl = data.nextResource

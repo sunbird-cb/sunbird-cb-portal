@@ -81,11 +81,12 @@ export class QnaEditComponent implements OnInit, OnDestroy {
     private discussionSvc: WsDiscussionForumService,
     private socialSvc: WsSocialService,
     private configSvc: ConfigurationsService,
-    private matSnackBar: MatSnackBar,
+    private matSnackBar: MatSnackBar
   ) {
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId || ''
     }
+
     this.postPublishRequest.postCreator = this.userId
     this.postUpdateRequest.editor = this.userId
     this.tagsCtrl.valueChanges

@@ -23,6 +23,7 @@ export class BlogReplyComponent implements OnInit {
     private configSvc: ConfigurationsService,
     private discussionSvc: WsDiscussionForumService,
   ) {
+
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId || ''
     }

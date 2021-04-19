@@ -8,13 +8,22 @@ export const environment: IEnvironment = {
   organisation: 'igot-karmayogi',
   framework: 'igot',
   channelId: '0131397178949058560',
+  azureHost: 'https://igot.blob.core.windows.net',
+  azureBucket: 'content',
+
+  azureOldHost: 'https://staas-bbs1.cloud.gov.in',
+  azureOldBuket: 'igot',
 }
 interface IEnvironment {
   production: boolean
   sitePath: null | string
   organisation: string
   framework: string
-  channelId: string
+  channelId: string,
+  azureHost: string,
+  azureBucket: string,
+  azureOldHost: string,
+  azureOldBuket: string
 }
 
 /*

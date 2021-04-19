@@ -18,13 +18,14 @@ export class GoalHomeComponent implements OnInit {
 
   constructor(
     private router: Router,
+    // private route: ActivatedRoute,
     private configSvc: ConfigurationsService,
     private goalsSvc: BtnGoalsService,
   ) {
     this.navBackground = this.configSvc.pageNavBar
-    if (this.configSvc.userProfile) {
-      this.userName = (this.configSvc.userProfile.userName || '').split(' ')[0]
-    }
+    this.userName =
+     (this.configSvc.userProfile) ?
+     `${this.configSvc.userProfile.firstName}  ${this.configSvc.userProfile.lastName}` : undefined
   }
 
   ngOnInit() {

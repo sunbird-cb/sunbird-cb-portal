@@ -23,7 +23,7 @@ export class LearningComponent implements OnInit, OnDestroy {
   screenSizeIsLtMedium = false
   sideNavBarOpened = true
   searchRequestStatus: any = 'none'
-  searchResults: NSSearch.ISearchV6ApiResultV2 = {
+  searchResults: any = {
     id: '',
     ver: '',
     ts: '',
@@ -204,6 +204,7 @@ export class LearningComponent implements OnInit, OnDestroy {
     })
     if (queryMap.get('f')) {
       defaultFilters = JSON.parse(queryMap.get('f') || '{}')
+      // defaultFilters = queryMap.get('f') || '{}'
     }
     if (!Object.keys(defaultFilters).length && Object.keys(this.filtersFromConfig).length) {
       this.router.navigate([], {

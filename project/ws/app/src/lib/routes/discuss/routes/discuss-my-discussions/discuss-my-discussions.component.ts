@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { NSDiscussData } from '../../models/discuss.model'
@@ -27,9 +26,9 @@ export class DiscussMyDiscussionsComponent implements OnInit {
   fetchNetworkProfile() {
     this.discussService.fetchNetworkProfile().subscribe(response => {
       this.profilePhoto = _.get(_.first(response), 'photo')
-      if (this.configSvc.userProfile) {
-        localStorage.setItem(this.configSvc.userProfile.userId, this.profilePhoto)
-      }
+        if (this.configSvc.userProfile) {
+          localStorage.setItem(this.configSvc.userProfile.userId, this.profilePhoto)
+        }
     },
       /* tslint:disable */
       () => {

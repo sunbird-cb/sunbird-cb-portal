@@ -5,6 +5,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MatSnackBar } from '@angular/material'
 import { AppDateAdapter, APP_DATE_FORMATS, startWithYearformat } from '@ws/app'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { AppTocService } from '../../services/app-toc.service'
+
 @Component({
   selector: 'ws-app-create-batch-dialog',
   templateUrl: './create-batch-dialog.component.html',
@@ -26,9 +27,9 @@ export class CreateBatchDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CreateBatchDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private configSvc: ConfigurationsService,
     private appTocService: AppTocService,
     private snackBar: MatSnackBar,
+    private configSvc: ConfigurationsService
   ) {
     this.createBatchForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),

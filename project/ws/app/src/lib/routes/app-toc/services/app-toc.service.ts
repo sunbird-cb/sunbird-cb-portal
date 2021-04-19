@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Data } from '@angular/router'
-import { Subject, Observable } from 'rxjs'
+import { Subject, Observable, EMPTY } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 import { NsContent, NsContentConstants } from '@sunbird-cb/collection'
 import { NsAppToc, NsCohorts } from '../models/app-toc.model'
@@ -242,9 +242,11 @@ export class AppTocService {
   }
 
   fetchContentParents(contentId: string): Observable<NsContent.IContentMinimal[]> {
-    return this.http.get<NsContent.IContentMinimal[]>(
-      `${API_END_POINTS.CONTENT_PARENTS}/${contentId}`,
-    )
+    // return this.http.get<NsContent.IContentMinimal[]>(
+    //   `${API_END_POINTS.CONTENT_PARENTS}/${contentId}`,
+    // )
+    if (contentId) {}
+    return EMPTY
   }
   fetchContentWhatsNext(
     contentId: string,

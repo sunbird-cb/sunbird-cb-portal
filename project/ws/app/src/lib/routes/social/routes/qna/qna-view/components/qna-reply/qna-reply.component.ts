@@ -58,6 +58,7 @@ export class QnaReplyComponent implements OnInit {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
   ) {
+
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId || ''
     }
