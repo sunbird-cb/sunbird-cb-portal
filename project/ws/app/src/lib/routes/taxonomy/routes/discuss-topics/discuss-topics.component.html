@@ -13,7 +13,7 @@
 </div>
 <mat-sidenav-container class="container-balanced-local" name="discuss-menu">
   <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 sidenav-align">
-    <app-discuss-left-menu [unseen]="unread" [tabsData] = "firstLevelTopic"></app-discuss-left-menu>
+    <app-discuss-left-menu [unseen]="unread" [tabsData] = "firstLevelTopic"  (currentTab)="selectedEvent($event)"></app-discuss-left-menu>
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-align-cont">
     <div *ngIf="screenSizeIsLtMedium">
@@ -24,7 +24,7 @@
     </div>
 
     <div class="flex flex-4 bot">
-      <app-dicuss-card *ngIf="nextLevelTopic"[tags]="nextLevelTopic"></app-dicuss-card>
+      <app-dicuss-card *ngIf="nextLevelTopic"[tags]="nextLevelTopic"  (clickedTab)="getClickedTab($event)"></app-dicuss-card>
     </div>
     <div class="flex flex-1">
       <div class="margin-left-xll mb-1-imp flex flex-wrap">

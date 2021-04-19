@@ -8,8 +8,8 @@ import { DiscussTopicsComponent } from './routes/discuss-topics/discuss-topics.c
 const routes: Routes = [
   {
     path: '',
-    pathMatch:'full',
-    redirectTo:'home'
+    pathMatch: 'full',
+    redirectTo: 'home',
   },
   {
     path: 'home',
@@ -27,6 +27,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class TaxonomyRoutingModule { }

@@ -43,7 +43,6 @@ export class CompetenceAllComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
-    console.log(this.tabsData)
     if (this.route.snapshot.data &&
       this.route.snapshot.data.profile &&
       this.route.snapshot.data.profile.data &&

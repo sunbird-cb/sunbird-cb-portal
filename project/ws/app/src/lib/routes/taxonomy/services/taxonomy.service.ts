@@ -30,68 +30,65 @@ export class TaxonomyService {
   fetchAllTopics() {
     return this.http.get<any>(API_ENDPOINTS.getAllTopics)
   }
-  fetchAllRelatedCourse(){
-   var request ={
+  fetchAllRelatedCourse() {
+   const request = {
           filters: {
               primaryCategory: [
-                  "Collection",
-                  "Resource",
-                  "Content Playlist",
-                  "Course",
-                  "Course Assessment",
-                  "Digital Textbook",
-                  "eTextbook",
-                  "Explanation Content",
-                  "Learning Resource",
-                  "Lesson Plan Unit",
-                  "Practice Question Set",
-                  "Teacher Resource",
-                  "Textbook Unit",
-                  "LessonPlan",
-                  "FocusSpot",
-                  "Learning Outcome Definition",
-                  "Curiosity Questions",
-                  "MarkingSchemeRubric",
-                  "ExplanationResource",
-                  "ExperientialResource",
-                  "Practice Resource",
-                  "TVLesson"
-              ]
+                  'Collection',
+                  'Resource',
+                  'Content Playlist',
+                  'Course',
+                  'Course Assessment',
+                  'Digital Textbook',
+                  'eTextbook',
+                  'Explanation Content',
+                  'Learning Resource',
+                  'Lesson Plan Unit',
+                  'Practice Question Set',
+                  'Teacher Resource',
+                  'Textbook Unit',
+                  'LessonPlan',
+                  'FocusSpot',
+                  'Learning Outcome Definition',
+                  'Curiosity Questions',
+                  'MarkingSchemeRubric',
+                  'ExplanationResource',
+                  'ExperientialResource',
+                  'Practice Resource',
+                  'TVLesson',
+              ],
           },
-          query: "",
+          query: '',
           sort_by: {
-              "lastUpdatedOn": "desc"
+              lastUpdatedOn: 'desc',
           },
           fields: [
-              "name",
-              "appIcon",
-              "mimeType",
-              "gradeLevel",
-              "identifier",
-              "medium",
-              "pkgVersion",
-              "board",
-              "subject",
-              "resourceType",
-              "primaryCategory",
-              "contentType",
-              "channel",
-              "organisation",
-              "trackable"
+              'name',
+              'appIcon',
+              'mimeType',
+              'gradeLevel',
+              'identifier',
+              'medium',
+              'pkgVersion',
+              'board',
+              'subject',
+              'resourceType',
+              'primaryCategory',
+              'contentType',
+              'channel',
+              'organisation',
+              'trackable',
           ],
           facets: [
-              "board",
-              "gradeLevel",
-              "subject",
-              "medium",
-              "primaryCategory",
-              "mimeType"
-          ]
+              'board',
+              'gradeLevel',
+              'subject',
+              'medium',
+              'primaryCategory',
+              'mimeType',
+          ],
       }
-  console.log("comming")
-    return this.http.post<any>(API_ENDPOINTS.getAllReleatedCourse,  {request})
+    return this.http.post<any>(API_ENDPOINTS.getAllReleatedCourse,  { request })
   }
-
-
 
 }

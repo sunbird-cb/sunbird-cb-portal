@@ -40,7 +40,6 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 
 import { DiscussTopicsComponent } from './routes/discuss-topics/discuss-topics.component'
 
-
 @NgModule({
   declarations: [
     CategoryCardComponent,
@@ -54,7 +53,7 @@ import { DiscussTopicsComponent } from './routes/discuss-topics/discuss-topics.c
     RelatedDiscussionComponent,
     TrendingTagsComponent,
     PaginationComponent,
-    DiscussTopicsComponent
+    DiscussTopicsComponent,
   ],
   imports: [
     CommonModule,

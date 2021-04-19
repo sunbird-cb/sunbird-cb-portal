@@ -166,7 +166,6 @@ export class DashboardComponent implements OnInit {
       this.learnHstSvc.fetchContentProgress(this.pageNum, this.pageSize, this.selectedStatusType, 'course').subscribe(
         (data: NSLearningHistory.ILearningHistory) => {
           this.coursePending = data.result.sort((a: any, b: any) => (a.timeLeft > b.timeLeft ? 1 : a.timeLeft < b.timeLeft ? -1 : 0))
-          console.log(this.coursePending)
           this.historyFetchStatus = 'done'
         },
         () => {

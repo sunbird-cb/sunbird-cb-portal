@@ -15,7 +15,6 @@ export class InitResolver implements Resolve<any> {
     if (data.includes('ckeditor')) {
       // forkProcess.push(this.ckEditorInject.inject())
     }
-    console.log(data)
     return forkJoin(forkProcess).pipe()
   }
 }

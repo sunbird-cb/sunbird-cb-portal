@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core'
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core'
 import { Subscription } from 'rxjs/internal/Subscription'
 // import { BreakpointObserver } from '@angular/cdk/layout'
 // import { DomSanitizer } from '@angular/platform-browser'
@@ -11,13 +11,9 @@ import { Subscription } from 'rxjs/internal/Subscription'
 })
 export class LeftMenuComponent implements OnInit, OnDestroy {
   @Input() unseen = 0
-  @Input() tabsData:any = []
+  @Input() tabsData: any = []
+  @Output() currentTab = new EventEmitter<string>()
   private tabs: Subscription | null = null
-  constructor(
-    // private breakpointObserver: BreakpointObserver,
-    // private domSanitizer: DomSanitizer,
-    // private configSvc: ConfigurationsService,
-  ) { }
 
   ngOnInit(): void {
   }
@@ -25,5 +21,8 @@ export class LeftMenuComponent implements OnInit, OnDestroy {
     if (this.tabs) {
       this.tabs.unsubscribe()
     }
+  }
+  onChangeTab(tabName: string) {
+    this.currentTab.emit(tabName)
   }
 }

@@ -4,7 +4,7 @@
   class="example-chip"
   cdkDropList
   cdkDropListOrientation="horizontal">
-  <mat-chip
+  <mat-chip (click)="getClickedTab(tag)"
     class="example-box"
     cdkDrag
    *ngFor="let tag of tags">

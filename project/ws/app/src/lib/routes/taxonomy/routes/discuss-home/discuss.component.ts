@@ -5,6 +5,7 @@ import { ValueService } from '@sunbird-cb/utils'
 import { map } from 'rxjs/operators'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { TaxonomyService } from '../../services/taxonomy.service'
+const APP_TAXONOMY = `/app/taxonomy/`
 @Component({
   selector: 'app-discuss',
   templateUrl: './discuss.component.html',
@@ -13,7 +14,7 @@ import { TaxonomyService } from '../../services/taxonomy.service'
 export class DiscussComponent implements OnInit, OnDestroy {
   sideNavBarOpened = true
   panelOpenState = false
-  termsTopicArray:any
+  termsTopicArray: any
   titles = [{ title: 'DISCUSS', url: '/app/discuss/home', icon: 'forum' }]
   unread = 0
   currentRoute = 'home'
@@ -46,8 +47,8 @@ export class DiscussComponent implements OnInit, OnDestroy {
       }
     })
   }
-  gotoNextLevel(topic: any){
-    this.router.navigate(['/app/taxonomy/'+topic.name])
+  gotoNextLevel(topic: any) {
+    this.router.navigate([APP_TAXONOMY + topic.name])
   }
   ngOnInit() {
     this.getAllTopics()
@@ -64,10 +65,9 @@ export class DiscussComponent implements OnInit, OnDestroy {
       this.bannerSubscription.unsubscribe()
     }
   }
-  getAllTopics(){
+  getAllTopics() {
     this._service.fetchAllTopics().subscribe(response => {
-      console.log(response)
-      this.termsTopicArray =response.terms
+      this.termsTopicArray = response.terms
     })
   }
 

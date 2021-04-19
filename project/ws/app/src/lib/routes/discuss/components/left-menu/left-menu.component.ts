@@ -28,8 +28,6 @@ export class LeftMenuComponent implements OnInit, OnDestroy {
     this.tabs = this.activateRoute.data.subscribe(data => {
       if (data && data.pageData) {
         this.tabsData = data.pageData.data.tabs || []
-        console.log(this.tabsData)
-
       }
     })
   }
