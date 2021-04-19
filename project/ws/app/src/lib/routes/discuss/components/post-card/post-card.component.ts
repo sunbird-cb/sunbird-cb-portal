@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { NSDiscussData } from '../../models/discuss.model'
 import { Router } from '@angular/router'
+/* tslint:disable */
+import _ from 'lodash'
 @Component({
   selector: 'app-dicuss-post-card',
   templateUrl: './post-card.component.html',
@@ -36,7 +38,7 @@ export class PostCardComponent implements OnInit {
   }
   getDiscussion() {
     if (this.discuss && this.discuss.topic && this.discuss.topic) {
-      this.router.navigate([`/app/discuss/home/${this.discuss.topic.tid}`])
+      this.router.navigate([`/app/discussion-forum/topic/${_.trim(_.get(this.discuss.topic, 'slug'))}`])
     }
   }
 }
