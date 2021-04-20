@@ -22,6 +22,7 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
   unread = 0
   currentObj!: any
   nextLvlObj!: any
+  leftMenuChildObj!: any
   currentRoute = 'home'
   banner!: NsWidgetResolver.IWidgetData<any>
   public screenSizeIsLtMedium = false
@@ -104,6 +105,7 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
           this.currentTab = term.name
             this.firstLevelTopic = firstLvlArray
             if (term.name === decodeURI(topic) && term.children) {
+
               const nextLevel: string[] = []
               term.children.forEach((second: any) => {
                 nextLevel.push(second.name)
@@ -117,30 +119,24 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
         this.nextLvlObj = tempCurrentArray
     }
     dataProcessOn2ndLevel(topic: string) {
-      const firstLvlArray: any[] = []
       const tempCurrentArray: any[] = []
-      this.nextLvlObj.forEach((term: any) => {
-        // if(term.name!==decodeURI(topic)){
-          const obj = {
-            name: term.name,
-            enabled: true,
-            routerLink: APP_TAXONOMY + term.name,
-          }
-          firstLvlArray.push(obj)
+      this.nextLevelTopic = []
+      if (this.leftMenuChildObj) {
+      this.leftMenuChildObj.forEach((term: any) => {
           this.currentTab = term.name
-            this.firstLevelTopic = firstLvlArray
             if (term.name === topic && term.children) {
+              this.nextLvlObj = term.children
               const nextLevel: string[] = []
               term.children.forEach((second: any) => {
                 nextLevel.push(second.name)
                 tempCurrentArray.push(second)
               })
-
               this.nextLevelTopic = nextLevel
             }
 
         })
-        this.nextLvlObj = tempCurrentArray
+      }
+        // this.nextLvlObj = tempCurrentArray
     }
     selectedEvent(tabItem: string) {
       if (this.isFirst) {
@@ -152,15 +148,20 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
     }
     getClickedTab(clickedTab: string) {
       this.isFirst = false
+      const leftMenuData: any[] = []
       this.nextLvlObj.forEach((term: any) => {
+        leftMenuData.push(term)
         if (term.name === decodeURI(clickedTab)) {
           this.dataProcessOneMore(clickedTab, this.nextLvlObj)
         }
         })
+        this.leftMenuChildObj = leftMenuData
     }
 
     dataProcessOneMore(topic: string, processObj: any) {
       const firstLvlArray: any[] = []
+      this.firstLevelTopic = []
+      this.nextLevelTopic = []
       processObj.forEach((term: any) => {
         if (term) {
         if (term.name === decodeURI(topic)) {
@@ -168,7 +169,6 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
           this.nextLvlObj = term.children
           }
         }
-        // if (term.name !== decodeURI(topic)) {
           const obj = {
             name: term.name,
             enabled: true,
@@ -193,8 +193,6 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
               })
               if (nextLevel.length > 0) {
                 this.nextLevelTopic = nextLevel
-              } else {
-                this.nextLevelTopic = []
               }
 
             }
