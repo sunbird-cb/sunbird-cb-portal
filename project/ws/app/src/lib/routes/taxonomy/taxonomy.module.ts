@@ -31,7 +31,7 @@ import { MatCardModule } from '@angular/material/card'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { TrendingTagsComponent } from './components/trending-tags/trending-tags.component'
 import { RelatedDiscussionComponent } from './components/related-discussion/related-discussion.component'
-import { AvatarPhotoModule, BtnPageBackModule, CardContentModule } from '@sunbird-cb/collection'
+import { AvatarPhotoModule, BtnPageBackModule, CardContentModule, BreadcrumbsOrgModule} from '@sunbird-cb/collection'
 import { EditorSharedModule } from '@ws/author/src/lib/routing/modules/editor/shared/shared.module'
 // import { CkEditorModule } from 'library/ws-widget/collection/src/lib/_common/ck-editor/ck-editor.module'
 import { LoaderService } from '@ws/author/src/lib/services/loader.service'
@@ -87,6 +87,7 @@ import { DiscussTopicsComponent } from './routes/discuss-topics/discuss-topics.c
     BtnPageBackModule,
     WidgetResolverModule,
     CardContentModule,
+    BreadcrumbsOrgModule,
   ],
   providers: [
     // CKEditorService,

@@ -24,6 +24,7 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
   nextLvlObj!: any
   leftMenuChildObj!: any
   currentRoute = 'home'
+  breadCrum!:any
   banner!: NsWidgetResolver.IWidgetData<any>
   public screenSizeIsLtMedium = false
   isLtMedium$ = this.valueSvc.isLtMedium$
@@ -61,6 +62,7 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
       this.sideNavBarOpened = !isLtMedium
       this.screenSizeIsLtMedium = isLtMedium
     })
+    this.breadCrum = {titles:[{title:'Home', url:'/app/taxonomy/home'},{title:'Law',url:'none'}, {title:'Law',url:'none'}, {title:'Law',url:'none'}]}
     // this.firstLevelTopic =  [{name: "Economics", enabled: true, routerLink:"/app/taxonomy/test"},
     // {name: "1st level  topic", enabled: true, routerLink:"/app/taxonomy/116"},
     // {name: "1st level  topic", enabled: true, routerLink:"/app/taxonomy/ll1"},
