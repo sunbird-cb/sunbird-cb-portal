@@ -28,7 +28,7 @@ export class PlaylistCardComponent implements OnInit {
 
   type: NsPlaylist.EPlaylistTypes = this.route.snapshot.data.type
   isShareEnabled = false
-  defaultThumbnail = ''
+  defaultThumbnail: string | undefined = ''
   deletePlaylistStatus: TFetchStatus = 'none'
   deletedContents = new Set()
   isIntranetAllowedSettings = false
@@ -42,8 +42,9 @@ export class PlaylistCardComponent implements OnInit {
               public configSvc: ConfigurationsService,
 
   ) {
-    if (this.route.snapshot.data.pageData.data) {
-      this.defaultThumbnail = this.route.snapshot.data.pageData.data.defaultThumbnail
+    const instanceConfig = this.configSvc.instanceConfig
+    if (instanceConfig) {
+      this.defaultThumbnail = instanceConfig.logos.defaultContent
     }
 
   }
@@ -51,6 +52,14 @@ export class PlaylistCardComponent implements OnInit {
   ngOnInit() {
     if (this.configSvc.restrictedFeatures) {
       this.isShareEnabled = !this.configSvc.restrictedFeatures.has('share')
+    }
+    if (this.playlist) {
+      this.playlistSvc.getPlaylist(this.playlist.identifier).subscribe(data => {
+        this.playlist = data ? data.result.content : this.playlist
+         if (this.playlist && this.playlist.children && !this.playlist.icon) {
+          this.playlist.icon = this.playlist.children[0].appIcon
+        }
+      })
     }
   }
   getDuration(playlist: NsPlaylist.IPlaylist) {
@@ -63,11 +72,13 @@ export class PlaylistCardComponent implements OnInit {
     }
     return totalDuration
   }
-  greyOut(content: NsContent.IContent) {
+  greyOut(_content: NsContent.IContent) {
     return (
-      this.isDeletedOrExpired(content) ||
-      this.hasNoAccess(content) ||
-      this.isInIntranetMobile(content)
+      // TODO: Need to make these once the all the data is available
+      // this.isDeletedOrExpired(content) ||
+      // this.hasNoAccess(content) ||
+      // this.isInIntranetMobile(content)
+      false
     )
   }
   deletePlaylist() {

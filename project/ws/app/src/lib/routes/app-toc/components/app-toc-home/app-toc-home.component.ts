@@ -66,6 +66,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   showScrollHeight = 300
   hideScrollHeight = 10
   elementPosition: any
+  batchSubscription: Subscription | null = null
   @ViewChild('stickyMenu', { static: true }) menuElement!: ElementRef
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -110,6 +111,15 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.route.fragment.subscribe((fragment: string) => {
       this.currentFragment = fragment || 'overview'
     })
+    this.batchSubscription = this.tocSvc.batchReplaySubject.subscribe(
+      () => {
+        this.fetchBatchDetails()
+      },
+      () => {
+        // tslint:disable-next-line: no-console
+        console.log('error on batchSubscription')
+      },
+    )
   }
   ngAfterViewInit() {
     this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
@@ -117,6 +127,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   ngOnDestroy() {
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe()
+    }
+    if (this.batchSubscription) {
+      this.batchSubscription.unsubscribe()
     }
   }
 
@@ -227,36 +240,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             }
           } else {
             // It's understood that user is not already enrolled
-            // Fetch the available batches and presnt to user
-            this.resumeData = null
-            const req = {
-              request: {
-                filters: {
-                  courseId: this.content.identifier,
-                  status: ['0', '1', '2'],
-                  // createdBy: 'fca2925f-1eee-4654-9177-fece3fd6afc9',
-                },
-                sort_by: { createdDate: 'desc' },
-              },
-            }
-            this.contentSvc.fetchCourseBatches(req).subscribe(
-              (data: NsContent.IBatchListResponse) => {
-                this.batchData = data
-                this.batchData.enrolled = false
-                if (this.getBatchId()) {
-                  this.router.navigate(
-                    [],
-                    {
-                      relativeTo: this.route,
-                      queryParams: { batchId: this.getBatchId() },
-                      queryParamsHandling: 'merge',
-                    })
-                }
-              },
-              (error: any) => {
-                this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
-              },
-            )
+            // Fetch the available batches and present to user
+            this.fetchBatchDetails()
           }
         }
       },
@@ -274,6 +259,40 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       }
     }
     return batchId
+  }
+
+  public fetchBatchDetails() {
+    if (this.content && this.content.identifier) {
+      this.resumeData = null
+      const req = {
+        request: {
+          filters: {
+            courseId: this.content.identifier,
+            status: ['0', '1', '2'],
+            // createdBy: 'fca2925f-1eee-4654-9177-fece3fd6afc9',
+          },
+          sort_by: { createdDate: 'desc' },
+        },
+      }
+      this.contentSvc.fetchCourseBatches(req).subscribe(
+        (data: NsContent.IBatchListResponse) => {
+          this.batchData = data
+          this.batchData.enrolled = false
+          if (this.getBatchId()) {
+            this.router.navigate(
+              [],
+              {
+                relativeTo: this.route,
+                // queryParams: { batchId: this.getBatchId() },
+                queryParamsHandling: 'merge',
+              })
+          }
+        },
+        (error: any) => {
+          this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
+        },
+      )
+    }
   }
 
   private getContinueLearningData(contentId: string, batchId?: string) {

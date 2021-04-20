@@ -37,22 +37,34 @@ export class ConnectionHoverCardComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {
     // const userId = this.user.id || this.user.identifier
+  }
 
+  get getUserName() {
+    let name = 'Guest'
+    if (this.hoverUser && !this.hoverUser.personalDetails) {
+      name = `${this.hoverUser.name}`
+    } else if (this.hoverUser && this.hoverUser.personalDetails) {
+      if (this.hoverUser.personalDetails.middlename) {
+        // tslint:disable-next-line: max-line-length
+        name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.middlename} ${this.hoverUser.personalDetails.surname}`
+      } else {
+        name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.surname}`
+      }
+    }
+    return name
   }
   getUseravatarName() {
     let name = 'Guest'
     if (this.hoverUser && !this.hoverUser.personalDetails) {
       name = `${this.hoverUser.name}`
     } else if (this.hoverUser && this.hoverUser.personalDetails) {
-      // tslint:disable-next-line: max-line-length
-      name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.middlename} ${this.hoverUser.personalDetails.surname}`
-
+      if (this.hoverUser.personalDetails.middlename) {
+        // tslint:disable-next-line: max-line-length
+        name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.middlename} ${this.hoverUser.personalDetails.surname}`
+      } else {
+        name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.surname}`
+      }
     }
-    // if (this.hoverUser) {
-    //   // tslint:disable-next-line: max-line-length
-    //   name = `${this.hoverUser.personalDetails.firstname}
-    // ${this.hoverUser.personalDetails.middlename} ${this.hoverUser.personalDetails.surname}`
-    // }
     return name
   }
   goToUserProfile() {

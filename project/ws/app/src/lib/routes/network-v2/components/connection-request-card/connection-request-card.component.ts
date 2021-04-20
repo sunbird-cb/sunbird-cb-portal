@@ -36,6 +36,7 @@ export class ConnectionRequestCardComponent implements OnInit {
     const userId = this.user.id || this.user.identifier
     this.connectionHoverService.fetchProfile(userId).subscribe(res => {
       this.howerUser = res || {}
+      this.user = this.howerUser
       return this.howerUser
     })
   }
@@ -54,15 +55,14 @@ export class ConnectionRequestCardComponent implements OnInit {
   }
 
   connetToUser(action: string | 'Approved' | 'Rejected') {
-    // const req = { connectionId: this.user.id, status: action }
     const req = {
       connectionId: this.user.id,
       userIdFrom: this.me ? this.me.userId : '',
       userNameFrom: this.me ? this.me.userName : '',
-      userDepartmentFrom: this.me ? this.me.departmentName : 'iGOT',
-      userIdTo: this.user.identifier,
-      userNameTo: `${this.user.name}`,
-      userDepartmentTo: this.user.department,
+      userDepartmentFrom: this.me ? this.me.departmentName : '',
+      userIdTo: this.user.id,
+      userNameTo: `${this.user.personalDetails.firstname}${this.user.personalDetails.surname}`,
+      userDepartmentTo: this.user.employmentDetails.departmentName,
       status: action,
     }
 
@@ -87,9 +87,9 @@ export class ConnectionRequestCardComponent implements OnInit {
   }
 
   getUseravatarName() {
-    if (this.user) {
-      return `${this.user.name}`
-      // return `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
+    if (this.user && this.user.personalDetails) {
+      // return `${this.user.name}`
+      return `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
     }
     return ''
   }

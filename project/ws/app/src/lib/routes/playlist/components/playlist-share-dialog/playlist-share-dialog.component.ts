@@ -43,12 +43,12 @@ export class PlaylistShareDialogComponent implements OnInit {
       this.playlistSvc
         .sharePlaylist(
           {
-            name: this.data.playlist.result.content.name,
-            versionKey: this.data.playlist.result.content.versionKey,
+            name: this.data.playlist.name,
+            versionKey: this.data.playlist.versionKey,
             message: shareMsg,
             users: this.users.map(user => user.wid),
           },
-          this.data.playlist.result.content.identifier,
+          this.data.playlist.identifier,
         )
         .subscribe(
           () => {
