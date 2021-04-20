@@ -270,6 +270,9 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     })
     // dialogRef.componentInstance.xyz = this.configSvc
     dialogRef.afterClosed().subscribe((_result: any) => {
+      if (!this.batchId) {
+        this.tocSharedSvc.updateBatchData()
+      }
     })
   }
 

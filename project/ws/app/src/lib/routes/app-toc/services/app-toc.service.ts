@@ -32,6 +32,7 @@ const API_END_POINTS = {
 export class AppTocService {
   analyticsReplaySubject: Subject<any> = new Subject()
   analyticsFetchStatus: TFetchStatus = 'none'
+  batchReplaySubject: Subject<any> = new Subject()
   private showSubtitleOnBanners = false
   private canShowDescription = false
 
@@ -48,6 +49,10 @@ export class AppTocService {
   }
   set showDescription(val: boolean) {
     this.canShowDescription = val
+  }
+
+  updateBatchData() {
+    this.batchReplaySubject.next()
   }
 
   showStartButton(content: NsContent.IContent | null): { show: boolean; msg: string } {
