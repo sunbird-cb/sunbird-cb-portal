@@ -23,6 +23,7 @@ export class ConnectionRecommendedCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log('this.configSvc.userProfileV2', this.configSvc.userProfileV2)
   }
 
   getUseravatarName() {
@@ -34,8 +35,9 @@ export class ConnectionRecommendedCardComponent implements OnInit {
   connetToUser() {
     const req = {
       connectionId: this.user.id,
+      userIdFrom: this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.userId : '',
       userNameFrom: this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.userName : '',
-      userDepartmentFrom: this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.departmentName : 'iGOT',
+      userDepartmentFrom: this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.departmentName : '',
       userIdTo: this.user.id,
       userNameTo: `${this.user.personalDetails.firstname}${this.user.personalDetails.surname}`,
       userDepartmentTo: this.user.employmentDetails.departmentName,

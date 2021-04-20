@@ -52,8 +52,9 @@ export class ConnectionSearchCardComponent implements OnInit {
 
       const req = {
         connectionId: this.user.id,
+        userIdFrom: this.me ? this.me.userId : '',
         userNameFrom: this.me ? this.me.userName : '',
-        userDepartmentFrom: this.me ? this.me.departmentName : 'iGOT',
+        userDepartmentFrom: this.me ? this.me.departmentName : '',
         userIdTo: this.user.id,
         userNameTo: `${this.user.personalDetails.firstname}${this.user.personalDetails.surname}`,
         userDepartmentTo: this.user.employmentDetails.departmentName,
