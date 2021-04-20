@@ -62,7 +62,7 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
       this.sideNavBarOpened = !isLtMedium
       this.screenSizeIsLtMedium = isLtMedium
     })
-    this.breadCrum = {titles:[{title:'Home', url:'/app/taxonomy/home'},{title:'Law',url:'none'}, {title:'Law',url:'none'}, {title:'Law',url:'none'}]}
+    this.breadCrum = {titles:[{title:'Home', url:'/app/taxonomy/home'}]}
     // this.firstLevelTopic =  [{name: "Economics", enabled: true, routerLink:"/app/taxonomy/test"},
     // {name: "1st level  topic", enabled: true, routerLink:"/app/taxonomy/116"},
     // {name: "1st level  topic", enabled: true, routerLink:"/app/taxonomy/ll1"},
