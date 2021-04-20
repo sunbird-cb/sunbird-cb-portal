@@ -264,7 +264,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
 
   openDialog(content: any): void {
     const dialogRef = this.createBatchDialog.open(CreateBatchDialogComponent, {
-      height: '400px',
+      // height: '400px',
       width: '600px',
       data: { content },
     })
