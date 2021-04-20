@@ -17,6 +17,7 @@ export class NetworkHomeComponent implements OnInit {
   tabsData: NSNetworkDataV2.IProfileTab[]
   recommendedUsers!: NSNetworkDataV2.IRecommendedUserResult
   connectionRequests!: any
+  connectionRequestsSent!: any
   enableFeature = true
   nameFilter = ''
   searchSpinner = false
@@ -48,6 +49,7 @@ export class NetworkHomeComponent implements OnInit {
       return v
     })
     this.connectionRequests = this.route.snapshot.data.connectionRequests.data.result.data
+    this.getAllConnectionRequests()
   }
 
   ngOnInit() {
@@ -117,21 +119,28 @@ export class NetworkHomeComponent implements OnInit {
     }
   }
 
+  getAllConnectionRequests() {
+    this.networkV2Service.fetchAllConnectionRequests().subscribe(
+      (requests: any) => {
+        this.connectionRequestsSent = requests.result.data
+      })
+  }
+
   getSearchResult() {
     const val = this.nameFilter.trim()
     if (val.length >= 3) {
       this.searchResultUserArray = []
-      this.cardNetworkService.fetchSearchUserInfo(this.nameFilter.trim()).subscribe(data => {
+      this.cardNetworkService.fetchSearchUserInfo(val).subscribe(data => {
         const searchdata = data
         searchdata.forEach((usr: any) => {
           this.networkV2Service.fetchProfile(usr.wid).subscribe((res: any) => {
             this.searchResultUserArray.push(res.result.UserProfile[0])
             if (this.searchResultUserArray && this.searchResultUserArray.length > 0) {
-              this.networkV2Service.fetchAllConnectionRequests().subscribe(
-                requests => {
+              // this.networkV2Service.fetchAllConnectionRequests().subscribe(
+              //   requests => {
                   // Filter all the connection requests sent
-                  if (requests && requests.result && requests.result.data) {
-                    requests.result.data.map(user => {
+                  if (this.connectionRequestsSent &&  this.connectionRequestsSent.length > 0) {
+                    this.connectionRequestsSent.map((user: any) => {
                       const userid = user.id || user.identifier
                       if (userid) {
                         this.searchResultUserArray.map((autoCompleteUser: any) => {
@@ -169,17 +178,10 @@ export class NetworkHomeComponent implements OnInit {
                     })
                   }
                   this.searchSpinner = false
-                },
-                (_err: any) => {
-                  this.searchSpinner = false
-                })
-                // this.searchResultUserArray.splice(this.searchResultUserArray.findIndex((el: any) => {
-                //   if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
-                //     return el.wid === this.configSvc.userProfile.userId
-                //   }
-                //   return -1
-                // // tslint:disable-next-line: align
-                // }), 0)
+                // },
+                // (_err: any) => {
+                //   this.searchSpinner = false
+                // })
                 this.searchResultUserArray = this.searchResultUserArray.filter((el: any) => {
                   if (this.me && this.me.userId) {
                     if (el.wid === this.me.userId) {

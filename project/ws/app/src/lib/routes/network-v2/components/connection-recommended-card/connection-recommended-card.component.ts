@@ -27,7 +27,7 @@ export class ConnectionRecommendedCardComponent implements OnInit {
 
   getUseravatarName() {
     if (this.user) {
-      return `${this.user.name}`
+      return `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
     }
     return ''
   }
