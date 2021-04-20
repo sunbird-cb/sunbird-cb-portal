@@ -28,7 +28,7 @@ export class PlaylistCardComponent implements OnInit {
 
   type: NsPlaylist.EPlaylistTypes = this.route.snapshot.data.type
   isShareEnabled = false
-  defaultThumbnail = ''
+  defaultThumbnail: string | undefined = ''
   deletePlaylistStatus: TFetchStatus = 'none'
   deletedContents = new Set()
   isIntranetAllowedSettings = false
@@ -42,8 +42,9 @@ export class PlaylistCardComponent implements OnInit {
               public configSvc: ConfigurationsService,
 
   ) {
-    if (this.route.snapshot.data.pageData.data) {
-      this.defaultThumbnail = this.route.snapshot.data.pageData.data.defaultThumbnail
+    const instanceConfig = this.configSvc.instanceConfig
+    if (instanceConfig) {
+      this.defaultThumbnail = instanceConfig.logos.defaultContent
     }
 
   }
@@ -55,6 +56,9 @@ export class PlaylistCardComponent implements OnInit {
     if (this.playlist) {
       this.playlistSvc.getPlaylist(this.playlist.identifier).subscribe(data => {
         this.playlist = data ? data.result.content : this.playlist
+         if (this.playlist && this.playlist.children && !this.playlist.icon) {
+          this.playlist.icon = this.playlist.children[0].appIcon
+        }
       })
     }
   }

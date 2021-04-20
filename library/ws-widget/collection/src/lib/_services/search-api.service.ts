@@ -80,10 +80,7 @@ export class SearchApiService {
       request: {
         query: '',
         filters: {
-          primaryCategory: [
-            'Course',
-            'Learning Reasource',
-          ],
+          primaryCategory: body.request.filters.contentType,
           status: [
             'Draft',
             'Live',
