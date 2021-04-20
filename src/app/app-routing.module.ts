@@ -111,6 +111,21 @@ const routes: Routes = [
     },
   },
   {
+    path: 'app/taxonomy',
+    loadChildren: () =>
+      import('./routes/route-taxonomy.module').then(u => u.RouteTaxonomyModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'taxonomy',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+    // path: 'certs',
+    // loadChildren: () => import('./routes/route-cert.module').then(u => u.RouteCertificateModule),
+  },
+  {
     path: 'certs',
     loadChildren: () => import('./routes/route-cert.module').then(u => u.RouteCertificateModule),
   },
