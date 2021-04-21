@@ -23,7 +23,6 @@ export class ConnectionRecommendedCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('this.configSvc.userProfileV2', this.configSvc.userProfileV2)
   }
 
   getUseravatarName() {
