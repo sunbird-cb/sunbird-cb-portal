@@ -17,6 +17,8 @@ const API_ENDPOINTS = {
   getMasterLanguages: '/apis/protected/v8/user/profileRegistry/getMasterLanguages',
   getProfilePageMeta: '/apis/protected/v8/user/profileRegistry/getProfilePageMeta',
   getAllDepartments: '/apis/protected/v8/portal/listDeptNames',
+  approveRequest: '/apis/protected/v8/workflowhandler/transition',
+  getPendingFields: '/apis/protected/v8/workflowhandler/userWFApplicationFieldsSearch',
 }
 
 @Injectable()
@@ -45,5 +47,14 @@ export class UserProfileService {
   }
   getAllDepartments() {
     return this.http.get<INationalityApiData>(API_ENDPOINTS.getAllDepartments)
+  }
+  approveRequest(data: any) {
+    return this.http.post(API_ENDPOINTS.approveRequest, data)
+  }
+  listApprovalPendingFields() {
+    return this.http.post<any>(API_ENDPOINTS.getPendingFields, {
+      serviceName: 'profile',
+      applicationStatus: 'SEND_FOR_APPROVAL',
+    })
   }
 }
