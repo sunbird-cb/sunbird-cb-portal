@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core'
 import { NSDiscussData } from '../../models/discuss.model'
 @Component({
   selector: 'app-dicuss-card',
@@ -15,12 +15,14 @@ export class DiscussCardComponent implements OnInit {
   @Input()
   tags!: any
   rem!: number
+  showNoValue!:boolean
   @Output() clickedTab = new EventEmitter<string>()
 
   showRem = true
   public static get MINIMUM_LENGTH(): number { return 8 }
   constructor(
-  ) { }
+  ) {
+   }
 
   ngOnInit() {
     if (this.tags && this.tags.length > DiscussCardComponent.MINIMUM_LENGTH) {
@@ -28,17 +30,6 @@ export class DiscussCardComponent implements OnInit {
     this.tags.length =  DiscussCardComponent.MINIMUM_LENGTH
     }
    }
-  upvote(discuss: NSDiscussData.IDiscussionData) {
-    if (discuss) {
-
-    }
-
-  }
-  downvote(discuss: NSDiscussData.IDiscussionData) {
-    if (discuss) {
-
-    }
-  }
   getClickedTab(tab: string) {
     this.clickedTab.emit(tab)
   }
@@ -54,5 +45,12 @@ export class DiscussCardComponent implements OnInit {
 
   calculateLength(len: number) {
     return len - DiscussCardComponent.MINIMUM_LENGTH
+  }
+  ngOnChanges(changes: SimpleChanges) {
+   if(changes.tags.currentValue.length<=0){
+    this.showNoValue = true
+   }else{
+    this.showNoValue = false
+   }
   }
 }

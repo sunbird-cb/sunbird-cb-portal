@@ -16,15 +16,16 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
   panelOpenState = false
   nextLevelTopic: any
   firstLevelTopic: any
+  alreadyClicked!:boolean
   currentTab: any
   titles = [{ title: 'DISCUSS', url: '/app/discuss/home', icon: 'forum' }]
   relatedResource: any = []
   unread = 0
   currentObj!: any
   nextLvlObj!: any
+  tempArr!:any
   leftMenuChildObj!: any
   currentRoute = 'home'
-  breadCrum!:any
   banner!: NsWidgetResolver.IWidgetData<any>
   public screenSizeIsLtMedium = false
   isLtMedium$ = this.valueSvc.isLtMedium$
@@ -62,7 +63,8 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
       this.sideNavBarOpened = !isLtMedium
       this.screenSizeIsLtMedium = isLtMedium
     })
-    this.breadCrum = {titles:[{title:'Home', url:'/app/taxonomy/home'}]}
+    this.tempArr  =  [{title:'Home', url:'/app/taxonomy/home'}]
+    this.alreadyClicked= true
     // this.firstLevelTopic =  [{name: "Economics", enabled: true, routerLink:"/app/taxonomy/test"},
     // {name: "1st level  topic", enabled: true, routerLink:"/app/taxonomy/116"},
     // {name: "1st level  topic", enabled: true, routerLink:"/app/taxonomy/ll1"},
@@ -96,14 +98,27 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
     dataProcess(topic: string) {
       const firstLvlArray: any[] = []
       const tempCurrentArray: any[] = []
+      if(this.alreadyClicked){
+
+      let handleLink  = {title:decodeURI(topic), url:'none'}
+      this.tempArr.push(handleLink)
+
       this.currentObj.forEach((term: any) => {
-        // if(term.name!==decodeURI(topic)){
-          const obj = {
-            name: term.name,
-            enabled: true,
-            routerLink: APP_TAXONOMY + term.name,
+          if(term.name!==decodeURI(topic)){
+            const obj = {
+              name: term.name,
+              enabled: true,
+              routerLink: APP_TAXONOMY + term.name,
+            }
+            firstLvlArray.push(obj)
+            } else {
+            const firstObj = {
+              name: decodeURI(topic),
+              enabled: true,
+              routerLink: APP_TAXONOMY + decodeURI(topic),
+            }
+            firstLvlArray.splice(0, 0, firstObj)
           }
-          firstLvlArray.push(obj)
           this.currentTab = term.name
             this.firstLevelTopic = firstLvlArray
             if (term.name === decodeURI(topic) && term.children) {
@@ -119,8 +134,37 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
 
         })
         this.nextLvlObj = tempCurrentArray
+        this.alreadyClicked = false
+    }else{
+      let handleLink  = {title:decodeURI(topic), url:'none'}
+      this.tempArr[1]=handleLink
+      this.currentObj.forEach((term: any) => {
+          const obj = {
+            name: term.name,
+            enabled: true,
+            routerLink: APP_TAXONOMY + term.name,
+          }
+          firstLvlArray.push(obj)
+        this.currentTab = term.name
+          this.firstLevelTopic = firstLvlArray
+          if (term.name === decodeURI(topic) && term.children) {
+
+            const nextLevel: string[] = []
+            term.children.forEach((second: any) => {
+              nextLevel.push(second.name)
+              tempCurrentArray.push(second)
+            })
+
+            this.nextLevelTopic = nextLevel
+          }
+
+      })
+      this.nextLvlObj = tempCurrentArray
+    }
     }
     dataProcessOn2ndLevel(topic: string) {
+      let handleLink  = {title:decodeURI(topic), url:'none'}
+      this.tempArr[this.tempArr.length-1] =handleLink
       const tempCurrentArray: any[] = []
       this.nextLevelTopic = []
       if (this.leftMenuChildObj) {
@@ -154,6 +198,8 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
       this.nextLvlObj.forEach((term: any) => {
         leftMenuData.push(term)
         if (term.name === decodeURI(clickedTab)) {
+          let handleLink  = {title:decodeURI(clickedTab), url:'none'}
+          this.tempArr.push(handleLink)
           this.dataProcessOneMore(clickedTab, this.nextLvlObj)
         }
         })
@@ -171,6 +217,7 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
           this.nextLvlObj = term.children
           }
         }
+        //  if(term.name!==decodeURI(topic)){
           const obj = {
             name: term.name,
             enabled: true,

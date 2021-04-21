@@ -11,7 +11,7 @@
     {{tag}}
   </mat-chip>
   </mat-chip-list>
-  <div *ngIf="!tags">No Topics Available</div>
+  <div *ngIf="showNoValue">No Topics Available</div>
   </mat-card-content>
   <mat-card-actions *ngIf="tags.length>8">
     <a mat-button (click)="getDiscussion()" *ngIf="showRem">SEE {{rem}} MORE SUB TOPICS </a>
