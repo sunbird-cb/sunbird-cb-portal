@@ -3,11 +3,19 @@ import { FormControl } from '@angular/forms'
 import { Subscription } from 'rxjs'
 import { Router, ActivatedRoute } from '@angular/router'
 import { startWith, debounceTime, distinctUntilChanged } from 'rxjs/operators'
-import { NsAppsConfig, ConfigurationsService, NsPage, LogoutComponent, SubapplicationRespondService, ValueService } from '@sunbird-cb/utils'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ROOT_WIDGET_CONFIG, CustomTourService } from '@sunbird-cb/collection'
+import {
+  NsAppsConfig, ConfigurationsService, NsPage,
+  LogoutComponent, SubapplicationRespondService, ValueService
+}
+  from '@sunbird-cb/utils'
+
 import { MatDialog } from '@angular/material'
 import { AccessControlService } from '../../../../project/ws/author/src/public-api'
+import { NsWidgetResolver } from '@sunbird-cb/utils/src/lib/services/widget-resolver.model'
+import { CustomTourService, ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection/src/public-api'
+/* tslint:disable*/
+import _ from 'lodash'
+/* tslint:enable*/
 interface IGroupWithFeatureWidgets extends NsAppsConfig.IGroup {
   featureWidgets: NsWidgetResolver.IRenderConfigWithTypedData<NsPage.INavLink>[]
 }
@@ -36,7 +44,7 @@ export class FeaturesComponent implements OnInit, OnDestroy {
     private accessService: AccessControlService,
 
   ) {
-    this.valueSvc.isXSmall$.subscribe(isXSmall => {
+    this.valueSvc.isXSmall$.subscribe((isXSmall: boolean) => {
       this.isXSmall = isXSmall
     })
     if (this.configurationSvc.appsConfig && this.configurationSvc.appsConfig.tourGuide) {
@@ -46,7 +54,7 @@ export class FeaturesComponent implements OnInit, OnDestroy {
     if (this.configurationSvc.appsConfig) {
       const appsConfig = this.configurationSvc.appsConfig
       const availGroups: NsAppsConfig.IGroup[] = []
-      appsConfig.groups.forEach(group => {
+      appsConfig.groups.forEach((group: any) => {
         if (group.hasRole.length === 0 || this.accessService.hasRole(group.hasRole)) {
           availGroups.push(group)
         }
@@ -55,22 +63,27 @@ export class FeaturesComponent implements OnInit, OnDestroy {
         (group: NsAppsConfig.IGroup): IGroupWithFeatureWidgets => (
           {
             ...group,
-            featureWidgets: group.featureIds.map(
-              (id: string): NsWidgetResolver.IRenderConfigWithTypedData<NsPage.INavLink> =>
-                ({
-                  widgetType: ROOT_WIDGET_CONFIG.actionButton._type,
-                  widgetSubType: ROOT_WIDGET_CONFIG.actionButton.feature,
-                  widgetHostClass: 'my-2 px-2 w-1/2 sm:w-1/3 md:w-1/6 w-lg-1-8 box-sizing-box',
-                  widgetData: {
-                    config: {
-                      type: 'feature-item',
-                      useShortName: false,
-                      treatAsCard: true,
+            featureWidgets: _.compact(group.featureIds.map(
+              (id: string): NsWidgetResolver.IRenderConfigWithTypedData<NsPage.INavLink> | undefined => {
+                const permissions = _.get(appsConfig, `features[${id}].permission`)
+                if (!permissions || permissions.length === 0 || this.accessService.hasRole(permissions)) {
+                  return ({
+                    widgetType: ROOT_WIDGET_CONFIG.actionButton._type,
+                    widgetSubType: ROOT_WIDGET_CONFIG.actionButton.feature,
+                    widgetHostClass: 'my-2 px-2 w-1/2 sm:w-1/3 md:w-1/6 w-lg-1-8 box-sizing-box',
+                    widgetData: {
+                      config: {
+                        type: 'feature-item',
+                        useShortName: false,
+                        treatAsCard: true,
+                      },
+                      actionBtn: appsConfig.features[id],
                     },
-                    actionBtn: appsConfig.features[id],
-                  },
-                }),
-            ),
+                  })
+                }
+                return undefined
+              },
+            )),
           }),
       )
     }
@@ -87,7 +100,7 @@ export class FeaturesComponent implements OnInit, OnDestroy {
         this.router.navigate([], { queryParams: { q: query || null } })
         this.featureGroups = this.filteredFeatures(query)
       })
-    this.configurationSvc.tourGuideNotifier.subscribe(canShow => {
+    this.configurationSvc.tourGuideNotifier.subscribe((canShow: any) => {
       if (
         this.configurationSvc.restrictedFeatures &&
         !this.configurationSvc.restrictedFeatures.has('tourGuide')
@@ -128,7 +141,7 @@ export class FeaturesComponent implements OnInit, OnDestroy {
     if (feature) {
       return Boolean(
         feature.name.includes(query) ||
-        feature.keywords.some(keyword => keyword.includes(query)) ||
+        feature.keywords.some((keyword: any) => keyword.includes(query)) ||
         (feature.description && feature.description.includes(query)),
       )
     }
