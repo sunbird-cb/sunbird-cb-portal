@@ -5,9 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { startWith, debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import {
   NsAppsConfig, ConfigurationsService, NsPage,
-  LogoutComponent, SubapplicationRespondService, ValueService
-}
-  from '@sunbird-cb/utils'
+  LogoutComponent, SubapplicationRespondService, ValueService,
+} from '@sunbird-cb/utils'
 
 import { MatDialog } from '@angular/material'
 import { AccessControlService } from '../../../../project/ws/author/src/public-api'
