@@ -323,7 +323,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         debounceTime(500),
         distinctUntilChanged(),
         startWith(''),
-        map(value => typeof value === 'string' ? value : value.name),
+        map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
         map(name => name ? this.filterLanguage(name) : this.masterLanguagesEntries.slice())
       )
   }
@@ -692,9 +692,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       otherDetailsDoj: this.getDateFromText(_.get(data, 'employmentDetails.dojOfService') || ''),
       payType: _.get(data, 'employmentDetails.payType') || '',
       civilListNo: _.get(data, 'employmentDetails.civilListNo') || '',
-      employeeCode: _.get(data, 'employmentDetails.employeeCode') || '',
-      otherDetailsOfficeAddress: _.get(data, 'employmentDetails.officialPostalAddress') || '',
-      otherDetailsOfficePinCode: _.get(data, 'employmentDetails.pinCode') || '',
+      employeeCode: this.checkvalue(_.get(data, 'employmentDetails.employeeCode') || ''),
+      otherDetailsOfficeAddress: this.checkvalue(_.get(data, 'employmentDetails.officialPostalAddress') || ''),
+      otherDetailsOfficePinCode: this.checkvalue(_.get(data, 'employmentDetails.pinCode') || ''),
       skillAquiredDesc: _.get(data, 'skills.additionalSkills') || '',
       certificationDesc: _.get(data, 'skills.certificateDetails') || '',
     },
@@ -712,6 +712,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     if (value && value === 'undefined') {
         // tslint:disable-next-line:no-parameter-reassignment
         value = ''
+    } else {
+      return value
     }
   }
 
@@ -745,7 +747,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   private constructReq(form: any) {
+    const userid = this.userProfileData.userId || this.userProfileData.id
     const profileReq = {
+      id: userid,
+      userId: userid,
       photo: form.value.photo,
       personalDetails: {
         firstname: form.value.firstname,
@@ -1011,10 +1016,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     // Construct the request structure for open saber
     const profileRequest = this.constructReq(form)
-    const userid = this.userProfileData.userId || this.userProfileData.id
-    this.userProfileSvc.updateProfileDetails(userid, profileRequest).subscribe(
+    let appdata = [] as  any
+    appdata = profileRequest.approvalData !== undefined ? profileRequest.approvalData : []
+    this.userProfileSvc.updateProfileDetails(profileRequest.profileReq).subscribe(
       () => {
-        if (profileRequest.approvalData) {
+        if (appdata !== undefined && appdata.length > 0) {
           if (this.configSvc.userProfile) {
             this.userProfileSvc.getUserdetailsFromRegistry().subscribe(
               (data: any) => {
@@ -1057,7 +1063,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
                       }
                     }
                       ,
-                      /* tslint:disable */
+                      // tslint:disable-next-line:align
                       () => {
                         this.openSnackbar(this.toastError.nativeElement.value)
                         this.uploadSaveData = false
@@ -1090,10 +1096,17 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               (_err: any) => {
               })
           }
-
+        } else {
+          form.reset()
+          this.uploadSaveData = false
+          this.configSvc.profileDetailsStatus = true
+          this.openSnackbar(this.toastSuccess.nativeElement.value)
+          if (!this.isForcedUpdate && this.userProfileData) {
+            this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+          } else {
+            this.router.navigate(['page', 'home'])
+          }
         }
-
-        /* tslint:enable */
       }
       ,
       () => {
