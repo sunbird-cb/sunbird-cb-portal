@@ -62,7 +62,7 @@ export class ConnectionRequestCardComponent implements OnInit {
       userDepartmentFrom: this.me ? this.me.departmentName : '',
       userIdTo: this.user.id,
       userNameTo: `${this.user.personalDetails.firstname}${this.user.personalDetails.surname}`,
-      userDepartmentTo: this.user.employmentDetails.departmentName,
+      userDepartmentTo: this.user.employmentDetails.departmentName || 'IGOT',
       status: action,
     }
 

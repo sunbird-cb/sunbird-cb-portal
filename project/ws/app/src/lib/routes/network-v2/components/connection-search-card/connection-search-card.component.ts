@@ -48,13 +48,11 @@ export class ConnectionSearchCardComponent implements OnInit {
     if (this.me && this.me.userId === this.user.wid) {
       this.openSnackbar('Cannot send request to yourself')
     } else {
-      // const req = { connectionId: this.user.wid }
-
       const req = {
         connectionId: this.user.id,
         userIdFrom: this.me ? this.me.userId : '',
         userNameFrom: this.me ? this.me.userName : '',
-        userDepartmentFrom: this.me ? this.me.departmentName : '',
+        userDepartmentFrom: this.me && this.me.departmentName ? this.me.departmentName : 'IGOT',
         userIdTo: this.user.id,
         userNameTo: `${this.user.personalDetails.firstname}${this.user.personalDetails.surname}`,
         userDepartmentTo: this.user.employmentDetails.departmentName,
