@@ -3,8 +3,6 @@ import { ActivatedRoute } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { EventService } from '@sunbird-cb/utils'
 import videoJs from 'video.js'
-// /Viewar?
-// import { ViewerUtilService } from '../../../../../../project/ws/viewer/src/lib/viewer-util.service'
 import { ROOT_WIDGET_CONFIG } from '../collection.config'
 import { IWidgetsPlayerMediaData } from '../_models/player-media.model'
 import {
@@ -15,6 +13,7 @@ import {
   videoJsInitializer,
 } from '../_services/videojs-util'
 import { WidgetContentService } from '../_services/widget-content.service'
+import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service';
 
 const videoJsOptions: videoJs.PlayerOptions = {
   controls: true,
@@ -56,7 +55,7 @@ export class PlayerVideoComponent extends WidgetBaseComponent
   constructor(
     private eventSvc: EventService,
     private contentSvc: WidgetContentService,
-    // private viewerSvc: ViewerUtilService,
+    private viewerSvc: ViewerUtilService,
     private activatedRoute: ActivatedRoute,
   ) {
     super()
@@ -136,8 +135,8 @@ export class PlayerVideoComponent extends WidgetBaseComponent
     }
     const fireRProgress: fireRealTimeProgressFunction = (identifier, data) => {
       if (this.widgetData.identifier && identifier && data) {
-        //   this.viewerSvc
-        //     .realTimeProgressUpdate(identifier, data)
+          this.viewerSvc
+            .realTimeProgressUpdate(identifier, data)
       }
     }
     if (this.widgetData.resumePoint && this.widgetData.resumePoint !== 0) {
@@ -208,8 +207,8 @@ export class PlayerVideoComponent extends WidgetBaseComponent
     }
     const fireRProgress: fireRealTimeProgressFunction = (identifier, data) => {
       if (this.widgetData.identifier && identifier && data) {
-        // this.viewerSvc
-        //   .realTimeProgressUpdate(identifier, data)
+        this.viewerSvc
+          .realTimeProgressUpdate(identifier, data)
       }
     }
     let enableTelemetry = false
