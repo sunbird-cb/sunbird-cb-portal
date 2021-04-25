@@ -70,7 +70,7 @@ export class CreateBatchDialogComponent implements OnInit {
       },
       err => {
         if (err && err.error && err.error.params && err.error.params.errmsg) {
-          this.openSnackbar(err.error.params.errmsge)
+          this.openSnackbar(err.error.params.errmsg)
         } else {
           this.openSnackbar(this.toastError.nativeElement.value)
         }
