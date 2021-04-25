@@ -47,6 +47,7 @@ export class DiscussConfigResolve
       },
       categories: { result: [] },
       routerSlug: '/app',
+
     }
     return (this.discussionSvc.getDiscussionConfig() ? this.discussionSvc.getDiscussionConfig() : config)
   }

@@ -100,6 +100,7 @@ export class BtnPageBackComponent extends WidgetBaseComponent
       },
       categories: { result: [] },
       routerSlug: '/app',
+      headerOptions: false
     })
     this.router.navigate(['/app/discussion-forum'])
   }
