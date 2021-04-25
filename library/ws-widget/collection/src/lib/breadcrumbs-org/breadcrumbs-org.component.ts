@@ -99,6 +99,7 @@ export class BreadcrumbsOrgComponent extends WidgetBaseComponent
       },
       categories: { result: [] },
       routerSlug: '/app',
+      headerOptions: false
     })
     this.router.navigate(['/app/discussion-forum'])
   }
