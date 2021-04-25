@@ -75,7 +75,8 @@ export class CardHubsListComponent extends WidgetBaseComponent
       },
       categories: { result: [] },
       routerSlug: '/app',
-      headerOptions: false
+      headerOptions: false,
+      bannerOption: true
     })
     this.router.navigate(['/app/discussion-forum'])
   }
