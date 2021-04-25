@@ -187,7 +187,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   sharePlaylist() {
     this.dialog.open(PlaylistShareDialogComponent, {
       data: {
-        playlist: this.playlist,
+        playlist: this.playlist.result.content,
         deleted: [...this.deletedContents],
       },
       width: '600px',

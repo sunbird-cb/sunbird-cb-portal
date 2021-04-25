@@ -10,12 +10,15 @@ import {
 } from '../models/user-profile.model'
 
 const API_ENDPOINTS = {
-  updateProfileDetails: '/apis/protected/v8/user/profileRegistry/createUserRegistryV2',
+  updateProfileDetails: '/apis/protected/v8/user/profileRegistry/updateUserRegistry',
   getUserdetailsFromRegistry: '/apis/protected/v8/user/profileRegistry/getUserRegistryById',
   getUserdetails: '/apis/protected/v8/user/details/detailV1',
   getMasterNationlity: '/apis/protected/v8/user/profileRegistry/getMasterNationalities',
   getMasterLanguages: '/apis/protected/v8/user/profileRegistry/getMasterLanguages',
   getProfilePageMeta: '/apis/protected/v8/user/profileRegistry/getProfilePageMeta',
+  getAllDepartments: '/apis/protected/v8/portal/listDeptNames',
+  approveRequest: '/apis/protected/v8/workflowhandler/transition',
+  getPendingFields: '/apis/protected/v8/workflowhandler/userWFApplicationFieldsSearch',
 }
 
 @Injectable()
@@ -24,8 +27,8 @@ export class UserProfileService {
     private http: HttpClient,
   ) {
   }
-  updateProfileDetails(id: any, data: any) {
-    return this.http.post<any>(`${API_ENDPOINTS.updateProfileDetails}/${id}`, data)
+  updateProfileDetails(data: any) {
+    return this.http.post<any>(API_ENDPOINTS.updateProfileDetails, data)
   }
   getUserdetails(email: string | undefined): Observable<[IUserProfileDetails]> {
     return this.http.post<[IUserProfileDetails]>(API_ENDPOINTS.getUserdetails, { email })
@@ -41,5 +44,17 @@ export class UserProfileService {
   }
   getUserdetailsFromRegistry(): Observable<[IUserProfileDetailsFromRegistry]> {
     return this.http.get<[IUserProfileDetailsFromRegistry]>(API_ENDPOINTS.getUserdetailsFromRegistry)
+  }
+  getAllDepartments() {
+    return this.http.get<INationalityApiData>(API_ENDPOINTS.getAllDepartments)
+  }
+  approveRequest(data: any) {
+    return this.http.post(API_ENDPOINTS.approveRequest, data)
+  }
+  listApprovalPendingFields() {
+    return this.http.post<any>(API_ENDPOINTS.getPendingFields, {
+      serviceName: 'profile',
+      applicationStatus: 'SEND_FOR_APPROVAL',
+    })
   }
 }

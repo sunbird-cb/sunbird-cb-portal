@@ -27,15 +27,16 @@ export class ConnectionRecommendedCardComponent implements OnInit {
 
   getUseravatarName() {
     if (this.user) {
-      return `${this.user.name}`
+      return `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
     }
     return ''
   }
   connetToUser() {
     const req = {
       connectionId: this.user.id,
+      userIdFrom: this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.userId : '',
       userNameFrom: this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.userName : '',
-      userDepartmentFrom: this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.departmentName : 'iGOT',
+      userDepartmentFrom: this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.departmentName : '',
       userIdTo: this.user.id,
       userNameTo: `${this.user.personalDetails.firstname}${this.user.personalDetails.surname}`,
       userDepartmentTo: this.user.employmentDetails.departmentName,

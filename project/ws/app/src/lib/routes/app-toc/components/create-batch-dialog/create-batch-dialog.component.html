@@ -102,14 +102,14 @@
                       class="ws-mat-accent-border flex-auto-display">
                       <span class="ws-mat-default-text" i18n>Discard</span>
                     </button>
-                    <span *ngIf="uploadSaveData" class="px-4 flex items-center justify-center">
-                      <mat-spinner [diameter]="30"></mat-spinner>
-                    </span>
                     <button mat-raised-button type="submit"
-                      class="text-white ws-mat-primary-background flex-auto-display" 
-                      [disabled]="uploadSaveData || createBatchForm?.invalid" (click)="createBatchSubmit(createBatchForm)">
-                      <span class="text-white" i18n>Create</span>
-                    </button>
+                    class="text-white ws-mat-primary-background flex-auto-display" 
+                    [disabled]="uploadSaveData || createBatchForm?.invalid" (click)="createBatchSubmit(createBatchForm)">
+                    <span class="text-white" i18n>Create</span>
+                  </button>
+                  <span *ngIf="uploadSaveData" class="px-4 flex items-center justify-center">
+                    <mat-spinner [diameter]="30"></mat-spinner>
+                  </span>
                   </mat-dialog-actions>
             </div>
 

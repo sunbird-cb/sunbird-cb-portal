@@ -46,6 +46,15 @@ export class LearningComponent implements OnInit, OnDestroy {
     request: {
       filters: {
         visibility: ['Default'],
+        primaryCategory: [
+          'Course',
+          'Learning Resource',
+        ],
+        contentType: [
+          'Course',
+          'Learning Resource',
+          'Resource',
+        ],
       },
       query: '',
       sort_by: { lastUpdatedOn: 'desc' },
@@ -204,6 +213,7 @@ export class LearningComponent implements OnInit, OnDestroy {
     })
     if (queryMap.get('f')) {
       defaultFilters = JSON.parse(queryMap.get('f') || '{}')
+      // defaultFilters = queryMap.get('f') || '{}'
     }
     if (!Object.keys(defaultFilters).length && Object.keys(this.filtersFromConfig).length) {
       this.router.navigate([], {
@@ -268,7 +278,15 @@ export class LearningComponent implements OnInit, OnDestroy {
             }
           }
         } else {
-          this.searchRequestObject.request.filters = { visibility: ['Default'] }
+          this.searchRequestObject.request.filters = {
+            visibility: ['Default'],
+              primaryCategory: [
+                'Course',
+              ],
+              contentType: [
+                'Course',
+              ],
+          }
         }
       }
       if (queryParams.has('sort') && this.searchRequestObject.request.sort_by.lastUpdatedOn) {
@@ -349,7 +367,7 @@ export class LearningComponent implements OnInit, OnDestroy {
     }
   }
 
-  getResults(withQuotes?: boolean, didYouMean = true) {
+  getResults(withQuotes ? : boolean, didYouMean = true) {
     // this.searchRequestObject.didYouMean = didYouMean
     if (this.searchResultsSubscription) {
       this.searchResultsSubscription.unsubscribe()

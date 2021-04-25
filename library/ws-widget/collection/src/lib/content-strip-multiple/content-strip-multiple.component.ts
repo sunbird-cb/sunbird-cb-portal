@@ -13,7 +13,7 @@ import {
 } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
-import { NSSearch } from '@sunbird-cb/utils/src/lib/services/widget-search.model'
+// import { NSSearch } from '@sunbird-cb/utils/src/lib/services/widget-search.model'
 import { WidgetUserService } from '../_services/widget-user.service'
 
 interface IStripUnitContentData {
@@ -146,20 +146,47 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       this.fetchStripFromRequestData(stripData, calculateParentStatus)
     }
   }
-  private transformSearchV6Filters(v6filters: NSSearch.ISearchV6Filters[]) {
-    const filters: any = {}
-    v6filters.forEach((f => {
-      if (f.andFilters) {
-        f.andFilters.forEach((andFilter: any) => {
-          Object.keys(andFilter).forEach(key => {
-            filters[key] = andFilter[key]
-          })
+  // private transformSearchV6Filters(v6filters: NSSearch.ISearchV6Filters[]) {
+  //   const filters: any = {}
+  //   v6filters.forEach((f => {
+  //     if (f.andFilters) {
+  //       f.andFilters.forEach((andFilter: any) => {
+  //         Object.keys(andFilter).forEach(key => {
+  //           filters[key] = andFilter[key]
+  //         })
 
-        })
-      }
-    }))
-    return filters
+  //       })
+  //     }
+  //   }))
+  //   return filters
+  // }
+
+  private getFiltersFromArray(v6filters: any) {
+    const filters: any = {}
+    if (v6filters.constructor === Array) {
+      v6filters.forEach(((f: any) => {
+            Object.keys(f).forEach(key => {
+              filters[key] = f[key]
+            })
+        }))
+      return filters
+    }
+    return v6filters
   }
+
+  private transformSearchV6FiltersV2(v6filters: any) {
+    const filters: any = {}
+    if (v6filters.constructor === Array) {
+      v6filters.forEach(((f: any) => {
+            Object.keys(f).forEach(key => {
+              filters[key] = f[key]
+            })
+        }))
+      return filters
+    }
+    return v6filters
+  }
+
   private fetchStripFromRequestData(
     strip: NsContentStripMultiple.IContentStripUnit,
     calculateParentStatus = true,
@@ -257,12 +284,22 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
   }
   fetchFromSearchV6(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.searchV6 && Object.keys(strip.request.searchV6).length) {
-      if (!(strip.request.searchV6.locale && strip.request.searchV6.locale.length > 0)) {
-        if (this.configSvc.activeLocale) {
-          strip.request.searchV6.locale = [this.configSvc.activeLocale.locals[0]]
-        } else {
-          strip.request.searchV6.locale = ['en']
-        }
+      // if (!(strip.request.searchV6.locale && strip.request.searchV6.locale.length > 0)) {
+      //   if (this.configSvc.activeLocale) {
+      //     strip.request.searchV6.locale = [this.configSvc.activeLocale.locals[0]]
+      //   } else {
+      //     strip.request.searchV6.locale = ['en']
+      //   }
+      // }
+      let originalFilters: any = []
+      if (strip.request &&
+        strip.request.searchV6 &&
+        strip.request.searchV6.request &&
+        strip.request.searchV6.request.filters) {
+          originalFilters = strip.request.searchV6.request.filters
+          strip.request.searchV6.request.filters = this.getFiltersFromArray(
+            strip.request.searchV6.request.filters,
+          )
       }
       this.contentSvc.searchV6(strip.request.searchV6).subscribe(
         results => {
@@ -273,18 +310,24 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
             ? {
               path: '/app/search/learning',
               queryParams: {
-                q: strip.request && strip.request.searchV6 && strip.request.searchV6.query,
+                q: strip.request && strip.request.searchV6 && strip.request.searchV6.request,
                 f:
-                  strip.request && strip.request.searchV6 && strip.request.searchV6.filters
-                    ? JSON.stringify(
-                      this.transformSearchV6Filters(
-                        strip.request.searchV6.filters,
-                      ),
+                strip.request &&
+                strip.request.searchV6 &&
+                strip.request.searchV6.request &&
+                strip.request.searchV6.request.filters
+                  ? JSON.stringify(
+                    this.transformSearchV6FiltersV2(
+                      originalFilters,
                     )
-                    : {},
+                  )
+                  : {},
               },
             }
             : null
+          // if (viewMoreUrl && viewMoreUrl.queryParams) {
+          //   viewMoreUrl.queryParams = viewMoreUrl.queryParams
+          // }
           this.processStrip(
             strip,
             this.transformContentsToWidgets(results.result.content, strip),

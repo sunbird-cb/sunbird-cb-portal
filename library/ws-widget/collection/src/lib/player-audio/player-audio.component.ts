@@ -18,10 +18,10 @@ import {
   saveContinueLearningFunction,
   fireRealTimeProgressFunction,
 } from '../_services/videojs-util'
-// import { ViewerUtilService } from '../../../../../../project/ws/viewer/src/lib/viewer-util.service'
 import { WidgetContentService } from '../_services/widget-content.service'
 import { NsContent } from '../_services/widget-content.model'
 import { ActivatedRoute } from '@angular/router'
+import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service';
 
 const videoJsOptions: videoJs.PlayerOptions = {
   controls: true,
@@ -55,7 +55,7 @@ export class PlayerAudioComponent extends WidgetBaseComponent
   constructor(
     private eventSvc: EventService,
     private contentSvc: WidgetContentService,
-    // private viewerSvc: ViewerUtilService,
+    private viewerSvc: ViewerUtilService,
     private activatedRoute: ActivatedRoute,
   ) {
     super()
@@ -129,8 +129,8 @@ export class PlayerAudioComponent extends WidgetBaseComponent
     }
     const fireRProgress: fireRealTimeProgressFunction = (identifier, data) => {
       if (this.widgetData.identifier && identifier && data) {
-        // this.viewerSvc
-        //   .realTimeProgressUpdate(identifier, data)
+        this.viewerSvc
+          .realTimeProgressUpdate(identifier, data)
       }
     }
     let enableTelemetry = false

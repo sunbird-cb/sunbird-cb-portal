@@ -69,6 +69,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   tocConfig: any = null
   defaultSLogo = ''
   disableEnrollBtn = false
+
   // configSvc: any
 
   constructor(
@@ -236,6 +237,13 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
               content: [batch],
               enrolled: true,
             }
+            this.router.navigate(
+              [],
+              {
+                relativeTo: this.route,
+                queryParams: { batchId: batch.batchId },
+                queryParamsHandling: 'merge',
+              })
             this.openSnackbar('Enrolled Successfully!')
             this.disableEnrollBtn = false
           } else {

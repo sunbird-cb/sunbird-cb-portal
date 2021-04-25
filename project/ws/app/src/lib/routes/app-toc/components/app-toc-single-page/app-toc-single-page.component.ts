@@ -264,12 +264,15 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
 
   openDialog(content: any): void {
     const dialogRef = this.createBatchDialog.open(CreateBatchDialogComponent, {
-      height: '400px',
+      // height: '400px',
       width: '600px',
       data: { content },
     })
     // dialogRef.componentInstance.xyz = this.configSvc
     dialogRef.afterClosed().subscribe((_result: any) => {
+      if (!this.batchId) {
+        this.tocSharedSvc.updateBatchData()
+      }
     })
   }
 
