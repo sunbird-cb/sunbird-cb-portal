@@ -103,6 +103,8 @@ export class DiscussStripMultipleComponent extends WidgetBaseComponent
       },
       categories: { result: [] },
       routerSlug: '/app',
+      headerOptions: false,
+      bannerOption: true
     })
     this.router.navigate(['/app/discussion-forum'])
   }
