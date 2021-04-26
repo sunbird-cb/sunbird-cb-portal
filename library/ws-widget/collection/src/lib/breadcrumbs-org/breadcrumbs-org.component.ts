@@ -102,7 +102,7 @@ export class BreadcrumbsOrgComponent extends WidgetBaseComponent
       headerOptions: false,
       bannerOption: true,
     })
-    this.router.navigate(['/app/discussion-forum'])
+    this.router.navigate(['/app/discussion/forum'])
   }
 
   // get titleUrl(): { fragment?: string; routeUrl: string; queryParams: any } {
