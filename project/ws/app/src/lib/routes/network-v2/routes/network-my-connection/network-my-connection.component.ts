@@ -16,6 +16,7 @@ export class NetworkMyConnectionComponent implements OnInit {
   currentFilter = 'timestamp'
   currentFilterSort = 'desc'
   enableSearchFeature = false
+  datalist: any[] = []
   data: any[] = []
   constructor(
     private route: ActivatedRoute,
@@ -28,15 +29,7 @@ export class NetworkMyConnectionComponent implements OnInit {
     //   }
     //   return v
     // })
-    const datalist = this.route.snapshot.data.myConnectionList.data.result.data
-    datalist.forEach((usr: any) => {
-      const userrId = usr.identifier || usr.id
-      if (userrId) {
-        this.connectionHoverService.fetchProfile(userrId).subscribe((res: any) => {
-          this.data.push(res)
-        })
-      }
-    })
+    this.datalist = this.route.snapshot.data.myConnectionList.data.result.data
   }
 
   ngOnInit() {
@@ -45,6 +38,22 @@ export class NetworkMyConnectionComponent implements OnInit {
         this.enableSearchFeature = false
       } else {
         this.enableSearchFeature = true
+      }
+    })
+
+    if (this.datalist && this.datalist.length > 0) {
+      this.filter('timestamp', 'desc')
+      this.getFullUserData()
+    }
+  }
+
+  getFullUserData() {
+    this.datalist.forEach((usr: any) => {
+      const userrId = usr.identifier || usr.id
+      if (userrId) {
+        this.connectionHoverService.fetchProfile(userrId).subscribe((res: any) => {
+          this.data.push(res)
+        })
       }
     })
   }
