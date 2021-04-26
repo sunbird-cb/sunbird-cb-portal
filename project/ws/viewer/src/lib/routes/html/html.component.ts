@@ -349,7 +349,8 @@ export class HtmlComponent implements OnInit, OnDestroy {
         return
       }
     }
-    if ((this.htmlData || ({} as any)).isIframeSupported.toLowerCase() !== 'yes') {
+    if ((this.htmlData || ({} as any)).isIframeSupported &&
+      (this.htmlData || ({} as any)).isIframeSupported.toLowerCase() !== 'yes') {
       return
     }
     if (this.htmlData) {
@@ -358,9 +359,15 @@ export class HtmlComponent implements OnInit, OnDestroy {
       }
     }
     this.realTimeProgressRequest.content_type = this.htmlData ? this.htmlData.contentType : ''
+    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+              this.activatedRoute.snapshot.queryParams.collectionId : ''
+      const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+              this.activatedRoute.snapshot.queryParams.batchId : ''
     this.viewerSvc.realTimeProgressUpdate(
       this.htmlData ? this.htmlData.identifier : '',
       this.realTimeProgressRequest,
+      collectionId,
+      batchId
     )
     return
   }
