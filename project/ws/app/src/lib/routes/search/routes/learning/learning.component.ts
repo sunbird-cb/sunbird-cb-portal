@@ -367,7 +367,7 @@ export class LearningComponent implements OnInit, OnDestroy {
     }
   }
 
-  getResults(withQuotes ? : boolean, didYouMean = true) {
+  getResults(withQuotes ?: boolean, didYouMean = true) {
     // this.searchRequestObject.didYouMean = didYouMean
     if (this.searchResultsSubscription) {
       this.searchResultsSubscription.unsubscribe()

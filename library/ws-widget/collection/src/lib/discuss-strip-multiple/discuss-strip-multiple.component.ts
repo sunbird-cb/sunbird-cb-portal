@@ -97,6 +97,28 @@ export class DiscussStripMultipleComponent extends WidgetBaseComponent
 
   navigate() {
     this.discussUtilitySvc.setDiscussionConfig({
+      menuOptions: [
+        {
+          "route": "all-discussions",
+          "label": "All discussions",
+          "enable": true
+        },
+        {
+          "route": "categories",
+          "label": "Categories",
+          "enable": true
+        },
+        {
+          "route": "tags",
+          "label": "Tags",
+          "enable": true
+        },
+        {
+          "route": "my-discussion",
+          "label": "My discussion",
+          "enable": true
+        }
+      ],
       userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
       context: {
         id: 1,
@@ -104,7 +126,7 @@ export class DiscussStripMultipleComponent extends WidgetBaseComponent
       categories: { result: [] },
       routerSlug: '/app',
       headerOptions: false,
-      bannerOption: true
+      bannerOption: true,
     })
     this.router.navigate(['/app/discussion-forum'])
   }

@@ -21,7 +21,7 @@ import {
 import { WidgetContentService } from '../_services/widget-content.service'
 import { NsContent } from '../_services/widget-content.model'
 import { ActivatedRoute } from '@angular/router'
-import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service';
+import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 
 const videoJsOptions: videoJs.PlayerOptions = {
   controls: true,
