@@ -38,7 +38,7 @@ export class PostCardComponent implements OnInit {
   }
   getDiscussion() {
     if (this.discuss && this.discuss.topic && this.discuss.topic) {
-      this.router.navigate([`/app/discussion-forum/topic/${_.trim(_.get(this.discuss.topic, 'slug'))}`])
+      this.router.navigate([`/app/discussion/forum/topic/${_.trim(_.get(this.discuss.topic, 'slug'))}`])
     }
   }
 }
