@@ -390,8 +390,8 @@ export class InitService {
       request: {
         username: (this.configSvc.userProfile && this.configSvc.userProfile.userName) || '',
         identifier: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
-        fullname: this.configSvc.userProfile ? `${this.configSvc.userProfile.firstName}  ${this.configSvc.userProfile.lastName}` : ''
-      }
+        fullname: this.configSvc.userProfile ? `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}` : '',
+      },
     }
     let createUserRes: null
 

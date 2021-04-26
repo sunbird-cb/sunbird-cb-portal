@@ -1,4 +1,4 @@
-import { Injectable  } from '@angular/core'
+import { Injectable } from '@angular/core'
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable } from 'rxjs'
 // import { map, catchError } from 'rxjs/operators'
@@ -25,25 +25,25 @@ export class DiscussConfigResolve
     const config = {
       menuOptions: [
         {
-          "route": "all-discussions",
-          "label": "All discussions",
-          "enable": true
+          route: 'all-discussions',
+          label: 'All discussions',
+          enable: true,
         },
         {
-          "route": "categories",
-          "label": "Categories",
-          "enable": true
+          route: 'categories',
+          label: 'Categories',
+          enable: true,
         },
         {
-          "route": "tags",
-          "label": "Tags",
-          "enable": true
+          route: 'tags',
+          label: 'Tags',
+          enable: true,
         },
         {
-          "route": "my-discussion",
-          "label": "My discussion",
-          "enable": true
-        }
+          route: 'my-discussion',
+          label: 'My discussion',
+          enable: true,
+        },
       ],
       userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
       context: {
@@ -51,7 +51,8 @@ export class DiscussConfigResolve
       },
       categories: { result: [] },
       routerSlug: '/app',
-
+      headerOptions: false,
+      bannerOption: true,
     }
     return (this.discussionSvc.getDiscussionConfig() ? this.discussionSvc.getDiscussionConfig() : config)
   }

@@ -10,8 +10,8 @@
       <span class="flex ws-mat-default-text mat-body-2">
         <mat-icon svgIcon="category_xs"></mat-icon>{{discuss.category.name}}
       </span>
-      <span class="dot ws-mat-black40-text mat-body-2" *ngIf="discuss?.user?.username">{{'Asked by ' +
-        discuss?.user?.username}}</span>
+      <span class="dot ws-mat-black40-text mat-body-2" *ngIf="discuss?.user?.username"> Asked by
+        {{discuss?.user?.fullname != null ? discuss?.user?.fullname : discuss?.user?.username }}</span>
       <span class="dot mat-body-2" *ngIf="!(discuss?.user?.username)">{{'Asked by Anonymous'}}</span>
       <!-- <span class="margin-left-l">{{discuss.timestamp | pipeRelativeTime}}</span> -->
     </mat-card-subtitle>
