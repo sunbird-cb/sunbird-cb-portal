@@ -133,20 +133,26 @@ export class NetworkHomeComponent implements OnInit {
       this.searchResultUserArray = []
       if (this.searchResultUserArray && this.searchResultUserArray.length === 0) {
         this.cardNetworkService.fetchSearchUserInfo(val).subscribe(data => {
-          const searchdata = data
-          searchdata.forEach((usr: any) => {
-            this.networkV2Service.fetchProfile(usr.wid).subscribe((res: any) => {
-              this.searchResultUserArray.push(res.result.UserProfile[0])
+          this.searchResultUserArray = []
+          this.searchResultUserArray = data
+          // this.searchResultUserArray.forEach((usr: any) => {
+            // this.networkV2Service.fetchProfile(usr.wid).subscribe((res: any) => {
+              // const resdata = res.result.UserProfile[0]
+              // if (usr.wid === resdata.id) {
+                // const index = this.searchResultUserArray.indexOf(usr.wid)
+                // console.log(index)
+                // this.searchResultUserArray[index] = resdata
+              // }
               if (this.searchResultUserArray && this.searchResultUserArray.length > 0) {
                 // this.networkV2Service.fetchAllConnectionRequests().subscribe(
                 //   requests => {
                     // Filter all the connection requests sent
                     if (this.connectionRequestsSent &&  this.connectionRequestsSent.length > 0) {
                       this.connectionRequestsSent.map((user: any) => {
-                        const userid = user.id || user.identifier
+                        const userid = user.id || user.identifier || user.wid
                         if (userid) {
                           this.searchResultUserArray.map((autoCompleteUser: any) => {
-                            if (autoCompleteUser.userId === userid) {
+                            if ((autoCompleteUser.userId || autoCompleteUser.wid) === userid) {
                               autoCompleteUser['requestSent'] = true
                             }
                           })
@@ -156,10 +162,10 @@ export class NetworkHomeComponent implements OnInit {
                     // Filter all the connection requests recieved
                     if (this.connectionRequests && this.connectionRequests.length > 0) {
                       this.connectionRequests.map((con: any) => {
-                        const userid = con.id || con.identifier
+                        const userid = con.id || con.identifier || con.wid
                         if (userid) {
                           this.searchResultUserArray.map((autoCompleteUser: any) => {
-                            if (autoCompleteUser.userId === userid) {
+                            if ((autoCompleteUser.userId || autoCompleteUser.wid) === userid) {
                               autoCompleteUser['requestRecieved'] = true
                             }
                           })
@@ -169,10 +175,10 @@ export class NetworkHomeComponent implements OnInit {
                     // Filter all the estalished connections
                     if (this.establishedConnections && this.establishedConnections.length > 0) {
                       this.establishedConnections.map((con: any) => {
-                        const userid = con.id || con.identifier
+                        const userid = con.id || con.identifier || con.wid
                         if (userid) {
                           this.searchResultUserArray.map((autoCompleteUser: any) => {
-                            if (autoCompleteUser.userId === userid) {
+                            if ((autoCompleteUser.userId || autoCompleteUser.wid) === userid) {
                               autoCompleteUser['connectionEstablished'] = true
                             }
                           })
@@ -180,10 +186,7 @@ export class NetworkHomeComponent implements OnInit {
                       })
                     }
                     this.searchSpinner = false
-                  // },
-                  // (_err: any) => {
-                  //   this.searchSpinner = false
-                  // })
+
                   this.searchResultUserArray = this.searchResultUserArray.filter((el: any) => {
                     if (this.me && this.me.userId) {
                       if (el.id === this.me.userId) {
@@ -195,8 +198,8 @@ export class NetworkHomeComponent implements OnInit {
               } else {
                 this.searchSpinner = false
               }
-            })
-          })
+            // })
+          // })
         })
       }
     }

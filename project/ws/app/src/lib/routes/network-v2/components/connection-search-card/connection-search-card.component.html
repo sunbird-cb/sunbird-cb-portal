@@ -6,11 +6,10 @@
         </div>
         <div class="name-container flex flex-col width-expand">
             <div class="name ws-mat-black-text cursor-pointer" (click)="goToUserProfile(user)">
-                {{user?.personalDetails?.firstname}} {{user?.personalDetails?.middlename}}
-                    {{user?.personalDetails?.surname}}
+                {{user?.first_name}} {{user?.last_name}}
             </div>
             <div class="designation ws-mat-black60-text">
-                {{user?.employmentDetails?.departmentName}}
+                {{user?.department_name}}
             </div>
         </div>
         <div class="action-container flex items-center justify-center">
