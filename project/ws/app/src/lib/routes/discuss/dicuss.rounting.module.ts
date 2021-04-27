@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
-// import { DiscussComponent } from './routes/discuss-home/discuss.component'
+import { DiscussComponent } from './routes/discuss-home/discuss.component'
 // import { DiscussAllComponent } from './routes/discuss-all/discuss-all.component'
 // import { DiscussCategoriesComponent } from './routes/discuss-categories/discuss-categories.component'
 // import { DiscussGroupsComponent } from './routes/discuss-groups/discuss-groups.component'
@@ -23,24 +23,21 @@ import { DiscussConfigResolve } from './resolvers/discuss-config-resolve'
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./wrapper/wrapper.module').then(u => u.WrapperModule),
-    // component: DiscussComponent,
-    // children: [
-    //   {
-    //     path: '',
-    //     pathMatch: 'full',
-    //     redirectTo: 'home',
-    //   },
-    //   {
-    //     path: 'home',
-    //     component: DiscussAllComponent,
-    //     resolve: {
-    //       availCategories: DiscussCategoriesResolve,
-    //       availableTags: DiscussTagsResolve,
-    //       recent: DiscussRecentResolve,
-    //       // unread: DiscussUnreadResolve,
-    //     },
-    //   },
+    // loadChildren: () => import('./wrapper/wrapper.module').then(u => u.WrapperModule),
+    component: DiscussComponent,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'forum',
+      },
+      {
+        path: 'forum',
+        loadChildren: () => import('./wrapper/wrapper.module').then(u => u.WrapperModule),
+        resolve: {
+          data: DiscussConfigResolve
+        },
+      },
     //   {
     //     path: 'home/:topicId',
     //     component: DiscussionComponent,
@@ -81,12 +78,12 @@ const routes: Routes = [
     //       profile: DiscussProfileResolve,
     //     },
     //   },
-    // ],
-    resolve: {
-      data: DiscussConfigResolve,
-      // configData: ConfigurationsService,
-      // profileData: ProfileResolverService,
-    },
+    ],
+    // resolve: {
+    //   data: DiscussConfigResolve,
+    //   // configData: ConfigurationsService,
+    //   // profileData: ProfileResolverService,
+    // },
   },
 ]
 

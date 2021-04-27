@@ -14,7 +14,7 @@ export class DiscussComponent implements OnInit, OnDestroy {
   panelOpenState = false
   titles = [{ title: 'DISCUSS', url: '/app/discuss/home', icon: 'forum' }]
   unread = 0
-  currentRoute = 'home'
+  currentRoute = 'forum'
   banner!: NsWidgetResolver.IWidgetData<any>
   private bannerSubscription: any
   public screenSizeIsLtMedium = false
@@ -28,7 +28,7 @@ export class DiscussComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {
         // Hide loading indicator
         // console.log(event.url)
-        this.bindUrl(event.urlAfterRedirects.replace('/app/discuss/', ''))
+        this.bindUrl(event.urlAfterRedirects.replace('/app/discussion/', ''))
       }
 
       if (event instanceof NavigationError) {
