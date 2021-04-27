@@ -21,11 +21,21 @@
   margin-left: 5px;
   ;
 }
-
+.card-min-hei{
+  min-height: 100px;
+}
+.title-margin{
+  margin: 25px 0 0 0;
+}
 mat-expansion-panel-header {
   padding: 0;
 }
-
+.blue-border{
+border: 2px  solid #0074b6;
+}
+.mat-card>.mat-card-actions:last-child{
+  margin: 0 5px 5px;
+}
 .activity-button {
   border-radius: 2px !important;
   background-color: #05a7c9 !important;

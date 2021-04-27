@@ -1,21 +1,21 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core'
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core'
 import { NSDiscussData } from '../../models/discuss.model'
 @Component({
   selector: 'app-dicuss-card',
   templateUrl: './discuss-card.component.html',
   styleUrls: ['./discuss-card.component.scss'],
   /* tslint:disable */
-  host: { class: 'flex flex-1 margin-top-l' },
+  host: { class: 'flex flex-1' },
   /* tslint:enable */
 })
 
-export class DiscussCardComponent implements OnInit {
+export class DiscussCardComponent implements OnInit, OnChanges {
   @Input()
   discuss!: NSDiscussData.IDiscussionData
   @Input()
   tags!: any
   rem!: number
-  showNoValue!:boolean
+  showNoValue!: boolean
   @Output() clickedTab = new EventEmitter<string>()
 
   showRem = true
@@ -26,8 +26,8 @@ export class DiscussCardComponent implements OnInit {
 
   ngOnInit() {
     if (this.tags && this.tags.length > DiscussCardComponent.MINIMUM_LENGTH) {
-    this.rem = this.calculateLength(this.tags.length)
-    this.tags.length =  DiscussCardComponent.MINIMUM_LENGTH
+    // this.rem = this.calculateLength(this.tags.length)
+    // this.tags.length =  DiscussCardComponent.MINIMUM_LENGTH
     }
    }
   getClickedTab(tab: string) {
@@ -47,9 +47,9 @@ export class DiscussCardComponent implements OnInit {
     return len - DiscussCardComponent.MINIMUM_LENGTH
   }
   ngOnChanges(changes: SimpleChanges) {
-   if(changes.tags.currentValue.length<=0){
+   if (changes.tags.currentValue.length <= 0) {
     this.showNoValue = true
-   }else{
+   } else {
     this.showNoValue = false
    }
   }

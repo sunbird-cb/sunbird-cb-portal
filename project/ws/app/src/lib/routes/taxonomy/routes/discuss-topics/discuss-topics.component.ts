@@ -1,10 +1,11 @@
-
+import { LoaderService } from '@ws/author/src/lib/services/loader.service'
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ActivatedRoute, Router, Event, NavigationEnd, NavigationError } from '@angular/router'
 import { ValueService } from '@sunbird-cb/utils'
 import { map } from 'rxjs/operators'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { TaxonomyService } from '../../services/taxonomy.service'
+
 const APP_TAXONOMY = `/app/taxonomy/`
 @Component({
   selector: 'app-discuss',
@@ -16,23 +17,27 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
   panelOpenState = false
   nextLevelTopic: any
   firstLevelTopic: any
-  alreadyClicked!:boolean
+  alreadyClicked!: boolean
   currentTab: any
   titles = [{ title: 'DISCUSS', url: '/app/discuss/home', icon: 'forum' }]
   relatedResource: any = []
   unread = 0
   currentObj!: any
   nextLvlObj!: any
-  tempArr!:any
+  tempArr!: any
   leftMenuChildObj!: any
   currentRoute = 'home'
   banner!: NsWidgetResolver.IWidgetData<any>
   public screenSizeIsLtMedium = false
   isLtMedium$ = this.valueSvc.isLtMedium$
+  identifier: any = []
   mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
   private defaultSideNavBarOpenedSubscription: any
   isFirst = true
-  constructor(private valueSvc: ValueService, private route: ActivatedRoute, private router: Router,  private _service:  TaxonomyService) {
+  constructor(private valueSvc: ValueService, private route: ActivatedRoute,
+              private router: Router,
+              private _service: TaxonomyService,
+              private loader: LoaderService) {
     this.unread = this.route.snapshot.data.unread
 
     this.currentTab = this.route.snapshot.url.toString().split('/').pop()
@@ -63,8 +68,8 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
       this.sideNavBarOpened = !isLtMedium
       this.screenSizeIsLtMedium = isLtMedium
     })
-    this.tempArr  =  [{title:'Home', url:'/app/taxonomy/home'}]
-    this.alreadyClicked= true
+    this.tempArr  =  [{ title: 'Home', url: '/app/taxonomy/home' }]
+    this.alreadyClicked = true
     // this.firstLevelTopic =  [{name: "Economics", enabled: true, routerLink:"/app/taxonomy/test"},
     // {name: "1st level  topic", enabled: true, routerLink:"/app/taxonomy/116"},
     // {name: "1st level  topic", enabled: true, routerLink:"/app/taxonomy/ll1"},
@@ -98,13 +103,13 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
     dataProcess(topic: string) {
       const firstLvlArray: any[] = []
       const tempCurrentArray: any[] = []
-      if(this.alreadyClicked){
+      if (this.alreadyClicked) {
 
-      let handleLink  = {title:decodeURI(topic), url:'none'}
+      const handleLink  = { title: decodeURI(topic), url: 'none' }
       this.tempArr.push(handleLink)
 
       this.currentObj.forEach((term: any) => {
-          if(term.name!==decodeURI(topic)){
+          if (term.name !== decodeURI(topic)) {
             const obj = {
               name: term.name,
               enabled: true,
@@ -122,7 +127,7 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
           this.currentTab = term.name
             this.firstLevelTopic = firstLvlArray
             if (term.name === decodeURI(topic) && term.children) {
-
+              this.getIdentifierOnTopics(term)
               const nextLevel: string[] = []
               term.children.forEach((second: any) => {
                 nextLevel.push(second.name)
@@ -135,9 +140,9 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
         })
         this.nextLvlObj = tempCurrentArray
         this.alreadyClicked = false
-    }else{
-      let handleLink  = {title:decodeURI(topic), url:'none'}
-      this.tempArr[1]=handleLink
+    } else {
+      const handleLink  = { title: decodeURI(topic), url: 'none' }
+      this.tempArr[1] = handleLink
       this.currentObj.forEach((term: any) => {
           const obj = {
             name: term.name,
@@ -163,8 +168,8 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
     }
     }
     dataProcessOn2ndLevel(topic: string) {
-      let handleLink  = {title:decodeURI(topic), url:'none'}
-      this.tempArr[this.tempArr.length-1] =handleLink
+      const handleLink  = { title: decodeURI(topic), url: 'none' }
+      this.tempArr[this.tempArr.length - 1] = handleLink
       const tempCurrentArray: any[] = []
       this.nextLevelTopic = []
       if (this.leftMenuChildObj) {
@@ -185,7 +190,7 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
         // this.nextLvlObj = tempCurrentArray
     }
     selectedEvent(tabItem: string) {
-      if (this.isFirst) {
+      if (this.isFirst && !this.alreadyClicked) {
         this.dataProcess(tabItem)
       } else {
         this.dataProcessOn2ndLevel(tabItem)
@@ -198,7 +203,8 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
       this.nextLvlObj.forEach((term: any) => {
         leftMenuData.push(term)
         if (term.name === decodeURI(clickedTab)) {
-          let handleLink  = {title:decodeURI(clickedTab), url:'none'}
+          this.getIdentifierOnTopics(term)
+          const handleLink  = { title: decodeURI(clickedTab), url: 'none' }
           this.tempArr.push(handleLink)
           this.dataProcessOneMore(clickedTab, this.nextLvlObj)
         }
@@ -250,8 +256,13 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
         this.firstLevelTopic = firstLvlArray
 
     }
+  getIdentifierOnTopics(allLevelObject: any) {
+    this.identifier.push(allLevelObject.identifier)
+    this. getAllRelatedCourse()
+  }
   getAllRelatedCourse() {
-      this._service.fetchAllRelatedCourse().subscribe(response => {
+    this.loader.changeLoad.next(true)
+      this._service.fetchAllRelatedCourse(this.identifier).subscribe(response => {
         const tempRequestParam: { content: any }[] = []
         response.result.content.forEach((course: any) => {
          const temobj = {
@@ -260,6 +271,7 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
          tempRequestParam.push(temobj)
         })
         this.relatedResource = tempRequestParam
+        this.loader.changeLoad.next(false)
       })
     }
 }

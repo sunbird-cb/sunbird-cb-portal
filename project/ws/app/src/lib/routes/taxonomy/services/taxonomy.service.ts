@@ -30,64 +30,29 @@ export class TaxonomyService {
   fetchAllTopics() {
     return this.http.get<any>(API_ENDPOINTS.getAllTopics)
   }
-  fetchAllRelatedCourse() {
+  fetchAllRelatedCourse(identifier: any[]) {
    const request = {
-          filters: {
-              primaryCategory: [
-                  'Collection',
-                  'Resource',
-                  'Content Playlist',
-                  'Course',
-                  'Course Assessment',
-                  'Digital Textbook',
-                  'eTextbook',
-                  'Explanation Content',
-                  'Learning Resource',
-                  'Lesson Plan Unit',
-                  'Practice Question Set',
-                  'Teacher Resource',
-                  'Textbook Unit',
-                  'LessonPlan',
-                  'FocusSpot',
-                  'Learning Outcome Definition',
-                  'Curiosity Questions',
-                  'MarkingSchemeRubric',
-                  'ExplanationResource',
-                  'ExperientialResource',
-                  'Practice Resource',
-                  'TVLesson',
-              ],
+        query: '',
+        filters: {
+            status: [
+                'Draft',
+                'Live',
+            ],
+            contentType: [
+                'Collection',
+                'Course',
+                'Learning Path',
+            ],
+            topics: identifier,
           },
-          query: '',
           sort_by: {
               lastUpdatedOn: 'desc',
-          },
-          fields: [
-              'name',
-              'appIcon',
-              'mimeType',
-              'gradeLevel',
-              'identifier',
-              'medium',
-              'pkgVersion',
-              'board',
-              'subject',
-              'resourceType',
-              'primaryCategory',
-              'contentType',
-              'channel',
-              'organisation',
-              'trackable',
-          ],
+         },
           facets: [
-              'board',
-              'gradeLevel',
-              'subject',
-              'medium',
               'primaryCategory',
               'mimeType',
-          ],
-      }
+        ],
+    }
     return this.http.post<any>(API_ENDPOINTS.getAllReleatedCourse,  { request })
   }
 

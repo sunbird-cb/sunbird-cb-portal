@@ -8,7 +8,27 @@
   height: auto;
   min-height: 100px;
 }
+#wrap {
+  /* Your styling. */
+  position: absolute;
+  z-index: 999999;
+  right: 45%;
+  height: 80%;
+  text-align: center;
 
+  /* Solution part I. */
+  display: table;
+}
+.example-box{
+  background-color: #E5E7E9;
+}
+/* Solution part II. */
+#inside {
+  width: 100%;
+  height: 100%;
+  display: table-cell;
+  vertical-align: middle;
+}
 .dot:before {
   content: '•';
   margin: 1rem;
@@ -39,7 +59,7 @@
 
 .mobile2 {
   @include breakpoint-xs {
-    margin-top: $size-s;
+    // margin-top: $size-s;
   }
 
   // @include breakpoint-s {
