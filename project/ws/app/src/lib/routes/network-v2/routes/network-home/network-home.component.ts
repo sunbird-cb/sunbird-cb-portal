@@ -77,6 +77,7 @@ export class NetworkHomeComponent implements OnInit {
 
   connectionUpdateSearchCard(event: any) {
     if (event === 'connection-updated') {
+      this.getAllConnectionRequests()
       this.searchUser()
     }
   }
@@ -189,7 +190,7 @@ export class NetworkHomeComponent implements OnInit {
 
                   this.searchResultUserArray = this.searchResultUserArray.filter((el: any) => {
                     if (this.me && this.me.userId) {
-                      if (el.id === this.me.userId) {
+                      if (el.wid === this.me.userId) {
                         return false
                       }
                     }
