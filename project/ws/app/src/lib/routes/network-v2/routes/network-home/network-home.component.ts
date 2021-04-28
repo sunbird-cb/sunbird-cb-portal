@@ -77,6 +77,7 @@ export class NetworkHomeComponent implements OnInit {
 
   connectionUpdateSearchCard(event: any) {
     if (event === 'connection-updated') {
+      this.connectionUpdatePeopleCard(event)
       this.getAllConnectionRequests()
       this.searchUser()
     }
