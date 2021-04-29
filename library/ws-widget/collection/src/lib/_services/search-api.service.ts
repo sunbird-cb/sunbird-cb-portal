@@ -80,15 +80,13 @@ export class SearchApiService {
       request: {
         query: '',
         filters: {
+          primaryCategory: body.request.filters.contentType,
           status: [
             'Draft',
             'Live',
           ],
-          contentType: [
-            'Collection',
-            'Course',
-            'Learning Path',
-          ],
+          visibility: 'default',
+          contentType: body.request.filters.contentType,
         },
         sort_by: {
           lastUpdatedOn: 'desc',

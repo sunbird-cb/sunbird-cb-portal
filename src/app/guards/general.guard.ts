@@ -84,6 +84,12 @@ export class GeneralGuard implements CanActivate {
       // }
       // return this.router.parseUrl(`/app/tnc`)
     }
+    if (!this.configSvc.isActive) {
+      this.router.navigateByUrl('/error-access-forbidden')
+      this.authSvc.logout()
+      return false
+    }
+
     /**
        * Test IF User updated the profile details
        */

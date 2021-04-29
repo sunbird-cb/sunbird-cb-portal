@@ -21,7 +21,8 @@ const API_ENDPOINTS = {
   fetchProfile: (name: string) => `/apis/proxies/v8/discussion/user/${name}`,
   listUpVote: (slug: string) => `/apis//protected/v8/discussionHub/users/${slug}/upvoted`,
   listDownVoted: (slug: string) => `/apis/protected/v8/discussionHub/users/${slug}/downvoted`,
-  listSaved: (slug: string) => `/apis/protected/v8/discussionHub/users/${slug}/bookmarks`,
+  // listSaved: (slug: string) => `/apis/protected/v8/discussionHub/users/${slug}/bookmarks`,
+  listSaved: (slug: string) => `/apis/proxies/v8/discussion/user/${slug}/bookmarks`,
   fetchNetworkProfile: '/apis/protected/v8/user/profileDetails/getUserRegistry',
   // Above line is to fetch own details only for loged in user.
 }
@@ -123,7 +124,7 @@ export class DiscussService {
 
   fetchTopicByIdSort(topicId: number, topicName: any, sort: any) {
     // tslint:disable-next-line:prefer-template
-    const url = API_ENDPOINTS.getTopic + topicId.toString()  + '/' + topicName.toString()
+    const url = API_ENDPOINTS.getTopic + topicId.toString() + '/' + topicName.toString()
     // url = this.appendPage(page, url)
     return this.http.get<NSDiscussData.IDiscussionData>(`${url}&sort=${sort}`)
   }
@@ -143,8 +144,8 @@ export class DiscussService {
   fetchDownvoted() {
     return this.http.get<NSDiscussData.IProfile>(API_ENDPOINTS.listDownVoted(this.usr.userId))
   }
-  fetchSaved() {
-    return this.http.get<NSDiscussData.IProfile>(API_ENDPOINTS.listSaved(this.usr.userId))
+  fetchSaved(slug: string) {
+    return this.http.get<NSDiscussData.IProfile>(API_ENDPOINTS.listSaved(slug))
   }
   fetchSingleCategoryDetails(cid: number, page?: any) {
     const url = this.appendPage(page, API_ENDPOINTS.getSingleCategoryDetails(cid))

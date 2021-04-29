@@ -158,7 +158,7 @@ export class BtnPlaylistService {
 
   addPlaylistContent(playlist: any, contentIds: string[], updatePlaylists = true) {
     return this.addToPlaylist(
-      playlist[0].identifier,
+      playlist.identifier,
       {
         contentIds,
       },

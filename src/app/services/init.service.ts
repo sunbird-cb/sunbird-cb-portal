@@ -30,6 +30,7 @@ interface IDetailsResponse {
   roles: string[]
   group: string[]
   profileDetailsStatus: boolean
+  isActive: boolean
 }
 
 interface IFeaturePermissionConfigs {
@@ -301,18 +302,24 @@ export class InitService {
           // userName: `${userPidProfile.user.first_name} ${userPidProfile.user.last_name}`,
         }
       }
-      const details = { group: [], profileDetailsStatus: true, roles: (userRoles || []).map(v => v.toLowerCase()), tncStatus: true }
+      const details = { group: [],
+        profileDetailsStatus: true,
+        roles: (userRoles || []).map(v => v.toLowerCase()),
+        tncStatus: true,
+        isActive: true,
+      }
       this.configSvc.hasAcceptedTnc = details.tncStatus
       this.configSvc.profileDetailsStatus = details.profileDetailsStatus
       // this.configSvc.userRoles = new Set((userRoles || []).map(v => v.toLowerCase()))
       const detailsV: IDetailsResponse = await this.http
-        .get<IDetailsResponse>(endpoint.details).pipe(retry(3))
-        .toPromise()
+      .get<IDetailsResponse>(endpoint.details).pipe(retry(3))
+      .toPromise()
       this.configSvc.userGroups = new Set(detailsV.group)
       this.configSvc.userRoles = new Set((detailsV.roles || []).map(v => v.toLowerCase()))
+      this.configSvc.isActive = detailsV.isActive
       return details
     } else {
-      return { group: [], profileDetailsStatus: true, roles: userRoles, tncStatus: true }
+      return { group: [], profileDetailsStatus: true, roles: userRoles, tncStatus: true, isActive: true }
       // const details: IDetailsResponse = await this.http
       //   .get<IDetailsResponse>(endpoint.details).pipe(retry(3))
       //   .toPromise()
@@ -390,6 +397,7 @@ export class InitService {
       request: {
         username: (this.configSvc.userProfile && this.configSvc.userProfile.userName) || '',
         identifier: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
+        fullname: this.configSvc.userProfile ? `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}` : '',
       },
     }
     let createUserRes: null

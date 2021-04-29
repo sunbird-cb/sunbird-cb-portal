@@ -83,7 +83,7 @@ export class BtnGoalsService {
     return this.http.post<NsGoal.IUserGoals>(`/apis/proxies/v8/sunbirdigot/search?type=${type}&sourceFields=${sourceFields}`, {
       request: {
         filters: {
-          primaryCategory: 'Playlist',
+          primaryCategory: 'Goals',
           visibility: 'Private',
           status: ['Draft', 'Live'],
 

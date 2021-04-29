@@ -47,6 +47,7 @@ export class ConfigurationsService {
   isProduction = false
   hasAcceptedTnc = false
   profileDetailsStatus = false
+  isActive = true
   userPreference: IUserPreference | null = null
   userProfile: NsUser.IUserProfile | null = null
   userProfileV2: NsUser.IUserProfile | null = null
