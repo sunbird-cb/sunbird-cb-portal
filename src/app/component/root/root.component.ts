@@ -159,7 +159,7 @@ export class RootComponent implements OnInit, AfterViewInit {
             categories: { result: [] },
             routerSlug: '/app',
           })
-          this.router.navigate(['/app/discussion/forum'])
+          this.router.navigate(['/app/discussion-forum'])
         }
       }
     )

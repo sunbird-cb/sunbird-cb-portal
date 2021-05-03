@@ -29,10 +29,10 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'forum',
+        redirectTo: 'discussion-forum',
       },
       {
-        path: 'forum',
+        path: 'discussion-forum',
         loadChildren: () => import('./wrapper/wrapper.module').then(u => u.WrapperModule),
         resolve: {
           data: DiscussConfigResolve
