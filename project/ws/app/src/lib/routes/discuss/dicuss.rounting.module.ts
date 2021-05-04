@@ -35,7 +35,7 @@ const routes: Routes = [
         path: 'discussion-forum',
         loadChildren: () => import('./wrapper/wrapper.module').then(u => u.WrapperModule),
         resolve: {
-          data: DiscussConfigResolve
+          data: DiscussConfigResolve,
         },
       },
     //   {

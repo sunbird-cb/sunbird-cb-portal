@@ -80,7 +80,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
       }
       switch (path) {
         case 'home':
-          this.titles.push({ title: 'Network', icon: '', url: 'none' })
+          // this.titles.push({ title: 'Network', icon: '', url: 'none' })
           break
         case 'my-connection':
           this.titles.push({ title: 'My connections', icon: '', url: 'none' })
