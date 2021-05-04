@@ -15,6 +15,7 @@
                 {{getUserName}}
             </div>
             <div class="flex flex-1" *ngFor="let pro of hoverUser?.professionalDetails">
+
                 <span class="mat-body-1 ws-mat-black60-text truncate">
                     {{pro?.designation || pro?.designationOther}}
                 </span>
@@ -23,7 +24,7 @@
                     {{pro?.name}}
                 </div>
             </div>
-            <mat-divider class="p-inherit margin-top-s margin-bottom-s"></mat-divider>
+            <!-- <mat-divider class="p-inherit margin-top-s margin-bottom-s"></mat-divider> -->
 
             <div class="flex flex-1 flex-column">
                 <div class="flex flex-1 m-margin cursor-pointer">

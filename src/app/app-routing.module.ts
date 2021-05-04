@@ -98,7 +98,7 @@ const routes: Routes = [
     canActivate: [GeneralGuard],
   },
   {
-    path: 'app/discussion',
+    path: 'app',
     loadChildren: () =>
       import('./routes/route-discuss.module').then(u => u.RouteDiscussModule),
     canActivate: [GeneralGuard],
@@ -110,11 +110,11 @@ const routes: Routes = [
       pageData: PageResolve,
     },
   },
-  {
-    path: 'app/discussion-forum',
-    pathMatch: 'full',
-    redirectTo: 'app/discussion'
-  },
+  // {
+  //   path: 'app/discussion-forum',
+  //   pathMatch: 'full',
+  //   redirectTo: 'app/discussion'
+  // },
   {
     path: 'certs',
     loadChildren: () => import('./routes/route-cert.module').then(u => u.RouteCertificateModule),
