@@ -12,7 +12,7 @@ import { NsWidgetResolver } from '@sunbird-cb/resolver'
 export class DiscussComponent implements OnInit, OnDestroy {
   sideNavBarOpened = true
   panelOpenState = false
-  titles = [{ title: 'DISCUSS', url: '/app/discuss/home', icon: 'forum' }]
+  titles = [{ title: 'DISCUSS', url: '/app/discussion-forum', icon: 'forum' }]
   unread = 0
   currentRoute = 'forum'
   banner!: NsWidgetResolver.IWidgetData<any>
