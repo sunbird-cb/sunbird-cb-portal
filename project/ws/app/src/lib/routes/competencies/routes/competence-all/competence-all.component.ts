@@ -24,6 +24,8 @@ export class CompetenceAllComponent implements OnInit {
   @ViewChild('failMsg', { static: true }) failureMsg!: ElementRef
   @ViewChild('successRemoveMsg', { static: true })
   successRemoveMsg!: ElementRef
+  @ViewChild('searchInput', { static: true }) searchInput!: ElementRef
+
   sticky = false
   elementPosition: any
   currentFilter = 'recent'
@@ -149,7 +151,7 @@ export class CompetenceAllComponent implements OnInit {
         description: item.description || '',
         status: item.status || '',
         source: item.source || '',
-        competencyType: item.additionalProperties.competencyType,
+        competencyType: _.get(item, 'additionalProperties.competencyType') || item.type,
       }
       const updatedProfile = { ...this.currentProfile }
       if (
@@ -165,13 +167,13 @@ export class CompetenceAllComponent implements OnInit {
         updatedProfile.competencies.push(newCompetence)
       }
       this.competencySvc.updateProfile(updatedProfile).subscribe(response => {
-          if (response) {
-            // success
-            // this.myCompetencies.push(item)
-            this.snackBar.open(this.successMsg.nativeElement.value, 'X')
-          }
-        },
-        /* tslint:disable */ () => {
+        if (response) {
+          // success
+          // this.myCompetencies.push(item)
+          this.snackBar.open(this.successMsg.nativeElement.value, 'X')
+        }
+      },
+        /* tslint:disable */() => {
           this.snackBar.open(this.failureMsg.nativeElement.value, 'X');
         } /* tslint:disable */
       );
@@ -192,7 +194,7 @@ export class CompetenceAllComponent implements OnInit {
             this.snackBar.open(this.successRemoveMsg.nativeElement.value, 'X');
           }
         },
-        /* tslint:disable */ () => {
+        /* tslint:disable */() => {
           this.snackBar.open(this.failureMsg.nativeElement.value, 'X');
         } /* tslint:disable */
       );

@@ -76,6 +76,8 @@
 
 .main-back {
   font-size: $size-xl;
+  margin-bottom: calc(#{$size-s - 2px});
+  margin-right: $size-s;
 }
 
 /** No CSS for this example */
