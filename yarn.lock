@@ -1107,10 +1107,10 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.4.4.tgz#11d5db19bd178936ec89cd84519c4de439574398"
   integrity sha512-1oO6+dN5kdIA3sKPZhRGJTfGVP4SWV6KqlMOwry4J3HfyD68sl/3KmG7DeYUzvN+RbhXDnv/D8vNNB8168tAMg==
 
-"@project-sunbird/client-services@3.9.1":
-  version "3.9.1"
-  resolved "https://registry.yarnpkg.com/@project-sunbird/client-services/-/client-services-3.9.1.tgz#c5bd21c2207a1443047892d7a9511b63cace601a"
-  integrity sha512-q55jNOdZQSiwJmIj8ToYaINb7wwBFytmF3wRxy0wIHdy8DwwGaF4AQ261lRMuYRaWh8qC/osf+JNzF6qylu27A==
+"@project-sunbird/client-services@3.9.5":
+  version "3.9.5"
+  resolved "https://registry.yarnpkg.com/@project-sunbird/client-services/-/client-services-3.9.5.tgz#c9e56d2ec1ca636184f275446e4b820f2739afb8"
+  integrity sha512-v9L3pfVSs5TDv+psO/jlzvO++SpWhLxHRMUoOnPAH7DIBaOO0pWOLUvMQ7aTfg2IDnzpixFyR+8BiupnoW6wSQ==
   dependencies:
     "@project-sunbird/telemetry-sdk" "0.0.26"
     inversify "^5.0.1"
@@ -1128,13 +1128,6 @@
     qs "^6.9.4"
     reflect-metadata "^0.1.13"
     whatwg-fetch "^3.1.0"
-
-"@project-sunbird/discussions-ui-v8@2.0.28":
-  version "2.0.28"
-  resolved "https://registry.yarnpkg.com/@project-sunbird/discussions-ui-v8/-/discussions-ui-v8-2.0.28.tgz#b57eb9b4351a18f00507da55f0a1ab079c13188c"
-  integrity sha512-IE65g7yy+uvmeSFx2zyF44ABeRp1XJLUFUimxEOubj0PUnbIg/D+3ifvZ+eVdGSYbzWNxbfnmLn3wjmJwE3qIA==
-  dependencies:
-    tslib "^1.9.0"
 
 "@project-sunbird/sb-styles@0.0.7":
   version "0.0.7"
@@ -1164,6 +1157,11 @@
   dependencies:
     grunt-karma "^0.12.2"
     karma "^3.0.0"
+
+"@scarf/scarf@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@scarf/scarf/-/scarf-1.1.0.tgz#b84b4a91cd938a688d36245b7a7db6fbc476a499"
+  integrity sha512-b2iE8kjjzzUo2WZ0xuE2N77kfnTds7ClrDxcz3Atz7h2XrNVoAPUoT75i7CY0st5x++70V91Y+c6RpBX9MX7Jg==
 
 "@schematics/angular@8.3.29":
   version "8.3.29"
@@ -1196,6 +1194,13 @@
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/@sunbird-cb/design-system/-/design-system-0.0.2.tgz#54793a7d5c5b6942319b6c1f3e4f63ef60548545"
   integrity sha512-oTZMfeNu+fi2muVbZUN9vw0mF28e/MvqFgYzgrLJ6vvw3JDxW3814U00x4Fym7Rm0tYc7vpckDFGSKXR3EFMaQ==
+
+"@sunbird-cb/discussions-ui-v8@^2.0.39":
+  version "2.0.39"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/discussions-ui-v8/-/discussions-ui-v8-2.0.39.tgz#6be0eace0b39e6c1c3d2a2dd27728b57926b6f3f"
+  integrity sha512-g8RDGtFH0wgb62OYQZISvH+m9GgO+QRTzctpjmvkcAVjENbzyQxBiAAKL5qlfdBsjiN9V90m5717E2o8O4raOQ==
+  dependencies:
+    tslib "^1.9.0"
 
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
@@ -7207,6 +7212,14 @@ ngx-image-cropper@^3.0.3:
     tslib "^1.9.0"
   optionalDependencies:
     hammerjs "^2.0.8"
+
+ngx-infinite-scroll@10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-infinite-scroll/-/ngx-infinite-scroll-10.0.0.tgz#b4effa2d1b2cb9b3488b02e25b8b2c913d099993"
+  integrity sha512-s+q8Yuq9Qjsb7hNaxgA3C2gmLz1Eu7834wcEc5jRJzEUsVpqRaJhmVHzUEu64pWbNdADB37A1bHR8bxfKVjtzA==
+  dependencies:
+    "@scarf/scarf" "^1.1.0"
+    opencollective-postinstall "^2.0.2"
 
 ngx-quill@^7.1.2:
   version "7.3.12"
