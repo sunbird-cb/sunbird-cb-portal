@@ -113,7 +113,7 @@ const routes: Routes = [
   {
     path: 'app/discussion-forum',
     pathMatch: 'full',
-    redirectTo: 'app/discussion'
+    redirectTo: 'app/discussion',
   },
   {
     path: 'certs',
