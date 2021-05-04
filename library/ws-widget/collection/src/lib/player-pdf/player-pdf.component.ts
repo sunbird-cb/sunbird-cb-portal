@@ -321,6 +321,7 @@ export class PlayerPdfComponent extends WidgetBaseComponent
   }
 
   private async loadDocument(url: string) {
+  
     const pdf = await PDFJS.getDocument(url).promise
     this.pdfInstance = pdf
     this.totalPages = this.pdfInstance.numPages

@@ -104,7 +104,7 @@ export class DashboardComponent implements OnInit {
   ) {
 
     if (this.configSvc.userProfile) {
-      this.userName = this.configSvc.userProfile.userName || ''
+      this.userName = `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}`
       this.userEmail = this.configSvc.userProfile.email || ''
       this.departmentName = this.configSvc.userProfile.departmentName || ''
     }

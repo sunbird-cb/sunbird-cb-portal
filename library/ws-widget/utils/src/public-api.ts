@@ -35,6 +35,9 @@ export * from './lib/pipes/pipe-html-tag-removal/pipe-html-tag-removal.pipe'
 export * from './lib/pipes/pipe-filter/pipe-filter.module'
 export * from './lib/pipes/pipe-filter/pipe-filter.pipe'
 
+export * from './lib/pipes/pipe-filter-v2/pipe-filter-v2.module'
+export * from './lib/pipes/pipe-filter-v2/pipe-filter-v2.pipe'
+
 export * from './lib/pipes/pipe-filter-search/pipe-filter-search.module'
 export * from './lib/pipes/pipe-filter-search/pipe-filter-search.pipe'
 
