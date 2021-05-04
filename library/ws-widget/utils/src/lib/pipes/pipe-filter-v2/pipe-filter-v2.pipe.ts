@@ -11,7 +11,7 @@ export class PipeFilterV2Pipe implements PipeTransform {
     const searchTextLowerCase = searchText.toLowerCase()
 
     return items.filter(it => {
-      return (it[key] + '').toLowerCase().includes(searchTextLowerCase)
+      return `${it[key]} `.toLowerCase().includes(searchTextLowerCase)
     })
 
   }
