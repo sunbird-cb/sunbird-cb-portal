@@ -76,8 +76,9 @@ $color-thin-gray: #d8d8d8;
 }
 
 .main-back {
-  font-size: $size-l;
-  // color: $color-thin-gray;
+  font-size: $size-xl;
+  margin-bottom: calc(#{$size-s - 2px});
+  margin-right: $size-s;
 }
 
 /** No CSS for this example */

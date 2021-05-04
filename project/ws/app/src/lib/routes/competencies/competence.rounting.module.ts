@@ -6,7 +6,6 @@ import { InitResolver } from './resolvers/init-resolve.service'
 import { ProfileResolve } from './resolvers/profile-fetch'
 // import { ProfileResolverService } from './resolvers/profile-resolver.service'
 // import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
-
 const routes: Routes = [
   {
     path: '',

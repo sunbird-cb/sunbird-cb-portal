@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule } from '@sunbird-cb/utils'
+import { PipeFilterModule, PipeFilterV2Module, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule } from '@sunbird-cb/utils'
 import { CompetenceComponent } from './routes/competence-home/competence.component'
 import { CompetencieRoutingModule } from './competence.rounting.module'
 import { CompetenceCardComponent } from './components/competencies-card/competencies-card.component'
@@ -68,6 +68,7 @@ import { CompetenceAllComponent } from './routes/competence-all/competence-all.c
     PipeRelativeTimeModule,
     AvatarPhotoModule,
     EditorSharedModule,
+    PipeFilterV2Module,
     // CkEditorModule,
     PipeOrderByModule,
     BtnPageBackModule,
