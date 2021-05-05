@@ -69,6 +69,28 @@ export class CardHubsListComponent extends WidgetBaseComponent
 
   navigate() {
     this.discussUtilitySvc.setDiscussionConfig({
+      menuOptions: [
+        {
+          route: 'all-discussions',
+          label: 'All discussions',
+          enable: true,
+        },
+        {
+          route: 'categories',
+          label: 'Categories',
+          enable: true,
+        },
+        {
+          route: 'tags',
+          label: 'Tags',
+          enable: true,
+        },
+        {
+          route: 'my-discussion',
+          label: 'My discussion',
+          enable: true,
+        },
+      ],
       userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
       context: {
         id: 1,

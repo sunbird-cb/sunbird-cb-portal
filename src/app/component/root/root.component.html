@@ -18,10 +18,6 @@
       isNavBarRequired
   }">
   <router-outlet></router-outlet>
-  <!-- <a mat-button (click)="navigate()">
-    <span i18n>View All</span>
-    <mat-icon>arrow_forward</mat-icon>
-  </a> -->
 </div>
 <ws-app-footer class="app-footer" [ngClass]="{ 'padding-bottom: 56px': !isSetupPage}"
   *ngIf="(authSvc.isLoggedIn$ | async) === true && showNavbar"></ws-app-footer>

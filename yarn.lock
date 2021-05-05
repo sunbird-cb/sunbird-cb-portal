@@ -1173,10 +1173,10 @@
   resolved "https://registry.yarnpkg.com/@sunbird-cb/design-system/-/design-system-0.0.2.tgz#54793a7d5c5b6942319b6c1f3e4f63ef60548545"
   integrity sha512-oTZMfeNu+fi2muVbZUN9vw0mF28e/MvqFgYzgrLJ6vvw3JDxW3814U00x4Fym7Rm0tYc7vpckDFGSKXR3EFMaQ==
 
-"@sunbird-cb/discussions-ui-v8@^2.0.39":
-  version "2.0.39"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/discussions-ui-v8/-/discussions-ui-v8-2.0.39.tgz#6be0eace0b39e6c1c3d2a2dd27728b57926b6f3f"
-  integrity sha512-g8RDGtFH0wgb62OYQZISvH+m9GgO+QRTzctpjmvkcAVjENbzyQxBiAAKL5qlfdBsjiN9V90m5717E2o8O4raOQ==
+"@sunbird-cb/discussions-ui-v8@^2.0.43":
+  version "2.0.43"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/discussions-ui-v8/-/discussions-ui-v8-2.0.43.tgz#4cb3f604fe6d8f5ae5eae199624be31aea7398e8"
+  integrity sha512-dbBxznR5OwmEWeyLEsN2w6/8xU5edaGJhh/PMoa9yOxm9Nvhqls0jLy8gsPkEm2CtfdwFfnI3wGRtrDHYM6OAw==
   dependencies:
     tslib "^1.9.0"
 
@@ -7319,14 +7319,6 @@ ngx-image-cropper@^3.0.3:
   integrity sha512-0yRVKG5XAbVo3rOaj/iFDlekGsxEqXKU9iXFbjyvHvRT2DFs+AjwtyvINsHCWw+4ed9yA4Y+wLIUNqzA0bfxLw==
   dependencies:
     tslib "^1.9.0"
-
-ngx-infinite-scroll@10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/ngx-infinite-scroll/-/ngx-infinite-scroll-10.0.0.tgz#b4effa2d1b2cb9b3488b02e25b8b2c913d099993"
-  integrity sha512-s+q8Yuq9Qjsb7hNaxgA3C2gmLz1Eu7834wcEc5jRJzEUsVpqRaJhmVHzUEu64pWbNdADB37A1bHR8bxfKVjtzA==
-  dependencies:
-    "@scarf/scarf" "^1.1.0"
-    opencollective-postinstall "^2.0.2"
 
 ngx-infinite-scroll@10.0.0:
   version "10.0.0"

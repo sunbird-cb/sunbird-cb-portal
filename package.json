@@ -43,7 +43,7 @@
     "@project-sunbird/sunbird-quml-player": "0.0.6",
     "@project-sunbird/telemetry-sdk": "0.0.26",
     "@sunbird-cb/design-system": "0.0.2",
-    "@sunbird-cb/discussions-ui-v8": "^2.0.41",
+    "@sunbird-cb/discussions-ui-v8": "^2.0.43",
     "@types/file-saver": "^2.0.1",
     "@types/lodash": "^4.14.168",
     "bootstrap": "4.1.1",
