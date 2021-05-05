@@ -34,7 +34,7 @@
             *ngFor="let discuss of data.topics | orderBy: currentFilter :'desc' | pipeFilterSearch: searchInput.value; let i = index;let odd=odd; let even=even;">
             <div class="flex w-full sm:w-full md:w-1/2 mar-bot"
                 [ngClass]="{ 'justify-start  md:justify-end': odd, 'justify-start':even}">
-                <ws-app-careers-card class="w-fix" [discuss]="discuss"></ws-app-careers-card>
+                <ws-app-careers-card class="w-fix mb-8" [discuss]="discuss"></ws-app-careers-card>
             </div>
         </ng-container>
         <h2 *ngIf="data.topics?.length<=0">No Opening found</h2>
