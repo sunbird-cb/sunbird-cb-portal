@@ -1173,10 +1173,10 @@
   resolved "https://registry.yarnpkg.com/@sunbird-cb/design-system/-/design-system-0.0.2.tgz#54793a7d5c5b6942319b6c1f3e4f63ef60548545"
   integrity sha512-oTZMfeNu+fi2muVbZUN9vw0mF28e/MvqFgYzgrLJ6vvw3JDxW3814U00x4Fym7Rm0tYc7vpckDFGSKXR3EFMaQ==
 
-"@sunbird-cb/discussions-ui-v8@^2.0.43":
-  version "2.0.43"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/discussions-ui-v8/-/discussions-ui-v8-2.0.43.tgz#4cb3f604fe6d8f5ae5eae199624be31aea7398e8"
-  integrity sha512-dbBxznR5OwmEWeyLEsN2w6/8xU5edaGJhh/PMoa9yOxm9Nvhqls0jLy8gsPkEm2CtfdwFfnI3wGRtrDHYM6OAw==
+"@sunbird-cb/discussions-ui-v8@^2.0.44":
+  version "2.0.44"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/discussions-ui-v8/-/discussions-ui-v8-2.0.44.tgz#3eb44c5cd06689fe9f084baa5baa622c97d8eced"
+  integrity sha512-RlpHXSw4w8a/Rft5DsM665sY6krfWpjxmHPckyiDizdTsseYknD3WtBchJKns/P574vpqpvWcE/LBzaqp1hrPw==
   dependencies:
     tslib "^1.9.0"
 
