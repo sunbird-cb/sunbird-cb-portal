@@ -83,8 +83,8 @@
                   'artifactUrl'
                 ]
         "></ws-widget-btn-content-download>
-      <ws-widget-btn-content-like [widgetData]="widgetData.content | pipePartialContent: ['identifier']">
-      </ws-widget-btn-content-like>
+      <!-- <ws-widget-btn-content-like [widgetData]="widgetData.content | pipePartialContent: ['identifier']">
+      </ws-widget-btn-content-like> -->
       <ws-widget-btn-content-mail-me [widgetData]="widgetData.content"></ws-widget-btn-content-mail-me>
       <ws-widget-btn-content-share [widgetData]="widgetData.content"></ws-widget-btn-content-share>
       <ws-widget-btn-channel-analytics [widgetData]="widgetData.content"></ws-widget-btn-channel-analytics>
@@ -381,9 +381,9 @@
           <mat-divider></mat-divider>
           <div class="flex flex-middle">
             <ws-widget-btn-content-share [widgetData]="widgetData.content"></ws-widget-btn-content-share>
-            <ws-widget-btn-content-like [color]="'primary'" class="flex items-center"
+            <!-- <ws-widget-btn-content-like [color]="'primary'" class="flex items-center"
               [widgetData]="widgetData.content | pipePartialContent: ['identifier']" [likesCount]="widgetData.likes">
-            </ws-widget-btn-content-like>
+            </ws-widget-btn-content-like> -->
 
             <ws-widget-btn-playlist *ngIf="btnPlaylistConfig" [widgetData]="btnPlaylistConfig">
             </ws-widget-btn-playlist>
