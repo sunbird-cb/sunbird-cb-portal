@@ -22,7 +22,11 @@
     margin-bottom: 8px;
   }
 }
-
+.default-icon{
+  font-size: 22px;
+  margin-top: 3px;
+  margin-left: 6px;
+}
 .mob {
   @include breakpoint-767 {
     display: none;

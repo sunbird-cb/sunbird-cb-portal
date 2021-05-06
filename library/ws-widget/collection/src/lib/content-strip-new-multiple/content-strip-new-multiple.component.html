@@ -55,7 +55,7 @@
                   <a mat-button [routerLink]="widgetData.strips[0]?.viewMoreUrl?.path"
                     [queryParams]="widgetData.strips[0]?.viewMoreUrl?.queryParams">
                     <span i18n>{{widgetData.strips[0].viewMoreUrl.viewMoreText || 'View All'}}</span>
-                    <mat-icon>arrow_forward</mat-icon>
+                    <mat-icon class="default-icon">arrow_forward</mat-icon>
                   </a>
                 </div>
               </div>
@@ -93,7 +93,7 @@
             <ws-utils-horizontal-scroller class="flex container-balanced new-width" *ngIf="getLength(stripsResultDataMap[key]) && showAccordion(key)"
               [loadStatus]="'done'">
               <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets" [wsResolverWidget]="widget">
-                
+
               </ng-container>
             </ws-utils-horizontal-scroller>
 

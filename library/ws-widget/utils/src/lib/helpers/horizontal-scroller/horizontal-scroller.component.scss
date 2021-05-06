@@ -38,7 +38,7 @@ $spaceFromEnd: -$size-m;
 
 // Changing scrollbar
 .horizontal-scroll-content {
-  overflow-x: auto;
+  overflow-x: hidden;
   /* white-space: nowrap; */
   -webkit-overflow-scrolling: touch;
   height: 100%;

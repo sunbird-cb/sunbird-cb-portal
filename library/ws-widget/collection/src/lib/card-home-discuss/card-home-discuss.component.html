@@ -8,7 +8,7 @@
     </mat-card-title>
     <mat-card-subtitle class="responsive">
       <span class="flex ws-mat-default-text mat-body-2">
-        <mat-icon svgIcon="category_xs"></mat-icon>{{discuss.category.name}}
+        <mat-icon svgIcon="category_xs"></mat-icon>&nbsp;{{discuss.category.name}}
       </span>
       <span class="dot ws-mat-black40-text mat-body-2" *ngIf="discuss?.user?.username"> Asked by
         {{discuss?.user?.fullname != null ? discuss?.user?.fullname : discuss?.user?.username }}</span>
@@ -37,8 +37,8 @@
         <span class="pad-4 mat-subheading-2">{{discuss.count || 0}}&nbsp;views</span>
       </span>
     </div>
-    <div class="flex flex-1" class="cursor-pointer text-right mobile2 margin-right-s">
-      <span class="noocoments ws-mat-default-text mat-subheading-2">{{((discuss.postcount || 1) -1) }}
+    <div class="flex flex-1" class="cursor-pointer text-right mobile2 margin-right-s ws-mat-black60-text">
+      <span class="mat-subheading-2">{{((discuss.postcount || 1) -1) }}
         comments</span>
     </div>
   </mat-card-footer>
