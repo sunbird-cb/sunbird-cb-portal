@@ -215,7 +215,7 @@
       <ng-container i18n>Access to this YouTube content is blocked.</ng-container>
     </p>
     <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier"
-      [className]="'thick'" [progress]="content?.progress?.progress">
+      [className]="'thick'" [progress]="content?.completionPercentage" [progressType]="'percentage'">
     </ws-widget-content-progress>
   </div>
 </div>
