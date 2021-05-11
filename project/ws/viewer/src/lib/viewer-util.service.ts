@@ -35,6 +35,22 @@ export class ViewerUtilService {
     return
   }
 
+  calculatePercent(current: string[], max: number): number {
+    try {
+      if (current && current.length && max) {
+        const latest = parseFloat(current.pop() || '0')
+        const percentMilis = (latest / max) * 100
+        const percent = parseFloat(percentMilis.toFixed(2))
+        return percent
+      }
+      return 0
+    } catch (e) {
+      // tslint:disable-next-line: no-console
+      console.log('Error in calculating percentage', e)
+      return 0
+    }
+  }
+
   realTimeProgressUpdate(contentId: string, request: any, collectionId?: string, batchId?: string) {
     let req: any
     if (this.configservice.userProfile) {
@@ -53,6 +69,7 @@ export class ViewerUtilService {
                 current: request.current,
                 mimeType: request.mime_type,
               },
+              completionPercentage: this.calculatePercent(request.current, request.max_size),
             },
           ],
         },

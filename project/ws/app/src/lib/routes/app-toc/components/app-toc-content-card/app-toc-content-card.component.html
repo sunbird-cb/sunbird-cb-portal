@@ -114,9 +114,10 @@
           </div>
         </div>
       </div>
-      <div class="w-100" *ngIf="content?.identifier && content?.progress?.progress">
+      <div class="w-100" *ngIf="content?.identifier && content?.completionPercentage">
         <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
-          [contentId]="content?.identifier" class="progress-bar-thin" [progress]="content?.progress?.progress">
+          [contentId]="content?.identifier" class="progress-bar-thin" [progress]="content?.completionPercentage" 
+          [progressType]="'percentage'">
         </ws-widget-content-progress>
       </div>
     </div>
@@ -133,8 +134,9 @@
     <div class="img-container">
       <img class="card-thumbnail ws-mat-primary-lite-background" [src]="content?.appIcon" alt="Thumbnail"
         (click)="viewChildren = !viewChildren" [wsUtilsDefaultThumbnail]="defaultThumbnail" />
-      <ws-widget-content-progress *ngIf="content?.identifier && content?.progress?.progress" [forPreview]="forPreview"
-        [contentId]="content?.identifier" class="progress-bar-thin" [progress]="content?.progress?.progress">
+      <ws-widget-content-progress *ngIf="content?.identifier && content?.completionPercentage" [forPreview]="forPreview"
+        [contentId]="content?.identifier" class="progress-bar-thin" [progress]="content?.completionPercentage" 
+        [progressType]="'percentage'">
       </ws-widget-content-progress>
     </div>
 

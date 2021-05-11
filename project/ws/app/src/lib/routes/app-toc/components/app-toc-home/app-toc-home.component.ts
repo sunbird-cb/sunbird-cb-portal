@@ -318,6 +318,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       data => {
         if (data && data.result && data.result.contentList && data.result.contentList.length) {
           this.resumeData = data.result.contentList
+          this.tocSvc.updateResumaData(this.resumeData)
         } else {
           this.resumeData = null
         }
