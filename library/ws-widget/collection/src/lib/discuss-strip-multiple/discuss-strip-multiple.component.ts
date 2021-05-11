@@ -125,10 +125,13 @@ export class DiscussStripMultipleComponent extends WidgetBaseComponent
       },
       categories: { result: [] },
       routerSlug: '/app',
-      headerOptions: false,
-      bannerOption: true,
-    })
-    this.router.navigate(['/app/discussion-forum'])
+    }
+
+                                               this.discussUtilitySvc.setDiscussionConfig(config)
+    // below home is the key we are setting the configuration in localstorage
+                                               localStorage.setItem('home', JSON.stringify(config))
+    // we are sending that key in query params "queryParams: { page: 'home' }""
+                                               this.router.navigate(['/app/discussion-forum'], { queryParams: { page: 'home' }, queryParamsHandling: 'merge' })
   }
 
   private initData() {

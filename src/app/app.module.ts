@@ -23,8 +23,10 @@ import {
 } from '@angular/material'
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { BtnFeatureModule, ErrorResolverModule, TourModule, WIDGET_REGISTERED_MODULES, WIDGET_REGISTRATION_CONFIG, PipeContentRoutePipe,
-  StickyHeaderModule } from '@sunbird-cb/collection'
+import {
+  BtnFeatureModule, ErrorResolverModule, TourModule, WIDGET_REGISTERED_MODULES, WIDGET_REGISTRATION_CONFIG, PipeContentRoutePipe,
+  StickyHeaderModule,
+} from '@sunbird-cb/collection'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { LoggerService, PipeSafeSanitizerModule, ConfigurationsService } from '@sunbird-cb/utils'
 import { SearchModule } from '@ws/app/src/public-api'
@@ -56,6 +58,8 @@ import { AppRetryInterceptorService } from './services/app-retry-interceptor.ser
 import { TncAppResolverService } from './services/tnc-app-resolver.service'
 import { TncPublicResolverService } from './services/tnc-public-resolver.service'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { DiscussionUiModule } from '@project-sunbird/discussions-ui-v8'
+import { ConfigService } from '@ws/app/src/lib/routes/discuss/services/config.service'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -127,6 +131,8 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     MobileAppModule,
     PipeSafeSanitizerModule,
     TourModule,
+    DiscussionUiModule.forRoot(ConfigService),
+
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   exports: [

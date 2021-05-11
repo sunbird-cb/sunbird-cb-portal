@@ -12,6 +12,7 @@ import { CreateBatchDialogComponent } from '../create-batch-dialog/create-batch-
 import { TitleTagService } from '@ws/app/src/lib/routes/app-toc/services/title-tag.service'
 import { MatDialog } from '@angular/material'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
+import { IdiscussionConfig } from '@project-sunbird/discussions-ui-v8'
 
 @Component({
   selector: 'ws-app-app-toc-single-page',
@@ -40,6 +41,11 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   private routeQuerySubscription: Subscription | null = null
   batchId!: string
   isNotEditor = true
+  discussionConfig: IdiscussionConfig = {
+    // menuOptions: [{ route: 'categories', enable: true }],
+    userName: 'nptest',
+    categories: { result: [] },
+  }
   // configSvc: any
 
   constructor(
