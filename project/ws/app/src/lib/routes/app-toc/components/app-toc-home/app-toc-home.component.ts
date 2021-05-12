@@ -225,6 +225,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           if (enrolledCourse && enrolledCourse.batchId) {
             // const collectionId = this.isResource ? '' : this.content.identifier
             this.content.completionPercentage = enrolledCourse.completionPercentage || 0
+            this.content.completionStatus = enrolledCourse.status || 0
             this.getContinueLearningData(this.content.identifier, enrolledCourse.batchId)
             this.batchData = {
               content: [enrolledCourse.batch],

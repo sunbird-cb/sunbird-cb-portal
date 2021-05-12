@@ -37,8 +37,9 @@ export class ViewerUtilService {
 
   calculatePercent(current: string[], max: number): number {
     try {
-      if (current && current.length && max) {
-        const latest = parseFloat(current.pop() || '0')
+      const temp = [...current]
+      if (temp && temp.length && max) {
+        const latest = parseFloat(temp.pop() || '0')
         const percentMilis = (latest / max) * 100
         const percent = parseFloat(percentMilis.toFixed(2))
         return percent
@@ -48,6 +49,20 @@ export class ViewerUtilService {
       // tslint:disable-next-line: no-console
       console.log('Error in calculating percentage', e)
       return 0
+    }
+  }
+
+  getStatus(current: string[], max: number) {
+    try {
+      const percentage = this.calculatePercent(current, max)
+      if (Math.ceil(percentage) >= 100) {
+        return 2
+      }
+      return 1
+    } catch (e) {
+      // tslint:disable-next-line: no-console
+      console.log('Error in getting completion status', e)
+      return 1
     }
   }
 
@@ -61,7 +76,7 @@ export class ViewerUtilService {
             {
               contentId,
               batchId,
-              status: 2,
+              status: this.getStatus(request.current, request.max_size),
               courseId: collectionId,
               lastAccessTime: dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss:SSSZZ'),
               progressdetails: {

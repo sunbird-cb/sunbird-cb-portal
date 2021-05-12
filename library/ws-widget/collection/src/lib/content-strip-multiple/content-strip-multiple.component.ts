@@ -394,6 +394,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
             content = courses.map(c => {
               const contentTemp: NsContent.IContent =  c.content
               contentTemp.completionPercentage = c.completionPercentage || 0
+              contentTemp.completionStatus = c.completionStatus || 0
               return contentTemp
             })
           }
