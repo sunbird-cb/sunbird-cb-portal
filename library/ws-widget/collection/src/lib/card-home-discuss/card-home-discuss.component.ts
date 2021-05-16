@@ -51,6 +51,13 @@ export class CardHomeDiscussComponent extends WidgetBaseComponent implements OnI
     }
   }
 
+  getUserFullName(user: any) {
+    if (user && user.username) {
+      return `${user.username.trim()}`
+    }
+    return ''
+  }
+
   fillPopular() {
     // this.discussService.fetchRecentD().subscribe((response: any) => {
     //   this.discuss = _.get(response, 'topics')
@@ -60,5 +67,28 @@ export class CardHomeDiscussComponent extends WidgetBaseComponent implements OnI
 
   getDiscussion(discuss: any) {
     this.router.navigate([`/app/discussion-forum/topic/${_.trim(_.get(discuss, 'slug'))}`])
+  }
+
+  public getBgColor(tagTitle: any) {
+    const bgColor = this.stringToColor(tagTitle.toLowerCase())
+    const color = this.getContrast()
+    return { color, 'background-color': bgColor }
+  }
+
+  stringToColor(title: any) {
+    let hash = 0
+    // tslint:disable-next-line: no-bitwise
+    for (const element of title) {
+      // tslint:disable-next-line: no-bitwise
+      hash = title.charCodeAt(element) + ((hash << 5) - hash)
+    }
+    const hue = Math.abs(hash % 360)
+    // tslint:disable-next-line: prefer-template
+    const colour = 'hsl(' + hue + ',100%,30%)'
+    return colour
+  }
+
+  getContrast() {
+    return 'rgba(255, 255, 255, 80%)'
   }
 }
