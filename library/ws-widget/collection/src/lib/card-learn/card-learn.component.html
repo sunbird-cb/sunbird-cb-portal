@@ -9,6 +9,30 @@
   </div> -->
 </ng-container>
 
+<mat-card class="flex-1 remove-botton-radius card-min-hei">
+  <mat-card-header>
+    <mat-card-title class="margin-l-0 f-medium">
+      <span class="mat-subheading-1">Explore Courses</span>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="margin-left-m mb-0-imp">
+    <!-- <ng-container *ngFor="let post of data.posts | pipeFilter:'index': '0'"> -->
+    <h4 class="w-full title-margin ws-mat-black60-text">
+      Explore Career Options
+    </h4>
+    <!-- </ng-container> -->
+  </mat-card-content>
+  <mat-card-actions align="left" class="marg">
+    <button mat-button color="default" type="button" class="margin-left-xs small-button blue-border flex-auto-display" (click)="goToTaxonomyHome()">
+      <span class="ws-mat-default-text" i18n>Browse by topic</span>
+    </button>
+    <button mat-button color="default" type="button" class="margin-left-xs small-button blue-border flex-auto-display">
+      <span class="ws-mat-default-text" i18n>Explore by compentency</span>
+    </button>
+  </mat-card-actions>
+
+</mat-card>
+
 <ng-template #activities>
   <div class="px-4 sm:px-8 md:px-0 py-4 my-1">
 

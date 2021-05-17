@@ -6,6 +6,7 @@
   @extend %page-center;
   height: auto;
   // min-height: 400px;
+  background: transparent;
 }
 
 .show {
@@ -31,7 +32,7 @@
   border: none !important;
   padding: 0;
   margin: auto;
-  // background: inherit !important;
+  background: inherit !important;
 }
 
 .fix-ww {

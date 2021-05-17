@@ -59,6 +59,9 @@ export class CardLearnComponent extends WidgetBaseComponent
     })
     return returnValue
   }
+  goToTaxonomyHome() {
+    this.router.navigate(['/app/taxonomy/home'])
+  }
   ngOnInit() {
     if (this.showActivities) {
       // this.activitiesSvc.fetchLearnActivites().then((result: IActivity) => {
