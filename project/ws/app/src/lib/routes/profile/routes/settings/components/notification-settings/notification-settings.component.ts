@@ -23,7 +23,7 @@ export class NotificationSettingsComponent implements OnInit {
 
   ngOnInit() {
     this.userRoles = this.configSvc.userRoles || new Set()
-    this.fetchNotificationSettings()
+    // this.fetchNotificationSettings()
   }
 
   private fetchNotificationSettings() {
