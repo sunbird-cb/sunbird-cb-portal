@@ -263,7 +263,6 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
     }
   getIdentifierOnTopics(allLevelObject: any) {
     this.identifier.push(allLevelObject.identifier)
-    console.log(this.identifier)
     this. getAllRelatedCourse()
   }
   getAllRelatedCourse() {

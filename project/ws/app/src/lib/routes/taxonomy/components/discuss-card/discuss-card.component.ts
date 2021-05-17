@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core'
 import { NSDiscussData } from '../../models/discuss.model'
-import cloneDeep from 'lodash';
 @Component({
   selector: 'app-dicuss-card',
   templateUrl: './discuss-card.component.html',
@@ -17,7 +16,7 @@ export class DiscussCardComponent implements OnInit, OnChanges {
   tags!: any
   rem!: number
   showNoValue!: boolean
-  tagCopy!:any
+  tagCopy!: any
   @Output() clickedTab = new EventEmitter<string>()
 
   showRem = true
@@ -28,7 +27,6 @@ export class DiscussCardComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     if (this.tags && this.tags.length > DiscussCardComponent.MINIMUM_LENGTH) {
-
 
     //
     //
@@ -41,7 +39,7 @@ export class DiscussCardComponent implements OnInit, OnChanges {
   getDiscussion() {
     // this.router.navigate([`/app/discuss/home/${this.discuss.tid}`])
     this.tags = []
-    this.tags=this.tagCopy
+    this.tags = this.tagCopy
     this.showRem = false
   }
 
@@ -51,7 +49,7 @@ export class DiscussCardComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     this.rem = this.calculateLength(this.tags.length)
     this.tagCopy = [...this.tags]
-    if(this.tags.length>DiscussCardComponent.MINIMUM_LENGTH){
+    if (this.tags.length > DiscussCardComponent.MINIMUM_LENGTH) {
     this.tags.length =  DiscussCardComponent.MINIMUM_LENGTH
     this.showRem = true
   }
