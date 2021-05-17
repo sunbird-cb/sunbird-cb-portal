@@ -127,6 +127,7 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
           this.currentTab = term.name
             this.firstLevelTopic = firstLvlArray
             if (term.name === decodeURI(topic) && term.children) {
+              this.identifier = []
               this.getIdentifierOnTopics(term)
               const nextLevel: string[] = []
               term.children.forEach((second: any) => {
@@ -153,7 +154,8 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
         this.currentTab = term.name
           this.firstLevelTopic = firstLvlArray
           if (term.name === decodeURI(topic) && term.children) {
-
+            this.identifier = []
+            this.getIdentifierOnTopics(term)
             const nextLevel: string[] = []
             term.children.forEach((second: any) => {
               nextLevel.push(second.name)
@@ -178,6 +180,8 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
             if (term.name === topic && term.children) {
               this.nextLvlObj = term.children
               const nextLevel: string[] = []
+              this.identifier = []
+              this.getIdentifierOnTopics(term)
               term.children.forEach((second: any) => {
                 nextLevel.push(second.name)
                 tempCurrentArray.push(second)
@@ -203,6 +207,7 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
       this.nextLvlObj.forEach((term: any) => {
         leftMenuData.push(term)
         if (term.name === decodeURI(clickedTab)) {
+          this.identifier = []
           this.getIdentifierOnTopics(term)
           const handleLink  = { title: decodeURI(clickedTab), url: 'none' }
           this.tempArr.push(handleLink)
@@ -258,6 +263,7 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
     }
   getIdentifierOnTopics(allLevelObject: any) {
     this.identifier.push(allLevelObject.identifier)
+    console.log(this.identifier)
     this. getAllRelatedCourse()
   }
   getAllRelatedCourse() {

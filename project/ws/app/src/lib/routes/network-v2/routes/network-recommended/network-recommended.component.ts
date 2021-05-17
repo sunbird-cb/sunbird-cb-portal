@@ -3,6 +3,7 @@ import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { FormControl } from '@angular/forms'
 import { NetworkV2Service } from '../../services/network-v2.service'
 import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'ws-app-network-recommended',
@@ -22,14 +23,16 @@ export class NetworkRecommendedComponent implements OnInit {
   constructor(
     private networkV2Service: NetworkV2Service,
     private configSvc: ConfigurationsService,
+    private route: ActivatedRoute,
   ) {
     this.currentUserDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName
-    // this.data = this.route.snapshot.data.recommendedList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
-    //   if (v && v.personalDetails && v.personalDetails.firstname) {
-    //     v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
-    //   }
-    //   return v
-    // })
+    this.data = this.route.snapshot.data.recommendedList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
+      if (v && v.personalDetails && v.personalDetails.firstname) {
+        v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
+      }
+      return v
+    })
+    this.getFullUserData()
   }
 
   ngOnInit() {
@@ -40,7 +43,16 @@ export class NetworkRecommendedComponent implements OnInit {
         this.enableSearchFeature = true
       }
     })
-    this.getRecommnededUsers()
+    // this.getRecommnededUsers()
+  }
+  getFullUserData() {
+    const fulldata = this.data
+    this.data = []
+    fulldata.forEach((user: any) => {
+      this.networkV2Service.fetchProfile(user.identifier).subscribe((res: any) => {
+        this.data.push(res.result.UserProfile[0])
+      })
+    })
   }
 
   getRecommnededUsers () {

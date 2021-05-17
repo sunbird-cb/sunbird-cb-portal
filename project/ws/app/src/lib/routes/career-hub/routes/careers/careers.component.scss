@@ -85,10 +85,17 @@
       line-height: 21px;
       display: flex;
       align-items: center;
+      box-sizing: border-box;
+      text-align: center;
+      padding: 0 16px;
     }
   
     .filter-option:first-child {
       margin-left: 0;
+    }
+
+    .ws-mat-accent-border-active {
+      font-weight: bold;
     }
   }
 

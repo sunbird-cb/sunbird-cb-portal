@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Subscription } from 'rxjs'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpBackend } from '@angular/common/http'
 import { NsContent, WidgetContentService } from '@sunbird-cb/collection'
 import { NSQuiz } from '../../plugins/quiz/quiz.model'
 import { ActivatedRoute } from '@angular/router'
@@ -28,10 +28,10 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
   constructor(
     private activatedRoute: ActivatedRoute,
-    private http: HttpClient,
     private contentSvc: WidgetContentService,
     private eventSvc: EventService,
     private viewSvc: ViewerUtilService,
+    private httpBackend: HttpBackend
   ) { }
 
   ngOnInit() {
@@ -124,7 +124,8 @@ export class QuizComponent implements OnInit, OnDestroy {
     //   ? this.viewSvc.getAuthoringUrl(content.artifactUrl)
     //   : content.artifactUrl
     const artifactUrl = this.generateUrl(content.artifactUrl)
-    let quizJSON: NSQuiz.IQuiz = await this.http
+    const newHttpClient = new HttpClient(this.httpBackend)
+    let quizJSON: NSQuiz.IQuiz = await newHttpClient
       .get<any>(artifactUrl || '')
       .toPromise()
       .catch((_err: any) => {

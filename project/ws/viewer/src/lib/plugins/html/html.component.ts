@@ -148,21 +148,32 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       //   URL.revokeObjectURL(objectUrl)
       // })
       if (this.htmlContent.mimeType !== 'text/x-url' && this.htmlContent.mimeType !== 'video/x-youtube') {
-        if (this.htmlContent.status === 'Live') {
-          this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
-            // `https://igot.blob.core.windows.net/content/content/html/${this.htmlContent.identifier}-latest/index.html`
-            // tslint:disable-next-line: max-line-length
-            `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-latest/index.html?timestamp='${new Date().getTime()}`
-          )
-        } else {
-          this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
-            // `https://igot.blob.core.windows.net/content/content/html/${this.htmlContent.identifier}-snapshot/index.html`
-            // tslint:disable-next-line: max-line-length
-            `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
-          )
-        }
+        // if (this.htmlContent.status === 'Live') {
+        //   this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
+        //     // `https://igot.blob.core.windows.net/content/content/html/${this.htmlContent.identifier}-latest/index.html`
+             // tslint:disable-next-line: max-line-length
+        //     `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-latest/index.html?timestamp='${new Date().getTime()}`
+        //   )
+        // } else {
+        //   this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
+        //     // `https://igot.blob.core.windows.net/content/content/html/${this.htmlContent.identifier}-snapshot/index.html`
+             // tslint:disable-next-line: max-line-length
+        //     `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
+        //   )
+        // }
+        this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
+          // tslint:disable-next-line: max-line-length
+          `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
+        )
       } else {
-        this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.htmlContent.artifactUrl)
+        setTimeout(
+            () => {
+              if (this.htmlContent && this.htmlContent.artifactUrl) {
+                this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.htmlContent.artifactUrl)
+              }
+          },
+            1000,
+          )
         // this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.htmlContent.artifactUrl)
       }
       // testing purpose only

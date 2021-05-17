@@ -75,8 +75,10 @@ export class CardHubsListComponent extends WidgetBaseComponent
       },
       categories: { result: [] },
       routerSlug: '/app',
+      headerOptions: false,
+      bannerOption: true,
     })
-    this.router.navigate(['/app/discussion-forum'])
+    this.router.navigate(['/app/discussion/forum'])
   }
 
   getUserFullName(user: any) {

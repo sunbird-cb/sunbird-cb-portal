@@ -61,7 +61,14 @@ export namespace NSNetworkDataV2 {
         identifier: string,
         name: string,
         departmentName: string,
-        department: string
+        department: string,
+        department_name: string,
+        email: string,
+        first_name: string,
+        kid: string,
+        last_name: string,
+        rank: number,
+        wid: string,
     }
 
     export interface IAutocompleteUser {

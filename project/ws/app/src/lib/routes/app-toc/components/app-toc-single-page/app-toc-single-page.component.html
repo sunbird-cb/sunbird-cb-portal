@@ -14,10 +14,10 @@
                 </mat-card-content>
             </mat-card>
             <!-- Content Body -->
-            <mat-card *ngIf="tocConfig?.overview?.body?.enabled && content?.body" class="unit-meta-item">
+            <mat-card *ngIf="tocConfig?.overview?.body?.enabled && content?.instructions" class="unit-meta-item">
                 <h2 class="section-heading">{{ tocConfig?.overview?.body?.displayName }}</h2>
                 <mat-card-content>
-                    <div class="section-content break-words" [innerHTML]="body"></div>
+                    <div class="section-content break-words" [innerHTML]="content?.instructions"></div>
                 </mat-card-content>
             </mat-card>
             <!-- Learning objective -->

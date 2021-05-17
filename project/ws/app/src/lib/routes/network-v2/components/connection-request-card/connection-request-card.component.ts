@@ -56,14 +56,21 @@ export class ConnectionRequestCardComponent implements OnInit {
 
   connetToUser(action: string | 'Approved' | 'Rejected') {
     const req = {
-      connectionId: this.user.id,
+      connectionId: this.user.id || this.user.identifier || this.user.wid,
       userIdFrom: this.me ? this.me.userId : '',
       userNameFrom: this.me ? this.me.userName : '',
-      userDepartmentFrom: this.me ? this.me.departmentName : '',
-      userIdTo: this.user.id,
-      userNameTo: `${this.user.personalDetails.firstname}${this.user.personalDetails.surname}`,
-      userDepartmentTo: this.user.employmentDetails.departmentName,
-      status: action,
+      userDepartmentFrom: this.me && this.me.departmentName ? this.me.departmentName : '',
+      userIdTo: this.user.id || this.user.identifier || this.user.wid,
+      userNameTo: '',
+      userDepartmentTo: '',
+    }
+    if (this.user.personalDetails) {
+      req.userNameTo = `${this.user.personalDetails.firstname}${this.user.personalDetails.surname}`
+      req.userDepartmentTo =  this.user.employmentDetails.departmentName
+    }
+    if (!this.user.personalDetails && this.user.first_name) {
+      req.userNameTo = `${this.user.first_name}${this.user.last_name}`
+      req.userDepartmentTo =  this.user.department_name
     }
 
     this.networkV2Service.updateConnection(req).subscribe(

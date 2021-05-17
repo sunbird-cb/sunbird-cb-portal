@@ -13,11 +13,11 @@
   </mat-chip-list>
   <div id=wrap  *ngIf="showNoValue">
     <div id=inside>
-     <h2>No topics available</h2>
+     <!-- <h2>No topics available</h2> -->
     </div>
   </div>
   </mat-card-content>
-  <!-- <mat-card-actions *ngIf="tags.length>8">
-    <a mat-button (click)="getDiscussion()" *ngIf="showRem">SEE {{rem}} MORE SUB TOPICS </a>
-  </mat-card-actions> -->
+  <mat-card-actions *ngIf="this.rem>0 && this.showRem">
+    <a mat-button (click)="getDiscussion()">SEE {{rem}} MORE SUB TOPICS </a>
+  </mat-card-actions>
 </mat-card>

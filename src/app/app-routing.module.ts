@@ -98,7 +98,7 @@ const routes: Routes = [
     canActivate: [GeneralGuard],
   },
   {
-    path: 'app/discussion-forum',
+    path: 'app/discussion',
     loadChildren: () =>
       import('./routes/route-discuss.module').then(u => u.RouteDiscussModule),
     canActivate: [GeneralGuard],
@@ -124,6 +124,12 @@ const routes: Routes = [
     },
     // path: 'certs',
     // loadChildren: () => import('./routes/route-cert.module').then(u => u.RouteCertificateModule),
+  },
+  {
+    path: 'app/discussion-forum',
+    pathMatch: 'full',
+    redirectTo: 'app/discussion'
+
   },
   {
     path: 'certs',
