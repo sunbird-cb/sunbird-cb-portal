@@ -26,6 +26,9 @@ export class ContentProgressComponent implements OnChanges {
   progress = 0
 
   @Input()
+  progressType = ''
+
+  @Input()
   forPreview = false
 
   @Input()
@@ -51,7 +54,11 @@ export class ContentProgressComponent implements OnChanges {
     }
 
     if (this.progress) {
-      this.progress = Math.round(this.progress * 10000) / 100
+      if (this.progressType === 'percentage') {
+        this.progress = this.progress
+      } else {
+        this.progress = Math.round(this.progress * 10000) / 100
+      }
     }
   }
 }

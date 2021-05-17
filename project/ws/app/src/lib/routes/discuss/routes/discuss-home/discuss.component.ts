@@ -12,7 +12,7 @@ import { NsWidgetResolver } from '@sunbird-cb/resolver'
 export class DiscussComponent implements OnInit, OnDestroy {
   sideNavBarOpened = true
   panelOpenState = false
-  titles = [{ title: 'DISCUSS', url: '/app/discuss/home', icon: 'forum' }]
+  titles = [{ title: 'DISCUSS', url: '/app/discussion-forum', icon: 'forum' }]
   unread = 0
   currentRoute = 'forum'
   banner!: NsWidgetResolver.IWidgetData<any>
@@ -28,7 +28,7 @@ export class DiscussComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {
         // Hide loading indicator
         // console.log(event.url)
-        this.bindUrl(event.urlAfterRedirects.replace('/app/discussion/', ''))
+        this.bindUrl(event.urlAfterRedirects.replace('/app/discussion-forum', ''))
       }
 
       if (event instanceof NavigationError) {

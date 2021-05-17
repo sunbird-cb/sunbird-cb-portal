@@ -214,7 +214,8 @@
 .mat-card-content {
   flex-grow: 5;
   overflow: auto;
-  height: 50px;
+  height: 58px;
+  max-height: 58px;
   overflow-y: hidden;
 }
 

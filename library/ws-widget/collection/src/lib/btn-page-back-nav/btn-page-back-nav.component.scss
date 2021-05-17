@@ -1,6 +1,7 @@
 @import '~@sunbird-cb/design-system/src/styles/ws-common';
 @import '~@sunbird-cb/design-system/src/styles/ws-vars';
 @import '~@sunbird-cb/design-system/src/styles/ws-mixins';
+$color-thin-gray: #d8d8d8;
 
 
 .next-b {
@@ -15,5 +16,6 @@
 }
 
 .main-back {
-  font-size: $size-m;
+  font-size: $size-l;
+  // color: $color-thin-gray;
 }

@@ -35,6 +35,37 @@ export class ViewerUtilService {
     return
   }
 
+  calculatePercent(current: string[], max: number): number {
+    try {
+      const temp = [...current]
+      if (temp && temp.length && max) {
+        const latest = parseFloat(temp.pop() || '0')
+        const percentMilis = (latest / max) * 100
+        const percent = parseFloat(percentMilis.toFixed(2))
+        return percent
+      }
+      return 0
+    } catch (e) {
+      // tslint:disable-next-line: no-console
+      console.log('Error in calculating percentage', e)
+      return 0
+    }
+  }
+
+  getStatus(current: string[], max: number) {
+    try {
+      const percentage = this.calculatePercent(current, max)
+      if (Math.ceil(percentage) >= 100) {
+        return 2
+      }
+      return 1
+    } catch (e) {
+      // tslint:disable-next-line: no-console
+      console.log('Error in getting completion status', e)
+      return 1
+    }
+  }
+
   realTimeProgressUpdate(contentId: string, request: any, collectionId?: string, batchId?: string) {
     let req: any
     if (this.configservice.userProfile) {
@@ -45,7 +76,7 @@ export class ViewerUtilService {
             {
               contentId,
               batchId,
-              status: 2,
+              status: this.getStatus(request.current, request.max_size),
               courseId: collectionId,
               lastAccessTime: dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss:SSSZZ'),
               progressdetails: {
@@ -53,6 +84,7 @@ export class ViewerUtilService {
                 current: request.current,
                 mimeType: request.mime_type,
               },
+              completionPercentage: this.calculatePercent(request.current, request.max_size),
             },
           ],
         },

@@ -5,6 +5,7 @@
 // $max-screen: 1202px;
 // $size-s: 12px;
 // $size-m: 16px;
+$color-thin-gray: #d8d8d8;
 
 %page-center {
   max-width: $page-center;
@@ -76,6 +77,8 @@
 
 .main-back {
   font-size: $size-xl;
+  margin-bottom: calc(#{$size-s - 2px});
+  margin-right: $size-s;
 }
 
 /** No CSS for this example */
@@ -140,4 +143,8 @@ mat-grid-list {
 .mat-icon1 {
   padding: 16px;
   color: #347bb6 !important;
+}
+
+.font-bold-imp {
+  font-weight: bold !important;
 }

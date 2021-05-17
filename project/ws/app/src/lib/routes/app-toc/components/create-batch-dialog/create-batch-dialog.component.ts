@@ -33,12 +33,12 @@ export class CreateBatchDialogComponent implements OnInit {
   ) {
     this.createBatchForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
-      description: new FormControl('', [Validators.required]),
+      description: new FormControl('', []),
       enrollmentType: new FormControl(this.enrollmentTypes[0], [Validators.required]),
       startDate: new FormControl('', [Validators.required]),
-      endDate: new FormControl('', [Validators.required]),
+      endDate: new FormControl('', []),
       enrollmentEndDate: new FormControl('', []),
-      createdFor: new FormControl('', []),
+      // createdFor: new FormControl('', []),
       mentors: new FormControl('', []),
       courseId: new FormControl('', []),
       createdBy: new FormControl('', []),
@@ -52,11 +52,19 @@ export class CreateBatchDialogComponent implements OnInit {
   public createBatchSubmit(form: any) {
     this.uploadSaveData = true
     form.value.startDate = startWithYearformat(new Date(`${form.value.startDate}`))
-    form.value.endDate = startWithYearformat(new Date(`${form.value.endDate}`))
-    form.value.enrollmentEndDate = startWithYearformat(new Date(`${form.value.enrollmentEndDate}`))
+    if (form.value.endDate) {
+      form.value.endDate = startWithYearformat(new Date(`${form.value.endDate}`))
+    } else {
+      delete form.value.endDate
+    }
+    if (form.value.enrollmentEndDate) {
+      form.value.enrollmentEndDate = startWithYearformat(new Date(`${form.value.enrollmentEndDate}`))
+    } else {
+      delete form.value.enrollmentEndDate
+    }
     form.value.mentors = []
     if (this.configSvc.userProfile) {
-      form.value.createdFor = [this.configSvc.userProfile.rootOrgId]
+      // form.value.createdFor = [this.configSvc.userProfile.rootOrgId]
       form.value.createdBy = this.configSvc.userProfile.userId
     }
     if (this.data && this.data.content) {

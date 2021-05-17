@@ -224,6 +224,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           // If current course is present in the list of user enrolled course
           if (enrolledCourse && enrolledCourse.batchId) {
             // const collectionId = this.isResource ? '' : this.content.identifier
+            this.content.completionPercentage = enrolledCourse.completionPercentage || 0
+            this.content.completionStatus = enrolledCourse.status || 0
             this.getContinueLearningData(this.content.identifier, enrolledCourse.batchId)
             this.batchData = {
               content: [enrolledCourse.batch],
@@ -317,6 +319,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       data => {
         if (data && data.result && data.result.contentList && data.result.contentList.length) {
           this.resumeData = data.result.contentList
+          this.tocSvc.updateResumaData(this.resumeData)
         } else {
           this.resumeData = null
         }

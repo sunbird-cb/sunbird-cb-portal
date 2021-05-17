@@ -94,6 +94,28 @@ export class BtnPageBackComponent extends WidgetBaseComponent
 
   navigate() {
     this.discussUtilitySvc.setDiscussionConfig({
+      menuOptions: [
+        {
+          route: 'all-discussions',
+          label: 'All discussions',
+          enable: true,
+        },
+        {
+          route: 'categories',
+          label: 'Categories',
+          enable: true,
+        },
+        {
+          route: 'tags',
+          label: 'Tags',
+          enable: true,
+        },
+        {
+          route: 'my-discussion',
+          label: 'My discussion',
+          enable: true,
+        },
+      ],
       userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
       context: {
         id: 1,
@@ -103,7 +125,7 @@ export class BtnPageBackComponent extends WidgetBaseComponent
       headerOptions: false,
       bannerOption: true,
     })
-    this.router.navigate(['/app/discussion/forum'])
+    this.router.navigate(['/app/discussion-forum'])
   }
 
   // get titleUrl(): { fragment?: string; routeUrl: string; queryParams: any } {

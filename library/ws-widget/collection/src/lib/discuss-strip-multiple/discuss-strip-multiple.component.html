@@ -37,8 +37,10 @@
                   {{ stripsResultDataMap[key]?.stripTitle }}
                 </h1>
                 <mat-icon class="rotate-t-90 ws-mat-primary-default-text mob">maximize</mat-icon>
-                <span class="mat-subheading-1 margin-remove inline-block ws-mat-primary-default-text margin-left-s mob">
-                  {{stripsResultDataMap[key]?.description}}</span>
+                <!-- <span class="mat-subheading-1 margin-remove inline-block ws-mat-primary-default-text margin-left-s mob">
+                  {{stripsResultDataMap[key]?.description}}</span> -->
+                  <span class="mat-subheading-1 margin-remove inline-block ws-mat-primary-default-text margin-left-s mob">
+                    {{stripsResultDataMap[key]?.description}}</span>
 
                 <span class="spacer"></span>
                 <div
@@ -48,7 +50,7 @@
                     queryParams="widgetData.strips[0]?.viewMoreUrl?.queryParams"> -->
                   <a mat-button (click)="navigate()">
                     <span i18n>{{widgetData.strips[0].viewMoreUrl.viewMoreText || 'View All'}}</span>
-                    <mat-icon>arrow_forward</mat-icon>
+                    <mat-icon class="default-icon">arrow_forward</mat-icon>
                   </a>
                 </div>
               </div>
