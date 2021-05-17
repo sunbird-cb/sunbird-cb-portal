@@ -26,18 +26,18 @@ export class NotificationSettingsComponent implements OnInit {
     // this.fetchNotificationSettings()
   }
 
-  private fetchNotificationSettings() {
-    this.notificationsFetchStatus = 'fetching'
-    this.settingsSvc.fetchNotificationSettings().subscribe(
-      data => {
-        this.notificationSettings = data
-        this.notificationsFetchStatus = 'done'
-      },
-      _ => {
-        this.notificationsFetchStatus = 'error'
-      },
-    )
-  }
+  // private fetchNotificationSettings() {
+  //   this.notificationsFetchStatus = 'fetching'
+  //   this.settingsSvc.fetchNotificationSettings().subscribe(
+  //     data => {
+  //       this.notificationSettings = data
+  //       this.notificationsFetchStatus = 'done'
+  //     },
+  //     _ => {
+  //       this.notificationsFetchStatus = 'error'
+  //     },
+  //   )
+  // }
 
   updateMode(groupIndex: number, eventIndex: number, successMsg: string, errorMsg: string) {
     this.notificationSettings[groupIndex].events[eventIndex].recipients.forEach(recipient => {
