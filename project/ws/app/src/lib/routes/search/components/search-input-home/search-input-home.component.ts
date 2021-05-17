@@ -84,7 +84,7 @@ export class SearchInputHomeComponent implements OnInit, OnChanges {
         : false
       if (typeof isAutoCompleteAllowed === 'undefined' ||
         (typeof isAutoCompleteAllowed === 'boolean' && isAutoCompleteAllowed)) {
-        this.getSearchAutoCompleteResults(this.queryControl.value)
+        // this.getSearchAutoCompleteResults(this.queryControl.value)
       }
     })
     this.languageSearch = this.route.snapshot.data.searchPageData && this.route.snapshot.data.searchPageData.data.search.languageSearch.map(
@@ -104,7 +104,7 @@ export class SearchInputHomeComponent implements OnInit, OnChanges {
         searchPageData: { data },
       }
     }).then(() => {
-      this.autoFilter()
+      // this.autoFilter()
       this.init()
     })
     // } else {
