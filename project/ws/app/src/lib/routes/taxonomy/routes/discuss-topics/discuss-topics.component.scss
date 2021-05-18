@@ -21,10 +21,7 @@ ws-widget-breadcrumbs-org{
 .sidenav-align{
   overflow: auto;
   width: auto;
-  min-width: 400px;
-}
-.sidenav-align-cont{
-  margin-left: 400px;
+  min-width: 380px;
 }
 .container-balanced-banner {
   max-width: 1600px;
@@ -34,6 +31,7 @@ ws-widget-breadcrumbs-org{
 }
 .container-balanced-local {
   max-width: 1600px;
+  min-height: 900px;
   margin-left: auto !important;
   margin-right: auto !important;
   height: auto;

@@ -1,6 +1,6 @@
 {
   "/apis/*": {
-    "target": "https://igot-sunbird.idc.tarento.com",
+    "target": "https://frac.igot-dev.in",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true,
@@ -54,7 +54,7 @@
     }
   },
   "/assets/*": {
-    "target": "http://127.0.0.1:8080",
+    "target": "http://127.0.0.1:8080/client-assets/",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true,
