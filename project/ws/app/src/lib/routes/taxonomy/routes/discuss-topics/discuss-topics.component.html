@@ -1,4 +1,5 @@
-<div class="container-balanced">
+
+<div class="container-balanced min-height">
   <div *ngIf="currentRoute === 'home'" class="margin-top-s">
     <ng-container [wsResolverWidget]="banner"></ng-container>
   </div>
@@ -12,7 +13,8 @@
         type="search" [placeholder]="'Search'" />
     </mat-form-field>
   </div> -->
-  <mat-sidenav-container name="discuss-menu">
+
+  <mat-sidenav-container name="discuss-menu" class="min-height">
     <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 sidenav-align">
       <app-discuss-left-menu [unseen]="unread" [tabsData] = "firstLevelTopic"  (currentTab)="selectedEvent($event)"></app-discuss-left-menu>
     </mat-sidenav>
@@ -30,7 +32,8 @@
       <div class="flex flex-4 bot">
         <app-dicuss-card *ngIf="nextLevelTopic"[tags]="nextLevelTopic"  (clickedTab)="getClickedTab($event)"></app-dicuss-card>
       </div>
-      <h2 *ngIf="nextLevelTopic">CBPs</h2>
+
+      <h2 *ngIf="relatedResource.length>0">CBPs</h2>
       <div class="flex flex-1" *ngIf="nextLevelTopic">
 
         <div class="margin-left-xll mb-1-imp flex flex-wrap">
