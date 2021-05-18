@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  sitePath: 'frac.igot-dev.in',
+  sitePath: 'igot-dev.in',
   organisation: 'igot-karmayogi',
   framework: 'igot',
   channelId: '0131397178949058560',
