@@ -270,7 +270,7 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
       this._service.fetchAllRelatedCourse(this.identifier).subscribe(response => {
         const tempRequestParam: { content: any }[] = []
         response.result.content.forEach((course: any) => {
-          if(course.status==="Live"){
+          if (course.status === 'Live') {
          const temobj = {
            content: course,
          }
