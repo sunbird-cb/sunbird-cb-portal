@@ -60,9 +60,19 @@
           </button>
         </div>
       </div>
-      <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-        [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.progress">
+      <ng-container *ngIf="widgetData.content?.completionStatus == 2">
+        <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
+          [contentId]="widgetData.content?.identifier" [progress]="100" 
+          [progressType]="'percentage'">
+        </ws-widget-content-progress>
+      </ng-container>
+      <ng-container *ngIf="widgetData.content?.completionStatus < 2">
+        <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
+        [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.completionPercentage" 
+        [progressType]="'percentage'">
       </ws-widget-content-progress>
+      </ng-container>
+
     </div>
   </div>
 </ng-template>
@@ -82,8 +92,8 @@
                   'artifactUrl'
                 ]
         "></ws-widget-btn-content-download>
-      <ws-widget-btn-content-like [widgetData]="widgetData.content | pipePartialContent: ['identifier']">
-      </ws-widget-btn-content-like>
+      <!-- <ws-widget-btn-content-like [widgetData]="widgetData.content | pipePartialContent: ['identifier']">
+      </ws-widget-btn-content-like> -->
       <ws-widget-btn-content-mail-me [widgetData]="widgetData.content"></ws-widget-btn-content-mail-me>
       <ws-widget-btn-content-share [widgetData]="widgetData.content"></ws-widget-btn-content-share>
       <ws-widget-btn-channel-analytics [widgetData]="widgetData.content"></ws-widget-btn-channel-analytics>
@@ -141,9 +151,18 @@
             [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
             [title]="widgetData.content.name" />
         </a>
-        <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.progress">
+        <ng-container *ngIf="widgetData.content?.completionStatus == 2">
+          <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
+            [contentId]="widgetData.content?.identifier" [progress]="100" 
+            [progressType]="'percentage'">
+          </ws-widget-content-progress>
+        </ng-container>
+        <ng-container *ngIf="widgetData.content?.completionStatus < 2">
+          <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
+          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.completionPercentage" 
+          [progressType]="'percentage'">
         </ws-widget-content-progress>
+        </ng-container>
         <mat-card-content>
           <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
             [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" aria-label="Content"
@@ -261,9 +280,18 @@
         <img mat-card-image [src]="widgetData.content.appIcon" class="card-img ws-mat-primary-lite-background"
           [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
           [title]="widgetData.content.name" />
-        <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.progress">
-        </ws-widget-content-progress>
+          <ng-container *ngIf="widgetData.content?.completionStatus == 2">
+            <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
+              [contentId]="widgetData.content?.identifier" [progress]="100" 
+              [progressType]="'percentage'">
+            </ws-widget-content-progress>
+          </ng-container>
+          <ng-container *ngIf="widgetData.content?.completionStatus < 2">
+            <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
+            [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.completionPercentage" 
+            [progressType]="'percentage'">
+          </ws-widget-content-progress>
+          </ng-container>
       </a>
 
       <mat-card-content class="m-small">
@@ -336,9 +364,18 @@
           aria-label="Details" i18n-aria-label="Details | Click to see details">
           <mat-icon>flip_to_back</mat-icon>
         </button>
-        <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.progress">
+        <ng-container *ngIf="widgetData.content?.completionStatus == 2">
+          <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
+            [contentId]="widgetData.content?.identifier" [progress]="100" 
+            [progressType]="'percentage'">
+          </ws-widget-content-progress>
+        </ng-container>
+        <ng-container *ngIf="widgetData.content?.completionStatus < 2">
+          <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
+          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.completionPercentage" 
+          [progressType]="'percentage'">
         </ws-widget-content-progress>
+        </ng-container>
         <mat-card-content>
           <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
             [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" aria-label="Content"
@@ -377,9 +414,9 @@
           <mat-divider></mat-divider>
           <div class="flex flex-middle">
             <ws-widget-btn-content-share [widgetData]="widgetData.content"></ws-widget-btn-content-share>
-            <ws-widget-btn-content-like [color]="'primary'" class="flex items-center"
+            <!-- <ws-widget-btn-content-like [color]="'primary'" class="flex items-center"
               [widgetData]="widgetData.content | pipePartialContent: ['identifier']" [likesCount]="widgetData.likes">
-            </ws-widget-btn-content-like>
+            </ws-widget-btn-content-like> -->
 
             <ws-widget-btn-playlist *ngIf="btnPlaylistConfig" [widgetData]="btnPlaylistConfig">
             </ws-widget-btn-playlist>
@@ -615,9 +652,18 @@
           (click)="isCardFlipped = true" aria-label="Details" i18n-aria-label="Details | Click to see details">
           <mat-icon>flip_to_back</mat-icon>
         </button>
-        <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.progress">
+        <ng-container *ngIf="widgetData.content?.completionStatus == 2">
+          <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
+            [contentId]="widgetData.content?.identifier" [progress]="100" 
+            [progressType]="'percentage'">
+          </ws-widget-content-progress>
+        </ng-container>
+        <ng-container *ngIf="widgetData.content?.completionStatus < 2">
+          <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
+          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.completionPercentage" 
+          [progressType]="'percentage'">
         </ws-widget-content-progress>
+        </ng-container>
 
         <mat-card-content>
           <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"

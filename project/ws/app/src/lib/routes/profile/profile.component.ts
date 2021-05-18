@@ -54,7 +54,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   tabUpdate(tab: string) {
     this.tabName = tab
     if (!this.screenSizeIsLtMedium) {
-      this.showText = !this.showText
+      this.showText = true
+    } else {
+      this.showText = false
     }
   }
   ngOnDestroy() {

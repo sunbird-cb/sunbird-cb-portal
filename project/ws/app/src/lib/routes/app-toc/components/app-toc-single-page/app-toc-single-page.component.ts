@@ -188,6 +188,20 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     }
   }
 
+  public getCompetencies(competencies: any) {
+    const competenciesArray = JSON.parse(competencies)
+    const competencyStringArray: any[] = []
+    competenciesArray.map((c: any) => {
+      // if (i < (competenciesArray.length -1)) {
+      //   competencyString.push(`${c.name}, `)
+      // } else {
+      //   competencyString.push(c.name)
+      // }
+      competencyStringArray.push(c.name)
+    })
+    return competencyStringArray
+  }
+
   parseContentParent(content: NsAppToc.IContentParentResponse) {
     content.collections.forEach(collection => {
       if (!this.contentParents.hasOwnProperty(collection.contentType)) {

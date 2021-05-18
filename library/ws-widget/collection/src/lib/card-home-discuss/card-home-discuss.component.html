@@ -1,45 +1,75 @@
-<mat-card *ngIf="discuss && discuss.title && discuss.category.name!='Announcements'"
-  class="discuss-home-card cursor-pointer mr-6" (click)="getDiscussion(discuss)">
-  <mat-card-header>
-    <mat-card-title>
-      <a href="javascript:void(0)" role="link" i18n-aria-label>
-        <span class="cursor-pointer mat-subheading-1" [innerHTML]="discuss?.title"></span>
-      </a>
-    </mat-card-title>
-    <mat-card-subtitle class="responsive">
-      <span class="flex ws-mat-default-text mat-body-2">
-        <mat-icon svgIcon="category_xs"></mat-icon>{{discuss.category.name}}
-      </span>
-      <span class="dot ws-mat-black40-text mat-body-2" *ngIf="discuss?.user?.username"> Asked by
-        {{discuss?.user?.fullname != null ? discuss?.user?.fullname : discuss?.user?.username }}</span>
-      <span class="dot mat-body-2" *ngIf="!(discuss?.user?.username)">{{'Asked by Anonymous'}}</span>
-      <!-- <span class="margin-left-l">{{discuss.timestamp | pipeRelativeTime}}</span> -->
-    </mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content class="flex flex-1">
-    <!-- <ng-container *ngIf="discuss && discuss.tags && discuss.tags.length > 0">
-      <span *ngFor="let tag of discuss.tags" class="tag ws-mat-primary-tags">
-        {{tag.value}}
-      </span>
-    </ng-container> -->
-  </mat-card-content>
-  <!-- <mat-card-actions>
 
-  </mat-card-actions> -->
-  <mat-card-footer class="flex flex-1 custom margin-0">
-    <div class="flex flex-1 flex-row margin-left-l ws-mat-black60-text">
-      <span class="flex margin-right-l mobile">
-        <mat-icon class="cursor-pointer">import_export</mat-icon>
-        <span class="pad-4 mat-subheading-2">{{(discuss.upvotes + discuss.downvotes) || 0 }}&nbsp;votes</span>
-      </span>
-      <span class="flex mobile">
-        <mat-icon>trending_up</mat-icon>
-        <span class="pad-4 mat-subheading-2">{{discuss.count || 0}}&nbsp;views</span>
-      </span>
-    </div>
-    <div class="flex flex-1" class="cursor-pointer text-right mobile2 margin-right-s">
-      <span class="noocoments ws-mat-default-text mat-subheading-2">{{((discuss.postcount || 1) -1) }}
-        comments</span>
-    </div>
-  </mat-card-footer>
+<mat-card *ngIf="discuss && discuss.title && discuss.category.name!='Announcements'"
+  	class="discuss-home-card cursor-pointer mr-6" (click)="getDiscussion(discuss)">
+  	<mat-card-header>
+		<ws-widget-avatar-photo mat-card-avatar [name]="getUserFullName(discuss.user)" [size]="'s'">
+		</ws-widget-avatar-photo>
+		<mat-card-title class="mat-card-header-margin mat-card-title-height">
+		  	<a href="javascript:void(0)" role="link" i18n-aria-label>
+			<span class="ws-mat-black60-text mat-body-2"> Asked by
+				{{discuss?.user?.fullname != null ? discuss?.user?.fullname : discuss?.user?.username }}
+			</span></a>
+			<span class="dot mat-body-2" *ngIf="!(discuss?.user?.username)">{{'Asked by Anonymous'}}</span>
+			<span class="dot ws-mat-black60-text mat-body-2 ng-star-inserted  mar-16" >{{discuss?.timeinfo | pipeRelativeTime}}</span>
+		</mat-card-title>
+		<!-- <mat-card-title>
+			<span>
+				<ws-widget-avatar-photo mat-card-avatar [name]="getUserFullName(discuss.user)" [size]="'s'">
+				</ws-widget-avatar-photo>
+			</span>
+			
+			<span class="ws-mat-black60-text mat-body-2 flex-1 text-capitalize mar-16 i18n-aria-label" *ngIf="discuss?.user?.username"> Asked by
+				{{discuss?.user?.fullname != null ? discuss?.user?.fullname : discuss?.user?.username }}</span>
+			<span class="dot mat-body-2" *ngIf="!(discuss?.user?.username)">{{'Asked by Anonymous'}}</span>
+			<span class="dot ws-mat-black60-text mat-body-2 ng-star-inserted  mar-16" >{{discuss?.timeinfo | pipeRelativeTime}}</span>
+			<br />
+			<a href="javascript:void(0)" role="link" i18n-aria-label>
+				<span class="cursor-pointer mat-subheading-1" [innerHTML]="discuss?.title"></span>
+			</a>
+		</mat-card-title> -->
+  
+		<mat-card-title class="responsive title-margin">
+			<a href="javascript:void(0)">
+				<span class="cursor-pointer mat-subheading-1" [innerHTML]="discuss?.title"></span>
+			</a>
+		</mat-card-title>
+
+		<mat-card-subtitle class="responsive mat-card-sub-title-marign">
+			<span class="flex ws-mat-default-text mat-body-2">
+				<mat-icon svgIcon="category_xs"></mat-icon>&nbsp;{{discuss.category.name}}
+			</span>
+			
+			<!-- <span class="margin-left-l">{{discuss.timestamp | pipeRelativeTime}}</span> -->
+			<mat-card-content class="flex flex-2">
+				<div class="tags margin-bottom-s">
+					<ng-container *ngIf="discuss && discuss.tags && discuss.tags.length > 0">
+					  <span *ngFor="let tag of discuss.tags" class="tag" [ngStyle]="getBgColor(tag.value)">
+						{{tag.value}}
+					  </span>
+					</ng-container>
+				</div>
+			</mat-card-content>
+		</mat-card-subtitle>
+
+    </mat-card-header>
+  
+	<!-- <mat-card-actions>
+
+	</mat-card-actions> -->
+	<mat-card-footer class="flex flex-1 custom margin-0 mat-card-footer-l">
+		<div class="flex flex-1 flex-row margin-left-l ws-mat-black60-text">
+			<span class="flex margin-right-l mobile">
+				<mat-icon class="cursor-pointer">import_export</mat-icon>
+				<span class="pad-4 mat-subheading-2">{{(discuss.upvotes + discuss.downvotes) || 0 }}&nbsp;votes</span>
+			</span>
+			<span class="flex mobile">
+				<mat-icon>trending_up</mat-icon>
+				<span class="pad-4 mat-subheading-2">{{discuss.count || 0}}&nbsp;views</span>
+			</span>
+		</div>
+		<div class="flex flex-1" class="cursor-pointer text-right mobile2 margin-right-s ws-mat-black60-text">
+			<span class="mat-subheading-2">{{((discuss.postcount || 1) -1) }}
+			comments</span>
+		</div>
+	</mat-card-footer>
 </mat-card>

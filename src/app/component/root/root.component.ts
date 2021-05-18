@@ -123,48 +123,6 @@ export class RootComponent implements OnInit, AfterViewInit {
     // this.initAppUpdateCheck()
   }
 
-  navigate() {
-    const req = {
-      request: {
-        username: (this.configSvc.userProfile && this.configSvc.userProfile.userName) || '',
-        identifier: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
-      },
-    }
-    this.rootSvc.createUser(req).subscribe(
-      results => {
-        if (results) {
-          this.rootSvc.setDiscussionConfig({
-            // menuOptions: [
-            //   {
-            //     route: 'categories',
-            //     enable: true,
-            //   },
-            //   {
-            //     route: 'tags',
-            //     enable: true,
-            //   },
-            //   {
-            //     route: 'all-discussions',
-            //     enable: true,
-            //   },
-            //   {
-            //     route: 'my-discussion',
-            //     enable: true,
-            //   },
-            // ],
-            userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
-            context: {
-              id: 1,
-            },
-            categories: { result: [] },
-            routerSlug: '/app',
-          })
-          this.router.navigate(['/app/discussion/forum'])
-        }
-      }
-    )
-  }
-
   // initAppUpdateCheck() {
   //   this.logger.log('LOGGING IN ROOT FOR PWA INIT CHECK')
   //   if (environment.production) {

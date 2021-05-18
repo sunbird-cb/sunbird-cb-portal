@@ -343,7 +343,12 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
             }
             : null
           if (courses && courses.length) {
-            content = courses.map(c => c.content)
+            content = courses.map(c => {
+              const contentTemp: NsContent.IContent =  c.content
+              contentTemp.completionPercentage = c.completionPercentage || 0
+              contentTemp.completionStatus = c.completionStatus || 0
+              return contentTemp
+            })
           }
           this.processStrip(
             strip,

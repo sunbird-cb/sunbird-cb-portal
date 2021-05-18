@@ -50,7 +50,10 @@
   <ng-container *ngIf="hubs.hubname == 'Discuss'">
     <a class="flex flex-wrap mb-4" (click)="navigate()" role="menuitem" i18n-aria-label>
       <div class="icon ws-mat-primary-tags">
-        <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon>
+        <!-- {{hubs.icon | json}} -->
+        <!-- <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon> -->
+        <img class="mat-icon1" src="/assets/icons/hubs/{{hubs.icon}}.svg" id="draft"
+        alt="draft" title="draft" />
       </div>
       <div [ngClass]="{'cursor-pointer': enablePeopleSearch}" class="width-expand padding-left-xs">
         <div class="margin-0 mat-subheading-2">
@@ -64,7 +67,10 @@
   <ng-container *ngIf="hubs.hubname != 'Discuss'">
     <a class="flex flex-wrap mb-4" [routerLink]="(hubs.path)" role="menuitem" i18n-aria-label>
       <div class="icon ws-mat-primary-tags">
-        <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon>
+        <!-- {{hubs.icon | json}}
+        <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon> -->
+        <img class="mat-icon1" src="/assets/icons/hubs/{{hubs.icon}}.svg" id="draft"
+        alt="draft" title="draft" />
       </div>
       <div [ngClass]="{'cursor-pointer': enablePeopleSearch}" class="width-expand padding-left-xs">
         <div class="margin-0 mat-subheading-2">

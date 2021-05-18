@@ -214,9 +214,16 @@
       <mat-icon class="align-bottom">info</mat-icon>&nbsp;
       <ng-container i18n>Access to this YouTube content is blocked.</ng-container>
     </p>
-    <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier"
-      [className]="'thick'" [progress]="content?.progress?.progress">
-    </ws-widget-content-progress>
+    <ng-container *ngIf="content?.completionStatus == 2">
+      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier"
+      [className]="'thick'" [progress]="100" [progressType]="'percentage'">
+      </ws-widget-content-progress>
+    </ng-container>
+    <ng-container *ngIf="content?.completionStatus < 2">
+      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier"
+      [className]="'thick'" [progress]="content?.completionPercentage" [progressType]="'percentage'">
+      </ws-widget-content-progress>
+    </ng-container>
   </div>
 </div>
 

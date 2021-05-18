@@ -28,6 +28,8 @@ export namespace NsContent {
     childrenClassifiers?: string[]
     clients?: IClient[]
     collections?: IContent[]
+    completionPercentage?: number | null
+    completionStatus?: number
     complexityLevel: string
     contentId: string
     contentType: EContentTypes
@@ -184,6 +186,7 @@ export namespace NsContent {
     collectionId: string
     completedOn: string | null
     completionPercentage: number | null
+    completionStatus?: number
     content: IContent
     contentId: string
     contentStatus: any

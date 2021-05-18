@@ -89,7 +89,7 @@
               "node_modules/pdfjs-dist/web/pdf_viewer.css",
               "src/fusion-assets/fonts/lato/stylesheet.css",
               "src/fusion-assets/fonts/montserrat/stylesheet.css",
-              "./node_modules/@sunbird-cb/discussions-ui-v8/assets/styles/global.scss"
+              "node_modules/@sunbird-cb/discussions-ui-v8/assets/styles/global.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",

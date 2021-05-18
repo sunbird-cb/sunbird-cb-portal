@@ -37,9 +37,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fetchActionNotifications()
-    this.fetchInfoNotifications()
-    this.getCount()
+    // this.fetchActionNotifications()
+    // this.fetchInfoNotifications()
+    // this.getCount()
   }
 
   fetchActionNotifications() {
