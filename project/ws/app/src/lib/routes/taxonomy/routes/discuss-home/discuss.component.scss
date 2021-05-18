@@ -3,7 +3,7 @@
 @import 'ws-mixins';
 .search{
   margin-top: 20px;
-  margin-left: 14%;
+  margin-left: 1%;
 }
 .container-balanced {
   @extend %page-center;
@@ -177,10 +177,6 @@
     height: $description-line-count * $description-line-height;
     line-height: $description-line-height;
   }
-}
-.margin-left-xll{
-  margin-left: 254px;
-  margin-right: 254px;
 }
 .transparent-back{
   background-color: rgba(0, 0, 0, 0.5);
