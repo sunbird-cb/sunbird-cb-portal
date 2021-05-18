@@ -6,7 +6,7 @@ import {
   NavigationEnd,
 } from '@angular/router'
 import { Subscription } from 'rxjs'
-import { TFetchStatus, IResolveResponse } from '@sunbird-cb/utils'
+import { TFetchStatus, IResolveResponse } from '@ws-widget/utils'
 import {
   ILeaderboard,
   IHallOfFameItem,

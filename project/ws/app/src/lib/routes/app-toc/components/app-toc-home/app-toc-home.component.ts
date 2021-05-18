@@ -1,14 +1,15 @@
 import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild } from '@angular/core'
 import { ActivatedRoute, Data, Router } from '@angular/router'
-import { NsContent, WidgetContentService, WidgetUserService } from '@sunbird-cb/collection'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, LoggerService, NsPage } from '@sunbird-cb/utils'
+import { NsContent, WidgetContentService } from '@ws-widget/collection'
+import { NsWidgetResolver } from '@ws-widget/resolver'
+import { ConfigurationsService, LoggerService, NsPage } from '@ws-widget/utils'
 import { Subscription, Observable } from 'rxjs'
 import { share } from 'rxjs/operators'
 import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser'
 import { AccessControlService } from '@ws/author/src/public-api'
+import { WidgetUserService } from '@ws-widget/collection/src/lib/_services/widget-user.service'
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -66,7 +67,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   showScrollHeight = 300
   hideScrollHeight = 10
   elementPosition: any
-  batchSubscription: Subscription | null = null
   @ViewChild('stickyMenu', { static: true }) menuElement!: ElementRef
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -111,15 +111,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.route.fragment.subscribe((fragment: string) => {
       this.currentFragment = fragment || 'overview'
     })
-    this.batchSubscription = this.tocSvc.batchReplaySubject.subscribe(
-      () => {
-        this.fetchBatchDetails()
-      },
-      () => {
-        // tslint:disable-next-line: no-console
-        console.log('error on batchSubscription')
-      },
-    )
   }
   ngAfterViewInit() {
     this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
@@ -127,9 +118,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   ngOnDestroy() {
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe()
-    }
-    if (this.batchSubscription) {
-      this.batchSubscription.unsubscribe()
     }
   }
 
@@ -204,10 +192,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (this.configSvc.userProfile) {
       userId = this.configSvc.userProfile.userId || ''
     }
-    // this.route.data.subscribe(data => {
-    //   userId = data.profileData.data.userId
-    //   }
-    // )
     this.userSvc.fetchUserBatchList(userId).subscribe(
       (courses: NsContent.ICourse[]) => {
         let enrolledCourse: NsContent.ICourse | undefined
@@ -216,7 +200,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             enrolledCourse = courses.find(course => {
               const identifier = this.content && this.content.identifier || ''
               if (course.courseId !== identifier) {
-                return undefined
+                return  undefined
               }
               return course
             })
@@ -224,8 +208,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           // If current course is present in the list of user enrolled course
           if (enrolledCourse && enrolledCourse.batchId) {
             // const collectionId = this.isResource ? '' : this.content.identifier
-            this.content.completionPercentage = enrolledCourse.completionPercentage || 0
-            this.content.completionStatus = enrolledCourse.status || 0
             this.getContinueLearningData(this.content.identifier, enrolledCourse.batchId)
             this.batchData = {
               content: [enrolledCourse.batch],
@@ -242,8 +224,36 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             }
           } else {
             // It's understood that user is not already enrolled
-            // Fetch the available batches and present to user
-            this.fetchBatchDetails()
+            // Fetch the available batches and presnt to user
+            this.resumeData = null
+            const req = {
+              request: {
+                filters: {
+                  courseId: this.content.identifier,
+                  status: ['0', '1', '2'],
+                  // createdBy: 'fca2925f-1eee-4654-9177-fece3fd6afc9',
+                },
+                sort_by: { createdDate: 'desc' },
+              },
+            }
+            this.contentSvc.fetchCourseBatches(req).subscribe(
+              (data: NsContent.IBatchListResponse) => {
+                this.batchData = data
+                this.batchData.enrolled = false
+                if (this.getBatchId()) {
+                  this.router.navigate(
+                    [],
+                    {
+                      relativeTo: this.route,
+                      queryParams: { batchId: this.getBatchId() },
+                      queryParamsHandling: 'merge',
+                    })
+                }
+              },
+              (error: any) => {
+                this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
+              },
+            )
           }
         }
       },
@@ -263,49 +273,12 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     return batchId
   }
 
-  public fetchBatchDetails() {
-    if (this.content && this.content.identifier) {
-      this.resumeData = null
-      const req = {
-        request: {
-          filters: {
-            courseId: this.content.identifier,
-            status: ['0', '1', '2'],
-            // createdBy: 'fca2925f-1eee-4654-9177-fece3fd6afc9',
-          },
-          sort_by: { createdDate: 'desc' },
-        },
-      }
-      this.contentSvc.fetchCourseBatches(req).subscribe(
-        (data: NsContent.IBatchListResponse) => {
-          this.batchData = data
-          this.batchData.enrolled = false
-          if (this.getBatchId()) {
-            this.router.navigate(
-              [],
-              {
-                relativeTo: this.route,
-                // queryParams: { batchId: this.getBatchId() },
-                queryParamsHandling: 'merge',
-              })
-          }
-        },
-        (error: any) => {
-          this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
-        },
-      )
-    }
-  }
-
   private getContinueLearningData(contentId: string, batchId?: string) {
     this.resumeData = null
     let userId
     if (this.configSvc.userProfile) {
       userId = this.configSvc.userProfile.userId || ''
     }
-    // this.route.data.subscribe(data => {
-    //   userId = data.profileData.data.userId
-    // })
     const req: NsContent.IContinueLearningDataReq = {
       request: {
         batchId,
@@ -319,7 +292,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       data => {
         if (data && data.result && data.result.contentList && data.result.contentList.length) {
           this.resumeData = data.result.contentList
-          this.tocSvc.updateResumaData(this.resumeData)
         } else {
           this.resumeData = null
         }

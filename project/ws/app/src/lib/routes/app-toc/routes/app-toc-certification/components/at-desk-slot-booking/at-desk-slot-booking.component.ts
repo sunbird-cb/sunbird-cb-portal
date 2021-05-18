@@ -10,8 +10,8 @@ import { MatSnackBar } from '@angular/material'
 import { Observable, of, timer, throwError, noop, Subscription } from 'rxjs'
 import { finalize, startWith, map, switchMap, catchError } from 'rxjs/operators'
 
-import { NsContent } from '@sunbird-cb/collection'
-import { TFetchStatus, TSendStatus } from '@sunbird-cb/utils'
+import { NsContent } from '@ws-widget/collection'
+import { TFetchStatus, TSendStatus } from '@ws-widget/utils'
 
 import {
   ICertificationMeta,

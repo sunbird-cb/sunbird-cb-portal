@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core'
 import { MatSnackBar, MatDialog } from '@angular/material'
 import { ActivatedRoute, Data, Router } from '@angular/router'
 import { Subscription } from 'rxjs'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { NsWidgetResolver } from '@ws-widget/resolver'
 import {
   NsError,
   ROOT_WIDGET_CONFIG,
@@ -10,8 +10,8 @@ import {
   WsDiscussionForumService,
   EditorQuillComponent,
   DialogSocialDeletePostComponent,
-} from '@sunbird-cb/collection'
-import { TFetchStatus, ConfigurationsService, LoggerService, ValueService, NsPage } from '@sunbird-cb/utils'
+} from '@ws-widget/collection'
+import { TFetchStatus, ConfigurationsService, LoggerService, ValueService, NsPage } from '@ws-widget/utils'
 
 @Component({
   selector: 'ws-app-qna-view',
@@ -92,7 +92,6 @@ export class QnaViewComponent implements OnInit, OnDestroy {
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId || ''
     }
-
     this.commentAddRequest.postCreator = this.userId
     this.commentAddRequest.source = {
       id: '',

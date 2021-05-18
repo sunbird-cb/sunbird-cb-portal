@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { DashboardComponent } from './components/dashboard/dashboard.component'
-import { HorizontalScrollerModule, PipeDurationTransformModule, DefaultThumbnailModule } from '@sunbird-cb/utils'
-import { UserImageModule, CardKnowledgeModule } from '@sunbird-cb/collection'
+import { HorizontalScrollerModule, PipeDurationTransformModule, DefaultThumbnailModule } from '@ws-widget/utils'
+import { UserImageModule, CardKnowledgeModule } from '@ws-widget/collection'
 import {
   MatCardModule,
   MatChipsModule,
@@ -13,7 +13,7 @@ import {
   MatProgressSpinnerModule,
   MatTooltipModule,
 } from '@angular/material'
-import { WidgetResolverModule } from '@sunbird-cb/resolver'
+import { WidgetResolverModule } from '@ws-widget/resolver'
 import { CalendarModule } from '../../module/calendar-module/calendar.module'
 import { RouterModule } from '@angular/router'
 import { CoursePendingCardComponent } from './components/course-pending-card/course-pending-card.component'

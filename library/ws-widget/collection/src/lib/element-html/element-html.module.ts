@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ElementHtmlComponent } from '../element-html/element-html.component'
-import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
+import { PipeSafeSanitizerModule } from '@ws-widget/utils'
 
 @NgModule({
   declarations: [ElementHtmlComponent],

@@ -14,10 +14,10 @@
                 </mat-card-content>
             </mat-card>
             <!-- Content Body -->
-            <mat-card *ngIf="tocConfig?.overview?.body?.enabled && content?.instructions" class="unit-meta-item">
+            <mat-card *ngIf="tocConfig?.overview?.body?.enabled && content?.body" class="unit-meta-item">
                 <h2 class="section-heading">{{ tocConfig?.overview?.body?.displayName }}</h2>
                 <mat-card-content>
-                    <div class="section-content break-words" [innerHTML]="content?.instructions"></div>
+                    <div class="section-content break-words" [innerHTML]="body"></div>
                 </mat-card-content>
             </mat-card>
             <!-- Learning objective -->
@@ -274,11 +274,6 @@ tocConfig?.overview?.softwareRequirements?.enabled && content?.softwareRequireme
                     [contentId]="content?.identifier" [isDisabled]="isPreviewMode" [forPreview]="forPreview">
                 </ws-widget-user-content-rating>
             </div>
-            <div class="mb-10" [hidden]="isResource || isNotEditor">
-                <a [color]="'primary'" class="margin-right-m resumeButton" mat-button (click)="openDialog(content)">
-                    Create Batch
-                </a>
-            </div>
             <div class="glance-container">
                 <div
                     class="ws-mat-primary-lite-background-on-day ws-mat-primary-border-top-bolder white-bg info-container">
@@ -320,14 +315,11 @@ tocConfig?.overview?.softwareRequirements?.enabled && content?.softwareRequireme
                         </h3>
                     </div>
                     <mat-divider class="divider-transparent"
-                        *ngIf="tocConfig?.atAGlance?.competencies?.enabled && content?.competencies && content?.competencies.length">
-                    </mat-divider>
-                    <div class="info-item" *ngIf="tocConfig?.atAGlance?.competencies?.enabled && content?.competencies && content?.competencies.length">
-                        <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.competencies?.displayName}}
-                        </h3>
-                        <h3 class="item-value width-expand">
-                            {{ getCompetencies(content.competencies).join(', ') }}
-                        </h3>
+                        *ngIf="tocConfig?.atAGlance?.duration?.enabled && content?.duration"></mat-divider>
+                    <div class="info-item" *ngIf="tocConfig?.atAGlance?.cost?.enabled">
+                        <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.cost?.displayName}}</h3>
+                        <h3 *ngIf="content?.exclusiveContent" class="item-value width-expand">Paid Content</h3>
+                        <h3 *ngIf="!content?.exclusiveContent" class="item-value width-expand">Free</h3>
                     </div>
                     <mat-divider class="divider-transparent" *ngIf="tocConfig?.atAGlance?.cost?.enabled"></mat-divider>
                     <div class="info-item" *ngIf="tocConfig?.atAGlance?.license?.enabled">
@@ -446,13 +438,6 @@ tocConfig?.overview?.softwareRequirements?.enabled && content?.softwareRequireme
                             {{ content?.lastUpdatedOn | date }}
                         </h3>
                     </div>
-                    <mat-divider class="divider-transparent"
-                        *ngIf="tocConfig?.atAGlance?.duration?.enabled && content?.duration"></mat-divider>
-                    <div class="info-item" *ngIf="tocConfig?.atAGlance?.cost?.enabled">
-                        <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.cost?.displayName}}</h3>
-                        <h3 *ngIf="content?.exclusiveContent" class="item-value width-expand">Paid Content</h3>
-                        <h3 *ngIf="!content?.exclusiveContent" class="item-value width-expand">Free</h3>
-                    </div>
                     <ng-container *ngIf="showMoreGlance">
                         <mat-divider class="divider-transparent"
                             *ngIf="tocConfig?.atAGlance?.lastUpdatedOn?.enabled && content?.lastUpdatedOn">
@@ -560,15 +545,16 @@ tocConfig?.overview?.softwareRequirements?.enabled && content?.softwareRequireme
         <div class="fixed-width flex flex-col flex-wrap">
             <h2 _ngcontent-qml-c28="" class="mat-toolbar contacts-head">Authors</h2>
             <div class="contacts-body flex flex-wrap">
-                <div *ngFor="let author of parseJsonData(content?.creatorDetails)" class="author-card">
+                <div *ngFor="let author of content?.creatorDetails" class="author-card">
                     <ws-widget-user-image class="user-image" [imageType]="'user-photo'" [userName]="author.name || ''"
                         [email]="author.email" [imageUrl]="author.photo || ''"></ws-widget-user-image>
                     <div class="right flex flex-col flex-wrap right">
                         <div class="user-name mb-2">{{ author.name }}</div>
-                        <!-- <button mat-button role="button" class="user-button" *ngIf="loggedInUserId !== author.id"
+                        <!-- <div class="user-university">VTU Bangalore</div> -->
+                        <button mat-button role="button" class="user-button" *ngIf="loggedInUserId !== author.id"
                             (click)="openQueryMailDialog(content, author)">
                             Ask
-                        </button> -->
+                        </button>
                     </div>
                 </div>
                 <!-- <div *ngFor="let author of content?.creatorContacts" class="author-card">

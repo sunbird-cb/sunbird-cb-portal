@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
 import { NsContent } from '../_services/widget-content.model'
 
 export interface IWidgetBtnKbAnalytics {

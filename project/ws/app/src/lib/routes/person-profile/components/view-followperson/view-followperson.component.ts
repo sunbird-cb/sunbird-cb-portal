@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { BtnFollowService } from '@sunbird-cb/collection'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { BtnFollowService } from '@ws-widget/collection/src/public-api'
 import { PersonProfileService } from '../../services/person-profile.service'
+import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
 import { IFollowDetails } from '../../person-profile.model'
 import { Router } from '@angular/router'
 import { MatSnackBar } from '@angular/material'
@@ -25,9 +25,9 @@ export class ViewFollowpersonComponent implements OnInit {
   constructor(
     private followSvc: BtnFollowService,
     private personprofileSvc: PersonProfileService,
+    private configSvc: ConfigurationsService,
     private router: Router,
     private matSnackBar: MatSnackBar,
-    private configSvc: ConfigurationsService,
   ) { }
 
   ngOnInit() {
@@ -41,13 +41,11 @@ export class ViewFollowpersonComponent implements OnInit {
 
   fetchUserDetails() {
     if (this.wid) {
-
-        if (this.configSvc.userProfile) {
-          if (this.wid === this.configSvc.userProfile.userId) {
-            this.isFollowAvailable = false
-          }
+      if (this.configSvc.userProfile) {
+        if (this.wid === this.configSvc.userProfile.userId) {
+          this.isFollowAvailable = false
         }
-
+      }
       this.personprofileSvc.fetchdetails(this.wid).subscribe(
         (data: any) => {
           if (data) {

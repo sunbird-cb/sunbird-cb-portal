@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 
 import { Observable } from 'rxjs'
-import { NsDiscussionForum } from '@sunbird-cb/collection'
+import { NsDiscussionForum } from '../../../../../../../../../library/ws-widget/collection/src/public-api'
 
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'
 

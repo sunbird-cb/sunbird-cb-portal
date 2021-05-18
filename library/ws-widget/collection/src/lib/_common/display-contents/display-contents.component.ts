@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { NsContent } from '../../_services/widget-content.model'
-import { UtilityService, ConfigurationsService } from '@sunbird-cb/utils'
+import { UtilityService, ConfigurationsService } from '../../../../../utils/src/public-api'
 import { Subscription } from 'rxjs'
 
 @Component({
@@ -22,8 +22,7 @@ export class DisplayContentsComponent implements OnInit {
 
   ngOnInit() {
     this.isIntranetAllowedSettings = this.configSvc.isIntranetAllowed
-    // this.prefChangeSubscription =
-    this.configSvc.prefChangeNotifier.subscribe(() => {
+    this.prefChangeSubscription = this.configSvc.prefChangeNotifier.subscribe(() => {
       this.isIntranetAllowedSettings = this.configSvc.isIntranetAllowed
     })
   }

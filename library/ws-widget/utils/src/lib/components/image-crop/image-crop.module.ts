@@ -11,7 +11,7 @@ import {
 } from '@angular/material'
 import { ImageCropperModule } from 'ngx-image-cropper'
 import { ImageCropComponent } from './image-crop.component'
-// @dynamic
+
 @NgModule({
   declarations: [ImageCropComponent],
   imports: [

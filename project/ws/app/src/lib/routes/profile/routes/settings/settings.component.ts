@@ -13,9 +13,9 @@ import {
   ConfigurationsService,
   UserPreferenceService,
   UtilityService,
-} from '@sunbird-cb/utils'
+} from '@ws-widget/utils'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
-import { BtnSettingsService } from '@sunbird-cb/collection'
+import { BtnSettingsService } from '@ws-widget/collection'
 import { FormControl } from '@angular/forms'
 import { Subscription } from 'rxjs'
 import { Router, ActivatedRoute } from '@angular/router'

@@ -15,14 +15,14 @@ import {
   Router,
 } from '@angular/router'
 // import { interval, concat, timer } from 'rxjs'
-import { BtnPageBackService } from '@sunbird-cb/collection'
+import { BtnPageBackService } from '@ws-widget/collection'
 import {
   AuthKeycloakService,
   ConfigurationsService,
   TelemetryService,
   ValueService,
   WsEvents,
-} from '@sunbird-cb/utils'
+} from '@ws-widget/utils'
 import { delay } from 'rxjs/operators'
 import { MobileAppsService } from '../../services/mobile-apps.service'
 import { RootService } from './root.service'

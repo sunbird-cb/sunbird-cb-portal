@@ -1,6 +1,5 @@
-// @import 'ws-vars';
-$size-m:16px;
-$size-xs: 8px;
+@import 'ws-vars';
+
 $spaceFromEnd: -$size-m;
 
 .horizontal-scroll-container {
@@ -38,7 +37,7 @@ $spaceFromEnd: -$size-m;
 
 // Changing scrollbar
 .horizontal-scroll-content {
-  overflow-x: hidden;
+  overflow-x: auto;
   /* white-space: nowrap; */
   -webkit-overflow-scrolling: touch;
   height: 100%;

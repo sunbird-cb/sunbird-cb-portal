@@ -32,7 +32,7 @@ import { SharedModule } from '@ws/author/src/lib/modules/shared/shared.module'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { UserProfileService } from './services/user-profile.service'
 import { LoaderService } from '@ws/author/src/public-api'
-import { BtnPageBackModule } from '@sunbird-cb/collection'
+import { BtnPageBackModule } from '@ws-widget/collection'
 
 @NgModule({
   declarations: [

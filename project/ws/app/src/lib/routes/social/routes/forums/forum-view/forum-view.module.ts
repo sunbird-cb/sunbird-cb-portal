@@ -15,7 +15,7 @@ import {
   MatTooltipModule,
 } from '@angular/material'
 import { RouterModule } from '@angular/router'
-import { BtnPageBackModule, BtnSocialLikeModule } from '@sunbird-cb/collection'
+import { BtnPageBackModule, BtnSocialLikeModule } from '@ws-widget/collection'
 import { ForumViewComponent } from './components/forum-view.component'
 
 @NgModule({

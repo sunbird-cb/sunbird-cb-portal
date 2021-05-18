@@ -11,19 +11,3 @@
 .designation{
     line-height: 21px;
 }
-.circle-m {
-    background-color: rgb(48, 105, 51);
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .initials {
-        color: #fff;
-        font-size: 20px;
-        line-height: 19px;
-        letter-spacing: .2625px;
-    }
-}

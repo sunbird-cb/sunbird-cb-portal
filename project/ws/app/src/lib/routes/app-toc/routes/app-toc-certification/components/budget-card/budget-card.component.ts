@@ -2,8 +2,8 @@ import { Component, Input } from '@angular/core'
 import { throwError, Subject } from 'rxjs'
 import { takeWhile, tap, switchMap } from 'rxjs/operators'
 
-import { NsContent } from '@sunbird-cb/collection'
-import { TSendStatus } from '@sunbird-cb/utils'
+import { NsContent } from '@ws-widget/collection'
+import { TSendStatus } from '@ws-widget/utils'
 
 import { ICertificationMeta, TCertificationRequestType } from '../../models/certification.model'
 import { RequestCancelDialogComponent } from '../request-cancel-dialog/request-cancel-dialog.component'

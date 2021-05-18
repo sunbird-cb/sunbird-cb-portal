@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { BtnPageBackNavComponent } from './btn-page-back-nav.component'
+import { BtnPageBackNavComponent } from './btn-page-back.component'
 
 describe('BtnPageBackNavComponent', () => {
   let component: BtnPageBackNavComponent

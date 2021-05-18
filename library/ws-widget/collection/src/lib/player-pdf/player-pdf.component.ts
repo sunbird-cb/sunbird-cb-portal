@@ -10,16 +10,16 @@ import {
 } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
-import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { EventService, LoggerService, WsEvents, ValueService } from '@sunbird-cb/utils'
+import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
+import { EventService, LoggerService, WsEvents, ValueService } from '@ws-widget/utils'
 import * as PDFJS from 'pdfjs-dist/webpack'
 import { fromEvent, interval, merge, Subject, Subscription } from 'rxjs'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
+import { ViewerUtilService } from '../../../../../../project/ws/viewer/src/lib/viewer-util.service'
 import { ROOT_WIDGET_CONFIG } from '../collection.config'
 import { NsContent } from '../_services/widget-content.model'
 import { WidgetContentService } from '../_services/widget-content.service'
 import { IWidgetsPlayerPdfData } from './player-pdf.model'
-import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 
 const pdfjsViewer = require('pdfjs-dist/web/pdf_viewer')
 @Component({
@@ -273,9 +273,9 @@ export class PlayerPdfComponent extends WidgetBaseComponent
         current: this.current,
       }
       const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-        this.activatedRoute.snapshot.queryParams.collectionId : this.widgetData.identifier
+              this.activatedRoute.snapshot.queryParams.collectionId : this.widgetData.identifier
       const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-        this.activatedRoute.snapshot.queryParams.batchId : this.widgetData.identifier
+              this.activatedRoute.snapshot.queryParams.batchId : this.widgetData.identifier
       this.viewerSvc.realTimeProgressUpdate(id, realTimeProgressRequest, collectionId, batchId)
     }
     return

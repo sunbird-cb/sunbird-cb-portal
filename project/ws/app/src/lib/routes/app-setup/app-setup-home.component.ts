@@ -1,12 +1,11 @@
 import { MatDialog } from '@angular/material'
 import { StepperSelectionEvent, STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper'
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core'
-import { IWidgetsPlayerMediaData } from '@sunbird-cb/collection'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { IWidgetsPlayerMediaData } from '@ws-widget/collection'
+import { NsWidgetResolver } from '@ws-widget/resolver'
+import { ConfigurationsService } from '../../../../../../../library/ws-widget/utils/src/public-api'
 import { InterestComponent } from '../profile/routes/interest/components/interest/interest.component'
 import { SettingsComponent } from '../profile/routes/settings/settings.component'
-import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'ws-app-app-setup-home',
@@ -50,7 +49,7 @@ export class AppSetupHomeComponent implements OnInit, AfterViewInit {
     | SettingsComponent
     | undefined = undefined
 
-  constructor(private configSvc: ConfigurationsService, private matDialog: MatDialog, private route: ActivatedRoute) {}
+  constructor(private configSvc: ConfigurationsService, private matDialog: MatDialog) {}
 
   ngOnInit(): void {
     // if (this.configSvc.restrictedFeatures) {
@@ -58,11 +57,10 @@ export class AppSetupHomeComponent implements OnInit, AfterViewInit {
     // }
 
     this.appLanguage = (this.configSvc.activeLocale && this.configSvc.activeLocale.path) || ''
-    this.route.data.subscribe(data => {
-        this.introVideos = data.configData.data.introVideo
-      }
-    )
-
+    if (this.configSvc.instanceConfig) {
+      this.introVideos = this.configSvc.instanceConfig.introVideo
+      // //console.log('TYPE: ', this.introVideos)
+    }
     this.widgetResolverData = {
       ...this.widgetResolverData,
       widgetData: {

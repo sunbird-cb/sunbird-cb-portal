@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
 import { ContentStripNewMultipleComponent } from './content-strip-new-multiple.component'
-import { HorizontalScrollerModule } from '@sunbird-cb/utils'
-import { WidgetResolverModule } from '@sunbird-cb/resolver'
+import { HorizontalScrollerModule } from '@ws-widget/utils'
+import { WidgetResolverModule } from '@ws-widget/resolver'
 import {
   MatButtonModule,
   MatIconModule,

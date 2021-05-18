@@ -1,4 +1,4 @@
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { NsWidgetResolver } from '@ws-widget/resolver'
 // import { NSSearch } from '../_services/widget-search.model'
 import { NsCardContent } from '../card-content/card-content.model'
 

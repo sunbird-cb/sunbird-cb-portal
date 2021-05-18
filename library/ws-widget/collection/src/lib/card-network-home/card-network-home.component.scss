@@ -1,6 +1,6 @@
-@import '~@sunbird-cb/design-system/src/styles/ws-common';
-@import '~@sunbird-cb/design-system/src/styles/ws-vars';
-@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
 
 .network-card {
   $card-padding: $size-m;
@@ -60,14 +60,8 @@
 
   .mat-card-header .mat-card-title {
     font-size: 16px;
+  }
 
-  }
-  .mat-card-subtitle{
-    margin-top: -12px;
-  }
-.mat-card-header-text{
-  margin-right: 16px;
-}
   mat-card-content {
     margin: 0 -0.25 * $card-padding;
   }
@@ -224,15 +218,10 @@ mat-grid-list {
 .user-action-container {
   color: #adadae;
 }
-.mar-16{
-  margin-top: -12px;
-}
+
 .center {
   // text-align: center;
   // color: #187bcd;
   margin: 0.5rem auto 0.5rem auto;
   // padding-top: 15px;
-}
-.text-capitalize{
-  margin-left: 16px;
 }

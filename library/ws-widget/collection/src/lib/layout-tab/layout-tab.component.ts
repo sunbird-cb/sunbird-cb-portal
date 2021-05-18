@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
 import { NsWidgetLayoutTab } from './layout-tab.model'
 import { Subscription } from 'rxjs'
 import { ActivatedRoute, Router, ParamMap } from '@angular/router'

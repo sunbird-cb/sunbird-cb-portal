@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
-import { NsGoal, NsContent, BtnGoalsService, NsAutoComplete } from '@sunbird-cb/collection'
+import { NsGoal, NsContent, BtnGoalsService, NsAutoComplete } from '@ws-widget/collection'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
-import { TFetchStatus, EventService, ConfigurationsService } from '@sunbird-cb/utils'
+import { TFetchStatus, EventService, ConfigurationsService } from '@ws-widget/utils'
 import { MatSnackBar } from '@angular/material'
 import { Router, ActivatedRoute } from '@angular/router'
 
@@ -144,6 +144,7 @@ export class GoalCreateCustomComponent implements OnInit {
 
     const rawValues = this.createGoalForm.getRawValue()
     this.createGoalStatus = 'fetching'
+    this.raiseTelemetry(rawValues.type)
     if (this.editGoal) {
       this.goalsSvc
         .updateGoal(this.editGoal.identifier, {
@@ -176,7 +177,6 @@ export class GoalCreateCustomComponent implements OnInit {
               : this.snackbar.open(this.editGoalErrorMessage.nativeElement.value)
           },
         )
-      this.raiseTelemetry(this.editGoal.identifier)
     } else {
       this.goalsSvc
         .createGoal({
@@ -208,13 +208,13 @@ export class GoalCreateCustomComponent implements OnInit {
               : this.snackbar.open(this.editGoalErrorMessage.nativeElement.value)
           },
         )
-        this.raiseTelemetry(this.editGoal.identifier)
+
     }
   }
 
-  raiseTelemetry(goalId: NsGoal.EGoalTypes) {
+  raiseTelemetry(goalType: NsGoal.EGoalTypes) {
     this.events.raiseInteractTelemetry('goal', 'create', {
-      goalId,
+      goalType,
     })
   }
 }

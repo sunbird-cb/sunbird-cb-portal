@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core'
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
-import { } from '@sunbird-cb/collection'
+import { } from '@ws-widget/collection'
 import {
   IResolveResponse,
   // ConfigurationsService
-} from '@sunbird-cb/utils'
+} from '@ws-widget/utils'
 import { NetworkV2Service } from '../services/network-v2.service'
 import { NSNetworkDataV2 } from '../models/network-v2.model'
 

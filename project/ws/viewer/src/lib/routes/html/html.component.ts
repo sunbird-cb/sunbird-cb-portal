@@ -1,18 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { AccessControlService } from '@ws/author'
-import { NsContent, NsDiscussionForum, WidgetContentService } from '@sunbird-cb/collection'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { NsContent, NsDiscussionForum, WidgetContentService } from '@ws-widget/collection'
+import { NsWidgetResolver } from '@ws-widget/resolver'
 import {
+  ConfigurationsService,
   EventService,
   SubapplicationRespondService,
   WsEvents,
-  ConfigurationsService,
-} from '@sunbird-cb/utils'
+} from '@ws-widget/utils'
 import { fromEvent, Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
 import { ViewerUtilService } from '../../viewer-util.service'
-import { environment } from 'src/environments/environment'
 @Component({
   selector: 'viewer-html',
   templateUrl: './html.component.html',
@@ -48,16 +47,12 @@ export class HtmlComponent implements OnInit, OnDestroy {
     private contentSvc: WidgetContentService,
     private viewerSvc: ViewerUtilService,
     private respondSvc: SubapplicationRespondService,
+    private configSvc: ConfigurationsService,
     private eventSvc: EventService,
     private accessControlSvc: AccessControlService,
-    private configSvc: ConfigurationsService
   ) { }
 
   ngOnInit() {
-
-    // this.activatedRoute.data.subscribe(data => {
-    //   this.uuid = data.profileData.data.userId
-    // })
     this.uuid = this.configSvc.userProfile ? this.configSvc.userProfile.userId : ''
     this.isNotEmbed = !(
       window.location.href.includes('/embed/') ||
@@ -216,23 +211,6 @@ export class HtmlComponent implements OnInit, OnDestroy {
     })
   }
 
-  generateUrl(oldUrl: string) {
-    const chunk = oldUrl.split('/')
-    const newChunk = environment.azureHost.split('/')
-    const newLink = []
-    for (let i = 0; i < chunk.length; i += 1) {
-      if (i === 2) {
-        newLink.push(newChunk[i])
-      } else if (i === 3) {
-        newLink.push(environment.azureBucket)
-      } else {
-        newLink.push(chunk[i])
-      }
-    }
-    const newUrl = newLink.join('/')
-    return newUrl
-  }
-
   async  ngOnDestroy() {
     if (this.htmlData) {
       if (!this.subApp || this.activatedRoute.snapshot.queryParams.collectionId) {
@@ -349,8 +327,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
         return
       }
     }
-    if ((this.htmlData || ({} as any)).isIframeSupported &&
-      (this.htmlData || ({} as any)).isIframeSupported.toLowerCase() !== 'yes') {
+    if ((this.htmlData || ({} as any)).isIframeSupported.toLowerCase() !== 'yes') {
       return
     }
     if (this.htmlData) {
@@ -359,15 +336,9 @@ export class HtmlComponent implements OnInit, OnDestroy {
       }
     }
     this.realTimeProgressRequest.content_type = this.htmlData ? this.htmlData.contentType : ''
-    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-              this.activatedRoute.snapshot.queryParams.collectionId : ''
-      const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-              this.activatedRoute.snapshot.queryParams.batchId : ''
     this.viewerSvc.realTimeProgressUpdate(
       this.htmlData ? this.htmlData.identifier : '',
       this.realTimeProgressRequest,
-      collectionId,
-      batchId
     )
     return
   }

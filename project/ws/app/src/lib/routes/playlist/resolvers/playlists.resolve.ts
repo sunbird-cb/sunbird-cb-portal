@@ -4,8 +4,8 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Observable, of } from 'rxjs'
 import { map, catchError, first } from 'rxjs/operators'
 
-import { IResolveResponse } from '@sunbird-cb/utils'
-import { NsPlaylist, BtnPlaylistService } from '@sunbird-cb/collection'
+import { IResolveResponse } from '@ws-widget/utils'
+import { NsPlaylist, BtnPlaylistService } from '@ws-widget/collection'
 
 @Injectable()
 export class PlaylistsResolve

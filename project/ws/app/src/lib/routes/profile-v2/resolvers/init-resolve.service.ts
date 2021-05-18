@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router'
 
+import { CKEditorService } from 'library/ws-widget/collection/src/lib/_common/ck-editor/ck-editor.service'
 import { Observable, forkJoin, of } from 'rxjs'
 // import { tap } from 'rxjs/operators'
 // import { AuthInitService } from '@ws/author/src/lib/services/init.service'
@@ -8,7 +9,13 @@ import { Observable, forkJoin, of } from 'rxjs'
 @Injectable()
 export class InitResolver implements Resolve<any> {
   constructor(
-    // private ckEditorInject: CKEditorService,
+    // private apiService: ApiService,
+    // private router: Router,
+    private ckEditorInject: CKEditorService,
+    // private configurationsService: ConfigurationsService,
+    // private accessService: AccessControlService,
+    // private authInitService: AuthInitService,
+    // private zipJSInject: ZipJSResolverService,
   ) { }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
@@ -17,7 +24,7 @@ export class InitResolver implements Resolve<any> {
     const data: string[] = route.data ? route.data.load || [] : []
 
     if (data.includes('ckeditor')) {
-      // forkProcess.push(this.ckEditorInject.inject())
+      forkProcess.push(this.ckEditorInject.inject())
       // forkProcess.push(this.zipJSInject.inject())
     }
     return forkJoin(forkProcess).pipe()

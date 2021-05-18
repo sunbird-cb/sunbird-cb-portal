@@ -4,9 +4,9 @@ import {
   IGraphWidget,
   NsError,
   ROOT_WIDGET_CONFIG,
-} from '@sunbird-cb/collection'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
+} from '@ws-widget/collection'
+import { NsWidgetResolver } from '@ws-widget/resolver'
+import { ConfigurationsService, TFetchStatus } from '@ws-widget/utils'
 import { Subscription } from 'rxjs'
 import { NsAnalytics } from '../../models/learning-analytics.model'
 import { AnalyticsResolver } from '../../resolvers/learning-analytics-filters.resolver'

@@ -1,4 +1,4 @@
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { NsWidgetResolver } from '@ws-widget/resolver'
 // import { NSSearch } from '../_services/widget-search.model'
 import { NsCardContent } from '../card-content/card-content.model'
 
@@ -38,11 +38,6 @@ export namespace NsNetworkStripNewMultiple {
     errorWidget?: NsWidgetResolver.IRenderConfigWithAnyData
     refreshEvent?: Record<'eventType' | 'from', string>
     fetchLikes?: boolean
-    viewMoreUrl: {
-      viewMoreText: string
-      path: string
-      queryParams: any
-    } | null
   }
   export interface IStripRequestApi {
     path: string

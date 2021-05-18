@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { NsContent, NsContentStripMultiple, ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
+import { NsContent, NsContentStripMultiple, ROOT_WIDGET_CONFIG } from '@ws-widget/collection'
+import { NsWidgetResolver } from '@ws-widget/resolver'
+import { ConfigurationsService, TFetchStatus } from '@ws-widget/utils'
 import { NSProfileData } from '../../../../models/profile.model'
 import { ProfileService } from '../../../../services/profile.service'
 import { InterestService } from '../../../interest/services/interest.service'
@@ -95,16 +95,15 @@ export class DashboardComponent implements OnInit {
   ongoingCertifications: NSLearningHistory.ILearningHistoryItem[] = []
   passedCertifications: NSLearningHistory.ILearningHistoryItem[] = []
   constructor(
+    private configSvc: ConfigurationsService,
     // private badgesSvc: BadgesService,
     private profileSvc: ProfileService,
     private learnHstSvc: LearningHistoryService,
     private interestSvc: InterestService,
     private activatedRoute: ActivatedRoute,
-    private configSvc: ConfigurationsService
   ) {
-
     if (this.configSvc.userProfile) {
-      this.userName = `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}`
+      this.userName = this.configSvc.userProfile.givenName || ''
       this.userEmail = this.configSvc.userProfile.email || ''
       this.departmentName = this.configSvc.userProfile.departmentName || ''
     }

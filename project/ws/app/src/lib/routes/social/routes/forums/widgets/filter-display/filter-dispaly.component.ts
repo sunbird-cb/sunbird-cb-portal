@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '../../../../../../../../../../../library/ws-widget/utils/src/public-api'
 import { SocialForum } from '../../models/SocialForumposts.model'
 import { FilterService } from '../../service/sub-services/filter.service'
 

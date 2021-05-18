@@ -20,7 +20,7 @@
       <ng-container *ngIf="learningTimePerDay" i18n>This chart shows Time that you are viewing learning content on a
         particular day compared to the org.-wide average.</ng-container>
       <div class="text-center">
-        <mat-checkbox i18n [checked]="showDateRange"  (change)="changeRangeDisplay()">Date Range
+        <mat-checkbox i18n [checked]="showDateRange" [color]="'primary'" (change)="changeRangeDisplay()">Date Range
         </mat-checkbox>
       </div>
 

@@ -15,9 +15,7 @@ import { QuestionComponent } from './components/question/question.component'
 import { SubmitQuizDialogComponent } from './components/submit-quiz-dialog/submit-quiz-dialog.component'
 import { OnConnectionBindInfo } from 'jsplumb'
 import { QuizService } from './quiz.service'
-import { EventService } from '@sunbird-cb/utils'
-import { ActivatedRoute } from '@angular/router'
-import { ViewerUtilService } from '../../viewer-util.service'
+import { EventService } from '../../../../../../../library/ws-widget/utils/src/public-api'
 export type FetchStatus = 'hasMore' | 'fetching' | 'done' | 'error' | 'none'
 
 @Component({
@@ -81,8 +79,6 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
     private events: EventService,
     public dialog: MatDialog,
     private quizSvc: QuizService,
-    private activatedRoute: ActivatedRoute,
-    private viewerSvc: ViewerUtilService,
   ) { }
 
   ngOnInit() {
@@ -124,21 +120,9 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
   overViewed(event: NSQuiz.TUserSelectionType) {
     if (event === 'start') {
       this.startQuiz()
-      // call content progress with status 1 i.e, started
-      this.updateProgress(1)
     } else if (event === 'skip') {
       // alert('skip quiz TBI')
     }
-  }
-
-  updateProgress(status: number) {
-    // status = 1 indicates started
-    // status = 2 indicates completed
-    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-              this.activatedRoute.snapshot.queryParams.collectionId : ''
-      const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-              this.activatedRoute.snapshot.queryParams.batchId : ''
-      this.viewerSvc.realTimeProgressUpdateQuiz(this.identifier, collectionId, batchId, status)
   }
 
   startQuiz() {
@@ -251,9 +235,6 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
 
     this.quizSvc.submitQuizV2(sanitizedRequestData).subscribe(
       (res: NSQuiz.IQuizSubmitResponse) => {
-        // call content progress with status 2 i.e, completed
-        this.updateProgress(2)
-
         if (this.quizJson.isAssessment) {
           this.isIdeal = true
         }

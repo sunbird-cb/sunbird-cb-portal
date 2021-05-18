@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, HostBinding } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
 import { NsContentStripMultiple } from './content-strip-multiple.model'
 import { ContentStripMultipleService } from './content-strip-multiple.service'
 import { WidgetContentService } from '../_services/widget-content.service'
@@ -10,11 +10,10 @@ import {
   EventService,
   ConfigurationsService,
   UtilityService,
-} from '@sunbird-cb/utils'
+} from '@ws-widget/utils'
 import { Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
-// import { NSSearch } from '@sunbird-cb/utils/src/lib/services/widget-search.model'
-import { WidgetUserService } from '../_services/widget-user.service'
+import { SearchServService } from '@ws/app/src/lib/routes/search/services/search-serv.service'
 
 interface IStripUnitContentData {
   key: string
@@ -31,10 +30,10 @@ interface IStripUnitContentData {
   showOnLoader: boolean
   showOnError: boolean
   stripBackground?: string
-  viewMoreUrl?: {
+  viewMoreUrl: {
     path: string
     queryParams: any
-  }
+  } | null
 }
 @Component({
   selector: 'ws-widget-content-strip-multiple',
@@ -49,7 +48,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
   @Input() widgetData!: NsContentStripMultiple.IContentStripMultiple
   @HostBinding('id')
   public id = `ws-strip-miltiple_${Math.random()}`
-  stripsResultDataMap!: { [key: string]: IStripUnitContentData }
+  stripsResultDataMap: { [key: string]: IStripUnitContentData } = {}
   stripsKeyOrder: string[] = []
   showAccordionData = true
   showParentLoader = false
@@ -71,7 +70,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     private eventSvc: EventService,
     private configSvc: ConfigurationsService,
     protected utilitySvc: UtilityService,
-    private userSvc: WidgetUserService,
+    private searchServSvc: SearchServService,
   ) {
     super()
   }
@@ -89,25 +88,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       this.changeEventSubscription.unsubscribe()
     }
   }
-  get isMobile() {
-    return this.utilitySvc.isMobile || false
-  }
-  getdata(data: IStripUnitContentData) {
-    if (data.stripInfo) {
-      return data.stripInfo.widget
-    }
-    return {}
 
-  }
-  checkCondition(wData: NsContentStripMultiple.IContentStripMultiple, data: IStripUnitContentData) {
-    return wData.strips[0].viewMoreUrl && data.widgets && data.widgets.length >= 4
-  }
-  checkVisible(data: IStripUnitContentData) {
-    return data.stripInfo && data.stripInfo.visibilityMode === 'visible'
-  }
-  getLength(data: IStripUnitContentData) {
-    return data.widgets ? data.widgets.length : 0
-  }
   private initData() {
     this.stripsKeyOrder = this.widgetData.strips.map(strip => strip.key) || []
     if (this.widgetData.loader && this.widgetData.strips.length) {
@@ -146,46 +127,6 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       this.fetchStripFromRequestData(stripData, calculateParentStatus)
     }
   }
-  // private transformSearchV6Filters(v6filters: NSSearch.ISearchV6Filters[]) {
-  //   const filters: any = {}
-  //   v6filters.forEach((f => {
-  //     if (f.andFilters) {
-  //       f.andFilters.forEach((andFilter: any) => {
-  //         Object.keys(andFilter).forEach(key => {
-  //           filters[key] = andFilter[key]
-  //         })
-
-  //       })
-  //     }
-  //   }))
-  //   return filters
-  // }
-
-  private getFiltersFromArray(v6filters: any) {
-    const filters: any = {}
-    if (v6filters.constructor === Array) {
-      v6filters.forEach(((f: any) => {
-            Object.keys(f).forEach(key => {
-              filters[key] = f[key]
-            })
-        }))
-      return filters
-    }
-    return v6filters
-  }
-
-  private transformSearchV6FiltersV2(v6filters: any) {
-    const filters: any = {}
-    if (v6filters.constructor === Array) {
-      v6filters.forEach(((f: any) => {
-            Object.keys(f).forEach(key => {
-              filters[key] = f[key]
-            })
-        }))
-      return filters
-    }
-    return v6filters
-  }
 
   private fetchStripFromRequestData(
     strip: NsContentStripMultiple.IContentStripUnit,
@@ -198,7 +139,6 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     this.fetchFromSearchRegionRecommendation(strip, calculateParentStatus)
     this.fetchFromSearchV6(strip, calculateParentStatus)
     this.fetchFromIds(strip, calculateParentStatus)
-    this.fetchFromEnrollmentList(strip, calculateParentStatus)
   }
   fetchFromApi(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.api && Object.keys(strip.request.api).length) {
@@ -284,22 +224,12 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
   }
   fetchFromSearchV6(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.searchV6 && Object.keys(strip.request.searchV6).length) {
-      // if (!(strip.request.searchV6.locale && strip.request.searchV6.locale.length > 0)) {
-      //   if (this.configSvc.activeLocale) {
-      //     strip.request.searchV6.locale = [this.configSvc.activeLocale.locals[0]]
-      //   } else {
-      //     strip.request.searchV6.locale = ['en']
-      //   }
-      // }
-      let originalFilters: any = []
-      if (strip.request &&
-        strip.request.searchV6 &&
-        strip.request.searchV6.request &&
-        strip.request.searchV6.request.filters) {
-          originalFilters = strip.request.searchV6.request.filters
-          strip.request.searchV6.request.filters = this.getFiltersFromArray(
-            strip.request.searchV6.request.filters,
-          )
+      if (!(strip.request.searchV6.locale && strip.request.searchV6.locale.length > 0)) {
+        if (this.configSvc.activeLocale) {
+          strip.request.searchV6.locale = [this.configSvc.activeLocale.locals[0]]
+        } else {
+          strip.request.searchV6.locale = ['en']
+        }
       }
       this.contentSvc.searchV6(strip.request.searchV6).subscribe(
         results => {
@@ -310,24 +240,18 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
             ? {
               path: '/app/search/learning',
               queryParams: {
-                q: strip.request && strip.request.searchV6 && strip.request.searchV6.request,
+                q: strip.request && strip.request.searchV6 && strip.request.searchV6.query,
                 f:
-                strip.request &&
-                strip.request.searchV6 &&
-                strip.request.searchV6.request &&
-                strip.request.searchV6.request.filters
-                  ? JSON.stringify(
-                    this.transformSearchV6FiltersV2(
-                      originalFilters,
+                  strip.request && strip.request.searchV6 && strip.request.searchV6.filters
+                    ? JSON.stringify(
+                      this.searchServSvc.transformSearchV6Filters(
+                        strip.request.searchV6.filters,
+                      ),
                     )
-                  )
-                  : {},
+                    : {},
               },
             }
             : null
-          // if (viewMoreUrl && viewMoreUrl.queryParams) {
-          //   viewMoreUrl.queryParams = viewMoreUrl.queryParams
-          // }
           this.processStrip(
             strip,
             this.transformContentsToWidgets(results.result.content, strip),
@@ -357,58 +281,6 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         () => {
           this.processStrip(strip, [], 'error', calculateParentStatus, null)
         },
-      )
-    }
-  }
-
-  fetchFromEnrollmentList(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
-    if (strip.request && strip.request.enrollmentList && Object.keys(strip.request.enrollmentList).length) {
-      let userId = ''
-      let content: NsContent.IContent[]
-      if (this.configSvc.userProfile) {
-        userId = this.configSvc.userProfile.userId
-      }
-      // tslint:disable-next-line: deprecation
-      this.userSvc.fetchUserBatchList(userId).subscribe(
-        courses => {
-          const showViewMore = Boolean(
-            courses.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
-          )
-          const viewMoreUrl = showViewMore
-            ? {
-              path: '/app/search/learning',
-              queryParams: {
-                q: strip.request && strip.request.searchV6 && strip.request.searchV6.query,
-                f:
-                  strip.request && strip.request.searchV6 && strip.request.searchV6.filters
-                    ? JSON.stringify(
-                      // this.searchServSvc.transformSearchV6Filters(
-                      strip.request.searchV6.filters
-                      // ),
-                    )
-                    : {},
-              },
-            }
-            : null
-          if (courses && courses.length) {
-            content = courses.map(c => {
-              const contentTemp: NsContent.IContent =  c.content
-              contentTemp.completionPercentage = c.completionPercentage || 0
-              contentTemp.completionStatus = c.completionStatus || 0
-              return contentTemp
-            })
-          }
-          this.processStrip(
-            strip,
-            this.transformContentsToWidgets(content, strip),
-            'done',
-            calculateParentStatus,
-            viewMoreUrl,
-          )
-        },
-        () => {
-          this.processStrip(strip, [], 'error', calculateParentStatus, null)
-        }
       )
     }
   }
@@ -555,9 +427,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         (strip.request.searchRegionRecommendation &&
           Object.keys(strip.request.searchRegionRecommendation).length) ||
         (strip.request.searchV6 && Object.keys(strip.request.searchV6).length) ||
-        (strip.request.ids && Object.keys(strip.request.ids).length) ||
-        (strip.request.enrollmentList && Object.keys(strip.request.enrollmentList).length)
-      )
+        (strip.request.ids && Object.keys(strip.request.ids).length))
     ) {
       return true
     }

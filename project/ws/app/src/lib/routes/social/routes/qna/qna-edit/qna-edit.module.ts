@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
-import { WidgetResolverModule } from '@sunbird-cb/resolver'
+import { WidgetResolverModule } from '@ws-widget/resolver'
 import {
   MatButtonModule,
   MatDividerModule,
@@ -15,7 +15,7 @@ import {
   MatFormFieldModule,
   MatAutocompleteModule,
 } from '@angular/material'
-import { BtnPageBackModule, EditorQuillModule } from '@sunbird-cb/collection'
+import { BtnPageBackModule, EditorQuillModule } from '@ws-widget/collection'
 import { QnaEditComponent } from './components/qna-edit/qna-edit.component'
 
 @NgModule({

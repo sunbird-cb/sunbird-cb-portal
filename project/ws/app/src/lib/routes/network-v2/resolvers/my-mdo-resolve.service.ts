@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core'
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
-import { } from '@sunbird-cb/collection'
-import { IResolveResponse, ConfigurationsService } from '@sunbird-cb/utils'
+import { } from '@ws-widget/collection'
+import { IResolveResponse, ConfigurationsService } from '@ws-widget/utils'
 import { NetworkV2Service } from '../services/network-v2.service'
 import { NSNetworkDataV2 } from '../models/network-v2.model'
 
@@ -19,10 +19,10 @@ export class MyMdoResolveService implements
     _route: ActivatedRouteSnapshot,
     _state: RouterStateSnapshot,
   ): Observable<IResolveResponse<NSNetworkDataV2.IRecommendedUserResponse>> {
-    const usrDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName || ''
-    // if (this.configSvc.userProfile) {
-    //   usrDept = this.configSvc.userProfile.departmentName || 'iGOT'
-    // }
+    let usrDept = 'iGOT'
+    if (this.configSvc.userProfile) {
+      usrDept = this.configSvc.userProfile.departmentName || 'iGOT'
+    }
     let req: NSNetworkDataV2.IRecommendedUserReq
     req = {
       size: 50,

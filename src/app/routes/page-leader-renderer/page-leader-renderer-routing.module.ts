@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { LandingComponent } from './components/landing/landing.component'
-import { PageResolve } from '@sunbird-cb/utils'
+import { PageResolve } from '@ws-widget/utils'
 const routes: Routes = [
   {
     path: ':leaderId',

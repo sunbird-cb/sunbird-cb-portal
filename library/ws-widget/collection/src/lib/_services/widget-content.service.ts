@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { ConfigurationsService } from '@sunbird-cb/utils'
-import { Observable, of, EMPTY } from 'rxjs'
+import { ConfigurationsService } from '@ws-widget/utils/src/lib/services/configurations.service'
+import { Observable, of } from 'rxjs'
 import { catchError, retry, map } from 'rxjs/operators'
 import { NsContentStripMultiple } from '../content-strip-multiple/content-strip-multiple.model'
 import { NsContent } from './widget-content.model'
@@ -31,7 +31,7 @@ const API_END_POINTS = {
     `${PROTECTED_SLAG_V8}/content/collection/${type}/${id}`,
   REGISTRATION_STATUS: `${PROTECTED_SLAG_V8}/admin/userRegistration/checkUserRegistrationContent`,
   MARK_AS_COMPLETE_META: (contentId: string) => `${PROTECTED_SLAG_V8}/user/progress/${contentId}`,
-  ENROLL_BATCH: `/apis/proxies/v8/learner/course/v1/enrol`,
+  ENROLL_BATCH : `/apis/proxies/v8/learner/course/v1/enrol`,
 }
 
 @Injectable({
@@ -60,7 +60,7 @@ export class WidgetContentService {
     contentId: string,
     hierarchyType: 'all' | 'minimal' | 'detail' = 'detail',
     _additionalFields: string[] = [],
-    primaryCategory?: string | null,
+    primaryCategory?: string | null ,
   ): Observable<NsContent.IContent> {
     // const url = `${API_END_POINTS.CONTENT}/${contentId}?hierarchyType=${hierarchyType}`
     let url = ''
@@ -100,19 +100,19 @@ export class WidgetContentService {
 
   fetchCourseBatches(req: any): Observable<NsContent.IBatchListResponse> {
     return this.http
-      .post<NsContent.IBatchListResponse>(API_END_POINTS.COURSE_BATCH_LIST, req)
-      .pipe(
-        retry(1),
-        map(
-          (data: any) => data.result.response
-        )
+    .post<NsContent.IBatchListResponse>(API_END_POINTS.COURSE_BATCH_LIST, req)
+    .pipe(
+      retry(1),
+      map(
+        (data: any) => data.result.response
       )
+    )
   }
 
   enrollUserToBatch(req: any) {
     return this.http
-      .post(API_END_POINTS.ENROLL_BATCH, req)
-      .toPromise()
+    .post(API_END_POINTS.ENROLL_BATCH, req)
+    .toPromise()
   }
 
   fetchContentLikes(contentIds: { content_id: string[] }) {
@@ -176,14 +176,12 @@ export class WidgetContentService {
   }
 
   setS3Cookie(
-    _contentId: string,
+    contentId: string,
     // _path: string,
   ): Observable<any> {
-    // return this.http
-    //   .post(API_END_POINTS.SET_S3_COOKIE, { contentId })
-    //   .pipe(catchError(_err => of(true)))
-
-    return EMPTY
+    return this.http
+      .post(API_END_POINTS.SET_S3_COOKIE, { contentId })
+      .pipe(catchError(_err => of(true)))
   }
 
   setS3ImageCookie(): Observable<any> {

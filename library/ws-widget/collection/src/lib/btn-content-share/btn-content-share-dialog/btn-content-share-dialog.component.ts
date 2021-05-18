@@ -1,17 +1,13 @@
 import { COMMA, ENTER, SEMICOLON } from '@angular/cdk/keycodes'
 import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material'
-import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService } from '@ws-widget/utils'
 import { NsAutoComplete } from '../../_common/user-autocomplete/user-autocomplete.model'
 import { WidgetContentShareService } from '../../_services/widget-content-share.service'
 import { NsContent } from '../../_services/widget-content.model'
 import { NsShare } from '../../_services/widget-share.model'
 import { ICommon } from '../../_models/common.model'
-// import { TitleTagService } from '@ws/app/src/lib/routes/app-toc/services/title-tag.service'
-
-export interface IContentShareData {
-  content: NsContent.IContent
-}
+import { TitleTagService } from '@ws/app/src/lib/routes/app-toc/services/title-tag.service'
 
 @Component({
   selector: 'ws-widget-btn-content-share-dialog',
@@ -30,10 +26,10 @@ export class BtnContentShareDialogComponent implements OnInit {
     private events: EventService,
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<BtnContentShareDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IContentShareData,
+    @Inject(MAT_DIALOG_DATA) public data: { content: NsContent.IContent },
     private shareSvc: WidgetContentShareService,
     private configSvc: ConfigurationsService,
-    // private titleTagService: TitleTagService
+    private titleTagService: TitleTagService
   ) { }
 
   ngOnInit() {
@@ -52,11 +48,11 @@ export class BtnContentShareDialogComponent implements OnInit {
         !this.configSvc.restrictedFeatures.has('socialMediaTwitterShare')
     }
 
-    // this.titleTagService.setSocialMediaTags(
-    //   this.detailUrl,
-    //   this.data.content.name,
-    //   this.data.content.description,
-    //   this.data.content.appIcon)
+    this.titleTagService.setSocialMediaTags(
+      this.detailUrl,
+      this.data.content.name,
+      this.data.content.description,
+      this.data.content.appIcon)
   }
 
   updateUsers(users: NsAutoComplete.IUserAutoComplete[]) {
@@ -145,9 +141,9 @@ export class BtnContentShareDialogComponent implements OnInit {
         return `${locationOrigin}/app/knowledge-board/${this.data.content.identifier}`
       case NsContent.EContentTypes.KNOWLEDGE_ARTIFACT:
 
-        return `${locationOrigin}/app/toc/${this.data.content.identifier}/overview`
+        return `${locationOrigin}/app/toc/${this.data.content.identifier}/overview?primaryCategory=${this.data.content.primaryCategory}`
       default:
-        return `${locationOrigin}/app/toc/${this.data.content.identifier}/overview`
+        return `${locationOrigin}/app/toc/${this.data.content.identifier}/overview?primaryCategory=${this.data.content.primaryCategory}`
     }
   }
 

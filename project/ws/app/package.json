@@ -13,8 +13,5 @@
     "@angular/platform-browser": "~8.2.1",
     "@angular/platform-browser-dynamic": "~8.2.1",
     "@angular/router": "~8.2.1"
-  },
-  "devDependencies": {
-    "@types/lodash-es": "^4.17.4"
   }
 }

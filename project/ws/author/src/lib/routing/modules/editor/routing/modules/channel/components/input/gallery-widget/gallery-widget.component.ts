@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
-import { NsGalleryView } from '@sunbird-cb/collection'
+import { NsGalleryView } from '@ws-widget/collection/src/public-api'
 
 @Component({
   selector: 'ws-auth-gallery-widget',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { ActivatedRoute } from '@angular/router'
-import { NsAutoComplete } from '@sunbird-cb/collection'
+import { NsAutoComplete } from '@ws-widget/collection'
 import { SystemRolesManagementService } from '../system-roles-management/system-roles-management.service'
 import { IUserRoleDetail } from './users.model'
 import { OpenRolesDialogComponent } from './components/open-roles-dialog/open-roles-dialog.component'

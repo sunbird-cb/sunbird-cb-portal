@@ -26,10 +26,7 @@
         <mat-card class="flex-1 remove-botton-radius">
             <mat-card-header>
                 <mat-card-title class="margin-l-0 f-medium">
-                    <h2 *ngIf="data && data.length">{{data.length}} 
-                        <span *ngIf="data && data.length > 1 ">Connection requests</span>
-                        <span *ngIf="data && data.length === 1 ">Connection request</span>
-                    </h2>
+                    <h2 *ngIf="data && data.length">{{data.length}} Connection requests</h2>
                     <h4 class="w-full text-center ws-mat-black60-text" *ngIf="data && data.length <= 0">No connections
                         found!</h4>
                 </mat-card-title>

@@ -1,4 +1,4 @@
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { NsWidgetResolver } from '@ws-widget/resolver'
 
 export namespace NsWidgetLayoutTab {
   export interface ILayout {

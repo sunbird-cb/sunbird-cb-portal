@@ -1,5 +1,5 @@
 import { LoaderService } from '@ws/author/src/lib/services/loader.service'
-import { IWidgetElementHtml } from '@sunbird-cb/collection'
+import { IWidgetElementHtml } from '@ws-widget/collection'
 import { FILE_MAX_SIZE } from '@ws/author/src/lib/constants/upload'
 import { CONTENT_BASE_WEBHOST_ASSETS, AUTHORING_CONTENT_BASE } from '@ws/author/src/lib/constants/apiEndpoints'
 import { NotificationComponent } from '@ws/author/src/lib/modules/shared/components/notification/notification.component'

@@ -20,7 +20,7 @@ import { LoaderService } from '@ws/author/src/lib/services/loader.service'
 import { of } from 'rxjs'
 import { mergeMap, tap, catchError } from 'rxjs/operators'
 import { UrlUploadComponent } from './../url-upload/url-upload.component'
-import { VIEWER_ROUTE_FROM_MIME } from '@sunbird-cb/collection'
+import { VIEWER_ROUTE_FROM_MIME } from '@ws-widget/collection'
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper'
 
 @Component({

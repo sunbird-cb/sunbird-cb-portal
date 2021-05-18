@@ -1,10 +1,11 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core'
-import { NsPlaylist, BtnPlaylistService, NsContent } from '@sunbird-cb/collection'
-import { TFetchStatus, NsPage, ConfigurationsService } from '@sunbird-cb/utils'
+import { NsPlaylist, BtnPlaylistService, NsContent } from '@ws-widget/collection'
+import { TFetchStatus, NsPage, ConfigurationsService } from '@ws-widget/utils'
 import { ActivatedRoute, Router } from '@angular/router'
 import { MatSnackBar } from '@angular/material'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { PLAYLIST_TITLE_MIN_LENGTH, PLAYLIST_TITLE_MAX_LENGTH } from '../../constants/playlist.constant'
+
 @Component({
   selector: 'ws-app-playlist-edit',
   templateUrl: './playlist-edit.component.html',
@@ -20,7 +21,7 @@ export class PlaylistEditComponent implements OnInit {
   editPlaylistForm: FormGroup
   createPlaylistStatus: TFetchStatus = 'none'
 
-  playlist: NsPlaylist.IPlaylist = this.route.snapshot.data.playlist.data
+  playlist: NsPlaylist.IPlaylist = this.route.snapshot.data.playlist.data.result.content
   error = this.route.snapshot.data.playlist.error
   type = this.route.snapshot.data.type
   upsertPlaylistStatus: TFetchStatus = 'none'
@@ -39,22 +40,28 @@ export class PlaylistEditComponent implements OnInit {
   ) {
     this.editPlaylistForm = this.fb.group({
       title: [
-        this.playlist.result.content.name ,
+        this.playlist.name || '',
         [Validators.required, Validators.minLength(PLAYLIST_TITLE_MIN_LENGTH), Validators.maxLength(PLAYLIST_TITLE_MAX_LENGTH)],
       ],
       visibility: [NsPlaylist.EPlaylistVisibilityTypes.PRIVATE],
       message: '',
     })
-    const playlistData = this.playlist.result.content
+
+    const children = this.playlist.children
+    // let selectedIds = []
+    // children.forEach((item: { identifier: string }) => {
+    //   selectedIds.push(item.identifier)
+    // });
+
     this.selectedContentIds = new Set<string>(
-      (playlistData && playlistData.children || []).map((children: { identifier: string }) =>
-        children.identifier),
+      (children).map((content: { identifier: string }) => content.identifier),
     )
+
   }
   ngOnInit(): void {
     this.editPlaylistForm = this.fb.group({
       title: [
-        this.playlist.result.content.name || '',
+        this.playlist.name || '',
         [Validators.required, Validators.minLength(PLAYLIST_TITLE_MIN_LENGTH), Validators.maxLength(PLAYLIST_TITLE_MAX_LENGTH)],
       ],
       visibility: [NsPlaylist.EPlaylistVisibilityTypes.PRIVATE],
@@ -69,6 +76,7 @@ export class PlaylistEditComponent implements OnInit {
   }
 
   editPlaylist() {
+    this.upsertPlaylistStatus = 'fetching'
     this.editName()
     // if (this.changedContentIds.size) {
     //   this.playlistSvc.addPlaylistContent(this.playlist, Array.from(this.changedContentIds)).subscribe(
@@ -85,8 +93,7 @@ export class PlaylistEditComponent implements OnInit {
 
   editName() {
     const formValues: { [field: string]: string } = this.editPlaylistForm.getRawValue()
-    if (formValues.title || this.changedContentIds.size && this.playlist) {
-      this.upsertPlaylistStatus = 'fetching'
+    if (formValues.title && this.playlist) {
       this.playlist.name = formValues.title
       this.playlistSvc.patchPlaylist(this.playlist, Array.from(this.changedContentIds)).subscribe(() => {
         // if (!this.changedContentIds.size) {

@@ -3,8 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
 import { MatSnackBar } from '@angular/material'
 
-import { TFetchStatus, NsPage, ConfigurationsService, EventService } from '@sunbird-cb/utils'
-import { NsPlaylist, IPickerContentData, BtnPlaylistService, NsContent, NsAutoComplete } from '@sunbird-cb/collection'
+import { TFetchStatus, NsPage, ConfigurationsService, EventService } from '@ws-widget/utils'
+import { NsPlaylist, IPickerContentData, BtnPlaylistService, NsContent, NsAutoComplete } from '@ws-widget/collection'
 import {
   PLAYLIST_TITLE_MIN_LENGTH, PLAYLIST_TITLE_MAX_LENGTH,
 } from '../../constants/playlist.constant'
@@ -95,7 +95,7 @@ export class PlaylistCreateComponent implements OnInit {
     this.playlistSvc.upsertPlaylist({
       playlist_title: formValues.title,
       content_ids: Array.from(this.selectedContentIds),
-      shareWith: this.sharedWithUsers.map(user => user.wid),
+      shareWith: this.sharedWithUsers.map(user => user.userId),
       shareMsg: formValues.message,
       visibility: formValues.visibility as NsPlaylist.EPlaylistVisibilityTypes,
     }).subscribe(

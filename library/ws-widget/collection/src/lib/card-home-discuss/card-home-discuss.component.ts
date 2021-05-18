@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, HostBinding } from '@angular/core'
-import { WidgetBaseComponent, NsWidgetResolver } from '@sunbird-cb/resolver'
-// import { DiscussService } from '@ws/app/src/lib/routes/discuss/services/discuss.service'
+import { WidgetBaseComponent, NsWidgetResolver } from '@ws-widget/resolver'
+import { DiscussService } from '@ws/app/src/lib/routes/discuss/services/discuss.service'
 
 /* tslint:disable */
 import _ from 'lodash'
@@ -11,17 +11,14 @@ import { Router } from '@angular/router'
   selector: 'ws-widget-home-discuss-component',
   templateUrl: './card-home-discuss.component.html',
   styleUrls: ['./card-home-discuss.component.scss'],
-  // providers: [DiscussService],
+  providers: [DiscussService],
 })
 export class CardHomeDiscussComponent extends WidgetBaseComponent implements OnInit, NsWidgetResolver.IWidgetData<any> {
   @Input() widgetData: any
   discuss!: NSDiscuss.IDiscuss
   @HostBinding('id')
   public id = 'h-d-component'
-  constructor(
-    // private discussService: DiscussService,
-    private router: Router
-  ) {
+  constructor(private discussService: DiscussService, private router: Router) {
     super()
   }
 
@@ -44,51 +41,20 @@ export class CardHomeDiscussComponent extends WidgetBaseComponent implements OnI
           downvotes: d.downvotes,
           tags: d.tags,
           postcount: d.postcount,
-          slug: d.slug,
 
         }
       })[0]
     }
   }
 
-  getUserFullName(user: any) {
-    if (user && user.username) {
-      return `${user.username.trim()}`
-    }
-    return ''
-  }
-
   fillPopular() {
-    // this.discussService.fetchRecentD().subscribe((response: any) => {
-    //   this.discuss = _.get(response, 'topics')
-    //   // console.log(this.discuss)
-    // })
+    this.discussService.fetchRecentD().subscribe((response: any) => {
+      this.discuss = _.get(response, 'topics')
+      // console.log(this.discuss)
+    })
   }
 
   getDiscussion(discuss: any) {
-    this.router.navigate([`/app/discussion-forum/topic/${_.trim(_.get(discuss, 'slug'))}`])
-  }
-
-  public getBgColor(tagTitle: any) {
-    const bgColor = this.stringToColor(tagTitle.toLowerCase())
-    const color = this.getContrast()
-    return { color, 'background-color': bgColor }
-  }
-
-  stringToColor(title: any) {
-    let hash = 0
-    // tslint:disable-next-line: no-bitwise
-    for (const element of title) {
-      // tslint:disable-next-line: no-bitwise
-      hash = title.charCodeAt(element) + ((hash << 5) - hash)
-    }
-    const hue = Math.abs(hash % 360)
-    // tslint:disable-next-line: prefer-template
-    const colour = 'hsl(' + hue + ',100%,30%)'
-    return colour
-  }
-
-  getContrast() {
-    return 'rgba(255, 255, 255, 80%)'
+    this.router.navigate([`/app/discuss/home/${discuss.tid}`])
   }
 }

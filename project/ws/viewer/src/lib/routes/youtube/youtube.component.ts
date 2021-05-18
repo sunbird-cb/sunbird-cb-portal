@@ -5,9 +5,9 @@ import {
   IWidgetsPlayerMediaData,
   NsDiscussionForum,
   WidgetContentService,
-} from '@sunbird-cb/collection'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ValueService } from '@sunbird-cb/utils'
+} from '@ws-widget/collection'
+import { NsWidgetResolver } from '@ws-widget/resolver'
+import { ValueService } from '@ws-widget/utils'
 import { ActivatedRoute } from '@angular/router'
 import { Platform } from '@angular/cdk/platform'
 

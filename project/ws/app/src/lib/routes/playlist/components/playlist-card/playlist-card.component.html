@@ -7,7 +7,7 @@
         <div class="overlay flex flex-middle flex-center">
           <div class="color-white playlist-font">
             <h2 class="text-center playlist-count">
-              {{ playlist?.children?.length | number }}
+              {{ playlist?.contents?.length | number }}
             </h2>
             <mat-icon inline="true" class="playlist-icon">playlist_play</mat-icon>
           </div>
@@ -89,7 +89,7 @@
       <h2 i18n>This playlist includes</h2>
       <hr />
       <div class=" padding-top-s padding-bottom-s margin-bottom-xl">
-        <div *ngFor="let content of playlist?.children">
+        <div *ngFor="let content of playlist?.childNodes">
           <ng-container *ngTemplateOutlet="contentView; context: { $implicit: content }">
           </ng-container>
         </div>

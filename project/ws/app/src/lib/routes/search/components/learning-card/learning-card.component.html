@@ -17,7 +17,7 @@
     <mat-card-content>
       <div class="flex flex-middle" [title]="content.name">
         <a (click)="raiseTelemetry()" [routerLink]="(content | pipeContentRoute).url"
-          [queryParams]="{primaryCategory: content?.primaryCategory}" class="image-section">
+          [queryParams]="(content | pipeContentRoute).queryParams" class="image-section">
           <img i18n-alt alt="thumbnail" class="mat-lite-background" [src]="content.appIcon"
             [wsUtilsDefaultThumbnail]="defaultThumbnail" />
         </a>
@@ -26,7 +26,7 @@
             <mat-icon *ngIf="contentProgress > 0.99" class="completed-icon">
               check_circle</mat-icon>
             <a (click)="raiseTelemetry()" [routerLink]="(content | pipeContentRoute).url"
-              [queryParams]="{primaryCategory: content?.primaryCategory}"
+              [queryParams]="(content | pipeContentRoute).queryParams"
               class="margin-remove-bottom text-truncate mat-title">{{ content.name }}</a>
           </h1>
           <div>

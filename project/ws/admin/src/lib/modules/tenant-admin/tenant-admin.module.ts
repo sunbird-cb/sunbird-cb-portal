@@ -38,7 +38,7 @@ import {
   UserAutocompleteModule,
   PickerContentModule,
   UserImageModule,
-} from '@sunbird-cb/collection'
+} from '@ws-widget/collection'
 import { RouterModule } from '@angular/router'
 import { BannerComponent } from './routes/page/home/components/banner/banner.component'
 import { ContentStripRequestComponent } from './routes/page/home/components/content-strip-request/content-strip-request.component'

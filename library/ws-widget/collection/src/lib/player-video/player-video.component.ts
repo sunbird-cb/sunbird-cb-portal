@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, ElementRef, HostBinding, Input, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { EventService } from '@sunbird-cb/utils'
+import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
+import { EventService } from '@ws-widget/utils'
 import videoJs from 'video.js'
+import { ViewerUtilService } from '../../../../../../project/ws/viewer/src/lib/viewer-util.service'
 import { ROOT_WIDGET_CONFIG } from '../collection.config'
 import { IWidgetsPlayerMediaData } from '../_models/player-media.model'
 import {
@@ -13,7 +14,6 @@ import {
   videoJsInitializer,
 } from '../_services/videojs-util'
 import { WidgetContentService } from '../_services/widget-content.service'
-import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 
 const videoJsOptions: videoJs.PlayerOptions = {
   controls: true,
@@ -134,14 +134,13 @@ export class PlayerVideoComponent extends WidgetBaseComponent
       }
     }
     const fireRProgress: fireRealTimeProgressFunction = (identifier, data) => {
-      const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+      if (this.widgetData.identifier) {
+        const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
               this.activatedRoute.snapshot.queryParams.collectionId : this.widgetData.identifier
-      const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-              this.activatedRoute.snapshot.queryParams.batchId : this.widgetData.identifier
-
-      if (this.widgetData.identifier && identifier && data) {
-          this.viewerSvc
-            .realTimeProgressUpdate(identifier, data, collectionId, batchId)
+        const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+          this.activatedRoute.snapshot.queryParams.batchId : this.widgetData.identifier
+        this.viewerSvc
+          .realTimeProgressUpdate(identifier, data, collectionId, batchId)
       }
     }
     if (this.widgetData.resumePoint && this.widgetData.resumePoint !== 0) {
@@ -211,14 +210,13 @@ export class PlayerVideoComponent extends WidgetBaseComponent
       }
     }
     const fireRProgress: fireRealTimeProgressFunction = (identifier, data) => {
+      if (this.widgetData.identifier) {
         const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-                this.activatedRoute.snapshot.queryParams.collectionId : this.widgetData.identifier
+          this.activatedRoute.snapshot.queryParams.collectionId : this.widgetData.identifier
         const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-                this.activatedRoute.snapshot.queryParams.batchId : this.widgetData.identifier
-
-        if (this.widgetData.identifier && identifier && data) {
-          this.viewerSvc
-            .realTimeProgressUpdate(identifier, data, collectionId, batchId)
+          this.activatedRoute.snapshot.queryParams.batchId : this.widgetData.identifier
+        this.viewerSvc
+          .realTimeProgressUpdate(identifier, data, collectionId, batchId)
       }
     }
     let enableTelemetry = false
@@ -267,7 +265,7 @@ export class PlayerVideoComponent extends WidgetBaseComponent
   }
   async fetchContent() {
     const content = await this.contentSvc
-      .fetchContent(this.widgetData.identifier || '', 'minimal')
+      .fetchContent(this.widgetData.identifier || '', 'minimal', [], this.widgetData.primaryCategory)
       .toPromise()
     if (content.artifactUrl && content.artifactUrl.indexOf('/content-store/') > -1) {
       this.widgetData.url = content.artifactUrl

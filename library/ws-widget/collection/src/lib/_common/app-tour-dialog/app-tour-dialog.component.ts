@@ -1,7 +1,8 @@
-import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@ws-widget/utils'
 import { Component, OnInit, Inject, AfterViewInit, OnDestroy } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { CustomTourService } from '../tour-guide/tour-guide.service'
+import { NsPage } from '../../../../../utils/src/public-api'
 import { Router } from '@angular/router'
 
 @Component({
@@ -18,7 +19,7 @@ export class AppTourDialogComponent implements OnInit, AfterViewInit, OnDestroy 
     private tour: CustomTourService,
     @Inject(MAT_DIALOG_DATA) public clicked: string,
     private configSvc: ConfigurationsService,
-  ) { }
+  ) {}
 
   ngOnInit() {
     if (this.configSvc.userUrl) {

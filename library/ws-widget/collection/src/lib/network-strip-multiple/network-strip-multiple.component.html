@@ -11,7 +11,7 @@
     <ng-container *ngIf="stripsResultDataMap[key].showStrip">
       <a name="{{stripsResultDataMap[key]?.stripTitle}}">
         <div *ngIf="
-                  stripsResultDataMap[key]?.widgets ||
+                  stripsResultDataMap[key]?.widgets?.length ||
                   stripsResultDataMap[key]?.showOnNoData ||
                   stripsResultDataMap[key]?.showOnLoader ||
                   stripsResultDataMap[key]?.showOnError
@@ -47,7 +47,7 @@
                   <a mat-button [routerLink]="widgetData.strips[0]?.viewMoreUrl?.path"
                     [queryParams]="widgetData.strips[0]?.viewMoreUrl?.queryParams">
                     <span i18n>{{widgetData.strips[0].viewMoreUrl.viewMoreText || 'View All'}}</span>
-                    <mat-icon class="default-icon">arrow_forward</mat-icon>
+                    <mat-icon>arrow_forward</mat-icon>
                   </a>
                 </div>
               </div>
@@ -59,11 +59,9 @@
                 (click)="showAccordionData = !showAccordionData">{{ showAccordionData ? 'expand_less' : 'expand_more' }}
               </mat-icon>
             </div>
-            <!-- <div class="mb-4" *ngIf="stripsResultDataMap[key]?.stripInfo?.visibilityMode === 'visible'"> -->
-              <!-- <ng-container [wsResolverWidget]="stripsResultDataMap[key]?.stripInfo?.widget"></ng-container> -->
-              <!-- <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets" [wsResolverWidget]="widget">
-              </ng-container> -->
-            <!-- </div> -->
+            <div class="mb-4" *ngIf="stripsResultDataMap[key]?.stripInfo?.visibilityMode === 'visible'">
+              <ng-container [wsResolverWidget]="stripsResultDataMap[key]?.stripInfo?.widget"></ng-container>
+            </div>
             <div *ngIf="stripsResultDataMap[key]?.showOnLoader" class="text-center my-2">
               <mat-spinner [diameter]="40" [strokeWidth]="3"></mat-spinner>
             </div>
@@ -71,19 +69,12 @@
               [wsResolverWidget]="stripsResultDataMap[key]?.noDataWidget"></ng-container>
             <ng-container *ngIf="stripsResultDataMap[key]?.showOnError"
               [wsResolverWidget]="stripsResultDataMap[key]?.errorWidget"></ng-container>
-            <!-- <ws-utils-horizontal-scroller class="flex container-balanced new-width" [loadStatus]="'done'">
+            <ws-utils-horizontal-scroller *ngIf="stripsResultDataMap[key]?.widgets?.length && showAccordion(key)"
+              class="flex container-balanced new-width" [loadStatus]="'done'">
               <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets" [wsResolverWidget]="widget">
               </ng-container>
 
-            </ws-utils-horizontal-scroller> -->
-
-            <ws-utils-horizontal-scroller class="flex container-balanced new-width" *ngIf="getLength(stripsResultDataMap[key]) && showAccordion(key)"
-              [loadStatus]="'done'">
-              <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets" [wsResolverWidget]="widget">
-
-              </ng-container>
             </ws-utils-horizontal-scroller>
-
           </div>
         </div>
       </a>

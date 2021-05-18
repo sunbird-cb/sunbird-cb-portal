@@ -1,6 +1,6 @@
 import { Component, ElementRef, TemplateRef, ViewChild, OnInit , Inject } from '@angular/core'
-import {  NsAutoComplete } from '@sunbird-cb/collection'
-import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
+import {  NsAutoComplete } from '@ws-widget/collection'
+import { TFetchStatus, ConfigurationsService } from '@ws-widget/utils'
 import { MAT_DIALOG_DATA } from '@angular/material'
 
 @Component({

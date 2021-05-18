@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { MatDialog, MatSnackBar } from '@angular/material'
-import { ConfigurationsService } from '@sunbird-cb/utils'
-import { DialogSocialDeletePostComponent, NsDiscussionForum, WsDiscussionForumService } from '@sunbird-cb/collection'
+import { ConfigurationsService } from '@ws-widget/utils'
+import { DialogSocialDeletePostComponent, NsDiscussionForum, WsDiscussionForumService } from '@ws-widget/collection'
 
 @Component({
   selector: 'ws-app-blog-reply',
@@ -23,7 +23,6 @@ export class BlogReplyComponent implements OnInit {
     private configSvc: ConfigurationsService,
     private discussionSvc: WsDiscussionForumService,
   ) {
-
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId || ''
     }

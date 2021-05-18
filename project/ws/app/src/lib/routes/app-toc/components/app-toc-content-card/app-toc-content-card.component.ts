@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
-import { NsContent, viewerRouteGenerator } from '@sunbird-cb/collection'
+import { NsContent, viewerRouteGenerator } from '@ws-widget/collection'
+import { ConfigurationsService } from '@ws-widget/utils'
 import { NsAppToc } from '../../models/app-toc.model'
 
 @Component({
@@ -33,14 +34,14 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
   }
   defaultThumbnail = ''
   viewChildren = false
-  constructor() {}
+  constructor(private configSvc: ConfigurationsService) {}
 
   ngOnInit() {
     this.evaluateImmediateChildrenStructure()
-    // this.route.data.subscribe(data => {
-    //     this.defaultThumbnail = data.configData.data.logos.defaultContent
-    //   }
-    // )
+    const instanceConfig = this.configSvc.instanceConfig
+    if (instanceConfig) {
+      this.defaultThumbnail = instanceConfig.logos.defaultContent
+    }
   }
   ngOnChanges(changes: SimpleChanges) {
     for (const property in changes) {

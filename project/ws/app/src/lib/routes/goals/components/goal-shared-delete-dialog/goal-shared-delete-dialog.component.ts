@@ -1,12 +1,12 @@
 import { Component, Inject, ViewChild, ElementRef } from '@angular/core'
-import { TFetchStatus } from '@sunbird-cb/utils'
+import { TFetchStatus } from '@ws-widget/utils'
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
   MatListOption,
   MatSnackBar,
 } from '@angular/material'
-import { NsGoal, BtnGoalsService } from '@sunbird-cb/collection'
+import { NsGoal, BtnGoalsService } from '@ws-widget/collection'
 
 @Component({
   selector: 'ws-app-goal-shared-delete-dialog',

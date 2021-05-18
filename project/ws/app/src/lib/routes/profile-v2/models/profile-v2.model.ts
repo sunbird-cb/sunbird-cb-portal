@@ -97,7 +97,6 @@ export namespace NSProfileDataV2 {
     primaryEmail: string
     surname: string
     telephone: string
-    userName: string
   }
   export interface IProfessionalDetails {
     additionalAttributes: { osid: string }

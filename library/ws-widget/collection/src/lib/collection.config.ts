@@ -112,7 +112,6 @@ export const ROOT_WIDGET_CONFIG = {
     career: 'career',
     competencies: 'competencies',
     certifications: 'certifications',
-    certificationsV2: 'certificationsv2',
     departments: 'departments',
     // publications: 'publications',
     hobbies: 'hobbies',
@@ -145,9 +144,5 @@ export const ROOT_WIDGET_CONFIG = {
   wrapper: {
     _type: 'wrapper',
     videoWrapper: 'videoWrapper',
-  },
-  menus: {
-    _type: 'menus',
-    leftMenu: 'leftMenu',
   },
 }

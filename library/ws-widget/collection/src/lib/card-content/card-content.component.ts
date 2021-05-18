@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
-import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, EventService, UtilityService, NsInstanceConfig } from '@sunbird-cb/utils'
+import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
+import { ConfigurationsService, EventService, UtilityService, NsInstanceConfig } from '@ws-widget/utils'
 import { Subscription } from 'rxjs'
 import { NsGoal } from '../btn-goals/btn-goals.model'
 import { NsPlaylist } from '../btn-playlist/btn-playlist.model'
@@ -49,9 +49,9 @@ export class CardContentComponent extends WidgetBaseComponent
 
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
+      this.defaultThumbnail = instanceConfig.logos.defaultContent
       this.sourceLogos = instanceConfig.sources
-      this.defaultSLogo = instanceConfig.logos.defaultSourceLogo || ''
+      this.defaultSLogo = instanceConfig.logos.defaultSourceLogo
     }
 
     if (this.widgetData) {

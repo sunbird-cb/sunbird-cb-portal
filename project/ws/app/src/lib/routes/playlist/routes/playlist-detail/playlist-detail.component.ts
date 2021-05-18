@@ -11,9 +11,9 @@ import {
   ROOT_WIDGET_CONFIG,
   viewerRouteGenerator,
   WidgetContentService,
-} from '@sunbird-cb/collection'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, NsPage, TFetchStatus, ValueService } from '@sunbird-cb/utils'
+} from '@ws-widget/collection'
+import { NsWidgetResolver } from '@ws-widget/resolver'
+import { ConfigurationsService, NsPage, TFetchStatus, ValueService } from '@ws-widget/utils'
 import { Subscription } from 'rxjs'
 // tslint:disable-next-line:max-line-length
 import { PlaylistContentDeleteDialogComponent } from '../../components/playlist-content-delete-dialog/playlist-content-delete-dialog.component'
@@ -56,7 +56,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   }
   editPlaylistForm!: FormGroup
   changeName!: boolean
-  defaultThumbnail: string | undefined = ''
+  defaultThumbnail = ''
   deletedContents = new Set()
   prefChangeSubscription: Subscription | null = null
   isShareEnabled = false
@@ -151,8 +151,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
       this.changeName = changeName
       if (!this.changeName) {
         this.playlist.result.content.name = formValues.title
-        this.playlist.name = formValues.title
-        this.playlistSvc.patchPlaylist(this.playlist).subscribe()
+        this.playlistSvc.patchPlaylist(this.playlist.result.content).subscribe()
       }
     }
   }
@@ -187,7 +186,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   sharePlaylist() {
     this.dialog.open(PlaylistShareDialogComponent, {
       data: {
-        playlist: this.playlist.result.content,
+        playlist: this.playlist,
         deleted: [...this.deletedContents],
       },
       width: '600px',
@@ -197,7 +196,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   drop(event: CdkDragDrop<string[]>) {
     if (this.playlist) {
       moveItemInArray(this.playlist.contents, event.previousIndex, event.currentIndex)
-      // this.playlistSvc.patchPlaylist(this.playlist).subscribe()
+      this.playlistSvc.patchPlaylist(this.playlist).subscribe()
     }
   }
 

@@ -1,4 +1,4 @@
-// @import 'ws-mixins';
+@import 'ws-mixins';
 
 .channel-card {
   height: 9.25rem !important;
@@ -30,13 +30,11 @@
   // word-break: break-word;
   // text-overflow: ellipsis;
 }
-
 .heading h2 {
   z-index: 999;
   line-height: 1.25 !important;
   margin-bottom: 0.75rem !important;
 }
-
 // .sub-heading {
 //   max-height: 4rem;
 // }
@@ -51,7 +49,6 @@
   // background: white;
   z-index: 999;
 }
-
 .dateDiv {
   align-self: flex-end;
 }

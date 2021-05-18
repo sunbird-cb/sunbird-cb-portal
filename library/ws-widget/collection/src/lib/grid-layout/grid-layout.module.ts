@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { GridLayoutComponent } from './grid-layout.component'
-import { WidgetResolverModule } from '@sunbird-cb/resolver'
+import { WidgetResolverModule } from '@ws-widget/resolver'
 
 @NgModule({
   declarations: [GridLayoutComponent],

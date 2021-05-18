@@ -1,4 +1,4 @@
-// @import 'ws-mixins';
+@import 'ws-mixins';
 
 :host.video-full {
   .video-js {
@@ -6,19 +6,16 @@
     width: 100%;
   }
 }
-
 .video-js {
-  height: 100%;
-  width: 100%;
-}
-
+    height: 100%;
+    width: 100%;
+  }
 .youtube-iframe {
   width: 100%;
   height: 100%;
-
-  // @include breakpoint-gt-xs {
-  //   height: 30em;
-  // }
+  @include breakpoint-gt-xs{
+    height:30em;
+  }
 
 }
 

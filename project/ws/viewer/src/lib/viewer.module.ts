@@ -23,7 +23,7 @@ import {
   PipeLimitToModule,
   DefaultThumbnailModule,
   PipePartialContentModule,
-} from '@sunbird-cb/utils'
+} from '@ws-widget/utils'
 
 import {
   ErrorResolverModule,
@@ -39,9 +39,9 @@ import {
   DisplayContentTypeIconModule,
   BtnContentFeedbackV2Module,
   PlayerBriefModule,
-} from '@sunbird-cb/collection'
+} from '@ws-widget/collection'
 
-import { WidgetResolverModule } from '@sunbird-cb/resolver'
+import { WidgetResolverModule } from '@ws-widget/resolver'
 import { ViewerComponent } from './viewer.component'
 import { ViewerTocComponent } from './components/viewer-toc/viewer-toc.component'
 import { ViewerTopBarModule } from './components/viewer-top-bar/viewer-top-bar.module'

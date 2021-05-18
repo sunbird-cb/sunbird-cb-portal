@@ -22,12 +22,12 @@ export class AvatarPhotoComponent implements OnInit {
   // public initials!: string
 
   private colors = [
-    '#EB7181', // red
+    // '#EB7181', // red
     '#306933', // green
-    '#000000', // black
-    '#3670B2', // blue
-    '#4E9E87',
-    '#7E4C8D',
+    // '#000000', // black
+    // '#3670B2', // blue
+    // '#4E9E87',
+    // '#7E4C8D',
   ]
 
   private randomcolors = [

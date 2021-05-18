@@ -1,10 +1,10 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material'
-import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
 import { NsContent } from '../_services/widget-content.model'
 import { BtnGoalsDialogComponent } from './btn-goals-dialog/btn-goals-dialog.component'
 import { NsGoal } from './btn-goals.model'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '../../../../utils/src/public-api'
 
 const VALID_CONTENT_TYPES: NsContent.EContentTypes[] = [
   NsContent.EContentTypes.MODULE,

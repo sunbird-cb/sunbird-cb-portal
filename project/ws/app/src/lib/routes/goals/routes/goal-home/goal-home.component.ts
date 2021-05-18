@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
-import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsPage } from '@ws-widget/utils'
 import { Router } from '@angular/router'
-import { BtnGoalsService } from '@sunbird-cb/collection'
+import { BtnGoalsService } from '@ws-widget/collection'
 
 @Component({
   selector: 'ws-app-goal-home',
@@ -18,14 +18,13 @@ export class GoalHomeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    // private route: ActivatedRoute,
     private configSvc: ConfigurationsService,
     private goalsSvc: BtnGoalsService,
   ) {
     this.navBackground = this.configSvc.pageNavBar
-    this.userName =
-     (this.configSvc.userProfile) ?
-     `${this.configSvc.userProfile.firstName}  ${this.configSvc.userProfile.lastName}` : undefined
+    if (this.configSvc.userProfile) {
+      this.userName = (this.configSvc.userProfile.userName || '').split(' ')[0]
+    }
   }
 
   ngOnInit() {

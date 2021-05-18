@@ -3,8 +3,8 @@ import { Resolve } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
 import { HttpClient } from '@angular/common/http'
+import { IResolveResponse } from '@ws-widget/utils'
 import { NsTnc } from '../models/tnc.model'
-import { IResolveResponse } from '@sunbird-cb/utils'
 
 @Injectable()
 export class TncPublicResolverService implements Resolve<Observable<IResolveResponse<NsTnc.ITnc>> | IResolveResponse<NsTnc.ITnc>> {

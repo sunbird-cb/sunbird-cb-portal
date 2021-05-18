@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '../../../../../utils/src/public-api'
 
 @Component({
   selector: 'ws-widget-btn-twitter-share',
@@ -14,7 +14,7 @@ export class BtnTwitterShareComponent implements OnInit {
   @Input() message = ''
   isSocialMediaTwitterShareEnabled = false
   userId: string | undefined
-  constructor(private sanitizer: DomSanitizer, private configSvc: ConfigurationsService) { }
+  constructor(private sanitizer: DomSanitizer, private configSvc: ConfigurationsService) {}
 
   ngOnInit() {
     if (this.configSvc.restrictedFeatures) {

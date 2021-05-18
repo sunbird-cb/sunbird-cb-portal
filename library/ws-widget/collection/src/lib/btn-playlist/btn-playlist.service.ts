@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable, ReplaySubject, throwError } from 'rxjs'
 import { first, tap } from 'rxjs/operators'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@ws-widget/utils'
 // map, mergeMap,
 import { NsContent } from '../_services/widget-content.model'
 import { NsPlaylist } from './btn-playlist.model'
@@ -139,26 +139,27 @@ export class BtnPlaylistService {
     )
   }
 
-  // tslint: disable-next-line
   patchPlaylist(playlist: NsPlaylist.IPlaylist, newIDs?: string[]) {
-    const contentIds = playlist.result.content.children.map((content: { identifier: any }) => content.identifier)
-    // const contentIds: any[] = []
+    const contentIds = playlist.children.map((content: { identifier: any }) => {
+      const id = content.identifier
+      return id
+    })
     if (newIDs && newIDs.length > 0) {
       newIDs.forEach(content => {
         contentIds.push(content)
       })
     }
 
-    return this.http.patch(`${API_END_POINTS.updatePlaylists(playlist.result.content.identifier)}`, {
+    return this.http.patch(`${API_END_POINTS.updatePlaylists(playlist.identifier)}`, {
       contentIds,
       playlist_title: playlist.name,
-      versionKey: playlist.result.content.versionKey,
+      versionKey: playlist.versionKey,
     })
   }
 
   addPlaylistContent(playlist: any, contentIds: string[], updatePlaylists = true) {
     return this.addToPlaylist(
-      playlist.identifier,
+      playlist[0].identifier,
       {
         contentIds,
       },

@@ -3,8 +3,6 @@
 'circle-l' : size=== 'l',
 'circle-xl' : size=== 'xl',
 'circle-xxl' : size=== 'xxl',
-'circle-l-xs' : size=== 'l-xs',
-'circle-l-s' : size=== 'l-s',
 'circle-xl-s' : size=== 'xl-s',
 'circle-xxl-s': size=== 'xxl-s'}" [ngStyle]="{'background-color':  circleColor }">
   <img *ngIf="!showInitials" src="{{photoUrl}}" [alt]="photoUrl? '' :(name || initials || size || random)">

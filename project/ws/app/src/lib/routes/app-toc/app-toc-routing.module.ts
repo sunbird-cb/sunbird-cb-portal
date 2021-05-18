@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { PageResolve } from '@sunbird-cb/utils'
+import { PageResolve } from '@ws-widget/utils'
 import { GeneralGuard } from '../../../../../../../src/app/guards/general.guard'
 // import { AppTocCohortsComponent } from './components/app-toc-cohorts/app-toc-cohorts.component'
 import { AppTocDiscussionComponent } from './components/app-toc-discussion/app-toc-discussion.component'
@@ -49,6 +49,8 @@ const routes: Routes = [
       {
         path: 'overview',
         component: AppTocSinglePageRootComponent,
+        // pathMatch: 'full',
+        // redirectTo: 'single-page-view',
       },
       {
         path: 'discussion',
@@ -84,6 +86,9 @@ const routes: Routes = [
   {
     path: 'knowledge-artifact/:id',
     component: KnowledgeArtifactDetailsComponent,
+    resolve: {
+      content: AppTocResolverService,
+    },
   },
 ]
 

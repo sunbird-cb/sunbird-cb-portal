@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { NsDiscussionForum, DialogSocialDeletePostComponent } from '@sunbird-cb/collection'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { NsDiscussionForum, DialogSocialDeletePostComponent } from '@ws-widget/collection'
+import { ConfigurationsService } from '@ws-widget/utils'
 import { MatSnackBar, MatDialog } from '@angular/material'
 
 @Component({
@@ -20,7 +20,6 @@ export class QnaItemComponent implements OnInit {
     private snackBar: MatSnackBar,
     private configSvc: ConfigurationsService,
   ) {
-
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId || ''
     }

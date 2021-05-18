@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
 import { interval, Subscription } from 'rxjs'
-import { EventService } from '@sunbird-cb/utils'
+import { EventService } from '../../../../utils/src/public-api'
 import { ICarousel } from '../sliders/sliders.model'
 
 @Component({
@@ -72,7 +72,7 @@ export class SlidersMobComponent extends WidgetBaseComponent
       window.open(currentData.redirectUrl)
     }
   }
-  raiseTelemetry(bannerUrl: string | undefined) {
+  raiseTelemetry(bannerUrl: string) {
     this.openInNewTab()
     const path = window.location.pathname.replace('/', '')
     const url = path + window.location.search

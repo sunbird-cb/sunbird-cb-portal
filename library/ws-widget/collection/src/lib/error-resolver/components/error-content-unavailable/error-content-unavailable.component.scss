@@ -1,28 +1,21 @@
-@import '~@sunbird-cb/design-system/src/styles/ws-common';
-@import '~@sunbird-cb/design-system/src/styles/ws-vars';
-@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
-
+@import 'ws-vars';
 :host {
   display: flex;
   min-height: 100%;
   flex-direction: column;
   justify-content: center;
 }
-
 .error-message {
   font-size: 1.8em;
   line-height: 1.2;
 }
-
 .error-logo {
   width: 50%;
   text-align: center;
 }
-
 .error-support {
   width: 40%;
 }
-
 .support-message {
   font-size: 1.5em;
   line-height: 1.1;
@@ -44,24 +37,20 @@ li {
   .flex-direction {
     flex-direction: column;
   }
-
   .error-logo {
     width: 100%;
     height: 40%;
     text-align: center;
     margin-bottom: $size-l;
   }
-
   .error-message {
     text-align: center;
   }
-
   .error-support {
     width: 100%;
     height: 40%;
     // text-align: center;
   }
-
   .error-not-found {
     padding: $size-m;
   }

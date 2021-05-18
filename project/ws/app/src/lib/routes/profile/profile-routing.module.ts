@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { PageResolve } from '@sunbird-cb/utils'
+import { PageResolve } from '@ws-widget/utils'
 import { ProfileComponent } from './profile.component'
 import { LearningComponent } from './routes/analytics/routes/learning/learning.component'
 import { PlansComponent } from './routes/analytics/routes/plans/plans.component'
@@ -21,7 +21,6 @@ import { SettingsComponent } from './routes/settings/settings.component'
 // import { BadgeComponent } from '../gamification/routes/badges/components/badge/badge.component'
 import { BadgesComponent } from './routes/badges/badges.component'
 import { GeneralGuard } from '../../../../../../../src/app/guards/general.guard'
-import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = [
   {
@@ -38,7 +37,6 @@ const routes: Routes = [
     },
     resolve: {
       pageData: PageResolve,
-      profileData: ProfileResolverService,
     },
   },
   {
@@ -56,7 +54,6 @@ const routes: Routes = [
         component: BadgesComponent,
         resolve: {
           badges: BadgesResolver2,
-          profileData: ProfileResolverService,
         },
         canActivate: [GeneralGuard],
       },
@@ -65,7 +62,6 @@ const routes: Routes = [
         component: AchievementsComponent,
         resolve: {
           competencyData: CompetencyResolverService,
-          profileData: ProfileResolverService,
         },
       },
       {
@@ -79,7 +75,6 @@ const routes: Routes = [
     },
     resolve: {
       pageData: PageResolve,
-      profileData: ProfileResolverService,
     },
   },
   {
@@ -97,7 +92,6 @@ const routes: Routes = [
         resolve: {
           timeSpentData: LearningTimeResolver,
           pageData: PageResolve,
-          profileData: ProfileResolverService,
         },
         data: {
           pageType: 'feature',
@@ -115,7 +109,6 @@ const routes: Routes = [
         resolve: {
           learningHistory: LearningHistoryResolver,
           pageData: PageResolve,
-          profileData: ProfileResolverService,
         },
       },
     ],
@@ -132,7 +125,6 @@ const routes: Routes = [
     component: InterestComponent,
     resolve: {
       interests: InterestUserResolve,
-      profileData: ProfileResolverService,
     },
   },
   {
@@ -167,6 +159,5 @@ const routes: Routes = [
     ]),
   ],
   exports: [RouterModule],
-  providers: [ProfileResolverService],
 })
 export class ProfileRoutingModule { }

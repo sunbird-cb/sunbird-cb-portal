@@ -2,7 +2,7 @@
   <div class="main-container">
     <ng-container *ngIf="content?.children?.length; else noChildren">
       <div class="toc-section" role="contentinfo">
-        <h2 class="heading margin-remove">Contents </h2>
+        <h2 class="heading margin-remove">Content </h2>
         <a href="javascript:void(0)" role="button" class="expandButton"
           *ngIf="!contextPath || contextPath !== 'Collection'" (click)="expandAll = !expandAll" mat-button>
           <ng-container *ngIf="!expandAll" i18n>Expand All</ng-container>

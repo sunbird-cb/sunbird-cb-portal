@@ -1,16 +1,10 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import {
-  PipeFilterModule,
-  PipeHtmlTagRemovalModule,
-  PipeOrderByModule,
-  PipeRelativeTimeModule,
-  PipeFilterSearchModule,
-} from '@sunbird-cb/utils'
+import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule } from '@ws-widget/utils'
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatDividerModule } from '@angular/material/divider'
-import { WidgetResolverModule } from '@sunbird-cb/resolver'
+import { WidgetResolverModule } from '@ws-widget/resolver'
 import {
   MatIconModule,
   MatListModule,
@@ -25,9 +19,9 @@ import {
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
-import { AvatarPhotoModule, BtnPageBackModule } from '@sunbird-cb/collection'
+import { AvatarPhotoModule, BtnPageBackModule } from '@ws-widget/collection'
 import { EditorSharedModule } from '@ws/author/src/lib/routing/modules/editor/shared/shared.module'
-// import { CkEditorModule } from 'library/ws-widget/collection/src/lib/_common/ck-editor/ck-editor.module'
+import { CkEditorModule } from 'library/ws-widget/collection/src/lib/_common/ck-editor/ck-editor.module'
 import { LoaderService } from '@ws/author/src/lib/services/loader.service'
 import { InitResolveService } from './resolvers/init-resolve.service'
 import { RouterModule } from '@angular/router'
@@ -42,16 +36,13 @@ import { RecommendedResolveService } from './resolvers/recommended-resolve.servi
 import { NetworkMyConnectionComponent } from './routes/network-my-connection/network-my-connection.component'
 import { MyConnectionResolveService } from './resolvers/my-connection-resolve.service'
 import { MyConnectionCardComponent } from './components/my-connection-card/my-connection-card.component'
+import { PipeFilterSearchModule } from '@ws-widget/utils/src/lib/pipes/pipe-filter-search/pipe-filter-search.module'
 import { NetworkMyMdoComponent } from './routes/network-my-mdo/network-my-mdo.component'
 import { NetworkRecommendedComponent } from './routes/network-recommended/network-recommended.component'
 import { NetworkConnectionRequestsComponent } from './routes/network-connection-requests/network-connection-requests.component'
 import { ConnectionRequestResolveService } from './resolvers/connection-request-resolve.service'
 import { ConnectionSearchCardComponent } from './components/connection-search-card/connection-search-card.component'
 import { ConnectionRecommendedCardComponent } from './components/connection-recommended-card/connection-recommended-card.component'
-import { ConnectionHoverCardComponent } from './components/connection-hover-card/connection-hover-card.component'
-import { ConnectionHoverService } from './components/connection-name/connection-hover.servive'
-import { ConnectionNameComponent } from './components/connection-name/connection-name.component'
-import { TooltipDirective } from './directives/tooltip.directive'
 
 @NgModule({
   declarations: [
@@ -67,9 +58,6 @@ import { TooltipDirective } from './directives/tooltip.directive'
     NetworkConnectionRequestsComponent,
     ConnectionSearchCardComponent,
     ConnectionRecommendedCardComponent,
-    ConnectionHoverCardComponent,
-    ConnectionNameComponent,
-    TooltipDirective,
   ],
   imports: [
     CommonModule,
@@ -100,7 +88,7 @@ import { TooltipDirective } from './directives/tooltip.directive'
     PipeFilterSearchModule,
     AvatarPhotoModule,
     EditorSharedModule,
-    // CkEditorModule,
+    CkEditorModule,
     PipeOrderByModule,
     BtnPageBackModule,
     WidgetResolverModule,
@@ -111,7 +99,6 @@ import { TooltipDirective } from './directives/tooltip.directive'
     RecommendedResolveService,
     ConnectionRequestResolveService,
     MyConnectionResolveService,
-    ConnectionHoverService,
   ],
 })
 export class NetworkV2Module { }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
 
 @Component({
   selector: 'ws-app-profile-settings',

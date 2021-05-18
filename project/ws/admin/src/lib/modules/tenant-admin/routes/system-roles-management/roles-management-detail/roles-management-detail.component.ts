@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { MatDialog, MatSnackBar, MatTableDataSource } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
-import { NsAutoComplete } from '@sunbird-cb/collection'
+import { NsAutoComplete } from '@ws-widget/collection'
 import { IManageUser, IUserRoleDetail } from '../system-roles-management.model'
 import { SystemRolesManagementService } from '../system-roles-management.service'
 import { ConfirmActionComponent } from './components/confirm-action/confirm-action.component'

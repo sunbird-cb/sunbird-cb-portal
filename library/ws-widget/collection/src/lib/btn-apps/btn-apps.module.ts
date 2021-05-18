@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
 import { BtnAppsComponent } from './btn-apps.component'
 import { MatButtonModule, MatIconModule, MatMenuModule, MatRippleModule } from '@angular/material'
-import { WidgetResolverModule } from '@sunbird-cb/resolver'
+import { WidgetResolverModule } from '@ws-widget/resolver'
 
 @NgModule({
   declarations: [BtnAppsComponent],

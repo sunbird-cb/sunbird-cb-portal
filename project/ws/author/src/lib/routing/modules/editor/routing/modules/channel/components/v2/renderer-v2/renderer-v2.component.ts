@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core'
 import { MatDialog, MatSnackBar } from '@angular/material'
-import { responsiveSuffix, sizeSuffix } from '@sunbird-cb/collection'
+import { responsiveSuffix, sizeSuffix } from '@ws-widget/collection/src/public-api'
 import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
 import { Notify } from '@ws/author/src/lib/constants/notificationMessage'
 import { ConfirmDialogComponent } from '@ws/author/src/lib/modules/shared/components/confirm-dialog/confirm-dialog.component'

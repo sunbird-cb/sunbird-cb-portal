@@ -9,9 +9,9 @@ import {
   ISocialSearchResult,
   ISearchSocialSearchPartialRequest,
 } from '../../models/search.model'
-import { NsContent, NsError, ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection'
-import { ValueService } from '@sunbird-cb/utils'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { NsContent, NsError, ROOT_WIDGET_CONFIG } from '@ws-widget/collection'
+import { ValueService } from '@ws-widget/utils'
+import { NsWidgetResolver } from '@ws-widget/resolver'
 
 @Component({
   selector: 'ws-app-social',

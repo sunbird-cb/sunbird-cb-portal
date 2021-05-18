@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { IUserNotification } from '../../models/notifications.model'
-import { NsGoal, NsPlaylist, BtnGoalsService } from '@sunbird-cb/collection'
-import { TFetchStatus, NsPage, ConfigurationsService } from '@sunbird-cb/utils'
+import { NsGoal, NsPlaylist, BtnGoalsService } from '@ws-widget/collection'
+import { TFetchStatus, NsPage, ConfigurationsService } from '@ws-widget/utils'
 
 @Component({
   selector: 'ws-app-notification',

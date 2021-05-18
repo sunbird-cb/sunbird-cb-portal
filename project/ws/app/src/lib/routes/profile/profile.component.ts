@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
-import { ConfigurationsService, LogoutComponent, NsPage, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, LogoutComponent, NsPage, ValueService } from '@ws-widget/utils'
 import { Subscription } from 'rxjs'
 import { map } from 'rxjs/operators'
 
@@ -54,9 +54,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   tabUpdate(tab: string) {
     this.tabName = tab
     if (!this.screenSizeIsLtMedium) {
-      this.showText = true
-    } else {
-      this.showText = false
+      this.showText = !this.showText
     }
   }
   ngOnDestroy() {

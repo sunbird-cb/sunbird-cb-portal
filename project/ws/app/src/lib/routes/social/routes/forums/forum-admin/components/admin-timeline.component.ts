@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Observable } from 'rxjs'
-import { ConfigurationsService, TFetchStatus, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, TFetchStatus, ValueService } from '../../../../../../../../../../../library/ws-widget/utils/src/public-api'
 import { SocialForum } from '../../models/SocialForumposts.model'
 import { ForumHandlerService } from '../../service/EmitterService/forum-handler.service'
 import { ForumService } from '../../service/forum.service'
@@ -48,6 +48,9 @@ export class AdminTimelineComponent implements OnInit {
     private _eventEmiter: ForumHandlerService, private forumSvc: ForumService,
     private configSvc: ConfigurationsService, private valueSvc: ValueService) {
     this.isXSmall$ = this.valueSvc.isXSmall$
+    // if (this.configSvc.userProfile) {
+    //   this.moderatorTimelineRequest.userId = this.configSvc.userProfile.userId || ''
+    // }
     // console.log('Moderator timeline postcomop loaded')
     this._eventEmiter.sendFilterStatus(false)
     this._eventEmiter.sendStatusOfPredefinedFilter(false)

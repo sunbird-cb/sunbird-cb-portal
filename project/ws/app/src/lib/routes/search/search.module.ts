@@ -33,12 +33,12 @@ import {
   PipeContentRouteModule,
   BtnKbAnalyticsModule,
   UserAutocompleteModule,
-} from '@sunbird-cb/collection'
-import { WidgetResolverModule } from '@sunbird-cb/resolver'
+} from '@ws-widget/collection'
+import { WidgetResolverModule } from '@ws-widget/resolver'
 import {
   DefaultThumbnailModule,
   HorizontalScrollerModule, PipeDurationTransformModule, PipeLimitToModule, PipePartialContentModule,
-} from '@sunbird-cb/utils'
+} from '@ws-widget/utils/src/public-api'
 import { BlogsCardComponent } from './components/blogs-card/blogs-card.component'
 import { FilterDisplayComponent } from './components/filter-display/filter-display.component'
 import { ItemTileComponent } from './components/item-tile/item-tile.component'

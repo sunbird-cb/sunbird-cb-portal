@@ -23,12 +23,12 @@ import {
   MatMenuModule,
 } from '@angular/material'
 
-import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
+import { PipeSafeSanitizerModule } from '@ws-widget/utils'
 import {
   UserImageModule,
   DisplayContentTypeModule,
   BtnContentFeedbackV2Module,
-} from '@sunbird-cb/collection'
+} from '@ws-widget/collection'
 
 import { MyFeedbackRoutingModule } from './my-feedback-routing.module'
 import { HomeComponent } from './components/home/home.component'

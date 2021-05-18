@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 
-import { NsPlaylist } from '@sunbird-cb/collection'
+import { NsPlaylist } from '@ws-widget/collection'
 
 import { PlaylistHomeComponent } from './routes/playlist-home/playlist-home.component'
 import { PlaylistCreateComponent } from './routes/playlist-create/playlist-create.component'
@@ -10,8 +10,7 @@ import { PlaylistDetailComponent } from './routes/playlist-detail/playlist-detai
 import { PlaylistResolve } from './resolvers/playlist.resolve'
 import { PlaylistEditComponent } from './routes/playlist-edit/playlist-edit.component'
 import { PlaylistNotificationComponent } from './routes/playlist-notification/playlist-notification.component'
-import { PageResolve } from '@sunbird-cb/utils'
-// import { ProfileResolverService } from './resolvers/profile-resolver.service'
+import { PageResolve } from '@ws-widget/utils'
 
 const routes: Routes = [
   {
@@ -30,7 +29,6 @@ const routes: Routes = [
     resolve: {
       pageData: PageResolve,
       playlists: PlaylistsResolve,
-      // profileData: ProfileResolverService,
     },
     runGuardsAndResolvers: 'paramsChange',
   },
@@ -40,7 +38,6 @@ const routes: Routes = [
     data: { type: NsPlaylist.EPlaylistTypes.ME },
     resolve: {
       playlist: PlaylistResolve,
-      // profileData: ProfileResolverService,
     },
   },
   {
@@ -49,7 +46,6 @@ const routes: Routes = [
     data: { type: NsPlaylist.EPlaylistTypes.ME },
     resolve: {
       playlist: PlaylistResolve,
-      // profileData: ProfileResolverService,
     },
   },
   {
@@ -63,7 +59,6 @@ const routes: Routes = [
     resolve: {
       pageData: PageResolve,
       playlists: PlaylistsResolve,
-      // profileData: ProfileResolverService,
     },
     runGuardsAndResolvers: 'paramsChange',
   },
@@ -73,7 +68,6 @@ const routes: Routes = [
     data: { type: NsPlaylist.EPlaylistTypes.SHARED },
     resolve: {
       playlist: PlaylistResolve,
-      // profileData: ProfileResolverService,
     },
   },
   {
@@ -82,7 +76,6 @@ const routes: Routes = [
     data: { type: NsPlaylist.EPlaylistTypes.SHARED },
     resolve: {
       playlist: PlaylistResolve,
-      // profileData: ProfileResolverService,
     },
   },
   {
@@ -95,7 +88,6 @@ const routes: Routes = [
     data: { type: NsPlaylist.EPlaylistTypes.PENDING },
     resolve: {
       playlists: PlaylistsResolve,
-      // profileData: ProfileResolverService,
     },
     runGuardsAndResolvers: 'paramsChange',
   },

@@ -1,5 +1,5 @@
 import { ErrorHandler, Injectable } from '@angular/core'
-import { LoggerService } from '@sunbird-cb/utils'
+import { LoggerService } from '../../../../../../library/ws-widget/utils/src/public-api'
 import { LoaderService } from './loader.service'
 
 @Injectable()

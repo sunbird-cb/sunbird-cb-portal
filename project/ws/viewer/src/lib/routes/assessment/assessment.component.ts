@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-// import { WidgetContentService } from '@sunbird-cb/collection';
+// import { WidgetContentService } from '@ws-widget/collection/src/public-api';
 import { ViewerUtilService } from '../../viewer-util.service'
-// import { EventService, ConfigurationsService } from '@sunbird-cb/utils';
+// import { EventService, ConfigurationsService } from '@ws-widget/utils/src/public-api';
 import { AccessControlService } from '@ws/author/src/public-api'
 import { Subscription } from 'rxjs'
-import { EventService } from '@sunbird-cb/utils'
+import { EventService } from '@ws-widget/utils/src/public-api'
 
 @Component({
     selector: 'viewer-assessment',

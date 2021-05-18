@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, EventEmitter, Output } from '@angular/core'
-import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
+import { ConfigurationsService, TFetchStatus } from '@ws-widget/utils/src/public-api'
 import { MyContentService } from '../../../../../../../author/src/lib/routing/modules/my-content/services/my-content.service'
 import { ISearchResult, ISearchContent } from '../../../../../../../author/src/lib/interface/search'
 import { Subscription } from 'rxjs'
@@ -42,16 +42,14 @@ export class ContentAuthoredComponent implements OnInit, OnDestroy {
   ) {
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
+      this.defaultThumbnail = instanceConfig.logos.defaultContent
     }
   }
 
   ngOnInit() {
-
     if (this.configSvc.userProfile) {
-      this.userWid = this.configSvc.userProfile.userId || ''
+      this.userWid = this.configSvc.userProfile.userId
     }
-
     if (this.wid) {
       this.fetchContentAuthored()
     }

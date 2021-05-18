@@ -4,12 +4,12 @@ import { MatSnackBar } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
 import {
   ContentAssignService,
-} from '@sunbird-cb/collection'
+} from '../../../../../../../../../library/ws-widget/collection/src/public-api'
 import {
   ConfigurationsService,
   NsPage,
   TFetchStatus,
-} from '@sunbird-cb/utils'
+} from '../../../../../../../../../library/ws-widget/utils/src/public-api'
 
 @Component({
   selector: 'ws-app-assignment-details',

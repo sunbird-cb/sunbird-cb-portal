@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
+import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
-import { ConnectionHoverService } from '../../components/connection-name/connection-hover.servive'
 
 @Component({
   selector: 'ws-app-network-my-connection',
@@ -12,24 +12,21 @@ import { ConnectionHoverService } from '../../components/connection-name/connect
   /* tslint:enable */
 })
 export class NetworkMyConnectionComponent implements OnInit {
+  data!: NSNetworkDataV2.INetworkUser[]
   queryControl = new FormControl('')
   currentFilter = 'timestamp'
   currentFilterSort = 'desc'
   enableSearchFeature = false
-  datalist: any[] = []
-  data: any[] = []
   constructor(
     private route: ActivatedRoute,
-    private connectionHoverService: ConnectionHoverService,
   ) {
     // this.data = this.route.snapshot.data.myConnectionList.data.result.data
-    // this.data = this.route.snapshot.data.myConnectionList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
-    //   if (v && v.personalDetails && v.personalDetails.firstname) {
-    //     v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
-    //   }
-    //   return v
-    // })
-    this.datalist = this.route.snapshot.data.myConnectionList.data.result.data
+    this.data = this.route.snapshot.data.myConnectionList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
+      if (v && v.personalDetails && v.personalDetails.firstname) {
+        v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
+      }
+      return v
+    })
   }
 
   ngOnInit() {
@@ -38,22 +35,6 @@ export class NetworkMyConnectionComponent implements OnInit {
         this.enableSearchFeature = false
       } else {
         this.enableSearchFeature = true
-      }
-    })
-
-    if (this.datalist && this.datalist.length > 0) {
-      this.filter('timestamp', 'desc')
-      this.getFullUserData()
-    }
-  }
-
-  getFullUserData() {
-    this.datalist.forEach((usr: any) => {
-      const userrId = usr.identifier || usr.id
-      if (userrId) {
-        this.connectionHoverService.fetchProfile(userrId).subscribe((res: any) => {
-          this.data.push(res)
-        })
       }
     })
   }

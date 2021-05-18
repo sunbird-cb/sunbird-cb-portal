@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { PipeFilterModule, PipeFilterV2Module, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule } from '@sunbird-cb/utils'
+import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule } from '@ws-widget/utils'
 import { CompetenceComponent } from './routes/competence-home/competence.component'
 import { CompetencieRoutingModule } from './competence.rounting.module'
 import { CompetenceCardComponent } from './components/competencies-card/competencies-card.component'
@@ -11,7 +11,7 @@ import { RightMenuComponent } from './components/right-menu/right-menu.component
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatDividerModule } from '@angular/material/divider'
-import { WidgetResolverModule } from '@sunbird-cb/resolver'
+import { WidgetResolverModule } from '@ws-widget/resolver'
 import {
   MatIconModule,
   MatListModule,
@@ -26,11 +26,12 @@ import {
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
-/*CkEditorModule, CKEditorService,*/
-import {  AvatarPhotoModule, BtnPageBackModule } from '@sunbird-cb/collection'
+import { AvatarPhotoModule, BtnPageBackModule } from '@ws-widget/collection'
 import { EditorSharedModule } from '@ws/author/src/lib/routing/modules/editor/shared/shared.module'
+import { CkEditorModule } from 'library/ws-widget/collection/src/lib/_common/ck-editor/ck-editor.module'
 import { LoaderService } from '@ws/author/src/lib/services/loader.service'
 import { InitResolver } from './resolvers/init-resolve.service'
+import { CKEditorService } from 'library/ws-widget/collection/src/lib/_common/ck-editor/ck-editor.service'
 import { CompetenceAllComponent } from './routes/competence-all/competence-all.component'
 
 @NgModule({
@@ -68,15 +69,14 @@ import { CompetenceAllComponent } from './routes/competence-all/competence-all.c
     PipeRelativeTimeModule,
     AvatarPhotoModule,
     EditorSharedModule,
-    PipeFilterV2Module,
-    // CkEditorModule,
+    CkEditorModule,
     PipeOrderByModule,
     BtnPageBackModule,
     WidgetResolverModule,
   ],
   entryComponents: [CompetenceViewComponent],
   providers: [
-    // CKEditorService,
+    CKEditorService,
     LoaderService,
     InitResolver,
   ],

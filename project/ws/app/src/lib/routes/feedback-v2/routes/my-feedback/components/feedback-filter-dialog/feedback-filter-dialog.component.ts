@@ -6,7 +6,7 @@ import {
   NsContent,
   IFeedbackFilterDialogData,
   EFeedbackRole,
-} from '@sunbird-cb/collection'
+} from '@ws-widget/collection'
 import { FormGroup, FormControl } from '@angular/forms'
 import { Subscription } from 'rxjs'
 

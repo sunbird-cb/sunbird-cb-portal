@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
-import { NsGoal, BtnGoalsService } from '@sunbird-cb/collection'
+import { NsGoal, BtnGoalsService } from '@ws-widget/collection'
 import { ActivatedRoute } from '@angular/router'
-import { TFetchStatus, EventService } from '@sunbird-cb/utils'
+import { TFetchStatus, EventService } from '@ws-widget/utils'
 @Component({
   selector: 'ws-app-goal-create-common',
   templateUrl: './goal-create-common.component.html',

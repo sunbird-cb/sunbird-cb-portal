@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
 import { BtnPageBackNavService } from './btn-page-back-nav.service'
 type TUrl = undefined | 'none' | 'back' | string
 @Component({
@@ -10,7 +10,7 @@ type TUrl = undefined | 'none' | 'back' | string
 })
 export class BtnPageBackNavComponent extends WidgetBaseComponent
   implements OnInit, NsWidgetResolver.IWidgetData<{ url: TUrl }> {
-  @Input() widgetData: { url: TUrl, titles?: NsWidgetResolver.ITitle[], queryParams?: any } = { url: 'none', titles: [] }
+  @Input() widgetData: { url: TUrl, titles?: NsWidgetResolver.ITitle[], queryParams?: any } = { url: 'none', titles: [], queryParams: {} }
   presentUrl = ''
   constructor(
     private btnBackSvc: BtnPageBackNavService,

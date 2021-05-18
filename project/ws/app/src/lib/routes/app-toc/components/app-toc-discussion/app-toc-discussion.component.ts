@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core'
-import { NsDiscussionForum, NsContent } from '@sunbird-cb/collection'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { NsDiscussionForum, NsContent } from '@ws-widget/collection'
+import { NsWidgetResolver } from '@ws-widget/resolver'
 import { ActivatedRoute } from '../../../../../../../../../node_modules/@angular/router'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '../../../../../../../../../library/ws-widget/utils/src/public-api'
 
 @Component({
   selector: 'ws-app-toc-discussion',

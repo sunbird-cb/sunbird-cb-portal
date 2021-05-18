@@ -5,8 +5,8 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core'
-import { NsGoal, BtnGoalsService, NsAutoComplete } from '@sunbird-cb/collection'
-import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
+import { NsGoal, BtnGoalsService, NsAutoComplete } from '@ws-widget/collection'
+import { TFetchStatus, ConfigurationsService } from '@ws-widget/utils'
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material'
 
 @Component({

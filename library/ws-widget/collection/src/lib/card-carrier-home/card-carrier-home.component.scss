@@ -1,6 +1,6 @@
-@import '~@sunbird-cb/design-system/src/styles/ws-common';
-@import '~@sunbird-cb/design-system/src/styles/ws-vars';
-@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
 
 .carrier-card {
   $card-padding: $size-m;
@@ -157,6 +157,9 @@
     margin-top: $size-s;
   }
 
+  // @include breakpoint-s {
+  //   margin-top: $size-s;
+  // }
 }
 
 .tag {
@@ -182,6 +185,12 @@
     flex-direction: column;
     margin: 0 24px 0 24px;
   }
+
+  // @include breakpoint-s {
+  //   flex-direction: column;
+  //   margin: 0 24px 0 24px;
+
+  // }
 }
 
 .margin-0 {
@@ -204,7 +213,6 @@
     height: 116px;
     overflow-y: hidden;
   }
-
   .mat-card-sub-title {
     flex-shrink: 0;
     flex-grow: 2;
@@ -214,11 +222,9 @@
 .mat-card-content {
   flex-grow: 5;
   overflow: auto;
-  height: 58px;
-  max-height: 58px;
+  height: 50px;
   overflow-y: hidden;
 }
-
 .mat-card-footer {
   padding-bottom: 22px;
 }

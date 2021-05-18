@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { NSSearch } from '@sunbird-cb/collection'
+import { NsWidgetResolver } from '@ws-widget/resolver'
+import { NSSearch } from '@ws-widget/collection'
 
 @Component({
   selector: 'ws-conversations',

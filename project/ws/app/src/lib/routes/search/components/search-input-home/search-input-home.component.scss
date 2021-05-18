@@ -8,15 +8,12 @@ ws-app-search-input-home .autocomplete-form {
   display: block;
   margin: auto;
 }
-::ng-deep .mat-form-field-placeholder{
 
-  color:red;
-}
 .search-home {
   // background: #00A9F4 0% 0% no-repeat padding-box;
   // background: #00A9F4 0% 0% no-repeat padding-box;
   border-radius: 0px 4px 4px 0px;
-  padding: $size-s 0 $size-s $size-xs;
+  padding: $size-s $size-s;
 }
 
 ws-app-search-input-home input {

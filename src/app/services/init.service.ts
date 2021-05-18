@@ -4,13 +4,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Inject, Injectable } from '@angular/core'
 import { MatIconRegistry } from '@angular/material'
 import { DomSanitizer } from '@angular/platform-browser'
-import { BtnSettingsService } from '@sunbird-cb/collection'
+import { BtnSettingsService } from '@ws-widget/collection'
 import {
   hasPermissions,
   hasUnitPermission,
   NsWidgetResolver,
   WidgetResolverService,
-} from '@sunbird-cb/resolver'
+} from '@ws-widget/resolver'
 import {
   AuthKeycloakService,
   ConfigurationsService,
@@ -19,7 +19,7 @@ import {
   NsInstanceConfig,
   NsUser,
   UserPreferenceService,
-} from '@sunbird-cb/utils'
+} from '@ws-widget/utils'
 import { environment } from '../../environments/environment'
 /* tslint:disable */
 import _ from 'lodash'
@@ -30,20 +30,16 @@ interface IDetailsResponse {
   roles: string[]
   group: string[]
   profileDetailsStatus: boolean
-  isActive: boolean
 }
 
 interface IFeaturePermissionConfigs {
   [id: string]: Omit<NsWidgetResolver.IPermissions, 'feature'>
 }
 
-const PROXY_CREATE_V8 = '/apis/proxies/v8'
-
 const endpoint = {
   profilePid: '/apis/proxies/v8/api/user/v2/read',
   profileV2: '/apis/protected/v8/user/profileRegistry/getUserRegistryById',
   details: `/apis/protected/v8/user/details?ts=${Date.now()}`,
-  CREATE_USER_API: `${PROXY_CREATE_V8}/discussion/user/v1/create`,
 }
 
 @Injectable({
@@ -141,7 +137,6 @@ export class InitService {
       //   this.configSvc.profileSettings = this.configSvc.userPreference.profileSettings
       // }
       await this.fetchUserProfileV2()
-      await this.createUserInNodebb()
       const appsConfigPromise = this.fetchAppsConfig()
       const instanceConfigPromise = this.fetchInstanceConfig() // config: depends only on details
       const widgetStatusPromise = this.fetchWidgetStatus() // widget: depends only on details & feature
@@ -258,7 +253,7 @@ export class InitService {
           .get<NsUser.IUserPidProfileV2>(endpoint.profilePid)
           .toPromise()
       } catch (e) {
-        // this.configSvc.userProfile = null
+        this.configSvc.userProfile = null
         throw new Error('Invalid user')
       }
       if (userPidProfile) {
@@ -276,10 +271,9 @@ export class InitService {
           firstName: userPidProfile.result.response.firstName,
           lastName: userPidProfile.result.response.lastName,
           rootOrgId: userPidProfile.result.response.rootOrgId,
-          rootOrgName: userPidProfile.result.response.channel,
+          rootOrgName: userPidProfile.result.response.rootOrgName,
           // tslint:disable-next-line: max-line-length
-          // userName: `${userPidProfile.result.response.firstName ? userPidProfile.result.response.firstName : ' '}${userPidProfile.result.response.lastName ? userPidProfile.result.response.lastName : ' '}`,
-          userName: userPidProfile.result.response.userName,
+          userName: `${userPidProfile.result.response.firstName ? userPidProfile.result.response.firstName : ' '}${userPidProfile.result.response.lastName ? userPidProfile.result.response.lastName : ' '}`,
           profileImage: userPidProfile.result.response.thumbnail,
           dealerCode: null,
           isManager: false,
@@ -302,24 +296,18 @@ export class InitService {
           // userName: `${userPidProfile.user.first_name} ${userPidProfile.user.last_name}`,
         }
       }
-      const details = { group: [],
-        profileDetailsStatus: true,
-        roles: (userRoles || []).map(v => v.toLowerCase()),
-        tncStatus: true,
-        isActive: true,
-      }
+      const details = { group: [], profileDetailsStatus: true, roles: (userRoles || []).map(v => v.toLowerCase()), tncStatus: true }
       this.configSvc.hasAcceptedTnc = details.tncStatus
       this.configSvc.profileDetailsStatus = details.profileDetailsStatus
       // this.configSvc.userRoles = new Set((userRoles || []).map(v => v.toLowerCase()))
       const detailsV: IDetailsResponse = await this.http
-      .get<IDetailsResponse>(endpoint.details).pipe(retry(3))
-      .toPromise()
+        .get<IDetailsResponse>(endpoint.details).pipe(retry(3))
+        .toPromise()
       this.configSvc.userGroups = new Set(detailsV.group)
       this.configSvc.userRoles = new Set((detailsV.roles || []).map(v => v.toLowerCase()))
-      this.configSvc.isActive = detailsV.isActive
       return details
     } else {
-      return { group: [], profileDetailsStatus: true, roles: userRoles, tncStatus: true, isActive: true }
+      return { group: [], profileDetailsStatus: true, roles: userRoles, tncStatus: true }
       // const details: IDetailsResponse = await this.http
       //   .get<IDetailsResponse>(endpoint.details).pipe(retry(3))
       //   .toPromise()
@@ -339,11 +327,11 @@ export class InitService {
           .get<NsUser.IUserPidProfileVer2>(endpoint.profileV2)
           .toPromise()
       } catch (e) {
-        // this.configSvc.userProfileV2 = null
+        this.configSvc.userProfileV2 = null
         throw new Error('Invalid user')
       }
       if (userPidProfileV2) {
-        const userData: any = _.first(_.get(userPidProfileV2, 'result.UserProfile'))
+        const userData: any = _.first(userPidProfileV2.result.UserProfile)
         this.configSvc.userProfileV2 = {
           userId: userData.userId,
           firstName: userData.personalDetails.firstname,
@@ -390,34 +378,6 @@ export class InitService {
     this.configSvc.activeOrg = publicConfig.org[0]
     this.updateAppIndexMeta()
     return publicConfig
-  }
-
-  private async createUserInNodebb(): Promise<any> {
-    const req = {
-      request: {
-        username: (this.configSvc.userProfile && this.configSvc.userProfile.userName) || '',
-        identifier: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
-        fullname: this.configSvc.userProfile ? `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}` : '',
-      },
-    }
-    let createUserRes: null
-
-    try {
-      createUserRes = await this.http
-        .post<any>(endpoint.CREATE_USER_API, req)
-        .toPromise()
-    } catch (e) {
-      this.configSvc.nodebbUserProfile = null
-      throw new Error('Invalid user')
-    }
-
-    const nodebbUserData: any = _.get(createUserRes, 'result')
-    if (createUserRes) {
-      this.configSvc.nodebbUserProfile = {
-        username: nodebbUserData.userName,
-        email: 'null',
-      }
-    }
   }
 
   private async fetchFeaturesStatus(): Promise<Set<string>> {

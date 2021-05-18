@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter, OnChanges } from '@angular/core'
-import { NsPlaylist } from '@sunbird-cb/collection'
+import { NsPlaylist } from '@ws-widget/collection'
 import { Subscription } from 'rxjs'
-import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
+import { ConfigurationsService, TFetchStatus } from '@ws-widget/utils/src/public-api'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { PersonProfileService } from '../../services/person-profile.service'
 
@@ -33,7 +33,7 @@ export class UserPlaylistComponent implements OnInit, OnChanges {
   ngOnInit() {
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
+      this.defaultThumbnail = instanceConfig.logos.defaultContent
     }
     if (this.wid) { this.fetchPlaylists() }
   }

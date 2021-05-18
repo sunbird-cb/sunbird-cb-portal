@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
 import { IWidgetCardBreadcrumb, IBreadcrumbPath } from './card-breadcrumb.model'
-import { EventService } from '@sunbird-cb/utils'
+import { EventService } from '@ws-widget/utils'
 
 @Component({
   selector: 'ws-widget-card-breadcrumb',

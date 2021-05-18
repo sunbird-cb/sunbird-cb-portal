@@ -1,6 +1,5 @@
-@import '~@sunbird-cb/design-system/src/styles/ws-common';
-@import '~@sunbird-cb/design-system/src/styles/ws-vars';
-@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
+@import 'ws-mixins';
+@import 'ws-vars';
 
 .user-image {
   $icon-size: 36px;
@@ -17,15 +16,12 @@
   display: flex;
   margin-left: 30px;
 }
-
 .mat-expansion-panel-header-title {
   margin-left: 5px;
 }
-
 mat-expansion-panel-header {
   padding: 0;
 }
-
 .activity-button {
   border-radius: 2px !important;
   background-color: #05a7c9 !important;

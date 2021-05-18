@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Router, Event, NavigationEnd, NavigationError, ActivatedRoute } from '@angular/router'
-import { ValueService } from '@sunbird-cb/utils'
+import { ValueService } from '@ws-widget/utils/src/public-api'
 import { map } from 'rxjs/operators'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { NsWidgetResolver } from 'library/ws-widget/resolver/src/public-api'
 /* tslint:disable */
 import _ from 'lodash'
 /* tslint:enable */

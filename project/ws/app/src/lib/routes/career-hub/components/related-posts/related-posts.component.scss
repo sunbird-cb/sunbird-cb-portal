@@ -2,13 +2,15 @@
 @import 'ws-vars';
 @import 'ws-mixins';
 
-.discussCard {
+.tag {
   display: flex;
+  min-width: 276px;
+  // height: 32px;
   border-radius: 4px;
-  margin: 16px 0;
-  height: auto;
-  padding: 0 !important;
-  text-transform: none !important;
+  // justify-content: space-between;
+  margin: $size-m 0;
+  // background-color: red;
+  // align-items: center;
 
   @include breakpoint-xs {
     width: auto;
@@ -42,8 +44,4 @@
 
 .time {
   color: rgba(0, 0, 0, .4);
-}
-
-.mat-card-subtitle {
-  max-width: 22em;
 }

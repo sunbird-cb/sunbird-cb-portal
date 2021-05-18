@@ -5,9 +5,10 @@ import { Subscription, Observable } from 'rxjs'
 import { startWith, map, debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { MatSnackBar, MatChipInputEvent, DateAdapter, MAT_DATE_FORMATS, MatDialog } from '@angular/material'
 import { AppDateAdapter, APP_DATE_FORMATS, changeformat } from '../../services/format-datepicker'
-import { ImageCropComponent, ConfigurationsService } from '@sunbird-cb/utils'
+import { ImageCropComponent } from '@ws-widget/utils/src/public-api'
 import { IMAGE_MAX_SIZE, IMAGE_SUPPORT_TYPES } from '@ws/author/src/lib/constants/upload'
 import { UserProfileService } from '../../services/user-profile.service'
+import { ConfigurationsService } from '../../../../../../../../../library/ws-widget/utils/src/public-api'
 import { Router, ActivatedRoute } from '@angular/router'
 import {
   INationality,
@@ -25,9 +26,6 @@ import { NotificationComponent } from '@ws/author/src/lib/modules/shared/compone
 import { Notify } from '@ws/author/src/lib/constants/notificationMessage'
 import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
 import { LoaderService } from '@ws/author/src/public-api'
-/* tslint:disable */
-import _ from 'lodash'
-/* tslint:enable */
 
 export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -73,7 +71,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   eMaritalStatus = NsUserProfileDetails.EMaritalStatus
   eCategory = NsUserProfileDetails.ECategory
   userProfileFields!: NsUserProfileDetails.IUserProfileFields
-  inReview = 'In Review!'
   imageTypes = IMAGE_SUPPORT_TYPES
   today = new Date()
   phoneNumberPattern = '^((\\+91-?)|0)?[0-9]{10}$'
@@ -102,9 +99,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   photoUrl!: string | ArrayBuffer | null
   isForcedUpdate = false
   userProfileData!: any
-  allDept: any = []
-  approvalConfig!: NsUserProfileDetails.IApprovals
-  unApprovedField!: any[]
+
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -116,9 +111,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private loader: LoaderService,
   ) {
-    this.approvalConfig = this.route.snapshot.data.pageData.data
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
-    this.fetchPendingFields()
     this.createUserForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       middlename: new FormControl('', [Validators.pattern(this.namePatern)]),
@@ -177,13 +170,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
     //   console.log('ngOnInit - value', value);
     // })
-    const approvalData = _.compact(_.map(this.approvalConfig, (v, k) => {
-      return v.approvalRequired ? { [k]: v } : null
-    }))
-
-    if (approvalData.length > 0) {
-      // need to call search API
-    }
     this.getUserDetails()
     this.fetchMeta()
     this.assignPrimaryEmailType(this.isOfficialEmail)
@@ -221,12 +207,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       },
       (_err: any) => {
       })
-      this.userProfileSvc.getAllDepartments().subscribe(
-        (data: any) => {
-          this.allDept = data
-        },
-        (_err: any) => {
-        })
   }
   createDegree(): FormGroup {
     return this.fb.group({
@@ -236,18 +216,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     })
   }
 
-  fetchPendingFields() {
-    this.userProfileSvc.listApprovalPendingFields().subscribe(res => {
-      if (res && res.result && res.result.data) {
-        this.unApprovedField = _.get(res, 'result.data')
-      }
-    })
-  }
-  isAllowed(name: string) {
-    if (name && !!this.unApprovedField && this.unApprovedField.length > 0) {
-      return !!!(this.unApprovedField.indexOf(name) >= 0)
-    } return true
-  }
   createDegreeWithValues(degree: any): FormGroup {
     return this.fb.group({
       degree: new FormControl(degree.degree, []),
@@ -303,7 +271,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           debounceTime(500),
           distinctUntilChanged(),
           startWith(''),
-          map(value => typeof value === 'string' ? value : (value && value.name ? value.name : '')),
+          map(value => typeof value === 'string' ? value : value.name),
           map(name => name ? this.filterNationality(name) : this.masterNationalities.slice())
         )
       const newLocal = 'nationality'
@@ -323,7 +291,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         debounceTime(500),
         distinctUntilChanged(),
         startWith(''),
-        map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+        map(value => typeof value === 'string' ? value : value.name),
         map(name => name ? this.filterLanguage(name) : this.masterLanguagesEntries.slice())
       )
   }
@@ -487,6 +455,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   getUserDetails() {
     if (this.configSvc.profileDetailsStatus) {
+      if (this.configSvc.userProfile) {
         this.userProfileSvc.getUserdetailsFromRegistry().subscribe(
           (data: any) => {
             const userData = data.result.UserProfile
@@ -497,6 +466,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               const organisations = this.populateOrganisationDetails(userData[0])
               this.constructFormFromRegistry(userData[0], academics, organisations)
               this.populateChips(userData[0])
+              // this.userProfileData = data[0]
               this.userProfileData = userData[0]
             } else {
               if (this.configSvc.userProfile) {
@@ -504,14 +474,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
                   firstname: this.configSvc.userProfile.firstName,
                   surname: this.configSvc.userProfile.lastName,
                   primaryEmail: this.configSvc.userProfile.email,
-                  orgName: this.configSvc.userProfile.rootOrgName,
+                  // departmentName: data[0].department_name,
                 })
               }
+
             }
             // this.handleFormData(data[0])
           },
           (_err: any) => {
           })
+      }
     } else {
       if (this.configSvc.userProfile) {
         this.userProfileSvc.getUserdetails(this.configSvc.userProfile.email).subscribe(
@@ -521,7 +493,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
                 firstname: data[0].first_name,
                 surname: data[0].last_name,
                 primaryEmail: data[0].email,
-                orgName: data[0].department_name,
+                departmentName: data[0].department_name,
               })
             }
           },
@@ -621,14 +593,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         }
       })
     }
-    if (data.interests && data.interests.professional && data.interests.professional.length) {
+    if (data.interests.professional && data.interests.professional.length) {
       data.interests.professional.map((interest: IChipItems) => {
         if (interest) {
           this.personalInterests.push(interest)
         }
       })
     }
-    if (data.interests && data.interests.hobbies && data.interests.hobbies.length) {
+    if (data.interests.hobbies && data.interests.hobbies.length) {
       data.interests.hobbies.map((interest: IChipItems) => {
         if (interest) {
           this.selectedHobbies.push(interest)
@@ -651,6 +623,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   private constructFormFromRegistry(data: any, academics: NsUserProfileDetails.IAcademics, organisation: any) {
     /* tslint:disable */
+
+    console.log('------------- data --------------', data)
     this.createUserForm.patchValue({
       firstname: data.personalDetails.firstname,
       middlename: data.personalDetails.middlename,
@@ -665,8 +639,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       knownLanguages: data.personalDetails.knownLanguages,
       countryCode: data.personalDetails.countryCode,
       mobile: data.personalDetails.mobile,
-      telephone: this.checkvalue(data.personalDetails.telephone),
-      primaryEmail: data.personalDetails.primaryEmail || '',
+      telephone: data.personalDetails.telephone,
+      primaryEmail: data.personalDetails.primaryEmail,
       secondaryEmail: data.personalDetails.personalEmail,
       primaryEmailType: this.filterPrimaryEmailType(data),
       residenceAddress: data.personalDetails.postalAddress,
@@ -676,7 +650,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       schoolName12: academics.XII_STANDARD.schoolName12,
       yop12: academics.XII_STANDARD.yop12,
       isGovtOrg: organisation.isGovtOrg,
-      // orgName: organisation.orgName,
+      orgName: organisation.orgName,
       industry: organisation.industry,
       designation: organisation.designation,
       location: organisation.location,
@@ -685,18 +659,17 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       orgNameOther: organisation.orgNameOther,
       industryOther: organisation.industryOther,
       designationOther: organisation.designationOther,
-      orgName: _.get(data, 'employmentDetails.departmentName') || '',
-      service: _.get(data, 'employmentDetails.service') || '',
-      cadre: _.get(data, 'employmentDetails.cadre') || '',
-      allotmentYear: this.checkvalue(_.get(data, 'employmentDetails.allotmentYearOfService') || ''),
-      otherDetailsDoj: this.getDateFromText(_.get(data, 'employmentDetails.dojOfService') || ''),
-      payType: _.get(data, 'employmentDetails.payType') || '',
-      civilListNo: _.get(data, 'employmentDetails.civilListNo') || '',
-      employeeCode: this.checkvalue(_.get(data, 'employmentDetails.employeeCode') || ''),
-      otherDetailsOfficeAddress: this.checkvalue(_.get(data, 'employmentDetails.officialPostalAddress') || ''),
-      otherDetailsOfficePinCode: this.checkvalue(_.get(data, 'employmentDetails.pinCode') || ''),
-      skillAquiredDesc: _.get(data, 'skills.additionalSkills') || '',
-      certificationDesc: _.get(data, 'skills.certificateDetails') || '',
+      service: data.employmentDetails.service,
+      cadre: data.employmentDetails.cadre,
+      allotmentYear: data.employmentDetails.allotmentYearOfService,
+      otherDetailsDoj: this.getDateFromText(data.employmentDetails.dojOfService),
+      payType: data.employmentDetails.payType,
+      civilListNo: data.employmentDetails.civilListNo,
+      employeeCode: data.employmentDetails.employeeCode,
+      otherDetailsOfficeAddress: data.employmentDetails.officialPostalAddress,
+      otherDetailsOfficePinCode: data.employmentDetails.pinCode,
+      skillAquiredDesc: data.skills.additionalSkills,
+      certificationDesc: data.skills.certificateDetails,
     },
       {
         emitEvent: true,
@@ -706,15 +679,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.cd.markForCheck()
     this.setDropDownOther(organisation)
     this.setProfilePhotoValue(data)
-  }
-
-  checkvalue(value: any) {
-    if (value && value === 'undefined') {
-        // tslint:disable-next-line:no-parameter-reassignment
-        value = ''
-    } else {
-      return value
-    }
   }
 
   setProfilePhotoValue(data: any) {
@@ -747,10 +711,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   private constructReq(form: any) {
-    const userid = this.userProfileData.userId || this.userProfileData.id
     const profileReq = {
-      id: userid,
-      userId: userid,
       photo: form.value.photo,
       personalDetails: {
         firstname: form.value.firstname,
@@ -783,7 +744,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         employeeCode: form.value.employeeCode,
         officialPostalAddress: form.value.otherDetailsOfficeAddress,
         pinCode: form.value.otherDetailsOfficePinCode,
-        departmentName: form.value.orgName || form.value.orgNameOther || '',
+        departmentName: form.value.departmentName || 'iGOT',
       },
       professionalDetails: [
         ...this.getOrganisationsHistory(form),
@@ -804,115 +765,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     profileReq.personalDetails.personalEmail = form.value.secondaryEmail
 
-    let approvalData
-    _.forOwn(this.approvalConfig, (v, k) => {
-      if (!v.approvalRequired) {
-        _.set(profileReq, k, this.getDataforK(k, form))
-      } else {
-        _.set(profileReq, k, this.getDataforKRemove(k, v.approvalFiels, form))
-        approvalData = this.getDataforKAdd(k, v.approvalFiels, form)
-      }
-    })
-    return { profileReq, approvalData }
-  }
-
-  private getDataforK(k: string, form: any) {
-    switch (k) {
-      case 'personalDetails':
-        let officeEmail = ''
-        let personalEmail = ''
-        if (form.value.primaryEmailType === this.ePrimaryEmailType.OFFICIAL) {
-          officeEmail = form.value.primaryEmail
-        } else {
-          officeEmail = ''
-        }
-        personalEmail = form.value.secondaryEmail
-        return {
-          personalEmail,
-          firstname: form.value.firstname,
-          middlename: form.value.middlename,
-          surname: form.value.surname,
-          dob: form.value.dob,
-          nationality: form.value.nationality,
-          domicileMedium: form.value.domicileMedium,
-          gender: form.value.gender,
-          maritalStatus: form.value.maritalStatus,
-          category: form.value.category,
-          knownLanguages: form.value.knownLanguages,
-          countryCode: form.value.countryCode,
-          mobile: form.value.mobile,
-          telephone: `${form.value.telephone}` || '',
-          primaryEmail: form.value.primaryEmail,
-          officialEmail: officeEmail,
-          postalAddress: form.value.residenceAddress,
-          pincode: form.value.pincode,
-          osid: _.get(this.userProfileData, 'personalDetails.osid') || undefined,
-        }
-      case 'academics':
-        return this.getAcademics(form)
-      case 'employmentDetails':
-        return {
-          service: form.value.service,
-          cadre: form.value.cadre,
-          allotmentYearOfService: form.value.allotmentYear,
-          dojOfService: form.value.otherDetailsDoj || undefined,
-          payType: form.value.payType,
-          civilListNo: form.value.civilListNo,
-          employeeCode: form.value.employeeCode,
-          officialPostalAddress: form.value.otherDetailsOfficeAddress,
-          pinCode: form.value.otherDetailsOfficePinCode,
-          departmentName: form.value.orgName || form.value.orgNameOther || '',
-          osid: _.get(this.userProfileData, 'employmentDetails.osid') || undefined,
-        }
-      case 'professionalDetails':
-        return [
-          ...this.getOrganisationsHistory(form),
-        ]
-      case 'skills':
-        return {
-          additionalSkills: form.value.skillAquiredDesc,
-          certificateDetails: form.value.certificationDesc,
-          }
-      case 'interests':
-        return {
-          professional: form.value.interests,
-          hobbies: form.value.hobbies,
-          }
-      default:
-        return undefined
-    }
-  }
-  private getDataforKRemove(k: string, fields: string[], form: any) {
-    const datak = this.getDataforK(k, form)
-    _.each(datak, (dk, idx) => {
-      for (let i = 0; i <= fields.length && dk; i += 1) {
-        const oldVal = _.get(this.userProfileData, `${k}[${idx}].${fields[i]}`)
-        const newVal = _.get(dk, `${fields[i]}`)
-        if (oldVal !== newVal) {
-          _.set(dk, fields[i], oldVal)
-        }
-      }
-    })
-    return datak
-  }
-  private getDataforKAdd(k: string, fields: string[], form: any) {
-    const datak = this.getDataforK(k, form)
-    const lst: any = []
-    _.each(datak, (dk, idx) => {
-      for (let i = 0; i <= fields.length && dk; i += 1) {
-        const oldVal = _.get(this.userProfileData, `${k}[${idx}].${fields[i]}`)
-        const newVal = _.get(dk, `${fields[i]}`)
-        if ((oldVal !== newVal) && dk && _.get(dk, fields[i]) && typeof (_.get(dk, fields[i])) !== 'object') {
-          lst.push({
-            fieldKey: k,
-            fromValue: { [fields[i]]: oldVal || '' },
-            toValue: { [fields[i]]: newVal || '' },
-            osid: _.get(this.userProfileData, `${k}[${idx}].osid`),
-          })
-        }
-      }
-    })
-    return lst
+    return profileReq
   }
 
   private getOrganisationsHistory(form: any) {
@@ -931,7 +784,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       description: form.value.orgDesc,
       completePostalAddress: '',
       additionalAttributes: {},
-      osid: _.get(this.userProfileData, 'professionalDetails[0].osid') || undefined,
     }
     if (form.value.isGovtOrg) {
       org.organisationType = 'Government'
@@ -1016,99 +868,18 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     // Construct the request structure for open saber
     const profileRequest = this.constructReq(form)
-    let appdata = [] as  any
-    appdata = profileRequest.approvalData !== undefined ? profileRequest.approvalData : []
-    this.userProfileSvc.updateProfileDetails(profileRequest.profileReq).subscribe(
+    this.userProfileSvc.updateProfileDetails(profileRequest).subscribe(
       () => {
-        if (appdata !== undefined && appdata.length > 0) {
-          if (this.configSvc.userProfile) {
-            this.userProfileSvc.getUserdetailsFromRegistry().subscribe(
-              (data: any) => {
-                const dat = data.result.UserProfile[0]
-                if (dat) {
-                  const academics = this.populateAcademics(dat.academics)
-                  this.setDegreeValuesArray(academics)
-                  this.setPostDegreeValuesArray(academics)
-                  // const organisations = this.populateOrganisationDetails(data[0])
-                  // this.constructFormFromRegistry(data[0], academics, organisations)
-                  this.populateChips(dat)
-                  this.userProfileData = dat
-                  let deptNameValue = ''
-                  if (this.userProfileData && this.userProfileData.professionalDetails
-                    && this.userProfileData.professionalDetails.length > 0) {
-                    deptNameValue = form.value.orgName || form.value.orgNameOther || ''
-                  }
-                  const profDetails = {
-                    state: 'INITIATE',
-                    action: 'INITIATE',
-                    userId: this.userProfileData.userId,
-                    applicationId: this.userProfileData.userId,
-                    actorUserId: this.userProfileData.userId,
-                    serviceName: 'profile',
-                    comment: '',
-                    wfId: '',
-                    deptName: deptNameValue,
-                    updateFieldValues: profileRequest.approvalData,
-                  }
-                  if (deptNameValue && (profDetails.updateFieldValues || []).length > 0) {
-                    this.userProfileSvc.approveRequest(profDetails).subscribe(() => {
-                      form.reset()
-                      this.uploadSaveData = false
-                      this.configSvc.profileDetailsStatus = true
-                      this.openSnackbar(this.toastSuccess.nativeElement.value)
-                      if (!this.isForcedUpdate && this.userProfileData) {
-                        this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
-                      } else {
-                        this.router.navigate(['page', 'home'])
-                      }
-                    }
-                      ,
-                      // tslint:disable-next-line:align
-                      () => {
-                        this.openSnackbar(this.toastError.nativeElement.value)
-                        this.uploadSaveData = false
-                      })
-                  } else {
-                    this.uploadSaveData = false
-                    this.configSvc.profileDetailsStatus = true
-                    this.openSnackbar(this.toastSuccess.nativeElement.value)
-                    if (!this.isForcedUpdate && this.userProfileData) {
-                      // const organisations = this.populateOrganisationDetails(data[0])
-                      // this.constructFormFromRegistry(data[0], academics, organisations)
-                      this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
-                    } else {
-                      this.router.navigate(['page', 'home'])
-                    }
-                  }
-                } else {
-                  form.reset()
-                  this.uploadSaveData = false
-                  this.configSvc.profileDetailsStatus = true
-                  this.openSnackbar(this.toastSuccess.nativeElement.value)
-                  if (!this.isForcedUpdate && this.userProfileData) {
-                    this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
-                  } else {
-                    this.router.navigate(['page', 'home'])
-                  }
-                }
-                // this.handleFormData(data[0])
-              },
-              (_err: any) => {
-              })
-          }
+        form.reset()
+        this.uploadSaveData = false
+        this.configSvc.profileDetailsStatus = true
+        this.openSnackbar(this.toastSuccess.nativeElement.value)
+        if (!this.isForcedUpdate && this.userProfileData) {
+          this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
         } else {
-          form.reset()
-          this.uploadSaveData = false
-          this.configSvc.profileDetailsStatus = true
-          this.openSnackbar(this.toastSuccess.nativeElement.value)
-          if (!this.isForcedUpdate && this.userProfileData) {
-            this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
-          } else {
-            this.router.navigate(['page', 'home'])
-          }
+          this.router.navigate(['page', 'home'])
         }
-      }
-      ,
+      },
       () => {
         this.openSnackbar(this.toastError.nativeElement.value)
         this.uploadSaveData = false

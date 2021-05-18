@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
-import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsPage } from '@ws-widget/utils'
 
 @Component({
   selector: 'ws-app-public-nav-bar',

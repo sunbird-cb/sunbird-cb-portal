@@ -98,10 +98,10 @@ export namespace WsEvents {
   }
   export interface IWsEventTelemetryHeartBeat extends IWsEventTelemetry {
     type: string
-    // subType?: string
-    // mode: string
-    id: string
-    // mimeType: string
+    subType?: string
+    mode: string
+    identifier: string
+    mimeType: string
   }
   export type WsEventTelemetryInteract = IWsEvents<IWsEventTelemetryInteract>
   export type WsEventTelemetrySearch = IWsEvents<IWsEventTelemetrySearch>

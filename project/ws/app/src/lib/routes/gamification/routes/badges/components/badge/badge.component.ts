@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
+import { ConfigurationsService } from '@ws-widget/utils'
 import { GamificationService } from '../../../../services/gamification.service'
 import { Subscription, fromEvent } from 'rxjs'
 import { debounceTime, throttleTime } from 'rxjs/operators'
-import { ConfigurationsService } from '@sunbird-cb/utils'
-
 @Component({
   selector: 'ws-app-badge',
   templateUrl: './badge.component.html',
@@ -27,9 +26,8 @@ export class BadgeComponent implements OnInit {
               private configSvc: ConfigurationsService) {
     this.disablePrev = true
     this.disableNext = false
-
     if (this.configSvc.userProfile) {
-      this.userName = this.configSvc.userProfile.userName || ''
+      this.userName = this.configSvc.userProfile.userName
     }
     if (this.userName) {
       this.userName = this.userName.split(' ')[0]

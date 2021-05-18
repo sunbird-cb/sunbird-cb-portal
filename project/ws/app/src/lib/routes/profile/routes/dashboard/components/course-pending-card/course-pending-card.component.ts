@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@ws-widget/utils'
 import { Router } from '@angular/router'
 
 @Component({
@@ -16,7 +16,7 @@ export class CoursePendingCardComponent implements OnInit {
   ngOnInit() {
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
+      this.defaultThumbnail = instanceConfig.logos.defaultContent
     }
     this.timeLeft = (this.cardData.timeLeft / 60).toFixed(2)
   }

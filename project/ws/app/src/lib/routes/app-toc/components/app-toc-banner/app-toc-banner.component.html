@@ -1,4 +1,4 @@
-<div [ngStyle]="{'background-color': ((content?.draftImage || '').length === 7? content?.draftImage : '#F8AD1E')}">
+<div [ngStyle]="{'background-color': ((content?.posterImage || '').length === 7? content?.posterImage : '#F8AD1E')}">
   <div class="header-synopsis fixed-width" [ngClass]="{ 'header-synopsis-gradient': bannerUrl }" *ngIf="content">
     <div class="pt-10 header-actions top">
       <div class="action-btns">
@@ -43,13 +43,13 @@
           <div class="sm:ml-5 flex flex-col flex-auto">
             <div [ngSwitch]="routePath" class="header-meta" [ngClass]="{ 'header-meta-banner': bannerUrl }">
               <!-- Overview Section -->
-              <div class="banner-overview-container" [hidden]="!content?.purpose && showSubtitleOnBanner"
+              <div class="banner-overview-container" [hidden]="!content?.subTitle && showSubtitleOnBanner"
                 *ngSwitchCase="'overview'">
                 <h2 class="overview-description" *ngIf="showSubtitleOnBanner" i18n-title title="Subtitle">
-                  {{ content?.purpose | pipeLimitTo: 250 }}
+                  {{ content?.subTitle | pipeLimitTo: 250 }}
                 </h2>
                 <h3 class="overview-description" *ngIf="!showSubtitleOnBanner" i18n-title title="Description">
-                  {{ content?.instructions | pipeLimitTo: 450 }}
+                  {{ content?.description | pipeLimitTo: 450 }}
                 </h3>
                 <div *ngIf="sanitizedIntroductoryVideoIcon" class="overview-intro ws-mat-primary-lite-background"
                   [style.backgroundImage]="sanitizedIntroductoryVideoIcon" role="button" (click)="playIntroVideo()">
@@ -61,13 +61,13 @@
                 <!-- Contents Bannner -->
               </div>
               <!-- Analytics Section -->
-              <div class="banner-overview-container" [hidden]="!content?.purpose && showSubtitleOnBanner"
+              <div class="banner-overview-container" [hidden]="!content?.subTitle && showSubtitleOnBanner"
                 *ngSwitchCase="'analytics'">
                 <h2 class="overview-description" *ngIf="showSubtitleOnBanner" i18n-title title="Subtitle">
-                  {{ content?.purpose | pipeLimitTo: 250 }}
+                  {{ content?.subTitle | pipeLimitTo: 250 }}
                 </h2>
                 <h3 class="overview-description" *ngIf="!showSubtitleOnBanner" i18n-title title="Description">
-                  {{ content?.instructions | pipeLimitTo: 450 }}
+                  {{ content?.description | pipeLimitTo: 450 }}
                 </h3>
                 <div *ngIf="sanitizedIntroductoryVideoIcon" class="overview-intro ws-mat-primary-lite-background"
                   [style.backgroundImage]="sanitizedIntroductoryVideoIcon" role="button" (click)="playIntroVideo()">
@@ -197,6 +197,11 @@
                 The content is in review.
               </h3>
             </div>
+            <div class="header-actions mt-8 mb-4" [hidden]="isResource">
+              <a [color]="'primary'" class="margin-right-m resumeButton" mat-flat-button (click)="openDialog(content)">
+                Create Batch
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -214,16 +219,9 @@
       <mat-icon class="align-bottom">info</mat-icon>&nbsp;
       <ng-container i18n>Access to this YouTube content is blocked.</ng-container>
     </p>
-    <ng-container *ngIf="content?.completionStatus == 2">
-      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier"
-      [className]="'thick'" [progress]="100" [progressType]="'percentage'">
-      </ws-widget-content-progress>
-    </ng-container>
-    <ng-container *ngIf="content?.completionStatus < 2">
-      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier"
-      [className]="'thick'" [progress]="content?.completionPercentage" [progressType]="'percentage'">
-      </ws-widget-content-progress>
-    </ng-container>
+    <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier"
+      [className]="'thick'" [progress]="content?.progress?.progress">
+    </ws-widget-content-progress>
   </div>
 </div>
 

@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { NsContent, NsError, NSSearch, ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, ValueService, UtilityService } from '@sunbird-cb/utils'
+import { NsContent, NsError, NSSearch, ROOT_WIDGET_CONFIG } from '@ws-widget/collection'
+import { NsWidgetResolver } from '@ws-widget/resolver'
+import { ConfigurationsService, ValueService, UtilityService } from '@ws-widget/utils'
 import { Subscription } from 'rxjs'
 import { FilterDisplayComponent } from '../../components/filter-display/filter-display.component'
 import { IFilterUnitResponse, ISearchRequestV2, ISearchTab } from '../../models/search.model'
@@ -23,7 +23,7 @@ export class LearningComponent implements OnInit, OnDestroy {
   screenSizeIsLtMedium = false
   sideNavBarOpened = true
   searchRequestStatus: any = 'none'
-  searchResults: any = {
+  searchResults: NSSearch.ISearchV6ApiResultV2 = {
     id: '',
     ver: '',
     ts: '',
@@ -46,15 +46,6 @@ export class LearningComponent implements OnInit, OnDestroy {
     request: {
       filters: {
         visibility: ['Default'],
-        primaryCategory: [
-          'Course',
-          'Learning Resource',
-        ],
-        contentType: [
-          'Course',
-          'Learning Resource',
-          'Resource',
-        ],
       },
       query: '',
       sort_by: { lastUpdatedOn: 'desc' },
@@ -213,7 +204,6 @@ export class LearningComponent implements OnInit, OnDestroy {
     })
     if (queryMap.get('f')) {
       defaultFilters = JSON.parse(queryMap.get('f') || '{}')
-      // defaultFilters = queryMap.get('f') || '{}'
     }
     if (!Object.keys(defaultFilters).length && Object.keys(this.filtersFromConfig).length) {
       this.router.navigate([], {
@@ -278,15 +268,7 @@ export class LearningComponent implements OnInit, OnDestroy {
             }
           }
         } else {
-          this.searchRequestObject.request.filters = {
-            visibility: ['Default'],
-              primaryCategory: [
-                'Course',
-              ],
-              contentType: [
-                'Course',
-              ],
-          }
+          this.searchRequestObject.request.filters = { visibility: ['Default'] }
         }
       }
       if (queryParams.has('sort') && this.searchRequestObject.request.sort_by.lastUpdatedOn) {
@@ -367,7 +349,7 @@ export class LearningComponent implements OnInit, OnDestroy {
     }
   }
 
-  getResults(withQuotes ?: boolean, didYouMean = true) {
+  getResults(withQuotes?: boolean, didYouMean = true) {
     // this.searchRequestObject.didYouMean = didYouMean
     if (this.searchResultsSubscription) {
       this.searchResultsSubscription.unsubscribe()

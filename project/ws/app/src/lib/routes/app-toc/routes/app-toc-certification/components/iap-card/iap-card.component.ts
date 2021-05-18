@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { NsContent } from '@sunbird-cb/collection'
+import { NsContent } from '@ws-widget/collection'
 
 @Component({
   selector: 'ws-app-toc-certification-iap-card',

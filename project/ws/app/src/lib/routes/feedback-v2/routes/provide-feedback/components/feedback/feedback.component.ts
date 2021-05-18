@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
-import { TSendStatus, IResolveResponse, ConfigurationsService } from '@sunbird-cb/utils'
+import { TSendStatus, IResolveResponse, ConfigurationsService } from '@ws-widget/utils'
 import {
   FeedbackSnackbarComponent,
   FeedbackService,
@@ -9,7 +9,7 @@ import {
   EFeedbackType,
   IFeedbackConfig,
   INotificationRequest,
-} from '@sunbird-cb/collection'
+} from '@ws-widget/collection'
 import { ActivatedRoute, Router } from '@angular/router'
 
 @Component({
@@ -25,7 +25,6 @@ export class FeedbackComponent {
   singleFeedbackForm: FormGroup
   feedbackConfig!: IFeedbackConfig
   showImporveError = false
-  userId: any
 
   constructor(
     private feedbackApi: FeedbackService,
@@ -133,10 +132,6 @@ export class FeedbackComponent {
         () => {
           this.singleFeedbackSendStatus = 'done'
           if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.rootOrg === 'RootOrg') {
-
-            if (this.configSvc.userProfile) {
-              this.userId = this.configSvc.userProfile.userId || ''
-            }
             const req: INotificationRequest = {
               'event-id': 'platform_feedback',
               'tag-value-pair': {
@@ -144,7 +139,7 @@ export class FeedbackComponent {
               },
               recipients: {
                 learner: [
-                  (this.userId) || '',
+                  (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
                 ],
               },
             }

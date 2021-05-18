@@ -7,9 +7,9 @@ import {
   MatTooltipModule,
 } from '@angular/material'
 import { ViewerTopBarComponent } from './viewer-top-bar.component'
-import { BtnFullscreenModule, BtnPageBackNavModule } from '@sunbird-cb/collection'
+import { BtnFullscreenModule, BtnPageBackNavModule } from '@ws-widget/collection'
 import { RouterModule } from '@angular/router'
-import { ValueService } from '@sunbird-cb/utils'
+import { ValueService } from '@ws-widget/utils'
 @NgModule({
   declarations: [ViewerTopBarComponent],
   imports: [

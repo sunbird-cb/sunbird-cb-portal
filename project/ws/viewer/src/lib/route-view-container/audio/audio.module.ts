@@ -22,15 +22,15 @@ import {
   UserContentRatingModule,
   BtnContentFeedbackV2Module,
   PlayerBriefModule,
-} from '@sunbird-cb/collection'
+} from '@ws-widget/collection'
 
 import {
   PipeDurationTransformModule,
   PipeLimitToModule,
   PipePartialContentModule,
-} from '@sunbird-cb/utils'
+} from '@ws-widget/utils'
 
-import { WidgetResolverModule } from '@sunbird-cb/resolver'
+import { WidgetResolverModule } from '@ws-widget/resolver'
 
 import { AudioComponent } from './audio.component'
 import { RouterModule } from '@angular/router'

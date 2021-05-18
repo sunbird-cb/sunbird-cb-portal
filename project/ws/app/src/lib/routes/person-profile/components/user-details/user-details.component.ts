@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
 import { IFollowerId } from '../../person-profile.model'
 
 @Component({

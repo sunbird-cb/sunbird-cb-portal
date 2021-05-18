@@ -3,9 +3,9 @@ import { SafeUrl, DomSanitizer } from '@angular/platform-browser'
 import {
   ConfigurationsService,
   NsPage,
-} from '@sunbird-cb/utils'
+} from '../../../../../../../../../library/ws-widget/utils/src/public-api'
 import { MatDialog } from '@angular/material'
-import { AppTourDialogComponent } from '@sunbird-cb/collection'
+import { AppTourDialogComponent } from '../../../../../../../../../library/ws-widget/collection/src/public-api'
 import { Router, ActivatedRoute } from '@angular/router'
 import { Globals } from '../../globals'
 

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { NsContent } from '../../_services/widget-content.model'
-import { ConfigurationsService, UtilityService } from '@sunbird-cb/utils'
+import { ConfigurationsService, UtilityService } from '../../../../../utils'
 import { Router } from '@angular/router'
 import { WidgetContentService } from '../../_services/widget-content.service'
 
@@ -98,12 +98,7 @@ export class PlayerBriefComponent implements OnInit {
   goToContent(id: string) {
     this.router.navigate([`/app/toc/${id}/overview`])
   }
-  getViewCount(content: NsContent.IContent | null) {
-    if (content && this.configSvc.rootOrg && content.viewCount) {
-      return content.viewCount[this.configSvc.rootOrg]
-    }
-    return 0
-  }
+
   getTocConfig() {
     const url = `${this.configSvc.sitePath}/feature/toc.json`
     this.widgetContentSvc.fetchConfig(url).subscribe(data => {
@@ -127,14 +122,5 @@ export class PlayerBriefComponent implements OnInit {
     }
 
     // delete link;
-  }
-
-  public parseJsonData(s: string) {
-    try {
-      const parsedString = JSON.parse(s)
-      return parsedString
-    } catch {
-      return []
-    }
   }
 }

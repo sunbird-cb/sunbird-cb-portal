@@ -5,7 +5,7 @@ import 'videojs-hls-quality-selector'
 import 'videojs-vr'
 
 import { Subscription, interval, fromEvent } from 'rxjs'
-import { WsEvents } from '@sunbird-cb/utils'
+import { WsEvents } from '@ws-widget/utils'
 import { ROOT_WIDGET_CONFIG } from '../collection.config'
 import { IWidgetsPlayerMediaData } from '../_models/player-media.model'
 import { NsContent } from './widget-content.model'
@@ -103,10 +103,10 @@ function eventDispatchHelper(
       },
       to: '',
       data: {
-        id: data.identifier,
+        identifier: data.identifier,
         eventSubType: WsEvents.EnumTelemetrySubType.HeartBeat,
-        // mimeType: mimeT,
-        // mode: WsEvents.WsTimeSpentMode.Play,
+        mimeType: mimeT,
+        mode: WsEvents.WsTimeSpentMode.Play,
         type: WsEvents.WsTimeSpentType.Player,
       },
     }

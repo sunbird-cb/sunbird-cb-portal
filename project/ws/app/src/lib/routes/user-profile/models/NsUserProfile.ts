@@ -51,15 +51,4 @@ export namespace NsUserProfileDetails {
     SC = 'SC',
     ST = 'ST',
   }
-  export interface IFieldApproval {
-    approvalRequired: boolean
-    approvalFiels: string[]
-  }
-  export interface IApprovals {
-    academics: IFieldApproval
-    competencies: IFieldApproval
-    employmentDetails: IFieldApproval
-    personalDetails: IFieldApproval
-    professionalDetails: IFieldApproval
-  }
 }

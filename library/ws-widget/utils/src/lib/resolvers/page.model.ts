@@ -1,6 +1,6 @@
 import { ThemePalette } from '@angular/material'
+import { NsWidgetResolver } from '@ws-widget/resolver'
 import { NsAppsConfig } from '../services/configurations.model'
-import { NsWidgetResolver } from '../services/widget-resolver.model'
 
 export namespace NsPage {
   export interface IPage {

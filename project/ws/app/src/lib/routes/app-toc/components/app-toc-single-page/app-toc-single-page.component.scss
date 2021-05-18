@@ -307,21 +307,3 @@ mat-divider {
   letter-spacing: 0px;
   color: #222222;
 }
-
-.resumeButton {
-  height: 52px;
-  min-width: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #34D6A4 0% 0% no-repeat padding-box !important;
-  box-shadow: 0px 10px 30px #99999933;
-  color: #fff !important;
-
-  ::ng-deep.mat-button-wrapper {
-    // font: 14px/21px Poppins-SemiBold;
-    letter-spacing: 0px;
-    color: #fff;
-    text-transform: capitalize;
-  }
-}

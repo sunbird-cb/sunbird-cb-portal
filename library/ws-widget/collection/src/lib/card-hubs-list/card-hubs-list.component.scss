@@ -1,13 +1,7 @@
-@import '~@sunbird-cb/design-system/src/styles/ws-common';
-@import '~@sunbird-cb/design-system/src/styles/ws-vars';
-@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
 
-%page-center {
-  // max-width: $page-center;
-  max-width: $max-screen;
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
 
 .container-balanced {
   @extend %page-center;
@@ -26,13 +20,13 @@
 
 .mat-icon1 {
   padding: 16px;
-  color: #347bb6 !important;
+  color: #347bb6;
 }
 
 .icon {
-  width: 71px;
-  height: 64px;
-  border-radius: 4px;
+  width: 60px;
+  height: 60px;
+  border-radius: 3px;
   text-align: center;
 }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
-import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
-import { NsDiscussionForum } from '@sunbird-cb/collection'
+import { ConfigurationsService, NsPage } from '@ws-widget/utils'
+import { NsDiscussionForum } from '@ws-widget/collection'
 
 @Component({
   selector: 'ws-app-my-blog',
@@ -36,11 +36,9 @@ export class MyBlogComponent implements OnInit {
     private route: ActivatedRoute,
     private configSvc: ConfigurationsService,
   ) {
-
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId || ''
     }
-
     this.myDraftsRequest.userId = this.userId
     this.myTimelineRequest.userId = this.userId
   }

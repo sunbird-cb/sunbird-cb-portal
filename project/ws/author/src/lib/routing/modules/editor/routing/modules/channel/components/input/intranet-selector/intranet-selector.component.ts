@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core'
-import { IIntranetSelector } from '@sunbird-cb/collection/src/lib/intranet-selector/intranet-selector.model'
+import { IIntranetSelector } from '@ws-widget/collection/src/lib/intranet-selector/intranet-selector.model'
 
 @Component({
   selector: 'ws-auth-intranet-selector',

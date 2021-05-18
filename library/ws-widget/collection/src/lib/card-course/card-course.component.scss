@@ -1,6 +1,6 @@
-@import '~@sunbird-cb/design-system/src/styles/ws-common';
-@import '~@sunbird-cb/design-system/src/styles/ws-vars';
-@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
 
 div {
   .example-card {
@@ -8,7 +8,6 @@ div {
     $height: 150px;
     margin: 12px 12px 12px 0;
     max-width: $width;
-
     img {
       max-height: $height;
     }

@@ -1,8 +1,8 @@
-// import { NSSearch } from '@sunbird-cb/collection'
+// import { NSSearch } from '@ws-widget/collection'
 // import { IWidgetResolverDataConfigWithType } from '@ws-shared/widget-resolver'
 // import { ICarousel } from '@ws-shared/widgets/src/lib/models/widget-slider.model'
-import { NsContentStripMultiple } from '@sunbird-cb/collection'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { NsContentStripMultiple } from '@ws-widget/collection'
+import { NsWidgetResolver } from '@ws-widget/resolver'
 
 export interface IWsLeader {
   designation: string

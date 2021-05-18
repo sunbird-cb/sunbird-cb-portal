@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, HostBinding } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
 import { NsContentStripNewMultiple } from './content-strip-new-multiple.model'
 import { ContentStripNewMultipleService } from './content-strip-new-multiple.service'
 import { WidgetContentService } from '../_services/widget-content.service'
@@ -10,11 +10,11 @@ import {
   EventService,
   ConfigurationsService,
   UtilityService,
-} from '@sunbird-cb/utils'
+} from '@ws-widget/utils'
 import { Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
-import { WidgetUserService } from '../_services/widget-user.service'
-// import { SearchServService } from '../_services/search-serv.service'
+import { SearchServService } from '@ws/app/src/lib/routes/search/services/search-serv.service'
+import { WidgetUserService } from '@ws-widget/collection/src/lib/_services/widget-user.service'
 
 interface IStripUnitContentData {
   key: string
@@ -24,8 +24,6 @@ interface IStripUnitContentData {
   widgets?: NsWidgetResolver.IRenderConfigWithAnyData[]
   stripTitle: string
   stripName?: string
-  stripLogo?: string
-  description?: string
   stripInfo?: NsContentStripNewMultiple.IStripInfo
   noDataWidget?: NsWidgetResolver.IRenderConfigWithAnyData
   errorWidget?: NsWidgetResolver.IRenderConfigWithAnyData
@@ -38,7 +36,6 @@ interface IStripUnitContentData {
     queryParams: any
   } | null
 }
-
 @Component({
   selector: 'ws-widget-content-strip-new-multiple',
   templateUrl: './content-strip-new-multiple.component.html',
@@ -73,8 +70,8 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
     private loggerSvc: LoggerService,
     private eventSvc: EventService,
     private configSvc: ConfigurationsService,
-    public utilitySvc: UtilityService,
-    // private searchServSvc: SearchServService,
+    protected utilitySvc: UtilityService,
+    private searchServSvc: SearchServService,
     private userSvc: WidgetUserService,
   ) {
     super()
@@ -92,10 +89,6 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
     if (this.changeEventSubscription) {
       this.changeEventSubscription.unsubscribe()
     }
-  }
-
-  getLength(data: IStripUnitContentData) {
-    return data.widgets ? data.widgets.length : 0
   }
 
   private initData() {
@@ -273,9 +266,9 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
                 f:
                   strip.request && strip.request.searchV6 && strip.request.searchV6.filters
                     ? JSON.stringify(
-                      // this.searchServSvc.transformSearchV6Filters(
-                      strip.request.searchV6.filters
-                      // ),
+                      this.searchServSvc.transformSearchV6Filters(
+                        strip.request.searchV6.filters,
+                      ),
                     )
                     : {},
               },
@@ -334,21 +327,16 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
                 f:
                   strip.request && strip.request.searchV6 && strip.request.searchV6.filters
                     ? JSON.stringify(
-                      // this.searchServSvc.transformSearchV6Filters(
-                      strip.request.searchV6.filters
-                      // ),
+                      this.searchServSvc.transformSearchV6Filters(
+                        strip.request.searchV6.filters,
+                      ),
                     )
                     : {},
               },
             }
             : null
           if (courses && courses.length) {
-            content = courses.map(c => {
-              const contentTemp: NsContent.IContent =  c.content
-              contentTemp.completionPercentage = c.completionPercentage || 0
-              contentTemp.completionStatus = c.completionStatus || 0
-              return contentTemp
-            })
+            content = courses.map(c => c.content)
           }
           this.processStrip(
             strip,

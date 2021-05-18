@@ -6,7 +6,7 @@ import { MatIconModule, MatRadioModule, MatCardModule, MatSidenavModule, MatTool
 import { RouterModule } from '@angular/router'
 import { SocialSearchRoutingModule } from './social-search-routing.module'
 
-import { BtnPageBackModule, BtnSocialVoteModule, BtnSocialLikeModule } from '@sunbird-cb/collection'
+import { BtnPageBackModule, BtnSocialVoteModule, BtnSocialLikeModule } from '../../../../../../../../../library/ws-widget/collection/src/public-api'
 import { ForumHandlerService } from '../forums/service/EmitterService/forum-handler.service'
 import { SearchFilterDisplayComponent } from './widgets/search-filter-display/search-filter-display.component'
 

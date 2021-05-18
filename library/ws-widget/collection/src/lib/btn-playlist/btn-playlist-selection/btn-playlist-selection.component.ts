@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core'
 import { FormControl, Validators } from '@angular/forms'
 import { MatListOption, MatSnackBar } from '@angular/material'
-import { EventService, TFetchStatus } from '@sunbird-cb/utils'
+import { EventService, TFetchStatus } from '@ws-widget/utils'
 import { NsPlaylist } from '../btn-playlist.model'
 import { BtnPlaylistService } from '../btn-playlist.service'
 
@@ -20,7 +20,7 @@ export class BtnPlaylistSelectionComponent implements OnInit {
   @Output() playlistCreateEvent = new EventEmitter()
 
   fetchPlaylistStatus: TFetchStatus = 'none'
-  playlists: any
+  playlists: NsPlaylist.IPlaylist[] = []
 
   createPlaylistMode = false
   selectedPlaylists = new Set<string>()
@@ -39,13 +39,13 @@ export class BtnPlaylistSelectionComponent implements OnInit {
 
   ngOnInit() {
     this.fetchPlaylistStatus = 'fetching'
-    this.playlistSvc.getAllPlaylistsApi(true).subscribe((data: any) => {
+    this.playlistSvc.getAllPlaylistsApi(true).subscribe((response: any) => {
       this.fetchPlaylistStatus = 'done'
-      this.playlists = data.result.content
+      this.playlists = response.result.content
       // this.playlists = this.playlists.concat(response.share)
-      this.playlists.forEach((playlist: any) => {
-        if (playlist.childNodes.map((content: any) => content).includes(this.contentId)) {
-          this.selectedPlaylists.add(playlist.identifier)
+      this.playlists.forEach(playlist => {
+        if (playlist.contents.map(content => content.identifier).includes(this.contentId)) {
+          this.selectedPlaylists.add(playlist.id)
         }
       })
     })
@@ -54,7 +54,7 @@ export class BtnPlaylistSelectionComponent implements OnInit {
   selectionChange(option: MatListOption) {
     const playlistId = option.value
     const checked = option.selected
-    const playlist = this.playlists.find((item: any) => item.identifier === playlistId)
+    const playlist = this.playlists.filter(item => item.identifier === playlistId)
     if (playlist && checked) {
       this.raiseTelemetry('add', playlistId, this.contentId)
       this.playlistSvc.addPlaylistContent(playlist, [this.contentId]).subscribe(

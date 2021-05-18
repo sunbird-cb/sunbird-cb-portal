@@ -3,9 +3,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { DateAdapter, MAT_DATE_FORMATS, MatSnackBar } from '@angular/material'
 import { AppDateAdapter, APP_DATE_FORMATS, startWithYearformat } from '@ws/app'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
 import { AppTocService } from '../../services/app-toc.service'
-
 @Component({
   selector: 'ws-app-create-batch-dialog',
   templateUrl: './create-batch-dialog.component.html',
@@ -27,18 +26,18 @@ export class CreateBatchDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CreateBatchDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private configSvc: ConfigurationsService,
     private appTocService: AppTocService,
     private snackBar: MatSnackBar,
-    private configSvc: ConfigurationsService
   ) {
     this.createBatchForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
-      description: new FormControl('', []),
+      description: new FormControl('', [Validators.required]),
       enrollmentType: new FormControl(this.enrollmentTypes[0], [Validators.required]),
       startDate: new FormControl('', [Validators.required]),
-      endDate: new FormControl('', []),
+      endDate: new FormControl('', [Validators.required]),
       enrollmentEndDate: new FormControl('', []),
-      // createdFor: new FormControl('', []),
+      createdFor: new FormControl('', []),
       mentors: new FormControl('', []),
       courseId: new FormControl('', []),
       createdBy: new FormControl('', []),
@@ -52,19 +51,11 @@ export class CreateBatchDialogComponent implements OnInit {
   public createBatchSubmit(form: any) {
     this.uploadSaveData = true
     form.value.startDate = startWithYearformat(new Date(`${form.value.startDate}`))
-    if (form.value.endDate) {
-      form.value.endDate = startWithYearformat(new Date(`${form.value.endDate}`))
-    } else {
-      delete form.value.endDate
-    }
-    if (form.value.enrollmentEndDate) {
-      form.value.enrollmentEndDate = startWithYearformat(new Date(`${form.value.enrollmentEndDate}`))
-    } else {
-      delete form.value.enrollmentEndDate
-    }
+    form.value.endDate = startWithYearformat(new Date(`${form.value.endDate}`))
+    form.value.enrollmentEndDate = startWithYearformat(new Date(`${form.value.enrollmentEndDate}`))
     form.value.mentors = []
     if (this.configSvc.userProfile) {
-      // form.value.createdFor = [this.configSvc.userProfile.rootOrgId]
+      form.value.createdFor = [this.configSvc.userProfile.rootOrgId]
       form.value.createdBy = this.configSvc.userProfile.userId
     }
     if (this.data && this.data.content) {
@@ -78,7 +69,7 @@ export class CreateBatchDialogComponent implements OnInit {
       },
       err => {
         if (err && err.error && err.error.params && err.error.params.errmsg) {
-          this.openSnackbar(err.error.params.errmsg)
+          this.openSnackbar(err.error.params.errmsge)
         } else {
           this.openSnackbar(this.toastError.nativeElement.value)
         }

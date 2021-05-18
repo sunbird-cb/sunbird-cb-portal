@@ -4,14 +4,9 @@ import { CkEditorComponent } from './ck-editor.component'
 import { CKEditorModule } from 'ng2-ckeditor'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { CKEditorService } from './ck-editor.service'
-import { AccessControlService } from './services/access-control.service'
-import { ApiService } from './services/api.service'
-import { LoaderService } from './services/loader.service'
-import { UploadService } from './services/upload.service'
-import { NotificationComponent } from './components/notification/notification.component'
 
 @NgModule({
-  declarations: [CkEditorComponent, NotificationComponent],
+  declarations: [CkEditorComponent],
   imports: [
     CommonModule,
     CKEditorModule,
@@ -24,6 +19,6 @@ import { NotificationComponent } from './components/notification/notification.co
   entryComponents: [
     CkEditorComponent,
   ],
-  providers: [CKEditorService, AccessControlService, ApiService, LoaderService, UploadService],
+  providers: [CKEditorService],
 })
 export class CkEditorModule { }

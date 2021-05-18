@@ -8,7 +8,7 @@ import {
   MatIconModule,
   MatButtonModule,
 } from '@angular/material'
-import { BtnPageBackModule } from '@sunbird-cb/collection'
+import { BtnPageBackModule } from '@ws-widget/collection'
 
 @NgModule({
   declarations: [MobileAppHomeComponent],

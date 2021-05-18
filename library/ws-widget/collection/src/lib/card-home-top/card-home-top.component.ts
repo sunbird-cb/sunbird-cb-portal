@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, HostBinding } from '@angular/core'
-import { WidgetBaseComponent, NsWidgetResolver } from '@sunbird-cb/resolver'
+import { WidgetBaseComponent, NsWidgetResolver } from '@ws-widget/resolver'
 
 @Component({
   selector: 'ws-widget-home-component',

@@ -6,7 +6,7 @@ import {
   ConfigurationsService,
   TFetchStatus,
   ValueService,
-} from '@sunbird-cb/utils'
+} from '../../../../../../../../../../../library/ws-widget/utils/src/public-api'
 import { SocialForum } from '../../models/SocialForumposts.model'
 import { ForumHandlerService } from '../../service/EmitterService/forum-handler.service'
 // import { ForumHandlerService } from '../../service/EmitterService/eventemitter.service'
@@ -62,6 +62,9 @@ export class ModeratorTimelineComponent implements OnInit {
     public dialog: MatDialog,
   ) {
     this.isXSmall$ = this.valueSvc.isXSmall$
+    // if (this.configSvc.userProfile) {
+    //   this.moderatorTimelineRequest.userId = this.configSvc.userProfile.userId || ''
+    // }
     // console.log('Moderator timeline postcomop loaded')
     this._eventEmiter.sendFilterStatus(false)
     this._eventEmiter.sendStatusOfPredefinedFilter(false)

@@ -3,8 +3,8 @@ import { MatDialog, MatSnackBar } from '@angular/material'
 import { throwError, Subject } from 'rxjs'
 import { takeWhile, switchMap, tap, takeUntil } from 'rxjs/operators'
 
-import { NsContent } from '@sunbird-cb/collection'
-import { TSendStatus, TFetchStatus } from '@sunbird-cb/utils'
+import { NsContent } from '@ws-widget/collection'
+import { TSendStatus, TFetchStatus } from '@ws-widget/utils'
 
 import { SnackbarComponent } from '../snackbar/snackbar.component'
 import { CertificationApiService } from '../../apis/certification-api.service'

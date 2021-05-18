@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
+import { PipeLimitToPipe } from '@ws-widget/utils/src/lib/pipes/pipe-limit-to/pipe-limit-to.pipe'
 
 import {
   MatCardModule,
@@ -24,16 +25,15 @@ import {
   UserImageModule,
   BtnContentFeedbackV2Module,
   PlayerBriefModule,
-} from '@sunbird-cb/collection'
+} from '@ws-widget/collection'
 
 import {
   PipeDurationTransformModule,
   PipeLimitToModule,
   PipePartialContentModule,
-  PipeLimitToPipe,
-} from '@sunbird-cb/utils'
+} from '@ws-widget/utils'
 
-import { WidgetResolverModule } from '@sunbird-cb/resolver'
+import { WidgetResolverModule } from '@ws-widget/resolver'
 
 // import { HtmlRoutingModule } from './html-routing.module'
 

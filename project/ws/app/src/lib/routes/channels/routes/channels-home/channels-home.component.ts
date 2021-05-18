@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { WidgetContentService, NsContent } from '@sunbird-cb/collection'
+import { WidgetContentService, NsContent } from '@ws-widget/collection'
 import { IFilterUnitContent } from '../../../search/models/search.model'
 
 @Component({

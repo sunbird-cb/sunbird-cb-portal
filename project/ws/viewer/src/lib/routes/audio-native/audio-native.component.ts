@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Subscription } from 'rxjs'
-import { ValueService, ConfigurationsService } from '@sunbird-cb/utils'
+import { ValueService, ConfigurationsService } from '@ws-widget/utils'
 import { ActivatedRoute } from '@angular/router'
-import { NsContent, NsDiscussionForum, WidgetContentService } from '@sunbird-cb/collection'
+import { NsContent, NsDiscussionForum, WidgetContentService } from '@ws-widget/collection'
 import { ViewerUtilService } from '../../viewer-util.service'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { NsWidgetResolver } from '@ws-widget/resolver'
 
 @Component({
   selector: 'viewer-audio-native',
@@ -35,7 +35,7 @@ export class AudioNativeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.configSvc.instanceConfig) {
-      this.defaultThumbnail = this.configSvc.instanceConfig.logos.defaultContent || ''
+      this.defaultThumbnail = this.configSvc.instanceConfig.logos.defaultContent
     }
     this.screenSizeSubscription = this.valueSvc.isXSmall$.subscribe(data => {
       this.isScreenSizeSmall = data
@@ -54,7 +54,7 @@ export class AudioNativeComponent implements OnInit, OnDestroy {
               : this.audioData.appIcon
           } else {
             if (this.configSvc.instanceConfig) {
-              this.defaultThumbnail = this.configSvc.instanceConfig.logos.defaultContent || ''
+              this.defaultThumbnail = this.configSvc.instanceConfig.logos.defaultContent
             }
           }
         }

@@ -1,11 +1,11 @@
 <div class="flex width-expand flex-column">
   <div class="flex flex-1 mb-4 search">
-    <mat-form-field appearance="outline" class="autocomplete-form mat-body-2" color="primary" [floatLabel]="'never'">
+    <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'">
       <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
       <!-- <mat-placeholder>Search user</mat-placeholder> -->
       <!-- <input [(ngModel)]="nameFilter" (ngModelChange)="searchUser()" matInput type="search"> -->
-      <mat-label class="mat-body-2">Search user</mat-label>
-      <input type="search" #searchInput class="ml-2" [(ngModel)]="nameFilter" (ngModelChange)="searchUser()" matInput
+      <mat-label>Search user</mat-label>
+      <input type="search" #searchInput class="ml-2" [(ngModel)]="nameFilter" (keyup.enter)="searchUser()" matInput
         type="search" [placeholder]="'Search user'" />
     </mat-form-field>
   </div>
@@ -55,8 +55,7 @@
     <mat-card class="flex-1 remove-botton-radius">
       <mat-card-header>
         <mat-card-title class="margin-l-0 f-medium">
-          <span class="mat-subheading-1" *ngIf="connectionRequests && connectionRequests.length > 1 ">Connection requests</span>
-          <span class="mat-subheading-1" *ngIf="connectionRequests && connectionRequests.length === 1 ">Connection request</span>
+          <h2>Connection requests</h2>
         </mat-card-title>
       </mat-card-header>
       <mat-card-content class="margin-left-m mb-0-imp">
@@ -81,11 +80,11 @@
     </mat-card>
   </div>
   <div class="flex flex-1">
-    <mat-card class="flex-1 remove-botton-radius margin-bottom-m">
+    <mat-card class="flex-1 remove-botton-radius">
       <mat-card-header class="flex items-baseline margin-fix">
         <mat-card-title class="margin-l-0 f-medium  flex-1">
           <span class="width-expand">
-            <span class="mat-subheading-1">People you may know</span>
+            <h2>People you may know</h2>
           </span>
         </mat-card-title>
         <span class="spacer"></span>
@@ -98,7 +97,6 @@
           <ws-app-connection-people-card class="mr-4 mb-5" [user]="user"
             (connection)="connectionUpdatePeopleCard($event)"></ws-app-connection-people-card>
         </ng-container>
-        <h4 class="ws-mat-black60-text" *ngIf="!recommendedUsers">No users found!</h4>
       </mat-card-content>
       <mat-card-actions align="end">
       </mat-card-actions>

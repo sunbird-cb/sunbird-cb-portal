@@ -3,8 +3,8 @@ import { ActivatedRouteSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 
-import { WidgetContentService, NsContent } from '@sunbird-cb/collection'
-import { IResolveResponse } from '@sunbird-cb/utils'
+import { WidgetContentService, NsContent } from '@ws-widget/collection'
+import { IResolveResponse } from '@ws-widget/utils'
 
 @Injectable()
 export class ContentCertificationResolver {

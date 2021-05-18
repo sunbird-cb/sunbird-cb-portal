@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material'
-import { IWidgetElementHtml } from '@sunbird-cb/collection'
+import { IWidgetElementHtml } from '@ws-widget/collection'
 import {
   AUTHORING_CONTENT_BASE,
   CONTENT_BASE_WEBHOST_ASSETS,

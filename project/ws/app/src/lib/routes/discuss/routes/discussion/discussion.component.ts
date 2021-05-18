@@ -32,7 +32,6 @@ export class DiscussionComponent implements OnInit, OnDestroy, AfterViewInit {
   paginationData!: any
   currentActivePage!: any
   fetchNewData = false
-  topicName: any
   constructor(
     private formBuilder: FormBuilder,
     private loader: LoaderService,
@@ -50,7 +49,6 @@ export class DiscussionComponent implements OnInit, OnDestroy, AfterViewInit {
       this.paginationData = this.route.snapshot.data.topic.data.pagination
       this.setPagination()
       this.topicId = params.topicId
-      this.topicName = params.title
       if (this.data.posts && this.data.posts.length && this.data.posts[0].tid !== Number(this.topicId)) {
         this.getTIDData(this.currentActivePage)
       }
@@ -58,8 +56,7 @@ export class DiscussionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.route.queryParams.subscribe(x => {
       if (x.page) {
         this.currentActivePage = x.page || 1
-        // this.refreshPostData(this.currentActivePage)
-        this.refreshPostData()
+        this.refreshPostData(this.currentActivePage)
       }
     })
     this.postAnswerForm = this.formBuilder.group({
@@ -106,8 +103,7 @@ export class DiscussionComponent implements OnInit, OnDestroy, AfterViewInit {
       _data => {
         this.openSnackbar('Bookmark added successfully!')
         this.fetchNewData = true
-        // this.refreshPostData(this.currentActivePage)
-        this.refreshPostData()
+        this.refreshPostData(this.currentActivePage)
       },
       (err: any) => {
         this.openSnackbar(err.error.message.split('|')[1] || this.defaultError)
@@ -118,8 +114,7 @@ export class DiscussionComponent implements OnInit, OnDestroy, AfterViewInit {
       _data => {
         this.openSnackbar('Bookmark Removed successfully!')
         this.fetchNewData = true
-        // this.refreshPostData(this.currentActivePage)
-        this.refreshPostData()
+        this.refreshPostData(this.currentActivePage)
       },
       (err: any) => {
         this.openSnackbar(err.error.message.split('|')[1] || this.defaultError)
@@ -130,8 +125,7 @@ export class DiscussionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.discussService.deleteVotePost(discuss.pid).subscribe(
       _data => {
         this.fetchNewData = true
-        // this.refreshPostData(this.currentActivePage)
-        this.refreshPostData()
+        this.refreshPostData(this.currentActivePage)
       },
       (err: any) => {
         this.openSnackbar(err.error.message.split('|')[1] || this.defaultError)
@@ -144,8 +138,7 @@ export class DiscussionComponent implements OnInit, OnDestroy, AfterViewInit {
         () => {
           this.openSnackbar(this.toastSuccess.nativeElement.value)
           this.postAnswerForm.reset()
-          // this.refreshPostData(this.currentActivePage)
-          this.refreshPostData()
+          this.refreshPostData(this.currentActivePage)
         },
         (err: any) => {
           this.openSnackbar(err.error.message.split('|')[1] || this.defaultError)
@@ -163,8 +156,7 @@ export class DiscussionComponent implements OnInit, OnDestroy, AfterViewInit {
         () => {
           this.openSnackbar('Your reply was saved succesfuly!')
           this.fetchNewData = true
-          // this.refreshPostData(this.currentActivePage)
-          this.refreshPostData()
+          this.refreshPostData(this.currentActivePage)
         },
         (err: any) => {
           this.openSnackbar(err.error.message.split('|')[1] || this.defaultError)
@@ -181,8 +173,7 @@ export class DiscussionComponent implements OnInit, OnDestroy, AfterViewInit {
       this.discussService.replyPost(post.tid, req).subscribe(
         () => {
           this.openSnackbar('Your reply was saved succesfuly!')
-          // this.refreshPostData(this.currentActivePage)
-          this.refreshPostData()
+          this.refreshPostData(this.currentActivePage)
         },
         (err: any) => {
           this.openSnackbar(err.error.message.split('|')[1] || this.defaultError)
@@ -193,8 +184,7 @@ export class DiscussionComponent implements OnInit, OnDestroy, AfterViewInit {
   filter(key: string | 'timestamp' | 'upvotes') {
     if (key) {
       this.currentFilter = key
-      // this.refreshPostData(this.currentActivePage)
-      this.refreshPostData()
+      this.refreshPostData(this.currentActivePage)
     }
   }
   showError(meta: string) {
@@ -210,9 +200,9 @@ export class DiscussionComponent implements OnInit, OnDestroy, AfterViewInit {
     })
   }
 
-  refreshPostData() {
+  refreshPostData(page: any) {
     if (this.currentFilter === 'timestamp') {
-      this.discussService.fetchTopicById(this.topicId, this.topicName).subscribe(
+      this.discussService.fetchTopicById(this.topicId, page).subscribe(
         (data: NSDiscussData.IDiscussionData) => {
           this.data = data
           this.paginationData = data.pagination
@@ -222,7 +212,7 @@ export class DiscussionComponent implements OnInit, OnDestroy, AfterViewInit {
           this.openSnackbar(err.error.message.split('|')[1] || this.defaultError)
         })
     } else {
-      this.discussService.fetchTopicByIdSort(this.topicId, this.topicName, 'voted').subscribe(
+      this.discussService.fetchTopicByIdSort(this.topicId, 'voted', page).subscribe(
         (data: NSDiscussData.IDiscussionData) => {
           this.data = data
           this.paginationData = data.pagination

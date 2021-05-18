@@ -1,22 +1,16 @@
 <div class="flex flex-1 items-center card-container ws-mat-primary-tags">
     <a href="javascript:void(0)" class="flex flex-1" i18n-aria-label role="link">
-        <!-- <div class="mr-3 cursor-pointer" (click)="goToUserProfile(user)">
+        <div class="mr-3 cursor-pointer" (click)="goToUserProfile(user)">
             <ws-widget-avatar-photo [name]="getUseravatarName()" [photoUrl]="user?.photo" size="m">
             </ws-widget-avatar-photo>
-        </div> -->
-        <div class="mr-3 cursor-pointer circle-m" (click)="goToUserProfile(user)">
-            <div class="initials">
-                {{user?.personalDetails?.firstname.charAt(0).toUpperCase()}}{{user?.personalDetails?.surname.charAt(0).toUpperCase()}}
-            </div>
         </div>
         <div class="flex flex-col flex-1 cursor-pointer" (click)="goToUserProfile(user)">
             <!-- <a href="javascript:void(0)" class="" i18n-aria-label role="link"> -->
-            <!-- <div class="name truncate ws-mat-black-text">
+            <div class="name truncate ws-mat-black-text ">
                 {{user?.name}}
-            </div> -->
-            <ws-app-connection-name [hoverUser]="usr"></ws-app-connection-name>
+            </div>
             <div class="designation truncate ws-mat-black60-text">
-                {{user?.employmentDetails?.departmentName}}
+                {{user?.department}}
             </div>
             <!-- </a> -->
         </div>
@@ -36,7 +30,6 @@
         </button>
     </div>
 </div>
-
 
 <input type="hidden" i18-value i18-aria-value aria-value="Connection accepted" value="Connection accepted successfully!"
     #toastAccept />

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core'
-import { TFetchStatus } from '@sunbird-cb/utils'
+import { TFetchStatus } from '../../../../../utils/src/public-api'
 import { NsGoal } from '../btn-goals.model'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 
@@ -15,7 +15,7 @@ export class BtnGoalsDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<BtnGoalsDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-  ) { }
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 }

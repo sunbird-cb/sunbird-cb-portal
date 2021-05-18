@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { IapComponent } from './iap.component'
 import { IapRoutingModule } from './iap-routing.module'
-import { WidgetResolverModule } from '@sunbird-cb/resolver'
+import { WidgetResolverModule } from '@ws-widget/resolver'
 import { IapModule as IapPluginModule } from '../../plugins/iap/iap.module'
 
 import {
@@ -26,13 +26,13 @@ import {
   UserContentRatingModule,
   BtnContentFeedbackV2Module,
   PlayerBriefModule,
-} from '@sunbird-cb/collection'
+} from '@ws-widget/collection'
 
 import {
   PipeDurationTransformModule,
   PipeLimitToModule,
   PipePartialContentModule,
-} from '@sunbird-cb/utils'
+} from '@ws-widget/utils'
 @NgModule({
   declarations: [IapComponent],
   imports: [

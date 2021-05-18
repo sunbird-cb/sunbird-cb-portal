@@ -1,9 +1,9 @@
 
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ActivatedRoute, Router, Event, NavigationEnd, NavigationError } from '@angular/router'
-import { ValueService } from '@sunbird-cb/utils'
+import { ValueService } from '@ws-widget/utils/src/public-api'
 import { map } from 'rxjs/operators'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { NsWidgetResolver } from 'library/ws-widget/resolver/src/public-api'
 @Component({
   selector: 'app-discuss',
   templateUrl: './discuss.component.html',
@@ -12,9 +12,9 @@ import { NsWidgetResolver } from '@sunbird-cb/resolver'
 export class DiscussComponent implements OnInit, OnDestroy {
   sideNavBarOpened = true
   panelOpenState = false
-  titles = [{ title: 'DISCUSS', url: '/app/discussion-forum', icon: 'forum' }]
+  titles = [{ title: 'DISCUSS', url: '/app/discuss/home', icon: 'forum' }]
   unread = 0
-  currentRoute = 'forum'
+  currentRoute = 'home'
   banner!: NsWidgetResolver.IWidgetData<any>
   private bannerSubscription: any
   public screenSizeIsLtMedium = false
@@ -28,7 +28,7 @@ export class DiscussComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {
         // Hide loading indicator
         // console.log(event.url)
-        this.bindUrl(event.urlAfterRedirects.replace('/app/discussion-forum', ''))
+        this.bindUrl(event.urlAfterRedirects.replace('/app/discuss/', ''))
       }
 
       if (event instanceof NavigationError) {

@@ -1,8 +1,8 @@
 import { EventEmitter, Injectable } from '@angular/core'
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { Observable, BehaviorSubject } from 'rxjs'
-import { ConfigurationsService } from '@sunbird-cb/utils'
-import { NsPlaylist, NsGoal, NsDiscussionForum } from '@sunbird-cb/collection'
+import { ConfigurationsService } from '../../../../../../../../library/ws-widget/utils/src/lib/services/configurations.service'
+import { NsPlaylist, NsGoal, NsDiscussionForum } from '../../../../../../../../library/ws-widget/collection/src/public-api'
 import { IFollowDetails } from '../person-profile.model'
 
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'

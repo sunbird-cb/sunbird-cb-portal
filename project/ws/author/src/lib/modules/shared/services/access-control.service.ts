@@ -4,7 +4,7 @@ import { MIME_TYPE } from '@ws/author/src/lib/constants/mimeType'
 import { ISearchContent } from '@ws/author/src/lib/interface/search'
 import { APP_BASE_HREF } from '@angular/common'
 import { Inject, Injectable } from '@angular/core'
-import { ConfigurationsService, NsInstanceConfig } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsInstanceConfig } from '@ws-widget/utils'
 import { NSContent } from '@ws/author/src/lib/interface/content'
 
 @Injectable()
@@ -64,8 +64,9 @@ export class AccessControlService {
   }
 
   get defaultLogo(): string {
-    const logo = this.configService.instanceConfig ?  this.configService.instanceConfig.logos.defaultContent : ''
-    return logo || ''
+    return this.configService.instanceConfig
+      ? this.configService.instanceConfig.logos.defaultContent
+      : ''
   }
 
   get appName(): string {

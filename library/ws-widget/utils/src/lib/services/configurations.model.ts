@@ -1,5 +1,5 @@
+import { NsWidgetResolver } from '@ws-widget/resolver'
 import { NsPage } from '../resolvers/page.model'
-import { NsWidgetResolver } from './widget-resolver.model'
 export namespace NsInstanceConfig {
   export interface IConfig {
     authoring: {
@@ -60,7 +60,6 @@ export namespace NsInstanceConfig {
     sourceFieldsUserAutocomplete?: string[]
     forgotPasswordConfig?: IForgotPassword
     hubs: IHubs[]
-    courseContentPath?: string
   }
 
   export interface IForgotPassword {
@@ -141,8 +140,8 @@ export namespace NsInstanceConfig {
     company: string
     developedBy: string
     poweredBy: string
-    defaultContent?: string
-    defaultSourceLogo?: string
+    defaultContent: string
+    defaultSourceLogo: string
     landingLogo: string
     navbarLogo?: string
     playListLogo?: string
@@ -241,26 +240,20 @@ export namespace NsUser {
     email?: string
     departmentName?: string
     userName?: string
-    firstName?: string
-    surName?: string
-    middleName?: string
-    lastName?: string
-    rootOrgId?: string
-    rootOrgName?: string
-    profileImage?: string
     givenName?: string
     country?: null | string
     unit?: string | null
     source_profile_picture?: null | string
     dealerCode?: null | string
     isManager?: boolean
+    lastName?: string
+    firstName?: string
+    surName?: string
+    middleName?: string
+    profileImage?: string
+    rootOrgId?: string
+    rootOrgName?: string
   }
-
-  export interface INodebbUserProfile {
-    username: string
-    email: string
-  }
-
   export interface IUserPidProfile {
     kid_updated: boolean
     user: IUser
@@ -275,7 +268,7 @@ export namespace NsUser {
 
   export interface IUserPidProfileVer2 {
     result: {
-      UserProfile: IUserVer2
+      UserProfile: IUserVer2[]
     }
   }
   interface ISourceData {
@@ -344,66 +337,31 @@ export namespace NsUser {
     json_unmapped_fields?: any
     source_data: ISourceData
   }
-  interface IRootOrg {
-    dateTime: string
-    preferredLanguage: string
-    keys: {}
-    channel: string
-    approvedBy: string
-    description: string
-    updatedDate: string
-    addressId: string
-    orgType: string
-    provider: string
-    orgCode: string
-    locationId: string
-    theme: string
-    id: string
-    isApproved: boolean
-    communityId: string
-    slug: string
-    email: string
-    isSSOEnabled: boolean
-    thumbnail: string
-    updatedBy: string
-    orgName: string
-    locationIds: []
-    externalId: string
-    isRootOrg: boolean
-    rootOrgId: string
-    imgUrl: string
-    approvedDate: string
-    orgTypeId: string
-    homeUrl: string
-    isDefault: boolean
-    createdDate: string
-    contactDetail: string
-    parentOrgId: string
-    createdBy: string
-    hashTagId: string
-    noOfMembers: string
-    status: number
+  interface IUserVer2 {
+    'firstname': string,
+    'motherTongue': string,
+    'secondaryEmail': string,
+    'gender': string,
+    '@type': string,
+    'mobile': number,
+    'middlename': string,
+    'telephone': number,
+    'osid': string,
+    'primaryEmailType': string,
+    'knownLanguages': ILanguages[],
+    'wid': string,
+    'nationality': string,
+    'surname': string,
+    'dob': string,
+    'category': string,
+    'primaryEmail': string,
+    'maritalStatus': string,
+    'residenceAddress': string,
+    'result': any
   }
-  interface IOrg {
-    updatedBy: string
-    organisationId: string
-    orgName: string
-    addedByName: string
-    addedBy: string
-    roles: string[]
-    approvedBy: string
-    updatedDate: string
-    userId: string
-    approvaldate: string
-    isDeleted: boolean
-    parentOrgId: string
-    hashTagId: string
-    isRejected: boolean
-    position: string
-    id: string
-    orgjoindate: string
-    isApproved: boolean
-    orgLeftDate: string
+
+  export interface ILanguages {
+    name: string
   }
   interface IUserV2 {
     surName: any
@@ -461,29 +419,66 @@ export namespace NsUser {
     tncAcceptedVersion: string
   }
 
-  interface IUserVer2 {
-    'firstname': string,
-    'motherTongue': string,
-    'secondaryEmail': string,
-    'gender': string,
-    '@type': string,
-    'mobile': number,
-    'middlename': string,
-    'telephone': number,
-    'osid': string,
-    'primaryEmailType': string,
-    'knownLanguages': ILanguages[],
-    'wid': string,
-    'nationality': string,
-    'surname': string,
-    'dob': string,
-    'category': string,
-    'primaryEmail': string,
-    'maritalStatus': string,
-    'residenceAddress': string,
-    'result': any
+  interface IRootOrg {
+    dateTime: string
+    preferredLanguage: string
+    keys: {}
+    channel: string
+    approvedBy: string
+    description: string
+    updatedDate: string
+    addressId: string
+    orgType: string
+    provider: string
+    orgCode: string
+    locationId: string
+    theme: string
+    id: string
+    isApproved: boolean
+    communityId: string
+    slug: string
+    email: string
+    isSSOEnabled: boolean
+    thumbnail: string
+    updatedBy: string
+    orgName: string
+    locationIds: []
+    externalId: string
+    isRootOrg: boolean
+    rootOrgId: string
+    imgUrl: string
+    approvedDate: string
+    orgTypeId: string
+    homeUrl: string
+    isDefault: boolean
+    createdDate: string
+    contactDetail: string
+    parentOrgId: string
+    createdBy: string
+    hashTagId: string
+    noOfMembers: string
+    status: number
   }
-  export interface ILanguages {
-    name: string
+
+  interface IOrg {
+    updatedBy: string
+    organisationId: string
+    orgName: string
+    addedByName: string
+    addedBy: string
+    roles: string[]
+    approvedBy: string
+    updatedDate: string
+    userId: string
+    approvaldate: string
+    isDeleted: boolean
+    parentOrgId: string
+    hashTagId: string
+    isRejected: boolean
+    position: string
+    id: string
+    orgjoindate: string
+    isApproved: boolean
+    orgLeftDate: string
   }
 }

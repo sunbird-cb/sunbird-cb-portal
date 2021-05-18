@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { NetworkV2Service } from '../../services/network-v2.service'
-import { NsUser, ConfigurationsService } from '@sunbird-cb/utils'
-import { CardNetWorkService } from '@sunbird-cb/collection'
+import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
+import { CardNetWorkService } from '@ws-widget/collection/src/lib/card-network/card-network.service'
 
 @Component({
   selector: 'ws-app-network-home',
@@ -17,27 +17,19 @@ export class NetworkHomeComponent implements OnInit {
   tabsData: NSNetworkDataV2.IProfileTab[]
   recommendedUsers!: NSNetworkDataV2.IRecommendedUserResult
   connectionRequests!: any
-  connectionRequestsSent!: any
   enableFeature = true
   nameFilter = ''
   searchSpinner = false
   searchResultUserArray: any = []
   establishedConnections!: NSNetworkDataV2.INetworkUser[]
-  me!: NsUser.IUserProfile
-  currentUserDept: any
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private networkV2Service: NetworkV2Service,
-    private cardNetworkService: CardNetWorkService,
-    private activeRoute: ActivatedRoute,
     private configSvc: ConfigurationsService,
+    private cardNetworkService: CardNetWorkService,
   ) {
-    this.currentUserDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
-    if (this.activeRoute.parent) {
-      this.me = this.activeRoute.parent.snapshot.data.me
-    }
     if (this.route.snapshot.data.recommendedUsers && this.route.snapshot.data.recommendedUsers.data.result) {
       this.recommendedUsers = this.route.snapshot.data.recommendedUsers.data.result.data.
       find((item: any) => item.field === 'employmentDetails.departmentName').results
@@ -49,7 +41,7 @@ export class NetworkHomeComponent implements OnInit {
       return v
     })
     this.connectionRequests = this.route.snapshot.data.connectionRequests.data.result.data
-    this.getAllConnectionRequests()
+
   }
 
   ngOnInit() {
@@ -77,18 +69,16 @@ export class NetworkHomeComponent implements OnInit {
 
   connectionUpdateSearchCard(event: any) {
     if (event === 'connection-updated') {
-      this.connectionUpdatePeopleCard(event)
-      this.getAllConnectionRequests()
       this.searchUser()
     }
   }
 
   connectionUpdatePeopleCard(event: any) {
     if (event === 'connection-updated') {
-      // let usrDept = 'igot'
-      // if (this.me) {
-      //   usrDept = this.me.departmentName || 'igot'
-      // }
+      let usrDept = 'iGOT'
+      if (this.configSvc.userProfile) {
+        usrDept = this.configSvc.userProfile.departmentName || 'iGOT'
+      }
       let req: NSNetworkDataV2.IRecommendedUserReq
       req = {
         size: 50,
@@ -96,7 +86,7 @@ export class NetworkHomeComponent implements OnInit {
         search: [
           {
             field: 'employmentDetails.departmentName',
-            values: [this.currentUserDept],
+            values: [usrDept],
           },
         ],
       }
@@ -119,91 +109,71 @@ export class NetworkHomeComponent implements OnInit {
       this.enableFeature = false
       this.getSearchResult()
     }
-  }
 
-  getAllConnectionRequests() {
-    this.networkV2Service.fetchAllConnectionRequests().subscribe(
-      (requests: any) => {
-        this.connectionRequestsSent = requests.result.data
-      })
   }
 
   getSearchResult() {
-    const val = this.nameFilter.trim()
-    this.searchResultUserArray = []
-    if (val.length >= 3) {
-      this.searchResultUserArray = []
-      if (this.searchResultUserArray && this.searchResultUserArray.length === 0) {
-        this.cardNetworkService.fetchSearchUserInfo(val).subscribe(data => {
-          this.searchResultUserArray = []
-          this.searchResultUserArray = data
-          // this.searchResultUserArray.forEach((usr: any) => {
-            // this.networkV2Service.fetchProfile(usr.wid).subscribe((res: any) => {
-              // const resdata = res.result.UserProfile[0]
-              // if (usr.wid === resdata.id) {
-                // const index = this.searchResultUserArray.indexOf(usr.wid)
-                // console.log(index)
-                // this.searchResultUserArray[index] = resdata
-              // }
-              if (this.searchResultUserArray && this.searchResultUserArray.length > 0) {
-                // this.networkV2Service.fetchAllConnectionRequests().subscribe(
-                //   requests => {
-                    // Filter all the connection requests sent
-                    if (this.connectionRequestsSent &&  this.connectionRequestsSent.length > 0) {
-                      this.connectionRequestsSent.map((user: any) => {
-                        const userid = user.id || user.identifier || user.wid
-                        if (userid) {
-                          this.searchResultUserArray.map((autoCompleteUser: any) => {
-                            if ((autoCompleteUser.userId || autoCompleteUser.wid) === userid) {
-                              autoCompleteUser['requestSent'] = true
-                            }
-                          })
-                        }
-                      })
-                    }
-                    // Filter all the connection requests recieved
-                    if (this.connectionRequests && this.connectionRequests.length > 0) {
-                      this.connectionRequests.map((con: any) => {
-                        const userid = con.id || con.identifier || con.wid
-                        if (userid) {
-                          this.searchResultUserArray.map((autoCompleteUser: any) => {
-                            if ((autoCompleteUser.userId || autoCompleteUser.wid) === userid) {
-                              autoCompleteUser['requestRecieved'] = true
-                            }
-                          })
-                        }
-                      })
-                    }
-                    // Filter all the estalished connections
-                    if (this.establishedConnections && this.establishedConnections.length > 0) {
-                      this.establishedConnections.map((con: any) => {
-                        const userid = con.id || con.identifier || con.wid
-                        if (userid) {
-                          this.searchResultUserArray.map((autoCompleteUser: any) => {
-                            if ((autoCompleteUser.userId || autoCompleteUser.wid) === userid) {
-                              autoCompleteUser['connectionEstablished'] = true
-                            }
-                          })
-                        }
-                      })
-                    }
-                    this.searchSpinner = false
-
-                  this.searchResultUserArray = this.searchResultUserArray.filter((el: any) => {
-                    if (this.me && this.me.userId) {
-                      if (el.wid === this.me.userId) {
-                        return false
-                      }
-                    }
-                    return el
-                  })
-              } else {
-                this.searchSpinner = false
+    this.cardNetworkService.fetchSearchUserInfo(this.nameFilter.trim()).subscribe(data => {
+      this.searchResultUserArray = data.result.UserProfile
+      this.networkV2Service.fetchAllConnectionRequests().subscribe(
+        requests => {
+          // Filter all the connection requests sent
+          if (requests && requests.result && requests.result.data) {
+            requests.result.data.map(user => {
+              if (user.id) {
+                this.searchResultUserArray.map((autoCompleteUser: any) => {
+                  if (autoCompleteUser.wid === user.id) {
+                    autoCompleteUser['requestSent'] = true
+                  }
+                })
               }
-            // })
-          // })
+            })
+          }
+          // Filter all the connection requests recieved
+          if (this.connectionRequests) {
+            this.connectionRequests.map((con: any) => {
+              if (con.id) {
+                this.searchResultUserArray.map((autoCompleteUser: any) => {
+                  if (autoCompleteUser.wid === con.id) {
+                    autoCompleteUser['requestRecieved'] = true
+                  }
+                })
+              }
+            })
+          }
+          // Filter all the estalished connections
+          if (this.establishedConnections) {
+            this.establishedConnections.map((con: any) => {
+              if (con.id) {
+                this.searchResultUserArray.map((autoCompleteUser: any) => {
+                  if (autoCompleteUser.wid === con.id) {
+                    autoCompleteUser['connectionEstablished'] = true
+                  }
+                })
+              }
+            })
+          }
+          this.searchSpinner = false
+        },
+        (_err: any) => {
+          this.searchSpinner = false
         })
-      }
-    }
+      // this.searchResultUserArray.splice(this.searchResultUserArray.findIndex((el: any) => {
+      //   if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
+      //     return el.wid === this.configSvc.userProfile.userId
+      //   }
+      //   return -1
+      // // tslint:disable-next-line: align
+      // }), 0)
+      this.searchResultUserArray = this.searchResultUserArray.filter((el: any) => {
+        if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
+          if (el.wid === this.configSvc.userProfile.userId) {
+            return false
+          }
+        }
+        return el
+      })
+    })
   }
+
 }

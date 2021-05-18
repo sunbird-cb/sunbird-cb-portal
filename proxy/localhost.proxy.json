@@ -1,6 +1,6 @@
 {
   "/apis/*": {
-    "target": "https://igot-dev.in",
+    "target": "https://igot-sunbird.idc.tarento.com",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true,

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '../../../../../utils/src/public-api'
 
 @Component({
   selector: 'ws-widget-btn-linkedin-share',
@@ -13,7 +13,7 @@ export class BtnLinkedinShareComponent implements OnInit {
   @Input() shareType: string | null = null
   isSocialMediaLinkedinShareEnabled = false
   userId: string | undefined
-  constructor(private sanitizer: DomSanitizer, private configSvc: ConfigurationsService) { }
+  constructor(private sanitizer: DomSanitizer, private configSvc: ConfigurationsService) {}
 
   ngOnInit() {
     if (this.configSvc.restrictedFeatures) {
@@ -29,7 +29,7 @@ export class BtnLinkedinShareComponent implements OnInit {
   get sanitizeFbUrl() {
     const url = `https://${window.location.hostname}/share/${this.shareType}/${this.userId}/${this.contentId}`
     return this.sanitizer.bypassSecurityTrustResourceUrl(
-      `https://www.linkedin.com/shareArticle?mini=true&url=${url}&source=LinkedIn`,
-    )
-  }
+    `https://www.linkedin.com/shareArticle?mini=true&url=${url}&source=LinkedIn`,
+  )
+}
 }

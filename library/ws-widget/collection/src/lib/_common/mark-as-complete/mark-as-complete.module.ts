@@ -13,7 +13,7 @@ import {
 } from '@angular/material'
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component'
 import { RouterModule } from '@angular/router'
-// import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
+import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 
 @NgModule({
   declarations: [MarkAsCompleteComponent, ConfirmDialogComponent],
@@ -29,7 +29,7 @@ import { RouterModule } from '@angular/router'
     MatTooltipModule,
     RouterModule,
   ],
-  // providers: [AppTocService],
+  providers: [AppTocService],
   entryComponents: [ConfirmDialogComponent],
   exports: [MarkAsCompleteComponent],
 })

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { PersonProfileService } from '../../services/person-profile.service'
-import { NsContent } from '@sunbird-cb/collection'
+import { NsContent } from '../../../../../../../../../library/ws-widget/collection/src/public-api'
 export interface IFilteredContent {
   contentType: string,
   contents: NsContent.IContent[]

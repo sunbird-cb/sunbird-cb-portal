@@ -3,8 +3,8 @@ import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router'
 import { catchError, map, tap } from 'rxjs/operators'
 import { Observable, of } from 'rxjs'
 import { AccessControlService } from '@ws/author'
-import { WidgetContentService, NsContent, VIEWER_ROUTE_FROM_MIME } from '@sunbird-cb/collection'
-import { IResolveResponse, AuthMicrosoftService, ConfigurationsService } from '@sunbird-cb/utils'
+import { WidgetContentService, NsContent, VIEWER_ROUTE_FROM_MIME } from '@ws-widget/collection'
+import { IResolveResponse, AuthMicrosoftService, ConfigurationsService } from '@ws-widget/utils'
 import { ViewerDataService } from './viewer-data.service'
 import { MobileAppsService } from '../../../../../src/app/services/mobile-apps.service'
 import { Platform } from '@angular/cdk/platform'
@@ -51,7 +51,7 @@ export class ViewerResolve
         this.viewerDataSvc.primaryCategory,
       )
     ).pipe(
-      tap((content: any) => {
+      tap(content => {
         // tslint:disable-next-line: no-parameter-reassignment
         content = content.result.content
         if (content.status === 'Deleted' || content.status === 'Expired') {
@@ -82,7 +82,7 @@ export class ViewerResolve
           })
         }
       }),
-      map((data: any) => {
+      map(data => {
         // tslint:disable-next-line: no-parameter-reassignment
         data = data.result.content
         if (resourceType === 'unknown') {

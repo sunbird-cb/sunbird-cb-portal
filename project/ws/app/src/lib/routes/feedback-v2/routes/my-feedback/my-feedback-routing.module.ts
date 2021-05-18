@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
-import { EFeedbackRole } from '@sunbird-cb/collection'
+import { EFeedbackRole } from '@ws-widget/collection'
 
 import { HomeComponent } from './components/home/home.component'
 import { FeedbackThreadComponent } from './components/feedback-thread/feedback-thread.component'

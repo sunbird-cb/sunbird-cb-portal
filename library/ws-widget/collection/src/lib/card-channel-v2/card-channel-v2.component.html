@@ -25,8 +25,13 @@
 </a> -->
 {{ widgetData | json }}
 <div class="card-minimal-container">
-  <a [routerLink]="widgetData?.artifactUrl" class="card-link" role="link" aria-label="Content"
-    i18n-aria-label="Content | Click to view">
+  <a
+    [routerLink]="widgetData?.artifactUrl"
+    class="card-link"
+    role="link"
+    aria-label="Content"
+    i18n-aria-label="Content | Click to view"
+  >
     <!-- <img
       [src]="widgetData.appIcon"
       [id]="'card_' + widgetData.identifier"
@@ -35,8 +40,13 @@
       [alt]="widgetData.name"
       [title]="widgetData.name"
     /> -->
-    <img [src]="widgetData.appIcon" [id]="'card_' + widgetData.identifier"
-      class="card-thumbnail ws-mat-primary-lite-background" [alt]="widgetData.name" [title]="widgetData.name" />
+    <img
+      [src]="widgetData.appIcon"
+      [id]="'card_' + widgetData.identifier"
+      class="card-thumbnail ws-mat-primary-lite-background"
+      [alt]="widgetData.name"
+      [title]="widgetData.name"
+    />
   </a>
   <div class="card-overlay">
     <h3 *ngIf="widgetData.name" class="text-truncate card-title">
@@ -54,9 +64,9 @@
           [displayContentType]="widgetData?.displayContentType"
         >
         </ws-widget-display-content-type> -->
-        <!-- <span *ngIf="!!widgetData.expiryDate" i18n-title title="Duration">
+        <span *ngIf="widgetData.expiryDate" i18n-title title="Duration">
           {{ widgetData.expiryDate | pipeDurationTransform: 'hms' }}
-        </span> -->
+        </span>
       </div>
       <!-- <button
         mat-icon-button

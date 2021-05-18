@@ -31,12 +31,9 @@ import {
   UserAutocompleteModule,
   UserImageModule,
   ContentPickerV2Module,
-  BtnLinkedinShareModule,
-  BtnFacebookShareModule,
-  BtnTwitterShareModule,
-} from '@sunbird-cb/collection'
-import { WidgetResolverModule } from '@sunbird-cb/resolver'
-import { DefaultThumbnailModule, PipeDurationTransformModule } from '@sunbird-cb/utils'
+} from '@ws-widget/collection'
+import { WidgetResolverModule } from '@ws-widget/resolver'
+import { DefaultThumbnailModule, PipeDurationTransformModule } from '@ws-widget/utils'
 import { PlaylistCardComponent } from './components/playlist-card/playlist-card.component'
 import { PlaylistContentDeleteDialogComponent } from './components/playlist-content-delete-dialog/playlist-content-delete-dialog.component'
 import { PlaylistContentDeleteErrorDialogComponent } from './components/playlist-content-delete-error-dialog/playlist-content-delete-error-dialog.component'
@@ -50,6 +47,10 @@ import { PlaylistEditComponent } from './routes/playlist-edit/playlist-edit.comp
 import { PlaylistHomeComponent } from './routes/playlist-home/playlist-home.component'
 import { PlaylistNotificationComponent } from './routes/playlist-notification/playlist-notification.component'
 import { DragDropModule } from '@angular/cdk/drag-drop'
+import { BtnLinkedinShareModule } from '../../../../../../../library/ws-widget/collection/src/lib/btn-linkedin-share/btn-linkedin-share.module'
+import { BtnFacebookShareModule } from '../../../../../../../library/ws-widget/collection/src/lib/btn-facebook-share/btn-facebook-share.module'
+import { BtnTwitterShareModule } from '../../../../../../../library/ws-widget/collection/src/lib/btn-twitter-share/btn-twitter-share.module'
+
 @NgModule({
   declarations: [
     PlaylistCardComponent,

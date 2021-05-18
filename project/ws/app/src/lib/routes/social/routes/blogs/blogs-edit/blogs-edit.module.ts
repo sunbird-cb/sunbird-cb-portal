@@ -18,7 +18,7 @@ import {
   MatExpansionModule,
   MatProgressSpinnerModule,
 } from '@angular/material'
-import { EditorQuillModule, BtnPageBackModule } from '@sunbird-cb/collection'
+import { EditorQuillModule, BtnPageBackModule } from '@ws-widget/collection'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 @NgModule({

@@ -5,19 +5,18 @@
 .career-card {
   // display: flex;
   flex: 1;
-  height: 100%;
-  // height: calc(100% - 2rem);
+//   height: 100%;
+  height: calc(100% - 2rem);
   &.mat-card{
-    // flex-direction: column;
-    // display: flex;
-    display: inline-table;
-    width: 94%;
+    flex-direction: column;
+    display: flex;
   }
   .mat-card-footer{
     justify-self: flex-end;
     align-items: center;
   }
 }
+
 .dot:before {
   content: '•';
   margin: 1rem;
@@ -64,7 +63,6 @@
   min-width: 50px;
   justify-content: center;
   border-radius: 20px 5px 5px 20px;
-  max-height: 30px;
 }
 
 .noocoments {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { WidgetBaseComponent, NsWidgetResolver } from '@sunbird-cb/resolver'
+import { WidgetBaseComponent, NsWidgetResolver } from '@ws-widget/resolver'
 
 @Component({
   selector: 'ws-widget-home-network-component',
@@ -13,10 +13,7 @@ export class CardHomeNetworkComponent extends WidgetBaseComponent implements OnI
   imageSize = 'm'
   ngOnInit(): void {
   }
-  getUserFullName(user: any) {
-    if (user) {
-
-    }
+  getUserFullName() {
     return 'SH'
   }
   getUserSize() {

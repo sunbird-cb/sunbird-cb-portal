@@ -35,7 +35,7 @@ import {
   PickerContentModule,
   UserAutocompleteModule,
   UserImageModule,
-} from '@sunbird-cb/collection'
+} from '@ws-widget/collection'
 import { DialogAssignComponent } from './components/dialog-assign/dialog-assign.component'
 import {
   DialogUserRoleSelectComponent,

@@ -7,7 +7,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core'
-import { TFetchStatus, EventService } from '@sunbird-cb/utils'
+import { TFetchStatus, EventService } from '../../../../../utils/src/public-api'
 import { NsGoal } from '../btn-goals.model'
 import { BtnGoalsService } from '../btn-goals.service'
 import { MatSnackBar, MatListOption } from '@angular/material'

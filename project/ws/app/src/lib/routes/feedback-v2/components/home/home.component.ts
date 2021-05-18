@@ -2,8 +2,8 @@ import { Component, OnDestroy } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { Subscription } from 'rxjs'
 
-import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
-import { EFeedbackType } from '@sunbird-cb/collection'
+import { ConfigurationsService, NsPage } from '@ws-widget/utils'
+import { EFeedbackType } from '@ws-widget/collection'
 
 @Component({
   selector: 'ws-app-home',

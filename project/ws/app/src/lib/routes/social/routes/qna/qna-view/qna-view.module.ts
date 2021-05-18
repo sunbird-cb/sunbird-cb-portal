@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
-import { WidgetResolverModule } from '@sunbird-cb/resolver'
+import { WidgetResolverModule } from '@ws-widget/resolver'
 import {
   MatButtonModule,
   MatDividerModule,
@@ -23,8 +23,8 @@ import {
   BtnSocialVoteModule,
   BtnSocialLikeModule,
   UserImageModule,
-} from '@sunbird-cb/collection'
-import { PipeLimitToModule, PipeSafeSanitizerModule } from '@sunbird-cb/utils'
+} from '@ws-widget/collection'
+import { PipeLimitToModule, PipeSafeSanitizerModule } from '@ws-widget/utils'
 
 import { QnaViewComponent } from './components/qna-view/qna-view.component'
 import { QnaReplyComponent } from './components/qna-reply/qna-reply.component'

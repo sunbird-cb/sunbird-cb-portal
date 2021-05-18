@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core'
 import { Data } from '@angular/router'
-import { Subject, Observable, EMPTY, Subscription } from 'rxjs'
+import { Subject, Observable } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
-import { NsContent, NsContentConstants } from '@sunbird-cb/collection'
+import { NsContent } from '@ws-widget/collection/src/lib/_services/widget-content.model'
+import { NsContentConstants } from '@ws-widget/collection/src/lib/_constants/widget-content.constants'
 import { NsAppToc, NsCohorts } from '../models/app-toc.model'
-import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
+import { TFetchStatus, ConfigurationsService } from '@ws-widget/utils'
 
 // TODO: move this in some common place
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'
@@ -32,11 +33,8 @@ const API_END_POINTS = {
 export class AppTocService {
   analyticsReplaySubject: Subject<any> = new Subject()
   analyticsFetchStatus: TFetchStatus = 'none'
-  batchReplaySubject: Subject<any> = new Subject()
-  resumeData: Subject<NsContent.IContinueLearningData | null> = new Subject<NsContent.IContinueLearningData | null>()
   private showSubtitleOnBanners = false
   private canShowDescription = false
-  resumeDataSubscription: Subscription | null = null
 
   constructor(private http: HttpClient, private configSvc: ConfigurationsService) { }
 
@@ -51,14 +49,6 @@ export class AppTocService {
   }
   set showDescription(val: boolean) {
     this.canShowDescription = val
-  }
-
-  updateBatchData() {
-    this.batchReplaySubject.next()
-  }
-
-  updateResumaData(data: any) {
-    this.resumeData.next(data)
   }
 
   showStartButton(content: NsContent.IContent | null): { show: boolean; msg: string } {
@@ -84,33 +74,11 @@ export class AppTocService {
     return status
   }
 
-  initData(data: Data, needResumeData: boolean = false): NsAppToc.IWsTocResponse {
+  initData(data: Data): NsAppToc.IWsTocResponse {
     let content: NsContent.IContent | null = null
     let errorCode: NsAppToc.EWsTocErrorCode | null = null
     if (data.content && data.content.data && data.content.data.identifier) {
       content = data.content.data
-      if (needResumeData) {
-        this.resumeDataSubscription = this.resumeData.subscribe(
-          (dataResult: any) => {
-            if (dataResult && dataResult.length) {
-              // dataResult.map((item: any) => {
-              //   if ( && content.children) {
-              //     const foundContent = content.children.find(el => el.identifier === item.contentId)
-              //     if (foundContent) {
-              //       foundContent.completionPercentage = item.completionPercentage
-              //       foundContent.completionStatus = item.status
-              //     }
-              //   }
-              // })
-              this.mapCompletionPercentage(content, dataResult)
-            }
-          },
-          () => {
-            // tslint:disable-next-line: no-console
-            console.log('error on resumeDataSubscription')
-          },
-        )
-      }
     } else {
       if (data.error) {
         errorCode = NsAppToc.EWsTocErrorCode.API_FAILURE
@@ -121,20 +89,6 @@ export class AppTocService {
     return {
       content,
       errorCode,
-    }
-  }
-
-  mapCompletionPercentage(content: NsContent.IContent | null, dataResult: any) {
-    if (content && content.children) {
-      content.children.map(child => {
-        const foundContent = dataResult.find((el: any) => el.contentId === child.identifier)
-        if (foundContent) {
-          child.completionPercentage = foundContent.completionPercentage
-          child.completionStatus = foundContent.status
-        } else {
-          this.mapCompletionPercentage(child, dataResult)
-        }
-      })
     }
   }
 
@@ -289,11 +243,9 @@ export class AppTocService {
   }
 
   fetchContentParents(contentId: string): Observable<NsContent.IContentMinimal[]> {
-    // return this.http.get<NsContent.IContentMinimal[]>(
-    //   `${API_END_POINTS.CONTENT_PARENTS}/${contentId}`,
-    // )
-    if (contentId) {}
-    return EMPTY
+    return this.http.get<NsContent.IContentMinimal[]>(
+      `${API_END_POINTS.CONTENT_PARENTS}/${contentId}`,
+    )
   }
   fetchContentWhatsNext(
     contentId: string,

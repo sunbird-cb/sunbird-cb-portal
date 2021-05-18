@@ -23,7 +23,7 @@
   <mat-sidenav-container autosize="true" class="sidenav-content-min-height">
     <mat-sidenav #sideNavBar [opened]="!screenSizeIsLtMedium" [mode]="screenSizeIsLtMedium ? 'over' : 'side'">
       <mat-nav-list class="margin-left-s margin-right-xs">
-        <!-- <a mat-list-item *ngIf="enabledTabs?.dashboard?.enabled" routerLinkActive="mat-toolbar"
+        <a mat-list-item *ngIf="enabledTabs?.dashboard?.enabled" routerLinkActive="mat-toolbar"
           (click)="tabUpdate(enabledTabs?.dashboard?.displayName); screenSizeIsLtMedium ? sideNavBar.toggle() : null"
           routerLink="/app/profile/dashboard">
           <mat-icon>account_circle</mat-icon>
@@ -71,7 +71,7 @@
           <mat-icon>data_usage</mat-icon>
           <span *ngIf="showText || screenSizeIsLtMedium" class="padding-left-s">
             {{enabledTabs?.featureUsage?.displayName}}</span>
-        </a> -->
+        </a>
         <a mat-list-item *ngIf="enabledTabs?.settings?.enabled" routerLinkActive="mat-toolbar"
           (click)="tabUpdate(enabledTabs?.settings?.displayName); screenSizeIsLtMedium ? sideNavBar.toggle() : null"
           routerLink="/app/profile/settings">

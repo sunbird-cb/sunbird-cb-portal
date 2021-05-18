@@ -1,6 +1,6 @@
 import { Directive, HostListener, Input } from '@angular/core'
 import { Router } from '@angular/router'
-import { MobileAppsService } from './mobile-apps.service'
+import { MobileAppsService } from '../../../../../../src/app/services/mobile-apps.service'
 
 @Directive({
   selector: '[wsWidgetUrlResolver]',

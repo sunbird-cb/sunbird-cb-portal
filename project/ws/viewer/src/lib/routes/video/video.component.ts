@@ -6,13 +6,12 @@ import {
   IWidgetsPlayerMediaData,
   NsDiscussionForum,
   WidgetContentService,
-} from '@sunbird-cb/collection'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ValueService, ConfigurationsService } from '@sunbird-cb/utils'
+} from '@ws-widget/collection'
+import { NsWidgetResolver } from '@ws-widget/resolver'
+import { ValueService, ConfigurationsService } from '@ws-widget/utils'
 import { ActivatedRoute } from '@angular/router'
 import { ViewerUtilService } from '../../viewer-util.service'
 import { Platform } from '@angular/cdk/platform'
-import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'viewer-video',
@@ -42,7 +41,7 @@ export class VideoComponent implements OnInit, OnDestroy {
     private contentSvc: WidgetContentService,
     private platform: Platform,
     private accessControlSvc: AccessControlService,
-    private configSvc: ConfigurationsService
+    private configSvc: ConfigurationsService,
   ) { }
 
   ngOnInit() {
@@ -64,12 +63,11 @@ export class VideoComponent implements OnInit, OnDestroy {
           }
           this.widgetResolverVideoData = this.initWidgetResolverVideoData(this.videoData)
           let url = ''
-          // if (this.videoData.artifactUrl.indexOf('/content-store/') > -1) {
-          //   url = `/apis/authContent/${new URL(this.videoData.artifactUrl).pathname}`
-          // } else {
-          //   url = `/apis/authContent/${encodeURIComponent(this.videoData.artifactUrl)}`
-          // }
-          url = this.generateUrl(this.videoData.artifactUrl)
+          if (this.videoData.artifactUrl.indexOf('/content-store/') > -1) {
+            url = `/apis/authContent/${new URL(this.videoData.artifactUrl).pathname}`
+          } else {
+            url = `/apis/authContent/${encodeURIComponent(this.videoData.artifactUrl)}`
+          }
           this.widgetResolverVideoData.widgetData.url = this.videoData ? url : ''
           this.widgetResolverVideoData.widgetData.disableTelemetry = true
           this.isFetchingDataComplete = true
@@ -148,23 +146,6 @@ export class VideoComponent implements OnInit, OnDestroy {
         () => { },
       )
     }
-  }
-
-  generateUrl(oldUrl: string) {
-    const chunk = oldUrl.split('/')
-    const newChunk = environment.azureHost.split('/')
-    const newLink = []
-    for (let i = 0; i < chunk.length; i += 1) {
-      if (i === 2) {
-        newLink.push(newChunk[i])
-      } else if (i === 3) {
-        newLink.push(environment.azureBucket)
-      } else {
-        newLink.push(chunk[i])
-      }
-    }
-    const newUrl = newLink.join('/')
-    return newUrl
   }
 
   ngOnDestroy() {

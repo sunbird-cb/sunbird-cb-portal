@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { NsUser } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsUser } from 'library/ws-widget/utils/src/public-api'
 import { Observable } from 'rxjs'
-import { ConfigurationsService } from 'library/ws-widget/utils/src/public-api'
 
 const API_ENDPOINTS = {
-  searchCompetency: 'apis/protected/v8/frac/searchNodes',
-  // searchCompetency: '/apis/protected/v8/competency/searchCompetency',
+  searchCompetency: '/apis/protected/v8/competency/searchCompetency',
   fetchProfileNyId: (id: string) => `/apis/protected/v8/user/profileDetails/getUserRegistryById${id}`,
   // fetchProfile: '/apis/protected/v8/user/profileDetails/getUserRegistry',
   fetchProfile: '/apis/protected/v8/user/profileRegistry/getUserRegistryById',
@@ -21,7 +19,7 @@ export class CompetenceService {
   usr: any
   constructor(
     private http: HttpClient, private configSvc: ConfigurationsService) {
-      this.usr = this.configSvc.userProfile
+    this.usr = this.configSvc.userProfile
   }
 
   get getUserProfile(): NsUser.IUserProfile {

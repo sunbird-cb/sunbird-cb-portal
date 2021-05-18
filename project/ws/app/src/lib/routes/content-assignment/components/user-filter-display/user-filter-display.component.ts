@@ -1,8 +1,11 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { ContentAssignService } from '@sunbird-cb/collection'
-import { ConfigurationsService } from '@sunbird-cb/utils'
-import { IUserSearchUnitFilterModel, IUserSearchRequestModel } from '@sunbird-cb/collection/src/lib/content-assign/content-assign.model'
+import {
+  IUserSearchRequestModel,
+  IUserSearchUnitFilterModel,
+} from '../../../../../../../../../library/ws-widget/collection/src/lib/content-assign/content-assign.model'
+import { ContentAssignService } from '../../../../../../../../../library/ws-widget/collection/src/public-api'
+import { ConfigurationsService } from '../../../../../../../../../library/ws-widget/utils/src/public-api'
 
 @Component({
   selector: 'ws-app-user-filter-display',
@@ -22,7 +25,6 @@ export class UserFilterDisplayComponent implements OnInit, OnChanges {
   userAdminLevel = ''
   userType = ''
   userFilterLevel = ''
-  userId: any
 
   constructor(
     private configSvc: ConfigurationsService,
@@ -75,16 +77,12 @@ export class UserFilterDisplayComponent implements OnInit, OnChanges {
   }
 
   applyLevelFilter() {
-    if (this.configSvc.org && this.userAdminLevel) {
-
-      if (this.configSvc.userProfile) {
-        this.userId = this.configSvc.userProfile.userId || ''
-      }
+    if (this.configSvc.userProfile && this.configSvc.org && this.userAdminLevel) {
       const reqBody = {
         pageSize: 10,
         orgs: this.configSvc.org,
         filters: {
-          wid: [this.userId],
+          wid: [this.configSvc.userProfile.userId],
         },
         requiredSources: [this.userAdminLevel],
       }

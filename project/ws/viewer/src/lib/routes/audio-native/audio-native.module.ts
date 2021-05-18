@@ -8,7 +8,7 @@ import {
   MatSnackBarModule,
 } from '@angular/material'
 
-import { WidgetResolverModule } from '@sunbird-cb/resolver'
+import { WidgetResolverModule } from '@ws-widget/resolver'
 
 import {
   BtnContentDownloadModule,
@@ -21,7 +21,7 @@ import {
   UserImageModule,
   UserContentRatingModule,
   BtnContentFeedbackV2Module,
-} from '@sunbird-cb/collection'
+} from '@ws-widget/collection'
 
 import {
   PipeDurationTransformModule,
@@ -29,7 +29,7 @@ import {
   DefaultThumbnailModule,
   PipePartialContentModule,
   PipeSafeSanitizerModule,
-} from '@sunbird-cb/utils'
+} from '@ws-widget/utils'
 
 import { AudioNativeModule as AudioNativeViewContainerModule } from '../../route-view-container/audio-native/audio-native.module'
 

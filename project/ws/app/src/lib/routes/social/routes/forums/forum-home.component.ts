@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Event, NavigationEnd, Router, ActivatedRoute, Data } from '@angular/router'
 import { Observable, Subscription } from 'rxjs'
-import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsPage, ValueService } from '../../../../../../../../../library/ws-widget/utils/src/public-api'
 import { SocialForum } from './models/SocialForumposts.model'
 import { ForumHandlerService } from './service/EmitterService/forum-handler.service'
 import { map } from 'rxjs/operators'

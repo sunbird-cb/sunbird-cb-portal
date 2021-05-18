@@ -1,6 +1,6 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core'
 import { NSCarrierData } from './carrier.model'
-import { WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { WidgetBaseComponent } from '@ws-widget/resolver'
 import { Router } from '@angular/router'
 
 @Component({
@@ -38,7 +38,7 @@ export class CardCarrierHomeComponent extends WidgetBaseComponent implements OnI
     }
   }
   getCareer(discuss: any) {
-    this.router.navigate([`/app/careers/home/${discuss.tid}/${discuss.title}`])
+    this.router.navigate([`/app/careers/home/${discuss.tid}`])
   }
 
 }

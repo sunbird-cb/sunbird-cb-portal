@@ -1,8 +1,7 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService } from '@sunbird-cb/utils'
-import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
+import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
 
 @Component({
   selector: 'ws-widget-card-home-network',
@@ -16,7 +15,7 @@ export class CardNetworkHomeComponent extends WidgetBaseComponent
   networkUser!: any
   @HostBinding('id')
   public id = `ws-card-home-network_${Math.random()}`
-  constructor(private router: Router, public configurationsService: ConfigurationsService, private discussUtils: DiscussUtilsService) {
+  constructor(private router: Router, public configurationsService: ConfigurationsService) {
     super()
   }
 
@@ -36,12 +35,5 @@ export class CardNetworkHomeComponent extends WidgetBaseComponent
   goToUserProfile(user: any) {
     this.router.navigate([`/app/person-profile`, user.id])
     // this.router.navigate(['/app/person-profile'], { queryParams: { emailId: user.personalDetails.primaryEmail } })
-  }
-  public getBgColor(tagTitle: any) {
-    const bgColor = this.discussUtils.stringToColor(tagTitle.toLowerCase())
-
-    const color = this.discussUtils.getContrast(bgColor)
-    // console.log(color)
-    return { color, 'background-color': 'red' }
   }
 }

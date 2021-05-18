@@ -3,7 +3,7 @@ import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { NetworkV2Service } from '../../services/network-v2.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
 
 @Component({
   selector: 'ws-app-network-my-mdo',
@@ -20,14 +20,12 @@ export class NetworkMyMdoComponent implements OnInit {
   currentFilter = 'timestamp'
   currentFilterSort = 'desc'
   enableSearchFeature = false
-  currentUserDept: any
   constructor(
     private route: ActivatedRoute,
     private networkV2Service: NetworkV2Service,
-    private configSvc: ConfigurationsService
+    private configSvc: ConfigurationsService,
   ) {
     // console.log('this.route.snapshot.data.myMdoList.data :', this.route.snapshot.data.myMdoList.data)
-    this.currentUserDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName
     this.data = this.route.snapshot.data.myMdoList.data.result.data.
       find((item: any) => item.field === 'employmentDetails.departmentName').results
 
@@ -65,11 +63,10 @@ export class NetworkMyMdoComponent implements OnInit {
 
   connectionUpdate(event: any) {
     if (event === 'connection-updated') {
-      // let usrDept = 'iGOT'
-
-      // if (this.configSvc.userProfile) {
-      //   usrDept = this.configSvc.userProfile.departmentName || 'iGOT'
-      // }
+      let usrDept = 'iGOT'
+      if (this.configSvc.userProfile) {
+        usrDept = this.configSvc.userProfile.departmentName || 'iGOT'
+      }
       let req: NSNetworkDataV2.IRecommendedUserReq
       req = {
         size: 50,
@@ -77,7 +74,7 @@ export class NetworkMyMdoComponent implements OnInit {
         search: [
           {
             field: 'employmentDetails.departmentName',
-            values: [this.currentUserDept],
+            values: [usrDept],
           },
         ],
       }

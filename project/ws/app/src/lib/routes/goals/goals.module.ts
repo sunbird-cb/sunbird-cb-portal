@@ -8,10 +8,7 @@ import {
   EmailInputModule,
   DisplayContentsModule,
   UserAutocompleteModule,
-  BtnLinkedinShareModule,
-  BtnFacebookShareModule,
-  BtnTwitterShareModule,
-} from '@sunbird-cb/collection'
+} from '@ws-widget/collection'
 import { GoalsRoutingModule } from './goals-routing.module'
 import { GoalDeleteDialogComponent } from './components/goal-delete-dialog/goal-delete-dialog.component'
 import { GoalAcceptDialogComponent } from './components/goal-accept-dialog/goal-accept-dialog.component'
@@ -21,6 +18,9 @@ import { GoalCreateComponent } from './routes/goal-create/goal-create.component'
 import { GoalTrackComponent } from './routes/goal-track/goal-track.component'
 import { GoalHomeComponent } from './routes/goal-home/goal-home.component'
 import { GoalNotificationComponent } from './routes/goal-notification/goal-notification.component'
+import { BtnLinkedinShareModule } from '../../../../../../../library/ws-widget/collection/src/lib/btn-linkedin-share/btn-linkedin-share.module'
+import { BtnFacebookShareModule } from '../../../../../../../library/ws-widget/collection/src/lib/btn-facebook-share/btn-facebook-share.module'
+import { BtnTwitterShareModule } from '../../../../../../../library/ws-widget/collection/src/lib/btn-twitter-share/btn-twitter-share.module'
 
 import {
   MatProgressSpinnerModule,
@@ -45,7 +45,7 @@ import {
 } from '@angular/material'
 import { GoalMeComponent } from './routes/goal-me/goal-me.component'
 import { GoalOthersComponent } from './routes/goal-others/goal-others.component'
-import { PipeDurationTransformModule } from '@sunbird-cb/utils'
+import { PipeDurationTransformModule } from '@ws-widget/utils'
 import { GoalCreateCommonComponent } from './components/goal-create-common/goal-create-common.component'
 import { GoalCreateCustomComponent } from './components/goal-create-custom/goal-create-custom.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'

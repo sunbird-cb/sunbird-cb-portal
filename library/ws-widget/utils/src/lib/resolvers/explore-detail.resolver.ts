@@ -3,9 +3,9 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Observable, of } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 import { map, catchError } from 'rxjs/operators'
+import { IResolveResponse } from '@ws-widget/utils'
 import { UtilityService } from '../services/utility.service'
 import { ConfigurationsService } from '../services/configurations.service'
-import { IResolveResponse } from './resolver.model'
 
 @Injectable({
   providedIn: 'root',

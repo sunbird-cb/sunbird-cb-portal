@@ -5,7 +5,7 @@ import { MatButtonModule, MatCardModule, MatChipsModule, MatDialogModule, MatFor
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatListModule } from '@angular/material/list'
 import { RouterModule } from '@angular/router'
-import { BtnPageBackModule, BtnSocialLikeModule, BtnSocialVoteModule } from '@sunbird-cb/collection'
+import { BtnPageBackModule, BtnSocialLikeModule, BtnSocialVoteModule } from '@ws-widget/collection'
 import { ForumCardModule } from '../forum-card/forum-card.module'
 import { BtnFlagModule } from '../widgets/buttons/btn-flag/btn-flag.module'
 import { RecentForumPostComponent } from './components/recent-forum-post.component'

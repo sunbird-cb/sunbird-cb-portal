@@ -1,9 +1,10 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core'
-import { NsContent, NsDiscussionForum } from '@sunbird-cb/collection'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { NsContent, NsDiscussionForum } from '@ws-widget/collection'
+import { NsWidgetResolver } from '@ws-widget/resolver'
 import { ActivatedRoute } from '@angular/router'
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser'
-import { PipeLimitToPipe, ValueService, ConfigurationsService } from '@sunbird-cb/utils'
+import { PipeLimitToPipe } from '@ws-widget/utils/src/lib/pipes/pipe-limit-to/pipe-limit-to.pipe'
+import { ValueService, ConfigurationsService } from '@ws-widget/utils'
 @Component({
   selector: 'viewer-html-container',
   templateUrl: './html.component.html',
