@@ -83,7 +83,7 @@ export class BtnGoalsService {
     return this.http.post<NsGoal.IUserGoals>(`/apis/proxies/v8/sunbirdigot/search?type=${type}&sourceFields=${sourceFields}`, {
       request: {
         filters: {
-          primaryCategory: 'Playlist',
+          primaryCategory: 'Goals',
           visibility: 'Private',
           status: ['Draft', 'Live'],
 
@@ -113,7 +113,8 @@ export class BtnGoalsService {
         this.goalsHash = goals.reduce((hash: { [id: string]: NsGoal.IGoal }, obj: NsGoal.IGoal) => {
           hash[obj.id] = obj
           return hash
-        },                            {})
+          // tslint:disable-next-line: align
+        }, {})
       }),
     )
   }

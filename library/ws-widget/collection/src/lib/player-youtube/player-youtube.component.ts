@@ -1,15 +1,15 @@
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
-import { EventService, ValueService } from '@ws-widget/utils'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { EventService, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import videoJs from 'video.js'
-import { ActivatedRoute } from '../../../../../../node_modules/@angular/router'
-import { ViewerUtilService } from '../../../../../../project/ws/viewer/src/lib/viewer-util.service'
+import { ActivatedRoute } from '@angular/router'
 import { ROOT_WIDGET_CONFIG } from '../collection.config'
 import { IWidgetsPlayerMediaData } from '../_models/player-media.model'
 import { fireRealTimeProgressFunction, saveContinueLearningFunction, telemetryEventDispatcherFunction, videoJsInitializer, youtubeInitializer } from '../_services/videojs-util'
 import { NsContent } from '../_services/widget-content.model'
 import { WidgetContentService } from '../_services/widget-content.service'
+import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 interface IYTOptions extends videoJs.PlayerOptions {
   youtube: {
     ytControls: 0 | 1 | 2
@@ -108,7 +108,7 @@ export class PlayerYoutubeComponent extends WidgetBaseComponent
     const saveCLearning: saveContinueLearningFunction = data => {
       if (this.widgetData.identifier) {
         if (this.activatedRoute.snapshot.queryParams.collectionType &&
-        this.activatedRoute.snapshot.queryParams.collectionType.toLowerCase() === 'playlist') {
+          this.activatedRoute.snapshot.queryParams.collectionType.toLowerCase() === 'playlist') {
           const continueLearningData = {
             contextPathId: this.activatedRoute.snapshot.queryParams.collectionId ?
               this.activatedRoute.snapshot.queryParams.collectionId : this.widgetData.identifier,
@@ -144,7 +144,7 @@ export class PlayerYoutubeComponent extends WidgetBaseComponent
       }
     }
     const fireRProgress: fireRealTimeProgressFunction = (identifier, data) => {
-      if (this.widgetData.identifier) {
+      if (this.widgetData.identifier && identifier && data) {
         this.viewerSvc
           .realTimeProgressUpdate(identifier, data)
       }
@@ -153,6 +153,7 @@ export class PlayerYoutubeComponent extends WidgetBaseComponent
     if (!this.widgetData.disableTelemetry && typeof (this.widgetData.disableTelemetry) !== 'undefined') {
       enableTelemetry = true
     }
+    // this.widgetData.url = 'https://www.youtube.com/embed/3bwBkxiK3Aw'
     this.dispose = youtubeInitializer(
       this.youtubeTag.nativeElement,
       videoId,
@@ -213,7 +214,7 @@ export class PlayerYoutubeComponent extends WidgetBaseComponent
       }
     }
     const fireRProgress: fireRealTimeProgressFunction = (identifier, data) => {
-      if (this.widgetData.identifier) {
+      if (this.widgetData.identifier && identifier && data) {
         this.viewerSvc
           .realTimeProgressUpdate(identifier, data)
       }
@@ -223,6 +224,7 @@ export class PlayerYoutubeComponent extends WidgetBaseComponent
       enableTelemetry = true
     }
     if (this.widgetData.url) {
+      // this.widgetData.url = 'https://www.youtube.com/embed/3bwBkxiK3Aw'
       const initObj = videoJsInitializer(
         this.videoTag.nativeElement,
         {

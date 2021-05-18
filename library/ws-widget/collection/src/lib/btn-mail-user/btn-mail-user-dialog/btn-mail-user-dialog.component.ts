@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core'
 import { MatSnackBar, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { WidgetContentShareService } from '../../_services/widget-content-share.service'
 import { IBtnMailUser } from '../btn-mail-user.component'
-import { EventService } from '@ws-widget/utils'
+import { EventService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-widget-btn-mail-user-dialog',

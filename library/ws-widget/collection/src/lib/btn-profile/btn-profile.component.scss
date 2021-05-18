@@ -1,8 +1,7 @@
-//@import 'ws-common';
+@import '~@sunbird-cb/design-system/src/styles/ws-common';
+@import '~@sunbird-cb/design-system/src/styles/ws-vars';
+@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
 
-@import 'ws-vars';
-
-// @import 'ws-mixins';
 .log-o {
     flex: 1;
     // min-width: 100%;

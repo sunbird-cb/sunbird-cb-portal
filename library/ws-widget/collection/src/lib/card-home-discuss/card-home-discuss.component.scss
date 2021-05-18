@@ -1,6 +1,6 @@
-@import 'ws-common';
-@import 'ws-vars';
-@import 'ws-mixins';
+@import '~@sunbird-cb/design-system/src/styles/ws-common';
+@import '~@sunbird-cb/design-system/src/styles/ws-vars';
+@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
 
 .discuss-home-card {
   $card-padding: $size-m;
@@ -124,9 +124,26 @@
   }
 }
 
+.title-margin
+  {
+    margin-left: -18%; 
+    margin-top: -32px;
+  }
+
+  .mat-card-header-margin
+  {
+    margin-left: -9%; 
+    margin-top: -1%;
+  }
+
 .mat-card {
   display: flex;
   flex-direction: column;
+}
+
+.mat-card-title-height {
+  height: 60px !important;
+  overflow-y: hidden !important;
 }
 
 .mat-card-header {
@@ -136,11 +153,13 @@
     height: 116px;
     overflow-y: hidden;
   }
+
   .mat-card-sub-title {
     flex-shrink: 4;
     flex-grow: 2;
   }
 }
+
 
 .mat-card-content {
   flex-grow: 5;
@@ -151,4 +170,30 @@
 
 .mat-card-footer {
   padding-bottom: 22px;
+}
+
+.mat-card-footer-l {
+  margin-left: -20px !important;
+}
+
+.mat-card-sub-title-marign
+{
+  margin-left: -18%;
+}
+
+.text-capitalize{
+  margin-left: 32px;
+}
+
+.mar-16{
+  margin-top: -20px;
+}
+
+.dot:before {
+  content: '•';
+  margin: 1rem;
+
+  @include breakpoint-xs {
+    margin: 0.65rem;
+  }
 }

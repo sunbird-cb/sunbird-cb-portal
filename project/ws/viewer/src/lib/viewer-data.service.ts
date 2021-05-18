@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { NsContent } from '@ws-widget/collection'
+import { NsContent } from '@sunbird-cb/collection'
 import { Subject, ReplaySubject } from 'rxjs'
 
 export interface IViewerTocChangeEvent {

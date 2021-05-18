@@ -1,5 +1,7 @@
-@import 'ws-mixins';
-@import 'ws-common';
+@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
+@import '~@sunbird-cb/design-system/src/styles/ws-common';
+
+
 
 .container-balanced {
   @extend %page-center;
@@ -100,4 +102,12 @@
   @include breakpoint-lt-l {
     background-size: auto;
   }
+}
+.default-icon{
+  font-size: 22px;
+  margin-top: 3px;
+  margin-left: 6px;
+}
+.mat-subheading-1-1{
+  font-size: 20px;
 }

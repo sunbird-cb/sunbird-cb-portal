@@ -14,7 +14,9 @@
   align-content: center;
   text-align: center;
 }
-
+.min-height{
+  min-height: 25vh;
+}
 .text-box {
   display: flex;
   border: 1px solid;

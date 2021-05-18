@@ -21,6 +21,6 @@ export class RelatedPostsComponent implements OnInit {
   }
 
   getDiscussion(discuss: NSDiscussData.IDiscussionData) {
-    this.router.navigate([`/app/careers/home/${discuss.tid}`])
+    this.router.navigate([`/app/careers/home/${discuss.tid}/${discuss.title}`])
   }
 }

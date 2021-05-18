@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { NsError, NsPlaylist, ROOT_WIDGET_CONFIG } from '@ws-widget/collection'
-import { NsWidgetResolver } from '@ws-widget/resolver'
-import { ConfigurationsService, NsPage } from '@ws-widget/utils'
+import { NsError, NsPlaylist, ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { SafeStyle, DomSanitizer } from '@angular/platform-browser'
 
@@ -46,10 +46,10 @@ export class PlaylistHomeComponent implements OnInit, OnDestroy {
     private router: Router,
 
   ) {
-    if (this.configSvc.userProfile) {
-      this.userName = (this.configSvc.userProfile.userName || '').split(' ')[0]
-    }
-  }
+    this.userName =
+    (this.configSvc.userProfile) ?
+    `${this.configSvc.userProfile.firstName}  ${this.configSvc.userProfile.lastName}` : undefined
+ }
 
   ngOnInit() {
     this.playListLogo = this.sanitizer.bypassSecurityTrustStyle(

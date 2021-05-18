@@ -1,5 +1,6 @@
-<ng-container *ngIf="!contentAvailable && isFromAuthoring; then authoringTemplate; else otherTemplate"></ng-container>
 
+<!-- <ng-container *ngIf="!contentAvailable && isFromAuthoring; then authoringTemplate; else otherTemplate"></ng-container> -->
+<ng-container *ngIf="!contentAvailable; else otherTemplate"></ng-container>
 <ng-template #otherTemplate>
   <div *ngIf="showParentLoader" class="text-center my-2">
     <mat-spinner class="inline-block"></mat-spinner>
@@ -11,7 +12,7 @@
     <ng-container *ngIf="stripsResultDataMap[key].showStrip">
       <a name="{{stripsResultDataMap[key]?.stripTitle}}">
         <div *ngIf="
-                  stripsResultDataMap[key]?.widgets?.length ||
+                  stripsResultDataMap[key]?.widgets ||
                   stripsResultDataMap[key]?.showOnNoData ||
                   stripsResultDataMap[key]?.showOnLoader ||
                   stripsResultDataMap[key]?.showOnError
@@ -49,12 +50,12 @@
                 <span class="spacer"></span>
                 <!-- viewAll -->
                 <div
-                  *ngIf="widgetData.strips[0].viewMoreUrl && stripsResultDataMap[key] && stripsResultDataMap[key].widgets && stripsResultDataMap[key].widgets.length >=1"
+                  *ngIf="widgetData.strips[0].viewMoreUrl && stripsResultDataMap[key] && stripsResultDataMap[key].widgets"
                   class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all ws-mat-primary-lite-background-important">
                   <a mat-button [routerLink]="widgetData.strips[0]?.viewMoreUrl?.path"
                     [queryParams]="widgetData.strips[0]?.viewMoreUrl?.queryParams">
                     <span i18n>{{widgetData.strips[0].viewMoreUrl.viewMoreText || 'View All'}}</span>
-                    <mat-icon>arrow_forward</mat-icon>
+                    <mat-icon class="default-icon">arrow_forward</mat-icon>
                   </a>
                 </div>
               </div>
@@ -66,9 +67,9 @@
                 (click)="showAccordionData = !showAccordionData">{{ showAccordionData ? 'expand_less' : 'expand_more' }}
               </mat-icon>
             </div>
-            <div class="mb-4" *ngIf="stripsResultDataMap[key]?.stripInfo?.visibilityMode === 'visible'">
+            <!-- <div class="mb-4" *ngIf="stripsResultDataMap[key]?.stripInfo?.visibilityMode === 'visible'">
               <ng-container [wsResolverWidget]="stripsResultDataMap[key]?.stripInfo?.widget"></ng-container>
-            </div>
+            </div> -->
             <div *ngIf="stripsResultDataMap[key]?.showOnLoader" class="text-center my-2">
               <mat-spinner [diameter]="40" [strokeWidth]="3"></mat-spinner>
             </div>
@@ -76,18 +77,26 @@
               [wsResolverWidget]="stripsResultDataMap[key]?.noDataWidget"></ng-container>
             <ng-container *ngIf="stripsResultDataMap[key]?.showOnError"
               [wsResolverWidget]="stripsResultDataMap[key]?.errorWidget"></ng-container>
-            <ws-utils-horizontal-scroller *ngIf="stripsResultDataMap[key]?.widgets?.length && showAccordion(key)"
-              class="flex container-balanced new-width" [loadStatus]="'done'">
+
+            <!-- <ws-utils-horizontal-scroller class="flex container-balanced new-width" [loadStatus]="'done'">
               <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets" [wsResolverWidget]="widget">
               </ng-container>
-              <!-- <div *ngIf="stripsResultDataMap[key]?.viewMoreUrl" class="ml-4 mr-6 mb-2 view-more ws-mat-primary-text">
+              <div *ngIf="stripsResultDataMap[key]?.viewMoreUrl" class="ml-4 mr-6 mb-2 view-more ws-mat-primary-text">
                 <a [routerLink]="stripsResultDataMap[key]?.viewMoreUrl?.path"
                   [queryParams]="stripsResultDataMap[key]?.viewMoreUrl?.queryParams">
                   <mat-icon class="icon">arrow_forward</mat-icon>
                   <h3 i18n>View All</h3>
                 </a>
-              </div> -->
+              </div>
+            </ws-utils-horizontal-scroller> -->
+
+            <ws-utils-horizontal-scroller class="flex container-balanced new-width" *ngIf="getLength(stripsResultDataMap[key]) && showAccordion(key)"
+              [loadStatus]="'done'">
+              <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets" [wsResolverWidget]="widget">
+
+              </ng-container>
             </ws-utils-horizontal-scroller>
+
           </div>
         </div>
       </a>

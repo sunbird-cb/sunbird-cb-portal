@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { PlayerBriefComponent } from './player-brief.component'
-import { PipeCountTransformModule, PipeDurationTransformModule } from '@ws-widget/utils'
+import { PipeCountTransformModule, PipeDurationTransformModule } from '@sunbird-cb/utils'
 import { DisplayContentTypeModule } from '../display-content-type/display-content-type.module'
 import { UserContentRatingModule } from '../user-content-rating/user-content-rating.module'
 import { UserImageModule } from '../user-image/user-image.module'

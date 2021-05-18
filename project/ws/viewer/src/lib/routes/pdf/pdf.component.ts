@@ -1,11 +1,12 @@
 import { AccessControlService } from '@ws/author'
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Subscription } from 'rxjs'
-import { NsContent, NsDiscussionForum, WidgetContentService } from '@ws-widget/collection'
-import { WsEvents, EventService, ConfigurationsService } from '@ws-widget/utils'
-import { NsWidgetResolver } from '@ws-widget/resolver'
+import { NsContent, NsDiscussionForum, WidgetContentService } from '@sunbird-cb/collection'
+import { WsEvents, EventService, ConfigurationsService } from '@sunbird-cb/utils'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ActivatedRoute } from '@angular/router'
 import { ViewerUtilService } from '../../viewer-util.service'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'viewer-pdf',
@@ -61,9 +62,10 @@ export class PdfComponent implements OnInit, OnDestroy {
               this.discussionForumWidget.widgetData.isDisabled = true
             }
           }
-          this.widgetResolverPdfData.widgetData.pdfUrl = this.pdfData
-            ? `/apis/authContent/${encodeURIComponent(this.pdfData.artifactUrl)}`
-            : ''
+          // this.widgetResolverPdfData.widgetData.pdfUrl = this.pdfData
+          //   ? `/apis/authContent/${encodeURIComponent(this.pdfData.artifactUrl)}`
+          //   : ''
+          this.widgetResolverPdfData.widgetData.pdfUrl = this.generateUrl(this.pdfData.artifactUrl)
           this.widgetResolverPdfData.widgetData.disableTelemetry = true
           this.isFetchingDataComplete = true
         })
@@ -109,6 +111,23 @@ export class PdfComponent implements OnInit, OnDestroy {
         () => {},
       )
     }
+  }
+
+  generateUrl(oldUrl: string) {
+    const chunk = oldUrl.split('/')
+    const newChunk = environment.azureHost.split('/')
+    const newLink = []
+    for (let i = 0; i < chunk.length; i += 1) {
+      if (i === 2) {
+        newLink.push(newChunk[i])
+      } else if (i === 3) {
+        newLink.push(environment.azureBucket)
+      } else {
+        newLink.push(chunk[i])
+      }
+    }
+    const newUrl = newLink.join('/')
+    return newUrl
   }
 
   formDiscussionForumWidget(content: NsContent.IContent) {
@@ -166,6 +185,10 @@ export class PdfComponent implements OnInit, OnDestroy {
       if (this.configSvc.userProfile) {
         userId = this.configSvc.userProfile.userId || ''
       }
+
+      // this.activatedRoute.data.subscribe(data => {
+      //   userId = data.profileData.data.userId
+      // })
       const req: NsContent.IContinueLearningDataReq = {
         request: {
           userId,

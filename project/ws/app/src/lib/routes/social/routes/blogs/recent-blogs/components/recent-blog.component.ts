@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Observable } from 'rxjs'
-import { TFetchStatus, ValueService, ConfigurationsService, NsPage } from '@ws-widget/utils'
-import { NsDiscussionForum, WsDiscussionForumService } from '@ws-widget/collection'
+import { TFetchStatus, ValueService, ConfigurationsService, NsPage } from '@sunbird-cb/utils'
+import { NsDiscussionForum, WsDiscussionForumService } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-app-recent-blog',
@@ -31,7 +31,6 @@ export class RecentBlogComponent implements OnInit {
     private discussionSvc: WsDiscussionForumService,
     private configSvc: ConfigurationsService,
     private valueSvc: ValueService,
-
   ) {
     this.isXSmall$ = this.valueSvc.isXSmall$
     if (this.configSvc.userProfile) {

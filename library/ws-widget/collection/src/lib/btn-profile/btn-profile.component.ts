@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnDestroy, HostBinding } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
-import { ConfigurationsService, LogoutComponent, NsPage } from '@ws-widget/utils/src/public-api'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { ConfigurationsService, LogoutComponent, NsPage } from '@sunbird-cb/utils'
 import { IBtnAppsConfig } from '../btn-apps/btn-apps.model'
 import { MatDialog } from '@angular/material'
 import { Subscription } from 'rxjs'
@@ -44,9 +44,10 @@ export class BtnProfileComponent extends WidgetBaseComponent
     this.btnAppsConfig = { ...this.basicBtnAppsConfig }
     this.btnSettingsConfig = { ... this.settingBtnConfig }
     if (this.configSvc.userProfile) {
-      this.givenName = this.configSvc.userProfile.givenName || ''
-      // this.profileImage = this.configSvc.userProfile.source_profile_picture || null
-      if (localStorage.getItem(this.configSvc.userProfile.userId)) {
+      this.givenName = `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}`
+      this.profileImage = this.configSvc.userProfile.profileImage ||
+        (this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.profileImage : null) || null
+      if (!this.profileImage && localStorage.getItem(this.configSvc.userProfile.userId)) {
         this.profileImage = localStorage.getItem(this.configSvc.userProfile.userId)
       }
     }

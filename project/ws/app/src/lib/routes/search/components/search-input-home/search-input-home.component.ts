@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, ViewChild, ViewEncapsulation } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
-import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Observable } from 'rxjs'
 import { debounceTime, distinctUntilChanged, startWith, switchMap } from 'rxjs/operators'
 import { ISearchAutoComplete } from '../../models/search.model'
@@ -84,7 +84,7 @@ export class SearchInputHomeComponent implements OnInit, OnChanges {
         : false
       if (typeof isAutoCompleteAllowed === 'undefined' ||
         (typeof isAutoCompleteAllowed === 'boolean' && isAutoCompleteAllowed)) {
-        this.getSearchAutoCompleteResults(this.queryControl.value)
+        // this.getSearchAutoCompleteResults(this.queryControl.value)
       }
     })
     this.languageSearch = this.route.snapshot.data.searchPageData && this.route.snapshot.data.searchPageData.data.search.languageSearch.map(
@@ -104,7 +104,7 @@ export class SearchInputHomeComponent implements OnInit, OnChanges {
         searchPageData: { data },
       }
     }).then(() => {
-      this.autoFilter()
+      // this.autoFilter()
       this.init()
     })
     // } else {

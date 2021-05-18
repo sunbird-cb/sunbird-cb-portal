@@ -8,8 +8,8 @@ import {
   MatIconModule,
   MatExpansionModule,
 } from '@angular/material'
-import { BtnPageBackModule } from '@ws-widget/collection'
-import { PipeSafeSanitizerModule } from '@ws-widget/utils'
+import { BtnPageBackModule } from '@sunbird-cb/collection'
+import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 
 @NgModule({
   declarations: [PublicContactComponent],

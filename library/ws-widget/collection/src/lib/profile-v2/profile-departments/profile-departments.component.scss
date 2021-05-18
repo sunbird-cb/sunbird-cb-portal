@@ -1,4 +1,6 @@
-@import 'ws-vars';
+@import '~@sunbird-cb/design-system/src/styles/ws-common';
+@import '~@sunbird-cb/design-system/src/styles/ws-vars';
+@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
 
 .comment-card {
   // width: 40%;

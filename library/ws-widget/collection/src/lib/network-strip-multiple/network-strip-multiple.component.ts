@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, HostBinding } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { NsNetworkStripNewMultiple } from './network-strip-multiple.model'
 import { ContentStripNewMultipleService } from './network-strip-multiple.service'
 import { WidgetContentService } from '../_services/widget-content.service'
@@ -9,7 +9,7 @@ import {
   // EventService,
   // ConfigurationsService,
   UtilityService,
-} from '@ws-widget/utils'
+} from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 // import { filter } from 'rxjs/operators'
 // import { SearchServService } from '@ws/app/src/lib/routes/search/services/search-serv.service'
@@ -33,6 +33,8 @@ interface IStripUnitContentData {
     path: string
     queryParams: any
   } | null
+  stripLogo?: string | null
+  description?: string | null
 }
 @Component({
   selector: 'ws-widget-network-strip-multiple',
@@ -68,7 +70,7 @@ export class NetworkStripMultipleComponent extends WidgetBaseComponent
     private loggerSvc: LoggerService,
     // private eventSvc: EventService,
     // private configSvc: ConfigurationsService,
-    protected utilitySvc: UtilityService,
+    public utilitySvc: UtilityService,
     // private searchServSvc: SearchServService,
   ) {
     super()
@@ -82,6 +84,10 @@ export class NetworkStripMultipleComponent extends WidgetBaseComponent
     if (this.changeEventSubscription) {
       this.changeEventSubscription.unsubscribe()
     }
+  }
+
+  getLength(data: IStripUnitContentData) {
+    return data.widgets ? data.widgets.length : 0
   }
 
   private initData() {

@@ -1,6 +1,6 @@
-@import 'ws-common';
-@import 'ws-vars';
-@import 'ws-mixins';
+@import '~@sunbird-cb/design-system/src/styles/ws-common';
+@import '~@sunbird-cb/design-system/src/styles/ws-vars';
+@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
 
 mat-expansion-panel {
   flex: 1;
@@ -17,10 +17,12 @@ mat-expansion-panel {
 .progress_flex {
   display: flex;
   margin: 8px 0px 8px 0px;
+
   .progress_name {
     display: flex;
     flex: 1;
   }
+
   .progress_value {
     flex: 2;
     height: 12px;
@@ -28,6 +30,7 @@ mat-expansion-panel {
     margin: 10px;
   }
 }
+
 .mat-progress-bar {
   display: block;
   height: 8px;
@@ -38,6 +41,7 @@ mat-expansion-panel {
   background-color: red($color: #000000);
   width: 100%;
 }
+
 .mat-expansion-panel-header-description {
   flex-grow: 0;
   margin-top: 10px;

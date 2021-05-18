@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, HostBinding } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { NsCarrierStripNewMultiple } from './carrier-strip-multiple.model'
 import { ContentStripNewMultipleService } from './carrier-strip-multiple.service'
 import { WidgetContentService } from '../_services/widget-content.service'
@@ -10,7 +10,7 @@ import {
   TFetchStatus,
   LoggerService,
   UtilityService,
-} from '@ws-widget/utils'
+} from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 
 interface IStripUnitContentData {
@@ -32,6 +32,8 @@ interface IStripUnitContentData {
     path: string
     queryParams: any
   } | null
+  stripLogo?: string | null
+  description?: string | null
 }
 @Component({
   selector: 'ws-widget-carrier-strip-multiple',
@@ -65,7 +67,7 @@ export class CarrierStripMultipleComponent extends WidgetBaseComponent
     private contentStripSvc: ContentStripNewMultipleService,
     private contentSvc: WidgetContentService,
     private loggerSvc: LoggerService,
-    protected utilitySvc: UtilityService,
+    public utilitySvc: UtilityService,
   ) {
     super()
   }
@@ -78,6 +80,10 @@ export class CarrierStripMultipleComponent extends WidgetBaseComponent
     if (this.changeEventSubscription) {
       this.changeEventSubscription.unsubscribe()
     }
+  }
+
+  getLength(data: IStripUnitContentData) {
+    return data.widgets ? data.widgets.length : 0
   }
 
   private initData() {

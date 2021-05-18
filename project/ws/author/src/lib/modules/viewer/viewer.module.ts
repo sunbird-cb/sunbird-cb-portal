@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms'
 import { MatSelectModule, MatFormFieldModule, MatToolbarModule } from '@angular/material'
 import { ViewerComponent } from './viewer.component'
 import { ViewerRoutingModule } from './viewer-routing.module'
-import { PipeSafeSanitizerModule } from '@ws-widget/utils'
+import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 
 @NgModule({
   declarations: [ViewerComponent],

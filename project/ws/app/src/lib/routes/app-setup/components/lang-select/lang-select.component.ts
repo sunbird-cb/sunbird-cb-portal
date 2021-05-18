@@ -4,7 +4,7 @@ import {
   ConfigurationsService,
   NsInstanceConfig,
   UserPreferenceService,
-} from '../../../../../../../../../library/ws-widget/utils/src/public-api'
+} from '@sunbird-cb/utils'
 import { FormControl, Validators } from '@angular/forms'
 
 @Component({
@@ -28,7 +28,11 @@ export class LangSelectComponent implements OnInit {
     if (this.configSvc.userProfile) {
       this.userName = this.configSvc.userProfile.givenName || ''
     }
-    this.selectedLang = ''
+
+    // this.route.data.subscribe(data => {
+    //   this.userName = data.profileData.data.givenName
+    // })
+
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
       this.allowedLangCode = instanceConfig.locals.reduce(

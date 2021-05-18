@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core'
-import { NsContent } from '@ws-widget/collection'
+import { NsContent } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'viewer-class-diagram-container',

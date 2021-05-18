@@ -1,7 +1,17 @@
 {
   "extends": "../../../tslint.json",
   "rules": {
-    "directive-selector": [true, "attribute", "wsWidget", "camelCase"],
-    "component-selector": [true, "element", "ws-widget", "kebab-case"]
+    "directive-selector": [
+      true,
+      "attribute",
+      "wsWidget",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "ws-widget",
+      "kebab-case"
+    ]
   }
 }

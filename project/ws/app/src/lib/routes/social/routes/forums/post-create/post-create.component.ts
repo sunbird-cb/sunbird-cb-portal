@@ -3,8 +3,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { MatAutocomplete, MatAutocompleteSelectedEvent, MatSnackBar } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
-import { NsDiscussionForum, WsDiscussionForumService } from '@ws-widget/collection'
-import { ConfigurationsService, NsPage, TFetchStatus, ValueService } from '@ws-widget/utils'
+import { NsDiscussionForum, WsDiscussionForumService } from '@sunbird-cb/collection'
+import { ConfigurationsService, NsPage, TFetchStatus, ValueService } from '@sunbird-cb/utils'
 import { Observable } from 'rxjs'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { WsSocialService } from '../../../services/ws-social.service'
@@ -81,6 +81,7 @@ export class PostCreateComponent implements OnInit {
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId || ''
     }
+
     this.postPublishRequest.postCreator = this.userId
     this.isXSmall$ = this.valueSvc.isXSmall$
     this.tagsCtrl.valueChanges

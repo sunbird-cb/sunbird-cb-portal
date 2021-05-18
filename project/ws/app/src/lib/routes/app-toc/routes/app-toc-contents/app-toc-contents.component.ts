@@ -2,11 +2,11 @@ import { Component, OnDestroy, OnInit, Input } from '@angular/core'
 import { ActivatedRoute, Data } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser'
-import { NsContent, viewerRouteGenerator, ROOT_WIDGET_CONFIG } from '@ws-widget/collection'
+import { NsContent, viewerRouteGenerator, ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection'
 import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
-import { ConfigurationsService } from '@ws-widget/utils'
-import { NsWidgetResolver } from '@ws-widget/resolver'
+import { ConfigurationsService } from '@sunbird-cb/utils'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 
 @Component({
   selector: 'ws-app-app-toc-contents',
@@ -56,7 +56,7 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
     }
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.defaultThumbnail = instanceConfig.logos.defaultContent
+      this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
     }
   }
   ngOnDestroy() {
@@ -69,7 +69,7 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
   }
 
   private initData(data: Data) {
-    const initData = this.tocSvc.initData(data)
+    const initData = this.tocSvc.initData(data, true)
     this.content = initData.content
     this.errorCode = initData.errorCode
     if (this.content) {

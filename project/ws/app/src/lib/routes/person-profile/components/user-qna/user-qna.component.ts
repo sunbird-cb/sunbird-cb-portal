@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core'
-import { NsDiscussionForum } from '@ws-widget/collection'
-import { TFetchStatus, ConfigurationsService } from '@ws-widget/utils'
+import { NsDiscussionForum } from '@sunbird-cb/collection'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 import { PersonProfileService } from '../../services/person-profile.service'
 import { Subscription } from 'rxjs'
 @Component({
@@ -38,18 +38,15 @@ export class UserQnaComponent implements OnInit {
 
   ngOnInit() {
     this.showSocialLike = (this.configSvc.restrictedFeatures && !this.configSvc.restrictedFeatures.has('socialLike')) || false
-    if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
-      this.qnaTimelineRequest = {
-        pgNo: 0,
-        pgSize: 24,
-        postKind: [NsDiscussionForum.EPostKind.QUERY],
-        sessionId: Date.now(),
-        type: NsDiscussionForum.ETimelineType.MY_TIMELINE,
-        userId: this.wid,
-      }
-      this.fetchQnaData(this.qnaTimelineRequest)
+    this.qnaTimelineRequest = {
+      pgNo: 0,
+      pgSize: 24,
+      postKind: [NsDiscussionForum.EPostKind.QUERY],
+      sessionId: Date.now(),
+      type: NsDiscussionForum.ETimelineType.MY_TIMELINE,
+      userId: this.wid,
     }
-    // console.log(this.fetchQnaData)
+    this.fetchQnaData(this.qnaTimelineRequest)
   }
 
   qnaSorting(result: NsDiscussionForum.ITimelineResult[]) {

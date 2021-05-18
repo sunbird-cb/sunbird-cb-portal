@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Subscription } from 'rxjs'
-import { ValueService } from '@ws-widget/utils'
+import { ValueService } from '@sunbird-cb/utils'
 import { ActivatedRoute } from '@angular/router'
 import { AccessControlService } from '@ws/author'
 import {
@@ -8,9 +8,10 @@ import {
   IWidgetsPlayerMediaData,
   NsDiscussionForum,
   WidgetContentService,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 import { ViewerUtilService } from '../../viewer-util.service'
-import { NsWidgetResolver } from '@ws-widget/resolver'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'viewer-audio',
@@ -61,13 +62,17 @@ export class AudioComponent implements OnInit, OnDestroy {
             this.formDiscussionForumWidget(this.audioData)
           }
           this.widgetResolverAudioData = this.initWidgetResolverAudioData()
-          this.widgetResolverAudioData.widgetData.url = this.audioData
-            ? `/apis/authContent/${encodeURIComponent(this.audioData.artifactUrl)}`
-            : ''
+          // this.widgetResolverAudioData.widgetData.url = this.audioData
+          //   ? `/apis/authContent/${encodeURIComponent(this.audioData.artifactUrl)}`
+          //   : ''
+          // if (this.audioData) {
+          //   this.widgetResolverAudioData.widgetData.url = this.audioData.artifactUrl
+          // }
+          this.widgetResolverAudioData.widgetData.url = this.generateUrl(this.audioData.artifactUrl)
           this.widgetResolverAudioData.widgetData.disableTelemetry = true
           this.isFetchingDataComplete = true
 
-          if (this.audioData.subTitles) {
+          if (this.audioData && this.audioData.subTitles) {
 
             let subTitleUrl = ''
             if (this.audioData.subTitles.length > 0 && this.audioData.subTitles[0]) {
@@ -112,7 +117,7 @@ export class AudioComponent implements OnInit, OnDestroy {
             this.widgetResolverAudioData.widgetData.disableTelemetry = true
           }
 
-          if (data.content.data.subTitles[0]) {
+          if (data.content.data && data.content.data.subTitles && data.content.data.subTitles[0]) {
 
             let subTitlesUrl = ''
             if (data.content.data.subTitles[0].url.indexOf('/content-store/') > -1) {
@@ -128,11 +133,14 @@ export class AudioComponent implements OnInit, OnDestroy {
 
           }
 
-          this.widgetResolverAudioData.widgetData.url = this.audioData
-            ? this.forPreview
-              ? this.viewerSvc.getAuthoringUrl(this.audioData.artifactUrl)
-              : this.audioData.artifactUrl
-            : ''
+          // this.widgetResolverAudioData.widgetData.url = this.audioData
+          //   ? this.forPreview
+          //     ? this.viewerSvc.getAuthoringUrl(this.audioData.artifactUrl)
+          //     : this.audioData.artifactUrl
+          //   : ''
+          if (this.audioData) {
+            this.widgetResolverAudioData.widgetData.url = this.audioData.artifactUrl
+          }
           this.widgetResolverAudioData.widgetData.identifier = this.audioData
             ? this.audioData.identifier
             : ''
@@ -143,6 +151,23 @@ export class AudioComponent implements OnInit, OnDestroy {
         () => { },
       )
     }
+  }
+
+  generateUrl(oldUrl: string) {
+    const chunk = oldUrl.split('/')
+    const newChunk = environment.azureHost.split('/')
+    const newLink = []
+    for (let i = 0; i < chunk.length; i += 1) {
+      if (i === 2) {
+        newLink.push(newChunk[i])
+      } else if (i === 3) {
+        newLink.push(environment.azureBucket)
+      } else {
+        newLink.push(chunk[i])
+      }
+    }
+    const newUrl = newLink.join('/')
+    return newUrl
   }
 
   ngOnDestroy() {

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
-import { IActivityCard } from '@ws/app/src/lib/routes/activities/interfaces/activities.model'
+import { ConfigurationsService } from '@sunbird-cb/utils'
+// import { IActivityCard } from '@ws/app/src/lib/routes/activities/interfaces/activities.model'
 import { Router } from '@angular/router'
 import { MatSnackBar } from '@angular/material'
 
@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material'
   styleUrls: ['./activity-card.component.scss'],
 })
 export class ActivityCardComponent implements OnInit {
-  @Input() widgetData!: IActivityCard
+  @Input() widgetData!: any // IActivityCard
   completedActivity: string[] = []
   completedId = false
 

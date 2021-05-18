@@ -1,4 +1,5 @@
-import { NsWidgetResolver } from '@ws-widget/resolver'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { ROOT_WIDGET_CONFIG } from './collection.config'
 // Components
 import { BtnAppsComponent } from './btn-apps/btn-apps.component'
 // Modules
@@ -20,8 +21,8 @@ import { BtnContentMailMeComponent } from './btn-content-mail-me/btn-content-mai
 import { BtnContentMailMeModule } from './btn-content-mail-me/btn-content-mail-me.module'
 import { BtnContentShareComponent } from './btn-content-share/btn-content-share.component'
 import { BtnContentShareModule } from './btn-content-share/btn-content-share.module'
-import { BtnFeatureComponent } from './btn-feature/btn-feature.component'
-import { BtnFeatureModule } from './btn-feature/btn-feature.module'
+// import { BtnFeatureComponent } from './btn-feature/btn-feature.component'
+// import { BtnFeatureModule } from './btn-feature/btn-feature.module'
 import { BtnFullscreenComponent } from './btn-fullscreen/btn-fullscreen.component'
 import { BtnFullscreenModule } from './btn-fullscreen/btn-fullscreen.module'
 import { BtnGoalsComponent } from './btn-goals/btn-goals.component'
@@ -58,7 +59,7 @@ import { CardBrowseCourseModule } from './card-browse-course/card-browse-course.
 import { CardHomeDiscussModule } from './card-home-discuss/card-home-discuss.module'
 import { ChannelHubComponent } from './channel-hub/channel-hub.component'
 import { ChannelHubModule } from './channel-hub/channel-hub.module'
-import { ROOT_WIDGET_CONFIG } from './collection.config'
+
 import { ContentStripMultipleComponent } from './content-strip-multiple/content-strip-multiple.component'
 import { ContentStripNewMultipleComponent } from './content-strip-new-multiple/content-strip-new-multiple.component'
 import { ContentStripMultipleModule } from './content-strip-multiple/content-strip-multiple.module'
@@ -89,9 +90,9 @@ import { LayoutTabComponent } from './layout-tab/layout-tab.component'
 import { LayoutTabModule } from './layout-tab/layout-tab.module'
 import { NetworkStripMultipleModule } from './network-strip-multiple/network-strip-multiple.module'
 import { CarrierStripMultipleModule } from './carrier-strip-multiple/carrier-strip-multiple.module'
-import { ActivityStripMultipleModule } from './activity-strip-multiple/activity-strip-multiple.module'
+// import { ActivityStripMultipleModule } from './activity-strip-multiple/activity-strip-multiple.module'
 import { NetworkStripMultipleComponent } from './network-strip-multiple/network-strip-multiple.component'
-import { ActivityStripMultipleComponent } from './activity-strip-multiple/activity-strip-multiple.component'
+// import { ActivityStripMultipleComponent } from './activity-strip-multiple/activity-strip-multiple.component'
 import { PageComponent } from './page/page.component'
 import { PageModule } from './page/page.module'
 import { ProfileAcademicsComponent } from './profile-v2/profile-academics/profile-academics.component'
@@ -102,6 +103,9 @@ import { ProfileCompetenciesComponent } from './profile-v2/profile-competencies/
 import { ProfileCompetenciesModule } from './profile-v2/profile-competencies/profile-competencies.module'
 import { ProfileCretificationsComponent } from './profile-v2/profile-cretifications/profile-cretifications.component'
 import { ProfileCretificationsModule } from './profile-v2/profile-cretifications/profile-cretifications.module'
+import { ProfileCretificationsV2Component } from './profile-v2/profile-cretifications-v2/profile-cretifications-v2.component'
+import { ProfileCretificationsV2Module } from './profile-v2/profile-cretifications-v2/profile-cretifications-v2.module'
+
 import { ProfileDepartmentsComponent } from './profile-v2/profile-departments/profile-departments.component'
 import { ProfileDepartmentsModule } from './profile-v2/profile-departments/profile-departments.module'
 import { ProfileHobbiesModule } from './profile-v2/profile-hobbies/profile-hobbies.module'
@@ -135,8 +139,8 @@ import { TreeComponent } from './tree/tree.component'
 import { TreeModule } from './tree/tree.module'
 import { VideoWrapperComponent } from './video-wrapper/video-wrapper.component'
 import { VideoWrapperModule } from './video-wrapper/video-wrapper.module'
-import { ContentStripVerticalModule } from './content-strip-vertical/content-strip-vertical.module'
-import { ContentStripVerticalComponent } from './content-strip-vertical/content-strip-vertical.component'
+// import { ContentStripVerticalModule } from './content-strip-vertical/content-strip-vertical.module'
+// import { ContentStripVerticalComponent } from './content-strip-vertical/content-strip-vertical.component'
 import { CardNetworkHomeComponent } from './card-network-home/card-network-home.component'
 import { CardHomeDiscussComponent } from './card-home-discuss/card-home-discuss.component'
 import { CardBrowseCourseComponent } from './card-browse-course/card-browse-course.component'
@@ -151,6 +155,16 @@ import { DiscussStripMultipleComponent } from './discuss-strip-multiple/discuss-
 import { DiscussStripMultipleModule } from './discuss-strip-multiple/discuss-strip-multiple.module'
 import { CardActivityComponent } from './card-activity/card-activity.component'
 import { CardActivityModule } from './card-activity/card-activity.module'
+import { BtnFeatureComponent } from './btn-feature/btn-feature.component'
+import { BtnFeatureModule } from './btn-feature/btn-feature.module'
+// import { ContentQualityCheckModule } from './content-quality-check/content-quality-check.module'
+import { UIAdminTableModule } from './ui-admin-table/ui-admin-table.module'
+
+import { LeftMenuModule } from './left-menu/left-menu.module'
+import { LeftMenuComponent } from './left-menu/left-menu.component'
+import { UIORGTableModule } from './ui-org-table/ui-org-table.module'
+
+import { BreadcrumbsOrgModule } from './breadcrumbs-org/breadcrumbs-org.module'
 
 export const WIDGET_REGISTERED_MODULES = [
   AvatarPhotoModule,
@@ -186,7 +200,7 @@ export const WIDGET_REGISTERED_MODULES = [
   ContentStripMultipleModule,
   ContentStripNewMultipleModule,
   ContentStripSingleModule,
-  ContentStripVerticalModule,
+  // ContentStripVerticalModule,
   GraphGeneralModule,
   LayoutLinearModule,
   LayoutTabModule,
@@ -209,6 +223,7 @@ export const WIDGET_REGISTERED_MODULES = [
   ProfileCareerModule,
   ProfileCompetenciesModule,
   ProfileCretificationsModule,
+  ProfileCretificationsV2Module,
   ProfileDepartmentsModule,
   ProfileHobbiesModule,
   EmbeddedPageModule,
@@ -229,7 +244,11 @@ export const WIDGET_REGISTERED_MODULES = [
   CarrierStripMultipleModule,
   DiscussStripMultipleModule,
   CardActivityModule,
-  ActivityStripMultipleModule,
+  // ActivityStripMultipleModule,
+  UIAdminTableModule,
+  LeftMenuModule,
+  UIORGTableModule,
+  BreadcrumbsOrgModule,
 ]
 
 export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] = [
@@ -384,11 +403,11 @@ export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] 
     widgetSubType: ROOT_WIDGET_CONFIG.contentStrip.multiStripNew,
     component: ContentStripNewMultipleComponent,
   },
-  {
-    widgetType: ROOT_WIDGET_CONFIG.contentStrip._type,
-    widgetSubType: ROOT_WIDGET_CONFIG.contentStrip.verticalStrip,
-    component: ContentStripVerticalComponent,
-  },
+  // {
+  //   widgetType: ROOT_WIDGET_CONFIG.contentStrip._type,
+  //   widgetSubType: ROOT_WIDGET_CONFIG.contentStrip.verticalStrip,
+  //   component: ContentStripVerticalComponent,
+  // },
   {
     widgetType: ROOT_WIDGET_CONFIG.contentStrip._type,
     widgetSubType: ROOT_WIDGET_CONFIG.contentStrip.singleStrip,
@@ -410,24 +429,24 @@ export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] 
     component: LayoutTabComponent,
   },
   {
+    widgetType: ROOT_WIDGET_CONFIG.discussStrip._type,
+    widgetSubType: ROOT_WIDGET_CONFIG.discussStrip.multipleStrip,
+    component: DiscussStripMultipleComponent,
+  },
+  {
     widgetType: ROOT_WIDGET_CONFIG.networkStrip._type,
     widgetSubType: ROOT_WIDGET_CONFIG.networkStrip.multipleStrip,
     component: NetworkStripMultipleComponent,
   },
-  {
-    widgetType: ROOT_WIDGET_CONFIG.activityStrip._type,
-    widgetSubType: ROOT_WIDGET_CONFIG.activityStrip.multipleStrip,
-    component: ActivityStripMultipleComponent,
-  },
+  // {
+  //   widgetType: ROOT_WIDGET_CONFIG.activityStrip._type,
+  //   widgetSubType: ROOT_WIDGET_CONFIG.activityStrip.multipleStrip,
+  //   component: ActivityStripMultipleComponent,
+  // },
   {
     widgetType: ROOT_WIDGET_CONFIG.carrierStrip._type,
     widgetSubType: ROOT_WIDGET_CONFIG.carrierStrip.multipleStrip,
     component: CarrierStripMultipleComponent,
-  },
-  {
-    widgetType: ROOT_WIDGET_CONFIG.discussStrip._type,
-    widgetSubType: ROOT_WIDGET_CONFIG.discussStrip.multipleStrip,
-    component: DiscussStripMultipleComponent,
   },
   {
     widgetType: ROOT_WIDGET_CONFIG.player._type,
@@ -516,6 +535,11 @@ export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] 
   },
   {
     widgetType: ROOT_WIDGET_CONFIG.profileV2._type,
+    widgetSubType: ROOT_WIDGET_CONFIG.profileV2.certificationsV2,
+    component: ProfileCretificationsV2Component,
+  },
+  {
+    widgetType: ROOT_WIDGET_CONFIG.profileV2._type,
     widgetSubType: ROOT_WIDGET_CONFIG.profileV2.hobbies,
     component: ProfileHobbiesComponent,
   },
@@ -594,5 +618,11 @@ export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] 
     widgetType: ROOT_WIDGET_CONFIG.card._type,
     widgetSubType: ROOT_WIDGET_CONFIG.card.home_carrier,
     component: CardCarrierHomeComponent,
+  },
+
+  {
+    widgetType: ROOT_WIDGET_CONFIG.menus._type,
+    widgetSubType: ROOT_WIDGET_CONFIG.menus.leftMenu,
+    component: LeftMenuComponent,
   },
 ]

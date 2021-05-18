@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { EFeedbackType } from '@ws-widget/collection'
+import { EFeedbackType } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-app-feedback-type',

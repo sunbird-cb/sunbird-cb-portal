@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Subscription } from 'rxjs'
-import { HttpClient } from '@angular/common/http'
-import { NsContent, WidgetContentService } from '@ws-widget/collection'
+import { HttpClient, HttpBackend } from '@angular/common/http'
+import { NsContent, WidgetContentService } from '@sunbird-cb/collection'
 import { NSQuiz } from '../../plugins/quiz/quiz.model'
 import { ActivatedRoute } from '@angular/router'
-import { WsEvents, EventService } from '@ws-widget/utils'
+import { WsEvents, EventService } from '@sunbird-cb/utils'
 import { ViewerUtilService } from '../../viewer-util.service'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'viewer-quiz',
@@ -27,16 +28,19 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
   constructor(
     private activatedRoute: ActivatedRoute,
-    private http: HttpClient,
     private contentSvc: WidgetContentService,
     private eventSvc: EventService,
     private viewSvc: ViewerUtilService,
+    private httpBackend: HttpBackend
   ) { }
 
   ngOnInit() {
     this.dataSubscription = this.activatedRoute.data.subscribe(
       async data => {
         this.quizData = data.content.data
+        if (this.quizData) {
+          this.quizData.artifactUrl = this.generateUrl(this.quizData.artifactUrl)
+        }
         if (this.alreadyRaised && this.oldData) {
           this.raiseEvent(WsEvents.EnumTelemetrySubType.Unloaded, this.oldData)
         }
@@ -98,11 +102,30 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.eventSvc.dispatchEvent(event)
   }
 
+  generateUrl(oldUrl: string) {
+    const chunk = oldUrl.split('/')
+    const newChunk = environment.azureHost.split('/')
+    const newLink = []
+    for (let i = 0; i < chunk.length; i += 1) {
+      if (i === 2) {
+        newLink.push(newChunk[i])
+      } else if (i === 3) {
+        newLink.push(environment.azureBucket)
+      } else {
+        newLink.push(chunk[i])
+      }
+    }
+    const newUrl = newLink.join('/')
+    return newUrl
+  }
+
   private async transformQuiz(content: NsContent.IContent): Promise<NSQuiz.IQuiz> {
-    const artifactUrl = this.forPreview
-      ? this.viewSvc.getAuthoringUrl(content.artifactUrl)
-      : content.artifactUrl
-    let quizJSON: NSQuiz.IQuiz = await this.http
+    // const artifactUrl = this.forPreview
+    //   ? this.viewSvc.getAuthoringUrl(content.artifactUrl)
+    //   : content.artifactUrl
+    const artifactUrl = this.generateUrl(content.artifactUrl)
+    const newHttpClient = new HttpClient(this.httpBackend)
+    let quizJSON: NSQuiz.IQuiz = await newHttpClient
       .get<any>(artifactUrl || '')
       .toPromise()
       .catch((_err: any) => {

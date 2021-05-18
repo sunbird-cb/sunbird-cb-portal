@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core'
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
-import { } from '@ws-widget/collection'
-import { IResolveResponse } from '@ws-widget/utils'
+import { } from '@sunbird-cb/collection'
+import { IResolveResponse } from '@sunbird-cb/utils'
 import { DiscussService } from '../services/discuss.service'
 import { NSDiscussData } from '../models/discuss.model'
 
@@ -18,7 +18,8 @@ export class DiscussTopicResolve
     _state: RouterStateSnapshot,
   ): Observable<IResolveResponse<NSDiscussData.IDiscussionData>> {
     const topicId = _route.params.topicId
-    return this.discussionSvc.fetchTopicById(topicId).pipe(
+    const topicName = _route.params.topicName
+    return this.discussionSvc.fetchTopicById(topicId, topicName).pipe(
       map(data => ({ data, error: null })),
       catchError(error => of({ error, data: null })),
     )

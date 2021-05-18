@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core'
 import { MatSnackBar, MAT_DIALOG_DATA } from '@angular/material'
-import { EventService } from '@ws-widget/utils'
+import { EventService } from '@sunbird-cb/utils'
 
 export interface IWidgetBtnCallDialogData {
   name: string

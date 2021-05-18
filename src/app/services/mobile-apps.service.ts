@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
-import { AuthKeycloakService } from '@ws-widget/utils'
-import { NsContent } from '../../../library/ws-widget/collection/src/public-api'
+import { AuthKeycloakService } from '@sunbird-cb/utils'
+import { NsContent } from '@sunbird-cb/collection'
 // tslint:disable-next-line: max-line-length
 import {
   CHAT_BOT_VISIBILITY,

@@ -44,7 +44,7 @@
     <div class="info-item" *ngIf="tocConfig?.atAGlance?.viewCount?.enabled && content?.viewCount && configSvc?.rootOrg">
       <h3 class="item-heading ws-mat-primary-text">{{tocConfig?.atAGlance?.viewCount?.displayName}}</h3>
       <h3 class="ws-mat-accent-text width-expand">
-        {{ content?.viewCount[configSvc.rootOrg] | pipeCountTransform }}
+        {{ getViewCount(content) | pipeCountTransform }}
         <ng-container *ngIf="content?.uniqueLearners">
           ({{ content?.uniqueLearners | pipeCountTransform }}
           <ng-container i18n>Unique)</ng-container>
@@ -197,7 +197,8 @@
             <mat-chip>
               <h3 class="ws-mat-accent-text width-expand">
                 <ng-container *ngIf="item.contentType === 'Knowledge Board' && item.status === 'Live'">
-                  <a [href]="'/app/toc/' + item.identifier + '/overview?primaryCategory='+ item.primaryCategory "> {{ item.name }} </a>
+                  <a [href]="'/app/toc/' + item.identifier + '/overview?primaryCategory='+ item.primaryCategory "> {{
+                    item.name }} </a>
                 </ng-container>
               </h3>
             </mat-chip>
@@ -238,7 +239,7 @@
     <h2 i18n *ngIf="title === 'AUTHOR'">Authors</h2>
     <h2 i18n *ngIf="title === 'CONTACT'">Curator/Contact</h2>
     <mat-divider></mat-divider>
-    <div *ngFor="let author of authors" class="author">
+    <div *ngFor="let author of parseJsonData(authors)" class="author">
       <ws-widget-user-image class="author-image" [imageType]="'name-initial'" [userName]="author.name || ''"
         [email]="author.email"></ws-widget-user-image>
       <div class="width-expand flex flex-middle flex-between">

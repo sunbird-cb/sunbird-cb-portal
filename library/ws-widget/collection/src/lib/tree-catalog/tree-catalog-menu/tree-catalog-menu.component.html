@@ -5,9 +5,9 @@
     </h3>
     <div class="flex flex-center margin-m" *ngIf="fetchStatus === 'fetching'">
       <mat-spinner *ngIf="fetchStatus === 'fetching'"></mat-spinner>
-      <h2 *ngIf="fetchStatus === 'error'" class="mat-title margin-remove-bottom">
+      <!-- <h2 *ngIf="fetchStatus === 'error'" class="mat-title margin-remove-bottom">
         Error Fetching Data
-      </h2>
+      </h2> -->
     </div>
 
     <div class="m-4" *ngIf="fetchStatus === 'done' && !catalogItems?.length">

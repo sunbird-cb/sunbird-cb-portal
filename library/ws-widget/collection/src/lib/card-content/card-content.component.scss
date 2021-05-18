@@ -1,5 +1,6 @@
-@import 'ws-vars';
-@import 'ws-mixins';
+@import '~@sunbird-cb/design-system/src/styles/ws-common';
+@import '~@sunbird-cb/design-system/src/styles/ws-vars';
+@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
 
 .card-minimal-container {
   position: relative;
@@ -287,7 +288,7 @@
     display: flex;
     font-size: 14px;
     line-height: 27px;
-    padding-bottom: 10px;
+    padding-bottom: 24px;
 
     .mode-tag {
       border-radius: 5px;
@@ -313,7 +314,7 @@
   }
 
   $title-line-count: 2;
-  $title-line-height: 1.89em;
+  $title-line-height: 24px;
 
   .title-text {
     // font-size: 18px;
@@ -321,18 +322,18 @@
     position: relative;
     overflow: hidden;
     height: $title-line-count * $title-line-height;
-    line-height: $title-line-height;
+    // line-height: $title-line-height;
   }
 
   $description-line-count: 3;
-  $description-line-height: 1.9em;
+  $description-line-height: 21px;
 
   .description-text {
     // font-size: 15px;
     position: relative;
     overflow: hidden;
     height: $description-line-count * $description-line-height;
-    line-height: $description-line-height;
+    // line-height: $description-line-height;
   }
 }
 

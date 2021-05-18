@@ -114,10 +114,19 @@
           </div>
         </div>
       </div>
-      <div class="w-100" *ngIf="content?.identifier && content?.progress?.progress">
-        <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
-          [contentId]="content?.identifier" class="progress-bar-thin" [progress]="content?.progress?.progress">
-        </ws-widget-content-progress>
+      <div class="w-100" *ngIf="content?.identifier && content?.completionPercentage">
+        <ng-container *ngIf="content?.completionStatus == 2">
+          <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
+            [contentId]="content?.identifier" class="progress-bar-thin" [progress]="100" 
+            [progressType]="'percentage'">
+          </ws-widget-content-progress>
+        </ng-container>
+        <ng-container *ngIf="content?.completionStatus < 2">
+          <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
+            [contentId]="content?.identifier" class="progress-bar-thin" [progress]="content?.completionPercentage" 
+            [progressType]="'percentage'">
+          </ws-widget-content-progress>
+        </ng-container>
       </div>
     </div>
 
@@ -133,9 +142,18 @@
     <div class="img-container">
       <img class="card-thumbnail ws-mat-primary-lite-background" [src]="content?.appIcon" alt="Thumbnail"
         (click)="viewChildren = !viewChildren" [wsUtilsDefaultThumbnail]="defaultThumbnail" />
-      <ws-widget-content-progress *ngIf="content?.identifier && content?.progress?.progress" [forPreview]="forPreview"
-        [contentId]="content?.identifier" class="progress-bar-thin" [progress]="content?.progress?.progress">
-      </ws-widget-content-progress>
+        <ng-container *ngIf="content?.completionStatus == 2">
+          <ws-widget-content-progress *ngIf="content?.identifier && content?.completionPercentage" [forPreview]="forPreview"
+            [contentId]="content?.identifier" class="progress-bar-thin" [progress]="100" 
+            [progressType]="'percentage'">
+          </ws-widget-content-progress>
+        </ng-container>
+        <ng-container *ngIf="content?.completionStatus < 2">
+          <ws-widget-content-progress *ngIf="content?.identifier && content?.completionPercentage" [forPreview]="forPreview"
+            [contentId]="content?.identifier" class="progress-bar-thin" [progress]="content?.completionPercentage" 
+            [progressType]="'percentage'">
+          </ws-widget-content-progress>
+        </ng-container>
     </div>
 
 

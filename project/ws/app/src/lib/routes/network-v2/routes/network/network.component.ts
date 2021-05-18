@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core'
 import { ActivatedRoute, Router, Event, NavigationEnd, NavigationError } from '@angular/router'
-import { ValueService } from '@ws-widget/utils/src/public-api'
+import { ValueService } from '@sunbird-cb/utils'
 import { map } from 'rxjs/operators'
-import { NsWidgetResolver } from 'library/ws-widget/resolver/src/public-api'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { NSNetworkDataV2 } from '../../models/network-v2.model'
 /* tslint:disable */
 import _ from 'lodash'
@@ -80,7 +80,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
       }
       switch (path) {
         case 'home':
-          this.titles.push({ title: 'Network', icon: '', url: 'none' })
+          // this.titles.push({ title: 'Network', icon: '', url: 'none' })
           break
         case 'my-connection':
           this.titles.push({ title: 'My connections', icon: '', url: 'none' })

@@ -1,4 +1,4 @@
-import { NsWidgetResolver } from '@ws-widget/resolver'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { NSSearch } from '../_services/widget-search.model'
 import { NsContent } from '../_services/widget-content.model'
 import { NsCardContent } from '../card-content/card-content.model'
@@ -17,6 +17,10 @@ export namespace NsContentStripMultiple {
     name?: string
     mode?: 'accordion'
     info?: IStripInfo
+    viewMoreUrl?: {
+      queryParams?: string
+      path?: string
+    }
     preWidgets?: NsWidgetResolver.IRenderConfigWithAnyData[]
     postWidgets?: NsWidgetResolver.IRenderConfigWithAnyData[]
     stripConfig?: IStripConfig
@@ -29,6 +33,40 @@ export namespace NsContentStripMultiple {
       searchRegionRecommendation?: NSSearch.ISearchOrgRegionRecommendationRequest
       api?: IStripRequestApi
       ids?: string[]
+      enrollmentList?: any
+    }
+    searchV6Type?: 'KB' | 'Collections' | 'searchQuery' | null
+    stripBackground?: string
+    noDataWidget?: NsWidgetResolver.IRenderConfigWithAnyData
+    loader?: boolean
+    errorWidget?: NsWidgetResolver.IRenderConfigWithAnyData
+    refreshEvent?: Record<'eventType' | 'from', string>
+    fetchLikes?: boolean
+  }
+
+  export interface IContentStripUnitV2 {
+    key: string
+    title: string
+    name?: string
+    mode?: 'accordion'
+    info?: IStripInfo
+    viewMoreUrl?: {
+      queryParams?: string
+      path?: string
+    }
+    preWidgets?: NsWidgetResolver.IRenderConfigWithAnyData[]
+    postWidgets?: NsWidgetResolver.IRenderConfigWithAnyData[]
+    stripConfig?: IStripConfig
+    canHideStrip?: boolean
+    filters?: any[]
+    selectAll?: boolean | null
+    request?: {
+      search?: NSSearch.ISearchRequest
+      searchV6?: NSSearch.ISearchV6RequestV2
+      searchRegionRecommendation?: NSSearch.ISearchOrgRegionRecommendationRequest
+      api?: IStripRequestApi
+      ids?: string[]
+      enrollmentList?: any
     }
     searchV6Type?: 'KB' | 'Collections' | 'searchQuery' | null
     stripBackground?: string

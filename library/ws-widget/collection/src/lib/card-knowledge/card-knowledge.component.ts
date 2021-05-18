@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { Subscription } from 'rxjs'
-import { ConfigurationsService, EventService, UtilityService } from '../../../../utils/src/public-api'
+import { ConfigurationsService, EventService, UtilityService } from '@sunbird-cb/utils'
 import { NsContent } from '../_services/widget-content.model'
 import { IKBContentCard } from './card-knowledge.model'
 
@@ -26,7 +26,7 @@ export class CardKnowledgeComponent implements OnInit, OnDestroy {
   constructor(private events: EventService, private configSvc: ConfigurationsService, private utilitySvc: UtilityService) {
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.defaultThumbnail = instanceConfig.logos.defaultContent
+      this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
     }
   }
 

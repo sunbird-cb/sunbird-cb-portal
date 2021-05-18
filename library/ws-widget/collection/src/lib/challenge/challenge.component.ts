@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core'
-import {
-  IChallenges,
-  IActivityCard,
-} from '../../../../../../project/ws/app/src/lib/routes/activities/interfaces/activities.model'
-import { ConfigurationsService } from '../../../../utils/src/lib/services/configurations.service'
+// import {
+//   IChallenges,
+//   IActivityCard,
+// } from '../../../../../../project/ws/app/src/lib/routes/activities/interfaces/activities.model'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Router, NavigationExtras } from '@angular/router'
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner'
 
@@ -13,16 +13,17 @@ import { ProgressSpinnerMode } from '@angular/material/progress-spinner'
   styleUrls: ['./challenge.component.scss'],
 })
 export class ChallengeComponent implements OnInit {
-  @Input() widgetData!: IChallenges
+  @Input() widgetData!: any // IChallenges
   tag = ''
   heading = ''
-  activities: IActivityCard[] = []
+  // activities: IActivityCard[] = []
+  activities: any[] = []
   completedActivity: string[] = []
   moreActivities = false
   totalNumberOfActivities = 0
   completedActivityLength = 0
   mode: ProgressSpinnerMode = 'determinate'
-  constructor(private configSvc: ConfigurationsService, private router: Router) {}
+  constructor(private configSvc: ConfigurationsService, private router: Router) { }
 
   ngOnInit() {
     if (this.configSvc.userPreference) {
@@ -32,7 +33,7 @@ export class ChallengeComponent implements OnInit {
     }
     this.totalNumberOfActivities = this.widgetData.activities.length
     this.completedActivity.forEach(id => {
-      this.widgetData.activities.forEach(activityId => {
+      this.widgetData.activities.forEach((activityId: any) => {
         if (id === activityId.id) {
           this.completedActivityLength += 1
         }
@@ -43,7 +44,7 @@ export class ChallengeComponent implements OnInit {
     }
     if (this.widgetData) {
       if (this.widgetData.activities.length > 2) {
-        this.widgetData.activities.forEach(activity => {
+        this.widgetData.activities.forEach((activity: any) => {
           if (!this.completedActivity.includes(activity.id)) {
             if (this.activities.length < 2) {
               this.activities.push(activity)
@@ -51,7 +52,7 @@ export class ChallengeComponent implements OnInit {
           }
         })
         if (this.activities.length !== 2) {
-          this.widgetData.activities.forEach(activity => {
+          this.widgetData.activities.forEach((activity: any) => {
             if (this.activities.length !== 2) {
               if (!this.activities.includes(activity)) {
                 this.activities.push(activity)

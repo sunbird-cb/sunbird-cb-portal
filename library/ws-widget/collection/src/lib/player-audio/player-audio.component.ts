@@ -1,4 +1,4 @@
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import {
   Component,
   OnInit,
@@ -11,17 +11,17 @@ import {
 import videoJs from 'video.js'
 import { ROOT_WIDGET_CONFIG } from '../collection.config'
 import { IWidgetsPlayerMediaData } from '../_models/player-media.model'
-import { EventService } from '@ws-widget/utils'
+import { EventService } from '@sunbird-cb/utils'
 import {
   videoJsInitializer,
   telemetryEventDispatcherFunction,
   saveContinueLearningFunction,
   fireRealTimeProgressFunction,
 } from '../_services/videojs-util'
-import { ViewerUtilService } from '../../../../../../project/ws/viewer/src/lib/viewer-util.service'
 import { WidgetContentService } from '../_services/widget-content.service'
 import { NsContent } from '../_services/widget-content.model'
 import { ActivatedRoute } from '@angular/router'
+import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 
 const videoJsOptions: videoJs.PlayerOptions = {
   controls: true,
@@ -128,9 +128,13 @@ export class PlayerAudioComponent extends WidgetBaseComponent
       }
     }
     const fireRProgress: fireRealTimeProgressFunction = (identifier, data) => {
-      if (this.widgetData.identifier) {
+      const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+              this.activatedRoute.snapshot.queryParams.collectionId : this.widgetData.identifier
+      const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+              this.activatedRoute.snapshot.queryParams.batchId : this.widgetData.identifier
+      if (this.widgetData.identifier && identifier && data) {
         this.viewerSvc
-          .realTimeProgressUpdate(identifier, data)
+          .realTimeProgressUpdate(identifier, data, collectionId, batchId)
       }
     }
     let enableTelemetry = false
@@ -173,12 +177,7 @@ export class PlayerAudioComponent extends WidgetBaseComponent
     })
   }
   async fetchContent() {
-    const content = await this.contentSvc.fetchContent(
-      this.widgetData.identifier || '',
-      'minimal',
-      [],
-      this.widgetData.primaryCategory
-    ).toPromise()
+    const content = await this.contentSvc.fetchContent(this.widgetData.identifier || '', 'minimal').toPromise()
     if (content.artifactUrl && content.artifactUrl.indexOf('/content-store/') > -1) {
       this.widgetData.url = content.artifactUrl
       this.widgetData.posterImage = content.appIcon

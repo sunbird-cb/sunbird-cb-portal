@@ -2,13 +2,13 @@ import { Component, OnDestroy } from '@angular/core'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material'
 import { Subscription } from 'rxjs'
-import { TSendStatus } from '@ws-widget/utils'
+import { TSendStatus } from '@sunbird-cb/utils'
 import {
   FeedbackService,
   FeedbackSnackbarComponent,
   EFeedbackRole,
   EFeedbackType,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-app-service-request',

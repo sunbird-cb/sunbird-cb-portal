@@ -5,7 +5,7 @@ import { MatButtonModule, MatCardModule, MatChipsModule, MatExpansionModule, Mat
 import { MatDialogModule } from '@angular/material/dialog'
 import { MatListModule } from '@angular/material/list'
 import { RouterModule } from '@angular/router'
-import { BtnPageBackModule, BtnSocialLikeModule, BtnSocialVoteModule } from '@ws-widget/collection'
+import { BtnPageBackModule, BtnSocialLikeModule, BtnSocialVoteModule } from '@sunbird-cb/collection'
 import { BtnModeratorModule } from '../widgets/buttons/btn-moderator/btn-moderator.module'
 import { DialogBoxModeratorComponent } from '../widgets/Dialog-Box/dialog-box-moderator/dialog-box-moderator.component'
 import { DialogBoxModeratorModule } from '../widgets/Dialog-Box/dialog-box-moderator/dialog-box-moderator.module'

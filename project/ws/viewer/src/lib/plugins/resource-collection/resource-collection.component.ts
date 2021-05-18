@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { MatDialog, MatPaginator, MatSnackBar, MatTableDataSource } from '@angular/material'
-import { NsContent } from '@ws-widget/collection'
+import { NsContent } from '@sunbird-cb/collection'
 import { ViewSubmissionComponent } from './components/view-submission/view-submission.component'
 import { ResourceCollectionService } from './resource-collection.service'
 

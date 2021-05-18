@@ -9,9 +9,8 @@ import {
   NsPlaylist,
   viewerRouteGenerator,
   WidgetContentService,
-} from '@ws-widget/collection'
-import { ConfigurationsService, TFetchStatus } from '@ws-widget/utils'
-import { UtilityService } from '@ws-widget/utils/src/lib/services/utility.service'
+} from '@sunbird-cb/collection'
+import { TFetchStatus, UtilityService, ConfigurationsService } from '@sunbird-cb/utils'
 import { AccessControlService } from '@ws/author'
 import { Subscription } from 'rxjs'
 import { NsAnalytics } from '../../models/app-toc-analytics.model'
@@ -22,7 +21,6 @@ import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import { FormControl, Validators } from '@angular/forms'
 import * as dayjs from 'dayjs'
 import * as  lodash from 'lodash'
-import { CreateBatchDialogComponent } from '../create-batch-dialog/create-batch-dialog.component'
 
 @Component({
   selector: 'ws-app-toc-banner',
@@ -36,7 +34,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   @Input() resumeData: NsContent.IContinueLearningData | null = null
   @Input() analytics: NsAnalytics.IAnalytics | null = null
   @Input() forPreview = false
-  @Input() batchData: NsContent.IBatchListResponse | null = null
+  @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   batchControl = new FormControl('', Validators.required)
   contentProgress = 0
   bannerUrl: SafeStyle | null = null
@@ -72,21 +70,23 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   defaultSLogo = ''
   disableEnrollBtn = false
 
+  // configSvc: any
+
   constructor(
     private sanitizer: DomSanitizer,
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private tocSvc: AppTocService,
-    private configSvc: ConfigurationsService,
     private progressSvc: ContentProgressService,
     private contentSvc: WidgetContentService,
     private utilitySvc: UtilityService,
     private mobileAppsSvc: MobileAppsService,
     private snackBar: MatSnackBar,
-    public createBatchDialog: MatDialog,
-    // private authAccessService: AccessControlService,
-  ) { }
+    public configSvc: ConfigurationsService,
+  ) {
+
+  }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
@@ -104,9 +104,10 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       }
     })
     const instanceConfig = this.configSvc.instanceConfig
-    if (instanceConfig) {
+    if (instanceConfig && instanceConfig.logos && instanceConfig.logos.defaultSourceLogo) {
       this.defaultSLogo = instanceConfig.logos.defaultSourceLogo
     }
+
     if (this.configSvc.restrictedFeatures) {
       this.isGoalsEnabled = !this.configSvc.restrictedFeatures.has('goals')
     }
@@ -222,6 +223,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         if (this.configSvc.userProfile) {
           userId = this.configSvc.userProfile.userId || ''
         }
+
         const req = {
           request: {
             userId,
@@ -235,6 +237,13 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
               content: [batch],
               enrolled: true,
             }
+            this.router.navigate(
+              [],
+              {
+                relativeTo: this.route,
+                queryParams: { batchId: batch.batchId },
+                queryParamsHandling: 'merge',
+              })
             this.openSnackbar('Enrolled Successfully!')
             this.disableEnrollBtn = false
           } else {
@@ -525,16 +534,5 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     } catch (e) {
       return true
     }
-  }
-
-  openDialog(content: any): void {
-    const dialogRef = this.createBatchDialog.open(CreateBatchDialogComponent, {
-      height: '400px',
-      width: '600px',
-      data: { content },
-    })
-
-    dialogRef.afterClosed().subscribe((_result: any) => {
-    })
   }
 }

@@ -13,8 +13,8 @@ import {
   MatProgressSpinnerModule,
 } from '@angular/material'
 
-import { UserImageModule } from '@ws-widget/collection'
-import { PipeNameTransformModule, PipeCountTransformModule } from '@ws-widget/utils'
+import { UserImageModule } from '@sunbird-cb/collection'
+import { PipeNameTransformModule, PipeCountTransformModule } from '@sunbird-cb/utils'
 
 @NgModule({
   declarations: [

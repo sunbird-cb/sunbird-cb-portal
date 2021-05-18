@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/cor
 import { FormControl } from '@angular/forms'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { WidgetContentService } from '../../../../_services/widget-content.service'
-import { ConfigurationsService } from '@ws-widget/utils'
-import { SearchServService } from '@ws/app/src/lib/routes/search/services/search-serv.service'
+import { ConfigurationsService } from '@sunbird-cb/utils'
+// import { SearchServService } from '@ws/app/src/lib/routes/search/services/search-serv.service'
 import { Subscription } from 'rxjs'
 
 interface ISearchQuery {
@@ -29,11 +29,12 @@ export class SearchInputComponent implements OnInit, OnDestroy {
   constructor(
     private widgetContentSvc: WidgetContentService,
     private configSvc: ConfigurationsService,
-    private searchServSvc: SearchServService,
+    // private searchServSvc: SearchServService,
   ) {
-    this.selectedLang = this.searchServSvc.getLanguageSearchIndex(
-      this.configSvc.activeLocale && this.configSvc.activeLocale.locals[0] || 'en'
-    )
+    // this.selectedLang = this.searchServSvc.getLanguageSearchIndex(
+    //   this.configSvc.activeLocale && this.configSvc.activeLocale.locals[0] || 'en'
+    // )
+    this.selectedLang = 'en'
   }
 
   getSearchConfig() {

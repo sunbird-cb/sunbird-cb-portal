@@ -10,11 +10,13 @@ import {
   ViewChild,
 } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
-import { ConfigurationsService, TFetchStatus } from '@ws-widget/utils'
-import { SearchServService } from '@ws/app/src/lib/routes/search/services/search-serv.service'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
+// import { SearchServService } from '@ws/app/src/lib/routes/search/services/search-serv.service'
 import { BehaviorSubject, EMPTY, Subscription, timer } from 'rxjs'
 import { debounce, mergeMap } from 'rxjs/operators'
+import { SearchServService } from '../_services/search-serv.service'
+// import { debounce, mergeMap } from 'rxjs/operators'
 import { NsContent } from '../_services/widget-content.model'
 import { NSSearch } from '../_services/widget-search.model'
 import { IPickerContentData, ISearchConfig } from './picker-content.model'
@@ -55,7 +57,7 @@ export class PickerContentComponent extends WidgetBaseComponent
   displayFilters: NSSearch.IFilterUnitResponse[] | null = null
 
   searchFetchStatus: TFetchStatus = 'none'
-  searchResults: NsContent.IContent[] = []
+  searchResults: any = []
 
   debounceSubject = new BehaviorSubject<boolean>(false)
   debounceSubscription: Subscription | null = null
@@ -73,7 +75,7 @@ export class PickerContentComponent extends WidgetBaseComponent
     super()
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.defaultThumbnail = instanceConfig.logos.defaultContent
+      this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
     }
   }
 
@@ -101,12 +103,13 @@ export class PickerContentComponent extends WidgetBaseComponent
   }
 
   async initializeSearchSubject(phraseSearch: boolean = true) {
+    if (phraseSearch) { }
     const phraseSearchConfig = await this.searchServSvc.getApplyPhraseSearch()
     const searchConfig = await this.searchServSvc.getSearchConfig()
     const isStandAlone = searchConfig.search.tabs[0].isStandAlone
-    // let applyIsStandAlone = false
+    let applyIsStandAlone = false
     if (isStandAlone || isStandAlone === undefined) {
-      // applyIsStandAlone = true
+      applyIsStandAlone = true
     }
     this.debounceSubscription = this.debounceSubject
       .pipe(
@@ -116,38 +119,44 @@ export class PickerContentComponent extends WidgetBaseComponent
           this.searchResults = []
           let query = this.query || ''
           if (phraseSearch && query.indexOf(' ') > -1 && phraseSearchConfig) {
-            query = `${query}`
+            query = `"${query}"`
           }
-          // tslint:disable-next-line: max-line-length
-          return this.searchServSvc.searchV6Wrapper({ request: { query, filters: { visibility: ['Default'] }, sort_by: { lastUpdatedOn: 'desc' }, fields: [], facets: [] } })
+          return this.searchServSvc.searchV6Wrapper({
+            query,
+            locale: [this.language || 'en'],
+            filters:
+              this.customSearchFilters ?
+                this.customSearchFilters :
+                { contentType: this.selectedContentTypes },
+            isStandAlone: applyIsStandAlone ? applyIsStandAlone : undefined,
+            didYouMean: false,
+          })
         }),
       )
       .subscribe(
-        (search: any) => {
-          if (phraseSearch && search.result.count === 0 && phraseSearchConfig) {
+        search => {
+          if (phraseSearch && search.totalHits === 0 && phraseSearchConfig) {
             return this.initializeSearchSubject(false)
           }
           this.searchFetchStatus = 'done'
-          this.searchResults = search.result.content
-          this.searchResults.forEach(content => {
+          this.searchResults = (search.result.content) ? search.result.content : []
+          this.searchResults.forEach((content: { identifier: string | number; name: string }) => {
             if (this.widgetData.chipNamesHash) {
               this.widgetData.chipNamesHash[content.identifier] = content.name
             }
           })
-          const availableFilters = this.widgetData.availableFilters || ['contentType']
-          if (!this.displayFilters && availableFilters) {
-            this.displayFilters = search.filters.filter((filter: any) =>
-              availableFilters.includes(filter.type),
-            )
-            if (this.displayFilters) {
-              const contentTypes = this.displayFilters.find((filter: any) => filter.type === 'contentType')
-              if (contentTypes) {
-                contentTypes.content = contentTypes.content.filter(type =>
-                  this.allowContentTypes.includes(type.type || ''),
-                )
-              }
-            }
-          }
+          // const availableFilters = this.widgetData.availableFilters || ['contentType']
+          // if (!this.displayFilters && availableFilters) {
+          //   this.displayFilters = search.filters.filter(filter =>
+          //     availableFilters.includes(filter.type),
+          //   )
+          //   const contentTypes = this.displayFilters.find(filter => filter.type === 'contentType')
+          //   if (contentTypes) {
+          //     contentTypes.content = contentTypes.content.filter(type =>
+          //       this.allowContentTypes.includes(type.type || ''),
+          //     )
+          //   }
+          // }
           return
         },
         () => {
@@ -157,7 +166,7 @@ export class PickerContentComponent extends WidgetBaseComponent
   }
 
   selectedContentChanged(identifier: string, checked: boolean) {
-    const contentMeta = this.searchResults.find(content => content.identifier === identifier)
+    const contentMeta = this.searchResults.find((content: { identifier: string }) => content.identifier === identifier)
     if (checked) {
       if (this.selectionType === 'checkbox') {
         this.selectedContentIds.add(identifier)

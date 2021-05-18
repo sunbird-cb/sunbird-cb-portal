@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
-import { getStringifiedQueryParams } from '@ws-widget/utils'
+import { getStringifiedQueryParams } from '@sunbird-cb/utils'
 import { NsNetworkStripNewMultiple } from './activity-strip-multiple.model'
 
 @Injectable({

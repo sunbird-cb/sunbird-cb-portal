@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RecentBlogComponent } from './components/recent-blog.component'
-import { BtnSocialLikeModule, BtnPageBackModule, BtnSocialVoteModule } from '@ws-widget/collection'
+import { BtnSocialLikeModule, BtnPageBackModule, BtnSocialVoteModule } from '@sunbird-cb/collection'
 import {
   MatIconModule,
   MatMenuModule,

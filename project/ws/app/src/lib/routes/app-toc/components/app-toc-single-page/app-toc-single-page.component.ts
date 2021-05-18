@@ -2,16 +2,16 @@ import { AccessControlService } from '@ws/author'
 import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ActivatedRoute, Data } from '@angular/router'
-import { NsContent } from '@ws-widget/collection'
-import { ConfigurationsService } from '@ws-widget/utils'
+import { NsContent } from '@sunbird-cb/collection'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Observable, Subscription } from 'rxjs'
 import { share } from 'rxjs/operators'
 import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
-import { BtnMailUserDialogComponent } from '@ws-widget/collection/src/lib/btn-mail-user/btn-mail-user-dialog/btn-mail-user-dialog.component'
-import { IBtnMailUser } from '@ws-widget/collection/src/lib/btn-mail-user/btn-mail-user.component'
-import { MatDialog } from '@angular/material'
+import { CreateBatchDialogComponent } from '../create-batch-dialog/create-batch-dialog.component'
 import { TitleTagService } from '@ws/app/src/lib/routes/app-toc/services/title-tag.service'
+import { MatDialog } from '@angular/material'
+import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 
 @Component({
   selector: 'ws-app-app-toc-single-page',
@@ -39,20 +39,31 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   loggedInUserId!: any
   private routeQuerySubscription: Subscription | null = null
   batchId!: string
+  isNotEditor = true
+  // configSvc: any
 
   constructor(
     private route: ActivatedRoute,
     private tocSharedSvc: AppTocService,
-    public configSvc: ConfigurationsService,
     private domSanitizer: DomSanitizer,
     private authAccessControlSvc: AccessControlService,
-    private dialog: MatDialog,
+    // private dialog: MatDialog,
     private titleTagService: TitleTagService,
+    public createBatchDialog: MatDialog,
+    private mobileAppsSvc: MobileAppsService,
+    public configSvc: ConfigurationsService,
   ) {
     if (this.configSvc.restrictedFeatures) {
       this.askAuthorEnabled = !this.configSvc.restrictedFeatures.has('askAuthor')
       this.trainingLHubEnabled = !this.configSvc.restrictedFeatures.has('trainingLHub')
     }
+    // if (this.route && this.route.parent) {
+    //   this.configSvc = this.route.parent.snapshot.data.profileData
+    // }
+    // this.route.data.subscribe(data => {
+    //   this.askAuthorEnabled = !data.restrictedData.data.has('askAuthor')
+    //   this.trainingLHubEnabled = !data.restrictedData.data.has('trainingLHub')
+    // })
   }
 
   ngOnInit() {
@@ -65,9 +76,17 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
         this.tocConfig = data.pageData.data
       })
     }
-    if (this.configSvc && this.configSvc.userProfile &&  this.configSvc.userProfile.userId) {
+    if (this.configSvc && this.configSvc.userProfile && this.configSvc.userProfile.userId) {
       this.loggedInUserId = this.configSvc.userProfile.userId
     }
+    // check if the user has role editor,
+    if (this.configSvc && this.configSvc.userRoles &&
+      this.configSvc.userRoles.has('editor')
+    ) {
+      // if editor, create batch button will be shown
+      this.isNotEditor = false
+    }
+
     this.routeQuerySubscription = this.route.queryParamMap.subscribe(qParamsMap => {
       const batchId = qParamsMap.get('batchId')
       if (batchId) {
@@ -114,6 +133,18 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     return this.tocSharedSvc.showDescription
   }
 
+  get isResource() {
+    if (this.content) {
+      const isResource = this.content.contentType === NsContent.EContentTypes.KNOWLEDGE_ARTIFACT ||
+        this.content.contentType === NsContent.EContentTypes.RESOURCE || !this.content.children.length
+      if (isResource) {
+        this.mobileAppsSvc.sendViewerData(this.content)
+      }
+      return isResource
+    }
+    return false
+  }
+
   setSocialMediaMetaTags(data: any) {
     this.titleTagService.setSocialMediaTags(
       this.detailUrl(data),
@@ -155,6 +186,20 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
           },
         )
     }
+  }
+
+  public getCompetencies(competencies: any) {
+    const competenciesArray = JSON.parse(competencies)
+    const competencyStringArray: any[] = []
+    competenciesArray.map((c: any) => {
+      // if (i < (competenciesArray.length -1)) {
+      //   competencyString.push(`${c.name}, `)
+      // } else {
+      //   competencyString.push(c.name)
+      // }
+      competencyStringArray.push(c.name)
+    })
+    return competencyStringArray
   }
 
   parseContentParent(content: NsAppToc.IContentParentResponse) {
@@ -211,23 +256,46 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     }
   }
 
-  openQueryMailDialog(content: any, data: any) {
-    const emailArray = []
-    emailArray.push(data.email)
-    const dialogdata = {
-      content,
-      user: data,
-      emails: emailArray,
-    }
-    dialogdata.user.isAuthor = true
-    this.dialog.open<BtnMailUserDialogComponent, IBtnMailUser>(
-      BtnMailUserDialogComponent,
-      {
-        // width: '50vw',
-        minWidth: '40vw',
-        maxWidth: '80vw',
-        data: dialogdata,
+  // openQueryMailDialog(content: any, data: any) {
+  //   const emailArray = []
+  //   emailArray.push(data.email)
+  //   const dialogdata = {
+  //     content,
+  //     user: data,
+  //     emails: emailArray,
+  //   }
+  //   dialogdata.user.isAuthor = true
+  //   this.dialog.open<BtnMailUserDialogComponent, IBtnMailUser>(
+  //     BtnMailUserDialogComponent,
+  //     {
+  //       // width: '50vw',
+  //       minWidth: '40vw',
+  //       maxWidth: '80vw',
+  //       data: dialogdata,
+  //     }
+  //   )
+  // }
+
+  openDialog(content: any): void {
+    const dialogRef = this.createBatchDialog.open(CreateBatchDialogComponent, {
+      // height: '400px',
+      width: '600px',
+      data: { content },
+    })
+    // dialogRef.componentInstance.xyz = this.configSvc
+    dialogRef.afterClosed().subscribe((_result: any) => {
+      if (!this.batchId) {
+        this.tocSharedSvc.updateBatchData()
       }
-    )
+    })
+  }
+
+  public parseJsonData(s: string) {
+    try {
+      const parsedString = JSON.parse(s)
+      return parsedString
+    } catch {
+      return []
+    }
   }
 }

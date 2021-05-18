@@ -43,6 +43,7 @@ export namespace NSSearch {
     filters?: ISearchV6Filters[]
     isStandAlone?: boolean
     didYouMean?: boolean
+    request?: ISearchV6Request
   }
 
   export interface ISearchV6RequestV2 {
@@ -123,6 +124,7 @@ export namespace NSSearch {
     count: string
   }
   export interface ISearchV6ApiResultV2 {
+    totalHits: number
     id: string
     ver: string
     ts: string

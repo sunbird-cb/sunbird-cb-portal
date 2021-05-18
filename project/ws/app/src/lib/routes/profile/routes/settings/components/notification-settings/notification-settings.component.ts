@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { NsSettings } from '../../settings.model'
-import { TFetchStatus, ConfigurationsService } from '@ws-widget/utils'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 import { SettingsService } from '../../settings.service'
 import { MatSnackBar } from '@angular/material'
 
@@ -23,21 +23,21 @@ export class NotificationSettingsComponent implements OnInit {
 
   ngOnInit() {
     this.userRoles = this.configSvc.userRoles || new Set()
-    this.fetchNotificationSettings()
+    // this.fetchNotificationSettings()
   }
 
-  private fetchNotificationSettings() {
-    this.notificationsFetchStatus = 'fetching'
-    this.settingsSvc.fetchNotificationSettings().subscribe(
-      data => {
-        this.notificationSettings = data
-        this.notificationsFetchStatus = 'done'
-      },
-      _ => {
-        this.notificationsFetchStatus = 'error'
-      },
-    )
-  }
+  // private fetchNotificationSettings() {
+  //   this.notificationsFetchStatus = 'fetching'
+  //   this.settingsSvc.fetchNotificationSettings().subscribe(
+  //     data => {
+  //       this.notificationSettings = data
+  //       this.notificationsFetchStatus = 'done'
+  //     },
+  //     _ => {
+  //       this.notificationsFetchStatus = 'error'
+  //     },
+  //   )
+  // }
 
   updateMode(groupIndex: number, eventIndex: number, successMsg: string, errorMsg: string) {
     this.notificationSettings[groupIndex].events[eventIndex].recipients.forEach(recipient => {

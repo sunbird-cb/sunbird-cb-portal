@@ -1,10 +1,10 @@
 import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core'
 import { Event, NavigationEnd, Router } from '@angular/router'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
-import { ConfigurationsService, EventService, NsPage } from '@ws-widget/utils'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { ConfigurationsService, EventService, NsPage } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { take } from 'rxjs/operators'
-import { MobileAppsService } from '../../../../../../src/app/services/mobile-apps.service'
+import { MobileAppsService } from './mobile-apps.service'
 import { CustomTourService } from '../_common/tour-guide/tour-guide.service'
 import { BtnFeatureService } from './btn-feature.service'
 

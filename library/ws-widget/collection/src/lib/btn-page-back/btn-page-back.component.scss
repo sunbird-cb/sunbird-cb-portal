@@ -1,6 +1,18 @@
-@import 'ws-common';
-@import 'ws-vars';
-@import 'ws-mixins';
+@import '~@sunbird-cb/design-system/src/styles/ws-common';
+@import '~@sunbird-cb/design-system/src/styles/ws-vars';
+@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
+
+// $max-screen: 1202px;
+// $size-s: 12px;
+// $size-m: 16px;
+$color-thin-gray: #d8d8d8;
+
+%page-center {
+  max-width: $page-center;
+  max-width: $max-screen;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
 
 .container-balanced {
   @extend %page-center;
@@ -63,9 +75,11 @@
   margin: auto 20px auto 20px;
 }
 
-// .main-back {
-//   font-size: $size-xl;
-// }
+.main-back {
+  font-size: $size-xl;
+  margin-bottom: calc(#{$size-s - 2px});
+  margin-right: $size-s;
+}
 
 /** No CSS for this example */
 .mat-y-icon {
@@ -128,5 +142,9 @@ mat-grid-list {
 
 .mat-icon1 {
   padding: 16px;
-  color: #347bb6;
+  color: #347bb6 !important;
+}
+
+.font-bold-imp {
+  font-weight: bold !important;
 }

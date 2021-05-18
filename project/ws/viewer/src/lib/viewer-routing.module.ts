@@ -16,6 +16,8 @@ import { VideoComponent } from './routes/video/video.component'
 import { VideoModule } from './routes/video/video.module'
 import { YoutubeComponent } from './routes/youtube/youtube.component'
 import { YoutubeModule } from './routes/youtube/youtube.module'
+// import { ConfigurationsService } from './resolvers/config-resolver.service'
+// import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = [
   {
@@ -26,6 +28,8 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
     },
   },
   {
@@ -36,12 +40,18 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
     },
   },
   {
     path: 'certification',
     data: {
       resourceType: 'certification',
+    },
+    resolve: {
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
     },
     loadChildren: () =>
       import('./routes/certification/certification.module').then(u => u.CertificationModule),
@@ -51,6 +61,10 @@ const routes: Routes = [
     data: {
       resourceType: 'class-diagram',
     },
+    resolve: {
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
+    },
     loadChildren: () =>
       import('./routes/class-diagram/class-diagram.module').then(u => u.ClassDiagramModule),
   },
@@ -59,6 +73,10 @@ const routes: Routes = [
     data: {
       resourceType: 'dnd-quiz',
     },
+    resolve: {
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
+    },
     loadChildren: () =>
       import('./routes/dnd-quiz/dnd-quiz.module').then(u => u.DndQuizModule),
   },
@@ -66,6 +84,10 @@ const routes: Routes = [
     path: 'hands-on',
     data: {
       resourceType: 'hands-on',
+    },
+    resolve: {
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
     },
     loadChildren: () =>
       import('./routes/hands-on/hands-on.module').then(u => u.HandsOnModule),
@@ -78,6 +100,8 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
     },
   },
   {
@@ -95,6 +119,8 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
     },
     component: ChannelComponent,
   },
@@ -103,6 +129,11 @@ const routes: Routes = [
     data: {
       resourceType: 'iap',
     },
+    resolve: {
+      content: ViewerResolve,
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
+    },
     loadChildren: () =>
       import('./routes/iap/iap.module').then(u => u.IapModule),
   },
@@ -110,6 +141,11 @@ const routes: Routes = [
     path: 'interactive-exercise',
     data: {
       resourceType: 'interactive-exercise',
+    },
+    resolve: {
+      content: ViewerResolve,
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
     },
     loadChildren: () =>
       import('./routes/interactive-exercise/interactive-exercise.module').then(u => u.InteractiveExerciseModule),
@@ -122,12 +158,19 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
     },
   },
   {
     path: 'quiz',
     data: {
       resourceType: 'quiz',
+    },
+    resolve: {
+      content: ViewerResolve,
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
     },
     loadChildren: () =>
       import('./routes/quiz/quiz.module').then(u => u.QuizModule),
@@ -137,6 +180,11 @@ const routes: Routes = [
     data: {
       resourceType: 'assessment',
     },
+    resolve: {
+      content: ViewerResolve,
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
+    },
     loadChildren: () =>
       import('./routes/assessment/assessment.module').then(u => u.AssessmentModule),
   },
@@ -145,6 +193,11 @@ const routes: Routes = [
     data: {
       resourceType: 'rdbms-hands-on',
     },
+    resolve: {
+      content: ViewerResolve,
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
+    },
     loadChildren: () =>
       import('./routes/rdbms-hands-on/rdbms-hands-on.module').then(u => u.RdbmsHandsOnModule),
   },
@@ -152,6 +205,11 @@ const routes: Routes = [
     path: 'resource-collection',
     data: {
       resourceType: 'resource-collection',
+    },
+    resolve: {
+      content: ViewerResolve,
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
     },
     loadChildren: () => import('./routes/resource-collection/resource-collection.module')
       .then(u => u.ResourceCollectionModule),
@@ -164,12 +222,19 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
     },
   },
   {
     path: 'web-module',
     data: {
       resourceType: 'web-module',
+    },
+    resolve: {
+      content: ViewerResolve,
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
     },
     loadChildren: () =>
       import('./routes/web-module/web-module.module').then(u => u.WebModuleModule),
@@ -182,6 +247,8 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
     },
   },
   {
@@ -192,6 +259,8 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
     },
   },
   {
@@ -201,6 +270,8 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
     },
   },
 ]
@@ -224,6 +295,8 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     ViewerResolve,
+    // ConfigurationsService,
+    // ProfileResolverService,
   ],
 })
 export class ViewerRoutingModule { }

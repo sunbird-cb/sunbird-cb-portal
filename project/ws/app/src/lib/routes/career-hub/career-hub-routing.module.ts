@@ -24,7 +24,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'home/:topicId',
+        path: 'home/:topicId/:topicName',
         component: CareerDetailComponent,
         // data: {
         //   load: ['ckeditor'],

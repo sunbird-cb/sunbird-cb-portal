@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core'
 import { IFollowers, IFollowerId } from '../../person-profile.model'
 import { PersonProfileService } from '../../services/person-profile.service'
-import { TFetchStatus, ConfigurationsService } from '../../../../../../../../../library/ws-widget/utils/src/public-api'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-follow-list',
@@ -37,7 +37,7 @@ export class FollowListComponent implements OnInit, OnChanges {
 
   constructor(
     private personprofileSvc: PersonProfileService,
-    public configSvc: ConfigurationsService
+    public configSvc: ConfigurationsService,
   ) {
     this.personprofileSvc.isfollowevent.subscribe((result: Boolean) => {
       if (result) {
@@ -62,8 +62,9 @@ export class FollowListComponent implements OnInit, OnChanges {
     if (this.wid) {
       this.fetchFollowers()
     }
-    if (this.configSvc.userProfile && this.configSvc.userProfile.userName) {
-      this.currentUserId = this.configSvc.userProfile.userId
+
+    if (this.configSvc.userProfile) {
+      this.currentUserId = this.configSvc.userProfile.userId || ''
     }
     this.isInitialized = true
 

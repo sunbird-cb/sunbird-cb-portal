@@ -1,4 +1,4 @@
-import { IWidgetGraphData, NsContent } from '@ws-widget/collection'
+import { IWidgetGraphData, NsContent } from '@sunbird-cb/collection'
 
 export namespace NSAnalyticsData {
   export interface ITimeSpentResponse {

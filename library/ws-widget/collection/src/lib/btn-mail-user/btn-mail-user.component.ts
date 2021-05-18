@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { NsContent } from '../_services/widget-content.model'
 import { MatDialog } from '@angular/material'
 import { BtnMailUserDialogComponent } from './btn-mail-user-dialog/btn-mail-user-dialog.component'
-import { EventService, ConfigurationsService } from '@ws-widget/utils'
+import { EventService, ConfigurationsService } from '@sunbird-cb/utils'
 
 export interface IBtnMailUser {
   content: NsContent.IContent

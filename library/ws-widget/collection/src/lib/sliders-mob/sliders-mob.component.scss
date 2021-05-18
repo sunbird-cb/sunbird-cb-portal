@@ -1,5 +1,5 @@
-@import 'ws-vars';
-@import 'ws-mixins';
+@import '~@sunbird-cb/design-system/src/styles/ws-vars';
+@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
 
 $banner-min-height: 200px;
 
@@ -23,13 +23,11 @@ $banner-min-height: 200px;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    to left,
-    rgba(0, 0, 0, 0.25) 0%,
-    rgba(0, 0, 0, 0) 15%,
-    rgba(0, 0, 0, 0) 85%,
-    rgba(0, 0, 0, 0.25) 100%
-  );
+  background: linear-gradient(to left,
+      rgba(0, 0, 0, 0.25) 0%,
+      rgba(0, 0, 0, 0) 15%,
+      rgba(0, 0, 0, 0) 85%,
+      rgba(0, 0, 0, 0.25) 100%);
   // linear-gradient(
   //   to bottom,
   //   rgba(0, 0, 0, 0) 0%,
@@ -48,6 +46,7 @@ $banner-min-height: 200px;
     width: 100%;
     min-height: $banner-min-height;
     display: block;
+
     @include breakpoint-xs {
       min-height: 80px;
     }

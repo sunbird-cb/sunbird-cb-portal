@@ -1,5 +1,6 @@
-@import 'ws-common';
-@import 'ws-vars';
+@import '~@sunbird-cb/design-system/src/styles/ws-common';
+@import '~@sunbird-cb/design-system/src/styles/ws-vars';
+@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
 
 .btn-filter {
   padding-bottom: 1.34375em;

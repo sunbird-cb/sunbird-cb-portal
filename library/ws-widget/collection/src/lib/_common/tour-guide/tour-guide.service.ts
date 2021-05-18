@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core'
 import { NavigationEnd, NavigationStart, Router } from '@angular/router'
-import { ConfigurationsService } from '../../../../../utils/src/public-api'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 declare const Shepherd: any
 
 @Injectable({

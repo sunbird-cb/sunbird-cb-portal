@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { ConfigurationsService, EventService } from '@ws-widget/utils'
+import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
 import { WidgetContentService } from '../../_services/widget-content.service'
 
 @Component({

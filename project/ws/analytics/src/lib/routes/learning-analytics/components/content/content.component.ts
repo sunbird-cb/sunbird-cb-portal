@@ -3,11 +3,11 @@ import { PageEvent } from '@angular/material'
 import { LearningAnalyticsService } from '../../services/learning-analytics.service'
 import { MatPaginator } from '@angular/material/paginator'
 import { NsAnalytics } from '../../models/learning-analytics.model'
-import { TFetchStatus, ValueService } from '@ws-widget/utils'
+import { TFetchStatus, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { AnalyticsResolver } from '../../resolvers/learning-analytics-filters.resolver'
 import { ActivatedRoute } from '@angular/router'
-import { GraphGeneralService, IGraphWidget, ROOT_WIDGET_CONFIG } from '@ws-widget/collection'
+import { GraphGeneralService, IGraphWidget, ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-analytics-content',

@@ -6,8 +6,9 @@ import { LangSelectComponent } from './components/lang-select/lang-select.compon
 import { AboutVideoComponent } from '../info/about-video/about-video.component'
 import { TncAppResolverService } from '../../../../../../../src/app/services/tnc-app-resolver.service'
 import { TncComponent } from './components/tnc/tnc.component'
-import { PageResolve } from '../../../../../../../library/ws-widget/utils/src/public-api'
+import { ConfigurationsService, PageResolve } from '@sunbird-cb/utils'
 import { InterestComponent } from './module/interest/interest/interest.component'
+// import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
 const routes: Routes = []
 
@@ -26,18 +27,32 @@ const routes: Routes = []
           path: '',
           redirectTo: 'lang',
           pathMatch: 'full',
+          resolve: {
+            // configData: ConfigurationsService,
+            // profileData: ProfileResolverService,
+          },
         }, {
           path: 'lang',
           component: LangSelectComponent,
+          resolve: {
+            // configData: ConfigurationsService,
+            // profileData: ProfileResolverService,
+          },
         }, {
           path: 'tnc',
           component: TncComponent,
           resolve: {
             tnc: TncAppResolverService,
+            // configData: ConfigurationsService,
+            // profileData: ProfileResolverService,
           },
         }, {
           path: 'about-video',
           component: AboutVideoComponent,
+          resolve: {
+            // configData: ConfigurationsService,
+            // profileData: ProfileResolverService,
+          },
         }, {
           path: 'interest',
           component: InterestComponent,
@@ -47,6 +62,8 @@ const routes: Routes = []
           },
           resolve: {
             pageData: PageResolve,
+            // configData: ConfigurationsService,
+            // profileData: ProfileResolverService,
           },
         }],
 
@@ -54,5 +71,6 @@ const routes: Routes = []
     ]),
   ],
   exports: [RouterModule],
+  providers: [ConfigurationsService],
 })
 export class AppSetupRoutingModule { }

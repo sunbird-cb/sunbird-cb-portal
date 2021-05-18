@@ -28,6 +28,8 @@ export namespace NsContent {
     childrenClassifiers?: string[]
     clients?: IClient[]
     collections?: IContent[]
+    completionPercentage?: number | null
+    completionStatus?: number
     complexityLevel: string
     contentId: string
     contentType: EContentTypes
@@ -184,6 +186,7 @@ export namespace NsContent {
     collectionId: string
     completedOn: string | null
     completionPercentage: number | null
+    completionStatus?: number
     content: IContent
     contentId: string
     contentStatus: any
@@ -353,6 +356,7 @@ export namespace NsContent {
   ]
   export enum EMimeTypes {
     COLLECTION = 'application/vnd.ekstep.content-collection',
+    ZIP = 'application/vnd.ekstep.html-archive',
     HTML = 'application/html',
     HTML_TEXT = 'text/html',
     ILP_FP = 'application/ilpfp',
@@ -374,9 +378,11 @@ export namespace NsContent {
     CLASS_DIAGRAM = 'application/class-diagram',
     CHANNEL = 'application/channel',
     COLLECTION_RESOURCE = 'resource/collection',
+    APPLICATION_JSON = 'application/json',
     // Added on UI Only
     CERTIFICATION = 'application/certification',
     PLAYLIST = 'application/playlist',
+    TEXT_WEB = 'text/x-url',
     UNKNOWN = 'application/unknown',
   }
   export enum EDisplayContentTypes {

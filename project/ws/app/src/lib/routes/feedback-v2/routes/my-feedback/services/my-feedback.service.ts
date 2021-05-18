@@ -6,7 +6,7 @@ import {
   FeedbackService,
   IFeedback,
   EFeedbackRole,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 import { Observable } from 'rxjs'
 
 @Injectable()

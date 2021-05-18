@@ -1,5 +1,6 @@
-@import 'ws-vars';
-@import 'ws-mixins';
+@import '~@sunbird-cb/design-system/src/styles/ws-common';
+@import '~@sunbird-cb/design-system/src/styles/ws-vars';
+@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
 
 .box {
   box-sizing: border-box !important
@@ -42,7 +43,7 @@
 .fix-w {
   margin-left: auto;
   margin-right: auto;
-  // max-width: $max-screen;
+  
   display: flex;
   flex: 1;
 

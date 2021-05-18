@@ -215,6 +215,7 @@
 
     .ws-active-discuss-route {
       background: rgba(mat-color($primary, default), 0.1);
+      font-weight: bold;
 
       &:before {
         content: '';
@@ -361,6 +362,8 @@
     .ws-active-discuss-route {
       background-color: #eeeeee !important;
       // font-weight: 700;
+      font-weight: bold;
+
 
       &:before {
         content: '';

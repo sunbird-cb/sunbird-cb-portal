@@ -1,23 +1,29 @@
 import { Injectable } from '@angular/core'
 import { BehaviorSubject, ReplaySubject } from 'rxjs'
-import { environment } from '../../../../../../src/environments/environment'
+// import { environment } from '../../../../../../src/environments/environment'
 import { NsPage } from '../resolvers/page.model'
 import { NsAppsConfig, NsInstanceConfig, NsUser } from './configurations.model'
 import { IUserPreference } from './user-preference.model'
 
-let instanceConfigPath: string | null = window.location.host
-let locationHost: string | null = window.location.host
+const instanceConfigPath: string | null = window.location.host
+const locationHost: string | null = window.location.host
 
-if (!environment.production && Boolean(environment.sitePath)) {
-  locationHost = environment.sitePath
-  instanceConfigPath = environment.sitePath
-}
+// if (!environment.production && Boolean(environment.sitePath)) {
+//   locationHost = environment.sitePath
+//   instanceConfigPath = environment.sitePath
+// }
 @Injectable({
   providedIn: 'root',
 })
 export class ConfigurationsService {
   // update as the single source of truth
-
+  constructor() {
+    // @Inject('env') env: any
+    // if (!env.production && Boolean(env.sitePath)) {
+    //   locationHost = env.sitePath
+    //   instanceConfigPath = env.sitePath
+    // }
+  }
   appSetup = true
   // The url the user tried to access while landing in the app before accepting tnc
   userUrl = ''
@@ -35,14 +41,17 @@ export class ConfigurationsService {
   instanceConfig: NsInstanceConfig.IConfig | null = null
   appsConfig: NsAppsConfig.IAppsConfig | null = null
   rootOrg: string | null = null
+  courseContentPath?: string
   org: string[] | null = null
   activeOrg: string | null = ''
   isProduction = false
   hasAcceptedTnc = false
   profileDetailsStatus = false
+  isActive = true
   userPreference: IUserPreference | null = null
   userProfile: NsUser.IUserProfile | null = null
   userProfileV2: NsUser.IUserProfile | null = null
+  nodebbUserProfile: NsUser.INodebbUserProfile | null = null
   // created to store complete user details sent by pid
   unMappedUser: any
   isAuthenticated = false
@@ -75,4 +84,11 @@ export class ConfigurationsService {
     color: 'primary',
   }
   primaryNavBarConfig: NsInstanceConfig.IPrimaryNavbarConfig | null = null
+  /* for temp Fix */
+  setBaseUrl = (sitePath: string) => `assets/configurations/${(sitePath).replace(':', '_')}`
+  setSitePath = (sitePath: string) => `assets/configurations/${(sitePath).replace(
+    ':',
+    '_',
+  )}`
+  setHostPath = (sitePath: string) => (sitePath).replace(':', '_')
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnDestroy, EventEmitter, Output } from '@angu
 import { ISearchContent, ISearchResult } from '../../../../../../../author/src/lib/interface/search'
 import { Subscription } from 'rxjs'
 import { MyContentService } from '../../../../../../../author/src/lib/routing/modules/my-content/services/my-content.service'
-import { ConfigurationsService, TFetchStatus } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
 import { MatSnackBar } from '@angular/material'
 
 @Component({
@@ -39,17 +39,17 @@ export class ContentReviewedComponent implements OnInit, OnDestroy {
   constructor(
     private myContSvc: MyContentService,
     private configSvc: ConfigurationsService,
-    private matSnackBar: MatSnackBar
+    private matSnackBar: MatSnackBar,
   ) {
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.defaultThumbnail = instanceConfig.logos.defaultContent
+      this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
     }
   }
 
   ngOnInit() {
     if (this.configSvc.userProfile) {
-      this.userWid = this.configSvc.userProfile.userId
+      this.userWid = this.configSvc.userProfile.userId || ''
     }
     if (this.wid) {
       this.fetchContentReviewed()

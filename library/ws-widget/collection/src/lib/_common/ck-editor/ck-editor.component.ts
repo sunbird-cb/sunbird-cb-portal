@@ -1,16 +1,16 @@
 // tslint:disable-next-line: max-line-length
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { AUTHORING_CONTENT_BASE, CONTENT_BASE_STATIC, CONTENT_BASE_STREAM, CONTENT_BASE_WEBHOST, CONTENT_BASE_WEBHOST_ASSETS } from '@ws/author/src/lib/constants/apiEndpoints'
-import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
-import { Notify } from '@ws/author/src/lib/constants/notificationMessage'
-import { FILE_MAX_SIZE, IMAGE_MAX_SIZE, IMAGE_SUPPORT_TYPES } from '@ws/author/src/lib/constants/upload'
-import { NotificationComponent } from '@ws/author/src/lib/modules/shared/components/notification/notification.component'
-import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
-import { UploadService } from '@ws/author/src/lib/routing/modules/editor/shared/services/upload.service'
-import { LoaderService } from '@ws/author/src/lib/services/loader.service'
-import { ConfigurationsService } from 'library/ws-widget/utils/src/lib/services/configurations.service'
+import { AUTHORING_CONTENT_BASE, CONTENT_BASE_STATIC, CONTENT_BASE_STREAM, CONTENT_BASE_WEBHOST, CONTENT_BASE_WEBHOST_ASSETS } from './constants/apiEndpoints'
+import { NOTIFICATION_TIME } from './constants/constant'
+import { Notify } from './constants/notificationMessage'
+import { FILE_MAX_SIZE, IMAGE_MAX_SIZE, IMAGE_SUPPORT_TYPES } from './constants/upload'
+import { NotificationComponent } from './components/notification/notification.component'
+import { AccessControlService } from './services/access-control.service'
+import { UploadService } from './services/upload.service'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
+import { LoaderService } from './services/loader.service'
 
 declare const CKEDITOR: any
 

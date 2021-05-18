@@ -10,7 +10,7 @@ import {
   MatChipsModule,
 } from '@angular/material'
 
-import { WidgetResolverModule } from '@ws-widget/resolver'
+import { WidgetResolverModule } from '@sunbird-cb/resolver'
 
 import {
   BtnContentDownloadModule,
@@ -24,7 +24,7 @@ import {
   UserContentRatingModule,
   BtnContentFeedbackV2Module,
   PlayerBriefModule,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 
 import {
   PipeDurationTransformModule,
@@ -32,7 +32,7 @@ import {
   DefaultThumbnailModule,
   PipePartialContentModule,
   PipeSafeSanitizerModule,
-} from '@ws-widget/utils'
+} from '@sunbird-cb/utils'
 
 import { AudioNativeModule as AudioNativePluginModule } from '../../plugins/audio-native/audio-native.module'
 

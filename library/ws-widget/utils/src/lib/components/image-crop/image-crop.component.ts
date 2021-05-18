@@ -5,7 +5,13 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { ImageCroppedEvent, ImageTransform } from 'ngx-image-cropper'
 import { ConfigurationsService } from '../../services/configurations.service'
 import { ValueService } from '../../services/value.service'
-
+export interface IDialogueDta {
+  isRoundCrop: boolean,
+  imageFile: File,
+  height: number,
+  width: number,
+  imageFileName: string
+}
 @Component({
   selector: 'ws-utils-image-crop',
   templateUrl: './image-crop.component.html',
@@ -40,13 +46,7 @@ export class ImageCropComponent implements OnInit {
     private configSvc: ConfigurationsService,
     private snackBar: MatSnackBar,
     private valueSvc: ValueService,
-    @Inject(MAT_DIALOG_DATA) data: {
-      isRoundCrop: boolean,
-      imageFile: File,
-      height: number,
-      width: number,
-      imageFileName: string
-    },
+    @Inject(MAT_DIALOG_DATA) data: IDialogueDta
   ) {
     this.isRoundCrop = data.isRoundCrop
     if (data.imageFile) {

@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing'
 
-import { EventResolverService } from './event-resolver.service'
+import { MobileAppsService } from './mobile-apps.service'
 
-describe('EventResolverService', () => {
+describe('MobileAppsService', () => {
   beforeEach(() => TestBed.configureTestingModule({}))
 
   it('should be created', () => {
-    const service: EventResolverService = TestBed.get(EventResolverService)
+    const service: MobileAppsService = TestBed.get(MobileAppsService)
     expect(service).toBeTruthy()
   })
 })

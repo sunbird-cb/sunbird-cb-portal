@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material'
 import { ActivatedRoute } from '@angular/router'
 import { Observable, Subscription } from 'rxjs'
-import { ConfigurationsService, TFetchStatus, ValueService } from '../../../../../../../../../../../library/ws-widget/utils/src/public-api'
+import { ConfigurationsService, TFetchStatus, ValueService } from '@sunbird-cb/utils'
 import { SocialForum } from '../../models/SocialForumposts.model'
 import { ForumHandlerService } from '../../service/EmitterService/forum-handler.service'
 import { ForumService } from '../../service/forum.service'
@@ -59,9 +59,11 @@ export class RecentForumPostComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
   ) {
     this.isXSmall$ = this.valueSvc.isXSmall$
+
     if (this.configSvc.userProfile) {
       this.timelineRequest.userId = this.configSvc.userProfile.userId || ''
     }
+
     // console.log('Recent forum postcomop loaded')
     this._eventEmiter.sendFilterStatus(true)
     this._eventEmiter.sendStatusOfPredefinedFilter(false)

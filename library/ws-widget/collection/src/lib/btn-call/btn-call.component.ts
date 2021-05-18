@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { MatDialog } from '@angular/material'
 import {
   BtnCallDialogComponent,
   IWidgetBtnCallDialogData,
 } from './btn-call-dialog/btn-call-dialog.component'
-import { EventService, ConfigurationsService } from '@ws-widget/utils'
+import { EventService, ConfigurationsService } from '@sunbird-cb/utils'
 
 export interface IWidgetBtnCall {
   userName: string

@@ -17,7 +17,7 @@ export class CareersCardComponent implements OnInit {
   }
 
   getCareer() {
-    this.router.navigate([`/app/careers/home/${this.discuss.tid}`])
+    this.router.navigate([`/app/careers/home/${this.discuss.tid}/${this.discuss.title}`])
   }
 
 }

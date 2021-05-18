@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
-import { ConfigurationsService } from '../../../../../utils/src/public-api'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-widget-btn-facebook-share',
@@ -13,7 +13,7 @@ export class BtnFacebookShareComponent implements OnInit {
   @Input() shareType: string | null = null
   isSocialMediaFacebookShareEnabled = false
   userId: string | undefined
-  constructor(private sanitizer: DomSanitizer, private configSvc: ConfigurationsService) {}
+  constructor(private sanitizer: DomSanitizer, private configSvc: ConfigurationsService) { }
 
   ngOnInit() {
 
@@ -29,7 +29,7 @@ export class BtnFacebookShareComponent implements OnInit {
 
   get sanitizeFbUrl() {
     const url = `https://${window.location.hostname}/share/${this.shareType}/${this.userId}/${this.contentId}`
-      return this.sanitizer.bypassSecurityTrustResourceUrl(
+    return this.sanitizer.bypassSecurityTrustResourceUrl(
       `https://www.facebook.com/plugins/share_button.php?href=${url}&layout=button&size=large`,
     )
   }

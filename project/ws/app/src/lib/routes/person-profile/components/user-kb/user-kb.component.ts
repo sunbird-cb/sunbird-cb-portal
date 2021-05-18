@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter, OnChanges } from '@angular/core'
-import { ConfigurationsService, TFetchStatus } from '@ws-widget/utils'
-import { NsContent } from '@ws-widget/collection'
+import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
+import { NsContent } from '@sunbird-cb/collection'
 import { NSProfileData } from '../../../profile/models/profile.model'
 import { UserdetailallComponent } from '../userdetailall/userdetailall.component'
 import { MatDialog, MatSnackBar } from '@angular/material'
@@ -32,7 +32,7 @@ export class UserKbComponent implements OnInit, OnChanges {
   ) {
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.defaultThumbnail = instanceConfig.logos.defaultContent
+      this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
     }
   }
 

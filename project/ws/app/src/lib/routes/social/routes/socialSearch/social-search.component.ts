@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { NsPage, ConfigurationsService, ValueService, TFetchStatus } from '../../../../../../../../../library/ws-widget/utils/src/public-api'
+import { NsPage, ConfigurationsService, ValueService, TFetchStatus } from '@sunbird-cb/utils'
 import { Subscription, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core'
-import { NsDiscussionForum } from '@ws-widget/collection'
-import { TFetchStatus, ConfigurationsService, ValueService } from '@ws-widget/utils'
+import { NsDiscussionForum } from '@sunbird-cb/collection'
+import { TFetchStatus, ConfigurationsService, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { PersonProfileService } from '../../services/person-profile.service'
 @Component({
@@ -54,19 +54,17 @@ export class ProfileBlogComponent implements OnInit {
       this.startIndexBlogArray = 0
     })
     this.showSocialLike = (this.configSvc.restrictedFeatures && !this.configSvc.restrictedFeatures.has('socialLike')) || false
-    if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
-      this.requestBody = {
-        pgNo: 0,
-        pgSize: 24,
-        postKind: [NsDiscussionForum.EPostKind.BLOG],
-        sessionId: Date.now(),
-        type: NsDiscussionForum.ETimelineType.MY_TIMELINE,
-        userId: this.wid,
-      }
-      if (this.wid) {
-        this.fetchTimelineDataProfile(this.requestBody)
-      }
 
+    this.requestBody = {
+      pgNo: 0,
+      pgSize: 24,
+      postKind: [NsDiscussionForum.EPostKind.BLOG],
+      sessionId: Date.now(),
+      type: NsDiscussionForum.ETimelineType.MY_TIMELINE,
+      userId: this.wid,
+    }
+    if (this.wid) {
+      this.fetchTimelineDataProfile(this.requestBody)
     }
   }
   blogSorting(result: NsDiscussionForum.ITimelineResult[]) {

@@ -42,10 +42,11 @@ import { AppTocDiscussionComponent } from './components/app-toc-discussion/app-t
 
 // services
 import { AppTocResolverService } from './resolvers/app-toc-resolver.service'
+import { ProfileResolverService } from './resolvers/profile-resolver.service'
 import { AppTocService } from './services/app-toc.service'
 
 // custom modules
-import { WidgetResolverModule } from '@ws-widget/resolver'
+import { WidgetResolverModule } from '@sunbird-cb/resolver'
 
 import {
   PipeDurationTransformModule,
@@ -56,7 +57,7 @@ import {
   DefaultThumbnailModule,
   PipeNameTransformModule,
   PipeCountTransformModule,
-} from '@ws-widget/utils'
+} from '@sunbird-cb/utils'
 import {
   BtnCallModule,
   BtnContentDownloadModule,
@@ -80,7 +81,7 @@ import {
   PlayerBriefModule,
   CardContentModule,
   UserAutocompleteModule,
-} from '@ws-widget/collection'
+} from '@sunbird-cb/collection'
 import { AppTocDialogIntroVideoComponent } from './components/app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { CertificationMetaResolver } from './routes/app-toc-certification/resolvers/certification-meta.resolver'
 import { ContentCertificationResolver } from './routes/app-toc-certification/resolvers/content-certification.resolver'
@@ -93,7 +94,6 @@ import { AppTocCohortsDirective } from './routes/app-toc-cohorts/app-toc-cohorts
 import { AppTocCohortsComponent as AppTocCohortsRootComponent } from './routes/app-toc-cohorts/app-toc-cohorts.component'
 import { AppTocAnalyticsTilesComponent } from './components/app-toc-analytics-tiles/app-toc-analytics-tiles.component'
 import { KnowledgeArtifactDetailsComponent } from './components/knowledge-artifact-details/knowledge-artifact-details.component'
-import { ProfileImageModule } from '../../../../../../../library/ws-widget/collection/src/lib/_common/profile-image/profile-image.module'
 import { EditorService } from '../../../../../author/src/lib/routing/modules/editor/services/editor.service'
 import { ApiService, AccessControlService } from '../../../../../author/src/public-api'
 import { AppTocSinglePageComponent } from './components/app-toc-single-page/app-toc-single-page.component'
@@ -186,7 +186,6 @@ import { CreateBatchDialogComponent } from './components/create-batch-dialog/cre
     CardContentModule,
     BtnContentShareModule,
     UserAutocompleteModule,
-    ProfileImageModule,
   ],
   providers: [
     AppTocResolverService,
@@ -198,6 +197,7 @@ import { CreateBatchDialogComponent } from './components/create-batch-dialog/cre
     EditorService,
     ApiService,
     AccessControlService,
+    ProfileResolverService,
   ],
   exports: [AppTocDiscussionComponent],
   entryComponents: [

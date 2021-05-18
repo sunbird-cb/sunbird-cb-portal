@@ -13,7 +13,7 @@ import {
   MatAutocompleteModule,
   MatProgressSpinnerModule,
 } from '@angular/material'
-import { PipeLimitToModule } from '@ws-widget/utils'
+import { PipeLimitToModule } from '@sunbird-cb/utils'
 
 @NgModule({
   declarations: [InterestComponent],

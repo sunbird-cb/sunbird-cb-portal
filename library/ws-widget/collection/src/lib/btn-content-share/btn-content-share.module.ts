@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core'
+import { NgModule, ModuleWithProviders } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import {
   MatButtonModule,
@@ -39,4 +39,16 @@ import { BtnTwitterShareModule } from '../btn-twitter-share/btn-twitter-share.mo
   exports: [BtnContentShareComponent],
   entryComponents: [BtnContentShareComponent, BtnContentShareDialogComponent],
 })
-export class BtnContentShareModule {}
+export class BtnContentShareModule {
+  public static forRoot(environment: any): ModuleWithProviders {
+    return {
+      ngModule: BtnContentShareModule,
+      providers: [
+        {
+          provide: 'env', // you can also use InjectionToken
+          useValue: environment,
+        },
+      ],
+    }
+  }
+}

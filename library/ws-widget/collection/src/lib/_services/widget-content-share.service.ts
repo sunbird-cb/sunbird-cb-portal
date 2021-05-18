@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
-import { ConfigurationsService } from '@ws-widget/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { NsContent } from './widget-content.model'
 import { NsShare } from './widget-share.model'
 import { ICommon } from '../_models/common.model'
@@ -67,7 +67,7 @@ export class WidgetContentShareService {
           thumbnailUrl: content.appIcon,
           title: content.name,
           track: (content.track || []).map(t => t.name).join(';'),
-          url: `${document.baseURI}app/toc/${content.identifier}/overview?primaryCategory=${content.primaryCategory}`,
+          url: `${document.baseURI}app/toc/${content.identifier}/overview`,
         },
       ],
       body: {

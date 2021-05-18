@@ -1,8 +1,8 @@
-import { ConfigurationsService } from '@ws-widget/utils'
-import { Injectable } from '@angular/core'
+import { ConfigurationsService } from '@sunbird-cb/utils'
+import { Injectable  } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { noop, Observable } from 'rxjs'
-import { NsContent } from '@ws-widget/collection'
+import { NsContent } from '@sunbird-cb/collection'
 import * as dayjs from 'dayjs'
 
 @Injectable({
@@ -27,12 +27,43 @@ export class ViewerUtilService {
     return manifestFile
   }
 
-  private async setS3Cookie(contentId: string) {
-    await this.http
-      .post(this.API_ENDPOINTS.setS3Cookie, { contentId })
-      .toPromise()
-      .catch((_err: any) => { })
+  private async setS3Cookie(_contentId: string) {
+    // await this.http
+    //   .post(this.API_ENDPOINTS.setS3Cookie, { contentId })
+    //   .toPromise()
+    //   .catch((_err: any) => { })
     return
+  }
+
+  calculatePercent(current: string[], max: number): number {
+    try {
+      const temp = [...current]
+      if (temp && temp.length && max) {
+        const latest = parseFloat(temp.pop() || '0')
+        const percentMilis = (latest / max) * 100
+        const percent = parseFloat(percentMilis.toFixed(2))
+        return percent
+      }
+      return 0
+    } catch (e) {
+      // tslint:disable-next-line: no-console
+      console.log('Error in calculating percentage', e)
+      return 0
+    }
+  }
+
+  getStatus(current: string[], max: number) {
+    try {
+      const percentage = this.calculatePercent(current, max)
+      if (Math.ceil(percentage) >= 100) {
+        return 2
+      }
+      return 1
+    } catch (e) {
+      // tslint:disable-next-line: no-console
+      console.log('Error in getting completion status', e)
+      return 1
+    }
   }
 
   realTimeProgressUpdate(contentId: string, request: any, collectionId?: string, batchId?: string) {
@@ -45,7 +76,7 @@ export class ViewerUtilService {
             {
               contentId,
               batchId,
-              status: 2,
+              status: this.getStatus(request.current, request.max_size),
               courseId: collectionId,
               lastAccessTime: dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss:SSSZZ'),
               progressdetails: {
@@ -53,6 +84,32 @@ export class ViewerUtilService {
                 current: request.current,
                 mimeType: request.mime_type,
               },
+              completionPercentage: this.calculatePercent(request.current, request.max_size),
+            },
+          ],
+        },
+      }
+    } else {
+      req = {}
+    }
+    this.http
+      .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
+      .subscribe(noop, noop)
+  }
+
+  realTimeProgressUpdateQuiz(contentId: string, collectionId?: string, batchId?: string, status?: number) {
+    let req: any
+    if (this.configservice.userProfile) {
+      req = {
+        request: {
+          userId: this.configservice.userProfile.userId || '',
+          contents: [
+            {
+              contentId,
+              batchId,
+              status: status || 2,
+              courseId: collectionId,
+              lastAccessTime: dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss:SSSZZ'),
             },
           ],
         },

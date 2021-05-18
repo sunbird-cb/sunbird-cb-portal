@@ -1,7 +1,7 @@
 import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { Subscription } from 'rxjs'
-import { ConfigurationsService, EventService, WsEvents } from '../../../../utils'
+import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
 import { BtnContentLikeService } from './btn-content-like.service'
 
 @Component({
@@ -18,7 +18,7 @@ export class BtnContentLikeComponent extends WidgetBaseComponent
     isDisabled?: boolean
     totalLikes?: { [key: string]: number }
   }> {
-  @Input() widgetData!: { identifier: string; isDisabled?: boolean }
+  @Input() widgetData!: { identifier: string; isDisabled?: boolean, status?: string }
   @Input() likesCount = 0
   @Input() color: 'primary' | 'accent' | 'default' = 'default'
   @Input() forPreview = false

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
-import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
+// import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 import { NsContent } from '../../_services/widget-content.model'
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component'
 import { IReqMarkAsComplete } from './mark-as-complete.model'
@@ -19,7 +19,7 @@ export class MarkAsCompleteComponent implements OnInit, OnChanges {
 
   constructor(
     public dialog: MatDialog,
-    private appTocSvc: AppTocService,
+    // private appTocSvc: AppTocService,
     private contentSvc: WidgetContentService,
   ) { }
 
@@ -44,7 +44,8 @@ export class MarkAsCompleteComponent implements OnInit, OnChanges {
   }
 
   get showStart() {
-    return this.appTocSvc.showStartButton(this.content)
+    return { show: true }
+    // return this.appTocSvc.showStartButton(this.content)
   }
 
   ngOnInit() {

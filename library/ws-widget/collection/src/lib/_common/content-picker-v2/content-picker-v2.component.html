@@ -1,6 +1,6 @@
 <mat-sidenav-container autosize>
   <mat-sidenav #sidenav class="sidenav mat-drawer mat-sidenav" position="end" mode="over" closed>
-    <ws-widget-filters (closeSideNav)="sidenav.toggle()" (appliedFiltersEmitter)="appliedFilters()"
+    <ws-widget-filters (closeSideNav)="sidenav.toggle()" (appliedFiltersEmitter)="appliedFilters($event)"
       [includedFilters]="widgetData?.includedFilters" [preAppliedFilters]="widgetData?.preAppliedFilters">
     </ws-widget-filters>
   </mat-sidenav>
@@ -77,9 +77,9 @@
         [ngClass]="{'ws-mat-accent-border-top-light': sortOrderControl.value === 'desc'}">arrow_downward</mat-icon>
     </div>
     <mat-radio-group [formControl]="sortByControl" aria-labelledby="Sort" class="flex flex-col">
-      <mat-radio-button class="my-1" *ngFor="let key of objKey(widgetData?.sortableFields)" [value]="key">
-        {{widgetData?.sortableFields[key]}}
-      </mat-radio-button>
+      <!-- <mat-radio-button class="my-1" *ngFor="let key of objKey(widgetData?.sortableFields || {})" [value]="key">
+        {{ widgetData && widgetData?.sortableFields[key]}}
+      </mat-radio-button> -->
     </mat-radio-group>
   </div>
 </mat-menu>

@@ -1,5 +1,6 @@
 <ws-widget-btn-page-back
-  [widgetData]="{ url: 'home', titles: [{title:'Features', url:'/app/features'},{title:'Update Profile', url:'none'}] }">
+  [widgetData]="{ url: 'home', titles: [{ title: 'NETWORK', url: '/app/network-v2', icon: 'group' }, 
+  { title: 'My profile', url: 'none'}, {title:'Update Profile', url:'none'}] }">
 </ws-widget-btn-page-back>
 <div class="profile-container container-balanced">
   <div class="profile-box">
@@ -461,7 +462,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="pinCode" #pincode type="text" matInput placeholder="123456" formControlName="pincode"
-                        i18n-aria-label aria-label="Pin Code inpput field">
+                        i18n-aria-label aria-label="Pin Code inpput field" autocomplete="off">
                       <mat-error [hidden]="false" i18n="Pin Code Error|Explains pincode is required"
                         *ngIf="createUserForm?.controls['pincode'].errors?.required" i18n-aria-label
                         aria-label="Pin Code Error|Explains pincode is required">
@@ -718,15 +719,17 @@
           </ng-template>
           <div class="margin-top-xl new-mobile">
             <div class="flex flex-wrap mobile-break">
-              <div class="w-full profile-cols-full bg-grey">
-                <div class="radio-toolbar">
+              <div class="w-full profile-cols-full bg-grey" *ngIf="isAllowed('isGovtOrg')">
+                <div class="radio-toolbar flex-1" [ngClass]="{ disable: !isAllowed('isGovtOrg') }">
                   <input type="radio" id="govtOrg" name="isGovtOrg" formControlName="isGovtOrg" [value]="true">
                   <label for="govtOrg">Government Organisation</label>
                   <input type="radio" id="nonGovtOrg" name="isGovtOrg" formControlName="isGovtOrg" [value]="false">
                   <label for="nonGovtOrg">Non-Government Organisation</label>
+                  <br>
+                  <span class="txt" *ngIf="!isAllowed('isGovtOrg')">{{inReview}}</span>
                 </div>
-                <div class="flex flex-wrap section-input">
-                  <div class="item">
+                <div class="flex flex-1 flex-wrap section-input margin-top-m">
+                  <div class="item" [ngClass]="{ disable: !isAllowed('name') }">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Organisation Name label|Label which explains the user to enter Organisation Name">
                       Organisation Name
@@ -734,13 +737,15 @@
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <mat-select #orgNameSelect formControlName="orgName" i18n-placeholder placeholder="--Select--"
                         (selectionChange)="otherDropDownChange(designation.value, 'orgname')">
-                        <mat-option [value]="org.name" *ngFor="let org of govtOrgMeta?.ministries">{{org.name}}
+                        <mat-option [value]="org" *ngFor="let org of allDept">{{org}}
                         </mat-option>
                         <mat-option [value]="'Other'">Other</mat-option>
                       </mat-select>
                     </mat-form-field>
+                    <span class="txt" *ngIf="!isAllowed('name')">{{inReview}}</span>
                   </div>
-                  <div class="item" *ngIf="orgNameSelect.value === 'Other' || showOrgnameOther">
+                  <div class="item" *ngIf="orgNameSelect.value === 'Other' || showOrgnameOther"
+                    [ngClass]="{ disable: !isAllowed('showOrgnameOther') }">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Other label|Label which explains the user to enter Other">
                       Other
@@ -752,10 +757,11 @@
                         Other Organisation Name is mandatory
                       </mat-error>
                     </mat-form-field>
+                    <span class="txt" *ngIf="!isAllowed('orgNameOther')">{{inReview}}</span>
                   </div>
                 </div>
-                <div class="flex flex-wrap section-input">
-                  <div class="item">
+                <div class="flex flex-1 flex-wrap section-input margin-top-m">
+                  <div class="item" [ngClass]="{ disable: !isAllowed('industry') }">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Industry label|Label which explains the user to enter Industry">
                       Industry
@@ -769,8 +775,10 @@
                         <mat-option [value]="'Other'">Other</mat-option>
                       </mat-select>
                     </mat-form-field>
+                    <span class="txt" *ngIf="!isAllowed('industry')">{{inReview}}</span>
                   </div>
-                  <div class="item" *ngIf="industrySelect.value === 'Other' || showIndustryOther">
+                  <div class="item" *ngIf="industrySelect.value === 'Other' || showIndustryOther"
+                    [ngClass]="{ disable: !isAllowed('showIndustryOther') }">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Other label|Label which explains the user to enter Other">
                       Other
@@ -782,10 +790,11 @@
                         Other Industry Name is mandatory
                       </mat-error>
                     </mat-form-field>
+                    <span class="txt" *ngIf="!isAllowed('industryOther')">{{inReview}}</span>
                   </div>
                 </div>
-                <div class="flex flex-wrap section-input">
-                  <div class="item">
+                <div class="flex flex-1 flex-wrap section-input margin-top-m">
+                  <div class="item" [ngClass]="{ disable: !isAllowed('designation') }">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Designation label|Label which explains the user to enter Designation">
                       Designation
@@ -800,8 +809,10 @@
                         <mat-option [value]="'Other'">Other</mat-option>
                       </mat-select>
                     </mat-form-field>
+                    <span class="txt" *ngIf="!isAllowed('designation')">{{inReview}}</span>
                   </div>
-                  <div class="item" *ngIf="designation.value === 'Other' || showDesignationOther">
+                  <div class="item" *ngIf="designation.value === 'Other' || showDesignationOther"
+                    [ngClass]="{ disable: !isAllowed('showDesignationOther') }">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Other label|Label which explains the user to enter Other">
                       Other
@@ -813,10 +824,11 @@
                         Other Designation Name is mandatory
                       </mat-error>
                     </mat-form-field>
+                    <span class="txt" *ngIf="!isAllowed('designationOther')">{{inReview}}</span>
                   </div>
                 </div>
-                <div class="flex flex-wrap section-input">
-                  <div class="item">
+                <div class="flex flex-1 flex-wrap section-input margin-top-m">
+                  <div class="item" [ngClass]="{ disable: !isAllowed('location') }">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Location label|Label which explains the user to enter Location">
                       Location
@@ -828,6 +840,8 @@
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
+                    <span class="txt" *ngIf="!isAllowed('location')">{{inReview}}</span>
+
                   </div>
                   <!-- <div class="item">
                     <p class=" margin-remove-bottom form-label"
@@ -843,8 +857,8 @@
                     </mat-form-field>
                   </div> -->
                 </div>
-                <div class="flex flex-wrap section-input">
-                  <div class="item">
+                <div class="flex flex-1 flex-wrap section-input margin-top-m">
+                  <div class="item" [ngClass]="{ disable: !isAllowed('doj') }">
                     <label for="chooseDOJ" class=" margin-remove-bottom form-label"
                       i18n="Date of Joining|Label which explains the user to enter Date of Joining">
                       Date of Joining
@@ -859,9 +873,11 @@
                         Date of Joining is mandatory
                       </mat-error>
                     </mat-form-field>
+                    <br>
+                    <span class="txt" *ngIf="!isAllowed('doj')">{{inReview}}</span>
                   </div>
                 </div>
-                <div class="flex flex-wrap section-input">
+                <div class="flex flex-1 flex-wrap section-input margin-top-m">
                   <div class="item">
                     <label for="description" class=" margin-remove-bottom form-label"
                       i18n="Description label|Label which explains the user to enter Description">
@@ -886,7 +902,7 @@
                   <input type="radio" id="'Grade Pay'" name="payType" formControlName="payType" [value]="'Grade Pay'">
                   <label for="'Grade Pay'">Grade Pay</label>
                 </div> -->
-                <div class="flex flex-wrap section-input">
+                <div class="flex flex-1 flex-wrap section-input margin-top-m">
                   <div class="item">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Service label|Label which explains the user to enter Service">
@@ -901,7 +917,7 @@
                     </mat-form-field>
                   </div>
                 </div>
-                <div class="flex flex-wrap section-input">
+                <div class="flex flex-1 flex-wrap section-input margin-top-m">
                   <div class="item">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Service label|Label which explains the user to enter Service">
@@ -929,7 +945,7 @@
                     </mat-form-field>
                   </div>
                 </div>
-                <div class="flex flex-wrap section-input">
+                <div class="flex flex-1 flex-wrap section-input margin-top-m">
                   <div class="item">
                     <label for="allotmentYearService" class=" margin-remove-bottom form-label"
                       i18n="Allotment Year of Service|Label which explains the user to enter Allotment Year of Service">
@@ -968,7 +984,7 @@
                     </mat-form-field>
                   </div>
                 </div>
-                <div class="flex flex-wrap section-input">
+                <div class="flex flex-1 flex-wrap section-input margin-top-m">
                   <div class="item">
                     <label for="civilListNumber" class=" margin-remove-bottom form-label"
                       i18n="Civil List Number label|Label which explains the user to enter Civil List Number">
@@ -996,7 +1012,7 @@
                     </mat-form-field>
                   </div>
                 </div>
-                <div class="flex flex-wrap section-input">
+                <div class="flex flex-1 flex-wrap section-input margin-top-m">
                   <div class="item">
                     <label for="officePostalAddress" class=" margin-remove-bottom form-label"
                       i18n="Office Postal Address label|Label which explains the user to enter Office Postal Address">
@@ -1029,6 +1045,10 @@
                     </mat-form-field>
                   </div>
                 </div>
+              </div>
+              <div class="=w-full profile-cols-fill bg-gray" *ngIf="!isAllowed('name')">
+                <span class="mat-subheading-1">Once Your department will approve your request, System will unlock this
+                  section.</span>
               </div>
             </div>
           </div>

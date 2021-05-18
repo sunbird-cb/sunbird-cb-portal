@@ -1,8 +1,8 @@
 import { Platform } from '@angular/cdk/platform'
 import { Component, HostBinding, Input, OnInit } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
-import { ConfigurationsService, EventService } from '@ws-widget/utils'
-import { MobileAppsService } from '../../../../../../src/app/services/mobile-apps.service'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
+// import { MobileAppsService } from './mobile-apps.service'
 import { NsContent } from '../_services/widget-content.model'
 
 export interface IWidgetBtnDownload {
@@ -13,6 +13,7 @@ export interface IWidgetBtnDownload {
   downloadUrl: string
   isExternal: boolean
   artifactUrl: string
+  status?: string
 }
 
 @Component({
@@ -31,14 +32,15 @@ export class BtnContentDownloadComponent extends WidgetBaseComponent
   constructor(
     private platform: Platform,
     private events: EventService,
-    private mobAppSvc: MobileAppsService,
+    // private mobAppSvc: MobileAppsService,
     private configSvc: ConfigurationsService,
   ) {
     super()
   }
   ngOnInit() {
     if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.isContentDownloadAvailable) {
-      this.downloadable = this.mobAppSvc.isMobile && this.isContentDownloadable
+      // this.downloadable = this.mobAppSvc.isMobile && this.isContentDownloadable
+      this.downloadable = this.isContentDownloadable
     }
   }
 
@@ -77,7 +79,7 @@ export class BtnContentDownloadComponent extends WidgetBaseComponent
     event.stopPropagation()
     if (!this.forPreview) {
       this.raiseTelemetry()
-      this.mobAppSvc.downloadResource(this.widgetData.identifier)
+      // this.mobAppSvc.downloadResource(this.widgetData.identifier)
     }
   }
 

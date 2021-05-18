@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA, MatTabChangeEvent } from '@angular/material'
 import { HttpErrorResponse } from '@angular/common/http'
 
-import { TFetchStatus, ConfigurationsService } from '@ws-widget/utils'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 import { WsDiscussionForumService } from '../../ws-discussion-forum.services'
 import { WsDiscussionForumUserService } from '../../ws-discussion-forum-user.service'
 import { NsDiscussionForum } from '../../ws-discussion-forum.model'
@@ -24,19 +24,19 @@ export class DialogSocialActivityUserComponent implements OnInit {
     pgNo: 0,
     pgSize: 20,
   }
-
+  activityTyp = NsDiscussionForum.EActivityType
   activityUsersFetchRequest: {
     like: NsDiscussionForum.IActivityUsers;
     upvote: NsDiscussionForum.IActivityUsers;
     downvote: NsDiscussionForum.IActivityUsers;
   } = {
-    like: { ...this.commonRequestForActivityUsers, activityType: NsDiscussionForum.EActivityType.LIKE },
-    upvote: { ...this.commonRequestForActivityUsers, activityType: NsDiscussionForum.EActivityType.UPVOTE },
-    downvote: {
-      ...this.commonRequestForActivityUsers,
-      activityType: NsDiscussionForum.EActivityType.DOWNVOTE,
-    },
-  }
+      like: { ...this.commonRequestForActivityUsers, activityType: NsDiscussionForum.EActivityType.LIKE },
+      upvote: { ...this.commonRequestForActivityUsers, activityType: NsDiscussionForum.EActivityType.UPVOTE },
+      downvote: {
+        ...this.commonRequestForActivityUsers,
+        activityType: NsDiscussionForum.EActivityType.DOWNVOTE,
+      },
+    }
 
   activityUsersResult: {
     like: { data: NsDiscussionForum.IActivityUsersResult | null; fetchStatus: TFetchStatus };
@@ -44,10 +44,10 @@ export class DialogSocialActivityUserComponent implements OnInit {
     downvote: { data: NsDiscussionForum.IActivityUsersResult | null; fetchStatus: TFetchStatus };
     [key: string]: { data: NsDiscussionForum.IActivityUsersResult | null; fetchStatus: TFetchStatus };
   } = {
-    like: { data: null, fetchStatus: 'none' },
-    upvote: { data: null, fetchStatus: 'none' },
-    downvote: { data: null, fetchStatus: 'none' },
-  }
+      like: { data: null, fetchStatus: 'none' },
+      upvote: { data: null, fetchStatus: 'none' },
+      downvote: { data: null, fetchStatus: 'none' },
+    }
 
   selectedTabIndex = 0
   userId = ''

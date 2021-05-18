@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, HostBinding } from '@angular/core'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { NsDiscussStripNewMultiple } from './discuss-strip-multiple.model'
 import { ContentStripNewMultipleService } from './discuss-strip-multiple.service'
 import { WidgetContentService } from '../_services/widget-content.service'
@@ -8,10 +8,12 @@ import {
   TFetchStatus,
   LoggerService,
   // EventService,
-  // ConfigurationsService,
+  ConfigurationsService,
   UtilityService,
-} from '@ws-widget/utils'
+} from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
+import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+import { Router } from '@angular/router'
 // import { filter } from 'rxjs/operators'
 // import { SearchServService } from '@ws/app/src/lib/routes/search/services/search-serv.service'
 
@@ -34,6 +36,8 @@ interface IStripUnitContentData {
     path: string
     queryParams: any
   } | null
+  description: any
+  stripLogo: any
 }
 @Component({
   selector: 'ws-widget-discuss-strip-multiple',
@@ -68,8 +72,10 @@ export class DiscussStripMultipleComponent extends WidgetBaseComponent
     private contentSvc: WidgetContentService,
     private loggerSvc: LoggerService,
     // private eventSvc: EventService,
-    // private configSvc: ConfigurationsService,
-    protected utilitySvc: UtilityService,
+    private configSvc: ConfigurationsService,
+    public utilitySvc: UtilityService,
+    private discussUtilitySvc: DiscussUtilsService,
+    public router: Router
     // private searchServSvc: SearchServService,
   ) {
     super()
@@ -83,6 +89,46 @@ export class DiscussStripMultipleComponent extends WidgetBaseComponent
     if (this.changeEventSubscription) {
       this.changeEventSubscription.unsubscribe()
     }
+  }
+
+  getLength(data: IStripUnitContentData) {
+    return data.widgets ? data.widgets.length : 0
+  }
+
+  navigate() {
+    this.discussUtilitySvc.setDiscussionConfig({
+      menuOptions: [
+        {
+          route: 'all-discussions',
+          label: 'All discussions',
+          enable: true,
+        },
+        {
+          route: 'categories',
+          label: 'Categories',
+          enable: true,
+        },
+        {
+          route: 'tags',
+          label: 'Tags',
+          enable: true,
+        },
+        {
+          route: 'my-discussion',
+          label: 'My discussion',
+          enable: true,
+        },
+      ],
+      userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
+      context: {
+        id: 1,
+      },
+      categories: { result: [] },
+      routerSlug: '/app',
+      headerOptions: false,
+      bannerOption: true,
+    })
+    this.router.navigate(['/app/discussion-forum'])
   }
 
   private initData() {

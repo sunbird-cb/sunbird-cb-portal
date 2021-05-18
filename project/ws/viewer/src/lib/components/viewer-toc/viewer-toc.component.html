@@ -6,14 +6,14 @@
           class="viewer-toc-header-thumbnail align-self-start margin-auto"
           [routerLink]="collectionCard?.redirectUrl"
           queryParamsHandling="preserve"
-        >
-          <img
+        >portal
+          <!-- <img
             i18n-alt
             alt="thumbnail"
             class="viewer-toc-header-thumbnail align-self-start margin-auto mat-app-background"
             [src]="collectionCard?.thumbnail"
             [wsUtilsDefaultThumbnail]="defaultThumbnail"
-          />
+          /> -->
         </a>
         <span class="width-1-1 margin-left-m flex flex-wrapped align-self-start">
           <div class="width-1-1 flex flex-between">
@@ -43,7 +43,7 @@
             ><span> {{ collectionCard?.subText2 | pipeLimitTo: 300 }}</span>
           </span>
           <div *ngIf="collectionCard?.type === 'content'" class="width-1-1">
-            <ws-widget-btn-content-like
+            <!-- <ws-widget-btn-content-like
               [widgetData]="{ identifier: collectionCard?.id }"
             ></ws-widget-btn-content-like>
             <ws-widget-btn-content-share [forPreview]="forPreview"></ws-widget-btn-content-share>
@@ -51,7 +51,7 @@
             <ws-widget-btn-playlist [forPreview]="forPreview"></ws-widget-btn-playlist>
             <ws-widget-btn-content-feedback
               [forPreview]="forPreview"
-            ></ws-widget-btn-content-feedback>
+            ></ws-widget-btn-content-feedback> -->
           </div>
         </span>
         <span>
@@ -248,11 +248,11 @@
 <ng-template let-content #TocContentList>
   <!-- <div class="resource-container margin-left-xl"> -->
   <div class="resource-container">
-    <ws-widget-display-content-type-icon
+    <!-- <ws-widget-display-content-type-icon
       class="flex margin-left-xs"
       [displayContentType]="content?.type"
     >
-    </ws-widget-display-content-type-icon>
+    </ws-widget-display-content-type-icon> -->
     <div class="resource-meta width-expand">
       <a
         [ngClass]="{ 'content-active': pathSet.has(content.identifier) }"

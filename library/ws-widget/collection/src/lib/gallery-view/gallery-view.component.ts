@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { WidgetBaseComponent, NsWidgetResolver } from '@ws-widget/resolver'
+import { WidgetBaseComponent, NsWidgetResolver } from '@sunbird-cb/resolver'
 import { NsGalleryView } from './gallery-view.model'
 import { Subscription } from 'rxjs'
 

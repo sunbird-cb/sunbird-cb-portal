@@ -2,7 +2,7 @@ import { ChannelResolverService } from './../../../services/resolver.service'
 import { Component, OnInit, Input, OnChanges } from '@angular/core'
 import { IWidgetAuthor, tDimensions, tSize } from './../../../interface/widget'
 import { ChannelStoreService } from './../../../services/store.service'
-import { responsiveSuffix, sizeSuffix } from '@ws-widget/collection/src/public-api'
+import { responsiveSuffix, sizeSuffix } from '@sunbird-cb/collection'
 
 interface IAuthorGrid {
   id: string

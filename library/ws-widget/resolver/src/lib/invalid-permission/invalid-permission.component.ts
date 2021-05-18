@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { NsWidgetResolver } from '@ws-widget/resolver'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { WidgetBaseComponent } from '../widget-base.component'
 @Component({
   selector: 'ws-resolver-invalid-permission',

@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostBinding, Input, OnInit, ViewChild } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
-import { NsWidgetResolver, WidgetBaseComponent } from '@ws-widget/resolver'
-import { ConfigurationsService, TFetchStatus } from '@ws-widget/utils'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
 import { EditorQuillComponent } from '../../editor-quill/editor-quill.component'
 import { NsDiscussionForum } from '../../ws-discussion-forum.model'
 import { WsDiscussionForumService } from '../../ws-discussion-forum.services'
@@ -125,6 +125,9 @@ export class DiscussionForumComponent extends WidgetBaseComponent
         this.discussionFetchStatus = 'error'
       },
     )
+  }
+  get isDisabled() {
+    return this.discussionFetchStatus === 'fetching'
   }
 
   publishConversation(failMsg: string) {

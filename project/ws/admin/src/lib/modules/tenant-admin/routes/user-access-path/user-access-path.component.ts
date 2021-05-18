@@ -3,7 +3,7 @@ import { FormControl, FormBuilder, FormGroup } from '@angular/forms'
 import { MatSnackBar, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material'
 // import { debounceTime, filter } from 'rxjs/operators'
 import { TenantAdminService } from '../../tenant-admin.service'
-import { ConfigurationsService } from '@ws-widget/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { debounceTime, filter } from 'rxjs/operators'
 
 @Component({

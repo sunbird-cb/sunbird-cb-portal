@@ -2,7 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core'
 import { MatSnackBar, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
 import { NsFeedback } from '../btn-content-feedback.model'
 import { BtnContentFeedbackService } from '../btn-content-feedback.service'
-
+export interface IBtnFeedbackData {
+  id: string; name: string
+}
 @Component({
   selector: 'ws-widget-btn-content-feedback-dialog',
   templateUrl: './btn-content-feedback-dialog.component.html',
@@ -16,7 +18,7 @@ export class BtnContentFeedbackDialogComponent implements OnInit {
   numbersPattern = /^[1-9]\d*/
   constructor(
     private snackBar: MatSnackBar,
-    @Inject(MAT_DIALOG_DATA) public data: { id: string; name: string },
+    @Inject(MAT_DIALOG_DATA) public data: IBtnFeedbackData,
     private dialogRef: MatDialogRef<BtnContentFeedbackDialogComponent>,
     private btnFeedbackSvc: BtnContentFeedbackService,
   ) { }

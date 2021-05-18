@@ -5,9 +5,9 @@ import { FormControl } from '@angular/forms'
 import { MatAutocomplete, MatAutocompleteSelectedEvent, MatSnackBar } from '@angular/material'
 import { ActivatedRoute, Data, Router } from '@angular/router'
 import { Subscription } from 'rxjs'
-import { NsWidgetResolver } from '@ws-widget/resolver'
-import { NsError, ROOT_WIDGET_CONFIG, NsDiscussionForum, WsDiscussionForumService } from '@ws-widget/collection'
-import { TFetchStatus, ConfigurationsService, NsPage } from '@ws-widget/utils'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { NsError, ROOT_WIDGET_CONFIG, NsDiscussionForum, WsDiscussionForumService } from '@sunbird-cb/collection'
+import { TFetchStatus, ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 import { WsSocialService } from '../../../../../services/ws-social.service'
 
 @Component({
@@ -81,11 +81,12 @@ export class QnaEditComponent implements OnInit, OnDestroy {
     private discussionSvc: WsDiscussionForumService,
     private socialSvc: WsSocialService,
     private configSvc: ConfigurationsService,
-    private matSnackBar: MatSnackBar,
+    private matSnackBar: MatSnackBar
   ) {
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId || ''
     }
+
     this.postPublishRequest.postCreator = this.userId
     this.postUpdateRequest.editor = this.userId
     this.tagsCtrl.valueChanges

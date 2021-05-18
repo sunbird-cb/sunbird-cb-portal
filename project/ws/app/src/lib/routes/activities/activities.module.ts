@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { MatButtonModule, MatCardModule, MatIconModule } from '@angular/material'
 import { RouterModule } from '@angular/router'
-import { HorizontalScrollerModule } from '@ws-widget/utils/src/lib/helpers/horizontal-scroller/horizontal-scroller.module'
+import { HorizontalScrollerModule } from '@sunbird-cb/utils'
 import { ActivitiesRoutingModule } from './activities-routing.module'
 import { ActivitiesComponent } from './components/activities/activities.component'
 import { ChallengeStripComponent } from './components/challenge-strip/challenge-strip.component'
-import { ActivityCardModule } from '@ws-widget/collection/src/lib/activity-card/activity-card.module'
+import { ActivityCardModule } from '@sunbird-cb/collection'
 
 @NgModule({
   declarations: [ActivitiesComponent, ChallengeStripComponent],

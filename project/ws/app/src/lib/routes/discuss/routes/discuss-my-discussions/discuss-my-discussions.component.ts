@@ -1,9 +1,8 @@
-
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { NSDiscussData } from '../../models/discuss.model'
 import { DiscussService } from '../../services/discuss.service'
-import { ConfigurationsService } from '@ws-widget/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 /* tslint:disable */
 import _ from 'lodash'
 /* tslint:enable */
@@ -21,15 +20,17 @@ export class DiscussMyDiscussionsComponent implements OnInit {
   department!: string | null
   location!: string | null
   profilePhoto!: string
+  currentUsername: any
   constructor(private route: ActivatedRoute, private discussService: DiscussService, private configSvc: ConfigurationsService) {
     this.fetchNetworkProfile()
+    this.currentUsername = this.configSvc.userProfile && this.configSvc.userProfile.userName
   }
   fetchNetworkProfile() {
     this.discussService.fetchNetworkProfile().subscribe(response => {
       this.profilePhoto = _.get(_.first(response), 'photo')
-      if (this.configSvc.userProfile) {
-        localStorage.setItem(this.configSvc.userProfile.userId, this.profilePhoto)
-      }
+        if (this.configSvc.userProfile) {
+          localStorage.setItem(this.configSvc.userProfile.userId, this.profilePhoto)
+        }
     },
       /* tslint:disable */
       () => {
@@ -56,7 +57,7 @@ export class DiscussMyDiscussionsComponent implements OnInit {
           this.discussionList = _.uniqBy(this.data.bestPosts, 'tid')
           break
         case 'saved':
-          this.discussService.fetchSaved().subscribe(response => {
+          this.discussService.fetchSaved(this.currentUsername).subscribe(response => {
             if (response) {
               this.discussionList = _.uniqBy(response.posts, 'tid')
             } else {
