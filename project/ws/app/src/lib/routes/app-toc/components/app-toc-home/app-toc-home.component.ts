@@ -229,6 +229,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               content: [enrolledCourse.batch],
               enrolled: true,
             }
+            this.tocSvc.setBatchData(this.batchData)
             if (this.getBatchId()) {
               this.router.navigate(
                 [],

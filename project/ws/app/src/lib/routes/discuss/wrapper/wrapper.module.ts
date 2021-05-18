@@ -7,7 +7,7 @@ import { ConfigService } from '../services/config.service'
     declarations: [],
     imports: [
         CommonModule,
-        DiscussionUiModule.forRoot(ConfigService),
+        DiscussionUiModule,
     ],
     exports: [DiscussionUiModule],
 })

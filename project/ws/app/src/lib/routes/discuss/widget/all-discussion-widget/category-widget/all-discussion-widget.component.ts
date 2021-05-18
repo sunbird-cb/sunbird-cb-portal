@@ -14,7 +14,6 @@ import * as CONSTANTS from '@project-sunbird/discussions-ui-v8'
 })
 export class AllDiscussionWidgetComponent extends BaseWrapperComponent {
 
-  @Input() discussionConfig!: IdiscussionConfig
 
   detailsToggle = true
   category = 'category'
@@ -22,7 +21,7 @@ export class AllDiscussionWidgetComponent extends BaseWrapperComponent {
   homePage = 'categoryHome'
   tid!: number
   slug!: string
-  context: any = { categories: { result: [2] } }
+  context: any = { categories: { result: [] } }
   categoryId: any
   alldiscussPage = 'alldiscuss'
 
@@ -40,7 +39,7 @@ export class AllDiscussionWidgetComponent extends BaseWrapperComponent {
   // @Input() config
 
   wrapperInit() {
-    this.state = this.alldiscussPage
+    this.state = this.alldiscussPage;
   }
 
   stateChange(event) {

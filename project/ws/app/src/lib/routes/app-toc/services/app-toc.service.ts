@@ -33,6 +33,7 @@ export class AppTocService {
   analyticsReplaySubject: Subject<any> = new Subject()
   analyticsFetchStatus: TFetchStatus = 'none'
   batchReplaySubject: Subject<any> = new Subject()
+  setBatchDataSubject: Subject<any> = new Subject()
   private showSubtitleOnBanners = false
   private canShowDescription = false
 
@@ -53,6 +54,10 @@ export class AppTocService {
 
   updateBatchData() {
     this.batchReplaySubject.next()
+  }
+
+  setBatchData(data){
+    this.setBatchDataSubject.next(data)
   }
 
   showStartButton(content: NsContent.IContent | null): { show: boolean; msg: string } {
