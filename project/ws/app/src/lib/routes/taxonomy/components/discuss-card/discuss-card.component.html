@@ -1,5 +1,5 @@
-<mat-card class="discuss-card cursor-pointer" >
-  <mat-card-content class="flex flex-1" >
+<mat-card class="discuss-card cursor-pointer" *ngIf="!(tags.length<=0)">
+  <mat-card-content class="flex flex-1">
     <mat-chip-list
   class="example-chip"
   cdkDropList
@@ -11,7 +11,7 @@
     {{tag}}
   </mat-chip>
   </mat-chip-list>
-  <div id=wrap  *ngIf="showNoValue">
+  <div id=wrap>
     <div id=inside>
      <!-- <h2>No topics available</h2> -->
     </div>

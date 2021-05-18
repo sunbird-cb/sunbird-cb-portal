@@ -68,7 +68,7 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
       this.sideNavBarOpened = !isLtMedium
       this.screenSizeIsLtMedium = isLtMedium
     })
-    this.tempArr  =  [{ title: 'Home', url: '/app/taxonomy/home' }]
+    this.tempArr  =  [{ title: 'All topics', url: '/app/taxonomy/home' }]
     this.alreadyClicked = true
     // this.firstLevelTopic =  [{name: "Economics", enabled: true, routerLink:"/app/taxonomy/test"},
     // {name: "1st level  topic", enabled: true, routerLink:"/app/taxonomy/116"},
@@ -270,10 +270,12 @@ export class DiscussTopicsComponent implements OnInit, OnDestroy {
       this._service.fetchAllRelatedCourse(this.identifier).subscribe(response => {
         const tempRequestParam: { content: any }[] = []
         response.result.content.forEach((course: any) => {
+          if (course.status === 'Live') {
          const temobj = {
            content: course,
          }
          tempRequestParam.push(temobj)
+        }
         })
         this.relatedResource = tempRequestParam
         this.loader.changeLoad.next(false)
