@@ -1,11 +1,10 @@
 import { LoaderService } from '@ws/author/src/lib/services/loader.service'
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { ActivatedRoute, Router} from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { ValueService } from '@sunbird-cb/utils'
 import { map } from 'rxjs/operators'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { TaxonomyService } from '../../services/taxonomy.service'
-import _ from 'lodash'
 
 const APP_TAXONOMY = `/app/taxonomy/`
 @Component({
@@ -28,7 +27,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
   tempArr!: any
   leftMenuChildObj!: any
   currentRoute = 'home'
-  isFirstTab=true
+  isFirstTab = true
   banner!: NsWidgetResolver.IWidgetData<any>
   public screenSizeIsLtMedium = false
   isLtMedium$ = this.valueSvc.isLtMedium$
@@ -42,27 +41,25 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
               private loader: LoaderService) {
     this.unread = this.route.snapshot.data.unread
 
-    this.currentTab = this.route.snapshot.url.toString().split('/').pop()||''
-    if(!localStorage.getItem('isFirstTab')){
-      localStorage.setItem('currentTab', decodeURI(this.currentTab));
-      localStorage.setItem('isFirstTab', "true");
+    this.currentTab = this.route.snapshot.url.toString().split('/').pop() || ''
+    if (!localStorage.getItem('isFirstTab')) {
+      localStorage.setItem('currentTab', decodeURI(this.currentTab))
+      localStorage.setItem('isFirstTab', 'true')
     }
-
-
 
   }
   ngOnInit() {
 
-    this.router.navigate([APP_TAXONOMY+localStorage.getItem('currentTab')])
-    if(!localStorage.getItem('currentTab')){
+    this.router.navigate([APP_TAXONOMY + localStorage.getItem('currentTab')])
+    if (!localStorage.getItem('currentTab')) {
       this.getAllTopics(this.currentTab)
 
-    }else{
+    } else {
       this.topicKey.push(localStorage.getItem('currentTab'))
       this.getAllTopics(localStorage.getItem('currentTab') || this.currentTab)
     }
 
-    this. getAllRelatedCourse();
+    this. getAllRelatedCourse()
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
       this.sideNavBarOpened = !isLtMedium
       this.screenSizeIsLtMedium = isLtMedium
@@ -136,7 +133,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
       this.nextLvlObj = tempCurrentArray
     }
     }
-    createTermObject(termObj: any){
+    createTermObject(termObj: any) {
       const termObject = {
         name: decodeURI(termObj.name),
         enabled: true,
@@ -178,7 +175,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
     onTabLeftMenu(tabItem: string) {
       if (this.isFirst && !this.alreadyClicked) {
         this.taxonomyFirstLevel(tabItem)
-        localStorage.setItem('currentTab', decodeURI(tabItem));
+        localStorage.setItem('currentTab', decodeURI(tabItem))
       } else {
         this.taxonomyOnGoingLevels(tabItem)
       }
@@ -236,7 +233,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
     this.loader.changeLoad.next(true)
       this._service.fetchAllRelatedCourse(this.topicKey).subscribe(response => {
         const tempRequestParam: { content: any }[] = []
-        if( response.result.content){
+        if (response.result.content) {
         response.result.content.forEach((course: any) => {
           if (course.status === 'Live') {
          const temobj = {
