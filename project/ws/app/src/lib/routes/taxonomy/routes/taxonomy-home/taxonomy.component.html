@@ -6,18 +6,6 @@
   <div class="flex flex-2 search">
     <h1>All topics</h1>
   </div>
-  <!-- <div class="flex flex-2 search">
-
-    <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'"  style="width: 27%">
-      <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
-      <!-- <mat-placeholder>Search user</mat-placeholder> -->
-      <!-- <input [(ngModel)]="nameFilter" (ngModelChange)="searchUser()" matInput type="search">
-      <mat-label>Search</mat-label>
-      <input type="search" #searchInput class="ml-2" matInput
-        type="search" [placeholder]="'Search'" />
-    </mat-form-field>
-  </div> -->
-
     <div class="flex flex-1">
         <div class="margin-left-xll mb-1-imp flex flex-wrap">
             <ng-container *ngFor="let topics of termsTopicArray" [ngTemplateOutlet]="userIndividualNew"
@@ -26,7 +14,6 @@
         </div>
     </div>
 </div>
- <!-- Tem component -->
  <ng-template #userIndividualNew let-topic="topic">
   <mat-card class="network-card mr-9" (click)="gotoNextLevel(topic)">
     <mat-card-header>

@@ -7,11 +7,11 @@ import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { TaxonomyService } from '../../services/taxonomy.service'
 const APP_TAXONOMY = `/app/taxonomy/`
 @Component({
-  selector: 'app-discuss',
-  templateUrl: './discuss.component.html',
-  styleUrls: ['./discuss.component.scss'],
+  selector: 'app-taxonomy',
+  templateUrl: './taxonomy.component.html',
+  styleUrls: ['./taxonomy.component.scss'],
 })
-export class DiscussComponent implements OnInit, OnDestroy {
+export class TaxonomyHomeComponent implements OnInit, OnDestroy {
   sideNavBarOpened = true
   panelOpenState = false
   termsTopicArray: any

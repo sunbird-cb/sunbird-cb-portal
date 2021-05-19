@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule, PipeListFilterModule } from '@sunbird-cb/utils'
-import { DiscussComponent } from './routes/discuss-home/discuss.component'
+import { TaxonomyHomeComponent } from './routes/taxonomy-home/taxonomy.component'
 import { DiscussCommetsComponent } from './components/discuss-comments/discuss-comments.component'
-import { DiscussCategoriesComponent } from './routes/discuss-categories/discuss-categories.component'
 import { TaxonomyRoutingModule } from './taxonomy.rounting.module'
 import { TaxonomyLevelCardComponent } from './components/taxonomy-level-card/taxonomy-level-card.component'
 import { CategoryCardComponent } from './components/category-card/category-card.component'
@@ -43,10 +42,9 @@ import { DiscussTopicsComponent } from './routes/discuss-topics/discuss-topics.c
 @NgModule({
   declarations: [
     CategoryCardComponent,
-    DiscussComponent,
+    TaxonomyHomeComponent,
     TaxonomyLevelCardComponent,
     DiscussCommetsComponent,
-    DiscussCategoriesComponent,
     LeftMenuComponent,
     PostCardComponent,
     RightMenuComponent,
