@@ -7,6 +7,7 @@
   flex: 1;
   height: auto;
   min-height: 100px;
+  padding: 20px;
 }
 #wrap {
   /* Your styling. */
@@ -18,9 +19,6 @@
 
   /* Solution part I. */
   display: table;
-}
-.example-box{
-  background-color: #E5E7E9;
 }
 /* Solution part II. */
 #inside {
@@ -105,4 +103,15 @@
 
 .pad-4 {
   padding: 4px;
+}
+.action-button{
+  color:#0074B6;
+  font-size: 14px;
+  font-family: Lato;
+  font-weight: 700;
+
+
+}
+.max-wid{
+  max-width: 815px;
 }
