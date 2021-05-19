@@ -12,7 +12,7 @@ const APP_TAXONOMY = `/app/taxonomy/`
   templateUrl: './explorer.component.html',
   styleUrls: ['./explorer.component.scss'],
 })
-export class DiscussTopicsComponent implements OnInit, OnDestroy {
+export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
   sideNavBarOpened = true
   panelOpenState = false
   nextLevelTopic: any

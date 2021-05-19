@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core'
-import { NSDiscussData } from '../../models/discuss.model'
 @Component({
   selector: 'taxonomy-level-card',
   templateUrl: './taxonomy-level-card.component.html',
@@ -10,8 +9,6 @@ import { NSDiscussData } from '../../models/discuss.model'
 })
 
 export class TaxonomyLevelCardComponent implements OnInit, OnChanges {
-  @Input()
-  discuss!: NSDiscussData.IDiscussionData
   @Input()
   tags!: any
   rem!: number
