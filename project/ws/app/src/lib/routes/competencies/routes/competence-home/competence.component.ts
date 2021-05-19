@@ -18,7 +18,7 @@ import _ from 'lodash'
 export class CompetenceComponent implements OnInit, OnDestroy {
   sideNavBarOpened = true
   panelOpenState = false
-  titles = [{ title: 'Competencies', url: '/page/competencies', icon: 'extension' }]
+  titles = [{ title: 'Competencies', url: '/app/competencies/home', icon: 'extension' }]
   unread = 0
   currentRoute = 'home'
   banner!: NsWidgetResolver.IWidgetData<any>

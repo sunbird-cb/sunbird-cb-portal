@@ -32,11 +32,11 @@ export class SearchApiService {
     return (kc.tokenParsed && kc.tokenParsed.sub) || (kc.idTokenParsed && kc.idTokenParsed.sub)
   }
 
-  getSearchV6Results(body: NSSearch.ISearchV6RequestV2): Observable<NSSearch.ISearchV6ApiResultV2> {
+  getSearchV6Results(body: NSSearch.ISearchV6RequestV2, searchconfig: any): Observable<NSSearch.ISearchV6ApiResultV2> {
     return this.http.post<NSSearch.ISearchV6ApiResultV2>(API_END_POINTS.SEARCH_V6, body).pipe(map((res: NSSearch.ISearchV6ApiResultV2) => {
       const tempArray = Array()
       if (res.result.facets.length > 0) {
-        res.result.facets.forEach(ele => {
+        searchconfig.forEach((ele: any) => {
           const temp: NSSearch.IFacet = {
             displayName: '',
             type: '',
@@ -46,7 +46,7 @@ export class SearchApiService {
           temp.displayName = ele.name
           temp.type = ele.name
           if (ele.values.length > 0) {
-            ele.values.forEach(subEle => {
+            ele.values.forEach((subEle: any) => {
               temp.content.push({
                 displayName: subEle.name,
                 type: subEle.name,

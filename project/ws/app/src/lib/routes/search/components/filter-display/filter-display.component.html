@@ -8,6 +8,7 @@
     <mat-icon>close</mat-icon>
   </button>
 </div>
+<div id="loader"></div>
 <mat-accordion multi="true" *ngIf="filtersResponse">
   <mat-expansion-panel [expanded]="filter.checked" *ngFor="let filter of filtersResponse; trackBy: filterUnitResponseTrackBy">
     <mat-expansion-panel-header>{{ translatedFilters[filter.displayName.toLowerCase()]?.translatedField || filter.displayName }}

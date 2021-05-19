@@ -74,7 +74,7 @@ export class SearchServService {
         fields: request.request.fields,
       },
     }
-    return this.searchApi.getSearchV6Results(v6Request)
+    return this.searchApi.getSearchV6Results(v6Request, this.searchConfig.defaultsearch)
   }
   fetchSocialSearchUsers(request: ISearchSocialSearchPartialRequest) {
     const req: ISocialSearchRequest = {
