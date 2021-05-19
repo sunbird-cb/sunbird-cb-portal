@@ -32,7 +32,7 @@
       </ws-widget-breadcrumbs-org>
       </div>
       <div class="flex flex-4 bot">
-        <app-dicuss-card *ngIf="nextLevelTopic"[tags]="nextLevelTopic"  (clickedTab)="getClickedTab($event)"></app-dicuss-card>
+        <taxonomy-level-card *ngIf="nextLevelTopic"[tags]="nextLevelTopic"  (clickedTab)="getClickedTab($event)"></taxonomy-level-card>
       </div>
 
       <h2 *ngIf="relatedResource.length>0">CBPs</h2>

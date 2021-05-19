@@ -1,15 +1,15 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core'
 import { NSDiscussData } from '../../models/discuss.model'
 @Component({
-  selector: 'app-dicuss-card',
-  templateUrl: './discuss-card.component.html',
-  styleUrls: ['./discuss-card.component.scss'],
+  selector: 'taxonomy-level-card',
+  templateUrl: './taxonomy-level-card.component.html',
+  styleUrls: ['./taxonomy-level-card.component.scss'],
   /* tslint:disable */
   host: { class: 'flex flex-1' },
   /* tslint:enable */
 })
 
-export class DiscussCardComponent implements OnInit, OnChanges {
+export class TaxonomyLevelCardComponent implements OnInit, OnChanges {
   @Input()
   discuss!: NSDiscussData.IDiscussionData
   @Input()
@@ -26,7 +26,7 @@ export class DiscussCardComponent implements OnInit, OnChanges {
    }
 
   ngOnInit() {
-    if (this.tags && this.tags.length > DiscussCardComponent.MINIMUM_LENGTH) {
+    if (this.tags && this.tags.length > TaxonomyLevelCardComponent.MINIMUM_LENGTH) {
 
     //
     //
@@ -44,13 +44,13 @@ export class DiscussCardComponent implements OnInit, OnChanges {
   }
 
   calculateLength(len: number) {
-    return len - DiscussCardComponent.MINIMUM_LENGTH
+    return len - TaxonomyLevelCardComponent.MINIMUM_LENGTH
   }
   ngOnChanges(changes: SimpleChanges) {
     this.rem = this.calculateLength(this.tags.length)
     this.tagCopy = [...this.tags]
-    if (this.tags.length > DiscussCardComponent.MINIMUM_LENGTH) {
-    this.tags.length =  DiscussCardComponent.MINIMUM_LENGTH
+    if (this.tags.length > TaxonomyLevelCardComponent.MINIMUM_LENGTH) {
+    this.tags.length =  TaxonomyLevelCardComponent.MINIMUM_LENGTH
     this.showRem = true
   }
    if (changes.tags.currentValue.length <= 0) {

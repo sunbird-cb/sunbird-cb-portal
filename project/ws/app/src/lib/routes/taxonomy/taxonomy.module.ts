@@ -5,7 +5,7 @@ import { DiscussComponent } from './routes/discuss-home/discuss.component'
 import { DiscussCommetsComponent } from './components/discuss-comments/discuss-comments.component'
 import { DiscussCategoriesComponent } from './routes/discuss-categories/discuss-categories.component'
 import { TaxonomyRoutingModule } from './taxonomy.rounting.module'
-import { DiscussCardComponent } from './components/discuss-card/discuss-card.component'
+import { TaxonomyLevelCardComponent } from './components/taxonomy-level-card/taxonomy-level-card.component'
 import { CategoryCardComponent } from './components/category-card/category-card.component'
 import { LeftMenuComponent } from './components/left-menu/left-menu.component'
 import { PostCardComponent } from './components/post-card/post-card.component'
@@ -44,7 +44,7 @@ import { DiscussTopicsComponent } from './routes/discuss-topics/discuss-topics.c
   declarations: [
     CategoryCardComponent,
     DiscussComponent,
-    DiscussCardComponent,
+    TaxonomyLevelCardComponent,
     DiscussCommetsComponent,
     DiscussCategoriesComponent,
     LeftMenuComponent,
