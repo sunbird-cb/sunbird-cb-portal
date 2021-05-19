@@ -8,9 +8,9 @@ import { TaxonomyService } from '../../services/taxonomy.service'
 
 const APP_TAXONOMY = `/app/taxonomy/`
 @Component({
-  selector: 'app-discuss',
-  templateUrl: './discuss-topics.component.html',
-  styleUrls: ['./discuss-topics.component.scss'],
+  selector: 'app-explorer',
+  templateUrl: './explorer.component.html',
+  styleUrls: ['./explorer.component.scss'],
 })
 export class DiscussTopicsComponent implements OnInit, OnDestroy {
   sideNavBarOpened = true
