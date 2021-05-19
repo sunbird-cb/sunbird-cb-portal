@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
-import { DiscussComponent } from './routes/discuss-home/discuss.component'
+import { TaxonomyHomeComponent } from './routes/taxonomy-home/taxonomy.component'
 // import { DiscussCategoriesResolve } from './resolvers/discuss-category-resolve'
 
-import { DiscussTopicsComponent } from './routes/discuss-topics/discuss-topics.component'
+import { TaxonomyExplorerComponent } from './routes/taxonomy-explorer/explorer.component'
 
 const routes: Routes = [
   {
@@ -13,14 +13,11 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: DiscussComponent,
-    // resolve: {
-    //   profile: ProfileResolve,
-    // },
+    component: TaxonomyHomeComponent,
   },
   {
     path: ':topic',
-    component: DiscussTopicsComponent,
+    component: TaxonomyExplorerComponent,
 
   },
 ]

@@ -35,7 +35,6 @@ export class TaxonomyService {
         query: '',
         filters: {
             status: [
-                'Draft',
                 'Live',
             ],
             contentType: [

@@ -1,4 +1,6 @@
-
+<ws-widget-btn-page-back [widgetData]="{ url: 'home',titles:[{title: 'Learn', url:'/page/learn', icon:'school'},
+{title: ( 'All topis') ,url:'none', icon:''}]  }">
+</ws-widget-btn-page-back>
 <div class="container-balanced min-height">
   <div *ngIf="currentRoute === 'home'" class="margin-top-s">
     <ng-container [wsResolverWidget]="banner"></ng-container>
@@ -16,7 +18,7 @@
 
   <mat-sidenav-container name="discuss-menu" class="min-height">
     <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 sidenav-align">
-      <app-discuss-left-menu [unseen]="unread" [tabsData] = "firstLevelTopic"  (currentTab)="selectedEvent($event)"></app-discuss-left-menu>
+      <app-discuss-left-menu [unseen]="unread" [tabsData] = "firstLevelTopic"  (currentTab)="onTabLeftMenu($event)"></app-discuss-left-menu>
     </mat-sidenav>
     <mat-sidenav-content class="sidenav-align-cont">
       <div *ngIf="screenSizeIsLtMedium">
@@ -30,14 +32,13 @@
       </ws-widget-breadcrumbs-org>
       </div>
       <div class="flex flex-4 bot">
-        <app-dicuss-card *ngIf="nextLevelTopic"[tags]="nextLevelTopic"  (clickedTab)="getClickedTab($event)"></app-dicuss-card>
+        <taxonomy-level-card *ngIf="nextLevelTopic"[tags]="nextLevelTopic"  (clickedTab)="getClickedTab($event)"></taxonomy-level-card>
       </div>
 
       <h2 *ngIf="relatedResource.length>0">CBPs</h2>
       <div class="flex flex-1" *ngIf="nextLevelTopic">
 
         <div class="margin-left-xll mb-1-imp flex flex-wrap">
-
       <div *ngFor="let content of relatedResource" class="mb-8">
         <ws-widget-card-content [widgetData]="content"></ws-widget-card-content>
       </div>
