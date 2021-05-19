@@ -18,7 +18,7 @@
 
   <mat-sidenav-container name="discuss-menu" class="min-height">
     <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 sidenav-align">
-      <app-discuss-left-menu [unseen]="unread" [tabsData] = "firstLevelTopic"  (currentTab)="selectedEvent($event)"></app-discuss-left-menu>
+      <app-discuss-left-menu [unseen]="unread" [tabsData] = "firstLevelTopic"  (currentTab)="onTabLeftMenu($event)"></app-discuss-left-menu>
     </mat-sidenav>
     <mat-sidenav-content class="sidenav-align-cont">
       <div *ngIf="screenSizeIsLtMedium">

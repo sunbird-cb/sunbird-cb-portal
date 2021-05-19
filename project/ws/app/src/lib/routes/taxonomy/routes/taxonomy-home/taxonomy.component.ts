@@ -51,6 +51,8 @@ export class TaxonomyHomeComponent implements OnInit, OnDestroy {
     this.router.navigate([APP_TAXONOMY + topic.name])
   }
   ngOnInit() {
+    localStorage.removeItem('isFirstTab')
+    localStorage.removeItem('currentTab')
     this.getAllTopics()
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
       this.sideNavBarOpened = !isLtMedium

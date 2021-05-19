@@ -14,9 +14,6 @@ const routes: Routes = [
   {
     path: 'home',
     component: TaxonomyHomeComponent,
-    // resolve: {
-    //   profile: ProfileResolve,
-    // },
   },
   {
     path: ':topic',
