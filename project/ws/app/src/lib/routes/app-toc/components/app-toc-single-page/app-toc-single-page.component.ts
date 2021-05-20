@@ -12,6 +12,7 @@ import { CreateBatchDialogComponent } from '../create-batch-dialog/create-batch-
 import { TitleTagService } from '@ws/app/src/lib/routes/app-toc/services/title-tag.service'
 import { MatDialog } from '@angular/material'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
+import { IdiscussionConfig } from '@project-sunbird/discussions-ui-v8'
 
 @Component({
   selector: 'ws-app-app-toc-single-page',
@@ -40,6 +41,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   private routeQuerySubscription: Subscription | null = null
   batchId!: string
   isNotEditor = true
+  discussionConfig!: IdiscussionConfig
   // configSvc: any
 
   constructor(
@@ -70,8 +72,24 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     if (!this.forPreview) {
       this.forPreview = window.location.href.includes('/author/')
     }
+    this.discussionConfig = {
+      // menuOptions: [{ route: 'categories', enable: true }],
+      userName: 'nptest',
+      categories: { result: [] },
+    }
     if (this.route && this.route.parent) {
       this.routeSubscription = this.route.parent.data.subscribe((data: Data) => {
+        this.routeQuerySubscription = this.route.queryParamMap.subscribe(qParamsMap => {
+          const batchId = qParamsMap.get('batchId')
+          if (batchId) {
+            this.discussionConfig.contextId = batchId
+            this.discussionConfig.contextType = 'batch'
+            this.batchId = batchId
+          }
+        })
+        this.tocSharedSvc.setBatchDataSubject.subscribe(data => {
+          console.log(data)
+        })
         this.initData(data)
         this.tocConfig = data.pageData.data
       })
@@ -87,12 +105,12 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
       this.isNotEditor = false
     }
 
-    this.routeQuerySubscription = this.route.queryParamMap.subscribe(qParamsMap => {
-      const batchId = qParamsMap.get('batchId')
-      if (batchId) {
-        this.batchId = batchId
-      }
-    })
+    // this.routeQuerySubscription = this.route.queryParamMap.subscribe(qParamsMap => {
+    //   const batchId = qParamsMap.get('batchId')
+    //   if (batchId) {
+    //     this.batchId = batchId
+    //   }
+    // })
   }
 
   detailUrl(data: any) {
@@ -156,6 +174,10 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   private initData(data: Data) {
     const initData = this.tocSharedSvc.initData(data)
     this.content = initData.content
+    if (!this.batchId) {
+      this.discussionConfig.contextId = this.content.identifier
+      this.discussionConfig.contextType = 'course'
+    }
     this.setSocialMediaMetaTags(this.content)
     this.body = this.domSanitizer.bypassSecurityTrustHtml(
       this.content && this.content.body

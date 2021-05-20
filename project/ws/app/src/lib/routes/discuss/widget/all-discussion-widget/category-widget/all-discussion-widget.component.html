@@ -1,0 +1,4 @@
+<div>
+    <lib-discuss-all *ngIf='state === alldiscussPage' [context]='config' (stateChange)='stateChange($event)'></lib-discuss-all>
+    <lib-discussion-details *ngIf='state === detailsPage'  [topicId]='tid' [slug]='slug' (stateChange)='stateChange($event)'></lib-discussion-details>
+</div> 
