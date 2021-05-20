@@ -7,6 +7,8 @@
   flex: 1;
   height: auto;
   min-height: 100px;
+  padding: 20px;
+
 }
 #wrap {
   /* Your styling. */
@@ -105,4 +107,16 @@
 
 .pad-4 {
   padding: 4px;
+}
+
+.action-button{
+  color:#0074B6;
+  font-size: 14px;
+  font-family: Lato;
+  font-weight: 700;
+
+
+}
+.max-wid{
+  max-width: 815px;
 }

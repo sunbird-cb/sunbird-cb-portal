@@ -1,23 +1,17 @@
-<mat-card class="discuss-card cursor-pointer" *ngIf="!(tags.length<=0)">
+
+<mat-card class="discuss-card cursor-pointer max-wid" *ngIf="!(tags.length<=0)">
   <mat-card-content class="flex flex-1">
     <mat-chip-list
-  class="example-chip"
   cdkDropList
   cdkDropListOrientation="horizontal">
-  <mat-chip (click)="getClickedTab(tag)"
-    class="example-box"
+  <mat-chip (click)="getClickedTab(tag)" class="chip" style="background: #F5F5F5; border: 1px solid #E2E2E2; padding: 17px 12px; margin: 6px;"
     cdkDrag
    *ngFor="let tag of tags">
     {{tag}}
   </mat-chip>
   </mat-chip-list>
-  <div id=wrap>
-    <div id=inside>
-     <!-- <h2>No topics available</h2> -->
-    </div>
-  </div>
   </mat-card-content>
-  <mat-card-actions *ngIf="this.rem>0 && this.showRem">
+  <mat-card-actions *ngIf="this.rem>0 && this.showRem" align="center" class="action-button">
     <a mat-button (click)="getDiscussion()">SEE {{rem}} MORE SUB TOPICS </a>
   </mat-card-actions>
 </mat-card>
