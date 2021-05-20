@@ -1,6 +1,6 @@
 export const environment = {
     production: true,
-    sitePath: 'igot-stage.in',
+    sitePath: 'igot-bm-sunbird.idc.tarento.com',
     organisation: 'igot-karmayogi',
     framework: 'igot',
     channelId: '0131397178949058560',
