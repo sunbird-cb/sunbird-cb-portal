@@ -12,7 +12,7 @@ import {
   UtilityService,
 } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
-import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+// import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 import { Router } from '@angular/router'
 // import { filter } from 'rxjs/operators'
 // import { SearchServService } from '@ws/app/src/lib/routes/search/services/search-serv.service'
@@ -74,7 +74,7 @@ export class DiscussStripMultipleComponent extends WidgetBaseComponent
     // private eventSvc: EventService,
     private configSvc: ConfigurationsService,
     public utilitySvc: UtilityService,
-    private discussUtilitySvc: DiscussUtilsService,
+    // private discussUtilitySvc: DiscussUtilsService,
     public router: Router
     // private searchServSvc: SearchServService,
   ) {

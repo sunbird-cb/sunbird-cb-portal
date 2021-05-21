@@ -1,11 +1,11 @@
-import { Component, Inject, Input, OnInit } from '@angular/core'
-import { ConfigService, IdiscussionConfig, EventsService, NavigationServiceService, DiscussionService, BaseWrapperComponent } from '@project-sunbird/discussions-ui-v8'
+import { Component, Inject } from '@angular/core'
+import { ConfigService, EventsService, NavigationServiceService, DiscussionService, BaseWrapperComponent } from '@project-sunbird/discussions-ui-v8'
 // import { EventsService } from '@project-sunbird/discussions-ui-v8/lib/events.service'
 // import { NavigationServiceService } from '@project-sunbird/discussions-ui-v8/lib/navigation-service.service'
 // import { DiscussionService } from '@project-sunbird/discussions-ui-v8/lib/services/discussion.service'
 // import { BaseWrapperComponent } from '@project-sunbird/discussions-ui-v8/lib/wrapper/base-wrapper/base-wrapper.component'
-import lodash from 'lodash'
-import * as CONSTANTS from '@project-sunbird/discussions-ui-v8'
+// import lodash from 'lodash'
+// import * as CONSTANTS from '@project-sunbird/discussions-ui-v8'
 
 @Component({
   selector: 'all-discussion-widget',
@@ -41,8 +41,8 @@ export class AllDiscussionWidgetComponent extends BaseWrapperComponent {
     this.state = this.alldiscussPage
   }
 
-  stateChange(event) {
-    console.log(event)
+  stateChange(event: any) {
+    // console.log(event)
     this.state = event.action
     if (event.action === this.detailsPage) {
       this.tid = event.tid
@@ -50,6 +50,6 @@ export class AllDiscussionWidgetComponent extends BaseWrapperComponent {
     }
   }
 
-  protected wrapperEventListener(data: any) {
-  }
+  // protected wrapperEventListener(data: any) {
+  // }
 }

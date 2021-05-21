@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { DiscussionUiModule } from '@sunbird-cb/discussions-ui-v8'
 
-import { ConfigService } from '../services/config.service'
+// import { ConfigService } from '../services/config.service'
 
 @NgModule({
     declarations: [],

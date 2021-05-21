@@ -26,7 +26,7 @@ import {
 import { delay } from 'rxjs/operators'
 import { MobileAppsService } from '../../services/mobile-apps.service'
 import { RootService } from './root.service'
-import { DiscussionUiModule } from '@project-sunbird/discussions-ui-v8'
+// import { DiscussionUiModule } from '@project-sunbird/discussions-ui-v8'
 
 import { CsModule } from '@project-sunbird/client-services'
 // import { SwUpdate } from '@angular/service-worker'
