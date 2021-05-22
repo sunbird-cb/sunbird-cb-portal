@@ -230,6 +230,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
     this. getAllRelatedCourse()
   }
   getAllRelatedCourse() {
+    this.relatedResource =[]
     this.loader.changeLoad.next(true)
       this._service.fetchAllRelatedCourse(this.topicKey).subscribe(response => {
         const tempRequestParam: { content: any }[] = []
