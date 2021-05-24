@@ -1,5 +1,5 @@
 <ws-widget-btn-page-back [widgetData]="{ url: 'home',titles:[{title: 'Learn', url:'/page/learn', icon:'school'},
-{title: ( 'All topis') ,url:'none', icon:''}]  }">
+{title: ( 'All topics') ,url:'none', icon:''}]  }">
 </ws-widget-btn-page-back>
 <div class="container-balanced min-height">
   <div *ngIf="currentRoute === 'home'" class="margin-top-s">
@@ -40,7 +40,7 @@
 
         <div class="margin-left-xll mb-1-imp flex flex-wrap">
       <div *ngFor="let content of relatedResource" class="mb-8">
-        <ws-widget-card-content [widgetData]="content"></ws-widget-card-content>
+        <ws-widget-card-content *ngIf="content" [widgetData]="content"></ws-widget-card-content>
       </div>
         </div>
       </div>

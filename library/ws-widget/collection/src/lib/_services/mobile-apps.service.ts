@@ -13,7 +13,7 @@ import {
   NAVIGATION_DATA_INCOMING,
   SESSIONID_OUTGOING,
   TOKEN_OUTGOING,
-} from './models/mobile-events.model'
+} from '../_models/mobile-events.model'
 import { NavigationExternalService } from './navigation-external.service'
 interface IWindowMobileAppModified extends Window {
   appRef?: any

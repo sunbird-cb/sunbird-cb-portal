@@ -48,7 +48,7 @@
                     <span *ngIf="!col.isList" class="textclass mat-body-2">
                         {{element[col.key]}} {{col.isList}}
                     </span>
-                </mat-cell> 
+                </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="Actions" *ngIf="tableData!.actions && tableData!.actions.length > 0">
@@ -84,7 +84,7 @@
             <mat-row *matRowDef="let row; columns: getFinalColumns();" (click)="selection.toggle(row);">
             </mat-row>
         </mat-table>
-        <div class="no-information-found" *ngIf="dataSource.filteredData.length===0">No User information found
+        <div class="no-information-found" *ngIf="dataSource.filteredData.length===0">No user information found
         </div>
     </div>
 
