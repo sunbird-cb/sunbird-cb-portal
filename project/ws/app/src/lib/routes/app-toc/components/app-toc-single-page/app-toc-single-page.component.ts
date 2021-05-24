@@ -79,7 +79,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
       this.routeSubscription = this.route.parent.data.subscribe((data: Data) => {
         this.routeQuerySubscription = this.route.queryParamMap.subscribe(qParamsMap => {
           const batchId = qParamsMap.get('batchId')
-          if (batchId) {
+          if (batchId) { 
             this.discussionConfig.contextId = [batchId]
             this.discussionConfig.contextType = 'batch'
             this.batchId = batchId

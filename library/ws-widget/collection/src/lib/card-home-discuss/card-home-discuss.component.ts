@@ -66,7 +66,7 @@ export class CardHomeDiscussComponent extends WidgetBaseComponent implements OnI
   }
 
   getDiscussion(discuss: any) {
-    this.router.navigate([`/app/discussion-forum/topic/${_.trim(_.get(discuss, 'slug'))}`])
+    this.router.navigate([`/app/discussion-forum/topic/${_.trim(_.get(discuss, 'slug'))}`], { queryParams: { page: 'home' }, queryParamsHandling: 'merge' })
   }
 
   public getBgColor(tagTitle: any) {
