@@ -58,7 +58,7 @@ export class AppTocService {
     this.batchReplaySubject.next()
   }
 
-  setBatchData(data) {
+  setBatchData(data: NsContent.IBatchListResponse) {
     this.setBatchDataSubject.next(data)
   }
 
@@ -253,7 +253,7 @@ export class AppTocService {
     this.analyticsFetchStatus = 'fetching'
     const url = `${PROXY_SLAG_V8}/LA/api/la/contentanalytics?content_id=${contentId}&type=course`
     this.http.get(url).subscribe(
-      result => {
+      (result: any) => {
         this.analyticsFetchStatus = 'done'
         this.analyticsReplaySubject.next(result)
       },
@@ -276,7 +276,7 @@ export class AppTocService {
       '"source":["iGot","Learning Hub"]',
     )}$${encodeURIComponent(`"courseCode": ["${contentId}"]`)}`
     this.http.get(url).subscribe(
-      result => {
+      (result: any) => {
         this.analyticsFetchStatus = 'done'
         this.analyticsReplaySubject.next(result)
       },

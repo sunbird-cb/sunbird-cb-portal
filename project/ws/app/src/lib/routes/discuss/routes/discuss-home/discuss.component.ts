@@ -28,7 +28,7 @@ export class DiscussComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {
         // Hide loading indicator
         // console.log(event.url)
-        this.bindUrl(event.urlAfterRedirects.replace('/app/discussion-forum', ''))
+        this.bindUrl(event.urlAfterRedirects.replace('/app/discussion-forum?page=home', ''))
       }
 
       if (event instanceof NavigationError) {

@@ -5,7 +5,7 @@ import { ConfigService, IdiscussionConfig, EventsService, NavigationServiceServi
 // import { DiscussionService } from '@project-sunbird/discussions-ui-v8/lib/services/discussion.service'
 // import { BaseWrapperComponent } from '@project-sunbird/discussions-ui-v8/lib/wrapper/base-wrapper/base-wrapper.component'
 import lodash from 'lodash'
-import * as CONSTANTS from '@project-sunbird/discussions-ui-v8'
+// import * as CONSTANTS from '@project-sunbird/discussions-ui-v8'
 
 @Component({
   selector: 'igot-category-widget',

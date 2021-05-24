@@ -66,6 +66,7 @@ export class CardHomeDiscussComponent extends WidgetBaseComponent implements OnI
   }
 
   getDiscussion(discuss: any) {
+    // tslint:disable-next-line:max-line-length
     this.router.navigate([`/app/discussion-forum/topic/${_.trim(_.get(discuss, 'slug'))}`], { queryParams: { page: 'home' }, queryParamsHandling: 'merge' })
   }
 
