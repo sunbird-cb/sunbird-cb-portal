@@ -58,8 +58,6 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
       this.topicKey.push(localStorage.getItem('currentTab'))
       this.getAllTopics(localStorage.getItem('currentTab') || this.currentTab)
     }
-
-    this. getAllRelatedCourse()
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
       this.sideNavBarOpened = !isLtMedium
       this.screenSizeIsLtMedium = isLtMedium
@@ -95,8 +93,8 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
           }
           this.currentTab = term.name
             this.firstLevelTopic = firstLvlArray
+
             if (term.name === decodeURI(topic) && term.children) {
-              this.topicKey = []
               this.getSecondLevelTopic(term)
               const nextLevel: string[] = []
               term.children.forEach((second: any) => {
@@ -118,7 +116,6 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
         this.currentTab = term.name
           this.firstLevelTopic = firstLvlArray
           if (term.name === decodeURI(topic) && term.children) {
-            this.topicKey = []
             this.getSecondLevelTopic(term)
             const nextLevel: string[] = []
             term.children.forEach((second: any) => {
@@ -137,7 +134,8 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
       const termObject = {
         name: decodeURI(termObj.name),
         enabled: true,
-        routerLink: APP_TAXONOMY + termObj.name,
+        identifier: termObj.identifier,
+        routerLink: APP_TAXONOMY + termObj.name.replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, ''),
       }
       return termObject
     }
@@ -159,15 +157,15 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
             if (term.name === topic && term.children) {
               this.nextLvlObj = term.children
               const nextLevel: string[] = []
-              this.topicKey = []
               this.getSecondLevelTopic(term)
               term.children.forEach((second: any) => {
                 nextLevel.push(second.name)
                 tempCurrentArray.push(second)
               })
               this.nextLevelTopic = nextLevel
+            } else if (term.name === topic) {
+              this.getSecondLevelTopic(term)
             }
-
         })
       }
         // this.nextLvlObj = tempCurrentArray
@@ -185,11 +183,11 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
       this.isFirst = false
       const leftMenuData: any[] = []
       this.nextLvlObj.forEach((term: any) => {
-        leftMenuData.push(term)
+        leftMenuData.push(this.createTermObject(term))
         if (term.name === decodeURI(clickedTab)) {
-          this.topicKey = []
           this.getSecondLevelTopic(term)
-          const handleLink  = { title: decodeURI(clickedTab), url: 'none' }
+          const decode = decodeURI(clickedTab)
+          const handleLink  = { title: decode, url: 'none' }
           this.tempArr.push(handleLink)
           this.dataProcessOneMore(clickedTab, this.nextLvlObj)
         }
@@ -209,7 +207,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
           }
         }
           firstLvlArray.push(this.createTermObject(term))
-          this.router.navigate([APP_TAXONOMY + decodeURI(topic)])
+          this.router.navigate([APP_TAXONOMY + decodeURI(topic).replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '')])
             if (term.name === topic && term.children) {
               const nextLevel: string[] = []
               term.children.forEach((second: any) => {
@@ -226,11 +224,14 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
 
     }
   getSecondLevelTopic(allLevelObject: any) {
+    this.topicKey = []
+    if (allLevelObject.identifier) {
     this.topicKey.push(allLevelObject.identifier)
+    }
     this. getAllRelatedCourse()
   }
   getAllRelatedCourse() {
-    this.relatedResource =[]
+    this.relatedResource = []
     this.loader.changeLoad.next(true)
       this._service.fetchAllRelatedCourse(this.topicKey).subscribe(response => {
         const tempRequestParam: { content: any }[] = []
