@@ -281,6 +281,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         (data: NsContent.IBatchListResponse) => {
           this.batchData = data
           this.batchData.enrolled = false
+          this.tocSvc.setBatchData(this.batchData)
           if (this.getBatchId()) {
             this.router.navigate(
               [],

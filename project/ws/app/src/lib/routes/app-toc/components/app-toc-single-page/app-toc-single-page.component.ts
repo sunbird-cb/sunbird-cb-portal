@@ -41,7 +41,9 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   private routeQuerySubscription: Subscription | null = null
   batchId!: string
   isNotEditor = true
-  discussionConfig!: IdiscussionConfig
+  discussionConfig!: IdiscussionConfig = {}
+  batchData: any
+  batchDataLoaded: boolean
   // configSvc: any
 
   constructor(
@@ -72,23 +74,34 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     if (!this.forPreview) {
       this.forPreview = window.location.href.includes('/author/')
     }
-    this.discussionConfig = {
-      // menuOptions: [{ route: 'categories', enable: true }],
-      userName: 'nptest',
-      categories: { result: [] },
-    }
+
     if (this.route && this.route.parent) {
       this.routeSubscription = this.route.parent.data.subscribe((data: Data) => {
         this.routeQuerySubscription = this.route.queryParamMap.subscribe(qParamsMap => {
           const batchId = qParamsMap.get('batchId')
           if (batchId) {
-            this.discussionConfig.contextId = batchId
+            this.discussionConfig.contextId = [batchId]
             this.discussionConfig.contextType = 'batch'
             this.batchId = batchId
           }
         })
         this.tocSharedSvc.setBatchDataSubject.subscribe(data => {
-          console.log(data)
+          this.discussionConfig = {
+            // menuOptions: [{ route: 'categories', enable: true }],
+            userName: 'nptest',
+            categories: { result: [] },
+          }
+
+          this.batchData = data.content
+          if (this.batchData) {
+            const batchIdArr: any[] = []
+            this.batchData.forEach((element: { identifier: any }) => {
+              batchIdArr.push(element.identifier)
+            })
+            this.discussionConfig.contextIdArr = batchIdArr
+            this.discussionConfig.contextType = 'batch'
+            this.batchDataLoaded = true
+          }
         })
         this.initData(data)
         this.tocConfig = data.pageData.data
@@ -174,10 +187,10 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   private initData(data: Data) {
     const initData = this.tocSharedSvc.initData(data)
     this.content = initData.content
-    if (!this.batchId) {
-      this.discussionConfig.contextId = this.content.identifier
-      this.discussionConfig.contextType = 'course'
-    }
+    // if (!this.batchId || !this.batchData) {
+    //   this.discussionConfig.contextIdArr = [this.content.identifier]
+    //   this.discussionConfig.contextType = 'course'
+    // }
     this.setSocialMediaMetaTags(this.content)
     this.body = this.domSanitizer.bypassSecurityTrustHtml(
       this.content && this.content.body
