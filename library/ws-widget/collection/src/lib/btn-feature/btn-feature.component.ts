@@ -4,7 +4,7 @@ import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ConfigurationsService, EventService, NsPage } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { take } from 'rxjs/operators'
-import { MobileAppsService } from './mobile-apps.service'
+import { MobileAppsService } from '../_services/mobile-apps.service'
 import { CustomTourService } from '../_common/tour-guide/tour-guide.service'
 import { BtnFeatureService } from './btn-feature.service'
 
