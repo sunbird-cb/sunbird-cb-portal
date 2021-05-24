@@ -21,6 +21,7 @@ export class DiscussComponent implements OnInit, OnDestroy {
   isLtMedium$ = this.valueSvc.isLtMedium$
   mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
   private defaultSideNavBarOpenedSubscription: any
+  lastUrlPath = ''
 
   constructor(private valueSvc: ValueService, private route: ActivatedRoute, private router: Router) {
     this.unread = this.route.snapshot.data.unread
@@ -60,7 +61,11 @@ export class DiscussComponent implements OnInit, OnDestroy {
   }
   bindUrl(path: string) {
     if (path) {
-      this.currentRoute = path
+
+      this.lastUrlPath  = path.substring(path.lastIndexOf('/') + 1, path.length)
+      this.currentRoute = this.lastUrlPath
+      // console.log('path' + this.currentRoute)
+
       if (this.titles.length > 1) {
         this.titles.pop()
       }
