@@ -43,7 +43,7 @@
     </div>
   </section> -->
 
-  <section class="padding-xs border-bottom">
+  <section class="padding-s border-bottom">
     <a role="link" routerLink="/app/person-profile/me" class="all-features" id="viewprofile">
       <div class="float-left">
         <ws-widget-avatar-photo [name]="givenName" [size]="'m'" [photoUrl]="profileImage"></ws-widget-avatar-photo>
@@ -56,8 +56,8 @@
   </section>
   
   <!-- portal links section-->
-  <section *ngIf="portalLinks && portalLinks.length" class="padding-s border-bottom"> 
-    <div class="plmain" *ngFor="let wdata of portalLinks">
+  <section *ngIf="portalLinks && portalLinks.length" class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s border-bottom"> 
+    <div class="margin-top-s margin-bottom-s" *ngFor="let wdata of portalLinks">
       <div class="box-sizing-box" id="wdata.widgetData.actionBtn.id">
         <a class="inline-block" [href]="wdata.widgetData.actionBtn.url" target="_blank" [url]="wdata.widgetData.actionBtn.url"
         [wsWidgetUrlResolver]="wdata.widgetData.actionBtn.isExternal" [mobileAppFunction]="wdata.widgetData.actionBtn.mobileAppFunction">
