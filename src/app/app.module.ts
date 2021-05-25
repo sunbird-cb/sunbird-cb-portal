@@ -58,8 +58,8 @@ import { AppRetryInterceptorService } from './services/app-retry-interceptor.ser
 import { TncAppResolverService } from './services/tnc-app-resolver.service'
 import { TncPublicResolverService } from './services/tnc-public-resolver.service'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { DiscussionUiModule } from '@project-sunbird/discussions-ui-v8'
 import { ConfigService } from '@ws/app/src/lib/routes/discuss/services/config.service'
+import { DiscussionUiModule } from '@sunbird-cb/discussions-ui-v8'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 

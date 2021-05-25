@@ -12,7 +12,7 @@ import { NsWidgetResolver } from '@sunbird-cb/resolver'
 export class DiscussComponent implements OnInit, OnDestroy {
   sideNavBarOpened = true
   panelOpenState = false
-  titles = [{ title: 'DISCUSS', url: '/app/discussion-forum', icon: 'forum' }]
+  titles = [{ title: 'DISCUSS', url: '/app/discussion-forum', icon: 'forum', queryParams: { page: "home" } }]
   unread = 0
   currentRoute = 'forum'
   banner!: NsWidgetResolver.IWidgetData<any>
@@ -62,7 +62,7 @@ export class DiscussComponent implements OnInit, OnDestroy {
   bindUrl(path: string) {
     if (path) {
 
-      this.lastUrlPath  = path.substring(path.lastIndexOf('/') + 1, path.length)
+      this.lastUrlPath = path.substring(path.lastIndexOf('/') + 1, path.length)
       this.currentRoute = this.lastUrlPath
       // console.log('path' + this.currentRoute)
 
@@ -71,19 +71,19 @@ export class DiscussComponent implements OnInit, OnDestroy {
       }
       switch (path) {
         case 'home':
-          this.titles.push({ title: 'Discussion', icon: '', url: 'none' })
+          this.titles.push({ title: 'Discussion', icon: '', url: 'none', queryParams: { page: "home" } })
           break
         case 'categories':
-          this.titles.push({ title: 'Categories', icon: '', url: 'none' })
+          this.titles.push({ title: 'Categories', icon: '', url: 'none', queryParams: { page: "home" } })
           break
         case 'tags':
-          this.titles.push({ title: 'Tags', icon: '', url: 'none' })
+          this.titles.push({ title: 'Tags', icon: '', url: 'none', queryParams: { page: "home" } })
           break
         case 'leaderboard':
-          this.titles.push({ title: 'Leaderboard', icon: '', url: 'none' })
+          this.titles.push({ title: 'Leaderboard', icon: '', url: 'none', queryParams: { page: "home" } })
           break
         case 'my-discussions':
-          this.titles.push({ title: 'My Discussions', icon: '', url: 'none' })
+          this.titles.push({ title: 'My Discussions', icon: '', url: 'none', queryParams: { page: "home" } })
           break
 
         default:
