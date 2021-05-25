@@ -28,7 +28,7 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
 } from '@angular/material'
-import { DiscussionUiModule } from '@project-sunbird/discussions-ui-v8'
+import { DiscussionUiModule } from '@sunbird-cb/discussions-ui-v8'
 
 // comps
 import { AppTocAnalyticsComponent } from './routes/app-toc-analytics/app-toc-analytics.component'

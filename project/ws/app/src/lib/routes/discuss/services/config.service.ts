@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { AbstractConfigService } from '@project-sunbird/discussions-ui-v8'
+import { AbstractConfigService } from '@sunbird-cb/discussions-ui-v8'
 // import { AbstractPageService } from '../../../projects/components/src/lib/services/abstract-page.service'
 
 @Injectable({
