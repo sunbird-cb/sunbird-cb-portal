@@ -42,7 +42,7 @@ export class AllDiscussionWidgetComponent extends BaseWrapperComponent {
     this.state = this.alldiscussPage
   }
 
-  widgetBackClick(){
+  widgetBackClick() {
     this.state = this.previousState
   }
 

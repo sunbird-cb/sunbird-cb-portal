@@ -92,20 +92,17 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
           }
         })
         // this.tocSharedSvc.setBatchDataSubject.subscribe((data1: { content: any }) => {
-          
-
-          // this.batchData = data1.content
-          // if (this.batchData) {
-          //   const batchIdArr: any[] = []
-          //   this.batchData.forEach((element: { identifier: any }) => {
-          //     batchIdArr.push(element.identifier)
-          //   })
-          //   this.discussionConfig.contextIdArr = batchIdArr
-          //   this.discussionConfig.contextType = 'batch'
-          //   this.batchDataLoaded = true
-          // }
-        })
-      
+        // this.batchData = data1.content
+        // if (this.batchData) {
+        //   const batchIdArr: any[] = []
+        //   this.batchData.forEach((element: { identifier: any }) => {
+        //     batchIdArr.push(element.identifier)
+        //   })
+        //   this.discussionConfig.contextIdArr = batchIdArr
+        //   this.discussionConfig.contextType = 'batch'
+        //   this.batchDataLoaded = true
+        // }
+      })
       // })
     }
     if (this.configSvc && this.configSvc.userProfile && this.configSvc.userProfile.userId) {
@@ -188,8 +185,8 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   private initData(data: Data) {
     const initData = this.tocSharedSvc.initData(data)
     this.content = initData.content
-      this.discussionConfig.contextIdArr = [this.content.identifier]
-      this.discussionConfig.contextType = 'course'
+    this.discussionConfig.contextIdArr = [this.content.identifier]
+    this.discussionConfig.contextType = 'course'
     this.setSocialMediaMetaTags(this.content)
     this.body = this.domSanitizer.bypassSecurityTrustHtml(
       this.content && this.content.body
