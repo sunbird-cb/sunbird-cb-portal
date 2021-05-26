@@ -56,6 +56,7 @@ export class RootComponent implements OnInit, AfterViewInit {
   appStartRaised = false
   isSetupPage = false
   processed: any
+  loginToken: any
 
   constructor(
     private router: Router,
@@ -69,9 +70,15 @@ export class RootComponent implements OnInit, AfterViewInit {
     private changeDetector: ChangeDetectorRef,
   ) {
     this.mobileAppsSvc.init()
-    const lastSaved = localStorage.getItem('kc')
-    if (lastSaved) {
-        this.processed = JSON.parse(lastSaved)
+    if (this.authSvc.token) {
+      // console.log("CALLED AFTER LOGIN")
+      this.loginToken = this.authSvc.token
+    } else {
+      // console.log("ALREADY LOGGED IN")
+      const lastSaved = localStorage.getItem('kc')
+      if (lastSaved) {
+          this.loginToken = JSON.parse(lastSaved).token
+      }
     }
     const locationOrigin = location.origin
 
@@ -91,7 +98,7 @@ export class RootComponent implements OnInit, AfterViewInit {
           authentication: {
             // bearerToken: "", // optional
             // userToken: "5574b3c5-16ca-49d8-8059-705304f2c7fb"
-            // bearerToken: this.processed.token,
+            bearerToken: this.loginToken,
             // optional
           },
         },
