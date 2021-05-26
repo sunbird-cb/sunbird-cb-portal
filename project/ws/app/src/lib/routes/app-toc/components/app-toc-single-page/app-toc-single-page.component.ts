@@ -68,6 +68,10 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     //   this.askAuthorEnabled = !data.restrictedData.data.has('askAuthor')
     //   this.trainingLHubEnabled = !data.restrictedData.data.has('trainingLHub')
     // })
+    this.discussionConfig = {
+      // menuOptions: [{ route: 'categories', enable: true }],
+      userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
+    }
   }
 
   ngOnInit() {
@@ -77,35 +81,32 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
 
     if (this.route && this.route.parent) {
       this.routeSubscription = this.route.parent.data.subscribe((data: Data) => {
+        this.initData(data)
+        this.tocConfig = data.pageData.data
         this.routeQuerySubscription = this.route.queryParamMap.subscribe(qParamsMap => {
           const batchId = qParamsMap.get('batchId')
           if (batchId) {
-            this.discussionConfig.contextId = [batchId]
-            this.discussionConfig.contextType = 'batch'
+            // this.discussionConfig.contextId = [batchId]
+            // this.discussionConfig.contextType = 'batch'
             this.batchId = batchId
           }
         })
-        this.tocSharedSvc.setBatchDataSubject.subscribe((data1: { content: any }) => {
-          this.discussionConfig = {
-            // menuOptions: [{ route: 'categories', enable: true }],
-            userName: 'nptest',
-            categories: { result: [] },
-          }
+        // this.tocSharedSvc.setBatchDataSubject.subscribe((data1: { content: any }) => {
+          
 
-          this.batchData = data1.content
-          if (this.batchData) {
-            const batchIdArr: any[] = []
-            this.batchData.forEach((element: { identifier: any }) => {
-              batchIdArr.push(element.identifier)
-            })
-            this.discussionConfig.contextIdArr = batchIdArr
-            this.discussionConfig.contextType = 'batch'
-            this.batchDataLoaded = true
-          }
+          // this.batchData = data1.content
+          // if (this.batchData) {
+          //   const batchIdArr: any[] = []
+          //   this.batchData.forEach((element: { identifier: any }) => {
+          //     batchIdArr.push(element.identifier)
+          //   })
+          //   this.discussionConfig.contextIdArr = batchIdArr
+          //   this.discussionConfig.contextType = 'batch'
+          //   this.batchDataLoaded = true
+          // }
         })
-        this.initData(data)
-        this.tocConfig = data.pageData.data
-      })
+      
+      // })
     }
     if (this.configSvc && this.configSvc.userProfile && this.configSvc.userProfile.userId) {
       this.loggedInUserId = this.configSvc.userProfile.userId
@@ -187,10 +188,8 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   private initData(data: Data) {
     const initData = this.tocSharedSvc.initData(data)
     this.content = initData.content
-    // if (!this.batchId || !this.batchData) {
-    //   this.discussionConfig.contextIdArr = [this.content.identifier]
-    //   this.discussionConfig.contextType = 'course'
-    // }
+      this.discussionConfig.contextIdArr = [this.content.identifier]
+      this.discussionConfig.contextType = 'course'
     this.setSocialMediaMetaTags(this.content)
     this.body = this.domSanitizer.bypassSecurityTrustHtml(
       this.content && this.content.body

@@ -23,6 +23,7 @@ export class AllDiscussionWidgetComponent extends BaseWrapperComponent {
   context: any = { categories: { result: [] } }
   categoryId: any
   alldiscussPage = 'alldiscuss'
+  previousState: any
 
   constructor(
     @Inject(ConfigService)
@@ -41,8 +42,13 @@ export class AllDiscussionWidgetComponent extends BaseWrapperComponent {
     this.state = this.alldiscussPage
   }
 
+  widgetBackClick(){
+    this.state = this.previousState
+  }
+
   stateChange(event: any) {
     // console.log(event)
+    this.previousState = this.state
     this.state = event.action
     if (event.action === this.detailsPage) {
       this.tid = event.tid
