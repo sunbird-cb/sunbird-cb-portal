@@ -183,9 +183,10 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   }
 
   private initData(data: Data) {
+    // debugger
     const initData = this.tocSharedSvc.initData(data)
     this.content = initData.content
-    this.discussionConfig.contextIdArr = [this.content.identifier]
+    this.discussionConfig.contextIdArr = (this.content) ? [this.content.identifier] : []
     this.discussionConfig.contextType = 'course'
     this.setSocialMediaMetaTags(this.content)
     this.body = this.domSanitizer.bypassSecurityTrustHtml(
