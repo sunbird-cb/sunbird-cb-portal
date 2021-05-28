@@ -25,6 +25,7 @@ const API_END_POINTS = {
   CONTENT_HISTORY: `${PROTECTED_SLAG_V8}/user/history`,
   CONTENT_HISTORYV2: `/apis/proxies/v8/read/content-progres`,
   COURSE_BATCH_LIST: `/apis/proxies/v8/learner/course/v1/batch/list`,
+  AUTO_ASSIGN_BATCH: `/apis/protected/v8/cohorts/user/autoenrollment/`,
   USER_CONTINUE_LEARNING: `${PROTECTED_SLAG_V8}/user/history/continue`,
   CONTENT_RATING: `${PROTECTED_SLAG_V8}/user/rating`,
   COLLECTION_HIERARCHY: (type: string, id: string) =>
@@ -107,6 +108,16 @@ export class WidgetContentService {
           (data: any) => data.result.response
         )
       )
+  }
+
+  autoAssignBatchApi(identifier: any): Observable<NsContent.IBatchListResponse> {
+    return this.http.get<NsContent.IBatchListResponse>(`${API_END_POINTS.AUTO_ASSIGN_BATCH}${identifier}`)
+    .pipe(
+      retry(1),
+      map(
+        (data: any) => data.result.response
+      )
+    )
   }
 
   enrollUserToBatch(req: any) {
