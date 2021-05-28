@@ -243,7 +243,11 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           } else {
             // It's understood that user is not already enrolled
             // Fetch the available batches and present to user
-            this.fetchBatchDetails()
+            if (this.content.contentType === 'Course') {
+              this.autoBatchAssign()
+            } else {
+              this.fetchBatchDetails()
+            }
           }
         }
       },
@@ -261,6 +265,28 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       }
     }
     return batchId
+  }
+
+  public autoBatchAssign() {
+    if (this.content && this.content.identifier) {
+      this.contentSvc.autoAssignBatchApi(this.content.identifier).subscribe(
+        (data: NsContent.IBatchListResponse) => {
+          this.batchData = {
+            content: data.content,
+            enrolled: true,
+          }
+          if (this.getBatchId()) {
+            this.router.navigate(
+              [],
+              {
+                relativeTo: this.route,
+                queryParams: { batchId: this.getBatchId() },
+                queryParamsHandling: 'merge',
+              })
+          }
+        }
+      )
+    }
   }
 
   public fetchBatchDetails() {
