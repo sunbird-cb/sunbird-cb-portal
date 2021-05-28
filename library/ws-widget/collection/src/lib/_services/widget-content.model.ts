@@ -158,17 +158,17 @@ export namespace NsContent {
     name: string,
     startDate: string,
     status: number
-    cert_templates: null
+    cert_templates?: null
     collectionId: string
     courseId: string
     createdDate: string
     createdFor: string[]
-    description: null
+    description?: null
     enrollmentEndDate: string | null
     id: string
-    mentors: string[] | null
-    tandc: null
-    updatedDate: string | null
+    mentors?: string[] | null
+    tandc?: null
+    updatedDate?: string | null
   }
 
   export interface IBatchListResponse {

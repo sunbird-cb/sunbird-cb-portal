@@ -99,7 +99,7 @@
               <span class="rating-count" *ngIf="!content?.totalRating">
                 ( {{ 0 | pipeCountTransform }} )</span>
             </div>
-            <div class="header-actions mt-8 mb-4">
+            <!-- <div class="header-actions mt-8 mb-4">
               <ng-container *ngIf="batchData && !batchData?.enrolled && batchData?.content?.length">
                 <form>
                   <mat-form-field appearance="fill">
@@ -126,7 +126,7 @@
                   No batches
                 </h3>
               </ng-container>
-            </div>
+            </div> -->
             <div class="header-actions mt-8 mb-4">
               <ng-container *ngIf="
                   actionBtnStatus !== 'wait' &&
