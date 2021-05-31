@@ -59,18 +59,9 @@
   <section *ngIf="portalLinks && portalLinks.length" class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s border-bottom"> 
     <div class="margin-top-s margin-bottom-s" *ngFor="let wdata of portalLinks">
       <div class="box-sizing-box" id="wdata.widgetData.actionBtn.id">
-        <a class="inline-block" [href]="wdata.widgetData.actionBtn.url" target="_blank" [url]="wdata.widgetData.actionBtn.url"
-        [wsWidgetUrlResolver]="wdata.widgetData.actionBtn.isExternal" [mobileAppFunction]="wdata.widgetData.actionBtn.mobileAppFunction">
-          <ng-container [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{
-              iconType: wdata.widgetData.actionBtn.iconType,
-              icon: wdata.widgetData.actionBtn.icon,
-              scale: 1.7,
-              color: wdata.widgetData.actionBtn.color
-            }"></ng-container>
+        <a class="inline-block" target="_blank" href="{{wdata.widgetData.actionBtn.url}}">
+          <img src="{{wdata.widgetData.actionBtn.icon}}" alt="wdata.widgetData.actionBtn.name">
           <div class="mb-2 mat-body-2 inline-block margin-left-s portal-name" [attr.id]="wdata.widgetData.actionBtn.icon">{{ wdata.widgetData.actionBtn.name }} <span *ngIf="wdata.widgetData.actionBtn.name !== 'Frac'">portal</span> <span *ngIf="wdata.widgetData.actionBtn.name === 'Frac'">dictionary</span></div>
-          <!-- <div class="mt-2 text-center" >
-            {{ wdata.widgetData.actionBtn.shortName }}
-          </div> -->
         </a>
       </div>
     </div>
@@ -93,28 +84,3 @@
     </a>
   </section>
 </mat-menu>
-
-<ng-template #icon let-iconType="iconType" let-icon="icon" let-scale="scale" let-color="color">
-  <ng-container>
-    <mat-icon *ngIf="iconType === 'mat-icon'" role="img" aria-hidden="false" [attr.aria-label]="icon"
-      [attr.aria-labelledby]="icon" [color]="color" class="inline-block csicon" [ngStyle]="
-        scale
-          ? {
-              'font-size': scale * defaultIconSize + 'px',
-              height: scale * defaultIconSize + 'px',
-              width: scale * defaultIconSize + 'px'
-            }
-          : {}
-      ">
-      {{ icon }}
-    </mat-icon>
-  </ng-container>
-  <img class="feature-icon-img" [ngStyle]="
-      scale
-        ? {
-            height: scale * defaultIconSize + 'px',
-            width: scale * defaultIconSize + 'px'
-          }
-        : {}
-    " *ngIf="iconType === 'url'" [src]="icon" i18n-alt alt="icon" />
-</ng-template>
