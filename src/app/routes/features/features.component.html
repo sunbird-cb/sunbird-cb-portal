@@ -18,8 +18,9 @@
 </div>
 <!-- </mat-toolbar> -->
 
-<section class="padding-m container-balanced" *ngFor="let group of featureGroups">
-  <div [ngClass]="{ pad: group?.stripBackground }" [ngStyle]="{ 'background-color': group?.stripBackground }">
+<section class="container-balanced" *ngFor="let group of featureGroups">
+  <div class="margin-bottom-l margin-top-l" [ngClass]="{ pad: group?.stripBackground }" [ngStyle]="{ 'background-color': group?.stripBackground }" 
+  *ngIf="group.id !== 'portal_admin' && group.id !== 'portal_frac'">
     <h2 class="feature-group-heading">
       <span>{{ group.name }}</span>
     </h2>
