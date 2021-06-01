@@ -35,13 +35,27 @@ export class ViewerUtilService {
     return
   }
 
-  calculatePercent(current: string[], max: number): number {
+  calculatePercent(current: string[], max: number, mimeType?: string): number {
     try {
       const temp = [...current]
       if (temp && temp.length && max) {
         const latest = parseFloat(temp.pop() || '0')
         const percentMilis = (latest / max) * 100
-        const percent = parseFloat(percentMilis.toFixed(2))
+        let percent = parseFloat(percentMilis.toFixed(2))
+        if (
+          mimeType === NsContent.EMimeTypes.MP4 ||
+          mimeType === NsContent.EMimeTypes.M3U8 ||
+          mimeType === NsContent.EMimeTypes.MP3 ||
+          mimeType === NsContent.EMimeTypes.M4A
+        ) {
+          if (percent < 5) {
+            // if percentage is less than 5% make it 0
+            percent = 0
+          } else if (percent > 95) {
+            // if percentage is greater than 95% make it 100
+            percent = 100
+          }
+        }
         return percent
       }
       return 0
@@ -52,11 +66,28 @@ export class ViewerUtilService {
     }
   }
 
-  getStatus(current: string[], max: number) {
+  getStatus(current: string[], max: number, mimeType?: string) {
     try {
-      const percentage = this.calculatePercent(current, max)
-      if (Math.ceil(percentage) >= 100) {
-        return 2
+      const percentage = this.calculatePercent(current, max, mimeType)
+      // for videos and audios
+      if (
+        mimeType === NsContent.EMimeTypes.MP4 ||
+        mimeType === NsContent.EMimeTypes.M3U8 ||
+        mimeType === NsContent.EMimeTypes.MP3 ||
+        mimeType === NsContent.EMimeTypes.M4A
+      ) {
+        // if percentage is less than 5% then make status started
+        if (Math.ceil(percentage) < 5) {
+          return 1
+        }
+        // if percentage is greater than 95% then make status complete
+        if (Math.ceil(percentage) > 95) {
+          return 2
+        }
+      } else {
+        if (Math.ceil(percentage) >= 100) {
+          return 2
+        }
       }
       return 1
     } catch (e) {
@@ -76,7 +107,7 @@ export class ViewerUtilService {
             {
               contentId,
               batchId,
-              status: this.getStatus(request.current, request.max_size),
+              status: this.getStatus(request.current, request.max_size, request.mime_type),
               courseId: collectionId,
               lastAccessTime: dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss:SSSZZ'),
               progressdetails: {
@@ -84,7 +115,7 @@ export class ViewerUtilService {
                 current: request.current,
                 mimeType: request.mime_type,
               },
-              completionPercentage: this.calculatePercent(request.current, request.max_size),
+              completionPercentage: this.calculatePercent(request.current, request.max_size, request.mime_type),
             },
           ],
         },
