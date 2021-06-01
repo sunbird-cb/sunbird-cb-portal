@@ -48,10 +48,10 @@ export class ViewerUtilService {
           mimeType === NsContent.EMimeTypes.MP3 ||
           mimeType === NsContent.EMimeTypes.M4A
         ) {
-          if (percent < 5) {
+          if (percent <= 5) {
             // if percentage is less than 5% make it 0
             percent = 0
-          } else if (percent > 95) {
+          } else if (percent >= 95) {
             // if percentage is greater than 95% make it 100
             percent = 100
           }
@@ -77,11 +77,11 @@ export class ViewerUtilService {
         mimeType === NsContent.EMimeTypes.M4A
       ) {
         // if percentage is less than 5% then make status started
-        if (Math.ceil(percentage) < 5) {
+        if (Math.ceil(percentage) <= 5) {
           return 1
         }
         // if percentage is greater than 95% then make status complete
-        if (Math.ceil(percentage) > 95) {
+        if (Math.ceil(percentage) >= 95) {
           return 2
         }
       } else {
