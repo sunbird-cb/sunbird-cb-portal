@@ -274,11 +274,12 @@ tocConfig?.overview?.softwareRequirements?.enabled && content?.softwareRequireme
                     [contentId]="content?.identifier" [isDisabled]="isPreviewMode" [forPreview]="forPreview">
                 </ws-widget-user-content-rating>
             </div>
-            <div class="mb-10" [hidden]="isResource || isNotEditor">
+            <!-- TODO: Hiding for now, as the feature is not required -->
+            <!-- <div class="mb-10" [hidden]="isResource || isNotEditor">
                 <a [color]="'primary'" class="margin-right-m resumeButton" mat-button (click)="openDialog(content)">
                     Create Batch
                 </a>
-            </div>
+            </div> -->
             <div class="glance-container">
                 <div
                     class="ws-mat-primary-lite-background-on-day ws-mat-primary-border-top-bolder white-bg info-container">
