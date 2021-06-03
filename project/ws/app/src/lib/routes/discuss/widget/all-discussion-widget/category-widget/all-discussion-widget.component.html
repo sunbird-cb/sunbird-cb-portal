@@ -1,6 +1,6 @@
 <div class='widget-container'>
     <button *ngIf='state !== alldiscussPage' mat-icon-button (click)="widgetBackClick()">
-        <mat-icon>arrow_backword</mat-icon>
+        <mat-icon class="padding-right-s">arrow_backword</mat-icon>
         <span>Back</span>
     </button>
     <lib-discuss-all *ngIf='state === alldiscussPage' [context]='config' (stateChange)='stateChange($event)'></lib-discuss-all>
