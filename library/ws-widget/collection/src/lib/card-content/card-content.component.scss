@@ -156,7 +156,6 @@
   .duration {
     height: 1.6em;
     display: flex;
-
     .resource-type {
       order: 3;
       margin-left: auto;
@@ -173,7 +172,9 @@
       text-overflow: ellipsis;
     }
   }
-
+.min-top{
+  margin-top: 50px;
+}
   $title-line-count: 1;
   $title-line-height: 1.3em;
 
@@ -284,11 +285,11 @@
   }
 
   .complexity {
-    padding-top: 7px;
+    padding-top: 70px;
     display: flex;
     font-size: 14px;
-    line-height: 27px;
-    padding-bottom: 24px;
+    line-height: 21px;
+    padding-bottom: 10px;
 
     .mode-tag {
       border-radius: 5px;

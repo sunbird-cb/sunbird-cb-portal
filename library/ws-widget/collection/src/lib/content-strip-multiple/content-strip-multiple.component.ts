@@ -365,6 +365,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     if (strip.request && strip.request.enrollmentList && Object.keys(strip.request.enrollmentList).length) {
       let userId = ''
       let content: NsContent.IContent[]
+      let contentNew: NsContent.IContent[]
       if (this.configSvc.userProfile) {
         userId = this.configSvc.userProfile.userId
       }
@@ -398,9 +399,19 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
               return contentTemp
             })
           }
+          // To filter content with completionPercentage > 0,
+          // so that only those content will show in home page
+          // continue learing strip
+          if (content && content.length) {
+            contentNew = content.filter((c: any) => {
+              if (c.completionPercentage && c.completionPercentage > 0) {
+                return c
+              }
+            })
+          }
           this.processStrip(
             strip,
-            this.transformContentsToWidgets(content, strip),
+            this.transformContentsToWidgets(contentNew, strip),
             'done',
             calculateParentStatus,
             viewMoreUrl,
