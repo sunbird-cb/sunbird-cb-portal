@@ -609,7 +609,18 @@ tocConfig?.overview?.softwareRequirements?.enabled && content?.softwareRequireme
 <mat-divider class="fluid-width mtb-xl"></mat-divider>
 <section id="discussion-forum">
     <div class="fixed-width toc-discussion-container">
-        <all-discussion-widget style=' width: 100%;' [config]="discussionConfig"></all-discussion-widget>
+        <div class="flex flex-middle py-4 cursor-pointer mat-toolbar mat-toolbar-custom discussion-head"
+            (click)="showDiscussionForum = !showDiscussionForum">
+            <h2 class="heading">Discussion Forum</h2>
+            <mat-icon *ngIf="showDiscussionForum">keyboard_arrow_down</mat-icon>
+            <mat-icon *ngIf="!showDiscussionForum">chevron_right</mat-icon>
+        </div>
+    </div>
+    <br />
+    <div class="fixed-width toc-discussion-container">
+        <ng-container *ngIf="showDiscussionForum">
+            <all-discussion-widget style=' width: 100%;' [config]="discussionConfig"></all-discussion-widget>
+        </ng-container>        
         <!-- <ws-app-toc-discussion [content]="content" class="discussion"></ws-app-toc-discussion> -->
     </div>
 </section>
