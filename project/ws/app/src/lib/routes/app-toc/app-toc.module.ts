@@ -102,6 +102,8 @@ import { AppTocSinglePageComponent as AppTocSinglePageRootComponent } from './ro
 import { AppTocSinglePageDirective } from './routes/app-toc-single-page/app-toc-single-page.directive'
 import { CreateBatchDialogComponent } from './components/create-batch-dialog/create-batch-dialog.component'
 import { AllDiscussionWidgetComponent } from '../discuss/widget/all-discussion-widget/category-widget/all-discussion-widget.component'
+import { TagWidgetComponent } from '../discuss/widget/tag-widget/tag-widget.component'
+
 @NgModule({
   declarations: [
     AppTocAnalyticsComponent,
@@ -126,6 +128,7 @@ import { AllDiscussionWidgetComponent } from '../discuss/widget/all-discussion-w
     AppTocSinglePageDirective,
     CreateBatchDialogComponent,
     AllDiscussionWidgetComponent,
+    TagWidgetComponent,
   ],
   imports: [
     CommonModule,
