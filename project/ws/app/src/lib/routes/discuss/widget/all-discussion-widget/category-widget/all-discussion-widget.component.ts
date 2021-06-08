@@ -46,6 +46,7 @@ export class AllDiscussionWidgetComponent extends BaseWrapperComponent {
 
   widgetBackClick() {
     this.state = this.alldiscussPage
+    this.showTrendTagPost = 0
   }
 
   stateChange(event: any) {
