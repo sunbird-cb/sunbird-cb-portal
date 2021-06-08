@@ -17,7 +17,9 @@ export class AllDiscussionWidgetComponent extends BaseWrapperComponent {
   detailsToggle = true
   category = 'category'
   detailsPage = 'categoryDetails'
+  tagAllDiscussPage =  'tagAllDiscuss'
   homePage = 'categoryHome'
+  showTrendTagPost = 0
   tid!: number
   slug!: string
   context: any = { categories: { result: [] } }
@@ -47,12 +49,20 @@ export class AllDiscussionWidgetComponent extends BaseWrapperComponent {
   }
 
   stateChange(event: any) {
+    // debugger
     // console.log(event)
     this.previousState = this.state
     this.state = event.action
     if (event.action === this.detailsPage) {
       this.tid = event.tid
       this.slug = event.title
+      this.showTrendTagPost = 0
+    }
+
+    if (event.action === this.tagAllDiscussPage) {
+      this.tid = event.tid
+      this.slug = event.title
+      this.showTrendTagPost = 1
     }
   }
 
