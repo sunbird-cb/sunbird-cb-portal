@@ -187,6 +187,21 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     const initData = this.tocSharedSvc.initData(data)
     this.content = initData.content
     this.discussionConfig.contextIdArr = (this.content) ? [this.content.identifier] : []
+    if (this.content) {
+      this.discussionConfig.categoryObj = {
+        category: {
+          name: this.content.name,
+          pid: "",
+          description: this.content.description,
+          context: [
+            {
+              type: "course",
+              identifier: this.content.identifier
+            }
+          ]
+        }
+      }
+    }
     this.discussionConfig.contextType = 'course'
     this.setSocialMediaMetaTags(this.content)
     this.body = this.domSanitizer.bypassSecurityTrustHtml(
