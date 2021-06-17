@@ -18,7 +18,7 @@
 
   <mat-sidenav-container name="discuss-menu" class="min-height min-wid">
     <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 sidenav-align">
-      <app-discuss-left-menu [unseen]="unread" [tabsData] = "firstLevelTopic"  (currentTab)="onTabLeftMenu($event)"></app-discuss-left-menu>
+      <app-discuss-left-menu [unseen]="unread" [tabsData] = "firstLevelTopic" (currentTab)="onTabLeftMenu($event)"></app-discuss-left-menu>
     </mat-sidenav>
     <mat-sidenav-content class="sidenav-align-cont">
       <div *ngIf="screenSizeIsLtMedium">
@@ -28,11 +28,12 @@
         </button>
       </div>
       <div class="flex flex-4">
-      <ws-widget-breadcrumbs-org [widgetData]="{titles: tempArr}" *ngIf="nextLevelTopic">
+      <ws-widget-breadcrumbs-org [widgetData]="{titles: tempArr, data: currentObj,  tab: currentTab1}" *ngIf="currentObj"
+      (firstLevelTopic)="getFirstLevelTopic($event)" (nextLevelTopic)="getNextLevelTopic($event)">
       </ws-widget-breadcrumbs-org>
       </div>
       <div class="flex flex-4 bot max-height">
-        <taxonomy-level-card *ngIf="nextLevelTopic"[tags]="nextLevelTopic"  (clickedTab)="getClickedTab($event)"></taxonomy-level-card>
+        <taxonomy-level-card [tags]="nextLevelTopic"  (clickedTab)="getClickedTab($event)"></taxonomy-level-card>
       </div>
 
       <h2 *ngIf="relatedResource.length>0">CBPs</h2>

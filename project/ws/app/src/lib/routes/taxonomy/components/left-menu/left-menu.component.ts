@@ -16,6 +16,7 @@ export class LeftMenuComponent implements OnInit, OnDestroy {
   private tabs: Subscription | null = null
 
   ngOnInit(): void {
+    console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkk")
   }
   ngOnDestroy() {
     if (this.tabs) {
@@ -23,6 +24,7 @@ export class LeftMenuComponent implements OnInit, OnDestroy {
     }
   }
   onChangeTab(tabName: string) {
+    console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkk")
     this.currentTab.emit(tabName)
   }
 }

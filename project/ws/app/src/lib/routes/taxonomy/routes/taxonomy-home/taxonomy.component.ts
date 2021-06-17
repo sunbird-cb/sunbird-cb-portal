@@ -41,11 +41,11 @@ export class TaxonomyHomeComponent implements OnInit, OnDestroy {
         // console.log(event.error)
       }
     })
-    this.bannerSubscription = this.route.data.subscribe(data => {
-      if (data && data.pageData) {
-        this.banner = data.pageData.data.banner || []
-      }
-    })
+    // this.bannerSubscription = this.route.data.subscribe(data => {
+    //   if (data && data.pageData) {
+    //     this.banner = data.pageData.data.banner || []
+    //   }
+    // })
   }
   gotoNextLevel(topic: any) {
     this.router.navigate([APP_TAXONOMY + topic.name])
