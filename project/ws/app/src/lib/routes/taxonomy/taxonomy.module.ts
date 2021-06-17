@@ -25,13 +25,14 @@ import {
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
-import { AvatarPhotoModule, BtnPageBackModule, CardContentModule, BreadcrumbsOrgModule } from '@sunbird-cb/collection'
+import { AvatarPhotoModule, BtnPageBackModule, CardContentModule} from '@sunbird-cb/collection'
 import { EditorSharedModule } from '@ws/author/src/lib/routing/modules/editor/shared/shared.module'
 // import { CkEditorModule } from 'library/ws-widget/collection/src/lib/_common/ck-editor/ck-editor.module'
 import { LoaderService } from '@ws/author/src/lib/services/loader.service'
 // import { CKEditorService } from 'library/ws-widget/collection/src/lib/_common/ck-editor/ck-editor.service'
 
 import { TaxonomyExplorerComponent } from './routes/taxonomy-explorer/explorer.component'
+import { BreadcrumbsOrgModule } from './components/breadcrumbs/breadcrumbs-org.module'
 
 @NgModule({
   declarations: [
