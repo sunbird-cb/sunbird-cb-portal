@@ -1,4 +1,5 @@
 export const environment = {
+    name: 'np',
     production: true,
     sitePath: 'karmayogiprod.nic.in',
     organisation: 'igot-karmayogi',
@@ -7,8 +8,6 @@ export const environment = {
     azureHost: 'https://karmayogi.nic.in',
     contentHost: 'https://content.igot-dev.in',
     azureBucket: 'content-store',
-  
     azureOldHost: 'https://staas-bbs1.cloud.gov.in',
     azureOldBuket: 'igot',
   }
-  

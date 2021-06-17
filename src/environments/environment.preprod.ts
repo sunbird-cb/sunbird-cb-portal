@@ -1,4 +1,5 @@
 export const environment = {
+  name: 'preprod',
   production: true,
   sitePath: 'igot-stage.in',
   organisation: 'igot-karmayogi',
