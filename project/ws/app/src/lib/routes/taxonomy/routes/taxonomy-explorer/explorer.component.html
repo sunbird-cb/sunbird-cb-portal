@@ -1,6 +1,3 @@
-<ws-widget-btn-page-back [widgetData]="{ url: 'home',titles:[{title: 'Learn', url:'/page/learn', icon:'school'},
-{title: ( 'All topics') ,url:'none', icon:''}]  }">
-</ws-widget-btn-page-back>
 <div class="container-balanced min-height">
   <div *ngIf="currentRoute === 'home'" class="margin-top-s">
     <ng-container [wsResolverWidget]="banner"></ng-container>
@@ -28,8 +25,7 @@
         </button>
       </div>
       <div class="flex flex-4">
-      <ws-widget-breadcrumbs-org [widgetData]="{titles: tempArr, data: currentObj,  tab: currentTab1}" *ngIf="currentObj"
-      (firstLevelTopic)="getFirstLevelTopic($event)" (nextLevelTopic)="getNextLevelTopic($event)">
+      <ws-widget-breadcrumbs-org (currentSelection)="getTab($event)"[widgetData]="{titles: tempArr, data: currentObj,  tab: currentTab1}" *ngIf="currentObj">
       </ws-widget-breadcrumbs-org>
       </div>
       <div class="flex flex-4 bot max-height">

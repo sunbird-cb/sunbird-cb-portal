@@ -5,7 +5,6 @@ import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ConfigurationsService, NsInstanceConfig } from '@sunbird-cb/utils'
 import { BreadcrumbsOrgService } from './breadcrumbs-org.service'
 
-
 type TUrl = undefined | 'none' | 'back' | string
 const APP_TAXONOMY = `/app/taxonomy/`
 @Component({
@@ -29,16 +28,19 @@ const APP_TAXONOMY = `/app/taxonomy/`
 })
 export class BreadcrumbsOrgComponent extends WidgetBaseComponent
   implements OnInit, NsWidgetResolver.IWidgetData<{ url: TUrl }> {
-  @Input() widgetData: { url: TUrl, titles?: NsWidgetResolver.ITitle[] | undefined, data: any, tab: any } = { url: 'none', titles: [], data:null, tab: null }
+  @Input() widgetData: { url: TUrl, titles?: NsWidgetResolver.ITitle[]
+     | undefined, data: any, tab: any } =
+  { url: 'none', titles: [], data: null, tab: null }
   presentUrl = ''
   topicKey: any = []
   @HostBinding('id')
   public id = 'nav-back'
   visible = false
-  @Output() nextLevelTopic = new EventEmitter<any>();
-  @Output() firstLevelTopic = new EventEmitter<any>();
-  nextLvlObj:any
-  currentTab:any
+  @Output() nextLevelTopic = new EventEmitter<any>()
+  @Output() firstLevelTopic = new EventEmitter<any>()
+  @Output() currentSelection = new EventEmitter<any>()
+  nextLvlObj: any
+  currentTab: any
   enablePeopleSearch = true
   hubsList!: NsInstanceConfig.IHubs[]
   constructor(
@@ -103,6 +105,9 @@ export class BreadcrumbsOrgComponent extends WidgetBaseComponent
   // }
   toggleVisibility() {
     this.visible = !this.visible
+  }
+  clickedTab(tab: any) {
+    this.currentSelection.emit(tab)
   }
   // createLeftMenuAndData(currentObj: any, topic:any){
   //   const firstLvlArray: any[] = []

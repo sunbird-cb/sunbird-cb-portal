@@ -13,11 +13,11 @@
               <span *ngIf="title.title && title.url && title.url === 'none'" i18n-aria-label i18n-aria-title
                 i18n="page title: {{title.title}}" class="flex margin-left-xs m-auto">
                 <mat-icon class="ws-mat-default-text icon-margin m-t-b" *ngIf="title.icon">{{title.icon}}</mat-icon>
-                <span class="text-capitalize m-t-b"
+                <span class="text-capitalize m-t-b" (click)="clickedTab(title.title)"
                   [ngClass]="( i === widgetData.titles.length-1) ?'color-80': 'color-60'"> {{title.title}}</span>
               </span>
               <a class="flex m-auto ws-mat-default-text" i18n-aria-label *ngIf="title.url && title.url !== 'none'"
-                [routerLink]="title.url" role="menuitem" i18n-aria-label [routerLink]="title.path"
+                 role="menuitem" i18n-aria-label  (click)="clickedTab(title.title)"
                 [attr.accesskey]="title.accessKey">
                 <mat-icon class="ws-mat-default-text icon-margin" *ngIf="title.icon">{{title.icon}}</mat-icon>
                 <span class="m-t-b color-60"> {{title.title}}</span>
@@ -43,12 +43,12 @@
 
 
   <ng-template #userIndividualNew let-hubs="hubs">
-    <ng-container *ngIf="hubs.hubname == 'Discuss'">
+    <ng-container>
       <a class="flex flex-wrap mb-4" (click)="navigate()" role="menuitem" i18n-aria-label>
         <div class="icon ws-mat-primary-tags">
           <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon>
         </div>
-        <div [ngClass]="{'cursor-pointer': enablePeopleSearch}" class="width-expand padding-left-xs">
+        <div [ngClass]="{'cursor-pointer': enablePeopleSearch}" class="width-expand padding-left-xs" >
           <div class="margin-0 mat-subheading-2">
             {{hubs.hubname}}
           </div>
@@ -57,7 +57,7 @@
       </a>
     </ng-container>
 
-    <ng-container *ngIf="hubs.hubname != 'Discuss'">
+    <!-- <ng-container *ngIf="hubs.hubname != 'Discuss'">
       <a class="flex flex-wrap mb-4" [routerLink]="(hubs.path)" role="menuitem" i18n-aria-label>
         <div class="icon ws-mat-primary-tags">
           <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon>
@@ -69,5 +69,5 @@
           <div class="mat-caption cohorts-desc ws-mat-black60-text">{{hubs.desc}}</div>
         </div>
       </a>
-    </ng-container>
+    </ng-container> -->
   </ng-template>
