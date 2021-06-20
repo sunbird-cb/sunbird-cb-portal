@@ -44,8 +44,7 @@ export class TaxonomyLevelCardComponent implements OnInit, OnChanges {
     return len - TaxonomyLevelCardComponent.MINIMUM_LENGTH
   }
   ngOnChanges(changes: SimpleChanges) {
-
-    if(this.tags){
+    if (this.tags) {
       this.rem = this.calculateLength(this.tags.length)
       this.tagCopy = [...this.tags]
       if (this.tags.length > TaxonomyLevelCardComponent.MINIMUM_LENGTH) {
