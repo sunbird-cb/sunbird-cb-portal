@@ -29,7 +29,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
   leftMenuChildObj!: any
   currentRoute = 'home'
   isFirstTab = true
-  resourceLoading= true
+  resourceLoading = true
   banner!: NsWidgetResolver.IWidgetData<any>
   public screenSizeIsLtMedium = false
   isLtMedium$ = this.valueSvc.isLtMedium$
@@ -181,9 +181,9 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
     // }
     onTabLeftMenu(tabItem: string) {
       this.arrayTemplate[this.arrayTemplate.length - 1] = tabItem
-      if(this.arrayTemplate.length >1){
+      if (this.arrayTemplate.length > 1) {
         this.getChildrenByArray('none')
-      }else{
+      } else {
         this.getFirstChildrenByArray(tabItem)
       }
 
@@ -299,7 +299,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
       this.firstLevelTopic = firstLvlArray
       this.nextLevelTopic = nextLevel
       this.getRouterLink(this.firstLevelTopic[0].name)
-      this.resourceLoading= false
+      this.resourceLoading = false
 
     }
     getLodashData(data: any, topic: any) {
@@ -331,9 +331,9 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
      }
     }
     getFirstChildrenByArray(tab: string) {
-      let leftMenuData =  this.currentObj
+      const leftMenuData =  this.currentObj
       for (let i = 0; i < leftMenuData.length - 1; i = i + 1) {
-        if(leftMenuData[i].name ===tab){
+        if (leftMenuData[i].name === tab) {
           this.nextLevelTopic = this.createTagStringsArray(leftMenuData[i].children)
         }
      }
@@ -374,7 +374,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
     return decodeURI(str).replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '')
   }
   getTab(tab: any) {
-    this.resourceLoading= true
+    this.resourceLoading = true
     for (let i = 0; i < this.tempArr.length; i = i + 1) {
       const breadCrump = this.tempArr[i]
       if (breadCrump.title === tab) {

@@ -14,7 +14,7 @@ const APP_TAXONOMY = `/app/taxonomy/`
 export class TaxonomyHomeComponent implements OnInit, OnDestroy {
   sideNavBarOpened = true
   panelOpenState = false
-  resourceLoading= true
+  resourceLoading = true
   termsTopicArray: any
   titles = [{ title: 'DISCUSS', url: '/app/discuss/home', icon: 'forum' }]
   unread = 0
