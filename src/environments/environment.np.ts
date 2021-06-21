@@ -1,15 +1,13 @@
 export const environment = {
-    name: 'benchmark',
+    name: 'np',
     production: true,
-    sitePath: 'igot-bm-sunbird.idc.tarento.com',
+    sitePath: 'karmayogiprod.nic.in',
     organisation: 'igot-karmayogi',
     framework: 'igot',
     channelId: '0131397178949058560',
-    azureHost: 'https://ppigot.blob.core.windows.net',
+    azureHost: 'https://karmayogi.nic.in',
     contentHost: 'https://content.igot-dev.in',
-    // https://ppigot.blob.core.windows.net/
-    azureBucket: 'content',
-
+    azureBucket: 'content-store',
     azureOldHost: 'https://staas-bbs1.cloud.gov.in',
     azureOldBuket: 'igot',
-}
+  }

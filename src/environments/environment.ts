@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment: IEnvironment = {
+  name: 'dev',
   production: false,
   sitePath: 'localhost_3000',
   organisation: 'igot-karmayogi',
@@ -16,6 +17,7 @@ export const environment: IEnvironment = {
   azureOldBuket: 'igot',
 }
 interface IEnvironment {
+  name: string,
   production: boolean
   sitePath: null | string
   organisation: string
