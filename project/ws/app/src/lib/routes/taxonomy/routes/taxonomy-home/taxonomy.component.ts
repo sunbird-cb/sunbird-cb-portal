@@ -14,6 +14,7 @@ const APP_TAXONOMY = `/app/taxonomy/`
 export class TaxonomyHomeComponent implements OnInit, OnDestroy {
   sideNavBarOpened = true
   panelOpenState = false
+  resourceLoading= true
   termsTopicArray: any
   titles = [{ title: 'DISCUSS', url: '/app/discuss/home', icon: 'forum' }]
   unread = 0
@@ -53,6 +54,7 @@ export class TaxonomyHomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     localStorage.removeItem('isFirstTab')
     localStorage.removeItem('currentTab')
+
     this.getAllTopics()
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
       this.sideNavBarOpened = !isLtMedium
@@ -70,6 +72,7 @@ export class TaxonomyHomeComponent implements OnInit, OnDestroy {
   getAllTopics() {
     this._service.fetchAllTopics().subscribe(response => {
       this.termsTopicArray = response.terms
+      this.resourceLoading = false
     })
   }
 
