@@ -329,6 +329,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
 
           }
      }
+     this.resourceLoading = false
     }
     getFirstChildrenByArray(tab: string) {
       const leftMenuData =  this.currentObj
