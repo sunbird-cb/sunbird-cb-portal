@@ -21,7 +21,6 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
   currentTab!: any
   currentTab1: any
   arrayTemplate!: any
-  titles = [{ title: 'DISCUSS', url: '/app/discuss/home', icon: 'forum' }]
   relatedResource: any = []
   unread = 0
   currentObj!: any
@@ -30,6 +29,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
   leftMenuChildObj!: any
   currentRoute = 'home'
   isFirstTab = true
+  resourceLoading= true
   banner!: NsWidgetResolver.IWidgetData<any>
   public screenSizeIsLtMedium = false
   isLtMedium$ = this.valueSvc.isLtMedium$
@@ -53,6 +53,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // this.loader.changeLoad.next(true)
     this.arrayTemplate = []
     this.router.navigate([APP_TAXONOMY + localStorage.getItem('currentTab')])
 
@@ -63,7 +64,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
       this.topicKey.push(localStorage.getItem('currentTab'))
       this.getAllTopics(localStorage.getItem('currentTab') || this.currentTab, true)
     }
-    this.arrayTemplate.push(this.currentTab)
+    this.arrayTemplate.push(decodeURI(this.currentTab))
 
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
       this.sideNavBarOpened = !isLtMedium
@@ -180,7 +181,12 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
     // }
     onTabLeftMenu(tabItem: string) {
       this.arrayTemplate[this.arrayTemplate.length - 1] = tabItem
-      this.getChildrenByArray('none')
+      if(this.arrayTemplate.length >1){
+        this.getChildrenByArray('none')
+      }else{
+        this.getFirstChildrenByArray(tabItem)
+      }
+
       this.getRouterLink(tabItem)
       this.createBreadCrumbs(tabItem, 'leftMenu')
 
@@ -293,6 +299,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
       this.firstLevelTopic = firstLvlArray
       this.nextLevelTopic = nextLevel
       this.getRouterLink(this.firstLevelTopic[0].name)
+      this.resourceLoading= false
 
     }
     getLodashData(data: any, topic: any) {
@@ -323,6 +330,14 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
           }
      }
     }
+    getFirstChildrenByArray(tab: string) {
+      let leftMenuData =  this.currentObj
+      for (let i = 0; i < leftMenuData.length - 1; i = i + 1) {
+        if(leftMenuData[i].name ===tab){
+          this.nextLevelTopic = this.createTagStringsArray(leftMenuData[i].children)
+        }
+     }
+    }
     createLeftMenuObjects(lftMnu: any, tab: string) {
       const lftmnuArray: any[] = []
       if (tab !== 'none') {
@@ -350,7 +365,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
     return tagArr
   }
   getRouterLink(str: string) {
-    return this.router.navigate([this.getRouterString(str)])
+      return this.router.navigate([this.getRouterString(str)])
   }
   getRouterString(str: string) {
     return APP_TAXONOMY + this.organizeString(str)
@@ -359,10 +374,11 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
     return decodeURI(str).replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '')
   }
   getTab(tab: any) {
+    this.resourceLoading= true
     for (let i = 0; i < this.tempArr.length; i = i + 1) {
       const breadCrump = this.tempArr[i]
       if (breadCrump.title === tab) {
-        this.router.navigate([breadCrump.url])
+        this.router.navigate([decodeURI(breadCrump.url)])
         this.tempArr.length = i + 1
 
       }
@@ -380,10 +396,11 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
 
       }
     }
+
   }
   createBreadCrumbs(tab: any, place: any) {
     const decodedValue = decodeURI(tab)
-    const redirectURl  = { title: decodedValue, url: `/app/taxonomy/${decodedValue}` }
+    const redirectURl  = { title: decodedValue, url: `${APP_TAXONOMY}${decodedValue}` }
     if (place === 'leftMenu') {
       this.tempArr[this.tempArr.length - 1] = redirectURl
     } else {
