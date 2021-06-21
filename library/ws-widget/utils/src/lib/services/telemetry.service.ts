@@ -40,7 +40,7 @@ export class TelemetryService {
         uid: this.configSvc.userProfile && this.configSvc.userProfile.userId,
         authtoken: this.authSvc.token,
         // tslint:disable-next-line: no-non-null-assertion
-        channel: this.rootOrgName,
+        channel: this.rootOrgId,
       }
       this.pData = this.telemetryConfig.pdata
       this.addPlayerListener()
@@ -51,9 +51,9 @@ export class TelemetryService {
     }
   }
 
-  get rootOrgName(): string {
-    if (this.configSvc && this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName) {
-      return this.configSvc.userProfile.rootOrgName
+  get rootOrgId(): string {
+    if (this.configSvc && this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId) {
+      return this.configSvc.userProfile.rootOrgId
     }
     return ''
 }

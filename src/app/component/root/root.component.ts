@@ -108,10 +108,10 @@ export class RootComponent implements OnInit, AfterViewInit {
 
       if (event instanceof NavigationEnd) {
         this.telemetrySvc.impression()
-        if (this.appStartRaised) {
-          this.telemetrySvc.audit(WsEvents.WsAuditTypes.Created, 'Login', {})
-          this.appStartRaised = false
-        }
+        // if (this.appStartRaised) {
+        //   this.telemetrySvc.audit(WsEvents.WsAuditTypes.Created, 'Login', {})
+        //   this.appStartRaised = false
+        // }
       }
     })
     this.rootSvc.showNavbarDisplay$.pipe(delay(500)).subscribe(display => {
