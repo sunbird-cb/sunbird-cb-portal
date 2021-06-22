@@ -1,0 +1,22 @@
+.filter-section {
+     .mat-expansion-panel-spacing {
+        margin-bottom: 10px !important;
+        box-shadow: none !important;
+        border: 0;
+    }
+    .mat-expansion-panel {
+        box-shadow: none !important;
+        border: 0 !important;
+    }
+    .mat-expansion-panel-header {
+        height: 45px !important;
+    }
+    .mat-expansion-panel-body {
+        padding: 0 16px 16px !important;
+    }
+    .sublist-section {
+        ul {
+            list-style-type: none;
+        }
+    }
+}

@@ -1,0 +1,78 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+.custom-sidenav {
+    width: 25%;
+    box-shadow: none !important;
+    border: 0 !important;
+    border-radius: 4px;
+}
+.font-bold-imp {
+    font-weight: bold !important;
+}
+.custom-sidecontent {
+    width: 73%;
+    min-height: 60vh;
+
+    .learn-card {
+        border-radius: 10px;
+        background: #ffffff;
+        height: 192px;
+        min-height: 192px;
+        box-shadow: none !important;
+        .imageholder {
+            width: 30%;
+            height: 196px;
+            border-radius: 10px 0 0 10px;
+            img {
+                width: 100%;
+                display: block;
+                height: auto;
+            }
+        }
+        .mat-card-content {
+            margin-left: 31%;
+            padding: 8px;
+            .mat-caption {
+                .mat-icon {
+                    vertical-align: middle;
+                    height: 20px !important;
+                    width: 20px !important;
+                    font-size: 18px !important;
+                }
+            }
+
+            .bottomsection {
+                position: absolute;
+                bottom: 0;
+            }
+
+            ul {
+                list-style-type: none;
+
+                li {
+                    display: inline-block;
+                    padding-right: 10px;
+                    
+                }
+                .circle {
+                    span {
+                        background: RGBA(0, 0, 0, 0.87);
+                        border-radius: 50%;
+                        height: 10px;
+                        width: 10px;
+                    }
+                }
+            }
+
+            .tags {
+                li {
+                    background: RGBA(0, 0, 0, 0.04);
+                    padding: 2px 13px 4px!important;
+                    margin-right: 10px;
+                    border-radius: 10px 4px 4px 10px;
+                }
+            }
+        }
+    }
+}

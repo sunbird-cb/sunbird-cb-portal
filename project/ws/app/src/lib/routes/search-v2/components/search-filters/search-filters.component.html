@@ -1,0 +1,48 @@
+<div class="filter-sidebar padding-m">
+    <p class="mat-subheading-1 margin-bottom-m font-bold-imp">Filter search</p>
+    <mat-accordion class="filter-section margin-bottom-m" *ngFor="let fs of filteroptions" open>
+        <mat-expansion-panel (opened)="panelOpenState = true"
+                                (closed)="panelOpenState = false">
+            <mat-expansion-panel-header class="padding-remove">
+                <mat-panel-title>
+                    <p class="mat-subheading-2 margin-bottom-xs font-bold-imp">{{fs.name}}</p>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <section class="mat-body-2" *ngFor="let options of fs.values">
+                <span>
+                    <mat-checkbox>
+                    {{options.name}}
+                    </mat-checkbox>
+                </span>
+                <span class="sublist-section">
+                    <ul class="padding-left-l">
+                    <li *ngFor="let subopt of options.subvalues" class="margin-bottom-s">
+                        <mat-checkbox>
+                        {{subopt.name}}
+                        </mat-checkbox>
+                    </li>
+                    </ul>
+                </span>
+            </section>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <!-- <div class="filter-section margin-bottom-m" *ngFor="let fs of filteroptions">
+        <p class="mat-subheading-2 margin-bottom-xs font-bold-imp">{{fs.name}}</p>
+        <section class="mat-body-2 margin-bottom-l" *ngFor="let options of fs.values">
+            <span class="example-list-section">
+                <mat-checkbox>
+                {{options.name}}
+                </mat-checkbox>
+            </span>
+            <span class="example-list-section">
+                <ul>
+                <li *ngFor="let subopt of options.subvalues">
+                    <mat-checkbox>
+                    {{subopt.name}}
+                    </mat-checkbox>
+                </li>
+                </ul>
+            </span>
+        </section>
+    </div> -->
+</div>
