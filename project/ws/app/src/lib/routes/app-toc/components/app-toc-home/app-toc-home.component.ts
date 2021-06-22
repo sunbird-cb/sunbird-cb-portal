@@ -9,6 +9,8 @@ import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser'
 import { AccessControlService } from '@ws/author/src/public-api'
+import jsPDF from 'jspdf';
+
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -67,7 +69,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   hideScrollHeight = 10
   elementPosition: any
   batchSubscription: Subscription | null = null
+  courseCompleteState: number = 2
   @ViewChild('stickyMenu', { static: true }) menuElement!: ElementRef
+  certData: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -226,6 +230,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             // const collectionId = this.isResource ? '' : this.content.identifier
             this.content.completionPercentage = enrolledCourse.completionPercentage || 0
             this.content.completionStatus = enrolledCourse.status || 0
+            this.certificateDownloadTrigger(this.content.completionStatus, enrolledCourse.batchId)
+
             this.getContinueLearningData(this.content.identifier, enrolledCourse.batchId)
             this.batchData = {
               content: [enrolledCourse.batch],
@@ -267,6 +273,45 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     return batchId
   }
 
+  certificateDownloadTrigger(courseState: number, batchId: string) {
+    if (courseState === this.courseCompleteState && this.content && this.configSvc.userProfile) {
+      let body = {
+        request: {
+          courseId: this.content.identifier,
+          batchId: batchId,
+          userIds: [
+            this.configSvc.userProfile.userId
+          ]
+        }
+      }
+      this.contentSvc.issueCert(body).subscribe(resp => {
+        if (resp.responseCode === 'OK') {
+          this.checkIfCertIsReady(this.configSvc.userProfile.userId)
+        
+        }
+      })
+    }
+  }
+
+  downloadCert(certidArr: any){
+    let certId = certidArr[0]
+     this.contentSvc.downloadCert('4fab7ba4-ba44-4fec-820c-9c9e989c1e87').subscribe(response => {
+       let url = response.result.printUri
+       this.certData =  response.result.printUri
+      // var win = window.open();
+      // win.document.write('<iframe src="' + url  + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
+      // const doc = new jsPDF();
+
+      // var str = doc.output(response.result.printUri);
+
+      // var iframe = "<iframe width='100%' height='100%' src='" + str + "'></iframe>"
+      // var x = window.open();
+      // x.document.open();
+      // x.document.write(iframe);
+      // x.document.close();
+          })
+  }
+
   public autoBatchAssign() {
     if (this.content && this.content.identifier) {
       this.contentSvc.autoAssignBatchApi(this.content.identifier).subscribe(
@@ -276,6 +321,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             enrolled: true,
           }
           if (this.getBatchId()) {
+            this.createCertTemplate(this.getBatchId(), this.content.identifier)
+
             this.router.navigate(
               [],
               {
@@ -287,6 +334,70 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         }
       )
     }
+  }
+
+  createCertTemplate(batchId: string, courseId: string) {
+    let body = {
+      "request": {
+        "batch": {
+          "batchId": batchId,
+          "courseId": courseId,
+          "template": {
+            "template": "https://igot.blob.core.windows.net/content/content/do_1132380892469411841494/artifact/do_1132380892469411841494_1615977708965_gjsvgtemplate.svg",
+            "identifier": "do_1132380892469411841494",
+            "previewUrl": "https://igot.blob.core.windows.net/content/content/do_1132380892469411841494/artifact/do_1132380892469411841494_1615977708965_gjsvgtemplate.svg",
+            "criteria": {
+              "enrollment": {
+                "status": 2
+              }
+            },
+            "name": "Completion Certificate",
+            "issuer": {
+              "name": "in",
+              "url": "https://diksha.gov.in/gj/"
+            },
+            "signatoryList": [
+              {
+                "image": "https://diksha.gov.in/gj/header-logo.png",
+                "name": "Govt Of India",
+                "id": "in",
+                "designation": "Home Minister"
+              }
+            ]
+          }
+        }
+      }
+
+    }
+    this.contentSvc.addCertTemplate(body).subscribe(resp => {
+      console.log(resp)
+    })
+  }
+
+  checkIfCertIsReady(userId) {
+    this.userSvc.fetchUserBatchList(userId).subscribe(
+      (courses: NsContent.ICourse[]) => {
+        let enrolledCourse: NsContent.ICourse | undefined
+        if (this.content && this.content.identifier && !this.forPreview) {
+          if (courses && courses.length) {
+            enrolledCourse = courses.find(course => {
+              const identifier = this.content && this.content.identifier || ''
+              if (course.courseId !== identifier) {
+                return undefined
+              }
+              return course
+            })
+          }
+          // If current course is present in the list of user enrolled course
+          if (enrolledCourse && enrolledCourse.batchId) {
+           this.downloadCert(enrolledCourse.certificates)
+          }
+        }
+      },
+      (error: any) => {
+        this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
+      },
+    )
   }
 
   public fetchBatchDetails() {
@@ -314,6 +425,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                 // queryParams: { batchId: this.getBatchId() },
                 queryParamsHandling: 'merge',
               })
+
+
           }
         },
         (error: any) => {

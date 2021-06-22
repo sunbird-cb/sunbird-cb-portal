@@ -1,8 +1,9 @@
 import { AccessControlService } from '@ws/author'
 import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
+
 import { ActivatedRoute, Data } from '@angular/router'
-import { NsContent } from '@sunbird-cb/collection'
+import { NsContent , WidgetContentService} from '@sunbird-cb/collection'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Observable, Subscription } from 'rxjs'
 import { share } from 'rxjs/operators'
@@ -40,6 +41,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   private routeQuerySubscription: Subscription | null = null
   batchId!: string
   isNotEditor = true
+  courseCompleteState: number = 2
   // configSvc: any
 
   constructor(
@@ -52,6 +54,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     public createBatchDialog: MatDialog,
     private mobileAppsSvc: MobileAppsService,
     public configSvc: ConfigurationsService,
+    private contentSvc: WidgetContentService,
   ) {
     if (this.configSvc.restrictedFeatures) {
       this.askAuthorEnabled = !this.configSvc.restrictedFeatures.has('askAuthor')
@@ -91,8 +94,26 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
       const batchId = qParamsMap.get('batchId')
       if (batchId) {
         this.batchId = batchId
+        
       }
     })
+  }
+
+  certificateDownloadTrigger(courseState) {
+    if (courseState == this.courseCompleteState && this.content && this.configSvc.userProfile) {
+      let body = {
+        request: {
+          courseId: this.content.identifier,
+          batchId:  this.batchId ,
+          userIds: [
+            this.configSvc.userProfile.userId
+          ]
+        }
+      }
+      this.contentSvc.issueCert(body).subscribe(resp => {
+        console.log(resp)
+      })
+    }
   }
 
   detailUrl(data: any) {
@@ -156,6 +177,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   private initData(data: Data) {
     const initData = this.tocSharedSvc.initData(data)
     this.content = initData.content
+    this.certificateDownloadTrigger(this.content.status)
     this.setSocialMediaMetaTags(this.content)
     this.body = this.domSanitizer.bypassSecurityTrustHtml(
       this.content && this.content.body

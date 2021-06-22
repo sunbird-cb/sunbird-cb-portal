@@ -7,6 +7,7 @@ import { NsContentStripMultiple } from '../content-strip-multiple/content-strip-
 import { NsContent } from './widget-content.model'
 import { NSSearch } from './widget-search.model'
 
+
 // TODO: move this in some common place
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'
 
@@ -33,6 +34,9 @@ const API_END_POINTS = {
   REGISTRATION_STATUS: `${PROTECTED_SLAG_V8}/admin/userRegistration/checkUserRegistrationContent`,
   MARK_AS_COMPLETE_META: (contentId: string) => `${PROTECTED_SLAG_V8}/user/progress/${contentId}`,
   ENROLL_BATCH: `/apis/proxies/v8/learner/course/v1/enrol`,
+  CERT_ADD_TEMPLATE: `http://localhost:3003/protected/v8/cohorts/course/batch/cert/template/add`,
+  CERT_ISSUE: `http://localhost:3003/protected/v8/cohorts/course/batch/cert/issue`,
+  CERT_DOWNLOAD: (certId: any) =>`http://localhost:3003/protected/v8/cohorts/course/batch/cert/download/${certId}`
 }
 
 @Injectable({
@@ -112,12 +116,12 @@ export class WidgetContentService {
 
   autoAssignBatchApi(identifier: any): Observable<NsContent.IBatchListResponse> {
     return this.http.get<NsContent.IBatchListResponse>(`${API_END_POINTS.AUTO_ASSIGN_BATCH}${identifier}`)
-    .pipe(
-      retry(1),
-      map(
-        (data: any) => data.result.response
+      .pipe(
+        retry(1),
+        map(
+          (data: any) => data.result.response
+        )
       )
-    )
   }
 
   enrollUserToBatch(req: any) {
@@ -273,6 +277,17 @@ export class WidgetContentService {
 
   fetchConfig(url: string) {
     return this.http.get<any>(url)
+  }
+
+  addCertTemplate(body: any) {
+    return this.http.patch<any>(`${API_END_POINTS.CERT_ADD_TEMPLATE}`, body)
+  }
+
+  issueCert(body: any) {
+    return this.http.post<any>(`${API_END_POINTS.CERT_ISSUE}`, body)
+  }
+  downloadCert(certId: any) {
+    return this.http.get<any>(`${API_END_POINTS.CERT_DOWNLOAD(certId)}`)
   }
 
 }

@@ -159,6 +159,10 @@
                       [routerLink]="firstResourceLink?.url" class="margin-right-m" mat-flat-button>
                       <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>Take Assessment</ng-container>
                     </a>
+                    <a [color]="'primary'" *ngIf="certData" class="margin-right-m" mat-flat-button
+                      (click)="downloadCert()">
+                      <ng-container i18n>Download Certificate</ng-container>
+                  </a>
                     <!-- <a
                           [color]="'primary'"
                           *ngIf="isPracticeVisible"
@@ -215,13 +219,14 @@
       <ng-container i18n>Access to this YouTube content is blocked.</ng-container>
     </p>
     <ng-container *ngIf="content?.completionStatus == 2">
-      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier"
-      [className]="'thick'" [progress]="100" [progressType]="'percentage'">
+      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
+        [contentId]="content?.identifier" [className]="'thick'" [progress]="100" [progressType]="'percentage'">
       </ws-widget-content-progress>
     </ng-container>
     <ng-container *ngIf="content?.completionStatus < 2">
-      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier"
-      [className]="'thick'" [progress]="content?.completionPercentage" [progressType]="'percentage'">
+      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
+        [contentId]="content?.identifier" [className]="'thick'" [progress]="content?.completionPercentage"
+        [progressType]="'percentage'">
       </ws-widget-content-progress>
     </ng-container>
   </div>

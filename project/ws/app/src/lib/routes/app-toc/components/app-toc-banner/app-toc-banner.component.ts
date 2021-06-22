@@ -35,6 +35,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   @Input() analytics: NsAnalytics.IAnalytics | null = null
   @Input() forPreview = false
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
+  @Input() certData: any
   batchControl = new FormControl('', Validators.required)
   contentProgress = 0
   bannerUrl: SafeStyle | null = null
@@ -264,6 +265,27 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     }
     return batchId
   }
+
+  downloadCert(){
+    if(this.certData){
+    const downloadLink = document.createElement("a");
+    const fileName = "sample.img";
+
+    downloadLink.href = this.certData;
+    downloadLink.download = fileName;
+    downloadLink.click();
+    }
+  }
+
+  base64ToArrayBuffer(base64:any):ArrayBuffer {
+      var binary_string =  window.atob(base64);
+      var len = binary_string.length;
+      var bytes = new Uint8Array( len );
+      for (var i = 0; i < len; i++)        {
+          bytes[i] = binary_string.charCodeAt(i);
+      }
+      return bytes.buffer;
+    }
 
   public handleEnrollmentEndDate(batch: any) {
     const enrollmentEndDate = dayjs(lodash.get(batch, 'enrollmentEndDate')).format('YYYY-MM-DD')
