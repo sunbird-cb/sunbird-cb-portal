@@ -1,3 +1,4 @@
+import { LeftMenuComponent } from '../settings/components/left-menu/left-menu.component';
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import {
@@ -28,7 +29,7 @@ import { SettingsService } from './settings.service'
 // import { ProfileSettingsComponent } from '../../../person-profile/module/profile-settings/profile-settings.component'
 
 @NgModule({
-  declarations: [SettingsComponent, NotificationSettingsComponent,
+  declarations: [SettingsComponent, NotificationSettingsComponent, LeftMenuComponent
     // ProfileSettingsComponent
   ],
   imports: [
@@ -55,7 +56,7 @@ import { SettingsService } from './settings.service'
     MatRippleModule,
     MatTooltipModule,
   ],
-  exports: [SettingsComponent],
+  exports: [SettingsComponent, LeftMenuComponent],
   providers: [SettingsService],
 })
 export class SettingsModule { }

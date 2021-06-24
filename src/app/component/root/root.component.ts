@@ -21,7 +21,6 @@ import {
   ConfigurationsService,
   TelemetryService,
   ValueService,
-  WsEvents,
 } from '@sunbird-cb/utils'
 import { delay } from 'rxjs/operators'
 import { MobileAppsService } from '../../services/mobile-apps.service'
