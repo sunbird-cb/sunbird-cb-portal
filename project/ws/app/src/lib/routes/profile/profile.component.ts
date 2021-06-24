@@ -19,6 +19,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   showText = true
   pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
   enabledTabs = this.activatedRoute.snapshot.data.pageData.data.enabledTabs
+  tabsData!:any
+  sideNavBarOpened!:any
+  currentRoute = 'home'
 
   constructor(
     private dialog: MatDialog,
@@ -29,6 +32,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.tabsData = [ { name: "Network home", key: "NetworkHome", badges: { enabled: true, "uri": "" }, enabled: true, routerLink: "/app/network-v2/home" }]
+    this.sideNavBarOpened = true
     const tab = this.router.url.split('/')[3]
     if (tab === 'dashboard') {
       this.tabName = this.enabledTabs.dashboard.displayName
