@@ -3,7 +3,7 @@
 set -eo pipefail
 
 build_tag=$1
-name='sun-ui-static'
+name='ui-static'
 node=$2
 org=$3
 
