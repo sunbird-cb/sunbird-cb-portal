@@ -147,7 +147,7 @@ export class SearchInputHomeComponent implements OnInit, OnChanges {
     }
     if (this.ref === 'home') {
       this.closed.emit(false)
-      this.router.navigate(['/app/search'], {
+      this.router.navigate(['/app/globalsearch'], {
         queryParams: { q: query.trim() },
         queryParamsHandling: 'merge',
       })

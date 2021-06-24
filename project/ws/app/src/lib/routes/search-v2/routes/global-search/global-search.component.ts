@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'ws-app-global-search',
@@ -6,8 +7,15 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./global-search.component.scss'],
 })
 export class GlobalSearchComponent implements OnInit {
+  searchParam: any
 
-  constructor() { }
+  constructor(private activated: ActivatedRoute) {
+    this.activated.queryParamMap.subscribe(queryParams => {
+      if (queryParams.has('q')) {
+        this.searchParam = queryParams.get('q')
+      }
+    })
+  }
 
   ngOnInit() {
   }

@@ -1,7 +1,7 @@
 <div class="learnsearch  margin-top-l margin-bottom-l">
     <div class="topsection margin-bottom-m">
         <div class="display-inline-block">
-            <p class="mat-body-2 font-bold-imp">34 search results for 'Test'</p>
+            <p class="mat-body-2 font-bold-imp">{{totalResults}} search results for '{{param}}'</p>
         </div>
         <!-- sort -->
         <div class="float-right">
@@ -11,44 +11,62 @@
     <mat-sidenav-container>
         <!-- search cards -->
         <mat-sidenav-content class="custom-sidecontent">
-            <mat-card class="learn-card margin-bottom-m padding-remove position-relative">
-                <div class="imageholder float-left">
-                    <img mat-card-image class="margin-remove" src="https://igot.blob.core.windows.net/public/content/do_11329809202031820812002/artifact/do_11327648084294041614386_1620664166246_basicsofnationalincomeaccounting1602569458184.thumb.png" alt="">
-                </div>
-                <mat-card-content>
-                    <p class="mat-caption margin-bottom-xxs ws-mat-black60-text"><mat-icon class="ws-mat-default-text">video_collection</mat-icon> COURSE</p>
-                    <!-- <p class="mat-caption margin-bottom-xxs"><mat-icon class="ws-mat-default-text">smart_display</mat-icon> MODULE</p>
-                    <p class="mat-caption margin-bottom-xxs">
-                        <mat-icon class="ws-mat-default-text">smart_display</mat-icon>
-                        <mat-icon class="ws-mat-default-text">pdf</mat-icon>
-                        <mat-icon class="ws-mat-default-text">audio</mat-icon>
-                        RESOURCE
-                    </p> -->
-                    <p class="mat-subheading-1 margin-bottom-xs font-bold-imp">The science of healthcare, public health and pharma care.</p>
-                    <p class="mat-body-2 margin-bottom-s"></p>
-                    <div class="bottomsection">
-                        <p class="mat-body-2 margin-bottom-xs">By Diraj Rasthogi</p>
-                        <div class="contentdata">
-                            <ul class="mat-body-2 margin-remove-top margin-bottom-xs padding-remove ws-mat-black60-text">
-                                <li>Health social science</li> <li class="circle"><span></span></li>
-                                <li>Jan 2020</li> <li class="circle"><span></span></li>
-                                <li>2h 55m</li> <li class="circle"><span></span></li>
-                                <li>Ratings</li>
-                            </ul>
-                        </div>
-                        <div class="tags">
-                            <ul class="mat-caption margin-remove-top margin-bottom-s padding-remove display-inline-block">
-                                <li>Health science</li><li>Other tags</li>
-                            </ul>
-                            <p class="display-inline-block ws-mat-black87-text">
-                                <mat-icon class="ws-mat-default-text">more_vert_outlined</mat-icon> 
-                                <mat-icon class="ws-mat-default-text">playlist_add</mat-icon>
-                            </p>
-                        </div>
-                    </div>
-                </mat-card-content>
-            </mat-card>
 
+            <div *ngIf="totalResults > 0">
+                <mat-card class="learn-card margin-bottom-m padding-remove position-relative" *ngFor="let content of searchResults">
+                    <div class="imageholder float-left">
+                        <img mat-card-image class="margin-remove" [src]="content.appIcon"
+                        [wsUtilsDefaultThumbnail]="defaultThumbnail" alt="">
+                    </div>
+                    <mat-card-content>
+                        <p class="mat-caption margin-bottom-xxs ws-mat-black60-text" *ngIf="content.contentType === 'Course'">
+                                <img src="/assets/icons/content/course.svg" alt="Course" class="contenticon"> COURSE
+                        </p>
+                        <!-- <p class="mat-caption margin-bottom-xxs" *ngIf="content.contentType === 'Module'">
+                            <img src="/assets/icons/content/module.svg" class="contenticon" alt="Module"> MODULE
+                        </p> -->
+                        <p class="mat-caption margin-bottom-xxs" *ngIf="content.contentType === 'Resource'">
+                            <img src="/assets/icons/content/audio.svg" class="contenticon" alt="Audio"  *ngIf="content.mimeType === 'audio/mpeg'"> 
+                            <img src="/assets/icons/content/assessment.svg" class="contenticon" alt="Assessment"  *ngIf="content.mimeType === 'application/json'"> 
+                            <img src="/assets/icons/content/pdf.svg" alt="PDF" class="contenticon" *ngIf="content.mimeType === 'application/pdf'"> 
+                            <img src="/assets/icons/content/video.svg" alt="Video" class="contenticon"  *ngIf="content.mimeType === 'video/mp4'"> 
+                            RESOURCE
+                        </p>
+                        <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer" (click)="viewContent(content)">{{content.name}}</p>
+                        <!-- <p class="mat-body-2 margin-bottom-s"></p> -->
+                        <div class="bottomsection">
+                            <p class="mat-body-2 margin-bottom-xs" *ngIf="content.creator">By {{content.creator}}</p>
+                            <div class="contentdata">
+                                <ul class="mat-body-2 margin-remove-top margin-bottom-xs padding-remove ws-mat-black60-text">
+                                    <li>Health social science</li>
+                                    <li *ngIf="content.lastUpdatedOn">
+                                        <img src="/assets/icons/content/separator.svg">  {{ content.lastUpdatedOn | date: "MMM yyyy"  }}
+                                    </li> 
+                                    <li *ngIf="content.duration">
+                                        <img src="/assets/icons/content/separator.svg">  {{ content.duration | pipeDurationTransform: 'hms' }}
+                                    </li> 
+                                    <!-- <li><img src="/assets/icons/content/separator.svg">  Ratings</li> -->
+                                </ul>
+                            </div>
+                            <div class="tags">
+                                <ul class="mat-caption margin-remove-top margin-bottom-s padding-remove display-inline-block">
+                                    <li>Health science</li><li>Other tags</li>
+                                </ul>
+                                <p class="display-inline-block ws-mat-black60-text actionbtns">
+                                    <mat-icon class="margin-right-s">more_vert_outlined</mat-icon> 
+                                    <mat-icon>playlist_add</mat-icon>
+                                </p>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+
+            <div class="margin-xl text-center" *ngIf="totalResults === 0">
+                <img src="/assets/common/error-pages/empty_search.svg" wsUtilsImageResponsive alt="No results" class="margin-top-l margin-bottom-s">
+                <h2 class="mat-h2" i18n="search route no result">No results found</h2>
+                <h3 class="mat-h3" i18n="search route you may try">Try removing the filters or search using different keywords</h3>
+            </div>
         </mat-sidenav-content>
 
         <!-- filter sidebar -->
