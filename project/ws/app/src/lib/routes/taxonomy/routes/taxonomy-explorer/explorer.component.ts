@@ -70,7 +70,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
       this.sideNavBarOpened = !isLtMedium
       this.screenSizeIsLtMedium = isLtMedium
     })
-    this.tempArr  =  [{ title: 'All topics', url: '/app/taxonomy/home' }]
+    this.tempArr  =  [{ title: 'All topics', url: `${APP_TAXONOMY}home` }]
     this.alreadyClicked = true
   }
   ngOnDestroy() {
@@ -82,63 +82,10 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
     this._service.fetchAllTopics().subscribe(response => {
       this.currentObj = response.terms
       this.nextLvlObj = response.terms
-      // this.taxonomyFirstLevel(topic)
       this.createLeftMenuAndData(this.currentObj, topic, needBreadCurmp)
       })
     }
-    // taxonomyFirstLevel(topic: string) {
-    //   const firstLvlArray: any[] = []
-    //   const tempCurrentArray: any[] = []
-    //   if (this.alreadyClicked) {
 
-    //   const handleLink  = { title: decodeURI(topic), url: 'none' }
-    //   this.tempArr.push(handleLink)
-
-    //   this.currentObj.forEach((term: any) => {
-    //       if (term.name !== decodeURI(topic)) {
-    //         firstLvlArray.push(this.createTermObject(term))
-    //         } else {
-    //         firstLvlArray.splice(0, 0, this.createTermObject(term))
-    //       }
-    //       this.currentTab = term.name
-    //         this.firstLevelTopic = firstLvlArray
-
-    //         if (term.name === decodeURI(topic) && term.children) {
-    //           this.getSecondLevelTopic(term)
-    //           const nextLevel: string[] = []
-    //           term.children.forEach((second: any) => {
-    //             nextLevel.push(second.name)
-    //             tempCurrentArray.push(second)
-    //           })
-
-    //           this.nextLevelTopic = nextLevel
-    //         }
-
-    //     })
-    //     this.nextLvlObj = tempCurrentArray
-    //     this.alreadyClicked = false
-    // } else {
-    //   const handleLink  = { title: decodeURI(topic), url: 'none' }
-    //   this.tempArr[1] = handleLink
-    //   this.currentObj.forEach((term: any) => {
-    //       firstLvlArray.push(this.createTermObject(term))
-    //     this.currentTab = term.name
-    //       this.firstLevelTopic = firstLvlArray
-    //       if (term.name === decodeURI(topic) && term.children) {
-    //         this.getSecondLevelTopic(term)
-    //         const nextLevel: string[] = []
-    //         term.children.forEach((second: any) => {
-    //           nextLevel.push(second.name)
-    //           tempCurrentArray.push(second)
-    //         })
-
-    //         this.nextLevelTopic = nextLevel
-    //       }
-
-    //   })
-    //   this.nextLvlObj = tempCurrentArray
-    // }
-    // }
     createTermObject(termObj: any) {
       const termObject = {
         name: decodeURI(termObj.name),
@@ -148,37 +95,6 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
       }
       return termObject
     }
-    // processTermChildrenObject(termChildren: any){
-    //   term.children.forEach((second: any) => {
-    //     nextLevel.push(second.name)
-    //     tempCurrentArray.push(second)
-    //   })
-    //   this.nextLevelTopic = nextLevel
-    // }
-    // taxonomyOnGoingLevels(topic: string) {
-    //   const handleLink  = { title: decodeURI(topic), url: 'none' }
-    //   this.tempArr[this.tempArr.length - 1] = handleLink
-    //   const tempCurrentArray: any[] = []
-    //   this.nextLevelTopic = []
-    //   if (this.leftMenuChildObj) {
-    //   this.leftMenuChildObj.forEach((term: any) => {
-    //       this.currentTab = term.name
-    //         if (term.name === topic && term.children) {
-    //           this.nextLvlObj = term.children
-    //           const nextLevel: string[] = []
-    //           this.getSecondLevelTopic(term)
-    //           term.children.forEach((second: any) => {
-    //             nextLevel.push(second.name)
-    //             tempCurrentArray.push(second)
-    //           })
-    //           this.nextLevelTopic = nextLevel
-    //         } else if (term.name === topic) {
-    //           this.getSecondLevelTopic(term)
-    //         }
-    //     })
-    //   }
-    //     // this.nextLvlObj = tempCurrentArray
-    // }
     onTabLeftMenu(tabItem: string) {
       this.arrayTemplate[this.arrayTemplate.length - 1] = tabItem
       if (this.arrayTemplate.length > 1) {
@@ -190,63 +106,13 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
       this.getRouterLink(tabItem)
       this.createBreadCrumbs(tabItem, 'leftMenu')
 
-      // if (this.isFirst && !this.alreadyClicked) {
-      //   this.taxonomyFirstLevel(tabItem)
-      //   localStorage.setItem('currentTab', decodeURI(tabItem))
-      // } else {
-      //   this.taxonomyOnGoingLevels(tabItem)
-      // }
-
     }
     getClickedTab(clickedTab: string) {
       this.arrayTemplate.push(clickedTab)
       this.getChildrenByArray(clickedTab)
       this.getRouterLink(clickedTab)
       this.createBreadCrumbs(clickedTab, 'rightMenu')
-
-      // this.isFirst = false
-      // const leftMenuData: any[] = []
-      // this.nextLvlObj.forEach((term: any) => {
-      //   leftMenuData.push(this.createTermObject(term))
-      //   if (term.name === decodeURI(clickedTab)) {
-      //     this.getSecondLevelTopic(term)
-      //     const decode = decodeURI(clickedTab)
-      //     const handleLink  = { title: decode, url: 'none' }
-      //     this.tempArr.push(handleLink)
-      //     this.dataProcessOneMore(clickedTab, this.nextLvlObj)
-      //   }
-      //   })
-      //   this.leftMenuChildObj = leftMenuData
     }
-
-    // dataProcessOneMore(topic: string, processObj: any) {
-    //   const firstLvlArray: any[] = []
-    //   this.firstLevelTopic = []
-    //   this.nextLevelTopic = []
-    //   processObj.forEach((term: any) => {
-    //     if (term) {
-    //     if (term.name === decodeURI(topic)) {
-    //       if (term.children) {
-    //       this.nextLvlObj = term.children
-    //       }
-    //     }
-    //       firstLvlArray.push(this.createTermObject(term))
-    //       this.router.navigate([APP_TAXONOMY + decodeURI(topic).replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '')])
-    //         if (term.name === topic && term.children) {
-    //           const nextLevel: string[] = []
-    //           term.children.forEach((second: any) => {
-    //             nextLevel.push(second.name)
-    //           })
-    //           if (nextLevel.length > 0) {
-    //             this.nextLevelTopic = nextLevel
-    //           }
-
-    //         }
-    //       }
-    //     })
-    //     this.firstLevelTopic = firstLvlArray
-
-    // }
   getSecondLevelTopic(allLevelObject: any) {
     this.topicKey = []
     if (allLevelObject.identifier) {

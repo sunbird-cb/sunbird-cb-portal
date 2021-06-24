@@ -2,17 +2,6 @@
   <div *ngIf="currentRoute === 'home'" class="margin-top-s">
     <ng-container [wsResolverWidget]="banner"></ng-container>
   </div>
-  <!-- <div class="flex flex-2 search">
-    <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'"  style="width: 27%">
-      <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
-      <mat-placeholder>Search user</mat-placeholder> -->
-      <!-- <input [(ngModel)]="nameFilter" (ngModelChange)="searchUser()" matInput type="search"> -->
-      <!-- <mat-label>Search</mat-label>
-      <input type="search" #searchInput class="ml-2" matInput
-        type="search" [placeholder]="'Search'" />
-    </mat-form-field>
-  </div> -->
-
   <mat-sidenav-container name="discuss-menu" class="min-height min-wid">
     <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 sidenav-align">
       <app-discuss-left-menu [unseen]="unread" [tabsData] = "firstLevelTopic" (currentTab)="onTabLeftMenu($event)"></app-discuss-left-menu>
