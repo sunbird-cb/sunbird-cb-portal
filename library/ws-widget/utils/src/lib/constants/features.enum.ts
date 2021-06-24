@@ -440,33 +440,33 @@ export enum EFeatures {
   CHANNELS_POST_YOUR_THOUGHTS_IN_DISCUSSION_MOHIT_JOSHI = 'channelsPostYourThoughtsInDiscussionMohitJoshi',
   CHANNELS_VIEW_CORPORATE_SECTION = 'channelsViewCorporateSection',
   CHANNELS_VIEW_EXPERIENCE_WOW_PAGE = 'channelsViewExperienceWowPage',
-  CHANNELS_VIEW_INFOSYS_KNOWLEDGE_INSTITUTE_PAGE = 'channelsViewInfosysKnowledgeInstitutePage',
+  CHANNELS_VIEW_iGOT_KNOWLEDGE_INSTITUTE_PAGE = 'channelsViewiGOTKnowledgeInstitutePage',
   CHANNELS_VIEW_CMT_LEARNING_HUB_PAGE = 'channelsViewCmtLearningHubPage',
   CHANNELS_VIEW_FULL_STACK_SALES_LEADERS_PAGE = 'channelsViewFullStackSalesLeaderPage',
 
   // Experience Wow Page
   EXPERIENCE_WOW_PAGE = 'experienceWowPage',
   EXPERIENCE_WOW_PAGE_VIEW_PAGE_SECTIONS = 'experienceWowPageViewPageSections',
-  EXPERIENCE_WOW_PAGE_CHECK_Wingspan_STATISTICS = 'experienceWowPageCheckWingspanStatistics',
-  EXPERIENCE_WOW_PAGE_CHECK_INFY_ME_STATISTICS = 'experienceWowPageCheckInfyMeStatistics',
+  EXPERIENCE_WOW_PAGE_CHECK_iGOT_STATISTICS = 'experienceWowPageCheckiGOTStatistics',
+  EXPERIENCE_WOW_PAGE_CHECK_iGOT_ME_STATISTICS = 'experienceWowPageCheckiGOTMeStatistics',
   EXPERIENCE_WOW_PAGE_PROVIDE_SUGGESTIONS = 'experienceWowPageProvideSuggestions',
   EXPERIENCE_WOW_PAGE_SEND_MAIL_FOR_BECOMING_COCREATOR = 'experienceWowPageSendMailForBecomingCocreator',
 
-  // Infy Radio
-  INFY_RADIO = 'infyRadio',
-  INFY_RADIO_VIEW_PODCASTS_STRIP = 'infyRadioViewPodcastsStrip',
+  // iGOT Radio
+  iGOT_RADIO = 'iGOTRadio',
+  iGOT_RADIO_VIEW_PODCASTS_STRIP = 'iGOTRadioViewPodcastsStrip',
 
-  // Infy TV
-  INFY_TV = 'infyTv',
-  INFY_TV_VIEW_JUST_FOR_YOU_SECTION = 'infyTvViewJustForYouSection',
-  INFY_TV_VIEW_MUST_VIEW_STRIP = 'infyTvViewMustViewStrip',
-  INFY_TV_VIEW_LATEST_STRIP = 'infyTvViewLatestStrip',
-  INFY_TV_VIEW_CHANNELS_SECTION = 'infyTvViewChannelsSection',
-  INFY_TV_VIEW_CHANNELS_STRIP = 'infyTvViewChannelsStrip',
-  INFY_TV_VIEW_BROADCAST_SECTION = 'infyTvViewBroadcastSection',
-  INFY_TV_VIEW_PREVIOUS_EVENTS_LIST = 'infyTvViewPreviousEventsList',
-  INFY_TV_VIEW_LIVE_EVENTS_LIST = 'infyTvViewLiveEventsList',
-  INFY_TV_VIEW_UPCOMING_EVENTS_LIST = 'infyTvViewUpcomingEventsList',
+  // iGOT TV
+  iGOT_TV = 'iGOTTv',
+  iGOT_TV_VIEW_JUST_FOR_YOU_SECTION = 'iGOTTvViewJustForYouSection',
+  iGOT_TV_VIEW_MUST_VIEW_STRIP = 'iGOTTvViewMustViewStrip',
+  iGOT_TV_VIEW_LATEST_STRIP = 'iGOTTvViewLatestStrip',
+  iGOT_TV_VIEW_CHANNELS_SECTION = 'iGOTTvViewChannelsSection',
+  iGOT_TV_VIEW_CHANNELS_STRIP = 'iGOTTvViewChannelsStrip',
+  iGOT_TV_VIEW_BROADCAST_SECTION = 'iGOTTvViewBroadcastSection',
+  iGOT_TV_VIEW_PREVIOUS_EVENTS_LIST = 'iGOTTvViewPreviousEventsList',
+  iGOT_TV_VIEW_LIVE_EVENTS_LIST = 'iGOTTvViewLiveEventsList',
+  iGOT_TV_VIEW_UPCOMING_EVENTS_LIST = 'iGOTTvViewUpcomingEventsList',
 
   // Leadership Messages
   LEADERSHIP_MESSAGES = 'leadershipMessages',
@@ -525,7 +525,7 @@ export enum EFeatures {
   MY_ANALYTICS_VIEW_MY_LEARNING_POINTS = 'myAnalyticsViewMyLearningPoints',
   MY_ANALYTICS_VIEW_BADGES = 'myAnalyticsViewBadges',
   MY_ANALYTICS_VIEW_TIME_SPENT_BY_USER = 'myAnalyticsViewTimeSpentByUser',
-  MY_ANALYTICS_VIEW_AVERAGE_MINUTES_ON_Wingspan = 'myAnalyticsViewAverageMinutesOnWingspan',
+  MY_ANALYTICS_VIEW_AVERAGE_MINUTES_ON_iGOT = 'myAnalyticsViewAverageMinutesOniGOT',
   MY_ANALYTICS_VIEW_AVERAGE_MINUTES_ACROSS_DIMENSIONS = 'myAnalyticsViewAverageMinutesAcrossDimensions',
   MY_ANALYTICS_VIEW_PERCENTAGE_TIME_SPENT_BY_USER = 'myAnalyticsViewPercentageTimeSpentByUser',
   MY_ANALYTICS_VIEW_PERCENTAGE_TIME_SPENT_BY_INFOSCIONS = 'myAnalyticsViewPercentageTimeSpentByInfoscions',
@@ -551,9 +551,9 @@ export enum EFeatures {
   MY_ANALYTICS_VIEW_PLAYGROUNDS = 'myAnalyticsViewPlaygrounds',
   MY_ANALYTICS_VIEW_LIKES = 'myAnalyticsViewLikes',
   MY_ANALYTICS_VIEW_SEARCH = 'myAnalyticsViewSearch',
-  MY_ANALYTICS_VIEW_INFY_TV = 'myAnalyticsViewInfyTv',
-  MY_ANALYTICS_VIEW_INFY_RADIO = 'myAnalyticsViewInfyRadio',
-  MY_ANALYTICS_VIEW_INFY_LIVE = 'myAnalyticsViewInfyLive',
+  MY_ANALYTICS_VIEW_iGOT_TV = 'myAnalyticsViewiGOTTv',
+  MY_ANALYTICS_VIEW_iGOT_RADIO = 'myAnalyticsViewiGOTRadio',
+  MY_ANALYTICS_VIEW_iGOT_LIVE = 'myAnalyticsViewiGOTLive',
   MY_ANALYTICS_VIEW_TOP_COURSES_BY_USER_UNIT = 'myAnalyticsViewTopCoursesByUserUnit',
   MY_ANALYTICS_VIEW_TOP_COURSES_BY_USER_PEERS = 'myAnalyticsViewTopCoursesbyUserPeers',
 

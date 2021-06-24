@@ -449,8 +449,8 @@
                   *ngIf="checkCondition('resourceType', 'show')"
                   [ngClass]="{ disable: checkCondition('resourceType', 'disabled') }">
                   <label [ngClass]="{ required: checkCondition('resourceType', 'required') }">
-                    <b *ngIf="isSiemens" i18n>Format</b>
-                    <span *ngIf="!isSiemens" i18n>Category Type</span>
+                    <b i18n>Format</b>
+                    <span i18n>Category Type</span>
                   </label>
                   <div class="">
                     <mat-form-field appearance="outline" class="margin-top-s"

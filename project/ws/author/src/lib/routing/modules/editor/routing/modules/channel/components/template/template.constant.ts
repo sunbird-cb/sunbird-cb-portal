@@ -442,7 +442,7 @@ export const template1Data = {
                         templateData: {
                           link:
                             // tslint:disable-next-line: quotemark tslint:disable-next-line: max-line-length
-                            'https://www.yammer.com/siemens.com/#/threads/inGroup?type=in_group&feedId=17128474',
+                            'https://url',
 
                           cardStyle:
                             // tslint:disable-next-line: quotemark tslint:disable-next-line: max-line-length
@@ -467,7 +467,7 @@ export const template1Data = {
                         templateData: {
                           link:
                             // tslint:disable-next-line: quotemark tslint:disable-next-line: max-line-length
-                            'https://www.yammer.com/siemens.com/#/threads/inGroup?type=in_group&feedId=17725148',
+                            'https://url',
 
                           cardStyle:
                             // tslint:disable-next-line: quotemark tslint:disable-next-line: max-line-length
@@ -556,21 +556,21 @@ export const template2Data = {
                           coords: [44, 197, 178, 241],
                           alt: 'Hot Topics',
                           title: 'Hot Topics',
-                          link: './page/siemens-digital-enterprise#hot_topics',
+                          link: '',
                           target: '',
                         },
                         {
                           coords: [86, 273, 351, 316],
                           alt: 'Learning activities @DF',
                           title: 'Learning activities @DF',
-                          link: './page/siemens-digital-enterprise#learning_activities_df',
+                          link: '',
                           target: '',
                         },
                         {
                           coords: [128, 351, 662, 393],
                           alt: 'What you need to drive your digital transformation',
                           title: 'What you need to drive your digital transformation',
-                          link: './page/siemens-digital-enterprise#digital_transformation_leader',
+                          link: '',
                           target: '',
                         },
                       ],
@@ -822,7 +822,7 @@ export const template2Data = {
                           overlayText:
                             'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
                           overlayStyle: 'background:#005f87cc;color:white;opacity:0.9;',
-                          link: './page/siemens-virtual-collaboration',
+                          link: '',
                         },
                         containerClass: 'h-full',
                       },
