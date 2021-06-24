@@ -23,11 +23,11 @@ export class IframeLoaderComponent implements OnInit {
     this.appEventSvc.bannerisEnabled.next(false)
     this.iframeType = this.activatedRoute.snapshot.paramMap.get('iframe')
     if (this.iframeType === EiframeUrl.QUIZ) {
-      this.iframeUrl = 'https://lab42.idemo-ppc.com/colligo/'
+      this.iframeUrl = 'https://igot-gov.in'
     } else if (this.iframeType === EiframeUrl.WEBEX) {
-      this.iframeUrl = 'https://lab42.idemo-ppc.com/zoomonlex/'
+      this.iframeUrl = 'https://igot-gov.in'
     } else if (this.iframeType === EiframeUrl.VR) {
-      this.iframeUrl = 'https://lab42.idemo-ppc.com/virtualevents/'
+      this.iframeUrl = 'https://igot-gov.in'
     }
     this.iframeSrc = this.iframeUrl ? this.domSanitizer.bypassSecurityTrustResourceUrl(this.iframeUrl) : null
   }
