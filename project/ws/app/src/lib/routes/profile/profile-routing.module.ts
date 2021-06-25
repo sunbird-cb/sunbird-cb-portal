@@ -1,5 +1,5 @@
-import { AccountPasswordSettingsComponent } from './routes/settings/components/account-password-settings/account-password-settings.component';
-import { PrivacySettingsComponent } from './routes/settings/components/privacy-settings/privacy-settings.component';
+import { AccountPasswordSettingsComponent } from './routes/settings/components/account-password-settings/account-password-settings.component'
+import { PrivacySettingsComponent } from './routes/settings/components/privacy-settings/privacy-settings.component'
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { PageResolve } from '@sunbird-cb/utils'

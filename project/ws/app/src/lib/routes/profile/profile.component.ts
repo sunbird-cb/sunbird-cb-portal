@@ -19,8 +19,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   showText = true
   pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
   enabledTabs = this.activatedRoute.snapshot.data.pageData.data.enabledTabs
-  tabsData!:any
-  sideNavBarOpened!:any
+  tabsData!: any
+  sideNavBarOpened!: any
   currentRoute = 'home'
   sticky = false
   titles = [{ title: 'NETWORK', url: '/app/network-v2', icon: 'group' }]
@@ -34,11 +34,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.tabsData = [ {
-      name: "General Settings", key: "Network Home", badges: { enabled: true, "uri": "" }, enabled: true, routerLink: "/app/profile/settings" },
-    { name: "Notifications", key: "Network Home", badges: { enabled: true, "uri": "" }, enabled: true, routerLink: "/app/profile/notification" },
-    { name: "Account and Password", key: "Network Home", badges: { enabled: true, "uri": "" }, enabled: true, routerLink: "/app/profile/accountandpassword" },
-    { name: "Privacy", key: "Network Home", badges: { enabled: true, "uri": "" }, enabled: true, routerLink: "/app/profile/privacy" }]
+    this.tabsData = [{
+      name: 'General Settings', key: 'Network Home', badges: { enabled: true, uri: '' },
+       enabled: true, routerLink: '/app/profile/settings' },
+    { name: 'Notifications', key: 'Network Home', badges: { enabled: true, uri: '' },
+     enabled: true, routerLink: '/app/profile/notification' },
+    { name: 'Account and Password', key: 'Network Home', badges: { enabled: true, uri: '' },
+    enabled: true, routerLink: '/app/profile/accountandpassword' },
+    { name: 'Privacy', key: 'Network Home', badges: { enabled: true, uri: '' },
+    enabled: true, routerLink: '/app/profile/privacy' }]
     this.sideNavBarOpened = true
     const tab = this.router.url.split('/')[3]
     if (tab === 'dashboard') {

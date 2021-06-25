@@ -8,7 +8,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core'
 export class LeftMenuComponent implements OnInit, OnDestroy {
 
   @Input()
-  tabsData!:any
+  tabsData!: any
   constructor() { }
 
   ngOnInit(): void {

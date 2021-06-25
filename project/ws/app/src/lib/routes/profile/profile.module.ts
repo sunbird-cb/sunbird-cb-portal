@@ -43,7 +43,7 @@ import { BadgesModule } from './routes/badges/badges.module'
     MatListModule,
     MatSidenavModule,
     MatToolbarModule,
-    RouterModule
+    RouterModule,
   ],
   providers: [
     InterestUserResolve,
