@@ -1,7 +1,4 @@
-<mat-tab-group mat-align-tabs="center" [selectedIndex]="selectedIndex"
-  (selectedTabChange)="updateCurrentTabIndex($event)">
-  <mat-tab i18n-label label="General">
-    <section class="user-settings-container">
+
       <mat-card class="margin-bottom-l" *ngIf="isLanguageEnabled">
         <mat-card-content class="padding-bottom-s">
           <h3 class="mat-subheading-2 flex flex-middle">
@@ -217,15 +214,12 @@
           </ul>
         </mat-card-content>
       </mat-card>
-    </section>
-  </mat-tab>
-  <mat-tab i18n-label label="Notifications">
+  <!-- <mat-tab i18n-label label="Notifications">
     <ws-app-notification-settings class="user-settings-container block"></ws-app-notification-settings>
-  </mat-tab>
+  </mat-tab> -->
   <!-- <mat-tab *ngIf="showProfileSettings" i18n-label label="Profile">
     <ws-app-profile-settings class="user-settings-container block"></ws-app-profile-settings>
   </mat-tab> -->
-</mat-tab-group>
 <input type="hidden" i18n-value="Toast msg after successfully saving preferences" value="Preferences Saved"
   #successToast />
 <input type="hidden" i18n-value="Toast msg after failed to save preferences" value="Failed to save preference"

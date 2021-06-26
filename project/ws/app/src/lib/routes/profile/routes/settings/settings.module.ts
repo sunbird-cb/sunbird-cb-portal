@@ -1,3 +1,4 @@
+import { LeftMenuComponent } from '../settings/components/left-menu/left-menu.component'
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import {
@@ -25,10 +26,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { SettingsComponent } from './settings.component'
 import { NotificationSettingsComponent } from './components/notification-settings/notification-settings.component'
 import { SettingsService } from './settings.service'
+import { RouterModule } from '@angular/router'
+import { PrivacySettingsComponent } from './components/privacy-settings/privacy-settings.component'
+import { AccountPasswordSettingsComponent } from './components/account-password-settings/account-password-settings.component'
 // import { ProfileSettingsComponent } from '../../../person-profile/module/profile-settings/profile-settings.component'
 
 @NgModule({
-  declarations: [SettingsComponent, NotificationSettingsComponent,
+  declarations: [SettingsComponent, NotificationSettingsComponent, LeftMenuComponent,
+    PrivacySettingsComponent,
+    AccountPasswordSettingsComponent,
     // ProfileSettingsComponent
   ],
   imports: [
@@ -54,8 +60,9 @@ import { SettingsService } from './settings.service'
     MatProgressSpinnerModule,
     MatRippleModule,
     MatTooltipModule,
+    RouterModule,
   ],
-  exports: [SettingsComponent],
+  exports: [SettingsComponent, LeftMenuComponent],
   providers: [SettingsService],
 })
 export class SettingsModule { }
