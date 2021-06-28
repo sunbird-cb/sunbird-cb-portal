@@ -10,10 +10,24 @@
 .font-bold-imp {
     font-weight: bold !important;
 }
+.filternames {
+    span {
+        background: RGBA(0, 0, 0, 0.08);
+        border-radius: 20px;
+    }
+
+    .mat-icon {
+        width: 14px;
+        height: 14px;
+        font-size: 20px;
+        vertical-align: middle;
+        line-height: 12px;
+    }
+}
+
 .custom-sidecontent {
     width: 73%;
     min-height: 60vh;
-
     .learn-card {
         border-radius: 10px;
         background: #ffffff;

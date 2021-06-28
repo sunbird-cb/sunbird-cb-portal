@@ -19,6 +19,8 @@ import {
   MatToolbarModule,
   MatTooltipModule,
   MatDividerModule,
+  MatListModule,
+  MatSelectModule,
 } from '@angular/material'
 import {
   BtnChannelAnalyticsModule,
@@ -65,6 +67,8 @@ import { SearchFiltersComponent } from './components/search-filters/search-filte
     MatIconModule,
     MatMenuModule,
     MatChipsModule,
+    MatListModule,
+    MatSelectModule,
     MatCardModule,
     MatExpansionModule,
     MatCheckboxModule,

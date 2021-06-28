@@ -2,11 +2,24 @@
     <div class="topsection margin-bottom-m">
         <div class="display-inline-block">
             <p class="mat-body-2 font-bold-imp">{{totalResults}} search results for '{{param}}'</p>
+            <p *ngIf="myFilters && myFilters.length > 0" class="mat-body-2 ws-mat-black60-text filternames">
+                <span *ngFor="let mf of myFilters" class="margin-right-s ng-star-inserted padding-right-s padding-left-s padding-top-xs padding-bottom-xs">
+                    {{mf.name}} 
+                    <mat-icon (click)="removeFilter(mf)" class="margin-left-xs ws-mat-black60-text">close</mat-icon> 
+                </span>
+            </p>
         </div>
         <!-- sort -->
-        <div class="float-right">
-            Sort
-        </div>
+        <!-- <div class="float-right">
+            <mat-form-field>
+                <mat-label>Sort</mat-label>
+                <mat-select>
+                    <mat-option [value]="Popular">Most popular</mat-option>
+                    <mat-option [value]="Recent">Most recent</mat-option>
+                    <mat-option [value]="Relevant">Most relevant</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div> -->
     </div>
     <mat-sidenav-container>
         <!-- search cards -->
@@ -22,9 +35,9 @@
                         <p class="mat-caption margin-bottom-xxs ws-mat-black60-text" *ngIf="content.contentType === 'Course'">
                                 <img src="/assets/icons/content/course.svg" alt="Course" class="contenticon"> COURSE
                         </p>
-                        <!-- <p class="mat-caption margin-bottom-xxs" *ngIf="content.contentType === 'Module'">
+                        <p class="mat-caption margin-bottom-xxs" *ngIf="content.contentType === 'Module'">
                             <img src="/assets/icons/content/module.svg" class="contenticon" alt="Module"> MODULE
-                        </p> -->
+                        </p>
                         <p class="mat-caption margin-bottom-xxs" *ngIf="content.contentType === 'Resource'">
                             <img src="/assets/icons/content/audio.svg" class="contenticon" alt="Audio"  *ngIf="content.mimeType === 'audio/mpeg'"> 
                             <img src="/assets/icons/content/assessment.svg" class="contenticon" alt="Assessment"  *ngIf="content.mimeType === 'application/json'"> 
@@ -70,8 +83,8 @@
         </mat-sidenav-content>
 
         <!-- filter sidebar -->
-        <mat-sidenav mode="side" position="end" opened class="custom-sidenav">
-            <ws-app-search-filters></ws-app-search-filters>
+        <mat-sidenav mode="side" position="end" opened class="custom-sidenav" >
+            <ws-app-search-filters *ngIf="facets && facets.length > 0" [newfacets]="facets" (appliedFilter)="applyFilter($event)" [removeFilter]="rFilter"></ws-app-search-filters>
         </mat-sidenav>
     </mat-sidenav-container>
 </div>
