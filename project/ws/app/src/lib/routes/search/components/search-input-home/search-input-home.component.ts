@@ -160,6 +160,10 @@ export class SearchInputHomeComponent implements OnInit, OnChanges {
     }
   }
 
+  clearSearchText() {
+    this.queryControl.reset()
+  }
+
   getSearchAutoCompleteResults(q: string) {
     if (this.searchLocale.split(',').length === 1) {
       this.searchServSvc.searchAutoComplete({
