@@ -1,12 +1,14 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core'
+import { Component, OnInit, OnDestroy , Output, EventEmitter, Input } from '@angular/core'
 import { FormGroup, FormControl } from '@angular/forms'
+import { Subscription } from 'rxjs'
+import { GbSearchService } from '../../services/gb-search.service'
 
 @Component({
   selector: 'ws-app-search-filters',
   templateUrl: './search-filters.component.html',
   styleUrls: ['./search-filters.component.scss'],
 })
-export class SearchFiltersComponent implements OnInit {
+export class SearchFiltersComponent implements OnInit, OnDestroy  {
   @Input() newfacets!: any
   @Input() removeFilter!: any
   @Output() appliedFilter = new EventEmitter<any>()
@@ -14,8 +16,9 @@ export class SearchFiltersComponent implements OnInit {
   filteroptions: any = []
   public userFilters = new Set()
   myFilterArray: any = []
+  private subscription: Subscription = new Subscription
 
-  constructor() { }
+  constructor(private searchSrvc: GbSearchService) { }
 
   ngOnInit() {
     this.filteroptions = this.newfacets
@@ -158,10 +161,17 @@ export class SearchFiltersComponent implements OnInit {
     this.filterForm = new FormGroup({
       filters: new FormControl(''),
     })
+    this.subscription = this.searchSrvc.notifyObservable$.subscribe((res: any) => {
+      const fil = {
+        name: res.name,
+        count : res.count,
+      }
+      this.modifyUserFilters(fil, res.mainType)
+    })
+  }
 
-    if (this.removeFilter) {
-      this.modifyUserFilters(this.removeFilter.filter, this.removeFilter.mainType.name)
-    }
+  ngOnDestroy() {
+    this.subscription.unsubscribe()
   }
 
   modifyUserFilters(fil: any, mainparentType: any) {
@@ -180,6 +190,7 @@ export class SearchFiltersComponent implements OnInit {
       const reqfilter = {
         mainType:  mainparentType.name,
         name: fil.name,
+        count: fil.count,
       }
       this.myFilterArray.push(reqfilter)
       this.appliedFilter.emit(this.myFilterArray)

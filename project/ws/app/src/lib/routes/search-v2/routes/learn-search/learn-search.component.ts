@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { GbSearchService } from '../../services/gb-search.service'
 import { ConfigurationsService } from '@sunbird-cb/utils'
-import { Router } from '@angular/router'
 
 @Component({
   selector: 'ws-app-learn-search',
@@ -18,6 +17,7 @@ export class LearnSearchComponent implements OnInit {
         primaryCategory: [],
         mimeType: [],
         source: [],
+        mediaType: [],
       },
       query: '',
       sort_by: { lastUpdatedOn: '' },
@@ -32,9 +32,10 @@ export class LearnSearchComponent implements OnInit {
   primaryCategoryType: any = []
   mimeType: any = []
   sourceType: any = []
+  mediaType: any = []
   facets: any = []
 
-  constructor(private searchSrvc: GbSearchService, private configSvc: ConfigurationsService, private router: Router) { }
+  constructor(private searchSrvc: GbSearchService, private configSvc: ConfigurationsService) { }
 
   ngOnInit() {
     const instanceConfig = this.configSvc.instanceConfig
@@ -69,20 +70,9 @@ export class LearnSearchComponent implements OnInit {
     })
   }
 
-  viewContent(content: any) {
-    // const url = `/app/toc/${content.identifier}/overview?primaryCategory=${content.primaryCategory}`
-
+  // viewContent(content: any) {
     // this.router.navigate([`/app/toc/${content.identifier}/overview?primaryCategory=/${content.primaryCategory}`])
-    let url = `/app/toc/${content.identifier}/overview`
-    url += content.primaryCategory ? `?primaryCategory=/${content.primaryCategory}` : ''
-    this.router.navigate([url])
-
-    // this.router.navigate([
-    //   `${forPreview ? '/author' : '/app'}/toc/${resolveData.data.identifier}/${
-    //   resolveData.data.children.length ? 'contents' : 'overview'
-    //   }?primaryCategory=${resolveData.data.primaryCategory}`,
-    // ])
-  }
+  // }
 
   applyFilter(filter: any) {
     if (filter && filter.length > 0) {
@@ -102,6 +92,9 @@ export class LearnSearchComponent implements OnInit {
         } else if (mf.mainType === 'source') {
           this.sourceType.push(mf.name)
           queryparam.request.filters.source = this.sourceType
+        }  else if (mf.mainType === 'mediaType') {
+          this.mediaType.push(mf.name)
+          queryparam.request.filters.mediaType = this.mediaType
         }
       })
       this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
@@ -110,6 +103,7 @@ export class LearnSearchComponent implements OnInit {
         this.primaryCategoryType = []
         this.mimeType = []
         this.sourceType = []
+        this.mediaType = []
       })
     } else {
       this.getSearchedData()
@@ -118,5 +112,6 @@ export class LearnSearchComponent implements OnInit {
 
   removeFilter (mfilter: any) {
     this.rfilter = mfilter
+    // this.searchSrvc.notifyOther(this.rfilter)
   }
 }
