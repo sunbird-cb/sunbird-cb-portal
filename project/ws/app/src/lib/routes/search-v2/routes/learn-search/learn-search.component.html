@@ -1,11 +1,19 @@
 <div class="learnsearch  margin-top-l margin-bottom-l">
     <div class="topsection margin-bottom-m">
         <div class="display-inline-block">
-            <p class="mat-body-2 font-bold-imp">{{totalResults}} search results for '{{param}}'</p>
+            <p class="mat-body-2 font-bold-imp margin-bottom-s">{{totalResults}} search results for '{{param}}'</p>
             <p *ngIf="myFilters && myFilters.length > 0" class="mat-body-2 ws-mat-black60-text filternames">
-                <span *ngFor="let mf of myFilters" class="margin-right-s ng-star-inserted padding-right-s padding-left-s padding-top-xs padding-bottom-xs">
-                    {{mf.name}} 
-                    <mat-icon (click)="removeFilter(mf)" class="margin-left-xs ws-mat-black60-text">close</mat-icon> 
+                <span *ngFor="let mf of myFilters" class="myfilter-custom margin-right-s ng-star-inserted padding-right-s padding-left-s padding-top-xs padding-bottom-xs">
+                     
+                    <span *ngIf="mf.name === 'video/mp4'">Video</span>
+                    <span *ngIf="mf.name === 'audio/mpeg'">Audio</span>
+                    <span *ngIf="mf.name === 'application/pdf'">PDF</span>
+                    <span *ngIf="mf.name === 'application/json'">Assessment</span>
+                    <span *ngIf="mf.name === 'application/vnd.ekstep.html-archive'">HTML</span>
+
+                    <span *ngIf="mf.name !== 'application/vnd.ekstep.html-archive' && mf.name !== 'application/json' && 
+                    mf.name !== 'application/pdf' && mf.name !== 'audio/mpeg' && mf.name !== 'video/mp4'">{{mf.name}}</span>
+                    <mat-icon (click)="removeFilter(mf)" class="cursor-pointer margin-left-xs ws-mat-black60-text">close</mat-icon> 
                 </span>
             </p>
         </div>
@@ -45,7 +53,9 @@
                             <img src="/assets/icons/content/video.svg" alt="Video" class="contenticon"  *ngIf="content.mimeType === 'video/mp4'"> 
                             RESOURCE
                         </p>
-                        <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer" (click)="viewContent(content)">{{content.name}}</p>
+                        <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer">
+                            <a [href]="'/app/toc/' + content.identifier + '/overview?primaryCategory='+ content.primaryCategory ">{{content.name}}</a>
+                        </p>
                         <!-- <p class="mat-body-2 margin-bottom-s"></p> -->
                         <div class="bottomsection">
                             <p class="mat-body-2 margin-bottom-xs" *ngIf="content.creator">By {{content.creator}}</p>
