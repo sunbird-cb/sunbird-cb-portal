@@ -69,7 +69,6 @@
        <div class="flex flex-middle py-4 cursor-pointer" (click)="showContentLang = !showContentLang">
          <mat-icon *ngIf="showContentLang">keyboard_arrow_down</mat-icon>
          <mat-icon *ngIf="!showContentLang">chevron_right</mat-icon>
-
          <span i18n class="px-4">Do you want to select additional languages for Content?</span>
        </div>
        <mat-selection-list class="flex flex-wrapped" [hidden]="!showContentLang" [formControl]="contentLangForm"
@@ -204,7 +203,6 @@
         </mat-slide-toggle>
 
       </div>
-
       <ul *ngIf="themes.length && themes.length > 1" class="flex flex-between flex-wrapped padding-remove">
         <li *ngFor="let themeObj of themes" class="theme-section" matRipple
           (click)="changeTheme(themeObj.themeClass)">
@@ -224,6 +222,7 @@
     </div>
   </mat-card-content>
 </mat-card>
+
 <input type="hidden" i18n-value="Toast msg after successfully saving preferences" value="Preferences Saved"
   #successToast />
 <input type="hidden" i18n-value="Toast msg after failed to save preferences" value="Failed to save preference"

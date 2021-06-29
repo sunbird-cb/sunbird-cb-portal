@@ -72,7 +72,7 @@ export class ChannelComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.showSettingButtons = this.accessService.rootOrg === 'Siemens'
+    this.showSettingButtons = this.accessService.rootOrg === 'iGOT'
     this.canShowMode = this.accessService.hasRole(['admin', 'channel-creator-advanced'])
     this.storeService.editMode = this.mode
     this.contentService.changeActiveCont.subscribe(data => {
