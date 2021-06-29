@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core'
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core'
 import { GbSearchService } from '../../services/gb-search.service'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 
@@ -7,7 +7,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
   templateUrl: './learn-search.component.html',
   styleUrls: ['./learn-search.component.scss'],
 })
-export class LearnSearchComponent implements OnInit {
+export class LearnSearchComponent implements OnInit, OnChanges {
   @Input() param: any
   searchResults: any = []
   searchRequestObject = {
@@ -45,6 +45,12 @@ export class LearnSearchComponent implements OnInit {
     this.getSearchedData()
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+      if (changes.param.currentValue) {
+        this.getSearchedData()
+      }
+  }
+
   getSearchedData() {
     const queryparam = {
       request: {
@@ -52,15 +58,14 @@ export class LearnSearchComponent implements OnInit {
           visibility: ['Default'],
           contentType: [
             'Course',
-            'Learning Resource',
+            'Course Unit',
             'Resource',
           ],
-          primaryCategory: ['Course', 'Learning Resource'],
         },
         query: this.param,
         sort_by: { lastUpdatedOn: '' },
         fields: [],
-        facets: ['primaryCategory', 'mimeType', 'mediaType', 'source'],
+        facets: ['contentType', 'mimeType', 'source'],
       },
     }
     this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
