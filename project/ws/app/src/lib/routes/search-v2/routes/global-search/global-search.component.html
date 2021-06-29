@@ -1,9 +1,16 @@
+<ws-widget-btn-page-back [widgetData]="{ url: 'home',titles: [{ title: 'Search', url: 'none', icon: '' }] }">
+</ws-widget-btn-page-back>
+
 <div class="container-balanced margin-top-l margin-bottom-xl">
     <ng-container>
         <mat-tab-group [selectedIndex]="1">
             <mat-tab label="All">
             <ng-template matTabContent>
-                All coming soon
+                <div class="margin-xl text-center" >
+                    <img src="/assets/common/error-pages/empty_search.svg" wsUtilsImageResponsive alt="No results" 
+                    class="margin-top-l margin-bottom-s">
+                    <h2 class="mat-h2" i18n="search route no result">Feature coming soon</h2>
+                </div>
             </ng-template>
             </mat-tab>
             <mat-tab label="Learn">
@@ -13,17 +20,29 @@
             </mat-tab>
             <mat-tab label="Network">
             <ng-template matTabContent>
-                Netwrok coming soon
+                <div class="margin-xl text-center" >
+                    <img src="/assets/common/error-pages/empty_search.svg" wsUtilsImageResponsive alt="No results" 
+                    class="margin-top-l margin-bottom-s">
+                    <h2 class="mat-h2" i18n="search route no result">Feature coming soon</h2>
+                </div>
             </ng-template>
             </mat-tab>
             <mat-tab label="Discuss">
                 <ng-template matTabContent>
-                    Discuss coming soon
+                    <div class="margin-xl text-center" >
+                        <img src="/assets/common/error-pages/empty_search.svg" wsUtilsImageResponsive alt="No results" 
+                        class="margin-top-l margin-bottom-s">
+                        <h2 class="mat-h2" i18n="search route no result">Feature coming soon</h2>
+                    </div>
                 </ng-template>
             </mat-tab>
             <mat-tab label="Careers">
                 <ng-template matTabContent>
-                    Career coming soon
+                    <div class="margin-xl text-center" >
+                        <img src="/assets/common/error-pages/empty_search.svg" wsUtilsImageResponsive alt="No results" 
+                        class="margin-top-l margin-bottom-s">
+                        <h2 class="mat-h2" i18n="search route no result">Feature coming soon</h2>
+                    </div>
                 </ng-template>
             </mat-tab>
         </mat-tab-group>

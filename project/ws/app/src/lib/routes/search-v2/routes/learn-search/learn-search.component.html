@@ -1,7 +1,8 @@
 <div class="learnsearch  margin-top-l margin-bottom-l">
     <div class="topsection margin-bottom-m">
         <div class="display-inline-block">
-            <p class="mat-body-2 font-bold-imp margin-bottom-m">{{totalResults}} search results for '{{param}}'</p>
+            <p class="mat-body-2 font-bold-imp margin-bottom-m" *ngIf="totalResults > 1">{{totalResults}} search results for '{{param}}'</p>
+            <p class="mat-body-2 font-bold-imp margin-bottom-m" *ngIf="totalResults === 1">{{totalResults}} search result for '{{param}}'</p>
             <p *ngIf="myFilters && myFilters.length > 0" class="mat-body-2 ws-mat-black60-text filternames">
                 <span *ngFor="let mf of myFilters" class="display-inline-block myfilter-custom margin-right-s ng-star-inserted padding-right-s padding-left-s padding-top-xs padding-bottom-xs">
                      
