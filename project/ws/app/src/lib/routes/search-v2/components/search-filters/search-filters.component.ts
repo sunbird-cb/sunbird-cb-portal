@@ -14,7 +14,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy  {
   @Output() appliedFilter = new EventEmitter<any>()
   filterForm: FormGroup | undefined
   filteroptions: any = []
-  public userFilters = new Set()
+  userFilters: any = []
   myFilterArray: any = []
   private subscription: Subscription = new Subscription
 
@@ -22,6 +22,11 @@ export class SearchFiltersComponent implements OnInit, OnDestroy  {
 
   ngOnInit() {
     this.filteroptions = this.newfacets
+    // this.filteroptions.forEach((fas: any) => {
+    //   fas.values.forEach((fasv: any) => {
+    //         fasv.ischecked = false
+    //   })
+    // })
     // this.filteroptions = [
     //   {
     //     name: 'Provider',
@@ -174,24 +179,50 @@ export class SearchFiltersComponent implements OnInit, OnDestroy  {
     this.subscription.unsubscribe()
   }
 
+  getFilterName(fil: any) {
+    return this.userFilters.filter((x: any) => x.name === fil.name)
+  }
+
   modifyUserFilters(fil: any, mainparentType: any) {
-    if (this.userFilters.has(fil)) {
-      this.userFilters.delete(fil)
+    const indx = this.getFilterName(fil)
+    if (indx.length > 0) {
+      this.userFilters.forEach((fs: any, index: number) => {
+        if (fs.name === fil.name) {
+          this.userFilters.splice(index, 1)
+        }
+      })
       this.myFilterArray.forEach((fs: any, index: number) => {
         if (fs.name === fil.name) {
           this.myFilterArray.splice(index, 1)
         }
       })
+      // this.filteroptions.forEach((fas: any) => {
+      //   if (fas.name === mainparentType.name) {
+      //     fas.values.forEach((fasv: any) => {
+      //       if (fasv.name === fil.name) {
+      //         fasv.ischecked = false
+      //       }
+      //     })
+      //   }
+      // })
       this.appliedFilter.emit(this.myFilterArray)
     } else {
-      this.userFilters.add(fil)
-      // const myFilterArr = Array.from(this.userFilters)
+      this.userFilters.push(fil)
 
       const reqfilter = {
         mainType:  mainparentType.name,
         name: fil.name,
         count: fil.count,
       }
+      // this.filteroptions.forEach((fas: any) => {
+      //   if (fas.name === mainparentType.name) {
+      //     fas.values.forEach((fasv: any) => {
+      //       if (fasv.name === fil.name) {
+      //         fasv.ischecked = true
+      //       }
+      //     })
+      //   }
+      // })
       this.myFilterArray.push(reqfilter)
       this.appliedFilter.emit(this.myFilterArray)
     }

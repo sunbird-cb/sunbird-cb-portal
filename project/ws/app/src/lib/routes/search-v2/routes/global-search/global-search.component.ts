@@ -8,11 +8,25 @@ import { ActivatedRoute } from '@angular/router'
 })
 export class GlobalSearchComponent implements OnInit {
   searchParam: any
+  searchparamFilters: any
+  selectedTab = 1
+  tabs = ['All', 'Learn', 'Network', 'Discuss', 'Careers']
 
   constructor(private activated: ActivatedRoute) {
     this.activated.queryParamMap.subscribe(queryParams => {
+      if (queryParams.has('tab')) {
+        const tabn = queryParams.get('tab')
+        this.tabs.forEach((t: any, index: number) => {
+          if (t === tabn) {
+            this.selectedTab = index
+          }
+        })
+      }
       if (queryParams.has('q')) {
-        this.searchParam = queryParams.get('q')
+        this.searchParam = queryParams.get('q') || ''
+      }
+      if (queryParams.has('f')) {
+        this.searchparamFilters = JSON.parse(queryParams.get('f') || '{}')
       }
     })
   }
