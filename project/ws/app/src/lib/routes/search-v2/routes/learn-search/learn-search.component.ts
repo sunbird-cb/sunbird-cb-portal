@@ -9,6 +9,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 })
 export class LearnSearchComponent implements OnInit, OnChanges {
   @Input() param: any
+  @Input() paramFilters: any
   searchResults: any = []
   searchRequestObject = {
     request: {
@@ -27,7 +28,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
   }
   totalResults: any
   defaultThumbnail = ''
-  myFilters = []
+  myFilters: any = []
   rfilter: any
   primaryCategoryType: any = []
   mimeType: any = []
@@ -35,7 +36,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
   mediaType: any = []
   facets: any = []
 
-  constructor(private searchSrvc: GbSearchService, private configSvc: ConfigurationsService) { }
+  constructor(private searchSrvc: GbSearchService, private configSvc: ConfigurationsService) {}
 
   ngOnInit() {
     const instanceConfig = this.configSvc.instanceConfig
@@ -67,6 +68,17 @@ export class LearnSearchComponent implements OnInit, OnChanges {
         fields: [],
         facets: ['contentType', 'mimeType', 'source'],
       },
+    }
+    if (this.paramFilters) {
+      queryparam.request.filters = this.paramFilters
+      if (this.paramFilters.contentType) {
+        const pf = {
+          mainType:  'contentType',
+          name: this.paramFilters.contentType[0],
+          count: '',
+        }
+        this.myFilters.push(pf)
+      }
     }
     this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
       this.searchResults = response.result.content

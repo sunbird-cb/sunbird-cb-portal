@@ -20,8 +20,9 @@ export class AchievementsComponent implements OnInit, OnDestroy {
   private routeSubscription: Subscription | null = null
   achievementType = ''
   redirectUrl = {
-    path: '/app/search/learning',
+    path: '/app/globalsearch',
     qParams: {
+      tab: 'Learn',
       q: 'all',
       f: JSON.stringify({
         contentType: ['Resource'],
@@ -48,8 +49,9 @@ export class AchievementsComponent implements OnInit, OnDestroy {
           this.achievementType = this.router.url.split('/')[this.router.url.split('/').length - 1]
           if (this.achievementType === 'assessment') {
             this.redirectUrl = {
-              path: '/app/search/learning',
+              path: '/app/globalsearch',
               qParams: {
+                tab: 'Learn',
                 q: 'all',
                 f: JSON.stringify({
                   contentType: ['Resource'],

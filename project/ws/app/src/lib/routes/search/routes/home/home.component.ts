@@ -46,8 +46,9 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/app/search/home'], {
       queryParams: { lang: this.searchQuery.l, q: query || this.searchQuery.q },
     }).then(() => {
-      this.router.navigate(['/app/search/learning'], {
+      this.router.navigate(['/app/globalsearch'], {
         queryParams: {
+          tab: 'Learn',
           q: query || this.searchQuery.q,
           lang: this.searchQuery.l,
         },
@@ -62,8 +63,9 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/app/search/home'], {
       queryParams: { lang: this.searchQuery.l, q: this.searchQuery.q },
     }).then(() => {
-      this.router.navigate(['/app/search/learning'], {
+      this.router.navigate(['/app/globalsearch'], {
         queryParams: {
+          tab: 'Learn',
           q: this.searchQuery.q,
           lang: this.searchQuery.l,
           f: JSON.stringify(objType),
