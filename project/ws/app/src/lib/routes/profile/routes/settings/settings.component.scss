@@ -9,7 +9,7 @@
 }
 
 .seventy{
-  width: 67%;
+  width: 100%;
   display: block;
   float: right;
 
@@ -120,96 +120,90 @@
   border-radius: 4px;
   padding: 0;
   margin-bottom: 20px;
-  width: 99%;
+  width: 145%;
+  height: auto;
 
   .mat-card-image {
     margin: 0;
-    height: auto;
-    width: 12%;
+    width: 35%;
   }
 
   .home-card-content {
     display: flex;
-
-    & > * {
-      display: flex;
-      flex: auto;
-
-      &:first-child {
-        border-top-left-radius: 4px;
-        border-bottom-left-radius: 4px;
-      }
-
-      &:last-child {
-        flex-direction: column;
-        align-items: start;
-        padding: 8px;
-      }
-    }
   }
 }
 .home-card-2 {
   border-radius: 4px;
   padding: 0;
   margin-bottom: 20px;
-  width: 99%;
+  width: 145%;
 
   .mat-card-image {
     margin: 0;
-    height: auto;
+    width: 35%;
   }
 
   .home-card-content {
     display: flex;
 
-    & > * {
-      display: flex;
-      flex: auto;
-
-      &:first-child {
-        border-top-left-radius: 4px;
-        border-bottom-left-radius: 4px;
-      }
-
-      &:last-child {
-        flex-direction: column;
-        align-items: start;
-        padding: 8px;
-        width: 300%;
-      }
-    }
   }
 }
 .home-card-3{
   border-radius: 4px;
   padding: 0;
   margin-bottom: 20px;
-  width: 99%;
+  width: 145%;
 
   .mat-card-image {
     margin: 0;
-    height: auto;
-    width: 30%;
+    width: 35%;
   }
 
   .home-card-content {
     display: flex;
 
-    & > * {
-      display: flex;
-      flex: auto;
+    // & > * {
+    //   display: flex;
+    //   flex: auto;
 
-      &:first-child {
-        border-top-left-radius: 4px;
-        border-bottom-left-radius: 4px;
-      }
+    //   &:first-child {
+    //     border-top-left-radius: 4px;
+    //     border-bottom-left-radius: 4px;
+    //   }
 
-      &:last-child {
-        flex-direction: column;
-        align-items: start;
-        padding: 8px;
-      }
-    }
+    //   &:last-child {
+    //     flex-direction: column;
+    //     align-items: start;
+    //     padding: 8px;
+    //     width: 800px;
+    //   }
+    // }
   }
 }
 
+.radio-select{
+  border: 2px solid #0174B6;
+  padding: 15px 10px 15px 10px;
+  border-radius: 5px;
+  background: #f2f8fB;
+}
+.radio-select-2{
+  border: 2px solid #0174B6;
+  border-radius: 5px;
+  background: #F2F8FB;
+}
+
+
+.comming-soon{
+  padding: 15px 20px 15px 15px;
+  border-radius: 5px;
+  background: #FDEBDE;
+}
+
+.mat-icon {
+  vertical-align: middle;
+  padding-right: 10px;
+}
+.wid-50{
+  width: 50% !important;
+}
