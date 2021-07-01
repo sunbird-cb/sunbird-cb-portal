@@ -2,19 +2,19 @@
   <mat-card-content class="home-card-content">
     <img mat-card-image src="/assets/images/profile/2.svg" alt="Photo of a Shiba Inu">
     <div class="ml-8  mt-4">
-      <div class="mt-6">
+      <div class="mt-4">
         <h2 class="mat-subheading-2 flex flex-middle">
           Language
         </h2>
       </div>
-      <div class="mt-10">
+      <div class="mt-8">
         <h4 class="mat-subheading-2 flex flex-middle">
           Website language
         </h4>
       </div>
 
       <div class="col-md-4 mt-10">
-        <span class="radio-select">
+        <span mat-line class="radio-select">
           <mat-radio-button [checked]="true"></mat-radio-button>EN - English
         </span>
       </div>   
@@ -75,7 +75,7 @@
            </mat-option>
          </mat-select>
        </mat-form-field> -->
-      <div class="flex flex-middle mt-4" (click)="showContentLang = !showContentLang">
+      <div class="flex flex-middle mt-8" (click)="showContentLang = !showContentLang">
         <!-- <mat-icon *ngIf="showContentLang">keyboard_arrow_down</mat-icon>
          <mat-icon *ngIf="!showContentLang">chevron_right</mat-icon> -->
         <span i18n>Content Language</span>
@@ -149,8 +149,8 @@
            </a>
          </div>
        </div> -->
-       <div class="col-md-4 mt-10">
-        <span class="comming-soon">
+       <div class="col-md-4 mt-12">
+        <span class="comming-soon" [formControl]="contentLangForm">
           <mat-icon>info</mat-icon>Support for more languages coming soon
         </span>
       </div>   
@@ -196,8 +196,8 @@
 
 <mat-card class="home-card-3">
   <mat-card-content class="home-card-content">
-    <img  src="/assets/images/profile/1.svg" alt="Photo of a Shiba Inu">
-    <div>
+    <img mat-card-image src="/assets/images/profile/1.svg" alt="Photo of a Shiba Inu">
+    <div class="ml-8  mt-4">
       <div class="flex flex-between flex-wrap">
         <h3 class="theme-mode mat-subheading-2 flex flex-middle" *ngIf="themes.length && themes.length > 1">
           <mat-icon class="margin-right-s">format_color_fill</mat-icon>

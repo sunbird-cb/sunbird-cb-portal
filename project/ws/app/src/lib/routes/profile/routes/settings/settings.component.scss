@@ -120,13 +120,12 @@
   border-radius: 4px;
   padding: 0;
   margin-bottom: 20px;
-  width: 130%;
+  width: 145%;
   height: auto;
 
   .mat-card-image {
     margin: 0;
-    width: 352px;
-    height: fit-content;
+    width: 35%;
   }
 
   .home-card-content {
@@ -137,31 +136,27 @@
   border-radius: 4px;
   padding: 0;
   margin-bottom: 20px;
-  width: 130%;
-  height: auto;
+  width: 145%;
 
   .mat-card-image {
     margin: 0;
-    width: 352px;
-    height: fit-content;
+    width: 35%;
   }
 
   .home-card-content {
     display: flex;
-    height: 519px;
-    width: 123%;
+
   }
 }
 .home-card-3{
   border-radius: 4px;
   padding: 0;
   margin-bottom: 20px;
-  width: 130%;
+  width: 145%;
 
   .mat-card-image {
     margin: 0;
-    height: auto;
-    width: 61%;
+    width: 35%;
   }
 
   .home-card-content {
@@ -190,7 +185,7 @@
   border: 2px solid #0174B6;
   padding: 15px 10px 15px 10px;
   border-radius: 5px;
-  background: #F2F8FB;
+  background: #f2f8fB;
 }
 .radio-select-2{
   border: 2px solid #0174B6;
