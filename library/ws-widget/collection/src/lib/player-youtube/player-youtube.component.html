@@ -1,2 +1,3 @@
-<video #videoTag *ngIf="widgetData?.isVideojs" class="video-js vjs-default-skin vjs-big-play-centered"></video>
+<youtube-player #videoTag videoId="iUnDIdh5QDc"  [height]="1080"
+[width]="1500"></youtube-player>
 <div *ngIf="!widgetData?.isVideojs" #youtubeTag id='youtubeTag'></div>

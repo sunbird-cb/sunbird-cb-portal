@@ -58,6 +58,7 @@ export class PlayerYoutubeComponent extends WidgetBaseComponent
   @ViewChild('youtubeTag', { static: false }) youtubeTag!: ElementRef<HTMLElement>
   private player: videoJs.Player | null = null
   private dispose: (() => void) | null = null
+  private videoId!: string
   constructor(
     private eventSvc: EventService,
     private contentSvc: WidgetContentService,
@@ -76,14 +77,18 @@ export class PlayerYoutubeComponent extends WidgetBaseComponent
         this.screenHeight = '500vh'
       }
     })
+    const tag = document.createElement('script')
+
+    tag.src = 'https://www.youtube.com/iframe_api'
+    document.body.appendChild(tag)
   }
 
   ngAfterViewInit() {
     if (this.widgetData && this.widgetData.url) {
       if (this.widgetData.isVideojs) {
-        this.initializePlayer()
+       this.initializePlayer()
       } else {
-        this.initializeYPlayer(this.widgetData.url.split('embed/')[1])
+     //   this.initializeYPlayer(this.widgetData.url.split('embed/')[1])
       }
     }
   }
@@ -224,31 +229,11 @@ export class PlayerYoutubeComponent extends WidgetBaseComponent
       enableTelemetry = true
     }
     if (this.widgetData.url) {
-      // this.widgetData.url = 'https://www.youtube.com/embed/3bwBkxiK3Aw'
-      const initObj = videoJsInitializer(
-        this.videoTag.nativeElement,
-        {
-          ...videoJsOptions,
-          poster: this.widgetData.posterImage,
-          sources: [
-            {
-              type: 'video/youtube',
-              src: this.widgetData.url,
-            },
-          ],
-        },
-        dispatcher,
-        saveCLearning,
-        fireRProgress,
-        this.widgetData.passThroughData,
-        ROOT_WIDGET_CONFIG.player.video,
-        this.widgetData.resumePoint ? this.widgetData.resumePoint : 0,
-        enableTelemetry,
-        this.widgetData,
-        NsContent.EMimeTypes.YOUTUBE,
-      )
-      this.player = initObj.player
-      this.dispose = initObj.dispose
+        let video_id = window.location.search.split('v=')[1]
+        let ampersandPosition = video_id.indexOf('&')
+        if (ampersandPosition != -1) {
+          this.videoId = video_id.substring(0, ampersandPosition)
+        }
     }
   }
 }
