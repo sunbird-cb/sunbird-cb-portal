@@ -9,7 +9,7 @@
       <span matPrefix i18n *ngIf="!isSmallViewPort">Page</span>
       <input label="PageNumber" aria-label="Page Number" i18n-aria-label class="pdf-page-num" type="number" min="1"
         [max]="totalPages" [formControl]="currentPage" matInput />
-      <span matSuffix>of {{ totalPages }}</span>
+      <span matSuffix style="margin-left: 12px;">of {{ totalPages }}</span>
     </mat-form-field>
     <button mat-icon-button [disabled]="currentPage.value >= totalPages" (click)="loadPageNum(currentPage.value + 1)"
       aria-label="next page" i18n-aria-label>
