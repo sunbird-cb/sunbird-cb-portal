@@ -129,6 +129,6 @@ export class LearnSearchComponent implements OnInit, OnChanges {
 
   removeFilter (mfilter: any) {
     this.rfilter = mfilter
-    // this.searchSrvc.notifyOther(this.rfilter)
+    this.searchSrvc.notifyOther(this.rfilter)
   }
 }
