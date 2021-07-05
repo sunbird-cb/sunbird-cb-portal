@@ -78,7 +78,7 @@ export class DiscussComponent implements OnInit, OnDestroy {
           this.titles.push({ title: 'Leaderboard', icon: '', url: 'none' })
           break
         case 'my-discussions':
-          this.titles.push({ title: 'My Discussions', icon: '', url: 'none' })
+          this.titles.push({ title: 'Your Discussions', icon: '', url: 'none' })
           break
 
         default:
