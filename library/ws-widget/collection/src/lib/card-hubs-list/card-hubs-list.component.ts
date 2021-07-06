@@ -87,7 +87,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
         },
         {
           route: 'my-discussion',
-          label: 'My discussion',
+          label: 'Your discussion',
           enable: true,
         },
       ],
