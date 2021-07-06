@@ -6,8 +6,7 @@
   flex: 1;
   height: auto;
   // min-width: 346px;
-  height: fit-content;
-  min-height: -webkit-fill-available;
+  min-height: 108px;
 
   // width: max-content;
   @include breakpoint-xs {
