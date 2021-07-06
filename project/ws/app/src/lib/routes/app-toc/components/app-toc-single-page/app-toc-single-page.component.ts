@@ -44,6 +44,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   discussionConfig: any = {}
   batchData: any
   batchDataLoaded = false
+  showDiscussionForum: any
   // configSvc: any
 
   constructor(
@@ -191,15 +192,15 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
       this.discussionConfig.categoryObj = {
         category: {
           name: this.content.name,
-          pid: "",
+          pid: '',
           description: this.content.description,
           context: [
             {
-              type: "course",
-              identifier: this.content.identifier
-            }
-          ]
-        }
+              type: 'course',
+              identifier: this.content.identifier,
+            },
+          ],
+        },
       }
     }
     this.discussionConfig.contextType = 'course'
