@@ -1,3 +1,5 @@
+import { AccountPasswordSettingsComponent } from './routes/settings/components/account-password-settings/account-password-settings.component'
+import { PrivacySettingsComponent } from './routes/settings/components/privacy-settings/privacy-settings.component'
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { PageResolve } from '@sunbird-cb/utils'
@@ -22,6 +24,7 @@ import { SettingsComponent } from './routes/settings/settings.component'
 import { BadgesComponent } from './routes/badges/badges.component'
 import { GeneralGuard } from '../../../../../../../src/app/guards/general.guard'
 import { ProfileResolverService } from './resolvers/profile-resolver.service'
+import { NotificationSettingsComponent } from './routes/settings/components/notification-settings/notification-settings.component'
 
 const routes: Routes = [
   {
@@ -146,6 +149,18 @@ const routes: Routes = [
   {
     path: 'settings',
     component: SettingsComponent,
+  },
+  {
+    path: 'notification',
+    component: NotificationSettingsComponent,
+  },
+  {
+    path: 'privacy',
+    component: PrivacySettingsComponent,
+  },
+  {
+    path: 'accountandpassword',
+    component: AccountPasswordSettingsComponent,
   },
 ]
 

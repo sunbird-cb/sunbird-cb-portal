@@ -337,6 +337,16 @@ tocConfig?.overview?.softwareRequirements?.enabled && content?.softwareRequireme
                             {{ getCompetencies(content.competencies).join(', ') }}
                         </h3>
                     </div>
+                    <mat-divider class="divider-transparent"
+                        *ngIf="tocConfig?.atAGlance?.source?.enabled">
+                    </mat-divider>
+                    <div class="info-item" *ngIf="tocConfig?.atAGlance?.source?.enabled">
+                        <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.source?.displayName}}
+                        </h3>
+                        <h3 class="item-value width-expand">
+                            {{content?.source}}
+                        </h3>
+                    </div>
                     <mat-divider class="divider-transparent" *ngIf="tocConfig?.atAGlance?.cost?.enabled"></mat-divider>
                     <div class="info-item" *ngIf="tocConfig?.atAGlance?.license?.enabled">
                         <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.license?.displayName}}</h3>

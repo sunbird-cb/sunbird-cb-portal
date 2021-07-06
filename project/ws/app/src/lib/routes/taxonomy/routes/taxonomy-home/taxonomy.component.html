@@ -2,7 +2,7 @@
 <ws-widget-btn-page-back [widgetData]="{ url: 'home',titles:[{title: 'Learn', url:'/page/learn', icon:'school'},
 {title: ( 'All topics') ,url:'none', icon:''}]  }">
 </ws-widget-btn-page-back>
-<div class="container-balanced">
+<div class="container-balanced" *ngIf="!resourceLoading">
   <div class="flex flex-2 search">
     <h1>All topics</h1>
   </div>
@@ -31,3 +31,6 @@
   </mat-card>
 
 </ng-template>
+<div class="container-balanced min-height mt-24" align='center' *ngIf="resourceLoading">
+  <mat-progress-spinner mode="indeterminate" diameter='20' strokeWidth='50'></mat-progress-spinner>
+  </div>

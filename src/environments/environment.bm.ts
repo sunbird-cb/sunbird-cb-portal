@@ -1,4 +1,5 @@
 export const environment = {
+    name: 'benchmark',
     production: true,
     sitePath: 'igot-bm-sunbird.idc.tarento.com',
     organisation: 'igot-karmayogi',

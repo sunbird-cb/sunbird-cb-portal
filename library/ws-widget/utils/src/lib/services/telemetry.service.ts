@@ -7,6 +7,7 @@ import { WsEvents } from './event.model'
 import { EventService } from './event.service'
 import { LoggerService } from './logger.service'
 import { NsContent } from './widget-content.model'
+import { environment } from 'src/environments/environment'
 
 declare var $t: any
 
@@ -33,10 +34,13 @@ export class TelemetryService {
         ...this.telemetryConfig,
         pdata: {
           ...this.telemetryConfig.pdata,
-          pid: navigator.userAgent,
+          // pid: navigator.userAgent,
+          id: `${environment.name}.${this.telemetryConfig.pdata.id}`,
         },
         uid: this.configSvc.userProfile && this.configSvc.userProfile.userId,
         authtoken: this.authSvc.token,
+        // tslint:disable-next-line: no-non-null-assertion
+        channel: this.rootOrgId,
       }
       this.pData = this.telemetryConfig.pdata
       this.addPlayerListener()
@@ -46,6 +50,13 @@ export class TelemetryService {
       this.addHearbeatListener()
     }
   }
+
+  get rootOrgId(): string {
+    if (this.configSvc && this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId) {
+      return this.configSvc.userProfile.rootOrgId
+    }
+    return ''
+}
 
   start(type: string, mode: string, id: string) {
     try {

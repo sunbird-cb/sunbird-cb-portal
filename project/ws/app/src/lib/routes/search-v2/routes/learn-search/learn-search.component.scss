@@ -1,0 +1,100 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+.custom-sidenav {
+    width: 25%;
+    box-shadow: none !important;
+    border: 0 !important;
+    border-radius: 4px;
+}
+.font-bold-imp {
+    font-weight: bold !important;
+}
+.filternames {
+    .myfilter-custom {
+        background: RGBA(0, 0, 0, 0.08);
+        border-radius: 20px;
+    }
+
+    .mat-icon {
+        width: 14px;
+        height: 14px;
+        font-size: 20px;
+        vertical-align: middle;
+        line-height: 12px;
+    }
+}
+
+.custom-sidecontent {
+    width: 73%;
+    min-height: 60vh;
+    .learn-card {
+        border-radius: 10px;
+        background: #ffffff;
+        height: 192px;
+        min-height: 192px;
+        box-shadow: none !important;
+        .imageholder {
+            width: 39%;
+            height: 196px;
+            img {
+                width: 100%;
+                display: block;
+                height: auto;
+                max-height: 192px;
+                border-radius: 10px 0 0 10px;
+            }
+        }
+        .mat-card-content {
+            margin-left: 40%;
+            padding: 8px;
+            position: relative;
+            height: 176px;
+            .mat-caption {
+                .mat-icon {
+                    vertical-align: middle;
+                    height: 20px !important;
+                    width: 20px !important;
+                    font-size: 18px !important;
+                }
+            }
+            
+            .contenticon {
+                vertical-align: middle;
+            }
+
+            .bottomsection {
+               position: absolute;
+               bottom: 0;
+               width: 96%;
+
+                .actionbtns {
+                    position: absolute;
+                    right: 0;
+                }
+            }
+
+            ul {
+                list-style-type: none;
+
+                li {
+                    display: inline-block;
+                    padding-right: 10px;
+                    
+                    img {
+                        vertical-align: bottom;
+                    }
+                }
+            }
+
+            .tags {
+                li {
+                    background: RGBA(0, 0, 0, 0.04);
+                    padding: 2px 13px 4px!important;
+                    margin-right: 10px;
+                    border-radius: 10px 4px 4px 10px;
+                }
+            }
+        }
+    }
+}

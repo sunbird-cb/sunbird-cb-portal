@@ -1,0 +1,103 @@
+<div class="learnsearch  margin-top-l margin-bottom-l">
+    <div class="topsection margin-bottom-m">
+        <div class="display-inline-block">
+            <p class="mat-body-2 font-bold-imp margin-bottom-m" *ngIf="totalResults > 1">{{totalResults}} search results 
+                <span *ngIf="param">for '{{param}}'</span></p>
+            <p class="mat-body-2 font-bold-imp margin-bottom-m" *ngIf="totalResults === 1">{{totalResults}} search result 
+                <span *ngIf="param">for '{{param}}'</span></p>
+            <p *ngIf="myFilters && myFilters.length > 0" class="mat-body-2 ws-mat-black60-text filternames">
+                <span *ngFor="let mf of myFilters" class="display-inline-block myfilter-custom margin-right-s ng-star-inserted padding-right-s padding-left-s padding-top-xs padding-bottom-xs">
+                     
+                    <span *ngIf="mf.name === 'video/mp4'">Video</span>
+                    <span *ngIf="mf.name === 'audio/mpeg'">Audio</span>
+                    <span *ngIf="mf.name === 'application/pdf'">PDF</span>
+                    <span *ngIf="mf.name === 'application/json'">Assessment</span>
+                    <span *ngIf="mf.name === 'application/vnd.ekstep.html-archive'">HTML</span>
+
+                    <span *ngIf="mf.name !== 'application/vnd.ekstep.html-archive' && mf.name !== 'application/json' && 
+                    mf.name !== 'application/pdf' && mf.name !== 'audio/mpeg' && mf.name !== 'video/mp4'">{{mf.name}}</span>
+                    <mat-icon (click)="removeFilter(mf)" class="cursor-pointer margin-left-xs ws-mat-black60-text">close</mat-icon> 
+                </span>
+            </p>
+        </div>
+        <!-- sort -->
+        <!-- <div class="float-right">
+            <mat-form-field>
+                <mat-label>Sort</mat-label>
+                <mat-select>
+                    <mat-option [value]="Popular">Most popular</mat-option>
+                    <mat-option [value]="Recent">Most recent</mat-option>
+                    <mat-option [value]="Relevant">Most relevant</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div> -->
+    </div>
+    <mat-sidenav-container>
+        <!-- search cards -->
+        <mat-sidenav-content class="custom-sidecontent">
+
+            <div *ngIf="totalResults > 0">
+                <mat-card class="learn-card margin-bottom-m padding-remove position-relative" *ngFor="let content of searchResults">
+                    <div class="imageholder float-left">
+                        <img mat-card-image class="margin-remove" [src]="content.appIcon"
+                        [wsUtilsDefaultThumbnail]="defaultThumbnail" alt="">
+                    </div>
+                    <mat-card-content>
+                        <p class="mat-caption margin-bottom-xxs ws-mat-black60-text" *ngIf="content.contentType === 'Course'">
+                                <img src="/assets/icons/content/course.svg" alt="Course" class="contenticon"> COURSE
+                        </p>
+                        <p class="mat-caption margin-bottom-xxs" *ngIf="content.contentType === 'Module'">
+                            <img src="/assets/icons/content/module.svg" class="contenticon" alt="Module"> MODULE
+                        </p>
+                        <p class="mat-caption margin-bottom-xxs" *ngIf="content.contentType === 'Resource'">
+                            <img src="/assets/icons/content/audio.svg" class="contenticon" alt="Audio"  *ngIf="content.mimeType === 'audio/mpeg'"> 
+                            <img src="/assets/icons/content/assessment.svg" class="contenticon" alt="Assessment"  *ngIf="content.mimeType === 'application/json'"> 
+                            <img src="/assets/icons/content/pdf.svg" alt="PDF" class="contenticon" *ngIf="content.mimeType === 'application/pdf'"> 
+                            <img src="/assets/icons/content/video.svg" alt="Video" class="contenticon"  *ngIf="content.mimeType === 'video/mp4'"> 
+                            RESOURCE
+                        </p>
+                        <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer">
+                            <a [href]="'/app/toc/' + content.identifier + '/overview?primaryCategory='+ content.primaryCategory ">{{content.name}}</a>
+                        </p>
+                        <!-- <p class="mat-body-2 margin-bottom-s"></p> -->
+                        <div class="bottomsection">
+                            <p class="mat-body-2 margin-bottom-xs" *ngIf="content.creator">By {{content.creator}}</p>
+                            <div class="contentdata">
+                                <ul class="mat-body-2 margin-remove-top margin-bottom-xs padding-remove ws-mat-black60-text">
+                                    <li>Health social science</li>
+                                    <li *ngIf="content.lastUpdatedOn">
+                                        <img src="/assets/icons/content/separator.svg">  {{ content.lastUpdatedOn | date: "MMM yyyy"  }}
+                                    </li> 
+                                    <li *ngIf="content.duration">
+                                        <img src="/assets/icons/content/separator.svg">  {{ content.duration | pipeDurationTransform: 'hms' }}
+                                    </li> 
+                                    <!-- <li><img src="/assets/icons/content/separator.svg">  Ratings</li> -->
+                                </ul>
+                            </div>
+                            <div class="tags">
+                                <ul class="mat-caption margin-remove-top margin-bottom-s padding-remove display-inline-block">
+                                    <li>Health science</li><li>Other tags</li>
+                                </ul>
+                                <!-- <p class="display-inline-block ws-mat-black60-text actionbtns">
+                                    <mat-icon class="margin-right-s">more_vert_outlined</mat-icon> 
+                                    <mat-icon>playlist_add</mat-icon>
+                                </p> -->
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+
+            <div class="margin-xl text-center" *ngIf="totalResults === 0">
+                <img src="/assets/common/error-pages/empty_search.svg" wsUtilsImageResponsive alt="No results" class="margin-top-l margin-bottom-s">
+                <h2 class="mat-h2" i18n="search route no result">No results found</h2>
+                <h3 class="mat-h3" i18n="search route you may try">Try removing the filters or search using different keywords</h3>
+            </div>
+        </mat-sidenav-content>
+
+        <!-- filter sidebar -->
+        <mat-sidenav mode="side" position="end" opened class="custom-sidenav" >
+            <ws-app-search-filters *ngIf="facets && facets.length > 0" [newfacets]="facets" (appliedFilter)="applyFilter($event)" [removeFilter]="rFilter"></ws-app-search-filters>
+        </mat-sidenav>
+    </mat-sidenav-container>
+</div>

@@ -266,6 +266,15 @@ const routes: Routes = [
     canActivate: [GeneralGuard],
   },
   {
+    path: 'app/globalsearch',
+    loadChildren: () =>
+      import('./routes/route-searchv2-app.module').then(u => u.RouteSearchV2AppModule),
+    data: {
+      pageType: 'feature',
+      pageKey: 'globalsearch',
+    },
+  },
+  {
     path: 'app/social',
     loadChildren: () =>
       import('./routes/route-social-app.module').then(u => u.RouteSocialAppModule),

@@ -232,8 +232,9 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           )
           const viewMoreUrl = showViewMore
             ? {
-              path: '/app/search/learning',
+              path: '/app/globalsearch',
               queryParams: {
+                tab: 'Learn',
                 q: strip.request && strip.request.search && strip.request.search.query,
                 f: JSON.stringify(
                   strip.request && strip.request.search && strip.request.search.filters,
@@ -308,8 +309,9 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           )
           const viewMoreUrl = showViewMore
             ? {
-              path: '/app/search/learning',
+              path: '/app/globalsearch',
               queryParams: {
+                tab: 'Learn',
                 q: strip.request && strip.request.searchV6 && strip.request.searchV6.request,
                 f:
                 strip.request &&
@@ -377,8 +379,9 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           )
           const viewMoreUrl = showViewMore
             ? {
-              path: '/app/search/learning',
+              path: '/app/globalsearch',
               queryParams: {
+                tab: 'Learn',
                 q: strip.request && strip.request.searchV6 && strip.request.searchV6.query,
                 f:
                   strip.request && strip.request.searchV6 && strip.request.searchV6.filters

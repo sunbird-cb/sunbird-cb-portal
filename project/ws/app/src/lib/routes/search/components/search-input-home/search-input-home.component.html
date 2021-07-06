@@ -16,6 +16,8 @@
         <input type="text" role="combobox" accesskey="S" #searchInput [attr.title]="placeHolder"
           class="ml-2 margin-top-xs" i18n-placeholder="search content" [placeholder]="placeHolder" i18-aria-label
           aria-label="search content" matInput [formControl]="queryControl" [matAutocomplete]="auto" />
+        
+        <mat-icon matSuffix (click)="clearSearchText()" class="cursor-pointer" *ngIf="queryControl.value">close</mat-icon>
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
           (optionSelected)="updateQuery($event.option.value)">
           <mat-option *ngIf="queryControl.value" [value]="queryControl.value">{{ queryControl.value }}

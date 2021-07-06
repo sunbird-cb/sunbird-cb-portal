@@ -1,6 +1,28 @@
 @import 'ws-common';
 @import 'ws-vars';
+.thirty {
+  width: 30%;
+  float: left;
+  height:100px; /*height of your image*/
+  margin:0; /* If you want no margin */
+  padding:0; /*if your want to padding */
+}
 
+.seventy{
+  width: 100%;
+  display: block;
+  float: right;
+
+}
+.min-heigh{
+  min-height: 200px;
+}
+.mh24{
+  min-height: 24%;
+}
+.mh55{
+  min-height: 55%;
+}
 .user-settings-container {
   @extend %page-center;
   padding: $size-m;
@@ -93,4 +115,95 @@
 
 .domain-drop-down-width {
   width: 200px;
+}
+.home-card-1 {
+  border-radius: 4px;
+  padding: 0;
+  margin-bottom: 20px;
+  width: 145%;
+  height: auto;
+
+  .mat-card-image {
+    margin: 0;
+    width: 35%;
+  }
+
+  .home-card-content {
+    display: flex;
+  }
+}
+.home-card-2 {
+  border-radius: 4px;
+  padding: 0;
+  margin-bottom: 20px;
+  width: 145%;
+
+  .mat-card-image {
+    margin: 0;
+    width: 35%;
+  }
+
+  .home-card-content {
+    display: flex;
+
+  }
+}
+.home-card-3{
+  border-radius: 4px;
+  padding: 0;
+  margin-bottom: 20px;
+  width: 145%;
+
+  .mat-card-image {
+    margin: 0;
+    width: 35%;
+  }
+
+  .home-card-content {
+    display: flex;
+
+    // & > * {
+    //   display: flex;
+    //   flex: auto;
+
+    //   &:first-child {
+    //     border-top-left-radius: 4px;
+    //     border-bottom-left-radius: 4px;
+    //   }
+
+    //   &:last-child {
+    //     flex-direction: column;
+    //     align-items: start;
+    //     padding: 8px;
+    //     width: 800px;
+    //   }
+    // }
+  }
+}
+
+.radio-select{
+  border: 2px solid #0174B6;
+  padding: 15px 10px 15px 10px;
+  border-radius: 5px;
+  background: #f2f8fB;
+}
+.radio-select-2{
+  border: 2px solid #0174B6;
+  border-radius: 5px;
+  background: #F2F8FB;
+}
+
+
+.comming-soon{
+  padding: 15px 20px 15px 15px;
+  border-radius: 5px;
+  background: #FDEBDE;
+}
+
+.mat-icon {
+  vertical-align: middle;
+  padding-right: 10px;
+}
+.wid-50{
+  width: 50% !important;
 }

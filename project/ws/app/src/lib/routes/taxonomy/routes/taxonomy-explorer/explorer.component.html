@@ -1,24 +1,10 @@
-<ws-widget-btn-page-back [widgetData]="{ url: 'home',titles:[{title: 'Learn', url:'/page/learn', icon:'school'},
-{title: ( 'All topics') ,url:'none', icon:''}]  }">
-</ws-widget-btn-page-back>
-<div class="container-balanced min-height">
+<div class="container-balanced min-height" *ngIf="!resourceLoading">
   <div *ngIf="currentRoute === 'home'" class="margin-top-s">
     <ng-container [wsResolverWidget]="banner"></ng-container>
   </div>
-  <!-- <div class="flex flex-2 search">
-    <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'"  style="width: 27%">
-      <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
-      <mat-placeholder>Search user</mat-placeholder> -->
-      <!-- <input [(ngModel)]="nameFilter" (ngModelChange)="searchUser()" matInput type="search"> -->
-      <!-- <mat-label>Search</mat-label>
-      <input type="search" #searchInput class="ml-2" matInput
-        type="search" [placeholder]="'Search'" />
-    </mat-form-field>
-  </div> -->
-
   <mat-sidenav-container name="discuss-menu" class="min-height min-wid">
     <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 sidenav-align">
-      <app-discuss-left-menu [unseen]="unread" [tabsData] = "firstLevelTopic"  (currentTab)="onTabLeftMenu($event)"></app-discuss-left-menu>
+      <app-discuss-left-menu [unseen]="unread" [tabsData] = "firstLevelTopic" (currentTab)="onTabLeftMenu($event)"></app-discuss-left-menu>
     </mat-sidenav>
     <mat-sidenav-content class="sidenav-align-cont">
       <div *ngIf="screenSizeIsLtMedium">
@@ -28,11 +14,11 @@
         </button>
       </div>
       <div class="flex flex-4">
-      <ws-widget-breadcrumbs-org [widgetData]="{titles: tempArr}" *ngIf="nextLevelTopic">
+      <ws-widget-breadcrumbs-org (currentSelection)="getTab($event)"[widgetData]="{titles: tempArr, data: currentObj,  tab: currentTab1}" *ngIf="currentObj">
       </ws-widget-breadcrumbs-org>
       </div>
       <div class="flex flex-4 bot max-height">
-        <taxonomy-level-card *ngIf="nextLevelTopic"[tags]="nextLevelTopic"  (clickedTab)="getClickedTab($event)"></taxonomy-level-card>
+        <taxonomy-level-card [tags]="nextLevelTopic"  (clickedTab)="getClickedTab($event)"></taxonomy-level-card>
       </div>
 
       <h2 *ngIf="relatedResource.length>0">CBPs</h2>
@@ -48,3 +34,7 @@
   </mat-sidenav-container>
 
 </div>
+
+<div class="container-balanced min-height mt-24" align='center' *ngIf="resourceLoading">
+  <mat-progress-spinner mode="indeterminate" diameter='20' strokeWidth='50'></mat-progress-spinner>
+  </div>

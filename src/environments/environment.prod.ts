@@ -1,4 +1,5 @@
 export const environment = {
+  name: 'prod',
   production: true,
   sitePath: 'karmayogi.nic.in',
   organisation: 'igot-karmayogi',

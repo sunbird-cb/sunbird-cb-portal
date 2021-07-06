@@ -1,0 +1,37 @@
+.filter-section {
+     .mat-expansion-panel-spacing {
+        margin-bottom: 10px !important;
+        box-shadow: none !important;
+        border: 0;
+    }
+    .mat-expansion-panel {
+        box-shadow: none !important;
+        border: 0 !important;
+    }
+    .mat-expansion-panel-header {
+        height: 45px !important;
+    }
+    .mat-expansion-panel-body {
+        padding: 0 16px 16px !important;
+    }
+    .sublist-section {
+        ul {
+            list-style-type: none;
+        }
+    }
+}
+::ng-deep .mat-checkbox-inner-container {
+    height: 23px !important;
+    width: 23px !important;
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+::ng-deep .mat-pseudo-checkbox-checked,
+::ng-deep .mat-pseudo-checkbox-indeterminate {
+    background: #0074b6 0% 0% no-repeat padding-box !important;
+    border-radius: 4px;
+}
+
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+    border-radius: 4px !important;
+}
