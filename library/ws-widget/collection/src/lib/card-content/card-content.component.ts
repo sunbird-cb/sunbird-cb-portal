@@ -241,6 +241,8 @@ export class CardContentComponent extends WidgetBaseComponent
       contentId: this.widgetData.content.identifier,
       contentType: this.widgetData.content.contentType,
       context: this.widgetData.context,
+      rollup: {},
+      ver: this.widgetData.content.version,
     })
   }
 
