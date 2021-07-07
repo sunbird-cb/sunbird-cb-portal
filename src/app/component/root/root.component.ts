@@ -25,6 +25,9 @@ import {
 import { delay } from 'rxjs/operators'
 import { MobileAppsService } from '../../services/mobile-apps.service'
 import { RootService } from './root.service'
+// import { DiscussionUiModule } from '@project-sunbird/discussions-ui-v8'
+
+import { CsModule } from '@project-sunbird/client-services'
 // import { SwUpdate } from '@angular/service-worker'
 // import { environment } from '../../../environments/environment'
 // import { MatDialog } from '@angular/material'
@@ -51,6 +54,9 @@ export class RootComponent implements OnInit, AfterViewInit {
   isInIframe = false
   appStartRaised = false
   isSetupPage = false
+  processed: any
+  loginToken: any
+
   constructor(
     private router: Router,
     public authSvc: AuthKeycloakService,
@@ -63,6 +69,60 @@ export class RootComponent implements OnInit, AfterViewInit {
     private changeDetector: ChangeDetectorRef,
   ) {
     this.mobileAppsSvc.init()
+    if (this.authSvc.token) {
+      // console.log("CALLED AFTER LOGIN")
+      this.loginToken = this.authSvc.token
+    } else {
+      // console.log("ALREADY LOGGED IN")
+      const lastSaved = localStorage.getItem('kc')
+      if (lastSaved) {
+          this.loginToken = JSON.parse(lastSaved).token
+      }
+    }
+    const locationOrigin = location.origin
+
+    CsModule.instance.init({
+      core: {
+        httpAdapter: 'HttpClientBrowserAdapter',
+        global: {
+          channelId: '', // required
+          producerId: '', // required
+          deviceId: '', // required
+          sessionId: '',
+        },
+        api: {
+          host: `${locationOrigin}/apis/proxies/v8`, // default host
+          // host: 'http://localhost:3004/proxies/v8', // default host
+          // host: 'http://localhost:3002', // default host
+          authentication: {
+            // bearerToken: "", // optional
+            // userToken: "5574b3c5-16ca-49d8-8059-705304f2c7fb"
+            bearerToken: this.loginToken,
+            // optional
+          },
+        },
+      },
+      services: {
+        groupServiceConfig: {
+          apiPath: '/learner/group/v1',
+          dataApiPath: '/learner/data/v1/group',
+          updateGroupGuidelinesApiPath: '/learner/group/membership/v1',
+        },
+        userServiceConfig: {
+          apiPath: '/learner/user/v2',
+        },
+        formServiceConfig: {
+          apiPath: '/learner/data/v1/form',
+        },
+        courseServiceConfig: {
+          apiPath: '/learner/course/v1',
+          certRegistrationApiPath: '/learner/certreg/v2/certs',
+        },
+        discussionServiceConfig: {
+          apiPath: '/discussion',
+        },
+      },
+    })
   }
 
   ngOnInit() {
