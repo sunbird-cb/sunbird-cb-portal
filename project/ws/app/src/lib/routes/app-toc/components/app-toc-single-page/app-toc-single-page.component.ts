@@ -12,6 +12,7 @@ import { CreateBatchDialogComponent } from '../create-batch-dialog/create-batch-
 import { TitleTagService } from '@ws/app/src/lib/routes/app-toc/services/title-tag.service'
 import { MatDialog } from '@angular/material'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
+// import { IdiscussionConfig } from '@project-sunbird/discussions-ui-v8'
 
 @Component({
   selector: 'ws-app-app-toc-single-page',
@@ -40,6 +41,10 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   private routeQuerySubscription: Subscription | null = null
   batchId!: string
   isNotEditor = true
+  discussionConfig: any = {}
+  batchData: any
+  batchDataLoaded = false
+  showDiscussionForum: any
   // configSvc: any
 
   constructor(
@@ -64,17 +69,42 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     //   this.askAuthorEnabled = !data.restrictedData.data.has('askAuthor')
     //   this.trainingLHubEnabled = !data.restrictedData.data.has('trainingLHub')
     // })
+    this.discussionConfig = {
+      // menuOptions: [{ route: 'categories', enable: true }],
+      userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
+    }
   }
 
   ngOnInit() {
     if (!this.forPreview) {
       this.forPreview = window.location.href.includes('/author/')
     }
+
     if (this.route && this.route.parent) {
       this.routeSubscription = this.route.parent.data.subscribe((data: Data) => {
         this.initData(data)
         this.tocConfig = data.pageData.data
+        this.routeQuerySubscription = this.route.queryParamMap.subscribe(qParamsMap => {
+          const batchId = qParamsMap.get('batchId')
+          if (batchId) {
+            // this.discussionConfig.contextId = [batchId]
+            // this.discussionConfig.contextType = 'batch'
+            this.batchId = batchId
+          }
+        })
+        // this.tocSharedSvc.setBatchDataSubject.subscribe((data1: { content: any }) => {
+        // this.batchData = data1.content
+        // if (this.batchData) {
+        //   const batchIdArr: any[] = []
+        //   this.batchData.forEach((element: { identifier: any }) => {
+        //     batchIdArr.push(element.identifier)
+        //   })
+        //   this.discussionConfig.contextIdArr = batchIdArr
+        //   this.discussionConfig.contextType = 'batch'
+        //   this.batchDataLoaded = true
+        // }
       })
+      // })
     }
     if (this.configSvc && this.configSvc.userProfile && this.configSvc.userProfile.userId) {
       this.loggedInUserId = this.configSvc.userProfile.userId
@@ -87,12 +117,12 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
       this.isNotEditor = false
     }
 
-    this.routeQuerySubscription = this.route.queryParamMap.subscribe(qParamsMap => {
-      const batchId = qParamsMap.get('batchId')
-      if (batchId) {
-        this.batchId = batchId
-      }
-    })
+    // this.routeQuerySubscription = this.route.queryParamMap.subscribe(qParamsMap => {
+    //   const batchId = qParamsMap.get('batchId')
+    //   if (batchId) {
+    //     this.batchId = batchId
+    //   }
+    // })
   }
 
   detailUrl(data: any) {
@@ -154,8 +184,26 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   }
 
   private initData(data: Data) {
+    // debugger
     const initData = this.tocSharedSvc.initData(data)
     this.content = initData.content
+    this.discussionConfig.contextIdArr = (this.content) ? [this.content.identifier] : []
+    if (this.content) {
+      this.discussionConfig.categoryObj = {
+        category: {
+          name: this.content.name,
+          pid: '',
+          description: this.content.description,
+          context: [
+            {
+              type: 'course',
+              identifier: this.content.identifier,
+            },
+          ],
+        },
+      }
+    }
+    this.discussionConfig.contextType = 'course'
     this.setSocialMediaMetaTags(this.content)
     this.body = this.domSanitizer.bypassSecurityTrustHtml(
       this.content && this.content.body
