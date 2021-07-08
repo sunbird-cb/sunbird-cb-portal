@@ -12,7 +12,7 @@ import { NsWidgetResolver } from '@sunbird-cb/resolver'
 export class DiscussComponent implements OnInit, OnDestroy {
   sideNavBarOpened = true
   panelOpenState = false
-  titles = [{ title: 'DISCUSS', url: '/app/discussion-forum', icon: 'forum' }]
+  titles = [{ title: 'DISCUSS', url: '/app/discussion-forum', icon: 'forum', queryParams: { page: 'home' } }]
   unread = 0
   currentRoute = 'forum'
   banner!: NsWidgetResolver.IWidgetData<any>
@@ -21,6 +21,7 @@ export class DiscussComponent implements OnInit, OnDestroy {
   isLtMedium$ = this.valueSvc.isLtMedium$
   mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
   private defaultSideNavBarOpenedSubscription: any
+  lastUrlPath = ''
 
   constructor(private valueSvc: ValueService, private route: ActivatedRoute, private router: Router) {
     this.unread = this.route.snapshot.data.unread
@@ -28,7 +29,7 @@ export class DiscussComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {
         // Hide loading indicator
         // console.log(event.url)
-        this.bindUrl(event.urlAfterRedirects.replace('/app/discussion-forum', ''))
+        this.bindUrl(event.urlAfterRedirects.replace('/app/discussion-forum?page=home', ''))
       }
 
       if (event instanceof NavigationError) {
@@ -60,25 +61,29 @@ export class DiscussComponent implements OnInit, OnDestroy {
   }
   bindUrl(path: string) {
     if (path) {
-      this.currentRoute = path
+
+      this.lastUrlPath = path.substring(path.lastIndexOf('/') + 1, path.length)
+      this.currentRoute = this.lastUrlPath
+      // console.log('path' + this.currentRoute)
+
       if (this.titles.length > 1) {
         this.titles.pop()
       }
       switch (path) {
         case 'home':
-          this.titles.push({ title: 'Discussion', icon: '', url: 'none' })
+          this.titles.push({ title: 'Discussion', icon: '', url: 'none', queryParams: { page: 'home' } })
           break
         case 'categories':
-          this.titles.push({ title: 'Categories', icon: '', url: 'none' })
+          this.titles.push({ title: 'Categories', icon: '', url: 'none', queryParams: { page: 'home' } })
           break
         case 'tags':
-          this.titles.push({ title: 'Tags', icon: '', url: 'none' })
+          this.titles.push({ title: 'Tags', icon: '', url: 'none', queryParams: { page: 'home' } })
           break
         case 'leaderboard':
-          this.titles.push({ title: 'Leaderboard', icon: '', url: 'none' })
+          this.titles.push({ title: 'Leaderboard', icon: '', url: 'none', queryParams: { page: 'home' } })
           break
         case 'my-discussions':
-          this.titles.push({ title: 'Your Discussions', icon: '', url: 'none' })
+          this.titles.push({ title: 'Your Discussions', icon: '', url: 'none', queryParams: { page: 'home' } })
           break
 
         default:

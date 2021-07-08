@@ -306,7 +306,8 @@
         <ng-template matTabContent>
             <section id="discussion-forum">
                 <div class="fixed-width toc-discussion-container">
-                    <ws-app-toc-discussion [content]="content" class="discussion"></ws-app-toc-discussion>
+                    <!-- <ws-app-toc-discussion [content]="content" class="discussion"></ws-app-toc-discussion> -->
+                    <all-discussion-widget style=' width: 100%;' [config]="discussionConfig"></all-discussion-widget>
                 </div>
             </section>
         </ng-template>

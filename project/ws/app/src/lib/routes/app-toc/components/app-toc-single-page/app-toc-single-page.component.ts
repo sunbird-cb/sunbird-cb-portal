@@ -12,6 +12,7 @@ import { CreateBatchDialogComponent } from '../create-batch-dialog/create-batch-
 import { TitleTagService } from '@ws/app/src/lib/routes/app-toc/services/title-tag.service'
 import { MatDialog } from '@angular/material'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
+// import { IdiscussionConfig } from '@project-sunbird/discussions-ui-v8'
 
 @Component({
   selector: 'ws-app-app-toc-single-page',
@@ -45,6 +46,10 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     [key: string]: { hasError: boolean; contents: NsCohorts.ICohortsContent[] }
   } = {}
   cohortTypesEnum = NsCohorts.ECohortTypes
+  discussionConfig: any = {}
+  batchData: any
+  batchDataLoaded = false
+  showDiscussionForum: any
   // configSvc: any
 
   constructor(
@@ -70,6 +75,10 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     //   this.askAuthorEnabled = !data.restrictedData.data.has('askAuthor')
     //   this.trainingLHubEnabled = !data.restrictedData.data.has('trainingLHub')
     // })
+    this.discussionConfig = {
+      // menuOptions: [{ route: 'categories', enable: true }],
+      userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
+    }
   }
 
   ngOnInit() {
@@ -97,12 +106,12 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
       this.isNotEditor = false
     }
 
-    this.routeQuerySubscription = this.route.queryParamMap.subscribe(qParamsMap => {
-      const batchId = qParamsMap.get('batchId')
-      if (batchId) {
-        this.batchId = batchId
-      }
-    })
+    // this.routeQuerySubscription = this.route.queryParamMap.subscribe(qParamsMap => {
+    //   const batchId = qParamsMap.get('batchId')
+    //   if (batchId) {
+    //     this.batchId = batchId
+    //   }
+    // })
   }
 
   detailUrl(data: any) {
@@ -164,8 +173,26 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   }
 
   private initData(data: Data) {
+    // debugger
     const initData = this.tocSharedSvc.initData(data)
     this.content = initData.content
+    this.discussionConfig.contextIdArr = (this.content) ? [this.content.identifier] : []
+    if (this.content) {
+      this.discussionConfig.categoryObj = {
+        category: {
+          name: this.content.name,
+          pid: '',
+          description: this.content.description,
+          context: [
+            {
+              type: 'course',
+              identifier: this.content.identifier,
+            },
+          ],
+        },
+      }
+    }
+    this.discussionConfig.contextType = 'course'
     this.setSocialMediaMetaTags(this.content)
     this.body = this.domSanitizer.bypassSecurityTrustHtml(
       this.content && this.content.body
