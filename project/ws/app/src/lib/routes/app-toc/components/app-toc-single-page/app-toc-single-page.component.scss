@@ -110,9 +110,10 @@ mat-divider {
   .unit-meta-item {
     border-radius: 2px;
     box-sizing: border-box;
-    margin-bottom: $size-m;
+    margin-bottom: $size-l;
     box-shadow: none;
-    padding-left: 0;
+    padding: 0 !important;
+    background: transparent !important;
   }
 
   @include breakpoint-xs {
@@ -323,5 +324,39 @@ mat-divider {
     letter-spacing: 0px;
     color: #fff;
     text-transform: capitalize;
+  }
+}
+
+.custom-tabgroup {
+  .fixed-width {
+    padding: 0 !important;
+  }
+
+  .unit-cohort {
+    background: #E7EAEB;
+    margin: 10px 0;
+    padding: 10px 15px;
+    border-radius: 4px;
+    .datadiv {
+      // margin-left: 60px;
+    }
+
+    .circle-l-xs, .circle-l-s, .circle-l, .circle-xl, .circle-m, .circle-xxl {
+      width: 56px !important;
+      height: 56px !important;
+    }
+  }
+}
+::ng-deep.mat-tab-body {
+  padding: 15px 0 !important;
+}
+::ng-deep.mat-tab-label {
+  .mat-tab-label-content {
+    text-transform: uppercase;
+  }
+}
+::ng-deep.mat-tab-label-active {
+  .mat-tab-label-content {
+    font-weight: 700 !important;
   }
 }
