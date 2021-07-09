@@ -14,7 +14,7 @@ import { MatDialog, MatSnackBar } from '@angular/material'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import * as dayjs from 'dayjs'
 import * as  lodash from 'lodash'
-import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component';
+import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 
 export enum ErrorType {
   internalServer = 'internalServer',
