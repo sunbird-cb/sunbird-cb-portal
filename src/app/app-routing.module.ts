@@ -79,6 +79,18 @@ const routes: Routes = [
     canActivate: [GeneralGuard],
   },
   {
+    path: 'app/event-hub',
+    loadChildren: () => import('./routes/route-events.module').then(u => u.RouteEventsModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'event',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
+  {
     path: 'app/competencies',
     loadChildren: () =>
       import('./routes/route-competencie.module').then(u => u.RouteCompetenciesModule),
