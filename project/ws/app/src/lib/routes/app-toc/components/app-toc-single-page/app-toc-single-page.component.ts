@@ -1,12 +1,12 @@
 import { AccessControlService } from '@ws/author'
 import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
-import { ActivatedRoute, Data } from '@angular/router'
-import { NsContent } from '@sunbird-cb/collection'
+import { ActivatedRoute, Data, Router } from '@angular/router'
+import { NsContent, NsAutoComplete } from '@sunbird-cb/collection'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Observable, Subscription } from 'rxjs'
 import { share } from 'rxjs/operators'
-import { NsAppToc } from '../../models/app-toc.model'
+import { NsAppToc, NsCohorts } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
 import { CreateBatchDialogComponent } from '../create-batch-dialog/create-batch-dialog.component'
 import { TitleTagService } from '@ws/app/src/lib/routes/app-toc/services/title-tag.service'
@@ -33,7 +33,8 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   objKeys = Object.keys
   fragment!: string
   activeFragment = this.route.fragment.pipe(share())
-  content: NsContent.IContent | null = null
+  @Input() content: NsContent.IContent | null = null
+  @Input() initialrouteData: any
   routeSubscription: Subscription | null = null
   @Input() forPreview = false
   tocConfig: any = null
@@ -41,6 +42,10 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   private routeQuerySubscription: Subscription | null = null
   batchId!: string
   isNotEditor = true
+  cohortResults: {
+    [key: string]: { hasError: boolean; contents: NsCohorts.ICohortsContent[] }
+  } = {}
+  cohortTypesEnum = NsCohorts.ECohortTypes
   discussionConfig: any = {}
   batchData: any
   batchDataLoaded = false
@@ -48,6 +53,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   // configSvc: any
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private tocSharedSvc: AppTocService,
     private domSanitizer: DomSanitizer,
@@ -79,32 +85,15 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     if (!this.forPreview) {
       this.forPreview = window.location.href.includes('/author/')
     }
-
-    if (this.route && this.route.parent) {
-      this.routeSubscription = this.route.parent.data.subscribe((data: Data) => {
-        this.initData(data)
-        this.tocConfig = data.pageData.data
-        this.routeQuerySubscription = this.route.queryParamMap.subscribe(qParamsMap => {
-          const batchId = qParamsMap.get('batchId')
-          if (batchId) {
-            // this.discussionConfig.contextId = [batchId]
-            // this.discussionConfig.contextType = 'batch'
-            this.batchId = batchId
-          }
-        })
-        // this.tocSharedSvc.setBatchDataSubject.subscribe((data1: { content: any }) => {
-        // this.batchData = data1.content
-        // if (this.batchData) {
-        //   const batchIdArr: any[] = []
-        //   this.batchData.forEach((element: { identifier: any }) => {
-        //     batchIdArr.push(element.identifier)
-        //   })
-        //   this.discussionConfig.contextIdArr = batchIdArr
-        //   this.discussionConfig.contextType = 'batch'
-        //   this.batchDataLoaded = true
-        // }
-      })
-      // })
+    // if (this.route && this.route.parent) {
+    //   this.routeSubscription = this.route.parent.data.subscribe((data: Data) => {
+    //     this.initData(data)
+    //     this.tocConfig = data.pageData.data
+    //   })
+    // }
+    if (this.initialrouteData) {
+      this.initData(this.initialrouteData)
+      this.tocConfig = this.initialrouteData.pageData.data
     }
     if (this.configSvc && this.configSvc.userProfile && this.configSvc.userProfile.userId) {
       this.loggedInUserId = this.configSvc.userProfile.userId
@@ -214,8 +203,12 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     )
     this.contentParents = {}
     this.resetAndFetchTocStructure()
-    this.getTrainingCount()
-    this.getContentParent()
+    // this.getTrainingCount()
+    // this.getContentParent()
+    if (this.content && this.content.identifier) {
+      this.fetchCohorts(this.cohortTypesEnum.ACTIVE_USERS, this.content.identifier)
+      this.fetchCohorts(this.cohortTypesEnum.AUTHORS, this.content.identifier)
+    }
   }
 
   getContentParent() {
@@ -291,18 +284,18 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   }
 
   // For Learning Hub trainings
-  private getTrainingCount() {
-    if (
-      this.trainingLHubEnabled &&
-      this.content &&
+  // private getTrainingCount() {
+  //   if (
+  //     this.trainingLHubEnabled &&
+  //     this.content &&
       // this.trainingSvc.isValidTrainingContent(this.content) &&
-      !this.forPreview
-    ) {
+    //   !this.forPreview
+    // ) {
       // this.trainingLHubCount$ = this.trainingApi
       //   .getTrainingCount(this.content.identifier)
       //   .pipe(retry(2))
-    }
-  }
+  //   }
+  // }
 
   // openQueryMailDialog(content: any, data: any) {
   //   const emailArray = []
@@ -344,6 +337,54 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
       return parsedString
     } catch {
       return []
+    }
+  }
+
+  // cohorts & learners
+  public get enablePeopleSearch(): boolean {
+    if (this.configSvc.restrictedFeatures) {
+      return !this.configSvc.restrictedFeatures.has('peopleSearch')
+    }
+    return false
+  }
+
+  goToUserProfile(user: NsAutoComplete.IUserAutoComplete) {
+    if (this.enablePeopleSearch) {
+      this.router.navigate(['/app/person-profile', user.wid])
+      // this.router.navigate(['/app/person-profile'], { queryParams: { emailId: user.email } })
+    }
+  }
+
+  getUserFullName(user: any) {
+    if (user && user.first_name && user.last_name) {
+      return `${user.first_name.trim()} ${user.last_name.trim()}`
+    }
+    return ''
+  }
+
+  fetchCohorts(cohortType: NsCohorts.ECohortTypes, contentID: any) {
+    if (!this.cohortResults[cohortType] && !this.forPreview) {
+      this.tocSharedSvc.fetchContentCohorts(cohortType, contentID).subscribe(
+        (data: any) => {
+          this.cohortResults[cohortType] = {
+            contents: data || [],
+            hasError: false,
+          }
+        },
+        () => {
+          this.cohortResults[cohortType] = {
+            contents: [],
+            hasError: true,
+          }
+        },
+      )
+    } else if (this.cohortResults[cohortType] && !this.forPreview) {
+      return
+    } else {
+      this.cohortResults[cohortType] = {
+        contents: [],
+        hasError: false,
+      }
     }
   }
 }

@@ -15,7 +15,7 @@ import { NsWidgetResolver } from '@sunbird-cb/resolver'
 })
 export class AppTocContentsComponent implements OnInit, OnDestroy {
   @Input() batchId!: string
-  content: NsContent.IContent | null = null
+  @Input() content: NsContent.IContent | null = null
   forPreview = false
   isPlayable = false
   contentPlayWidgetConfig: NsWidgetResolver.IRenderConfigWithTypedData<any> | null = null
@@ -70,7 +70,7 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
 
   private initData(data: Data) {
     const initData = this.tocSvc.initData(data, true)
-    this.content = initData.content
+    // this.content = initData.content
     this.errorCode = initData.errorCode
     if (this.content) {
       if (!this.contextId || !this.contextPath) {
