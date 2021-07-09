@@ -17,7 +17,7 @@ export const VIEWER_ROUTE_FROM_MIME = (mimeType: NsContent.EMimeTypes) => {
     case NsContent.EMimeTypes.HTML:
     case NsContent.EMimeTypes.ZIP:
     case NsContent.EMimeTypes.TEXT_WEB:
-      return 'youtube'
+      return 'html'
     case NsContent.EMimeTypes.IAP:
       return 'iap'
     case NsContent.EMimeTypes.ILP_FP:
