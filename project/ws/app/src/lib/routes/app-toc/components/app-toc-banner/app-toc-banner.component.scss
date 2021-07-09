@@ -128,7 +128,10 @@
   .header-actions {
     display: flex;
     // margin-top: 24px;
-
+    .custom-button{
+      background: #0074B6 0% 0% no-repeat padding-box;
+      border-radius: 4px;
+    }
     &.top {
       margin-top: 0;
       margin-bottom: 40px;
