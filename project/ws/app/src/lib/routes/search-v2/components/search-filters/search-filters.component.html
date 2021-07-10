@@ -2,8 +2,7 @@
     <p class="mat-subheading-1 margin-bottom-m font-bold-imp">Filter search</p>
     <form class="filter-form" [formGroup]="filterForm">
         <mat-accordion class="filter-section margin-bottom-m" *ngFor="let fs of filteroptions" open>
-            <mat-expansion-panel (opened)="panelOpenState = true"
-                                    (closed)="panelOpenState = false">
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [expanded]="true">
                 <mat-expansion-panel-header class="padding-remove">
                     <mat-panel-title>
                         <p class="mat-subheading-2 margin-bottom-xs font-bold-imp" *ngIf="fs.name === 'contentType'">Content type</p>
