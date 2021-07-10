@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { filter } from 'rxjs/operators'
-import { AuthKeycloakService } from './auth-keycloak.service'
+// import { AuthKeycloakService } from './auth-keycloak.service'
 import { NsInstanceConfig } from './configurations.model'
 import { ConfigurationsService } from './configurations.service'
 import { WsEvents } from './event.model'
@@ -24,7 +24,7 @@ export class TelemetryService {
   constructor(
     private configSvc: ConfigurationsService,
     private eventsSvc: EventService,
-    private authSvc: AuthKeycloakService,
+    // private authSvc: AuthKeycloakService,
     private logger: LoggerService,
   ) {
     const instanceConfig = this.configSvc.instanceConfig
@@ -38,7 +38,7 @@ export class TelemetryService {
           id: `${environment.name}.${this.telemetryConfig.pdata.id}`,
         },
         uid: this.configSvc.userProfile && this.configSvc.userProfile.userId,
-        authtoken: this.authSvc.token,
+        // authtoken: this.authSvc.token,
         // tslint:disable-next-line: no-non-null-assertion
         channel: this.rootOrgId,
       }

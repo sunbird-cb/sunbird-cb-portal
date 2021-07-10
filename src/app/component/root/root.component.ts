@@ -97,7 +97,7 @@ export class RootComponent implements OnInit, AfterViewInit {
           authentication: {
             // bearerToken: "", // optional
             // userToken: "5574b3c5-16ca-49d8-8059-705304f2c7fb"
-            bearerToken: this.loginToken,
+            // bearerToken: this.loginToken,
             // optional
           },
         },

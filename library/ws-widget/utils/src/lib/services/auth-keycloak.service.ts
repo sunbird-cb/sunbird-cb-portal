@@ -15,6 +15,7 @@ interface IParsedToken {
 
 const storage = localStorage
 const storageKey = 'kc'
+const logoutRedirectUrl = ''
 
 @Injectable({
   providedIn: 'root',
@@ -139,13 +140,14 @@ export class AuthKeycloakService {
   }
 
   async logout(redirectUrl = this.defaultRedirectUrl) {
-    storage.removeItem(storageKey)
+    // storage.removeItem(storageKey)
     await this.http.get('/apis/reset').toPromise()
-    if (this.msAuthSvc.isLogoutRequired) {
-      this.keycloakSvc.logout(this.msAuthSvc.logoutUrl(redirectUrl))
-    } else {
-      this.keycloakSvc.logout(redirectUrl)
-    }
+    logoutRedirectUrl = redirectUrl
+    // if (this.msAuthSvc.isLogoutRequired) {
+    //   this.keycloakSvc.logout(this.msAuthSvc.logoutUrl(redirectUrl))
+    // } else {
+    //   this.keycloakSvc.logout(redirectUrl)
+    // }
   }
 
   private addKeycloakEventListener() {
