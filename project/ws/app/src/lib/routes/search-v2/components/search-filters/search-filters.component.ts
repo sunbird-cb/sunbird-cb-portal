@@ -10,7 +10,7 @@ import { GbSearchService } from '../../services/gb-search.service'
 })
 export class SearchFiltersComponent implements OnInit, OnDestroy  {
   @Input() newfacets!: any
-  @Input() removeFilter!: any
+  @Input() urlparamFilters!: any
   @Output() appliedFilter = new EventEmitter<any>()
   filterForm: FormGroup | undefined
   filteroptions: any = []
@@ -24,7 +24,13 @@ export class SearchFiltersComponent implements OnInit, OnDestroy  {
     this.filteroptions = this.newfacets
     this.filteroptions.forEach((fas: any) => {
       fas.values.forEach((fasv: any) => {
-            fasv.ischecked = false
+        if (this.urlparamFilters && fas.name === this.urlparamFilters.mainType) {
+            if (fasv.name === this.urlparamFilters.name) {
+              fasv.ischecked = true
+            }
+        } else {
+          fasv.ischecked = false
+        }
       })
     })
     // this.filteroptions = [
@@ -171,6 +177,9 @@ export class SearchFiltersComponent implements OnInit, OnDestroy  {
         name: res.name,
         count: res.count,
         ischecked: false,
+      }
+      if (this.userFilters.length === 0) {
+        this.userFilters.push(fil)
       }
       this.modifyUserFilters(fil, res.mainType)
     })

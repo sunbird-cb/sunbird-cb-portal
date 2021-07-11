@@ -85,7 +85,7 @@ TODO: edit option while preview Mode
 
 
   <div class="info-section right margin-top-xl padding-m white-bg margin-left-xl margin-bottom-xl">
-    <div class="header-actions margin-top-s margin-bottom-m">
+    <!-- <div class="header-actions margin-top-s margin-bottom-m">
       <ng-container *ngIf="
           actionBtnStatus !== 'wait' &&
           content?.status !== 'Deleted' &&
@@ -150,13 +150,15 @@ TODO: edit option while preview Mode
     <p class="mt-5 mb-5 info-msg" *ngIf="showStart.msg === 'youtubeForbidden'">
       <mat-icon class="align-bottom">info</mat-icon>&nbsp;
       <ng-container i18n>Access to this YouTube content is blocked.</ng-container>
-    </p>
+    </p> -->
     <ng-container *ngIf="content?.completionStatus == 2">
+        <p class="mat-body-2 font-bold-imp ws-mat-black60-text">Your progress</p>
       <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier"
       [className]="'thick'" [progress]="100" [progressType]="'percentage'">
       </ws-widget-content-progress>
     </ng-container>
     <ng-container *ngIf="content?.completionStatus < 2">
+        <p class="mat-body-2 font-bold-imp ws-mat-black60-text">Your progress</p>
       <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier"
       [className]="'thick'" [progress]="content?.completionPercentage" [progressType]="'percentage'">
       </ws-widget-content-progress>

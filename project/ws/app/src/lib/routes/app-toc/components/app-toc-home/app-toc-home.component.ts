@@ -148,6 +148,20 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.tocConfig = data.pageData.data
         this.initData(data)
       })
+      this.route.data.subscribe(data => {
+        this.tocConfig = data.pageData.data
+        if (this.content && this.isPostAssessment) {
+          this.tocSvc.fetchPostAssessmentStatus(this.content.identifier).subscribe(res => {
+            const assessmentData = res.result
+            for (const o of assessmentData) {
+              if (o.contentId === (this.content && this.content.identifier)) {
+                this.showTakeAssessment = o
+                break
+              }
+            }
+          })
+        }
+      })
     }
     this.currentFragment = 'overview'
     this.route.fragment.subscribe((fragment: string) => {
@@ -162,6 +176,22 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         console.log('error on batchSubscription')
       },
     )
+    const instanceConfig = this.configSvc.instanceConfig
+    if (instanceConfig && instanceConfig.logos && instanceConfig.logos.defaultSourceLogo) {
+      this.defaultSLogo = instanceConfig.logos.defaultSourceLogo
+    }
+
+    if (this.configSvc.restrictedFeatures) {
+      this.isGoalsEnabled = !this.configSvc.restrictedFeatures.has('goals')
+    }
+    this.routeSubscription = this.route.queryParamMap.subscribe(qParamsMap => {
+      const contextId = qParamsMap.get('contextId')
+      const contextPath = qParamsMap.get('contextPath')
+      if (contextId && contextPath) {
+        this.contextId = contextId
+        this.contextPath = contextPath
+      }
+    })
     if (this.configSvc.restrictedFeatures) {
       this.isRegistrationSupported = this.configSvc.restrictedFeatures.has('registrationExternal')
       this.showIntranetMessage = !this.configSvc.restrictedFeatures.has(
@@ -174,9 +204,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.assignPathAndUpdateBanner(routerEvent.url)
       }
     })
-    if (this.configSvc.restrictedFeatures) {
-      this.isGoalsEnabled = !this.configSvc.restrictedFeatures.has('goals')
-    }
 
     if (this.content) {
       this.btnPlaylistConfig = {
