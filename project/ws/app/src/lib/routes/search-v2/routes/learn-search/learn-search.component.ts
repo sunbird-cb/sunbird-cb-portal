@@ -119,12 +119,23 @@ export class LearnSearchComponent implements OnInit, OnChanges {
             this.contentType.push(mf.name)
             queryparam.request.filters.contentType = this.contentType
           }
-        } else
-        if (mf.mainType === 'primaryCategory') {
+        } else if (mf.mainType === 'primaryCategory') {
           this.primaryCategoryType.push(mf.name)
           queryparam.request.filters.primaryCategory = this.primaryCategoryType
         } else if (mf.mainType === 'mimeType') {
-          this.mimeType.push(mf.name)
+          if (mf.name === 'Image') {
+           this.mimeType.push('image/jpeg')
+           this.mimeType.push('image/png')
+          } else if (mf.name === 'Video') {
+            this.mimeType.push('video/mp4')
+            this.mimeType.push('video/x-youtube')
+          } else if (mf.name === 'HTML') {
+            this.mimeType.push('application/vnd.ekstep.html-archive')
+            this.mimeType.push('text/x-url')
+            this.mimeType.push('application/vnd.ekstep.ecml-archive')
+          } else {
+            this.mimeType.push(mf.name)
+          }
           queryparam.request.filters.mimeType = this.mimeType
         } else if (mf.mainType === 'source') {
           this.sourceType.push(mf.name)
@@ -134,6 +145,12 @@ export class LearnSearchComponent implements OnInit, OnChanges {
           queryparam.request.filters.mediaType = this.mediaType
         }
       })
+
+      if (queryparam.request.filters.contentType.length === 0) {
+        this.contentType.push('Course')
+        this.contentType.push('Resource')
+        queryparam.request.filters.contentType = this.contentType
+      }
       // this.facets = []
       this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
         this.searchResults = response.result.content

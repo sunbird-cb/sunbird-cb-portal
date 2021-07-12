@@ -19,6 +19,8 @@
 }
 ::ng-deep.mat-expansion-panel-body {
     padding: 0 !important;
+    height: 160px;
+    overflow: auto;
 }
 ::ng-deep.mat-expansion-indicator {
     padding: 0 3px;
@@ -26,6 +28,7 @@
 ::ng-deep .mat-checkbox-layout {
     white-space: pre-line !important;
     padding-right: 6px !important;
+    text-transform: capitalize;
 }
 ::ng-deep .mat-checkbox-inner-container {
     height: 18px !important;

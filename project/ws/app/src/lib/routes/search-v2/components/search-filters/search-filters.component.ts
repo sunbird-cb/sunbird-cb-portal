@@ -22,6 +22,46 @@ export class SearchFiltersComponent implements OnInit, OnDestroy  {
   constructor(private searchSrvc: GbSearchService, private activated: ActivatedRoute) { }
 
   ngOnInit() {
+    this.newfacets.forEach((nf: any)  => {
+      if (nf.name === 'mimeType') {
+        const values: any = []
+        nf.values.forEach((nfv: any) => {
+          const nv = {
+            count: '',
+            name: '',
+          }
+          if (nfv.name !== 'video/mp4' && nfv.name !== 'video/x-youtube' && nfv.name !== 'application/vnd.ekstep.html-archive'
+          && nfv.name !== 'text/x-url' && nfv.name !== 'application/vnd.ekstep.ecml-archive' && nfv.name !== 'image/jpeg' 
+          && nfv.name !== 'image/png') {
+            values.push(nfv)
+          } else {
+            if (nfv.name === 'video/mp4' || nfv.name === 'video/x-youtube') {
+              nv.name = 'Video'
+              const indx = values.filter((x: any) => x.name === nv.name)
+              if (indx.length === 0) {
+                values.push(nv)
+              }
+            }
+            if (nfv.name === 'application/vnd.ekstep.html-archive' || nfv.name === 'text/x-url' ||
+            nfv.name ===  'application/vnd.ekstep.ecml-archive') {
+              nv.name = 'HTML'
+              const indx = values.filter((x: any) => x.name === nv.name)
+              if (indx.length === 0) {
+                values.push(nv)
+              }
+            }
+            if (nfv.name === 'image/jpeg' || nfv.name === 'image/png') {
+              nv.name = 'Image'
+              const indx = values.filter((x: any) => x.name === nv.name)
+              if (indx.length === 0) {
+                values.push(nv)
+              }
+            }
+          }
+        })
+        nf.values = values
+      }
+    })
     this.filteroptions = this.newfacets
     this.activated.queryParamMap.subscribe(queryParams => {
       if (queryParams.has('f')) {
