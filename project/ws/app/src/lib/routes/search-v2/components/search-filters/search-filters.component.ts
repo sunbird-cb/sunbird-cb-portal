@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy , Output, EventEmitter, Input } from '@ang
 import { FormGroup, FormControl } from '@angular/forms'
 import { Subscription } from 'rxjs'
 import { GbSearchService } from '../../services/gb-search.service'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'ws-app-search-filters',
@@ -18,21 +19,45 @@ export class SearchFiltersComponent implements OnInit, OnDestroy  {
   myFilterArray: any = []
   private subscription: Subscription = new Subscription
 
-  constructor(private searchSrvc: GbSearchService) { }
+  constructor(private searchSrvc: GbSearchService, private activated: ActivatedRoute) { }
 
   ngOnInit() {
     this.filteroptions = this.newfacets
-    this.filteroptions.forEach((fas: any) => {
-      fas.values.forEach((fasv: any) => {
-        if (this.urlparamFilters && fas.name === this.urlparamFilters.mainType) {
-            if (fasv.name === this.urlparamFilters.name) {
-              fasv.ischecked = true
-            }
-        } else {
-          fasv.ischecked = false
+    this.activated.queryParamMap.subscribe(queryParams => {
+      if (queryParams.has('f')) {
+        const sfilters = JSON.parse(queryParams.get('f') || '{}')
+        const fil = {
+          name: sfilters.contentType[0].toLowerCase(),
+          count: '',
+          ischecked: true,
         }
-      })
+        this.filteroptions.forEach((fas: any) => {
+          fas.values.forEach((fasv: any) => {
+            if (fas.name === 'contentType') {
+                if (fasv.name === fil.name) {
+                  fasv.ischecked = true
+                }
+            } else {
+              fasv.ischecked = false
+            }
+          })
+        })
+        this.modifyUserFilters(fil, 'contentType')
+      }
     })
+    // if (this.urlparamFilters) {
+    //   this.filteroptions.forEach((fas: any) => {
+    //     fas.values.forEach((fasv: any) => {
+    //       if (this.urlparamFilters && fas.name === this.urlparamFilters.mainType) {
+    //           if (fasv.name === this.urlparamFilters.name) {
+    //             fasv.ischecked = true
+    //           }
+    //       } else {
+    //         fasv.ischecked = false
+    //       }
+    //     })
+    //   })
+    // }
     // this.filteroptions = [
     //   {
     //     name: 'Provider',

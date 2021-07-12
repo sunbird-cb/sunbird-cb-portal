@@ -60,7 +60,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
           visibility: ['Default'],
           contentType: [
             'Course',
-            'Course Unit',
+            // 'Course Unit',
             'Resource',
           ],
         },
@@ -89,7 +89,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
       })
       this.applyFilter(this.paramFilters)
     } else {
-      this.facets = []
+      // this.facets = []
       this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
         this.searchResults = response.result.content
         this.totalResults = response.result.count
@@ -114,8 +114,11 @@ export class LearnSearchComponent implements OnInit, OnChanges {
       this.myFilters.forEach((mf: any) => {
         queryparam.request.query = this.param
         if (mf.mainType === 'contentType') {
-          this.contentType.push(mf.name)
-          queryparam.request.filters.contentType = this.contentType
+          const indx = this.contentType.filter((x: any) => x.name === mf.name)
+          if (indx.length === 0) {
+            this.contentType.push(mf.name)
+            queryparam.request.filters.contentType = this.contentType
+          }
         } else
         if (mf.mainType === 'primaryCategory') {
           this.primaryCategoryType.push(mf.name)
@@ -131,7 +134,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
           queryparam.request.filters.mediaType = this.mediaType
         }
       })
-      this.facets = []
+      // this.facets = []
       this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
         this.searchResults = response.result.content
         this.totalResults = response.result.count
@@ -144,7 +147,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
         this.paramFilters = []
       })
     } else {
-      this.myFilters = []
+      this.myFilters = filter
       this.getSearchedData()
     }
   }
