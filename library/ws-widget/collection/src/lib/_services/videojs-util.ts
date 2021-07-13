@@ -88,6 +88,14 @@ function eventDispatchHelper(
         identifier: data.identifier,
         playerStatus: playerState,
         mimeType: mimeT,
+        object: {
+          id: data.identifier,
+          type: data.contentType,
+          ver: data.version,
+          rollup: {
+            l1: data.collectionId || '',
+          },
+        },
       },
     }
     dispatcher(event)

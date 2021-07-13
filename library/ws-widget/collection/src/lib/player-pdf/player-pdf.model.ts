@@ -9,6 +9,10 @@ export interface IWidgetsPlayerPdfData {
     zoom: string;
     pageNumber: string;
   }
+  collectionId?: string
+  contentType?: string
+  version?: string
+  mimeType?: any
 }
 
 export interface IPlayerPdf {

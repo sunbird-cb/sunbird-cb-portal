@@ -224,6 +224,11 @@ export class PlayerPdfComponent extends WidgetBaseComponent
     if (this.identifier) {
       this.eventSvc.raiseInteractTelemetry(action, 'click', {
         contentId: this.identifier,
+        contentType: this.widgetData.contentType,
+        rollup: {
+          l1: this.widgetData.collectionId || '',
+        },
+        ver: this.widgetData.version,
       })
     }
   }
@@ -362,6 +367,14 @@ export class PlayerPdfComponent extends WidgetBaseComponent
         currentPage: this.currentPage.value,
         totalPage: this.totalPages,
         activityStartedAt: this.activityStartedAt,
+        object: {
+          id: this.widgetData.identifier,
+          type: this.widgetData.contentType,
+          ver: this.widgetData.version,
+          rollup: {
+            l1: this.widgetData.collectionId || '',
+          },
+        },
       },
       passThroughData: this.widgetData.passThroughData,
     }

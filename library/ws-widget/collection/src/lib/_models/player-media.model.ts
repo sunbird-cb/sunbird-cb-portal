@@ -18,4 +18,7 @@ export interface IWidgetsPlayerMediaData {
   platform?: any
   mimeType?: any
   continueLearning?: boolean
+  collectionId?: string
+  contentType?: string
+  version?: string
 }
