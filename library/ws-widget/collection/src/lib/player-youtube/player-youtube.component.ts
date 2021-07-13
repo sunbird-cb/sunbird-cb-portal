@@ -240,7 +240,7 @@ export class PlayerYoutubeComponent extends WidgetBaseComponent
               src: this.widgetData.url,
             },
           ],
-          autoplay: true
+          autoplay: true,
         },
         dispatcher,
         saveCLearning,

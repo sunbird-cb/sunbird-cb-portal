@@ -215,7 +215,6 @@ export function videoJsInitializer(
           }
         }
       } catch (err) {
-        console.log(err)
       }
     })
     player.on(videojsEventNames.ended, () => {
