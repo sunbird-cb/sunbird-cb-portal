@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy , Output, EventEmitter, Input } from '@ang
 import { FormGroup, FormControl } from '@angular/forms'
 import { Subscription } from 'rxjs'
 import { GbSearchService } from '../../services/gb-search.service'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'ws-app-search-filters',
@@ -10,7 +11,7 @@ import { GbSearchService } from '../../services/gb-search.service'
 })
 export class SearchFiltersComponent implements OnInit, OnDestroy  {
   @Input() newfacets!: any
-  @Input() removeFilter!: any
+  @Input() urlparamFilters!: any
   @Output() appliedFilter = new EventEmitter<any>()
   filterForm: FormGroup | undefined
   filteroptions: any = []
@@ -18,15 +19,85 @@ export class SearchFiltersComponent implements OnInit, OnDestroy  {
   myFilterArray: any = []
   private subscription: Subscription = new Subscription
 
-  constructor(private searchSrvc: GbSearchService) { }
+  constructor(private searchSrvc: GbSearchService, private activated: ActivatedRoute) { }
 
   ngOnInit() {
-    this.filteroptions = this.newfacets
-    this.filteroptions.forEach((fas: any) => {
-      fas.values.forEach((fasv: any) => {
-            fasv.ischecked = false
-      })
+    this.newfacets.forEach((nf: any)  => {
+      if (nf.name === 'mimeType') {
+        const values: any = []
+        nf.values.forEach((nfv: any) => {
+          const nv = {
+            count: '',
+            name: '',
+          }
+          if (nfv.name !== 'video/mp4' && nfv.name !== 'video/x-youtube' && nfv.name !== 'application/vnd.ekstep.html-archive'
+          && nfv.name !== 'text/x-url' && nfv.name !== 'application/vnd.ekstep.ecml-archive' && nfv.name !== 'image/jpeg' 
+          && nfv.name !== 'image/png') {
+            values.push(nfv)
+          } else {
+            if (nfv.name === 'video/mp4' || nfv.name === 'video/x-youtube') {
+              nv.name = 'Video'
+              const indx = values.filter((x: any) => x.name === nv.name)
+              if (indx.length === 0) {
+                values.push(nv)
+              }
+            }
+            if (nfv.name === 'application/vnd.ekstep.html-archive' || nfv.name === 'text/x-url' ||
+            nfv.name ===  'application/vnd.ekstep.ecml-archive') {
+              nv.name = 'HTML'
+              const indx = values.filter((x: any) => x.name === nv.name)
+              if (indx.length === 0) {
+                values.push(nv)
+              }
+            }
+            if (nfv.name === 'image/jpeg' || nfv.name === 'image/png') {
+              nv.name = 'Image'
+              const indx = values.filter((x: any) => x.name === nv.name)
+              if (indx.length === 0) {
+                values.push(nv)
+              }
+            }
+          }
+        })
+        nf.values = values
+      }
     })
+    this.filteroptions = this.newfacets
+    this.activated.queryParamMap.subscribe(queryParams => {
+      if (queryParams.has('f')) {
+        const sfilters = JSON.parse(queryParams.get('f') || '{}')
+        const fil = {
+          name: sfilters.contentType[0].toLowerCase(),
+          count: '',
+          ischecked: true,
+        }
+        this.filteroptions.forEach((fas: any) => {
+          fas.values.forEach((fasv: any) => {
+            if (fas.name === 'contentType') {
+                if (fasv.name === fil.name) {
+                  fasv.ischecked = true
+                }
+            } else {
+              fasv.ischecked = false
+            }
+          })
+        })
+        this.modifyUserFilters(fil, 'contentType')
+      }
+    })
+    // if (this.urlparamFilters) {
+    //   this.filteroptions.forEach((fas: any) => {
+    //     fas.values.forEach((fasv: any) => {
+    //       if (this.urlparamFilters && fas.name === this.urlparamFilters.mainType) {
+    //           if (fasv.name === this.urlparamFilters.name) {
+    //             fasv.ischecked = true
+    //           }
+    //       } else {
+    //         fasv.ischecked = false
+    //       }
+    //     })
+    //   })
+    // }
     // this.filteroptions = [
     //   {
     //     name: 'Provider',
@@ -171,6 +242,9 @@ export class SearchFiltersComponent implements OnInit, OnDestroy  {
         name: res.name,
         count: res.count,
         ischecked: false,
+      }
+      if (this.userFilters.length === 0) {
+        this.userFilters.push(fil)
       }
       this.modifyUserFilters(fil, res.mainType)
     })

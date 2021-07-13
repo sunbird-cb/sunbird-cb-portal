@@ -8,14 +8,13 @@
             <p *ngIf="myFilters && myFilters.length > 0" class="mat-body-2 ws-mat-black60-text filternames">
                 <span *ngFor="let mf of myFilters" class="display-inline-block myfilter-custom margin-right-s ng-star-inserted padding-right-s padding-left-s padding-top-xs padding-bottom-xs">
                      
-                    <span *ngIf="mf.name === 'video/mp4'">Video</span>
+                    <span *ngIf="mf.name === 'application/vnd.ekstep.content-collection'">Collection</span>
                     <span *ngIf="mf.name === 'audio/mpeg'">Audio</span>
                     <span *ngIf="mf.name === 'application/pdf'">PDF</span>
                     <span *ngIf="mf.name === 'application/json'">Assessment</span>
-                    <span *ngIf="mf.name === 'application/vnd.ekstep.html-archive'">HTML</span>
 
-                    <span *ngIf="mf.name !== 'application/vnd.ekstep.html-archive' && mf.name !== 'application/json' && 
-                    mf.name !== 'application/pdf' && mf.name !== 'audio/mpeg' && mf.name !== 'video/mp4'">{{mf.name}}</span>
+                    <span *ngIf="mf.name !== 'application/json' && 
+                    mf.name !== 'application/pdf' && mf.name !== 'audio/mpeg' && mf.name !== 'application/vnd.ekstep.content-collection'">{{mf.name}}</span>
                     <mat-icon (click)="removeFilter(mf)" class="cursor-pointer margin-left-xs ws-mat-black60-text">close</mat-icon> 
                 </span>
             </p>
@@ -43,18 +42,21 @@
                         [wsUtilsDefaultThumbnail]="defaultThumbnail" alt="">
                     </div>
                     <mat-card-content>
-                        <p class="mat-caption margin-bottom-xxs ws-mat-black60-text" *ngIf="content.contentType === 'Course'">
-                                <img src="/assets/icons/content/course.svg" alt="Course" class="contenticon"> COURSE
+                        <!-- <p class="mat-caption margin-bottom-xxs ws-mat-black60-text" *ngIf="content.contentType === 'Course'">
+                            <img src="/assets/icons/content/course.svg" alt="Course" class="contenticon"> COURSE
                         </p>
                         <p class="mat-caption margin-bottom-xxs" *ngIf="content.contentType === 'Module'">
                             <img src="/assets/icons/content/module.svg" class="contenticon" alt="Module"> MODULE
-                        </p>
-                        <p class="mat-caption margin-bottom-xxs" *ngIf="content.contentType === 'Resource'">
+                        </p> -->
+                        <p class="mat-caption margin-bottom-xxs text-uppercase" *ngIf="content.contentType === 'Resource' || content.contentType === 'Course' || content.contentType === 'Module'">
                             <img src="/assets/icons/content/audio.svg" class="contenticon" alt="Audio"  *ngIf="content.mimeType === 'audio/mpeg'"> 
                             <img src="/assets/icons/content/assessment.svg" class="contenticon" alt="Assessment"  *ngIf="content.mimeType === 'application/json'"> 
                             <img src="/assets/icons/content/pdf.svg" alt="PDF" class="contenticon" *ngIf="content.mimeType === 'application/pdf'"> 
-                            <img src="/assets/icons/content/video.svg" alt="Video" class="contenticon"  *ngIf="content.mimeType === 'video/mp4'"> 
-                            RESOURCE
+                            <img src="/assets/icons/content/video.svg" alt="Video" class="contenticon"  *ngIf="content.mimeType === 'video/mp4' || content.mimeType === 'video/x-youtube'"> 
+                            <img src="/assets/icons/content/collection.svg" class="contenticon" alt="Module"  *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection'">
+                            <img src="/assets/icons/content/link.svg" class="contenticon" alt="Module"  *ngIf="content.mimeType === 'application/vnd.ekstep.html-archive' || content.mimeType === 'text/x-url' || content.mimeType === 'application/vnd.ekstep.ecml-archive'">
+                            <img src="/assets/icons/content/image.svg" class="contenticon" alt="Module"  *ngIf="content.mimeType === 'image/jpeg' || content.mimeType === 'image/png'">
+                            {{content.contentType}}
                         </p>
                         <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer">
                             <a [href]="'/app/toc/' + content.identifier + '/overview?primaryCategory='+ content.primaryCategory ">{{content.name}}</a>
@@ -96,8 +98,8 @@
         </mat-sidenav-content>
 
         <!-- filter sidebar -->
-        <mat-sidenav mode="side" position="end" opened class="custom-sidenav" >
-            <ws-app-search-filters *ngIf="facets && facets.length > 0" [newfacets]="facets" (appliedFilter)="applyFilter($event)" [removeFilter]="rFilter"></ws-app-search-filters>
+        <mat-sidenav mode="side" position="end" opened class="custom-sidenav">
+            <ws-app-search-filters *ngIf="facets && facets.length > 0" [urlparamFilters]="paramFilters" [newfacets]="facets" (appliedFilter)="applyFilter($event)"></ws-app-search-filters>
         </mat-sidenav>
     </mat-sidenav-container>
 </div>
