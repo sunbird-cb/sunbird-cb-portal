@@ -26,7 +26,14 @@ export class GlobalSearchComponent implements OnInit {
         this.searchParam = queryParams.get('q') || ''
       }
       if (queryParams.has('f')) {
-        this.searchparamFilters = JSON.parse(queryParams.get('f') || '{}')
+        const sfilters = JSON.parse(queryParams.get('f') || '{}')
+        const paramfilter = [{
+          mainType:  'contentType',
+          name: sfilters.contentType[0].toLowerCase(),
+          count: '',
+          ischecked: true,
+        }]
+        this.searchparamFilters = paramfilter
       }
     })
   }

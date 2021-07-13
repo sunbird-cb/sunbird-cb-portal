@@ -97,7 +97,7 @@
 
         <!-- filter sidebar -->
         <mat-sidenav mode="side" position="end" opened class="custom-sidenav" >
-            <ws-app-search-filters *ngIf="facets && facets.length > 0" [newfacets]="facets" (appliedFilter)="applyFilter($event)" [removeFilter]="rFilter"></ws-app-search-filters>
+            <ws-app-search-filters *ngIf="facets && facets.length > 0" [urlparamFilters]="paramFilters" [newfacets]="facets" (appliedFilter)="applyFilter($event)"></ws-app-search-filters>
         </mat-sidenav>
     </mat-sidenav-container>
 </div>

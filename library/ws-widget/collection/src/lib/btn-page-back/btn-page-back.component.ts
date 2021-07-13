@@ -93,7 +93,7 @@ export class BtnPageBackComponent extends WidgetBaseComponent
   }
 
   navigate() {
-    this.discussUtilitySvc.setDiscussionConfig({
+    const config = {
       menuOptions: [
         {
           route: 'all-discussions',
@@ -112,7 +112,7 @@ export class BtnPageBackComponent extends WidgetBaseComponent
         },
         {
           route: 'my-discussion',
-          label: 'My discussion',
+          label: 'Your discussion',
           enable: true,
         },
       ],
@@ -124,8 +124,10 @@ export class BtnPageBackComponent extends WidgetBaseComponent
       routerSlug: '/app',
       headerOptions: false,
       bannerOption: true,
-    })
-    this.router.navigate(['/app/discussion-forum'])
+    }
+    this.discussUtilitySvc.setDiscussionConfig(config)
+    localStorage.setItem('home', JSON.stringify(config))
+    this.router.navigate(['/app/discussion-forum'], { queryParams: { page: 'home' }, queryParamsHandling: 'merge' })
   }
 
   // get titleUrl(): { fragment?: string; routeUrl: string; queryParams: any } {

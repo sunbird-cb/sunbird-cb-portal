@@ -1,0 +1,10 @@
+
+<div class='widget-container'>
+    <button *ngIf='state !== alldiscussPage' mat-icon-button (click)="widgetBackClick()">
+        <mat-icon class="padding-right-s">arrow_backword</mat-icon>
+        <span>Back</span>
+    </button>
+    <lib-discuss-tags *ngIf='state === alldiscussPage' (stateChange)='stateChange($event)'></lib-discuss-tags>
+    <lib-tag-all-discussion *ngIf='state === tagAllDiscussPage'  [widgetTagName]='slug' (stateChange)='stateChange($event)'></lib-tag-all-discussion>
+    <lib-discussion-details *ngIf='state === detailsPage'  [topicId]='tid' [slug]='slug' (stateChange)='stateChange($event)'></lib-discussion-details>
+</div> 

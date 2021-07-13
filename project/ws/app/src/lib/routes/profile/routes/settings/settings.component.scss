@@ -207,3 +207,15 @@
 .wid-50{
   width: 50% !important;
 }
+.theme-radio{
+  display: inline-block;
+  width: 74%;
+  border: 2px solid #0174B6;
+  padding: 15px 10px 10px 10px;
+  border-radius: 5px 5px 0 0 ;
+}
+.theme-img{
+  width: -webkit-fill-available;
+    /* height: 13%; */
+    max-width: 80%;
+}
