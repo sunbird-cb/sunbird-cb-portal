@@ -78,6 +78,7 @@ export namespace WsEvents {
     currentPage: number
     totalPage: number
     activityStartedAt: Date | null
+    object: any
   }
   export type WsEventTelemetryPDF = IWsEvents<IWsEventTelemetryPdfData>
 

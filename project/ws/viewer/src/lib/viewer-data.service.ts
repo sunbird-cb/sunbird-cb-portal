@@ -30,6 +30,7 @@ export class ViewerDataService {
   resourceId: string | null = null
   resource: NsContent.IContent | null = null
   primaryCategory: string | null = null
+  collectionId: string | null = null
   error: any
   status: TStatus = 'none'
   resourceChangedSubject = new Subject<string>()
@@ -38,12 +39,13 @@ export class ViewerDataService {
   navSupportForResource = new ReplaySubject<IViewerResourceOptions>(1)
   constructor() { }
 
-  reset(resourceId: string | null = null, status: TStatus = 'none', primaryCategory?: string) {
+  reset(resourceId: string | null = null, status: TStatus = 'none', primaryCategory?: string, collectionId?: string) {
     this.resourceId = resourceId
     this.resource = null
     this.error = null
     this.status = status
     this.primaryCategory = primaryCategory || ''
+    this.collectionId = collectionId || '',
     this.changedSubject.next()
   }
   updateResource(resource: NsContent.IContent | null = null, error: any | null = null) {
