@@ -190,10 +190,11 @@ export function videoJsInitializer(
   fireRProgress: fireRealTimeProgressFunction,
   passThroughData: any,
   widgetSubType: string,
-  resumePoint: number = 0,
+  resumePoint: number,
   enableTelemetry: boolean,
   widgetData: IWidgetsPlayerMediaData,
   mimeType: NsContent.EMimeTypes,
+  size?: any
 ): { player: videoJs.Player; dispose: () => void } {
   const player = videoJs(elem, config)
   const eventDispatcher = enableTelemetry
@@ -205,15 +206,17 @@ export function videoJsInitializer(
   let readyToRaise = false
   let currTime = 0
   if (enableTelemetry) {
-    player.on(videojsEventNames.loadeddata, () => {
+    player.on(videojsEventNames.ready, () => {
       try {
         if (resumePoint) {
           const start = Number(resumePoint)
-          if (start > 10 && player.duration() - start > 20) {
+          if (start > 10 && size - start > 20) {
             player.currentTime(start - 10)
           }
         }
-      } catch (err) { }
+      } catch (err) {
+        console.log(err)
+      }
     })
     player.on(videojsEventNames.ended, () => {
       if (loaded) {
