@@ -251,6 +251,7 @@ export class PlayerYoutubeComponent extends WidgetBaseComponent
         enableTelemetry,
         this.widgetData,
         NsContent.EMimeTypes.YOUTUBE,
+        this.widgetData.size
       )
       this.player = initObj.player
       this.dispose = initObj.dispose

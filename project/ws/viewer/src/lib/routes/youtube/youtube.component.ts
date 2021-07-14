@@ -54,7 +54,6 @@ export class YoutubeComponent implements OnInit, OnDestroy {
           this.formDiscussionForumWidget(this.youtubeData)
         }
 
-
         this.widgetResolverYoutubeData = this.initWidgetResolverYoutubeData()
         if (this.youtubeData && this.youtubeData.identifier) {
           if (this.activatedRoute.snapshot.queryParams.collectionId) {
