@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy , Output, EventEmitter, Input } from '@angular/core'
+import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core'
 import { FormGroup, FormControl } from '@angular/forms'
 import { Subscription } from 'rxjs'
 import { GbSearchService } from '../../services/gb-search.service'
@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router'
   templateUrl: './search-filters.component.html',
   styleUrls: ['./search-filters.component.scss'],
 })
-export class SearchFiltersComponent implements OnInit, OnDestroy  {
+export class SearchFiltersComponent implements OnInit, OnDestroy {
   @Input() newfacets!: any
   @Input() urlparamFilters!: any
   @Output() appliedFilter = new EventEmitter<any>()
@@ -22,7 +22,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy  {
   constructor(private searchSrvc: GbSearchService, private activated: ActivatedRoute) { }
 
   ngOnInit() {
-    this.newfacets.forEach((nf: any)  => {
+    this.newfacets.forEach((nf: any) => {
       if (nf.name === 'mimeType') {
         const values: any = []
         nf.values.forEach((nfv: any) => {
@@ -31,8 +31,8 @@ export class SearchFiltersComponent implements OnInit, OnDestroy  {
             name: '',
           }
           if (nfv.name !== 'video/mp4' && nfv.name !== 'video/x-youtube' && nfv.name !== 'application/vnd.ekstep.html-archive'
-          && nfv.name !== 'text/x-url' && nfv.name !== 'application/vnd.ekstep.ecml-archive' && nfv.name !== 'image/jpeg' 
-          && nfv.name !== 'image/png') {
+            // tslint:disable-next-line: max-line-length
+            && nfv.name !== 'text/x-url' && nfv.name !== 'application/vnd.ekstep.ecml-archive' && nfv.name !== 'image/jpeg' && nfv.name !== 'image/png') {
             values.push(nfv)
           } else {
             if (nfv.name === 'video/mp4' || nfv.name === 'video/x-youtube') {
@@ -43,7 +43,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy  {
               }
             }
             if (nfv.name === 'application/vnd.ekstep.html-archive' || nfv.name === 'text/x-url' ||
-            nfv.name ===  'application/vnd.ekstep.ecml-archive') {
+              nfv.name === 'application/vnd.ekstep.ecml-archive') {
               nv.name = 'HTML'
               const indx = values.filter((x: any) => x.name === nv.name)
               if (indx.length === 0) {
@@ -74,9 +74,9 @@ export class SearchFiltersComponent implements OnInit, OnDestroy  {
         this.filteroptions.forEach((fas: any) => {
           fas.values.forEach((fasv: any) => {
             if (fas.name === 'contentType') {
-                if (fasv.name === fil.name) {
-                  fasv.ischecked = true
-                }
+              if (fasv.name === fil.name) {
+                fasv.ischecked = true
+              }
             } else {
               fasv.ischecked = false
             }
@@ -285,7 +285,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy  {
       this.userFilters.push(fil)
 
       const reqfilter = {
-        mainType:  mainparentType,
+        mainType: mainparentType,
         name: fil.name,
         count: fil.count,
         ischecked: true,
