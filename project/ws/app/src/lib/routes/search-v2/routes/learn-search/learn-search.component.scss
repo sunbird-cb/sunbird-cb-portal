@@ -31,25 +31,25 @@
     .learn-card {
         border-radius: 10px;
         background: #ffffff;
-        height: 192px;
-        min-height: 192px;
+        height: 170px;
+        min-height: 170px;
         box-shadow: none !important;
         .imageholder {
-            width: 39%;
-            height: 196px;
+            width: 34%;
+            height: 170px;
             img {
                 width: 100%;
                 display: block;
                 height: auto;
-                max-height: 192px;
+                max-height: 170px;
                 border-radius: 10px 0 0 10px;
             }
         }
         .mat-card-content {
-            margin-left: 40%;
+            margin-left: 36%;
             padding: 8px;
             position: relative;
-            height: 176px;
+            height: 152px;
             .mat-caption {
                 .mat-icon {
                     vertical-align: middle;

@@ -61,6 +61,16 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
         })
         nf.values = values
       }
+      if (nf.name === 'contentType') {
+        nf.values = [{
+          count: '',
+          name: 'resource',
+        },
+        {
+          count: '',
+          name: 'course',
+        }]
+      }
     })
     this.filteroptions = this.newfacets
     this.activated.queryParamMap.subscribe(queryParams => {

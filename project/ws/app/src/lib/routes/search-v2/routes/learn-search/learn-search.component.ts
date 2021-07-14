@@ -114,13 +114,11 @@ export class LearnSearchComponent implements OnInit, OnChanges {
       this.myFilters.forEach((mf: any) => {
         queryparam.request.query = this.param
         if (mf.mainType === 'contentType') {
-          // const indx = this.contentType.filter((x: any) => x.name === mf.name)
-          // if (indx.length === 0) {
-          //   this.contentType.push(mf.name)
-          //   queryparam.request.filters.contentType = this.contentType
-          // }
-          this.contentType.push('Course')
-          this.contentType.push('Resource')
+          const indx = this.contentType.filter((x: any) => x.name === mf.name)
+          if (indx.length === 0) {
+            this.contentType.push(mf.name)
+            queryparam.request.filters.contentType = this.contentType
+          }
           queryparam.request.filters.contentType = this.contentType
         } else if (mf.mainType === 'primaryCategory') {
           this.primaryCategoryType.push(mf.name)
@@ -149,11 +147,11 @@ export class LearnSearchComponent implements OnInit, OnChanges {
         }
       })
 
-      // if (queryparam.request.filters.contentType.length === 0) {
-      //   this.contentType.push('Course')
-      //   this.contentType.push('Resource')
-      //   queryparam.request.filters.contentType = this.contentType
-      // }
+      if (queryparam.request.filters.contentType.length === 0) {
+        this.contentType.push('Course')
+        this.contentType.push('Resource')
+        queryparam.request.filters.contentType = this.contentType
+      }
       // this.facets = []
       this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
         this.searchResults = response.result.content
