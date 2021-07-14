@@ -334,9 +334,7 @@ export class AppTocService {
     cohortType: NsCohorts.ECohortTypes,
     contentId: string,
   ): Observable<NsCohorts.ICohortsContent[]> {
-    return this.http.get<NsCohorts.ICohortsContent[]>(API_END_POINTS.COHORTS(cohortType, contentId), {
-      headers: { rootOrg: this.configSvc.rootOrg || '', org: this.configSvc.org ? this.configSvc.org[0] : '' },
-    })
+    return this.http.get<NsCohorts.ICohortsContent[]>(API_END_POINTS.COHORTS(cohortType, contentId))
   }
   fetchExternalContentAccess(contentId: string): Observable<{ hasAccess: boolean }> {
     return this.http.get<{ hasAccess: boolean }>(API_END_POINTS.EXTERNAL_CONTENT(contentId))

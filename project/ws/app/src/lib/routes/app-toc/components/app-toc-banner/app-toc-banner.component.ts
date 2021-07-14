@@ -21,7 +21,6 @@ import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import { FormControl, Validators } from '@angular/forms'
 import * as dayjs from 'dayjs'
 import * as  lodash from 'lodash'
-import { TitleTagService } from '../../services/title-tag.service'
 
 @Component({
   selector: 'ws-app-toc-banner',
@@ -85,7 +84,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     private mobileAppsSvc: MobileAppsService,
     private snackBar: MatSnackBar,
     public configSvc: ConfigurationsService,
-    private tagSvc: TitleTagService,
   ) {
 
   }
@@ -536,11 +534,5 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     } catch (e) {
       return true
     }
-  }
-
-  public getBgColor(tagTitle: any) {
-    const bgColor = this.tagSvc.stringToColor(tagTitle.toLowerCase())
-    const color = this.tagSvc.getContrast(bgColor)
-    return { color, 'background-color': bgColor }
   }
 }

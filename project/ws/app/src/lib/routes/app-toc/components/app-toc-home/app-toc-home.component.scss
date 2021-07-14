@@ -139,17 +139,12 @@ mat-divider {
     width: 100%;
   }
 }
-.font-bold-imp {
-  font-weight: 700 !important;
-}
-.info-section {
-  width: 20%;
-  min-width: 250px;
 
-  .custom-button{
-    background: #0074B6 0% 0% no-repeat padding-box;
-    border-radius: 4px;
-  }
+.info-section {
+  width: 28%;
+  padding: 0 8px;
+  min-width: 250px;
+  margin-left: 24px;
 
   @include breakpoint-xs {
     width: 100%;
@@ -157,49 +152,49 @@ mat-divider {
   }
 
   .glance-container {
-    .at-glance-heading {
-      letter-spacing: 0px;
-      color: #222222;
-    }
+    .info-container {
+      // padding: $size-s $size-m;
+      margin-bottom: $size-l;
 
-    .info-item {
-      // display: flex;
-      // align-items: center;
-      // padding: $size-xs 0;
-      // box-sizing: border-box;
-
-      .cs-icons {
-        .mat-icon {
-          color: #666666;
-          vertical-align: middle;
-          font-size: 20px;
-        }
-        img {
-          width: 20px;
-          height: 20px;
-          vertical-align: middle;
-        }
-      }
-
-      .item-heading {
-        font: 600 14px/21px Lato;
-        margin: 0 0 4px;
+      .at-glance-heading {
+        // font: 18px/30px Poppins-Medium;
         letter-spacing: 0px;
-        color: #00A9F4 !important;
+        color: #222222;
       }
 
-      .item-value {
-        // font: 14px/20px Poppins-Regular;
-        letter-spacing: 0px;
-        color: #5F5F5F;
-      }
+      .info-item {
+        display: flex;
+        align-items: center;
+        padding: $size-xs 0;
+        box-sizing: border-box;
 
-      .item-icon {
-        $icon-size: 20px;
-        width: $icon-size;
-        height: $icon-size;
-        font-size: $icon-size;
-        margin-left: $size-xs;
+        h3 {
+          margin: 0;
+        }
+
+        .item-heading {
+          width: 40%;
+          min-width: 80px;
+          max-width: 140px;
+          text-align: left;
+          // font: 14px/20px Poppins-Regular;
+          letter-spacing: 0px;
+          color: #00A9F4 !important;
+        }
+
+        .item-value {
+          // font: 14px/20px Poppins-Regular;
+          letter-spacing: 0px;
+          color: #5F5F5F;
+        }
+
+        .item-icon {
+          $icon-size: 20px;
+          width: $icon-size;
+          height: $icon-size;
+          font-size: $icon-size;
+          margin-left: $size-xs;
+        }
       }
     }
   }

@@ -45,7 +45,7 @@
 }
 
 .header-synopsis {
-  // height: 100%;
+  height: 100%;
   @extend %container-padding;
   box-sizing: border-box;
 
@@ -53,18 +53,26 @@
     min-width: 86px;
 
     img {
-      height: 32px;
-      width: 86px;
+      height: 72px;
+      width: 72px;
+      object-fit: cover;
       background-color: #fff;
-      padding: 4px;
-      border-radius: 12px;
-      object-fit: contain;
+      padding: 7px;
+      border-radius: 8px;
     }
   }
 
   .header-title {
     display: flex;
-    // align-items: center;
+    align-items: center;
+
+    h1 {
+      // font: 48px/48px Poppins-SemiBold;
+      letter-spacing: 0px;
+      color: #FFFFFF;
+      // font-family: Poppins-SemiBold;
+
+    }
 
     .text-truncate-title {
       max-width: 100%;
@@ -74,34 +82,26 @@
     }
   }
 
-  .rating {
-    .mat-icon {
-      width: 16px;
-      height: 16px;
-      display: inline-table;
-      color: #F69953;
-      font-size: 18px;
-    }
-    .rating-number {
-      letter-spacing: 0px;
-      color: #F69953;
-    }
-  
-    .rating-count {
-      // font: 18px/27px Poppins-regular;
-      letter-spacing: 0.36px;
-      color: #F69953;
-    }
-  
-    .rating mat-icon {
-      color: #F69953;
-    }
+  .rating-number {
+    // font: 24px/35px Poppins-Medium;
+    letter-spacing: 0px;
+    color: #FFFFFF;
   }
 
-  // .header-meta-banner {
-    // height: 135px;
-    // overflow: hidden;
-  // }
+  .rating-count {
+    // font: 18px/27px Poppins-regular;
+    letter-spacing: 0.36px;
+    color: #FFFFFF;
+  }
+
+  .rating mat-icon {
+    color: #fff;
+  }
+
+  .header-meta-banner {
+    height: 135px;
+    overflow: hidden;
+  }
 
   .header-meta {
     line-height: 1.5;
@@ -128,10 +128,7 @@
   .header-actions {
     display: flex;
     // margin-top: 24px;
-    .custom-button{
-      background: #0074B6 0% 0% no-repeat padding-box;
-      border-radius: 4px;
-    }
+
     &.top {
       margin-top: 0;
       margin-bottom: 40px;
@@ -153,6 +150,9 @@
     flex: 1;
     min-width: 1px;
     margin-right: $size-l;
+    // font: Regular 24px/35px Poppins;
+    letter-spacing: 0px;
+    color: #FFFFFF;
 
     @include breakpoint-xs {
       margin-right: 0;
@@ -242,24 +242,6 @@
 
   mat-icon {
     color: #fff !important;
-  }
-}
-.tags {
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  flex-wrap: wrap;
-  position: relative;
-  z-index: 2; 
-  
-  .tag {
-    display: flex;
-    margin: 0 10p 0 0;
-    padding: 3px 15px;
-    font-size: 12px;
-    min-width: 30px;
-    justify-content: center;
-    border-radius: 20px 5px 5px 20px;
   }
 }
 

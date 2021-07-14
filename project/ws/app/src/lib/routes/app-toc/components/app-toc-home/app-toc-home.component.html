@@ -13,15 +13,14 @@ TODO: edit option while preview Mode
 </a> -->
 <!-- <ng-container *ngIf="isAuthor" [wsResolverWidget]="authorBtnWidget"></ng-container> -->
 <!-- </mat-toolbar> -->
+
+<ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content"
+  [analytics]="analytics" [resumeData]="resumeData" [batchData]="batchData">
+</ws-app-toc-banner>
 <ng-container>
-<div class="fixed-width flex flex-wrap">
-  <div class="meta-section">
-    <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content"
-      [analytics]="analytics" [resumeData]="resumeData" [batchData]="batchData">
-    </ws-app-toc-banner>
-    <div role="none" class="toc-body margin-top-xl">
-        <ws-app-app-toc-single-page [content]="content" [initialrouteData]="initialrouteData"></ws-app-app-toc-single-page>
-      <!-- <div class="flex mat-app-background" #stickyMenu >
+  <div class="toc-container">
+    <div role="none" class="toc-body">
+      <div class="flex mat-app-background" #stickyMenu [class.sticky]="sticky">
         <nav mat-tab-nav-bar class="toc-links fixed-width" aria-label="content navigation">
           <a mat-tab-link [routerLink]='"./single-page-view"' fragment="overview" i18n-aria-label aria-label="overview"
             class="tab" [ngClass]="{'ws-mat-primary-text link-active': currentFragment === 'overview'}" 
@@ -56,22 +55,23 @@ TODO: edit option while preview Mode
             [ngClass]="{'ws-mat-primary-text link-active': currentFragment === 'cohorts'}" i18n>
             <span i18n class="margin-top-m mat-title">Cohorts</span>
           </a>
-          <a *ngIf="content?.children?.length" mat-tab-link [routerLink]='"./single-page-view"' fragment="cohorts"
+          <!-- <a *ngIf="content?.children?.length" mat-tab-link [routerLink]='"./single-page-view"' fragment="cohorts"
           [ngClass]="{'ws-mat-primary-text link-active' : fragment ==='cohorts'}" [routerLinkActiveOptions]="{ exact: true }"
             i18n>Cohorts</a> -->
 
-          <!-- <a *ngIf="content?.children?.length" mat-tab-link [routerLink]='"./single-page-view"' i18n-aria-label
+          <a *ngIf="content?.children?.length" mat-tab-link [routerLink]='"./single-page-view"' i18n-aria-label
             class="tab" fragment="discussion-forum"
             [ngClass]="{'ws-mat-primary-text link-active': currentFragment === 'discussion-forum'}" i18n>
             <span i18n class="margin-top-m mat-title">Discussion</span>
-          </a> -->
+
+          </a>
 
           <!-- <a *ngIf="enableAnalytics" class="rounded-icon justify-center" [disabled]="forPreview" i18n-aria-label
             class="tab" mat-tab-link [routerLink]="'./analytics'" [routerLinkActiveOptions]="{ exact: true }"
             aria-label="analytics" routerLinkActive="ws-mat-primary-text link-active" i18n>
             <mat-icon>bar_chart</mat-icon>
           </a> -->
-        <!-- </nav>
+        </nav>
       </div>
 
       <mat-divider class="fluid-width margin-bottom-m"></mat-divider>
@@ -79,357 +79,15 @@ TODO: edit option while preview Mode
         <div class="" *ngIf="!errorCode; else tocError">
           <router-outlet #routerRef></router-outlet>
         </div>
-      </section> -->
+      </section>
     </div>
   </div>
 
-
-  <div class="info-section right margin-top-xl padding-m white-bg margin-left-xl margin-bottom-xl">
-    <!-- <div class="header-actions margin-top-s margin-bottom-m">
-      <ng-container *ngIf="
-          actionBtnStatus !== 'wait' &&
-          content?.status !== 'Deleted' &&
-          content?.status !== 'Expired'
-        ">
-        <div [hidden]="isResource && !content?.artifactUrl?.length" class="text-white text-center custom-button">
-          <ng-container *ngIf="
-              actionBtnStatus === 'grant' &&
-              !(isMobile && content?.isInIntranet) &&
-              !(
-                content?.contentType === 'Course' &&
-                content?.children.length === 0 &&
-                !content?.artifactUrl?.length
-              ) &&
-              !(
-                content?.contentType === 'Course' && !batchData?.enrolled
-              ) &&
-              !(content?.contentType === 'Resource' && !content?.artifactUrl)
-            ">
-            <a *ngIf="showStart.show && !isPostAssessment"
-              [routerLink]="resumeData ? resumeDataLink?.url : firstResourceLink?.url"
-              [queryParams]="resumeData ? generateQuery('RESUME') : generateQuery('START')"
-              class="mat-button mat-button-base resumeButton">
-              <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
-                {{resumeData?"Resume":"Start"}}
-              </ng-container>
-            </a>
-            <a *ngIf="isPostAssessment && showTakeAssessment?.post_assessment"
-              [routerLink]="firstResourceLink?.url" class="mat-button mat-button-base">
-              <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>Take Assessment</ng-container>
-            </a>
-          </ng-container>
-          <ng-container *ngIf="actionBtnStatus == 'reject' && content?.registrationUrl">
-            <a [href]="content?.registrationUrl" target="_blank" class="mat-button mat-button-base" i18n>Register</a>
-          </ng-container>
-        </div>
-      </ng-container>
-      <h3 *ngIf="content?.status === 'Deleted' || content?.status === 'Expired'"
-        class="margin-remove-bottom pt-4 info-msg" i18n>
-        The content is expired or deleted.
-      </h3>
-      <h3 class="margin-remove-bottom pt-4 info-msg" i18n *ngIf="content?.status === 'Unpublished'">
-        The content has been unpublished.
-      </h3>
-      <h3 class="margin-remove-bottom pt-4 info-msg" i18n *ngIf="content?.status === 'Draft'">
-        The content is in draft.
-      </h3>
-      <h3 class="margin-remove-bottom pt-4 info-msg" i18n *ngIf="content?.status === 'InReview'">
-        The content is in review.
-      </h3>
-    </div>
-
-    <p class="mt-5 mb-5 info-msg" *ngIf="content?.isInIntranet && showIntranetMsg">
-        <mat-icon class="align-bottom">info</mat-icon>&nbsp;
-        <ng-container i18n>This can be viewed only in the Intranet.</ng-container>
-    </p>
-    <p class="mt-5 mb-5 info-msg" *ngIf="showInstructorLedMsg">
-      <mat-icon class="align-bottom">info</mat-icon>&nbsp;
-      <ng-container i18n>This is instructor-led classroom course and is not available online.</ng-container>
-    </p>
-
-    <p class="mt-5 mb-5 info-msg" *ngIf="showStart.msg === 'youtubeForbidden'">
-      <mat-icon class="align-bottom">info</mat-icon>&nbsp;
-      <ng-container i18n>Access to this YouTube content is blocked.</ng-container>
-    </p> -->
-    <ng-container *ngIf="content?.completionStatus == 2">
-        <p class="mat-body-2 font-bold-imp ws-mat-black60-text">Your progress</p>
-      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier" [progress]="100" [progressType]="'percentage'">
-      </ws-widget-content-progress>
-    </ng-container>
-    <ng-container *ngIf="content?.completionStatus < 2">
-        <p class="mat-body-2 font-bold-imp ws-mat-black60-text">Your progress</p>
-      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier" [progress]="content?.completionPercentage" [progressType]="'percentage'">
-      </ws-widget-content-progress>
-    </ng-container>
-    <div class="margin-top-l glance-container">
-      <div class="margin-bottom-m">
-          <p class="mat-subheading-1 at-glance-heading" i18n>At a glance</p>
-          <div class="info-item">
-            <p *ngIf="tocConfig?.atAGlance?.duration?.enabled && content?.duration" class="mat-body-2 cs-icons">
-              <mat-icon class="margin-right-xxs">timer</mat-icon> {{ content?.duration | pipeDurationTransform: 'hms' }}
-            </p>
-          </div>
-          <div class="info-item" *ngIf="tocConfig?.atAGlance?.structure?.enabled && hasTocStructure && content?.children?.length">
-            <p *ngIf="tocStructure?.course > 0" class="mat-body-2 cs-icons">
-                <img src="/assets/icons/content/grey/course.svg" alt="Course" class="margin-right-xs">  {{ tocStructure?.course }}
-                <span *ngIf="tocStructure?.course === 1" i18n> Course</span>
-                <span *ngIf="tocStructure?.course > 1" i18n> Courses</span>
-            </p>
-            <p *ngIf="tocStructure?.learningModule > 0" class="mat-body-2 cs-icons">
-                <img src="/assets/icons/content/grey/module.svg" alt="Module" class="margin-right-xs"> {{ tocStructure?.learningModule }}
-                <span *ngIf="tocStructure?.learningModule === 1" i18n> Module</span>
-                <span *ngIf="tocStructure?.learningModule > 1" i18n> Modules</span>
-            </p>
-            <p *ngIf="tocStructure?.video > 0" class="mat-body-2 cs-icons">
-                <img src="/assets/icons/content/grey/video.svg" alt="Video" class="margin-right-xs"> {{ tocStructure?.video }}
-                <span *ngIf="tocStructure?.video === 1" i18n> Video</span>
-                <span *ngIf="tocStructure?.video > 1" i18n> Videos</span>
-            </p>
-            <p *ngIf="tocStructure?.interactiveVideo > 0" class="mat-body-2 cs-icons">
-                <img src="/assets/icons/content/grey/video.svg" alt="Video" class="margin-right-xs"> {{ tocStructure?.interactiveVideo }}
-                <span *ngIf="tocStructure?.interactiveVideo === 1" i18n>
-                    Interactive Video</span>
-                <span *ngIf="tocStructure?.interactiveVideo > 1" i18n>
-                    Interactive Videos</span>
-                </p>
-            <p *ngIf="tocStructure?.youtube > 0" class="mat-body-2 cs-icons">
-                <img src="/assets/icons/content/grey/video.svg" alt="video" class="margin-right-xs"> {{ tocStructure?.youtube }}
-                <span *ngIf="tocStructure?.youtube === 1" i18n> Youtube Video</span>
-                <span *ngIf="tocStructure?.youtube > 1" i18n> Youtube Videos</span>
-            </p>
-            <p *ngIf="tocStructure?.pdf > 0" class="mat-body-2 cs-icons">
-                <img src="/assets/icons/content/grey/pdf.svg" alt="PDF" class="margin-right-xs"> {{ tocStructure?.pdf }}
-                <span *ngIf="tocStructure?.pdf === 1" i18n> PDF</span>
-                <span *ngIf="tocStructure?.pdf > 1" i18n> PDFs</span>
-            </p>
-            <p *ngIf="tocStructure?.podcast > 0" class="mat-body-2 cs-icons">
-                <img src="/assets/icons/content/grey/audio.svg" alt="Podcast" class="margin-right-xs"> {{ tocStructure?.podcast }}
-                <span *ngIf="tocStructure?.podcast === 1" i18n> Podcast</span>
-                <span *ngIf="tocStructure?.podcast > 1" i18n> Podcasts</span>
-            </p>
-            <p *ngIf="tocStructure?.webModule > 0" class="mat-body-2 cs-icons">
-                <img src="/assets/icons/content/grey/module.svg" alt="Web Module" class="margin-right-xs"> {{ tocStructure?.webModule }}
-                <span *ngIf="tocStructure?.webModule === 1" i18n> Web Module</span>
-                <span *ngIf="tocStructure?.webModule > 1" i18n> Web Modules</span>
-            </p>
-            <p *ngIf="tocStructure?.webPage > 0" class="mat-body-2 cs-icons">
-                <img src="/assets/icons/content/grey/content_copy.svg" alt="Web Page" class="margin-right-xs"> {{ tocStructure?.webPage }}
-                <span *ngIf="tocStructure?.webPage === 1" i18n> Web Page</span>
-                <span *ngIf="tocStructure?.webPage > 1" i18n> Web Pages</span>
-            </p>
-            <p *ngIf="tocStructure?.quiz > 0" class="mat-body-2 cs-icons">
-                <img src="/assets/icons/content/grey/assessment.svg" alt="Quiz" class="margin-right-xs"> {{ tocStructure?.quiz }}
-                <span *ngIf="tocStructure?.quiz === 1" i18n> Quiz</span>
-                <span *ngIf="tocStructure?.quiz > 1" i18n> Quizzes</span>
-            </p>
-            <p *ngIf="tocStructure?.assessment > 0" class="mat-body-2 cs-icons">
-                <img src="/assets/icons/content/grey/assessment.svg" alt="Assessment" class="margin-right-xs"> {{ tocStructure?.assessment }}
-                <span *ngIf="tocStructure?.assessment === 1" i18n> Assessment</span>
-                <span *ngIf="tocStructure?.assessment > 1" i18n> Assessments</span>
-            </p>
-            <p *ngIf="tocStructure?.other > 0" class="mat-body-2 cs-icons">
-                <img src="/assets/icons/content/grey/course.svg" alt="Course" class="margin-right-xs"> {{ tocStructure?.other }}
-                <span *ngIf="tocStructure?.other === 1" i18n> Other Item</span>
-                <span *ngIf="tocStructure?.other > 1" i18n> Other Items</span>
-            </p>
-          </div>
-          <mat-divider class="margin-bottom-m"></mat-divider> 
-          <div class="info-item"
-              *ngIf="tocConfig?.atAGlance?.displayContentType?.enabled && content?.displayContentType">
-              <h3 class="item-heading ws-mat-default-text">
-                  {{tocConfig?.atAGlance?.displayContentType?.displayName}}
-              </h3>
-              <ws-widget-display-content-type *ngIf="content?.contentType !== contentTypes.RESOURCE"
-                  class="ws-mat-accent-text width-expand mat-body-strong"
-                  [displayContentType]="content?.displayContentType">
-              </ws-widget-display-content-type>
-              <div *ngIf="content?.contentType === contentTypes.RESOURCE"
-                  class="item-value width-expand mat-body-strong">
-                  {{ content?.resourceType }}
-              </div>
-          </div>
-          <div class="info-item"
-              *ngIf="tocConfig?.atAGlance?.complexityLevel?.enabled && content?.complexityLevel">
-              <h3 class="item-heading ws-mat-default-text">
-                  {{tocConfig?.atAGlance?.complexityLevel?.displayName}}
-              </h3>
-              <h3 class="item-value width-expand">
-                  {{ content?.complexityLevel }}
-              </h3>
-          </div>
-          <div class="info-item" *ngIf="tocConfig?.atAGlance?.competencies?.enabled && content?.competencies && content?.competencies.length">
-              <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.competencies?.displayName}}
-              </h3>
-              <h3 class="item-value width-expand">
-                  {{ getCompetencies(content.competencies).join(', ') }}
-              </h3>
-          </div>
-          <div class="info-item" *ngIf="tocConfig?.atAGlance?.source?.enabled">
-              <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.source?.displayName}}
-              </h3>
-              <h3 class="item-value width-expand">
-                  {{content?.source}}
-              </h3>
-          </div>
-          <div class="info-item" *ngIf="tocConfig?.atAGlance?.license?.enabled">
-              <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.license?.displayName}}</h3>
-              <h3 *ngIf="content?.license" class="item-value width-expand">
-                  {{content?.license}}
-              </h3>
-          </div>
-          <!-- <div class="info-item"
-              *ngIf="tocConfig?.atAGlance?.viewCount?.enabled && content?.viewCount && configSvc?.rootOrg">
-              <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.viewCount?.displayName}}
-              </h3>
-              <h3 class="item-value width-expand">
-                  {{ content?.viewCount[configSvc.rootOrg] | pipeCountTransform }}
-                  <ng-container *ngIf="content?.uniqueLearners">
-                      ({{ content?.uniqueLearners | pipeCountTransform }}
-                      <ng-container i18n>Unique)</ng-container>
-                  </ng-container>
-              </h3>
-          </div> -->
-          <div class="info-item"
-              *ngIf="tocConfig?.atAGlance?.sourceShortName?.enabled && content?.sourceShortName">
-              <h3 class="item-heading ws-mat-default-text">
-                  {{tocConfig?.atAGlance?.sourceShortName?.displayName}}
-              </h3>
-              <h3 class="item-value width-expand">
-                  {{ content?.sourceShortName }}
-              </h3>
-          </div>
-          <div class="info-item" *ngIf="tocConfig?.atAGlance?.cost?.enabled">
-              <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.cost?.displayName}}</h3>
-              <h3 *ngIf="content?.exclusiveContent" class="item-value width-expand">Paid Content</h3>
-              <h3 *ngIf="!content?.exclusiveContent" class="item-value width-expand">Free</h3>
-          </div>
-            <div class="info-item"
-                *ngIf="tocConfig?.atAGlance?.expiryDate?.enabled && content?.expiryDate && content?.expiryDate?.startsWith('20')">
-                <h3 class="item-heading ws-mat-default-text">
-                    {{tocConfig?.atAGlance?.expiryDate?.displayName}}</h3>
-                <h3 class="item-value width-expand">
-                    {{ content?.expiryDate | date }}
-                </h3>
-            </div>
-            <div class="info-item"
-                *ngIf="tocConfig?.atAGlance?.learningMode?.enabled && content?.learningMode">
-                <h3 class="item-heading ws-mat-default-text">
-                    {{tocConfig?.atAGlance?.learningMode?.displayName}}
-                </h3>
-                <h3 class="item-value width-expand">
-                    {{ content?.learningMode }}
-                </h3>
-            </div>
-            <div class="info-item" *ngIf="tocConfig?.atAGlance?.region?.enabled && content?.region?.length">
-                <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.region?.displayName}}
-                </h3>
-                <h3 class="item-value width-expand">
-                    {{ content?.region }}
-                </h3>
-            </div>
-            <div class="info-item" *ngIf="tocConfig?.atAGlance?.locale?.enabled && content?.locale">
-                <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.locale?.displayName}}
-                </h3>
-                <h3 class="item-value width-expand">
-                    {{ content?.locale | uppercase }}
-                </h3>
-            </div>
-            <div class="info-item"
-                *ngIf="tocConfig?.atAGlance?.hasTranslations?.enabled && (content?.hasTranslations?.length || content?.isTranslationOf?.length)">
-                <h3 class="item-heading ws-mat-default-text">
-                    {{tocConfig?.atAGlance?.hasTranslations?.displayName}}
-                </h3>
-                <h3 class="item-value width-expand">
-                    <span class="cursor-pointer" (click)="goToContent(trans?.identifier)"
-                        *ngFor="let trans of content?.hasTranslations || content?.isTranslationOf">{{ trans.locale | uppercase }}
-                    </span>
-                </h3>
-            </div>
-            <!-- <div class="info-item"
-                *ngIf="tocConfig?.atAGlance?.keywords?.enabled && content?.keywords?.length">
-                <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.keywords?.displayName}}
-                </h3>
-                <h3 class="item-value width-expand">
-                    {{ content?.keywords?.join(', ') }}
-                </h3>
-            </div> -->
-            <ng-container *ngFor="let item of content?.collections">
-                <div class="info-item"
-                    *ngIf="tocConfig?.atAGlance?.curatedInKB?.enabled && item.contentType === 'Knowledge Board' && item.status === 'Live'">
-                    <h3 class="item-heading ws-mat-default-text">
-                        {{tocConfig?.atAGlance?.curatedInKB?.displayName}}
-                    </h3>
-                    <mat-chip-list>
-                        <mat-chip>
-                            <h3 class="item-value width-expand">
-                                <ng-container
-                                    *ngIf="item.contentType === 'Knowledge Board' && item.status === 'Live'">
-                                    <a [href]="'/app/toc/' + item.identifier + '/overview?primaryCategory='+ item.primaryCategory"> {{ item.name }}
-                                    </a>
-                                </ng-container>
-                            </h3>
-                        </mat-chip>
-                    </mat-chip-list>
-                </div>
-            </ng-container>
-            <mat-divider class="divider-transparent"></mat-divider>
-
-            <div class="info-item"
-              *ngIf="tocConfig?.atAGlance?.lastUpdatedOn?.enabled && content?.lastUpdatedOn">
-              <p class="mat-body-2 font-bold-imp ws-mat-black60-text">
-                  {{tocConfig?.atAGlance?.lastUpdatedOn?.displayName}} on {{ content?.lastUpdatedOn | date }}
-              </p>
-          </div>
-      </div>
-    </div>
-  </div>
-</div>
 </ng-container>
 
 <ng-template #tocError>
   <div [wsResolverWidget]="errorWidgetData"></div>
 </ng-template>
-
-<mat-menu #actionMenu="matMenu">
-    <div mat-menu-item>
-      <ng-container *ngIf="content" [ngTemplateOutlet]="actions"></ng-container>
-    </div>
-  </mat-menu>
-  
-  <ng-template #actions>
-    <!-- <a i18n-aria-label aria-label="Edit" mat-icon-button *ngIf="editButton"
-      [routerLink]="['/author/editor/' + content?.identifier]" color="primary">
-      <mat-icon>edit</mat-icon>
-    </a> -->
-    <a i18n-aria-label aria-label="Take Action" mat-icon-button *ngIf="reviewButton"
-      [routerLink]="['/author/editor/' + content?.identifier]">
-      <mat-icon>publish</mat-icon>
-    </a>
-    <ws-widget-btn-content-download id="prevfordownload" [forPreview]="forPreview" [widgetData]="
-        content
-          | pipePartialContent
-            : ['identifier', 'contentType', 'resourceType', 'mimeType', 'downloadUrl', 'isExternal',
-                    'artifactUrl']
-      "></ws-widget-btn-content-download>
-    <ws-widget-btn-content-like id="prevforlike" [forPreview]="forPreview"
-      [widgetData]="content | pipePartialContent: ['identifier']" [color]="default">
-    </ws-widget-btn-content-like>
-    <ws-widget-btn-content-share id="prevforshare" [forPreview]="forPreview" [widgetData]="content">
-    </ws-widget-btn-content-share>
-    <ws-widget-btn-kb [forPreview]="forPreview" id="prev" [contentId]="content?.identifier" [contentName]="content?.name"
-      [contentType]="content?.contentType" [status]="content?.status">
-    </ws-widget-btn-kb>
-    <ws-widget-btn-goals [forPreview]="forPreview" id="goalsforprev" *ngIf="isGoalsEnabled && btnGoalsConfig"
-      [widgetData]="btnGoalsConfig">
-    </ws-widget-btn-goals>
-    <ws-widget-btn-playlist [forPreview]="forPreview" id="playlistforprev" *ngIf="btnPlaylistConfig"
-      [widgetData]="btnPlaylistConfig">
-    </ws-widget-btn-playlist>
-    <ws-widget-btn-content-feedback-v2 [forPreview]="forPreview" id="feedbackforprev"
-      [widgetData]="content | pipePartialContent: ['identifier', 'name']">
-    </ws-widget-btn-content-feedback-v2>
-  </ng-template>
-  <ng-template #authView i18n>View</ng-template>
 
 <!--Scroll to top-->
 <button mat-fab color="accent" [ngClass]="{'show-scroll': showScroll}" (click)="scrollToTop()" class="scroll-to-top">
