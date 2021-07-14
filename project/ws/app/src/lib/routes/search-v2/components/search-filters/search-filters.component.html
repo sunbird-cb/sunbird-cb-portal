@@ -33,7 +33,7 @@
                                 <label for="Image">Image</label>
                             </mat-checkbox>
                             <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name === 'application/vnd.ekstep.content-collection'">
-                                <label for="Collection">Collection</label>
+                                <label for="Collection">Course</label>
                             </mat-checkbox>
                             <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name !== 'HTML' &&  options.name !== 'application/json' && options.name !== 'application/pdf' && options.name !== 'audio/mpeg' && options.name !== 'Video' && options.name !== 'Image' && options.name !== 'application/vnd.ekstep.content-collection'">
                                 <label for="options.name">{{options.name}}</label>
