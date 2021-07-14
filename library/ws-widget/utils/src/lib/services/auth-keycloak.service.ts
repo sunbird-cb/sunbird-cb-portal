@@ -139,9 +139,10 @@ export class AuthKeycloakService {
     })
   }
 
-  async logout(_redirectUrl = this.defaultRedirectUrl) {
+  async logout(redirectUrl = this.defaultRedirectUrl) {
     // storage.removeItem(storageKey)
     await this.http.get('/apis/reset').toPromise()
+    window.location.href = redirectUrl
     // logoutRedirectUrl = redirectUrl
     // if (this.msAuthSvc.isLogoutRequired) {
     //   this.keycloakSvc.logout(this.msAuthSvc.logoutUrl(redirectUrl))
