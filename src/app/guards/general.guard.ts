@@ -3,7 +3,7 @@ import {
   ActivatedRouteSnapshot,
   CanActivate,
   Router,
-  RouterStateSnapshot,
+  // RouterStateSnapshot,
   UrlTree,
 } from '@angular/router'
 import { ConfigurationsService, AuthKeycloakService } from '@sunbird-cb/utils'
@@ -20,15 +20,15 @@ export class GeneralGuard implements CanActivate {
 
   async canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot,
+    // _state: RouterStateSnapshot,
   ): Promise<boolean | UrlTree> {
     const requiredFeatures = (next.data && next.data.requiredFeatures) || []
     const requiredRoles = (next.data && next.data.requiredRoles) || []
-    return await this.shouldAllow<boolean | UrlTree>(state, requiredFeatures, requiredRoles)
+    return await this.shouldAllow<boolean | UrlTree>(requiredFeatures, requiredRoles)
   }
 
   private async shouldAllow<T>(
-    state: RouterStateSnapshot,
+    // state: RouterStateSnapshot,
     requiredFeatures: string[],
     requiredRoles: string[],
   ): Promise<T | UrlTree | boolean> {
@@ -36,21 +36,21 @@ export class GeneralGuard implements CanActivate {
      * Test IF User is authenticated
      */
     if (!this.configSvc.isAuthenticated) {
-      let refAppend = ''
-      if (state.url) {
-        refAppend = `?ref=${encodeURIComponent(state.url)}`
-      }
+      // let refAppend = ''
+      // if (state.url) {
+      //   refAppend = `?ref=${encodeURIComponent(state.url)}`
+      // }
       // return this.router.parseUrl(`/login${refAppend}`)
 
-      let redirectUrl
-      if (refAppend) {
-        redirectUrl = document.baseURI + refAppend
-      } else {
-        redirectUrl = document.baseURI
-      }
+      // let redirectUrl
+      // if (refAppend) {
+      //   redirectUrl = document.baseURI + refAppend
+      // } else {
+      //   redirectUrl = document.baseURI
+      // }
 
       try {
-        Promise.resolve(this.authSvc.login('S', redirectUrl))
+        // Promise.resolve(this.authSvc.login('S', redirectUrl))
         return true
       } catch (e) {
         return false
