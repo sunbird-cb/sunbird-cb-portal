@@ -79,7 +79,13 @@
                 <img [src]="content?.creatorLogo" [id]="'source_' + content.identifier" class="source-icon"
                 [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
               </div>
-              <div class="header-actions margin-top-l">
+              <!-- tags -->
+              <div class="tags margin-top-m margin-bottom-s" *ngIf="content?.keywords && content?.keywords?.length > 0">
+                  <span *ngFor="let tag of content.keywords" class="tag" [ngStyle]="getBgColor(tag)">
+                    {{tag}}
+                  </span>
+              </div>
+              <div class="header-actions margin-top-m">
                 <ng-container *ngIf="
                     actionBtnStatus !== 'wait' &&
                     content?.status !== 'Deleted' &&
