@@ -247,10 +247,22 @@ const routes: Routes = [
       import('./routes/route-person-profile.module').then(u => u.RoutePersonProfileModule),
     canActivate: [GeneralGuard],
   },
+  // {
+  //   path: 'app/events',
+  //   loadChildren: () => import('./routes/route-app-event.module').then(m => m.AppEventsModule),
+  //   canActivate: [GeneralGuard],
+  // },
   {
-    path: 'app/events',
-    loadChildren: () => import('./routes/route-app-event.module').then(m => m.AppEventsModule),
+    path: 'app/event-hub',
+    loadChildren: () => import('./routes/route-events.module').then(u => u.RouteEventsModule),
     canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'event',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
   },
   {
     path: 'app/search',
