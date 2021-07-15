@@ -17,7 +17,8 @@ export class EventsCardComponent implements OnInit {
   }
 
   getCareer() {
-    this.router.navigate([`/app/event-hub/home/${this.discuss.tid}`])
+    // this.router.navigate([`/app/event-hub/home/${this.discuss.tid}`])
+    this.router.navigate([`/app/event-hub/home/1`])
   }
 
 }

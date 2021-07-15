@@ -10,7 +10,7 @@ import { Router } from '@angular/router'
 export class TodayEventCardComponent implements OnInit {
   @Input()
   discuss!: NSDiscussData.IDiscussionData
-  isLive: boolean = true;
+  isLive = true
 
   constructor(private router: Router) { }
 
@@ -21,4 +21,6 @@ export class TodayEventCardComponent implements OnInit {
     this.router.navigate([`/app/event-hub/home/${this.discuss.tid}`])
   }
 
+  getEvent() {
+  }
 }

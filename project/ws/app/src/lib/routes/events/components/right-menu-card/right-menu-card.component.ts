@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
-//import { ActivatedRoute } from '@angular/router'
-//import { ConfigurationsService } from '@ws-widget/utils'
-//import { NSProfileDataV2 } from '../../models/profile-v2.model'
+// import { ActivatedRoute } from '@angular/router'
+// import { ConfigurationsService } from '@ws-widget/utils'
+// import { NSProfileDataV2 } from '../../models/profile-v2.model'
 
 @Component({
   selector: 'app-right-menu-card',
@@ -12,16 +12,16 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
   /* tslint:enable */
 })
 export class RightMenuCardComponent implements OnInit, OnDestroy {
-  //completedPercent!: number
-  //badgesSubscription: any
-  //portalProfile!: NSProfileDataV2.IProfile
-  //badges!: NSProfileDataV2.IBadgeResponse
-  //currentEvent!: any
+  // completedPercent!: number
+  // badgesSubscription: any
+  // portalProfile!: NSProfileDataV2.IProfile
+  // badges!: NSProfileDataV2.IBadgeResponse
+  // currentEvent!: any
   constructor(
-    //private route: ActivatedRoute,
-    //configSvc: ConfigurationsService,
+    // private route: ActivatedRoute,
+    // configSvc: ConfigurationsService,
   ) {
-    //this.currentEvent = configSvc.userProfile && configSvc.userProfile.eventId
+    // this.currentEvent = configSvc.userProfile && configSvc.userProfile.eventId
     // this.badgesSubscription = this.route.data.subscribe(response => {
     //   this.badges = response && response.badges && response.badges.data
     //   this.portalProfile = response && response.profile && response.profile.data[0]
@@ -36,7 +36,8 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
   //   if (!profile) {
   //     return count
   //   }
-  //   if (profile.academics && profile.academics[0] && (profile.academics[0].nameOfInstitute || profile.academics[0].nameOfQualification)) {
+  //   if (profile.academics && profile.academics[0] && (profile.academics[0].nameOfInstitute ||
+  //  profile.academics[0].nameOfQualification)) {
   //     count += 23
   //   }
   //   // if (profile.employmentDetails && profile.employmentDetails.departmentName) {

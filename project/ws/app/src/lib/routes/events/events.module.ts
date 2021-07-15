@@ -37,7 +37,6 @@ import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { RightMenuCardComponent } from './components/right-menu-card/right-menu-card.component'
 import { PresenterCardComponent } from './components/presenter-card/presenter-card.component'
 
-
 @NgModule({
   declarations: [
     EventsComponent,
@@ -47,7 +46,7 @@ import { PresenterCardComponent } from './components/presenter-card/presenter-ca
     EventDetailComponent,
     RelatedPostsComponent,
     RightMenuCardComponent,
-    PresenterCardComponent
+    PresenterCardComponent,
   ],
   imports: [
     CommonModule,

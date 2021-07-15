@@ -1,9 +1,9 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core'
-//import { NSDiscussData } from '../../../discuss/models/discuss.model'
+// import { NSDiscussData } from '../../../discuss/models/discuss.model'
 import { ActivatedRoute } from '@angular/router'
-//import { MatSnackBar } from '@angular/material'
+// import { MatSnackBar } from '@angular/material'
 import { MatDialog } from '@angular/material/dialog'
-//import { DiscussService } from '../../../discuss/services/discuss.service'
+// import { DiscussService } from '../../../discuss/services/discuss.service'
 /* tslint:disable */
 import _ from 'lodash'
 /* tslint:enable */
@@ -16,7 +16,7 @@ import _ from 'lodash'
 export class EventDetailComponent implements OnInit {
   @ViewChild('toastSuccess', { static: true }) toastSuccess!: ElementRef<any>
   @ViewChild('toastError', { static: true }) toastError!: ElementRef<any>
-  //data!: NSDiscussData.IDiscussionData
+  // data!: NSDiscussData.IDiscussionData
   similarPosts!: any
   defaultError = 'Something went wrong, Please try again after sometime!'
   eventId!: number
@@ -26,8 +26,8 @@ export class EventDetailComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private route: ActivatedRoute,
-    //private discussService: DiscussService,
-    //private snackBar: MatSnackBar,
+    // private discussService: DiscussService,
+    // private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -36,13 +36,13 @@ export class EventDetailComponent implements OnInit {
       // if (this.fetchNewData) {
       //   this.getTIDData()
       // }
-      //this.data = this.route.snapshot.data.topic.data
+      // this.data = this.route.snapshot.data.topic.data
     })
-    //this.fetchSingleCategoryDetails(this.data.cid)
+    // this.fetchSingleCategoryDetails(this.data.cid)
   }
 
-  //fetchSingleCategoryDetails(cid: number) {
-    //this.fetchSingleCategoryLoader = true
+  // fetchSingleCategoryDetails(cid: number) {
+    // this.fetchSingleCategoryLoader = true
     // this.discussService.fetchSingleCategoryDetails(cid).subscribe(
     //   (data: NSDiscussData.ICategoryData) => {
     //     this.similarPosts = data.topics
@@ -52,7 +52,7 @@ export class EventDetailComponent implements OnInit {
     //     this.openSnackbar(err.error.message.split('|')[1] || this.defaultError)
     //     this.fetchSingleCategoryLoader = false
     //   })
-  //}
+  // }
 
   // private openSnackbar(primaryMsg: string, duration: number = 5000) {
   //   this.snackBar.open(primaryMsg, 'X', {

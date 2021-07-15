@@ -24,7 +24,6 @@ export class EventsComponent implements OnInit {
     private router: Router,
     private discussService: DiscussService,
   ) {
-    console.log('here in app / events');
     this.data = this.route.snapshot.data.topics.data
     this.paginationData = this.data.pagination
     this.categoryId = this.route.snapshot.data['eventsCategoryId'] || 1
