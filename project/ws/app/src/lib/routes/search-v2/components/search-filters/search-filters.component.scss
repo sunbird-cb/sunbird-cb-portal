@@ -9,29 +9,35 @@
         border: 0 !important;
     }
     .mat-expansion-panel-header {
-        height: 45px !important;
-    }
-    .mat-expansion-panel-body {
-        padding: 0 16px 16px !important;
+        height: 30px !important;
     }
     .sublist-section {
         ul {
             list-style-type: none;
         }
-    }
+    }  
+}
+::ng-deep.mat-expansion-panel-body {
+    padding: 0 !important;
+    min-height: 74px;
+    overflow-y: auto;
+    max-height: calc(100vh - 75vh);
+}
+::ng-deep.mat-expansion-indicator {
+    padding: 0 3px;
+}
+::ng-deep .mat-checkbox-layout {
+    white-space: pre-line !important;
+    padding-right: 6px !important;
+    text-transform: capitalize;
 }
 ::ng-deep .mat-checkbox-inner-container {
-    height: 23px !important;
-    width: 23px !important;
+    height: 18px !important;
+    width: 18px !important;
 }
 
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
 ::ng-deep .mat-pseudo-checkbox-checked,
 ::ng-deep .mat-pseudo-checkbox-indeterminate {
     background: #0074b6 0% 0% no-repeat padding-box !important;
-    border-radius: 4px;
-}
-
-::ng-deep .mat-checkbox .mat-checkbox-frame {
-    border-radius: 4px !important;
 }

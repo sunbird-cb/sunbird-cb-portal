@@ -214,9 +214,13 @@ export class PlayerYoutubeComponent extends WidgetBaseComponent
       }
     }
     const fireRProgress: fireRealTimeProgressFunction = (identifier, data) => {
+      const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+        this.activatedRoute.snapshot.queryParams.collectionId : this.widgetData.identifier
+      const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+        this.activatedRoute.snapshot.queryParams.batchId : this.widgetData.identifier
       if (this.widgetData.identifier && identifier && data) {
         this.viewerSvc
-          .realTimeProgressUpdate(identifier, data)
+          .realTimeProgressUpdate(identifier, data, collectionId, batchId)
       }
     }
     let enableTelemetry = false
@@ -236,16 +240,18 @@ export class PlayerYoutubeComponent extends WidgetBaseComponent
               src: this.widgetData.url,
             },
           ],
+          autoplay: true,
         },
         dispatcher,
         saveCLearning,
         fireRProgress,
         this.widgetData.passThroughData,
         ROOT_WIDGET_CONFIG.player.video,
-        this.widgetData.resumePoint ? this.widgetData.resumePoint : 0,
+        this.widgetData.resumePoint ? Math.floor(this.widgetData.resumePoint) : 0,
         enableTelemetry,
         this.widgetData,
         NsContent.EMimeTypes.YOUTUBE,
+        this.widgetData.size
       )
       this.player = initObj.player
       this.dispose = initObj.dispose

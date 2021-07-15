@@ -8,6 +8,10 @@
             <img [src]="content?.posterImage" [id]="'source_' + content.identifier" class="app-icon"
               [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
           </div>
+          <div *ngIf="!content?.posterImage" class="float-left">
+            <img src="/assets/instances/eagle/app_logos/default.png" [id]="'source_' + content.identifier" class="app-icon"
+             [alt]="content.sourceName || iGOT" />
+          </div>
           <!-- data -->
           <div class="sm:ml-5 flex flex-auto" [id]="'m-c-'+ content.identifier">
             
@@ -75,13 +79,19 @@
                 <img [src]="content?.creatorLogo" [id]="'source_' + content.identifier" class="source-icon"
                 [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
               </div>
-              <!-- <div class="header-actions mt-8 mb-4">
+              <!-- tags -->
+              <div class="tags margin-top-m margin-bottom-s" *ngIf="content?.keywords && content?.keywords?.length > 0">
+                  <span *ngFor="let tag of content.keywords" class="tag" [ngStyle]="getBgColor(tag)">
+                    {{tag}}
+                  </span>
+              </div>
+              <div class="header-actions margin-top-m">
                 <ng-container *ngIf="
                     actionBtnStatus !== 'wait' &&
                     content?.status !== 'Deleted' &&
                     content?.status !== 'Expired'
                   ">
-                  <div [hidden]="isResource && !content?.artifactUrl?.length">
+                  <div [hidden]="isResource && !content?.artifactUrl?.length" class="text-white text-center custom-button">
                     <ng-container *ngIf="
                         actionBtnStatus === 'grant' &&
                         !(isMobile && content?.isInIntranet) &&
@@ -95,22 +105,21 @@
                         ) &&
                         !(content?.contentType === 'Resource' && !content?.artifactUrl)
                       ">
-                      <a [color]="'primary'" *ngIf="showStart.show && !isPostAssessment"
+                      <a *ngIf="showStart.show && !isPostAssessment"
                         [routerLink]="resumeData ? resumeDataLink?.url : firstResourceLink?.url"
                         [queryParams]="resumeData ? generateQuery('RESUME') : generateQuery('START')"
-                        class="margin-right-m resumeButton" mat-flat-button>
+                        class="mat-button mat-button-base">
                         <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
-                          {{resumeData?"Resume":"Start"}}
+                          {{resumeData?"RESUME":"START"}}
                         </ng-container>
                       </a>
-                      <a [color]="'primary'" *ngIf="isPostAssessment && showTakeAssessment?.post_assessment"
-                        [routerLink]="firstResourceLink?.url" class="margin-right-m" mat-flat-button>
-                        <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>Take Assessment</ng-container>
+                      <a *ngIf="isPostAssessment && showTakeAssessment?.post_assessment"
+                        [routerLink]="firstResourceLink?.url" class="mat-button mat-button-base">
+                        <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>TAKE ASSESSMENT</ng-container>
                       </a>
                     </ng-container>
                     <ng-container *ngIf="actionBtnStatus == 'reject' && content?.registrationUrl">
-                      <a [href]="content?.registrationUrl" target="_blank" [color]="'primary'" class="margin-right-m" i18n
-                        mat-flat-button>Register</a>
+                      <a [href]="content?.registrationUrl" target="_blank" class="mat-button mat-button-base" i18n>REGISTER</a>
                     </ng-container>
                   </div>
                 </ng-container>
@@ -127,13 +136,13 @@
                 <h3 class="margin-remove-bottom pt-4 info-msg" i18n *ngIf="content?.status === 'InReview'">
                   The content is in review.
                 </h3>
-              </div> -->
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- <p class="mt-5 mb-5 info-msg" *ngIf="content?.isInIntranet && showIntranetMsg">
+    <p class="mt-5 mb-5 info-msg" *ngIf="content?.isInIntranet && showIntranetMsg">
       <mat-icon class="align-bottom">info</mat-icon>&nbsp;
       <ng-container i18n>This can be viewed only in the Intranet.</ng-container>
     </p>
@@ -146,7 +155,7 @@
       <mat-icon class="align-bottom">info</mat-icon>&nbsp;
       <ng-container i18n>Access to this YouTube content is blocked.</ng-container>
     </p>
-    <ng-container *ngIf="content?.completionStatus == 2">
+    <!-- <ng-container *ngIf="content?.completionStatus == 2">
       <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier"
       [className]="'thick'" [progress]="100" [progressType]="'percentage'">
       </ws-widget-content-progress>

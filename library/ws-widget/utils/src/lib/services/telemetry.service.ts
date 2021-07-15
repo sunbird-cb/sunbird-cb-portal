@@ -40,7 +40,7 @@ export class TelemetryService {
         uid: this.configSvc.userProfile && this.configSvc.userProfile.userId,
         // authtoken: this.authSvc.token,
         // tslint:disable-next-line: no-non-null-assertion
-        channel: this.rootOrgId,
+        channel: this.rootOrgId || this.telemetryConfig.channel,
       }
       this.pData = this.telemetryConfig.pdata
       this.addPlayerListener()
@@ -58,15 +58,31 @@ export class TelemetryService {
     return ''
 }
 
-  start(type: string, mode: string, id: string) {
+  start(type: string, mode: string, id: string, data?: any) {
     try {
       if (this.telemetryConfig) {
-        $t.start(this.telemetryConfig, id, '1.0', {
+        $t.start(
+          this.telemetryConfig,
+          id,
+          '1.0',
+          {
           // id,
-          type,
-          mode,
-          pageid: id,
-        })
+            type,
+            mode,
+            pageid: id,
+          },
+          {
+            context: {
+              pdata: {
+                ...this.pData,
+                id: this.pData.id,
+              },
+            },
+            object : {
+              ...(data) && data,
+            },
+          }
+        )
       } else {
         this.logger.error('Error Initializing Telemetry. Config missing.')
       }
@@ -76,7 +92,7 @@ export class TelemetryService {
     }
   }
 
-  end(type: string, mode: string, id: string) {
+  end(type: string, mode: string, id: string, data?: any) {
     try {
       $t.end(
         {
@@ -90,6 +106,9 @@ export class TelemetryService {
               ...this.pData,
               id: this.pData.id,
             },
+          },
+          object : {
+            ...(data) && data,
           },
         },
       )
@@ -258,7 +277,8 @@ export class TelemetryService {
           this.start(
             event.data.type || WsEvents.WsTimeSpentType.Player,
             event.data.mode || WsEvents.WsTimeSpentMode.Play,
-            event.data.id,
+            event.data.identifier,
+            event.data.object
           )
         }
         if (
@@ -270,7 +290,8 @@ export class TelemetryService {
           this.end(
             event.data.type || WsEvents.WsTimeSpentType.Player,
             event.data.mode || WsEvents.WsTimeSpentMode.Play,
-            event.data.id,
+            event.data.identifier,
+            event.data.object
           )
         }
       })
@@ -325,6 +346,9 @@ export class TelemetryService {
                     ...this.pData,
                     id: this.pData.id,
                   },
+                },
+                object: {
+                  ...event.data.object,
                 },
               })
           } catch (e) {

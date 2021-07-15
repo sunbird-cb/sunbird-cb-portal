@@ -9,7 +9,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 })
 export class LearnSearchComponent implements OnInit, OnChanges {
   @Input() param: any
-  @Input() paramFilters: any
+  @Input() paramFilters: any = []
   searchResults: any = []
   searchRequestObject = {
     request: {
@@ -23,7 +23,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
       query: '',
       sort_by: { lastUpdatedOn: '' },
       fields: [],
-      facets: [],
+      facets: ['contentType', 'mimeType', 'source'],
     },
   }
   totalResults: any
@@ -31,6 +31,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
   myFilters: any = []
   rfilter: any
   primaryCategoryType: any = []
+  contentType: any = []
   mimeType: any = []
   sourceType: any = []
   mediaType: any = []
@@ -59,7 +60,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
           visibility: ['Default'],
           contentType: [
             'Course',
-            'Course Unit',
+            // 'Course Unit',
             'Resource',
           ],
         },
@@ -69,22 +70,33 @@ export class LearnSearchComponent implements OnInit, OnChanges {
         facets: ['contentType', 'mimeType', 'source'],
       },
     }
-    if (this.paramFilters) {
-      queryparam.request.filters = this.paramFilters
-      if (this.paramFilters.contentType) {
-        const pf = {
-          mainType:  'contentType',
-          name: this.paramFilters.contentType[0],
-          count: '',
-        }
+    if (this.paramFilters && this.paramFilters.length > 0) {
+        // queryparam.request.filters = this.paramFilters
+      //   if (this.paramFilters.contentType) {
+      //     const pf = {
+      //       mainType:  'contentType',
+      //       name: this.paramFilters.contentType[0].toLowerCase(),
+      //       count: '',
+      //       ischecked: true,
+      //     }
+      //     this.paramFilters = pf
+      //     this.searchSrvc.addFilter(pf)
+      //     this.myFilters.push(pf)
+      //   }
+      // }
+      this.paramFilters.forEach((pf: any) => {
         this.myFilters.push(pf)
-      }
+      })
+      this.applyFilter(this.paramFilters)
+    } else {
+      // this.facets = []
+      this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
+        this.searchResults = response.result.content
+        this.totalResults = response.result.count
+        this.facets = response.result.facets
+        this.paramFilters = []
+      })
     }
-    this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
-      this.searchResults = response.result.content
-      this.totalResults = response.result.count
-      this.facets = response.result.facets
-    })
   }
 
   // viewContent(content: any) {
@@ -96,15 +108,35 @@ export class LearnSearchComponent implements OnInit, OnChanges {
       this.myFilters = filter
       const queryparam = this.searchRequestObject
       queryparam.request.filters.primaryCategory = []
+      queryparam.request.filters.contentType = []
       queryparam.request.filters.mimeType = []
       queryparam.request.filters.source = []
       this.myFilters.forEach((mf: any) => {
         queryparam.request.query = this.param
-        if (mf.mainType === 'primaryCategory') {
+        if (mf.mainType === 'contentType') {
+          const indx = this.contentType.filter((x: any) => x.name === mf.name)
+          if (indx.length === 0) {
+            this.contentType.push(mf.name)
+            queryparam.request.filters.contentType = this.contentType
+          }
+          queryparam.request.filters.contentType = this.contentType
+        } else if (mf.mainType === 'primaryCategory') {
           this.primaryCategoryType.push(mf.name)
           queryparam.request.filters.primaryCategory = this.primaryCategoryType
         } else if (mf.mainType === 'mimeType') {
-          this.mimeType.push(mf.name)
+          if (mf.name === 'Image') {
+           this.mimeType.push('image/jpeg')
+           this.mimeType.push('image/png')
+          } else if (mf.name === 'Video') {
+            this.mimeType.push('video/mp4')
+            this.mimeType.push('video/x-youtube')
+          } else if (mf.name === 'HTML') {
+            this.mimeType.push('application/vnd.ekstep.html-archive')
+            this.mimeType.push('text/x-url')
+            this.mimeType.push('application/vnd.ekstep.ecml-archive')
+          } else {
+            this.mimeType.push(mf.name)
+          }
           queryparam.request.filters.mimeType = this.mimeType
         } else if (mf.mainType === 'source') {
           this.sourceType.push(mf.name)
@@ -114,15 +146,26 @@ export class LearnSearchComponent implements OnInit, OnChanges {
           queryparam.request.filters.mediaType = this.mediaType
         }
       })
+
+      if (queryparam.request.filters.contentType.length === 0) {
+        this.contentType.push('Course')
+        this.contentType.push('Resource')
+        queryparam.request.filters.contentType = this.contentType
+      }
+      // this.facets = []
       this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
         this.searchResults = response.result.content
         this.totalResults = response.result.count
+        this.facets = response.result.facets
         this.primaryCategoryType = []
+        this.contentType = []
         this.mimeType = []
         this.sourceType = []
         this.mediaType = []
+        this.paramFilters = []
       })
     } else {
+      this.myFilters = filter
       this.getSearchedData()
     }
   }

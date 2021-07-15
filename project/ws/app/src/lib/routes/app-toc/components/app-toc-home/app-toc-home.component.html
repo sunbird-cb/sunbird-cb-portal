@@ -85,7 +85,7 @@ TODO: edit option while preview Mode
 
 
   <div class="info-section right margin-top-xl padding-m white-bg margin-left-xl margin-bottom-xl">
-    <div class="header-actions margin-top-s margin-bottom-m">
+    <!-- <div class="header-actions margin-top-s margin-bottom-m">
       <ng-container *ngIf="
           actionBtnStatus !== 'wait' &&
           content?.status !== 'Deleted' &&
@@ -150,15 +150,15 @@ TODO: edit option while preview Mode
     <p class="mt-5 mb-5 info-msg" *ngIf="showStart.msg === 'youtubeForbidden'">
       <mat-icon class="align-bottom">info</mat-icon>&nbsp;
       <ng-container i18n>Access to this YouTube content is blocked.</ng-container>
-    </p>
+    </p> -->
     <ng-container *ngIf="content?.completionStatus == 2">
-      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier"
-      [className]="'thick'" [progress]="100" [progressType]="'percentage'">
+        <p class="mat-body-2 font-bold-imp ws-mat-black60-text">Your progress</p>
+      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier" [progress]="100" [progressType]="'percentage'">
       </ws-widget-content-progress>
     </ng-container>
     <ng-container *ngIf="content?.completionStatus < 2">
-      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier"
-      [className]="'thick'" [progress]="content?.completionPercentage" [progressType]="'percentage'">
+        <p class="mat-body-2 font-bold-imp ws-mat-black60-text">Your progress</p>
+      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier" [progress]="content?.completionPercentage" [progressType]="'percentage'">
       </ws-widget-content-progress>
     </ng-container>
     <div class="margin-top-l glance-container">
@@ -345,14 +345,14 @@ TODO: edit option while preview Mode
                     </span>
                 </h3>
             </div>
-            <div class="info-item"
+            <!-- <div class="info-item"
                 *ngIf="tocConfig?.atAGlance?.keywords?.enabled && content?.keywords?.length">
                 <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.keywords?.displayName}}
                 </h3>
                 <h3 class="item-value width-expand">
                     {{ content?.keywords?.join(', ') }}
                 </h3>
-            </div>
+            </div> -->
             <ng-container *ngFor="let item of content?.collections">
                 <div class="info-item"
                     *ngIf="tocConfig?.atAGlance?.curatedInKB?.enabled && item.contentType === 'Knowledge Board' && item.status === 'Live'">

@@ -347,10 +347,15 @@ mat-divider {
     }
   }
 }
+::ng-deep.mat-tab-header {
+  border: 0 !important;
+}
 ::ng-deep.mat-tab-body {
   padding: 15px 0 !important;
 }
 ::ng-deep.mat-tab-label {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  margin-right: 3%;
   .mat-tab-label-content {
     text-transform: uppercase;
   }
