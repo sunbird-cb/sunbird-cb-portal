@@ -153,14 +153,12 @@ TODO: edit option while preview Mode
     </p> -->
     <ng-container *ngIf="content?.completionStatus == 2">
         <p class="mat-body-2 font-bold-imp ws-mat-black60-text">Your progress</p>
-      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier"
-      [className]="'thick'" [progress]="100" [progressType]="'percentage'">
+      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier" [progress]="100" [progressType]="'percentage'">
       </ws-widget-content-progress>
     </ng-container>
     <ng-container *ngIf="content?.completionStatus < 2">
         <p class="mat-body-2 font-bold-imp ws-mat-black60-text">Your progress</p>
-      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier"
-      [className]="'thick'" [progress]="content?.completionPercentage" [progressType]="'percentage'">
+      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier" [progress]="content?.completionPercentage" [progressType]="'percentage'">
       </ws-widget-content-progress>
     </ng-container>
     <div class="margin-top-l glance-container">
@@ -347,14 +345,14 @@ TODO: edit option while preview Mode
                     </span>
                 </h3>
             </div>
-            <div class="info-item"
+            <!-- <div class="info-item"
                 *ngIf="tocConfig?.atAGlance?.keywords?.enabled && content?.keywords?.length">
                 <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.keywords?.displayName}}
                 </h3>
                 <h3 class="item-value width-expand">
                     {{ content?.keywords?.join(', ') }}
                 </h3>
-            </div>
+            </div> -->
             <ng-container *ngFor="let item of content?.collections">
                 <div class="info-item"
                     *ngIf="tocConfig?.atAGlance?.curatedInKB?.enabled && item.contentType === 'Knowledge Board' && item.status === 'Live'">

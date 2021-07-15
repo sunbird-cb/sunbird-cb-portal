@@ -8,6 +8,10 @@
             <img [src]="content?.posterImage" [id]="'source_' + content.identifier" class="app-icon"
               [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
           </div>
+          <div *ngIf="!content?.posterImage" class="float-left">
+            <img src="/assets/instances/eagle/app_logos/default.png" [id]="'source_' + content.identifier" class="app-icon"
+             [alt]="content.sourceName || iGOT" />
+          </div>
           <!-- data -->
           <div class="sm:ml-5 flex flex-auto" [id]="'m-c-'+ content.identifier">
             
@@ -75,7 +79,13 @@
                 <img [src]="content?.creatorLogo" [id]="'source_' + content.identifier" class="source-icon"
                 [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
               </div>
-              <div class="header-actions margin-top-l">
+              <!-- tags -->
+              <div class="tags margin-top-m margin-bottom-s" *ngIf="content?.keywords && content?.keywords?.length > 0">
+                  <span *ngFor="let tag of content.keywords" class="tag" [ngStyle]="getBgColor(tag)">
+                    {{tag}}
+                  </span>
+              </div>
+              <div class="header-actions margin-top-m">
                 <ng-container *ngIf="
                     actionBtnStatus !== 'wait' &&
                     content?.status !== 'Deleted' &&
@@ -100,16 +110,16 @@
                         [queryParams]="resumeData ? generateQuery('RESUME') : generateQuery('START')"
                         class="mat-button mat-button-base">
                         <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
-                          {{resumeData?"Resume":"Start"}}
+                          {{resumeData?"RESUME":"START"}}
                         </ng-container>
                       </a>
                       <a *ngIf="isPostAssessment && showTakeAssessment?.post_assessment"
                         [routerLink]="firstResourceLink?.url" class="mat-button mat-button-base">
-                        <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>Take Assessment</ng-container>
+                        <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>TAKE ASSESSMENT</ng-container>
                       </a>
                     </ng-container>
                     <ng-container *ngIf="actionBtnStatus == 'reject' && content?.registrationUrl">
-                      <a [href]="content?.registrationUrl" target="_blank" class="mat-button mat-button-base" i18n>Register</a>
+                      <a [href]="content?.registrationUrl" target="_blank" class="mat-button mat-button-base" i18n>REGISTER</a>
                     </ng-container>
                   </div>
                 </ng-container>

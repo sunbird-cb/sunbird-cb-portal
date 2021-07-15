@@ -244,6 +244,24 @@
     color: #fff !important;
   }
 }
+.tags {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 2; 
+  
+  .tag {
+    display: flex;
+    margin: 0 10p 0 0;
+    padding: 3px 15px;
+    font-size: 12px;
+    min-width: 30px;
+    justify-content: center;
+    border-radius: 20px 5px 5px 20px;
+  }
+}
 
 .sticky-banner {
   z-index: 999;

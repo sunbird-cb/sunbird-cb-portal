@@ -119,6 +119,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
             this.contentType.push(mf.name)
             queryparam.request.filters.contentType = this.contentType
           }
+          queryparam.request.filters.contentType = this.contentType
         } else if (mf.mainType === 'primaryCategory') {
           this.primaryCategoryType.push(mf.name)
           queryparam.request.filters.primaryCategory = this.primaryCategoryType

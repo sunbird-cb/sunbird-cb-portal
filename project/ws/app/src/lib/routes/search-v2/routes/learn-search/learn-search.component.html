@@ -8,7 +8,7 @@
             <p *ngIf="myFilters && myFilters.length > 0" class="mat-body-2 ws-mat-black60-text filternames">
                 <span *ngFor="let mf of myFilters" class="display-inline-block myfilter-custom margin-right-s ng-star-inserted padding-right-s padding-left-s padding-top-xs padding-bottom-xs">
                      
-                    <span *ngIf="mf.name === 'application/vnd.ekstep.content-collection'">Collection</span>
+                    <span *ngIf="mf.name === 'application/vnd.ekstep.content-collection'">Course</span>
                     <span *ngIf="mf.name === 'audio/mpeg'">Audio</span>
                     <span *ngIf="mf.name === 'application/pdf'">PDF</span>
                     <span *ngIf="mf.name === 'application/json'">Assessment</span>
@@ -38,7 +38,7 @@
             <div *ngIf="totalResults > 0">
                 <mat-card class="learn-card margin-bottom-m padding-remove position-relative" *ngFor="let content of searchResults">
                     <div class="imageholder float-left">
-                        <img mat-card-image class="margin-remove" [src]="content.appIcon"
+                        <img mat-card-image class="margin-remove" [src]="content.posterImage"
                         [wsUtilsDefaultThumbnail]="defaultThumbnail" alt="">
                     </div>
                     <mat-card-content>
@@ -58,17 +58,18 @@
                             <img src="/assets/icons/content/image.svg" class="contenticon" alt="Module"  *ngIf="content.mimeType === 'image/jpeg' || content.mimeType === 'image/png'">
                             {{content.contentType}}
                         </p>
-                        <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer">
+                        <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title">
                             <a [href]="'/app/toc/' + content.identifier + '/overview?primaryCategory='+ content.primaryCategory ">{{content.name}}</a>
                         </p>
                         <!-- <p class="mat-body-2 margin-bottom-s"></p> -->
                         <div class="bottomsection">
-                            <p class="mat-body-2 margin-bottom-xs" *ngIf="content.creator">By {{content.creator}}</p>
-                            <div class="contentdata">
+                            <p class="mat-body-2 margin-bottom-xxs" *ngIf="content.creator">By {{content.creator}}</p>
+                            <div class="contentdata margin-bottom-xm">
                                 <ul class="mat-body-2 margin-remove-top margin-bottom-xs padding-remove ws-mat-black60-text">
-                                    <li>Health social science</li>
+                                    <!-- <li>Health social science</li> -->
                                     <li *ngIf="content.lastUpdatedOn">
-                                        <img src="/assets/icons/content/separator.svg">  {{ content.lastUpdatedOn | date: "MMM yyyy"  }}
+                                        <!-- <img src="/assets/icons/content/separator.svg">   -->
+                                        {{ content.lastUpdatedOn | date: "MMM yyyy"  }}
                                     </li> 
                                     <li *ngIf="content.duration">
                                         <img src="/assets/icons/content/separator.svg">  {{ content.duration | pipeDurationTransform: 'hms' }}
@@ -76,9 +77,9 @@
                                     <!-- <li><img src="/assets/icons/content/separator.svg">  Ratings</li> -->
                                 </ul>
                             </div>
-                            <div class="tags">
+                            <div class="tags" *ngIf="content.keywords && content.keywords.length > 0">
                                 <ul class="mat-caption margin-remove-top margin-bottom-s padding-remove display-inline-block">
-                                    <li>Health science</li><li>Other tags</li>
+                                    <li *ngFor="let tag of content.keywords">{{tag}}</li>
                                 </ul>
                                 <!-- <p class="display-inline-block ws-mat-black60-text actionbtns">
                                     <mat-icon class="margin-right-s">more_vert_outlined</mat-icon> 
