@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router'
-import { AuthKeycloakService, ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils' // AuthKeycloakService,
 import { Subscription } from 'rxjs'
 import { ILoginDescriptiveFooterConfig, IWSPublicLoginConfig } from './login.model'
 
@@ -24,12 +24,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   welcomeFooter: ILoginDescriptiveFooterConfig | null = null
   title = ''
   subTitle = ''
-  private redirectUrl = ''
+  // private redirectUrl = ''
   private subscriptionLogin: Subscription | null = null
 
   constructor(
     private activateRoute: ActivatedRoute,
-    private authSvc: AuthKeycloakService,
+    // private authSvc: AuthKeycloakService,
     private configSvc: ConfigurationsService,
     private domSanitizer: DomSanitizer,
   ) {
@@ -54,12 +54,12 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.contactUs = data.pageData.data.footer.contactUs
     })
 
-    const paramsMap = this.activateRoute.snapshot.queryParamMap
-    if (paramsMap.has('ref')) {
-      this.redirectUrl = document.baseURI + paramsMap.get('ref')
-    } else {
-      this.redirectUrl = document.baseURI
-    }
+    // const paramsMap = this.activateRoute.snapshot.queryParamMap
+    // if (paramsMap.has('ref')) {
+    //   this.redirectUrl = document.baseURI + paramsMap.get('ref')
+    // } else {
+    //   this.redirectUrl = document.baseURI
+    // }
   }
 
   ngOnDestroy() {
@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  login(key: 'E' | 'N' | 'S') {
-    this.authSvc.login(key, this.redirectUrl)
-  }
+  // login(key: 'E' | 'N' | 'S') {
+  //   this.authSvc.login(key, this.redirectUrl)
+  // }
 }
