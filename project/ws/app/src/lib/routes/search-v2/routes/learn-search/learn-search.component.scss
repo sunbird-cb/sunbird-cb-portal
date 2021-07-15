@@ -45,6 +45,11 @@
                 border-radius: 10px 0 0 10px;
             }
         }
+        .content-title{
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
         .mat-card-content {
             margin-left: 36%;
             padding: 8px;
@@ -79,6 +84,9 @@
 
             ul {
                 list-style-type: none;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
 
                 li {
                     display: inline-block;
