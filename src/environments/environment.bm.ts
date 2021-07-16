@@ -1,15 +1,13 @@
 export const environment = {
-    name: 'benchmark',
     production: true,
-    sitePath: 'igot-bm-sunbird.idc.tarento.com',
-    organisation: 'igot-karmayogi',
-    framework: 'igot',
-    channelId: '0131397178949058560',
-    azureHost: 'https://ppigot.blob.core.windows.net',
-    contentHost: 'https://content.igot-dev.in',
-    // https://ppigot.blob.core.windows.net/
-    azureBucket: 'content',
-
-    azureOldHost: 'https://staas-bbs1.cloud.gov.in',
-    azureOldBuket: 'igot',
+    name: (window as { [key: string]: any })['env']['name'],
+    sitePath: (window as { [key: string]: any })['env']['sitePath'] || '',
+    organisation: (window as { [key: string]: any })['env']['organisation'] || '',
+    framework: (window as { [key: string]: any })['env']['framework'] || '',
+    channelId: (window as { [key: string]: any })['env']['channelId'] || '',
+    azureHost: (window as { [key: string]: any })['env']['azureHost'] || '',
+    contentHost: (window as { [key: string]: any })['env']['contentHost'] || '',
+    azureBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
+    azureOldHost: (window as { [key: string]: any })['env']['azureOldHost'] || '',
+    azureOldBuket: (window as { [key: string]: any })['env']['azureOldBuket'] || '',
 }
