@@ -26,7 +26,7 @@ node('build-slave') {
 
                 dir("${env.WORKSPACE}/assets") {
                 checkout scm: [$class: 'GitSCM', branches: [[name: assets_repo_branch]], extensions: [[$class: 'CloneOption', depth: 1, noTags: true, reference: '', shallow: true]], userRemoteConfigs: [[credentialsId: asset_repo_credentials, url: assets_repo_url]]]
-                sh('mv client-assets/assets/configurations/cbc_3000 client-assets/assets/configurations/cbc.igot-dev.in')
+                sh('mv client-assets/assets/configurations/localhost_3000 client-assets/assets/configurations/igot-dev.in')
                 }
                 }
 		
