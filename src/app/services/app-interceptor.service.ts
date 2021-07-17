@@ -42,7 +42,15 @@ export class AppInterceptorService implements HttpInterceptor {
           if (error instanceof HttpErrorResponse) {
             switch (error.status) {
               case 419:      // login
-                  window.location.href = error.error.redirectUrl // 'http://localhost:3003/protected/v8/user/resource/'
+                  const localUrl = location.origin
+                  const pageName = '/page/home'
+                  if (localUrl.includes('localhost')) {
+                    // tslint:disable-next-line: prefer-template
+                    window.location.href = error.error.redirectUrl + `?q=${localUrl}${pageName}`
+                  } else {
+                    // tslint:disable-next-line: prefer-template
+                    window.location.href = error.error.redirectUrl + `?q=${pageName}`
+                  }
                   break
             }
           }
