@@ -12,30 +12,24 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <mat-selection-list id="filters" formControlName="filters" #roles>
-                    <section class="mat-body-2 margin-bottom-xs" *ngFor="let options of fs.values">
+                    <section class="mat-body-2 margin-bottom-xs text-capitalize" *ngFor="let options of fs.values">
                         <span>
-                            <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name === 'Video'">
-                                <label for="Video">Video</label>
-                            </mat-checkbox>
                             <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name === 'audio/mpeg'">
                                 <label for="Audio">Audio</label>
                             </mat-checkbox>
                             <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name === 'application/pdf'">
                                 <label for="PDF">PDF</label>
                             </mat-checkbox>
-                            <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name === 'application/json'">
-                                <label for="Assessment">Assessment</label>
+                            <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name === 'application/vnd.ekstep.html-archive'">
+                                <label for="Interactive Content">Interactive Content</label>
                             </mat-checkbox>
-                            <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name === 'HTML'">
-                                <label for="HTML">HTML</label>
-                            </mat-checkbox>
-                            <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name === 'Image'">
-                                <label for="Image">Image</label>
+                            <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name === 'text/x-url'">
+                                <label for="Webpage">Webpage</label>
                             </mat-checkbox>
                             <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name === 'application/vnd.ekstep.content-collection'">
-                                <label for="Collection">Course</label>
+                                <label for="Course">Course</label>
                             </mat-checkbox>
-                            <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name !== 'HTML' &&  options.name !== 'application/json' && options.name !== 'application/pdf' && options.name !== 'audio/mpeg' && options.name !== 'Video' && options.name !== 'Image' && options.name !== 'application/vnd.ekstep.content-collection'">
+                            <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name !== 'application/vnd.ekstep.html-archive' && options.name !== 'application/pdf' && options.name !== 'audio/mpeg' && options.name !== 'application/vnd.ekstep.content-collection' && options.name !== 'text/x-url'">
                                 <label for="options.name">{{options.name}}</label>
                             </mat-checkbox>
                         </span>
@@ -58,3 +52,4 @@
         </mat-accordion>
     </form>
 </div>
+    
