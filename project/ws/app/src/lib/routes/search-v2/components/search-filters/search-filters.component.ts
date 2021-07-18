@@ -30,21 +30,20 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
             count: '',
             name: '',
           }
-          if (nfv.name !== 'video/mp4' && nfv.name !== 'video/x-youtube' && nfv.name !== 'application/vnd.ekstep.html-archive'
-            // tslint:disable-next-line: max-line-length
-            && nfv.name !== 'text/x-url' && nfv.name !== 'application/vnd.ekstep.ecml-archive' && nfv.name !== 'image/jpeg' && nfv.name !== 'image/png') {
+          if (nfv.name !== 'video/mp4' && nfv.name !== 'video/x-youtube'  && nfv.name !== 'application/json' &&
+          nfv.name !== 'application/x-mpegURL' && nfv.name !== 'application/quiz' && nfv.name !== 'image/jpeg' &&
+          nfv.name !== 'image/png') {
             values.push(nfv)
           } else {
-            if (nfv.name === 'video/mp4' || nfv.name === 'video/x-youtube') {
+            if (nfv.name === 'video/mp4' || nfv.name === 'video/x-youtube' || nfv.name === 'application/x-mpegURL') {
               nv.name = 'Video'
               const indx = values.filter((x: any) => x.name === nv.name)
               if (indx.length === 0) {
                 values.push(nv)
               }
             }
-            if (nfv.name === 'application/vnd.ekstep.html-archive' || nfv.name === 'text/x-url' ||
-              nfv.name === 'application/vnd.ekstep.ecml-archive') {
-              nv.name = 'HTML'
+            if (nfv.name === 'application/json' || nfv.name === 'application/quiz') {
+              nv.name = 'Assessment'
               const indx = values.filter((x: any) => x.name === nv.name)
               if (indx.length === 0) {
                 values.push(nv)
