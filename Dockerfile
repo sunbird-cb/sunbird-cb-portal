@@ -12,6 +12,7 @@ RUN npm run compress:brotli
 #RUN npm run compress:gzip
 
 WORKDIR /app/dist
+COPY assets/client-assets www/en/
 RUN npm install --production
 EXPOSE 3004
 

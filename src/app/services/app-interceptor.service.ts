@@ -1,7 +1,8 @@
 import { Injectable, LOCALE_ID, Inject } from '@angular/core'
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http'
-import { Observable } from 'rxjs'
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http'
+import { Observable, throwError } from 'rxjs'
 import { ConfigurationsService } from '@sunbird-cb/utils'
+import { catchError } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +29,7 @@ export class AppInterceptorService implements HttpInterceptor {
     if (this.configSvc.activeOrg && this.configSvc.rootOrg) {
       const modifiedReq = req.clone({
         setHeaders: {
+          Authorization: '',
           org: this.configSvc.activeOrg,
           rootOrg: this.configSvc.rootOrg,
           locale: lang.join(','),
@@ -35,7 +37,26 @@ export class AppInterceptorService implements HttpInterceptor {
           hostPath: this.configSvc.hostPath,
         },
       })
-      return next.handle(modifiedReq)
+      return next.handle(modifiedReq).pipe(
+        catchError(error => {
+          if (error instanceof HttpErrorResponse) {
+            switch (error.status) {
+              case 419:      // login
+                  const localUrl = location.origin
+                  const pageName = '/page/home'
+                  if (localUrl.includes('localhost')) {
+                    // tslint:disable-next-line: prefer-template
+                    window.location.href = error.error.redirectUrl + `?q=${localUrl}${pageName}`
+                  } else {
+                    // tslint:disable-next-line: prefer-template
+                    window.location.href = error.error.redirectUrl + `?q=${pageName}`
+                  }
+                  break
+            }
+          }
+          return throwError('error')
+        })
+      )
     }
     return next.handle(req)
   }

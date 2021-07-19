@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild, OnDestroy } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { NsContent } from '@sunbird-cb/collection'
 import { ConfigurationsService, EventService, TFetchStatus } from '@sunbird-cb/utils'
 import { MobileAppsService } from '../../../../../../../src/app/services/mobile-apps.service'
@@ -28,6 +28,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   isUserInIntranet = false
   intranetUrlPatterns: string[] | undefined = []
   isIntranetUrl = false
+  collectionId = ''
   progress = 100
   constructor(
     private domSanitizer: DomSanitizer,
@@ -37,6 +38,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     private configSvc: ConfigurationsService,
     private snackBar: MatSnackBar,
     private events: EventService,
+    private activatedRoute: ActivatedRoute,
   ) {
     (window as any).API = this.scormAdapterService
     // if (window.addEventListener) {
@@ -275,8 +277,17 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     if (this.htmlContent) {
       /* tslint:disable-next-line */
       console.log(this.htmlContent.identifier)
+      if (this.activatedRoute.snapshot.queryParams.collectionId) {
+        this.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
+      }
       this.events.raiseInteractTelemetry(data.event, 'scrom', {
         contentId: this.htmlContent.identifier,
+        contentType: this.htmlContent.contentType,
+        context: this.htmlContent.context,
+        rollup: {
+          l1: this.collectionId || '',
+        },
+        ver: this.htmlContent.version,
         ...data,
       })
     }
