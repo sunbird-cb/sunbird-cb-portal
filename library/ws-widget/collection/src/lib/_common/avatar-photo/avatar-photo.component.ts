@@ -6,6 +6,7 @@ import { Component, OnInit, Input } from '@angular/core'
   styleUrls: ['./avatar-photo.component.scss'],
 })
 export class AvatarPhotoComponent implements OnInit {
+  @Input() datalen: any
 
   @Input()
   public photoUrl!: string
@@ -44,6 +45,11 @@ export class AvatarPhotoComponent implements OnInit {
       this.showInitials = true
       if (!this.initials) {
         this.createInititals()
+      }
+      if (this.datalen === 1) {
+        this.randomcolors = [
+          '#006400', // green
+        ]
       }
       const randomIndex = Math.floor(Math.random() * Math.floor(this.colors.length))
       this.circleColor = this.colors[randomIndex]
