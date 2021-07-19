@@ -185,18 +185,18 @@ TODO: edit option while preview Mode
                 <span *ngIf="tocStructure?.video === 1" i18n> Video</span>
                 <span *ngIf="tocStructure?.video > 1" i18n> Videos</span>
             </p>
-            <p *ngIf="tocStructure?.interactiveVideo > 0" class="mat-body-2 cs-icons">
+            <!-- <p *ngIf="tocStructure?.interactiveVideo > 0" class="mat-body-2 cs-icons">
                 <img src="/assets/icons/content/grey/video.svg" alt="Video" class="margin-right-xs"> {{ tocStructure?.interactiveVideo }}
                 <span *ngIf="tocStructure?.interactiveVideo === 1" i18n>
                     Interactive Video</span>
                 <span *ngIf="tocStructure?.interactiveVideo > 1" i18n>
                     Interactive Videos</span>
-                </p>
-            <p *ngIf="tocStructure?.youtube > 0" class="mat-body-2 cs-icons">
+                </p> -->
+            <!-- <p *ngIf="tocStructure?.youtube > 0" class="mat-body-2 cs-icons">
                 <img src="/assets/icons/content/grey/video.svg" alt="video" class="margin-right-xs"> {{ tocStructure?.youtube }}
                 <span *ngIf="tocStructure?.youtube === 1" i18n> Youtube Video</span>
                 <span *ngIf="tocStructure?.youtube > 1" i18n> Youtube Videos</span>
-            </p>
+            </p> -->
             <p *ngIf="tocStructure?.pdf > 0" class="mat-body-2 cs-icons">
                 <img src="/assets/icons/content/grey/pdf.svg" alt="PDF" class="margin-right-xs"> {{ tocStructure?.pdf }}
                 <span *ngIf="tocStructure?.pdf === 1" i18n> PDF</span>
@@ -204,24 +204,29 @@ TODO: edit option while preview Mode
             </p>
             <p *ngIf="tocStructure?.podcast > 0" class="mat-body-2 cs-icons">
                 <img src="/assets/icons/content/grey/audio.svg" alt="Podcast" class="margin-right-xs"> {{ tocStructure?.podcast }}
-                <span *ngIf="tocStructure?.podcast === 1" i18n> Podcast</span>
-                <span *ngIf="tocStructure?.podcast > 1" i18n> Podcasts</span>
+                <span *ngIf="tocStructure?.podcast === 1" i18n> Audio</span>
+                <span *ngIf="tocStructure?.podcast > 1" i18n> Audios</span>
             </p>
-            <p *ngIf="tocStructure?.webModule > 0" class="mat-body-2 cs-icons">
+            <!-- <p *ngIf="tocStructure?.webModule > 0" class="mat-body-2 cs-icons">
                 <img src="/assets/icons/content/grey/module.svg" alt="Web Module" class="margin-right-xs"> {{ tocStructure?.webModule }}
                 <span *ngIf="tocStructure?.webModule === 1" i18n> Web Module</span>
                 <span *ngIf="tocStructure?.webModule > 1" i18n> Web Modules</span>
-            </p>
+            </p> -->
             <p *ngIf="tocStructure?.webPage > 0" class="mat-body-2 cs-icons">
                 <img src="/assets/icons/content/grey/content_copy.svg" alt="Web Page" class="margin-right-xs"> {{ tocStructure?.webPage }}
                 <span *ngIf="tocStructure?.webPage === 1" i18n> Web Page</span>
                 <span *ngIf="tocStructure?.webPage > 1" i18n> Web Pages</span>
             </p>
-            <p *ngIf="tocStructure?.quiz > 0" class="mat-body-2 cs-icons">
+            <p *ngIf="tocStructure?.interactivecontent > 0" class="mat-body-2 cs-icons">
+                <img src="/assets/icons/content/grey/link.svg" alt="Interactive Content" class="margin-right-xs"> {{ tocStructure?.interactivecontent }}
+                <span *ngIf="tocStructure?.interactivecontent === 1" i18n> Interactive Content</span>
+                <span *ngIf="tocStructure?.interactivecontent > 1" i18n> Interactive Contents</span>
+            </p>
+            <!-- <p *ngIf="tocStructure?.quiz > 0" class="mat-body-2 cs-icons">
                 <img src="/assets/icons/content/grey/assessment.svg" alt="Quiz" class="margin-right-xs"> {{ tocStructure?.quiz }}
                 <span *ngIf="tocStructure?.quiz === 1" i18n> Quiz</span>
                 <span *ngIf="tocStructure?.quiz > 1" i18n> Quizzes</span>
-            </p>
+            </p> -->
             <p *ngIf="tocStructure?.assessment > 0" class="mat-body-2 cs-icons">
                 <img src="/assets/icons/content/grey/assessment.svg" alt="Assessment" class="margin-right-xs"> {{ tocStructure?.assessment }}
                 <span *ngIf="tocStructure?.assessment === 1" i18n> Assessment</span>
