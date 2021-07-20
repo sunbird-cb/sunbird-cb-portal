@@ -149,6 +149,7 @@ mat-divider {
   .custom-button{
     background: #0074B6 0% 0% no-repeat padding-box;
     border-radius: 4px;
+    width: 100%;
   }
 
   @include breakpoint-xs {
