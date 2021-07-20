@@ -85,7 +85,7 @@
                     {{tag}}
                   </span>
               </div>
-              <div class="header-actions margin-top-m">
+              <!-- <div class="header-actions margin-top-m">
                 <ng-container *ngIf="
                     actionBtnStatus !== 'wait' &&
                     content?.status !== 'Deleted' &&
@@ -136,13 +136,13 @@
                 <h3 class="margin-remove-bottom pt-4 info-msg" i18n *ngIf="content?.status === 'InReview'">
                   The content is in review.
                 </h3>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
       </div>
     </div>
-    <p class="mt-5 mb-5 info-msg" *ngIf="content?.isInIntranet && showIntranetMsg">
+    <!-- <p class="mt-5 mb-5 info-msg" *ngIf="content?.isInIntranet && showIntranetMsg">
       <mat-icon class="align-bottom">info</mat-icon>&nbsp;
       <ng-container i18n>This can be viewed only in the Intranet.</ng-container>
     </p>
@@ -154,7 +154,7 @@
     <p class="mt-5 mb-5 info-msg" *ngIf="showStart.msg === 'youtubeForbidden'">
       <mat-icon class="align-bottom">info</mat-icon>&nbsp;
       <ng-container i18n>Access to this YouTube content is blocked.</ng-container>
-    </p>
+    </p> -->
     <!-- <ng-container *ngIf="content?.completionStatus == 2">
       <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier"
       [className]="'thick'" [progress]="100" [progressType]="'percentage'">

@@ -22,6 +22,7 @@ import { FormControl, Validators } from '@angular/forms'
 import * as dayjs from 'dayjs'
 import * as  lodash from 'lodash'
 import { TitleTagService } from '../../services/title-tag.service'
+import { ActionService } from '../../services/action.service'
 
 @Component({
   selector: 'ws-app-toc-banner',
@@ -86,6 +87,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     private snackBar: MatSnackBar,
     public configSvc: ConfigurationsService,
     private tagSvc: TitleTagService,
+    private actionSVC: ActionService,
   ) {
 
   }
@@ -217,6 +219,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         'Learning Resource',
         this.getBatchId()
       )
+      this.actionSVC.setUpdateCompGroupO = this.resumeDataLink
     }
     this.batchControl.valueChanges.subscribe((batch: NsContent.IBatch) => {
       this.disableEnrollBtn = true
