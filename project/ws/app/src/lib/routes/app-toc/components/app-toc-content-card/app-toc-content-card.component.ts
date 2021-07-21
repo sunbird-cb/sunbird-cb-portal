@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
 import { NsContent, viewerRouteGenerator } from '@sunbird-cb/collection'
 import { NsAppToc } from '../../models/app-toc.model'
+import { EventService } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
   selector: 'ws-app-toc-content-card',
@@ -33,7 +34,9 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
   }
   defaultThumbnail = ''
   viewChildren = false
-  constructor() {}
+  constructor(
+    private events: EventService,
+  ) {}
 
   ngOnInit() {
     this.evaluateImmediateChildrenStructure()
@@ -148,5 +151,18 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
       return null
     }
     return content.identifier
+  }
+
+  public raiseTelemetry() {
+    if (this.content) {
+      this.events.raiseInteractTelemetry('click', `card-tocContentCard`, {
+        contentId: this.content.identifier || '',
+        contentType: this.content.contentType,
+        rollup: {
+          l1: this.rootId || '',
+        },
+        ver: this.content.version,
+      })
+    }
   }
 }

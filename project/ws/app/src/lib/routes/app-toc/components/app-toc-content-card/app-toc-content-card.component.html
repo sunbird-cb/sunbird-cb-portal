@@ -160,7 +160,7 @@
     <div class="flex flex-col sm:flex-row flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto">
 
       <a [routerLink]="resourceLink.url" [queryParams]="resourceLink.queryParams">
-        <div class="text-truncate cursor-pointer" (click)="viewChildren = !viewChildren">
+        <div class="text-truncate cursor-pointer" (click)="viewChildren = !viewChildren; raiseTelemetry()">
           <div class="flex flex-col sm:flex-row flex-wrap">
             <h2 class="margin-remove text-truncate content-heading flex-auto">
               {{ content?.name }}
