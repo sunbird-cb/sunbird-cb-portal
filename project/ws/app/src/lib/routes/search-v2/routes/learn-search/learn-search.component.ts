@@ -91,7 +91,10 @@ export class LearnSearchComponent implements OnInit, OnChanges {
       this.paramFilters.forEach((pf: any) => {
         this.myFilters.push(pf)
       })
-      this.applyFilter(this.paramFilters)
+      this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
+        this.facets = response.result.facets
+        this.applyFilter(this.paramFilters)
+      })
     } else {
       // this.facets = []
       this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
@@ -134,10 +137,10 @@ export class LearnSearchComponent implements OnInit, OnChanges {
           } else if (mf.name === 'Video') {
             this.mimeType.push('video/mp4')
             this.mimeType.push('video/x-youtube')
-          } else if (mf.name === 'HTML') {
-            this.mimeType.push('application/vnd.ekstep.html-archive')
-            this.mimeType.push('text/x-url')
-            this.mimeType.push('application/vnd.ekstep.ecml-archive')
+            this.mimeType.push('application/x-mpegURL')
+          } else if (mf.name === 'Assessment') {
+            this.mimeType.push('application/json')
+            this.mimeType.push('application/quiz')
           } else {
             this.mimeType.push(mf.name)
           }
@@ -160,7 +163,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
       this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
         this.searchResults = response.result.content
         this.totalResults = response.result.count
-        this.facets = response.result.facets
+        // this.facets = response.result.facets
         this.primaryCategoryType = []
         this.contentType = []
         this.mimeType = []

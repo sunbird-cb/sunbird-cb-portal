@@ -27,9 +27,9 @@ import { AppTocResolverService } from '@ws/app/src/lib/routes/app-toc/resolvers/
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'page/home',
     pathMatch: 'full',
     canActivate: [EmptyRouteGuard],
-    component: LoginRootComponent,
   },
   {
     path: 'practice/behavioral',

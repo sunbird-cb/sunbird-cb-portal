@@ -82,16 +82,15 @@ TODO: edit option while preview Mode
       </section> -->
     </div>
   </div>
-
-
-  <div class="info-section right margin-top-xl padding-m white-bg margin-left-xl margin-bottom-xl">
-    <!-- <div class="header-actions margin-top-s margin-bottom-m">
+    <!-- Rigtht sidebar -->
+  <div class="info-section right margin-top-xl padding-m white-bg margin-left-xl margin-bottom-xl"> 
+    <div class="header-actions margin-top-s margin-bottom-m">
       <ng-container *ngIf="
           actionBtnStatus !== 'wait' &&
           content?.status !== 'Deleted' &&
           content?.status !== 'Expired'
         ">
-        <div [hidden]="isResource && !content?.artifactUrl?.length" class="text-white text-center custom-button">
+        <div [hidden]="isResource && !content?.artifactUrl?.length" class="text-white text-center">
           <ng-container *ngIf="
               actionBtnStatus === 'grant' &&
               !(isMobile && content?.isInIntranet) &&
@@ -108,18 +107,18 @@ TODO: edit option while preview Mode
             <a *ngIf="showStart.show && !isPostAssessment"
               [routerLink]="resumeData ? resumeDataLink?.url : firstResourceLink?.url"
               [queryParams]="resumeData ? generateQuery('RESUME') : generateQuery('START')"
-              class="mat-button mat-button-base resumeButton">
+              class="mat-button mat-button-base resumeButton custom-button">
               <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
                 {{resumeData?"Resume":"Start"}}
               </ng-container>
             </a>
             <a *ngIf="isPostAssessment && showTakeAssessment?.post_assessment"
-              [routerLink]="firstResourceLink?.url" class="mat-button mat-button-base">
+              [routerLink]="firstResourceLink?.url" class="mat-button mat-button-base custom-button">
               <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>Take Assessment</ng-container>
             </a>
           </ng-container>
           <ng-container *ngIf="actionBtnStatus == 'reject' && content?.registrationUrl">
-            <a [href]="content?.registrationUrl" target="_blank" class="mat-button mat-button-base" i18n>Register</a>
+            <a [href]="content?.registrationUrl" target="_blank" class="mat-button mat-button-base custom-button" i18n>Register</a>
           </ng-container>
         </div>
       </ng-container>
@@ -150,7 +149,7 @@ TODO: edit option while preview Mode
     <p class="mt-5 mb-5 info-msg" *ngIf="showStart.msg === 'youtubeForbidden'">
       <mat-icon class="align-bottom">info</mat-icon>&nbsp;
       <ng-container i18n>Access to this YouTube content is blocked.</ng-container>
-    </p> -->
+    </p>
     <ng-container *ngIf="content?.completionStatus == 2">
         <p class="mat-body-2 font-bold-imp ws-mat-black60-text">Your progress</p>
       <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier" [progress]="100" [progressType]="'percentage'">
@@ -185,18 +184,18 @@ TODO: edit option while preview Mode
                 <span *ngIf="tocStructure?.video === 1" i18n> Video</span>
                 <span *ngIf="tocStructure?.video > 1" i18n> Videos</span>
             </p>
-            <p *ngIf="tocStructure?.interactiveVideo > 0" class="mat-body-2 cs-icons">
+            <!-- <p *ngIf="tocStructure?.interactiveVideo > 0" class="mat-body-2 cs-icons">
                 <img src="/assets/icons/content/grey/video.svg" alt="Video" class="margin-right-xs"> {{ tocStructure?.interactiveVideo }}
                 <span *ngIf="tocStructure?.interactiveVideo === 1" i18n>
                     Interactive Video</span>
                 <span *ngIf="tocStructure?.interactiveVideo > 1" i18n>
                     Interactive Videos</span>
-                </p>
-            <p *ngIf="tocStructure?.youtube > 0" class="mat-body-2 cs-icons">
+                </p> -->
+            <!-- <p *ngIf="tocStructure?.youtube > 0" class="mat-body-2 cs-icons">
                 <img src="/assets/icons/content/grey/video.svg" alt="video" class="margin-right-xs"> {{ tocStructure?.youtube }}
                 <span *ngIf="tocStructure?.youtube === 1" i18n> Youtube Video</span>
                 <span *ngIf="tocStructure?.youtube > 1" i18n> Youtube Videos</span>
-            </p>
+            </p> -->
             <p *ngIf="tocStructure?.pdf > 0" class="mat-body-2 cs-icons">
                 <img src="/assets/icons/content/grey/pdf.svg" alt="PDF" class="margin-right-xs"> {{ tocStructure?.pdf }}
                 <span *ngIf="tocStructure?.pdf === 1" i18n> PDF</span>
@@ -204,24 +203,29 @@ TODO: edit option while preview Mode
             </p>
             <p *ngIf="tocStructure?.podcast > 0" class="mat-body-2 cs-icons">
                 <img src="/assets/icons/content/grey/audio.svg" alt="Podcast" class="margin-right-xs"> {{ tocStructure?.podcast }}
-                <span *ngIf="tocStructure?.podcast === 1" i18n> Podcast</span>
-                <span *ngIf="tocStructure?.podcast > 1" i18n> Podcasts</span>
+                <span *ngIf="tocStructure?.podcast === 1" i18n> Audio</span>
+                <span *ngIf="tocStructure?.podcast > 1" i18n> Audios</span>
             </p>
-            <p *ngIf="tocStructure?.webModule > 0" class="mat-body-2 cs-icons">
+            <!-- <p *ngIf="tocStructure?.webModule > 0" class="mat-body-2 cs-icons">
                 <img src="/assets/icons/content/grey/module.svg" alt="Web Module" class="margin-right-xs"> {{ tocStructure?.webModule }}
                 <span *ngIf="tocStructure?.webModule === 1" i18n> Web Module</span>
                 <span *ngIf="tocStructure?.webModule > 1" i18n> Web Modules</span>
-            </p>
+            </p> -->
             <p *ngIf="tocStructure?.webPage > 0" class="mat-body-2 cs-icons">
                 <img src="/assets/icons/content/grey/content_copy.svg" alt="Web Page" class="margin-right-xs"> {{ tocStructure?.webPage }}
                 <span *ngIf="tocStructure?.webPage === 1" i18n> Web Page</span>
                 <span *ngIf="tocStructure?.webPage > 1" i18n> Web Pages</span>
             </p>
-            <p *ngIf="tocStructure?.quiz > 0" class="mat-body-2 cs-icons">
+            <p *ngIf="tocStructure?.interactivecontent > 0" class="mat-body-2 cs-icons">
+                <img src="/assets/icons/content/grey/link.svg" alt="Interactive Content" class="margin-right-xs"> {{ tocStructure?.interactivecontent }}
+                <span *ngIf="tocStructure?.interactivecontent === 1" i18n> Interactive Content</span>
+                <span *ngIf="tocStructure?.interactivecontent > 1" i18n> Interactive Contents</span>
+            </p>
+            <!-- <p *ngIf="tocStructure?.quiz > 0" class="mat-body-2 cs-icons">
                 <img src="/assets/icons/content/grey/assessment.svg" alt="Quiz" class="margin-right-xs"> {{ tocStructure?.quiz }}
                 <span *ngIf="tocStructure?.quiz === 1" i18n> Quiz</span>
                 <span *ngIf="tocStructure?.quiz > 1" i18n> Quizzes</span>
-            </p>
+            </p> -->
             <p *ngIf="tocStructure?.assessment > 0" class="mat-body-2 cs-icons">
                 <img src="/assets/icons/content/grey/assessment.svg" alt="Assessment" class="margin-right-xs"> {{ tocStructure?.assessment }}
                 <span *ngIf="tocStructure?.assessment === 1" i18n> Assessment</span>

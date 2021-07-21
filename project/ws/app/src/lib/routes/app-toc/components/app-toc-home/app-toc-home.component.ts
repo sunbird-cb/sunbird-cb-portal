@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnChanges, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild } from '@angular/core'
+import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild } from '@angular/core'
 import { ActivatedRoute, Event, Data, Router, NavigationEnd } from '@angular/router'
 import { NsContent, WidgetContentService, WidgetUserService, viewerRouteGenerator, NsPlaylist, NsGoal, ContentProgressService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
@@ -15,6 +15,7 @@ import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import * as dayjs from 'dayjs'
 import * as  lodash from 'lodash'
 import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
+import { ActionService } from '../../services/action.service'
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -26,7 +27,7 @@ export enum ErrorType {
   templateUrl: './app-toc-home.component.html',
   styleUrls: ['./app-toc-home.component.scss'],
 })
-export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit, OnChanges {
+export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
   banners: NsAppToc.ITocBanner | null = null
   showMoreGlance = false
   content: NsContent.IContent | null = null
@@ -129,6 +130,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private mobileAppsSvc: MobileAppsService,
     private utilitySvc: UtilityService,
     private progressSvc: ContentProgressService,
+    private actionSVC: ActionService,
   ) {
   }
 
@@ -327,7 +329,17 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           break
         }
       }
+
+      // from ngOnChanges
+      this.fetchExternalContentAccess()
+      this.modifySensibleContentRating()
+      this.assignPathAndUpdateBanner(this.router.url)
+      this.getLearningUrls()
     }
+
+    this.actionSVC.getUpdateCompGroupO.subscribe((res: any) => {
+      this.resumeDataLink = res
+    })
 
     if (this.content && this.isPostAssessment) {
       this.tocSvc.fetchPostAssessmentStatus(this.content.identifier).subscribe(res => {
@@ -340,6 +352,44 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         }
       })
     }
+    // from ngOnChanges
+    this.batchControl.valueChanges.subscribe((batch: NsContent.IBatch) => {
+      this.disableEnrollBtn = true
+      let userId = ''
+      if (batch) {
+        if (this.configSvc.userProfile) {
+          userId = this.configSvc.userProfile.userId || ''
+        }
+
+        const req = {
+          request: {
+            userId,
+            courseId: batch.courseId,
+            batchId: batch.batchId,
+          },
+        }
+        this.contentSvc.enrollUserToBatch(req).then((datab: any) => {
+          if (datab && datab.result && datab.result.response === 'SUCCESS') {
+            this.batchData = {
+              content: [batch],
+              enrolled: true,
+            }
+            this.router.navigate(
+              [],
+              {
+                relativeTo: this.route,
+                queryParams: { batchId: batch.batchId },
+                queryParamsHandling: 'merge',
+              })
+            this.openSnackbar('Enrolled Successfully!')
+            this.disableEnrollBtn = false
+          } else {
+            this.openSnackbar('Something went wrong, please try again later!')
+            this.disableEnrollBtn = false
+          }
+        })
+      }
+    })
   }
 
   private getUserEnrollmentList() {
@@ -576,67 +626,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     return this.tocSvc.subtitleOnBanners
   }
 
-  ngOnChanges() {
-    this.assignPathAndUpdateBanner(this.router.url)
-    if (this.content) {
-      // this.content.status = 'Deleted'
-      this.fetchExternalContentAccess()
-      this.modifySensibleContentRating()
-      this.assignPathAndUpdateBanner(this.router.url)
-      this.getLearningUrls()
-    }
-    if (this.resumeData && this.content) {
-      const resumeDataV2 = this.getResumeDataFromList()
-      this.resumeDataLink = viewerRouteGenerator(
-        resumeDataV2.identifier,
-        resumeDataV2.mimeType,
-        this.isResource ? undefined : this.content.identifier,
-        this.isResource ? undefined : this.content.contentType,
-        this.forPreview,
-        // this.content.primaryCategory
-        'Learning Resource',
-        this.getBatchId()
-      )
-    }
-    this.batchControl.valueChanges.subscribe((batch: NsContent.IBatch) => {
-      this.disableEnrollBtn = true
-      let userId = ''
-      if (batch) {
-        if (this.configSvc.userProfile) {
-          userId = this.configSvc.userProfile.userId || ''
-        }
-
-        const req = {
-          request: {
-            userId,
-            courseId: batch.courseId,
-            batchId: batch.batchId,
-          },
-        }
-        this.contentSvc.enrollUserToBatch(req).then((data: any) => {
-          if (data && data.result && data.result.response === 'SUCCESS') {
-            this.batchData = {
-              content: [batch],
-              enrolled: true,
-            }
-            this.router.navigate(
-              [],
-              {
-                relativeTo: this.route,
-                queryParams: { batchId: batch.batchId },
-                queryParamsHandling: 'merge',
-              })
-            this.openSnackbar('Enrolled Successfully!')
-            this.disableEnrollBtn = false
-          } else {
-            this.openSnackbar('Something went wrong, please try again later!')
-            this.disableEnrollBtn = false
-          }
-        })
-      }
-    })
-  }
-
   public handleEnrollmentEndDate(batch: any) {
     const enrollmentEndDate = dayjs(lodash.get(batch, 'enrollmentEndDate')).format('YYYY-MM-DD')
     const systemDate = dayjs()
@@ -690,14 +679,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     )
   }
 
-  private getResumeDataFromList() {
-    const lastItem = this.resumeData && this.resumeData.pop()
-    return {
-      identifier: lastItem.contentId,
-      mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,
-
-    }
-  }
+  // private getResumeDataFromList() {
+  //   const lastItem = this.resumeData && this.resumeData.pop()
+  //   return {
+  //     identifier: lastItem.contentId,
+  //     mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,
+  //   }
+  // }
   private modifySensibleContentRating() {
     if (
       this.content &&

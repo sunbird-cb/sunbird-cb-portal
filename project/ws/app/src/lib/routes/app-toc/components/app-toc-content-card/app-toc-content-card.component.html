@@ -215,7 +215,7 @@
 </ng-container>
 
 <mat-menu #buttonMenu="matMenu">
-  <a mat-menu-item [routerLink]="'../../' + content?.identifier + '/overview'" [queryParams]="contextPath"
+  <a mat-menu-item [routerLink]="'../' + content?.identifier + '/overview'" [queryParams]="contextPath"
     class="flex flex-middle">
     <mat-icon>toc</mat-icon>
     <h3 class="margin-remove" i18n>

@@ -6,15 +6,15 @@
             <p class="mat-body-2 font-bold-imp margin-bottom-m" *ngIf="totalResults === 1">{{totalResults}} search result 
                 <span *ngIf="param">for '{{param}}'</span></p>
             <p *ngIf="myFilters && myFilters.length > 0" class="mat-body-2 ws-mat-black60-text filternames">
-                <span *ngFor="let mf of myFilters" class="display-inline-block myfilter-custom margin-right-s ng-star-inserted padding-right-s padding-left-s padding-top-xs padding-bottom-xs">
+                <span *ngFor="let mf of myFilters" class="text-capitalize display-inline-block myfilter-custom margin-right-s ng-star-inserted padding-right-s padding-left-s padding-top-xs padding-bottom-xs">
                      
                     <span *ngIf="mf.name === 'application/vnd.ekstep.content-collection'">Course</span>
                     <span *ngIf="mf.name === 'audio/mpeg'">Audio</span>
                     <span *ngIf="mf.name === 'application/pdf'">PDF</span>
-                    <span *ngIf="mf.name === 'application/json'">Assessment</span>
+                    <span *ngIf="mf.name === 'application/vnd.ekstep.html-archive'">Interactive Content</span>
+                    <span *ngIf="mf.name === 'text/x-url'">Webpage</span>
 
-                    <span *ngIf="mf.name !== 'application/json' && 
-                    mf.name !== 'application/pdf' && mf.name !== 'audio/mpeg' && mf.name !== 'application/vnd.ekstep.content-collection'">{{mf.name}}</span>
+                    <span *ngIf="mf.name !== 'text/x-url' && mf.name !== 'application/vnd.ekstep.html-archive' && mf.name !== 'application/pdf' && mf.name !== 'audio/mpeg' && mf.name !== 'application/vnd.ekstep.content-collection'">{{mf.name}}</span>
                     <mat-icon (click)="removeFilter(mf)" class="cursor-pointer margin-left-xs ws-mat-black60-text">close</mat-icon> 
                 </span>
             </p>
@@ -51,11 +51,11 @@
                         </p> -->
                         <p class="mat-caption margin-bottom-xxs text-uppercase" *ngIf="content.contentType === 'Resource' || content.contentType === 'Course' || content.contentType === 'Module'">
                             <img src="/assets/icons/content/audio.svg" class="contenticon" alt="Audio"  *ngIf="content.mimeType === 'audio/mpeg'"> 
-                            <img src="/assets/icons/content/assessment.svg" class="contenticon" alt="Assessment"  *ngIf="content.mimeType === 'application/json'"> 
+                            <img src="/assets/icons/content/assessment.svg" class="contenticon" alt="Assessment"  *ngIf="content.mimeType === 'application/json' || content.mimeType === 'application/quiz'"> 
                             <img src="/assets/icons/content/pdf.svg" alt="PDF" class="contenticon" *ngIf="content.mimeType === 'application/pdf'"> 
-                            <img src="/assets/icons/content/video.svg" alt="Video" class="contenticon"  *ngIf="content.mimeType === 'video/mp4' || content.mimeType === 'video/x-youtube'"> 
-                            <img src="/assets/icons/content/collection.svg" class="contenticon" alt="Module"  *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection'">
-                            <img src="/assets/icons/content/link.svg" class="contenticon" alt="Module"  *ngIf="content.mimeType === 'application/vnd.ekstep.html-archive' || content.mimeType === 'text/x-url' || content.mimeType === 'application/vnd.ekstep.ecml-archive'">
+                            <img src="/assets/icons/content/video.svg" alt="Video" class="contenticon"  *ngIf="content.mimeType === 'video/mp4' || content.mimeType === 'video/x-youtube' || content.mimeType === 'application/x-mpegURL'"> 
+                            <img src="/assets/icons/content/collection.svg" class="contenticon" alt="Course"  *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection'">
+                            <img src="/assets/icons/content/link.svg" class="contenticon" alt="HTML"  *ngIf="content.mimeType === 'application/vnd.ekstep.html-archive' || content.mimeType === 'text/x-url'">
                             <img src="/assets/icons/content/image.svg" class="contenticon" alt="Module"  *ngIf="content.mimeType === 'image/jpeg' || content.mimeType === 'image/png'">
                             {{content.contentType}}
                         </p>

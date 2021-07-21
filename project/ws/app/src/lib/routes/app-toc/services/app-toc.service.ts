@@ -165,38 +165,44 @@ export class AppTocService {
       (content.contentType === 'Resource' || content.contentType === 'Knowledge Artifact')
     ) {
       switch (content.mimeType) {
-        case NsContent.EMimeTypes.HANDS_ON:
-          tocStructure.handsOn += 1
-          break
+        // case NsContent.EMimeTypes.HANDS_ON:
+        //   tocStructure.handsOn += 1
+        //   break
         case NsContent.EMimeTypes.MP3:
           tocStructure.podcast += 1
           break
         case NsContent.EMimeTypes.MP4:
         case NsContent.EMimeTypes.M3U8:
+        case NsContent.EMimeTypes.YOUTUBE:
           tocStructure.video += 1
           break
-        case NsContent.EMimeTypes.INTERACTION:
-          tocStructure.interactiveVideo += 1
-          break
+        // case NsContent.EMimeTypes.INTERACTION:
+        //   tocStructure.interactiveVideo += 1
+        //   break
         case NsContent.EMimeTypes.PDF:
           tocStructure.pdf += 1
           break
-        case NsContent.EMimeTypes.HTML:
+        // case NsContent.EMimeTypes.HTML:
+        case NsContent.EMimeTypes.TEXT_WEB:
           tocStructure.webPage += 1
           break
         case NsContent.EMimeTypes.QUIZ:
-          if (content.resourceType === 'Assessment') {
+        case NsContent.EMimeTypes.APPLICATION_JSON:
+          // if (content.resourceType === 'Assessment') {
             tocStructure.assessment += 1
-          } else {
-            tocStructure.quiz += 1
-          }
+          // } else {
+          //   tocStructure.quiz += 1
+          // }
           break
-        case NsContent.EMimeTypes.WEB_MODULE:
-          tocStructure.webModule += 1
+        // case NsContent.EMimeTypes.WEB_MODULE:
+        //   tocStructure.webModule += 1
+        //   break
+        case NsContent.EMimeTypes.ZIP:
+          tocStructure.interactivecontent += 1
           break
-        case NsContent.EMimeTypes.YOUTUBE:
-          tocStructure.youtube += 1
-          break
+        // case NsContent.EMimeTypes.YOUTUBE:
+        //   tocStructure.youtube += 1
+        //   break
         default:
           tocStructure.other += 1
           break
