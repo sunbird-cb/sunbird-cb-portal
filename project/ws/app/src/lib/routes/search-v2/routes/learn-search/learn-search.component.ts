@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core'
 import { GbSearchService } from '../../services/gb-search.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-learn-search',
@@ -37,7 +37,11 @@ export class LearnSearchComponent implements OnInit, OnChanges {
   mediaType: any = []
   facets: any = []
 
-  constructor(private searchSrvc: GbSearchService, private configSvc: ConfigurationsService) {}
+  constructor(
+    private searchSrvc: GbSearchService,
+    private configSvc: ConfigurationsService,
+    private events: EventService
+  ) {}
 
   ngOnInit() {
     const instanceConfig = this.configSvc.instanceConfig
@@ -173,5 +177,16 @@ export class LearnSearchComponent implements OnInit, OnChanges {
   removeFilter (mfilter: any) {
     this.rfilter = mfilter
     this.searchSrvc.notifyOther(this.rfilter)
+  }
+
+  raiseTelemetry(content: any) {
+    if (content) {
+      this.events.raiseInteractTelemetry('click', `card-learnSearch`, {
+        contentId: content.identifier || '',
+        contentType: content.contentType,
+        rollup: {},
+        ver: content.version,
+      })
+    }
   }
 }
