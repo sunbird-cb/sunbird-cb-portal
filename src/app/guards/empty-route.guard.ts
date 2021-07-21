@@ -7,7 +7,7 @@ import {
   Router,
   // ActivatedRoute,
 } from '@angular/router'
-// import { ConfigurationsService } from '@sunbird-cb/utils' // AuthKeycloakService
+import { ConfigurationsService } from '@sunbird-cb/utils' // AuthKeycloakService
 import { Observable } from 'rxjs'
 
 @Injectable({
@@ -16,7 +16,7 @@ import { Observable } from 'rxjs'
 export class EmptyRouteGuard implements CanActivate {
   constructor(
     private router: Router,
-    // private configSvc: ConfigurationsService,
+    private configSvc: ConfigurationsService,
     // private authSvc: AuthKeycloakService,
     // private activateRoute: ActivatedRoute
   ) {}
@@ -24,7 +24,10 @@ export class EmptyRouteGuard implements CanActivate {
     _next: ActivatedRouteSnapshot,
     _state: RouterStateSnapshot,
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    this.router.parseUrl('/page/home')
+    if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
+      return this.router.parseUrl('/page/home')
+    }
+    // this.router.parseUrl('/page/home')
     // if (this.configSvc.isAuthenticated) {
     //   // logger.log('Redirecting to application home page');
     //   return this.router.parseUrl('/page/home')
