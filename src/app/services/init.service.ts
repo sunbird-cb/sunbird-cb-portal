@@ -17,21 +17,21 @@ import {
   LoggerService,
   NsAppsConfig,
   NsInstanceConfig,
-  NsUser,
+  // NsUser,
   UserPreferenceService,
 } from '@sunbird-cb/utils'
 import { environment } from '../../environments/environment'
 /* tslint:disable */
 import _ from 'lodash'
-import { retry } from 'rxjs/operators'
+import { map } from 'rxjs/operators'
 /* tslint:enable */
-interface IDetailsResponse {
-  tncStatus: boolean
-  roles: string[]
-  group: string[]
-  profileDetailsStatus: boolean
-  isActive: boolean
-}
+// interface IDetailsResponse {
+//   tncStatus: boolean
+//   roles: string[]
+//   group: string[]
+//   profileDetailsStatus: boolean
+//   isActive: boolean
+// }
 
 interface IFeaturePermissionConfigs {
   [id: string]: Omit<NsWidgetResolver.IPermissions, 'feature'>
@@ -41,8 +41,8 @@ const PROXY_CREATE_V8 = '/apis/proxies/v8'
 
 const endpoint = {
   profilePid: '/apis/proxies/v8/api/user/v2/read',
-  profileV2: '/apis/protected/v8/user/profileRegistry/getUserRegistryById',
-  details: `/apis/protected/v8/user/details?ts=${Date.now()}`,
+  // profileV2: '/apis/protected/v8/user/profileRegistry/getUserRegistryById',
+  // details: `/apis/protected/v8/user/details?ts=${Date.now()}`,
   CREATE_USER_API: `${PROXY_CREATE_V8}/discussion/user/v1/create`,
 }
 
@@ -140,7 +140,7 @@ export class InitService {
       // if (this.configSvc.userPreference.profileSettings) {
       //   this.configSvc.profileSettings = this.configSvc.userPreference.profileSettings
       // }
-      await this.fetchUserProfileV2()
+      // await this.fetchUserProfileV2()
       await this.createUserInNodebb()
       const appsConfigPromise = this.fetchAppsConfig()
       const instanceConfigPromise = this.fetchInstanceConfig() // config: depends only on details
@@ -249,13 +249,14 @@ export class InitService {
     return appsConfig
   }
 
-  private async fetchStartUpDetails(): Promise<IDetailsResponse> {
-    const userRoles: string[] = []
+  private async fetchStartUpDetails(): Promise<any> {
+    // const userRoles: string[] = []
     if (this.configSvc.instanceConfig && !Boolean(this.configSvc.instanceConfig.disablePidCheck)) {
-      let userPidProfile: NsUser.IUserPidProfileV2 | null = null
+      let userPidProfile: any | null = null
       try {
         userPidProfile = await this.http
-          .get<NsUser.IUserPidProfileV2>(endpoint.profilePid)
+          .get<any>(endpoint.profilePid)
+          .pipe(map((res: any) => res.result.response))
           .toPromise()
       } catch (e) {
         // this.configSvc.userProfile = null
@@ -266,21 +267,23 @@ export class InitService {
         //   const organisationData = userPidProfile.result.response.organisations
         //   userRoles = (organisationData[0].roles.length > 0) ? organisationData[0].roles : []
         // }
-        this.configSvc.unMappedUser = userPidProfile.result.response
+        this.configSvc.unMappedUser = userPidProfile
+        const profileV2 = _.get(userPidProfile, 'profiledetails')
         this.configSvc.userProfile = {
 
-          country: userPidProfile.result.response.countryCode || null,
-          email: userPidProfile.result.response.email,
-          givenName: userPidProfile.result.response.firstName,
-          userId: userPidProfile.result.response.userId,
-          firstName: userPidProfile.result.response.firstName,
-          lastName: userPidProfile.result.response.lastName,
-          rootOrgId: userPidProfile.result.response.rootOrgId,
-          rootOrgName: userPidProfile.result.response.channel,
+          country: _.get(profileV2, 'personalDetails.countryCode') || null,
+          email: userPidProfile.email,
+          givenName: userPidProfile.firstName,
+          userId: userPidProfile.userId,
+          firstName: userPidProfile.firstName,
+          lastName: userPidProfile.lastName,
+          rootOrgId: userPidProfile.rootOrgId,
+          rootOrgName: userPidProfile.channel,
           // tslint:disable-next-line: max-line-length
-          // userName: `${userPidProfile.result.response.firstName ? userPidProfile.result.response.firstName : ' '}${userPidProfile.result.response.lastName ? userPidProfile.result.response.lastName : ' '}`,
-          userName: userPidProfile.result.response.userName,
-          profileImage: userPidProfile.result.response.thumbnail,
+          // userName: `${userPidProfile.firstName ? userPidProfile.firstName : ' '}${userPidProfile.lastName ? userPidProfile.lastName : ' '}`,
+          userName: userPidProfile.userName,
+          profileImage: userPidProfile.thumbnail,
+          departmentName: userPidProfile.channel,
           dealerCode: null,
           isManager: false,
           // departmentName: userPidProfile.user.department_name || '',
@@ -301,25 +304,38 @@ export class InitService {
           //     : false,
           // userName: `${userPidProfile.user.first_name} ${userPidProfile.user.last_name}`,
         }
+        this.configSvc.userProfileV2 = {
+          userId: _.get(profileV2, 'userId'),
+          email: _.get(profileV2, 'personalDetails.officialEmail'),
+          firstName: _.get(profileV2, 'personalDetails.firstname'),
+          surName: _.get(profileV2, 'personalDetails.surname'),
+          middleName: _.get(profileV2, 'personalDetails.middlename'),
+          departmentName: _.get(profileV2, 'employmentDetails.departmentName'),
+          // tslint:disable-next-line: max-line-length
+          userName: `${_.get(profileV2, 'personalDetails.firstname') ? _.get(profileV2, 'personalDetails.firstname') : ''}${_.get(profileV2, 'personalDetails.surname') ? _.get(profileV2, 'personalDetails.surname') : ''}`,
+          profileImage: _.get(profileV2, 'photo'),
+          dealerCode: null,
+          isManager: false,
+        }
       }
       const details = { group: [],
-        profileDetailsStatus: true,
-        roles: (userRoles || []).map(v => v.toLowerCase()),
-        tncStatus: true,
+        profileDetailsStatus: userPidProfile.profileDetailStatus,
+        roles: (userPidProfile.roles || []).map((v: { toLowerCase: () => void; }) => v.toLowerCase()),
+        tncStatus: !userPidProfile.promptTnC,
         isActive: true,
       }
       this.configSvc.hasAcceptedTnc = details.tncStatus
       this.configSvc.profileDetailsStatus = details.profileDetailsStatus
       // this.configSvc.userRoles = new Set((userRoles || []).map(v => v.toLowerCase()))
-      const detailsV: IDetailsResponse = await this.http
-      .get<IDetailsResponse>(endpoint.details).pipe(retry(3))
-      .toPromise()
-      this.configSvc.userGroups = new Set(detailsV.group)
-      this.configSvc.userRoles = new Set((detailsV.roles || []).map(v => v.toLowerCase()))
-      this.configSvc.isActive = detailsV.isActive
+      // const detailsV: IDetailsResponse = await this.http
+      // .get<IDetailsResponse>(endpoint.details).pipe(retry(3))
+      // .toPromise()
+      this.configSvc.userGroups = new Set(details.group)
+      this.configSvc.userRoles = new Set((details.roles || []).map((v: string) => v.toLowerCase()))
+      this.configSvc.isActive = details.isActive
       return details
     } else {
-      return { group: [], profileDetailsStatus: true, roles: userRoles, tncStatus: true, isActive: true }
+      return { group: [], profileDetailsStatus: true, roles: new Set(['Public']), tncStatus: true, isActive: true }
       // const details: IDetailsResponse = await this.http
       //   .get<IDetailsResponse>(endpoint.details).pipe(retry(3))
       //   .toPromise()
@@ -330,54 +346,56 @@ export class InitService {
     }
   }
 
-  private async fetchUserProfileV2(): Promise<any> {
-    // const userRoles: string[] = []
-    if (this.configSvc.instanceConfig && !Boolean(this.configSvc.instanceConfig.disablePidCheck)) {
-      let userPidProfileV2: NsUser.IUserPidProfileVer2 | null = null
-      try {
-        userPidProfileV2 = await this.http
-          .get<NsUser.IUserPidProfileVer2>(endpoint.profileV2)
-          .toPromise()
-      } catch (e) {
-        // this.configSvc.userProfileV2 = null
-        throw new Error('Invalid user')
-      }
-      if (userPidProfileV2) {
-        const userData: any = _.first(_.get(userPidProfileV2, 'result.UserProfile'))
-        this.configSvc.userProfileV2 = {
-          userId: userData.userId,
-          firstName: userData.personalDetails.firstname,
-          surName: userData.personalDetails.surname,
-          middleName: userData.personalDetails.middlename,
-          departmentName: _.get(userData, 'employmentDetails.departmentName'),
-          // tslint:disable-next-line: max-line-length
-          userName: `${userData.personalDetails.firstname ? userData.personalDetails.firstname : ''}${userData.personalDetails.surname ? userData.personalDetails.surname : ''}`,
-          profileImage: userData && userData.photo,
-          dealerCode: null,
-          isManager: false,
-        }
-        if (this.configSvc.userProfile) {
-          // tslint:disable-next-line: max-line-length
-          this.configSvc.userProfile.departmentName = _.get(userData, 'employmentDetails.departmentName') ? userData.employmentDetails.departmentName : null
-        }
+  // private async fetchUserProfileV2(): Promise<any> {
+  //   // const userRoles: string[] = []
+  //   if (this.configSvc.instanceConfig && !Boolean(this.configSvc.instanceConfig.disablePidCheck)) {
+  //     let userPidProfileV2: NsUser.IUserPidProfileVer2 | null = null
+  //     try {
+  //       userPidProfileV2 = await this.http
+  //         .get<NsUser.IUserPidProfileVer2>(endpoint.profileV2)
+  //         .toPromise()
+  //     } catch (e) {
+  //       // this.configSvc.userProfileV2 = null
+  //       throw new Error('Invalid user')
+  //     }
+  //     if (userPidProfileV2) {
+  //       const userData: any = _.first(_.get(userPidProfileV2, 'result.UserProfile'))
+  //       this.configSvc.userProfileV2 = {
+  //         userId: userData.userId,
+  //         firstName: userData.personalDetails.firstname,
+  //         surName: userData.personalDetails.surname,
+  //         middleName: userData.personalDetails.middlename,
+  //         departmentName: _.get(userData, 'employmentDetails.departmentName'),
+  //         // tslint:disable-next-line: max-line-length
+  // tslint:disable-next-line: max-line-length
+  //         userName: `${userData.personalDetails.firstname ? userData.personalDetails.firstname : ''}${userData.personalDetails.surname ? userData.personalDetails.surname : ''}`,
+  //         profileImage: userData && userData.photo,
+  //         dealerCode: null,
+  //         isManager: false,
+  //       }
+  //       if (this.configSvc.userProfile) {
+  //         // tslint:disable-next-line: max-line-length
+  // tslint:disable-next-line: max-line-length
+  //         this.configSvc.userProfile.departmentName = _.get(userData, 'employmentDetails.departmentName') ? userData.employmentDetails.departmentName : null
+  //       }
 
-      }
-    }
-    // const details: IDetailsResponse = await this.http
-    //   .get<IDetailsResponse>(endpoint.details).pipe(retry(3))
-    //   .toPromise()
-    // this.configSvc.userGroups = new Set(details.group)
-    // this.configSvc.userRoles = new Set(details.roles)
-    // if (this.configSvc.userProfile && this.configSvc.userProfile.isManager) {
-    //   this.configSvc.userRoles.add('is_manager')
-    // }
-    // tslint:disable-next-line: max-line-length
-    // const details = { group: [], profileDetailsStatus: true, roles: userRoles, tncStatus: true }
-    // this.configSvc.hasAcceptedTnc = details.tncStatus
-    // this.configSvc.profileDetailsStatus = details.profileDetailsStatus
-    // this.configSvc.userRoles = new Set(userRoles)
-    // return details
-  }
+  //     }
+  //   }
+  //   // const details: IDetailsResponse = await this.http
+  //   //   .get<IDetailsResponse>(endpoint.details).pipe(retry(3))
+  //   //   .toPromise()
+  //   // this.configSvc.userGroups = new Set(details.group)
+  //   // this.configSvc.userRoles = new Set(details.roles)
+  //   // if (this.configSvc.userProfile && this.configSvc.userProfile.isManager) {
+  //   //   this.configSvc.userRoles.add('is_manager')
+  //   // }
+  //   // tslint:disable-next-line: max-line-length
+  //   // const details = { group: [], profileDetailsStatus: true, roles: userRoles, tncStatus: true }
+  //   // this.configSvc.hasAcceptedTnc = details.tncStatus
+  //   // this.configSvc.profileDetailsStatus = details.profileDetailsStatus
+  //   // this.configSvc.userRoles = new Set(userRoles)
+  //   // return details
+  // }
 
   private async fetchInstanceConfig(): Promise<NsInstanceConfig.IConfig> {
     // TODO: use the rootOrg and org to fetch the instance
@@ -461,6 +479,7 @@ export class InitService {
     const tourGuide = appsConfig.tourGuide
     const features: { [id: string]: NsAppsConfig.IFeature } = Object.values(
       appsConfig.features,
+    // tslint:disable-next-line: no-shadowed-variable
     ).reduce((map: { [id: string]: NsAppsConfig.IFeature }, feature: NsAppsConfig.IFeature) => {
       if (hasUnitPermission(feature.permission, this.configSvc.restrictedFeatures, true)) {
         map[feature.id] = feature
