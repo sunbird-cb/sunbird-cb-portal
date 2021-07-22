@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog'
 // import { DiscussService } from '../../../discuss/services/discuss.service'
 /* tslint:disable */
 import _ from 'lodash'
+import { EventService } from '../../services/events.service'
 /* tslint:enable */
 
 @Component({
@@ -19,13 +20,15 @@ export class EventDetailComponent implements OnInit {
   // data!: NSDiscussData.IDiscussionData
   similarPosts!: any
   defaultError = 'Something went wrong, Please try again after sometime!'
-  eventId!: number
+  eventId!: any
   fetchSingleCategoryLoader = false
+  eventData: any
   // fetchNewData = false
 
   constructor(
     public dialog: MatDialog,
     private route: ActivatedRoute,
+    private eventSvc: EventService,
     // private discussService: DiscussService,
     // private snackBar: MatSnackBar,
   ) { }
@@ -33,12 +36,15 @@ export class EventDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.eventId = params.eventId
+      this.eventId = 'do_11332782008724684819'
       // if (this.fetchNewData) {
       //   this.getTIDData()
       // }
       // this.data = this.route.snapshot.data.topic.data
     })
-    // this.fetchSingleCategoryDetails(this.data.cid)
+     this.eventSvc.getEventData(this.eventId).subscribe((data: any) => {
+        this.eventData = data
+      })
   }
 
   // fetchSingleCategoryDetails(cid: number) {

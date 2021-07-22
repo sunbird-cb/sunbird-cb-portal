@@ -36,6 +36,7 @@ import { RelatedPostsComponent } from './components/related-posts/related-posts.
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { RightMenuCardComponent } from './components/right-menu-card/right-menu-card.component'
 import { PresenterCardComponent } from './components/presenter-card/presenter-card.component'
+import { EventService } from './services/events.service'
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { PresenterCardComponent } from './components/presenter-card/presenter-ca
   providers: [
     LoaderService,
     InitResolver,
+    EventService,
   ],
 })
 export class EventsModule { }
