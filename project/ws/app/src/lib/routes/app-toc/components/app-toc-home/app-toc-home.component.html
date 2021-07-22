@@ -107,7 +107,7 @@ TODO: edit option while preview Mode
             <a *ngIf="showStart.show && !isPostAssessment"
               [routerLink]="resumeData ? resumeDataLink?.url : firstResourceLink?.url"
               [queryParams]="resumeData ? generateQuery('RESUME') : generateQuery('START')"
-              class="mat-button mat-button-base resumeButton custom-button">
+              class="mat-button mat-button-base resumeButton custom-button width-1-1">
               <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
                 {{resumeData?"Resume":"Start"}}
               </ng-container>
@@ -160,6 +160,22 @@ TODO: edit option while preview Mode
       <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier" [progress]="content?.completionPercentage" [progressType]="'percentage'">
       </ws-widget-content-progress>
     </ng-container>
+
+    <!-- action buttons -->
+    <!-- <div class="margin-top-m margin-bottom-s actbutton ws-mat-black60-text text-left" *ngIf="btnPlaylistConfig">
+        <ws-widget-btn-playlist [forPreview]="forPreview" id="playlistforprev" *ngIf="btnPlaylistConfig" [widgetData]="btnPlaylistConfig">
+        </ws-widget-btn-playlist>
+    </div>
+    <div class="margin-bottom-s actbutton ws-mat-black60-text text-left" *ngIf="isGoalsEnabled && btnGoalsConfig">
+        <ws-widget-btn-goals [forPreview]="forPreview" id="goalsforprev" *ngIf="isGoalsEnabled && btnGoalsConfig" [widgetData]="btnGoalsConfig">
+        </ws-widget-btn-goals>
+    </div>
+    <div class="margin-bottom-m actbutton ws-mat-black60-text text-left">
+        <ws-widget-btn-content-share id="prevforshare" [forPreview]="forPreview" [showText]="true" [widgetData]="content">
+        </ws-widget-btn-content-share>
+    </div> -->
+    
+    <!-- at glance -->
     <div class="margin-top-l glance-container">
       <div class="margin-bottom-m">
           <p class="mat-subheading-1 at-glance-heading" i18n>At a glance</p>

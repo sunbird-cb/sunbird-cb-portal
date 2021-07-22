@@ -1,15 +1,15 @@
 <ng-container *ngIf="content">
   <ng-container *ngIf="isCollection">
     <div class="flex flex-col">
-      <div class="card-collection w-auto sm:w-100">
-        <img class="card-thumbnail ws-mat-primary-lite-background" [src]="content?.appIcon" alt="Thumbnail"
-          (click)="viewChildren = !viewChildren" [wsUtilsDefaultThumbnail]="defaultThumbnail" />
+      <div class="card-collection w-auto sm:w-100 padding-right-xl">
+        <!-- <img class="card-thumbnail ws-mat-primary-lite-background" [src]="content?.appIcon" alt="Thumbnail"
+          (click)="viewChildren = !viewChildren" [wsUtilsDefaultThumbnail]="defaultThumbnail" /> -->
         <div class="flex flex-col flex-wrap flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto">
           <div class="text-truncate cursor-pointer" (click)="viewChildren = !viewChildren">
             <div class="flex flex-col sm:flex-row flex-wrap">
-              <h2 class="margin-remove text-truncate content-heading flex-auto">
+              <p class="margin-remove text-truncate mat-subheading-1 flex-auto">
                 {{ content?.name }}
-              </h2>
+              </p>
               <div class="type-container resource mt-2 sm:mt-0" *ngIf="content?.category === 'Resource'">
                 <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>
                 <span>Resource</span>
@@ -24,21 +24,21 @@
               </div>
             </div>
             <div>
-              <span class="mat-body-strong content-type">{{ content?.displayContentType }}</span>
-              <span class="ml-5">
+              <!-- <span class="mat-body-strong content-type">{{ content?.displayContentType }}</span> -->
+              <!-- <span class="ml-5"> -->
                 <!-- <ng-container *ngIf="content?.displayContentType">&nbsp;&nbsp;|&nbsp;&nbsp;</ng-container> -->
-                <mat-icon class="time-icon">schedule</mat-icon>
-                <span class="ml-2 time-value">{{ content?.duration | pipeDurationTransform: 'hms' }}</span>
-              </span>
+                <!-- <mat-icon class="time-icon">schedule</mat-icon> -->
+                <span class="text-lowercase ws-mat-black60-text">{{ content?.duration | pipeDurationTransform: 'hms' }}</span>
+              <!-- </span> -->
             </div>
           </div>
           <button *ngIf="content?.artifactUrl" type="button" mat-icon-button [matMenuTriggerFor]="buttonMenu">
             <mat-icon>more_vertical</mat-icon>
           </button>
-          <div *ngIf="hasContentStructure" class="child-meta-container">
-            <div class="child-structure">
+          <!-- <div *ngIf="hasContentStructure" class="child-meta-container">
+            <div class="child-structure"> -->
               <!-- <mat-icon class="structure-icon">import_contacts</mat-icon> -->
-              <span class="oval-white" *ngIf="contentStructure?.course > 0">
+              <!-- <span class="oval-white" *ngIf="contentStructure?.course > 0">
                 <ng-container>{{ contentStructure?.course }}</ng-container>
                 <ng-container *ngIf="contentStructure?.course === 1" i18n> Course</ng-container>
                 <ng-container *ngIf="contentStructure?.course > 1" i18n> Courses</ng-container>
@@ -102,7 +102,7 @@
                 <ng-container *ngIf="contentStructure?.other > 1" i18n> Other Items</ng-container>
               </span>
             </div>
-          </div>
+          </div> -->
           <div class="see-all-container">
             <a href="javascript:void(0)" role="button" (click)="viewChildren = !viewChildren"
               class="margin-left-m see-all-btn tab" mat-button>
@@ -130,7 +130,7 @@
       </div>
     </div>
 
-    <div class="children-container" [hidden]="!viewChildren">
+    <div class="children-container margin-top-s margin-bottom-s" [hidden]="!viewChildren">
       <ws-app-toc-content-card [content]="child" [expandAll]="expandAll" [rootId]="rootId" [batchId]="batchId"
         [rootContentType]="rootContentType" *ngFor="let child of content?.children; trackBy: contentTrackBy">
       </ws-app-toc-content-card>
@@ -139,9 +139,9 @@
   <div *ngIf="isResource" class="resource-container">
     <!-- <ws-widget-display-content-type-icon class="flex" [displayContentType]="content?.displayContentType">
     </ws-widget-display-content-type-icon> -->
-    <div class="img-container">
-      <img class="card-thumbnail ws-mat-primary-lite-background" [src]="content?.appIcon" alt="Thumbnail"
-        (click)="viewChildren = !viewChildren" [wsUtilsDefaultThumbnail]="defaultThumbnail" />
+    <!-- <div class="img-container"> -->
+      <!-- <img class="card-thumbnail ws-mat-primary-lite-background" [src]="content?.appIcon" alt="Thumbnail"
+        (click)="viewChildren = !viewChildren" [wsUtilsDefaultThumbnail]="defaultThumbnail" /> -->
         <ng-container *ngIf="content?.completionStatus == 2">
           <ws-widget-content-progress *ngIf="content?.identifier && content?.completionPercentage" [forPreview]="forPreview"
             [contentId]="content?.identifier" class="progress-bar-thin" [progress]="100" 
@@ -154,7 +154,7 @@
             [progressType]="'percentage'">
           </ws-widget-content-progress>
         </ng-container>
-    </div>
+    <!-- </div> -->
 
 
     <div class="flex flex-col sm:flex-row flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto">
@@ -162,22 +162,22 @@
       <a [routerLink]="resourceLink.url" [queryParams]="resourceLink.queryParams">
         <div class="text-truncate cursor-pointer" (click)="viewChildren = !viewChildren; raiseTelemetry()">
           <div class="flex flex-col sm:flex-row flex-wrap">
-            <h2 class="margin-remove text-truncate content-heading flex-auto">
+            <p class="margin-remove text-truncate mat-subheading-1 flex-auto">
               {{ content?.name }}
-            </h2>
+            </p>
           </div>
           <div>
-            <span class="mat-body-strong content-type ws-mat-default-text">{{ content?.contentType }}</span>
-            <span class="ml-5">
+            <!-- <span class="mat-body-strong content-type ws-mat-default-text">{{ content?.contentType }}</span> -->
+            <!-- <span class="ml-5"> -->
               <!-- <ng-container *ngIf="content?.displayContentType">&nbsp;&nbsp;|&nbsp;&nbsp;</ng-container> -->
-              <mat-icon class="time-icon">schedule</mat-icon>
-              <span class="ml-2 time-value">{{ content?.duration | pipeDurationTransform: 'hms' }}</span>
-            </span>
+              <!-- <mat-icon class="time-icon">schedule</mat-icon> -->
+              <span class="text-lowercase ws-mat-black60-text">{{ content?.duration | pipeDurationTransform: 'hms' }}</span>
+            <!-- </span> -->
           </div>
         </div>
       </a>
       <div class="flex flex-wrap items-center justify-start sm:justify-end">
-        <div class="type-container resource" *ngIf="content?.contentType === 'Resource'">
+        <!-- <div class="type-container resource" *ngIf="content?.contentType === 'Resource'">
           <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>
           <span>Resource</span>
         </div>
@@ -188,7 +188,7 @@
         <div class="type-container course" *ngIf="content?.contentType === 'Course'">
           <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>
           <span>Course</span>
-        </div>
+        </div> -->
         <button *ngIf="content?.artifactUrl && !isXSmall" type="button" mat-icon-button class="text-right"
           [matMenuTriggerFor]="buttonMenu">
           <mat-icon>more_vertical</mat-icon>

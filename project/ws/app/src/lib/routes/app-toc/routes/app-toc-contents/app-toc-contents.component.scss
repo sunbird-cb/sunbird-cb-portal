@@ -36,11 +36,12 @@ $border-color: #d8d8d8;
     .content-card {
       // padding: $size-s 0;
       // border-bottom: 1px solid $border-color;
-      background: #F5F6FA 0% 0% no-repeat padding-box;
+      // background: #F5F6FA 0% 0% no-repeat padding-box;
+      background: #ffffff;
       border-radius: 8px;
-      margin: 20px 0;
       border: 1px solid #F5F6FA;
       overflow: hidden;
+      position: relative;
     }
 
     .noChildren {
