@@ -1,15 +1,15 @@
 <div class="contents-container">
   <div class="main-container">
     <ng-container *ngIf="content?.children?.length; else noChildren">
-      <div class="toc-section" role="contentinfo">
+      <!-- <div class="toc-section" role="contentinfo">
         <h2 class="heading margin-remove">Contents </h2>
         <a href="javascript:void(0)" role="button" class="expandButton"
           *ngIf="!contextPath || contextPath !== 'Collection'" (click)="expandAll = !expandAll" mat-button>
           <ng-container *ngIf="!expandAll" i18n>Expand All</ng-container>
           <ng-container *ngIf="expandAll" i18n>Collapse All</ng-container>
         </a>
-      </div>
-      <div class="content-card" *ngFor="let card of content?.children; trackBy: contentTrackBy">
+      </div> -->
+      <div class="content-card padding-right-m padding-left-m padding-top-s padding-bottom-s margin-bottom-m" *ngFor="let card of content?.children; trackBy: contentTrackBy">
         <ws-app-toc-content-card [forPreview]="forPreview" [expandAll]="expandAll" [rootId]="contextId" [batchId]="batchId"
           [rootContentType]="contextPath" [content]="card"></ws-app-toc-content-card>
       </div>
