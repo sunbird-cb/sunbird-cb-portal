@@ -44,6 +44,9 @@ export class AppInterceptorService implements HttpInterceptor {
               case 419:      // login
                   const localUrl = location.origin
                   const pageName = '/page/home'
+                  if (localStorage.getItem('telemetrySessionId')) {
+                    localStorage.removeItem('telemetrySessionId')
+                  }
                   if (localUrl.includes('localhost')) {
                     // tslint:disable-next-line: prefer-template
                     window.location.href = error.error.redirectUrl + `?q=${localUrl}${pageName}`

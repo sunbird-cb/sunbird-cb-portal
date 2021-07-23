@@ -104,7 +104,7 @@ import { AppTocSinglePageDirective } from './routes/app-toc-single-page/app-toc-
 import { CreateBatchDialogComponent } from './components/create-batch-dialog/create-batch-dialog.component'
 import { AllDiscussionWidgetComponent } from '../discuss/widget/all-discussion-widget/category-widget/all-discussion-widget.component'
 import { TagWidgetComponent } from '../discuss/widget/tag-widget/tag-widget.component'
-import { ActionService } from './services/action.service';
+import { ActionService } from './services/action.service'
 
 @NgModule({
   declarations: [

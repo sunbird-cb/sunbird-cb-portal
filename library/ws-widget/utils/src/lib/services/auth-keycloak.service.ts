@@ -140,6 +140,9 @@ export class AuthKeycloakService {
   }
 
   async logout(redirectUrl = this.defaultRedirectUrl) {
+    if (storage.getItem('telemetrySessionId')) {
+      storage.removeItem('telemetrySessionId')
+    }
     // storage.removeItem(storageKey)
     // alert(`${redirectUrl}apis/reset`)
     window.location.href = `${redirectUrl}apis/reset`

@@ -41,6 +41,7 @@ export class TelemetryService {
         // authtoken: this.authSvc.token,
         // tslint:disable-next-line: no-non-null-assertion
         channel: this.rootOrgId || this.telemetryConfig.channel,
+        sid: this.getTelemetrySessionId,
       }
       this.pData = this.telemetryConfig.pdata
       this.addPlayerListener()
@@ -49,6 +50,10 @@ export class TelemetryService {
       this.addSearchListener()
       this.addHearbeatListener()
     }
+  }
+
+  get getTelemetrySessionId(): string {
+      return localStorage.getItem('telemetrySessionId') || ''
   }
 
   get rootOrgId(): string {

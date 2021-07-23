@@ -188,6 +188,7 @@ export namespace NsInstanceConfig {
     host: string
     endpoint: string
     apislug: string
+    sid: string
   }
 }
 
