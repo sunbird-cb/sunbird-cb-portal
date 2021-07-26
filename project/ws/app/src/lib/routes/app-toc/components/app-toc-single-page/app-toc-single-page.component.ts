@@ -50,6 +50,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   batchData: any
   batchDataLoaded = false
   showDiscussionForum: any
+  competencies: any
   // configSvc: any
 
   constructor(
@@ -176,6 +177,11 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     // debugger
     const initData = this.tocSharedSvc.initData(data)
     this.content = initData.content
+    const competenciesData = this.content && this.content.competencies ? this.content.competencies : []
+    if (competenciesData) {
+      const str = competenciesData.replace(/\\/g, '')
+      this.competencies = JSON.parse(str)
+    }
     this.discussionConfig.contextIdArr = (this.content) ? [this.content.identifier] : []
     if (this.content) {
       this.discussionConfig.categoryObj = {
