@@ -16,7 +16,6 @@ export const environment: IEnvironment = {
   azureOldHost: (window as { [key: string]: any })['env']['azureOldHost'] || '',
   azureOldBuket: (window as { [key: string]: any })['env']['azureOldBuket'] || '',
 
-
 }
 interface IEnvironment {
   name: string,
