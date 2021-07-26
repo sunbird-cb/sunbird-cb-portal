@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit, Input } from '@angular/core'
 // import { ActivatedRoute } from '@angular/router'
 // import { ConfigurationsService } from '@ws-widget/utils'
 // import { NSProfileDataV2 } from '../../models/profile-v2.model'
@@ -12,6 +12,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
   /* tslint:enable */
 })
 export class RightMenuCardComponent implements OnInit, OnDestroy {
+  @Input() eventData: any
+  startTime: any
+  endTime: any
+  lastUpdate: any
   // completedPercent!: number
   // badgesSubscription: any
   // portalProfile!: NSProfileDataV2.IProfile
@@ -30,6 +34,11 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     // this.completedPercent = 86
+    if (this.eventData) {
+      this.startTime = this.eventData.startTime.split('+')[0].replace(/(.*)\D\d+/, '$1')
+      this.endTime = this.eventData.endTime.split('+')[0].replace(/(.*)\D\d+/, '$1')
+      this.lastUpdate = this.eventData.lastUpdatedOn.split('T')[0]
+    }
   }
   // calculatePercent(profile: NSProfileDataV2.IProfile | null): number {
   //   let count = 30
