@@ -14,6 +14,7 @@ import {
   MatSidenavModule,
   MatChipsModule,
   MatProgressSpinnerModule,
+  MatTabsModule,
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
 import { EventsRoutingModule } from './events-routing.module'
@@ -76,6 +77,7 @@ import { EventService } from './services/events.service'
     PipeFilterSearchModule,
     BtnPageBackModule,
     WidgetResolverModule,
+    MatTabsModule,
   ],
   providers: [
     LoaderService,

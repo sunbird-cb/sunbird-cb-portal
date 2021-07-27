@@ -13,14 +13,14 @@
                         " class="unit-meta-item">
                             <h2 class="section-heading">{{ tocConfig?.overview?.description?.displayName }}</h2>
                             <mat-card-content>
-                                <div class="section-content mat-subheading-1" [innerHTML]="content?.description"></div>
+                                <div class="section-content mat-body-1" [innerHTML]="content?.description"></div>
                             </mat-card-content>
                         </mat-card>
                         <!-- Content Body -->
                         <mat-card *ngIf="tocConfig?.overview?.body?.enabled && content?.instructions" class="unit-meta-item">
                             <h2 class="section-heading">{{ tocConfig?.overview?.body?.displayName }}</h2>
                             <mat-card-content>
-                                <div class="section-content break-words" [innerHTML]="content?.instructions"></div>
+                                <div class="mat-body-1" [innerHTML]="content?.instructions"></div>
                             </mat-card-content>
                         </mat-card>
                         <!-- Learning objective -->
@@ -259,7 +259,7 @@
             </section>
             <section id="authors" *ngIf="(content?.creatorDetails && content?.creatorDetails.length > 0) || 
                 (cohortResults[cohortTypesEnum.AUTHORS] && cohortResults[cohortTypesEnum.AUTHORS].length > 0)">
-                <div class="fluid-width contacts-container mb-10">
+                <div class="fluid-width contacts-container">
                     <div class="fixed-width flex flex-col flex-wrap">
                         <h2 _ngcontent-qml-c28="" class="mat-toolbar contacts-head">Authors and curators</h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 col-gap-4">
@@ -272,10 +272,11 @@
                                     </ws-widget-avatar-photo>
                                 <div class="margin-left-xl">
                                     <div class="user-name">{{ author.name }}</div>
+                                    <p class="mat-body-2 ws-mat-black60-text">Author</p>
                                 </div>
                             </div>
                             <!-- curators -->
-                            <!-- <div *ngIf="cohortResults[cohortTypesEnum.AUTHORS]"> -->
+                            <div *ngIf="cohortResults[cohortTypesEnum.AUTHORS]">
                                <!--  <h3 *ngIf="cohortResults[cohortTypesEnum.AUTHORS].hasError" class="mat-error text-center" i18n>
                                     Failed to fetch curators
                                 </h3>
@@ -285,10 +286,29 @@
                                     " class="text-center" i18n>
                                     None
                                 </h3> -->
-                                <!-- <ng-container *ngFor="let cohort of cohortResults[cohortTypesEnum.AUTHORS].contents"
-                                    [ngTemplateOutlet]="unitCohortNew" [ngTemplateOutletContext]="{ user: cohort }"></ng-container>
-                            </div> -->
+                                <ng-container *ngFor="let cohort of cohortResults[cohortTypesEnum.AUTHORS].contents"
+                                    [ngTemplateOutlet]="unitCohortNew1" [ngTemplateOutletContext]="{ user: cohort }"></ng-container>
+                            </div>
                         </div>
+                    </div>
+                </div>
+            </section>
+            <section id="competencies" *ngIf="content?.competencies && competencies.length">
+                <div class="fluid-width contacts-container mb-10">
+                    <div class="fixed-width flex flex-col flex-wrap">
+                        <h2 class="mat-toolbar contacts-head">Competencies</h2>
+                    </div>
+                    <div>
+                        <table class="compt-table width-1-1 text-left">
+                            <tr>
+                                <th class="padding-xs ws-mat-black60-text mat-body-1">Competency</th>
+                                <th class="padding-xs ws-mat-black60-text mat-body-1">Type</th>
+                            </tr>
+                            <tr *ngFor="let comp of competencies">
+                                <td class="padding-xs mat-body-1">{{comp.name}}</td>
+                                <td class="padding-xs mat-body-1">{{comp.competencyType}}</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </section>
@@ -343,6 +363,24 @@
     </div>
 </section> -->
 
+<ng-template #unitCohortNew1 let-user="user">
+    <div class="unit-cohort sm:pr-8 md:pr-10">
+        <ws-widget-avatar-photo class="float-left margin-right-s" [size]="'m'" [photoUrl]="user.photo || ''" [name]="getUserFullName(user)" size="l-xs">
+            </ws-widget-avatar-photo>
+        <div class="margin-left-l">
+            <div (click)="goToUserProfile(user)" [ngClass]="{'cursor-pointer': enablePeopleSearch}"
+            class="width-expand padding-left-xs">
+            <div class="mat-body-1 cohorts-name">
+                {{
+                    { firstName: user.first_name, lastName: user.last_name, email: user.email }
+                    | pipeNameTransform
+                }}
+            </div>
+            <p class="mat-body-2 ws-mat-black60-text">Curator</p>
+            </div>
+        </div>
+    </div>
+</ng-template>
 <ng-template #unitCohortNew let-user="user">
     <div class="unit-cohort sm:pr-8 md:pr-10">
         <!-- <ws-widget-user-image class="user-image" [imageType]="'user-photo'" [userName]="getUserFullName(user)"
@@ -358,6 +396,7 @@
                     | pipeNameTransform
                 }}
             </div>
+            <p class="mat-body-2 ws-mat-black60-text">{{user.designation}}</p>
             <!-- <div class="mat-caption cohorts-desc">{{ user.desc }}</div>
             </div>
             <div class="width-auto user-action-container">

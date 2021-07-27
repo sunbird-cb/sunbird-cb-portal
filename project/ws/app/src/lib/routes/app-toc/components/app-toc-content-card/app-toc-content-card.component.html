@@ -166,18 +166,33 @@
               {{ content?.name }}
             </p>
           </div>
-          <div>
+          <div class="ws-mat-black60-text">
             <!-- <span class="mat-body-strong content-type ws-mat-default-text">{{ content?.contentType }}</span> -->
             <!-- <span class="ml-5"> -->
               <!-- <ng-container *ngIf="content?.displayContentType">&nbsp;&nbsp;|&nbsp;&nbsp;</ng-container> -->
               <!-- <mat-icon class="time-icon">schedule</mat-icon> -->
-              <span class="text-lowercase ws-mat-black60-text">{{ content?.duration | pipeDurationTransform: 'hms' }}</span>
+              <img src="/assets/icons/content/grey/video.svg" alt="Video" class="float-left margin-right-xs" 
+                *ngIf="content?.mimeType === 'video/mp4' || content?.mimeType === 'video/x-youtube' ||  
+                content?.mimeType ==='application/x-mpegURL'">
+                <img src="/assets/icons/content/grey/audio.svg" alt="Audio" class="float-left margin-right-xs" 
+                *ngIf="content?.mimeType === 'audio/mpeg'">
+                <img src="/assets/icons/content/grey/pdf.svg" alt="PDF" class="float-left margin-right-xs" 
+                *ngIf="content?.mimeType === 'application/pdf'">
+               <img src="/assets/icons/content/grey/link.svg" alt="InteractiveContent" class="float-left margin-right-xs" 
+                *ngIf="content?.mimeType === 'application/vnd.ekstep.html-archive' || content?.mimeType === 'text/x-url'">
+                <img src="/assets/icons/content/grey/assessment.svg" alt="Assessment" class="float-left margin-right-xs" 
+                *ngIf="content?.mimeType === 'application/json' || content?.mimeType === 'application/quiz'">
+                <img src="/assets/icons/content/grey/image.svg" alt="Image" class="float-left margin-right-xs" 
+                *ngIf="content?.mimeType === 'image/png' || content?.mimeType === 'image/jpeg'">
+                <img src="/assets/icons/content/grey/content_copy.svg" class="contenticon" alt="Course"  
+                *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection'">
+              <span class="ws-mat-black60-text">{{ content?.duration | pipeDurationTransform: 'hms' }}</span>
             <!-- </span> -->
           </div>
         </div>
       </a>
       <div class="flex flex-wrap items-center justify-start sm:justify-end">
-        <!-- <div class="type-container resource" *ngIf="content?.contentType === 'Resource'">
+       <!-- <div class="type-container resource" *ngIf="content?.contentType === 'Resource'">
           <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>
           <span>Resource</span>
         </div>
