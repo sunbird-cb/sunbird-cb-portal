@@ -130,7 +130,7 @@
       </div>
     </div>
 
-    <div class="children-container margin-top-s margin-bottom-s" [hidden]="!viewChildren">
+    <div class="children-container margin-left-l margin-top-s margin-bottom-s" [hidden]="!viewChildren">
       <ws-app-toc-content-card [content]="child" [expandAll]="expandAll" [rootId]="rootId" [batchId]="batchId"
         [rootContentType]="rootContentType" *ngFor="let child of content?.children; trackBy: contentTrackBy">
       </ws-app-toc-content-card>
@@ -156,17 +156,16 @@
         </ng-container>
     <!-- </div> -->
 
-
     <div class="flex flex-col sm:flex-row flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto">
-
       <a [routerLink]="resourceLink.url" [queryParams]="resourceLink.queryParams">
         <div class="text-truncate cursor-pointer" (click)="viewChildren = !viewChildren; raiseTelemetry()">
           <div class="flex flex-col sm:flex-row flex-wrap">
             <p class="margin-remove text-truncate mat-subheading-1 flex-auto">
+              <!-- <mat-icon class="margin-right-xs radiobtn time-icon">radio_button_unchecked </mat-icon> -->
               {{ content?.name }}
             </p>
           </div>
-          <div class="ws-mat-black60-text">
+          <div class="resicons ws-mat-black60-text">
             <!-- <span class="mat-body-strong content-type ws-mat-default-text">{{ content?.contentType }}</span> -->
             <!-- <span class="ml-5"> -->
               <!-- <ng-container *ngIf="content?.displayContentType">&nbsp;&nbsp;|&nbsp;&nbsp;</ng-container> -->
