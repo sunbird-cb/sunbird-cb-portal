@@ -486,13 +486,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   getUserDetails() {
-    if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.id) {
-      console.log(this.configSvc.unMappedUser)
-    }
+    // if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.id) {
+    //   console.log(this.configSvc.unMappedUser)
+    // }
     if (this.configSvc.profileDetailsStatus) {
       this.userProfileSvc.getUserdetailsFromRegistry(this.configSvc.unMappedUser.id).subscribe(
         (data: any) => {
-          const userData = data.profileDetails
+          const userData = data.profileDetails || _.get(this.configSvc.unMappedUser, 'profileDetails')
           if (data.profileDetails && userData.id) {
             const academics = this.populateAcademics(userData)
             this.setDegreeValuesArray(academics)
@@ -1024,10 +1024,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const reqUpdate = {
       request: {
         userId: this.configSvc.unMappedUser.id,
-        profileDetails: profileRequest.profileReq
-      }
+        profileDetails: profileRequest.profileReq,
+      },
     }
-    console.log(reqUpdate)
     this.userProfileSvc.updateProfileDetails(reqUpdate).subscribe(
       () => {
         if (appdata !== undefined && appdata.length > 0) {
