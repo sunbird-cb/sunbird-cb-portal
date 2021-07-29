@@ -32,7 +32,7 @@ export namespace NSProfileDataV2 {
     skills: ISkills
     result: any
     userName: any
-
+    profileDetails: any
   }
   export interface IAcademics {
     nameOfInstitute: string
