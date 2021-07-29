@@ -221,12 +221,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       },
       (_err: any) => {
       })
-      this.userProfileSvc.getAllDepartments().subscribe(
-        (data: any) => {
-          this.allDept = data
-        },
-        (_err: any) => {
-        })
+    this.userProfileSvc.getAllDepartments().subscribe(
+      (data: any) => {
+        this.allDept = data
+      },
+      (_err: any) => {
+      })
   }
   createDegree(): FormGroup {
     return this.fb.group({
@@ -486,49 +486,52 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   getUserDetails() {
+    if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.id) {
+      console.log(this.configSvc.unMappedUser)
+    }
     if (this.configSvc.profileDetailsStatus) {
-        this.userProfileSvc.getUserdetailsFromRegistry().subscribe(
-          (data: any) => {
-            const userData = data.result.UserProfile
-            if (data && data.result && data.result.UserProfile && userData.length) {
-              const academics = this.populateAcademics(userData[0])
-              this.setDegreeValuesArray(academics)
-              this.setPostDegreeValuesArray(academics)
-              const organisations = this.populateOrganisationDetails(userData[0])
-              this.constructFormFromRegistry(userData[0], academics, organisations)
-              this.populateChips(userData[0])
-              this.userProfileData = userData[0]
-            } else {
-              if (this.configSvc.userProfile) {
-                this.createUserForm.patchValue({
-                  firstname: this.configSvc.userProfile.firstName,
-                  surname: this.configSvc.userProfile.lastName,
-                  primaryEmail: this.configSvc.userProfile.email,
-                  orgName: this.configSvc.userProfile.rootOrgName,
-                })
-              }
-            }
-            // this.handleFormData(data[0])
-          },
-          (_err: any) => {
-          })
-    } else {
-      if (this.configSvc.userProfile) {
-        this.userProfileSvc.getUserdetails(this.configSvc.userProfile.email).subscribe(
-          data => {
-            if (data && data.length) {
+      this.userProfileSvc.getUserdetailsFromRegistry(this.configSvc.unMappedUser.id).subscribe(
+        (data: any) => {
+          const userData = data.profileDetails
+          if (data.profileDetails && userData.id) {
+            const academics = this.populateAcademics(userData)
+            this.setDegreeValuesArray(academics)
+            this.setPostDegreeValuesArray(academics)
+            const organisations = this.populateOrganisationDetails(userData)
+            this.constructFormFromRegistry(userData, academics, organisations)
+            this.populateChips(userData)
+            this.userProfileData = userData
+          } else {
+            if (this.configSvc.userProfile) {
               this.createUserForm.patchValue({
-                firstname: data[0].first_name,
-                surname: data[0].last_name,
-                primaryEmail: data[0].email,
-                orgName: data[0].department_name,
+                firstname: this.configSvc.userProfile.firstName,
+                surname: this.configSvc.userProfile.lastName,
+                primaryEmail: this.configSvc.userProfile.email,
+                orgName: this.configSvc.userProfile.rootOrgName,
               })
             }
-          },
-          () => {
-            // console.log('err :', err)
-          })
-      }
+          }
+          // this.handleFormData(data[0])
+        },
+        (_err: any) => {
+        })
+    } else {
+      //   if (this.configSvc.userProfile) {
+      //     this.userProfileSvc.getUserdetails(this.configSvc.userProfile.email).subscribe(
+      //       data => {
+      //         if (data && data.length) {
+      //           this.createUserForm.patchValue({
+      //             firstname: data[0].first_name,
+      //             surname: data[0].last_name,
+      //             primaryEmail: data[0].email,
+      //             orgName: data[0].department_name,
+      //           })
+      //         }
+      //       },
+      //       () => {
+      //         // console.log('err :', err)
+      //       })
+      //   }
     }
   }
 
@@ -710,8 +713,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   checkvalue(value: any) {
     if (value && value === 'undefined') {
-        // tslint:disable-next-line:no-parameter-reassignment
-        value = ''
+      // tslint:disable-next-line:no-parameter-reassignment
+      value = ''
     } else {
       return value
     }
@@ -872,12 +875,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         return {
           additionalSkills: form.value.skillAquiredDesc,
           certificateDetails: form.value.certificationDesc,
-          }
+        }
       case 'interests':
         return {
           professional: form.value.interests,
           hobbies: form.value.hobbies,
-          }
+        }
       default:
         return undefined
     }
@@ -1016,15 +1019,22 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     // Construct the request structure for open saber
     const profileRequest = this.constructReq(form)
-    let appdata = [] as  any
+    let appdata = [] as any
     appdata = profileRequest.approvalData !== undefined ? profileRequest.approvalData : []
-    this.userProfileSvc.updateProfileDetails(profileRequest.profileReq).subscribe(
+    const reqUpdate = {
+      request: {
+        userId: this.configSvc.unMappedUser.id,
+        profileDetails: profileRequest.profileReq
+      }
+    }
+    console.log(reqUpdate)
+    this.userProfileSvc.updateProfileDetails(reqUpdate).subscribe(
       () => {
         if (appdata !== undefined && appdata.length > 0) {
           if (this.configSvc.userProfile) {
-            this.userProfileSvc.getUserdetailsFromRegistry().subscribe(
+            this.userProfileSvc.getUserdetailsFromRegistry(this.configSvc.unMappedUser.id).subscribe(
               (data: any) => {
-                const dat = data.result.UserProfile[0]
+                const dat = data.profileDetails
                 if (dat) {
                   const academics = this.populateAcademics(dat.academics)
                   this.setDegreeValuesArray(academics)
