@@ -60,6 +60,8 @@ import { TncPublicResolverService } from './services/tnc-public-resolver.service
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ConfigService } from '@ws/app/src/lib/routes/discuss/services/config.service'
 import { DiscussionUiModule } from '@sunbird-cb/discussions-ui-v8'
+import { ServiceWorkerModule } from '@angular/service-worker'
+import { environment } from 'src/environments/environment'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -132,7 +134,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PipeSafeSanitizerModule,
     TourModule,
     DiscussionUiModule.forRoot(ConfigService),
-    // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   exports: [
     TncComponent,
