@@ -26,10 +26,20 @@ export class ConnectionRecommendedCardComponent implements OnInit {
   }
 
   getUseravatarName() {
-    if (this.user) {
-      return `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
+    let name = ''
+    if (this.user && !this.user.personalDetails) {
+      if (this.user.firstName) {
+        name = `${this.user.firstName} ${this.user.lastName}`
+      }
+    } else if (this.user && this.user.personalDetails) {
+      if (this.user.personalDetails.middlename) {
+        // tslint:disable-next-line: max-line-length
+        name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.middlename} ${this.user.personalDetails.surname}`
+      } else {
+        name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
+      }
     }
-    return ''
+    return name
   }
   connetToUser() {
     const req = {
@@ -48,6 +58,10 @@ export class ConnectionRecommendedCardComponent implements OnInit {
     if (!this.user.personalDetails && this.user.first_name) {
       req.userNameTo = `${this.user.first_name}${this.user.last_name}`
       req.userDepartmentTo =  this.user.department_name
+    }
+    if (!this.user.personalDetails && this.user.firstName) {
+      req.userNameTo = `${this.user.firstName}${this.user.lastName}`
+      req.userDepartmentTo =  this.user.channel
     }
 
     this.networkV2Service.createConnection(req).subscribe(
