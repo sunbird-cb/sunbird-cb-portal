@@ -50,7 +50,8 @@ export class NetworkRecommendedComponent implements OnInit {
     this.data = []
     fulldata.forEach((user: any) => {
       this.networkV2Service.fetchProfile(user.identifier).subscribe((res: any) => {
-        this.data.push(res.result.UserProfile[0])
+        // this.data.push(res.result.UserProfile[0])
+        this.data.push(res.result.response)
       })
     })
   }
