@@ -34,8 +34,12 @@ export class ConnectionRequestCardComponent implements OnInit {
 
   ngOnInit() {
     const userId = this.user.id || this.user.identifier
-    this.connectionHoverService.fetchProfile(userId).subscribe(res => {
-      this.howerUser = res || {}
+    this.connectionHoverService.fetchProfile(userId).subscribe((res: any) => {
+      if (res.profileDetails !== null) {
+        this.howerUser = res.profileDetails
+      } else {
+        this.howerUser = res || {}
+      }
       this.user = this.howerUser
       return this.howerUser
     })
@@ -72,6 +76,10 @@ export class ConnectionRequestCardComponent implements OnInit {
       req.userNameTo = `${this.user.first_name}${this.user.last_name}`
       req.userDepartmentTo =  this.user.department_name
     }
+    if (!this.user.personalDetails && this.user.firstName) {
+      req.userNameTo = `${this.user.firstName}${this.user.lastName}`
+      req.userDepartmentTo =  this.user.channel
+    }
 
     this.networkV2Service.updateConnection(req).subscribe(
       () => {
@@ -94,11 +102,20 @@ export class ConnectionRequestCardComponent implements OnInit {
   }
 
   getUseravatarName() {
-    if (this.user && this.user.personalDetails) {
-      // return `${this.user.name}`
-      return `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
+    let name = ''
+    if (this.user && !this.user.personalDetails) {
+      if (this.user.firstName) {
+        name = `${this.user.firstName} ${this.user.lastName}`
+      }
+    } else if (this.user && this.user.personalDetails) {
+      if (this.user.personalDetails.middlename) {
+        // tslint:disable-next-line: max-line-length
+        name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.middlename} ${this.user.personalDetails.surname}`
+      } else {
+        name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
+      }
     }
-    return ''
+    return name
   }
   get usr() {
     return this.howerUser
