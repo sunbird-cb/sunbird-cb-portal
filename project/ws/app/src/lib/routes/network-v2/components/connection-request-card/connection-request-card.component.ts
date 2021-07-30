@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
-import { NSNetworkDataV2 } from '../../models/network-v2.model'
+// import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { NetworkV2Service } from '../../services/network-v2.service'
 import { MatSnackBar } from '@angular/material'
 import { NsUser } from '@sunbird-cb/utils'
@@ -12,7 +12,7 @@ import { ConnectionHoverService } from '../connection-name/connection-hover.serv
   styleUrls: ['./connection-request-card.component.scss'],
 })
 export class ConnectionRequestCardComponent implements OnInit {
-  @Input() user!: NSNetworkDataV2.INetworkUser
+  @Input() user!: any // NSNetworkDataV2.INetworkUser
   @Output() connection = new EventEmitter<string>()
   @ViewChild('toastAccept', { static: true }) toastAccept!: ElementRef<any>
   @ViewChild('toastReject', { static: true }) toastReject!: ElementRef<any>
