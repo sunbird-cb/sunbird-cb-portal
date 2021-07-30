@@ -17,7 +17,7 @@ export class LangSelectComponent implements OnInit {
     private configSvc: ConfigurationsService,
     private router: Router,
     private userPrefSvc: UserPreferenceService,
-  ) {}
+  ) { }
   userName = ''
   selectedLang = ''
   lang = ''
@@ -28,11 +28,6 @@ export class LangSelectComponent implements OnInit {
     if (this.configSvc.userProfile) {
       this.userName = this.configSvc.userProfile.givenName || ''
     }
-
-    // this.route.data.subscribe(data => {
-    //   this.userName = data.profileData.data.givenName
-    // })
-
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
       this.allowedLangCode = instanceConfig.locals.reduce(
@@ -43,40 +38,39 @@ export class LangSelectComponent implements OnInit {
         {},
       )
     }
-    // this.getUsersLocale('en')
+    this.getUsersLocale('en')
   }
 
-  // async getUsersLocale(defaultValue: string) {
-  //   // if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
-  //   //   return defaultValue
-  //   // }
-  //   const wn = window.navigator as any
-  //   this.lang = wn.languages ? wn.languages[0] : defaultValue
-  //   this.lang = this.lang || wn.language || wn.browserLanguage || wn.userLanguage
-  //   Object.keys(this.allowedLangCode).forEach(async langCode => {
+  async getUsersLocale(defaultValue: string) {
+    // if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
+    //   return defaultValue
+    // }
+    const wn = window.navigator as any
+    this.lang = wn.languages ? wn.languages[0] : defaultValue
+    this.lang = this.lang || wn.language || wn.browserLanguage || wn.userLanguage
+    Object.keys(this.allowedLangCode).forEach(async langCode => {
 
-  //     if (!langCode) {
-  //       langCode = 'en'
-  //     }
-  //     if (langCode.split('-')[0] === this.lang.split('-')[0]) {
-  //       if (this.configSvc.userPreference && this.configSvc.userPreference.selectedLocale !== this.lang) {
-  //         console.log('seleced: ', this.configSvc.userPreference.selectedLocale)
-  //         console.log('Geo: ', this.lang)
-  //         await this.userPrefSvc.saveUserPreference({
-  //           selectedLocale: this.lang,
-  //         })
-  //         if (this.lang === 'en') {
-  //           this.lang = ''
-  //         } else {
-  //           this.lang += '/'
-  //         }
-  //         location.assign(`${location.origin}/${this.lang}${this.router.url.substring(1)}`)
+      if (!langCode) {
+        langCode = 'en'
+      }
+      if (langCode.split('-')[0] === this.lang.split('-')[0]) {
+        if (this.configSvc.userPreference && this.configSvc.userPreference.selectedLocale !== this.lang) {
+          console.log('seleced: ', this.configSvc.userPreference.selectedLocale)
+          console.log('Geo: ', this.lang)
+          await this.userPrefSvc.saveUserPreference({
+            selectedLocale: this.lang,
+          })
+          if (this.lang === 'en') {
+            this.lang = ''
+          } else {
+            this.lang += '/'
+          }
+          location.assign(`${location.origin}/${this.lang}${this.router.url.substring(1)}`)
+        }
+      }
+    })
 
-  //       }
-  //     }
-  //   })
-
-  // }
+  }
 
   isLocaleAvailable(langPath: string): boolean {
     // this.loggerSvc.log('Locale', this.allowedLangCode[langPath].isAvailable)
@@ -94,9 +88,9 @@ export class LangSelectComponent implements OnInit {
     if (this.selectedLang === 'en') {
       this.selectedLang = ''
     }
-    await this.userPrefSvc.saveUserPreference({
-      selectedLocale: this.selectedLang,
-    })
+      await this.userPrefSvc.saveUserPreference({
+        selectedLocale: this.selectedLang,
+      })
 
     let refAppend = ''
     if (this.configSvc.userUrl) {
