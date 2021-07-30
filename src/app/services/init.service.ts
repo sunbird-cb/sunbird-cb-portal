@@ -324,7 +324,7 @@ export class InitService {
         }
       }
       const details = { group: [],
-        profileDetailsStatus: userPidProfile.profileDetails.mandatoryFieldsExists,
+        profileDetailsStatus: !!userPidProfile.profileDetails.mandatoryFieldsExists,
         roles: (userPidProfile.roles || []).map((v: { toLowerCase: () => void; }) => v.toLowerCase()),
         tncStatus: !userPidProfile.promptTnC,
         isActive: true,
