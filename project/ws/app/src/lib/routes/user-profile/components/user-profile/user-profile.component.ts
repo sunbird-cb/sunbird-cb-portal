@@ -494,7 +494,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.userProfileSvc.getUserdetailsFromRegistry(this.configSvc.unMappedUser.id).subscribe(
         (data: any) => {
           const userData = data.profileDetails || _.get(this.configSvc.unMappedUser, 'profileDetails')
-          if (data.profileDetails && userData.id) {
+          if (data.profileDetails && (userData.id || userData.userId)) {
             const academics = this.populateAcademics(userData)
             this.setDegreeValuesArray(academics)
             this.setPostDegreeValuesArray(academics)
