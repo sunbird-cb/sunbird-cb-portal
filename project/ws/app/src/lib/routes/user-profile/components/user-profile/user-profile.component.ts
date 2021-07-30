@@ -508,7 +508,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               this.createUserForm.patchValue({
                 firstname: this.configSvc.userProfile.firstName,
                 surname: this.configSvc.userProfile.lastName,
-                primaryEmail: this.configSvc.userProfile.email,
+                primaryEmail: _.get(this.userProfileData, 'personalDetails.primaryEmail') || this.configSvc.userProfile.email,
                 orgName: this.configSvc.userProfile.rootOrgName,
               })
             }
