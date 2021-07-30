@@ -504,6 +504,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             this.userProfileData = userData
           } else {
             if (this.configSvc.userProfile) {
+              this.userProfileData = { ...userData, id: this.configSvc.userProfile.userId, userId: this.configSvc.userProfile.userId }
               this.createUserForm.patchValue({
                 firstname: this.configSvc.userProfile.firstName,
                 surname: this.configSvc.userProfile.lastName,
@@ -516,7 +517,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         },
         (_err: any) => {
         })
-      // } else {
+    } else {
       // if (this.configSvc.userProfile) {
       //   this.userProfileSvc.getUserdetails(this.configSvc.userProfile.email).subscribe(
       //     data => {
@@ -533,15 +534,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       //       // console.log('err :', err)
       //     })
       // }
-      // if (this.configSvc.userProfile) {
-      //   const tempData = this.configSvc.userProfile
-      //   this.createUserForm.patchValue({
-      //     firstname: tempData.firstName,
-      //     surname: tempData.lastName,
-      //     primaryEmail: _.get(this.configSvc.unMappedUser, 'profileDetails.personalDetails.primaryEmail') || tempData.email,
-      //     orgName: tempData.rootOrgName,
-      //   })
-      // }
+      if (this.configSvc.userProfile) {
+        const tempData = this.configSvc.userProfile
+        this.userProfileData = _.get(this.configSvc, 'unMappedUser.profileDetails')
+        this.createUserForm.patchValue({
+          firstname: tempData.firstName,
+          surname: tempData.lastName,
+          primaryEmail: _.get(this.configSvc.unMappedUser, 'profileDetails.personalDetails.primaryEmail') || tempData.email,
+          orgName: tempData.rootOrgName,
+        })
+      }
     }
   }
 

@@ -71,13 +71,17 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
         this.portalProfile = data.profile.data
       }
 
-      const user = this.portalProfile.userId || this.portalProfile.id || ''
+      const user = this.portalProfile.userId || this.portalProfile.id || _.get(data, 'profile.data.id') || ''
+      if (this.portalProfile && !(this.portalProfile.id && this.portalProfile.userId)) {
+        this.portalProfile.id = user
+        this.portalProfile.userId = user
+      }
       if (user === this.currentUser) {
         this.currentUsername = this.configSvc.userProfile && this.configSvc.userProfile.userName
-      } else  {
+      } else {
         this.currentUsername = this.portalProfile.personalDetails && this.portalProfile.personalDetails !== null
-        ? this.portalProfile.personalDetails.userName
-        : this.portalProfile.userName
+          ? this.portalProfile.personalDetails.userName
+          : this.portalProfile.userName
       }
       this.decideAPICall()
     })
