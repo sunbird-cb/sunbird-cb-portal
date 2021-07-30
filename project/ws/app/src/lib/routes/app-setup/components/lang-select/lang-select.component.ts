@@ -49,14 +49,15 @@ export class LangSelectComponent implements OnInit {
     this.lang = wn.languages ? wn.languages[0] : defaultValue
     this.lang = this.lang || wn.language || wn.browserLanguage || wn.userLanguage
     Object.keys(this.allowedLangCode).forEach(async langCode => {
-
+      // tslint:disable
       if (!langCode) {
         langCode = 'en'
       }
+      // tslint:enable
       if (langCode.split('-')[0] === this.lang.split('-')[0]) {
         if (this.configSvc.userPreference && this.configSvc.userPreference.selectedLocale !== this.lang) {
-          console.log('seleced: ', this.configSvc.userPreference.selectedLocale)
-          console.log('Geo: ', this.lang)
+          // console.log('seleced: ', this.configSvc.userPreference.selectedLocale)
+          // console.log('Geo: ', this.lang)
           await this.userPrefSvc.saveUserPreference({
             selectedLocale: this.lang,
           })
@@ -88,9 +89,9 @@ export class LangSelectComponent implements OnInit {
     if (this.selectedLang === 'en') {
       this.selectedLang = ''
     }
-      await this.userPrefSvc.saveUserPreference({
-        selectedLocale: this.selectedLang,
-      })
+    await this.userPrefSvc.saveUserPreference({
+      selectedLocale: this.selectedLang,
+    })
 
     let refAppend = ''
     if (this.configSvc.userUrl) {

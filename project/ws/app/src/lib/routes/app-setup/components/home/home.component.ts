@@ -12,11 +12,11 @@ export class HomeComponent implements OnInit {
   appIcon: SafeUrl = ''
   stepCount = 1
   appName = ''
-  configSvc1:any
   showStepCount = false
-  constructor(private configSvc: ConfigurationsService, private domSanitizer: DomSanitizer,
+  constructor(
+    private configSvc: ConfigurationsService,
+    private domSanitizer: DomSanitizer,
     private router: Router) {
-    // this.configSvc1 = this.activeRoutr.snapshot.data.configData
     this.router.events.subscribe((e: Event) => {
       if (e instanceof NavigationEnd) {
         if (e.url.includes('lang')) {
