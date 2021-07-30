@@ -489,7 +489,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     // if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.id) {
     //   console.log(this.configSvc.unMappedUser)
     // }
-    if (this.configSvc.profileDetailsStatus) {
+    if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.id) {
+      // if (this.configSvc.userProfile) {
       this.userProfileSvc.getUserdetailsFromRegistry(this.configSvc.unMappedUser.id).subscribe(
         (data: any) => {
           const userData = data.profileDetails || _.get(this.configSvc.unMappedUser, 'profileDetails')
@@ -515,23 +516,32 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         },
         (_err: any) => {
         })
-    } else {
-      //   if (this.configSvc.userProfile) {
-      //     this.userProfileSvc.getUserdetails(this.configSvc.userProfile.email).subscribe(
-      //       data => {
-      //         if (data && data.length) {
-      //           this.createUserForm.patchValue({
-      //             firstname: data[0].first_name,
-      //             surname: data[0].last_name,
-      //             primaryEmail: data[0].email,
-      //             orgName: data[0].department_name,
-      //           })
-      //         }
-      //       },
-      //       () => {
-      //         // console.log('err :', err)
-      //       })
-      //   }
+      // } else {
+      // if (this.configSvc.userProfile) {
+      //   this.userProfileSvc.getUserdetails(this.configSvc.userProfile.email).subscribe(
+      //     data => {
+      //       if (data && data.length) {
+      //         this.createUserForm.patchValue({
+      //           firstname: data[0].first_name,
+      //           surname: data[0].last_name,
+      //           primaryEmail: data[0].email,
+      //           orgName: data[0].department_name,
+      //         })
+      //       }
+      //     },
+      //     () => {
+      //       // console.log('err :', err)
+      //     })
+      // }
+      // if (this.configSvc.userProfile) {
+      //   const tempData = this.configSvc.userProfile
+      //   this.createUserForm.patchValue({
+      //     firstname: tempData.firstName,
+      //     surname: tempData.lastName,
+      //     primaryEmail: _.get(this.configSvc.unMappedUser, 'profileDetails.personalDetails.primaryEmail') || tempData.email,
+      //     orgName: tempData.rootOrgName,
+      //   })
+      // }
     }
   }
 
