@@ -3,6 +3,7 @@ import {
   ActivatedRouteSnapshot,
   CanActivate,
   Router,
+  RouterStateSnapshot,
   // RouterStateSnapshot,
   UrlTree,
 } from '@angular/router'
@@ -20,62 +21,62 @@ export class GeneralGuard implements CanActivate {
 
   async canActivate(
     next: ActivatedRouteSnapshot,
-    // _state: RouterStateSnapshot,
+    _state: RouterStateSnapshot,
   ): Promise<boolean | UrlTree> {
     const requiredFeatures = (next.data && next.data.requiredFeatures) || []
     const requiredRoles = (next.data && next.data.requiredRoles) || []
-    return await this.shouldAllow<boolean | UrlTree>(requiredFeatures, requiredRoles)
+    return await this.shouldAllow<boolean | UrlTree>(_state, requiredFeatures, requiredRoles)
   }
 
   private async shouldAllow<T>(
-    // state: RouterStateSnapshot,
+    state: RouterStateSnapshot,
     requiredFeatures: string[],
     requiredRoles: string[],
   ): Promise<T | UrlTree | boolean> {
     /**
-     * Test IF User is authenticated
+     * Test IF User is authenticated===> in now from backend
      */
-    if (!this.configSvc.isAuthenticated) {
-      // let refAppend = ''
-      // if (state.url) {
-      //   refAppend = `?ref=${encodeURIComponent(state.url)}`
-      // }
-      // return this.router.parseUrl(`/login${refAppend}`)
+    // if (!this.configSvc.isAuthenticated) {
+    // let refAppend = ''
+    // if (state.url) {
+    //   refAppend = `?ref=${encodeURIComponent(state.url)}`
+    // }
+    // return this.router.parseUrl(`/login${refAppend}`)
 
-      // let redirectUrl
-      // if (refAppend) {
-      //   redirectUrl = document.baseURI + refAppend
-      // } else {
-      //   redirectUrl = document.baseURI
-      // }
+    // let redirectUrl
+    // if (refAppend) {
+    //   redirectUrl = document.baseURI + refAppend
+    // } else {
+    //   redirectUrl = document.baseURI
+    // }
 
-      try {
-        // Promise.resolve(this.authSvc.login('S', redirectUrl))
-        return true
-      } catch (e) {
-        return false
-      }
-    }
+    //   try {
+    //     // Promise.resolve(this.authSvc.login('S', redirectUrl))
+    //     return true
+    //   } catch (e) {
+    //     return false
+    //   }
+    // }
     // If invalid user
     if (
       this.configSvc.userProfile === null &&
       this.configSvc.instanceConfig &&
       !Boolean(this.configSvc.instanceConfig.disablePidCheck)
     ) {
-      // return this.router.parseUrl('/app/invalid-user')
+      return this.router.parseUrl('/app/invalid-user')
     }
     /**
      * Test IF User Tnc Is Accepted
      */
     if (!this.configSvc.hasAcceptedTnc) {
-      // if (
-      //   state.url &&
-      //   !state.url.includes('/app/setup/') &&
-      //   !state.url.includes('/app/tnc') &&
-      //   !state.url.includes('/page/home')
-      // ) {
-      //   this.configSvc.userUrl = state.url
-      // }
+      if (
+        state.url &&
+        !state.url.includes('/app/setup/') &&
+        !state.url.includes('/app/tnc') &&
+        !state.url.includes('/page/home')
+      ) {
+        this.configSvc.userUrl = state.url
+      }
       // if (
       //   this.configSvc.restrictedFeatures &&
       //   !this.configSvc.restrictedFeatures.has('firstTimeSetupV2')
@@ -95,7 +96,7 @@ export class GeneralGuard implements CanActivate {
        */
     if (!this.configSvc.profileDetailsStatus) {
       // return this.router.parseUrl('/app/user-profile/details')
-      // return this.router.navigate(['/app/user-profile/details', { isForcedUpdate: true }])
+      return this.router.navigate(['/app/user-profile/details', { isForcedUpdate: true }])
     }
 
     /**

@@ -118,6 +118,11 @@ export class CarrierStripMultipleComponent extends WidgetBaseComponent
             calculateParentStatus,
             null,
           )
+        }, // tslint:disable-next-line
+        (error: any) => {
+          if (error) {
+            this.loggerSvc.error(error)
+          }
         }
       )
     }
