@@ -112,11 +112,11 @@ export class LearnSearchComponent implements OnInit, OnChanges {
       this.paramFilters.forEach((pf: any) => {
         this.myFilters.push(pf)
       })
-      this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
+      // this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
         // this.facets = response.result.facets
         if (response) { }
         this.applyFilter(this.paramFilters)
-      })
+      // })
     } else {
       // this.facets = []
       this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
