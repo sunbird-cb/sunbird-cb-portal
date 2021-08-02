@@ -70,6 +70,13 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
           name: 'course',
         }]
       }
+      if (nf.name === 'source') {
+        nf.values.sort((a: any, b: any) => {
+          const textA = a.name.toUpperCase()
+          const textB = b.name.toUpperCase()
+          return (textA < textB) ? -1 : (textA > textB) ? 1 : 0
+      })
+      }
     })
     this.filteroptions = this.newfacets
     this.activated.queryParamMap.subscribe(queryParams => {
