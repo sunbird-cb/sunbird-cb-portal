@@ -3,21 +3,21 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Observable, of } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
 import { } from '@sunbird-cb/collection'
-import { IResolveResponse } from '@sunbird-cb/utils'
+import { ConfigurationsService, IResolveResponse } from '@sunbird-cb/utils'
 import { CompetenceService } from '../services/competence.service'
 
 @Injectable()
 export class ProfileResolve
   implements
   Resolve<Observable<IResolveResponse<any>> | IResolveResponse<any>> {
-  constructor(private competenceSvc: CompetenceService) { }
+  constructor(private competenceSvc: CompetenceService, private confSvc: ConfigurationsService) { }
 
   resolve(
     _route: ActivatedRouteSnapshot,
     _state: RouterStateSnapshot,
   ): Observable<IResolveResponse<any>> {
-    return this.competenceSvc.fetchProfile().pipe(
-      map(data => ({ data, error: null })),
+    return this.competenceSvc.fetchProfileById(this.confSvc.unMappedUser.id).pipe(
+      map(data => ({ data: (data && data.profileDetails) || {}, error: null })),
       catchError(error => of({ error, data: null })),
     )
   }

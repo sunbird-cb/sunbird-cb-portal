@@ -1080,6 +1080,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
                       if (!this.isForcedUpdate && this.userProfileData) {
                         this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
                       } else {
+                        setTimeout(() => {
+                          // do nothing
+                          // tslint:disable-next-line
+                        }, 1000)
                         this.router.navigate(['page', 'home'])
                       }
                     }
@@ -1098,6 +1102,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
                       // this.constructFormFromRegistry(data[0], academics, organisations)
                       this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
                     } else {
+                      setTimeout(() => {
+                        // do nothing
+                        // tslint:disable-next-line
+                      }, 1000)
                       this.router.navigate(['page', 'home'])
                     }
                   }
@@ -1109,12 +1117,19 @@ export class UserProfileComponent implements OnInit, OnDestroy {
                   if (!this.isForcedUpdate && this.userProfileData) {
                     this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
                   } else {
+                    setTimeout(() => {
+                      // do nothing
+                      // tslint:disable-next-line
+                    }, 1000)
                     this.router.navigate(['page', 'home'])
                   }
                 }
                 // this.handleFormData(data[0])
               },
               (_err: any) => {
+                if (_err) {
+                  window.location.reload()
+                }
               })
           }
         } else {
@@ -1125,6 +1140,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           if (!this.isForcedUpdate && this.userProfileData) {
             this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
           } else {
+            setTimeout(() => {
+              // do nothing
+              // tslint:disable-next-line
+            }, 1000)
             this.router.navigate(['page', 'home'])
           }
         }
