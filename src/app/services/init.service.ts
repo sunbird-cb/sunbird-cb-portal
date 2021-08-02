@@ -323,7 +323,8 @@ export class InitService {
           isManager: false,
         }
       }
-      const details = { group: [],
+      const details = {
+        group: [],
         profileDetailsStatus: !!userPidProfile.profileDetails.mandatoryFieldsExists,
         roles: (userPidProfile.roles || []).map((v: { toLowerCase: () => void; }) => v.toLowerCase()),
         tncStatus: !userPidProfile.promptTnC,
@@ -350,57 +351,6 @@ export class InitService {
       //   this.configSvc.userRoles.add('is_manager')
     }
   }
-
-  // private async fetchUserProfileV2(): Promise<any> {
-  //   // const userRoles: string[] = []
-  //   if (this.configSvc.instanceConfig && !Boolean(this.configSvc.instanceConfig.disablePidCheck)) {
-  //     let userPidProfileV2: NsUser.IUserPidProfileVer2 | null = null
-  //     try {
-  //       userPidProfileV2 = await this.http
-  //         .get<NsUser.IUserPidProfileVer2>(endpoint.profileV2)
-  //         .toPromise()
-  //     } catch (e) {
-  //       // this.configSvc.userProfileV2 = null
-  //       throw new Error('Invalid user')
-  //     }
-  //     if (userPidProfileV2) {
-  //       const userData: any = _.first(_.get(userPidProfileV2, 'result.UserProfile'))
-  //       this.configSvc.userProfileV2 = {
-  //         userId: userData.userId,
-  //         firstName: userData.personalDetails.firstname,
-  //         surName: userData.personalDetails.surname,
-  //         middleName: userData.personalDetails.middlename,
-  //         departmentName: _.get(userData, 'employmentDetails.departmentName'),
-  //         // tslint:disable-next-line: max-line-length
-  // tslint:disable-next-line: max-line-length
-  //         userName: `${userData.personalDetails.firstname ? userData.personalDetails.firstname : ''}${userData.personalDetails.surname ? userData.personalDetails.surname : ''}`,
-  //         profileImage: userData && userData.photo,
-  //         dealerCode: null,
-  //         isManager: false,
-  //       }
-  //       if (this.configSvc.userProfile) {
-  //         // tslint:disable-next-line: max-line-length
-  // tslint:disable-next-line: max-line-length
-  //         this.configSvc.userProfile.departmentName = _.get(userData, 'employmentDetails.departmentName') ? userData.employmentDetails.departmentName : null
-  //       }
-
-  //     }
-  //   }
-  //   // const details: IDetailsResponse = await this.http
-  //   //   .get<IDetailsResponse>(endpoint.details).pipe(retry(3))
-  //   //   .toPromise()
-  //   // this.configSvc.userGroups = new Set(details.group)
-  //   // this.configSvc.userRoles = new Set(details.roles)
-  //   // if (this.configSvc.userProfile && this.configSvc.userProfile.isManager) {
-  //   //   this.configSvc.userRoles.add('is_manager')
-  //   // }
-  //   // tslint:disable-next-line: max-line-length
-  //   // const details = { group: [], profileDetailsStatus: true, roles: userRoles, tncStatus: true }
-  //   // this.configSvc.hasAcceptedTnc = details.tncStatus
-  //   // this.configSvc.profileDetailsStatus = details.profileDetailsStatus
-  //   // this.configSvc.userRoles = new Set(userRoles)
-  //   // return details
-  // }
 
   private async fetchInstanceConfig(): Promise<NsInstanceConfig.IConfig> {
     // TODO: use the rootOrg and org to fetch the instance
@@ -484,7 +434,7 @@ export class InitService {
     const tourGuide = appsConfig.tourGuide
     const features: { [id: string]: NsAppsConfig.IFeature } = Object.values(
       appsConfig.features,
-    // tslint:disable-next-line: no-shadowed-variable
+      // tslint:disable-next-line: no-shadowed-variable
     ).reduce((map: { [id: string]: NsAppsConfig.IFeature }, feature: NsAppsConfig.IFeature) => {
       if (hasUnitPermission(feature.permission, this.configSvc.restrictedFeatures, true)) {
         map[feature.id] = feature

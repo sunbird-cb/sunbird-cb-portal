@@ -345,9 +345,9 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
             : null
           if (courses && courses.length) {
             content = courses.map(c => {
-              const contentTemp: NsContent.IContent =  c.content
-              contentTemp.completionPercentage = c.completionPercentage || 0
-              contentTemp.completionStatus = c.completionStatus || 0
+              const contentTemp: NsContent.IContent = c.content
+              contentTemp.completionPercentage = c.completionPercentage || c.progress || 0
+              contentTemp.completionStatus = c.completionStatus || c.status || 0
               return contentTemp
             })
           }
@@ -356,9 +356,10 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
           // continue learing strip
           if (content && content.length) {
             contentNew = content.filter((c: any) => {
-              if (c.completionPercentage && c.completionPercentage > 0) {
+              /** commented as both are 0 after enrolll */
+              // if (c.completionPercentage && c.completionPercentage > 0) {
                 return c
-              }
+              // }
             })
           }
           this.processStrip(

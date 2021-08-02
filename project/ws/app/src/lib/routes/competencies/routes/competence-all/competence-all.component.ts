@@ -8,6 +8,7 @@ import _ from 'lodash';
 import { FormControl } from '@angular/forms';
 import { CompetenceViewComponent } from '../../components/competencies-view/competencies-view.component';
 import { MatSnackBar } from '@angular/material';
+import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
 /* tslint:enable */
 
 @Component({
@@ -42,7 +43,8 @@ export class CompetenceAllComponent implements OnInit {
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private competencySvc: CompetenceService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private configSvc: ConfigurationsService,
   ) {
     this.tabsData =
       (this.route.parent &&
@@ -89,10 +91,10 @@ export class CompetenceAllComponent implements OnInit {
   }
 
   getProfile() {
-    this.competencySvc.fetchProfile().subscribe(response => {
+    this.competencySvc.fetchProfileById(this.configSvc.unMappedUser.id).subscribe(response => {
       if (response) {
-        this.myCompetencies = response.result.UserProfile[0].competencies || []
-        this.currentProfile = response.result.UserProfile[0]
+        this.myCompetencies = response.profileDetails.competencies || []
+        this.currentProfile = response.profileDetails
       }
     })
   }
@@ -166,7 +168,13 @@ export class CompetenceAllComponent implements OnInit {
         updatedProfile.competencies = []
         updatedProfile.competencies.push(newCompetence)
       }
-      this.competencySvc.updateProfile(updatedProfile).subscribe(response => {
+      const reqUpdate = {
+        request: {
+          userId: this.configSvc.unMappedUser.id,
+          profileDetails: updatedProfile,
+        },
+      }
+      this.competencySvc.updateProfile(reqUpdate).subscribe(response => {
         if (response) {
           // success
           // this.myCompetencies.push(item)
@@ -187,7 +195,13 @@ export class CompetenceAllComponent implements OnInit {
       if (updatedProfile) {
         updatedProfile.competencies = currentCompetencies;
       }
-      this.competencySvc.updateProfile(updatedProfile).subscribe(
+      const reqUpdate = {
+        request: {
+          userId: this.configSvc.unMappedUser.id,
+          profileDetails: updatedProfile,
+        },
+      }
+      this.competencySvc.updateProfile(reqUpdate).subscribe(
         (response) => {
           if (response) {
             // success => removed

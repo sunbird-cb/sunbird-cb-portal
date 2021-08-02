@@ -8,6 +8,7 @@ import {
   UrlTree,
 } from '@angular/router'
 import { ConfigurationsService, AuthKeycloakService } from '@sunbird-cb/utils'
+import { environment } from 'src/environments/environment'
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class GeneralGuard implements CanActivate {
   constructor(
     private router: Router,
     private configSvc: ConfigurationsService,
-    private authSvc: AuthKeycloakService
+    private authSvc: AuthKeycloakService,
   ) { }
 
   async canActivate(
@@ -28,6 +29,15 @@ export class GeneralGuard implements CanActivate {
     return await this.shouldAllow<boolean | UrlTree>(_state, requiredFeatures, requiredRoles)
   }
 
+  hasRole(role: string[]): boolean {
+    let returnValue = false
+    role.forEach(v => {
+      if ((this.configSvc.userRoles || new Set()).has((v || '').toLocaleLowerCase())) {
+        returnValue = true
+      }
+    })
+    return returnValue
+  }
   private async shouldAllow<T>(
     state: RouterStateSnapshot,
     requiredFeatures: string[],
@@ -57,6 +67,13 @@ export class GeneralGuard implements CanActivate {
     //     return false
     //   }
     // }
+
+    // if Invalid Role
+    if (!this.hasRole(environment.portalRoles)) {
+      this.router.navigateByUrl('/error-access-forbidden')
+      this.authSvc.logout()
+      return false
+    }
     // If invalid user
     if (
       this.configSvc.userProfile === null &&

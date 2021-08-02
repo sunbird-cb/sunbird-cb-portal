@@ -178,7 +178,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     const initData = this.tocSharedSvc.initData(data)
     this.content = initData.content
     const competenciesData = this.content && this.content.competencies ? this.content.competencies : []
-    if (competenciesData) {
+    if (competenciesData && competenciesData.length) {
       const str = competenciesData.replace(/\\/g, '')
       this.competencies = JSON.parse(str)
     }
