@@ -1082,7 +1082,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
                       } else {
                         setTimeout(() => {
                           // do nothing
-                        }, 1000);
+                          // tslint:disable-next-line
+                        }, 1000)
                         this.router.navigate(['page', 'home'])
                       }
                     }
@@ -1103,7 +1104,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
                     } else {
                       setTimeout(() => {
                         // do nothing
-                      }, 1000);
+                        // tslint:disable-next-line
+                      }, 1000)
                       this.router.navigate(['page', 'home'])
                     }
                   }
@@ -1117,7 +1119,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
                   } else {
                     setTimeout(() => {
                       // do nothing
-                    }, 1000);
+                      // tslint:disable-next-line
+                    }, 1000)
                     this.router.navigate(['page', 'home'])
                   }
                 }
@@ -1139,7 +1142,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           } else {
             setTimeout(() => {
               // do nothing
-            }, 1000);
+              // tslint:disable-next-line
+            }, 1000)
             this.router.navigate(['page', 'home'])
           }
         }
