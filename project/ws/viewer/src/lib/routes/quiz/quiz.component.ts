@@ -65,7 +65,8 @@ export class QuizComponent implements OnInit, OnDestroy {
     if (this.activatedRoute.snapshot.queryParams.collectionId &&
       this.activatedRoute.snapshot.queryParams.collectionType
       && this.quizData) {
-      await this.contentSvc.continueLearning(this.quizData.identifier,
+      await this.contentSvc.continueLearning(
+        this.quizData.identifier,
         this.activatedRoute.snapshot.queryParams.collectionId,
         this.activatedRoute.snapshot.queryParams.collectionType,
       )
