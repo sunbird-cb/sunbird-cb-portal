@@ -70,6 +70,7 @@ export class GeneralGuard implements CanActivate {
 
     // if Invalid Role
     if (!this.hasRole(environment.portalRoles)) {
+      this.router.navigateByUrl('/error-access-forbidden')
       this.authSvc.logout()
       return false
     }

@@ -352,7 +352,6 @@ export class InitService {
     }
   }
 
-
   private async fetchInstanceConfig(): Promise<NsInstanceConfig.IConfig> {
     // TODO: use the rootOrg and org to fetch the instance
     const publicConfig = await this.http
