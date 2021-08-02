@@ -48,6 +48,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
     if (instanceConfig) {
       this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
     }
+    this.getFacets()
     this.getSearchedData()
   }
 
@@ -55,6 +56,26 @@ export class LearnSearchComponent implements OnInit, OnChanges {
       if (changes.param.currentValue) {
         this.getSearchedData()
       }
+  }
+
+  getFacets() {
+    const queryparam = {
+      request: {
+        filters: {
+          visibility: ['Default'],
+          contentType: [
+            'Course',
+            'Resource',
+          ],
+        },
+        sort_by: { lastUpdatedOn: '' },
+        fields: [],
+        facets: ['contentType', 'mimeType', 'source'],
+      },
+    }
+    this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
+      this.facets = response.result.facets
+    })
   }
 
   getSearchedData() {
@@ -92,7 +113,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
         this.myFilters.push(pf)
       })
       this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
-        this.facets = response.result.facets
+        // this.facets = response.result.facets
         this.applyFilter(this.paramFilters)
       })
     } else {
@@ -100,7 +121,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
       this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
         this.searchResults = response.result.content
         this.totalResults = response.result.count
-        this.facets = response.result.facets
+        // this.facets = response.result.facets
         this.paramFilters = []
       })
     }
