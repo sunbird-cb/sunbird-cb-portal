@@ -10,4 +10,5 @@ export const environment = {
   azureBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
   azureOldHost: (window as { [key: string]: any })['env']['azureOldHost'] || '',
   azureOldBuket: (window as { [key: string]: any })['env']['azureOldBuket'] || '',
+  portalRoles: (((window as { [key: string]: any })['env']['portalRoles'] || '').split(',')) || [],
   }
