@@ -5,6 +5,7 @@ import { AboutHomeComponent } from './about/components/about-home.component'
 import { ContactHomeComponent } from './contact/components/contact-home.component'
 import { QuickTourComponent } from './quick-tour/quick-tour.component'
 import { AboutVideoComponent } from './about-video/about-video.component'
+import { FeedbackComponent } from './micro-survey/components/feedback.component'
 
 const routes: Routes = [
   {
@@ -47,6 +48,10 @@ const routes: Routes = [
   {
     path: 'about-us-video',
     component: AboutVideoComponent,
+  },
+  {
+    path: 'feedback',
+    component: FeedbackComponent,
   },
 ]
 
