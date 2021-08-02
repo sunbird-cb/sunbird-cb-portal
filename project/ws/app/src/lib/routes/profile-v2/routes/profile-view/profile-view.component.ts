@@ -60,30 +60,44 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     this.tabs = this.route.data.subscribe(data => {
-      this.portalProfile = data.profile
-        && data.profile.data
-        && data.profile.data.length > 0
-        && data.profile.data[0]
+      // this.portalProfile = data.profile
+      //   && data.profile.data
+      //   && data.profile.data.length > 0
+      //   && data.profile.data[0]
 
-      if (this.portalProfile.id === this.currentUser) {
+      if (data.profile.data.profileDetails !== null) {
+        this.portalProfile = data.profile.data.profileDetails
+      } else {
+        this.portalProfile = data.profile.data
+      }
+
+      const user = this.portalProfile.userId || this.portalProfile.id || _.get(data, 'profile.data.id') || ''
+      if (this.portalProfile && !(this.portalProfile.id && this.portalProfile.userId)) {
+        this.portalProfile.id = user
+        this.portalProfile.userId = user
+      }
+      if (user === this.currentUser) {
         this.currentUsername = this.configSvc.userProfile && this.configSvc.userProfile.userName
-      } else  {
-        this.currentUsername = this.portalProfile.personalDetails.userName
+      } else {
+        this.currentUsername = this.portalProfile.personalDetails && this.portalProfile.personalDetails !== null
+          ? this.portalProfile.personalDetails.userName
+          : this.portalProfile.userName
       }
       this.decideAPICall()
     })
   }
   decideAPICall() {
-    if (this.portalProfile && this.portalProfile.id) {
+    const user = this.portalProfile.userId || this.portalProfile.id || ''
+    if (this.portalProfile && user) {
       this.fetchUserDetails(this.currentUsername)
-      this.fetchConnectionDetails(this.portalProfile.id)
+      this.fetchConnectionDetails(user)
     } else {
 
       if (this.configSvc.userProfile) {
-        const me = this.configSvc.userProfile.userId || ''
+        const me = this.configSvc.userProfile.userName || ''
         if (me) {
           this.fetchUserDetails(me)
-          this.fetchConnectionDetails(me)
+          this.fetchConnectionDetails(this.configSvc.userProfile.userId)
         }
       }
 

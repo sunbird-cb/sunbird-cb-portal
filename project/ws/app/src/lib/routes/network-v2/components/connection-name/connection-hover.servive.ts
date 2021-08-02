@@ -9,7 +9,8 @@ import _ from 'lodash'
 // const PROTECTED_SLAG_V8 = '/apis/protected/v8'
 
 const API_END_POINTS = {
-  getUserdetailsV2FromRegistry: '/apis/protected/v8/user/profileRegistry/getUserRegistryByUser',
+  // getUserdetailsV2FromRegistry: '/apis/protected/v8/user/profileRegistry/getUserRegistryByUser',
+  getUserdetailsV2FromRegistry: '/apis/proxies/v8/api/user/v2/read',
 }
 
 @Injectable({
@@ -23,7 +24,9 @@ export class ConnectionHoverService {
         // tslint:disable-next-line: prefer-const
         let profile!: NSProfileDataV2.IProfile | null
         // _.set(profile, '.', _.first(_.get(data, 'result.UserProfile')))
-        profile = _.first(_.get(data, 'result.UserProfile')) || null
+        // profile = _.first(_.get(data, 'result.UserProfile')) || null
+        // profile = _.first(_.get(data.result.response, 'result.UserProfile')) || null
+        profile = data.result.response
         return profile
       },
         // tslint:disable-next-line: align

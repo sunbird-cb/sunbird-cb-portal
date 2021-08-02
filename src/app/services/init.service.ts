@@ -24,6 +24,7 @@ import { environment } from '../../environments/environment'
 /* tslint:disable */
 import _ from 'lodash'
 import { map } from 'rxjs/operators'
+import { v4 as uuid } from 'uuid'
 /* tslint:enable */
 // interface IDetailsResponse {
 //   tncStatus: boolean
@@ -267,6 +268,10 @@ export class InitService {
         //   const organisationData = userPidProfile.result.response.organisations
         //   userRoles = (organisationData[0].roles.length > 0) ? organisationData[0].roles : []
         // }
+        if (localStorage.getItem('telemetrySessionId')) {
+          localStorage.removeItem('telemetrySessionId')
+        }
+        localStorage.setItem('telemetrySessionId', uuid())
         this.configSvc.unMappedUser = userPidProfile
         const profileV2 = _.get(userPidProfile, 'profiledetails')
         this.configSvc.userProfile = {
@@ -319,7 +324,7 @@ export class InitService {
         }
       }
       const details = { group: [],
-        profileDetailsStatus: userPidProfile.profileDetailStatus,
+        profileDetailsStatus: !!userPidProfile.profileDetails.mandatoryFieldsExists,
         roles: (userPidProfile.roles || []).map((v: { toLowerCase: () => void; }) => v.toLowerCase()),
         tncStatus: !userPidProfile.promptTnC,
         isActive: true,

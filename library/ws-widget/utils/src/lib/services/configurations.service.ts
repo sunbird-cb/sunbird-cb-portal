@@ -5,8 +5,8 @@ import { NsPage } from '../resolvers/page.model'
 import { NsAppsConfig, NsInstanceConfig, NsUser } from './configurations.model'
 import { IUserPreference } from './user-preference.model'
 
-const instanceConfigPath: string | null = window.location.host
-const locationHost: string | null = window.location.host
+// const instanceConfigPath: string | null = window.location.host
+// const locationHost: string | null = window.location.host
 
 // if (!environment.production && Boolean(environment.sitePath)) {
 //   locationHost = environment.sitePath
@@ -27,12 +27,9 @@ export class ConfigurationsService {
   appSetup = true
   // The url the user tried to access while landing in the app before accepting tnc
   userUrl = ''
-  baseUrl = `assets/configurations/${(locationHost || window.location.host).replace(':', '_')}`
-  sitePath = `assets/configurations/${(instanceConfigPath || window.location.host).replace(
-    ':',
-    '_',
-  )}`
-  hostPath = (instanceConfigPath || window.location.host).replace(':', '_')
+  baseUrl = `assets/configurations`
+  sitePath = `assets/configurations`
+  hostPath = (window.location.host).replace(':', '_')
 
   userRoles: Set<string> | null = null
   userGroups: Set<string> | null = null
@@ -85,10 +82,10 @@ export class ConfigurationsService {
   }
   primaryNavBarConfig: NsInstanceConfig.IPrimaryNavbarConfig | null = null
   /* for temp Fix */
-  setBaseUrl = (sitePath: string) => `assets/configurations/${(sitePath).replace(':', '_')}`
-  setSitePath = (sitePath: string) => `assets/configurations/${(sitePath).replace(
-    ':',
-    '_',
-  )}`
-  setHostPath = (sitePath: string) => (sitePath).replace(':', '_')
+  // setBaseUrl = (sitePath: string) => `assets/configurations/${(sitePath).replace(':', '_')}`
+  // setSitePath = (sitePath: string) => `assets/configurations/${(sitePath).replace(
+  //   ':',
+  //   '_',
+  // )}`
+  // setHostPath = (sitePath: string) => (sitePath).replace(':', '_')
 }

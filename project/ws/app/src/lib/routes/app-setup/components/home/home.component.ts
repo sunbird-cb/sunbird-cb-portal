@@ -13,7 +13,10 @@ export class HomeComponent implements OnInit {
   stepCount = 1
   appName = ''
   showStepCount = false
-  constructor(private configSvc: ConfigurationsService, private domSanitizer: DomSanitizer, private router: Router) {
+  constructor(
+    private configSvc: ConfigurationsService,
+    private domSanitizer: DomSanitizer,
+    private router: Router) {
     this.router.events.subscribe((e: Event) => {
       if (e instanceof NavigationEnd) {
         if (e.url.includes('lang')) {

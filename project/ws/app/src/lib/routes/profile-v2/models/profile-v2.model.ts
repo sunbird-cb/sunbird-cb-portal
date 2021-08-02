@@ -31,7 +31,8 @@ export namespace NSProfileDataV2 {
     professionalDetails: IProfessionalDetails[]
     skills: ISkills
     result: any
-
+    userName: any
+    profileDetails: any
   }
   export interface IAcademics {
     nameOfInstitute: string

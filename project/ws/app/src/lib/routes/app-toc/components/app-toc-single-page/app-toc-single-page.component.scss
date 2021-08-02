@@ -234,7 +234,7 @@ mat-divider {
 .contacts-container {
   background: #F5F6FA 0% 0% no-repeat padding-box;
   // border: 1px solid #ECECEC;
-  padding: 30px 0;
+  padding: 22px 0 10px;
   border: 0;
   border-top: 1px;
   border-style: solid;
@@ -326,6 +326,16 @@ mat-divider {
     text-transform: capitalize;
   }
 }
+.compt-table {
+  border-spacing: 0px 6px !important;
+  th {
+    background: rgba(0, 0, 0, 0.04);
+    font-weight: 700 !important;
+  }
+  td {
+    background: #FFFFFF;
+  }
+}
 
 .custom-tabgroup {
   .fixed-width {
@@ -337,9 +347,9 @@ mat-divider {
     margin: 10px 0;
     padding: 10px 15px;
     border-radius: 4px;
-    .datadiv {
+    // .datadiv {
       // margin-left: 60px;
-    }
+    // }
 
     .circle-l-xs, .circle-l-s, .circle-l, .circle-xl, .circle-m, .circle-xxl {
       width: 56px !important;

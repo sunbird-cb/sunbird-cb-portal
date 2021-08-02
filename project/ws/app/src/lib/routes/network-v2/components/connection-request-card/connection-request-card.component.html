@@ -5,8 +5,11 @@
             </ws-widget-avatar-photo>
         </div> -->
         <div class="mr-3 cursor-pointer circle-m" (click)="goToUserProfile(user)">
-            <div class="initials">
+            <div class="initials" *ngIf="user && user?.personalDetails">
                 {{user?.personalDetails?.firstname.charAt(0).toUpperCase()}}{{user?.personalDetails?.surname.charAt(0).toUpperCase()}}
+            </div>
+            <div class="initials" *ngIf="user && !user?.personalDetails && user.profileDetails === null">
+                {{user?.firstName.charAt(0).toUpperCase()}}{{user?.lastName.charAt(0).toUpperCase()}}
             </div>
         </div>
         <div class="flex flex-col flex-1 cursor-pointer" (click)="goToUserProfile(user)">
@@ -15,8 +18,11 @@
                 {{user?.name}}
             </div> -->
             <ws-app-connection-name [hoverUser]="usr"></ws-app-connection-name>
-            <div class="designation truncate ws-mat-black60-text">
+            <div class="designation truncate ws-mat-black60-text" *ngIf="user?.employmentDetails">
                 {{user?.employmentDetails?.departmentName}}
+            </div>
+            <div class="designation truncate ws-mat-black60-text" *ngIf="!user?.employmentDetails">
+                {{user?.channel}}
             </div>
             <!-- </a> -->
         </div>

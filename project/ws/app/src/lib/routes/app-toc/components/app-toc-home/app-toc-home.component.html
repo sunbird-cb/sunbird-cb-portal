@@ -277,13 +277,13 @@ TODO: edit option while preview Mode
                   {{ content?.complexityLevel }}
               </h3>
           </div>
-          <div class="info-item" *ngIf="tocConfig?.atAGlance?.competencies?.enabled && content?.competencies && content?.competencies.length">
+          <!-- <div class="info-item" *ngIf="tocConfig?.atAGlance?.competencies?.enabled && content?.competencies && content?.competencies.length">
               <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.competencies?.displayName}}
               </h3>
               <h3 class="item-value width-expand">
                   {{ getCompetencies(content.competencies).join(', ') }}
               </h3>
-          </div>
+          </div> -->
           <div class="info-item" *ngIf="tocConfig?.atAGlance?.source?.enabled">
               <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.source?.displayName}}
               </h3>

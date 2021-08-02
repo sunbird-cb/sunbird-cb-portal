@@ -262,7 +262,17 @@
 .progress-bar-thin ::ng-deep.theme-igot.day-mode .mat-progress-bar-background {
   fill: transparent;
 }
+.radiobtn {
+  color: rgba(0,0,0,0.16)
+}
 
+.resicons {
+  img {
+    width: 22px;
+    opacity: 0.5;
+    margin-top: 2px;
+  }
+}
 
 
 // @media only screen and (max-width:469px) {

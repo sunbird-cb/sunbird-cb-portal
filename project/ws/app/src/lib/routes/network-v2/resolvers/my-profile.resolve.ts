@@ -18,7 +18,6 @@ export class MyProfileResolve
         }
         const combinedProfile = {
             ...this.configSvc.userProfile,
-            ...this.configSvc.userProfileV2,
         }
         return of(combinedProfile)
     }

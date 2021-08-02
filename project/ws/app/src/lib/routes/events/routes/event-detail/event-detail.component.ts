@@ -36,14 +36,17 @@ export class EventDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.eventId = params.eventId
-      this.eventId = 'do_11332782008724684819'
+      this.eventId = 'do_11332870064504832012'
       // if (this.fetchNewData) {
       //   this.getTIDData()
       // }
       // this.data = this.route.snapshot.data.topic.data
     })
      this.eventSvc.getEventData(this.eventId).subscribe((data: any) => {
-        this.eventData = data
+        this.eventData = data.result.event
+        const creatordata = this.eventData.creatorDetails
+        const str = creatordata.replace(/\\/g, '')
+        this.eventData.creatorDetails = JSON.parse(str)
       })
   }
 
