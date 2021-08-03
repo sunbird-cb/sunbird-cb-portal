@@ -68,11 +68,17 @@ export class GeneralGuard implements CanActivate {
     //   }
     // }
 
-    // if Invalid Role
-    if (!this.hasRole(environment.portalRoles)) {
-      this.router.navigateByUrl('/error-access-forbidden')
-      this.authSvc.logout()
-      return false
+     // if Invalid Role
+     if (
+      state.url &&
+      // !state.url.includes('/app/setup/') &&
+      !(state.url.includes('/app/tnc') ||
+        state.url.includes('/app/setup/'))
+    ) {
+      if (!this.hasRole(environment.portalRoles)) {
+        this.authSvc.logout()
+        return false
+      }
     }
     // If invalid user
     if (
@@ -113,7 +119,7 @@ export class GeneralGuard implements CanActivate {
        */
     if (!this.configSvc.profileDetailsStatus) {
       // return this.router.parseUrl('/app/user-profile/details')
-      return this.router.navigate(['/app/user-profile/details', { isForcedUpdate: true }])
+      // return this.router.navigate(['/app/user-profile/details', { isForcedUpdate: true }])
     }
 
     /**
