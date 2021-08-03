@@ -60,7 +60,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     if (this.htmlContent && this.htmlContent.identifier) {
       this.scormAdapterService.contentId = this.htmlContent.identifier
-      this.scormAdapterService.loadData()
+      this.scormAdapterService.loadDataV2()
     }
   }
   ngOnDestroy() {
@@ -285,7 +285,6 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   raiseTelemetry(data: any) {
     if (this.htmlContent) {
       /* tslint:disable-next-line */
-      console.log(this.htmlContent.identifier)
       if (this.activatedRoute.snapshot.queryParams.collectionId) {
         this.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
       }
