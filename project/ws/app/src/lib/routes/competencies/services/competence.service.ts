@@ -13,8 +13,6 @@ const API_ENDPOINTS = {
   // fetchProfile: '/apis/protected/v8/user/profileDetails/getUserRegistry',
   fetchProfile: '/apis/proxies/v8/api/user/v2/read',
   updateProfile: '/apis/protected/v8/user/profileDetails/updateUser',
-
-
 }
 /* this page needs refactor*/
 @Injectable({

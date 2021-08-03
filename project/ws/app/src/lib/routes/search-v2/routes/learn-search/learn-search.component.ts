@@ -41,7 +41,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
     private searchSrvc: GbSearchService,
     private configSvc: ConfigurationsService,
     private events: EventService
-  ) {}
+  ) { }
 
   ngOnInit() {
     const instanceConfig = this.configSvc.instanceConfig
@@ -53,9 +53,9 @@ export class LearnSearchComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-      if (changes.param.currentValue) {
-        this.getSearchedData()
-      }
+    if (changes.param.currentValue) {
+      this.getSearchedData()
+    }
   }
 
   getFacets() {
@@ -96,7 +96,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
       },
     }
     if (this.paramFilters && this.paramFilters.length > 0) {
-        // queryparam.request.filters = this.paramFilters
+      // queryparam.request.filters = this.paramFilters
       //   if (this.paramFilters.contentType) {
       //     const pf = {
       //       mainType:  'contentType',
@@ -114,6 +114,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
       })
       // this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
         // this.facets = response.result.facets
+        if (response) { }
         this.applyFilter(this.paramFilters)
       // })
     } else {
@@ -128,7 +129,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
   }
 
   // viewContent(content: any) {
-    // this.router.navigate([`/app/toc/${content.identifier}/overview?primaryCategory=/${content.primaryCategory}`])
+  // this.router.navigate([`/app/toc/${content.identifier}/overview?primaryCategory=/${content.primaryCategory}`])
   // }
 
   applyFilter(filter: any) {
@@ -153,8 +154,8 @@ export class LearnSearchComponent implements OnInit, OnChanges {
           queryparam.request.filters.primaryCategory = this.primaryCategoryType
         } else if (mf.mainType === 'mimeType') {
           if (mf.name === 'Image') {
-           this.mimeType.push('image/jpeg')
-           this.mimeType.push('image/png')
+            this.mimeType.push('image/jpeg')
+            this.mimeType.push('image/png')
           } else if (mf.name === 'Video') {
             this.mimeType.push('video/mp4')
             this.mimeType.push('video/x-youtube')
@@ -169,7 +170,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
         } else if (mf.mainType === 'source') {
           this.sourceType.push(mf.name)
           queryparam.request.filters.source = this.sourceType
-        }  else if (mf.mainType === 'mediaType') {
+        } else if (mf.mainType === 'mediaType') {
           this.mediaType.push(mf.name)
           queryparam.request.filters.mediaType = this.mediaType
         }
@@ -198,7 +199,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
     }
   }
 
-  removeFilter (mfilter: any) {
+  removeFilter(mfilter: any) {
     this.rfilter = mfilter
     this.searchSrvc.notifyOther(this.rfilter)
   }
