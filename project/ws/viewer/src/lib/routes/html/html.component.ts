@@ -108,7 +108,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
           if (this.alreadyRaised && this.oldData) {
             this.raiseEvent(WsEvents.EnumTelemetrySubType.Unloaded, this.oldData)
             if (!this.hasFiredRealTimeProgress) {
-              this.fireRealTimeProgress()
+              // this.fireRealTimeProgress()
               if (this.realTimeProgressTimer) {
                 clearTimeout(this.realTimeProgressTimer)
               }
@@ -252,12 +252,12 @@ export class HtmlComponent implements OnInit, OnDestroy {
     if (this.viewerDataSubscription) {
       this.viewerDataSubscription.unsubscribe()
     }
-    if (!this.hasFiredRealTimeProgress && !this.forPreview) {
-      this.fireRealTimeProgress()
-      if (this.realTimeProgressTimer) {
-        clearTimeout(this.realTimeProgressTimer)
-      }
-    }
+    // if (!this.hasFiredRealTimeProgress && !this.forPreview) {
+    //   this.fireRealTimeProgress()
+    //   if (this.realTimeProgressTimer) {
+    //     clearTimeout(this.realTimeProgressTimer)
+    //   }
+    // }
   }
 
   formDiscussionForumWidget(content: NsContent.IContent) {
@@ -359,16 +359,16 @@ export class HtmlComponent implements OnInit, OnDestroy {
       }
     }
     this.realTimeProgressRequest.content_type = this.htmlData ? this.htmlData.contentType : ''
-    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-              this.activatedRoute.snapshot.queryParams.collectionId : ''
-      const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-              this.activatedRoute.snapshot.queryParams.batchId : ''
-    this.viewerSvc.realTimeProgressUpdate(
-      this.htmlData ? this.htmlData.identifier : '',
-      this.realTimeProgressRequest,
-      collectionId,
-      batchId
-    )
+    // const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+    //           this.activatedRoute.snapshot.queryParams.collectionId : ''
+    //   const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+    //           this.activatedRoute.snapshot.queryParams.batchId : ''
+    // this.viewerSvc.realTimeProgressUpdate(
+    //   this.htmlData ? this.htmlData.identifier : '',
+    //   this.realTimeProgressRequest,
+    //   collectionId,
+    //   batchId
+    // )
     return
   }
 }
