@@ -12,6 +12,7 @@ import {
   WidgetResolverService,
 } from '@sunbird-cb/resolver'
 import {
+  AuthKeycloakService,
   // AuthKeycloakService,
   ConfigurationsService,
   LoggerService,
@@ -62,7 +63,7 @@ export class InitService {
   constructor(
     private logger: LoggerService,
     private configSvc: ConfigurationsService,
-    // private authSvc: AuthKeycloakService,
+    private authSvc: AuthKeycloakService,
     private widgetResolverService: WidgetResolverService,
     private settingsSvc: BtnSettingsService,
     private userPreference: UserPreferenceService,
@@ -260,10 +261,11 @@ export class InitService {
           .pipe(map((res: any) => res.result.response))
           .toPromise()
       } catch (e) {
-        // this.configSvc.userProfile = null
+        this.configSvc.userProfile = null
         throw new Error('Invalid user')
       }
-      if (userPidProfile) {
+      if (userPidProfile && userPidProfile.roles && userPidProfile.roles.length > 0 &&
+        this.hasRole(userPidProfile.roles)) {
         // if (userPidProfile.result.response.organisations.length > 0) {
         //   const organisationData = userPidProfile.result.response.organisations
         //   userRoles = (organisationData[0].roles.length > 0) ? organisationData[0].roles : []
@@ -322,6 +324,8 @@ export class InitService {
           dealerCode: null,
           isManager: false,
         }
+      } else {
+        this.authSvc.logout()
       }
       const details = {
         group: [],
@@ -507,5 +511,15 @@ export class InitService {
         this.logger.error('Error updating index html meta >', error)
       }
     }
+  }
+  hasRole(role: string[]): boolean {
+    let returnValue = false
+    const rolesForCBP = environment.portalRoles
+    role.forEach(v => {
+      if ((rolesForCBP).includes(v)) {
+        returnValue = true
+      }
+    })
+    return returnValue
   }
 }
