@@ -19,6 +19,7 @@ export class ConnectionRequestCardComponent implements OnInit {
   @ViewChild('toastError', { static: true }) toastError!: ElementRef<any>
   me!: NsUser.IUserProfile
   howerUser!: any
+  unmappedHowerUser!: any
   constructor(
     private router: Router,
     private networkV2Service: NetworkV2Service,
@@ -36,6 +37,7 @@ export class ConnectionRequestCardComponent implements OnInit {
     const userId = this.user.id || this.user.identifier
     this.connectionHoverService.fetchProfile(userId).subscribe((res: any) => {
       if (res.profileDetails !== null) {
+        this.unmappedHowerUser = res
         this.howerUser = res.profileDetails
       } else {
         this.howerUser = res || {}
@@ -67,18 +69,24 @@ export class ConnectionRequestCardComponent implements OnInit {
       userIdTo: this.user.id || this.user.identifier || this.user.wid,
       userNameTo: '',
       userDepartmentTo: '',
+      status: action
     }
-    if (this.user.personalDetails) {
+
+    if (this.user.personalDetails && this.user.employmentDetails && this.user.employmentDetails.departmentName) {
       req.userNameTo = `${this.user.personalDetails.firstname}${this.user.personalDetails.surname}`
-      req.userDepartmentTo =  this.user.employmentDetails.departmentName
+      req.userDepartmentTo = this.user.employmentDetails.departmentName
+    } else {
+      req.userNameTo = `${this.unmappedHowerUser.firstName}${this.unmappedHowerUser.lastName}`
+      req.userDepartmentTo = this.unmappedHowerUser.rootOrg.channel
     }
+
     if (!this.user.personalDetails && this.user.first_name) {
       req.userNameTo = `${this.user.first_name}${this.user.last_name}`
-      req.userDepartmentTo =  this.user.department_name
+      req.userDepartmentTo = this.user.department_name
     }
     if (!this.user.personalDetails && this.user.firstName) {
       req.userNameTo = `${this.user.firstName}${this.user.lastName}`
-      req.userDepartmentTo =  this.user.channel
+      req.userDepartmentTo = this.user.channel
     }
 
     this.networkV2Service.updateConnection(req).subscribe(
