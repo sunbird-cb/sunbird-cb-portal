@@ -1173,10 +1173,17 @@
   resolved "https://registry.yarnpkg.com/@sunbird-cb/design-system/-/design-system-0.0.2.tgz#54793a7d5c5b6942319b6c1f3e4f63ef60548545"
   integrity sha512-oTZMfeNu+fi2muVbZUN9vw0mF28e/MvqFgYzgrLJ6vvw3JDxW3814U00x4Fym7Rm0tYc7vpckDFGSKXR3EFMaQ==
 
-"@sunbird-cb/discussions-ui-v8@2.0.51":
-  version "2.0.51"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/discussions-ui-v8/-/discussions-ui-v8-2.0.51.tgz#e1fcde04e0b2e207485b90d056788614bc39c228"
-  integrity sha512-+5xkMbLm9o1U6kxvW1rppu3Dw7sd/87NLohhMYVhWqt2fLx93015oMfFykbkCQv2aQzQGmL/0qw1I82Sm4JzmA==
+"@sunbird-cb/discussions-ui-v8@^2.0.53":
+  version "2.0.53"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/discussions-ui-v8/-/discussions-ui-v8-2.0.53.tgz#1a7c06934f0aaedd183c2a4a36ef3367a90fd035"
+  integrity sha512-xH488gwB6V6JyWBxDUiGZgVsebGGBagWAgyCzpBeEB8xp7A1JGWQBwRT6uYHQ6Ci/Sw6dmBj9zIYT/iHnprnGw==
+  dependencies:
+    tslib "^1.9.0"
+
+"@sunbird-cb/micro-surveys@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/micro-surveys/-/micro-surveys-1.0.4.tgz#cd391794f00202f458a123ed980f8b77041a72fe"
+  integrity sha512-i8ATo/i6KJss+bUK4BxXHyEJk+Ar8fa6aJWMtHMabn7UsuQyupzoXCRsnoq8qSAenVLySzQAhWpJul7jEPkiUA==
   dependencies:
     tslib "^1.9.0"
 

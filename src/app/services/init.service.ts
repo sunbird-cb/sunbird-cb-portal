@@ -260,90 +260,73 @@ export class InitService {
           .get<any>(endpoint.profilePid)
           .pipe(map((res: any) => res.result.response))
           .toPromise()
+        if (userPidProfile && userPidProfile.roles && userPidProfile.roles.length > 0 &&
+          this.hasRole(userPidProfile.roles)) {
+          // if (userPidProfile.result.response.organisations.length > 0) {
+          //   const organisationData = userPidProfile.result.response.organisations
+          //   userRoles = (organisationData[0].roles.length > 0) ? organisationData[0].roles : []
+          // }
+          if (localStorage.getItem('telemetrySessionId')) {
+            localStorage.removeItem('telemetrySessionId')
+          }
+          localStorage.setItem('telemetrySessionId', uuid())
+          this.configSvc.unMappedUser = userPidProfile
+          const profileV2 = _.get(userPidProfile, 'profiledetails')
+          this.configSvc.userProfile = {
+            country: _.get(profileV2, 'personalDetails.countryCode') || null,
+            email: _.get(profileV2, 'profileDetails.officialEmail') || userPidProfile.email,
+            givenName: userPidProfile.firstName,
+            userId: userPidProfile.userId,
+            firstName: userPidProfile.firstName,
+            lastName: userPidProfile.lastName,
+            rootOrgId: userPidProfile.rootOrgId,
+            rootOrgName: userPidProfile.channel,
+            // tslint:disable-next-line: max-line-length
+            // userName: `${userPidProfile.firstName ? userPidProfile.firstName : ' '}${userPidProfile.lastName ? userPidProfile.lastName : ' '}`,
+            userName: userPidProfile.userName,
+            profileImage: userPidProfile.thumbnail,
+            departmentName: userPidProfile.channel,
+            dealerCode: null,
+            isManager: false,
+          }
+          this.configSvc.userProfileV2 = {
+            userId: _.get(profileV2, 'userId') || userPidProfile.userId,
+            email: _.get(profileV2, 'personalDetails.officialEmail') || userPidProfile.email,
+            firstName: _.get(profileV2, 'personalDetails.firstname') || userPidProfile.firstName,
+            surName: _.get(profileV2, 'personalDetails.surname') || userPidProfile.lastName,
+            middleName: _.get(profileV2, 'personalDetails.middlename') || '',
+            departmentName: _.get(profileV2, 'employmentDetails.departmentName') || userPidProfile.channel,
+            givenName: _.get(userPidProfile, 'userName'),
+            // tslint:disable-next-line: max-line-length
+            userName: `${_.get(profileV2, 'personalDetails.firstname') ? _.get(profileV2, 'personalDetails.firstname') : ''}${_.get(profileV2, 'personalDetails.surname') ? _.get(profileV2, 'personalDetails.surname') : ''}`,
+            profileImage: _.get(profileV2, 'photo') || userPidProfile.thumbnail,
+            dealerCode: null,
+            isManager: false,
+          }
+        } else {
+          this.authSvc.logout()
+        }
+        const details = {
+          group: [],
+          profileDetailsStatus: !!_.get(userPidProfile, 'profileDetails.mandatoryFieldsExists'),
+          roles: (userPidProfile.roles || []).map((v: { toLowerCase: () => void; }) => v.toLowerCase()),
+          tncStatus: !userPidProfile.promptTnC,
+          isActive: !!!userPidProfile.isDeleted,
+        }
+        this.configSvc.hasAcceptedTnc = details.tncStatus
+        this.configSvc.profileDetailsStatus = details.profileDetailsStatus
+        // this.configSvc.userRoles = new Set((userRoles || []).map(v => v.toLowerCase()))
+        // const detailsV: IDetailsResponse = await this.http
+        // .get<IDetailsResponse>(endpoint.details).pipe(retry(3))
+        // .toPromise()
+        this.configSvc.userGroups = new Set(details.group)
+        this.configSvc.userRoles = new Set((details.roles || []).map((v: string) => v.toLowerCase()))
+        this.configSvc.isActive = details.isActive
+        return details
       } catch (e) {
         this.configSvc.userProfile = null
         throw new Error('Invalid user')
       }
-      if (userPidProfile && userPidProfile.roles && userPidProfile.roles.length > 0 &&
-        this.hasRole(userPidProfile.roles)) {
-        // if (userPidProfile.result.response.organisations.length > 0) {
-        //   const organisationData = userPidProfile.result.response.organisations
-        //   userRoles = (organisationData[0].roles.length > 0) ? organisationData[0].roles : []
-        // }
-        if (localStorage.getItem('telemetrySessionId')) {
-          localStorage.removeItem('telemetrySessionId')
-        }
-        localStorage.setItem('telemetrySessionId', uuid())
-        this.configSvc.unMappedUser = userPidProfile
-        const profileV2 = _.get(userPidProfile, 'profiledetails')
-        this.configSvc.userProfile = {
-
-          country: _.get(profileV2, 'personalDetails.countryCode') || null,
-          email: userPidProfile.email,
-          givenName: userPidProfile.firstName,
-          userId: userPidProfile.userId,
-          firstName: userPidProfile.firstName,
-          lastName: userPidProfile.lastName,
-          rootOrgId: userPidProfile.rootOrgId,
-          rootOrgName: userPidProfile.channel,
-          // tslint:disable-next-line: max-line-length
-          // userName: `${userPidProfile.firstName ? userPidProfile.firstName : ' '}${userPidProfile.lastName ? userPidProfile.lastName : ' '}`,
-          userName: userPidProfile.userName,
-          profileImage: userPidProfile.thumbnail,
-          departmentName: userPidProfile.channel,
-          dealerCode: null,
-          isManager: false,
-          // departmentName: userPidProfile.user.department_name || '',
-          // unit: userPidProfile.user.unit_name,
-          // tslint:disable-next-line:max-line-length
-          // source_profile_picture: userPidProfile.result.response.source_profile_picture || '',
-          // dealerCode:
-          //   userPidProfile &&
-          //     userPidProfile.user.json_unmapped_fields &&
-          //     userPidProfile.user.json_unmapped_fields.dealer_code
-          //     ? userPidProfile.user.json_unmapped_fields.dealer_code
-          //     : null,
-          // isManager:
-          //   userPidProfile &&
-          //     userPidProfile.user.json_unmapped_fields &&
-          //     userPidProfile.user.json_unmapped_fields.is_manager
-          //     ? userPidProfile.user.json_unmapped_fields.is_manager
-          //     : false,
-          // userName: `${userPidProfile.user.first_name} ${userPidProfile.user.last_name}`,
-        }
-        this.configSvc.userProfileV2 = {
-          userId: _.get(profileV2, 'userId'),
-          email: _.get(profileV2, 'personalDetails.officialEmail'),
-          firstName: _.get(profileV2, 'personalDetails.firstname'),
-          surName: _.get(profileV2, 'personalDetails.surname'),
-          middleName: _.get(profileV2, 'personalDetails.middlename'),
-          departmentName: _.get(profileV2, 'employmentDetails.departmentName'),
-          // tslint:disable-next-line: max-line-length
-          userName: `${_.get(profileV2, 'personalDetails.firstname') ? _.get(profileV2, 'personalDetails.firstname') : ''}${_.get(profileV2, 'personalDetails.surname') ? _.get(profileV2, 'personalDetails.surname') : ''}`,
-          profileImage: _.get(profileV2, 'photo'),
-          dealerCode: null,
-          isManager: false,
-        }
-      } else {
-        this.authSvc.logout()
-      }
-      const details = {
-        group: [],
-        profileDetailsStatus: !!userPidProfile.profileDetails.mandatoryFieldsExists,
-        roles: (userPidProfile.roles || []).map((v: { toLowerCase: () => void; }) => v.toLowerCase()),
-        tncStatus: !userPidProfile.promptTnC,
-        isActive: true,
-      }
-      this.configSvc.hasAcceptedTnc = details.tncStatus
-      this.configSvc.profileDetailsStatus = details.profileDetailsStatus
-      // this.configSvc.userRoles = new Set((userRoles || []).map(v => v.toLowerCase()))
-      // const detailsV: IDetailsResponse = await this.http
-      // .get<IDetailsResponse>(endpoint.details).pipe(retry(3))
-      // .toPromise()
-      this.configSvc.userGroups = new Set(details.group)
-      this.configSvc.userRoles = new Set((details.roles || []).map((v: string) => v.toLowerCase()))
-      this.configSvc.isActive = details.isActive
-      return details
     } else {
       return { group: [], profileDetailsStatus: true, roles: new Set(['Public']), tncStatus: true, isActive: true }
       // const details: IDetailsResponse = await this.http
