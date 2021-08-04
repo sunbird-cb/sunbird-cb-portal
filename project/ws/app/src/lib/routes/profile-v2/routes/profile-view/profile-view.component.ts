@@ -83,6 +83,10 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
           ? this.portalProfile.personalDetails.userName
           : this.portalProfile.userName
       }
+      if (!this.portalProfile.personalDetails) {
+        _.set(this.portalProfile, 'personalDetails.firstname', _.get(this.configSvc, 'userProfile.firstName'))
+        _.set(this.portalProfile, 'personalDetails.surname', _.get(this.configSvc, 'userProfile.lastName'))
+      }
       this.decideAPICall()
     })
   }
