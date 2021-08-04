@@ -273,7 +273,6 @@ export class InitService {
           this.configSvc.unMappedUser = userPidProfile
           const profileV2 = _.get(userPidProfile, 'profiledetails')
           this.configSvc.userProfile = {
-
             country: _.get(profileV2, 'personalDetails.countryCode') || null,
             email: _.get(profileV2, 'profileDetails.officialEmail') || userPidProfile.email,
             givenName: userPidProfile.firstName,
