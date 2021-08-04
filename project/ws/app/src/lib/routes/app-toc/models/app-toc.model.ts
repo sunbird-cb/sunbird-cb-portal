@@ -52,6 +52,7 @@ export namespace NsAppToc {
     webModule: number
     webPage: number
     youtube: number
+    interactivecontent: number
     [key: string]: number
   }
 }

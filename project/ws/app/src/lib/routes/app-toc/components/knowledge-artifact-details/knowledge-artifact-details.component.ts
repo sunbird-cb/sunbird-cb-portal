@@ -155,6 +155,7 @@ export class KnowledgeArtifactDetailsComponent implements OnInit, OnDestroy {
       webModule: 0,
       webPage: 0,
       youtube: 0,
+      interactivecontent: 0,
     }
     if (this.content) {
       this.hasTocStructure = true
