@@ -60,15 +60,16 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     this.tabs = this.route.data.subscribe(data => {
-      // this.portalProfile = data.profile
-      //   && data.profile.data
-      //   && data.profile.data.length > 0
-      //   && data.profile.data[0]
-
       if (data.profile.data.profileDetails !== null) {
         this.portalProfile = data.profile.data.profileDetails
       } else {
         this.portalProfile = data.profile.data
+        _.set(this.portalProfile, 'personalDetails.firstname', _.get(data.profile.data, 'firstName'))
+        _.set(this.portalProfile, 'personalDetails.surname', _.get(data.profile.data, 'lastName'))
+        _.set(this.portalProfile, 'personalDetails.email', _.get(data.profile.data, 'email'))
+        _.set(this.portalProfile, 'personalDetails.userId', _.get(data.profile.data, 'userId'))
+        _.set(this.portalProfile, 'personalDetails.userName', _.get(data.profile.data, 'userName'))
+        
       }
 
       const user = this.portalProfile.userId || this.portalProfile.id || _.get(data, 'profile.data.id') || ''
@@ -76,6 +77,8 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
         this.portalProfile.id = user
         this.portalProfile.userId = user
       }
+
+      /** // for loged in user only */
       if (user === this.currentUser) {
         this.currentUsername = this.configSvc.userProfile && this.configSvc.userProfile.userName
       } else {
@@ -83,10 +86,12 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
           ? this.portalProfile.personalDetails.userName
           : this.portalProfile.userName
       }
-      if (!this.portalProfile.personalDetails) {
+
+      if (!this.portalProfile.personalDetails && user === this.currentUser) {
         _.set(this.portalProfile, 'personalDetails.firstname', _.get(this.configSvc, 'userProfile.firstName'))
         _.set(this.portalProfile, 'personalDetails.surname', _.get(this.configSvc, 'userProfile.lastName'))
       }
+      /** // for loged in user only */
       this.decideAPICall()
     })
   }
