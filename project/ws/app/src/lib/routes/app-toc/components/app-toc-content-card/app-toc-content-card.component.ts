@@ -31,6 +31,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
     webModule: 0,
     webPage: 0,
     youtube: 0,
+    interactivecontent: 0,
   }
   defaultThumbnail = ''
   viewChildren = false

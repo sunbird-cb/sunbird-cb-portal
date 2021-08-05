@@ -30,7 +30,7 @@ export class TaxonomyLevelCardComponent implements OnInit, OnChanges {
     }
   }
 
-  getClickedTab(tab: string) {
+  getClickedTab(tab: any) {
     this.clickedTab.emit(tab)
   }
   getDiscussion() {

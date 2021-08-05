@@ -7,7 +7,7 @@
   <mat-chip (click)="getClickedTab(tag)" class="chip" style="background: #F5F5F5; border: 1px solid #E2E2E2; padding: 17px 12px; margin: 6px;"
     cdkDrag
    *ngFor="let tag of tags">
-    {{tag}}
+    {{tag.name}}
   </mat-chip>
   </mat-chip-list>
   </mat-card-content>
