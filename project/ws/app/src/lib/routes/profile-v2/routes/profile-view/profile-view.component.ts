@@ -69,7 +69,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
         _.set(this.portalProfile, 'personalDetails.email', _.get(data.profile.data, 'email'))
         _.set(this.portalProfile, 'personalDetails.userId', _.get(data.profile.data, 'userId'))
         _.set(this.portalProfile, 'personalDetails.userName', _.get(data.profile.data, 'userName'))
-        
+
       }
 
       const user = this.portalProfile.userId || this.portalProfile.id || _.get(data, 'profile.data.id') || ''
