@@ -24,9 +24,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
   relatedResource: any = []
   unread = 0
   currentObj!: any
-  nextLvlObj!: any
   tempArr!: any
-  leftMenuChildObj!: any
   currentRoute = 'home'
   isFirstTab = true
   resourceLoading = true
@@ -81,7 +79,6 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
   getAllTopics(topic: string, needBreadCurmp: boolean) {
     this._service.fetchAllTopics().subscribe(response => {
       this.currentObj = response.terms
-      this.nextLvlObj = response.terms
       this.createLeftMenuAndData(this.currentObj, topic, needBreadCurmp)
       })
     }
@@ -254,16 +251,16 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
       if (this.arrayTemplate[i] === tab) {
         this.arrayTemplate.length = i + 1
         if (this.arrayTemplate.length > 1) {
+          // if(!(i === this.arrayTemplate.length -1))
           this.getChildrenByArray(tab)
         } else {
           this.tempArr.lenght = 1
           this.getAllTopics(tab, false)
         }
         this.getRouterLink(tab)
-
-      }
     }
-
+    }
+    this.resourceLoading = false
   }
   createBreadCrumbs(tab: any, place: any) {
     const decodedValue = decodeURI(tab)
@@ -273,7 +270,8 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
     } else {
       this.tempArr.push(redirectURl)
     }
-
+    // console.log(this.tempArr)
+    // this.clearLast();
   }
 
 }
