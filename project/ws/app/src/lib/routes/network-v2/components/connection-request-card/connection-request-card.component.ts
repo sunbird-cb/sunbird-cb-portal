@@ -69,7 +69,7 @@ export class ConnectionRequestCardComponent implements OnInit {
       userIdTo: this.user.id || this.user.identifier || this.user.wid,
       userNameTo: '',
       userDepartmentTo: '',
-      status: action
+      status: action,
     }
 
     if (this.user.personalDetails && this.user.employmentDetails && this.user.employmentDetails.departmentName) {

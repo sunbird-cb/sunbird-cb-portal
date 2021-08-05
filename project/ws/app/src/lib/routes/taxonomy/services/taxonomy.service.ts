@@ -30,7 +30,7 @@ export class TaxonomyService {
   fetchAllTopics() {
     return this.http.get<any>(API_ENDPOINTS.getAllTopics)
   }
-  fetchAllRelatedCourse(identifier: any[]) {
+  fetchAllRelatedCourse(identifier: any) {
    const request = {
         query: '',
         filters: {

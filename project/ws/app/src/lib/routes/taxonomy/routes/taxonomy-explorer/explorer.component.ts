@@ -95,35 +95,38 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
       }
       return termObject
     }
-    onTabLeftMenu(tabItem: string) {
-      this.arrayTemplate[this.arrayTemplate.length - 1] = tabItem
+    onTabLeftMenu(tabItem: any) {
+      const tabName = tabItem.name
+      this.arrayTemplate[this.arrayTemplate.length - 1] = tabName
       if (this.arrayTemplate.length > 1) {
         this.getChildrenByArray('none')
       } else {
-        this.getFirstChildrenByArray(tabItem)
+        this.getFirstChildrenByArray(tabName)
       }
 
-      this.getRouterLink(tabItem)
-      this.createBreadCrumbs(tabItem, 'leftMenu')
+      this.getRouterLink(tabName)
+      this.createBreadCrumbs(tabName, 'leftMenu')
+      this. getAllRelatedCourse(tabItem.identifier)
 
     }
-    getClickedTab(clickedTab: string) {
-      this.arrayTemplate.push(clickedTab)
-      this.getChildrenByArray(clickedTab)
-      this.getRouterLink(clickedTab)
-      this.createBreadCrumbs(clickedTab, 'rightMenu')
+    getClickedTab(clickedTab: any) {
+      this.arrayTemplate.push(clickedTab.name)
+      this.getChildrenByArray(clickedTab.name)
+      this.getRouterLink(clickedTab.name)
+      this.createBreadCrumbs(clickedTab.name, 'rightMenu')
+      this. getAllRelatedCourse(clickedTab.identifier)
     }
   getSecondLevelTopic(allLevelObject: any) {
     this.topicKey = []
     if (allLevelObject.identifier) {
     this.topicKey.push(allLevelObject.identifier)
     }
-    this. getAllRelatedCourse()
+    this. getAllRelatedCourse(allLevelObject.identifier)
   }
-  getAllRelatedCourse() {
+  getAllRelatedCourse(identifier: any) {
     this.relatedResource = []
     this.loader.changeLoad.next(true)
-      this._service.fetchAllRelatedCourse(this.topicKey).subscribe(response => {
+      this._service.fetchAllRelatedCourse(identifier).subscribe(response => {
         const tempRequestParam: { content: any }[] = []
         if (response.result.content) {
         response.result.content.forEach((course: any) => {
@@ -142,7 +145,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
     createLeftMenuAndData(currentObj: any, topic: any, needBradCurmp: boolean) {
       const firstLvlArray: any[] = []
       const tempCurrentArray: any[] = []
-      const nextLevel: string[] = []
+      const nextLevel: any[] = []
       currentObj.forEach((term: any) => {
         if (term.name !== decodeURI(topic)) {
           firstLvlArray.push(this.createTermObject(term))
@@ -154,7 +157,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
             this.getSecondLevelTopic(term)
 
             term.children.forEach((second: any) => {
-              nextLevel.push(second.name)
+              nextLevel.push(second)
               tempCurrentArray.push(second)
             })
           }
@@ -226,7 +229,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
     const tagArr: any[] = []
     if (tagObjArr) {
       tagObjArr.forEach((tgo: { name: any }) => {
-        tagArr.push(tgo.name)
+        tagArr.push(tgo)
       })
     }
     return tagArr
