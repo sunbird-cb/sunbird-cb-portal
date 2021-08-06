@@ -11,11 +11,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 export class LeftMenuComponent implements OnInit {
   @Input() unseen = 0
   @Input() tabsData: any = []
-  @Output() currentTab = new EventEmitter<string>()
+  @Output() currentTab = new EventEmitter<any>()
 
   ngOnInit(): void {
   }
-  onChangeTab(tabName: string) {
+  onChangeTab(tabName: any) {
     this.currentTab.emit(tabName)
   }
 }

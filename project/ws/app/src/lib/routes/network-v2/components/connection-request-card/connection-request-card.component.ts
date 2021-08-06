@@ -40,6 +40,7 @@ export class ConnectionRequestCardComponent implements OnInit {
         this.unmappedHowerUser = res
         this.howerUser = res.profileDetails
       } else {
+        this.unmappedHowerUser = res
         this.howerUser = res || {}
       }
       this.user = this.howerUser
@@ -66,28 +67,28 @@ export class ConnectionRequestCardComponent implements OnInit {
       userIdFrom: this.me ? this.me.userId : '',
       userNameFrom: this.me ? this.me.userName : '',
       userDepartmentFrom: this.me && this.me.departmentName ? this.me.departmentName : '',
-      userIdTo: this.user.id || this.user.identifier || this.user.wid,
-      userNameTo: '',
-      userDepartmentTo: '',
-      status: action
+      userIdTo: this.unmappedHowerUser.userId,
+      userNameTo: this.unmappedHowerUser.userName,
+      userDepartmentTo: this.unmappedHowerUser.rootOrg.channel,
+      status: action,
     }
 
-    if (this.user.personalDetails && this.user.employmentDetails && this.user.employmentDetails.departmentName) {
-      req.userNameTo = `${this.user.personalDetails.firstname}${this.user.personalDetails.surname}`
-      req.userDepartmentTo = this.user.employmentDetails.departmentName
-    } else {
-      req.userNameTo = `${this.unmappedHowerUser.firstName}${this.unmappedHowerUser.lastName}`
-      req.userDepartmentTo = this.unmappedHowerUser.rootOrg.channel
-    }
+    // if (this.user.personalDetails && this.user.employmentDetails && this.user.employmentDetails.departmentName) {
+    //   req.userNameTo = `${this.user.personalDetails.firstname}${this.user.personalDetails.surname}`
+    //   req.userDepartmentTo = this.user.employmentDetails.departmentName
+    // } else {
+    //   req.userNameTo = `${this.unmappedHowerUser.firstName}${this.unmappedHowerUser.lastName}`
+    //   req.userDepartmentTo = this.unmappedHowerUser.rootOrg.channel
+    // }
 
-    if (!this.user.personalDetails && this.user.first_name) {
-      req.userNameTo = `${this.user.first_name}${this.user.last_name}`
-      req.userDepartmentTo = this.user.department_name
-    }
-    if (!this.user.personalDetails && this.user.firstName) {
-      req.userNameTo = `${this.user.firstName}${this.user.lastName}`
-      req.userDepartmentTo = this.user.channel
-    }
+    // if (!this.user.personalDetails && this.user.first_name) {
+    //   req.userNameTo = `${this.user.first_name}${this.user.last_name}`
+    //   req.userDepartmentTo = this.user.department_name
+    // }
+    // if (!this.user.personalDetails && this.user.firstName) {
+    //   req.userNameTo = `${this.user.firstName}${this.user.lastName}`
+    //   req.userDepartmentTo = this.user.channel
+    // }
 
     this.networkV2Service.updateConnection(req).subscribe(
       () => {
