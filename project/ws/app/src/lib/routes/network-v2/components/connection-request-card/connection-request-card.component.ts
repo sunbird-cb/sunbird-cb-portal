@@ -67,7 +67,7 @@ export class ConnectionRequestCardComponent implements OnInit {
       userIdFrom: this.me ? this.me.userId : '',
       userNameFrom: this.me ? this.me.userName : '',
       userDepartmentFrom: this.me && this.me.departmentName ? this.me.departmentName : '',
-      userIdTo: this.user.id || this.user.identifier || this.user.wid,
+      userIdTo: this.unmappedHowerUser.userId,
       userNameTo: this.unmappedHowerUser.userName,
       userDepartmentTo: this.unmappedHowerUser.rootOrg.channel,
       status: action,
