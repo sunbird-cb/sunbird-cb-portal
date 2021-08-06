@@ -65,10 +65,10 @@ export class ConnectionRequestCardComponent implements OnInit {
     const req = {
       connectionId: this.user.id || this.user.identifier || this.user.wid,
       userIdFrom: this.me ? this.me.userId : '',
-      userNameFrom: this.me ? this.me.userName : '',
+      userNameFrom: this.me ? this.me.userId : '',
       userDepartmentFrom: this.me && this.me.departmentName ? this.me.departmentName : '',
       userIdTo: this.unmappedHowerUser.userId,
-      userNameTo: this.unmappedHowerUser.userName,
+      userNameTo: this.unmappedHowerUser.userId,
       userDepartmentTo: this.unmappedHowerUser.rootOrg.channel,
       status: action,
     }
