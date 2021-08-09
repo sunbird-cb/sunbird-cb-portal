@@ -11,6 +11,7 @@ import { ConnectionHoverService } from '../connection-name/connection-hover.serv
 export class MyConnectionCardComponent implements OnInit {
   @Input() user!: NSNetworkDataV2.INetworkUser
   howerUser!: any
+  unmappedUser!: any
   constructor(
     private router: Router,
     private connectionHoverService: ConnectionHoverService,
@@ -21,8 +22,10 @@ export class MyConnectionCardComponent implements OnInit {
     this.connectionHoverService.fetchProfile(userId).subscribe((res: any) => {
       if (res.profileDetails !== null) {
         this.howerUser = res.profileDetails
+        this.unmappedUser = res
       } else {
         this.howerUser = res || {}
+        this.unmappedUser = res
       }
       return this.howerUser
     })
@@ -35,16 +38,14 @@ export class MyConnectionCardComponent implements OnInit {
   }
 
   getUseravatarName() {
-    // if (this.user && this.user.personalDetails) {
+     // if (this.user) {
     //   return `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
     // }
-    //   return `${this.user.firstName} ${this.user.lastName}`
+    // return ''
     let name = ''
     if (this.user && !this.user.personalDetails) {
       if (this.user.firstName) {
         name = `${this.user.firstName} ${this.user.lastName}`
-      } else {
-        name = `${this.user.name}`
       }
     } else if (this.user && this.user.personalDetails) {
       if (this.user.personalDetails.middlename) {
