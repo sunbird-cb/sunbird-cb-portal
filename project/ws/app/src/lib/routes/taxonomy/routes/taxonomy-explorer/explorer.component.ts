@@ -37,6 +37,7 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
   mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
   private defaultSideNavBarOpenedSubscription: any
   isFirst = true
+  title:any[] =[]
   constructor(private valueSvc: ValueService, private route: ActivatedRoute,
               private router: Router,
               private _service: TaxonomyService,
@@ -45,6 +46,8 @@ export class TaxonomyExplorerComponent implements OnInit, OnDestroy {
 
     this.currentTab = this.route.snapshot.url.toString().split('/').pop() || ''
     this.currentTab1 = this.route.snapshot.url.toString().split('/').pop() || ''
+    this.title= [{title: 'Learn', url:'/page/learn', icon:'school'},
+    {title: ( 'All topics') ,url:'none', icon:''}]
     if (!localStorage.getItem('isFirstTab')) {
       localStorage.setItem('currentTab', decodeURI(this.currentTab))
       localStorage.setItem('isFirstTab', 'true')
