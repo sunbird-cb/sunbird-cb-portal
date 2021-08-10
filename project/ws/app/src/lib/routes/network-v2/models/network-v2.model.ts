@@ -75,6 +75,7 @@ export namespace NSNetworkDataV2 {
     }
 
     export interface IAutocompleteUser {
+        rootOrgName: any,
         employmentDetails: IEmploymentDetails,
         personalDetails: IPersonalDetails,
         id: string,

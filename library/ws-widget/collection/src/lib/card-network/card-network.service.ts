@@ -8,7 +8,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 
 const API_END_POINTS = {
   GET_ALL_ACTIVE_USER: `/apis/protected/v8/networkHub/users`,
-  GET_ALL_SEARCH_USER: `/apis/protected/v8/user/autocomplete/`,
+  GET_ALL_SEARCH_USER: `/apis/proxies/v8/user/v1/autocomplete/`,
 }
 
 @Injectable({
