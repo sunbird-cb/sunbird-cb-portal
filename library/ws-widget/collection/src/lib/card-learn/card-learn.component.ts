@@ -62,6 +62,11 @@ export class CardLearnComponent extends WidgetBaseComponent
   goToTaxonomyHome() {
     this.router.navigate(['/app/taxonomy/home'])
   }
+
+  goToCompentencyBrowse() {
+    this.router.navigate(['/app/learn/browse-by/all-competencies'])
+  }
+
   ngOnInit() {
     if (this.showActivities) {
       // this.activitiesSvc.fetchLearnActivites().then((result: IActivity) => {

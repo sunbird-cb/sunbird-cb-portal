@@ -126,6 +126,21 @@ const routes: Routes = [
     // loadChildren: () => import('./routes/route-cert.module').then(u => u.RouteCertificateModule),
   },
   {
+    path: 'app/learn/browse-by',
+    loadChildren: () =>
+      import('./routes/route-browse-competency.module').then(u => u.RouteBrowseCompetencyModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'browse by competency',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+    // path: 'certs',
+    // loadChildren: () => import('./routes/route-cert.module').then(u => u.RouteCertificateModule),
+  },
+  {
     path: 'app/discussion-forum',
     pathMatch: 'full',
     redirectTo: 'app/discussion',
