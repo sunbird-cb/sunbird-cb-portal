@@ -62,7 +62,7 @@ export class ConnectionSearchCardComponent implements OnInit {
         userDepartmentFrom: this.me && this.me.departmentName ? this.me.departmentName : 'IGOT',
         userIdTo: this.user.id || this.user.identifier || this.user.wid,
         userNameTo:  this.user.id || this.user.identifier || this.user.wid,
-        userDepartmentTo: this.user.department_name,
+        userDepartmentTo: this.user.rootOrgName,
       }
       // if (this.user.personalDetails) {
       //   req.userNameTo = `${this.user.personalDetails.firstname}${this.user.personalDetails.surname}`
