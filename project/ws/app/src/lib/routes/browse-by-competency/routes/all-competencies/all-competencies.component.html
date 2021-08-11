@@ -1,16 +1,171 @@
 <ws-widget-btn-page-back [widgetData]="{ url: 'home', titles: titles  }">
 </ws-widget-btn-page-back>
-<div class="container-balanced">
-    <div class="">
+<div class="container-balanced main_content_box">
+    <!-- <div class="">
         <h1  class="mat-h1 margin-remove inline-block "> Popular competencies</h1>
         <div>
-            cards will come here
+            <div class="card-box">
+                <h2>Communication</h2>
+                </div>
+                <div class="card-box">
+                <h2>this is card</h2>
+                </div>
+                <div class="card-box">
+                <h2>this is card</h2>
+                </div>
+                <div class="card-box">
+                <h2>this is card</h2>
+                </div>
+                <div class="card-box">
+                <h2>this is card</h2>
+                </div>
+                <div class="card-box">
+                <h2>this is card</h2>
+                </div>
+                <div class="card-box">
+                <h2>this is card</h2>
+                </div>
+                <div class="card-box">
+                <h2>this is card</h2>
+                </div>
         </div>
-    </div>
-    <div class="">
+    </div> -->
+
+    <!--===========  All competencies section ============= -->
+    <div class="all_competency_box">
         <h1  class="mat-h1 margin-remove inline-block "> All competencies </h1>
-        <div>
-            cards will come here
+        <div class="all_competency_inner">
+           <div class="left_card_box">
+               <div class="top_search_box">
+                    <div class="search_box_inner">
+                        <div class="flex flex-1 flex-column margin-fix search search_box_main">
+                            <form>
+                                <mat-form-field appearance="outline" class="autocomplete-form search_form" color="primary">
+                                    <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+                                    <!-- <mat-label>Search</mat-label> -->
+                                    <input type="search"  #searchInput class="ml-2" i18-aria-label aria-label="Search"  i18n-placeholder="search" [placeholder]="'Search'"  matInput 
+                                     />
+                                </mat-form-field>
+
+                               
+                            </form>
+                        </div>
+
+                        <div class="search_tag_box">
+                           
+                            <a href="#" class="single_tag">Behavioural <mat-icon class="cursor-pointer margin-left-xs ws-mat-black60-text">close</mat-icon></a>
+                            <a href="#" class="single_tag">Behavioural <mat-icon class="cursor-pointer margin-left-xs ws-mat-black60-text">close</mat-icon></a>
+                            <a href="#" class="ws-mat-default-text mat-subheading-2 ">Clear all</a>
+                        </div>
+                    </div>
+                    <div class="item_dropdown_box">
+                        <div class="flex flex-1 flex-wrap section-input">
+                            <div class="item">
+                                
+                                <mat-form-field class="">
+                                    <mat-select #orgNameSelect formControlName="orgName" i18n-placeholder placeholder="Ascending ( A - Z )">
+                                        <mat-option >Ascending ( A - Z )</mat-option>
+                                        <mat-option >Descending ( Z - A )</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                
+                            </div>
+
+                            
+                        </div>
+                    </div>
+               </div>
+                <div class="main_card_box">
+                    <mat-sidenav-container>
+                        <!-- search cards -->
+                        <mat-sidenav-content class="custom-sidecontent  mat-drawer-content mat-sidenav-content">
+                
+                            <div>
+
+                                <!-- ===================== single card ===================-->
+                                <mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card">
+                                    
+                                    <mat-card-content class="card_inner_content">
+                                        <div class="card_inner_title_box float-left">
+                                            <h4 class="mat-h4">Health welfare</h4>
+                                            <p class="mat-body-2 ws-mat-black60-text">Behavioural</p>
+                                            <p class="icon_text">
+                                                <mat-icon  class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">school</mat-icon> 
+                                                4 CBPs
+                                            </p>
+                                        </div>
+                                        <div class="card_right_txtbox">
+                                            <p class="mat-body-1 ws-mat-black60-text">
+                                                Planning vigilance activities in accordance with procedures that balance the needs of maintaining a fraud free
+                                                 environment and business objectives
+                                            </p>
+                                            
+                                            <div class="bottomsection">
+                                                <div class="contentdata margin-bottom-xm">
+                                                    <a href="#" class="ws-mat-default-text mat-subheading-2 explore_link">Quick explore
+                                                        <mat-icon class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color">expand_more</mat-icon>
+                                                    </a>
+                                                </div>
+
+                                                <!--=============== div for hidden cards for quick explore =============-->
+                                                <div class="">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                    </mat-card-content>
+                                </mat-card>
+
+                                 <!-- ===================== single card ===================-->
+                                 <mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card">
+                                    
+                                    <mat-card-content class="card_inner_content">
+                                        <div class="card_inner_title_box float-left">
+                                            <h4 class="mat-h4">Competency label</h4>
+                                            <p class="mat-body-2 ws-mat-black60-text">Behavioural</p>
+                                            <p class="icon_text">
+                                                <mat-icon  class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">school</mat-icon> 
+                                                18 CBPs
+                                            </p>
+                                        </div>
+                                        <div class="card_right_txtbox">
+                                            <p class="mat-body-1 ws-mat-black60-text">
+                                                Sed sit amet arcu aliquet, molestie justo at, auctor nunc. Phasellus ligula ipsum, volutpat eget semper id, viverra eget nibh.
+                                                 Suspendisse luctus mattis cursus. Nam consectetur ante at nisl hendrerit gravida.
+                                            </p>
+                                            
+                                            <div class="bottomsection">
+                                                <div class="contentdata margin-bottom-xm">
+                                                    <a href="#" class="ws-mat-default-text mat-subheading-2 explore_link">Quick explore
+                                                        <mat-icon class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color">expand_more</mat-icon>
+                                                    </a>
+                                                </div>
+
+                                                <!--=============== div for hidden cards for quick explore =============-->
+                                                <div class="">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                
+                           
+                        </mat-sidenav-content>
+                
+                        <!-- filter sidebar -->
+                        <mat-sidenav mode="side" position="end" opened class="custom-sidenav">
+                            
+                        </mat-sidenav>
+                    </mat-sidenav-container>
+                </div>
+           </div>
+           <div class="right_sidebar_box">
+
+            </div>
         </div>
     </div>
 </div>
