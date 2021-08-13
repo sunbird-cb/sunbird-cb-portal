@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule, PipeListFilterModule } from '@sunbird-cb/utils'
 import { MatGridListModule } from '@angular/material/grid-list'
-import { MatExpansionModule } from '@angular/material/expansion'
-import { MatDividerModule } from '@angular/material/divider'
+
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { AvatarPhotoModule, BtnPageBackModule } from '@sunbird-cb/collection'
 import {
@@ -17,8 +16,20 @@ import {
   MatSidenavModule,
   MatChipsModule,
   MatProgressSpinnerModule,
+  MatCardModule,
+  MatExpansionModule,
+  MatAutocompleteModule,
+  MatCheckboxModule,
+  MatMenuModule,
+  MatOptionModule,
+  MatRippleModule,
+  MatSlideToggleModule,
+  MatTabsModule,
+  MatToolbarModule,
+  MatTooltipModule,
+  MatDividerModule,
+
 } from '@angular/material'
-import { MatCardModule } from '@angular/material/card'
 import { LoaderService } from '@ws/author/src/lib/services/loader.service'
 import { BrowseByCompetencyRoutingModule } from './browse-by-competency-routing.module'
 import { AllCompetenciesComponent } from './routes/all-competencies/all-competencies.component'
@@ -43,6 +54,15 @@ import { CompetencyDetailsComponent } from './routes/competency-details/competen
     MatButtonModule,
     MatSidenavModule,
     MatProgressSpinnerModule,
+    MatAutocompleteModule,
+    MatCheckboxModule,
+    MatMenuModule,
+    MatOptionModule,
+    MatRippleModule,
+    MatSlideToggleModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule,
     PipeFilterModule,
     PipeHtmlTagRemovalModule,
     PipeRelativeTimeModule,
@@ -51,6 +71,7 @@ import { CompetencyDetailsComponent } from './routes/competency-details/competen
     PipeListFilterModule,
     BtnPageBackModule,
     WidgetResolverModule,
+
   ],
   providers: [
     LoaderService,
