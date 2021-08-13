@@ -49,12 +49,18 @@ export class LearnSearchComponent implements OnInit, OnChanges {
       this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
     }
     this.getFacets()
-    this.getSearchedData()
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.param.currentValue) {
-      this.getSearchedData()
+      this.searchResults = []
+      this.totalResults = 0
+      if (this.myFilters && this.myFilters.length > 0) {
+        this.myFilters.forEach((fil: any) => {
+          this.removeFilter(fil)
+        })
+      }
+      this.getStartupData()
     }
   }
 
@@ -75,27 +81,57 @@ export class LearnSearchComponent implements OnInit, OnChanges {
     }
     this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
       this.facets = response.result.facets
+      this.getStartupData()
     })
   }
 
+  getStartupData() {
+    if (!this.paramFilters || this.paramFilters === 'undefined') {
+      this.paramFilters = [{
+         mainType:  'contentType',
+         name: 'course',
+         count: '',
+         ischecked: true,
+       }]
+     }
+     if (this.paramFilters && this.paramFilters.length > 0) {
+       this.paramFilters.forEach((pf: any) => {
+         const indx = this.myFilters.filter((x: any) => x.name === pf.name)
+         if (indx.length === 0) {
+           this.myFilters.push(pf)
+         }
+       })
+       this.applyFilter(this.paramFilters)
+     } else {
+       this.getSearchedData()
+     }
+  }
+
   getSearchedData() {
-    const queryparam = {
-      request: {
-        filters: {
-          visibility: ['Default'],
-          contentType: [
-            'Course',
-            // 'Course Unit',
-            'Resource',
-          ],
+    if (this.myFilters.length === 0) {
+      const queryparam = {
+        request: {
+          filters: {
+            contentType: [
+              'Course',
+              // 'Course Unit',
+              'Resource',
+            ],
+          },
+          query: this.param,
+          sort_by: { lastUpdatedOn: '' },
+          fields: [],
+          facets: ['contentType', 'mimeType', 'source'],
         },
-        query: this.param,
-        sort_by: { lastUpdatedOn: '' },
-        fields: [],
-        facets: ['contentType', 'mimeType', 'source'],
-      },
+      }
+      this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
+        this.searchResults = response.result.content
+        this.totalResults = response.result.count
+        // this.facets = response.result.facets
+        this.paramFilters = []
+      })
     }
-    if (this.paramFilters && this.paramFilters.length > 0) {
+    // if ((this.paramFilters && this.paramFilters.length > 0) || (this.myFilters && this.myFilters.length > 0)) {
       // queryparam.request.filters = this.paramFilters
       //   if (this.paramFilters.contentType) {
       //     const pf = {
@@ -109,23 +145,18 @@ export class LearnSearchComponent implements OnInit, OnChanges {
       //     this.myFilters.push(pf)
       //   }
       // }
-      this.paramFilters.forEach((pf: any) => {
-        this.myFilters.push(pf)
-      })
+      // this.paramFilters.forEach((pf: any) => {
+      //   const indx = this.myFilters.filter((x: any) => x.name === pf.name)
+      //   if (indx.length === 0) {
+      //     this.myFilters.push(pf)
+      //   }
+      // })
       // this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
         // this.facets = response.result.facets
         // if (response) { }
-        this.applyFilter(this.paramFilters)
+        // this.applyFilter(this.paramFilters)
       // })
-    } else {
-      // this.facets = []
-      this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
-        this.searchResults = response.result.content
-        this.totalResults = response.result.count
-        // this.facets = response.result.facets
-        this.paramFilters = []
-      })
-    }
+    // }
   }
 
   // viewContent(content: any) {
@@ -143,7 +174,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
       this.myFilters.forEach((mf: any) => {
         queryparam.request.query = this.param
         if (mf.mainType === 'contentType') {
-          const indx = this.contentType.filter((x: any) => x.name === mf.name)
+          const indx = this.contentType.filter((x: any) => x === mf.name)
           if (indx.length === 0) {
             this.contentType.push(mf.name)
             queryparam.request.filters.contentType = this.contentType
@@ -181,7 +212,13 @@ export class LearnSearchComponent implements OnInit, OnChanges {
         this.contentType.push('Resource')
         queryparam.request.filters.contentType = this.contentType
       }
+
+      if (this.param) {
+        queryparam.request.query = this.param
+      }
       // this.facets = []
+      this.searchResults = []
+      this.totalResults = 0
       this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
         this.searchResults = response.result.content
         this.totalResults = response.result.count
