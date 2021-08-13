@@ -10,6 +10,7 @@ import { Router } from '@angular/router'
 export class TodayEventCardComponent implements OnInit {
   @Input()
   discuss!: NSDiscussData.IDiscussionData
+  @Input() tevent: any
   isLive = true
 
   constructor(private router: Router) { }

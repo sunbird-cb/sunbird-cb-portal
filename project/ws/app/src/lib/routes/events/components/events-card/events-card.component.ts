@@ -10,15 +10,16 @@ import { Router } from '@angular/router'
 export class EventsCardComponent implements OnInit {
   @Input()
   discuss!: NSDiscussData.IDiscussionData
+  @Input() eventData: any
 
   constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
-  getCareer() {
+  getEventDetails(eventID: any) {
     // this.router.navigate([`/app/event-hub/home/${this.discuss.tid}`])
-    this.router.navigate([`/app/event-hub/home/1`])
+    this.router.navigate([`/app/event-hub/home/${eventID}`])
   }
 
 }
