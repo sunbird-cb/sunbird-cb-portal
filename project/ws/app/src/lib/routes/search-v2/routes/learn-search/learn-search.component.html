@@ -35,7 +35,7 @@
         <!-- search cards -->
         <mat-sidenav-content class="custom-sidecontent">
 
-            <div *ngIf="totalResults > 0">
+            <div *ngIf="totalResults > 0 && searchResults && searchResults.length > 0">
                 <mat-card class="learn-card margin-bottom-m padding-remove position-relative" *ngFor="let content of searchResults"
                 (click)="raiseTelemetry(content)">
                     <div class="imageholder float-left">
