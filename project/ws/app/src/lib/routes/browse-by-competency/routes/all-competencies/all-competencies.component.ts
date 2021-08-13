@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 
+
 @Component({
   selector: 'ws-app-all-competencies',
   templateUrl: './all-competencies.component.html',
