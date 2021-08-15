@@ -18,24 +18,19 @@
 }
 
 .events-card {
-  flex: 1;
-  height: 447px;
-  width: 347px;
-  &.mat-card{
-    flex-direction: column;
-    display: flex;
-    padding:0px;
-  }
+  display: inline-block;
+  height: 418px;
+  width: 30%;
   .mat-card-content {
     margin-bottom: 5px;
   }
   .mat-card-footer{
-    justify-self: flex-end;
-    align-items: center;
+    bottom: 6px;
+    position: absolute;
   }
   .event-card-image {
-    width: 347px;
-    height:186px;
+    width: 100%;
+    height: 204px;
   }
 }
 
@@ -71,10 +66,6 @@
   @include breakpoint-xs {
     margin-top: $size-s;
   }
-
-  // @include breakpoint-s {
-  //   margin-top: $size-s;
-  // }
 }
 
 .tag {
@@ -87,32 +78,29 @@
   border-radius: 20px 5px 5px 20px;
 }
 
-.noocoments {
-  flex: 1;
-  text-align: right;
-  margin-right: $size-m;
-}
-
 .custom {
-  flex-direction: row;
+  // flex-direction: row;
 
   @include breakpoint-xs {
     flex-direction: column;
     margin: 0 24px 0 24px;
-
   }
-
-  // @include breakpoint-s {
-  //   flex-direction: column;
-  //   margin: 0 24px 0 24px;
-
-  // }
 }
-
-.margin-0 {
-  margin: 0;
-}
-
 .pad-4 {
   padding: 4px;
+}
+
+.textoverflow {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.textoverflow-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

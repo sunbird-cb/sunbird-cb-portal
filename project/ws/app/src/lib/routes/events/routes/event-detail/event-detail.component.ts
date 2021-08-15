@@ -36,7 +36,6 @@ export class EventDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.eventId = params.eventId
-      this.eventId = 'do_11332870064504832012'
       // if (this.fetchNewData) {
       //   this.getTIDData()
       // }
