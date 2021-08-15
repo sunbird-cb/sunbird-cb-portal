@@ -1,4 +1,4 @@
-<div class="flex flex-4 flex-column py-10">
+<div class="flex flex-4 flex-column margin-top-l">
   <mat-card class="flex-custom event-details-card">
       <div class="flex-1">
           <div class="flex flex-4">
@@ -6,7 +6,7 @@
               <img src="{{eventData?.appIcon}}" class="event-card-image" *ngIf="eventData?.appIcon">
               <img src="/assets/icons/Events_default.png" class="event-card-image" *ngIf="!eventData?.appIcon">
             </div>
-            <div class="flex-3 px-10 custom-height margin-top-s">
+            <div class="flex-3 px-10 custom-height">
               <mat-card-title role="link" tabindex="0" class="flex-4 mobile-margin text-capitalize mat-h2">
                 {{eventData?.name}}
               </mat-card-title>

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core'
+import * as moment from 'moment'
 // import { ActivatedRoute } from '@angular/router'
 // import { ConfigurationsService } from '@ws-widget/utils'
 // import { NSProfileDataV2 } from '../../models/profile-v2.model'
@@ -16,6 +17,7 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
   startTime: any
   endTime: any
   lastUpdate: any
+  disablebtn = false
   // completedPercent!: number
   // badgesSubscription: any
   // portalProfile!: NSProfileDataV2.IProfile
@@ -38,8 +40,25 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
       this.startTime = this.eventData.startTime.split('+')[0].replace(/(.*)\D\d+/, '$1')
       this.endTime = this.eventData.endTime.split('+')[0].replace(/(.*)\D\d+/, '$1')
       this.lastUpdate = this.eventData.lastUpdatedOn.split('T')[0]
+
+      const eventDate = this.customDateFormat(this.eventData.startDate, this.eventData.startTime)
+
+      const now = new Date()
+      const today = moment(now).format('YYYY-MM-DD HH:mm')
+      // return (selectedDate === today) ? true : false
+
+      if (eventDate < today) {
+        this.disablebtn = true
+      }
     }
   }
+
+  customDateFormat(date: any, time: any) {
+    const stime = time.split('+')[0]
+    const hour = stime.substr(0, 2)
+    const min = stime.substr(2, 3)
+    return `${date} ${hour}${min}`
+}
   // calculatePercent(profile: NSProfileDataV2.IProfile | null): number {
   //   let count = 30
   //   if (!profile) {
