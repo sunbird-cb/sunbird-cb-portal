@@ -8,7 +8,10 @@
     padding: $size-xl $size-l;
   }
 }
-
+.app-icon {
+  max-height: 180px;
+  max-width: 280px;
+}
 .banner-container {
   // color: white;
   position: relative;
