@@ -20,16 +20,18 @@
     .all_competency_inner {
         width: 100%;
         box-sizing: border-box;
-        
+        overflow: hidden;
+        margin-top: 25px;
 
         .left_card_box {
-            width: 890px;
+            // width: 890px;
+            width: 73%;
             float: left;
 
             .top_search_box {
                 width: 100%;
                 overflow: hidden;
-                margin-top: 25px;
+               
 
                 .search_box_inner {
                     width: 585px;
@@ -158,8 +160,34 @@
         }
 
         .right_sidebar_box {
-            width: 280px;
+            width: 25%;
             float: right;
+            background-color: #fff;
+            box-shadow: none!important;
+            border: 0!important;
+            border-radius: 4px;
+
+           
+        }
+        .right_section_search_box {
+            width:100%;
+            background-color: #fff;
+
+            // .mat-icon {
+            //     position: absolute;
+            // }
+        }
+        .filter_span_box {
+            display: block;
+            width: 100%;
+            overflow: hidden;
+
+            .search_form {
+                width: 100%;
+            }
+        }
+        .seacrh_span_box {
+            margin-top: 25px;
         }
     }
 }

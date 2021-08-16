@@ -178,25 +178,71 @@
                     <a href="#" class="ws-mat-default-text mat-subheading-2 load_more_link">Load more</a>
                 </div> <!-- main card box end -->
            </div>
-           <div class="right_sidebar_box">
-            <div class="filter-sidebar padding-m">
-                <p class="mat-subheading-1 margin-bottom-m font-bold-imp">Filter by</p>
-                <form class="filter-form" >
-                  
-                    <mat-card>
-                        <mat-card-content>
-                          <h2 class="example-h2">Checkbox configuration</h2>
-                      
-                          <section class="example-section">
-                            <mat-checkbox class="example-margin">Checked</mat-checkbox>
-                            <mat-checkbox class="example-margin" >Indeterminate</mat-checkbox>
-                          </section>
-                      
-                         
-                        </mat-card-content>
-                      </mat-card>
-                </form>
-            </div>
+           <div class="right_sidebar_box custom-sidenav">
+            <!-- <mat-sidenav mode="side" position="end" opened class="custom-sidenav"> -->
+                <div class="filter-sidebar padding-m">
+                    <p class="mat-subheading-2 margin-bottom-m font-bold-imp">Filter by</p>
+                    <form class="filter-form" >
+                        <span class="filter_span_box">
+                            <p class="mat-subheading-1 margin-bottom-xs font-bold-imp">Type</p>
+                        
+                            <section class="mat-body-2 margin-bottom-xs text-capitalize">
+                                <mat-checkbox class="example-margin">
+                                    <label for="Behavioural">Behavioural</label>
+                                </mat-checkbox>
+                            </section>
+                            <section class="mat-body-2 margin-bottom-xs text-capitalize">
+                                <mat-checkbox class="example-margin" >
+                                    <label for="Behavioural">Domain</label>
+                                    </mat-checkbox> 
+                            </section>
+                            <section class="mat-body-2 margin-bottom-xs text-capitalize">
+                                <mat-checkbox class="example-margin" >
+                                    <label for="Behavioural">Functional</label>
+                                    </mat-checkbox>
+                            </section>
+                            
+                        </span>   
+                    </form>
+                    
+                   
+                    <form>
+                        <span class="filter_span_box seacrh_span_box">
+                            <p class="mat-subheading-1 font-bold-imp margin-remove">Competency area</p>
+                            <!-- <mat-form-field class="right_section_search_box">
+                             
+                              <mat-icon>search</mat-icon>
+                              <input matInput placeholder="Search" value="">
+                            </mat-form-field> -->
+
+                            <mat-form-field class="autocomplete-form search_form" color="primary">
+                                <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+                                <!-- <mat-label>Search</mat-label> -->
+                                <input type="search"  #searchInput class="ml-2" i18-aria-label aria-label="Search"  i18n-placeholder="search" [placeholder]="'Search'"  matInput 
+                                 />
+                            </mat-form-field>
+
+                            <section class="mat-body-2 margin-bottom-xs text-capitalize">
+                                <mat-checkbox class="example-margin">
+                                    <label for="Behavioural">Competency area</label>
+                                </mat-checkbox>
+                            </section>
+                            <section class="mat-body-2 margin-bottom-xs text-capitalize">
+                                <mat-checkbox class="example-margin" >
+                                    <label for="Behavioural">Competency area</label>
+                                    </mat-checkbox> 
+                            </section>
+                            <section class="mat-body-2 margin-bottom-xs text-capitalize">
+                                <mat-checkbox class="example-margin" >
+                                    <label for="Behavioural">Competency area</label>
+                                    </mat-checkbox>
+                            </section>
+                          
+                           
+                        </span>
+                    </form>
+                </div>
+            <!-- </mat-sidenav> -->
             </div>
         </div>
     </div>
