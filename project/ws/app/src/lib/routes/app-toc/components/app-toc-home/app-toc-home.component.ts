@@ -394,7 +394,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   private getUserEnrollmentList() {
-    if (this.content && this.content.identifier && this.content.primaryCategory !== 'Course') {
+    if (this.content && this.content.identifier && this.content.primaryCategory !== this.contentTypes.COURSE && this.content.primaryCategory !== this.contentTypes.PROGRAMV2) {
       // const collectionId = this.isResource ? '' : this.content.identifier
       return this.getContinueLearningData(this.content.identifier)
     }
@@ -443,7 +443,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           } else {
             // It's understood that user is not already enrolled
             // Fetch the available batches and present to user
-            if (this.content.contentType === 'Course') {
+            if (this.content.contentType === this.contentTypes.COURSE || this.content.contentType === this.contentTypes.PROGRAMV2) {
               this.autoBatchAssign()
             } else {
               this.fetchBatchDetails()
