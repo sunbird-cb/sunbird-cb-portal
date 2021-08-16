@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core'
 export class CompetencyDetailsComponent implements OnInit {
   titles = [
     { title: 'Learn', url: '/page/learn', icon: 'school' },
-    { title: 'All Competencies' , url: '/app/learn/browse-by', icon: '' },
+    { title: 'All Competencies' , url: '/app/learn/browse-by/competency', icon: '' },
   ]
   competencyName = 'Sample competency'
   constructor() { }

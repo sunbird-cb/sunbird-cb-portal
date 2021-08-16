@@ -1,8 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core'
 import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
-import { BrowseCompetencyService } from '../../services/browse-competency';
-
-
+import { BrowseCompetencyService } from '../../services/browse-competency'
 @Component({
   selector: 'ws-app-all-competencies',
   templateUrl: './all-competencies.component.html',

@@ -126,19 +126,30 @@ const routes: Routes = [
     // loadChildren: () => import('./routes/route-cert.module').then(u => u.RouteCertificateModule),
   },
   {
-    path: 'app/learn/browse-by',
+    path: 'app/learn/browse-by/competency',
     loadChildren: () =>
       import('./routes/route-browse-competency.module').then(u => u.RouteBrowseCompetencyModule),
     canActivate: [GeneralGuard],
-    data: {
-      pageType: 'feature',
-      pageKey: 'browse by competency',
-    },
+    // data: {
+    //   pageType: 'feature',
+    //   pageKey: 'browse by competency',
+    // },
     resolve: {
       pageData: PageResolve,
     },
-    // path: 'certs',
-    // loadChildren: () => import('./routes/route-cert.module').then(u => u.RouteCertificateModule),
+  },
+  {
+    path: 'app/learn/browse-by/provider',
+    loadChildren: () =>
+      import('./routes/route-browse-provider.module').then(u => u.RouteBrowseProviderModule),
+    canActivate: [GeneralGuard],
+    // data: {
+    //   pageType: 'feature',
+    //   pageKey: 'browse by competency',
+    // },
+    resolve: {
+      pageData: PageResolve,
+    },
   },
   {
     path: 'app/discussion-forum',
