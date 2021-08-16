@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { FormControl } from '@angular/forms'
 import { EventService } from '../../services/events.service'
 import * as moment from 'moment'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-events',
@@ -24,15 +25,21 @@ export class EventsComponent implements OnInit {
   featuredEvents: any = []
   alltypeEvents: any = []
   currentFilterSort = 'desc'
+  departmentID: any
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private eventSvc: EventService,
+    private configSvc: ConfigurationsService,
   ) {
     this.data = this.route.snapshot.data.topics.data
     this.paginationData = this.data.pagination
     this.categoryId = this.route.snapshot.data['eventsCategoryId'] || 1
+
+    if (this.configSvc.userProfile) {
+      this.departmentID = this.configSvc.userProfile.rootOrgId
+    }
   }
 
   ngOnInit() {
@@ -140,17 +147,28 @@ export class EventsComponent implements OnInit {
                 eventjoined: creatorDetails.length,
                 eventThumbnail: obj.appIcon && (obj.appIcon !== null || obj.appIcon !== undefined) ? obj.appIcon :
                 '/assets/icons/Events_default.png',
+                pastevent: false,
             }
             this.allEvents['all'].push(eventDataObj)
-            const isToday = this.compareDate(expiryDateFormat)
+            const isToday = this.compareDate(expiryDateFormat, obj.startDate)
             if (isToday) {
               this.allEvents['todayEvents'].push(eventDataObj)
+            }
+            if (obj.createdFor && obj.createdFor[0] === this.departmentID) {
+              this.allEvents['featuredEvents'].push(eventDataObj)
+            }
+
+            const now = new Date()
+            const today = moment(now).format('YYYY-MM-DD HH:mm')
+            if (expiryDateFormat < today) {
+              eventDataObj.pastevent = true
             }
             // const isPast = this.compareDate(expiryDateFormat);
             // (!isPast) ? this.allEvents['all'].push(eventDataObj) : this.allEvents['todayEvents'].push(eventDataObj)
         })
         this.filter('all')
         this.filter('todayEvents')
+        this.filter('featuredEvents')
     }
   }
 
@@ -199,10 +217,16 @@ export class EventsComponent implements OnInit {
       }
   }
 
-  compareDate(selectedDate: any) {
+  compareDate(selectedDate: any, startDate: any) {
     const now = new Date()
     const today = moment(now).format('YYYY-MM-DD HH:mm')
-    return (selectedDate === today) ? true : false
+
+    const day = new Date().getDate()
+    const year = new Date().getFullYear()
+    // tslint:disable-next-line:prefer-template
+    const month = ('0' + (now.getMonth() + 1)).slice(-2)
+    const todaysdate = `${year}-${month}-${day}`
+    return (startDate === todaysdate && selectedDate > today) ? true : false
   }
 
   allEventDateFormat(datetime: any) {

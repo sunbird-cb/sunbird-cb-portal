@@ -22,7 +22,7 @@
     </mat-card-content>
     <mat-card-footer class="w-full margin-remove">
         <div class="margin-right-m margin-left-m">
-            <span class="mobile">
+            <span class="mobile" *ngIf="!eventData.pastevent">
                 <button mat-stroked-button color="accent" type="button" class=" mat-accent-border flex-auto-display">
                     <span i18n>Join</span>
                 </button>

@@ -89,10 +89,30 @@
                 Hosted by my MDO </a>
         </div>
     </div> -->
-    <div class="w-full margin-bottom-m">
-        <ng-container *ngFor="let event of alltypeEvents |  pipeFilterV2:'eventName': searchInput.value">
-            <ws-app-events-card class="w-fix" [eventData]="event" *ngIf="event !== -1"></ws-app-events-card>
-            <h4 class="w-full text-center ws-mat-black60-text" *ngIf="event === -1">No search results found!</h4>
-        </ng-container>
-    </div>
+    <mat-tab-group [selectedIndex]="0" class="custom-tabgroup">
+        <mat-tab label="All" *ngIf="alltypeEvents?.length">
+            <ng-template matTabContent>
+                <section id="content">
+                    <div class="w-full margin-top-xl margin-bottom-m">
+                        <ng-container *ngFor="let event of alltypeEvents |  pipeFilterV2:'eventName': searchInput.value">
+                            <ws-app-events-card class="w-fix" [eventData]="event" *ngIf="event !== -1"></ws-app-events-card>
+                            <h4 class="w-full text-center ws-mat-black60-text" *ngIf="event === -1">No search results found!</h4>
+                        </ng-container>
+                    </div>
+                </section>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Hosted by my MDO" *ngIf="featuredEvents?.length">
+            <ng-template matTabContent>
+                <section id="content">
+                    <div class="w-full margin-top-xl margin-bottom-m">
+                        <ng-container *ngFor="let event of featuredEvents |  pipeFilterV2:'eventName': searchInput.value">
+                            <ws-app-events-card class="w-fix" [eventData]="event" *ngIf="event !== -1"></ws-app-events-card>
+                            <h4 class="w-full text-center ws-mat-black60-text" *ngIf="event === -1">No search results found!</h4>
+                        </ng-container>
+                    </div>
+                </section>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
 </div>
