@@ -319,6 +319,7 @@ export namespace NsContent {
   }
 
   export enum EContentTypes {
+    PROGRAMV2="Program",
     PROGRAM = 'Learning Path',
     CHANNEL = 'Channel',
     COURSE = 'Course',
