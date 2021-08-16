@@ -3,10 +3,10 @@
         <img class="event-card-image image-border" src="{{eventData?.eventThumbnail}}" alt="Karmayogi Bharat" />
     </div>
     <mat-card-header>
-        <!-- <mat-card-subtitle class="responsive">
-            <span class="mat-body-2">Karmayogi Bharat</span>
-        </mat-card-subtitle> -->
-        <mat-card-title class="textoverflow-title margin-top-m">
+        <mat-card-subtitle class="responsive margin-top-s margin-bottom-xs">
+            <span class="mat-body-2">{{eventData?.event?.owner || 'IGOT'}}</span>
+        </mat-card-subtitle>
+        <mat-card-title class="textoverflow-title">
             <a href="javascript:void(0)" class="" i18n-aria-label role="link">
                 <span role="link" i18n-aria-label tabindex="0" class="cursor-pointer mat-subheading-1">
                    {{eventData?.eventName}}
@@ -17,7 +17,7 @@
     <mat-card-content class="flex flex-1 margin-left-m margin-right-m">
         <div class="mat-body-2">
             <span class="event_date ws-mat-default-text">{{eventData?.event.startDate | date }} {{eventData?.eventStartTime}}</span>
-            <p class="textoverflow margin-top-m">{{eventData?.event.instructions}}</p>
+            <p class="textoverflow margin-top-s">{{eventData?.event.instructions}}</p>
         </div>
     </mat-card-content>
     <mat-card-footer class="w-full margin-remove">
