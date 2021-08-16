@@ -2,10 +2,10 @@
   <mat-card class="right-menu-card">
     <mat-card-content role="link" tabindex="0">
       <ng-container>
-        <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all ws-mat-accent-background">
+        <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all ws-mat-accent-background" *ngIf="!disablebtn">
           <!-- [routerLink]="'/app/user-profile/details'" -->
-          <a mat-button class="flex-1">
-            <span class="text-white" i18n >Attend Live Event</span>
+          <a mat-button class="flex-1" href="{{eventData?.registrationLink}}" target="_blank">
+            <span class="text-white" i18n>Attend Live Event</span>
           </a>
         </div>
       </ng-container>

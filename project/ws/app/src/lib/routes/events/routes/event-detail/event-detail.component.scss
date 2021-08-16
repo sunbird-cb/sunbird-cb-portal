@@ -3,15 +3,23 @@
 @import 'ws-mixins';
 
 
+::ng-deep.theme-igot.day-mode a[target=_blank] {
+  color: inherit !important;
+  background-color: inherit !important;
+}
+
+.custom-height {
+  height: 167px;
+}
 .event-card-image {
   width: 276px;
   height: 166px;
 }
 
 .event-details-card {
-  background:none;
+  box-shadow: none !important;
+  background:none !important;
   padding-left: 0;
-  height: 167px;
 }
 
 ::ng-deep.event-details-card .mat-card-header-text {
