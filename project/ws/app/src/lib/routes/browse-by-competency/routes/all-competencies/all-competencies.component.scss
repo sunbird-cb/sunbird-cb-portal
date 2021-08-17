@@ -40,6 +40,11 @@
                     .search_box_main {
                         width: 100%;
 
+                        mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix{
+                            border-top-width: 8px !important;
+                            padding: 12px 10px 12px 12px;
+                        }
+
                         form {
                             width: 100%;
 
@@ -73,12 +78,12 @@
                     width: 210px;
                     box-sizing: border-box;
                     .item {
-                        .mat-form-field {
+                        .mat-form-field-outline  {
                             background-color: #f0f3f4;
-                            border:1px solid rgba(0, 0, 0, 0.08);
-                            padding: 0px 12px;
-                            border-radius: 4px 4px;
-                            box-sizing: border-box;
+                            // border:1px solid rgba(0, 0, 0, 0.08);
+                            // padding: 0px 12px;
+                            // border-radius: 4px 4px;
+                            // box-sizing: border-box;
                         }
                         .theme-igot.day-mode .mat-form-field-appearance-legacy .mat-form-field-underline {
                             background-color:none;
