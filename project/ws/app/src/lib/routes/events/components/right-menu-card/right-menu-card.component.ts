@@ -17,7 +17,9 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
   startTime: any
   endTime: any
   lastUpdate: any
-  disablebtn = false
+  pastEvent = false
+  futureEvent = false
+  currentEvent = false
   // completedPercent!: number
   // badgesSubscription: any
   // portalProfile!: NSProfileDataV2.IProfile
@@ -45,10 +47,22 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
 
       const now = new Date()
       const today = moment(now).format('YYYY-MM-DD HH:mm')
-      // return (selectedDate === today) ? true : false
 
       if (eventDate < today) {
-        this.disablebtn = true
+        this.pastEvent = true
+        this.currentEvent = false
+        this.futureEvent = false
+      }
+      if (eventDate > today) {
+        this.futureEvent = true
+        this.pastEvent = false
+        this.currentEvent = false
+      }
+      const isToday = this.compareDate(eventDate, this.eventData.startDate)
+      if (isToday) {
+        this.currentEvent = true
+        this.futureEvent = false
+        this.pastEvent = false
       }
     }
   }
@@ -58,7 +72,19 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
     const hour = stime.substr(0, 2)
     const min = stime.substr(2, 3)
     return `${date} ${hour}${min}`
-}
+  }
+
+  compareDate(selectedDate: any, startDate: any) {
+    const now = new Date()
+    const today = moment(now).format('YYYY-MM-DD HH:mm')
+
+    const day = new Date().getDate()
+    const year = new Date().getFullYear()
+    // tslint:disable-next-line:prefer-template
+    const month = ('0' + (now.getMonth() + 1)).slice(-2)
+    const todaysdate = `${year}-${month}-${day}`
+    return (startDate === todaysdate && selectedDate > today) ? true : false
+  }
   // calculatePercent(profile: NSProfileDataV2.IProfile | null): number {
   //   let count = 30
   //   if (!profile) {

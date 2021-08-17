@@ -54,9 +54,9 @@
       </ng-container>
   </div>
   <div class="flex flex-1 flex-column margin-fix mb-2">
-      <span class="f-medium mat-title">Presenters</span>
+      <span class="f-medium mat-title margin-bottom-xs">Presenters</span>
   </div>
-  <div class="flex flex-wrap margin-fix">
+  <div class="flex flex-wrap margin-fix margn-bottom-l">
       <ng-container>
           <div class="flex" *ngFor="let user of eventData?.creatorDetails">
             <app-presenter-card [userData]="user"></app-presenter-card>
