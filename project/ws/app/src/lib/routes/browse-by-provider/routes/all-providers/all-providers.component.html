@@ -1,0 +1,331 @@
+<ws-widget-btn-page-back [widgetData]="{ url: 'home', titles: titles  }">
+</ws-widget-btn-page-back>
+<div class="container-balanced main_content_box">
+    <div class="top_card_container">
+        <h1  class="mat-h1 margin-bottom-m inline-block "> Popular providers</h1>
+        <div class="top_card_inner_box flex">
+            <div class="card-box card_gradient bg_color_blue">
+                <p class="mat-subheading-1 text-white margin-bottom-m">LBSNAA</p>
+                <p class="mat-body-2 text-white">Lal Bahadur Shastri National Academy of Administration</p>
+            </div>
+
+            <div class="card-box card_gradient bg_color_blue">
+                <p class="mat-subheading-1 text-white margin-bottom-m">ISTM</p>
+                <p class="mat-body-2 text-white">Institute of Secretariat Training and Management</p>
+            </div>
+
+            <div class="card-box card_gradient bg_color_blue">
+                <p class="mat-subheading-1 text-white margin-bottom-m">J-PAL</p>
+                <p class="mat-body-2 text-white">The Abdul Latif Jameel poverty action lab</p>
+            </div>
+               
+            <div class="card-box card_gradient bg_color_blue">
+                <p class="mat-subheading-1 text-white margin-bottom-m">SVPNPA</p>
+                <p class="mat-body-2 text-white">Sardar Vallabhbhai Patel National Police Academy</p>
+            </div>
+           
+            <div class="card-box card_gradient bg_color_blue">
+                <p class="mat-subheading-1 text-white margin-bottom-m">ISRO</p>
+                <p class="mat-body-2 text-white">Indian Space Research Organisation</p>
+            </div>
+
+            <div class="card-box card_gradient bg_color_blue">
+                <p class="mat-subheading-1 text-white margin-bottom-m">iGot</p>
+                <p class="mat-body-2 text-white">Domain</p>
+            </div>
+
+            <div class="card-box card_gradient bg_color_blue">
+                <p class="mat-subheading-1 text-white margin-bottom-m">Competency which has a long label </p>
+                <p class="mat-body-2 text-white">Domain</p>
+            </div>
+               
+            <div class="card-box card_gradient bg_color_blue">
+                <p class="mat-subheading-1 text-white margin-bottom-m">Competency which has a long label - time</p>
+                <p class="mat-body-2 text-white">Domain</p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--===========  All competencies section ============= -->
+    <div class="all_provider_box">
+        <h1  class="mat-h1 margin-bottom-m inline-block "> All providers </h1>
+        <div class="all_provider_inner">
+            <!-- search box and dropdown-->
+               <div class="top_search_box">
+                    <div class="search_box_inner">
+                        <div class="flex flex-1 flex-column margin-fix search search_box_main">
+                            <form>
+                                <mat-form-field appearance="outline" class="autocomplete-form search_form" color="primary">
+                                    <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+                                    <!-- <mat-label>Search</mat-label> -->
+                                    <input type="search"  #searchInput class="ml-2" i18-aria-label aria-label="Search"  i18n-placeholder="search" [placeholder]="'Search'"  matInput 
+                                     />
+                                </mat-form-field> 
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="item_dropdown_box">
+                        <div class="flex flex-1 flex-wrap section-input">
+                            <div class="item">
+                                <mat-form-field class="">
+                                    <mat-select #orgNameSelect formControlName="orgName" i18n-placeholder placeholder="Ascending ( A - Z )">
+                                        <mat-option >Ascending ( A - Z )</mat-option>
+                                        <mat-option >Descending ( Z - A )</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                
+                            </div>    
+                        </div>
+                    </div>
+               </div> <!-- search box and dropdown end -->
+
+               <mat-sidenav-container>
+                <!-- search cards -->
+                <mat-sidenav-content class="custom-sidecontent  mat-drawer-content mat-sidenav-content">
+        
+                    <div class="provider_card_box">
+
+                        <!-- ===================== single card ===================--
+                        <mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card">
+                            
+                            <mat-card-content class="provider_card_box">
+                               
+                            </mat-card-content>
+                        </mat-card>  single card end -->
+
+                        <div class="flex item-center single_provider_card mat-card">
+                            <div class="flex flex-col card-container  item-center justify-center">   
+                                <div class="name-container flex flex-col margin-bottom-m">
+                                    <div class="" role="link" tabindex="0"><!---->
+                                        <div class="name ws-mat-black-text cursor-pointer mat-body-1"> Lal Bahadur Shastri National Academy of Administration </div><!----><!---->
+                                       
+                                    </div>
+                                </div>
+                                <div class="provider-image-container flex margin-bottom-s">
+                                    <img src="fusion-assets/images/lbs_logo.png" class="sb-certificatePage-loader-img" alt="LBSNAA" />
+                                </div>
+                                <p class="mat-body-2 text-center margin-remove">LBSNAA</p>
+                            </div>
+                        </div>
+
+                        <div class="flex item-center single_provider_card mat-card">
+                            <div class="flex flex-col card-container">   
+                                <div class="name-container flex flex-col margin-bottom-m">
+                                    <div class="" role="link" tabindex="0"><!---->
+                                        <div class="name ws-mat-black-text cursor-pointer mat-body-1"> Lal Bahadur Shastri National Academy of Administration </div><!----><!---->
+                                       
+                                    </div>
+                                </div>
+                                <div class="provider-image-container flex items-center justify-center margin-bottom-s">
+                                    <img src="fusion-assets/images/lbs_logo.png" class="sb-certificatePage-loader-img" alt="LBSNAA" />
+                                </div>
+                                <p class="mat-body-2 text-center margin-remove">LBSNAA</p>
+                            </div>
+                        </div>
+
+                        <div class="flex item-center single_provider_card mat-card">
+                            <div class="flex flex-col card-container">   
+                                <div class="name-container flex flex-col margin-bottom-m">
+                                    <div class="" role="link" tabindex="0"><!---->
+                                        <div class="name ws-mat-black-text cursor-pointer mat-body-1"> Lal Bahadur Shastri National Academy of Administration </div><!----><!---->
+                                       
+                                    </div>
+                                </div>
+                                <div class="provider-image-container flex items-center justify-center margin-bottom-s">
+                                    <img src="fusion-assets/images/lbs_logo.png" class="sb-certificatePage-loader-img" alt="LBSNAA" />
+                                </div>
+                                <p class="mat-body-2 text-center margin-remove">LBSNAA</p>
+                            </div>
+                        </div>
+
+                        <div class="flex item-center single_provider_card mat-card">
+                            <div class="flex flex-col card-container">   
+                                <div class="name-container flex flex-col margin-bottom-m">
+                                    <div class="" role="link" tabindex="0"><!---->
+                                        <div class="name ws-mat-black-text cursor-pointer mat-body-1"> Lal Bahadur Shastri National Academy of Administration </div><!----><!---->
+                                       
+                                    </div>
+                                </div>
+                                <div class="provider-image-container flex items-center justify-center margin-bottom-s">
+                                    <img src="fusion-assets/images/lbs_logo.png" class="sb-certificatePage-loader-img" alt="LBSNAA" />
+                                </div>
+                                <p class="mat-body-2 text-center margin-remove">LBSNAA</p>
+                            </div>
+                        </div>
+
+                    </div>  
+                </mat-sidenav-content>
+            </mat-sidenav-container>
+          
+       
+    </div>
+
+ <div class="top_card_container">
+        <h1  class="mat-h1 margin-bottom-m inline-block "> Popular providers</h1>
+        <div class="top_card_inner_box flex">
+            <div class="card-box card_gradient bg_color_blue">
+                <p class="mat-subheading-1 text-white margin-bottom-m">LBSNAA</p>
+                <p class="mat-body-2 text-white">Lal Bahadur Shastri National Academy of Administration</p>
+            </div>
+
+            <div class="card-box card_gradient bg_color_blue">
+                <p class="mat-subheading-1 text-white margin-bottom-m">ISTM</p>
+                <p class="mat-body-2 text-white">Institute of Secretariat Training and Management</p>
+            </div>
+
+            <div class="card-box card_gradient bg_color_blue">
+                <p class="mat-subheading-1 text-white margin-bottom-m">J-PAL</p>
+                <p class="mat-body-2 text-white">The Abdul Latif Jameel poverty action lab</p>
+            </div>
+               
+            <div class="card-box card_gradient bg_color_blue">
+                <p class="mat-subheading-1 text-white margin-bottom-m">SVPNPA</p>
+                <p class="mat-body-2 text-white">Sardar Vallabhbhai Patel National Police Academy</p>
+            </div>
+           
+            <div class="card-box card_gradient bg_color_blue">
+                <p class="mat-subheading-1 text-white margin-bottom-m">ISRO</p>
+                <p class="mat-body-2 text-white">Indian Space Research Organisation</p>
+            </div>
+
+            <div class="card-box card_gradient bg_color_blue">
+                <p class="mat-subheading-1 text-white margin-bottom-m">iGot</p>
+                <p class="mat-body-2 text-white">Domain</p>
+            </div>
+
+            <div class="card-box card_gradient bg_color_blue">
+                <p class="mat-subheading-1 text-white margin-bottom-m">Competency which has a long label </p>
+                <p class="mat-body-2 text-white">Domain</p>
+            </div>
+               
+            <div class="card-box card_gradient bg_color_blue">
+                <p class="mat-subheading-1 text-white margin-bottom-m">Competency which has a long label - time</p>
+                <p class="mat-body-2 text-white">Domain</p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--===========  All competencies section ============= -->
+    <div class="all_provider_box">
+        <h1  class="mat-h1 margin-bottom-m inline-block "> All providers </h1>
+        <div class="all_provider_inner">
+            <!-- search box and dropdown-->
+               <div class="top_search_box">
+                    <div class="search_box_inner">
+                        <div class="flex flex-1 flex-column margin-fix search search_box_main">
+                            <form>
+                                <mat-form-field appearance="outline" class="autocomplete-form search_form" color="primary">
+                                    <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+                                    <!-- <mat-label>Search</mat-label> -->
+                                    <input type="search"  #searchInput class="ml-2" i18-aria-label aria-label="Search"  i18n-placeholder="search" [placeholder]="'Search'"  matInput 
+                                     />
+                                </mat-form-field> 
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="item_dropdown_box">
+                        <div class="flex flex-1 flex-wrap section-input">
+                            <div class="item">
+                                <mat-form-field class="">
+                                    <mat-select #orgNameSelect formControlName="orgName" i18n-placeholder placeholder="Ascending ( A - Z )">
+                                        <mat-option >Ascending ( A - Z )</mat-option>
+                                        <mat-option >Descending ( Z - A )</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                
+                            </div>    
+                        </div>
+                    </div>
+               </div> <!-- search box and dropdown end -->
+
+               <mat-sidenav-container>
+                <!-- search cards -->
+                <mat-sidenav-content class="custom-sidecontent  mat-drawer-content mat-sidenav-content">
+        
+                    <div class="provider_card_box">
+
+                        <!-- ===================== single card ===================--
+                        <mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card">
+                            
+                            <mat-card-content class="provider_card_box">
+                               
+                            </mat-card-content>
+                        </mat-card>  single card end -->
+
+                        <div class="flex item-center single_provider_card mat-card">
+                            <div class="flex flex-col card-container  item-center justify-center">   
+                                <div class="name-container flex flex-col margin-bottom-m">
+                                    <div class="" role="link" tabindex="0"><!---->
+                                        <div class="name ws-mat-black-text cursor-pointer mat-body-1"> Lal Bahadur Shastri National Academy of Administration </div><!----><!---->
+                                       
+                                    </div>
+                                </div>
+                                <div class="provider-image-container flex margin-bottom-s">
+                                    <img src="fusion-assets/images/lbs_logo.png" class="sb-certificatePage-loader-img" alt="LBSNAA" />
+                                </div>
+                                <p class="mat-body-2 text-center margin-remove">LBSNAA</p>
+                            </div>
+                        </div>
+
+                        <div class="flex item-center single_provider_card mat-card">
+                            <div class="flex flex-col card-container">   
+                                <div class="name-container flex flex-col margin-bottom-m">
+                                    <div class="" role="link" tabindex="0"><!---->
+                                        <div class="name ws-mat-black-text cursor-pointer mat-body-1"> Lal Bahadur Shastri National Academy of Administration </div><!----><!---->
+                                       
+                                    </div>
+                                </div>
+                                <div class="provider-image-container flex items-center justify-center margin-bottom-s">
+                                    <img src="fusion-assets/images/lbs_logo.png" class="sb-certificatePage-loader-img" alt="LBSNAA" />
+                                </div>
+                                <p class="mat-body-2 text-center margin-remove">LBSNAA</p>
+                            </div>
+                        </div>
+
+                        <div class="flex item-center single_provider_card mat-card">
+                            <div class="flex flex-col card-container">   
+                                <div class="name-container flex flex-col margin-bottom-m">
+                                    <div class="" role="link" tabindex="0"><!---->
+                                        <div class="name ws-mat-black-text cursor-pointer mat-body-1"> Lal Bahadur Shastri National Academy of Administration </div><!----><!---->
+                                       
+                                    </div>
+                                </div>
+                                <div class="provider-image-container flex items-center justify-center margin-bottom-s">
+                                    <img src="fusion-assets/images/lbs_logo.png" class="sb-certificatePage-loader-img" alt="LBSNAA" />
+                                </div>
+                                <p class="mat-body-2 text-center margin-remove">LBSNAA</p>
+                            </div>
+                        </div>
+
+                        <div class="flex item-center single_provider_card mat-card">
+                            <div class="flex flex-col card-container">   
+                                <div class="name-container flex flex-col margin-bottom-m">
+                                    <div class="" role="link" tabindex="0"><!---->
+                                        <div class="name ws-mat-black-text cursor-pointer mat-body-1"> Lal Bahadur Shastri National Academy of Administration </div><!----><!---->
+                                       
+                                    </div>
+                                </div>
+                                <div class="provider-image-container flex items-center justify-center margin-bottom-s">
+                                    <img src="fusion-assets/images/lbs_logo.png" class="sb-certificatePage-loader-img" alt="LBSNAA" />
+                                </div>
+                                <p class="mat-body-2 text-center margin-remove">LBSNAA</p>
+                            </div>
+                        </div>
+
+                    </div>  
+                </mat-sidenav-content>
+            </mat-sidenav-container>
+          
+       
+    </div>
+
+
+</div>
+
+<button [routerLink]="['/app/learn/browse-by/provider', provider]">go to details</button>

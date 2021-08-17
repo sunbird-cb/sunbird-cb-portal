@@ -64,7 +64,11 @@ export class CardLearnComponent extends WidgetBaseComponent
   }
 
   goToCompentencyBrowse() {
-    this.router.navigate(['/app/learn/browse-by/all-competencies'])
+    this.router.navigate(['/app/learn/browse-by/competency/all-competencies'])
+  }
+
+  goToProviderBrowse() {
+    this.router.navigate(['/app/learn/browse-by/provider/all-providers'])
   }
 
   ngOnInit() {
