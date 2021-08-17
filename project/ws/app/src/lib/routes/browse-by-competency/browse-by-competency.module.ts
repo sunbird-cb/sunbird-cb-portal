@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule, PipeListFilterModule } from '@sunbird-cb/utils'
 import { MatGridListModule } from '@angular/material/grid-list'
-
+import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { AvatarPhotoModule, BtnPageBackModule } from '@sunbird-cb/collection'
 import {
@@ -39,6 +39,8 @@ import { CompetencyDetailsComponent } from './routes/competency-details/competen
   declarations: [AllCompetenciesComponent, CompetencyDetailsComponent],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
     BrowseByCompetencyRoutingModule,
     MatGridListModule,
     MatExpansionModule,

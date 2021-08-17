@@ -1,6 +1,8 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core'
 import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
-import { BrowseCompetencyService } from '../../services/browse-competency'
+import { FormGroup, FormControl } from '@angular/forms'
+import { BrowseCompetencyService } from '../../services/browse-competency.service'
+import { NSBrowseCompetency } from '../../models/competencies.model'
 @Component({
   selector: 'ws-app-all-competencies',
   templateUrl: './all-competencies.component.html',
@@ -8,7 +10,9 @@ import { BrowseCompetencyService } from '../../services/browse-competency'
 })
 export class AllCompetenciesComponent implements OnInit, OnChanges {
   defaultThumbnail = ''
-  facets: any = []
+  allCompetencies!: NSBrowseCompetency.ICompetencie[]
+  filterForm: FormGroup | undefined
+  searchForm: FormGroup | undefined
   titles = [
     { title: 'Learn', url: '/page/learn', icon: 'school' },
     { title: 'All Competencies' , url: 'none', icon: '' },
@@ -23,12 +27,18 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
+    this.filterForm = new FormGroup({
+      filters: new FormControl(''),
+    })
+    this.searchForm = new FormGroup({
+      orgName: new FormControl(''),
+      searchKey: new FormControl(''),
+    })
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
       this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
     }
-    this.getFacets()
-    // this.getSearchedData()
+    this.searchCompetency('')
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -37,24 +47,31 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
     }
   }
 
-  getFacets() {
-    const queryparam = {
-      request: {
-        filters: {
-          visibility: ['Default'],
-          contentType: [
-            'Course',
-            'Resource',
-          ],
-        },
-        sort_by: { lastUpdatedOn: '' },
-        fields: [],
-        facets: ['contentType', 'mimeType', 'source'],
-      },
+  searchCompetency(searchQuery: any) {
+    const searchJson = [
+      { type: 'COMPETENCY', field: 'name', keyword: searchQuery? searchQuery:'' },
+      { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
+    ]
+
+    const req = {
+      searches: searchJson,
     }
-    this.browseCompServ.fetchSearchData(queryparam).subscribe((response: any) => {
-      this.facets = response.result.facets
-    })
+    this.browseCompServ
+      .fetchCompetency(req)
+      .subscribe((reponse: NSBrowseCompetency.ICompetencieResponse) => {
+        if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
+          this.allCompetencies = reponse.responseData
+        }
+      })
+  }
+
+  updateQuery(key: string) {
+    this.searchCompetency(key)
+  }
+
+  reset() {
+    // this.searchForm.setValue('searchKey') = ''
+    this.searchCompetency('')
   }
 
   raiseTelemetry(content: any) {

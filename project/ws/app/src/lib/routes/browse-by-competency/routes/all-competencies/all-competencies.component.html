@@ -48,60 +48,64 @@
 
     <!--===========  All competencies section ============= -->
     <div class="all_competency_box">
-        <h1  class="mat-h1 margin-remove inline-block "> All competencies </h1>
+        <h1 class="mat-h1 margin-remove inline-block "> All competencies </h1>
         <div class="all_competency_inner">
-           <div class="left_card_box">
-               <div class="top_search_box">
-                    <div class="search_box_inner">
-                        <div class="flex flex-1 flex-column margin-fix search search_box_main">
-                            <form>
-                                <mat-form-field appearance="outline" class="autocomplete-form search_form" color="primary">
-                                    <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
-                                    <!-- <mat-label>Search</mat-label> -->
-                                    <input type="search"  #searchInput class="ml-2" i18-aria-label aria-label="Search"  i18n-placeholder="search" [placeholder]="'Search'"  matInput 
-                                     />
-                                </mat-form-field>
-
-                               
-                            </form>
-                        </div>
-
-                        <div class="search_tag_box">
-                           
-                            <a href="#" class="single_tag">Behavioural <mat-icon class="cursor-pointer margin-left-xs ws-mat-black60-text">close</mat-icon></a>
-                            <a href="#" class="single_tag">Behavioural <mat-icon class="cursor-pointer margin-left-xs ws-mat-black60-text">close</mat-icon></a>
-                            <a href="#" class="ws-mat-default-text mat-subheading-2 ">Clear all</a>
-                        </div>
-                    </div>
-                    <div class="item_dropdown_box">
-                        <div class="flex flex-1 flex-wrap section-input">
-                            <div class="item">
-                                
-                                <mat-form-field class="">
-                                    <mat-select #orgNameSelect formControlName="orgName" i18n-placeholder placeholder="Ascending ( A - Z )">
-                                        <mat-option >Ascending ( A - Z )</mat-option>
-                                        <mat-option >Descending ( Z - A )</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                
+            <div class="left_card_box">
+                <form [formGroup]="searchForm">
+                    <div class="top_search_box">
+                        <div class="search_box_inner">
+                            <div class="flex flex-1 flex-column margin-fix search search_box_main">
+                                    <mat-form-field appearance="outline" class="autocomplete-form search_form"
+                                        color="primary">
+                                        <mat-icon matPrefix class="search-home flex items-center justify-center">search
+                                        </mat-icon>
+                                        <!-- <mat-label>Search</mat-label> -->
+                                        <input type="search" name="searchInput" #searchInput class="ml-2" i18-aria-label aria-label="Search"
+                                        formControlName="searchKey" (ngModelChange)="updateQuery(nameFilter)"   i18n-placeholder="search" [placeholder]="'Search'" matInput />
+            
+                                    </mat-form-field>
                             </div>
-
-                            
+    
+                            <div class="search_tag_box">
+    
+                                <a href="#" class="single_tag">Behavioural <mat-icon
+                                        class="cursor-pointer margin-left-xs ws-mat-black60-text">close</mat-icon></a>
+                                <a href="#" class="single_tag">Behavioural <mat-icon
+                                        class="cursor-pointer margin-left-xs ws-mat-black60-text">close</mat-icon></a>
+                                <a href="#" class="ws-mat-default-text mat-subheading-2 ">Clear all</a>
+                            </div>
+                        </div>
+                        <div class="item_dropdown_box">
+                            <div class="flex flex-1 flex-wrap section-input">
+                                <div class="item">
+    
+                                    <mat-form-field class="">
+                                        <mat-select #orgNameSelect formControlName="orgName" i18n-placeholder
+                                            placeholder="Ascending ( A - Z )">
+                                            <mat-option>Ascending ( A - Z )</mat-option>
+                                            <mat-option>Descending ( Z - A )</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+    
+                                </div>
+    
+    
+                            </div>
                         </div>
                     </div>
-               </div>
+                </form>
                 <div class="main_card_box">
                     <mat-sidenav-container>
                         <!-- search cards -->
                         <mat-sidenav-content class="custom-sidecontent  mat-drawer-content mat-sidenav-content">
-                
+
                             <div>
 
                                 <!-- ===================== single card ===================-->
                                 <mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card">
-                                    
+
                                     <mat-card-content>
-                                        <div  class="card_inner_content flex">
+                                        <div class="card_inner_content flex">
                                             <div class="card_inner_title_box flex-col">
                                                 <div class="flex-col">
                                                     <h4 class="mat-h4">Design thinking</h4>
@@ -109,21 +113,26 @@
                                                 <div class="flex-col">
                                                     <p class="mat-body-2 ws-mat-black60-text">Behavioural</p>
                                                 </div>
-                                                
-                                                
+
+
                                                 <div class="flex-col text_icon_box">
-                                                    <mat-icon  class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">school</mat-icon> 
-                                                    <span class="icon_text mat-caption ws-mat-black60-text"> 4 CBPs</span>
+                                                    <mat-icon
+                                                        class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color"
+                                                        role="img" aria-hidden="true">school</mat-icon>
+                                                    <span class="icon_text mat-caption ws-mat-black60-text"> 4
+                                                        CBPs</span>
                                                 </div>
                                             </div>
                                             <div class="card_right_txtbox flex-col">
                                                 <p class="mat-body-1 ws-mat-black60-text">
-                                                    Planning vigilance activities in accordance with procedures that balance the needs of maintaining a fraud free
+                                                    Planning vigilance activities in accordance with procedures that
+                                                    balance the needs of maintaining a fraud free
                                                     environment and business objectives
                                                 </p>
-                                                
+
                                                 <div class="bottomsection">
                                                     <div class="contentdata margin-bottom-xm">
+
 
                                                         <mat-expansion-panel class="explore_main_panel">
                                                             <mat-expansion-panel-header class="mat-expansion-head">
@@ -134,6 +143,14 @@
                                                             </mat-expansion-panel-header>
                                                             <p>This is the primary content of the panel.</p>
                                                           </mat-expansion-panel>
+
+                                                        <!-- <a class="ws-mat-default-text mat-subheading-2 explore_link">Quick
+                                                            explore
+                                                            <mat-icon
+                                                                class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color">
+                                                                expand_more</mat-icon>
+                                                        </a> -->
+
                                                     </div>
 
                                                     <!--=============== div for hidden cards for quick explore =============-->
@@ -146,9 +163,9 @@
 
                                 <!-- ===================== single card ===================-->
                                 <mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card">
-                                    
+
                                     <mat-card-content>
-                                        <div  class="card_inner_content flex">
+                                        <div class="card_inner_content flex">
                                             <div class="card_inner_title_box flex-col">
                                                 <div class="flex-col">
                                                     <h4 class="mat-h4">Competency label</h4>
@@ -156,23 +173,32 @@
                                                 <div class="flex-col">
                                                     <p class="mat-body-2 ws-mat-black60-text">Domain</p>
                                                 </div>
-                                                
-                                                
+
+
                                                 <div class="flex-col text_icon_box">
-                                                    <mat-icon  class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">school</mat-icon> 
-                                                    <span class="icon_text mat-caption ws-mat-black60-text"> 18 CBPs</span>
+                                                    <mat-icon
+                                                        class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color"
+                                                        role="img" aria-hidden="true">school</mat-icon>
+                                                    <span class="icon_text mat-caption ws-mat-black60-text"> 18
+                                                        CBPs</span>
                                                 </div>
                                             </div>
                                             <div class="card_right_txtbox flex-col">
                                                 <p class="mat-body-1 ws-mat-black60-text">
-                                                    Sed sit amet arcu aliquet, molestie justo at, auctor nunc. Phasellus ligula ipsum, volutpat eget semper id, viverra eget nibh.
-                                                     Suspendisse luctus mattis cursus. Nam consectetur ante at nisl hendrerit gravida.
+                                                    Sed sit amet arcu aliquet, molestie justo at, auctor nunc. Phasellus
+                                                    ligula ipsum, volutpat eget semper id, viverra eget nibh.
+                                                    Suspendisse luctus mattis cursus. Nam consectetur ante at nisl
+                                                    hendrerit gravida.
                                                 </p>
-                                                
+
                                                 <div class="bottomsection">
                                                     <div class="contentdata margin-bottom-xm">
-                                                        <a href="#" class="ws-mat-default-text mat-subheading-2 explore_link">Quick explore
-                                                            <mat-icon class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color">expand_more</mat-icon>
+                                                        <a href="#"
+                                                            class="ws-mat-default-text mat-subheading-2 explore_link">Quick
+                                                            explore
+                                                            <mat-icon
+                                                                class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color">
+                                                                expand_more</mat-icon>
                                                         </a>
                                                     </div>
 
@@ -185,10 +211,10 @@
                                         </div>
                                     </mat-card-content>
                                 </mat-card> <!-- single card end -->
- 
-                            </div>  
+
+                            </div>
                         </mat-sidenav-content>
-                
+
                         <!-- filter sidebar -->
                         <!-- <mat-sidenav mode="side" position="end" opened class="custom-sidenav">
                             
@@ -197,36 +223,33 @@
 
                     <a href="#" class="ws-mat-default-text mat-subheading-2 load_more_link">Load more</a>
                 </div> <!-- main card box end -->
-           </div>
-           <div class="right_sidebar_box custom-sidenav">
-            <!-- <mat-sidenav mode="side" position="end" opened class="custom-sidenav"> -->
+            </div>
+            <div class="right_sidebar_box custom-sidenav">
+                <!-- <mat-sidenav mode="side" position="end" opened class="custom-sidenav"> -->
                 <div class="filter-sidebar padding-m">
                     <p class="mat-subheading-2 margin-bottom-m font-bold-imp">Filter by</p>
-                    <form class="filter-form" >
+                    <form class="filter-form" [formGroup]="filterForm">
                         <span class="filter_span_box">
                             <p class="mat-subheading-1 margin-bottom-xs font-bold-imp">Type</p>
-                        
+
                             <section class="mat-body-2 margin-bottom-xs text-capitalize">
                                 <mat-checkbox class="example-margin">
                                     <label for="Behavioural">Behavioural</label>
                                 </mat-checkbox>
                             </section>
                             <section class="mat-body-2 margin-bottom-xs text-capitalize">
-                                <mat-checkbox class="example-margin" >
+                                <mat-checkbox class="example-margin">
                                     <label for="Behavioural">Domain</label>
-                                    </mat-checkbox> 
+                                </mat-checkbox>
                             </section>
                             <section class="mat-body-2 margin-bottom-xs text-capitalize">
-                                <mat-checkbox class="example-margin" >
+                                <mat-checkbox class="example-margin">
                                     <label for="Behavioural">Functional</label>
-                                    </mat-checkbox>
+                                </mat-checkbox>
                             </section>
-                            
-                        </span>   
-                    </form>
+
+                        </span>
                     
-                   
-                    <form>
                         <span class="filter_span_box seacrh_span_box">
                             <p class="mat-subheading-1 font-bold-imp margin-remove">Competency area</p>
                             <!-- <mat-form-field class="right_section_search_box">
@@ -236,10 +259,11 @@
                             </mat-form-field> -->
 
                             <mat-form-field class="autocomplete-form search_form" color="primary">
-                                <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+                                <mat-icon matPrefix class="search-home flex items-center justify-center">search
+                                </mat-icon>
                                 <!-- <mat-label>Search</mat-label> -->
-                                <input type="search"  #searchInput class="ml-2" i18-aria-label aria-label="Search"  i18n-placeholder="search" [placeholder]="'Search'"  matInput 
-                                 />
+                                <input type="search" #searchInput class="ml-2" i18-aria-label aria-label="Search"
+                                    i18n-placeholder="search" [placeholder]="'Search'" matInput />
                             </mat-form-field>
 
                             <section class="mat-body-2 margin-bottom-xs text-capitalize">
@@ -248,25 +272,26 @@
                                 </mat-checkbox>
                             </section>
                             <section class="mat-body-2 margin-bottom-xs text-capitalize">
-                                <mat-checkbox class="example-margin" >
+                                <mat-checkbox class="example-margin">
                                     <label for="Behavioural">Competency area</label>
-                                    </mat-checkbox> 
+                                </mat-checkbox>
                             </section>
                             <section class="mat-body-2 margin-bottom-xs text-capitalize">
-                                <mat-checkbox class="example-margin" >
+                                <mat-checkbox class="example-margin">
                                     <label for="Behavioural">Competency area</label>
-                                    </mat-checkbox>
+                                </mat-checkbox>
                             </section>
-                          
-                           
+
+
                         </span>
                     </form>
                 </div>
-            <!-- </mat-sidenav> -->
+                <!-- </mat-sidenav> -->
             </div>
         </div>
     </div>
 </div>
+
 
 
 <!-- <button [routerLink]="['/app/learn/browse-by/', this.compentency]">go to details</button> -->
@@ -280,3 +305,4 @@
 <!-- =======
 <button [routerLink]="['/app/learn/browse-by/competency', compentency]">go to details</button>
 >>>>>>> 72847408662f430d3d621032ce4efe57f7ee5181 -->
+
