@@ -6,6 +6,63 @@
     min-height: 400px;
     
 }
+.top_card_container {
+    .top_card_inner_box {
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content:space-between;
+
+        .card-box {
+            width: 275px;
+            height: 130px;
+            margin-bottom: 25px;
+            border-radius: 8px 8px;
+            overflow: hidden;
+            background-image: url("https://igot.blob.core.windows.net/content/content/do_11327647746152857614136/artifact/do_11327647746152857614136_1620663753379_introtoeconomics11602651204113.jpg");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            padding: 16px 16px;
+            box-sizing: border-box;
+        }
+    }
+}
+
+.explore_main_panel {
+    box-shadow: none!important;
+    border: 0;
+
+    .mat-expansion-panel-header {
+        box-shadow: none!important;
+        border: 0;
+        padding: 0;
+    
+       
+    }
+
+    .mat-content {
+        flex-direction: row-reverse!important;
+        border:1px solid red;
+
+        
+    }
+    .mat-expansion-panel-header-title  {
+        flex-grow: initial;
+        flex-grow:none;
+
+    }
+    .mat-expansion-panel-content {
+        .mat-expansion-panel-body {
+            padding:10px 0;
+            border:1px solid red;
+        }
+    }
+}
+
+
+
+
 .main_content_box {
     overflow: hidden;
     box-sizing: border-box;
@@ -189,5 +246,97 @@
         .seacrh_span_box {
             margin-top: 25px;
         }
+        
     }
+}
+
+
+// all providers 
+.all_provider_box {
+    width: 100%;
+
+    .all_provider_inner {
+        width: 100%;
+    }
+
+    .top_search_box {
+        width: 100%;
+        overflow: hidden;
+       
+
+        .search_box_inner {
+            width: 585px;
+            float: left;
+
+            .search_box_main {
+                width: 100%;
+
+                form {
+                    width: 100%;
+
+                    .search_form {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        .item_dropdown_box {
+            float: right;
+            width: 210px;
+            box-sizing: border-box;
+            .item {
+                .mat-form-field {
+                    background-color: #f0f3f4;
+                    border:1px solid rgba(0, 0, 0, 0.08);
+                    padding: 0px 12px;
+                    border-radius: 4px 4px;
+                    box-sizing: border-box;
+                }
+                .theme-igot.day-mode .mat-form-field-appearance-legacy .mat-form-field-underline {
+                    background-color:none;
+                }
+                
+            }
+        }
+    }
+
+    .provider_card_box {
+        width:100%;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        display: flex;
+        justify-content: space-between;
+    }
+    .single_provider_card {
+        height: 315px;
+        width: 275px;
+        padding: 24px 24px;
+        box-sizing: border-box;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+    .name-container {
+        height: 70px;
+        border: 1px solid red;
+        overflow: hidden;
+    }
+    .provider-image-container {
+        width: 150px;
+        height: 150px;
+        border-radius: 4px 4px;
+        overflow: hidden;
+        align-items: center;
+        display: flex;
+        border: 1px solid rgba(0,0,0,.08);
+
+        img {
+            height: 120px;
+            width: 120px;
+            margin: 15px auto;
+        }
+    }
+
 }
