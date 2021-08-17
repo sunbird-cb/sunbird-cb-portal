@@ -137,10 +137,16 @@ export class EventsComponent implements OnInit {
             const min = stime.substr(2, 3)
             const starttime = `${hour}${min}`
 
+            const etime = obj.endTime.split('+')[0]
+            const ehour = etime.substr(0, 2)
+            const emin = etime.substr(2, 3)
+            const endtime = `${ehour}${emin}`
+
             const eventDataObj = {
                 event: obj,
                 eventName: obj.name,
                 eventStartTime: starttime,
+                eventEndTime: endtime,
                 eventStartDate: obj.startDate,
                 eventCreatedOn: this.allEventDateFormat(obj.createdOn),
                 eventDuration: duration,
