@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 
 const API_END_POINTS = {
-  EVENT_READ: `/apis/proxies/v8/api/event/v4/read`,
+  EVENT_READ: `/apis/proxies/v8/event/v4/read`,
   GET_EVENTS: '/apis/proxies/v8/sunbirdigot/search',
 }
 
