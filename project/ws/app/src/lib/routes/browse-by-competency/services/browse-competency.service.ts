@@ -23,8 +23,12 @@ export class BrowseCompetencyService {
     return this.http.post<any>(API_ENDPOINTS.SEARCH_V6, request)
   }
 
-  fetchCompetency(searchData: any): Observable<any> {
+  searchCompetency(searchData: any): Observable<any> {
     return this.http.post<any>(API_ENDPOINTS.SEARCH_COMPETENCY, searchData)
+  }
+
+  fetchCompetencyAreas(): Observable<any> {
+    return this.http.get<any>(API_ENDPOINTS.GET_COMPETENCY_AREA)
   }
 
   public notifyOther(data: any) {

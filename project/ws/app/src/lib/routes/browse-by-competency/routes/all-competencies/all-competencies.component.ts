@@ -39,6 +39,7 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
       this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
     }
     this.searchCompetency('')
+    this.getAllCompetencyAreas()
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -50,17 +51,28 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
   searchCompetency(searchQuery: any) {
     const searchJson = [
       { type: 'COMPETENCY', field: 'name', keyword: searchQuery? searchQuery:'' },
+      { type: 'COMPETENCY', field: 'description', keyword: searchQuery? searchQuery:'' },
+    //   // { type: 'COMPETENCY', field: 'competencyType', keyword: 'Behavioural' },
       { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
     ]
-
     const req = {
       searches: searchJson,
     }
     this.browseCompServ
-      .fetchCompetency(req)
+      .searchCompetency(req)
       .subscribe((reponse: NSBrowseCompetency.ICompetencieResponse) => {
         if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
           this.allCompetencies = reponse.responseData
+        }
+      })
+  }
+
+  getAllCompetencyAreas() {
+    this.browseCompServ
+      .fetchCompetencyAreas()
+      .subscribe((reponse: NSBrowseCompetency.ICompetencieResponse) => {
+        if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
+          this.competencyAreas = reponse.responseData
         }
       })
   }
