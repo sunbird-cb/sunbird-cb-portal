@@ -11,6 +11,7 @@ import { NSBrowseCompetency } from '../../models/competencies.model'
 export class AllCompetenciesComponent implements OnInit, OnChanges {
   defaultThumbnail = ''
   allCompetencies!: NSBrowseCompetency.ICompetencie[]
+  competencyAreas: any
   filterForm: FormGroup | undefined
   searchForm: FormGroup | undefined
   titles = [
