@@ -15,8 +15,8 @@ import { Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
 // import { NSSearch } from '@sunbird-cb/utils/src/lib/services/widget-search.model'
 import { WidgetUserService } from '../_services/widget-user.service'
+ // tslint:disable-next-line
 import _ from 'lodash'
-
 interface IStripUnitContentData {
   key: string
   canHideStrip: boolean
@@ -369,12 +369,12 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       let userId = ''
       let content: NsContent.IContent[]
       let contentNew: NsContent.IContent[]
-      let QueryParams = _.get(strip.request.enrollmentList, 'queryParams')
+      const queryParams = _.get(strip.request.enrollmentList, 'queryParams')
       if (this.configSvc.userProfile) {
         userId = this.configSvc.userProfile.userId
       }
       // tslint:disable-next-line: deprecation
-      this.userSvc.fetchUserBatchList(userId, QueryParams).subscribe(
+      this.userSvc.fetchUserBatchList(userId, queryParams).subscribe(
         courses => {
           const showViewMore = Boolean(
             courses.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,

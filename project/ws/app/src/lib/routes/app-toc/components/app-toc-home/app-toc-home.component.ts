@@ -13,7 +13,8 @@ import { FormControl, Validators } from '@angular/forms'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import * as dayjs from 'dayjs'
-import _, * as  lodash from 'lodash'
+// tslint:disable-next-line
+import _ from 'lodash'
 import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { ActionService } from '../../services/action.service'
 
@@ -629,7 +630,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   public handleEnrollmentEndDate(batch: any) {
-    const enrollmentEndDate = dayjs(lodash.get(batch, 'enrollmentEndDate')).format('YYYY-MM-DD')
+    const enrollmentEndDate = dayjs(_.get(batch, 'enrollmentEndDate')).format('YYYY-MM-DD')
     const systemDate = dayjs()
     return enrollmentEndDate ? dayjs(enrollmentEndDate).isBefore(systemDate) : false
   }
@@ -680,8 +681,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       !(this.content && this.content.contentType === 'Resource' && !this.content.artifactUrl)
     )
   }
-
-
   // private getResumeDataFromList() {
   //   const lastItem = this.resumeData && this.resumeData.pop()
   //   return {
@@ -774,7 +773,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             this.externalContentFetchStatus = 'done'
             this.registerForExternal = data.hasAccess
           },
-          _ => {
+          _error => {
             this.externalContentFetchStatus = 'done'
             this.registerForExternal = false
           },
