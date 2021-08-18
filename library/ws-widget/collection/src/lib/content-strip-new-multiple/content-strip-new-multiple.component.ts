@@ -14,6 +14,7 @@ import {
 import { Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
 import { WidgetUserService } from '../_services/widget-user.service'
+import _ from 'lodash'
 // import { SearchServService } from '../_services/search-serv.service'
 
 interface IStripUnitContentData {
@@ -318,11 +319,12 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
       let userId = ''
       let content: NsContent.IContent[]
       let contentNew: NsContent.IContent[]
+      let queryParams = _.get(strip.request.enrollmentList, 'queryParams')
       if (this.configSvc.userProfile) {
         userId = this.configSvc.userProfile.userId
       }
       // tslint:disable-next-line: deprecation
-      this.userSvc.fetchUserBatchList(userId).subscribe(
+      this.userSvc.fetchUserBatchList(userId, queryParams).subscribe(
         courses => {
           const showViewMore = Boolean(
             courses.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,

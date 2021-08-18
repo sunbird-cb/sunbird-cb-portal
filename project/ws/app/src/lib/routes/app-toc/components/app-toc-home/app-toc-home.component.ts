@@ -13,7 +13,7 @@ import { FormControl, Validators } from '@angular/forms'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import * as dayjs from 'dayjs'
-import * as  lodash from 'lodash'
+import _, * as  lodash from 'lodash'
 import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { ActionService } from '../../services/action.service'
 
@@ -32,7 +32,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   showMoreGlance = false
   content: NsContent.IContent | null = null
   errorCode: NsAppToc.EWsTocErrorCode | null = null
-  resumeData: NsContent.IContinueLearningData | null = null
+  resumeData: any = null
   batchData: NsContent.IBatchListResponse | null = null
   userEnrollmentList = null
   routeSubscription: Subscription | null = null
@@ -680,6 +680,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       !(this.content && this.content.contentType === 'Resource' && !this.content.artifactUrl)
     )
   }
+
 
   // private getResumeDataFromList() {
   //   const lastItem = this.resumeData && this.resumeData.pop()

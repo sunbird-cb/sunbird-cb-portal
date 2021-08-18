@@ -24,7 +24,7 @@ export class ContentProgressService {
 
   getProgressFor(id: string): Observable<number> {
     if (this.shouldFetchProgress) {
-      this.fetchProgressHash()
+      // this.fetchProgressHash()
     }
     return this.progressHashSubject.pipe(map(hash => hash[id]))
   }
