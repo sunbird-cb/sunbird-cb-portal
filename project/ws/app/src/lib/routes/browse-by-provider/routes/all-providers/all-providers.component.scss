@@ -8,6 +8,7 @@
 }
 
 .top_card_container {
+    margin-top: 30px;
     .top_card_inner_box {
         align-items: center;
         flex-direction: row;
@@ -20,12 +21,31 @@
             margin-bottom: 25px;
             border-radius: 8px 8px;
             overflow: hidden;
-            background-image: url("https://igot.blob.core.windows.net/content/content/do_11327647746152857614136/artifact/do_11327647746152857614136_1620663753379_introtoeconomics11602651204113.jpg");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            padding: 16px 16px;
+            // background-image: url("https://igot.blob.core.windows.net/content/content/do_11327647746152857614136/artifact/do_11327647746152857614136_1620663753379_introtoeconomics11602651204113.jpg");
+            // background-position: center;
+            // background-repeat: no-repeat;
+            // background-size: cover;
+            // padding: 16px 16px;
             box-sizing: border-box;
+            position: relative;
+
+            img {
+                height: 100%;
+                width: 100%;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: absolute;
+                z-index: -1;
+            
+            }
+            .card_text_box {
+                padding: 16px 16px;
+                width: 100%;
+                position: relative;
+                z-index: 9;
+                box-sizing: border-box;
+            }
         }
     }
 }
@@ -33,6 +53,7 @@
 // all providers 
 .all_provider_box {
     width: 100%;
+    margin-bottom: 150px;
 
     .all_provider_inner {
         width: 100%;
@@ -50,6 +71,12 @@
             .search_box_main {
                 width: 100%;
 
+                mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix{
+                    border-top-width: 8px !important;
+                    padding: 12px 10px 12px 12px;
+                    
+                }
+
                 form {
                     width: 100%;
 
@@ -66,11 +93,11 @@
             box-sizing: border-box;
             .item {
                 .mat-form-field {
-                    background-color: #f0f3f4;
-                    border:1px solid rgba(0, 0, 0, 0.08);
-                    padding: 0px 12px;
-                    border-radius: 4px 4px;
-                    box-sizing: border-box;
+                    // background-color: #f0f3f4;
+                    // border:1px solid rgba(0, 0, 0, 0.08);
+                    // padding: 0px 12px;
+                    // border-radius: 4px 4px;
+                    // box-sizing: border-box;
                 }
                 .theme-igot.day-mode .mat-form-field-appearance-legacy .mat-form-field-underline {
                     background-color:none;
@@ -115,6 +142,12 @@
             width: 120px;
             margin: 15px auto;
         }
+    }
+
+    a.load_more_link {
+        margin:35px auto 0 auto;
+        text-align:center;
+        display: block;
     }
 
 }

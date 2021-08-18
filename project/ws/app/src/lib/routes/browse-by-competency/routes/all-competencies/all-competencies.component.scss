@@ -7,6 +7,8 @@
     
 }
 .top_card_container {
+    margin-top: 30px;
+    
     .top_card_inner_box {
         align-items: center;
         flex-direction: row;
@@ -25,7 +27,6 @@
             // background-size: cover;
             
             box-sizing: border-box;
-           
             position: relative;
 
             img {
@@ -159,7 +160,7 @@
                     float: right;
                     width: 210px;
                     box-sizing: border-box;
-                    
+
                     .item {
                         .mat-form-field-outline  {
                             background-color: #f0f3f4;
