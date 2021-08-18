@@ -19,12 +19,31 @@
             margin-bottom: 25px;
             border-radius: 8px 8px;
             overflow: hidden;
-            background-image: url("https://igot.blob.core.windows.net/content/content/do_11327647746152857614136/artifact/do_11327647746152857614136_1620663753379_introtoeconomics11602651204113.jpg");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            padding: 16px 16px;
+            // background-image: url("https://igot.blob.core.windows.net/content/content/do_11327647746152857614136/artifact/do_11327647746152857614136_1620663753379_introtoeconomics11602651204113.jpg");
+            // background-position: center;
+            // background-repeat: no-repeat;
+            // background-size: cover;
+            
             box-sizing: border-box;
+            border: 2px solid red;
+            position: relative;
+
+            img {
+                height: 100%;
+                width: 100%;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: absolute;
+                z-index: -1;
+            
+            }
+            .card_text_box {
+                padding: 16px 16px;
+                width: 100%;
+                position: relative;
+                z-index: 9;
+            }
         }
     }
 }
@@ -43,14 +62,16 @@
 
     .mat-content {
         flex-direction: row-reverse!important;
-        border:1px solid red;
+        // border:1px solid red;
 
         
     }
     .mat-expansion-panel-header-title  {
         flex-grow: initial;
         flex-grow:none;
-
+        vertical-align: middle;
+        margin-bottom: 0;
+        flex-direction: row-reverse!important;
     }
     .mat-expansion-panel-content {
         .mat-expansion-panel-body {
@@ -100,6 +121,7 @@
                         mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix{
                             border-top-width: 8px !important;
                             padding: 12px 10px 12px 12px;
+                            height: 48px;
                         }
 
                         form {
@@ -107,6 +129,13 @@
 
                             .search_form {
                                 width: 100%;
+
+                                // .mat-form-field-flex {
+                                //     // padding: 0 .75em 0 .75em;
+                                //     // margin-top: -.25em;
+                                //     // position: relative;
+                                //     height: 48px;
+                                // }
                             }
                         }
                     }
@@ -250,6 +279,11 @@
         }
         .seacrh_span_box {
             margin-top: 25px;
+        }
+        .comp_side_box {
+            height: 225px;
+
+            overflow: auto;
         }
         
     }
