@@ -8,7 +8,7 @@
       "/apis": "/apis"
     },
     "headers": {
-      "Cookie": "connect.sid=s:BYQPXBznaAjMNMrh4tjjsJohyaxxSzuO.a2D8WQYyxa0+OxDyxns0WBHfsXqHWdGUa4PJxUGWbk4"
+      "Cookie": "express.sid=s:85dsSxD1HHgSK5hkTIMBHkwhmZVDA-Gi.wV1jYuzYiMwQY6dea2ePUAyeajEqL1vYacGvXxjLa3A; connect.sid=s:BlUKoCJfZQY5eMW_EiO_REzp7-SYqxa8.rJFgj9QvEWDzTSNC5bmz3+yntwTZ/YGREE47ONFioiY"
       
     }
   },
@@ -64,6 +64,15 @@
     "changeOrigin": true,
     "pathRewrite": {
       "/apis": ""
+    }
+  },
+  "/abcd/*": {
+    "target": "https://igot-dev.in",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "/abcd": ""
     }
   }
 }

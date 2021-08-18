@@ -57,14 +57,15 @@
                             <div class="flex flex-1 flex-column margin-fix search search_box_main">
                                 <mat-form-field appearance="outline" class="autocomplete-form search_form"
                                     color="primary">
-                                    <mat-icon matPrefix class="search-home flex items-center justify-center">search
+                                    <mat-icon matPrefix class="search-home flex items-center justify-center mr-2">search
                                     </mat-icon>
                                     <!-- <mat-label>Search</mat-label> -->
-                                    <input type="search" name="searchInput" #searchInput class="ml-2" i18-aria-label
-                                        aria-label="Search" formControlName="searchKey"
-                                        (ngModelChange)="updateQuery(nameFilter)" i18n-placeholder="search"
+                                    <input type="search" name="searchKey" #searchKey class="ml-2" i18-aria-label
+                                        aria-label="Search" formControlName="searchKey" 
+                                        
+                                        i18n-placeholder="search"
                                         [placeholder]="'Search'" matInput />
-
+<!-- (input)="updateQuery(searchKey.value)" -->
                                 </mat-form-field>
                             </div>
 
@@ -112,7 +113,7 @@
                                                         <h4 class="mat-h4">{{comp.name}}</h4>
                                                     </div>
                                                     <div class="flex-col">
-                                                        <p class="mat-body-2 ws-mat-black60-text">{{comp.type}}</p>
+                                                        <p class="mat-body-2 ws-mat-black60-text">{{comp?.additionalProperties?.competencyType}}</p>
                                                     </div>
     
     
@@ -250,17 +251,21 @@
                               <input matInput placeholder="Search" value="">
                             </mat-form-field> -->
 
-                            <mat-form-field class="autocomplete-form search_form" color="primary">
-                                <mat-icon matPrefix class="search-home flex items-center justify-center">search
+                            <mat-form-field  class="autocomplete-form search_form" color="primary" [floatLabel]="'never'">
+                                <mat-icon matPrefix class="search-home flex items-center justify-center mr-2">search
                                 </mat-icon>
                                 <!-- <mat-label>Search</mat-label> -->
-                                <input type="search" #searchInput class="ml-2" i18-aria-label aria-label="Search"
-                                    i18n-placeholder="search" [placeholder]="'Search'" matInput />
+                                <input type="search" #searchCompArea class="ml-2" i18-aria-label aria-label="Search"
+                                    formControlName="searchCompArea" i18n-placeholder="search" [placeholder]="'Search'" matInput autocomplete="off"/>
+                                    
+                                    <!-- <input type="search" #searchInput class="ml-2" i18n-placeholder="search content"
+                                    [placeholder]="'Search'" i18-aria-label aria-label="Query" matInput [formControl]="queryControl"
+                                    accesskey="F" /> -->
                             </mat-form-field>
 
                             <section class="mat-body-2 margin-bottom-xs text-capitalize"
-                                *ngFor="let comp of competencyAreas">
-                                <mat-checkbox class="example-margin">
+                                *ngFor="let comp of competencyAreas | pipeFilterV2:'name': searchCompArea.value">
+                                <mat-checkbox class="example-margin" name="{{comp.name}}}">
                                     <label for="{{comp.name}}">{{comp.name}}</label>
                                 </mat-checkbox>
                             </section>
