@@ -8,6 +8,7 @@ import {
   PipeOrderByModule,
   PipeRelativeTimeModule,
   PipeFilterSearchModule,
+  PipeFilterV2Module,
 } from '@sunbird-cb/utils'
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatExpansionModule } from '@angular/material/expansion'
@@ -72,6 +73,7 @@ import { ProviderLeftMenuComponent } from './components/left-menu/left-menu.comp
     PipeRelativeTimeModule,
     PipeFilterSearchModule,
     PipeOrderByModule,
+    PipeFilterV2Module,
     BtnPageBackModule,
     WidgetResolverModule,
   ],

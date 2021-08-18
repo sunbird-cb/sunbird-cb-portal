@@ -65,5 +65,14 @@
     "pathRewrite": {
       "/apis": ""
     }
+  },
+  "/abcd/*": {
+    "target": "https://igot-dev.in",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "/abcd": ""
+    }
   }
 }
