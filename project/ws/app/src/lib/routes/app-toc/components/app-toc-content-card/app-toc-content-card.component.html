@@ -26,9 +26,10 @@
             <div>
               <!-- <span class="mat-body-strong content-type">{{ content?.displayContentType }}</span> -->
               <!-- <span class="ml-5"> -->
-                <!-- <ng-container *ngIf="content?.displayContentType">&nbsp;&nbsp;|&nbsp;&nbsp;</ng-container> -->
-                <!-- <mat-icon class="time-icon">schedule</mat-icon> -->
-                <span class="text-lowercase ws-mat-black60-text">{{ content?.duration | pipeDurationTransform: 'hms' }}</span>
+              <!-- <ng-container *ngIf="content?.displayContentType">&nbsp;&nbsp;|&nbsp;&nbsp;</ng-container> -->
+              <!-- <mat-icon class="time-icon">schedule</mat-icon> -->
+              <span class="text-lowercase ws-mat-black60-text">{{ content?.duration | pipeDurationTransform: 'hms'
+                }}</span>
               <!-- </span> -->
             </div>
           </div>
@@ -37,8 +38,8 @@
           </button>
           <!-- <div *ngIf="hasContentStructure" class="child-meta-container">
             <div class="child-structure"> -->
-              <!-- <mat-icon class="structure-icon">import_contacts</mat-icon> -->
-              <!-- <span class="oval-white" *ngIf="contentStructure?.course > 0">
+          <!-- <mat-icon class="structure-icon">import_contacts</mat-icon> -->
+          <!-- <span class="oval-white" *ngIf="contentStructure?.course > 0">
                 <ng-container>{{ contentStructure?.course }}</ng-container>
                 <ng-container *ngIf="contentStructure?.course === 1" i18n> Course</ng-container>
                 <ng-container *ngIf="contentStructure?.course > 1" i18n> Courses</ng-container>
@@ -140,20 +141,19 @@
     <!-- <ws-widget-display-content-type-icon class="flex" [displayContentType]="content?.displayContentType">
     </ws-widget-display-content-type-icon> -->
     <!-- <div class="img-container"> -->
-      <!-- <img class="card-thumbnail ws-mat-primary-lite-background" [src]="content?.appIcon" alt="Thumbnail"
+    <!-- <img class="card-thumbnail ws-mat-primary-lite-background" [src]="content?.appIcon" alt="Thumbnail"
         (click)="viewChildren = !viewChildren" [wsUtilsDefaultThumbnail]="defaultThumbnail" /> -->
-        <!-- <ng-container *ngIf="content?.completionStatus == 2">
-          <ws-widget-content-progress *ngIf="content?.identifier && content?.completionPercentage" [forPreview]="forPreview"
-            [contentId]="content?.identifier" class="progress-bar-thin" [progress]="100" 
-            [progressType]="'percentage'">
-          </ws-widget-content-progress>
-        </ng-container>
-        <ng-container *ngIf="content?.completionStatus < 2">
-          <ws-widget-content-progress *ngIf="content?.identifier && content?.completionPercentage" [forPreview]="forPreview"
-            [contentId]="content?.identifier" class="progress-bar-thin" [progress]="content?.completionPercentage" 
-            [progressType]="'percentage'">
-          </ws-widget-content-progress>
-        </ng-container> -->
+    <!-- <ng-container *ngIf="content?.completionStatus == 2">
+      <ws-widget-content-progress *ngIf="content?.identifier && content?.completionPercentage" [forPreview]="forPreview"
+        [contentId]="content?.identifier" class="progress-bar-thin" [progress]="100" [progressType]="'percentage'">
+      </ws-widget-content-progress>
+    </ng-container>
+    <ng-container *ngIf="content?.completionStatus < 2">
+      <ws-widget-content-progress *ngIf="content?.identifier && content?.completionPercentage" [forPreview]="forPreview"
+        [contentId]="content?.identifier" class="progress-bar-thin" [progress]="content?.completionPercentage"
+        [progressType]="'percentage'">
+      </ws-widget-content-progress>
+    </ng-container> -->
     <!-- </div> -->
 
     <div class="flex flex-col sm:flex-row flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto">
@@ -168,30 +168,29 @@
           <div class="resicons ws-mat-black60-text">
             <!-- <span class="mat-body-strong content-type ws-mat-default-text">{{ content?.contentType }}</span> -->
             <!-- <span class="ml-5"> -->
-              <!-- <ng-container *ngIf="content?.displayContentType">&nbsp;&nbsp;|&nbsp;&nbsp;</ng-container> -->
-              <!-- <mat-icon class="time-icon">schedule</mat-icon> -->
-              <img src="/assets/icons/content/grey/video.svg" alt="Video" class="float-left margin-right-xs" 
-                *ngIf="content?.mimeType === 'video/mp4' || content?.mimeType === 'video/x-youtube' ||  
+            <!-- <ng-container *ngIf="content?.displayContentType">&nbsp;&nbsp;|&nbsp;&nbsp;</ng-container> -->
+            <!-- <mat-icon class="time-icon">schedule</mat-icon> -->
+            <img src="/assets/icons/content/grey/video.svg" alt="Video" class="float-left margin-right-xs" *ngIf="content?.mimeType === 'video/mp4' || content?.mimeType === 'video/x-youtube' ||  
                 content?.mimeType ==='application/x-mpegURL'">
-                <img src="/assets/icons/content/grey/audio.svg" alt="Audio" class="float-left margin-right-xs" 
-                *ngIf="content?.mimeType === 'audio/mpeg'">
-                <img src="/assets/icons/content/grey/pdf.svg" alt="PDF" class="float-left margin-right-xs" 
-                *ngIf="content?.mimeType === 'application/pdf'">
-               <img src="/assets/icons/content/grey/link.svg" alt="InteractiveContent" class="float-left margin-right-xs" 
-                *ngIf="content?.mimeType === 'application/vnd.ekstep.html-archive' || content?.mimeType === 'text/x-url'">
-                <img src="/assets/icons/content/grey/assessment.svg" alt="Assessment" class="float-left margin-right-xs" 
-                *ngIf="content?.mimeType === 'application/json' || content?.mimeType === 'application/quiz'">
-                <img src="/assets/icons/content/grey/image.svg" alt="Image" class="float-left margin-right-xs" 
-                *ngIf="content?.mimeType === 'image/png' || content?.mimeType === 'image/jpeg'">
-                <img src="/assets/icons/content/grey/content_copy.svg" class="contenticon" alt="Course"  
-                *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection'">
-              <span class="ws-mat-black60-text">{{ content?.duration | pipeDurationTransform: 'hms' }}</span>
+            <img src="/assets/icons/content/grey/audio.svg" alt="Audio" class="float-left margin-right-xs"
+              *ngIf="content?.mimeType === 'audio/mpeg'">
+            <img src="/assets/icons/content/grey/pdf.svg" alt="PDF" class="float-left margin-right-xs"
+              *ngIf="content?.mimeType === 'application/pdf'">
+            <img src="/assets/icons/content/grey/link.svg" alt="InteractiveContent" class="float-left margin-right-xs"
+              *ngIf="content?.mimeType === 'application/vnd.ekstep.html-archive' || content?.mimeType === 'text/x-url'">
+            <img src="/assets/icons/content/grey/assessment.svg" alt="Assessment" class="float-left margin-right-xs"
+              *ngIf="content?.mimeType === 'application/json' || content?.mimeType === 'application/quiz'">
+            <img src="/assets/icons/content/grey/image.svg" alt="Image" class="float-left margin-right-xs"
+              *ngIf="content?.mimeType === 'image/png' || content?.mimeType === 'image/jpeg'">
+            <img src="/assets/icons/content/grey/content_copy.svg" class="contenticon" alt="Course"
+              *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection'">
+            <span class="ws-mat-black60-text">{{ content?.duration | pipeDurationTransform: 'hms' }}</span>
             <!-- </span> -->
           </div>
         </div>
       </a>
       <div class="flex flex-wrap items-center justify-start sm:justify-end">
-       <!-- <div class="type-container resource" *ngIf="content?.contentType === 'Resource'">
+        <!-- <div class="type-container resource" *ngIf="content?.contentType === 'Resource'">
           <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>
           <span>Resource</span>
         </div>

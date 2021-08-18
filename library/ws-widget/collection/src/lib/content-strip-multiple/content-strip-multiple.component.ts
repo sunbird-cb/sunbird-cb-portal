@@ -15,7 +15,8 @@ import { Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
 // import { NSSearch } from '@sunbird-cb/utils/src/lib/services/widget-search.model'
 import { WidgetUserService } from '../_services/widget-user.service'
-
+ // tslint:disable-next-line
+import _ from 'lodash'
 interface IStripUnitContentData {
   key: string
   canHideStrip: boolean
@@ -165,10 +166,10 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     const filters: any = {}
     if (v6filters.constructor === Array) {
       v6filters.forEach(((f: any) => {
-            Object.keys(f).forEach(key => {
-              filters[key] = f[key]
-            })
-        }))
+        Object.keys(f).forEach(key => {
+          filters[key] = f[key]
+        })
+      }))
       return filters
     }
     return v6filters
@@ -178,10 +179,10 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     const filters: any = {}
     if (v6filters.constructor === Array) {
       v6filters.forEach(((f: any) => {
-            Object.keys(f).forEach(key => {
-              filters[key] = f[key]
-            })
-        }))
+        Object.keys(f).forEach(key => {
+          filters[key] = f[key]
+        })
+      }))
       return filters
     }
     return v6filters
@@ -297,10 +298,10 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         strip.request.searchV6 &&
         strip.request.searchV6.request &&
         strip.request.searchV6.request.filters) {
-          originalFilters = strip.request.searchV6.request.filters
-          strip.request.searchV6.request.filters = this.getFiltersFromArray(
-            strip.request.searchV6.request.filters,
-          )
+        originalFilters = strip.request.searchV6.request.filters
+        strip.request.searchV6.request.filters = this.getFiltersFromArray(
+          strip.request.searchV6.request.filters,
+        )
       }
       this.contentSvc.searchV6(strip.request.searchV6).subscribe(
         results => {
@@ -314,16 +315,16 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
                 tab: 'Learn',
                 q: strip.request && strip.request.searchV6 && strip.request.searchV6.request,
                 f:
-                strip.request &&
-                strip.request.searchV6 &&
-                strip.request.searchV6.request &&
-                strip.request.searchV6.request.filters
-                  ? JSON.stringify(
-                    this.transformSearchV6FiltersV2(
-                      originalFilters,
+                  strip.request &&
+                    strip.request.searchV6 &&
+                    strip.request.searchV6.request &&
+                    strip.request.searchV6.request.filters
+                    ? JSON.stringify(
+                      this.transformSearchV6FiltersV2(
+                        originalFilters,
+                      )
                     )
-                  )
-                  : {},
+                    : {},
               },
             }
             : null
@@ -368,11 +369,12 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       let userId = ''
       let content: NsContent.IContent[]
       let contentNew: NsContent.IContent[]
+      const queryParams = _.get(strip.request.enrollmentList, 'queryParams')
       if (this.configSvc.userProfile) {
         userId = this.configSvc.userProfile.userId
       }
       // tslint:disable-next-line: deprecation
-      this.userSvc.fetchUserBatchList(userId).subscribe(
+      this.userSvc.fetchUserBatchList(userId, queryParams).subscribe(
         courses => {
           const showViewMore = Boolean(
             courses.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
@@ -396,7 +398,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
             : null
           if (courses && courses.length) {
             content = courses.map(c => {
-              const contentTemp: NsContent.IContent =  c.content
+              const contentTemp: NsContent.IContent = c.content
               contentTemp.completionPercentage = c.completionPercentage || 0
               contentTemp.completionStatus = c.completionStatus || 0
               return contentTemp

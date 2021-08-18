@@ -82,8 +82,7 @@
 
       <!-- TODO: Added this view details, as a temp replacement for share and other functionalities, as they are not working-->
       <a mat-menu-item (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
-      [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link"
-        class="flex flex-middle">
+        [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" class="flex flex-middle">
         <mat-icon>toc</mat-icon>
         <h3 class="margin-remove" i18n>
           View details
@@ -293,7 +292,7 @@
         <img mat-card-image [src]="widgetData.content.appIcon" class="card-img ws-mat-primary-lite-background"
           [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
           [title]="widgetData.content.name" />
-          <!-- <ng-container *ngIf="widgetData.content?.completionStatus == 2">
+        <!-- <ng-container *ngIf="widgetData.content?.completionStatus == 2">
             <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
               [contentId]="widgetData.content?.identifier" [progress]="100"
               [progressType]="'percentage'">
@@ -379,15 +378,14 @@
         </button>
         <ng-container *ngIf="widgetData.content?.completionStatus == 2">
           <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-            [contentId]="widgetData.content?.identifier" [progress]="100"
-            [progressType]="'percentage'">
+            [contentId]="widgetData.content?.identifier" [progress]="100" [progressType]="'percentage'">
           </ws-widget-content-progress>
         </ng-container>
         <ng-container *ngIf="widgetData.content?.completionStatus < 2">
           <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.completionPercentage"
-          [progressType]="'percentage'">
-        </ws-widget-content-progress>
+            [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.completionPercentage"
+            [progressType]="'percentage'">
+          </ws-widget-content-progress>
         </ng-container>
         <mat-card-content>
           <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
@@ -719,10 +717,10 @@
               [displayContentType]="widgetData.content?.displayContentType"
             >
             </ws-widget-display-content-type> -->
-            <ws-widget-display-content-type i18n-title title="Content Type" *ngIf="widgetData.content?.contentType"
-              class="ws-mat-primary-text font-normal" [displayContentType]="widgetData.content?.contentType==='Collection'
+              <ws-widget-display-content-type i18n-title title="Content Type" *ngIf="widgetData.content?.primaryCategory"
+              class="ws-mat-primary-text font-normal" [displayContentType]="widgetData.content?.primaryCategory==='Collection'
               ?'Module'
-              :(widgetData.content?.contentType==='Learning Path'?'Program':widgetData.content?.contentType)">
+              :(widgetData.content?.primaryCategory==='Learning Path'?'Program':widgetData.content?.primaryCategory)">
             </ws-widget-display-content-type>
             <div class="flex items-center">
               <ng-container [ngTemplateOutlet]="rating"></ng-container>
