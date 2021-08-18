@@ -44,6 +44,7 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
       this.lastUpdate = this.eventData.lastUpdatedOn.split('T')[0]
 
       const eventDate = this.customDateFormat(this.eventData.startDate, this.eventData.startTime)
+      const eventendDate = this.customDateFormat(this.eventData.endDate, this.eventData.endTime)
 
       const now = new Date()
       const today = moment(now).format('YYYY-MM-DD HH:mm')
@@ -58,7 +59,7 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
         this.pastEvent = false
         this.currentEvent = false
       }
-      const isToday = this.compareDate(eventDate, this.eventData.startDate)
+      const isToday = this.compareDate(eventDate, eventendDate, this.eventData)
       if (isToday) {
         this.currentEvent = true
         this.futureEvent = false
@@ -74,7 +75,7 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
     return `${date} ${hour}${min}`
   }
 
-  compareDate(selectedDate: any, startDate: any) {
+  compareDate(selectedStartDate: any, selectedEndDate: any, eventData: any) {
     const now = new Date()
     const today = moment(now).format('YYYY-MM-DD HH:mm')
 
@@ -83,7 +84,18 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line:prefer-template
     const month = ('0' + (now.getMonth() + 1)).slice(-2)
     const todaysdate = `${year}-${month}-${day}`
-    return (startDate === todaysdate && selectedDate > today) ? true : false
+
+    const stime = eventData.startTime.split('+')[0]
+    const shour = stime.substr(0, 2) * 60
+    const smin = stime.substr(3, 2) * 1
+    const starttime = shour + smin
+
+    const currentTime = new Date().getHours() * 60 + new Date().getMinutes()
+    const minustime = starttime - currentTime
+    if (eventData.startDate === todaysdate && (selectedStartDate > today || selectedEndDate < today || minustime < 16))  {
+      return true
+    }
+    return false
   }
   // calculatePercent(profile: NSProfileDataV2.IProfile | null): number {
   //   let count = 30
