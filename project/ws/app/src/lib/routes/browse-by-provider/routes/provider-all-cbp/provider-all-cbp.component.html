@@ -52,6 +52,46 @@
 
 
     <div class="all_cbp_box">
+        <form>
+            <div class="top_search_box">
+                <div class="search_box_inner">
+                    <div class="flex flex-1 flex-column margin-fix search search_box_main">
+                        <mat-form-field appearance="outline" class="autocomplete-form search_form"
+                            color="primary">
+                            <mat-icon matPrefix class="search-home flex items-center justify-center mr-2">search
+                            </mat-icon>
+                            <!-- <mat-label>Search</mat-label> -->
+                            <input type="search" name="searchKey" #searchKey class="ml-2" i18-aria-label
+                                aria-label="Search"  
+                                
+                                i18n-placeholder="search"
+                                [placeholder]="'Search'" matInput />
+<!-- (input)="updateQuery(searchKey.value)" -->
+                        </mat-form-field>
+                    </div>
+
+                  
+                </div>
+                <div class="item_dropdown_box">
+                    <div class="flex flex-1 flex-wrap section-input">
+                        <div class="item">
+
+                            <mat-form-field class="" appearance="outline">
+                                <mat-select #orgNameSelect  i18n-placeholder
+                                    placeholder="Ascending ( A - Z )">
+                                    <mat-option>Ascending ( A - Z )</mat-option>
+                                    <mat-option>Descending ( Z - A )</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </form>
+
         <mat-sidenav-container>
             <mat-sidenav-content class="custom-sidecontent">
                 <p class="mat-title margin-bottom-xs">All CBPs</p>
