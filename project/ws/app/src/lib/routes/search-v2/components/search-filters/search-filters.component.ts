@@ -3,6 +3,8 @@ import { FormGroup, FormControl } from '@angular/forms'
 import { Subscription } from 'rxjs'
 import { GbSearchService } from '../../services/gb-search.service'
 import { ActivatedRoute } from '@angular/router'
+// tslint:disable-next-line
+import _ from 'lodash'
 
 @Component({
   selector: 'ws-app-search-filters',
@@ -30,9 +32,9 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
             count: '',
             name: '',
           }
-          if (nfv.name !== 'video/mp4' && nfv.name !== 'video/x-youtube'  && nfv.name !== 'application/json' &&
-          nfv.name !== 'application/x-mpegURL' && nfv.name !== 'application/quiz' && nfv.name !== 'image/jpeg' &&
-          nfv.name !== 'image/png') {
+          if (nfv.name !== 'video/mp4' && nfv.name !== 'video/x-youtube' && nfv.name !== 'application/json' &&
+            nfv.name !== 'application/x-mpegURL' && nfv.name !== 'application/quiz' && nfv.name !== 'image/jpeg' &&
+            nfv.name !== 'image/png') {
             values.push(nfv)
           } else {
             if (nfv.name === 'video/mp4' || nfv.name === 'video/x-youtube' || nfv.name === 'application/x-mpegURL') {
@@ -75,7 +77,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
           const textA = a.name.toUpperCase()
           const textB = b.name.toUpperCase()
           return (textA < textB) ? -1 : (textA > textB) ? 1 : 0
-      })
+        })
       }
     })
     this.filteroptions = this.newfacets
@@ -207,5 +209,8 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
       this.myFilterArray.push(reqfilter)
       this.appliedFilter.emit(this.myFilterArray)
     }
+  }
+  getText(val: string) {
+    return _.startCase(val || '');
   }
 }
