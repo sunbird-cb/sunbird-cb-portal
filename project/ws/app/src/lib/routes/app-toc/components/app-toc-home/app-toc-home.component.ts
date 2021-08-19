@@ -548,6 +548,21 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       data => {
         if (data && data.result && data.result.contentList && data.result.contentList.length) {
           this.resumeData = data.result.contentList
+          const completedCount = (_.filter(this.resumeData, { status: 2 }) || []).length || 0
+          const total = _.toInteger(_.get(this.content, 'leafNodesCount')) || 1
+          const percentage = _.toInteger((completedCount / total) * 100)
+          if (this.content) {
+            _.set(this.content, 'completionPercentage', percentage)
+          }
+          // _.set(this.content, 'progress', _.map(this.resumeData, _d => {
+          //   return {
+          //     progressStatus: _.get(_d, ''),
+          //     showMarkAsComplete: _.get(_d, ''),
+          //     markAsCompleteReason: _.get(_d, ''),
+          //     progressSupported: _.get(_d, ''),
+          //     progress: _.get(_d, '') || 0
+          //   }
+          // }))
           this.tocSvc.updateResumaData(this.resumeData)
         } else {
           this.resumeData = null
