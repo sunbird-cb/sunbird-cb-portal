@@ -68,6 +68,7 @@
     "moment": "^2.29.1",
     "mustache": "^3.0.2",
     "mux.js": "^5.11.0",
+    "ng-circle-progress": "1.5.1",
     "ng2-ace-editor": "^0.3.9",
     "ng2-ckeditor": "1.2.6",
     "ngx-bootstrap": "^5.6.2",
