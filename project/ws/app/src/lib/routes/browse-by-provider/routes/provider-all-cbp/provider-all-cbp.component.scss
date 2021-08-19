@@ -1,11 +1,9 @@
 
-
 .provider_right_main_block {
-    display: flex;
-    flex-direction: column;
     margin-top: 15px;
     overflow: hidden;
     box-sizing: border-box;
+    width: 100%;
 
     .explore_popular_topic, .top_cbp_section {
         margin-bottom: 55px;

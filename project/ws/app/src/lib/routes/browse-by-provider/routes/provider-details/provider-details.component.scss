@@ -58,3 +58,8 @@
   // z-index: 10;
   // width: 100%;
 }
+
+.mat-drawer-content {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
