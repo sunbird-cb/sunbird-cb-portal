@@ -65,7 +65,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.param.currentValue!= changes.param.previousValue) {
+    if (changes.param.currentValue !== changes.param.previousValue) {
       this.searchResults = []
       this.totalResults = 0
       if (this.myFilters && this.myFilters.length > 0) {
@@ -129,7 +129,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
               'Course',
               // 'Course Unit',
               'Learning Resource',
-              'Program'
+              'Program',
             ],
           },
           query: this.param,
@@ -228,7 +228,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
         // queryparam.request.filters.contentType = this.contentType
       }
       if (queryparam.request.filters.primaryCategory.length === 0) {
-        this.contentType.push('Course')
+        // this.contentType.push('Course')
         // this.contentType.push('Resource')
         // this.contentType.push('Program')
         // queryparam.request.filters.contentType = this.contentType
