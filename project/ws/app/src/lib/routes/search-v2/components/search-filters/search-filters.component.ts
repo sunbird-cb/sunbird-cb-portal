@@ -211,6 +211,6 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     }
   }
   getText(val: string) {
-    return _.startCase(val || '');
+    return _.startCase(val || '')
   }
 }

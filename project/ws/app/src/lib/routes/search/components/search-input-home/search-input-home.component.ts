@@ -107,8 +107,8 @@ export class SearchInputHomeComponent implements OnInit, OnChanges {
       this.init()
     })
     } else {
-      this.autoFilter();
-      this.init();
+      this.autoFilter()
+      this.init()
     }
   }
   ngOnChanges() {
