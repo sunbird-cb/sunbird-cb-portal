@@ -127,7 +127,8 @@
                             <div>
                                 <ng-container *ngFor="let comp of allCompetencies">
                                     <!-- ===================== single card ===================-->
-                                    <mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card">
+                                    <mat-card class="cursor-pointer learn-card margin-bottom-m padding-remove position-relative mat-card" 
+                                    [routerLink]="['/app/learn/browse-by/competency', compentency]">
                                         <mat-card-content>
                                             <div class="card_inner_content flex">
                                                 <div class="card_inner_title_box flex-col">
@@ -300,7 +301,7 @@
 </div>
 
 
-<button [routerLink]="['/app/learn/browse-by/competency', compentency]">go to details</button>
+<!-- <button [routerLink]="['/app/learn/browse-by/competency', compentency]">go to details</button> -->
 
    
 
