@@ -82,6 +82,18 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
     return { url: '', queryParams: {} }
   }
 
+  public progressColor(): string {
+    // if (this.currentProgress <= 30) {
+    //   return '#D13924'
+    // } if (this.currentProgress > 30 && this.currentProgress <= 70) {
+    //   return '#E99E38'
+    // }
+    // if (this.currentProgress > 70 && this.currentProgress <= 100) {
+    //   return '#1D8923'
+    // }
+    return '#1D8923'
+  }
+
   private evaluateImmediateChildrenStructure() {
     if (this.content && this.content.children && this.content.children.length) {
       this.content.children.forEach((child: NsContent.IContent) => {

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { AppTocRoutingModule } from './app-toc-routing.module'
+import { NgCircleProgressModule } from 'ng-circle-progress'
 
 import {
   MatToolbarModule,
@@ -196,6 +197,7 @@ import { ActionService } from './services/action.service'
     UserAutocompleteModule,
     AvatarPhotoModule,
     DiscussionUiModule,
+    NgCircleProgressModule.forRoot({}),
   ],
   providers: [
     AppTocResolverService,
