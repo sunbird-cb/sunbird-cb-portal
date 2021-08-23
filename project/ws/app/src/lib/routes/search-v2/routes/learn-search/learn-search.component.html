@@ -57,7 +57,7 @@
                             <img src="/assets/icons/content/collection.svg" class="contenticon" alt="Course"  *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection'">
                             <img src="/assets/icons/content/link.svg" class="contenticon" alt="HTML"  *ngIf="content.mimeType === 'application/vnd.ekstep.html-archive' || content.mimeType === 'text/x-url'">
                             <img src="/assets/icons/content/image.svg" class="contenticon" alt="Module"  *ngIf="content.mimeType === 'image/jpeg' || content.mimeType === 'image/png'">
-                            {{content.contentType}}
+                            {{content.primaryCategory || content.contentType}}
                         </p>
                         <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title">
                             <a [href]="'/app/toc/' + content.identifier + '/overview?primaryCategory='+ content.primaryCategory ">{{content.name}}</a>
