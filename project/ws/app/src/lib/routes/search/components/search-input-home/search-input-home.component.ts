@@ -26,7 +26,7 @@ export class SearchInputHomeComponent implements OnInit, OnChanges {
     distinctUntilChanged(),
     switchMap(() => []),
   )
-  @ViewChild('searchInput', { static: false }) searchInputElem: ElementRef<any> = {} as ElementRef<any>
+  @ViewChild('searchInput', { static: true }) searchInputElem: ElementRef<any> = {} as ElementRef<any>
   autoCompleteResults: ISearchAutoComplete[] = []
   searchLocale = this.getActiveLocale()
   lang = ''
@@ -52,8 +52,7 @@ export class SearchInputHomeComponent implements OnInit, OnChanges {
   autoFilter() {
     if (this.route.snapshot.data.searchPageData) {
       const isAutoCompleteAllowed = this.route.snapshot.data.searchPageData.data.search.isAutoCompleteAllowed
-      if (typeof isAutoCompleteAllowed === 'undefined' ||
-        (typeof isAutoCompleteAllowed === 'boolean' && isAutoCompleteAllowed)) {
+      if ((typeof isAutoCompleteAllowed === 'boolean' && isAutoCompleteAllowed)) {
         this.queryControl.valueChanges.pipe(
           debounceTime(200),
           distinctUntilChanged(),
@@ -98,19 +97,19 @@ export class SearchInputHomeComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    // if (!this.activated.snapshot.data.searchPageData) {
+    if (!this.activated.snapshot.data.searchPageData) {
     this.searchServSvc.getSearchConfig().then(data => {
       this.activated.snapshot.data = {
         searchPageData: { data },
       }
     }).then(() => {
-      // this.autoFilter()
+      this.autoFilter()
       this.init()
     })
-    // } else {
-    //   this.autoFilter();
-    //   this.init();
-    // }
+    } else {
+      this.autoFilter()
+      this.init()
+    }
   }
   ngOnChanges() {
     for (const change in SimpleChange) {

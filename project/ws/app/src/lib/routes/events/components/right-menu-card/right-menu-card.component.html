@@ -2,11 +2,20 @@
   <mat-card class="right-menu-card">
     <mat-card-content role="link" tabindex="0">
       <ng-container>
-        <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all ws-mat-accent-background">
-          <!-- [routerLink]="'/app/user-profile/details'" -->
-          <a mat-button class="flex-1">
-            <span class="text-white" i18n >Attend Live Event</span>
+        <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all" *ngIf="pastEvent">
+          <p mat-button class="flex-1 margin-top-xs margin-bottom-xs">
+            <span i18n>Event is completed</span>
+          </p>
+        </div>
+        <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all ws-mat-accent-background" *ngIf="currentEvent">
+          <a mat-button class="flex-1" href="{{eventData?.registrationLink}}" target="_blank">
+            <span class="text-white" i18n>Attend Live Event</span>
           </a>
+        </div>
+        <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all" *ngIf="futureEvent">
+          <p mat-button class="flex-1  margin-top-xs margin-bottom-xs">
+            <span i18n>Event is yet to start</span>
+          </p>
         </div>
       </ng-container>
     </mat-card-content>
@@ -31,7 +40,7 @@
         <span class="mat-subheading-2" role="link" tabindex="0" style="color:rgb(0, 116, 182);">Hosted By</span>
         <div class="flex flex-wrap" role="link" tabindex="0">
             <span class="flex-wrap" role="link" tabindex="0" style="font-size:14px;">
-              Department of health research
+              {{eventData?.owner}}
             </span>
         </div>
       </div>

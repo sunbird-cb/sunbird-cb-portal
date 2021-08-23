@@ -1173,10 +1173,10 @@
   resolved "https://registry.yarnpkg.com/@sunbird-cb/design-system/-/design-system-0.0.2.tgz#54793a7d5c5b6942319b6c1f3e4f63ef60548545"
   integrity sha512-oTZMfeNu+fi2muVbZUN9vw0mF28e/MvqFgYzgrLJ6vvw3JDxW3814U00x4Fym7Rm0tYc7vpckDFGSKXR3EFMaQ==
 
-"@sunbird-cb/discussions-ui-v8@^2.0.52":
-  version "2.0.52"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/discussions-ui-v8/-/discussions-ui-v8-2.0.52.tgz#41f074f4f71250af5b56a22e24179d9d3438e934"
-  integrity sha512-jw8PJHTMH+1OzvDQ0k3YrJFydlgQKddTeyOLolpm487dRxIxW4IR7V8TrCoINVWU6uwpaQeYpEkfwV/5/5ueHQ==
+"@sunbird-cb/discussions-ui-v8@^2.0.54":
+  version "2.0.54"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/discussions-ui-v8/-/discussions-ui-v8-2.0.54.tgz#efe8627007c487e8f80f7f89032c4296f62d3234"
+  integrity sha512-Jo2z4Wq2OYMgXFUHOV7kOUDlaEi0fntbJ/rWywWatuKjGkvtXYqJoXILXEcrLBONGB9R43ewfCFOQL0PjaihQw==
   dependencies:
     tslib "^1.9.0"
 
@@ -7263,6 +7263,13 @@ neo-async@^2.5.0, neo-async@^2.6.1:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
+
+ng-circle-progress@1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/ng-circle-progress/-/ng-circle-progress-1.5.1.tgz#ea4ea89318754b929dc1550d5779e391d7c5c646"
+  integrity sha512-gJ0SdWc+TkXckfbhbvUY522yjya3qcc1a3lGvvVyLsUfSOgll8LQaZGDEko84d8dk8vYO83n0O5vP+e8bJTInQ==
+  dependencies:
+    tslib "^1.9.0"
 
 ng-packagr@^5.4.3:
   version "5.7.1"

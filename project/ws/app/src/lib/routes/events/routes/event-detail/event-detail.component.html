@@ -1,26 +1,27 @@
-<div class="flex flex-4 flex-column py-10">
-  <mat-card class="flex-custom event-details-card" style="box-shadow: none;background:none;">
-      <div class="flex-1" style="height: 167px;">
-          <div class="flex flex-4" style="height: 167px;">
+<div class="flex flex-4 flex-column margin-top-l">
+  <mat-card class="flex-custom event-details-card">
+      <div class="flex-1">
+          <div class="flex flex-4">
             <div class="flex-1">
-              <img src="/assets/images/profile/business.jpg" class="event-card-image">
+              <img src="{{eventData?.appIcon}}" class="event-card-image" *ngIf="eventData?.appIcon">
+              <img src="/assets/icons/Events_default.png" class="event-card-image" *ngIf="!eventData?.appIcon">
             </div>
-            <div class="flex-3 px-10" style="margin-top: 10px;height: 167px;">
+            <div class="flex-3 px-10 custom-height">
               <mat-card-title role="link" tabindex="0" class="flex-4 mobile-margin text-capitalize mat-h2">
                 {{eventData?.name}}
               </mat-card-title>
               <mat-card-content>
-                <span class="flex mat-body-2" role="link" tabindex="0" i18n-aria-label>
-                  {{eventData?.description}}
+                <span class="flex mat-body-2 margin-bottom-m" role="link" tabindex="0" i18n-aria-label>
+                  {{eventData?.instructions}}
                 </span>
-                <span class="flex mat-body-2 ws-mat-black60-text" role="link" tabindex="0" i18n-aria-label>
+                <span class="flex mat-body-2 mat-error" role="link" tabindex="0" i18n-aria-label>
                   {{eventData?.status}}
                 </span>
               </mat-card-content>
             </div>
             <div class="flex flex-row-reverse">
               <div class="ml-4 mb-2 view-more ws-mat-accent-text view-all">
-                <div class="flex-1" style="position: relative;">
+                <div class="flex-1 position-relative">
                   <!-- <div #stickyMenu [class.sticky]="sticky"> -->
                     <app-right-menu-card [eventData]="eventData" *ngIf="eventData"></app-right-menu-card>
                   <!-- </div> -->
@@ -48,14 +49,14 @@
   <div class="flex flex-wrap margin-fix">
       <ng-container>
           <div class="flex w-65 mb-5">
-             <p>{{eventData?.learningObjective}}</p>
+             <p>{{eventData?.description}}</p>
           </div>
       </ng-container>
   </div>
   <div class="flex flex-1 flex-column margin-fix mb-2">
-      <span class="f-medium mat-title">Presenters</span>
+      <span class="f-medium mat-title margin-bottom-xs">Presenters</span>
   </div>
-  <div class="flex flex-wrap margin-fix">
+  <div class="flex flex-wrap margin-fix margn-bottom-l">
       <ng-container>
           <div class="flex" *ngFor="let user of eventData?.creatorDetails">
             <app-presenter-card [userData]="user"></app-presenter-card>

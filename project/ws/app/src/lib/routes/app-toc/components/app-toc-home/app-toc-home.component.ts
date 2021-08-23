@@ -13,7 +13,8 @@ import { FormControl, Validators } from '@angular/forms'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import * as dayjs from 'dayjs'
-import * as  lodash from 'lodash'
+// tslint:disable-next-line
+import _ from 'lodash'
 import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { ActionService } from '../../services/action.service'
 
@@ -32,7 +33,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   showMoreGlance = false
   content: NsContent.IContent | null = null
   errorCode: NsAppToc.EWsTocErrorCode | null = null
-  resumeData: NsContent.IContinueLearningData | null = null
+  resumeData: any = null
   batchData: NsContent.IBatchListResponse | null = null
   userEnrollmentList = null
   routeSubscription: Subscription | null = null
@@ -273,7 +274,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   private initData(data: Data) {
-    const initData = this.tocSvc.initData(data)
+    const initData = this.tocSvc.initData(data, true)
     this.content = initData.content
     this.errorCode = initData.errorCode
     switch (this.errorCode) {
@@ -394,7 +395,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   private getUserEnrollmentList() {
-    if (this.content && this.content.identifier && this.content.primaryCategory !== 'Course') {
+    // tslint:disable-next-line
+    if (this.content && this.content.identifier && this.content.primaryCategory !== this.contentTypes.COURSE && this.content.primaryCategory !== this.contentTypes.PROGRAMV2) {
       // const collectionId = this.isResource ? '' : this.content.identifier
       return this.getContinueLearningData(this.content.identifier)
     }
@@ -443,7 +445,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           } else {
             // It's understood that user is not already enrolled
             // Fetch the available batches and present to user
-            if (this.content.contentType === 'Course') {
+            if (this.content.contentType === this.contentTypes.COURSE || this.content.contentType === this.contentTypes.PROGRAMV2) {
               this.autoBatchAssign()
             } else {
               this.fetchBatchDetails()
@@ -546,6 +548,21 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       data => {
         if (data && data.result && data.result.contentList && data.result.contentList.length) {
           this.resumeData = data.result.contentList
+          const completedCount = (_.filter(this.resumeData, { status: 2 }) || []).length || 0
+          const total = _.toInteger(_.get(this.content, 'leafNodesCount')) || 1
+          const percentage = _.toInteger((completedCount / total) * 100)
+          if (this.content) {
+            _.set(this.content, 'completionPercentage', percentage)
+          }
+          // _.set(this.content, 'progress', _.map(this.resumeData, _d => {
+          //   return {
+          //     progressStatus: _.get(_d, ''),
+          //     showMarkAsComplete: _.get(_d, ''),
+          //     markAsCompleteReason: _.get(_d, ''),
+          //     progressSupported: _.get(_d, ''),
+          //     progress: _.get(_d, '') || 0
+          //   }
+          // }))
           this.tocSvc.updateResumaData(this.resumeData)
         } else {
           this.resumeData = null
@@ -628,7 +645,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   public handleEnrollmentEndDate(batch: any) {
-    const enrollmentEndDate = dayjs(lodash.get(batch, 'enrollmentEndDate')).format('YYYY-MM-DD')
+    const enrollmentEndDate = dayjs(_.get(batch, 'enrollmentEndDate')).format('YYYY-MM-DD')
     const systemDate = dayjs()
     return enrollmentEndDate ? dayjs(enrollmentEndDate).isBefore(systemDate) : false
   }
@@ -679,7 +696,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       !(this.content && this.content.contentType === 'Resource' && !this.content.artifactUrl)
     )
   }
-
   // private getResumeDataFromList() {
   //   const lastItem = this.resumeData && this.resumeData.pop()
   //   return {
@@ -772,7 +788,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             this.externalContentFetchStatus = 'done'
             this.registerForExternal = data.hasAccess
           },
-          _ => {
+          _error => {
             this.externalContentFetchStatus = 'done'
             this.registerForExternal = false
           },

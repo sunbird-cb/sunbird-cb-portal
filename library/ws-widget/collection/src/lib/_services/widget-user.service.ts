@@ -12,7 +12,10 @@ const API_END_POINTS = {
   FETCH_USER_ENROLLMENT_LIST: (userId: string | undefined) =>
     // tslint:disable-next-line: max-line-length
     `/apis/proxies/v8/learner/course/v1/user/enrollment/list/${userId}?orgdetails=orgName,email&licenseDetails=name,description,url&fields=contentType,topic,name,channel,mimeType,appIcon,gradeLevel,resourceType,identifier,medium,pkgVersion,board,subject,trackable,posterImage,duration,creatorLogo,license,version,versionKey&batchDetails=name,endDate,startDate,status,enrollmentType,createdBy,certificates`,
-
+  // tslint:disable-next-line: max-line-length
+  FETCH_USER_ENROLLMENT_LIST_V2: (userId: string | undefined, orgdetails: string, licenseDetails: string, fields: string, batchDetails: string) =>
+    // tslint:disable-next-line: max-line-length
+    `apis/proxies/v8/learner/course/v1/user/enrollment/list/${userId}?orgdetails=${orgdetails}&licenseDetails=${licenseDetails}&fields=${fields}&batchDetails=${batchDetails}`,
 }
 
 @Injectable({
@@ -34,10 +37,17 @@ export class WidgetUserService {
       .get<IUserGroupDetails[]>(API_END_POINTS.FETCH_USER_GROUPS(userId))
       .pipe(catchError(this.handleError))
   }
-
-  fetchUserBatchList(userId: string | undefined): Observable<NsContent.ICourse[]> {
+ // tslint:disable-next-line: max-line-length
+  fetchUserBatchList(userId: string | undefined, queryParams?: { orgdetails: any, licenseDetails: any, fields: any, batchDetails: any }): Observable<NsContent.ICourse[]> {
+    let path = ''
+    if (queryParams) {
+       // tslint:disable-next-line: max-line-length
+      path = API_END_POINTS.FETCH_USER_ENROLLMENT_LIST_V2(userId, queryParams.orgdetails, queryParams.licenseDetails, queryParams.fields, queryParams.batchDetails)
+    } else {
+      path = API_END_POINTS.FETCH_USER_ENROLLMENT_LIST(userId)
+    }
     return this.http
-      .get(API_END_POINTS.FETCH_USER_ENROLLMENT_LIST(userId))
+      .get(path)
       .pipe(
         catchError(this.handleError),
         map(
