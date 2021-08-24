@@ -7,7 +7,30 @@
   color: inherit !important;
   background-color: inherit !important;
 }
+.white-bg {
+  background: #fff !important;
+  background-color: #fff !important;
+}
+.meta-section {
+  flex: 1;
+  min-width: 1px;
 
+  .unit-meta-item {
+    border-radius: 2px;
+    box-sizing: border-box;
+    margin-bottom: $size-m;
+    box-shadow: none;
+    padding-left: 0;
+  }
+
+  @include breakpoint-xs {
+    width: 100%;
+  }
+}
+.info-section{
+  width: 20%;
+  min-width: 250px;
+}
 .custom-height {
   height: 167px;
 }
