@@ -551,8 +551,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           const progress = _.map(this.resumeData, 'completionPercentage')
           const totalCount = _.toInteger(_.get(this.content, 'leafNodesCount')) || 1
           if (progress.length < totalCount) {
-            let diff = totalCount - progress.length
+            const diff = totalCount - progress.length
             if (diff) {
+              // tslint:disable-next-line
               _.each(new Array(diff), () => {
                 progress.push(0)
               })

@@ -44,7 +44,7 @@ export class WidgetContentService {
     // tslint:disable-next-line
     const url = API_END_POINTS.MARK_AS_COMPLETE_META(identifier)
     // return this.http.get(url).toPromise()
-    if(url){}
+    if (url) { }
     return of().toPromise()
   }
 
@@ -81,9 +81,9 @@ export class WidgetContentService {
       .post<{ [identifier: string]: number }>(API_END_POINTS.CONTENT_LIKES, contentIds)
       .toPromise()
   }
-  
+
   fetchContentRatings(contentIds: { contentIds: string[] }) {
-    if(contentIds){}
+    if (contentIds) { }
     // return this.http
     //   .post(`${API_END_POINTS.CONTENT_RATING}/rating`, contentIds)
     //   .toPromise()

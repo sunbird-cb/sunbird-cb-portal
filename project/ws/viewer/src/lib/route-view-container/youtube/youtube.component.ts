@@ -33,7 +33,7 @@ export class YoutubeComponent implements OnInit {
     }
     this.isTypeOfCollection = this.activatedRoute.snapshot.queryParams.collectionType ? true : false
   }
-  get getData(){
+  get getData() {
     return this.widgetResolverYoutubeData
   }
 }

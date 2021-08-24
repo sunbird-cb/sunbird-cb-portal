@@ -354,7 +354,7 @@ export class InitService {
   }
 
   private async createUserInNodebb(): Promise<any> {
-    if(this.configSvc.nodebbUserProfile){
+    if (this.configSvc.nodebbUserProfile) {
       return of()
     }
     const req = {

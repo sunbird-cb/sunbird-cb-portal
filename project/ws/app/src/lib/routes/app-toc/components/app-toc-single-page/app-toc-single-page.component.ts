@@ -185,7 +185,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
         this.competencies = JSON.parse(str)
       } catch (ex: any) {
         this.competencies = []
-        this.logger.error("Competency Parse Error", ex)
+        this.logger.error('Competency Parse Error', ex)
       }
     }
     this.discussionConfig.contextIdArr = (this.content) ? [this.content.identifier] : []

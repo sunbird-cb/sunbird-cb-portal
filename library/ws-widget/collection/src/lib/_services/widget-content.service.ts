@@ -56,7 +56,7 @@ export class WidgetContentService {
     // tslint:disable-next-line
     const url = API_END_POINTS.MARK_AS_COMPLETE_META(identifier)
     // return this.http.get(url).toPromise()
-    if(url){}
+    if (url) { }
     return of().toPromise()
   }
 
