@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core'
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { EventService, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
@@ -49,7 +49,7 @@ const videoJsOptions: IYTOptions = {
   styleUrls: ['./player-youtube.component.scss'],
 })
 export class PlayerYoutubeComponent extends WidgetBaseComponent
-  implements OnInit, AfterViewInit, OnDestroy, NsWidgetResolver.IWidgetData<any> {
+  implements OnInit,OnChanges, AfterViewInit, OnDestroy, NsWidgetResolver.IWidgetData<any> {
   @Input() widgetData!: IWidgetsPlayerMediaData
   screenSubscription: Subscription | null = null
   screenHeight: string | null = null
@@ -66,6 +66,9 @@ export class PlayerYoutubeComponent extends WidgetBaseComponent
     private valueSvc: ValueService,
   ) {
     super()
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes)
   }
 
   ngOnInit() {

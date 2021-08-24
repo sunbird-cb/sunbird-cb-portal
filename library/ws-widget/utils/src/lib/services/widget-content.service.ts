@@ -41,8 +41,11 @@ export class WidgetContentService {
   ) { }
 
   fetchMarkAsCompleteMeta(identifier: string): Promise<any> {
+    // tslint:disable-next-line
     const url = API_END_POINTS.MARK_AS_COMPLETE_META(identifier)
-    return this.http.get(url).toPromise()
+    // return this.http.get(url).toPromise()
+    if(url){}
+    return of().toPromise()
   }
 
   fetchContent(
@@ -78,10 +81,13 @@ export class WidgetContentService {
       .post<{ [identifier: string]: number }>(API_END_POINTS.CONTENT_LIKES, contentIds)
       .toPromise()
   }
+  
   fetchContentRatings(contentIds: { contentIds: string[] }) {
-    return this.http
-      .post(`${API_END_POINTS.CONTENT_RATING}/rating`, contentIds)
-      .toPromise()
+    if(contentIds){}
+    // return this.http
+    //   .post(`${API_END_POINTS.CONTENT_RATING}/rating`, contentIds)
+    //   .toPromise()
+    return of().toPromise()
   }
 
   fetchContentHistory(contentId: string): Observable<NsContent.IContinueLearningData> {
@@ -122,8 +128,12 @@ export class WidgetContentService {
     })
   }
   saveContinueLearning(content: NsContent.IViewerContinueLearningRequest): Observable<any> {
-    const url = API_END_POINTS.USER_CONTINUE_LEARNING
-    return this.http.post<any>(url, content)
+    // const url = API_END_POINTS.USER_CONTINUE_LEARNING
+    // return this.http.post<any>(url, content)
+    if (content) {
+
+    }
+    return of() as any
   }
 
   setS3Cookie(
