@@ -11,7 +11,7 @@ import {
 import { MatGridListModule } from '@angular/material/grid-list'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
-import { AvatarPhotoModule, BtnPageBackModule } from '@sunbird-cb/collection'
+import { AvatarPhotoModule, BtnPageBackModule, CardContentModule } from '@sunbird-cb/collection'
 import {
   MatIconModule,
   MatListModule,
@@ -40,10 +40,19 @@ import {
 import { LoaderService } from '@ws/author/src/lib/services/loader.service'
 import { BrowseByCompetencyRoutingModule } from './browse-by-competency-routing.module'
 import { AllCompetenciesComponent } from './routes/all-competencies/all-competencies.component'
-import { CompetencyDetailsComponent } from './routes/competency-details/competency-details.component'
+import { CompetencyDetailsComponent } from './routes/competency-details/competency-details.component';
+import { CompetencyFiltersComponent } from './components/competency-filters/competency-filters.component';
+import { CompetencyCardComponent } from './components/competency-card/competency-card.component';
+import { PopularCompetencyCardComponent } from './components/popular-competency-card/popular-competency-card.component'
 
 @NgModule({
-  declarations: [AllCompetenciesComponent, CompetencyDetailsComponent],
+  declarations: [
+    AllCompetenciesComponent,
+    CompetencyDetailsComponent,
+    CompetencyFiltersComponent,
+    CompetencyCardComponent,
+    PopularCompetencyCardComponent,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -81,7 +90,7 @@ import { CompetencyDetailsComponent } from './routes/competency-details/competen
     PipeListFilterModule,
     BtnPageBackModule,
     WidgetResolverModule,
-
+    CardContentModule,
   ],
   providers: [
     LoaderService,

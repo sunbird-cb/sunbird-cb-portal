@@ -15,38 +15,6 @@
         flex-wrap: wrap;
         justify-content:space-between;
 
-        .card-box {
-            width: 275px;
-            height: 130px;
-            margin-bottom: 25px;
-            border-radius: 8px 8px;
-            overflow: hidden;
-            // background-image: url("https://igot.blob.core.windows.net/content/content/do_11327647746152857614136/artifact/do_11327647746152857614136_1620663753379_introtoeconomics11602651204113.jpg");
-            // background-position: center;
-            // background-repeat: no-repeat;
-            // background-size: cover;
-            
-            box-sizing: border-box;
-            position: relative;
-
-            img {
-                height: 100%;
-                width: 100%;
-                background-position: center;
-                background-repeat: no-repeat;
-                background-size: cover;
-                position: absolute;
-                z-index: -1;
-            
-            }
-            .card_text_box {
-                padding: 16px 16px;
-                width: 100%;
-                position: relative;
-                z-index: 9;
-                box-sizing: border-box;
-            }
-        }
     }
 }
 
@@ -105,7 +73,7 @@
 
         .left_card_box {
             // width: 890px;
-            width: 73%;
+            width: 75%;
             float: left;
 
             .top_search_box {
@@ -143,7 +111,7 @@
                         a.single_tag {
                             display: inline-block;
                             padding: 8px 12px;
-                            margin-right: 15px;
+                            margin: 8px 8px;
                             border-radius: 20px 20px;
                             background-color: rgba(0, 0, 0, 0.08);
                             color: #000;
@@ -181,65 +149,6 @@
                 width: 100%;
                 margin-top: 35px;
 
-                .learn-card {
-                    padding: 24px!important;
-                    overflow: hidden;
-
-                    .card_inner_content {
-                        overflow: hidden;
-                    }
-
-                    .card_inner_title_box {
-                    //    display: column;
-                        width: 195px;
-                        padding-right: 24px;
-                        
-                        box-sizing: border-box;
-
-                        h4.mat-h4 {
-                            margin-bottom: 5px;
-                        }
-
-                        .text_icon_box {
-                            margin-top: 45px;
-                            .mat-icon1 {
-                                // font-size: 24px;
-                                vertical-align: middle;
-                                margin-right: 10px;
-                            }
-                            .icon_text {
-                                margin-bottom: 0;  
-                               
-                            }
-                        }
-                       
-                    }
-                    .card_right_txtbox {
-                        float: right;
-                        padding-left: 24px;
-                        box-sizing: border-box;
-                        width: calc(100% - 210px);
-                        border-left:1px solid rgba(0, 0, 0, 0.08);
-
-                        // .bottomsection {
-                        //     flex-flow: ;
-                        // }
-                    }
-
-                    a.explore_link {
-                        float: right;
-                        margin-top: 40px;
-                        margin-bottom: 0;
-
-                        .mat-icon {
-                            vertical-align: middle;
-                            margin-left: 22px;
-                            color: rgba(0, 0, 0, 0.6)!important;
-                        }
-                    }
-                   
-                }
-
                 a.load_more_link {
                     margin:35px auto 0 auto;
                     text-align:center;
@@ -249,7 +158,7 @@
         }
 
         .right_sidebar_box {
-            width: 25%;
+            width: 23%;
             float: right;
             background-color: #fff;
             box-shadow: none!important;
@@ -265,23 +174,6 @@
             // .mat-icon {
             //     position: absolute;
             // }
-        }
-        .filter_span_box {
-            display: block;
-            width: 100%;
-            overflow: hidden;
-
-            .search_form {
-                width: 100%;
-            }
-        }
-        .seacrh_span_box {
-            margin-top: 25px;
-        }
-        .comp_side_box {
-            height: 225px;
-
-            overflow: auto;
         }
         
     }
