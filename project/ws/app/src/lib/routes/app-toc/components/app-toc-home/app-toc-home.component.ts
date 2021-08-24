@@ -547,10 +547,20 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.contentSvc.fetchContentHistoryV2(req).subscribe(
       data => {
         if (data && data.result && data.result.contentList && data.result.contentList.length) {
-          this.resumeData = data.result.contentList
-          const completedCount = (_.filter(this.resumeData, { status: 2 }) || []).length || 0
-          const total = _.toInteger(_.get(this.content, 'leafNodesCount')) || 1
-          const percentage = _.toInteger((completedCount / total) * 100)
+          this.resumeData = _.get(data, 'result.contentList')
+          const progress = _.map(this.resumeData, 'completionPercentage')
+          const totalCount = _.toInteger(_.get(this.content, 'leafNodesCount')) || 1
+          if (progress.length < totalCount) {
+            const diff = totalCount - progress.length
+            if (diff) {
+              // tslint:disable-next-line
+              _.each(new Array(diff), () => {
+                progress.push(0)
+              })
+            }
+          }
+
+          const percentage = _.toInteger((_.sum(progress) / progress.length))
           if (this.content) {
             _.set(this.content, 'completionPercentage', percentage)
           }

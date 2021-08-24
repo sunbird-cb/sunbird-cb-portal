@@ -53,8 +53,11 @@ export class WidgetContentService {
   }
 
   fetchMarkAsCompleteMeta(identifier: string): Promise<any> {
+    // tslint:disable-next-line
     const url = API_END_POINTS.MARK_AS_COMPLETE_META(identifier)
-    return this.http.get(url).toPromise()
+    // return this.http.get(url).toPromise()
+    if (url) { }
+    return of().toPromise()
   }
 
   fetchContent(
@@ -112,12 +115,12 @@ export class WidgetContentService {
 
   autoAssignBatchApi(identifier: any): Observable<NsContent.IBatchListResponse> {
     return this.http.get<NsContent.IBatchListResponse>(`${API_END_POINTS.AUTO_ASSIGN_BATCH}${identifier}`)
-    .pipe(
-      retry(1),
-      map(
-        (data: any) => data.result.response
+      .pipe(
+        retry(1),
+        map(
+          (data: any) => data.result.response
+        )
       )
-    )
   }
 
   enrollUserToBatch(req: any) {
@@ -132,9 +135,11 @@ export class WidgetContentService {
       .toPromise()
   }
   fetchContentRatings(contentIds: { contentIds: string[] }) {
-    return this.http
-      .post(`${API_END_POINTS.CONTENT_RATING}/rating`, contentIds)
-      .toPromise()
+    if (contentIds) { }
+    // return this.http
+    //   .post(`${API_END_POINTS.CONTENT_RATING}/rating`, contentIds)
+    //   .toPromise()
+    return of().toPromise()
   }
 
   fetchContentHistory(contentId: string): Observable<NsContent.IContinueLearningData> {
@@ -182,8 +187,12 @@ export class WidgetContentService {
     })
   }
   saveContinueLearning(content: NsContent.IViewerContinueLearningRequest): Observable<any> {
-    const url = API_END_POINTS.USER_CONTINUE_LEARNING
-    return this.http.post<any>(url, content)
+    // const url = API_END_POINTS.USER_CONTINUE_LEARNING
+    // return this.http.post<any>(url, content)
+    if (content) {
+
+    }
+    return of() as any
   }
 
   setS3Cookie(

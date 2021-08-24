@@ -3,7 +3,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ActivatedRoute, Data, Router } from '@angular/router'
 import { NsContent, NsAutoComplete } from '@sunbird-cb/collection'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, LoggerService } from '@sunbird-cb/utils'
 import { Observable, Subscription } from 'rxjs'
 import { share } from 'rxjs/operators'
 import { NsAppToc, NsCohorts } from '../../models/app-toc.model'
@@ -60,6 +60,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     private domSanitizer: DomSanitizer,
     private authAccessControlSvc: AccessControlService,
     // private dialog: MatDialog,
+    private logger: LoggerService,
     private titleTagService: TitleTagService,
     public createBatchDialog: MatDialog,
     private mobileAppsSvc: MobileAppsService,
@@ -180,7 +181,12 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     const competenciesData = this.content && this.content.competencies ? this.content.competencies : []
     if (competenciesData && competenciesData.length) {
       const str = competenciesData.replace(/\\/g, '')
-      this.competencies = JSON.parse(str)
+      try {
+        this.competencies = JSON.parse(str)
+      } catch (ex: any) {
+        this.competencies = []
+        this.logger.error('Competency Parse Error', ex)
+      }
     }
     this.discussionConfig.contextIdArr = (this.content) ? [this.content.identifier] : []
     if (this.content) {
@@ -295,12 +301,12 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   //   if (
   //     this.trainingLHubEnabled &&
   //     this.content &&
-      // this.trainingSvc.isValidTrainingContent(this.content) &&
-    //   !this.forPreview
-    // ) {
-      // this.trainingLHubCount$ = this.trainingApi
-      //   .getTrainingCount(this.content.identifier)
-      //   .pipe(retry(2))
+  // this.trainingSvc.isValidTrainingContent(this.content) &&
+  //   !this.forPreview
+  // ) {
+  // this.trainingLHubCount$ = this.trainingApi
+  //   .getTrainingCount(this.content.identifier)
+  //   .pipe(retry(2))
   //   }
   // }
 

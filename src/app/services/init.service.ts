@@ -26,6 +26,7 @@ import { environment } from '../../environments/environment'
 import _ from 'lodash'
 import { map } from 'rxjs/operators'
 import { v4 as uuid } from 'uuid'
+import { of } from 'rxjs'
 /* tslint:enable */
 // interface IDetailsResponse {
 //   tncStatus: boolean
@@ -353,6 +354,9 @@ export class InitService {
   }
 
   private async createUserInNodebb(): Promise<any> {
+    if (this.configSvc.nodebbUserProfile) {
+      return of()
+    }
     const req = {
       request: {
         username: (this.configSvc.userProfile && this.configSvc.userProfile.userName) || '',
