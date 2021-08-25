@@ -358,6 +358,7 @@ export namespace NsContent {
   export enum EMimeTypes {
     COLLECTION = 'application/vnd.ekstep.content-collection',
     ZIP = 'application/vnd.ekstep.html-archive',
+    ZIP2 = 'application/vnd.ekstep.ecml-archive',
     HTML = 'application/html',
     HTML_TEXT = 'text/html',
     ILP_FP = 'application/ilpfp',
