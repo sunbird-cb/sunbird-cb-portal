@@ -197,6 +197,7 @@ export class AppTocService {
         // case NsContent.EMimeTypes.WEB_MODULE:
         //   tocStructure.webModule += 1
         //   break
+        case NsContent.EMimeTypes.ZIP2:
         case NsContent.EMimeTypes.ZIP:
           tocStructure.interactivecontent += 1
           break
