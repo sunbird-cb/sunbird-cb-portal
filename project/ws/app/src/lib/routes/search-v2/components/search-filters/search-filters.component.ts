@@ -34,7 +34,8 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
           }
           if (nfv.name !== 'video/mp4' && nfv.name !== 'video/x-youtube' && nfv.name !== 'application/json' &&
             nfv.name !== 'application/x-mpegURL' && nfv.name !== 'application/quiz' && nfv.name !== 'image/jpeg' &&
-            nfv.name !== 'image/png') {
+            nfv.name !== 'image/png' && nfv.name !== 'application/vnd.ekstep.html-archive' &&
+            nfv.name !== 'application/vnd.ekstep.ecml-archive') {
             values.push(nfv)
           } else {
             if (nfv.name === 'video/mp4' || nfv.name === 'video/x-youtube' || nfv.name === 'application/x-mpegURL') {
@@ -58,19 +59,16 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
                 values.push(nv)
               }
             }
+            if (nfv.name === 'application/vnd.ekstep.html-archive' || nfv.name === 'application/vnd.ekstep.ecml-archive') {
+              nv.name = 'Interactive Content'
+              const indx = values.filter((x: any) => x.name === nv.name)
+              if (indx.length === 0) {
+                values.push(nv)
+              }
+            }
           }
         })
         nf.values = values
-      }
-      if (nf.name === 'contentType') {
-        nf.values = [{
-          count: '',
-          name: 'resource',
-        },
-        {
-          count: '',
-          name: 'course',
-        }]
       }
       if (nf.name === 'source') {
         nf.values.sort((a: any, b: any) => {
@@ -85,13 +83,13 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
       if (queryParams.has('f')) {
         const sfilters = JSON.parse(queryParams.get('f') || '{}')
         const fil = {
-          name: sfilters.contentType[0].toLowerCase(),
+          name: sfilters.primaryCategory[0].toLowerCase(),
           count: '',
           ischecked: true,
         }
         this.filteroptions.forEach((fas: any) => {
           fas.values.forEach((fasv: any) => {
-            if (fas.name === 'contentType') {
+            if (fas.name === 'primaryCategory') {
               if (fasv.name === fil.name) {
                 fasv.ischecked = true
               }
@@ -100,7 +98,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
             }
           })
         })
-        this.modifyUserFilters(fil, 'contentType')
+        this.modifyUserFilters(fil, 'primaryCategory')
       } else {
         const fil = {
           name: 'course',
@@ -109,7 +107,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
         }
         this.filteroptions.forEach((fas: any) => {
           fas.values.forEach((fasv: any) => {
-            if (fas.name === 'contentType') {
+            if (fas.name === 'primaryCategory') {
               if (fasv.name === fil.name) {
                 fasv.ischecked = true
               }
@@ -119,12 +117,15 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
           })
         })
         const reqfilter = {
-          mainType: 'contentType',
+          mainType: 'primaryCategory',
           name: fil.name,
           count: fil.count,
           ischecked: true,
         }
         this.myFilterArray.push(reqfilter)
+        if (this.userFilters.length === 0) {
+          this.userFilters.push(fil)
+        }
       }
     })
     // if (this.urlparamFilters) {
