@@ -183,7 +183,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
       const str = competenciesData.replace(/\\/g, '')
       try {
         this.competencies = JSON.parse(str)
-      } catch (ex: any) {
+      } catch (ex) {
         this.competencies = []
         this.logger.error('Competency Parse Error', ex)
       }
