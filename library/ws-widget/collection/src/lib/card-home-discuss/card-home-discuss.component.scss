@@ -150,6 +150,8 @@
   .mat-card-title {
     flex-shrink: 4;
     flex-grow: 4;
+    white-space: initial;
+    word-break: break-word;
     height: 116px;
     overflow-y: hidden;
   }
