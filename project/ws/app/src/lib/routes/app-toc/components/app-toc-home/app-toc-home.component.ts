@@ -549,7 +549,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         if (data && data.result && data.result.contentList && data.result.contentList.length) {
           this.resumeData = _.get(data, 'result.contentList')
           this.resumeData = _.map(this.resumeData, rr => {
-            _.set(rr, 'progressdetails.mimeType', _.get(_.first(_.filter(_.get(this.content, 'children'), { 'identifier': rr.contentId })), 'mimeType'))
+            // tslint:disable-next-line
+            _.set(rr, 'progressdetails.mimeType', _.get(_.first(_.filter(_.get(this.content, 'children'), { identifier: rr.contentId })), 'mimeType'))
             if (!_.get(rr, 'completionPercentage')) {
               if (_.get(rr, 'status') === 2) {
                 _.set(rr, 'completionPercentage', 100)
