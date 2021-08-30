@@ -1,0 +1,28 @@
+.single_provider_card {
+    height: 315px;
+    width: 275px;
+    padding: 24px 24px;
+    box-sizing: border-box;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.name-container {
+    height: 70px;
+    overflow: hidden;
+}
+.provider-image-container {
+    width: 150px;
+    height: 150px;
+    border-radius: 4px 4px;
+    overflow: hidden;
+    align-items: center;
+    display: flex;
+    border: 1px solid rgba(0,0,0,.08);
+
+    img {
+        height: 120px;
+        width: 120px;
+        margin: 15px auto;
+    }
+}
