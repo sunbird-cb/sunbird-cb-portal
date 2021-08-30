@@ -23,6 +23,16 @@ export enum ErrorType {
   serviceUnavailable = 'serviceUnavailable',
   somethingWrong = 'somethingWrong',
 }
+const flattenItems = (items: any[], key: string | number) => {
+  return items.reduce((flattenedItems, item) => {
+    flattenedItems.push(item)
+    if (Array.isArray(item[key])) {
+      // tslint:disable-next-line
+      flattenedItems = flattenedItems.concat(flattenItems(item[key], key))
+    }
+    return flattenedItems
+  },                  [])
+}
 @Component({
   selector: 'ws-app-app-toc-home',
   templateUrl: './app-toc-home.component.html',
@@ -547,10 +557,33 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.contentSvc.fetchContentHistoryV2(req).subscribe(
       data => {
         if (data && data.result && data.result.contentList && data.result.contentList.length) {
-          this.resumeData = data.result.contentList
-          const completedCount = (_.filter(this.resumeData, { status: 2 }) || []).length || 0
-          const total = _.toInteger(_.get(this.content, 'leafNodesCount')) || 1
-          const percentage = _.toInteger((completedCount / total) * 100)
+          this.resumeData = _.get(data, 'result.contentList')
+          this.resumeData = _.map(this.resumeData, rr => {
+            // tslint:disable-next-line
+            const items = _.filter(flattenItems(_.get(this.content, 'children') || [], 'children'), { 'identifier': rr.contentId, primaryCategory: 'Learning Resource' })
+            _.set(rr, 'progressdetails.mimeType', _.get(_.first(items), 'mimeType'))
+            if (!_.get(rr, 'completionPercentage')) {
+              if (_.get(rr, 'status') === 2) {
+                _.set(rr, 'completionPercentage', 100)
+              } else {
+                _.set(rr, 'completionPercentage', 0)
+              }
+            }
+            return rr
+          })
+          const progress = _.map(this.resumeData, 'completionPercentage')
+          const totalCount = _.toInteger(_.get(this.content, 'leafNodesCount')) || 1
+          if (progress.length < totalCount) {
+            const diff = totalCount - progress.length
+            if (diff) {
+              // tslint:disable-next-line
+              _.each(new Array(diff), () => {
+                progress.push(0)
+              })
+            }
+          }
+
+          const percentage = _.toInteger((_.sum(progress) / progress.length))
           if (this.content) {
             _.set(this.content, 'completionPercentage', percentage)
           }

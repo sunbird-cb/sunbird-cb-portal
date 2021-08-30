@@ -1,20 +1,15 @@
 <div class="card-container">
-  <mat-card style="box-shadow: none; background-color: rgba(0, 0, 0, 0.04);">
+  <mat-card class="padding-remove">
     <div class="badge-container">
-      <div class="image-container btn-circle mat-elevation-z5" style="background-color: rgb(158, 158, 158);
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-    padding-left: 14px;">
+      <div class="image-container btn-circle mat-elevation-z5">
         {{initials}}
       </div>
 
       <div class="badge-data">
-        <div class="mat-title margin-remove text-align" style="font-size: 16px;">
+        <div class="mat-title margin-remove text-align mat-subheading-1">
           {{userData?.name}}
         </div>
-        <div class="mat-body text-align" style="font-size: 14px;">Host</div>
+        <div class="mat-body-2 text-align">Host</div>
       </div>
     </div>
   </mat-card>

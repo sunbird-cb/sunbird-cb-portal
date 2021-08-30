@@ -20,32 +20,32 @@
       </ng-container>
     </mat-card-content>
     <mat-card-content>
-      <div style="background:rgba(0, 0, 0, 0.04); padding:15px;">
+      <div class="timediv">
         <span class="mat-subheading-2" role="link" tabindex="0">{{eventData?.startDate | date }}</span>
         <div class="flex flex-wrap" role="link" tabindex="0">
-            <span class="flex-wrap" role="link" tabindex="0" style="color:rgba(0, 0, 0, 0.6); font-size:14px;">
+            <span class="flex-wrap ws-mat-accent-text" role="link" tabindex="0">
               {{startTime}} - {{endTime}}
             </span>
         </div>
       </div>
-      <div style="margin-top:20px;">
-        <span class="mat-subheading-2" role="link" tabindex="0" style="color:rgb(0, 116, 182);">Event Type</span>
+      <div class="margin-top-m">
+        <span class="mat-subheading-2 ws-mat-accent-text" role="link" tabindex="0">Event Type</span>
         <div class="flex flex-wrap" role="link" tabindex="0">
-            <span class="flex-wrap" role="link" tabindex="0" style="font-size:14px;">
+            <span class="flex-wrap mat-body-2" role="link" tabindex="0">
               {{eventData?.resourceType}}
             </span>
         </div>
       </div>
-      <div style="margin-top:20px;">
-        <span class="mat-subheading-2" role="link" tabindex="0" style="color:rgb(0, 116, 182);">Hosted By</span>
+      <div class="margin-top-m">
+        <span class="mat-subheading-2 ws-mat-accent-text" role="link" tabindex="0">Hosted By</span>
         <div class="flex flex-wrap" role="link" tabindex="0">
-            <span class="flex-wrap" role="link" tabindex="0" style="font-size:14px;">
+            <span class="flex-wrap mat-body-2" role="link" tabindex="0">
               {{eventData?.owner}}
             </span>
         </div>
       </div>
-      <div style="margin-top:20px;">
-        <span class="mat-subheading-2" role="link" tabindex="0" style="color:rgba(0, 0, 0, 0.6); font-size:14px;">
+      <div class="margin-top-m">
+        <span class="mat-subheading-2 ws-mat-black60-text" role="link" tabindex="0">
         Last updated on {{eventData?.lastUpdatedOn | date}}
         </span>
       </div>
