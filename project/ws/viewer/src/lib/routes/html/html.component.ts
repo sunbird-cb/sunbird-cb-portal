@@ -73,24 +73,26 @@ export class HtmlComponent implements OnInit, OnDestroy {
         .getContent(this.activatedRoute.snapshot.paramMap.get('resourceId') || '')
         .subscribe(
           async data => {
-            data.artifactUrl = (data.artifactUrl.startsWith('https://')
-              ? data.artifactUrl
-              : data.artifactUrl.startsWith('http://')
+            if (data && data.artifactUrl) {
+              data.artifactUrl = (data.artifactUrl.startsWith('https://')
                 ? data.artifactUrl
-                : `https://${data.artifactUrl}`).replace(/ /ig, '').replace(/%20/ig, '').replace(/\n/ig, '')
-            if (this.accessControlSvc.hasAccess(data as any, true)) {
-              if (data && data.artifactUrl.indexOf('content-store') >= 0) {
-                await this.setS3Cookie(data.identifier)
-                this.htmlData = data
-              } else {
-                this.htmlData = data
-              }
+                : data.artifactUrl.startsWith('http://')
+                  ? data.artifactUrl
+                  : `https://${data.artifactUrl}`).replace(/ /ig, '').replace(/%20/ig, '').replace(/\n/ig, '')
+              if (this.accessControlSvc.hasAccess(data as any, true)) {
+                if (data && data.artifactUrl.indexOf('content-store') >= 0) {
+                  await this.setS3Cookie(data.identifier)
+                  this.htmlData = data
+                } else {
+                  this.htmlData = data
+                }
 
-            }
-            if (this.htmlData) {
-              this.formDiscussionForumWidget(this.htmlData)
-              if (this.discussionForumWidget) {
-                this.discussionForumWidget.widgetData.isDisabled = true
+              }
+              if (this.htmlData) {
+                this.formDiscussionForumWidget(this.htmlData)
+                if (this.discussionForumWidget) {
+                  this.discussionForumWidget.widgetData.isDisabled = true
+                }
               }
             }
           })
@@ -233,7 +235,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
     return newUrl
   }
 
-  async  ngOnDestroy() {
+  async ngOnDestroy() {
     if (this.htmlData) {
       if (!this.subApp || this.activatedRoute.snapshot.queryParams.collectionId) {
         await this.saveContinueLearning(this.htmlData)
