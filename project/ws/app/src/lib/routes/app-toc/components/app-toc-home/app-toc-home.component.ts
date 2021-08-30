@@ -23,6 +23,16 @@ export enum ErrorType {
   serviceUnavailable = 'serviceUnavailable',
   somethingWrong = 'somethingWrong',
 }
+const flattenItems = (items: any[], key: string | number) => {
+  return items.reduce((flattenedItems, item) => {
+    flattenedItems.push(item)
+    if (Array.isArray(item[key])) {
+      // tslint:disable-next-line
+      flattenedItems = flattenedItems.concat(flattenItems(item[key], key))
+    }
+    return flattenedItems
+  },                  [])
+}
 @Component({
   selector: 'ws-app-app-toc-home',
   templateUrl: './app-toc-home.component.html',
@@ -550,7 +560,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           this.resumeData = _.get(data, 'result.contentList')
           this.resumeData = _.map(this.resumeData, rr => {
             // tslint:disable-next-line
-            _.set(rr, 'progressdetails.mimeType', _.get(_.first(_.filter(_.get(this.content, 'children'), { identifier: rr.contentId })), 'mimeType'))
+            const items = _.filter(flattenItems(_.get(this.content, 'children') || [], 'children'), { 'identifier': rr.contentId, primaryCategory: 'Learning Resource' })
+            _.set(rr, 'progressdetails.mimeType', _.get(_.first(items), 'mimeType'))
             if (!_.get(rr, 'completionPercentage')) {
               if (_.get(rr, 'status') === 2) {
                 _.set(rr, 'completionPercentage', 100)

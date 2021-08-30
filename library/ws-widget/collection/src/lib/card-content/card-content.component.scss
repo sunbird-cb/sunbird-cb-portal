@@ -276,9 +276,9 @@
   .card-img {
     min-width: 269px;
     max-width: 269px;
-    /* max-height: 148px; */
+    max-height: 152px;
     display: block;
-    object-fit: contain;
+    object-fit: fill;
     /* border-top: 1px solid red; */
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
