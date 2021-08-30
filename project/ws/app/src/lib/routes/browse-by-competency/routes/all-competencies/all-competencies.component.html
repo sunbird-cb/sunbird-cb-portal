@@ -101,10 +101,10 @@
                 <div class="item">
 
                   <mat-form-field class="" appearance="outline">
-                    <mat-select #orgNameSelect formControlName="orgName" i18n-placeholder
-                      placeholder="Ascending ( A - Z )">
-                      <mat-option>Ascending ( A - Z )</mat-option>
-                      <mat-option>Descending ( Z - A )</mat-option>
+                    <mat-select #sortBySelect formControlName="sortByControl" i18n-placeholder
+                      placeholder="Sort by">
+                      <mat-option [value]="'Ascending'" slected>Ascending ( A - Z )</mat-option>
+                      <mat-option [value]="'Descending'">Descending ( Z - A )</mat-option>
                     </mat-select>
                   </mat-form-field>
 

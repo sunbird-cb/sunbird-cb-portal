@@ -21,6 +21,7 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
   searchForm: FormGroup | undefined
   appliedFilters: any = []
   searchQuery: string = ''
+  sortBy:any
   
   // searchCompArea = new FormControl('')
   titles = [
@@ -38,7 +39,7 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.searchForm = new FormGroup({
-      orgName: new FormControl(''),
+      sortByControl: new FormControl(''),
       searchKey: new FormControl(''),
     })
     const instanceConfig = this.configSvc.instanceConfig
@@ -49,19 +50,20 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
       .pipe(
         debounceTime(500),
         switchMap(async formValue => {
+          this.sortBy = formValue.sortByControl
           this.updateQuery(formValue.searchKey)
         }),
         takeUntil(this.unsubscribe)
       ).subscribe()
 
-    // this.filterForm.searchCompArea.valueChanges.subscribe(val => {
-    //   if (val.length === 0) {
-    //     // this.enableSearchFeature = false
-    //   } else {
-    //     // this.enableSearchFeature = true
-    //   }
-    //   console.log('this.searchCompArea.valueChanges val -', val)
-    // })
+    // if(this.searchForm.get('sortByControl')) {
+    //   this.searchForm.get('sortByControl')!.valueChanges.pipe(
+    //     debounceTime(500),
+    //     takeUntil(this.unsubscribe)
+    //   ).subscribe(val => {
+    //     this.sortBy = val
+    //   });
+    // }
 
     // Fetch initial data
     this.searchCompetency('')
@@ -81,17 +83,20 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
       // { type: 'COMPETENCY', field: 'competencyType', keyword: 'Behavioural' },
       { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
     ]
-    if(filters) {
+    const filterJson = []
+    if(filters && filters.length) {
       const groups = _.groupBy(filters, 'mainType')
       for (let key of Object.keys(groups)) {
-        const  filter = {type: 'COMPETENCY', field: key, keyword: '' }
-        const keywords = groups[key].map(x=> x.name).join()
-        filter.keyword = keywords
-        searchJson.push(filter)
+        const  filter = {field: key, values: [''] }
+        const keywords = groups[key].map(x=> x.name)
+        filter.values = keywords
+        filterJson.push(filter)
       }
     }
     const req = {
       searches: searchJson,
+      filter: filterJson,
+      sort: this.sortBy
     }
     this.browseCompServ
       .searchCompetency(req)
