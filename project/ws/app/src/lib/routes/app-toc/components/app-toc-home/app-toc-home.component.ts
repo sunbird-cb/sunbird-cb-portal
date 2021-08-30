@@ -558,7 +558,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       data => {
         if (data && data.result && data.result.contentList && data.result.contentList.length) {
           this.resumeData = _.get(data, 'result.contentList')
-
           this.resumeData = _.map(this.resumeData, rr => {
             // tslint:disable-next-line
             const items = _.filter(flattenItems(_.get(this.content, 'children') || [], 'children'), { 'identifier': rr.contentId, primaryCategory: 'Learning Resource' })
