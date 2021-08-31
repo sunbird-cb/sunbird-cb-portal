@@ -45,6 +45,7 @@ import { Searchv2RoutingModule } from './searchv2-routing.module'
 import { GlobalSearchComponent } from './routes/global-search/global-search.component'
 import { LearnSearchComponent } from './routes/learn-search/learn-search.component'
 import { SearchFiltersComponent } from './components/search-filters/search-filters.component'
+import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 
 @NgModule({
   declarations: [
@@ -97,6 +98,7 @@ import { SearchFiltersComponent } from './components/search-filters/search-filte
     BtnChannelAnalyticsModule,
     MatDividerModule,
     UserAutocompleteModule,
+    InfiniteScrollModule,
   ],
   exports: [],
   providers: [],
