@@ -1,307 +1,142 @@
 <ws-widget-btn-page-back [widgetData]="{ url: 'home', titles: titles  }">
 </ws-widget-btn-page-back>
 <div class="container-balanced main_content_box">
-    <div class="top_card_container">
-        <h1  class="mat-h1 margin-bottom-m inline-block "> Popular competencies</h1>
-        <div class="top_card_inner_box flex">
-            <div class="card-box card_gradient bg_color_blue">
-                <img src="fusion-assets/images/competency.svg">
-                <div class="card_text_box">
-                    <p class="mat-subheading-1 text-white margin-bottom-m">Communication</p>
-                    <p class="mat-body-2 text-white">Behavioural</p>
-                </div>
-            </div>
+  <div class="top_card_container">
+    <h1 class="mat-h1 margin-bottom-m inline-block "> Popular competencies</h1>
+    <div class="top_card_inner_box flex">
+      <ng-container *ngFor="let comp of [1,2,3,4,5,6,7,8]">
+        <ws-app-popular-competency-card></ws-app-popular-competency-card>
+      </ng-container>
 
-            <div class="card-box card_gradient bg_color_blue">
-                <img src="fusion-assets/images/competency.svg">
-                <div class="card_text_box">
-                    <p class="mat-subheading-1 text-white margin-bottom-m">Vigilance and planning</p>
-                    <p class="mat-body-2 text-white">Domain</p>
-                </div>
-            </div>
-
-            <div class="card-box card_gradient bg_color_blue">
-                <img src="fusion-assets/images/competency.svg">
-                <div class="card_text_box">
-                    <p class="mat-subheading-1 text-white margin-bottom-m">Competency which has a long label</p>
-                    <p class="mat-body-2 text-white">Domain</p>
-                </div>
-            </div>
-               
-            <div class="card-box card_gradient bg_color_blue">
-                <img src="fusion-assets/images/competency.svg">
-                <div class="card_text_box">
-                    <p class="mat-subheading-1 text-white margin-bottom-m">Competency which has a long label - time</p>
-                    <p class="mat-body-2 text-white">Domain</p>
-                </div>
-            </div>
-           
-            <div class="card-box card_gradient bg_color_blue">
-                <img src="fusion-assets/images/competency.svg">
-                <div class="card_text_box">
-                    <p class="mat-subheading-1 text-white margin-bottom-m">Communication</p>
-                    <p class="mat-body-2 text-white">Behavioural</p>
-                </div>
-            </div>
-
-            <div class="card-box card_gradient bg_color_blue">
-                <img src="fusion-assets/images/competency.svg">
-                <div class="card_text_box">
-                    <p class="mat-subheading-1 text-white margin-bottom-m">Vigilance and planning</p>
-                    <p class="mat-body-2 text-white">Domain</p>
-                </div>
-            </div>
-
-            <div class="card-box card_gradient bg_color_blue">
-                <img src="fusion-assets/images/competency.svg">
-                <div class="card_text_box">
-                    <p class="mat-subheading-1 text-white margin-bottom-m">Competency which has a long label </p>
-                    <p class="mat-body-2 text-white">Domain</p>
-                </div>
-            </div>
-               
-            <div class="card-box card_gradient bg_color_blue">
-                <img src="fusion-assets/images/competency.svg">
-                <div class="card_text_box">
-                    <p class="mat-subheading-1 text-white margin-bottom-m">Competency which has a long label - time</p>
-                    <p class="mat-body-2 text-white">Domain</p>
-                </div>
-            </div>
+      <!-- <div class="card-box card_gradient bg_color_blue">
+        <img src="fusion-assets/images/competency.svg">
+        <div class="card_text_box">
+          <p class="mat-subheading-1 text-white margin-bottom-m">Vigilance and planning</p>
+          <p class="mat-body-2 text-white">Domain</p>
         </div>
-    </div>
+      </div>
 
-    <!--===========  All competencies section ============= -->
-    <div class="all_competency_box">
-        <h1 class="mat-h1 margin-remove inline-block "> All competencies </h1>
-        <div class="all_competency_inner">
-            <div class="left_card_box">
-                <form [formGroup]="searchForm">
-                    <div class="top_search_box">
-                        <div class="search_box_inner">
-                            <div class="flex flex-1 flex-column margin-fix search search_box_main">
-                                <mat-form-field appearance="outline" class="autocomplete-form search_form"
-                                    color="primary">
-                                    <mat-icon matPrefix class="search-home flex items-center justify-center mr-2">search
-                                    </mat-icon>
-                                    <!-- <mat-label>Search</mat-label> -->
-                                    <input type="search" name="searchKey" #searchKey class="ml-2" i18-aria-label
-                                        aria-label="Search" formControlName="searchKey" 
-                                        
-                                        i18n-placeholder="search"
-                                        [placeholder]="'Search'" matInput />
-<!-- (input)="updateQuery(searchKey.value)" -->
-                                </mat-form-field>
-                            </div>
-
-                            <div class="search_tag_box">
-
-                                <a href="#" class="single_tag">Behavioural <mat-icon
-                                        class="cursor-pointer margin-left-xs ws-mat-black60-text">close</mat-icon></a>
-                                <a href="#" class="single_tag">Behavioural <mat-icon
-                                        class="cursor-pointer margin-left-xs ws-mat-black60-text">close</mat-icon></a>
-                                <a href="#" class="ws-mat-default-text mat-subheading-2 ">Clear all</a>
-                            </div>
-                        </div>
-                        <div class="item_dropdown_box">
-                            <div class="flex flex-1 flex-wrap section-input">
-                                <div class="item">
-
-                                    <mat-form-field class="" appearance="outline">
-                                        <mat-select #orgNameSelect formControlName="orgName" i18n-placeholder
-                                            placeholder="Ascending ( A - Z )">
-                                            <mat-option>Ascending ( A - Z )</mat-option>
-                                            <mat-option>Descending ( Z - A )</mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <div class="main_card_box">
-                    <mat-sidenav-container>
-                        <!-- search cards -->
-                        <mat-sidenav-content class="custom-sidecontent  mat-drawer-content mat-sidenav-content">
-
-                            <div>
-                                <ng-container *ngFor="let comp of allCompetencies">
-                                    <!-- ===================== single card ===================-->
-                                    <mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card">
-                                        <mat-card-content>
-                                            <div class="card_inner_content flex">
-                                                <div class="card_inner_title_box flex-col">
-                                                    <div class="flex-col">
-                                                        <h4 class="mat-h4">{{comp.name}}</h4>
-                                                    </div>
-                                                    <div class="flex-col">
-                                                        <p class="mat-body-2 ws-mat-black60-text">{{comp?.additionalProperties?.competencyType}}</p>
-                                                    </div>
-    
-    
-                                                    <div class="flex-col text_icon_box">
-                                                        <mat-icon
-                                                            class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color"
-                                                            role="img" aria-hidden="true">school</mat-icon>
-                                                        <span class="icon_text mat-caption ws-mat-black60-text"> 4
-                                                            CBPs</span>
-                                                    </div>
-                                                </div>
-                                                <div class="card_right_txtbox flex-col">
-                                                    <p class="mat-body-1 ws-mat-black60-text">
-                                                        {{comp.description}}
-                                                    </p>
-    
-                                                    <div class="bottomsection">
-                                                        <div class="contentdata margin-bottom-xm">
-                                                            <a class="ws-mat-default-text mat-subheading-2 explore_link">Quick
-                                                                explore
-                                                                <mat-icon
-                                                                    class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color">
-                                                                    expand_more</mat-icon>
-                                                            </a>
-                                                        </div>
-    
-                                                        <!--=============== div for hidden cards for quick explore =============-->
-                                                        <div class="">
-    
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </mat-card-content>
-                                    </mat-card> <!-- single card end -->
-                                </ng-container>
-
-                                <!-- ===================== single card ===================-->
-                                <mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card" [hidden]=true>
-                                    <mat-card-content>
-                                        <div class="card_inner_content flex">
-                                            <div class="card_inner_title_box flex-col">
-                                                <div class="flex-col">
-                                                    <h4 class="mat-h4">Competency label</h4>
-                                                </div>
-                                                <div class="flex-col">
-                                                    <p class="mat-body-2 ws-mat-black60-text">Domain</p>
-                                                </div>
-
-
-                                                <div class="flex-col text_icon_box">
-                                                    <mat-icon
-                                                        class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color"
-                                                        role="img" aria-hidden="true">school</mat-icon>
-                                                    <span class="icon_text mat-caption ws-mat-black60-text"> 18
-                                                        CBPs</span>
-                                                </div>
-                                            </div>
-                                            <div class="card_right_txtbox flex-col">
-                                                <p class="mat-body-1 ws-mat-black60-text">
-                                                    Sed sit amet arcu aliquet, molestie justo at, auctor nunc. Phasellus
-                                                    ligula ipsum, volutpat eget semper id, viverra eget nibh.
-                                                    Suspendisse luctus mattis cursus. Nam consectetur ante at nisl
-                                                    hendrerit gravida.
-                                                </p>
-
-                                                <div class="bottomsection">
-                                                    <div class="contentdata margin-bottom-xm">
-                                                        <a class="ws-mat-default-text mat-subheading-2 explore_link">Quick
-                                                            explore
-                                                            <mat-icon
-                                                                class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color">
-                                                                expand_more</mat-icon>
-                                                        </a>
-                                                    </div>
-
-                                                    <!--=============== div for hidden cards for quick explore =============-->
-                                                    <div class="">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </mat-card-content>
-                                </mat-card> 
-                                <!-- single card end -->
-
-                            </div>
-                        </mat-sidenav-content>
-
-                        <!-- filter sidebar -->
-                        <!-- <mat-sidenav mode="side" position="end" opened class="custom-sidenav">
-                            
-                        </mat-sidenav> -->
-                    </mat-sidenav-container>
-
-                    <a href="#" class="ws-mat-default-text mat-subheading-2 load_more_link">Load more</a>
-                </div> <!-- main card box end -->
-            </div>
-            <div class="right_sidebar_box custom-sidenav">
-                <!-- <mat-sidenav mode="side" position="end" opened class="custom-sidenav"> -->
-                <div class="filter-sidebar padding-m">
-                    <p class="mat-subheading-2 margin-bottom-m font-bold-imp">Filter by</p>
-                    <form class="filter-form" [formGroup]="filterForm">
-                        <span class="filter_span_box">
-                            <p class="mat-subheading-1 margin-bottom-xs font-bold-imp">Type</p>
-
-                            <section class="mat-body-2 margin-bottom-xs text-capitalize">
-                                <mat-checkbox class="example-margin">
-                                    <label for="Behavioural">Behavioural</label>
-                                </mat-checkbox>
-                            </section>
-                            <section class="mat-body-2 margin-bottom-xs text-capitalize">
-                                <mat-checkbox class="example-margin">
-                                    <label for="Behavioural">Domain</label>
-                                </mat-checkbox>
-                            </section>
-                            <section class="mat-body-2 margin-bottom-xs text-capitalize">
-                                <mat-checkbox class="example-margin">
-                                    <label for="Behavioural">Functional</label>
-                                </mat-checkbox>
-                            </section>
-
-                        </span>
-
-                        <span class="filter_span_box seacrh_span_box">
-                            <p class="mat-subheading-1 font-bold-imp margin-remove">Competency area</p>
-                            <!-- <mat-form-field class="right_section_search_box">
-                             
-                              <mat-icon>search</mat-icon>
-                              <input matInput placeholder="Search" value="">
-                            </mat-form-field> -->
-
-                            <mat-form-field  class="autocomplete-form search_form" color="primary" [floatLabel]="'never'">
-                                <mat-icon matPrefix class="search-home flex items-center justify-center mr-2">search
-                                </mat-icon>
-                                <!-- <mat-label>Search</mat-label> -->
-                                <input type="search" #searchCompArea class="ml-2" i18-aria-label aria-label="Search"
-                                    formControlName="searchCompArea" i18n-placeholder="search" [placeholder]="'Search'" matInput autocomplete="off"/>
-                                    
-                                    <!-- <input type="search" #searchInput class="ml-2" i18n-placeholder="search content"
-                                    [placeholder]="'Search'" i18-aria-label aria-label="Query" matInput [formControl]="queryControl"
-                                    accesskey="F" /> -->
-                            </mat-form-field>
-
-                            <div class="comp_side_box">
-                                <section class="mat-body-2 margin-bottom-xs text-capitalize"
-                                    *ngFor="let comp of competencyAreas | pipeFilterV2:'name': searchCompArea.value">
-                                    <mat-checkbox class="example-margin" name="{{comp.name}}}">
-                                        <label for="{{comp.name}}">{{comp.name}}</label>
-                                    </mat-checkbox>
-                                </section>
-                            </div>
-
-                        </span>
-                    </form>
-                </div>
-                <!-- </mat-sidenav> -->
-            </div>
+      <div class="card-box card_gradient bg_color_blue">
+        <img src="fusion-assets/images/competency.svg">
+        <div class="card_text_box">
+          <p class="mat-subheading-1 text-white margin-bottom-m">Competency which has a long label</p>
+          <p class="mat-body-2 text-white">Domain</p>
         </div>
+      </div>
+
+      <div class="card-box card_gradient bg_color_blue">
+        <img src="fusion-assets/images/competency.svg">
+        <div class="card_text_box">
+          <p class="mat-subheading-1 text-white margin-bottom-m">Competency which has a long label - time</p>
+          <p class="mat-body-2 text-white">Domain</p>
+        </div>
+      </div>
+
+      <div class="card-box card_gradient bg_color_blue">
+        <img src="fusion-assets/images/competency.svg">
+        <div class="card_text_box">
+          <p class="mat-subheading-1 text-white margin-bottom-m">Communication</p>
+          <p class="mat-body-2 text-white">Behavioural</p>
+        </div>
+      </div>
+
+      <div class="card-box card_gradient bg_color_blue">
+        <img src="fusion-assets/images/competency.svg">
+        <div class="card_text_box">
+          <p class="mat-subheading-1 text-white margin-bottom-m">Vigilance and planning</p>
+          <p class="mat-body-2 text-white">Domain</p>
+        </div>
+      </div>
+
+      <div class="card-box card_gradient bg_color_blue">
+        <img src="fusion-assets/images/competency.svg">
+        <div class="card_text_box">
+          <p class="mat-subheading-1 text-white margin-bottom-m">Competency which has a long label </p>
+          <p class="mat-body-2 text-white">Domain</p>
+        </div>
+      </div>
+
+      <div class="card-box card_gradient bg_color_blue">
+        <img src="fusion-assets/images/competency.svg">
+        <div class="card_text_box">
+          <p class="mat-subheading-1 text-white margin-bottom-m">Competency which has a long label - time</p>
+          <p class="mat-body-2 text-white">Domain</p>
+        </div>
+      </div> -->
     </div>
+  </div>
+
+  <!--===========  All competencies section ============= -->
+  <div class="all_competency_box">
+    <h1 class="mat-h1 margin-remove inline-block "> All competencies </h1>
+    <div class="all_competency_inner">
+      <div class="left_card_box">
+        <form [formGroup]="searchForm">
+          <div class="flex top_search_box">
+            <div class="flex-1 search_box_inner">
+              <div class="flex flex-1 flex-column margin-fix search search_box_main">
+                <mat-form-field appearance="outline" class="autocomplete-form search_form margin-right-s"
+                  color="primary">
+                  <mat-icon matPrefix class="search-home flex items-center justify-center mr-2">search
+                  </mat-icon>
+                  <!-- <mat-label>Search</mat-label> -->
+                  <input type="search" name="searchKey" #searchKey class="ml-2" i18-aria-label aria-label="Search"
+                    formControlName="searchKey" i18n-placeholder="search" [placeholder]="'Search'" matInput />
+                  <!-- (input)="updateQuery(searchKey.value)" -->
+                </mat-form-field>
+              </div>
+
+              <div class="search_tag_box">
+                <ng-container *ngFor="let f of appliedFilters">
+                  <a class="single_tag">{{f.name}}
+                    <mat-icon class="cursor-pointer margin-left-xs ws-mat-black60-text" (click)="removeFilter(f)">
+                      close
+                    </mat-icon>
+                  </a>
+                </ng-container>
+              </div>
+            </div>
+            <div class="item_dropdown_box">
+              <div class="flex flex-1 flex-wrap section-input">
+                <div class="item">
+
+                  <mat-form-field class="" appearance="outline">
+                    <mat-select #sortBySelect formControlName="sortByControl" i18n-placeholder
+                      placeholder="Sort by">
+                      <mat-option [value]="'Ascending'" slected>Ascending ( A - Z )</mat-option>
+                      <mat-option [value]="'Descending'">Descending ( Z - A )</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="main_card_box">
+          <mat-sidenav-container>
+            <!-- search cards -->
+            <mat-sidenav-content class="custom-sidecontent  mat-drawer-content mat-sidenav-content">
+              <div>
+                <ng-container *ngFor="let comp of allCompetencies">
+                  <ws-app-competency-card [competency]="comp"></ws-app-competency-card>
+                </ng-container>
+              </div>
+            </mat-sidenav-content>
+
+          </mat-sidenav-container>
+
+          <!-- <a class="ws-mat-default-text mat-subheading-2 load_more_link">Load more</a> -->
+        </div>
+        <!-- main card box end -->
+      </div>
+      <div class="right_sidebar_box custom-sidenav">
+        <ws-app-competency-filters (appliedFilter)="applyFilter($event)">
+        </ws-app-competency-filters>
+      </div>
+    </div>
+  </div>
 </div>
 
 
-<button [routerLink]="['/app/learn/browse-by/competency', compentency]">go to details</button>
-
-   
-
-
+<!-- <button [routerLink]="['/app/learn/browse-by/competency', compentency]">go to details</button> -->

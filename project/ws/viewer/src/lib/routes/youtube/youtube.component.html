@@ -1,3 +1,4 @@
+<ng-container *ngIf="widgetResolverYoutubeData?.widgetData?.url; else loader">
 <viewer-youtube-container
   [isScreenSizeSmall]="isScreenSizeSmall"
   [isFetchingDataComplete]="isFetchingDataComplete"
@@ -6,3 +7,9 @@
   [discussionForumWidget]="discussionForumWidget"
   [forPreview]="forPreview"
 ></viewer-youtube-container>
+</ng-container>
+<ng-template #loader>
+  <div class="flex justify-center">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

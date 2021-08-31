@@ -67,7 +67,6 @@ export class PlayerYoutubeComponent extends WidgetBaseComponent
   ) {
     super()
   }
-
   ngOnInit() {
     this.screenSubscription = this.valueSvc.isXSmall$.subscribe(isXsSmall => {
       if (isXsSmall) {

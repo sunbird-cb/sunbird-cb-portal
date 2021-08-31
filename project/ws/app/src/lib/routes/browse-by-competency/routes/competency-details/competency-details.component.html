@@ -5,16 +5,19 @@
 
     <!--====== top left text box ===============-->
     <div class="left_content_box">
-        <h2 class="mat-h2  inline-block "> Health welfare</h2>
+        <h2 class="mat-h2  inline-block "> {{competencyData?.name}}</h2>
         <div>
-            <p class="mat-body-1 ws-mat-black60-text">Banjo tote bag bicycle rights, High Life sartorial cray craft beer whatever street art fap. Hashtag typewriter banh mi, squid keffiyeh High 
-                Life Brooklyn twee craft beer tousled chillwave. PBR&B selfies chillwave, bespoke tote bag blog post-ironic. Single-origin coffee put a
-                    bird on it craft beer YOLO, Portland hella deep v Schlitz. Tumblr Bushwick post-ironic Thundercats. Vinyl 90's keytar,
-                    literally cardigan Williamsburg YOLO squid pickled Etsy salvia lo-fi locavore. Meh leggings retro narwhal Neutra.</p>
+            <p class="mat-body-1 ws-mat-black60-text">{{competencyData?.description}}</p>
             
             
-            <p class="mat-body-1 ws-mat-black60-text highlight_point_text">Competency type: <span class="mat-primary mat-subheading-1">Behavioural</span></p>
-            <p class="mat-body-1 ws-mat-black60-text highlight_point_text">Competency area: <span class="mat-primary mat-subheading-1">Public welfare</span></p>
+            <p class="mat-body-1 ws-mat-black60-text highlight_point_text">
+                Competency type: 
+                <span class="mat-primary mat-subheading-1">{{competencyData?.additionalProperties?.competencyType}}</span>
+            </p>
+            <p class="mat-body-1 ws-mat-black60-text highlight_point_text">
+                Competency area: 
+                <span class="mat-primary mat-subheading-1">{{competencyData?.additionalProperties?.competencyArea}}</span>
+            </p>
             
         </div>
     </div>
@@ -22,9 +25,9 @@
      <!--====== second left text box ===============-->
     <div class="all_cbp_box">
         <div class="left_content_box">
-            <h2 class="mat-h2 margin-remove inline-block "> All competencies </h2>
+            <h2 class="mat-h2 margin-remove inline-block "> All associated CBPs </h2>
             <div>
-                <p class="mat-body-2 ws-mat-black60-text"> 4 CBPs for “Health welfare”</p>
+                <p class="mat-body-2 ws-mat-black60-text"> 4 CBPs for “{{competencyData?.name}}”</p>
             </div>
         </div>
             
@@ -32,125 +35,13 @@
             <mat-sidenav-content class="custom-sidecontent">
 
                 <div class="">
-                    <!-- ====== first card =============-->
-                    <mat-card class="learn-card margin-bottom-m padding-remove position-relative flex">
-                        <div class="imageholder ">
-                            <img mat-card-image class="margin-remove" src="https://igot.blob.core.windows.net/content/content/do_11327647746152857614136/artifact/do_11327647746152857614136_1620663753379_introtoeconomics11602651204113.jpg"
-                            alt="">
-                        </div>
-                        <mat-card-content class="mat-text-box">
-                            <p class="mat-caption margin-bottom-xxs text-uppercase ws-mat-black60-text">
-                                <mat-icon class="ws-mat-default-text title_icon">video_library</mat-icon> COURSE
-                            </p>
-                           <div class="flex main_title_box">
-                                <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title">
-                                    <a href="#">The science of healthcare, public health and pharma care.</a>
-                                </p>
-                           </div>
-                            <!-- <p class="mat-body-2 margin-bottom-s"></p> -->
-                            <div class="bottomsection">
-                                <p class="mat-body-2 margin-bottom-xxs">By Diraj Rasthogi</p>
-                                <div class="contentdata margin-bottom-xm">
-                                    <ul class="mat-body-2 margin-remove-top margin-bottom-xs padding-remove ws-mat-black60-text highlighting_list">
-                                        <li>Health social science</li>
-                                        <li >
-                                            <img src="/assets/icons/content/separator.svg" class="text_seperator">  
-                                            Jan 2020
-                                        </li> 
-                                        <li >
-                                            <img src="/assets/icons/content/separator.svg" class="text_seperator"> 
-                                            2h 55m
-                                        </li> 
-                                        <li class="rating"><img src="/assets/icons/content/separator.svg" class="text_seperator">
-                                            <span class="rating-number mat-body-2">  4.5  &nbsp;</span>
-                                            <mat-icon>star</mat-icon>
-                                            <mat-icon>star</mat-icon>
-                                            <mat-icon>star</mat-icon>
-                                            <mat-icon>star</mat-icon>
-                                            <mat-icon>star_half</mat-icon>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="flex">
-                                    <div class="tags flex-col">
-                                        <ul class="mat-caption margin-remove-top padding-remove tag_list">
-                                            <li><span class="tag">Health science</span> </li>
-                                            <li><span class="tag">Other tags</span> </li>
-                                        </ul>
-                                        
-                                    </div>
-                                    <div class="flex-col">
-                                        <p class="display-inline-block ws-mat-black60-text actionbtns">
-                                            <mat-icon class="margin-right-s">playlist_add</mat-icon>
-                                            <mat-icon>more_vert_outlined</mat-icon> 
-                                           
-                                        </p>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </mat-card-content>
-                    </mat-card> <!-- card end -->
-
-                    <!-- ====== second card =============-->
-                    <mat-card class="learn-card margin-bottom-m padding-remove position-relative flex">
-                        <div class="imageholder ">
-                            <img mat-card-image class="margin-remove" src="https://igot.blob.core.windows.net/content/content/do_11327647746152857614136/artifact/do_11327647746152857614136_1620663753379_introtoeconomics11602651204113.jpg"
-                            alt="">
-                        </div>
-                        <mat-card-content class="mat-text-box">
-                            <p class="mat-caption margin-bottom-xxs text-uppercase ws-mat-black60-text">
-                                <mat-icon class="ws-mat-default-text title_icon">video_library</mat-icon> COURSE
-                            </p>
-                           <div class="flex main_title_box">
-                                <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title">
-                                    <a href="#">The science of healthcare, public health and pharma care.</a>
-                                </p>
-                           </div>
-                            <!-- <p class="mat-body-2 margin-bottom-s"></p> -->
-                            <div class="bottomsection">
-                                <p class="mat-body-2 margin-bottom-xxs">By Diraj Rasthogi</p>
-                                <div class="contentdata margin-bottom-xm">
-                                    <ul class="mat-body-2 margin-remove-top margin-bottom-xs padding-remove ws-mat-black60-text highlighting_list">
-                                        <li>Health social science</li>
-                                        <li >
-                                            <img src="/assets/icons/content/separator.svg" class="text_seperator">  
-                                            Jan 2020
-                                        </li> 
-                                        <li >
-                                            <img src="/assets/icons/content/separator.svg" class="text_seperator"> 
-                                            2h 55m
-                                        </li> 
-                                        <li class="rating"><img src="/assets/icons/content/separator.svg" class="text_seperator">
-                                            <span class="rating-number mat-body-2">  4.5  &nbsp;</span>
-                                            <mat-icon>star</mat-icon>
-                                            <mat-icon>star</mat-icon>
-                                            <mat-icon>star</mat-icon>
-                                            <mat-icon>star</mat-icon>
-                                            <mat-icon>star_half</mat-icon>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="flex">
-                                    <div class="tags flex-col">
-                                        <ul class="mat-caption margin-remove-top padding-remove tag_list">
-                                            <li><span class="tag">Health science</span> </li>
-                                            <li><span class="tag">Other tags</span> </li>
-                                        </ul>
-                                        
-                                    </div>
-                                    <div class="flex-col">
-                                        <p class="display-inline-block ws-mat-black60-text actionbtns">
-                                            <mat-icon class="margin-right-s">playlist_add</mat-icon>
-                                            <mat-icon>more_vert_outlined</mat-icon> 
-                                           
-                                        </p>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </mat-card-content>
-                    </mat-card> <!-- card end -->
+                    <ng-container *ngFor="let c of courses">
+                        <ws-widget-card-content  [widgetData]="{
+                            content: c,
+                            cardSubType: 'card-wide'
+                          }">
+                        </ws-widget-card-content>
+                    </ng-container>
                 </div>
             </mat-sidenav-content>
 

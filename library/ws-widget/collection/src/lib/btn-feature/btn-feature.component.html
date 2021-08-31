@@ -52,7 +52,7 @@
 <ng-template #cardFull let-actionBtn="actionBtn" let-config="config">
   <mat-card class="card-full mr-4" id="{{actionBtn?.id}}">
     <a [href]="actionBtn.url" [url]="actionBtn.url" [wsWidgetUrlResolver]="actionBtn.isExternal" matRipple
-      class="feature">
+      class="feature mbord-allign">
       <!-- <mat-icon class="feature-status-icon" *ngIf="featureStatusColor" [color]="featureStatusColor">brightness_1
       </mat-icon> -->
       <ng-container [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{
@@ -73,7 +73,7 @@
 <ng-template #externalLinkButton let-actionBtn="actionBtn" let-config="config">
   <!-- [matTooltip]="actionBtn.toolTip" -->
   <a [href]="actionBtn.url" [target]="actionBtn.target ? actionBtn.target : '_self'"
-    class="external-link-button flex items-center justify-center"
+    class="external-link-button flex items-center justify-center mbord-allign"
     [ngClass]="{'mat-button' : !config.hideTitle, 'mat-icon-button': config.hideTitle}">
     <ng-container [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{
             iconType: actionBtn.iconType,
@@ -86,7 +86,7 @@
 
 <ng-template #cardSmall let-actionBtn="actionBtn" let-config="config">
   <a [href]="actionBtn.url" [url]="actionBtn.url" [wsWidgetUrlResolver]="actionBtn.isExternal" matRipple
-    class="feature card-small mat-card">
+    class="feature card-small mat-card mbord-allign">
     <!-- <mat-icon class="feature-status-icon" *ngIf="featureStatusColor" [color]="featureStatusColor">
       brightness_1
     </mat-icon> -->
@@ -101,7 +101,7 @@
 <ng-template #cardMini let-actionBtn="actionBtn" let-config="config">
   <a role="link" matRipple routerLink={{actionBtn.url}} active [wsWidgetUrlResolver]="actionBtn.isExternal"
     [attr.aria-label]="actionBtn.name" role="link" routerLinkActive="ws-mat-selected-home-menu"
-    class="flex items-center flex-col px-4 box-sizing-box rem">
+    class="flex items-center flex-col px-4 box-sizing-box rem mbord-allign">
     <!-- <mat-icon *ngIf="!config.hideIcon">{{ actionBtn.icon }}</mat-icon> -->
     <!-- <span *ngIf="!config.hideTitle" Class="mat-caption">{{ actionBtn.name }}</span> -->
     <ng-container [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="widgetData.actionBtn"></ng-container>
@@ -116,7 +116,7 @@
       brightness_1
     </mat-icon> -->
 
-    <a class="text-center block" [href]="actionBtn.url" [url]="actionBtn.url"
+    <a class="text-center block mbord-allign" [href]="actionBtn.url" [url]="actionBtn.url"
       [wsWidgetUrlResolver]="actionBtn.isExternal" [mobileAppFunction]="actionBtn.mobileAppFunction">
       <ng-container [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{
           iconType: actionBtn.iconType,

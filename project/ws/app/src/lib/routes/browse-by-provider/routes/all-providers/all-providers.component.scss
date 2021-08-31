@@ -14,39 +14,6 @@
         flex-direction: row;
         flex-wrap: wrap;
         justify-content:space-between;
-
-        .card-box {
-            width: 275px;
-            height: 130px;
-            margin-bottom: 25px;
-            border-radius: 8px 8px;
-            overflow: hidden;
-            // background-image: url("https://igot.blob.core.windows.net/content/content/do_11327647746152857614136/artifact/do_11327647746152857614136_1620663753379_introtoeconomics11602651204113.jpg");
-            // background-position: center;
-            // background-repeat: no-repeat;
-            // background-size: cover;
-            // padding: 16px 16px;
-            box-sizing: border-box;
-            position: relative;
-
-            img {
-                height: 100%;
-                width: 100%;
-                background-position: center;
-                background-repeat: no-repeat;
-                background-size: cover;
-                position: absolute;
-                z-index: -1;
-            
-            }
-            .card_text_box {
-                padding: 16px 16px;
-                width: 100%;
-                position: relative;
-                z-index: 9;
-                box-sizing: border-box;
-            }
-        }
     }
 }
 
@@ -114,34 +81,6 @@
         flex-wrap: wrap;
         display: flex;
         justify-content: space-between;
-    }
-    .single_provider_card {
-        height: 315px;
-        width: 275px;
-        padding: 24px 24px;
-        box-sizing: border-box;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-    }
-    .name-container {
-        height: 70px;
-        overflow: hidden;
-    }
-    .provider-image-container {
-        width: 150px;
-        height: 150px;
-        border-radius: 4px 4px;
-        overflow: hidden;
-        align-items: center;
-        display: flex;
-        border: 1px solid rgba(0,0,0,.08);
-
-        img {
-            height: 120px;
-            width: 120px;
-            margin: 15px auto;
-        }
     }
 
     a.load_more_link {

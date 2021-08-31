@@ -215,9 +215,9 @@
       </button>
     </div>
   </mat-card>
-  <ws-widget-user-content-rating class="mb-4 block" *ngIf="content?.identifier" [contentId]="content?.identifier"
+  <!-- <ws-widget-user-content-rating class="mb-4 block" *ngIf="content?.identifier" [contentId]="content?.identifier"
     [isDisabled]="isPreviewMode" [forPreview]="forPreview">
-  </ws-widget-user-content-rating>
+  </ws-widget-user-content-rating> -->
   <div class="hidden sm:block margin-bottom-m" *ngIf="content?.creatorDetails?.length">
     <ng-container [ngTemplateOutlet]="creators" [ngTemplateOutletContext]="{
         authors: content?.creatorDetails,

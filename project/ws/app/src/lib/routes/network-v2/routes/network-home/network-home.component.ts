@@ -136,7 +136,7 @@ export class NetworkHomeComponent implements OnInit {
       if (this.searchResultUserArray && this.searchResultUserArray.length === 0) {
         this.cardNetworkService.fetchSearchUserInfo(val).subscribe(data => {
           this.searchResultUserArray = []
-          this.searchResultUserArray = data
+          this.searchResultUserArray = data.result.response.content
           // this.searchResultUserArray.forEach((usr: any) => {
             // this.networkV2Service.fetchProfile(usr.wid).subscribe((res: any) => {
               // const resdata = res.result.UserProfile[0]

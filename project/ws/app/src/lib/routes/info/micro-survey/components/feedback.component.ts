@@ -10,6 +10,7 @@ export class FeedbackComponent implements OnInit {
     id: '1625726181379',
     getAPI: 'https://rain.tarento.com/api/forms/getFormById?id=1625726181379',
     postAPI: 'https://rain.tarento.com/api/forms/saveFormSubmit',
+    customizedHeader: {},
   }
   constructor() { }
 

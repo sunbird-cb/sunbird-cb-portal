@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core'
+import * as moment from 'moment'
 // import { ActivatedRoute } from '@angular/router'
 // import { ConfigurationsService } from '@ws-widget/utils'
 // import { NSProfileDataV2 } from '../../models/profile-v2.model'
@@ -16,6 +17,9 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
   startTime: any
   endTime: any
   lastUpdate: any
+  pastEvent = false
+  futureEvent = false
+  currentEvent = false
   // completedPercent!: number
   // badgesSubscription: any
   // portalProfile!: NSProfileDataV2.IProfile
@@ -38,7 +42,60 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
       this.startTime = this.eventData.startTime.split('+')[0].replace(/(.*)\D\d+/, '$1')
       this.endTime = this.eventData.endTime.split('+')[0].replace(/(.*)\D\d+/, '$1')
       this.lastUpdate = this.eventData.lastUpdatedOn.split('T')[0]
+
+      const eventDate = this.customDateFormat(this.eventData.startDate, this.eventData.startTime)
+      const eventendDate = this.customDateFormat(this.eventData.endDate, this.eventData.endTime)
+
+      const now = new Date()
+      const today = moment(now).format('YYYY-MM-DD HH:mm')
+
+      if (eventDate < today) {
+        this.pastEvent = true
+        this.currentEvent = false
+        this.futureEvent = false
+      }
+      if (eventDate > today) {
+        this.futureEvent = true
+        this.pastEvent = false
+        this.currentEvent = false
+      }
+      const isToday = this.compareDate(eventDate, eventendDate, this.eventData)
+      if (isToday) {
+        this.currentEvent = true
+        this.futureEvent = false
+        this.pastEvent = false
+      }
     }
+  }
+
+  customDateFormat(date: any, time: any) {
+    const stime = time.split('+')[0]
+    const hour = stime.substr(0, 2)
+    const min = stime.substr(2, 3)
+    return `${date} ${hour}${min}`
+  }
+
+  compareDate(selectedStartDate: any, selectedEndDate: any, eventData: any) {
+    const now = new Date()
+    const today = moment(now).format('YYYY-MM-DD HH:mm')
+
+    const day = new Date().getDate()
+    const year = new Date().getFullYear()
+    // tslint:disable-next-line:prefer-template
+    const month = ('0' + (now.getMonth() + 1)).slice(-2)
+    const todaysdate = `${year}-${month}-${day}`
+
+    const stime = eventData.startTime.split('+')[0]
+    const shour = stime.substr(0, 2) * 60
+    const smin = stime.substr(3, 2) * 1
+    const starttime = shour + smin
+
+    const currentTime = new Date().getHours() * 60 + new Date().getMinutes()
+    const minustime = starttime - currentTime
+    if (eventData.startDate === todaysdate && minustime < 16 && (selectedStartDate > today || selectedEndDate < today))  {
+      return true
+    }
+    return false
   }
   // calculatePercent(profile: NSProfileDataV2.IProfile | null): number {
   //   let count = 30

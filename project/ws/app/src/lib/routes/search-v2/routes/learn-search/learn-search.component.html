@@ -11,10 +11,10 @@
                     <span *ngIf="mf.name === 'application/vnd.ekstep.content-collection'">Course</span>
                     <span *ngIf="mf.name === 'audio/mpeg'">Audio</span>
                     <span *ngIf="mf.name === 'application/pdf'">PDF</span>
-                    <span *ngIf="mf.name === 'application/vnd.ekstep.html-archive'">Interactive Content</span>
+                    <!-- <span *ngIf="mf.name === 'application/vnd.ekstep.html-archive'">Interactive Content</span> -->
                     <span *ngIf="mf.name === 'text/x-url'">Webpage</span>
 
-                    <span *ngIf="mf.name !== 'text/x-url' && mf.name !== 'application/vnd.ekstep.html-archive' && mf.name !== 'application/pdf' && mf.name !== 'audio/mpeg' && mf.name !== 'application/vnd.ekstep.content-collection'">{{mf.name}}</span>
+                    <span *ngIf="mf.name !== 'text/x-url' && mf.name !== 'application/pdf' && mf.name !== 'audio/mpeg' && mf.name !== 'application/vnd.ekstep.content-collection'">{{mf.name}}</span>
                     <mat-icon (click)="removeFilter(mf)" class="cursor-pointer margin-left-xs ws-mat-black60-text">close</mat-icon> 
                 </span>
             </p>
@@ -35,7 +35,7 @@
         <!-- search cards -->
         <mat-sidenav-content class="custom-sidecontent">
 
-            <div *ngIf="totalResults > 0">
+            <div *ngIf="totalResults > 0 && searchResults && searchResults.length > 0">
                 <mat-card class="learn-card margin-bottom-m padding-remove position-relative" *ngFor="let content of searchResults"
                 (click)="raiseTelemetry(content)">
                     <div class="imageholder float-left">
@@ -55,12 +55,13 @@
                             <img src="/assets/icons/content/pdf.svg" alt="PDF" class="contenticon" *ngIf="content.mimeType === 'application/pdf'"> 
                             <img src="/assets/icons/content/video.svg" alt="Video" class="contenticon"  *ngIf="content.mimeType === 'video/mp4' || content.mimeType === 'video/x-youtube' || content.mimeType === 'application/x-mpegURL'"> 
                             <img src="/assets/icons/content/collection.svg" class="contenticon" alt="Course"  *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection'">
-                            <img src="/assets/icons/content/link.svg" class="contenticon" alt="HTML"  *ngIf="content.mimeType === 'application/vnd.ekstep.html-archive' || content.mimeType === 'text/x-url'">
+                            <img src="/assets/icons/content/link.svg" class="contenticon" alt="HTML"  *ngIf="content.mimeType === 'application/vnd.ekstep.html-archive' || content.mimeType === 'application/vnd.ekstep.ecml-archive' || content.mimeType === 'text/x-url'">
                             <img src="/assets/icons/content/image.svg" class="contenticon" alt="Module"  *ngIf="content.mimeType === 'image/jpeg' || content.mimeType === 'image/png'">
-                            {{content.contentType}}
+                            {{content.primaryCategory || content.contentType}}
                         </p>
                         <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title">
-                            <a [href]="'/app/toc/' + content.identifier + '/overview?primaryCategory='+ content.primaryCategory ">{{content.name}}</a>
+                            <a [routerLink]="['/app/toc/',content.identifier,'overview']"
+                            [queryParams]="{primaryCategory: content.primaryCategory}">{{content.name}}</a>
                         </p>
                         <!-- <p class="mat-body-2 margin-bottom-s"></p> -->
                         <div class="bottomsection">

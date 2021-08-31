@@ -28,7 +28,7 @@ export class GlobalSearchComponent implements OnInit {
       if (queryParams.has('f')) {
         const sfilters = JSON.parse(queryParams.get('f') || '{}')
         const paramfilter = [{
-          mainType:  'contentType',
+          mainType:  'primaryCategory',
           name: sfilters.contentType[0].toLowerCase(),
           count: '',
           ischecked: true,

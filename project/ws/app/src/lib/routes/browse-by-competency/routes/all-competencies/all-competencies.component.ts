@@ -5,6 +5,8 @@ import { BrowseCompetencyService } from '../../services/browse-competency.servic
 import { NSBrowseCompetency } from '../../models/competencies.model'
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { Subject } from 'rxjs'
+// tslint:disable
+import _ from 'lodash'
 
 @Component({
   selector: 'ws-app-all-competencies',
@@ -16,8 +18,11 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
   defaultThumbnail = ''
   allCompetencies!: NSBrowseCompetency.ICompetencie[]
   competencyAreas: any
-  filterForm: FormGroup | undefined
   searchForm: FormGroup | undefined
+  appliedFilters: any = []
+  searchQuery: string = ''
+  sortBy:any
+  
   // searchCompArea = new FormControl('')
   titles = [
     { title: 'Learn', url: '/page/learn', icon: 'school' },
@@ -33,12 +38,8 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-    this.filterForm = new FormGroup({
-      filters: new FormControl(''),
-      searchCompArea: new FormControl('')
-    })
     this.searchForm = new FormGroup({
-      orgName: new FormControl(''),
+      sortByControl: new FormControl(''),
       searchKey: new FormControl(''),
     })
     const instanceConfig = this.configSvc.instanceConfig
@@ -49,23 +50,24 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
       .pipe(
         debounceTime(500),
         switchMap(async formValue => {
+          this.sortBy = formValue.sortByControl
           this.updateQuery(formValue.searchKey)
         }),
         takeUntil(this.unsubscribe)
       ).subscribe()
 
-    // this.filterForm.searchCompArea.valueChanges.subscribe(val => {
-    //   if (val.length === 0) {
-    //     // this.enableSearchFeature = false
-    //   } else {
-    //     // this.enableSearchFeature = true
-    //   }
-    //   console.log('this.searchCompArea.valueChanges val -', val)
-    // })
+    // if(this.searchForm.get('sortByControl')) {
+    //   this.searchForm.get('sortByControl')!.valueChanges.pipe(
+    //     debounceTime(500),
+    //     takeUntil(this.unsubscribe)
+    //   ).subscribe(val => {
+    //     this.sortBy = val
+    //   });
+    // }
 
     // Fetch initial data
     this.searchCompetency('')
-    this.getAllCompetencyAreas()
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -74,15 +76,27 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
     }
   }
 
-  searchCompetency(searchQuery: any) {
+  searchCompetency(searchQuery: any, filters?: any) {
     const searchJson = [
       { type: 'COMPETENCY', field: 'name', keyword: searchQuery ? searchQuery : '' },
       { type: 'COMPETENCY', field: 'description', keyword: searchQuery ? searchQuery : '' },
       // { type: 'COMPETENCY', field: 'competencyType', keyword: 'Behavioural' },
       { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
     ]
+    const filterJson = []
+    if(filters && filters.length) {
+      const groups = _.groupBy(filters, 'mainType')
+      for (let key of Object.keys(groups)) {
+        const  filter = {field: key, values: [''] }
+        const keywords = groups[key].map(x=> x.name)
+        filter.values = keywords
+        filterJson.push(filter)
+      }
+    }
     const req = {
       searches: searchJson,
+      filter: filterJson,
+      sort: this.sortBy
     }
     this.browseCompServ
       .searchCompetency(req)
@@ -93,18 +107,10 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
       })
   }
 
-  getAllCompetencyAreas() {
-    this.browseCompServ
-      .fetchCompetencyAreas()
-      .subscribe((reponse: NSBrowseCompetency.ICompetencieResponse) => {
-        if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
-          this.competencyAreas = reponse.responseData
-        }
-      })
-  }
 
   updateQuery(key: string) {
-    this.searchCompetency(key)
+    this.searchQuery = key
+    this.searchCompetency(this.searchQuery)
   }
 
   reset() {
@@ -123,8 +129,22 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
     }
   }
 
+  applyFilter(filter: any) {
+    if (filter) {
+      this.appliedFilters = filter
+
+      this.searchCompetency(this.searchQuery, this.appliedFilters)
+      // const queryparam = this.searchRequestObject
+    }
+    console.log('Filter', filter)
+  }
+
+  removeFilter(filter: any) {
+    // this.rfilter = filter
+    this.browseCompServ.notifyOther(filter)
+  }
+
   ngOnDestroy() {
     this.unsubscribe.next()
   }
-
 }

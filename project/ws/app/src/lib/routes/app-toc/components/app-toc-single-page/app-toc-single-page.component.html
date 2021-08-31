@@ -20,7 +20,7 @@
                         <mat-card *ngIf="tocConfig?.overview?.body?.enabled && content?.instructions" class="unit-meta-item">
                             <h2 class="section-heading">{{ tocConfig?.overview?.body?.displayName }}</h2>
                             <mat-card-content>
-                                <div class="mat-body-1" [innerHTML]="content?.instructions"></div>
+                                <div class="section-content mat-body-1" [innerHTML]="content?.instructions"></div>
                             </mat-card-content>
                         </mat-card>
                         <!-- Learning objective -->

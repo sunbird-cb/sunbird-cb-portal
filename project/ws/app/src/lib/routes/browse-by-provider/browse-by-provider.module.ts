@@ -36,7 +36,9 @@ import { ProviderOverviewComponent } from './routes/provider-overview/provider-o
 import { ProviderAllCbpComponent } from './routes/provider-all-cbp/provider-all-cbp.component'
 import { InsightsComponent } from './routes/insights/insights.component'
 import { ProviderLeftMenuComponent } from './components/left-menu/left-menu.component'
-
+import { BrowseProviderService } from './services/browse-provider.service';
+import { PopularProviderCardComponent } from './components/popular-provider-card/popular-provider-card.component';
+import { ProviderCardComponent } from './components/provider-card/provider-card.component'
 @NgModule({
   declarations: [
     AllProvidersComponent,
@@ -45,6 +47,8 @@ import { ProviderLeftMenuComponent } from './components/left-menu/left-menu.comp
     ProviderAllCbpComponent,
     InsightsComponent,
     ProviderLeftMenuComponent,
+    PopularProviderCardComponent,
+    ProviderCardComponent,
   ],
   imports: [
     CommonModule,
@@ -77,5 +81,6 @@ import { ProviderLeftMenuComponent } from './components/left-menu/left-menu.comp
     BtnPageBackModule,
     WidgetResolverModule,
   ],
+  providers: [BrowseProviderService],
 })
 export class BrowseByProviderModule { }

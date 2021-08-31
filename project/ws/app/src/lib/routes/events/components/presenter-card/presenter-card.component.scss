@@ -8,9 +8,12 @@ $badge-padding: 12px;
 
 .card-container {
   position: relative;
-  width: 290px;
+  width: 284px;
   height: 82px;
   margin: 20px 10px;
+  .mat-card {
+    box-shadow: none; background-color: rgba(0, 0, 0, 0.04);
+  }
 
   // @include breakpoint-s {
   //   width: 300px;
@@ -66,7 +69,7 @@ $badge-padding: 12px;
 }
 
 .mat-card {
-  padding: 0;
+  box-shadow: none; background-color: rgba(0, 0, 0, 0.04);
 }
 
 .badge-container {
@@ -77,6 +80,12 @@ $badge-padding: 12px;
 .image-container {
   box-sizing: border-box;
   // width: $medium-badge-size + 2 * $badge-padding;
+  background-color: rgb(158, 158, 158);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 14px;
 }
 
 .mat-progress-bar {
