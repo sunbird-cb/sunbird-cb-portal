@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { BrowseByProviderRoutingModule } from './browse-by-provider-routing.module'
-import { BtnPageBackModule } from '@sunbird-cb/collection'
+import { BtnPageBackModule, CardContentModule } from '@sunbird-cb/collection'
 import {
   PipeFilterModule,
   PipeHtmlTagRemovalModule,
@@ -80,6 +80,7 @@ import { ProviderCardComponent } from './components/provider-card/provider-card.
     PipeFilterV2Module,
     BtnPageBackModule,
     WidgetResolverModule,
+    CardContentModule,
   ],
   providers: [BrowseProviderService],
 })

@@ -755,28 +755,37 @@
         alt="">
     </div>
     <mat-card-content class="mat-text-box">
-      <p class="mat-caption margin-bottom-xxs text-uppercase ws-mat-black60-text">
-        <mat-icon class="ws-mat-default-text title_icon">video_library</mat-icon> COURSE
+      <p class="mat-caption margin-bottom-xxs text-uppercase" *ngIf="widgetData.content.contentType === 'Resource' || widgetData.content.contentType === 'Course' || widgetData.content.contentType === 'Module'">
+        <img src="/assets/icons/content/audio.svg" class="contenticon" alt="Audio"  *ngIf="widgetData.content.mimeType === 'audio/mpeg'"> 
+        <img src="/assets/icons/content/assessment.svg" class="contenticon" alt="Assessment"  *ngIf="widgetData.content.mimeType === 'application/json' || widgetData.content.mimeType === 'application/quiz'"> 
+        <img src="/assets/icons/content/pdf.svg" alt="PDF" class="contenticon" *ngIf="widgetData.content.mimeType === 'application/pdf'"> 
+        <img src="/assets/icons/content/video.svg" alt="Video" class="contenticon"  *ngIf="widgetData.content.mimeType === 'video/mp4' || widgetData.content.mimeType === 'video/x-youtube' || widgetData.content.mimeType === 'application/x-mpegURL'"> 
+        <img src="/assets/icons/content/collection.svg" class="contenticon" alt="Course"  *ngIf="widgetData.content.mimeType === 'application/vnd.ekstep.content-collection'">
+        <img src="/assets/icons/content/link.svg" class="contenticon" alt="HTML"  *ngIf="widgetData.content.mimeType === 'application/vnd.ekstep.html-archive' || widgetData.content.mimeType === 'application/vnd.ekstep.ecml-archive' || widgetData.content.mimeType === 'text/x-url'">
+        <img src="/assets/icons/content/image.svg" class="contenticon" alt="Module"  *ngIf="widgetData.content.mimeType === 'image/jpeg' || widgetData.content.mimeType === 'image/png'">
+        {{widgetData.content.primaryCategory || widgetData.content.contentType}}
       </p>
       <div class="flex main_title_box">
         <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title">
-          <a href="#">The science of healthcare, public health and pharma care.</a>
-        </p>
+          <a [routerLink]="['/app/toc/',widgetData.content.identifier,'overview']"
+            [queryParams]="{primaryCategory: widgetData.content.primaryCategory}">
+            {{widgetData.content.name}}
+          </a>
+      </p>
       </div>
       <!-- <p class="mat-body-2 margin-bottom-s"></p> -->
       <div class="bottomsection">
-        <p class="mat-body-2 margin-bottom-xxs">By Diraj Rasthogi</p>
+        <p class="mat-body-2 margin-bottom-xxs" *ngIf="widgetData.content.creator">By {{widgetData.content.creator}}</p>
         <div class="contentdata margin-bottom-xm">
           <ul
             class="mat-body-2 margin-remove-top margin-bottom-xs padding-remove ws-mat-black60-text highlighting_list">
             <li>Health social science</li>
-            <li>
+            <li *ngIf="widgetData.content.lastUpdatedOn">
               <img src="/assets/icons/content/separator.svg" class="text_seperator">
-              Jan 2020
-            </li>
-            <li>
-              <img src="/assets/icons/content/separator.svg" class="text_seperator">
-              2h 55m
+                {{ widgetData.content.lastUpdatedOn | date: "MMM yyyy"  }}
+            </li> 
+            <li *ngIf="widgetData.content.duration">
+                <img src="/assets/icons/content/separator.svg">  {{ widgetData.content.duration | pipeDurationTransform: 'hms' }}
             </li>
             <li class="rating"><img src="/assets/icons/content/separator.svg" class="text_seperator">
               <span class="rating-number mat-body-2"> 4.5 &nbsp;</span>
@@ -789,20 +798,25 @@
           </ul>
         </div>
         <div class="flex">
-          <div class="tags flex-col">
+          <div class="tags flex-col" *ngIf="widgetData.content.keywords && widgetData.content.keywords.length > 0">
             <ul class="mat-caption margin-remove-top padding-remove tag_list">
-              <li><span class="tag">Health science</span> </li>
-              <li><span class="tag">Other tags</span> </li>
+              <li *ngFor="let tag of widgetData.content.keywords">
+                <span class="tag">{{tag}}</span>
+              </li>
             </ul>
+            <!-- <div class="tags" *ngIf="widgetData.content.keywords && widgetData.content.keywords.length > 0">
+              <ul class="mat-caption margin-remove-top margin-bottom-s padding-remove display-inline-block">
+                  <li *ngFor="let tag of widgetData.content.keywords">{{tag}}</li>
+              </ul> -->
 
           </div>
-          <div class="flex-col">
+          <!-- <div class="flex-col">
             <p class="display-inline-block ws-mat-black60-text actionbtns">
               <mat-icon class="margin-right-s">playlist_add</mat-icon>
               <mat-icon>more_vert_outlined</mat-icon>
 
             </p>
-          </div>
+          </div> -->
         </div>
 
       </div>
