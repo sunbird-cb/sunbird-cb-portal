@@ -104,8 +104,13 @@
 }
 
 .learn-card {
-  padding: 24px !important;
+  // padding: 24px !important;
   overflow: hidden;
+  width: 685px;
+
+  .mat-card-content {
+    margin-bottom: 0;
+  }
 
   .card_inner_content {
       overflow: hidden;
@@ -113,9 +118,8 @@
 
   .card_inner_title_box {
   //    display: column;
-      width: 195px;
-      padding-right: 24px;
-      
+      width: 220px;
+      padding: 24px;
       box-sizing: border-box;
 
       h4.mat-h4 {
@@ -137,9 +141,9 @@
   }
   .card_right_txtbox {
       float: right;
-      padding-left: 24px;
+      padding: 24px;
       box-sizing: border-box;
-      width: calc(100% - 210px);
+      width: calc(100% - 230px);
       border-left:1px solid rgba(0, 0, 0, 0.08);
 
   }
