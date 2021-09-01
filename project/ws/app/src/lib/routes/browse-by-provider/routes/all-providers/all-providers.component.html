@@ -1,0 +1,73 @@
+<ws-widget-btn-page-back [widgetData]="{ url: 'home', titles: titles  }">
+</ws-widget-btn-page-back>
+<div class="container-balanced main_content_box">
+    <div class="top_card_container">
+        <h1 class="mat-h1 margin-bottom-m inline-block "> Popular providers</h1>
+        <div class="top_card_inner_box flex">
+            <ng-container *ngFor="let p of [1,2,3,4,5,6,7,8]">
+                <ws-app-popular-provider-card></ws-app-popular-provider-card>
+            </ng-container>
+        </div>
+    </div>
+
+
+
+    <!--===========  All competencies section ============= -->
+    <div class="all_provider_box">
+        <h1 class="mat-h1 margin-bottom-m inline-block "> All providers </h1>
+        <div class="all_provider_inner">
+            <!-- search box and dropdown-->
+            <div class="top_search_box">
+                <form [formGroup]="searchForm">
+                    <div class="search_box_inner">
+                        <div class="flex flex-1 flex-column margin-fix search search_box_main">
+                            <mat-form-field appearance="outline" class="autocomplete-form search_form margin-right-s"
+                                color="primary">
+                                <mat-icon matPrefix class="search-home flex items-center justify-center mr-2">search
+                                </mat-icon>
+                                <input type="search" name="searchKey" #searchKey class="ml-2" i18-aria-label
+                                    aria-label="Search" formControlName="searchKey" i18n-placeholder="search"
+                                    [placeholder]="'Search'" matInput />
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="item_dropdown_box">
+                        <div class="flex flex-1 flex-wrap section-input">
+                            <div class="item">
+                                <mat-form-field class="" appearance="outline">
+                                    <mat-select #sortBySelect formControlName="sortByControl" i18n-placeholder
+                                        placeholder="Sort by">
+                                        <mat-option [value]="'asc'" slected>Ascending ( A - Z )</mat-option>
+                                        <mat-option [value]="'desc'">Descending ( Z - A )</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </form>
+            </div> <!-- search box and dropdown end -->
+
+            <mat-sidenav-container>
+                <!-- search cards -->
+                <mat-sidenav-content class="custom-sidecontent  mat-drawer-content mat-sidenav-content">
+
+                    <div class="provider_card_box">
+                        <ng-container *ngFor="let p of allProviders">
+                            <ws-app-provider-card [provider]="p"></ws-app-provider-card>
+                        </ng-container>
+                    </div>
+                </mat-sidenav-content>
+            </mat-sidenav-container>
+
+            <a (click)="loadMore()" class="cursor-pointer ws-mat-default-text mat-subheading-2 load_more_link"
+            [hidden]="disableLoadMore">
+                Load more
+            </a>
+
+        </div>
+    </div>
+
+    <!-- <button [routerLink]="['/app/learn/browse-by/provider', provider]">go to details</button> -->
