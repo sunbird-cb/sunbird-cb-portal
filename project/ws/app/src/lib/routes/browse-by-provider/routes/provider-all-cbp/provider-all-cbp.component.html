@@ -1,0 +1,85 @@
+<div class="provider_right_main_block flex flex-1 flex-col">
+
+
+    <!--============= explore_popular_topic ===================-->
+    <div class="explore_popular_topic flex flex-col">
+        <div class="flex flex-col top_head_block">
+            <p class="mat-title margin-bottom-m">Top 5 highly rated “Programs” from this provider</p>
+        </div>
+        <div class="flex">
+            Explore popular topics cards here
+        </div>
+    </div>
+
+
+    <!--============= top_cbp_section ===================-->
+    <div class="top_cbp_section flex flex-col">
+        <div class="flex flex-col top_head_block">
+            <p class="mat-title margin-bottom-m">Top 5 highly rated “CBPs” from this provider</p>
+        </div>
+        <div class="flex">
+            Top 5 CBPs picks cards here
+        </div>
+
+    </div>
+
+
+    <div class="all_cbp_box">
+        <div class="top_search_box">
+            <form [formGroup]="searchForm">
+                <div class="search_box_inner">
+                    <div class="flex flex-1 flex-column margin-fix search search_box_main">
+                        <mat-form-field appearance="outline" class="autocomplete-form search_form margin-right-s"
+                            color="primary">
+                            <mat-icon matPrefix class="search-home flex items-center justify-center mr-2">search
+                            </mat-icon>
+                            <input type="search" name="searchKey" #searchKey class="ml-2" i18-aria-label
+                                aria-label="Search" formControlName="searchKey" i18n-placeholder="search"
+                                [placeholder]="'Search'" matInput />
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="item_dropdown_box">
+                    <div class="flex flex-1 flex-wrap section-input">
+                        <div class="item">
+
+                            <mat-form-field class="" appearance="outline">
+                                <mat-select #sortBySelect formControlName="sortByControl" i18n-placeholder
+                                    placeholder="Sort by">
+                                    <mat-option [value]="'asc'" slected>Ascending ( A - Z )</mat-option>
+                                    <mat-option [value]="'desc'">Descending ( Z - A )</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <mat-sidenav-container>
+            <mat-sidenav-content class="custom-sidecontent">
+                <p class="mat-title margin-bottom-xs">All CBPs</p>
+                <p class="mat-body-2 ws-mat-black60-text">{{totalCount || 0}} CBPs from this provider</p>
+
+                <div class="">
+                    <ng-container *ngFor="let c of cbps">
+                        <ws-widget-card-content [widgetData]="{
+                            content: c,
+                            cardSubType: 'card-wide'
+                          }">
+                        </ws-widget-card-content>
+                    </ng-container>
+                </div>
+                <a (click)="loadMore()" class="cursor-pointer ws-mat-default-text mat-subheading-2 load_more_link"
+                    [hidden]="disableLoadMore">
+                    Load more
+                </a>
+            </mat-sidenav-content>
+        </mat-sidenav-container>
+    </div>
+
+</div>
