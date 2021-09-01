@@ -20,11 +20,14 @@ export class LearnSearchComponent implements OnInit, OnChanges {
         mimeType: [],
         source: [],
         mediaType: [],
+        status: ['Live'],
       },
       query: '',
-      sort_by: { lastUpdatedOn: '' },
+      sort_by: { lastUpdatedOn: 'desc' },
       fields: [],
       facets: ['primaryCategory', 'mimeType', 'source'],
+      limit: 100,
+      offset: 0,
     },
   }
   totalResults: any
@@ -37,6 +40,12 @@ export class LearnSearchComponent implements OnInit, OnChanges {
   sourceType: any = []
   mediaType: any = []
   facets: any = []
+  throttle = 100
+  scrollDistance = 0.2
+  limit = 100
+  page = 0
+  totalpages!: number | 0
+  newQueryParam: any
 
   constructor(
     private searchSrvc: GbSearchService,
@@ -126,18 +135,23 @@ export class LearnSearchComponent implements OnInit, OnChanges {
               'Learning Resource',
               'Program',
             ],
+            status: ['Live'],
           },
           query: this.param,
           sort_by: { lastUpdatedOn: '' },
           fields: [],
           facets: ['primaryCategory', 'mimeType', 'source'],
+          limit: 100,
+          offset: 0,
         },
       }
+      this.newQueryParam = queryparam
       this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
         this.searchResults = response.result.content
         this.totalResults = response.result.count
         // this.facets = response.result.facets
         this.paramFilters = []
+        this.totalpages = Math.ceil(this.totalResults / 100)
         this.getFacets(response.result.facets)
       })
     }
@@ -249,6 +263,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
       // this.facets = []
       this.searchResults = []
       this.totalResults = 0
+      this.newQueryParam = queryparam
       this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
         this.searchResults = response.result.content
         this.totalResults = response.result.count
@@ -259,6 +274,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
         this.sourceType = []
         this.mediaType = []
         this.paramFilters = []
+        this.totalpages = Math.ceil(this.totalResults / 100)
         this.getFacets(response.result.facets)
       })
     } else {
@@ -279,6 +295,18 @@ export class LearnSearchComponent implements OnInit, OnChanges {
         contentType: content.contentType,
         rollup: {},
         ver: content.version,
+      })
+    }
+  }
+
+  onScrollEnd() {
+    this.page += 1
+    if (this.page <= this.totalpages && this.searchResults.length < this.totalResults) {
+      const queryparam = this.newQueryParam
+      queryparam.request.offset += 100
+      this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
+        const array2 = response.result.content
+        this.searchResults = this.searchResults.concat(array2)
       })
     }
   }

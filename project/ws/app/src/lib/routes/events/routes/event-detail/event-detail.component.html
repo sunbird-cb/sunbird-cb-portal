@@ -16,7 +16,7 @@
               <p class="flex margin-bottom-m" role="link" tabindex="0" i18n-aria-label>
                 {{eventData?.instructions}}
               </p>
-              <p class="flex mat-error" role="link" tabindex="0" i18n-aria-label>
+              <p class="flex mat-error" role="link" tabindex="0" i18n-aria-label *ngIf="currentEvent">
                 {{eventData?.status}}
               </p>
             </div>
