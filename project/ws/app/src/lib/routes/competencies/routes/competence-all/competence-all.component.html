@@ -48,7 +48,7 @@
       <div class="w-full pt-10">
         <div class="flex flex-1 flex-column margin-fix mb-2" role="link" tabindex="0">
           <span class="mat-subheading-1">
-            Popular competencies
+          this is not  Popular competencies
           </span>
         </div>
         <div class="flex flex-1 flex-row margin-fix search">
@@ -72,12 +72,48 @@
             <ng-container *ngFor="let comp of filteredCompetencies | pipeFilterV2:'name': searchInput.value">
               <!-- <div class="flex sm:w-full md:w-1/3 mb-5" [ngClass]="{ 'justify-end': odd, 'justify-start':even}"> -->
               <!-- <ws-app-careers-card class="w-fix" [discuss]="discuss"></ws-app-careers-card> -->
-              <div class="flex sm:w-full md:w-1/3">
+
+
+              <!-- <div class="flex sm:w-full md:w-1/3">
                 <app-competence-card [data]="comp" [isSelected]="comp.id === selectedId"
                   (setSelected)="setSelectedCompetency($event)" (addComp)="addCompetency($event)"
                   (delComp)="deleteCompetency($event)">
                 </app-competence-card>
-              </div>
+              </div> -->
+
+
+                <!--=================== static content =========================================-->
+                        <!-- ===================== single card ===================-->
+                <mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card">
+                  <mat-card-content>
+                      <div class="card_inner_content flex">
+                          <div class="card_inner_title_box flex-col">
+                              <div class="cursor-pointer flex-col">
+                                  <h4 class="mat-h4">Design thinking</h4>
+                                  <p class="mat-body-2 ws-mat-black60-text">Behavioural</p>
+                              </div>
+                              <!-- <div class="flex-col text_icon_box">
+                                  <mat-icon class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color" role="img"
+                                      aria-hidden="true">school</mat-icon>
+                                  <span class="icon_text mat-caption ws-mat-black60-text">
+                                      4 CBPs
+                                  </span>
+                              </div> -->
+                          </div>
+                          <div class="flex-1 card_right_txtbox flex-col">
+                              <p class="cursor-pointer mat-body-1 ws-mat-black60-text">
+                                Planning vigilance activities in accordance with procedures that balance the needs of maintaining a 
+                                fraud free environment and business objectives
+                              </p>
+                          </div>
+                      </div>
+                  </mat-card-content>
+                </mat-card>
+                <!-- single card end -->
+
+
+              
+
             </ng-container>
           </ng-container>
           <!-- <app-competence-card></app-competence-card> -->
