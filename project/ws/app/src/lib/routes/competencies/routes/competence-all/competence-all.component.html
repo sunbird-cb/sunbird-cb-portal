@@ -6,8 +6,13 @@
       </div>
     </div>
     <div class="flex-3">
-      <div class="w-full pt-10" role="link" tabindex="0">
-        <mat-card class="no-competency-card margin-right-s" *ngIf="myCompetencies && myCompetencies.length === 0">
+      <div class="w-full pt-5" role="link" tabindex="0">
+        <div class="flex flex-1 flex-column margin-fix mb-2" role="link" tabindex="0">
+          <span class="mat-subheading-1">
+          Your competencies
+          </span>
+        </div>
+        <mat-card class="no-competency-card margin-right-s" > <!-- *ngIf="myCompetencies && myCompetencies.length === 0" -->
           <mat-card-header>
             <mat-card-title>
               <!-- <h2 [innerHTML]="category.name"></h2> -->
@@ -27,7 +32,7 @@
 
         </mat-card-footer> -->
         </mat-card>
-        <mat-card id="competency-card" class="competency-card" *ngIf="myCompetencies && myCompetencies.length > 0">
+        <!-- <mat-card id="competency-card" class="competency-card" *ngIf="myCompetencies && myCompetencies.length > 0">
           <mat-card-header>
             <mat-card-title>
               <span class="mat-subheading-1">
@@ -43,31 +48,80 @@
                 role="link">{{item.name}}</a>
             </div>
           </mat-card-content>
-        </mat-card>
+        </mat-card> -->
       </div>
-      <div class="w-full pt-10">
-        <div class="flex flex-1 flex-column margin-fix mb-2" role="link" tabindex="0">
-          <span class="mat-subheading-1">
-          this is not  Popular competencies
-          </span>
-        </div>
-        <div class="flex flex-1 flex-row margin-fix search">
-          <form (submit)="updateQuery(queryControl.value)" class="flex-1">
-            <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'">
-              <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
-              <mat-label>Search</mat-label>
-              <input type="search" ng-model="searchText" #searchInput class="ml-2 flex-1" i18n-placeholder="search" [placeholder]="'Search'"
-                i18-aria-label aria-label="Search" matInput [formControl]="queryControl" />
-            </mat-form-field>
-          </form>
-          <!-- <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all ws-mat-primary-lite-background-important"> -->
-          <button class="margin-top-s" mat-icon-button (click)="resetSearch()">
-            <mat-icon>refresh</mat-icon>
-          </button>
-          <!-- </div> -->
+      <div class="w-full pt-5">
+        <div class="flex flex-1 flex-column margin-fix mt-5">
+            <div class="flex flex-1 filter">
+                <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'recommended',
+                                'ws-mat-accent-border':currentFilter !== 'recommended'}"
+                    (click)="filter('recommended')">
+                    Recommended </a>
+                <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'added_by_you',
+                                'ws-mat-accent-border':currentFilter !== 'added_by_you'}"
+                    (click)="filter('added_by_you')">
+                    Added by you </a>
+            </div>
         </div>
 
-        <div class="flex flex-wrap margin-fix">
+        <div *ngIf="currentFilter && currentFilter === 'added_by_you'">
+          <div class="flex flex-1 flex-row margin-fix search">
+            <form (submit)="updateQuery(queryControl.value)" class="flex-1">
+              <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'">
+                <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+                <mat-label>Search</mat-label>
+                <input type="search" ng-model="searchText" #searchInput class="ml-2 flex-1" i18n-placeholder="search" [placeholder]="'Search'"
+                  i18-aria-label aria-label="Search" matInput [formControl]="queryControl" />
+              </mat-form-field>
+            </form>
+            <!-- <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all ws-mat-primary-lite-background-important"> -->
+            <button class="margin-top-s" mat-icon-button (click)="resetSearch()">
+              <mat-icon>refresh</mat-icon>
+            </button>
+            <!-- </div> -->
+          </div>
+          <div class="flex flex-wrap margin-fix">
+            <ng-container *ngIf="myCompetencies && myCompetencies.length > 0" >
+              <ng-container *ngFor="let comp of myCompetencies | pipeFilterV2:'name': searchInput.value"> <!-- -->
+                  <mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card" (click)=view(comp) >
+                    <mat-card-content>
+                        <div class="card_inner_content flex">
+                            <div class="card_inner_title_box flex-col">
+                                <div class="cursor-pointer flex-col">
+                                    <h4 class="mat-h4">{{comp.name}}</h4>
+                                    <p class="mat-body-2 ws-mat-black60-text">{{comp.type}}</p>
+                                </div>
+                            </div>
+                            <div class="flex-1 card_right_txtbox flex-col" (click)=view(comp) >
+                                <p class="cursor-pointer mat-body-1 ws-mat-black60-text">
+                                  {{comp.description}}
+                                </p>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                  </mat-card>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+        
+
+        <div class="flex flex-wrap margin-fix" *ngIf="currentFilter && currentFilter === 'recommended'">
+          <div class="flex flex-1 flex-row margin-fix search">
+            <form (submit)="updateQuery(queryControl.value)" class="flex-1">
+              <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'">
+                <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+                <mat-label>Search</mat-label>
+                <input type="search" ng-model="searchText" #searchInput class="ml-2 flex-1" i18n-placeholder="search" [placeholder]="'Search'"
+                  i18-aria-label aria-label="Search" matInput [formControl]="queryControl" />
+              </mat-form-field>
+            </form>
+            <!-- <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all ws-mat-primary-lite-background-important"> -->
+            <button class="margin-top-s" mat-icon-button (click)="resetSearch()">
+              <mat-icon>refresh</mat-icon>
+            </button>
+            <!-- </div> -->
+          </div>
           <ng-container *ngIf="filteredCompetencies && filteredCompetencies.length > 0">
             <ng-container *ngFor="let comp of filteredCompetencies | pipeFilterV2:'name': searchInput.value">
               <!-- <div class="flex sm:w-full md:w-1/3 mb-5" [ngClass]="{ 'justify-end': odd, 'justify-start':even}"> -->
