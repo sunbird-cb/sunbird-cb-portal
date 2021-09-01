@@ -755,7 +755,7 @@
         alt="">
     </div>
     <mat-card-content class="mat-text-box">
-      <p class="mat-caption margin-bottom-xxs text-uppercase" *ngIf="widgetData.content.contentType === 'Resource' || widgetData.content.contentType === 'Course' || widgetData.content.contentType === 'Module'">
+      <p class="flex items-center mat-caption margin-bottom-xxs text-uppercase" *ngIf="widgetData.content.contentType === 'Resource' || widgetData.content.contentType === 'Course' || widgetData.content.contentType === 'Module'">
         <img src="/assets/icons/content/audio.svg" class="contenticon" alt="Audio"  *ngIf="widgetData.content.mimeType === 'audio/mpeg'"> 
         <img src="/assets/icons/content/assessment.svg" class="contenticon" alt="Assessment"  *ngIf="widgetData.content.mimeType === 'application/json' || widgetData.content.mimeType === 'application/quiz'"> 
         <img src="/assets/icons/content/pdf.svg" alt="PDF" class="contenticon" *ngIf="widgetData.content.mimeType === 'application/pdf'"> 
@@ -775,7 +775,7 @@
       </div>
       <!-- <p class="mat-body-2 margin-bottom-s"></p> -->
       <div class="bottomsection">
-        <p class="mat-body-2 margin-bottom-xxs" *ngIf="widgetData.content.creator">By {{widgetData.content.creator}}</p>
+        <p class="mat-body-2 ws-mat-primary-text margin-bottom-xxs" *ngIf="widgetData.content.creator">By {{widgetData.content.creator}}</p>
         <div class="contentdata margin-bottom-xm">
           <ul
             class="mat-body-2 margin-remove-top margin-bottom-xs padding-remove ws-mat-black60-text highlighting_list">
@@ -785,7 +785,7 @@
                 {{ widgetData.content.lastUpdatedOn | date: "MMM yyyy"  }}
             </li> 
             <li *ngIf="widgetData.content.duration">
-                <img src="/assets/icons/content/separator.svg">  {{ widgetData.content.duration | pipeDurationTransform: 'hms' }}
+                <img class="text_seperator" src="/assets/icons/content/separator.svg">  {{ widgetData.content.duration | pipeDurationTransform: 'hms' }}
             </li>
             <li class="rating"><img src="/assets/icons/content/separator.svg" class="text_seperator">
               <span class="rating-number mat-body-2"> 4.5 &nbsp;</span>

@@ -604,6 +604,7 @@ $title-line-count: 2;
 
 
 .card-wide {
+   border-radius: 10px 0 0 10px;
   .highlight_point_text {
     margin-top:15px;
   }
@@ -670,4 +671,10 @@ $title-line-count: 2;
     p.actionbtns {
         margin-bottom: 0;
     }
+    .contenticon {
+      vertical-align: middle;
+      margin-right: 6px;
+      width: 16px;
+      max-height: 16px;
+  }
 }
