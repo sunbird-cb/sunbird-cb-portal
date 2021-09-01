@@ -1,6 +1,6 @@
 <ng-container *ngIf="content">
   <ng-container *ngIf="isCollection">
-    <div class="flex flex-col">
+    <div class="flex flex-col position-relative">
       <div class="card-collection w-auto sm:w-100 padding-right-xl">
         <!-- <img class="card-thumbnail ws-mat-primary-lite-background" [src]="content?.appIcon" alt="Thumbnail"
           (click)="viewChildren = !viewChildren" [wsUtilsDefaultThumbnail]="defaultThumbnail" /> -->
@@ -136,7 +136,7 @@
           </div> -->
           <div class="see-all-container">
             <a href="javascript:void(0)" role="button" (click)="viewChildren = !viewChildren"
-              class="margin-left-m see-all-btn tab" mat-button>
+              class="margin-left-m see-all-btn tab customicon" mat-button>
               <!-- <ng-container *ngIf="!viewChildren" i18n>See All</ng-container>
               <ng-container *ngIf="viewChildren" i18n>See Less</ng-container> -->
               <mat-icon *ngIf="!viewChildren">keyboard_arrow_down</mat-icon>

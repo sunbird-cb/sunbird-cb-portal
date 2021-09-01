@@ -1,5 +1,10 @@
 @import 'ws-vars';
 
+.customicon {
+  position: absolute;
+  top: -0.5em;
+  right: 0;
+}
 .card-collection {
   display: flex;
   align-items: center;
