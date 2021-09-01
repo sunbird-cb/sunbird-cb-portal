@@ -6,49 +6,10 @@
       </div>
     </div>
     <div class="flex-3">
-      <div class="w-full pt-10" role="link" tabindex="0">
-        <mat-card class="no-competency-card margin-right-s" *ngIf="myCompetencies && myCompetencies.length === 0">
-          <mat-card-header>
-            <mat-card-title>
-              <!-- <h2 [innerHTML]="category.name"></h2> -->
-              You have’t added any competencies yet!
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content class="flex flex-1 custom-content">
-            <h5>What do you think are your competencies? Are you not sure how to write your competencies? </h5>
-            <h5>It is not a bad idea to learn from what others did.</h5>
-            <!-- <div class="mb-2 view-more text-white others">
-              <a mat-button>
-                <span i18n>{{'Explore what others have added'}}</span>
-              </a>
-            </div> -->
-          </mat-card-content>
-          <!-- <mat-card-footer class="flex flex-1 custom margin-0">
-
-        </mat-card-footer> -->
-        </mat-card>
-        <mat-card id="competency-card" class="competency-card" *ngIf="myCompetencies && myCompetencies.length > 0">
-          <mat-card-header>
-            <mat-card-title>
-              <span class="mat-subheading-1">
-                My competencies
-              </span>
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content class="flex flex-1 flex-wrap" role="list">
-            <span>&nbsp;</span>
-            <div class="tag mat-copmetence cursor-pointer mat-app-background" role="listitem" (click)=view(item)
-              *ngFor="let item of myCompetencies">
-              <a href="javascript:void(0)" [attr.id]="item.name" class="mat-body-1 margin-xs" i18n-aria-label
-                role="link">{{item.name}}</a>
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
       <div class="w-full pt-10">
         <div class="flex flex-1 flex-column margin-fix mb-2" role="link" tabindex="0">
           <span class="mat-subheading-1">
-           this is  Popular competencies
+            All competencies
           </span>
         </div>
         <div class="flex flex-1 flex-row margin-fix search">
@@ -73,12 +34,12 @@
             <ng-container *ngFor="let comp of filteredCompetencies | pipeFilterV2:'name': searchInput.value">
               <!-- <div class="flex sm:w-full md:w-1/3 mb-5" [ngClass]="{ 'justify-end': odd, 'justify-start':even}"> -->
               <!-- <ws-app-careers-card class="w-fix" [discuss]="discuss"></ws-app-careers-card> -->
-              <div class="flex sm:w-full md:w-1/3">
+              
                 <app-competence-card [data]="comp" [isSelected]="comp.id === selectedId"
                   (setSelected)="setSelectedCompetency($event)" (addComp)="addCompetency($event)"
                   (delComp)="deleteCompetency($event)">
                 </app-competence-card>
-              </div>
+              
             </ng-container>
           </ng-container>
           <!-- <app-competence-card></app-competence-card> -->
