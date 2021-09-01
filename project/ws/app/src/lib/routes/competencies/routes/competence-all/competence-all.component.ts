@@ -29,7 +29,7 @@ export class CompetenceAllComponent implements OnInit {
 
   sticky = false
   elementPosition: any
-  currentFilter = 'recent'
+  currentFilter = 'recommended'
   myCompetencies: NSCompetencie.ICompetencie[] = []
   tabsData: NSCompetencie.ICompetenciesTab[]
   allCompetencies!: NSCompetencie.ICompetencie[]
@@ -97,6 +97,13 @@ export class CompetenceAllComponent implements OnInit {
         this.currentProfile = response.profileDetails
       }
     })
+  }
+
+  filter(key: string | 'recommended' | 'added_by_you') {
+    if (key) {
+      this.currentFilter = key
+      this.refreshData()
+    }
   }
 
   updateQuery(key: string) {
