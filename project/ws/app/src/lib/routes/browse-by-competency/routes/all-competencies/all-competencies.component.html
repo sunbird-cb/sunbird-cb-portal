@@ -4,8 +4,8 @@
   <div class="top_card_container">
     <h1 class="mat-h1 margin-bottom-m inline-block "> Popular competencies</h1>
     <div class="top_card_inner_box flex">
-      <ng-container *ngFor="let comp of [1,2,3,4,5,6,7,8]">
-        <ws-app-popular-competency-card></ws-app-popular-competency-card>
+      <ng-container *ngFor="let comp of allCompetencies | slice:0:8; let i=index">
+        <ws-app-popular-competency-card [competency]="comp"></ws-app-popular-competency-card>
       </ng-container>
 
       <!-- <div class="card-box card_gradient bg_color_blue">

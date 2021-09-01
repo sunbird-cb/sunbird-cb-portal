@@ -5,7 +5,7 @@ import { Observable, Subject } from 'rxjs'
 const API_ENDPOINTS = {
   SEARCH_V6: `/apis/proxies/v8/sunbirdigot/search`,
   GET_COMPETENCY_AREA: `/apis/protected/v8/frac/getAllNodes/competencyarea`,
-  SEARCH_COMPETENCY: `apis/protected/v8/frac/searchNodes`
+  SEARCH_COMPETENCY: `apis/protected/v8/frac/searchNodes`,
 }
 
 @Injectable({

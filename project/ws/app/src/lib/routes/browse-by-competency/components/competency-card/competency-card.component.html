@@ -8,11 +8,12 @@
                     <p class="mat-body-2 ws-mat-black60-text">{{competency?.additionalProperties?.competencyType}}</p>
                 </div>
                 <div class="flex-col text_icon_box">
-                    <mat-icon class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color" role="img"
+                    <!--TODO: Count has to be shown once we have data from backend  -->
+                    <!-- <mat-icon class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color" role="img"
                         aria-hidden="true">school</mat-icon>
-                    <span class="icon_text mat-caption ws-mat-black60-text">
+                     <span class="icon_text mat-caption ws-mat-black60-text">
                         4 CBPs
-                    </span>
+                    </span> -->
                 </div>
             </div>
             <div class="flex-1 card_right_txtbox flex-col">
@@ -24,7 +25,7 @@
                 <div class="bottomsection">
                     <div class="contentdata margin-bottom-xm">
                         <a class="cursor-pointer ws-mat-default-text mat-subheading-2 explore_link"
-                            (click)="viewChildren = !viewChildren">
+                            (click)="viewChildren = !viewChildren; getCbps(viewChildren)">
                             Quick explore
                             <mat-icon class="ml-5 mat-icon1 mat-icon notranslate material-icons mat-icon-no-color"
                                 *ngIf="!viewChildren">
@@ -40,18 +41,26 @@
             </div>
         </div>
         <div class="mt-4 flex flex-col " [hidden]="!viewChildren">
-            <div class="flex">
-                <ng-container *ngFor="let content of competency?.contentData| slice:0:3">
-                    <ws-widget-card-content  [widgetData]="{
-                        content: content
-                      }">
-                    </ws-widget-card-content>
-                </ng-container>
-            </div>
-            <a class="margin-top-m ws-mat-default-text mat-subheading-2 load_more_link text-center"
-                [routerLink]="['/app/learn/browse-by/competency', competency?.name]">
-                See all
-            </a> </div>
+            <ng-container *ngIf="competency?.contentData && competency?.contentData.length; else noData">
+                <div class="flex">
+                        <ng-container *ngFor="let content of competency?.contentData| slice:0:3">
+                            <ws-widget-card-content  [widgetData]="{
+                                content: content
+                            }">
+                            </ws-widget-card-content>
+                        </ng-container>
+                    </div>
+                    <a class="margin-top-m ws-mat-default-text mat-subheading-2 load_more_link text-center"
+                    [routerLink]="['/app/learn/browse-by/competency', competency?.name]">
+                    See all
+                </a> 
+            </ng-container>
+            <ng-template #noData>
+                <p class="mat-body-2 ws-mat-primary-text text-center">
+                    No CBP's for this competency...
+                </p>
+            </ng-template>
+        </div>
     </mat-card-content>
 </mat-card>
 <!-- single card end -->

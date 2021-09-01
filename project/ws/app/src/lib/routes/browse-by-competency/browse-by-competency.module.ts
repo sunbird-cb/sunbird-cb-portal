@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { 
+import {
   PipeFilterModule,
   PipeHtmlTagRemovalModule,
   PipeOrderByModule,
@@ -40,9 +40,9 @@ import {
 import { LoaderService } from '@ws/author/src/lib/services/loader.service'
 import { BrowseByCompetencyRoutingModule } from './browse-by-competency-routing.module'
 import { AllCompetenciesComponent } from './routes/all-competencies/all-competencies.component'
-import { CompetencyDetailsComponent } from './routes/competency-details/competency-details.component';
-import { CompetencyFiltersComponent } from './components/competency-filters/competency-filters.component';
-import { CompetencyCardComponent } from './components/competency-card/competency-card.component';
+import { CompetencyDetailsComponent } from './routes/competency-details/competency-details.component'
+import { CompetencyFiltersComponent } from './components/competency-filters/competency-filters.component'
+import { CompetencyCardComponent } from './components/competency-card/competency-card.component'
 import { PopularCompetencyCardComponent } from './components/popular-competency-card/popular-competency-card.component'
 
 @NgModule({
