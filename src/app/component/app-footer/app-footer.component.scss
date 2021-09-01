@@ -12,3 +12,35 @@
 .font-12 {
   font-size: 12px !important;
 }
+
+
+
+
+
+.top_footer_box {
+  padding: 45px 0;
+  background: rgba(0, 0, 0, .8);
+
+   .top_footer_inner {
+      max-width: 1202px;
+      margin-left: auto!important;
+      margin-right: auto!important;
+  }
+   
+
+  .footer_heading {
+    color: rgba(255, 255, 255, 0.95);
+  }
+  .footer_sub_text {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  a.get_feedback_btn {
+    width: 100%;
+    border-radius: 4px 4px;
+    border-radius: 4px 4px;
+    display: block;
+    background: #fff;
+    text-align: center;
+    padding: 14px 0;
+  }
+}
