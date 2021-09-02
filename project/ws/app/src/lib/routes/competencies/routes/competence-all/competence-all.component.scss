@@ -357,6 +357,7 @@ a:not([href]):not([tabindex]) {
 .main_progress_box {
   padding: 30px 30px;
   background-image: url("https://igot-dev.in/fusion-assets/images/competency.svg");
+  // background-image: url("assets/images/banners/backdrop.svg");
   background-position: center;
   background-size: cover;
 
@@ -463,4 +464,34 @@ h4.main_text {
 p.proficiency_text {
   font: 400 12px/16px Lato;
   letter-spacing: 0.25px;
+}
+
+
+
+// recommendation_frca_box
+
+.recommendation_frca_box {
+  padding: 12px 15px;
+  border-radius: 8px 8px;
+  background:  rgba(246, 153, 83, 0.2);
+
+
+  .post_image_box {
+    
+    img {
+      margin-top: 56px;
+      margin-bottom: 24px;
+    }
+
+  }
+
+  .info_icon {
+    margin-right: 10px;
+    vertical-align: top;
+  }
+
+  a.work_order_link {
+    color: #0074B6;
+    text-decoration: underline;
+  }
 }
