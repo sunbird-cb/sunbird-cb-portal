@@ -32,6 +32,7 @@ import { EditorSharedModule } from '@ws/author/src/lib/routing/modules/editor/sh
 import { LoaderService } from '@ws/author/src/lib/services/loader.service'
 import { InitResolver } from './resolvers/init-resolve.service'
 import { CompetenceAllComponent } from './routes/competence-all/competence-all.component'
+import { CompetenceSysComponent } from './routes/competence-sys/competence-sys.component'
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { CompetenceAllComponent } from './routes/competence-all/competence-all.c
     LeftMenuComponent,
     RightMenuComponent,
     CompetenceAllComponent,
+    CompetenceSysComponent,
     CompetenceViewComponent,
   ],
   imports: [
