@@ -88,6 +88,8 @@
             </div>
         </div>
 
+       
+
         <div *ngIf="currentFilter && currentFilter === 'added_by_you'">
           <div class="flex flex-1 flex-row margin-fix search">
             <form (submit)="updateQuery(queryControl.value)" class="flex-1">
@@ -99,11 +101,169 @@
               </mat-form-field>
             </form>
             <!-- <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all ws-mat-primary-lite-background-important"> -->
-            <button class="margin-top-s" mat-icon-button (click)="resetSearch()">
+            <!-- <button class="margin-top-s" mat-icon-button (click)="resetSearch()">
               <mat-icon>refresh</mat-icon>
-            </button>
+            </button> -->
+            <div class="flex">
+              <a class="add_competency_btn text-white flex items-center justify-center cursor-pointer mat-subheading-2">Add a competency</a>
+            </div>
             <!-- </div> -->
           </div>
+
+
+          <!--============competency box with proficiency==========================-->
+          <div class="proficiency_main_section">
+
+            <!-- inner card start -->
+            <mat-card class=" margin-bottom-m position-relative mat-card">
+              <a role="button">
+                <mat-card-content>
+                  <div class="card_inner_content flex flex-row justify-between">
+                    <div class="card_inner_title_box flex-col">
+                        <h4 class="mat-h4 main_text">Empathy</h4>
+                        <p class="mat-body-2 ws-mat-black60-text">Behavioural</p>
+                    </div>
+  
+                    <div class="flex-col proficiency_text_box">
+                      <div class="flex flex-row justify-between">
+                        <div>
+                          <p class="proficiency_text">WPCAS:</p>
+                        </div>
+                        <div class="proficiency_graph_box">
+                          <ul class="tagIconList">
+                            <li><a href="#" class="activeLevelIcon"></a> </li>
+                            <li><a href="#" class="activeLevelIcon"></a> </li>
+                            <li><a href="#" class="disableTagIcon"></a> </li>
+                            <li><a href="#" class="disableTagIcon"></a> </li>
+                            <li><a href="#" class="disableTagIcon"></a> </li>
+                        </ul>
+                        </div>
+                      </div>
+  
+                      <div class="flex flex-row justify-between">
+                        <div>
+                          <p class="proficiency_text">PIAA</p>
+                        </div>
+                        <div class="proficiency_graph_box">
+                          <ul class="tagIconList">
+                            <li><a href="#" class="activeLevelIcon"></a> </li>
+                            <li><a href="#" class="activeLevelIcon"></a> </li>
+                            <li><a href="#" class="activeLevelIcon"></a> </li>
+                            <li><a href="#" class="disableTagIcon"></a> </li>
+                            <li><a href="#" class="disableTagIcon"></a> </li>
+                        </ul>
+                        </div>
+                      </div>
+  
+                      <div class="flex flex-row justify-between">
+                        <div>
+                          <p class="proficiency_text">CBP assessment</p>
+                        </div>
+                        <div class="proficiency_graph_box">
+                          <ul class="tagIconList">
+                            <li><a href="#" class="activeLevelIcon"></a> </li>
+                            <li><a href="#" class="activeLevelIcon"></a> </li>
+                            <li><a href="#" class="activeLevelIcon"></a> </li>
+                            <li><a href="#" class="disableTagIcon"></a> </li>
+                            <li><a href="#" class="disableTagIcon"></a> </li>
+                        </ul>
+                        </div>
+                      </div>
+  
+                      <div class="flex flex-row justify-between">
+                        <div>
+                          <p class="proficiency_text">Self attestation</p>
+                        </div>
+                        <div class="proficiency_graph_box">
+                          <ul class="tagIconList">
+                            <li><a href="#" class="activeLevelIcon"></a> </li>
+                            <li><a href="#" class="activeLevelIcon"></a> </li>
+                            <li><a href="#" class="activeLevelIcon"></a> </li>
+                            <li><a href="#" class="disableTagIcon"></a> </li>
+                            <li><a href="#" class="disableTagIcon"></a> </li>
+                        </ul>
+                        </div>
+                      </div>
+                    </div>
+                  
+              
+                    <div class="flex proficient_level_box">
+                      <p class="mat-h3">Proficient (level 2)</p>
+                    </div>
+                  </div>
+              </mat-card-content>
+              </a>
+            </mat-card> <!-- inner card end -->
+
+            <!-- inner card start -->
+            <mat-card class=" margin-bottom-m position-relative mat-card">
+              <a role="button">
+                <mat-card-content>
+                  <div class="card_inner_content flex flex-row justify-between">
+                    <div class="card_inner_title_box flex-col">
+                        <h4 class="mat-h4 main_text">Result Orientation</h4>
+                        <p class="mat-body-2 ws-mat-black60-text">Behavioural</p>
+                    </div>
+  
+                    <div class="flex-col proficiency_text_box">
+                      <div class="flex flex-row justify-between">
+                        <div>
+                          <p class="proficiency_text"> Added by you:</p>
+                        </div>
+                        <div class="proficiency_graph_box">
+                          <ul class="tagIconList">
+                            <li><a href="#" class="activeTagIcon"></a> </li>
+                            <li><a href="#" class="activeTagIcon"></a> </li>
+                            <li><a href="#" class="activeTagIcon"></a> </li>
+                            <li><a href="#" class="disableTagIcon"></a> </li>
+                            <li><a href="#" class="disableTagIcon"></a> </li>
+                          </ul>
+                        </div>
+                      </div>
+  
+                      <div class="flex flex-row justify-between">
+                        <div>
+                          <p class="proficiency_text"> WPCAS</p>
+                        </div>
+                        <div class="proficiency_graph_box">
+                          <ul class="tagIconList">
+                            <li><a href="#" class="activeLevelIcon"></a> </li>
+                            <li><a href="#" class="activeLevelIcon"></a> </li>
+                            <li><a href="#" class="disableTagIcon"></a> </li>
+                            <li><a href="#" class="disableTagIcon"></a> </li>
+                            <li><a href="#" class="disableTagIcon"></a> </li>
+                          </ul>
+                        </div>
+                      </div>
+  
+                      <div class="flex flex-row justify-between">
+                        <div>
+                          <p class="proficiency_text"> CBP assessment</p>
+                        </div>
+                        <div class="proficiency_graph_box">
+                          <ul class="tagIconList">
+                            <li><a href="#" class="activeLevelIcon"></a> </li>
+                            <li><a href="#" class="activeLevelIcon"></a> </li>
+                            <li><a href="#" class="deactiveLevelIcon"></a> </li>
+                            <li><a href="#" class="disableTagIcon"></a> </li>
+                            <li><a href="#" class="disableTagIcon"></a> </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  
+              
+                    <div class="flex proficient_level_box">
+                      <p class="deactivate_text mat-body-2">Not enough data</p>
+                    </div>
+                  </div>
+              </mat-card-content>
+              </a>
+            </mat-card> <!-- inner card end -->
+          </div>
+  
+
+          
           <div class="flex flex-wrap margin-fix">
             <ng-container *ngIf="myCompetencies && myCompetencies.length > 0" >
               <ng-container *ngFor="let comp of myCompetencies | pipeFilterV2:'name': searchInput.value"> <!-- -->
@@ -131,6 +291,15 @@
         
 
         <div class="flex flex-wrap margin-fix" *ngIf="currentFilter && currentFilter === 'recommended'">
+
+          <div class="recommendation_box flex flex-col justify-start margin-bottom-l margin-top-l">
+            <p class="mat-body margin-remove">
+              <!-- <mat-icon class="info_icon mat-icon ws-mat-black60-text">info</mat-icon> -->
+              Recommendations based on your position are coming from
+              <a class="work_order_link">Work order</a>
+            </p>
+          </div>
+
           <div class="flex flex-1 flex-row margin-fix search">
             <form (submit)="updateQuery(queryControl.value)" class="flex-1">
               <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'">
