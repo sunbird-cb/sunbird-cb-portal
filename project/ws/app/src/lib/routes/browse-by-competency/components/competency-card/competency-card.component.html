@@ -29,10 +29,10 @@
                             (click)="competency.viewChildren = !competency.viewChildren; getCbps(competency.viewChildren)">
                             Quick explore
                             <mat-icon class="ml-5 mat-icon1 mat-icon notranslate material-icons mat-icon-no-color"
-                                *ngIf="!viewChildren">
+                                *ngIf="!competency.viewChildren">
                                 expand_more</mat-icon>
                             <mat-icon class="ml-5 mat-icon1 mat-icon notranslate material-icons mat-icon-no-color"
-                                *ngIf="viewChildren">
+                                *ngIf="competency.viewChildren">
                                 expand_less</mat-icon>
                         </a>
                     </div>

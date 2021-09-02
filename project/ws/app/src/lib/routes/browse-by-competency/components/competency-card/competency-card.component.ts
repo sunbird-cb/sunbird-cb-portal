@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { BrowseCompetencyService } from '../../services/browse-competency.service'
-import { Observable } from 'rxjs'
 
 @Component({
   selector: 'ws-app-competency-card',

@@ -19,7 +19,7 @@ export class BrowseProviderService {
    */
   notifyObservable$ = this.removeFilter.asObservable()
   constructor(private http: HttpClient) { }
-  
+
   public isLoading(): Observable<boolean> {
     return this.displayLoader$
   }
