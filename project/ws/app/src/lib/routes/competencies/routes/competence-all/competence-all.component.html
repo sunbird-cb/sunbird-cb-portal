@@ -13,15 +13,39 @@
           </span>
         </div>
         <mat-card class="no-competency-card margin-right-s" > <!-- *ngIf="myCompetencies && myCompetencies.length === 0" -->
-          <mat-card-header>
-            <mat-card-title>
-              <!-- <h2 [innerHTML]="category.name"></h2> -->
-              You have’t added any competencies yet!
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content class="flex flex-1 custom-content">
-            <h5>What do you think are your competencies? Are you not sure how to write your competencies? </h5>
-            <h5>It is not a bad idea to learn from what others did.</h5>
+         
+          <mat-card-content class="flex flex-1 flex-col">
+            <div class="flex flex-col items-center main_progress_box">
+              <div class="flex flex-row inner_progress_box justify-between">
+                <div class="progress_data_box">
+                  <!-- <mat-progress-bar mode="determinate" value="40"></mat-progress-bar> -->
+                  <p class="mat-h3 margin-remove">6</p>
+                  <p class="mat-body-2">Your competencies</p>
+                </div>
+    
+                <div class="progress_data_box">
+                  <!-- <mat-progress-bar mode="determinate" value="20"></mat-progress-bar> -->
+                  <p class="mat-h3 margin-remove">2</p>
+                  <p class="mat-body-2">Recommended competencies</p>
+                </div>
+                
+              </div>
+    
+              <div class="flex flex-row inner_progress_box">
+                <div class="progress_data_box">
+                  <!-- <mat-progress-bar mode="determinate" value="40"></mat-progress-bar> -->
+                  <p class="mat-h3 margin-remove" class="mat-h3">7.5</p>
+                  <p class="mat-body-2">Platform average</p>
+                </div>
+    
+                <div class="progress_data_box">
+                  <!-- <mat-progress-bar mode="determinate" value="20"></mat-progress-bar> -->
+                  <p class="mat-h3 margin-remove">1</p>
+                  <p class="mat-body-2">Competencies with gaps</p>
+                </div>
+                
+              </div>
+            </div>
             <!-- <div class="mb-2 view-more text-white others">
               <a mat-button>
                 <span i18n>{{'Explore what others have added'}}</span>
