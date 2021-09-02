@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Input } from '@angular/core'
 
 @Component({
   selector: 'ws-app-popular-competency-card',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./popular-competency-card.component.scss'],
 })
 export class PopularCompetencyCardComponent implements OnInit {
-
+  @Input() competency!: any
   constructor() { }
 
   ngOnInit() {

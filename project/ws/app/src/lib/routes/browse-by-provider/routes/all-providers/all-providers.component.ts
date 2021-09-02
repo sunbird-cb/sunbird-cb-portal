@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormControl } from '@angular/forms'
 import { BrowseProviderService } from '../../services/browse-provider.service'
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs'
 
 @Component({
   selector: 'ws-app-all-providers',
@@ -10,10 +10,11 @@ import { Subject } from 'rxjs';
   styleUrls: ['./all-providers.component.scss'],
 })
 export class AllProvidersComponent implements OnInit {
+  public displayLoader!: Observable<boolean>
   provider = 'JPAL'
   page = 1
-  defaultLimit = 10
-  limit = 10
+  defaultLimit = 18
+  limit = 18
   searchForm: FormGroup | undefined
   sortBy: any
   searchQuery = ''
@@ -47,6 +48,7 @@ export class AllProvidersComponent implements OnInit {
       sortByControl: new FormControl(''),
       searchKey: new FormControl(''),
     })
+    this.displayLoader = this.browseProviderSvc.isLoading()
     this.searchForm.valueChanges
       .pipe(
         debounceTime(500),
@@ -65,6 +67,11 @@ export class AllProvidersComponent implements OnInit {
       if (res && res.result &&  res.result.response && res.result.response.content) {
         this.allProviders = res.result.response.content
         this.totalCount = res.result.response.count
+        if ((this.page * this.defaultLimit) >= this.totalCount) {
+          this.disableLoadMore = true
+        } else {
+          this.disableLoadMore = false
+        }
       }
     })
   }
@@ -73,6 +80,8 @@ export class AllProvidersComponent implements OnInit {
     this.searchQuery = key
     this.getAllProvidersReq.request.query = this.searchQuery
     this.getAllProvidersReq.request.offset = 0
+    this.getAllProvidersReq.request.limit = this.defaultLimit
+    this.page = 1
     this.getAllProvidersReq.request.sort_by.orgName = this.sortBy
     this.getAllProviders()
   }
@@ -85,6 +94,8 @@ export class AllProvidersComponent implements OnInit {
     this.getAllProviders()
     if ((this.page * this.defaultLimit) >= this.totalCount) {
       this.disableLoadMore = true
+    } else {
+      this.disableLoadMore = false
     }
   }
 

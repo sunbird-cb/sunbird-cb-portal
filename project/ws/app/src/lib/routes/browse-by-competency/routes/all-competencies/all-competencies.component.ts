@@ -4,7 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms'
 import { BrowseCompetencyService } from '../../services/browse-competency.service'
 import { NSBrowseCompetency } from '../../models/competencies.model'
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
-import { Subject } from 'rxjs'
+import { Subject, Observable } from 'rxjs'
 // tslint:disable
 import _ from 'lodash'
 
@@ -15,6 +15,7 @@ import _ from 'lodash'
 })
 export class AllCompetenciesComponent implements OnInit, OnChanges {
   private unsubscribe = new Subject<void>()
+  public displayLoader!: Observable<boolean>
   defaultThumbnail = ''
   allCompetencies!: NSBrowseCompetency.ICompetencie[]
   competencyAreas: any
@@ -38,6 +39,7 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
+    this.displayLoader = this.browseCompServ.isLoading()
     this.searchForm = new FormGroup({
       sortByControl: new FormControl(''),
       searchKey: new FormControl(''),

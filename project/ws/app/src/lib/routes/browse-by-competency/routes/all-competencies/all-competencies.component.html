@@ -4,10 +4,12 @@
   <div class="top_card_container">
     <h1 class="mat-h1 margin-bottom-m inline-block "> Popular competencies</h1>
     <div class="top_card_inner_box flex">
-      <ng-container *ngFor="let comp of [1,2,3,4,5,6,7,8]">
-        <ws-app-popular-competency-card></ws-app-popular-competency-card>
+      <ng-container *ngFor="let comp of allCompetencies | slice:0:8; let i=index">
+        <ws-app-popular-competency-card [competency]="comp"></ws-app-popular-competency-card>
       </ng-container>
-
+      <h4 *ngIf="allCompetencies?.length <=0 && !(displayLoader | async)" class="w-full text-center ws-mat-black60-text ">
+         No competencies found! 
+      </h4>
       <!-- <div class="card-box card_gradient bg_color_blue">
         <img src="fusion-assets/images/competency.svg">
         <div class="card_text_box">
@@ -64,6 +66,9 @@
         </div>
       </div> -->
     </div>
+    <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
+        <mat-spinner [diameter]="30"></mat-spinner>
+    </div>
   </div>
 
   <!--===========  All competencies section ============= -->
@@ -117,10 +122,16 @@
           <mat-sidenav-container>
             <!-- search cards -->
             <mat-sidenav-content class="custom-sidecontent  mat-drawer-content mat-sidenav-content">
+              <div *ngIf="displayLoader | async" class="mb-5 pr-4 flex items-center justify-center">
+                  <mat-spinner [diameter]="30"></mat-spinner>
+              </div>
               <div>
                 <ng-container *ngFor="let comp of allCompetencies">
                   <ws-app-competency-card [competency]="comp"></ws-app-competency-card>
                 </ng-container>
+                <h4 *ngIf="allCompetencies?.length <=0 && !(displayLoader | async)" class="w-full text-center ws-mat-black60-text ">
+                   No competencies found! 
+                </h4>
               </div>
             </mat-sidenav-content>
 

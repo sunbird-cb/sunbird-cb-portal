@@ -77,10 +77,18 @@
     .provider_card_box {
         width:100%;
         align-items: center;
-        flex-direction: row;
-        flex-wrap: wrap;
-        display: flex;
+        // Enable if flex layout is needed
+        // flex-direction: row;
+        // flex-wrap: wrap;
+        // display: flex;
+        // justify-content: space-between;
+
+        // disable if flex layout is needed and not grid 
+        display: grid;
+        grid-gap: 32px;
+        grid-template-columns: repeat(auto-fill, 275px);
         justify-content: space-between;
+        
     }
 
     a.load_more_link {

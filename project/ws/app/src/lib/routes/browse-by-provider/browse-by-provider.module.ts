@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { BrowseByProviderRoutingModule } from './browse-by-provider-routing.module'
-import { BtnPageBackModule } from '@sunbird-cb/collection'
+import { BtnPageBackModule, CardContentModule } from '@sunbird-cb/collection'
 import {
   PipeFilterModule,
   PipeHtmlTagRemovalModule,
@@ -36,8 +36,8 @@ import { ProviderOverviewComponent } from './routes/provider-overview/provider-o
 import { ProviderAllCbpComponent } from './routes/provider-all-cbp/provider-all-cbp.component'
 import { InsightsComponent } from './routes/insights/insights.component'
 import { ProviderLeftMenuComponent } from './components/left-menu/left-menu.component'
-import { BrowseProviderService } from './services/browse-provider.service';
-import { PopularProviderCardComponent } from './components/popular-provider-card/popular-provider-card.component';
+import { BrowseProviderService } from './services/browse-provider.service'
+import { PopularProviderCardComponent } from './components/popular-provider-card/popular-provider-card.component'
 import { ProviderCardComponent } from './components/provider-card/provider-card.component'
 @NgModule({
   declarations: [
@@ -80,6 +80,7 @@ import { ProviderCardComponent } from './components/provider-card/provider-card.
     PipeFilterV2Module,
     BtnPageBackModule,
     WidgetResolverModule,
+    CardContentModule,
   ],
   providers: [BrowseProviderService],
 })

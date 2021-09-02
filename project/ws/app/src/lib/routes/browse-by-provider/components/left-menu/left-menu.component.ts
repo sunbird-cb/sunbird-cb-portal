@@ -12,7 +12,6 @@ export class ProviderLeftMenuComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('tabsData --', this.tabsData)
   }
   ngOnDestroy() {
 

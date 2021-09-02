@@ -8,21 +8,23 @@
         <h2 class="mat-h2  inline-block "> {{competencyData?.name}}</h2>
         <div>
             <p class="mat-body-1 ws-mat-black60-text">{{competencyData?.description}}</p>
-            
-            
+
+
             <p class="mat-body-1 ws-mat-black60-text highlight_point_text">
-                Competency type: 
-                <span class="mat-primary mat-subheading-1">{{competencyData?.additionalProperties?.competencyType}}</span>
+                Competency type:
+                <span
+                    class="mat-primary mat-subheading-1">{{competencyData?.additionalProperties?.competencyType}}</span>
             </p>
             <p class="mat-body-1 ws-mat-black60-text highlight_point_text">
-                Competency area: 
-                <span class="mat-primary mat-subheading-1">{{competencyData?.additionalProperties?.competencyArea}}</span>
+                Competency area:
+                <span
+                    class="mat-primary mat-subheading-1">{{competencyData?.additionalProperties?.competencyArea}}</span>
             </p>
-            
+
         </div>
     </div>
-       
-     <!--====== second left text box ===============-->
+
+    <!--====== second left text box ===============-->
     <div class="all_cbp_box">
         <div class="left_content_box">
             <h2 class="mat-h2 margin-remove inline-block "> All associated CBPs </h2>
@@ -30,30 +32,34 @@
                 <p class="mat-body-2 ws-mat-black60-text"> 4 CBPs for “{{competencyData?.name}}”</p>
             </div>
         </div>
-            
+
         <mat-sidenav-container>
             <mat-sidenav-content class="custom-sidecontent">
 
                 <div class="">
                     <ng-container *ngFor="let c of courses">
-                        <ws-widget-card-content  [widgetData]="{
+                        <ws-widget-card-content [widgetData]="{
                             content: c,
                             cardSubType: 'card-wide'
                           }">
                         </ws-widget-card-content>
                     </ng-container>
                 </div>
+                <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
+                    <mat-spinner [diameter]="30"></mat-spinner>
+                </div>
             </mat-sidenav-content>
 
             <mat-sidenav mode="side" position="end" opened class="custom-sidenav">
-                <p class="mat-subheading-2 margin-bottom-m font-bold-imp">Filter by</p>
-                <p class="mat-subheading-1 margin-bottom-xs font-bold-imp">Tags</p>
+                <form class="filter-form" [formGroup]="filterForm">
+                    <p class="mat-subheading-2 margin-bottom-m font-bold-imp">Filter by</p>
+                    <!-- TODO: Tags feature has to be implemented -->
+                    <!-- <p class="mat-subheading-1 margin-bottom-xs font-bold-imp">Tags</p>
                 <div class="search_box">
                     <div class="flex flex-1 flex-column margin-fix search search_box_main">
                         <form>
                             <mat-form-field appearance="outline" class="autocomplete-form search_form" color="primary">
                                 <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
-                                <!-- <mat-label>Search</mat-label> -->
                                 <input type="search"  #searchInput class="ml-2" i18-aria-label aria-label="Search"  i18n-placeholder="search" [placeholder]="'Search'"  matInput 
                                  />
                             </mat-form-field>
@@ -61,31 +67,49 @@
                            
                         </form>
                     </div>
-                </div>
-                <div>
-                    <mat-accordion>
-                        <mat-expansion-panel class="accordian_panel">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Content type
-                                  </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <p>This is the primary content of the panel.</p>
-                          </mat-expansion-panel>
-    
-                          <mat-expansion-panel  class="accordian_panel">
+                </div> -->
+                    <div>
+                        <mat-accordion *ngFor="let fs of facets">
+                            <mat-expansion-panel *ngIf="fs.values.length > 0" (opened)="panelOpenState = true" (closed)="panelOpenState = false" [expanded]="true" class="accordian_panel">
+                                <mat-expansion-panel-header >
+                                    <mat-panel-title>
+                                        <ng-container
+                                            *ngIf="fs.name === 'mimeType'">Resource type
+                                        </ng-container>
+                                        <ng-container
+                                            *ngIf="fs.name === 'source'">Provider
+                                        </ng-container>
+                                        <ng-container
+                                            *ngIf="fs.name === 'primaryCategory'">Content type
+                                        </ng-container>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <mat-selection-list id="filters" formControlName="filters" #roles>
+                                    <section class="mat-body-2 margin-bottom-xs text-capitalize"
+                                        *ngFor="let options of fs.values">
+                                        <mat-checkbox (change)="modifyUserFilters(options, fs.name)"
+                                            [checked]="options.ischecked">
+                                            <label for="options.name">{{options.name}}</label>
+                                        </mat-checkbox>
+                                    </section>
+                                </mat-selection-list>
+                            </mat-expansion-panel>
+
+                            <!-- <mat-expansion-panel  class="accordian_panel">
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
                                     Learning levels
                                   </mat-panel-title>
                             </mat-expansion-panel-header>
                             <p>This is the primary content of the panel.</p>
-                          </mat-expansion-panel>
-                    </mat-accordion>
-                    
-                </div>
+                          </mat-expansion-panel> -->
+                        </mat-accordion>
+
+                    </div>
+                </form>
             </mat-sidenav>
         </mat-sidenav-container>
-    </div> <!--====== second left text box end here ===============-->
-    
+    </div>
+    <!--====== second left text box end here ===============-->
+
 </div>

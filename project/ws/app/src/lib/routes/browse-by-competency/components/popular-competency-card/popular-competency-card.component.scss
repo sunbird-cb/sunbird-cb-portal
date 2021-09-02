@@ -11,6 +11,10 @@
     
     box-sizing: border-box;
     position: relative;
+    .comp-name {
+        height: 48px;
+        overflow: hidden;
+    }
 
     img {
         height: 100%;
