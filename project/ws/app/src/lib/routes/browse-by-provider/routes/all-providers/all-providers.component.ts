@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormControl } from '@angular/forms'
 import { BrowseProviderService } from '../../services/browse-provider.service'
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
-import { Subject } from 'rxjs'
+import { Subject, Observable } from 'rxjs'
 
 @Component({
   selector: 'ws-app-all-providers',
@@ -10,6 +10,7 @@ import { Subject } from 'rxjs'
   styleUrls: ['./all-providers.component.scss'],
 })
 export class AllProvidersComponent implements OnInit {
+  public displayLoader!: Observable<boolean>
   provider = 'JPAL'
   page = 1
   defaultLimit = 18
@@ -47,6 +48,7 @@ export class AllProvidersComponent implements OnInit {
       sortByControl: new FormControl(''),
       searchKey: new FormControl(''),
     })
+    this.displayLoader = this.browseProviderSvc.isLoading()
     this.searchForm.valueChanges
       .pipe(
         debounceTime(500),

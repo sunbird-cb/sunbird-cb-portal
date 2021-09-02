@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { Observable, Subject } from 'rxjs'
+import { BehaviorSubject, Subject, Observable } from 'rxjs'
+import { finalize } from 'rxjs/operators'
 
 const API_ENDPOINTS = {
   SEARCH_V6: `/apis/proxies/v8/sunbirdigot/search`,
@@ -12,18 +13,27 @@ const API_ENDPOINTS = {
 })
 export class BrowseProviderService {
   private removeFilter = new Subject<any>()
+  private displayLoader$: Subject<boolean> = new BehaviorSubject<boolean>(false)
   /**
    * Observable string streams
    */
   notifyObservable$ = this.removeFilter.asObservable()
   constructor(private http: HttpClient) { }
+  
+  public isLoading(): Observable<boolean> {
+    return this.displayLoader$
+  }
 
   fetchSearchData(request: any): Observable<any> {
+    this.displayLoader$.next(true)
     return this.http.post<any>(API_ENDPOINTS.SEARCH_V6, request)
+    .pipe(finalize(() => this.displayLoader$.next(false)))
   }
 
   fetchAllProviders(request: any): Observable<any> {
+    this.displayLoader$.next(true)
     return this.http.post<any>(API_ENDPOINTS.ALL_PROVIDERS, request)
+    .pipe(finalize(() => this.displayLoader$.next(false)))
   }
 
   public notifyOther(data: any) {

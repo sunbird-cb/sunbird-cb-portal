@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { BrowseProviderService } from '../../services/browse-provider.service'
-import { Subscription, Subject } from 'rxjs'
+import { Subscription, Subject, Observable } from 'rxjs'
 import { ActivatedRoute } from '@angular/router'
 // tslint:disable
 import _ from 'lodash'
@@ -15,6 +15,7 @@ import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 })
 export class ProviderAllCbpComponent implements OnInit, OnDestroy {
   private paramSubscription: Subscription | null = null
+  public displayLoader!: Observable<boolean>
   page = 1
   defaultLimit = 10
   limit = 10
@@ -54,6 +55,7 @@ export class ProviderAllCbpComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.displayLoader = this.browseProviderSvc.isLoading()
     if(this.activatedRoute.parent){
       this.paramSubscription = this.activatedRoute.parent.params.subscribe(async (params: any) => {
         this.provider = _.get(params, 'provider')
