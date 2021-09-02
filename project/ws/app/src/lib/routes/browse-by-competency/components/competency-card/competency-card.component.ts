@@ -8,7 +8,7 @@ import { BrowseCompetencyService } from '../../services/browse-competency.servic
 })
 export class CompetencyCardComponent implements OnInit {
   @Input() competency!: any
-  viewChildren = false
+  public displayLoader = false
 
   searchReq = {
     request: {
@@ -45,16 +45,23 @@ export class CompetencyCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.competency.viewChildren = false
   }
 
   getCbps(viewChildren: boolean) {
     if (viewChildren) {
+      this.displayLoader = true
       this.searchReq.request.filters['competencies_v2.name'].splice(0, 1, this.competency.name)
-      this.browseCompServ.fetchSearchData(this.searchReq).subscribe((res: any) => {
-        if (res && res.result &&  res.result && res.result.content) {
-          this.competency.contentData = res.result.content
-        }
-      })
+      this.browseCompServ.fetchSearchData(this.searchReq).subscribe(
+        (res: any) => {
+          this.displayLoader = false
+          if (res && res.result &&  res.result && res.result.content) {
+            this.competency.contentData = res.result.content
+          }
+        },
+        _err => this.displayLoader = false,
+        () => this.displayLoader = false
+      )
     }
   }
 }

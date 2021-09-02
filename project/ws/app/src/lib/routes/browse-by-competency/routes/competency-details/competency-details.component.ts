@@ -4,7 +4,7 @@ import { NSBrowseCompetency } from '../../models/competencies.model'
 // tslint:disable
 import _ from 'lodash'
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
@@ -14,6 +14,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class CompetencyDetailsComponent implements OnInit, OnDestroy {
   private paramSubscription: Subscription | null = null
+  public displayLoader!: Observable<boolean>
   competencyData: any
   filterForm: FormGroup | undefined
   facets: any
@@ -58,6 +59,7 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit() {
+    this.displayLoader = this.browseCompServ.isLoading()
     this.filterForm = new FormGroup({
       filters: new FormControl(''),
     })
