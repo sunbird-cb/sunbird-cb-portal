@@ -2,38 +2,41 @@
     <div class="top_footer_inner flex flex-row justify-between">
       <div class="flex flex-col justify-start">
         <p class="footer_heading mat-subheading-1 margin-bottom-m">Hubs</p>
-        <p class="footer_sub_text mat-body">Learn</p>
-        <p class="footer_sub_text mat-body">Network</p>
-        <p class="footer_sub_text mat-body">Discuss</p>
-        <p class="footer_sub_text mat-body">Careers</p>
-        <p class="footer_sub_text mat-body">Competencies</p>
-        <p class="footer_sub_text mat-body">Events</p>
+       
+        <ng-container *ngFor="let hub of hubsList">
+          <ng-container *ngIf="hub.hubname == 'Discuss'">
+            <a  class="footer_sub_text mat-body cursor-pointer" (click)="navigate()">{{hub.hubname}}</a>
+          </ng-container>
+          <ng-container *ngIf="hub.hubname != 'Discuss'">
+            <a class="footer_sub_text mat-body cursor-pointer" [routerLink]="hub.path">{{hub.hubname}}</a>
+          </ng-container>
+        </ng-container>
+        <!-- <a class="footer_sub_text mat-body" href="/page/learn"  [routerLink]="hub.path">Learn</a>
+        <a class="footer_sub_text mat-body" href="/app/network-v2"  [routerLink]="hub.path">Network</a>
+        <a class="footer_sub_text mat-body" (click)="navigate()">Discuss</a>
+        <a  class="footer_sub_text mat-body"  href="/app/careers/home"  [routerLink]="hub.path">Careers</a>
+        <a  class="footer_sub_text mat-body" href="/app/competencies"  [routerLink]="hub.path">Competencies</a>
+        <a  class="footer_sub_text mat-body" href="/app/event-hub"  [routerLink]="hub.path">Events</a> -->
       </div>
 
       <div class="flex flex-col justify-start">
         <p class="footer_heading mat-subheading-1 margin-bottom-m">Related links</p>
-        <p class="footer_sub_text mat-body">MDO portal</p>
-        <p class="footer_sub_text mat-body">CBP portal</p>
-        <p class="footer_sub_text mat-body">FRAC dictionaries</p>
-        <p class="footer_sub_text mat-body">Mobile application</p>
+        <a class="footer_sub_text mat-body" href="mdo.igot-dev.in" target="_blank">MDO portal</a>
+        <a class="footer_sub_text mat-body" href="cbp.igot-dev.in" target="_blank">CBP portal</a>
+        <a class="footer_sub_text mat-body" href="https://frac-dictionary.igot-dev.in/" target="_blank">FRAC dictionaries</a>
+        <!-- <a class="footer_sub_text mat-body">Mobile application</a> -->
       </div>
 
       <div class="flex flex-col justify-start">
         <p class="footer_heading mat-subheading-1 margin-bottom-m">About us</p>
-        <p class="footer_sub_text mat-body">Mission Karmayogi</p>
-        <p class="footer_sub_text mat-body">Capacity building commission</p>
+        <a class="footer_sub_text mat-body" href="https://dopttrg.nic.in/igotmk/" target="_blank">Mission Karmayogi</a>
+        <a class="footer_sub_text mat-body">Capacity building commission</a>
     
       </div>
 
       <div class="flex flex-col justify-start">
-        <!-- <p class="footer_heading mat-subheading-1 margin-bottom-m">Hubs</p> -->
         <img src="/assets/images/banners/iGOT_logo_dark.svg" class="footer_logo margin-bottom-xl">
-        <p class="footer_sub_text mat-body margin-bottom-m">Have any feebback? Let us know.</p>
-        <!-- <div class="flex items-center justify-center">
-          <a class="get_feedback_btn"><p class="margin-remove mat-h4">GOT FEEDBACK?</p></a>
-        </div> -->
-      
-          <a><p class="footer_sub_text margin-remove mat-h4">GOT FEEDBACK?</p></a>
+          <p class="footer_sub_text margin-remove mat-body"><a href="" class="feedback_link mat-body-2">GOT FEEDBACK?</a> Let us know</p>
       
       </div>
 
@@ -44,13 +47,13 @@
 <div class="mat-toolbar mat-ws-mat-primary-text footer-container px-6 sm:px-10 py-5">
   <div class="mat-body text-center flex-1">
     <ng-container i18n>
-      <span i18n>&copy; Copyright 2020-2021</span>
+      <span i18n>&copy; Copyright 2021-2022</span>
       &nbsp;&nbsp; | &nbsp;&nbsp;
       <a routerLink="/app/info/about" i18n> <span i18n>About Us</span></a>
+      <!-- &nbsp;&nbsp; | &nbsp;&nbsp; -->
+      <!-- <a routerLink="/app/info/feedback" i18n> <span i18n>Feedback</span></a> -->
       &nbsp;&nbsp; | &nbsp;&nbsp;
-      <a routerLink="/app/info/feedback" i18n> <span i18n>Feedback</span></a>
-      <!-- &nbsp;&nbsp; | &nbsp;&nbsp;
-      <a routerLink="/app/tnc" i18n>Privacy</a> -->
+      <a routerLink="/app/tnc" i18n>Privacy</a>
       <!-- &nbsp;&nbsp; | &nbsp;&nbsp;
       <a routerLink="/app/info/faq" i18n>Help </a>
        &
