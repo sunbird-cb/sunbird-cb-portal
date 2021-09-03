@@ -18,13 +18,13 @@
               <div class="flex flex-row inner_progress_box justify-between">
                 <div class="progress_data_box">
                   <mat-progress-bar mode="determinate" value="20"></mat-progress-bar>
-                  <p class="mat-h3 margin-remove">{{(filteredCompetencies) ? filteredCompetencies.length : 0}}</p>
+                  <p class="mat-h3 margin-remove">{{ myCompetencies.length }}</p>
                   <p class="mat-body-2">Your competencies</p>
                 </div>
     
                 <div class="progress_data_box">
                   <mat-progress-bar mode="determinate" value="20"></mat-progress-bar>
-                  <p class="mat-h3 margin-remove">{{ myCompetencies.length }}</p>
+                  <p class="mat-h3 margin-remove">{{(filteredCompetencies) ? filteredCompetencies.length : 0}}</p>
                   <p class="mat-body-2">Recommended competencies</p>
                 </div>
               </div>
