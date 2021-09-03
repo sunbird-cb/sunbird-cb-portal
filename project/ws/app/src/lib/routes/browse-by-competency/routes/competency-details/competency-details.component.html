@@ -29,14 +29,14 @@
         <div class="left_content_box">
             <h2 class="mat-h2 margin-remove inline-block "> All associated CBPs </h2>
             <div>
-                <p class="mat-body-2 ws-mat-black60-text"> 4 CBPs for “{{competencyData?.name}}”</p>
+                <p class="mat-body-2 ws-mat-black60-text"> {{courses?.length || 0 }} CBPs for “{{competencyData?.name}}”</p>
             </div>
         </div>
 
         <mat-sidenav-container>
             <mat-sidenav-content class="custom-sidecontent">
 
-                <div class="">
+                <div *ngIf="courses && courses.length; else noData" class="">
                     <ng-container *ngFor="let c of courses">
                         <ws-widget-card-content [widgetData]="{
                             content: c,
@@ -45,12 +45,18 @@
                         </ws-widget-card-content>
                     </ng-container>
                 </div>
+                <ng-template #noData>
+                    <h4 *ngIf="courses?.length <=0 && !(displayLoader | async)"
+                        class="w-full text-center ws-mat-black60-text ">
+                        No CBPs found!
+                    </h4>
+                </ng-template>
                 <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
                     <mat-spinner [diameter]="30"></mat-spinner>
                 </div>
             </mat-sidenav-content>
 
-            <mat-sidenav mode="side" position="end" opened class="custom-sidenav">
+            <mat-sidenav mode="side" position="end" opened class="custom-sidenav opacity-50" *ngIf="courses?.length">
                 <form class="filter-form" [formGroup]="filterForm">
                     <p class="mat-subheading-2 margin-bottom-m font-bold-imp">Filter by</p>
                     <!-- TODO: Tags feature has to be implemented -->
@@ -68,7 +74,7 @@
                         </form>
                     </div>
                 </div> -->
-                    <div>
+                    <div class="opacity-50" (click)="false; $event.stopPropagation();">
                         <mat-accordion *ngFor="let fs of facets">
                             <mat-expansion-panel *ngIf="fs.values.length > 0" (opened)="panelOpenState = true" (closed)="panelOpenState = false" [expanded]="true" class="accordian_panel">
                                 <mat-expansion-panel-header >
