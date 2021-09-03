@@ -302,3 +302,72 @@ a:not([href]):not([tabindex]) {
   border-radius: unset;
   background: inherit !important;
 }
+
+
+
+// progress bar component
+.main_progress_box {
+  padding: 30px 30px;
+  // background-color: #fff;
+
+  .inner_progress_box {
+    width: 100%;
+
+    .progress_data_box {
+      width: 50%;
+    }
+    
+  }
+}
+
+
+
+// competency box with proficiency
+
+ul.tagIconList {
+  padding: 0;
+  margin: 0;
+  width: 75px;
+  display: inline-block;
+  list-style: none;
+  vertical-align: middle;
+}
+ul.tagIconList li {
+  float: left;
+}
+ul.tagIconList li a {
+  width: 8px;
+  margin-left: 3px;
+  height: 5px;
+  border-radius: 2px 2px;
+  display: block;
+}
+a.activeTagIcon {
+  background-color: #0074B6;
+  border: 2px solid #0074B6;
+}
+a.activeLevelIcon {
+  background-color: #1D8923;
+  border: 2px solid #1D8923;
+}
+a.deactiveLevelIcon {
+  background-color: rgba(0, 0, 0, 0.08);
+  border: 2px solid #D13924;
+}
+a.disableTagIcon, a.disableLevelIcon {
+  background-color: rgba(0, 0, 0, 0.08);
+  border: 2px solid rgba(0, 0, 0, 0.08);
+}
+.card_inner_content {
+  width: 100%;
+
+  .card_inner_title_box {
+    width: 30%;
+  }
+  .proficiency_text_box {
+    width: 30%;
+  }
+  .proficient_level_box {
+    width: 25%;
+  }
+}

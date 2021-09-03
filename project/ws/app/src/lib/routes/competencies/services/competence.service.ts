@@ -8,6 +8,7 @@ import { IUserProfileDetailsFromRegistry } from '../../user-profile/models/user-
 
 const API_ENDPOINTS = {
   searchCompetency: 'apis/protected/v8/frac/searchNodes',
+  filterByMappings: 'apis/protected/v8/frac/filterByMappings',
   // searchCompetency: '/apis/protected/v8/competency/searchCompetency',
   fetchProfileNyId: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`,
   // fetchProfile: '/apis/protected/v8/user/profileDetails/getUserRegistry',
@@ -42,6 +43,10 @@ export class CompetenceService {
   fetchProfileById(id: any): Observable<any> {
     return this.http.get<[IUserProfileDetailsFromRegistry]>(API_ENDPOINTS.fetchProfileNyId(id))
       .pipe(map((res: any) => res.result.response))
+  }
+
+  fetchMappings(positionData: any): Observable<any> {
+    return this.http.post<any>(API_ENDPOINTS.filterByMappings, positionData)
   }
 
   updateProfile(profileData: any): Observable<any> {
