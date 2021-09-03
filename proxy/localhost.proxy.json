@@ -8,8 +8,7 @@
       "/apis": "/apis"
     },
     "headers": {
-      "Cookie": "connect.sid=s:PnHAVuQLRYsoZzw9xCs5A0Uep-09V5uL.3Apa1u31AXiK+5F2uZzy38Y26OLa0Xv95uFrutfhrRs; express.sid=s:wtSz6mnTZunlbL1Liy-CjGEARFMXTggi.s6T21Hl9mQwVwVAhENrfjxFDd6Z2/0Mj5ANUOyBmvL0"
-      
+      "Cookie": "connect.sid=s%3AOcSK_CVxU9jkTncbXYX3CjcJyXUxiP-6.OTo182%2B3RIOsGAX%2Bto3yKrCL4uX7MtofmQunYmJu8xs; express.sid=s%3Ahqut5Ke4fu8rw8f2hWB8QCTq3vx3Cbgs.bXW8OvlaNynnmCLXGxv%2FFxaIvvb5CwfEoeBBXvqAMu0"
     }
   },
   "/content-api/*": {
