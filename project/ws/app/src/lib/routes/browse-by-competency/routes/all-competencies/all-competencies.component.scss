@@ -1,0 +1,184 @@
+.container-balanced {
+    max-width: 1202px;
+    margin-left: auto!important;
+    margin-right: auto!important;
+    height: auto;
+    min-height: 400px;
+    
+}
+.top_card_container {
+    margin-top: 30px;
+    
+    .top_card_inner_box {
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content:space-between;
+
+    }
+}
+
+.explore_main_panel {
+    box-shadow: none!important;
+    border: 0;
+
+    .mat-expansion-panel-header {
+        box-shadow: none!important;
+        border: 0;
+        padding: 0;
+    
+       
+    }
+
+    .mat-content {
+        flex-direction: row-reverse!important;
+        // border:1px solid red;
+
+        
+    }
+    .mat-expansion-panel-header-title  {
+        flex-grow: initial;
+        flex-grow:none;
+        vertical-align: middle;
+        margin-bottom: 0;
+        flex-direction: row-reverse!important;
+    }
+    .mat-expansion-panel-content {
+        .mat-expansion-panel-body {
+            padding:10px 0;
+            border:1px solid red;
+        }
+    }
+}
+
+
+
+
+.main_content_box {
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.all_competency_box {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 30px 0;
+    overflow: hidden;
+
+    .all_competency_inner {
+        width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+        margin-top: 25px;
+
+        .left_card_box {
+            // width: 890px;
+            width: 75%;
+            float: left;
+
+            .top_search_box {
+                width: 100%;
+                overflow: hidden;
+               
+
+                .search_box_inner {
+                    width: 585px;
+                    float: left;
+
+                    .search_box_main {
+                        width: 100%;
+
+                        mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix{
+                            border-top-width: 8px !important;
+                            padding: 12px 10px 12px 12px;
+                            
+                        }
+
+                        form {
+                            width: 100%;
+
+                            .search_form {
+                                width: 100%;
+
+                               
+                            }
+                        }
+                    }
+
+                    .search_tag_box {
+                        width: 100%;
+
+                        a.single_tag {
+                            display: inline-block;
+                            padding: 8px 12px;
+                            margin: 8px 8px;
+                            border-radius: 20px 20px;
+                            background-color: rgba(0, 0, 0, 0.08);
+                            color: #000;
+
+                            .mat-icon {
+                                vertical-align: middle;
+                                margin-left: 15px;
+                            }
+                        }
+                    }
+                }
+
+                .item_dropdown_box {
+                    float: right;
+                    width: 210px;
+                    box-sizing: border-box;
+
+                    .item {
+                        .mat-form-field-outline  {
+                            background-color: #f0f3f4;
+                            // border:1px solid rgba(0, 0, 0, 0.08);
+                            // padding: 0px 12px;
+                            // border-radius: 4px 4px;
+                            // box-sizing: border-box;
+                        }
+                        .theme-igot.day-mode .mat-form-field-appearance-legacy .mat-form-field-underline {
+                            background-color:none;
+                        }
+                        
+                    }
+                }
+            }
+
+            .main_card_box {
+                width: 100%;
+                margin-top: 35px;
+
+                a.load_more_link {
+                    margin:35px auto 0 auto;
+                    text-align:center;
+                    display: block;
+                }
+            }
+        }
+
+        .right_sidebar_box {
+            width: 23%;
+            float: right;
+            background-color: #fff;
+            box-shadow: none!important;
+            border: 0!important;
+            border-radius: 4px;
+
+           
+        }
+        .right_section_search_box {
+            width:100%;
+            background-color: #fff;
+
+            // .mat-icon {
+            //     position: absolute;
+            // }
+        }
+        
+    }
+}
+
+
+
+

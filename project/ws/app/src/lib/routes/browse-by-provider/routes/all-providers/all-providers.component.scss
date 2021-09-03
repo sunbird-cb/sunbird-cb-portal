@@ -1,0 +1,100 @@
+.container-balanced {
+    max-width: 1202px;
+    margin-left: auto!important;
+    margin-right: auto!important;
+    height: auto;
+    min-height: 400px;
+    
+}
+
+.top_card_container {
+    margin-top: 30px;
+    .top_card_inner_box {
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content:space-between;
+    }
+}
+
+// all providers 
+.all_provider_box {
+    width: 100%;
+    margin-bottom: 150px;
+
+    .all_provider_inner {
+        width: 100%;
+    }
+
+    .top_search_box {
+        width: 100%;
+        overflow: hidden;
+       
+
+        .search_box_inner {
+            width: 585px;
+            float: left;
+
+            .search_box_main {
+                width: 100%;
+
+                mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix{
+                    border-top-width: 8px !important;
+                    padding: 12px 10px 12px 12px;
+                    
+                }
+
+                form {
+                    width: 100%;
+
+                    .search_form {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        .item_dropdown_box {
+            float: right;
+            width: 210px;
+            box-sizing: border-box;
+            .item {
+                .mat-form-field {
+                    // background-color: #f0f3f4;
+                    // border:1px solid rgba(0, 0, 0, 0.08);
+                    // padding: 0px 12px;
+                    // border-radius: 4px 4px;
+                    // box-sizing: border-box;
+                }
+                .theme-igot.day-mode .mat-form-field-appearance-legacy .mat-form-field-underline {
+                    background-color:none;
+                }
+                
+            }
+        }
+    }
+
+    .provider_card_box {
+        width:100%;
+        align-items: center;
+        // Enable if flex layout is needed
+        // flex-direction: row;
+        // flex-wrap: wrap;
+        // display: flex;
+        // justify-content: space-between;
+
+        // disable if flex layout is needed and not grid 
+        display: grid;
+        grid-gap: 32px;
+        grid-template-columns: repeat(auto-fill, 275px);
+        justify-content: space-between;
+        
+    }
+
+    a.load_more_link {
+        margin:35px auto 0 auto;
+        text-align:center;
+        display: block;
+    }
+
+}

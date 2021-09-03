@@ -1,0 +1,82 @@
+
+.provider_right_main_block {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    overflow: hidden;
+    box-sizing: border-box;
+
+    .about_provider_overview {
+        padding-top: 8px;
+    }
+
+    .overview_image_box {
+        width: 320px;
+        height: 180px;
+        border-radius: 4px 4px;
+        overflow: hidden;
+        background-color: #fff;
+    
+        img {
+            object-fit: fill;
+            object-position: center;
+            width: 100%;
+            height: 100%;
+        }
+    }
+    
+    
+    .top_head_block {
+        justify-content: space-between;
+        flex-wrap: wrap;
+        flex-direction: row;
+
+        .more_btn_box {
+
+            .kabab-menu {
+                padding: 15px 15px;
+                position: relative;
+                background-color: #eee;
+                border-radius: 4px 4px;
+
+            .mat-icon {
+                vertical-align: middle;
+                margin-left: 10px;
+            }
+        }
+            
+
+            .kabab-menu-dropdown-content {
+                position: absolute;
+                border-radius: 2px;
+                background-color: #fff;
+                box-shadow: 0 3px 5px 4px rgb(0 0 0 / 5%);
+                padding: 8px;
+                z-index: 1;
+                text-align: left;
+                right: 0;
+                top: 0;
+                min-width: 135px;
+                margin-top: 80px;
+
+                .list {
+                    cursor: pointer;
+                    font-size: 14px;
+                    padding: 8px;
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+                }
+            }
+        }
+    }
+    .explore_popular_topic, .top_cbp_section, .explore_popular_competency {
+        margin-top: 55px;
+    }
+}
+
+
+.mat-drawer-content {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
