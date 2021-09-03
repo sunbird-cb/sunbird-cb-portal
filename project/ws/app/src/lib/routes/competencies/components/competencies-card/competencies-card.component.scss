@@ -102,3 +102,50 @@
 .mat-copmetence a:hover {
   color: #ffffff !important ;
 }
+
+.learn-card {
+  // padding: 24px !important;
+  overflow: hidden;
+  width: 721px;
+
+  .mat-card-content {
+    margin-bottom: 0;
+  }
+
+  .card_inner_content {
+      overflow: hidden;
+  }
+
+  .card_inner_title_box {
+  //    display: column;
+      width: 220px;
+      padding: 24px;
+      box-sizing: border-box;
+
+      h4.mat-h4 {
+          margin-bottom: 5px;
+      }
+
+      .text_icon_box {
+          margin-top: 45px;
+          .mat-icon1 {
+              vertical-align: middle;
+              margin-right: 10px;
+          }
+          .icon_text {
+              margin-bottom: 0;  
+             
+          }
+      }
+     
+  }
+  .card_right_txtbox {
+      float: right;
+      padding: 24px;
+      box-sizing: border-box;
+      width: calc(100% - 230px);
+      border-left:1px solid rgba(0, 0, 0, 0.08);
+
+  }
+}
+
