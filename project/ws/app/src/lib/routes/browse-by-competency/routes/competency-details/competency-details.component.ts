@@ -34,7 +34,7 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
             status: [
                 'Live',
             ],
-            'competencies_v2.name': [''],
+            'competencies_v3.name': [''],
         },
         query: '',
         sort_by: {
@@ -45,9 +45,9 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
             'primaryCategory',
             'mimeType',
             'source',
-            // 'competencies_v2.name',
-            // 'competencies_v2.competencyType',
-            // 'taxonomyPaths_v2.name',
+            // 'competencies_v3.name',
+            // 'competencies_v3.competencyType',
+            // 'taxonomyPaths_v3.name',
         ],
     },
 }
@@ -95,7 +95,7 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
   }
 
   getCbps() {
-      this.searchReq.request.filters['competencies_v2.name'].splice(0, 1, this.competencyName)
+      this.searchReq.request.filters['competencies_v3.name'].splice(0, 1, this.competencyName)
       this.browseCompServ.fetchSearchData(this.searchReq).subscribe((res: any) => {
         if (res && res.result &&  res.result && res.result.content) {
           this.courses = res.result.content
