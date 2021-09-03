@@ -356,7 +356,8 @@ a:not([href]):not([tabindex]) {
 }
 .main_progress_box {
   padding: 30px 30px;
-  background-image: url("https://igot-dev.in/fusion-assets/images/competency.svg");
+  background-color: white;
+  // background-image: url("https://igot-dev.in/fusion-assets/images/competency.svg");
   background-position: center;
   background-size: cover;
 
@@ -367,8 +368,38 @@ a:not([href]):not([tabindex]) {
 
     .progress_data_box {
       width: 50%;
+      padding-right: 30px;
+      box-sizing: border-box;
     }
     
+  }
+}
+
+// recommendation_frca_box
+
+.recommendation_frca_box {
+  padding: 12px 15px;
+  border-radius: 8px 8px;
+  background:  rgba(246, 153, 83, 0.2);
+
+
+  .post_image_box {
+    
+    img {
+      margin-top: 56px;
+      margin-bottom: 24px;
+    }
+
+  }
+
+  .info_icon {
+    margin-right: 10px;
+    vertical-align: top;
+  }
+
+  a.work_order_link {
+    color: #0074B6;
+    text-decoration: underline;
   }
 }
 
@@ -378,7 +409,7 @@ a:not([href]):not([tabindex]) {
 .recommendation_box {
   padding: 12px 15px;
   border-radius: 8px 8px;
-  background:rgba(0, 0, 0, 0.04);
+  background:rgba(243, 92, 92, 0.479);
 
   .info_icon {
     margin-right: 10px;
