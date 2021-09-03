@@ -25,6 +25,7 @@ import {
   MatProgressSpinnerModule,
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
+import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 /*CkEditorModule, CKEditorService,*/
 import {  AvatarPhotoModule, BtnPageBackModule } from '@sunbird-cb/collection'
@@ -63,6 +64,7 @@ import { CompetenceSysComponent } from './routes/competence-sys/competence-sys.c
     MatInputModule,
     MatDialogModule,
     MatButtonModule,
+    MatProgressBarModule,
     MatSidenavModule,
     MatProgressSpinnerModule,
     PipeFilterModule,
