@@ -10,12 +10,10 @@ import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/dis
 })
 export class AppFooterComponent implements OnInit {
 
-  
   isXSmall = false
   termsOfUser = true
 
   hubsList!: NsInstanceConfig.IHubs[]
-
 
   constructor(
     private configSvc: ConfigurationsService,
@@ -38,7 +36,7 @@ export class AppFooterComponent implements OnInit {
     if (instanceConfig) {
       this.hubsList = (instanceConfig.hubs || []).filter(i => i.active)
     }
-   
+
   }
 
   navigate() {
