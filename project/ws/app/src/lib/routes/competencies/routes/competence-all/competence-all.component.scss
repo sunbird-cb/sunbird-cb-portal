@@ -309,7 +309,7 @@ a:not([href]):not([tabindex]) {
 .learn-card {
   // padding: 24px !important;
   overflow: hidden;
-  width: 685px;
+  width: 100%;
   .card_inner_content {
       overflow: hidden;
   }
