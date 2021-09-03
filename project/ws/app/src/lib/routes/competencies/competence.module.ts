@@ -25,6 +25,7 @@ import {
   MatProgressSpinnerModule,
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
+import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 /*CkEditorModule, CKEditorService,*/
 import {  AvatarPhotoModule, BtnPageBackModule } from '@sunbird-cb/collection'
@@ -32,6 +33,7 @@ import { EditorSharedModule } from '@ws/author/src/lib/routing/modules/editor/sh
 import { LoaderService } from '@ws/author/src/lib/services/loader.service'
 import { InitResolver } from './resolvers/init-resolve.service'
 import { CompetenceAllComponent } from './routes/competence-all/competence-all.component'
+import { CompetenceSysComponent } from './routes/competence-sys/competence-sys.component'
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { CompetenceAllComponent } from './routes/competence-all/competence-all.c
     LeftMenuComponent,
     RightMenuComponent,
     CompetenceAllComponent,
+    CompetenceSysComponent,
     CompetenceViewComponent,
   ],
   imports: [
@@ -61,6 +64,7 @@ import { CompetenceAllComponent } from './routes/competence-all/competence-all.c
     MatInputModule,
     MatDialogModule,
     MatButtonModule,
+    MatProgressBarModule,
     MatSidenavModule,
     MatProgressSpinnerModule,
     PipeFilterModule,

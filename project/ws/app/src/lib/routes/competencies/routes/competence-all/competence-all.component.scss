@@ -302,3 +302,196 @@ a:not([href]):not([tabindex]) {
   border-radius: unset;
   background: inherit !important;
 }
+
+
+
+
+.learn-card {
+  // padding: 24px !important;
+  overflow: hidden;
+  width: 721px;
+  .card_inner_content {
+      overflow: hidden;
+  }
+
+  .card_inner_title_box {
+  //    display: column;
+      width: 210px;
+      padding: 24px;
+      
+      box-sizing: border-box;
+
+      h4.mat-h4 {
+          margin-bottom: 5px;
+      }
+
+      .text_icon_box {
+          margin-top: 45px;
+          .mat-icon1 {
+              vertical-align: middle;
+              margin-right: 10px;
+          }
+          .icon_text {
+              margin-bottom: 0;  
+             
+          }
+      }
+     
+  }
+  .card_right_txtbox {
+      float: right;
+      padding: 24px;
+      box-sizing: border-box;
+      width: calc(100% - 225px);
+      border-left:1px solid rgba(0, 0, 0, 0.08);
+
+  }
+}
+
+
+// progress bar component
+.no-competency-card {
+  padding: 0;
+ background: transparent!important;
+}
+.main_progress_box {
+  padding: 30px 30px;
+  background-color: white;
+  // background-image: url("https://igot-dev.in/fusion-assets/images/competency.svg");
+  background-position: center;
+  background-size: cover;
+
+  // background-color: #fff;
+
+  .inner_progress_box {
+    width: 100%;
+
+    .progress_data_box {
+      width: 50%;
+      padding-right: 30px;
+      box-sizing: border-box;
+    }
+    
+  }
+}
+
+// recommendation_frca_box
+
+.recommendation_frca_box {
+  padding: 12px 15px;
+  border-radius: 8px 8px;
+  background:  rgba(246, 153, 83, 0.2);
+
+
+  .post_image_box {
+    
+    img {
+      margin-top: 56px;
+      margin-bottom: 24px;
+    }
+
+  }
+
+  .info_icon {
+    margin-right: 10px;
+    vertical-align: top;
+  }
+
+  a.work_order_link {
+    color: #0074B6;
+    text-decoration: underline;
+  }
+}
+
+
+// recommendation_box notification
+
+.recommendation_box {
+  padding: 12px 15px;
+  border-radius: 8px 8px;
+  background:rgba(243, 92, 92, 0.479);
+
+  .info_icon {
+    margin-right: 10px;
+  }
+
+  a.work_order_link {
+    color: #0074B6;
+    text-decoration: underline;
+  }
+}
+
+.add_competency_btn {
+  background: #0074b6;
+  border-radius: 4px 4px;
+  // padding: 14px 16px;
+  width: 155px;
+  height: 56px;
+  margin: 0;
+  color: #fff!important;
+}
+
+
+
+
+
+// competency box with proficiency
+
+ul.tagIconList {
+  padding: 0;
+  margin: 0;
+  width: 75px;
+  display: inline-block;
+  list-style: none;
+  vertical-align: middle;
+}
+ul.tagIconList li {
+  float: left;
+}
+ul.tagIconList li a {
+  width: 8px;
+  margin-left: 3px;
+  height: 5px;
+  border-radius: 2px 2px;
+  display: block;
+}
+a.activeTagIcon {
+  background-color: #0074B6;
+  border: 2px solid #0074B6;
+}
+a.activeLevelIcon {
+  background-color: #1D8923;
+  border: 2px solid #1D8923;
+}
+a.deactiveLevelIcon {
+  background-color: rgba(0, 0, 0, 0.08);
+  border: 2px solid #D13924;
+}
+a.disableTagIcon, a.disableLevelIcon {
+  background-color: rgba(0, 0, 0, 0.08);
+  border: 2px solid rgba(0, 0, 0, 0.08);
+}
+.card_inner_content {
+  width: 100%;
+
+  .card_inner_title_box {
+    width: 30%;
+  }
+  .proficiency_text_box {
+    width: 30%;
+  }
+  .proficient_level_box {
+    width: 25%;
+  }
+}
+
+p.deactivate_text {
+  opacity: 0.4;
+}
+h4.main_text {
+  margin-bottom: 4px;
+}
+p.proficiency_text {
+  font: 400 12px/16px Lato;
+  letter-spacing: 0.25px;
+}

@@ -1,0 +1,137 @@
+
+.provider_right_main_block {
+    margin-top: 15px;
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 100%;
+
+    .explore_popular_topic, .top_cbp_section {
+        margin-bottom: 55px;
+        padding-top: 8px;
+    }
+}
+
+
+.mat-drawer-content {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.learn-card {
+
+    .imageholder {
+        width: 310px;
+    }
+}
+
+.imageholder {
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        display: block;
+        border-radius: 10px 0 0 10px;
+        // object-fit: cover;
+        // object-position: center;
+        height: 100%;
+
+    }
+}
+.main_title_box {
+    height: 60px;
+}
+p.actionbtns {
+    margin-bottom: 0;
+}
+ul.highlighting_list li {
+    display: inline-block;
+    padding-right: 10px;
+}
+ul.highlighting_list li .rating-number{
+    letter-spacing: 0;
+    color: #f69953;
+}
+ul.highlighting_list li.rating .mat-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-table;
+    color: #f69953;
+    font-size: 18px;
+    vertical-align: text-bottom;
+}
+img.text_seperator {
+    vertical-align: middle;
+}
+.mat-text-box {
+    padding: 18px;
+    box-sizing: border-box;
+    width: calc(100% - 315px);
+
+    p.mat-caption .title_icon {
+        vertical-align: middle;
+    }
+}
+ul.tag_list {
+    list-style: none;
+    margin-bottom: 0;
+}
+ul.tag_list li {
+    display: inline-block;
+}
+ul.tag_list li span.tag {
+    background-color: rgba(0, 0, 0, 0.04);
+    border:1px solid rgba(0, 0, 0, 0.08);
+    margin:0px 8px 0px 0px;
+}
+
+.top_search_box {
+    width: 100%;
+    overflow: hidden;
+   
+
+    .search_box_inner {
+        width: 585px;
+        float: left;
+
+        .search_box_main {
+            width: 100%;
+
+            form {
+                width: 100%;
+
+                .search_form {
+                    width: 100%;
+                }
+            }
+            mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix{
+                border-top-width: 8px !important;
+                padding: 12px 10px 12px 12px;
+                
+            }
+        }
+    }
+
+    .item_dropdown_box {
+        float: right;
+        width: 210px;
+        box-sizing: border-box;
+        .item {
+            .mat-form-field {
+                // background-color: #f0f3f4;
+                // border:1px solid rgba(0, 0, 0, 0.08);
+                // padding: 0px 12px;
+                // border-radius: 4px 4px;
+                // box-sizing: border-box;
+            }
+            .theme-igot.day-mode .mat-form-field-appearance-legacy .mat-form-field-underline {
+                background-color:none;
+            }
+            
+        }
+    }
+}
+a.load_more_link {
+    margin:35px auto 0 auto;
+    text-align:center;
+    display: block;
+}
