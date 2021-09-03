@@ -39,6 +39,15 @@ const routes: Routes = [
           // profileData: ProfileResolverService,
         },
       },
+      {
+        path: 'desired',
+        component: CompetenceSysComponent,
+        resolve: {
+          profile: ProfileResolve,
+          // configData: ConfigurationsService,
+          // profileData: ProfileResolverService,
+        },
+      },
     ],
   },
 ]

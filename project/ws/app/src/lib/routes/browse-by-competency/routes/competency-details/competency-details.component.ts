@@ -47,7 +47,7 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
             'source',
             // 'competencies_v3.name',
             // 'competencies_v3.competencyType',
-            // 'taxonomyPaths_v2.name',
+            // 'taxonomyPaths_v3.name',
         ],
     },
 }
