@@ -82,6 +82,7 @@ export class RootComponent implements OnInit, AfterViewInit {
 
   ) {
     this.mobileAppsSvc.init()
+    this.openIntro()
     // if (this.authSvc.token) {
     //   // console.log("CALLED AFTER LOGIN")
     //   this.loginToken = this.authSvc.token

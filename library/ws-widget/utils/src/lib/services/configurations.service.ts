@@ -53,7 +53,7 @@ export class ConfigurationsService {
   unMappedUser: any
   isAuthenticated = false
   isNewUser = false
-  portalUrls: IPortalUrls | null = null
+  portalUrls: IPortalUrls | undefined
 
   // pinnedApps
   pinnedApps = new BehaviorSubject<Set<string>>(new Set())

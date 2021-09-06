@@ -61,7 +61,7 @@ export namespace NsInstanceConfig {
     forgotPasswordConfig?: IForgotPassword
     hubs: IHubs[]
     courseContentPath?: string
-    portalUrls: IPortalUrls
+    portalUrls: IPortalUrls | undefined
   }
   export interface IPortalUrls {
     igot: string,
@@ -69,7 +69,7 @@ export namespace NsInstanceConfig {
     mdo: string,
     cbc: string,
     cbp: string,
-    frac:string
+    frac: string
   }
   export interface IForgotPassword {
     local?: string

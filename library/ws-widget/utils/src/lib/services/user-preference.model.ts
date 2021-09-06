@@ -13,13 +13,13 @@ export interface IUserPreference {
   completedTour?: boolean
   profileSettings: string[]
 }
-export interface IPortalUrls{
+export interface IPortalUrls {
   igot: string,
   spv: string,
   mdo: string,
   cbc: string,
   cbp: string,
-  frac:string
+  frac: string
 }
 export interface IProfile {
   showProfilePicture: boolean
