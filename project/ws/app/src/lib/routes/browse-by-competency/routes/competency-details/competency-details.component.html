@@ -36,7 +36,7 @@
         <mat-sidenav-container>
             <mat-sidenav-content class="custom-sidecontent">
 
-                <div *ngIf="courses && courses.length; else noData" class="">
+                <ng-container *ngIf="courses && courses.length; else noData">
                     <ng-container *ngFor="let c of courses">
                         <ws-widget-card-content [widgetData]="{
                             content: c,
@@ -44,7 +44,7 @@
                           }">
                         </ws-widget-card-content>
                     </ng-container>
-                </div>
+                </ng-container>
                 <ng-template #noData>
                     <h4 *ngIf="courses?.length <=0 && !(displayLoader | async)"
                         class="w-full text-center ws-mat-black60-text ">
