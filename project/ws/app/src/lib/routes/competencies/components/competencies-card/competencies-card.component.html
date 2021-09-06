@@ -1,29 +1,29 @@
-<div>
-  <mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card" [ngClass]="{'mat-copmetence': isSelected}"
-  (click)="view()">
-    <a href="javascript:void(0)" role="button">
-      <mat-card-content *ngIf="!isSelected">
-        <div class="card_inner_content flex">
-            <div class="card_inner_title_box flex-col">
-                <div class="cursor-pointer flex-col">
-                    <h4 class="mat-h4">{{data.name}}</h4>
-                    <p class="mat-body-2 ws-mat-black60-text">{{data.type}}</p>
-                </div>
-                <!-- <div class="flex-col text_icon_box">
-                    <mat-icon class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color" role="img"
-                        aria-hidden="true">school</mat-icon>
-                    <span class="icon_text mat-caption ws-mat-black60-text">
-                        4 CBPs
-                    </span>
-                </div> -->
-            </div>
-            <div class="flex-1 card_right_txtbox flex-col">
-                <p class="cursor-pointer mat-body-1 ws-mat-black60-text" (click)="view()">
-                  {{data.description}}
-                </p>
-            </div>
-        </div>
-    </mat-card-content>
-    </a>
-  </mat-card>
-</div>
+
+<mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card" [ngClass]="{'mat-copmetence': isSelected}"
+(click)="view()">
+  <a href="javascript:void(0)" role="button">
+    <mat-card-content *ngIf="!isSelected">
+      <div class="card_inner_content flex">
+          <div class="card_inner_title_box flex-col">
+              <div class="cursor-pointer flex-col">
+                  <h4 class="mat-h4">{{data.name}}</h4>
+                  <p class="mat-body-2 ws-mat-black60-text">{{data.additionalProperties.competencyType}}</p>
+              </div>
+              <!-- <div class="flex-col text_icon_box">
+                  <mat-icon class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color" role="img"
+                      aria-hidden="true">school</mat-icon>
+                  <span class="icon_text mat-caption ws-mat-black60-text">
+                      4 CBPs
+                  </span>
+              </div> -->
+          </div>
+          <div class="flex-1 card_right_txtbox flex-col">
+              <p class="cursor-pointer mat-body-1 ws-mat-black60-text" (click)="view()">
+                {{data.description}}
+              </p>
+          </div>
+      </div>
+  </mat-card-content>
+  </a>
+</mat-card>
+

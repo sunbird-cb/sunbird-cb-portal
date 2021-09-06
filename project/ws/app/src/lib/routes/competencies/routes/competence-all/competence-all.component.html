@@ -73,7 +73,7 @@
 
           <!-- New -->
           
-          <div class="flex flex-wrap margin-fix">
+          <div class="flex flex-column flex-wrap margin-fix">
             <ng-container *ngIf="myCompetencies && myCompetencies.length > 0" >
               <ng-container *ngFor="let comp of myCompetencies | pipeFilterV2:'name': searchInput.value"> <!--  | pipeFilterV2:'name': searchInput.value   -->
                   <mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card" (click)=view(comp) >
@@ -82,7 +82,7 @@
                             <div class="card_inner_title_box flex-col">
                                 <div class="cursor-pointer flex-col">
                                     <h4 class="mat-h4">{{comp.name}}</h4>
-                                    <p class="mat-body-2 ws-mat-black60-text">{{comp.type}}</p>
+                                    <p class="mat-body-2 ws-mat-black60-text">{{comp.competencyType}}</p>
                                 </div>
                             </div>
                             <div class="flex-1 card_right_txtbox flex-col" (click)=view(comp) >
@@ -99,7 +99,7 @@
         </div>
         
 
-        <div class="flex flex-wrap margin-fix" *ngIf="currentFilter && currentFilter === 'recommended'">
+        <div class="flex flex-column flex-wrap margin-fix" *ngIf="currentFilter && currentFilter === 'recommended'">
 
           <div *ngIf="userPosition == null">
             <div class="recommendation_box flex flex-col justify-start margin-bottom-l margin-top-l">

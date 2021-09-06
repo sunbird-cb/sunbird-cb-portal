@@ -4,6 +4,8 @@
 .footer-container {
   display: flex;
   justify-content: space-between;
+  background-color: #464343!important;
+
   @include breakpoint-xs {
     flex-direction: column;
   }
@@ -39,14 +41,11 @@
   }
   .footer_sub_text {
     color: rgba(255, 255, 255, 0.7);
+    background-color: transparent;
+    margin-bottom: 12px;
   }
-  a.get_feedback_btn {
-    width: 100%;
-    border-radius: 4px 4px;
-    border-radius: 4px 4px;
-    display: block;
-    background: #fff;
-    text-align: center;
-    padding: 14px 0;
+  a.feedback_link {
+    color: #68BDFF;
+    text-decoration: underline!important;
   }
 }
