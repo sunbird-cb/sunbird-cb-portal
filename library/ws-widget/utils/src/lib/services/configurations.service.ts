@@ -3,7 +3,7 @@ import { BehaviorSubject, ReplaySubject } from 'rxjs'
 // import { environment } from '../../../../../../src/environments/environment'
 import { NsPage } from '../resolvers/page.model'
 import { NsAppsConfig, NsInstanceConfig, NsUser } from './configurations.model'
-import { IUserPreference } from './user-preference.model'
+import { IPortalUrls, IUserPreference } from './user-preference.model'
 
 // const instanceConfigPath: string | null = window.location.host
 // const locationHost: string | null = window.location.host
@@ -53,6 +53,7 @@ export class ConfigurationsService {
   unMappedUser: any
   isAuthenticated = false
   isNewUser = false
+  portalUrls: IPortalUrls | null = null
 
   // pinnedApps
   pinnedApps = new BehaviorSubject<Set<string>>(new Set())
