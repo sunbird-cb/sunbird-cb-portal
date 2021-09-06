@@ -82,7 +82,6 @@ export class RootComponent implements OnInit, AfterViewInit {
 
   ) {
     this.mobileAppsSvc.init()
-    this.openIntro()
     // if (this.authSvc.token) {
     //   // console.log("CALLED AFTER LOGIN")
     //   this.loginToken = this.authSvc.token
@@ -140,7 +139,9 @@ export class RootComponent implements OnInit, AfterViewInit {
   }
   openIntro() {
     if (!(this.rootSvc.getCookie('intro') && !!(this.rootSvc.getCookie('intro')))) {
-      this.dialog.open(AppIntroComponent, { data: {} })
+      if (this.router.url === '/page/home') {
+        this.dialog.open(AppIntroComponent, { data: {} })
+      }
     }
     // this.snackBar.openFromTemplate(this.userIntro, { duration: 20000, verticalPosition: 'bottom', horizontalPosition: 'left' })
   }
@@ -191,6 +192,7 @@ export class RootComponent implements OnInit, AfterViewInit {
         //   this.telemetrySvc.audit(WsEvents.WsAuditTypes.Created, 'Login', {})
         //   this.appStartRaised = false
         // }
+        this.openIntro()
       }
     })
     this.rootSvc.showNavbarDisplay$.pipe(delay(500)).subscribe(display => {

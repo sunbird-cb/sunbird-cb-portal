@@ -8,9 +8,8 @@
       "/apis": "/apis"
     },
     "headers": {
-      "Cookie": "express.sid=s%3AcxhPJjpV0mUNMJAkBjGLAruZEG3a8Myt.jhUxdYBm%2BJ6mllrcNES%2BDBf8It0tL2lFh4LhGfv7Rsg; connect.sid=s%3AoeyDyUrvQNPGufju5am-wgadhpMB6IOV.jJcfdPnyrHjBTyXmNTHUrN8YgT6zKfZ7Bhnz5jgxxhc"
+      "Cookie": "connect.sid=s%3AUPTck8eIGF8VUpRQ0rsbcxCuO5RTI9zZ.MDmBbvLClmm7tS8fL1rDC%2BoHwySbubmWil%2FlQ1rMcr8"
     }
-
   },
   "/content-api/*": {
     "target": "http://localhost:3004",
