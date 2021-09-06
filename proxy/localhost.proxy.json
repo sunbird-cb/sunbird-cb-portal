@@ -6,7 +6,11 @@
     "changeOrigin": true,
     "pathRewrite": {
       "/apis": "/apis"
+    },
+    "headers": {
+      "Cookie": "express.sid=s%3AcxhPJjpV0mUNMJAkBjGLAruZEG3a8Myt.jhUxdYBm%2BJ6mllrcNES%2BDBf8It0tL2lFh4LhGfv7Rsg; connect.sid=s%3AoeyDyUrvQNPGufju5am-wgadhpMB6IOV.jJcfdPnyrHjBTyXmNTHUrN8YgT6zKfZ7Bhnz5jgxxhc"
     }
+
   },
   "/content-api/*": {
     "target": "http://localhost:3004",

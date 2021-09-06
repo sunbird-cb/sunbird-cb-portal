@@ -2,7 +2,7 @@
     <div class="top_footer_inner flex flex-row justify-between">
       <div class="flex flex-col justify-start">
         <p class="footer_heading mat-subheading-1 margin-bottom-m">Hubs</p>
-       
+
         <ng-container *ngFor="let hub of hubsList">
           <ng-container *ngIf="hub.hubname == 'Discuss'">
             <a  class="footer_sub_text mat-body cursor-pointer" (click)="navigate()">{{hub.hubname}}</a>
@@ -21,9 +21,9 @@
 
       <div class="flex flex-col justify-start">
         <p class="footer_heading mat-subheading-1 margin-bottom-m">Related links</p>
-        <a class="footer_sub_text mat-body" href="" target="_blank">MDO portal</a>
-        <a class="footer_sub_text mat-body" href="" target="_blank">CBP portal</a>
-        <a class="footer_sub_text mat-body" href="https://frac-dictionary.igot-dev.in/" target="_blank">FRAC dictionaries</a>
+        <a class="footer_sub_text mat-body" [attr.href]="this.configSvc.portalUrls.mdo" target="_blank">MDO portal</a>
+        <a class="footer_sub_text mat-body" [attr.href]="this.configSvc.portalUrls.cbp"target="_blank">CBP portal</a>
+        <a class="footer_sub_text mat-body" [attr.href]="this.configSvc.portalUrls.frac" target="_blank">FRAC dictionaries</a>
         <!-- <a class="footer_sub_text mat-body">Mobile application</a> -->
       </div>
 
@@ -31,13 +31,13 @@
         <p class="footer_heading mat-subheading-1 margin-bottom-m">About us</p>
         <a class="footer_sub_text mat-body" href="https://dopttrg.nic.in/igotmk/" target="_blank">Mission Karmayogi</a>
         <a class="footer_sub_text mat-body">Capacity building commission</a>
-    
+
       </div>
 
       <div class="flex flex-col justify-start">
         <img src="/assets/images/banners/iGOT_logo_dark.svg" class="footer_logo margin-bottom-xl">
           <p class="footer_sub_text margin-remove mat-body"><a href="" class="feedback_link mat-body-2">GOT FEEDBACK?</a> Let us know</p>
-      
+
       </div>
 
     </div>

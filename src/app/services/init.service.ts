@@ -348,6 +348,7 @@ export class InitService {
     this.configSvc.instanceConfig = publicConfig
     this.configSvc.rootOrg = publicConfig.rootOrg
     this.configSvc.org = publicConfig.org
+    this.configSvc.portalUrls = publicConfig.portalUrls
     this.configSvc.activeOrg = publicConfig.org[0]
     this.updateAppIndexMeta()
     return publicConfig
