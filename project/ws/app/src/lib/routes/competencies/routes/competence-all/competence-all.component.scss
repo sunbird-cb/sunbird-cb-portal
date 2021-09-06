@@ -409,7 +409,7 @@ a:not([href]):not([tabindex]) {
 .recommendation_box {
   padding: 12px 15px;
   border-radius: 8px 8px;
-  background:rgba(243, 92, 92, 0.479);
+  background:rgba(241,226,213, 0.479);
 
   .info_icon {
     margin-right: 10px;
@@ -436,6 +436,12 @@ a:not([href]):not([tabindex]) {
 
 
 // competency box with proficiency
+
+.proficency-card {
+  // padding: 24px !important;
+  // overflow: hidden;
+  // width: 100%;
+}
 
 ul.tagIconList {
   padding: 0;

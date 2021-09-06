@@ -5,6 +5,7 @@ import { CompetenceComponent } from './routes/competence-home/competence.compone
 import { CompetencieRoutingModule } from './competence.rounting.module'
 import { CompetenceCardComponent } from './components/competencies-card/competencies-card.component'
 import { CompetenceViewComponent } from './components/competencies-view/competencies-view.component'
+import { CompetenceProficiencyCardComponent } from './components/competencies-proficency-card/competencies-proficency-card.component'
 import { LeftMenuComponent } from './components/left-menu/left-menu.component'
 import { RightMenuComponent } from './components/right-menu/right-menu.component'
 // import { BasicCKEditorComponent } from './components/basic-ckeditor/basic-ckeditor.component'
@@ -38,6 +39,7 @@ import { CompetenceSysComponent } from './routes/competence-sys/competence-sys.c
 @NgModule({
   declarations: [
     CompetenceCardComponent,
+    CompetenceProficiencyCardComponent,
     CompetenceComponent,
     LeftMenuComponent,
     RightMenuComponent,
