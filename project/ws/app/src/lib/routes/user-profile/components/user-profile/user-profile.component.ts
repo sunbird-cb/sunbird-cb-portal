@@ -217,7 +217,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.govtOrgMeta = data.govtOrg
         this.industriesMeta = data.industries
         this.degreesMeta = data.degrees
-        this.designationsMeta = data.designations
+        // this.designationsMeta = data.designations
       },
       (_err: any) => {
       })
@@ -227,6 +227,28 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       },
       (_err: any) => {
       })
+
+      const desreq = {
+        searches: [
+          {
+            type: 'POSITION',
+            field: 'name',
+            keyword: '',
+          },
+          {
+            field: 'status',
+            keyword: 'VERIFIED',
+            type: 'POSITION',
+          },
+        ],
+      }
+
+      this.userProfileSvc.getDesignations(desreq).subscribe(
+        (data: any) => {
+          this.designationsMeta = data.responseData
+        },
+        (_err: any) => {
+        })
   }
   createDegree(): FormGroup {
     return this.fb.group({
@@ -693,7 +715,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       isGovtOrg: organisation.isGovtOrg,
       // orgName: organisation.orgName,
       industry: organisation.industry,
-      designation: organisation.designation,
+      designation: organisation.designation ||  _.get(data, 'professionalDetails.designation'),
       location: organisation.location,
       doj: organisation.doj,
       orgDesc: organisation.orgDesc,
