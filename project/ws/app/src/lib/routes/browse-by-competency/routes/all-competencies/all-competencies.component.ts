@@ -112,7 +112,7 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
 
   updateQuery(key: string) {
     this.searchQuery = key
-    this.searchCompetency(this.searchQuery)
+    this.searchCompetency(this.searchQuery, this.appliedFilters)
   }
 
   reset() {

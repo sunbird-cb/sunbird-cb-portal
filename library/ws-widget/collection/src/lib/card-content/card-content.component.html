@@ -751,8 +751,14 @@
   <mat-card class="card-wide margin-bottom-m padding-remove position-relative flex">
     <div class="imageholder ">
       <img mat-card-image class="margin-remove"
-        src="https://igot.blob.core.windows.net/content/content/do_11327647746152857614136/artifact/do_11327647746152857614136_1620663753379_introtoeconomics11602651204113.jpg"
-        alt="">
+      [src]="widgetData.content.appIcon" [wsUtilsDefaultThumbnail]="defaultThumbnail"
+      [alt]="widgetData.content.name">
+      <div class="source-div" [hidden]="true">
+        <!-- [src]="sourseIcon(widgetData.content.sourceName)" -->
+        <img [src]="widgetData.content.creatorLogo" class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
+          [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
+        <!-- [title]="widgetData.content.sourceName" -->
+      </div>
     </div>
     <mat-card-content class="mat-text-box">
       <p class="flex items-center mat-caption margin-bottom-xxs text-uppercase" *ngIf="widgetData.content.contentType === 'Resource' || widgetData.content.contentType === 'Course' || widgetData.content.contentType === 'Module'">
@@ -775,7 +781,7 @@
       </div>
       <!-- <p class="mat-body-2 margin-bottom-s"></p> -->
       <div class="bottomsection">
-        <p class="mat-body-2 ws-mat-primary-text margin-bottom-xxs" *ngIf="widgetData.content.creator">By {{widgetData.content.creator}}</p>
+        <p class="mat-body-2 ws-mat-black-text margin-bottom-xxs" *ngIf="widgetData.content.creator">By {{widgetData.content.creator}}</p>
         <div class="contentdata margin-bottom-xm">
           <ul
             class="mat-body-2 margin-remove-top margin-bottom-xs padding-remove ws-mat-black60-text highlighting_list">
@@ -787,28 +793,24 @@
             <li *ngIf="widgetData.content.duration">
                 <img class="text_seperator" src="/assets/icons/content/separator.svg">  {{ widgetData.content.duration | pipeDurationTransform: 'hms' }}
             </li>
-            <li class="rating"><img src="/assets/icons/content/separator.svg" class="text_seperator">
+            <!-- TODO: Rating have to enabled once data is available -->
+            <!-- <li class="rating"><img src="/assets/icons/content/separator.svg" class="text_seperator">
               <span class="rating-number mat-body-2"> 4.5 &nbsp;</span>
               <mat-icon>star</mat-icon>
               <mat-icon>star</mat-icon>
               <mat-icon>star</mat-icon>
               <mat-icon>star</mat-icon>
               <mat-icon>star_half</mat-icon>
-            </li>
+            </li> -->
           </ul>
         </div>
-        <div class="flex">
-          <div class="tags flex-col" *ngIf="widgetData.content.keywords && widgetData.content.keywords.length > 0">
+        <!-- <div class="flex"> -->
+          <div class="tags" *ngIf="widgetData.content.keywords && widgetData.content.keywords.length > 0">
             <ul class="mat-caption margin-remove-top padding-remove tag_list">
               <li *ngFor="let tag of widgetData.content.keywords">
                 <span class="tag">{{tag}}</span>
               </li>
             </ul>
-            <!-- <div class="tags" *ngIf="widgetData.content.keywords && widgetData.content.keywords.length > 0">
-              <ul class="mat-caption margin-remove-top margin-bottom-s padding-remove display-inline-block">
-                  <li *ngFor="let tag of widgetData.content.keywords">{{tag}}</li>
-              </ul> -->
-
           </div>
           <!-- <div class="flex-col">
             <p class="display-inline-block ws-mat-black60-text actionbtns">
@@ -817,7 +819,7 @@
 
             </p>
           </div> -->
-        </div>
+        <!-- </div> -->
 
       </div>
     </mat-card-content>
