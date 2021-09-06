@@ -11,9 +11,16 @@
     
     .top_card_inner_box {
         align-items: center;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content:space-between;
+        // enable for flex box layout
+        // flex-direction: row;
+        // flex-wrap: wrap;
+        // justify-content:space-between;
+
+        // enable for grid box layout
+        display: grid !important;
+        grid-gap: 25px;
+        grid-template-columns: repeat(auto-fill, 275px);
+        justify-content: flex-start;
 
     }
 }
