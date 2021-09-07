@@ -14,6 +14,7 @@ export class AppFooterComponent implements OnInit {
   termsOfUser = true
 
   hubsList!: NsInstanceConfig.IHubs[]
+  portalUrls!: NsInstanceConfig.IPortalUrls
 
   constructor(
     private configSvc: ConfigurationsService,
@@ -33,6 +34,9 @@ export class AppFooterComponent implements OnInit {
 
   ngOnInit() {
     const instanceConfig = this.configSvc.instanceConfig
+    if (this.configSvc.portalUrls) {
+    this.portalUrls = this.configSvc.portalUrls
+    }
     if (instanceConfig) {
       this.hubsList = (instanceConfig.hubs || []).filter(i => i.active)
     }
