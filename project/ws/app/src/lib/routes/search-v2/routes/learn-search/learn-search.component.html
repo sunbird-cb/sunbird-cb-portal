@@ -123,10 +123,10 @@
         <!-- filter sidebar -->
         <!-- <mat-sidenav mode="side" position="end" opened class="custom-sidenav"> -->
 
-            <mat-sidenav [mode]="side" [(opened)]="sideNavBarOpened" position="end" class="custom-sidenav">
+            <mat-sidenav [mode]="'side'" [(opened)]="sideNavBarOpened" position="end" class="custom-sidenav">
                 <!-- <div class="contain">
                     <div class="flex-1" style="position: relative;"> -->
-                      <div #stickyMenu [class.sticky]="sticky">
+                      <div>
                         <ws-app-search-filters *ngIf="facets && facets.length > 0" [urlparamFilters]="paramFilters" [newfacets]="facets" (appliedFilter)="applyFilter($event)"></ws-app-search-filters>
                       </div>
                     <!-- </div>
