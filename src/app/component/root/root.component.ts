@@ -5,6 +5,7 @@ import {
   Component,
   ElementRef,
   OnInit,
+  TemplateRef,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core'
@@ -35,6 +36,7 @@ import { environment } from '../../../environments/environment'
 import { MatDialog } from '@angular/material'
 import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component'
 import { concat, interval, timer } from 'rxjs'
+import { AppIntroComponent } from '../app-intro/app-intro.component'
 
 @Component({
   selector: 'ws-root',
@@ -44,6 +46,7 @@ import { concat, interval, timer } from 'rxjs'
 })
 export class RootComponent implements OnInit, AfterViewInit {
   @ViewChild('previewContainer', { read: ViewContainerRef, static: true })
+  @ViewChild('userIntro', { static: true }) userIntro!: TemplateRef<any>
   previewContainerViewRef: ViewContainerRef | null = null
   @ViewChild('appUpdateTitle', { static: true })
   appUpdateTitleRef: ElementRef | null = null
@@ -75,8 +78,11 @@ export class RootComponent implements OnInit, AfterViewInit {
     private rootSvc: RootService,
     private btnBackSvc: BtnPageBackService,
     private changeDetector: ChangeDetectorRef,
+    // private dialogRef: MatDialogRef<any>,
+
   ) {
     this.mobileAppsSvc.init()
+    this.openIntro()
     // if (this.authSvc.token) {
     //   // console.log("CALLED AFTER LOGIN")
     //   this.loginToken = this.authSvc.token
@@ -132,6 +138,14 @@ export class RootComponent implements OnInit, AfterViewInit {
       },
     })
   }
+  openIntro() {
+    if (!(this.rootSvc.getCookie('intro') && !!(this.rootSvc.getCookie('intro')))) {
+      if (this.router.url === '/page/home') {
+        this.dialog.open(AppIntroComponent, { data: {} })
+      }
+    }
+    // this.snackBar.openFromTemplate(this.userIntro, { duration: 20000, verticalPosition: 'bottom', horizontalPosition: 'left' })
+  }
 
   ngOnInit() {
     try {
@@ -179,6 +193,7 @@ export class RootComponent implements OnInit, AfterViewInit {
         //   this.telemetrySvc.audit(WsEvents.WsAuditTypes.Created, 'Login', {})
         //   this.appStartRaised = false
         // }
+        this.openIntro()
       }
     })
     this.rootSvc.showNavbarDisplay$.pipe(delay(500)).subscribe(display => {

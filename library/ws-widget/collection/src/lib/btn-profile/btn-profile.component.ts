@@ -28,12 +28,12 @@ export class BtnProfileComponent extends WidgetBaseComponent
   basicBtnAppsConfig: NsWidgetResolver.IRenderConfigWithTypedData<IBtnAppsConfig> = {
     widgetType: 'actionButton',
     widgetSubType: 'actionButtonApps',
-    widgetData: { allListingUrl: '/app/features' },
+    widgetData: { allListingUrl: '' },
   }
   settingBtnConfig: NsWidgetResolver.IRenderConfigWithTypedData<IBtnAppsConfig> = {
     widgetType: 'actionButton',
     widgetSubType: 'actionButtonSetting',
-    widgetData: { allListingUrl: '/app/features' },
+    widgetData: { allListingUrl: '' },
   }
   isPinFeatureAvailable = true
   pinnedApps: NsWidgetResolver.IRenderConfigWithTypedData<NsPage.INavLink>[] = []

@@ -20,6 +20,7 @@ import {
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
   MatInputModule,
   MatFormFieldModule,
+  MatCheckboxModule,
 } from '@angular/material'
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -62,6 +63,8 @@ import { ConfigService } from '@ws/app/src/lib/routes/discuss/services/config.se
 import { DiscussionUiModule } from '@sunbird-cb/discussions-ui-v8'
 import { ServiceWorkerModule } from '@angular/service-worker'
 import { environment } from 'src/environments/environment'
+import { QuickTourModule } from '@ws/app/src/lib/routes/info/quick-tour/quick-tour.module'
+import { AppIntroComponent } from './component/app-intro/app-intro.component'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -91,6 +94,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     AppNavBarComponent,
     AppPublicNavBarComponent,
     TncComponent,
+    AppIntroComponent,
     TncRendererComponent,
     AppFooterComponent,
     InvalidUserComponent,
@@ -100,6 +104,8 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
   ],
   imports: [
     FormsModule,
+    MatCheckboxModule,
+    QuickTourModule,
     ReactiveFormsModule,
     BrowserModule,
     HttpClientModule,
@@ -143,6 +149,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
   entryComponents: [
     DialogConfirmComponent,
     LoginComponent,
+    AppIntroComponent,
   ],
   providers: [
     {
