@@ -227,7 +227,8 @@ export class EventsComponent implements OnInit {
     const now = new Date()
     const today = moment(now).format('YYYY-MM-DD HH:mm')
 
-    const day = new Date().getDate()
+    // tslint:disable-next-line:prefer-template
+    const day =  ('0' + (new Date().getDate())).slice(-2)
     const year = new Date().getFullYear()
     // tslint:disable-next-line:prefer-template
     const month = ('0' + (now.getMonth() + 1)).slice(-2)

@@ -13,7 +13,7 @@
               {{eventData?.name}}
             </div>
             <div class="flex flex-col flex-auto mat-body-2">
-              <p class="flex margin-bottom-m" role="link" tabindex="0" i18n-aria-label>
+              <p class="flex margin-bottom-m word-break" role="link" tabindex="0" i18n-aria-label>
                 {{eventData?.instructions}}
               </p>
               <p class="flex mat-error" role="link" tabindex="0" i18n-aria-label *ngIf="currentEvent">
@@ -40,7 +40,7 @@
     <div class="flex flex-wrap">
       <ng-container>
           <div class="flex mb-5">
-              <p>{{eventData?.description}}</p>
+              <p class="word-break">{{eventData?.description}}</p>
           </div>
       </ng-container>
     </div>
@@ -60,7 +60,7 @@
     <div class="flex flex-wrap margin-bottom-xl">
         <ng-container>
             <div class="flex mb-5">
-               <p>{{eventData?.learningObjective}}</p>
+               <p class="word-break">{{eventData?.learningObjective}}</p>
             </div>
         </ng-container>
     </div>
