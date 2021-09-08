@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router'
 import { CompetenceComponent } from './routes/competence-home/competence.component'
 import { CompetenceAllComponent } from './routes/competence-all/competence-all.component'
 import { CompetenceSysComponent } from './routes/competence-sys/competence-sys.component'
+import { CompetencyDetailedViewComponent } from './routes/competency-detailed-view/competency-detailed-view.component'
+import { CompetencyAllWrapperComponent } from './routes/competency-all-wrapper/competency-all-wrapper.component'
 import { InitResolver } from './resolvers/init-resolve.service'
 import { ProfileResolve } from './resolvers/profile-fetch'
 // import { ProfileResolverService } from './resolvers/profile-resolver.service'
@@ -32,12 +34,36 @@ const routes: Routes = [
       },
       {
         path: 'all',
-        component: CompetenceSysComponent,
+        component: CompetencyAllWrapperComponent,
         resolve: {
           profile: ProfileResolve,
           // configData: ConfigurationsService,
           // profileData: ProfileResolverService,
         },
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'list',
+            resolve: {
+              // configData: ConfigurationsService,
+              // profileData: ProfileResolverService,
+            },
+          },
+          {
+            path: 'list',
+            component: CompetenceSysComponent,
+            resolve: {
+              profile: ProfileResolve,
+              // configData: ConfigurationsService,
+              // profileData: ProfileResolverService,
+            },
+          },
+          {
+            path: ':competencyId/:competencyName',
+            component: CompetencyDetailedViewComponent,
+          },
+        ],
       },
       {
         path: 'desired',
