@@ -96,6 +96,7 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  word-break: break-all;
 }
 .textoverflow-title {
   display: -webkit-box;
@@ -103,4 +104,5 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  word-break: break-all;
 }
