@@ -35,6 +35,8 @@ import { LoaderService } from '@ws/author/src/lib/services/loader.service'
 import { InitResolver } from './resolvers/init-resolve.service'
 import { CompetenceAllComponent } from './routes/competence-all/competence-all.component'
 import { CompetenceSysComponent } from './routes/competence-sys/competence-sys.component'
+import { CompetencyDetailedViewComponent } from './routes/competency-detailed-view/competency-detailed-view.component'
+import { CompetencyAllWrapperComponent } from './routes/competency-all-wrapper/competency-all-wrapper.component'
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import { CompetenceSysComponent } from './routes/competence-sys/competence-sys.c
     RightMenuComponent,
     CompetenceAllComponent,
     CompetenceSysComponent,
+    CompetencyDetailedViewComponent,
+    CompetencyAllWrapperComponent,
     CompetenceViewComponent,
   ],
   imports: [

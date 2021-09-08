@@ -31,7 +31,7 @@ export class CompetenceSysComponent implements OnInit {
   elementPosition: any
   currentFilter = 'recent'
   myCompetencies: NSCompetencie.ICompetencie[] = []
-  tabsData: NSCompetencie.ICompetenciesTab[]
+  // tabsData: NSCompetencie.ICompetenciesTab[]
   allCompetencies!: NSCompetencie.ICompetencie[]
   filteredCompetencies!: NSCompetencie.ICompetencie[]
   searchJson!: NSCompetencie.ISearch[]
@@ -46,10 +46,10 @@ export class CompetenceSysComponent implements OnInit {
     private snackBar: MatSnackBar,
     private configSvc: ConfigurationsService,
   ) {
-    this.tabsData =
-      (this.route.parent &&
-        this.route.parent.snapshot.data.pageData.data.tabs) ||
-      []
+    // this.tabsData =
+    //   (this.route.parent &&
+    //     this.route.parent.snapshot.data.pageData.data.tabs) ||
+    //   []
     if (
       this.route.snapshot.data &&
       this.route.snapshot.data.profile &&
