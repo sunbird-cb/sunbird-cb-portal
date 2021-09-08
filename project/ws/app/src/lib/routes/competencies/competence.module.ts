@@ -6,6 +6,7 @@ import { CompetencieRoutingModule } from './competence.rounting.module'
 import { CompetenceCardComponent } from './components/competencies-card/competencies-card.component'
 import { CompetenceViewComponent } from './components/competencies-view/competencies-view.component'
 import { CompetenceProficiencyCardComponent } from './components/competencies-proficency-card/competencies-proficency-card.component'
+import { CompetencyLevelCardComponent } from './components/competency-level-card/competency-level-card.component'
 import { LeftMenuComponent } from './components/left-menu/left-menu.component'
 import { RightMenuComponent } from './components/right-menu/right-menu.component'
 // import { BasicCKEditorComponent } from './components/basic-ckeditor/basic-ckeditor.component'
@@ -42,6 +43,7 @@ import { CompetencyAllWrapperComponent } from './routes/competency-all-wrapper/c
   declarations: [
     CompetenceCardComponent,
     CompetenceProficiencyCardComponent,
+    CompetencyLevelCardComponent,
     CompetenceComponent,
     LeftMenuComponent,
     RightMenuComponent,

@@ -12,6 +12,7 @@ const API_ENDPOINTS = {
   // searchCompetency: '/apis/protected/v8/competency/searchCompetency',
   fetchProfileNyId: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`,
   // fetchProfile: '/apis/protected/v8/user/profileDetails/getUserRegistry',
+  fetchCompetencyDetails: (id: string, type: string) => `/apis/protected/v8/frac/getNodeById/${id}/${type}`,
   fetchProfile: '/apis/proxies/v8/api/user/v2/read',
   updateProfile: '/apis/protected/v8/user/profileDetails/updateUser',
 }
@@ -43,6 +44,10 @@ export class CompetenceService {
   fetchProfileById(id: any): Observable<any> {
     return this.http.get<[IUserProfileDetailsFromRegistry]>(API_ENDPOINTS.fetchProfileNyId(id))
       .pipe(map((res: any) => res.result.response))
+  }
+
+  fetchCompetencyDetails(id: any, type: string): Observable<any> {
+    return this.http.get<any>(API_ENDPOINTS.fetchCompetencyDetails(id, type))
   }
 
   fetchMappings(positionData: any): Observable<any> {
