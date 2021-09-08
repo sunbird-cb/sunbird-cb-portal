@@ -116,7 +116,7 @@
           </button>
           <!-- </div> -->
         </div>
-        <div class="flex flex-wrap margin-fix">
+        <div class="flex flex-column flex-wrap margin-fix">
           <ng-container *ngIf="filteredCompetencies && filteredCompetencies.length > 0">
             <ng-container *ngFor="let comp of filteredCompetencies | pipeFilterV2:'name': searchInput.value">
               <app-competence-card [data]="comp" [isSelected]="comp.id === selectedId"
