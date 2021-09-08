@@ -1,1 +1,28 @@
-<p>competency-detailed-view works!</p>
+<div class="container-balanced">
+    <div class="left_content_box">
+        <h2 class="mat-h2  inline-block "> {{competencyData?.name}}</h2>
+        <div>
+            <p class="mat-body-1 ws-mat-black60-text">{{competencyData?.description}}</p>
+
+
+            <p class="mat-body-1 ws-mat-black60-text highlight_point_text">
+                Competency type:
+                <span
+                    class="mat-primary mat-subheading-1">{{competencyData?.additionalProperties?.competencyType}}</span>
+            </p>
+            <p class="mat-body-1 ws-mat-black60-text highlight_point_text">
+                Competency area:
+                <span
+                    class="mat-primary mat-subheading-1">{{competencyData?.additionalProperties?.competencyArea}}</span>
+            </p>
+
+        </div>
+    </div>
+    <div class="flex flex-column flex-wrap margin-fix">
+        <ng-container *ngIf="competencyData && competencyData?.children.length > 0">
+            <ng-container *ngFor="let comp of competencyData?.children">
+                <ws-app-competency-level-card [data]="comp"></ws-app-competency-level-card>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>
