@@ -1,3 +1,5 @@
+import { ConnectionNameModule } from './../_common/connection-name/connection-name.module'
+
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { MatButtonModule, MatCardModule, MatChipsModule, MatDividerModule, MatExpansionModule, MatIconModule, MatProgressSpinnerModule, MatInputModule } from '@angular/material'
@@ -9,6 +11,9 @@ import { CardNetworkHomeComponent } from './card-network-home.component'
 import { ChallengeModule } from '../challenge/challenge.module'
 import { MatGridListModule } from '@angular/material/grid-list'
 import { FormsModule } from '@angular/forms'
+// import { ConnectionNameComponent } from '../_common/connection-name/connection-name.component'
+// import { ConnectionHoverCardComponent } from '../_common/connection-hover-card/connection-hover-card.component'
+// import { TooltipDirective } from '../_directives/tooltip.directive'
 
 @NgModule({
   declarations: [CardNetworkHomeComponent],
@@ -30,6 +35,7 @@ import { FormsModule } from '@angular/forms'
     MatInputModule,
     MatGridListModule,
     FormsModule,
+    ConnectionNameModule,
   ],
   entryComponents: [CardNetworkHomeComponent],
   providers: [],
