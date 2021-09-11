@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment'
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
@@ -12,6 +13,7 @@ export class AppFooterComponent implements OnInit {
 
   isXSmall = false
   termsOfUser = true
+  environment!: any
 
   hubsList!: NsInstanceConfig.IHubs[]
   portalUrls!: NsInstanceConfig.IPortalUrls
@@ -22,6 +24,7 @@ export class AppFooterComponent implements OnInit {
     private discussUtilitySvc: DiscussUtilsService,
     private router: Router,
   ) {
+    this.environment = environment
     if (this.configSvc.restrictedFeatures) {
       if (this.configSvc.restrictedFeatures.has('termsOfUser')) {
         this.termsOfUser = false

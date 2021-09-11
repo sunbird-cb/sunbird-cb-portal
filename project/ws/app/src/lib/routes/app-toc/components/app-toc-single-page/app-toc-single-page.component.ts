@@ -52,6 +52,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   batchDataLoaded = false
   showDiscussionForum: any
   competencies: any
+  howerUser!: any
   // configSvc: any
 
   constructor(
@@ -66,6 +67,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     public createBatchDialog: MatDialog,
     private mobileAppsSvc: MobileAppsService,
     public configSvc: ConfigurationsService,
+    private connectionHoverService: ConnectionHoverService
   ) {
     if (this.configSvc.restrictedFeatures) {
       this.askAuthorEnabled = !this.configSvc.restrictedFeatures.has('askAuthor')
@@ -109,12 +111,6 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
       this.isNotEditor = false
     }
 
-    // this.routeQuerySubscription = this.route.queryParamMap.subscribe(qParamsMap => {
-    //   const batchId = qParamsMap.get('batchId')
-    //   if (batchId) {
-    //     this.batchId = batchId
-    //   }
-    // })
   }
 
   detailUrl(data: any) {
@@ -364,17 +360,32 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   goToUserProfile(user: NsAutoComplete.IUserAutoComplete) {
     if (this.enablePeopleSearch) {
       this.router.navigate(['/app/person-profile', user.wid])
+
       // this.router.navigate(['/app/person-profile'], { queryParams: { emailId: user.email } })
     }
   }
 
   getUserFullName(user: any) {
+    // this.getHoverUser(user: any)
     if (user && user.first_name && user.last_name) {
+
       return `${user.first_name.trim()} ${user.last_name.trim()}`
     }
     return ''
   }
 
+  getHoverUser(user: any) {
+    const userId = user.wid
+    this.connectionHoverService.fetchProfile(userId).subscribe((res: any) => {
+      if (res.profileDetails !== null) {
+        this.howerUser = res.profileDetails
+      } else {
+        this.howerUser = res || {}
+
+      }
+      return this.howerUser
+    })
+  }
   fetchCohorts(cohortType: NsCohorts.ECohortTypes, contentID: any) {
     if (!this.cohortResults[cohortType] && !this.forPreview) {
       this.tocSharedSvc.fetchContentCohorts(cohortType, contentID).subscribe(
@@ -399,5 +410,9 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
         hasError: false,
       }
     }
+  }
+
+  get usr() {
+    return this.howerUser
   }
 }
