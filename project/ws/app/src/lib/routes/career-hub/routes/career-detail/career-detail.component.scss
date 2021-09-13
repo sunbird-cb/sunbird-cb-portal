@@ -112,3 +112,8 @@ mat-icon.downvoted {
     display: none !important;
   }
 }
+
+.post-content, .mat-card-title {
+  word-break: break-all;
+  white-space: initial;
+}
