@@ -52,6 +52,9 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
 
   public screenSizeIsLtMedium = false
   isLtMedium$ = this.valueSvc.isLtMedium$
+  statedata: {
+    param: any, path: any
+  } | undefined
 
   constructor(
     private searchSrvc: GbSearchService,
@@ -62,6 +65,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.statedata = { param: this.param, path: 'Search' }
     const instanceConfig = this.configSvc.instanceConfig
 
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
@@ -88,6 +92,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.param.currentValue !== changes.param.previousValue) {
+      this.statedata = { param: this.param, path: 'Search' }
       this.searchResults = []
       this.totalResults = 0
       if (this.myFilters && this.myFilters.length > 0) {

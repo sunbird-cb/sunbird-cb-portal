@@ -116,6 +116,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   disableEnrollBtn = false
   isAssessVisible = false
   isPracticeVisible = false
+  breadcrumbs: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -143,6 +144,18 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     // private progressSvc: ContentProgressService,
     private actionSVC: ActionService,
   ) {
+    const historyData = history.state
+    if (historyData && historyData.path === 'Search') {
+     const searchurl = `/app/globalsearch`
+      const  qParam = {
+        q: historyData.param,
+      }
+      // tslint:disable-next-line:max-line-length
+      this.breadcrumbs = { url: 'home', titles: [{ title: 'Search', url: searchurl, queryParams: qParam }, { title: 'Details', url: 'none' }] }
+    } else {
+      // tslint:disable-next-line:max-line-length
+      this.breadcrumbs = { url: 'home', titles: [{ title: 'Learn', url: '/page/learn', icon: 'school' }, { title: 'Details', url: 'none' }] }
+    }
   }
 
   ngOnInit() {
