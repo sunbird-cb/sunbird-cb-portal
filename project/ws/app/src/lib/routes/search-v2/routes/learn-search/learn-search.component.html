@@ -34,19 +34,13 @@
     <mat-sidenav-container autosize  class="container-balanced" [hasBackdrop]="false">
         <!-- search cards -->
         <mat-sidenav-content class="custom-sidecontent">
-
             <div *ngIf="screenSizeIsLtMedium" class="flex justify-end">
                 <button type="button" mat-icon-button (click)="sideNavBarOpened = !sideNavBarOpened"
                   id="ws-auth-root-home-btn-menu" name="ws-auth-root-home-btn-menu">
                   <mat-icon>menu</mat-icon>
                 </button>
               </div>
-
-             
               <!-- <div class="flex flex-5 marbot" [ngClass]="{'margin-top-56': currentRoute === 'home'}"> -->
-
-
-
             <div *ngIf="totalResults > 0 && searchResults && searchResults.length > 0"  infinite-scroll
                 [infiniteScrollDistance]="scrollDistance"
                 [infiniteScrollThrottle]="throttle"
@@ -75,9 +69,11 @@
                             <img src="/assets/icons/content/image.svg" class="contenticon" alt="Module"  *ngIf="content.mimeType === 'image/jpeg' || content.mimeType === 'image/png'">
                             {{content.primaryCategory || content.contentType}}
                         </p>
+                        
+                        <!-- <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title" (click)="navigateToToc(param, content.identifier, content.primaryCategory)"> -->
                         <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title">
                             <a [routerLink]="['/app/toc/',content.identifier,'overview']"
-                            [queryParams]="{primaryCategory: content.primaryCategory}">{{content.name}}</a>
+                            [queryParams]="{primaryCategory: content.primaryCategory}" [state]="statedata">{{content.name}}</a>
                         </p>
                         <!-- <p class="mat-body-2 margin-bottom-s"></p> -->
                         <div class="bottomsection">
@@ -122,17 +118,14 @@
 
         <!-- filter sidebar -->
         <!-- <mat-sidenav mode="side" position="end" opened class="custom-sidenav"> -->
-
-            <mat-sidenav [mode]="'side'" [(opened)]="sideNavBarOpened" position="end" class="custom-sidenav">
-                <!-- <div class="contain">
-                    <div class="flex-1" style="position: relative;"> -->
-                      <div>
-                        <ws-app-search-filters *ngIf="facets && facets.length > 0" [urlparamFilters]="paramFilters" [newfacets]="facets" (appliedFilter)="applyFilter($event)"></ws-app-search-filters>
-                      </div>
-                    <!-- </div>
-                  </div> -->
-
-           
+        <mat-sidenav [mode]="'side'" [(opened)]="sideNavBarOpened" position="end" class="custom-sidenav">
+            <!-- <div class="contain">
+                <div class="flex-1" style="position: relative;"> -->
+                <div>
+                <ws-app-search-filters *ngIf="facets && facets.length > 0" [urlparamFilters]="paramFilters" [newfacets]="facets" (appliedFilter)="applyFilter($event)"></ws-app-search-filters>
+                </div>
+            <!-- </div>
+            </div> -->
         </mat-sidenav>
     </mat-sidenav-container>
 </div>
