@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core'
+import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges } from '@angular/core'
 import { GbSearchService } from '../../services/gb-search.service'
-import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, ValueService } from '@sunbird-cb/utils'
 import { ActivatedRoute } from '@angular/router'
 
 @Component({
@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router'
   templateUrl: './learn-search.component.html',
   styleUrls: ['./learn-search.component.scss'],
 })
-export class LearnSearchComponent implements OnInit, OnChanges {
+export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
   @Input() param: any
   @Input() paramFilters: any = []
   searchResults: any = []
@@ -47,15 +47,33 @@ export class LearnSearchComponent implements OnInit, OnChanges {
   totalpages!: number | 0
   newQueryParam: any
 
+  sideNavBarOpened = true
+  private defaultSideNavBarOpenedSubscription: any
+
+  public screenSizeIsLtMedium = false
+  isLtMedium$ = this.valueSvc.isLtMedium$
+  statedata: {
+    param: any, path: any
+  } | undefined
+
   constructor(
     private searchSrvc: GbSearchService,
     private configSvc: ConfigurationsService,
     private events: EventService,
     private activated: ActivatedRoute,
+    private valueSvc: ValueService,
   ) { }
 
   ngOnInit() {
+    this.statedata = { param: this.param, path: 'Search' }
     const instanceConfig = this.configSvc.instanceConfig
+
+    this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
+      this.sideNavBarOpened = !isLtMedium
+      this.screenSizeIsLtMedium = isLtMedium
+
+    })
+
     if (instanceConfig) {
       this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
     }
@@ -74,6 +92,7 @@ export class LearnSearchComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.param.currentValue !== changes.param.previousValue) {
+      this.statedata = { param: this.param, path: 'Search' }
       this.searchResults = []
       this.totalResults = 0
       if (this.myFilters && this.myFilters.length > 0) {
@@ -309,5 +328,12 @@ export class LearnSearchComponent implements OnInit, OnChanges {
         this.searchResults = this.searchResults.concat(array2)
       })
     }
+  }
+
+  ngOnDestroy() {
+    if (this.defaultSideNavBarOpenedSubscription) {
+      this.defaultSideNavBarOpenedSubscription.unsubscribe()
+    }
+
   }
 }
