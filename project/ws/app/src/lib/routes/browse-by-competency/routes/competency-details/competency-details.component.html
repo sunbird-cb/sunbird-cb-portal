@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <mat-sidenav-container>
+        <mat-sidenav-container class="custom">
             <mat-sidenav-content class="custom-sidecontent">
 
                 <ng-container *ngIf="courses && courses.length; else noData">
@@ -56,7 +56,7 @@
                 </div>
             </mat-sidenav-content>
 
-            <mat-sidenav mode="side" position="end" opened class="custom-sidenav opacity-50" *ngIf="courses?.length">
+            <mat-sidenav mode="side" position="end" opened class="custom-sidenav" >
                 <form class="filter-form" [formGroup]="filterForm">
                     <p class="mat-subheading-2 margin-bottom-m font-bold-imp">Filter by</p>
                     <!-- TODO: Tags feature has to be implemented -->
@@ -74,29 +74,41 @@
                         </form>
                     </div>
                 </div> -->
-                    <div class="opacity-50" (click)="false; $event.stopPropagation();">
-                        <mat-accordion *ngFor="let fs of facets">
+                    <div >
+                        <mat-accordion *ngFor="let fs of filteroptions">
                             <mat-expansion-panel *ngIf="fs.values.length > 0" (opened)="panelOpenState = true" (closed)="panelOpenState = false" [expanded]="true" class="accordian_panel">
                                 <mat-expansion-panel-header >
                                     <mat-panel-title>
-                                        <ng-container
-                                            *ngIf="fs.name === 'mimeType'">Resource type
-                                        </ng-container>
-                                        <ng-container
-                                            *ngIf="fs.name === 'source'">Provider
-                                        </ng-container>
-                                        <ng-container
-                                            *ngIf="fs.name === 'primaryCategory'">Content type
-                                        </ng-container>
+                                        <p class="mat-subheading-2 margin-bottom-xs font-bold-imp">{{getText(fs.displayname)}}</p>
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
                                 <mat-selection-list id="filters" formControlName="filters" #roles>
                                     <section class="mat-body-2 margin-bottom-xs text-capitalize"
                                         *ngFor="let options of fs.values">
-                                        <mat-checkbox (change)="modifyUserFilters(options, fs.name)"
+                                        <!-- <mat-checkbox (change)="modifyUserFilters(options, fs.name)"
                                             [checked]="options.ischecked">
                                             <label for="options.name">{{options.name}}</label>
-                                        </mat-checkbox>
+                                        </mat-checkbox> -->
+                                        <span>
+                                            <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name === 'audio/mpeg'">
+                                                <label for="Audio">Audio</label>
+                                            </mat-checkbox>
+                                            <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name === 'application/pdf'">
+                                                <label for="PDF">PDF</label>
+                                            </mat-checkbox>
+                                            <!-- <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name === 'application/vnd.ekstep.html-archive'">
+                                                <label for="Interactive Content">Interactive Content</label>
+                                            </mat-checkbox> -->
+                                            <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name === 'text/x-url'">
+                                                <label for="Webpage">Webpage</label>
+                                            </mat-checkbox>
+                                            <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name === 'application/vnd.ekstep.content-collection'">
+                                                <label for="Course">Course</label>
+                                            </mat-checkbox>
+                                            <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name !== 'application/pdf' && options.name !== 'audio/mpeg' && options.name !== 'application/vnd.ekstep.content-collection' && options.name !== 'text/x-url'">
+                                                <label for="options.name">{{options.name}}</label>
+                                            </mat-checkbox>
+                                        </span>
                                     </section>
                                 </mat-selection-list>
                             </mat-expansion-panel>
