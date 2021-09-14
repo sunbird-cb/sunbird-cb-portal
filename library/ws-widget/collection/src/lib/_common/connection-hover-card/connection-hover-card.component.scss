@@ -3,12 +3,12 @@
 @import 'ws-mixins';
 
 .card-container {
-    height: 338px;
+    height: 238px;
     width: 320px;
     // border: 1px solid rgba(0, 0, 0, 8%);
     border-radius: calc(#{$size-s}-#{$size-xs});
     padding: 0;
-    min-height: 338px;
+    min-height: 238px;
     min-width: 320px;
 }
 
