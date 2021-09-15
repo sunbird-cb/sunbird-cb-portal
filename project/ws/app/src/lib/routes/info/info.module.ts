@@ -6,9 +6,10 @@ import { InfoRoutingModule } from './info-routing.module'
 import { QuickTourModule } from './quick-tour/quick-tour.module'
 import { AboutVideoModule } from './about-video/about-video.module'
 import { FeedBackModule } from './micro-survey/feedback.module'
+import { FaqModule } from './faq/faq.module'
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, InfoRoutingModule, AboutModule, ContactModule, QuickTourModule, AboutVideoModule, FeedBackModule],
+  imports: [CommonModule, InfoRoutingModule, AboutModule, ContactModule, QuickTourModule, AboutVideoModule, FeedBackModule, FaqModule],
 })
 export class InfoModule { }
