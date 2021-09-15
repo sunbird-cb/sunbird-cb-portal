@@ -1,4 +1,6 @@
-<div class="cursor-pointer  flex item-center single_provider_card mat-card " [routerLink]="['/app/learn/browse-by/provider', provider?.orgName]">
+<!-- Card 1 start -->
+<div class="cursor-pointer  flex item-center single_provider_card mat-card "
+    [routerLink]="['/app/learn/browse-by/provider', provider?.orgName]"[hidden]="true">
     <div class="flex flex-col card-container items-center justify-center">   
         <div class="name-container flex flex-col margin-bottom-m">
             <div class="" role="link" tabindex="0"><!---->
@@ -13,3 +15,24 @@
         <p class="mat-body-2 text-center margin-remove">{{provider?.slug}}</p>
     </div>
 </div>
+<!-- Card 1 end -->
+
+
+<!-- TODO: Remove this below card, when the above card (card 1) information is available from backend -->
+<!-- Card 2 start -->
+<div class="cursor-pointer card2 flex item-center single_provider_card mat-card " [routerLink]="['/app/learn/browse-by/provider', provider?.orgName]">
+    <div class="flex flex-col card-container items-center justify-center">   
+        <div class="name-container flex flex-col">
+            <div class="" role="link" tabindex="0"><!---->
+                <div class="name ws-mat-black-text cursor-pointer mat-subheading-1"> 
+                   {{provider?.orgName}}
+                </div>
+            </div>
+        </div>
+        <!-- <div class="provider-image-container flex margin-bottom-s">
+            <img src="fusion-assets/images/lbs_logo.png" class="sb-certificatePage-loader-img" alt="LBSNAA" />
+        </div>
+        <p class="mat-body-2 text-center margin-remove">{{provider?.slug}}</p> -->
+    </div>
+</div>
+<!-- Card 2 end -->
