@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators'
 import { IUserProfileDetailsFromRegistry } from '../../user-profile/models/user-profile.model'
 
 const API_ENDPOINTS = {
+  SEARCH_V6: `/apis/proxies/v8/sunbirdigot/search`,
   searchCompetency: 'apis/protected/v8/frac/searchNodes',
   filterByMappings: 'apis/protected/v8/frac/filterByMappings',
   // searchCompetency: '/apis/protected/v8/competency/searchCompetency',
@@ -56,5 +57,9 @@ export class CompetenceService {
 
   updateProfile(profileData: any): Observable<any> {
     return this.http.patch<any>(API_ENDPOINTS.updateProfile, profileData)
+  }
+
+  fetchSearchData(request: any): Observable<any> {
+    return this.http.post<any>(API_ENDPOINTS.SEARCH_V6, request)
   }
 }
