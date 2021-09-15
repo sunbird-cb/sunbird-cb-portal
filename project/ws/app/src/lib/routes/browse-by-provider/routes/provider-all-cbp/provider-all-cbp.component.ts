@@ -82,6 +82,9 @@ export class ProviderAllCbpComponent implements OnInit, OnDestroy {
     const request = req || this.searchReq
     this.browseProviderSvc.fetchSearchData(request).subscribe((res: any) => {
       console.log('res ::', res)
+      if(res.result.count === 0) {
+        this.disableLoadMore = true
+      }
       if (res && res.result &&  res.result && res.result.content) {
         this.cbps = res.result.content
         this.totalCount = res.result.count
