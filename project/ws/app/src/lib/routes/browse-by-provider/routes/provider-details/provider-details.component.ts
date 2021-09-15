@@ -109,7 +109,7 @@ export class ProviderDetailsComponent implements OnInit, OnDestroy {
           enabled: true,
           uri: '',
         },
-        enabled: true,
+        enabled: false,
         routerLink: `/app/learn/browse-by/provider/${this.provider}/overview`,
       },
       {

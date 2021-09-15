@@ -6,6 +6,7 @@ import { ContactHomeComponent } from './contact/components/contact-home.componen
 import { QuickTourComponent } from './quick-tour/quick-tour.component'
 import { AboutVideoComponent } from './about-video/about-video.component'
 import { FeedbackComponent } from './micro-survey/components/feedback.component'
+import { FaqComponent } from './faq/components/faq.component'
 
 const routes: Routes = [
   {
@@ -30,17 +31,17 @@ const routes: Routes = [
     component: ContactHomeComponent,
 
   },
-  // {
-  //   path: 'faq',
-  //   component: FaqHomeComponent,
-  //   data: {
-  //     pageType: 'feature',
-  //     pageKey: 'faq',
-  //   },
-  //   resolve: {
-  //     pageData: PageResolve,
-  //   },
-  // },
+  {
+    path: 'faq',
+    component: FaqComponent,
+    data: {
+      pageType: 'feature',
+      pageKey: 'faq',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
   {
     path: 'tour',
     component: QuickTourComponent,
