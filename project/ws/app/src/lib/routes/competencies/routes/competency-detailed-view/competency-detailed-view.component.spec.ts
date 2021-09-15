@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { CompetencyDetailedViewComponent } from './competency-detailed-view.component';
+import { CompetencyDetailedViewComponent } from './competency-detailed-view.component'
 
 describe('CompetencyDetailedViewComponent', () => {
-  let component: CompetencyDetailedViewComponent;
-  let fixture: ComponentFixture<CompetencyDetailedViewComponent>;
+  let component: CompetencyDetailedViewComponent
+  let fixture: ComponentFixture<CompetencyDetailedViewComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CompetencyDetailedViewComponent ]
+      declarations: [CompetencyDetailedViewComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CompetencyDetailedViewComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(CompetencyDetailedViewComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

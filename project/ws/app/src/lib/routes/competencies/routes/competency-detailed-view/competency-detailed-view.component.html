@@ -23,15 +23,15 @@
         <div class="right_button_box">
             <mat-card>
                 <mat-card-content>
-                    <button mat-button color="default" type="button" class="margin-bottom-l small-button blue-border flex-auto-display mat-button">
+                    <button mat-button color="default" type="button" class="margin-bottom-l small-button blue-border flex-auto-display mat-button" (click)=view(competencyData)>
                       
                         <span class="ws-mat-default-text" i18n>Add to your competecies</span>
                     </button>
 
-                    <button mat-button color="default" type="button" class="small-button view-all flex-auto-display mat-button">
+                    <!-- <button mat-button color="default" type="button" class="small-button view-all flex-auto-display mat-button">
                       
                         <span class="ws-mat-default-text" i18n>Mark as desired competency</span>
-                    </button>
+                    </button> -->
                 </mat-card-content>
             </mat-card>
         </div>
@@ -50,5 +50,29 @@
                 <ws-app-competency-level-card [data]="comp"></ws-app-competency-level-card>
             </ng-container>
         </ng-container>
+        <!-- <ng-container>
+            <div class="left_content_box">
+                <h2 class="mat-h2 margin-remove inline-block "> Related CBPs </h2>
+                <div>
+                    <p class="mat-body-2 ws-mat-black60-text"> {{courses?.length || 0 }} CBPs for “{{competencyData?.name}}”</p>
+                </div>
+                <ng-container *ngIf="courses && courses.length; else noData">
+                    <ng-container *ngFor="let c of courses">
+                        <ws-widget-card-content [widgetData]="{
+                            content: c,
+                            cardSubType: ''
+                          }">
+                        </ws-widget-card-content>
+                    </ng-container>
+                </ng-container>
+                <ng-template #noData>
+                    <h4 *ngIf="courses?.length <=0 && !(displayLoader | async)"
+                        class="w-full text-center ws-mat-black60-text ">
+                        No CBPs found!
+                    </h4>
+                </ng-template>
+            </div>
+        </ng-container> -->
+        
     </div>
 </div>
