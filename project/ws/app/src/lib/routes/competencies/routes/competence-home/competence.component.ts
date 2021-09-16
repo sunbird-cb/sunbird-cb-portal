@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
+import { NSCompetencie } from '../../models/competencies.model'
 import { Router, Event, NavigationEnd, NavigationError, ActivatedRoute } from '@angular/router'
 import { ValueService } from '@sunbird-cb/utils'
 import { map } from 'rxjs/operators'
@@ -27,12 +28,17 @@ export class CompetenceComponent implements OnInit, OnDestroy {
   isLtMedium$ = this.valueSvc.isLtMedium$
   mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
   userRouteName = ''
+  tabsData: NSCompetencie.ICompetenciesTab[]
   private defaultSideNavBarOpenedSubscription: any
   constructor(
     private valueSvc: ValueService,
     private router: Router,
     private route: ActivatedRoute
   ) {
+    this.tabsData =
+      (this.route.parent &&
+        this.route.parent.snapshot.data.pageData.data.tabs) ||
+      []
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.bindUrl(event.url.replace('/app/competencies/', ''))
@@ -56,6 +62,7 @@ export class CompetenceComponent implements OnInit, OnDestroy {
 
   bindUrl(path: string) {
     if (path) {
+      // console.log(path)
       // this.currentRoute = path
       // if (this.titles.length > 1) {
       // this.titles.pop()

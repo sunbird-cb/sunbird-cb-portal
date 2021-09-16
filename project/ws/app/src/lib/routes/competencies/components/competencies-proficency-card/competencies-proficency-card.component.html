@@ -1,0 +1,81 @@
+<mat-card class="proficency-card margin-bottom-m position-relative mat-card" [ngClass]="{'mat-copmetence': isSelected}"
+(click)="view(data)">
+    <a role="button">
+        <mat-card-content *ngIf="!isSelected">
+            <div class="card_inner_content flex flex-row justify-between">
+                <div class="card_inner_title_box flex-col">
+                    <h4 class="mat-h4">{{data.name}}</h4>
+                    <p class="mat-body-2 ws-mat-black60-text">{{data?.additionalProperties?.competencyType || data?.competencyType}}</p>
+                </div>
+
+                <div class="flex-col proficiency_text_box">
+                    <!-- <div class="flex flex-row justify-between">
+                    <div>
+                        <p>WPCAS:</p>
+                    </div>
+                    <div class="proficiency_graph_box">
+                        <ul class="tagIconList">
+                        <li><a href="#" class="activeLevelIcon"></a> </li>
+                        <li><a href="#" class="activeLevelIcon"></a> </li>
+                        <li><a href="#" class="disableTagIcon"></a> </li>
+                        <li><a href="#" class="disableTagIcon"></a> </li>
+                        <li><a href="#" class="disableTagIcon"></a> </li>
+                    </ul>
+                    </div>
+                    </div>
+
+                    <div class="flex flex-row justify-between">
+                    <div>
+                        <p>PIAA</p>
+                    </div>
+                    <div class="proficiency_graph_box">
+                        <ul class="tagIconList">
+                        <li><a href="#" class="activeLevelIcon"></a> </li>
+                        <li><a href="#" class="activeLevelIcon"></a> </li>
+                        <li><a href="#" class="activeLevelIcon"></a> </li>
+                        <li><a href="#" class="disableTagIcon"></a> </li>
+                        <li><a href="#" class="disableTagIcon"></a> </li>
+                    </ul>
+                    </div>
+                    </div>
+
+                    <div class="flex flex-row justify-between">
+                    <div>
+                        <p>CBP assessment</p>
+                    </div>
+                    <div class="proficiency_graph_box">
+                        <ul class="tagIconList">
+                        <li><a href="#" class="activeLevelIcon"></a> </li>
+                        <li><a href="#" class="activeLevelIcon"></a> </li>
+                        <li><a href="#" class="activeLevelIcon"></a> </li>
+                        <li><a href="#" class="disableTagIcon"></a> </li>
+                        <li><a href="#" class="disableTagIcon"></a> </li>
+                    </ul>
+                    </div>
+                    </div>
+
+                    <div class="flex flex-row justify-between">
+                    <div>
+                        <p>Self attestation</p>
+                    </div>
+                    <div class="proficiency_graph_box">
+                        <ul class="tagIconList">
+                        <li><a href="#" class="activeLevelIcon"></a> </li>
+                        <li><a href="#" class="activeLevelIcon"></a> </li>
+                        <li><a href="#" class="activeLevelIcon"></a> </li>
+                        <li><a href="#" class="disableTagIcon"></a> </li>
+                        <li><a href="#" class="disableTagIcon"></a> </li>
+                    </ul>
+                    </div>
+                    </div> -->
+                </div>
+        
+    
+                <div class="flex proficient_level_box">
+                    <p class="deactivate_text mat-body-2">Not enough data</p>
+                </div>
+            </div>
+        </mat-card-content>
+    </a>
+</mat-card>
+
