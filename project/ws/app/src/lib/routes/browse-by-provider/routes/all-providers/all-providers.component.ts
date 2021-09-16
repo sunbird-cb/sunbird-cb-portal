@@ -13,8 +13,8 @@ export class AllProvidersComponent implements OnInit {
   public displayLoader!: Observable<boolean>
   provider = 'JPAL'
   page = 1
-  defaultLimit = 18
-  limit = 18
+  defaultLimit = 20
+  limit = 20
   searchForm: FormGroup | undefined
   sortBy: any
   searchQuery = ''

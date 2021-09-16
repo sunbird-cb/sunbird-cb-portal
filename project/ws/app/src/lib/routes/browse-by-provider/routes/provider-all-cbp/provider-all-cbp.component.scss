@@ -13,7 +13,7 @@
 
 
 .mat-drawer-content {
-    overflow-y: auto;
+    overflow-y: hidden;
     overflow-x: hidden;
 }
 
@@ -90,11 +90,12 @@ ul.tag_list li span.tag {
    
 
     .search_box_inner {
-        width: 585px;
-        float: left;
+        max-width: 585px;
+        // float: left;
 
         .search_box_main {
             width: 100%;
+            max-width: 585px;
 
             form {
                 width: 100%;
@@ -112,7 +113,7 @@ ul.tag_list li span.tag {
     }
 
     .item_dropdown_box {
-        float: right;
+        // float: right;
         width: 210px;
         box-sizing: border-box;
         .item {
