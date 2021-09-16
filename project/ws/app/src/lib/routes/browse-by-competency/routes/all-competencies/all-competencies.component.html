@@ -2,14 +2,12 @@
 </ws-widget-btn-page-back>
 <div class="container-balanced main_content_box">
   <div class="top_card_container">
-    <h1 class="mat-h1 margin-bottom-m inline-block "> Popular competencies</h1>
+    <h2 class="mat-h1 margin-bottom-m inline-block "> Popular competencies</h2>
     <div class="top_card_inner_box flex">
       <ng-container *ngFor="let comp of allCompetencies | slice:0:8; let i=index">
         <ws-app-popular-competency-card [competency]="comp"></ws-app-popular-competency-card>
       </ng-container>
-      <h4 *ngIf="allCompetencies?.length <=0 && !(displayLoader | async)" class="w-full text-center ws-mat-black60-text ">
-         No competencies found! 
-      </h4>
+      
       <!-- <div class="card-box card_gradient bg_color_blue">
         <img src="fusion-assets/images/competency.svg">
         <div class="card_text_box">
@@ -66,6 +64,9 @@
         </div>
       </div> -->
     </div>
+    <h4 *ngIf="allCompetencies?.length <=0 && !(displayLoader | async)" class="w-full text-left ws-mat-black60-text ">
+      No competencies found! 
+   </h4>
     <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
         <mat-spinner [diameter]="30"></mat-spinner>
     </div>
@@ -73,7 +74,7 @@
 
   <!--===========  All competencies section ============= -->
   <div class="all_competency_box">
-    <h1 class="mat-h1 margin-remove inline-block "> All competencies </h1>
+    <h2 class="mat-h1 margin-remove inline-block "> All competencies </h2>
     <div class="all_competency_inner">
       <div class="left_card_box">
         <form [formGroup]="searchForm">
@@ -129,7 +130,7 @@
                 <ng-container *ngFor="let comp of allCompetencies">
                   <ws-app-competency-card [competency]="comp"></ws-app-competency-card>
                 </ng-container>
-                <h4 *ngIf="allCompetencies?.length <=0 && !(displayLoader | async)" class="w-full text-center ws-mat-black60-text ">
+                <h4 *ngIf="allCompetencies?.length <=0 && !(displayLoader | async)" class="w-full text-left ws-mat-black60-text ">
                    No competencies found! 
                 </h4>
               </div>
