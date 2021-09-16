@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./competency-all-wrapper.component.scss'],
 })
 export class CompetencyAllWrapperComponent implements OnInit {
-
+  currentRoute = 'home'
   constructor() { }
 
   ngOnInit() {
