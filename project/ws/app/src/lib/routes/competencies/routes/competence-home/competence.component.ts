@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core'
 import { NSCompetencie } from '../../models/competencies.model'
 import { Router, Event, NavigationEnd, NavigationError, ActivatedRoute } from '@angular/router'
 import { ValueService } from '@sunbird-cb/utils'
@@ -17,6 +17,8 @@ import _ from 'lodash'
   /* tslint:enable */
 })
 export class CompetenceComponent implements OnInit, OnDestroy {
+  @ViewChild('stickyMenu', { static: true }) menuElement!: ElementRef
+  sticky = false
   sideNavBarOpened = true
   panelOpenState = false
   titles = [{ title: 'Competencies', url: '/app/competencies/home', icon: 'extension' }]

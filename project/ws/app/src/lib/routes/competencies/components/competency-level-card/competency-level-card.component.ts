@@ -9,6 +9,8 @@ import { NSCompetencie } from '../../models/competencies.model'
 export class CompetencyLevelCardComponent implements OnInit {
   @Input()
   data!: NSCompetencie.ICompetencie
+  @Input()
+  isSelected!: boolean
   constructor() { }
 
   ngOnInit() {
