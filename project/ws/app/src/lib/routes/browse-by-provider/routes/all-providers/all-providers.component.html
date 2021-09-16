@@ -8,7 +8,7 @@
                 <ws-app-popular-provider-card [provider]="p"></ws-app-popular-provider-card>
             </ng-container>
         </div>
-        <h4 *ngIf="allProviders?.length <=0 && !(displayLoader | async)" class="w-full text-left ws-mat-black60-text ">
+        <h4 *ngIf="allProviders?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
             No providers found! 
         </h4>
         <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
@@ -64,7 +64,7 @@
                         <ng-container *ngFor="let p of allProviders">
                             <ws-app-provider-card [provider]="p"></ws-app-provider-card>
                         </ng-container>
-                        <h4 *ngIf="allProviders?.length <=0 && !(displayLoader | async)" class="w-full text-left ws-mat-black60-text ">
+                        <h4 *ngIf="allProviders?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
                             No providers found! 
                          </h4>
                     </div>
