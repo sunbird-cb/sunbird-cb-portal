@@ -33,11 +33,12 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
   competencyName = ''
   courses: any[] = []
   searchReq: any
+  myAppliedFilters: any =  []
   constructor(
     private browseCompServ: BrowseCompetencyService,
     private activatedRoute: ActivatedRoute,
   ) {
-    this.searchReq = this.activatedRoute.snapshot.data.searchPageData.data.search.searchReq
+    this.searchReq = {...this.activatedRoute.snapshot.data.searchPageData.data.search.searchReq}
     this.facets = this.activatedRoute.snapshot.data.searchPageData.data.search.defaultsearch || []
    }
 
@@ -138,7 +139,10 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
   }
 
   getCbps() {
-      this.searchReq.request.filters['competencies_v3.name'].splice(0, 1, this.competencyName)
+    // if (this.myAppliedFilters.length === 0) {
+    //   this.searchReq = this.activatedRoute.snapshot.data.searchPageData.data.search.searchReq
+    // }
+    this.searchReq.request.filters['competencies_v3.name'].splice(0, 1, this.competencyName)
       this.browseCompServ.fetchSearchData(this.searchReq).subscribe((res: any) => {
         if (res && res.result &&  res.result ) {
           this.courses = res.result.content || []
@@ -181,8 +185,8 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
   }
 
   modifyUserFilters(fil: any, mainparentType: any) {
-    const indx = this.getFilterName(fil)
-    if (indx.length > 0) {
+    const filters = this.getFilterName(fil)
+    if (filters.length > 0) {
       this.userFilters.forEach((fs: any, index: number) => {
         if (fs.name === fil.name) {
           this.userFilters.splice(index, 1)
@@ -299,10 +303,17 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
       this.getCbps()
 
     } else {
-      // this.myFilters = filter
+      this.myAppliedFilters = filter
+      this.resetFilters()
       this.getCbps()
     }
   }  
+
+  resetFilters() {
+    this.searchReq = {...this.activatedRoute.snapshot.data.searchPageData.data.search.searchReq}
+    this.searchReq.request.filters.source = []
+    this.searchReq.request.filters.primaryCategory = []
+  }
 
   ngOnDestroy() {
     if (this.paramSubscription) {
