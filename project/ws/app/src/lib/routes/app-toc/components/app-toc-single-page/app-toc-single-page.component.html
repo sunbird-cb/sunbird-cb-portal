@@ -31,7 +31,7 @@
                                 <p class="section-content mat-subheading-1" [innerHTML]="content?.learningObjective"></p>
                             </mat-card-content>
                         </mat-card> -->
-            
+
                         <!-- Registration instructions -->
                         <!-- <mat-card *ngIf="
             tocConfig?.overview?.registrationInstructions?.enabled &&
@@ -192,7 +192,7 @@
                                 </div>
                             </mat-card-content>
                         </mat-card> -->
-            
+
                         <!-- Training (LHub) -->
                         <!-- <mat-card *ngIf="trainingLHubEnabled && trainingLHubCount$ | async as trainingLHubCount"
                             class="unit-meta-item">
@@ -205,10 +205,10 @@
                                     training available</ng-container>
                             </h4>
                             <div>
-                                
+
                             </div>
                         </mat-card> -->
-            
+
                         <!-- Related Topics -->
                         <!-- <mat-card class="unit-meta-item" *ngIf="tocConfig?.overview?.topics?.enabled && content?.topics?.length">
                             <h2 class="section-heading">{{ tocConfig?.overview?.topics?.displayName }}</h2>
@@ -257,7 +257,7 @@
                     </div>
                 </div>
             </section>
-            <section id="authors" *ngIf="(content?.creatorDetails && content?.creatorDetails.length > 0) || 
+            <section id="authors" *ngIf="(content?.creatorDetails && content?.creatorDetails.length > 0) ||
                 (cohortResults[cohortTypesEnum.AUTHORS] && cohortResults[cohortTypesEnum.AUTHORS].length > 0)">
                 <div class="fluid-width contacts-container">
                     <div class="fixed-width flex flex-col flex-wrap">
@@ -267,7 +267,7 @@
                             <div *ngFor="let author of parseJsonData(content?.creatorDetails)" class="unit-cohort sm:pr-8 md:pr-10">
                                 <!-- <ws-widget-user-image class="user-image" [imageType]="'user-photo'" [userName]="author.name || ''"
                                     [email]="author.email" [imageUrl]="author.photo || ''"></ws-widget-user-image> -->
-                                <ws-widget-avatar-photo class="float-left margin-right-s" [randomColor]="true" [datalen]="parseJsonData(content?.creatorDetails).length" 
+                                <ws-widget-avatar-photo class="float-left margin-right-s" [randomColor]="true" [datalen]="parseJsonData(content?.creatorDetails).length"
                                 [size]="'m'" [photoUrl]="author.photo || ''" [name]="author.name" size="l-xs">
                                     </ws-widget-avatar-photo>
                                 <div class="margin-left-xl">
@@ -390,12 +390,14 @@
         <div class="margin-left-l">
             <div (click)="goToUserProfile(user)" [ngClass]="{'cursor-pointer': enablePeopleSearch}"
             class="width-expand padding-left-xs">
-            <div class="mat-body-1 cohorts-name">
+            <!-- <div class="mat-body-1 cohorts-name">
                 {{
                     { firstName: user.first_name, lastName: user.last_name, email: user.email }
                     | pipeNameTransform
                 }}
-            </div>
+            </div> -->
+            <ws-widget-connection-name [hoverUser]="{firstName: user.first_name, lastName:user.last_name}"></ws-widget-connection-name>
+            <!-- {{user | json}} -->
             <p class="mat-body-2 ws-mat-black60-text">{{user.designation}}</p>
             <!-- <div class="mat-caption cohorts-desc">{{ user.desc }}</div>
             </div>

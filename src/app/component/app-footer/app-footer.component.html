@@ -21,9 +21,9 @@
 
       <div class="flex flex-col justify-start">
         <p class="footer_heading mat-subheading-1 margin-bottom-m">Related links</p>
-        <a class="footer_sub_text mat-body" [attr.href]="portalUrls.mdo" target="_blank">MDO portal</a>
-        <a class="footer_sub_text mat-body" [attr.href]="portalUrls.cbp"target="_blank">CBP portal</a>
-        <a class="footer_sub_text mat-body" [attr.href]="portalUrls.frac" target="_blank">FRAC dictionaries</a>
+        <a class="footer_sub_text mat-body" [attr.href]="environment.mdoPortal" target="_blank">MDO portal</a>
+        <a class="footer_sub_text mat-body" [attr.href]="environment.cbpPortal"target="_blank">CBP portal</a>
+        <a class="footer_sub_text mat-body" [attr.href]="environment.fracPortal" target="_blank">FRAC dictionaries</a>
         <!-- <a class="footer_sub_text mat-body">Mobile application</a> -->
       </div>
 
@@ -36,7 +36,7 @@
 
       <div class="flex flex-col justify-start">
         <img src="/assets/images/banners/iGOT_logo_dark.svg" class="footer_logo margin-bottom-xl">
-          <p class="footer_sub_text margin-remove mat-body"><a href="" class="feedback_link mat-body-2">GOT FEEDBACK?</a> Let us know</p>
+          <p class="footer_sub_text margin-remove mat-body"><a href="/app/info/feedback" class="feedback_link mat-body-2">GOT FEEDBACK?</a> Let us know</p>
 
       </div>
 
@@ -48,12 +48,12 @@
   <div class="mat-body text-center flex-1">
     <ng-container i18n>
       <span i18n>&copy; Copyright 2021-2022</span>
-      &nbsp;&nbsp; | &nbsp;&nbsp;
+      <!-- &nbsp;&nbsp; | &nbsp;&nbsp;
       <a routerLink="/app/info/about" i18n> <span i18n>About Us</span></a>
-      <!-- &nbsp;&nbsp; | &nbsp;&nbsp; -->
-      <!-- <a routerLink="/app/info/feedback" i18n> <span i18n>Feedback</span></a> -->
       &nbsp;&nbsp; | &nbsp;&nbsp;
-      <a routerLink="/app/tnc" i18n>Privacy Policy</a>
+   <a routerLink="/app/info/feedback" i18n> <span i18n>Feedback</span></a>
+      &nbsp;&nbsp; | &nbsp;&nbsp; -->
+      <!-- <a routerLink="/app/tnc" i18n>Privacy Policy</a> -->
       <!-- &nbsp;&nbsp; | &nbsp;&nbsp;
       <a routerLink="/app/info/faq" i18n>Help </a>
        &
