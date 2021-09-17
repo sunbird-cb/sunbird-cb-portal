@@ -3,9 +3,7 @@
 @import 'ws-mixins';
 
 .card-container {
-    height: 231px;
-    width:  268px;
-    border: 1px solid rgba(0,0,0,8%);
+    height: 255px;
 }
 
 .photo-container{
@@ -22,7 +20,8 @@
     text-transform: capitalize;
 }
 .designation{
-    line-height: 21px;
+    height: 60px;
+    overflow: hidden;
 }
 .action-container{
     padding: $size-m 0;
