@@ -256,7 +256,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
          this.breadcrumbs = { url: 'home', titles: [{ title: this.historyData.param, url: finalUrl }, { title: 'Details', url: 'none' }] }
        } else if (this.historyData.path === 'all-CBP') {
          const finalURL = `/app/learn/browse-by/provider/${this.historyData.param}`
-         this.breadcrumbs = { url: 'home', titles: [{ title: 'all CBP', url: finalURL }, { title: 'Details', url: 'none' }] }
+         this.breadcrumbs = { url: 'home', titles: [{ title: `all CBP's`, url: finalURL }, { title: 'Details', url: 'none' }] }
        } else if (this.historyData.path === 'all-competencies') {
         const finalUrl = `/app/learn/browse-by/competency/all-competencies`
         // tslint:disable-next-line: max-line-length
