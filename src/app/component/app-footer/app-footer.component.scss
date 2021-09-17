@@ -54,10 +54,10 @@
 
   .top_footer_box {
     padding: 45px 8px!important;
-    flex-direction: column!important;
+   
 
     .top_footer_inner  {
-
+      flex-direction: column!important;
       div {
         margin-bottom: 16px;
       }

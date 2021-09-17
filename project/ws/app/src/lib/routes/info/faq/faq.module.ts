@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
+
 import {
   MatToolbarModule,
   MatDividerModule,
@@ -7,6 +8,10 @@ import {
   MatIconModule,
   MatButtonModule,
   MatCardModule,
+  MatSidenavModule,
+  MatMenuModule,
+  MatFormFieldModule,
+  MatInputModule,
 } from '@angular/material'
 import { BtnPageBackNavModule } from '@sunbird-cb/collection'
 import { HorizontalScrollerModule, PipeSafeSanitizerModule } from '@sunbird-cb/utils'
@@ -28,6 +33,11 @@ import { FaqComponent } from './components/faq.component'
     HorizontalScrollerModule,
     WidgetResolverModule,
     PipeSafeSanitizerModule,
+    MatMenuModule,
+    MatSidenavModule,
+
+    MatFormFieldModule,
+    MatInputModule, 
   ],
   exports: [FaqComponent],
 })
