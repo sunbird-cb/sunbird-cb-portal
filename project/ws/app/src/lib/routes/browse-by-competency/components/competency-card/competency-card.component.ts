@@ -8,6 +8,7 @@ import { BrowseCompetencyService } from '../../services/browse-competency.servic
 })
 export class CompetencyCardComponent implements OnInit {
   @Input() competency!: any
+  @Input() stateData: any
   public displayLoader = false
 
   searchReq = {

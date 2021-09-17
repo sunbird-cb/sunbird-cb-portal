@@ -117,6 +117,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   isAssessVisible = false
   isPracticeVisible = false
   breadcrumbs: any
+  historyData: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -144,18 +145,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     // private progressSvc: ContentProgressService,
     private actionSVC: ActionService,
   ) {
-    const historyData = history.state
-    if (historyData && historyData.path === 'Search') {
-     const searchurl = `/app/globalsearch`
-      const  qParam = {
-        q: historyData.param,
-      }
-      // tslint:disable-next-line:max-line-length
-      this.breadcrumbs = { url: 'home', titles: [{ title: 'Search', url: searchurl, queryParams: qParam }, { title: 'Details', url: 'none' }] }
-    } else {
-      // tslint:disable-next-line:max-line-length
-      this.breadcrumbs = { url: 'home', titles: [{ title: 'Learn', url: '/page/learn', icon: 'school' }, { title: 'Details', url: 'none' }] }
-    }
+    this.historyData = history.state
+    this.handleBreadcrumbs()
   }
 
   ngOnInit() {
@@ -250,6 +241,33 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   ngAfterViewInit() {
     // this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
+  }
+
+  handleBreadcrumbs() {
+    if (this.historyData) {
+      if (this.historyData.path === 'Search') {
+        const searchurl = `/app/globalsearch`
+         const  qParam = {
+           q: this.historyData.param,
+         }
+         // tslint:disable-next-line:max-line-length
+         this.breadcrumbs = { url: 'home', titles: [{ title: 'Search', url: searchurl, queryParams: qParam }, { title: 'Details', url: 'none' }] }
+       } else if (this.historyData.path === 'competency-details') {
+         const finalUrl = `/app/learn/browse-by/competency/${this.historyData.param}`
+         // tslint:disable-next-line: max-line-length
+         this.breadcrumbs = { url: 'home', titles: [{ title: this.historyData.param, url: finalUrl }, { title: 'Details', url: 'none' }] }
+       } else if (this.historyData.path === 'all-CBP') {
+         const finalURL = `/app/learn/browse-by/provider/${this.historyData.param}`
+         this.breadcrumbs = { url: 'home', titles: [{ title: 'all CBP', url: finalURL }, { title: 'Details', url: 'none' }] }
+       } else if (this.historyData.path === 'all-competencies') {
+        const finalUrl = `/app/learn/browse-by/competency/all-competencies`
+        // tslint:disable-next-line: max-line-length
+        this.breadcrumbs = { url: 'home', titles: [{ title: 'all competencies', url: finalUrl }, { title: 'Details', url: 'none' }] }
+       } else {
+         // tslint:disable-next-line:max-line-length
+         this.breadcrumbs = { url: 'home', titles: [{ title: 'Learn', url: '/page/learn', icon: 'school' }, { title: 'Details', url: 'none' }] }
+       }
+    }
   }
   ngOnDestroy() {
     if (this.routeSubscription) {

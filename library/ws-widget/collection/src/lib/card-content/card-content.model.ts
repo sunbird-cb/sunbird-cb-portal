@@ -9,6 +9,7 @@ export namespace NsCardContent {
     deletedMode?: 'greyOut' | 'hide'
     likes?: number
     contentTags?: IContentTags
+    stateData: any
   }
 
   export interface IContentTags {

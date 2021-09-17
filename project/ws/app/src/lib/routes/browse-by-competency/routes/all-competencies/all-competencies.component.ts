@@ -40,6 +40,7 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.displayLoader = this.browseCompServ.isLoading()
+    this.stateData = { param: '', path: 'all-competencies' }
     this.searchForm = new FormGroup({
       sortByControl: new FormControl(''),
       searchKey: new FormControl(''),
