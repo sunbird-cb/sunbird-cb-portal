@@ -487,7 +487,7 @@
         matTooltip="Available only in Company's network"
         *ngIf="widgetData?.intranetMode === 'greyOut' && showIntranetContent"></div>
       <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
-        [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" class="rounded-t"
+        [queryParams]="(widgetData.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData" role="link" class="rounded-t"
         aria-label="Content" i18n-aria-label="Content | Click to view">
         <img mat-card-image [src]="widgetData.content.appIcon" class="card-img ws-mat-primary-lite-background"
           [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
@@ -495,7 +495,7 @@
       </a>
       <mat-card-content>
         <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
-          [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" aria-label="Content"
+          [queryParams]="(widgetData.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData" role="link" aria-label="Content"
           i18n-aria-label>
           <div class="text-gray-600 complexity flex-between flex-center">
             <div *ngIf="widgetData.content.duration" class="duration" i18n-title title="Duration">
@@ -679,7 +679,8 @@
 
         <mat-card-content class="min-top">
           <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
-            [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" i18n-aria-label>
+            [queryParams]="(widgetData.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData" 
+            role="link" i18n-aria-label>
 
             <div class="text-gray-time complexity flex-between flex-center">
               <!-- <div *ngIf="widgetData.content.complexityLevel" i18n-title title="Complexity Level">
@@ -774,7 +775,7 @@
       <div class="flex main_title_box">
         <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title">
           <a [routerLink]="['/app/toc/',widgetData.content.identifier,'overview']"
-            [queryParams]="{primaryCategory: widgetData.content.primaryCategory}">
+            [queryParams]="{primaryCategory: widgetData.content.primaryCategory}" [state]="widgetData?.stateData">
             {{widgetData.content.name}}
           </a>
       </p>

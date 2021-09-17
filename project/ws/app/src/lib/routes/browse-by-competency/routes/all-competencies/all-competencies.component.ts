@@ -23,6 +23,9 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
   appliedFilters: any = []
   searchQuery: string = ''
   sortBy:any
+  stateData: {
+    param: any, path: any
+  } | undefined
   
   // searchCompArea = new FormControl('')
   titles = [
@@ -40,6 +43,7 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.displayLoader = this.browseCompServ.isLoading()
+    this.stateData = { param: '', path: 'all-competencies' }
     this.searchForm = new FormGroup({
       sortByControl: new FormControl(''),
       searchKey: new FormControl(''),

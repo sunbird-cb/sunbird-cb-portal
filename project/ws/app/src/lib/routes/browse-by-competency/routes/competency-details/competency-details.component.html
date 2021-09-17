@@ -40,6 +40,7 @@
                     <ng-container *ngFor="let c of courses">
                         <ws-widget-card-content [widgetData]="{
                             content: c,
+                            stateData: stateData,
                             cardSubType: 'card-wide'
                           }">
                         </ws-widget-card-content>
