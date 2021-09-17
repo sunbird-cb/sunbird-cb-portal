@@ -25,7 +25,8 @@
                 "glob": "**/*.*",
                 "input": "./node_modules/@sunbird-cb/discussions-ui-v8/assets",
                 "output": "./assets/discussion-ui"
-              }
+              },
+              "src/dashboard-assets"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -89,6 +90,8 @@
               "node_modules/pdfjs-dist/web/pdf_viewer.css",
               "src/fusion-assets/fonts/lato/stylesheet.css",
               "src/fusion-assets/fonts/montserrat/stylesheet.css",
+              "src/dashboard-assets/fonts/lato/stylesheet.css",
+              "src/dashboard-assets/fonts/montserrat/stylesheet.css",
               "node_modules/@sunbird-cb/discussions-ui-v8/assets/styles/global.scss"
             ],
             "scripts": [
