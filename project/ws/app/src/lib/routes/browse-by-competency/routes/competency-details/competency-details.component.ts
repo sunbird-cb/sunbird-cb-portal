@@ -34,6 +34,9 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
   courses: any[] = []
   searchReq: any
   myAppliedFilters: any =  []
+  stateData: {
+    param: any, path: any
+  } | undefined
   constructor(
     private browseCompServ: BrowseCompetencyService,
     private activatedRoute: ActivatedRoute,
@@ -43,7 +46,6 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit() {
-    
     this.displayLoader = this.browseCompServ.isLoading()
     this.filterForm = new FormGroup({
       filters: new FormControl(''),
@@ -51,6 +53,7 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
     this.paramSubscription = this.activatedRoute.params.subscribe(async params => {
       this.competencyName = _.get(params, 'competency')
       this.titles.push({ title: this.competencyName , url: 'none', icon: '' })
+      this.stateData = { param: this.competencyName, path: 'competency-details' }
     })
     this.formatFacets()
 
