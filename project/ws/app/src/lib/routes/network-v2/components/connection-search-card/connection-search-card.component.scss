@@ -4,6 +4,8 @@
 
 .card-container {
     height: 255px;
+    width: 268px;
+    border: 1px solid rgba(0, 0, 0, 0.08); 
 }
 
 .photo-container{
@@ -22,6 +24,7 @@
 .designation{
     height: 60px;
     overflow: hidden;
+    line-height: 21px;
 }
 .action-container{
     padding: $size-m 0;
