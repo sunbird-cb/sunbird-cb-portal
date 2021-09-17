@@ -52,7 +52,8 @@
                     <div class="flex">
                         <ng-container *ngFor="let content of competency?.contentData| slice:0:3">
                             <ws-widget-card-content [widgetData]="{
-                                    content: content
+                                    content: content,
+                                    stateData: stateData
                                 }">
                             </ws-widget-card-content>
                         </ng-container>

@@ -128,7 +128,7 @@
               </div>
               <div>
                 <ng-container *ngFor="let comp of allCompetencies">
-                  <ws-app-competency-card [competency]="comp"></ws-app-competency-card>
+                  <ws-app-competency-card [competency]="comp" [stateData]="stateData"></ws-app-competency-card>
                 </ng-container>
                 <h4 *ngIf="allCompetencies?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
                    No competencies found! 
