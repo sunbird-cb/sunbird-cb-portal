@@ -192,6 +192,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     strip: NsContentStripMultiple.IContentStripUnit,
     calculateParentStatus = true,
   ) {
+    console.log("In re");
     // setting initial values
     this.processStrip(strip, [], 'fetching', false, null)
     this.fetchFromApi(strip, calculateParentStatus)
@@ -200,6 +201,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     this.fetchFromSearchV6(strip, calculateParentStatus)
     this.fetchFromIds(strip, calculateParentStatus)
     this.fetchFromEnrollmentList(strip, calculateParentStatus)
+    this.fetchRelatedCBP(strip, calculateParentStatus)
   }
   fetchFromApi(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.api && Object.keys(strip.request.api).length) {
@@ -370,6 +372,71 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       let content: NsContent.IContent[]
       let contentNew: NsContent.IContent[]
       const queryParams = _.get(strip.request.enrollmentList, 'queryParams')
+      if (this.configSvc.userProfile) {
+        userId = this.configSvc.userProfile.userId
+      }
+      // tslint:disable-next-line: deprecation
+      this.userSvc.fetchUserBatchList(userId, queryParams).subscribe(
+        courses => {
+          const showViewMore = Boolean(
+            courses.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
+          )
+          const viewMoreUrl = showViewMore
+            ? {
+              path: '/app/globalsearch',
+              queryParams: {
+                tab: 'Learn',
+                q: strip.request && strip.request.searchV6 && strip.request.searchV6.query,
+                f:
+                  strip.request && strip.request.searchV6 && strip.request.searchV6.filters
+                    ? JSON.stringify(
+                      // this.searchServSvc.transformSearchV6Filters(
+                      strip.request.searchV6.filters
+                      // ),
+                    )
+                    : {},
+              },
+            }
+            : null
+          if (courses && courses.length) {
+            content = courses.map(c => {
+              const contentTemp: NsContent.IContent = c.content
+              contentTemp.completionPercentage = c.completionPercentage || 0
+              contentTemp.completionStatus = c.completionStatus || 0
+              return contentTemp
+            })
+          }
+          // To filter content with completionPercentage > 0,
+          // so that only those content will show in home page
+          // continue learing strip
+          if (content && content.length) {
+            contentNew = content.filter((c: any) => {
+              if (c.completionPercentage && c.completionPercentage > 0) {
+                return c
+              }
+            })
+          }
+          this.processStrip(
+            strip,
+            this.transformContentsToWidgets(contentNew, strip),
+            'done',
+            calculateParentStatus,
+            viewMoreUrl,
+          )
+        },
+        () => {
+          this.processStrip(strip, [], 'error', calculateParentStatus, null)
+        }
+      )
+    }
+  }
+
+  fetchRelatedCBP(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
+    if (strip.request && strip.request.comprelatedCbp && Object.keys(strip.request.comprelatedCbp).length) {
+      let userId = ''
+      let content: NsContent.IContent[]
+      let contentNew: NsContent.IContent[]
+      const queryParams = _.get(strip.request.comprelatedCbp, 'queryParams')
       if (this.configSvc.userProfile) {
         userId = this.configSvc.userProfile.userId
       }
