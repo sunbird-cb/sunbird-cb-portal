@@ -62,7 +62,7 @@ export class BtnMailUserDialogComponent implements OnInit {
       'email',
       'emailSME',
       {
-        contentId: this.data.content.identifier,
+        id: this.data.content.identifier,
         emails: this.data.emails,
       },
     )

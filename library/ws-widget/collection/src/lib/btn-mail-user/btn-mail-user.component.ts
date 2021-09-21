@@ -54,7 +54,7 @@ export class BtnMailUserComponent extends WidgetBaseComponent
       'email',
       'openDialog',
       {
-        contentId: this.widgetData.content.identifier,
+        id: this.widgetData.content.identifier,
         emails: this.widgetData.emails,
       },
     )

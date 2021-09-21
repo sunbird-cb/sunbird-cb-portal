@@ -89,6 +89,8 @@ export class BtnContentDownloadComponent extends WidgetBaseComponent
       platform: this.platform,
       contentId: this.widgetData.identifier,
       contentType: this.widgetData.contentType, // cccc
+      id: this.widgetData.identifier,
+      type: this.widgetData.contentType,
     })
   }
 }

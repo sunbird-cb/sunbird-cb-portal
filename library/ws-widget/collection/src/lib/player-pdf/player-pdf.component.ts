@@ -225,6 +225,8 @@ export class PlayerPdfComponent extends WidgetBaseComponent
       this.eventSvc.raiseInteractTelemetry(action, 'click', {
         contentId: this.identifier,
         contentType: this.widgetData.primaryCategory,
+        id: this.identifier,
+        type: this.widgetData.contentType,
         rollup: {
           l1: this.widgetData.collectionId || '',
         },

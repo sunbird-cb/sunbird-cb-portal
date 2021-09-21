@@ -241,8 +241,8 @@ export class CardContentComponent extends WidgetBaseComponent
 
   raiseTelemetry() {
     this.events.raiseInteractTelemetry('click', `${this.widgetType}-${this.widgetSubType}`, {
-      contentId: this.widgetData.content.identifier,
-      contentType: this.widgetData.content.contentType,
+      id: this.widgetData.content.identifier,
+      type: this.widgetData.content.contentType,
       context: this.widgetData.context,
       rollup: {},
       ver: this.widgetData.content.version,

@@ -111,7 +111,7 @@ export class BtnPlaylistSelectionComponent implements OnInit {
   raiseTelemetry(action: 'add' | 'remove', playlistId: string, contentId: string) {
     this.eventSvc.raiseInteractTelemetry('playlist', `btn-playlist-${action}`, {
       playlistId,
-      contentId,
+      id: contentId,
     })
   }
 }
