@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
 // import { NSSearch } from '@sunbird-cb/utils/src/lib/services/widget-search.model'
 import { WidgetUserService } from '../_services/widget-user.service'
- // tslint:disable-next-line
+// tslint:disable-next-line
 import _ from 'lodash'
 interface IStripUnitContentData {
   key: string
@@ -639,7 +639,8 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           Object.keys(strip.request.searchRegionRecommendation).length) ||
         (strip.request.searchV6 && Object.keys(strip.request.searchV6).length) ||
         (strip.request.ids && Object.keys(strip.request.ids).length) ||
-        (strip.request.enrollmentList && Object.keys(strip.request.enrollmentList).length)
+        (strip.request.enrollmentList && Object.keys(strip.request.enrollmentList).length) ||
+        (strip.request.comprelatedCbp && Object.keys(strip.request.comprelatedCbp).length)
       )
     ) {
       return true
