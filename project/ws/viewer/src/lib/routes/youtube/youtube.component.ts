@@ -83,7 +83,9 @@ export class YoutubeComponent implements OnInit, OnDestroy {
           await this.setS3Cookie(this.youtubeData.identifier)
         }
         // this.widgetResolverYoutubeData.widgetData.resumePoint = this.getResumePoint(this.youtubeData)
-
+        if (this.youtubeData) {
+          this.widgetResolverYoutubeData.widgetData.primaryCategory = this.youtubeData.primaryCategory
+        }
         this.isFetchingDataComplete = true
       },
       () => { },
@@ -148,7 +150,7 @@ export class YoutubeComponent implements OnInit, OnDestroy {
                 this.widgetResolverYoutubeData.widgetData.resumePoint = Number(
                   content.progressdetails.current.pop(),
                 )
-                this.widgetResolverYoutubeData.widgetData.size =  content.progressdetails.max_size
+                this.widgetResolverYoutubeData.widgetData.size = content.progressdetails.max_size
               }
             }
           }

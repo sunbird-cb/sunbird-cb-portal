@@ -68,7 +68,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     },
   }
   tocConfig: any = null
-  contentTypes = NsContent.EContentTypes
+  primaryCategory = NsContent.EPrimaryCategory
   askAuthorEnabled = true
   trainingLHubEnabled = false
   trainingLHubCount$?: Observable<number>
@@ -273,8 +273,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   get isResource() {
     if (this.content) {
-      const isResource = this.content.contentType === NsContent.EContentTypes.KNOWLEDGE_ARTIFACT ||
-        this.content.contentType === NsContent.EContentTypes.RESOURCE || !this.content.children.length
+      const isResource = this.content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT ||
+        this.content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE || !this.content.children.length
       if (isResource) {
         this.mobileAppsSvc.sendViewerData(this.content)
       }
@@ -332,8 +332,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     if (this.content) {
       this.hasTocStructure = false
-      this.tocStructure.learningModule = this.content.contentType === 'Collection' ? -1 : 0
-      this.tocStructure.course = this.content.contentType === 'Course' ? -1 : 0
+      this.tocStructure.learningModule = this.content.primaryCategory === this.primaryCategory.MODULE ? -1 : 0
+      this.tocStructure.course = this.content.primaryCategory === this.primaryCategory.COURSE ? -1 : 0
       this.tocStructure = this.tocSvc.getTocStructure(this.content, this.tocStructure)
       for (const progType in this.tocStructure) {
         if (this.tocStructure[progType] > 0) {
@@ -406,7 +406,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   private getUserEnrollmentList() {
     // tslint:disable-next-line
-    if (this.content && this.content.identifier && this.content.primaryCategory !== this.contentTypes.COURSE && this.content.primaryCategory !== this.contentTypes.PROGRAMV2) {
+    if (this.content && this.content.identifier && this.content.primaryCategory !== this.primaryCategory.COURSE && this.content.primaryCategory !== this.primaryCategory.PROGRAM) {
       // const collectionId = this.isResource ? '' : this.content.identifier
       return this.getContinueLearningData(this.content.identifier)
     }
@@ -455,7 +455,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           } else {
             // It's understood that user is not already enrolled
             // Fetch the available batches and present to user
-            if (this.content.contentType === this.contentTypes.COURSE || this.content.contentType === this.contentTypes.PROGRAMV2) {
+            if (this.content.primaryCategory === this.primaryCategory.COURSE
+              || this.content.primaryCategory === this.primaryCategory.PROGRAM) {
               this.autoBatchAssign()
             } else {
               this.fetchBatchDetails()
@@ -662,7 +663,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     if (this.content) {
       return (
-        this.content.contentType === NsContent.EContentTypes.COURSE &&
+        this.content.primaryCategory === NsContent.EPrimaryCategory.COURSE &&
         this.content.learningMode === 'Instructor-Led'
       )
     }
@@ -751,9 +752,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   private getLearningUrls() {
     if (this.content) {
       if (!this.forPreview) {
-        this.progressSvc.getProgressFor(this.content.identifier).subscribe(data => {
-          this.contentProgress = data
-        })
+        // this.progressSvc.getProgressFor(this.content.identifier).subscribe(data => {
+        //   this.contentProgress = data
+        // })
       }
       // this.progressSvc.fetchProgressHashContentsId({
       //   "contentIds": [

@@ -367,9 +367,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   private getLearningUrls() {
     if (this.content) {
       if (!this.forPreview) {
-        this.progressSvc.getProgressFor(this.content.identifier).subscribe(data => {
-          this.contentProgress = data
-        })
+        // this.progressSvc.getProgressFor(this.content.identifier).subscribe(data => {
+        //   this.contentProgress = data
+        // })
       }
       // this.progressSvc.fetchProgressHashContentsId({
       //   "contentIds": [

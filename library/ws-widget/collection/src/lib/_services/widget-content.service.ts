@@ -258,16 +258,16 @@ export class WidgetContentService {
       return content
     }
     if (
-      content.contentType === 'Learning Path' &&
+      content.primaryCategory === NsContent.EPrimaryCategory.PROGRAM &&
       !(content.artifactUrl && content.artifactUrl.length)
     ) {
       const child = content.children[0]
       return this.getFirstChildInHierarchy(child)
     }
     if (
-      content.contentType === 'Resource' ||
-      content.contentType === 'Knowledge Artifact' ||
-      content.contentType === 'Learning Path'
+      content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE ||
+      content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT ||
+      content.primaryCategory === NsContent.EPrimaryCategory.PROGRAM
     ) {
       return content
     }

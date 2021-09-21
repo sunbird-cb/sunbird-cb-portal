@@ -34,6 +34,9 @@ const API_END_POINTS = {
 @Injectable({
   providedIn: 'root',
 })
+/**
+ * @deprecated this will be depricated
+ */
 export class WidgetContentService {
   constructor(
     private http: HttpClient,
@@ -192,21 +195,24 @@ export class WidgetContentService {
   addContentRating(contentId: string, data: { rating: number }): Observable<any> {
     return this.http.post<any>(`${API_END_POINTS.CONTENT_RATING}/${contentId}`, data)
   }
-
+  /**
+   *
+   * @deprecated this will be depricated.
+   */
   getFirstChildInHierarchy(content: NsContent.IContent): NsContent.IContent {
     if (!(content.children || []).length) {
       return content
     }
     if (
-      content.contentType === 'Learning Path' &&
+      content.primaryCategory === 'Program' &&
       !(content.artifactUrl && content.artifactUrl.length)
     ) {
       const child = content.children[0]
       return this.getFirstChildInHierarchy(child)
     }
     if (
-      content.contentType === 'Resource' ||
-      content.contentType === 'Knowledge Artifact' ||
+      content.primaryCategory === 'Resource' ||
+      content.primaryCategory === 'Knowledge Artifact' ||
       content.contentType === 'Learning Path'
     ) {
       return content

@@ -29,7 +29,7 @@ import { PickerContentService } from './picker-content.service'
 })
 export class PickerContentComponent extends WidgetBaseComponent
   implements OnInit, OnChanges, OnDestroy, NsWidgetResolver.IWidgetData<IPickerContentData> {
-  allowContentTypes = ['Resource', 'Course', 'Learning Path', 'Module']
+  allowContentTypes = ['Resource', 'Course', 'Program', 'Module']
   @ViewChild('removeSubset', { static: true })
   errorRemoveSubsetMessage!: ElementRef<any>
   @Input() selectionType: 'radio' | 'checkbox' = 'checkbox'

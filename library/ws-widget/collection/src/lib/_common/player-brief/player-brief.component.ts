@@ -24,7 +24,6 @@ export class PlayerBriefComponent implements OnInit {
   askAuthorEnabled = false
   tocConfig: any = null
 
-  contentTypes = NsContent.EContentTypes
   showMoreGlance = false
   constructor(
     public configSvc: ConfigurationsService,

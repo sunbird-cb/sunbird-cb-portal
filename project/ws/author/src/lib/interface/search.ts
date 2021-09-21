@@ -25,6 +25,7 @@ export interface ISearchContent {
   description: string
   resourceType: string
   contentType: string
+  primaryCategory: string
   appIcon: string
   artifactUrl: string
   mimeType: string

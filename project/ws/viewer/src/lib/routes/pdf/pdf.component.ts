@@ -46,7 +46,7 @@ export class PdfComponent implements OnInit, OnDestroy {
     private eventSvc: EventService,
     private accessControlSvc: AccessControlService,
     private configSvc: ConfigurationsService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (
@@ -115,6 +115,8 @@ export class PdfComponent implements OnInit, OnDestroy {
             this.widgetResolverPdfData.widgetData.identifier = this.pdfData.identifier
             this.widgetResolverPdfData.widgetData.mimeType = this.pdfData.mimeType
             this.widgetResolverPdfData.widgetData.contentType = this.pdfData.contentType
+            this.widgetResolverPdfData.widgetData.primaryCategory = this.pdfData.primaryCategory
+
             this.widgetResolverPdfData.widgetData.version = this.pdfData.version
           }
           this.widgetResolverPdfData = JSON.parse(JSON.stringify(this.widgetResolverPdfData))
@@ -125,7 +127,7 @@ export class PdfComponent implements OnInit, OnDestroy {
           }
           this.isFetchingDataComplete = true
         },
-        () => {},
+        () => { },
       )
     }
   }

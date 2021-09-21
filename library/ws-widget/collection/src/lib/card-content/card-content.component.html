@@ -719,9 +719,9 @@
             >
             </ws-widget-display-content-type> -->
               <ws-widget-display-content-type i18n-title title="Content Type" *ngIf="widgetData.content?.primaryCategory"
-              class="ws-mat-primary-text font-normal" [displayContentType]="widgetData.content?.primaryCategory==='Collection'
+              class="ws-mat-primary-text font-normal" [displayContentType]="widgetData.content?.primaryCategory==='Course Unit'
               ?'Module'
-              :(widgetData.content?.primaryCategory==='Learning Path'?'Program':widgetData.content?.primaryCategory)">
+              :widgetData.content?.primaryCategory">
             </ws-widget-display-content-type>
             <div class="flex items-center">
               <ng-container [ngTemplateOutlet]="rating"></ng-container>

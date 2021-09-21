@@ -20,5 +20,6 @@ export interface IWidgetsPlayerMediaData {
   continueLearning?: boolean
   collectionId?: string
   contentType?: string
+  primaryCategory?: string
   version?: string
 }

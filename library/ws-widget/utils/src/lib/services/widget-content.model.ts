@@ -238,7 +238,9 @@ export namespace NsContent {
     dateAccessed: number
     contextType?: string
   }
-
+  /**
+     * @deprecated Enum EContentTypes should not be used in future
+     */
   export enum EContentTypes {
     PROGRAM = 'Learning Path',
     CHANNEL = 'Channel',
