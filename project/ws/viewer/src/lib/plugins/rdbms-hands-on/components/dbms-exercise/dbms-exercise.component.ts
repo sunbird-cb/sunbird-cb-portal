@@ -181,7 +181,7 @@ export class DbmsExerciseComponent implements OnDestroy, OnChanges {
   raiseInteractTelemetry(action: string, event: string) {
     if (this.resourceContent.content.identifier) {
       this.eventSvc.raiseInteractTelemetry(action, event, {
-        contentId: this.resourceContent.content.identifier,
+        id: this.resourceContent.content.identifier,
       })
     }
     if (event === 'codeinput') {
