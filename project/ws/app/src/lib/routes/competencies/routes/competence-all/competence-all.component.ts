@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 import { CompetenceViewComponent } from '../../components/competencies-view/competencies-view.component';
 import { MatSnackBar } from '@angular/material';
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
+import {ThemePalette} from '@angular/material/core'
 /* tslint:enable */
 
 @Component({
@@ -26,6 +27,9 @@ export class CompetenceAllComponent implements OnInit {
   @ViewChild('successRemoveMsg', { static: true })
   successRemoveMsg!: ElementRef
   @ViewChild('searchInput', { static: true }) searchInput!: ElementRef
+
+  color: ThemePalette = 'primary'
+  value = 20
 
   sticky = false
   elementPosition: any

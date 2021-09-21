@@ -34,6 +34,7 @@ export namespace NsContentStripMultiple {
       api?: IStripRequestApi
       ids?: string[]
       enrollmentList?: any
+      comprelatedCbp?: any
     }
     searchV6Type?: 'KB' | 'Collections' | 'searchQuery' | null
     stripBackground?: string
