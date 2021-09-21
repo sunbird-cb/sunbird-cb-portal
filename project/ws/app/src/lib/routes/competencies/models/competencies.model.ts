@@ -38,4 +38,12 @@ export namespace NSCompetencie {
     statusInfo: IWebResponse
   }
 
+  export interface IWatCompetencieResponse {
+    result: {
+      data: ICompetencie[]
+      message: string
+      status: string
+    }
+  }
+
 }

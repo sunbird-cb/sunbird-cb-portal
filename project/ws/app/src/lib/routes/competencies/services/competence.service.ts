@@ -16,6 +16,7 @@ const API_ENDPOINTS = {
   fetchCompetencyDetails: (id: string, type: string) => `/apis/protected/v8/frac/getNodeById/${id}/${type}`,
   fetchProfile: '/apis/proxies/v8/api/user/v2/read',
   updateProfile: '/apis/protected/v8/user/profileDetails/updateUser',
+  fetchWatCompetency: (id: string) => `/apis/protected/v8/workallocation/getUserCompetencies/${id}`,
 }
 /* this page needs refactor*/
 @Injectable({
@@ -49,6 +50,10 @@ export class CompetenceService {
 
   fetchCompetencyDetails(id: any, type: string): Observable<any> {
     return this.http.get<any>(API_ENDPOINTS.fetchCompetencyDetails(id, type))
+  }
+
+  fetchWatCompetency(id: any): Observable<any> {
+    return this.http.get<any>(API_ENDPOINTS.fetchWatCompetency(id))
   }
 
   fetchMappings(positionData: any): Observable<any> {
