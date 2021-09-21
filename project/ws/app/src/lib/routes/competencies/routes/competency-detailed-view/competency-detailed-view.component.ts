@@ -23,6 +23,9 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
   
   private paramSubscription: Subscription | null = null
   competencyName: any = null
+  routeType: any = 'ALL'
+  isAdded: boolean = false
+  // jsonConfigForCBP: any = null
   type: any = 'COMPETENCY'
   competencyId: any = null
   competencyData: any = null
@@ -63,12 +66,20 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private competencySvc: CompetenceService,
     private configSvc: ConfigurationsService,
-  ) { this.getProfile() }
+  ) { 
+    this.getProfile() 
+    // if(this.activatedRoute.snapshot && this.activatedRoute.snapshot.parent && this.activatedRoute.snapshot.parent.parent) {
+    //   this.jsonConfigForCBP = this.activatedRoute.snapshot.parent.parent.data.pageData.data.relatedCBP
+    //   console.log("SJSJS", this.jsonConfigForCBP)
+    // }
+    
+  }
 
   ngOnInit() {
     this.paramSubscription = this.activatedRoute.params.subscribe(async params => {
       this.competencyId = _.get(params, 'competencyId')
       this.competencyName = _.get(params, 'competencyName')
+      this.routeType = _.get(params, 'routeType')
       // console.log("Name", this.competencyName)
     })
 
@@ -79,10 +90,12 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
         if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
           this.competencyData = reponse.responseData
           console.log(this.competencyData)
+        } else {
+          this.competencyData = []
         }
       })
     
-    this.getCbps()
+    // this.getCbps()
   }
 
   getProfile() {
@@ -115,6 +128,53 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
       // this.myCompetencies.push(vc)
       this.addToProfile(vc)
       // this.reset()
+    }
+  }
+
+  deleteCompetency(id: string) {
+    if (id) {
+      /// API is not available
+      const data = [this.competencyData]
+      const vc = _.chain(data)
+        .filter(i => {
+          return i.id === id
+        })
+        .first()
+        .value()
+
+      console.log(vc)
+      if (vc) {
+        this.removeFromProfile(vc)
+      }
+    }
+  }
+
+  removeFromProfile(item: NSCompetencie.ICompetencie) {
+    if (item) {
+      const currentCompetencies = _.get(this, 'currentProfile.competencies');
+      const updatedProfile = { ...this.currentProfile };
+      _.remove(currentCompetencies, (itm) => _.get(itm, 'id') === item.id);
+      if (updatedProfile) {
+        updatedProfile.competencies = currentCompetencies;
+      }
+      const reqUpdate = {
+        request: {
+          userId: this.configSvc.unMappedUser.id,
+          profileDetails: updatedProfile,
+        },
+      }
+      this.competencySvc.updateProfile(reqUpdate).subscribe(
+        (response) => {
+          if (response) {
+            this.isAdded = false;
+            // success => removed
+            this.snackBar.open('Removed competency sucessfully', 'X');
+          }
+        },
+        /* tslint:disable */() => {
+          this.snackBar.open(this.failureMsg.nativeElement.value, 'X');
+        } /* tslint:disable */
+      );
     }
   }
 
@@ -154,6 +214,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
         if (response) {
           // success
           // this.myCompetencies.push(item)
+          this.isAdded = true;
           this.snackBar.open('Compentency added successfully', 'X')
         }
       },
@@ -172,7 +233,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
       data: item,
     });
     const instance = dialogRef.componentInstance;
-    instance.isUpdate = false;
+    instance.isUpdate = (this.isAdded) ? true : false;
     dialogRef.afterClosed().subscribe((response: any) => {
       console.log(response)
       if (response && response.action === 'ADD') {
@@ -183,9 +244,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
       }
     });
   }
-  deleteCompetency(_id: any) {
-    throw new Error("Method not implemented.");
-  }
+
 
   getCbps() {
       this.searchReq.request.filters['competencies_v3.name'].splice(0, 1, this.competencyName)
