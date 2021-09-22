@@ -1,0 +1,44 @@
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.rating-icon {
+    transform: scale(1.2);
+}
+  
+.rating-button {
+margin-right: 10px;
+line-height: 20px;
+height: 24px;
+width: 24px;
+}
+  
+.orange {
+color: RGB(246, 153, 83);
+font-size: 24px;
+}
+
+.no-padding {
+    padding: 0 !important
+} 
+
+.custom.mat-dialog-actions {
+    min-height: auto;
+}
+
+.success-msg-container {
+    min-height: 331px;
+    @include breakpoint-xs {
+        min-height: auto;
+    }
+}
+
+.large-icon {
+    height: inherit;
+    width: inherit;
+    font-size: 13rem;
+}
+
+button:disabled {
+    pointer-events: none;
+    opacity: 0.7;
+}
