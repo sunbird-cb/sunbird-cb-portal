@@ -1,6 +1,14 @@
 import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild } from '@angular/core'
 import { ActivatedRoute, Event, Data, Router, NavigationEnd } from '@angular/router'
-import { NsContent, WidgetContentService, WidgetUserService, viewerRouteGenerator, NsPlaylist, NsGoal, ContentProgressService } from '@sunbird-cb/collection'
+import {
+  NsContent,
+  WidgetContentService,
+  WidgetUserService,
+  viewerRouteGenerator,
+  NsPlaylist,
+  NsGoal,
+  ContentProgressService,
+  ContentRatingV2DialogComponent } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, LoggerService, NsPage, TFetchStatus, UtilityService } from '@sunbird-cb/utils'
 import { Subscription, Observable } from 'rxjs'
@@ -954,5 +962,18 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     } catch (e) {
       return true
     }
+  }
+
+  openFeedbackDialog(content: any): void {
+    const dialogRef = this.dialog.open(ContentRatingV2DialogComponent, {
+      // height: '400px',
+      width: '770px',
+      data: { content },
+    })
+    // dialogRef.componentInstance.xyz = this.configSvc
+    dialogRef.afterClosed().subscribe((result: any) => {
+      // tslint:disable-next-line: no-console
+      console.log('result :', result)
+    })
   }
 }
