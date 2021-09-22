@@ -1,6 +1,16 @@
 import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild } from '@angular/core'
 import { ActivatedRoute, Event, Data, Router, NavigationEnd } from '@angular/router'
 import { NsContent, WidgetContentService, WidgetUserService, viewerRouteGenerator, NsPlaylist, NsGoal } from '@sunbird-cb/collection'
+import {
+  NsContent,
+  WidgetContentService,
+  WidgetUserService,
+  viewerRouteGenerator,
+  NsPlaylist,
+  NsGoal,
+  ContentProgressService,
+  ContentRatingV2DialogComponent
+} from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, LoggerService, NsPage, TFetchStatus, UtilityService } from '@sunbird-cb/utils'
 import { Subscription, Observable } from 'rxjs'
@@ -31,7 +41,7 @@ const flattenItems = (items: any[], key: string | number) => {
       flattenedItems = flattenedItems.concat(flattenItems(item[key], key))
     }
     return flattenedItems
-  },                  [])
+  }, [])
 }
 @Component({
   selector: 'ws-app-app-toc-home',
@@ -247,26 +257,26 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (this.historyData) {
       if (this.historyData.path === 'Search') {
         const searchurl = `/app/globalsearch`
-         const  qParam = {
-           q: this.historyData.param,
-         }
-         // tslint:disable-next-line:max-line-length
-         this.breadcrumbs = { url: 'home', titles: [{ title: 'Search', url: searchurl, queryParams: qParam }, { title: 'Details', url: 'none' }] }
-       } else if (this.historyData.path === 'competency-details') {
-         const finalUrl = `/app/learn/browse-by/competency/${this.historyData.param}`
-         // tslint:disable-next-line: max-line-length
-         this.breadcrumbs = { url: 'home', titles: [{ title: this.historyData.param, url: finalUrl }, { title: 'Details', url: 'none' }] }
-       } else if (this.historyData.path === 'all-CBP') {
-         const finalURL = `/app/learn/browse-by/provider/${this.historyData.param}`
-         this.breadcrumbs = { url: 'home', titles: [{ title: `all CBP's`, url: finalURL }, { title: 'Details', url: 'none' }] }
-       } else if (this.historyData.path === 'all-competencies') {
+        const qParam = {
+          q: this.historyData.param,
+        }
+        // tslint:disable-next-line:max-line-length
+        this.breadcrumbs = { url: 'home', titles: [{ title: 'Search', url: searchurl, queryParams: qParam }, { title: 'Details', url: 'none' }] }
+      } else if (this.historyData.path === 'competency-details') {
+        const finalUrl = `/app/learn/browse-by/competency/${this.historyData.param}`
+        // tslint:disable-next-line: max-line-length
+        this.breadcrumbs = { url: 'home', titles: [{ title: this.historyData.param, url: finalUrl }, { title: 'Details', url: 'none' }] }
+      } else if (this.historyData.path === 'all-CBP') {
+        const finalURL = `/app/learn/browse-by/provider/${this.historyData.param}`
+        this.breadcrumbs = { url: 'home', titles: [{ title: `all CBP's`, url: finalURL }, { title: 'Details', url: 'none' }] }
+      } else if (this.historyData.path === 'all-competencies') {
         const finalUrl = `/app/learn/browse-by/competency/all-competencies`
         // tslint:disable-next-line: max-line-length
         this.breadcrumbs = { url: 'home', titles: [{ title: 'all competencies', url: finalUrl }, { title: 'Details', url: 'none' }] }
-       } else {
-         // tslint:disable-next-line:max-line-length
-         this.breadcrumbs = { url: 'home', titles: [{ title: 'Learn', url: '/page/learn', icon: 'school' }, { title: 'Details', url: 'none' }] }
-       }
+      } else {
+        // tslint:disable-next-line:max-line-length
+        this.breadcrumbs = { url: 'home', titles: [{ title: 'Learn', url: '/page/learn', icon: 'school' }, { title: 'Details', url: 'none' }] }
+      }
     }
   }
   ngOnDestroy() {
@@ -957,5 +967,18 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     } catch (e) {
       return true
     }
+  }
+
+  openFeedbackDialog(content: any): void {
+    const dialogRef = this.dialog.open(ContentRatingV2DialogComponent, {
+      // height: '400px',
+      width: '770px',
+      data: { content },
+    })
+    // dialogRef.componentInstance.xyz = this.configSvc
+    dialogRef.afterClosed().subscribe((result: any) => {
+      // tslint:disable-next-line: no-console
+      console.log('result :', result)
+    })
   }
 }
