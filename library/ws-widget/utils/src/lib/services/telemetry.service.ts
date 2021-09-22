@@ -46,6 +46,7 @@ export class TelemetryService {
       this.pData = this.telemetryConfig.pdata
       this.addPlayerListener()
       this.addInteractListener()
+      this.addFeedbackListener()
       this.addTimeSpentListener()
       this.addSearchListener()
       this.addHearbeatListener()
@@ -341,7 +342,7 @@ export class TelemetryService {
                 type: event.data.type,
                 subtype: event.data.subType,
                 // object: event.data.object,
-                id: event.data.object.contentId || interactid || '',
+                id: event.data.object.contentId || event.data.object.id  || interactid || '',
                 pageid: page.pageid,
                 // target: { page },
               },
@@ -363,6 +364,49 @@ export class TelemetryService {
         }
       })
   }
+
+  addFeedbackListener() {
+    this.eventsSvc.events$
+      .pipe(
+        filter(
+          (event: WsEvents.WsEventTelemetryFeedback) =>
+            event &&
+            event.data &&
+            event.eventType === WsEvents.WsEventType.Telemetry &&
+            event.data.eventSubType === WsEvents.EnumTelemetrySubType.Feedback,
+        ),
+      )
+      .subscribe(event => {
+        const page = this.getPageDetails()
+          try {
+            $t.feedback(
+              {
+                rating: event.data.object.rating || 0,
+                commentid: event.data.object.commentid || '',
+                commenttxt: event.data.object.commenttxt || '',
+                pageid: page.pageid,
+              },
+              {
+                context: {
+                  pdata: {
+                    ...this.pData,
+                    id: this.pData.id,
+                  },
+                },
+                object: {
+                 id: event.data.object.contentId || event.data.object.id  || '',
+                 type: event.data.type || '',
+                 ver: event.data.object.version || 1,
+                 rollup: {},
+                },
+              })
+          } catch (e) {
+            // tslint:disable-next-line: no-console
+            console.log('Error in telemetry interact', e)
+          }
+      })
+  }
+
   addHearbeatListener() {
     this.eventsSvc.events$
       .pipe(
