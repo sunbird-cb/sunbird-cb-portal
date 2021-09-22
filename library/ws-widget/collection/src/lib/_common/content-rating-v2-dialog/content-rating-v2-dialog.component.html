@@ -1,0 +1,95 @@
+<div class="padding-m">
+    <ng-container *ngIf="!showSuccessScreen">
+        <section class="w-full mb-8">
+            <div class="w-full flex align-center justify-between ">
+                <h2 class="mat-headline margin-remove-bottom ws-mat-black-text">Rate and review</h2>
+                <!-- <button mat-icon-button aria-label="close dialog" mat-dialog-close>
+                    <mat-icon>close</mat-icon>
+                </button> -->
+            </div>
+            <p class="ws-mat-black60-text">Your review and feedback is valuable in creating a robust learning experiance
+            </p>
+        </section>
+        <form [formGroup]="feedbackForm" >
+            <section class=" mb-5">
+                <h3 class="mat-h3 margin-bottom-xs required" i18n>Rate this CBP</h3>
+                <div class="" (click)="$event.stopPropagation();">
+                    <ng-container *ngFor="let start of [1, 2, 3, 4, 5]; let i = index">
+                        <button i18n-aria-label aria-label="Rating" aria-labelledby="rate-heading"
+                            name="user-content-rating-star-{{i+1}}" [disabled]="isRequesting || isDisabled"
+                            class="rating-button mr-2" mat-icon-button (click)="addRating(i); $event.stopPropagation();"
+                            color="primary">
+                            <mat-icon class="rating-icon ws-mat-black16-text"
+                                [ngClass]="{'ws-mat-orange-text':(userRating || -1) > i}">
+                                star
+                            </mat-icon>
+                        </button>
+                    </ng-container>
+                </div>
+            </section>
+    
+            <section class="w-full mb-5" *ngIf="!formDisabled">
+                <h3 class="mat-h3 margin-bottom-xs" i18n>Give a review</h3>
+                <div class="mat-body">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <textarea id="postalAddress" matInput [matTextareaAutosize] [matAutosizeMaxRows]="10"
+                            [matAutosizeMinRows]="3" maxlength="200" formControlName="review"
+                            placeholder="Type your review here" i18n-placeholder #review i18n-aria-label
+                            aria-label="Review textarea input"></textarea>
+                        <!-- <input matInput #review formControlName="review" i18n-placeholder
+                          placeholder="Enter Postal Address Here" [required]="true" /> -->
+                        <mat-hint align="end">{{ review.value.length }} /200 characters</mat-hint>
+                        <mat-error [hidden]="false" i18n="Postal address error |Explains Postal address is required"
+                            *ngIf="feedbackForm?.controls['review'].errors?.required" i18n-aria-label
+                            aria-label="Postal address error |Explains Postal address is required">
+                            Type your review
+                        </mat-error>
+                        <mat-error i18n *ngIf="feedbackForm?.controls['review'].errors?.maxlength" i18n-aria-label
+                            aria-label="Postal address error |You have exceeded 200 characters">
+                            You have exceeded 200 characters.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </section>
+            <mat-dialog-actions class="custom margin-remove-bottom no-padding" align="end">
+                <button mat-stroked-button color="accent" type="button" [mat-dialog-close]="true"
+                    class="ws-mat-accent-border flex-auto-display margin-right-xs">
+                    <span class="ws-mat-default-text" i18n>Cancel</span>
+                </button>
+                <button mat-stroked-button type="submit" class="text-white ws-mat-primary-background flex-auto-display"
+                    [disabled]="feedbackForm?.invalid || formDisabled" (click)="submitRating(feedbackForm)">
+                    <span class="text-white" i18n>Send</span>
+                </button>
+    
+    
+                <!--  <mat-progress-spinner [color]="'primary'" [diameter]="40" [strokeWidth]="4" [mode]="'indeterminate'" *ngIf="
+                    positiveFeedbackSendStatus === 'sending' || negativeFeedbackSendStatus === 'sending'
+                    ">
+                </mat-progress-spinner> -->
+            </mat-dialog-actions>
+        </form>
+    </ng-container>
+
+    <div *ngIf="showSuccessScreen" class="flex-col align-center justify-center">
+        <div class="text-right">
+            <button mat-icon-button aria-label="close dialog" mat-dialog-close>
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <div class="flex flex-wrap items-center justify-center success-msg-container">
+            <div class="mr-5">
+                <mat-icon class="icon-margin mat-icon ws-mat-black16-text large-icon">
+                    question_answer
+                </mat-icon>
+            </div>
+            <div class="flex-col">
+                <div class="w-full flex align-center justify-between ">
+                    <h2 class="mat-headline margin-bottom-xxs ws-mat-black-text">Thank you for the rating!!!</h2>
+                </div>
+                <!-- <div _ngcontent-anh-c23="" class="section-content mat-body-1">
+                    You can update your rating at anytime.
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>

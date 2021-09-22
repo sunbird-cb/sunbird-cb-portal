@@ -176,6 +176,8 @@ export * from './lib/_common/user-content-rating/user-content-rating.module'
 export * from './lib/_common/user-image/user-image.module'
 export * from './lib/_common/avatar-photo/avatar-photo.module'
 export * from './lib/_common/content-picker-v2/content-picker-v2.module'
+export * from './lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.module'
+export * from './lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
 // constants
 export * from './lib/_constants/widget-content.constants'
 export * from './lib/_models/error.model'
