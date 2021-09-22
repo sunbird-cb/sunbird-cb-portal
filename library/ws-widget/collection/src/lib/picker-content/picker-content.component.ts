@@ -197,7 +197,7 @@ export class PickerContentComponent extends WidgetBaseComponent
     })
   }
 
-  filterChanged(item: NsContent.EContentTypes, checked: boolean) {
+  filterChanged(item: NsContent.EPrimaryCategory, checked: boolean) {
     if (checked) {
       this.selectedContentTypes.push(item)
     } else {

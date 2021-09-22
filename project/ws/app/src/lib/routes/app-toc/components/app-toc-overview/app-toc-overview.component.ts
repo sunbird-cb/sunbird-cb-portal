@@ -132,8 +132,8 @@ export class AppTocOverviewComponent implements OnInit, OnDestroy {
     }
     if (this.content) {
       this.hasTocStructure = false
-      this.tocStructure.learningModule = this.content.contentType === 'Collection' ? -1 : 0
-      this.tocStructure.course = this.content.contentType === 'Course' ? -1 : 0
+      this.tocStructure.learningModule = this.content.primaryCategory === NsContent.EPrimaryCategory.MODULE ? -1 : 0
+      this.tocStructure.course = this.content.primaryCategory === NsContent.EPrimaryCategory.COURSE ? -1 : 0
       this.tocStructure = this.tocSharedSvc.getTocStructure(this.content, this.tocStructure)
       for (const progType in this.tocStructure) {
         if (this.tocStructure[progType] > 0) {

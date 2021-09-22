@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild } from '@angular/core'
 import { ActivatedRoute, Event, Data, Router, NavigationEnd } from '@angular/router'
-import { NsContent, WidgetContentService, WidgetUserService, viewerRouteGenerator, NsPlaylist, NsGoal, ContentProgressService } from '@sunbird-cb/collection'
+import { NsContent, WidgetContentService, WidgetUserService, viewerRouteGenerator, NsPlaylist, NsGoal } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, LoggerService, NsPage, TFetchStatus, UtilityService } from '@sunbird-cb/utils'
 import { Subscription, Observable } from 'rxjs'
@@ -140,7 +140,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private dialog: MatDialog,
     private mobileAppsSvc: MobileAppsService,
     private utilitySvc: UtilityService,
-    private progressSvc: ContentProgressService,
+    // private progressSvc: ContentProgressService,
     private actionSVC: ActionService,
   ) {
   }
