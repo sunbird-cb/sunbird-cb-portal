@@ -32,6 +32,21 @@ export class EventService {
     })
   }
 
+  raiseFeedbackTelemetry(type: string, subType: string | undefined, object: any, from?: string) {
+    this.dispatchEvent<WsEvents.IWsEventTelemetryInteract>({
+      eventType: WsEvents.WsEventType.Telemetry,
+      eventLogLevel: WsEvents.WsEventLogLevel.Info,
+      data: {
+        type,
+        subType,
+        object,
+        eventSubType: WsEvents.EnumTelemetrySubType.Feedback,
+      },
+      from: from || '',
+      to: 'Telemetry',
+    })
+  }
+
   // private focusChangeEventListener() {
   //   fromEvent(window, 'focus').subscribe(() => {
   //     this.raiseInteractTelemetry('focus', 'gained', {})
