@@ -60,7 +60,7 @@ const routes: Routes = [
             },
           },
           {
-            path: ':competencyId/:competencyName',
+            path: ':competencyId/:competencyName/:routeType',
             component: CompetencyDetailedViewComponent,
           },
         ],
