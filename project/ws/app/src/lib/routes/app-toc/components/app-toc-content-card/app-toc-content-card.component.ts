@@ -169,8 +169,8 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
   public raiseTelemetry() {
     if (this.content) {
       this.events.raiseInteractTelemetry('click', `card-tocContentCard`, {
-        contentId: this.content.identifier || '',
-        contentType: this.content.contentType,
+        id: this.content.identifier || '',
+        type: this.content.contentType,
         rollup: {
           l1: this.rootId || '',
         },

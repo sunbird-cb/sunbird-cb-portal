@@ -43,7 +43,7 @@ export class LearningCardComponent implements OnInit, OnChanges {
       'click',
       'cardSearch',
       {
-        contentId: this.content.identifier,
+        id: this.content.identifier,
 
       },
     )

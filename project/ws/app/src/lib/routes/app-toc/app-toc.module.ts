@@ -84,6 +84,7 @@ import {
   CardContentModule,
   UserAutocompleteModule,
   AvatarPhotoModule,
+  ContentRatingV2DialogModule,
 } from '@sunbird-cb/collection'
 import { AppTocDialogIntroVideoComponent } from './components/app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { CertificationMetaResolver } from './routes/app-toc-certification/resolvers/certification-meta.resolver'
@@ -178,6 +179,7 @@ import { ConnectionNameModule } from '@sunbird-cb/collection/src/lib/_common/con
     BtnContentLikeModule,
     BtnContentFeedbackModule,
     BtnContentFeedbackV2Module,
+    ContentRatingV2DialogModule,
     BtnGoalsModule,
     BtnPlaylistModule,
     BtnMailUserModule,

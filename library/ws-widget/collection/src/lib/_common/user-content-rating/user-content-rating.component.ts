@@ -42,7 +42,7 @@ export class UserContentRatingComponent implements OnInit {
       if (this.userRating !== index + 1) {
         this.userRating = index + 1
         this.events.raiseInteractTelemetry('rating', 'content', {
-          contentId: this.contentId,
+          id: this.contentId,
           rating: this.userRating,
         })
         this.contentSvc.addContentRating(this.contentId, { rating: this.userRating }).subscribe(
