@@ -3,7 +3,7 @@ import { MatDialog, MatSnackBar } from '@angular/material'
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router'
 import {
-  ContentProgressService,
+  // ContentProgressService,
   NsContent,
   NsGoal,
   NsPlaylist,
@@ -80,7 +80,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private tocSvc: AppTocService,
-    private progressSvc: ContentProgressService,
+    // private progressSvc: ContentProgressService,
     private contentSvc: WidgetContentService,
     private utilitySvc: UtilityService,
     private mobileAppsSvc: MobileAppsService,
@@ -183,7 +183,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     }
     if (this.content) {
       return (
-        this.content.contentType === NsContent.EContentTypes.COURSE &&
+        this.content.primaryCategory === NsContent.EPrimaryCategory.COURSE &&
         this.content.learningMode === 'Instructor-Led'
       )
     }

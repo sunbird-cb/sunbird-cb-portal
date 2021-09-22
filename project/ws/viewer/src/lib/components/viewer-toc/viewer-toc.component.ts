@@ -2,7 +2,7 @@ import { NestedTreeControl } from '@angular/cdk/tree'
 import { Component, EventEmitter, OnDestroy, OnInit, Output, Input } from '@angular/core'
 import { MatTreeNestedDataSource } from '@angular/material'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Params } from '@angular/router'
 import {
   ContentProgressService,
   NsContent,
@@ -41,6 +41,7 @@ interface ICollectionCard {
   subText2: string
   duration: number
   redirectUrl: string | null
+  queryParams: Params
 }
 
 @Component({
@@ -139,16 +140,17 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       }
     })
   }
-
+  // tslint:disable
   private getContentProgressHash() {
     if (this.collection && this.batchId && this.configSvc.userProfile) {
       this.contentProgressSvc
-        .getProgressHash(this.collection.identifier, this.batchId, this.configSvc.userProfile.userId).subscribe(progressHash => {
+        .getProgressHash(this.collection.identifier, this.batchId, this.configSvc.userProfile.userId)
+        .subscribe(progressHash => {
           this.contentProgressHash = progressHash
         })
     }
   }
-
+  // tslint:enable
   ngOnDestroy() {
     if (this.paramSubscription) {
       this.paramSubscription.unsubscribe()
@@ -175,7 +177,9 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       this.viewerDataSvc.updateNextPrevResource(Boolean(this.collection), prev, next)
       this.processCollectionForTree()
       this.expandThePath()
-      // this.getContentProgressHash()
+      if (next === '0') { // temp
+        this.getContentProgressHash()
+      }
     }
   }
   private async getCollection(
@@ -284,7 +288,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
         : content.appIcon,
       title: content.name,
       duration: content.duration,
-      type: content.resourceType ? content.resourceType : content.contentType,
+      type: content.primaryCategory,
       complexity: content.difficultyLevel,
       children:
         Array.isArray(content.children) && content.children.length
@@ -318,9 +322,10 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       duration: collection.duration,
       redirectUrl: this.getCollectionTypeRedirectUrl(
         collection.identifier,
+        // collection.primaryCategory,
         collection.primaryCategory,
-        collection.primaryCategory, // temp
       ),
+      queryParams: { batchId: this.batchId },
     }
   }
 
@@ -343,11 +348,12 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
 
   private getCollectionTypeRedirectUrl(
     identifier: string,
-    contentType: string = '',
+    // contentType: string = '',
     displayContentType?: NsContent.EDisplayContentTypes | NsContent.EPrimaryCategory,
   ): string | null {
     let url: string | null
-    switch (displayContentType) {
+    const dct = (displayContentType || '').toUpperCase()
+    switch (dct) {
       case NsContent.EDisplayContentTypes.PROGRAM:
       case NsContent.EDisplayContentTypes.COURSE:
       case NsContent.EDisplayContentTypes.MODULE:
@@ -362,9 +368,9 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       default:
         url = null
     }
-    if (contentType) {
-      url = `${url}?primaryCategory=${contentType}`
-    }
+    // if (contentType) {
+    //   url = `${url}?primaryCategory=${contentType}`
+    // }
     return url
   }
 

@@ -3,14 +3,17 @@
     <mat-card-content>
       <span class="width-expand flex flex-middle">
         <a class="viewer-toc-header-thumbnail align-self-start margin-auto" [routerLink]="collectionCard?.redirectUrl"
-          queryParamsHandling="preserve"> <img i18n-alt alt="thumbnail"
+        [queryParams]="collectionCard?.queryParams">
+          <!-- queryParamsHandling="preserve" -->
+          <img i18n-alt alt="thumbnail"
             class="viewer-toc-header-thumbnail align-self-start margin-auto mat-app-background"
             [src]="collectionCard?.thumbnail" [wsUtilsDefaultThumbnail]="defaultThumbnail" />
         </a>
         <span class="width-1-1 margin-left-m flex flex-wrapped align-self-start">
           <div class="width-1-1 flex flex-between">
             <div class="mat-body-2 text-truncate flex">
-              <a [routerLink]="collectionCard?.redirectUrl" queryParamsHandling="preserve">
+              <a [routerLink]="collectionCard?.redirectUrl" [queryParams]="collectionCard?.queryParams">
+                <!-- queryParamsHandling="preserve" -->
                 {{ collectionCard?.title | pipeLimitTo: 20 }}
               </a>
               <mat-icon *ngIf="
