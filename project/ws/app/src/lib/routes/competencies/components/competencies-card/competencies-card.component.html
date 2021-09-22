@@ -1,6 +1,6 @@
 
 <mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card" [ngClass]="{'mat-copmetence': isSelected}"
-[routerLink]="['/app/competencies/all', data?.id, data?.name]">
+[routerLink]="['/app/competencies/all', data?.id, data?.name, 'ALL']">
     <a href="javascript:void(0)" role="button">
         <mat-card-content *ngIf="!isSelected">
             <div class="card_inner_content flex" >
