@@ -21,6 +21,7 @@ const API_END_POINTS = {
   MULTIPLE_CONTENT: `${PROTECTED_SLAG_V8}/content/multiple`,
   CONTENT_SEARCH_V5: `${PROTECTED_SLAG_V8}/content/searchV5`,
   CONTENT_SEARCH_V6: `/apis/proxies/v8/sunbirdigot/read`,
+  CONTENT_SEARCH_RELATED_CBP_V6: `/apis/proxies/v8/sunbirdigot/search`,
   CONTENT_SEARCH_REGION_RECOMMENDATION: `${PROTECTED_SLAG_V8}/content/searchRegionRecommendation`,
   CONTENT_HISTORY: `${PROTECTED_SLAG_V8}/user/history`,
   CONTENT_HISTORYV2: `/apis/proxies/v8/read/content-progres`,
@@ -241,6 +242,10 @@ export class WidgetContentService {
   searchV6(req: NSSearch.ISearchV6Request): Observable<NSSearch.ISearchV6ApiResultV2> {
     req.query = req.query || ''
     return this.http.post<NSSearch.ISearchV6ApiResultV2>(API_END_POINTS.CONTENT_SEARCH_V6, req)
+  }
+
+  searchRelatedCBPV6(req: NSSearch.ISearchV6RequestV2): Observable<NSSearch.ISearchV6ApiResultV2> {
+    return this.http.post<NSSearch.ISearchV6ApiResultV2>(API_END_POINTS.CONTENT_SEARCH_RELATED_CBP_V6, req)
   }
 
   fetchContentRating(contentId: string): Observable<{ rating: number }> {
