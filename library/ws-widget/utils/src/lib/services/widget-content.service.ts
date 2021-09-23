@@ -211,9 +211,9 @@ export class WidgetContentService {
       return this.getFirstChildInHierarchy(child)
     }
     if (
-      content.primaryCategory === 'Resource' ||
-      content.primaryCategory === 'Knowledge Artifact' ||
-      content.contentType === 'Learning Path'
+      content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE ||
+      content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT ||
+      content.primaryCategory === NsContent.EPrimaryCategory.PROGRAM
     ) {
       return content
     }
