@@ -22,8 +22,10 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
   searchForm: FormGroup | undefined
   appliedFilters: any = []
   searchQuery: string = ''
-  sortBy: any
-
+  sortBy:any
+  stateData: {
+    param: any, path: any
+  } | undefined
   // searchCompArea = new FormControl('')
   titles = [
     { title: 'Learn', url: '/page/learn', icon: 'school' },
@@ -128,6 +130,8 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
         contentType: content.primaryCategory,
         id: content.identifier || '',
         type: content.contentType,
+        // contentId: content.identifier || '',
+        // contentType: content.primaryCategory,
         rollup: {},
         ver: content.version,
       })
