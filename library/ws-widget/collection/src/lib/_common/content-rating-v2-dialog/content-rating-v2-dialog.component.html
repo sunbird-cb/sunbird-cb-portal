@@ -1,14 +1,15 @@
 <div class="padding-m">
     <ng-container *ngIf="!showSuccessScreen">
-        <section class="w-full mb-8">
-            <div class="w-full flex align-center justify-between ">
+        <section class="w-full flex align-center justify-between ">
+            <div class="">
                 <h2 class="mat-headline margin-remove-bottom ws-mat-black-text">Rate and review</h2>
-                <!-- <button mat-icon-button aria-label="close dialog" mat-dialog-close>
-                    <mat-icon>close</mat-icon>
-                </button> -->
+                <p class="mat-body-2 ws-mat-black60-text">Your review and feedback is valuable in creating a robust learning experiance
+                </p>
             </div>
-            <p class="mat-body-2 ws-mat-black60-text">Your review and feedback is valuable in creating a robust learning experiance
-            </p>
+            <button mat-icon-button aria-label="close dialog" mat-dialog-close>
+                <mat-icon>close</mat-icon>
+            </button>
+            
         </section>
         <form [formGroup]="feedbackForm" >
             <section class=" mb-5">
@@ -52,13 +53,13 @@
                 </div>
             </section>
             <mat-dialog-actions class="custom margin-remove-bottom no-padding" align="end">
-                <button mat-stroked-button color="accent" type="button" [mat-dialog-close]="true"
+                <!-- <button mat-stroked-button color="accent" type="button" [mat-dialog-close]="true"
                     class="ws-mat-accent-border flex-auto-display margin-right-xs">
                     <span class="ws-mat-default-text" i18n>Cancel</span>
-                </button>
+                </button> -->
                 <button mat-stroked-button type="submit" class="text-white ws-mat-primary-background flex-auto-display"
                     [disabled]="feedbackForm?.invalid || formDisabled" (click)="submitRating(feedbackForm)">
-                    <span class="text-white" i18n>Send</span>
+                    <span class="text-white" i18n>Submit</span>
                 </button>
     
     
