@@ -64,7 +64,7 @@ export class PickerContentComponent extends WidgetBaseComponent
 
   defaultThumbnail = ''
   @Input() searchableContentTypes = NsContent.PLAYLIST_SUPPORTED_CONTENT_TYPES
-  @Input() appContentTypes = NsContent.EContentTypes
+  @Input() appContentTypes = NsContent.EPrimaryCategory
   preSelected = new Set()
   constructor(
     private snackBar: MatSnackBar,
