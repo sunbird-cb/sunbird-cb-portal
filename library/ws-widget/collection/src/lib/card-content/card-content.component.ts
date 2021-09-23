@@ -59,12 +59,15 @@ export class CardContentComponent extends WidgetBaseComponent
         contentId: this.widgetData.content.identifier,
         contentName: this.widgetData.content.name,
         contentType: this.widgetData.content.contentType,
+        primaryCategory: this.widgetData.content.primaryCategory,
         mode: 'dialog',
       }
       this.btnGoalsConfig = {
         contentId: this.widgetData.content.identifier,
         contentName: this.widgetData.content.name,
         contentType: this.widgetData.content.contentType,
+        primaryCategory: this.widgetData.content.primaryCategory,
+
       }
       this.modifySensibleContentRating()
     }

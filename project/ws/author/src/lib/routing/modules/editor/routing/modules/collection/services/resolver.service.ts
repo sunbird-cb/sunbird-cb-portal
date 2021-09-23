@@ -6,6 +6,7 @@ import { EditorContentService } from '@ws/author/src/lib/routing/modules/editor/
 import { NSContent } from '../../../../../../../interface/content'
 import { IContentNode, IContentTreeNode } from '../interface/icontent-tree'
 import { AuthInitService } from './../../../../../../../services/init.service'
+import { NsContent } from '@sunbird-cb/collection/src/public-api'
 
 @Injectable()
 /**
@@ -146,10 +147,10 @@ export class CollectionResolverService {
    */
   getIcon(content: NSContent.IContentMeta): string {
     if (content.mimeType === MIME_TYPE.collection) {
-      if (content.contentType === 'Learning Path') {
+      if (content.primaryCategory === NsContent.EPrimaryCategory.PROGRAM) {
         return ICON_TYPE.program
       }
-      if (content.contentType === 'Course') {
+      if (content.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
         return ICON_TYPE.course
       }
       return ICON_TYPE.learningModule
@@ -199,7 +200,7 @@ export class CollectionResolverService {
     if (content.mimeType === MIME_TYPE.mp4) {
       return ICON_TYPE.video
     }
-    if (content.contentType === 'Collection') {
+    if (content.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
       return ICON_TYPE.learningModule
     }
     return ICON_TYPE.default

@@ -317,7 +317,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       thumbnail: this.forPreview
         ? this.viewSvc.getAuthoringUrl(collection.appIcon)
         : collection.appIcon,
-      subText1: collection.resourceType ? collection.resourceType : collection.contentType,
+      subText1: collection.primaryCategory,
       subText2: collection.difficultyLevel,
       duration: collection.duration,
       redirectUrl: this.getCollectionTypeRedirectUrl(

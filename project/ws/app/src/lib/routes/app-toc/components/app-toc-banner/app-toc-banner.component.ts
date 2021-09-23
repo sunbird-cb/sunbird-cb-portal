@@ -156,12 +156,14 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         contentId: this.content.identifier,
         contentName: this.content.name,
         contentType: this.content.contentType,
+        primaryCategory: this.content.primaryCategory,
         mode: 'dialog',
       }
       this.btnGoalsConfig = {
         contentId: this.content.identifier,
         contentName: this.content.name,
         contentType: this.content.contentType,
+        primaryCategory: this.content.primaryCategory,
       }
     }
   }

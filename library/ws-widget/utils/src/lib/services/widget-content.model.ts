@@ -21,6 +21,7 @@ export namespace NsContent {
     complexityLevel: string
     contentId: string
     contentType: EContentTypes
+    primaryCategory: EPrimaryCategory
     contentUrlAtSource: string
     creatorContacts: ICreator[]
 
@@ -126,11 +127,37 @@ export namespace NsContent {
     [key: string]: any
   }
 
+  export enum EPrimaryCategory {
+    PROGRAM = 'Program',
+    COURSE = 'Course',
+    MODULE = 'Course Unit',
+    RESOURCE = 'Learning Resource',
+    GOALS = 'GOALS',
+    PLAYLIST = 'PLAYLIST',
+    // following will not be available soon
+    /**
+     * @deprecated The type should not be used
+     */
+    KNOWLEDGE_ARTIFACT = 'Knowledge Artifact',
+    /**
+    * @deprecated The type should not be used
+    */
+    KNOWLEDGE_BOARD = 'Knowledge Board',
+    /**
+    * @deprecated The type should not be used
+    */
+    LEARNING_JOURNEY = 'Learning Journeys',
+    /**
+    * @deprecated The type should not be used
+    */
+    CHANNEL = 'Channel',
+  }
   export interface IContentMinimal {
     appIcon: string
     artifactUrl: string
     complexityLevel: string
     contentType: EContentTypes
+    primaryCategory: EPrimaryCategory
     description: string
     displayContentType?: EDisplayContentTypes
     duration: number

@@ -19,7 +19,7 @@
                     | pipePartialContent
                       : [
                           'identifier',
-                          'contentType',
+                          'primaryCategory',
                           'resourceType',
                           'mimeType',
                           'downloadUrl',
@@ -38,7 +38,7 @@
               <ws-widget-btn-playlist [forPreview]="forPreview" [widgetData]="{
                   contentId: audioData?.identifier,
                   contentName: audioData?.name,
-                  contentType: 'Resource',
+                  contentType: 'Learning Resource',
                   mode: 'dialog',
                   isDisabled: isPreviewMode
                 }"></ws-widget-btn-playlist>
@@ -59,7 +59,7 @@
                   | pipePartialContent
                     : [
                         'identifier',
-                        'contentType',
+                        'primaryCategory',
                         'resourceType',
                         'mimeType',
                         'downloadUrl',
