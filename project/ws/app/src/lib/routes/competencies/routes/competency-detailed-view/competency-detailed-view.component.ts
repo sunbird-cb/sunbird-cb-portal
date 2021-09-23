@@ -77,6 +77,8 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
       this.routeType = _.get(params, 'routeType')
       if(this.activatedRoute.snapshot && this.activatedRoute.snapshot.parent && this.activatedRoute.snapshot.parent.parent) {
         this.jsonConfigForCBP = this.activatedRoute.snapshot.parent.parent.data.pageData.data.relatedCBP
+        this.searchReq.request.filters['competencies_v3.name'].splice(0, 1, this.competencyName)
+        this.jsonConfigForCBP.widgetData.strips[0]['payload'] = this.searchReq
         console.log("SJSJS", this.jsonConfigForCBP)
       }
       // console.log("Name", this.competencyName)

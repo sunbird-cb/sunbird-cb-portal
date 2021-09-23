@@ -157,7 +157,7 @@ export class CompetenceAllComponent implements OnInit {
   }
 
   fetchWatCompetency() {
-    const userId = this.currentProfile.id
+    const userId = this.configSvc.unMappedUser.id
     if (_.isEmpty(userId) || _.isNull(userId)) {
       this.watCompetencies = []
     }
