@@ -25,7 +25,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
   competencyName: any = null
   routeType: any = 'ALL'
   isAdded: boolean = false
-  // jsonConfigForCBP: any = null
+  jsonConfigForCBP: any = null
   type: any = 'COMPETENCY'
   competencyId: any = null
   competencyData: any = null
@@ -68,11 +68,6 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
     private configSvc: ConfigurationsService,
   ) { 
     this.getProfile() 
-    // if(this.activatedRoute.snapshot && this.activatedRoute.snapshot.parent && this.activatedRoute.snapshot.parent.parent) {
-    //   this.jsonConfigForCBP = this.activatedRoute.snapshot.parent.parent.data.pageData.data.relatedCBP
-    //   console.log("SJSJS", this.jsonConfigForCBP)
-    // }
-    
   }
 
   ngOnInit() {
@@ -80,6 +75,12 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
       this.competencyId = _.get(params, 'competencyId')
       this.competencyName = _.get(params, 'competencyName')
       this.routeType = _.get(params, 'routeType')
+      if(this.activatedRoute.snapshot && this.activatedRoute.snapshot.parent && this.activatedRoute.snapshot.parent.parent) {
+        this.jsonConfigForCBP = this.activatedRoute.snapshot.parent.parent.data.pageData.data.relatedCBP
+        this.searchReq.request.filters['competencies_v3.name'].splice(0, 1, this.competencyName)
+        this.jsonConfigForCBP.widgetData.strips[0]['payload'] = this.searchReq
+        console.log("SJSJS", this.jsonConfigForCBP)
+      }
       // console.log("Name", this.competencyName)
     })
 
