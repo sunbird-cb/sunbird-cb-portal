@@ -7,7 +7,7 @@
                     <mat-icon>close</mat-icon>
                 </button> -->
             </div>
-            <p class="ws-mat-black60-text">Your review and feedback is valuable in creating a robust learning experiance
+            <p class="mat-body-2 ws-mat-black60-text">Your review and feedback is valuable in creating a robust learning experiance
             </p>
         </section>
         <form [formGroup]="feedbackForm" >
@@ -30,22 +30,22 @@
     
             <section class="w-full mb-5" *ngIf="!formDisabled">
                 <h3 class="mat-h3 margin-bottom-xs" i18n>Give a review</h3>
-                <div class="mat-body">
+                <div class="mat-body-2">
                     <mat-form-field appearance="outline" class="w-full">
-                        <textarea id="postalAddress" matInput [matTextareaAutosize] [matAutosizeMaxRows]="10"
+                        <textarea id="review" matInput [matTextareaAutosize] [matAutosizeMaxRows]="10"
                             [matAutosizeMinRows]="3" maxlength="200" formControlName="review"
-                            placeholder="Type your review here" i18n-placeholder #review i18n-aria-label
-                            aria-label="Review textarea input"></textarea>
+                            placeholder="Add a review for this CBP (optional)" i18n-placeholder #review i18n-aria-label
+                            aria-label="Review textarea input" class="mat-body-2"></textarea>
                         <!-- <input matInput #review formControlName="review" i18n-placeholder
-                          placeholder="Enter Postal Address Here" [required]="true" /> -->
+                          placeholder="Enter review Here" [required]="true" /> -->
                         <mat-hint align="end">{{ review.value.length }} /200 characters</mat-hint>
-                        <mat-error [hidden]="false" i18n="Postal address error |Explains Postal address is required"
+                        <mat-error [hidden]="false" i18n="review error |Explains review is required"
                             *ngIf="feedbackForm?.controls['review'].errors?.required" i18n-aria-label
-                            aria-label="Postal address error |Explains Postal address is required">
-                            Type your review
+                            aria-label="review error |Explains review is required">
+                            Add a review for this CBP (optional)
                         </mat-error>
                         <mat-error i18n *ngIf="feedbackForm?.controls['review'].errors?.maxlength" i18n-aria-label
-                            aria-label="Postal address error |You have exceeded 200 characters">
+                            aria-label="review error |You have exceeded 200 characters">
                             You have exceeded 200 characters.
                         </mat-error>
                     </mat-form-field>
