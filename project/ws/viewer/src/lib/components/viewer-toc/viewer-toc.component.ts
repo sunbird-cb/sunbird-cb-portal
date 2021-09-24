@@ -2,9 +2,9 @@ import { NestedTreeControl } from '@angular/cdk/tree'
 import { Component, EventEmitter, OnDestroy, OnInit, Output, Input } from '@angular/core'
 import { MatTreeNestedDataSource } from '@angular/material'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Params } from '@angular/router'
 import {
-  // ContentProgressService,
+  ContentProgressService,
   NsContent,
   VIEWER_ROUTE_FROM_MIME,
   WidgetContentService,
@@ -41,6 +41,7 @@ interface ICollectionCard {
   subText2: string
   duration: number
   redirectUrl: string | null
+  queryParams: Params
 }
 
 @Component({
@@ -61,13 +62,14 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
     private viewerDataSvc: ViewerDataService,
     private viewSvc: ViewerUtilService,
     private configSvc: ConfigurationsService,
-    // private contentProgressSvc: ContentProgressService,
+    private contentProgressSvc: ContentProgressService,
   ) {
     this.nestedTreeControl = new NestedTreeControl<IViewerTocCard>(this._getChildren)
     this.nestedDataSource = new MatTreeNestedDataSource()
   }
   resourceId: string | null = null
   collection: IViewerTocCard | null = null
+  batchId: any
   queue: IViewerTocCard[] = []
   tocMode: 'FLAT' | 'TREE' = 'FLAT'
   nestedTreeControl: NestedTreeControl<IViewerTocCard>
@@ -102,6 +104,12 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
     this.paramSubscription = this.activatedRoute.queryParamMap.subscribe(async params => {
       const collectionId = params.get('collectionId')
       const collectionType = params.get('collectionType')
+      try {
+        this.batchId = params.get('batchId')
+      } catch {
+        this.batchId = 0
+      }
+
       if (collectionId && collectionType) {
         if (
           collectionType.toLowerCase() ===
@@ -109,9 +117,9 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
         ) {
           this.collection = await this.getPlaylistContent(collectionId, collectionType)
         } else if (
-          collectionType.toLowerCase() === NsContent.EContentTypes.MODULE.toLowerCase() ||
-          collectionType.toLowerCase() === NsContent.EContentTypes.COURSE.toLowerCase() ||
-          collectionType.toLowerCase() === NsContent.EContentTypes.PROGRAM.toLowerCase()
+          collectionType.toLowerCase() === NsContent.EPrimaryCategory.MODULE.toLowerCase() ||
+          collectionType.toLowerCase() === NsContent.EPrimaryCategory.COURSE.toLowerCase() ||
+          collectionType.toLowerCase() === NsContent.EPrimaryCategory.PROGRAM.toLowerCase()
         ) {
           this.collection = await this.getCollection(collectionId, collectionType)
         } else {
@@ -132,13 +140,17 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       }
     })
   }
-
+  // tslint:disable
   private getContentProgressHash() {
-    // this.contentProgressSvc.getProgressHash().subscribe(progressHash => {
-    //   this.contentProgressHash = progressHash
-    // })
+    if (this.collection && this.batchId && this.configSvc.userProfile) {
+      this.contentProgressSvc
+        .getProgressHash(this.collection.identifier, this.batchId, this.configSvc.userProfile.userId)
+        .subscribe(progressHash => {
+          this.contentProgressHash = progressHash
+        })
+    }
   }
-
+  // tslint:enable
   ngOnDestroy() {
     if (this.paramSubscription) {
       this.paramSubscription.unsubscribe()
@@ -165,7 +177,9 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       this.viewerDataSvc.updateNextPrevResource(Boolean(this.collection), prev, next)
       this.processCollectionForTree()
       this.expandThePath()
-      this.getContentProgressHash()
+      if (next === '0') { // temp
+        this.getContentProgressHash()
+      }
     }
   }
   private async getCollection(
@@ -175,7 +189,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
     try {
       const content: NsContent.IContentResponse | NsContent.IContent = await (this.forPreview
         ? this.contentSvc.fetchAuthoringContent(collectionId)
-        : this.contentSvc.fetchContent(collectionId, 'detail')
+        : this.contentSvc.fetchContent(collectionId, 'detail', [], _collectionType)
       ).toPromise()
       const contentData = content.result.content
       this.collectionCard = this.createCollectionCard(contentData)
@@ -260,7 +274,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
     //   title: content.name,
     //   duration: content.duration,
     //   type: content.displayContentType,
-    //   complexity: content.complexityLevel,
+    //   complexity: content.difficultyLevel,
     //   children: Array.isArray(content.children) && content.children.length ?
     //     content.children.map(child => this.convertContentToIViewerTocCard(child)) : null,
     // }
@@ -274,8 +288,8 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
         : content.appIcon,
       title: content.name,
       duration: content.duration,
-      type: content.resourceType ? content.resourceType : content.contentType,
-      complexity: content.complexityLevel,
+      type: content.primaryCategory,
+      complexity: content.difficultyLevel,
       children:
         Array.isArray(content.children) && content.children.length
           ? content.children.map(child => this.convertContentToIViewerTocCard(child))
@@ -292,38 +306,40 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
     //   title: collection.name,
     //   thumbnail: collection.appIcon,
     //   subText1: collection.displayContentType || collection.contentType,
-    //   subText2: collection.complexityLevel,
+    //   subText2: collection.difficultyLevel,
     //   duration: collection.duration,
     //   redirectUrl: this.getCollectionTypeRedirectUrl(collection.displayContentType, collection.identifier),
     // }
     return {
-      type: this.getCollectionTypeCard(collection.displayContentType),
+      type: this.getCollectionTypeCard(collection.primaryCategory),
       id: collection.identifier,
       title: collection.name,
       thumbnail: this.forPreview
         ? this.viewSvc.getAuthoringUrl(collection.appIcon)
         : collection.appIcon,
-      subText1: collection.resourceType ? collection.resourceType : collection.contentType,
-      subText2: collection.complexityLevel,
+      subText1: collection.primaryCategory,
+      subText2: collection.difficultyLevel,
       duration: collection.duration,
       redirectUrl: this.getCollectionTypeRedirectUrl(
         collection.identifier,
-        collection.displayContentType,
+        // collection.primaryCategory,
+        collection.primaryCategory,
       ),
+      queryParams: { batchId: this.batchId },
     }
   }
 
   private getCollectionTypeCard(
-    displayContentType?: NsContent.EDisplayContentTypes,
+    displayContentType?: NsContent.EPrimaryCategory,
   ): TCollectionCardType | null {
     switch (displayContentType) {
-      case NsContent.EDisplayContentTypes.PROGRAM:
-      case NsContent.EDisplayContentTypes.COURSE:
-      case NsContent.EDisplayContentTypes.MODULE:
+      case NsContent.EPrimaryCategory.PROGRAM:
+      case NsContent.EPrimaryCategory.COURSE:
+      case NsContent.EPrimaryCategory.MODULE:
         return 'content'
-      case NsContent.EDisplayContentTypes.GOALS:
+      case NsContent.EPrimaryCategory.GOALS:
         return 'goals'
-      case NsContent.EDisplayContentTypes.PLAYLIST:
+      case NsContent.EPrimaryCategory.PLAYLIST:
         return 'playlist'
       default:
         return null
@@ -332,28 +348,29 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
 
   private getCollectionTypeRedirectUrl(
     identifier: string,
-    contentType: string = '',
-    displayContentType?: NsContent.EDisplayContentTypes,
+    // contentType: string = '',
+    displayContentType?: NsContent.EDisplayContentTypes | NsContent.EPrimaryCategory,
   ): string | null {
     let url: string | null
-    switch (displayContentType) {
+    const dct = (displayContentType || '').toUpperCase()
+    switch (dct) {
       case NsContent.EDisplayContentTypes.PROGRAM:
       case NsContent.EDisplayContentTypes.COURSE:
       case NsContent.EDisplayContentTypes.MODULE:
-        url =  `${this.forPreview ? '/author' : '/app'}/toc/${identifier}/overview`
+        url = `${this.forPreview ? '/author' : '/app'}/toc/${identifier}/overview`
         break
       case NsContent.EDisplayContentTypes.GOALS:
-        url =  `/app/goals/${identifier}`
+        url = `/app/goals/${identifier}`
         break
       case NsContent.EDisplayContentTypes.PLAYLIST:
-        url =  `/app/playlist/${identifier}`
+        url = `/app/playlist/${identifier}`
         break
       default:
-        url =  null
+        url = null
     }
-    if (contentType) {
-      url = `${url}?primaryCategory=${contentType}`
-    }
+    // if (contentType) {
+    //   url = `${url}?primaryCategory=${contentType}`
+    // }
     return url
   }
 
@@ -361,13 +378,14 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
     if (this.collection && this.collection.children) {
       this.nestedDataSource.data = this.collection.children
       this.pathSet = new Set()
-      // if (this.resourceId && this.tocMode === 'TREE') {
-      if (this.resourceId) {
-        of(true)
-          .pipe(delay(2000))
-          .subscribe(() => {
-            this.expandThePath()
-          })
+      if (this.resourceId && this.tocMode === 'TREE') {
+        if (this.resourceId) {
+          of(true)
+            .pipe(delay(2000))
+            .subscribe(() => {
+              this.expandThePath()
+            })
+        }
       }
     }
   }

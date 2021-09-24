@@ -38,6 +38,7 @@ export class AppTocService {
   private showSubtitleOnBanners = false
   private canShowDescription = false
   resumeDataSubscription: Subscription | null = null
+  primaryCategory = NsContent.EPrimaryCategory
 
   constructor(private http: HttpClient, private configSvc: ConfigurationsService) { }
 
@@ -149,11 +150,11 @@ export class AppTocService {
   ): NsAppToc.ITocStructure {
     if (
       content &&
-      !(content.contentType === 'Resource' || content.contentType === 'Knowledge Artifact')
+      !(content.primaryCategory === this.primaryCategory.RESOURCE || content.primaryCategory === this.primaryCategory.KNOWLEDGE_ARTIFACT)
     ) {
-      if (content.contentType === 'Course') {
+      if (content.primaryCategory === 'Course') {
         tocStructure.course += 1
-      } else if (content.contentType === 'Collection') {
+      } else if (content.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
         tocStructure.learningModule += 1
       }
       content.children.forEach(child => {
@@ -189,7 +190,7 @@ export class AppTocService {
         case NsContent.EMimeTypes.QUIZ:
         case NsContent.EMimeTypes.APPLICATION_JSON:
           // if (content.resourceType === 'Assessment') {
-            tocStructure.assessment += 1
+          tocStructure.assessment += 1
           // } else {
           //   tocStructure.quiz += 1
           // }
@@ -304,7 +305,7 @@ export class AppTocService {
     // return this.http.get<NsContent.IContentMinimal[]>(
     //   `${API_END_POINTS.CONTENT_PARENTS}/${contentId}`,
     // )
-    if (contentId) {}
+    if (contentId) { }
     return EMPTY
   }
   fetchContentWhatsNext(
@@ -379,7 +380,7 @@ export class AppTocService {
   createBatch(batchData: any) {
     return this.http.post(
       API_END_POINTS.BATCH_CREATE,
-      { request : batchData },
+      { request: batchData },
     )
   }
 }

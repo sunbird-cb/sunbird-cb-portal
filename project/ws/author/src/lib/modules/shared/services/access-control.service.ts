@@ -185,14 +185,14 @@ export class AccessControlService {
    */
   getCategoryType(content: NSContent.IContentMeta | ISearchContent): string {
     switch (this.getCategory(content)) {
-      case 'Resource':
-        return content.categoryType || content.resourceType || 'Resource'
-      case 'Collection':
-        return content.categoryType || 'Module'
+      case 'Learning Resource':
+        return content.primaryCategory || 'Resource'
+      case 'Course Unit':
+        return content.primaryCategory || 'Module'
       case 'Course':
-        return content.categoryType || 'Course'
-      case 'Learning Path':
-        return content.categoryType || 'Program'
+        return content.primaryCategory || 'Course'
+      case 'Program':
+        return content.primaryCategory || 'Program'
       default:
         return this.getCategory(content)
     }

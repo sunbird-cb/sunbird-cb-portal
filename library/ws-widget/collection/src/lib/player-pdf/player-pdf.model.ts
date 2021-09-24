@@ -1,3 +1,4 @@
+
 export interface IWidgetsPlayerPdfData {
   pdfUrl: string
   resumePage?: number
@@ -11,6 +12,7 @@ export interface IWidgetsPlayerPdfData {
   }
   collectionId?: string
   contentType?: string
+  primaryCategory?: string
   version?: string
   mimeType?: any
 }

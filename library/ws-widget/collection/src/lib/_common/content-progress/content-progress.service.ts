@@ -14,30 +14,40 @@ const API_END_POINTS = {
 })
 export class ContentProgressService {
 
-  private progressHashSubject: ReplaySubject<{ [id: string]: number }> = new ReplaySubject(1)
-  private progressHash: { [id: string]: number } | null = null
+  private progressHashSubject: ReplaySubject<{ [id: string]: number, [batch: number]: number }> = new ReplaySubject(1)
+  private progressHash: { [id: string]: number, [batch: number]: number } | null = null
   private isFetchingProgress = false
 
   constructor(
     private http: HttpClient,
   ) { }
 
-  getProgressFor(id: string): Observable<number> {
+  getProgressFor(id: string, batch: number, userId: string): Observable<number> {
     if (this.shouldFetchProgress) {
-      // this.fetchProgressHash()
+      this.fetchProgressHash(id, batch, userId)
     }
     return this.progressHashSubject.pipe(map(hash => hash[id]))
   }
 
-  getProgressHash(): Observable<{ [id: string]: number }> {
+  getProgressHash(contentId: string, batch: number, userId: string): Observable<{ [id: string]: number }> {
     if (this.shouldFetchProgress) {
-      this.fetchProgressHash()
+      this.fetchProgressHash(contentId, batch, userId)
     }
     return this.progressHashSubject
   }
-  private fetchProgressHash() {
+  private fetchProgressHash(contentId: string, batch: number, userId: string) {
     this.isFetchingProgress = true
-    this.http.get<{ [id: string]: number }>(API_END_POINTS.PROGRESS_HASH).subscribe(data => {
+    this.http.post<{ [id: string]: number, [batch: number]: number }>(`apis/proxies/v8/read/content-progres/${contentId}`, {
+      request:
+      {
+        userId,
+        batchId: batch,
+        courseId: contentId,
+        contentIds: [],
+        fields: ['progressdetails'],
+      },
+    }).subscribe(data => {
+      // this.http.get<{ [id: string]: number }>(API_END_POINTS.PROGRESS_HASH).subscribe(data => {
       this.progressHash = data
       this.isFetchingProgress = false
       this.progressHashSubject.next(data)
