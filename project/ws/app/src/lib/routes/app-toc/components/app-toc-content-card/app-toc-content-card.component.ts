@@ -174,6 +174,8 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
         contentType: this.content.primaryCategory,
         id: this.content.identifier || '',
         type: this.content.contentType,
+        contentId: this.content.identifier || '',
+        contentType: this.content.primaryCategory,
         rollup: {
           l1: this.rootId || '',
         },
