@@ -39,6 +39,7 @@ const flattenItems = (items: any[], key: string | number) => {
       flattenedItems = flattenedItems.concat(flattenItems(item[key], key))
     }
     return flattenedItems
+    // tslint:disable-next-line
   }, [])
 }
 @Component({
