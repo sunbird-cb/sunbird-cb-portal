@@ -54,7 +54,7 @@ export class TelemetryService {
   }
 
   get getTelemetrySessionId(): string {
-      return localStorage.getItem('telemetrySessionId') || ''
+    return localStorage.getItem('telemetrySessionId') || ''
   }
 
   get rootOrgId(): string {
@@ -62,7 +62,7 @@ export class TelemetryService {
       return this.configSvc.userProfile.rootOrgId
     }
     return ''
-}
+  }
 
   start(type: string, mode: string, id: string, data?: any) {
     try {
@@ -72,7 +72,7 @@ export class TelemetryService {
           id,
           '1.0',
           {
-          // id,
+            // id,
             type,
             mode,
             pageid: id,
@@ -84,7 +84,7 @@ export class TelemetryService {
                 id: this.pData.id,
               },
             },
-            object : {
+            object: {
               ...(data) && data,
             },
           }
@@ -113,7 +113,7 @@ export class TelemetryService {
               id: this.pData.id,
             },
           },
-          object : {
+          object: {
             ...(data) && data,
           },
         },
@@ -342,7 +342,7 @@ export class TelemetryService {
                 type: event.data.type,
                 subtype: event.data.subType,
                 // object: event.data.object,
-                id: event.data.object.contentId || event.data.object.id  || interactid || '',
+                id: event.data.object.contentId || event.data.object.id || interactid || '',
                 pageid: page.pageid,
                 // target: { page },
               },
@@ -378,32 +378,32 @@ export class TelemetryService {
       )
       .subscribe(event => {
         const page = this.getPageDetails()
-          try {
-            $t.feedback(
-              {
-                rating: event.data.object.rating || 0,
-                commentid: event.data.object.commentid || '',
-                commenttxt: event.data.object.commenttxt || '',
-                pageid: page.pageid,
+        try {
+          $t.feedback(
+            {
+              rating: event.data.object.rating || 0,
+              commentid: event.data.object.commentid || '',
+              commenttxt: event.data.object.commenttxt || '',
+              pageid: page.pageid,
+            },
+            {
+              context: {
+                pdata: {
+                  ...this.pData,
+                  id: this.pData.id,
+                },
               },
-              {
-                context: {
-                  pdata: {
-                    ...this.pData,
-                    id: this.pData.id,
-                  },
-                },
-                object: {
-                 id: event.data.object.contentId || event.data.object.id  || '',
-                 type: event.data.type || '',
-                 ver: event.data.object.version || 1,
-                 rollup: {},
-                },
-              })
-          } catch (e) {
-            // tslint:disable-next-line: no-console
-            console.log('Error in telemetry interact', e)
-          }
+              object: {
+                id: event.data.object.contentId || event.data.object.id || '',
+                type: event.data.type || '',
+                ver: `${(event.data.object.version || '1')}${''}`,
+                rollup: {},
+              },
+            })
+        } catch (e) {
+          // tslint:disable-next-line: no-console
+          console.log('Error in telemetry interact', e)
+        }
       })
   }
 

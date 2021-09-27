@@ -90,8 +90,8 @@ function eventDispatchHelper(
         mimeType: mimeT,
         object: {
           id: data.identifier,
-          type: data.contentType,
-          ver: data.version,
+          type: data.primaryCategory,
+          ver: `${data.version}${''}`,
           rollup: {
             l1: data.collectionId || '',
           },

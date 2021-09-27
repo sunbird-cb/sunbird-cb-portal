@@ -117,7 +117,7 @@ export class PdfComponent implements OnInit, OnDestroy {
             this.widgetResolverPdfData.widgetData.contentType = this.pdfData.contentType
             this.widgetResolverPdfData.widgetData.primaryCategory = this.pdfData.primaryCategory
 
-            this.widgetResolverPdfData.widgetData.version = this.pdfData.version
+            this.widgetResolverPdfData.widgetData.version = `${this.pdfData.version}${''}`
           }
           this.widgetResolverPdfData = JSON.parse(JSON.stringify(this.widgetResolverPdfData))
           if (this.pdfData) {

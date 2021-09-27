@@ -313,7 +313,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         id: content.identifier || '',
         type: content.contentType,
         rollup: {},
-        ver: content.version,
+        ver: `${content.version}${''}`,
       })
     }
   }

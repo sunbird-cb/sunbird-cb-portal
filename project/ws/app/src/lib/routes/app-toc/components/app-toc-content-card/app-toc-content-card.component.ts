@@ -177,7 +177,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
         rollup: {
           l1: this.rootId || '',
         },
-        ver: this.content.version,
+        ver: `${this.content.version}${''}`,
       })
     }
   }

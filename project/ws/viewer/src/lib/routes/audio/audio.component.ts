@@ -131,7 +131,7 @@ export class AudioComponent implements OnInit, OnDestroy {
           this.widgetResolverAudioData.widgetData.contentType = data.content.data.contentType
           this.widgetResolverAudioData.widgetData.primaryCategory = data.content.data.primaryCategory
 
-          this.widgetResolverAudioData.widgetData.version = data.content.data.version
+          this.widgetResolverAudioData.widgetData.version = `${data.content.data.version}${''}`
 
           if (data.content.data && data.content.data.subTitles && data.content.data.subTitles[0]) {
 
