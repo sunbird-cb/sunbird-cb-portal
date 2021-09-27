@@ -1,5 +1,5 @@
 import { Component, HostBinding, Input, OnChanges } from '@angular/core'
-import { ContentProgressService } from './content-progress.service'
+// import { ContentProgressService } from './content-progress.service'
 
 @Component({
   selector: 'ws-widget-content-progress',
@@ -37,7 +37,9 @@ export class ContentProgressComponent implements OnChanges {
   rendom = Math.random()
   @HostBinding('id')
   public id = `progress_${Math.random()}`
-  constructor(private progressSvc: ContentProgressService) {
+  constructor(
+    // private progressSvc: ContentProgressService
+    ) {
     if (this.contentId) {
       this.id = this.contentId
     }
@@ -45,12 +47,12 @@ export class ContentProgressComponent implements OnChanges {
 
   ngOnChanges() {
     if (this.contentId && !this.progress && !this.forPreview) {
-      this.progressSvc.getProgressFor(this.contentId).subscribe(data => {
-        this.progress = data
-        if (this.progress) {
-          this.progress = Math.round(this.progress * 10000) / 100
-        }
-      })
+      // this.progressSvc.getProgressFor(this.contentId).subscribe(data => {
+      //   this.progress = data
+      //   if (this.progress) {
+      //     this.progress = Math.round(this.progress * 10000) / 100
+      //   }
+      // })
     }
 
     if (this.progress) {

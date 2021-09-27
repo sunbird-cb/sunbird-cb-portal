@@ -7,8 +7,7 @@ import {
   viewerRouteGenerator,
   NsPlaylist,
   NsGoal,
-  ContentProgressService,
-  ContentRatingV2DialogComponent } from '@sunbird-cb/collection'
+} from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, LoggerService, NsPage, TFetchStatus, UtilityService } from '@sunbird-cb/utils'
 import { Subscription, Observable } from 'rxjs'
@@ -25,6 +24,7 @@ import * as dayjs from 'dayjs'
 import _ from 'lodash'
 import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { ActionService } from '../../services/action.service'
+import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -39,7 +39,8 @@ const flattenItems = (items: any[], key: string | number) => {
       flattenedItems = flattenedItems.concat(flattenItems(item[key], key))
     }
     return flattenedItems
-  },                  [])
+    // tslint:disable-next-line
+  }, [])
 }
 @Component({
   selector: 'ws-app-app-toc-home',
@@ -76,7 +77,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     },
   }
   tocConfig: any = null
-  contentTypes = NsContent.EContentTypes
+  primaryCategory = NsContent.EPrimaryCategory
   askAuthorEnabled = true
   trainingLHubEnabled = false
   trainingLHubCount$?: Observable<number>
@@ -150,7 +151,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private dialog: MatDialog,
     private mobileAppsSvc: MobileAppsService,
     private utilitySvc: UtilityService,
-    private progressSvc: ContentProgressService,
+    // private progressSvc: ContentProgressService,
     private actionSVC: ActionService,
   ) {
     this.historyData = history.state
@@ -235,12 +236,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         contentId: this.content.identifier,
         contentName: this.content.name,
         contentType: this.content.contentType,
+        primaryCategory: this.content.primaryCategory,
         mode: 'dialog',
       }
       this.btnGoalsConfig = {
         contentId: this.content.identifier,
         contentName: this.content.name,
         contentType: this.content.contentType,
+        primaryCategory: this.content.primaryCategory,
       }
     }
   }
@@ -312,8 +315,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   get isResource() {
     if (this.content) {
-      const isResource = this.content.contentType === NsContent.EContentTypes.KNOWLEDGE_ARTIFACT ||
-        this.content.contentType === NsContent.EContentTypes.RESOURCE || !this.content.children.length
+      const isResource = this.content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT ||
+        this.content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE || !this.content.children.length
       if (isResource) {
         this.mobileAppsSvc.sendViewerData(this.content)
       }
@@ -371,8 +374,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     if (this.content) {
       this.hasTocStructure = false
-      this.tocStructure.learningModule = this.content.contentType === 'Collection' ? -1 : 0
-      this.tocStructure.course = this.content.contentType === 'Course' ? -1 : 0
+      this.tocStructure.learningModule = this.content.primaryCategory === this.primaryCategory.MODULE ? -1 : 0
+      this.tocStructure.course = this.content.primaryCategory === this.primaryCategory.COURSE ? -1 : 0
       this.tocStructure = this.tocSvc.getTocStructure(this.content, this.tocStructure)
       for (const progType in this.tocStructure) {
         if (this.tocStructure[progType] > 0) {
@@ -445,7 +448,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   private getUserEnrollmentList() {
     // tslint:disable-next-line
-    if (this.content && this.content.identifier && this.content.primaryCategory !== this.contentTypes.COURSE && this.content.primaryCategory !== this.contentTypes.PROGRAMV2) {
+    if (this.content && this.content.identifier && this.content.primaryCategory !== this.primaryCategory.COURSE && this.content.primaryCategory !== this.primaryCategory.PROGRAM) {
       // const collectionId = this.isResource ? '' : this.content.identifier
       return this.getContinueLearningData(this.content.identifier)
     }
@@ -494,7 +497,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           } else {
             // It's understood that user is not already enrolled
             // Fetch the available batches and present to user
-            if (this.content.contentType === this.contentTypes.COURSE || this.content.contentType === this.contentTypes.PROGRAMV2) {
+            if (this.content.primaryCategory === this.primaryCategory.COURSE
+              || this.content.primaryCategory === this.primaryCategory.PROGRAM) {
               this.autoBatchAssign()
             } else {
               this.fetchBatchDetails()
@@ -701,7 +705,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     if (this.content) {
       return (
-        this.content.contentType === NsContent.EContentTypes.COURSE &&
+        this.content.primaryCategory === NsContent.EPrimaryCategory.COURSE &&
         this.content.learningMode === 'Instructor-Led'
       )
     }
@@ -790,9 +794,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   private getLearningUrls() {
     if (this.content) {
       if (!this.forPreview) {
-        this.progressSvc.getProgressFor(this.content.identifier).subscribe(data => {
-          this.contentProgress = data
-        })
+        // this.progressSvc.getProgressFor(this.content.identifier).subscribe(data => {
+        //   this.contentProgress = data
+        // })
       }
       // this.progressSvc.fetchProgressHashContentsId({
       //   "contentIds": [

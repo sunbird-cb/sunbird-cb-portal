@@ -8,7 +8,7 @@
               <ng-container *ngIf="isFetchingDataComplete">
                 <viewer-plugin-quiz [identifier]="quizData?.identifier" [artifactUrl]="quizData?.artifactUrl"
                   [name]="quizData?.name" [learningObjective]="quizData?.learningObjective"
-                  [complexityLevel]="quizData?.complexityLevel" [duration]="quizData?.duration" [quizJson]="quizJson"
+                  [complexityLevel]="quizData?.difficultyLevel" [duration]="quizData?.duration" [quizJson]="quizJson"
                   [collectionId]="collectionId"></viewer-plugin-quiz>
               </ng-container>
             </div>
@@ -18,7 +18,7 @@
                     | pipePartialContent
                       : [
                           'identifier',
-                          'contentType',
+                          'primaryCategory',
                           'resourceType',
                           'mimeType',
                           'downloadUrl',

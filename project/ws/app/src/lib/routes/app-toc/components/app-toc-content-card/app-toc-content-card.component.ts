@@ -37,7 +37,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
   viewChildren = false
   constructor(
     private events: EventService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.evaluateImmediateChildrenStructure()
@@ -62,7 +62,8 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
   get isResource(): boolean {
     if (this.content) {
       return (
-        this.content.contentType === 'Resource' || this.content.contentType === 'Knowledge Artifact'
+        this.content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE
+        || this.content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT
       )
     }
     return false
@@ -97,13 +98,13 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
   private evaluateImmediateChildrenStructure() {
     if (this.content && this.content.children && this.content.children.length) {
       this.content.children.forEach((child: NsContent.IContent) => {
-        if (child.contentType === NsContent.EContentTypes.COURSE) {
+        if (child.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
           this.contentStructure.course += 1
-        } else if (child.contentType === NsContent.EContentTypes.KNOWLEDGE_ARTIFACT) {
+        } else if (child.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT) {
           this.contentStructure.other += 1
-        } else if (child.contentType === NsContent.EContentTypes.MODULE) {
+        } else if (child.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
           this.contentStructure.learningModule += 1
-        } else if (child.contentType === NsContent.EContentTypes.RESOURCE) {
+        } else if (child.primaryCategory === NsContent.EPrimaryCategory.RESOURCE) {
           switch (child.mimeType) {
             case NsContent.EMimeTypes.HANDS_ON:
               this.contentStructure.handsOn += 1
@@ -169,6 +170,8 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
   public raiseTelemetry() {
     if (this.content) {
       this.events.raiseInteractTelemetry('click', `card-tocContentCard`, {
+        contentId: this.content.identifier || '',
+        contentType: this.content.primaryCategory,
         id: this.content.identifier || '',
         type: this.content.contentType,
         rollup: {

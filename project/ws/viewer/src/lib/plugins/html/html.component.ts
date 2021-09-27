@@ -294,6 +294,8 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         this.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
       }
       this.events.raiseInteractTelemetry(data.event, 'scrom', {
+        contentId: this.htmlContent.identifier,
+        contentType: this.htmlContent.primaryCategory,
         id: this.htmlContent.identifier,
         type: this.htmlContent.contentType,
         context: this.htmlContent.context,

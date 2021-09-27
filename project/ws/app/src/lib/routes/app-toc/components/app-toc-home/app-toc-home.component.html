@@ -95,14 +95,14 @@ TODO: edit option while preview Mode
               actionBtnStatus === 'grant' &&
               !(isMobile && content?.isInIntranet) &&
               !(
-                content?.contentType === 'Course' &&
+                content?.primaryCategory === 'Course' &&
                 content?.children.length === 0 &&
                 !content?.artifactUrl?.length
               ) &&
               !(
-                content?.contentType === 'Course' && !batchData?.enrolled
+                content?.primaryCategory === 'Course' && !batchData?.enrolled
               ) &&
-              !(content?.contentType === 'Resource' && !content?.artifactUrl)
+              !(content?.primaryCategory === 'Learning Resource' && !content?.artifactUrl)
             ">
             <a *ngIf="showStart.show && !isPostAssessment"
               [routerLink]="resumeData ? resumeDataLink?.url : firstResourceLink?.url"

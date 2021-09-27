@@ -2,7 +2,6 @@ import { AccessControlService } from '@ws/author'
 import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ActivatedRoute, Data, Router } from '@angular/router'
-import { NsContent, NsAutoComplete } from '@sunbird-cb/collection'
 import { ConfigurationsService, LoggerService } from '@sunbird-cb/utils'
 import { Observable, Subscription } from 'rxjs'
 import { share } from 'rxjs/operators'
@@ -13,6 +12,7 @@ import { TitleTagService } from '@ws/app/src/lib/routes/app-toc/services/title-t
 import { MatDialog } from '@angular/material'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import { ConnectionHoverService } from '@sunbird-cb/collection/src/lib/_common/connection-hover-card/connection-hover.servive'
+import { NsContent, NsAutoComplete } from '@sunbird-cb/collection/src/public-api'
 // import { IdiscussionConfig } from '@project-sunbird/discussions-ui-v8'
 
 @Component({
@@ -22,6 +22,7 @@ import { ConnectionHoverService } from '@sunbird-cb/collection/src/lib/_common/c
 })
 export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   contentTypes = NsContent.EContentTypes
+  primaryCategory = NsContent.EPrimaryCategory
   showMoreGlance = false
   askAuthorEnabled = true
   trainingLHubEnabled = false
@@ -119,13 +120,12 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     if (this.configSvc.activeLocale && this.configSvc.activeLocale.path) {
       locationOrigin += `/${this.configSvc.activeLocale.path}`
     }
-    switch (data.contentType) {
-      case NsContent.EContentTypes.CHANNEL:
+    switch (data.primaryCategory) {
+      case NsContent.EPrimaryCategory.CHANNEL:
         return `${locationOrigin}${data.artifactUrl}`
-      case NsContent.EContentTypes.KNOWLEDGE_BOARD:
+      case NsContent.EPrimaryCategory.KNOWLEDGE_BOARD:
         return `${locationOrigin}/app/knowledge-board/${data.identifier}`
-      case NsContent.EContentTypes.KNOWLEDGE_ARTIFACT:
-
+      case NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT:
         return `${locationOrigin}/app/toc/${data.identifier}/overview?primaryCategory=${data.primaryCategory}`
       default:
         return `${locationOrigin}/app/toc/${data.identifier}/overview?primaryCategory=${data.primaryCategory}`
@@ -153,8 +153,8 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
 
   get isResource() {
     if (this.content) {
-      const isResource = this.content.contentType === NsContent.EContentTypes.KNOWLEDGE_ARTIFACT ||
-        this.content.contentType === NsContent.EContentTypes.RESOURCE || !this.content.children.length
+      const isResource = this.content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT ||
+        this.content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE || !this.content.children.length
       if (isResource) {
         this.mobileAppsSvc.sendViewerData(this.content)
       }
@@ -281,8 +281,8 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     }
     if (this.content) {
       this.hasTocStructure = false
-      this.tocStructure.learningModule = this.content.contentType === 'Collection' ? -1 : 0
-      this.tocStructure.course = this.content.contentType === 'Course' ? -1 : 0
+      this.tocStructure.learningModule = this.content.primaryCategory === this.primaryCategory.MODULE ? -1 : 0
+      this.tocStructure.course = this.content.primaryCategory === this.primaryCategory.COURSE ? -1 : 0
       this.tocStructure = this.tocSharedSvc.getTocStructure(this.content, this.tocStructure)
       for (const progType in this.tocStructure) {
         if (this.tocStructure[progType] > 0) {
@@ -415,5 +415,5 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
 
   get usr() {
     return this.howerUser
-}
+  }
 }

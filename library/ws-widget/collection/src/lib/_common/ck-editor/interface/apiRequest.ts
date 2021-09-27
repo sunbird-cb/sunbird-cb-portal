@@ -12,6 +12,7 @@ export namespace NSApiRequest {
     description: string
     mimeType: string
     contentType: string
+    primaryCategory: string
     resourceType?: string
     isTranslationOf?: string
     locale?: string
@@ -24,6 +25,7 @@ export namespace NSApiRequest {
       description: string
       mimeType: string
       contentType: string
+      primaryCategory: string
       createdBy: string
       resourceType?: string
       locale: string
