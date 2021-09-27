@@ -33,7 +33,7 @@ export class ContentRatingV2DialogComponent implements OnInit {
       this.events.raiseFeedbackTelemetry(this.data.content.primaryCategory, 'rating', {
         id: this.data.content.identifier || '',
         rating: this.userRating,
-        version: this.data.content.version,
+        version: `${this.data.content.version}${''}`,
         // tslint:disable-next-line: no-non-null-assertion
         commenttxt: feedbackForm.value.review || '',
       })

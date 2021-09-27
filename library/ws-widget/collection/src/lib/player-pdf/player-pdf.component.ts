@@ -230,7 +230,7 @@ export class PlayerPdfComponent extends WidgetBaseComponent
         rollup: {
           l1: this.widgetData.collectionId || '',
         },
-        ver: this.widgetData.version,
+        ver: `${this.widgetData.version}${''}`,
       })
     }
   }
@@ -372,7 +372,7 @@ export class PlayerPdfComponent extends WidgetBaseComponent
         object: {
           id: this.widgetData.identifier,
           type: this.widgetData.contentType,
-          ver: this.widgetData.version,
+          ver: `${this.widgetData.version}${''}`,
           rollup: {
             l1: this.widgetData.collectionId || '',
           },
