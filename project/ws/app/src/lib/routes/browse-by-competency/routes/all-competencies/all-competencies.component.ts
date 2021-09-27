@@ -133,7 +133,7 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
         // contentId: content.identifier || '',
         // contentType: content.primaryCategory,
         rollup: {},
-        ver: content.version,
+        ver: `${content.version}${''}`,
       })
     }
   }
