@@ -6,12 +6,17 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./feedback.component.scss'],
 })
 export class FeedbackComponent implements OnInit {
+  domain = "https://rain.tarento.com/";
+  // surveyTitle = "Report a problem";
+  // surveyId= 1632458489991;
+  surveyTitle = "Feedback and suggestions";
+  surveyId = 1625726181379;
   apiData: object = {
-    id: '1625726181379',
-    getAPI: 'https://rain.tarento.com/api/forms/getFormById?id=1625726181379',
-    postAPI: 'https://rain.tarento.com/api/forms/saveFormSubmit',
-    customizedHeader: {},
-  }
+    getAPI: this.domain + "api/forms/getFormById?id=" + this.surveyId,
+    postAPI: this.domain + "api/forms/saveFormSubmit",
+    customizedHeader: {
+    },
+  };
   constructor() { }
 
   ngOnInit() {

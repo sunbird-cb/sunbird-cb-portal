@@ -50,3 +50,124 @@
 .search_faq_form {
     width: 100%;
 }
+
+.sb-sidebar-menu-mob{
+    list-style-type: none;
+    margin-bottom: 0;
+    height: 100%;
+    display: inline;
+  }
+
+  .openbtn {
+      display: none;
+  }
+
+
+  @media (max-width: 768px) {
+    .sb-sidebar-menu {
+      display: none;
+    }
+    .main_faq_content_box .discuss-right-panel {
+        width: 100%;
+        margin-left: 8px;
+        margin-right: 8px;
+        margin-top: 50px;
+    }
+
+    .main_faq_content_box .discuss-left-panel {
+        display: none;
+    }
+  
+    .openbtn {
+      display: inline;
+      border: none;
+      cursor: pointer;
+      height: 40px;
+      width: 40px;
+      border-radius: 16px;
+      font-size: 22px;
+      background-color: var(--white);
+      box-shadow: 3px 3px 2px 0 rgba(0,0,0,0.1);
+      color:var(--blue);
+      position: absolute;
+      margin-left: 8px;
+      margin-top: 10px;
+    }
+  
+    .overlay-sidebar {
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+      background: rgba(0, 0, 0, .4);
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      position: absolute;
+      display: inline;
+      z-index: 999;
+      transition-duration: .4s;
+      transition-timing-function: cubic-bezier(.25, .8, .25, 1);
+      transition-property: background-color, visibility;
+    }
+  
+    .overlay-sidebar__menu {
+      position: relative;
+      top: 0;
+      height: 100%;
+      width: 15rem;
+      right: 0;
+      z-index: 100000;
+      overflow-y: auto;
+      overflow-x: hidden;
+      background-color: var(--light-gray);
+      color: rgba(0, 0, 0, .87);
+      box-shadow: 0 8px 10px -5px rgba(0, 0, 0, .2), 0 16px 24px 2px rgba(0, 0, 0, .14), 0 6px 30px 5px rgba(0, 0, 0, 1);
+    }
+  
+    .sidebar-menu__content {
+      padding: 0 1rem;
+      height: 100%;
+      margin-top: 20px;
+    }
+  
+    .closebtn {
+      font-size: 2.5rem;
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 1rem;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  
+    .df-sidebar-menu-list {
+      margin-bottom: 0.5rem;
+      position: relative;
+      padding: 0.675rem;
+      font-size: 0.875rem;
+    }
+  
+    .sb-sidebar-menu-mob li {
+      margin-bottom: 0px;
+      padding: 0.75rem 1rem;
+      font-size: 14px;
+      color: #333;
+      cursor: pointer;
+      border-left: 0.125rem solid transparent;
+      cursor: pointer;
+    }
+  
+    .sb-sidebar-menu-mob li.menu-active {
+      background-color: var(--white);
+      font-weight: 700;
+      border-left: 3px solid var(--blue);
+      color:var(--blue);
+      border-bottom: 0px;
+    }
+  
+    .sb-sidebar-menu-mob li:hover {
+      background-color: var(--white);
+      font-weight: 700;
+      color: var(--blue);
+    }
+  }

@@ -64,3 +64,20 @@
     }
   }
 }
+
+@media only screen and (max-width: 1024px) {
+
+  .top_footer_box {
+    padding: 45px 16px!important;
+    
+   
+
+    .top_footer_inner  {
+      width: 100%;
+      max-width: 100%;
+      // div {
+      //   margin-bottom: 16px;
+      // }
+    }
+  }
+}
