@@ -295,7 +295,9 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       }
       this.events.raiseInteractTelemetry(data.event, 'scrom', {
         contentId: this.htmlContent.identifier,
-        contentType: this.htmlContent.contentType,
+        contentType: this.htmlContent.primaryCategory,
+        id: this.htmlContent.identifier,
+        type: this.htmlContent.contentType,
         context: this.htmlContent.context,
         rollup: {
           l1: this.collectionId || '',

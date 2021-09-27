@@ -13,7 +13,7 @@ export class BtnKbComponent implements OnInit {
   @Input() status!: string
   @Input() contentName!: string
   @Input() contentId!: string
-  @Input() contentType!: NsContent.EContentTypes
+  @Input() contentType!: NsContent.EPrimaryCategory
   @Input() forPreview = false
   @HostBinding('id')
   public id = 'kb-content'
@@ -23,7 +23,7 @@ export class BtnKbComponent implements OnInit {
   ngOnInit() {
     this.showBtn =
       this.contentType &&
-      this.contentType !== NsContent.EContentTypes.KNOWLEDGE_BOARD &&
+      this.contentType !== NsContent.EPrimaryCategory.KNOWLEDGE_BOARD &&
       NsContent.KB_SUPPORTED_CONTENT_TYPES.includes(this.contentType) &&
       (this.configSvc.userRoles || new Set<string>()).has('kb-curator')
   }

@@ -21,6 +21,7 @@ const API_END_POINTS = {
   MULTIPLE_CONTENT: `${PROTECTED_SLAG_V8}/content/multiple`,
   CONTENT_SEARCH_V5: `${PROTECTED_SLAG_V8}/content/searchV5`,
   CONTENT_SEARCH_V6: `/apis/proxies/v8/sunbirdigot/read`,
+  CONTENT_SEARCH_RELATED_CBP_V6: `/apis/proxies/v8/sunbirdigot/search`,
   CONTENT_SEARCH_REGION_RECOMMENDATION: `${PROTECTED_SLAG_V8}/content/searchRegionRecommendation`,
   CONTENT_HISTORY: `${PROTECTED_SLAG_V8}/user/history`,
   CONTENT_HISTORYV2: `/apis/proxies/v8/read/content-progres`,
@@ -243,6 +244,10 @@ export class WidgetContentService {
     return this.http.post<NSSearch.ISearchV6ApiResultV2>(API_END_POINTS.CONTENT_SEARCH_V6, req)
   }
 
+  searchRelatedCBPV6(req: NSSearch.ISearchV6RequestV2): Observable<NSSearch.ISearchV6ApiResultV2> {
+    return this.http.post<NSSearch.ISearchV6ApiResultV2>(API_END_POINTS.CONTENT_SEARCH_RELATED_CBP_V6, req)
+  }
+
   fetchContentRating(contentId: string): Observable<{ rating: number }> {
     return this.http.get<{ rating: number }>(`${API_END_POINTS.CONTENT_RATING}/${contentId}`)
   }
@@ -258,16 +263,16 @@ export class WidgetContentService {
       return content
     }
     if (
-      content.contentType === 'Learning Path' &&
+      content.primaryCategory === NsContent.EPrimaryCategory.PROGRAM &&
       !(content.artifactUrl && content.artifactUrl.length)
     ) {
       const child = content.children[0]
       return this.getFirstChildInHierarchy(child)
     }
     if (
-      content.contentType === 'Resource' ||
-      content.contentType === 'Knowledge Artifact' ||
-      content.contentType === 'Learning Path'
+      content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE ||
+      content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT ||
+      content.primaryCategory === NsContent.EPrimaryCategory.PROGRAM
     ) {
       return content
     }

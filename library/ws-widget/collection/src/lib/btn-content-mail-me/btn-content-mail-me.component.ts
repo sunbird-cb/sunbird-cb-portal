@@ -87,8 +87,8 @@ export class BtnContentMailMeComponent extends WidgetBaseComponent
                 'mailMe',
                 undefined,
                 {
-                  contentId: this.widgetData.identifier,
-                  contentType: this.widgetData.contentType,
+                  id: this.widgetData.identifier,
+                  type: this.widgetData.contentType,
                 },
               )
               return this.shareSvc.shareContent(this.widgetData, [], dialogResponse.mailBody, 'attachment').pipe(

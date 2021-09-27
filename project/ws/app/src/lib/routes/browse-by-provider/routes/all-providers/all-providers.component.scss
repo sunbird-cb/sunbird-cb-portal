@@ -11,9 +11,16 @@
     margin-top: 30px;
     .top_card_inner_box {
         align-items: center;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content:space-between;
+        // enable for flex box layout
+        // flex-direction: row;
+        // flex-wrap: wrap;
+        // justify-content:space-between;
+
+        // enable for grid box layout
+        display: grid !important;
+        grid-gap: 32px;
+        grid-template-columns: repeat(auto-fill, 276px);
+        justify-content: flex-start;
     }
 }
 
@@ -29,14 +36,16 @@
     .top_search_box {
         width: 100%;
         overflow: hidden;
+        justify-content: space-between;
        
 
         .search_box_inner {
-            width: 585px;
+            max-width: 585px;
             float: left;
 
             .search_box_main {
                 width: 100%;
+                max-width: 585px;
 
                 mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix{
                     border-top-width: 8px !important;

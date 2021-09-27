@@ -1,19 +1,20 @@
 <div class="provider_right_main_block flex flex-1 flex-col">
 
+    <p class="mat-title margin-top-s margin-bottom-m">{{provider}}</p>
 
     <!--============= explore_popular_topic ===================-->
-    <div class="explore_popular_topic flex flex-col">
+    <!-- <div class="explore_popular_topic flex flex-col">
         <div class="flex flex-col top_head_block">
             <p class="mat-title margin-bottom-m">Top 5 highly rated “Programs” from this provider</p>
         </div>
         <div class="flex">
             Explore popular topics cards here
         </div>
-    </div>
+    </div> -->
 
 
     <!--============= top_cbp_section ===================-->
-    <div class="top_cbp_section flex flex-col">
+    <!-- <div class="top_cbp_section flex flex-col">
         <div class="flex flex-col top_head_block">
             <p class="mat-title margin-bottom-m">Top 5 highly rated “CBPs” from this provider</p>
         </div>
@@ -21,13 +22,13 @@
             Top 5 CBPs picks cards here
         </div>
 
-    </div>
+    </div> -->
 
 
     <div class="all_cbp_box">
         <div class="top_search_box">
-            <form [formGroup]="searchForm">
-                <div class="search_box_inner">
+            <form [formGroup]="searchForm" class="w-full flex flex-1 justify-between">
+                <div class="flex-1 search_box_inner">
                     <div class="flex flex-1 flex-column margin-fix search search_box_main">
                         <mat-form-field appearance="outline" class="autocomplete-form search_form margin-right-s"
                             color="primary">
@@ -41,10 +42,10 @@
                 </div>
 
                 <div class="item_dropdown_box">
-                    <div class="flex flex-1 flex-wrap section-input">
+                    <div class=" section-input">
                         <div class="item">
 
-                            <mat-form-field class="" appearance="outline">
+                            <mat-form-field class="w-full" appearance="outline">
                                 <mat-select #sortBySelect formControlName="sortByControl" i18n-placeholder
                                     placeholder="Sort by">
                                     <mat-option [value]="'asc'" slected>Ascending ( A - Z )</mat-option>
@@ -69,6 +70,7 @@
                     <ng-container *ngFor="let c of cbps">
                         <ws-widget-card-content [widgetData]="{
                             content: c,
+                            stateData: stateData,
                             cardSubType: 'card-wide'
                           }">
                         </ws-widget-card-content>

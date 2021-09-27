@@ -21,7 +21,7 @@ export class PipeContentRoutePipe implements PipeTransform {
         queryParams: this.getQueryParams(),
       }
     }
-    if (content.contentType === 'Channel') {
+    if (content.primaryCategory === NsContent.EPrimaryCategory.CHANNEL) {
       return {
         url: `/${forPreview ? 'author/viewer/channel' : 'page'}/${content.identifier}`,
         queryParams: this.getQueryParams(),

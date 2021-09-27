@@ -16,6 +16,9 @@ import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 export class ProviderAllCbpComponent implements OnInit, OnDestroy {
   private paramSubscription: Subscription | null = null
   public displayLoader!: Observable<boolean>
+  stateData: {
+    param: any, path: any
+  } | undefined
   page = 1
   defaultLimit = 10
   limit = 10
@@ -59,6 +62,7 @@ export class ProviderAllCbpComponent implements OnInit, OnDestroy {
     if(this.activatedRoute.parent){
       this.paramSubscription = this.activatedRoute.parent.params.subscribe(async (params: any) => {
         this.provider = _.get(params, 'provider')
+        this.stateData = { param: this.provider, path: 'all-CBP' }
         this.searchReq.request.filters.source.splice(0,1, this.provider)
         this.getAllCbps()
       })
@@ -82,6 +86,11 @@ export class ProviderAllCbpComponent implements OnInit, OnDestroy {
     const request = req || this.searchReq
     this.browseProviderSvc.fetchSearchData(request).subscribe((res: any) => {
       console.log('res ::', res)
+      if(res.result.count === 0) {
+        this.disableLoadMore = true
+        this.cbps = []
+        this.totalCount = res.result.count
+      }
       if (res && res.result &&  res.result && res.result.content) {
         this.cbps = res.result.content
         this.totalCount = res.result.count

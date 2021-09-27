@@ -84,6 +84,7 @@ import {
   CardContentModule,
   UserAutocompleteModule,
   AvatarPhotoModule,
+  ContentRatingV2DialogModule,
 } from '@sunbird-cb/collection'
 import { AppTocDialogIntroVideoComponent } from './components/app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { CertificationMetaResolver } from './routes/app-toc-certification/resolvers/certification-meta.resolver'
@@ -106,6 +107,7 @@ import { CreateBatchDialogComponent } from './components/create-batch-dialog/cre
 import { AllDiscussionWidgetComponent } from '../discuss/widget/all-discussion-widget/category-widget/all-discussion-widget.component'
 import { TagWidgetComponent } from '../discuss/widget/tag-widget/tag-widget.component'
 import { ActionService } from './services/action.service'
+import { ConnectionNameModule } from '@sunbird-cb/collection/src/lib/_common/connection-name/connection-name.module'
 
 @NgModule({
   declarations: [
@@ -177,6 +179,7 @@ import { ActionService } from './services/action.service'
     BtnContentLikeModule,
     BtnContentFeedbackModule,
     BtnContentFeedbackV2Module,
+    ContentRatingV2DialogModule,
     BtnGoalsModule,
     BtnPlaylistModule,
     BtnMailUserModule,
@@ -197,6 +200,7 @@ import { ActionService } from './services/action.service'
     UserAutocompleteModule,
     AvatarPhotoModule,
     DiscussionUiModule,
+    ConnectionNameModule,
     NgCircleProgressModule.forRoot({}),
   ],
   providers: [

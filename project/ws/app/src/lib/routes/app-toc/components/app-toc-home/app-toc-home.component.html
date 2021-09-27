@@ -95,14 +95,14 @@ TODO: edit option while preview Mode
               actionBtnStatus === 'grant' &&
               !(isMobile && content?.isInIntranet) &&
               !(
-                content?.contentType === 'Course' &&
+                content?.primaryCategory === 'Course' &&
                 content?.children.length === 0 &&
                 !content?.artifactUrl?.length
               ) &&
               !(
-                content?.contentType === 'Course' && !batchData?.enrolled
+                content?.primaryCategory === 'Course' && !batchData?.enrolled
               ) &&
-              !(content?.contentType === 'Resource' && !content?.artifactUrl)
+              !(content?.primaryCategory === 'Learning Resource' && !content?.artifactUrl)
             ">
             <a *ngIf="showStart.show && !isPostAssessment"
               [routerLink]="resumeData ? resumeDataLink?.url : firstResourceLink?.url"
@@ -160,6 +160,13 @@ TODO: edit option while preview Mode
       <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier" [progress]="content?.completionPercentage" [progressType]="'percentage'">
       </ws-widget-content-progress>
     </ng-container>
+    <div *ngIf="resumeData" class="margin-top-l width-1-1">
+      <button mat-stroked-button color="accent" type="button" class="w-full text-left actbutton mat-body-2 blue-border" (click)="openFeedbackDialog(content)">
+        <mat-icon class=" icon-margin mat-icon notranslate material-icons mat-icon-no-color">star_purple500</mat-icon>
+        Rate this 
+        <span class="lowercase"> &nbsp; {{content?.primaryCategory}} </span>
+    </button>
+    </div>
 
     <!-- action buttons -->
     <!-- <div class="margin-top-m margin-bottom-s actbutton ws-mat-black60-text text-left" *ngIf="btnPlaylistConfig">

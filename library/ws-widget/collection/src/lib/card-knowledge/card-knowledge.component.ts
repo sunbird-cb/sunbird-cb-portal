@@ -57,7 +57,7 @@ export class CardKnowledgeComponent implements OnInit, OnDestroy {
       'click',
       NsContent.EContentTypes.KNOWLEDGE_BOARD,
       {
-        contentId: this.widgetData.content.identifier,
+        id: this.widgetData.content.identifier,
       },
     )
   }

@@ -59,6 +59,7 @@ export namespace WsEvents {
     StateChange = 'StateChange',
     HeartBeat = 'HeartBeat',
     Search = 'Search',
+    Feedback = 'Feedback',
   }
 
   export interface IWsEventTelemetry {
@@ -89,6 +90,12 @@ export namespace WsEvents {
     object: any
   }
 
+  export interface IWsEventTelemetryFeedback extends IWsEventTelemetry {
+    type: string
+    subType?: string
+    object: any
+  }
+
   export interface IWsEventTelemetrySearch extends IWsEventTelemetry {
     type: string
     subType?: string
@@ -105,6 +112,7 @@ export namespace WsEvents {
     // mimeType: string
   }
   export type WsEventTelemetryInteract = IWsEvents<IWsEventTelemetryInteract>
+  export type WsEventTelemetryFeedback = IWsEvents<IWsEventTelemetryFeedback>
   export type WsEventTelemetrySearch = IWsEvents<IWsEventTelemetrySearch>
   export type WsEventTelemetryHeartBeat = IWsEvents<IWsEventTelemetryHeartBeat>
 

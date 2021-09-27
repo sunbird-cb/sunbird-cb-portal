@@ -8,6 +8,7 @@ import { NsContent } from '../_services/widget-content.model'
 export interface IWidgetBtnDownload {
   identifier: string
   contentType: NsContent.EContentTypes
+  primaryCategory: NsContent.EPrimaryCategory
   resourceType: string
   mimeType: NsContent.EMimeTypes
   downloadUrl: string
@@ -47,7 +48,7 @@ export class BtnContentDownloadComponent extends WidgetBaseComponent
   private get isContentDownloadable(): boolean {
     if (this.widgetData.identifier) {
       if (
-        this.widgetData.contentType === NsContent.EContentTypes.PROGRAM ||
+        this.widgetData.primaryCategory === NsContent.EPrimaryCategory.PROGRAM ||
         this.widgetData.resourceType === 'Assessment' ||
         this.widgetData.resourceType === 'Competition' ||
         this.widgetData.resourceType === 'Classroom Training' ||
@@ -87,7 +88,9 @@ export class BtnContentDownloadComponent extends WidgetBaseComponent
     this.events.raiseInteractTelemetry('download', 'content', {
       platform: this.platform,
       contentId: this.widgetData.identifier,
-      contentType: this.widgetData.contentType,
+      contentType: this.widgetData.contentType, // cccc
+      id: this.widgetData.identifier,
+      type: this.widgetData.contentType,
     })
   }
 }

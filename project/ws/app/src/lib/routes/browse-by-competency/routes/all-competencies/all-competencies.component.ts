@@ -23,11 +23,13 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
   appliedFilters: any = []
   searchQuery: string = ''
   sortBy:any
-  
+  stateData: {
+    param: any, path: any
+  } | undefined
   // searchCompArea = new FormControl('')
   titles = [
     { title: 'Learn', url: '/page/learn', icon: 'school' },
-    { title: 'All Competencies' , url: 'none', icon: '' },
+    { title: 'All Competencies', url: 'none', icon: '' },
   ]
 
   compentency = 'some-competency'
@@ -40,6 +42,7 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.displayLoader = this.browseCompServ.isLoading()
+    this.stateData = { param: '', path: 'all-competencies' }
     this.searchForm = new FormGroup({
       sortByControl: new FormControl(''),
       searchKey: new FormControl(''),
@@ -86,11 +89,11 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
       { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
     ]
     const filterJson = []
-    if(filters && filters.length) {
+    if (filters && filters.length) {
       const groups = _.groupBy(filters, 'mainType')
       for (let key of Object.keys(groups)) {
-        const  filter = {field: key, values: [''] }
-        const keywords = groups[key].map(x=> x.name)
+        const filter = { field: key, values: [''] }
+        const keywords = groups[key].map(x => x.name)
         filter.values = keywords
         filterJson.push(filter)
       }
@@ -124,7 +127,11 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
     if (content) {
       this.events.raiseInteractTelemetry('click', `card-learnSearch`, {
         contentId: content.identifier || '',
-        contentType: content.contentType,
+        contentType: content.primaryCategory,
+        id: content.identifier || '',
+        type: content.contentType,
+        // contentId: content.identifier || '',
+        // contentType: content.primaryCategory,
         rollup: {},
         ver: content.version,
       })

@@ -101,7 +101,7 @@ export class BtnGoalsSelectionComponent implements OnInit {
   raiseTelemetry(action: 'add' | 'remove', goalId: string, contentId: string) {
     this.eventSvc.raiseInteractTelemetry('goal', `btn-goal-${action}`, {
       goalId,
-      contentId,
+      id: contentId,
     })
   }
 }

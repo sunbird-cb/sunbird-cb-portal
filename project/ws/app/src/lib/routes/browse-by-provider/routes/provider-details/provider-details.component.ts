@@ -21,7 +21,7 @@ export class ProviderDetailsComponent implements OnInit, OnDestroy {
   provider = ''
   titles = [
     { title: 'Learn', url: '/page/learn', icon: 'school' },
-    { title: `All providers`, url: `/app/learn/browse-by/provider/all-providers`, icon: 'scatter_plot' },
+    { title: `All providers`, url: `/app/learn/browse-by/provider/all-providers`, icon: '' },
     // { title: `${this.provider}`, url: `none`, icon: '' },
   ]
   unread = 0
@@ -109,7 +109,7 @@ export class ProviderDetailsComponent implements OnInit, OnDestroy {
           enabled: true,
           uri: '',
         },
-        enabled: true,
+        enabled: false,
         routerLink: `/app/learn/browse-by/provider/${this.provider}/overview`,
       },
       {

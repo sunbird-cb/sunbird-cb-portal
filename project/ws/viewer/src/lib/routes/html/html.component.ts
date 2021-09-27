@@ -35,6 +35,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
   uuid: string | null | undefined = null
   realTimeProgressRequest = {
     content_type: 'Resource',
+    primaryCategory: 'Learning Resource',
     current: ['0'],
     max_size: 0,
     mime_type: NsContent.EMimeTypes.HTML,
@@ -339,7 +340,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
     }
     if (this.htmlData) {
       if (
-        this.htmlData.contentType === NsContent.EContentTypes.COURSE &&
+        this.htmlData.primaryCategory === NsContent.EPrimaryCategory.COURSE &&
         this.htmlData.isExternal
       ) {
         return
@@ -361,6 +362,8 @@ export class HtmlComponent implements OnInit, OnDestroy {
       }
     }
     this.realTimeProgressRequest.content_type = this.htmlData ? this.htmlData.contentType : ''
+    this.realTimeProgressRequest.primaryCategory = this.htmlData ? this.htmlData.primaryCategory : ''
+
     // const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
     //           this.activatedRoute.snapshot.queryParams.collectionId : ''
     //   const batchId = this.activatedRoute.snapshot.queryParams.batchId ?

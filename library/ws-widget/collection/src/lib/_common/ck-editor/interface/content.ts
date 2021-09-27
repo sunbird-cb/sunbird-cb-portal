@@ -1,6 +1,6 @@
 export namespace NSContent {
   export type IContentType =
-    | 'Learning Path'
+    | 'Program'
     | 'Collection'
     | 'Course'
     | 'Resource'

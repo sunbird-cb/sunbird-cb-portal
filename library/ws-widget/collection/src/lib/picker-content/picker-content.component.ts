@@ -29,7 +29,7 @@ import { PickerContentService } from './picker-content.service'
 })
 export class PickerContentComponent extends WidgetBaseComponent
   implements OnInit, OnChanges, OnDestroy, NsWidgetResolver.IWidgetData<IPickerContentData> {
-  allowContentTypes = ['Resource', 'Course', 'Learning Path', 'Module']
+  allowContentTypes = ['Resource', 'Course', 'Program', 'Module']
   @ViewChild('removeSubset', { static: true })
   errorRemoveSubsetMessage!: ElementRef<any>
   @Input() selectionType: 'radio' | 'checkbox' = 'checkbox'
@@ -64,7 +64,7 @@ export class PickerContentComponent extends WidgetBaseComponent
 
   defaultThumbnail = ''
   @Input() searchableContentTypes = NsContent.PLAYLIST_SUPPORTED_CONTENT_TYPES
-  @Input() appContentTypes = NsContent.EContentTypes
+  @Input() appContentTypes = NsContent.EPrimaryCategory
   preSelected = new Set()
   constructor(
     private snackBar: MatSnackBar,
@@ -197,7 +197,7 @@ export class PickerContentComponent extends WidgetBaseComponent
     })
   }
 
-  filterChanged(item: NsContent.EContentTypes, checked: boolean) {
+  filterChanged(item: NsContent.EPrimaryCategory, checked: boolean) {
     if (checked) {
       this.selectedContentTypes.push(item)
     } else {

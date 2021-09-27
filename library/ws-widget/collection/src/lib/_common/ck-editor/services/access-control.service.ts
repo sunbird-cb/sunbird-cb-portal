@@ -65,7 +65,7 @@ export class AccessControlService {
 
   get defaultLogo(): string {
     return this.configService.instanceConfig
-      ? this.configService.instanceConfig.logos.defaultContent
+      ? this.configService.instanceConfig.logos.defaultContent || ''
       : ''
   }
 
@@ -173,7 +173,7 @@ export class AccessControlService {
    * @returns { string } The category
    */
   getCategory(content: NSContent.IContentMeta | ISearchContent): string {
-    return content.category || content.contentType
+    return content.contentType
   }
 
   /**
@@ -187,13 +187,13 @@ export class AccessControlService {
   getCategoryType(content: NSContent.IContentMeta | ISearchContent): string {
     switch (this.getCategory(content)) {
       case 'Resource':
-        return content.categoryType || content.resourceType || 'Resource'
+        return content.primaryCategory || 'Resource'
       case 'Collection':
-        return content.categoryType || 'Module'
+        return content.primaryCategory || 'Module'
       case 'Course':
-        return content.categoryType || 'Course'
-      case 'Learning Path':
-        return content.categoryType || 'Program'
+        return content.primaryCategory || 'Course'
+      case 'Program':
+        return content.primaryCategory || 'Program'
       default:
         return this.getCategory(content)
     }
@@ -211,7 +211,7 @@ export class AccessControlService {
       if (this.getCategory(content) === 'Knowledge Board') {
         return ICON_TYPE.kBoard
       }
-      if (this.getCategory(content) === 'Learning Path') {
+      if (this.getCategory(content) === 'Program') {
         return ICON_TYPE.program
       }
       if (this.getCategory(content) === 'Course') {

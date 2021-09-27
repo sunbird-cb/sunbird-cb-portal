@@ -75,7 +75,7 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
     if (this.content) {
       if (!this.contextId || !this.contextPath) {
         this.contextId = this.content.identifier
-        this.contextPath = this.content.contentType
+        this.contextPath = this.content.primaryCategory
       }
       this.fetchContentParents(this.content.identifier)
       this.populateContentPlayWidget(this.content)
@@ -88,8 +88,8 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
   }
   private populateContentPlayWidget(content: NsContent.IContent) {
     if (
-      content.contentType === NsContent.EContentTypes.RESOURCE ||
-      content.contentType === NsContent.EContentTypes.KNOWLEDGE_ARTIFACT
+      content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE ||
+      content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT
     ) {
       switch (content.mimeType) {
         case NsContent.EMimeTypes.M3U8:

@@ -177,7 +177,7 @@ export class HtmlPickerComponent implements OnInit, OnDestroy {
   raiseInteractTelemetry(action: string, event: string) {
     if (this.identifier) {
       this.eventSvc.raiseInteractTelemetry(action, event, {
-        contentId: this.identifier,
+        id: this.identifier,
       })
     }
     if (event === 'codeinput') {

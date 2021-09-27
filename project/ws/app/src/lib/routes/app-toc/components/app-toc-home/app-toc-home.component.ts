@@ -1,6 +1,13 @@
 import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild } from '@angular/core'
 import { ActivatedRoute, Event, Data, Router, NavigationEnd } from '@angular/router'
-import { NsContent, WidgetContentService, WidgetUserService, viewerRouteGenerator, NsPlaylist, NsGoal, ContentProgressService } from '@sunbird-cb/collection'
+import {
+  NsContent,
+  WidgetContentService,
+  WidgetUserService,
+  viewerRouteGenerator,
+  NsPlaylist,
+  NsGoal,
+} from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, LoggerService, NsPage, TFetchStatus, UtilityService } from '@sunbird-cb/utils'
 import { Subscription, Observable } from 'rxjs'
@@ -17,6 +24,7 @@ import * as dayjs from 'dayjs'
 import _ from 'lodash'
 import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { ActionService } from '../../services/action.service'
+import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -31,7 +39,8 @@ const flattenItems = (items: any[], key: string | number) => {
       flattenedItems = flattenedItems.concat(flattenItems(item[key], key))
     }
     return flattenedItems
-  },                  [])
+    // tslint:disable-next-line
+  }, [])
 }
 @Component({
   selector: 'ws-app-app-toc-home',
@@ -68,7 +77,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     },
   }
   tocConfig: any = null
-  contentTypes = NsContent.EContentTypes
+  primaryCategory = NsContent.EPrimaryCategory
   askAuthorEnabled = true
   trainingLHubEnabled = false
   trainingLHubCount$?: Observable<number>
@@ -117,6 +126,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   isAssessVisible = false
   isPracticeVisible = false
   breadcrumbs: any
+  historyData: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -141,21 +151,11 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private dialog: MatDialog,
     private mobileAppsSvc: MobileAppsService,
     private utilitySvc: UtilityService,
-    private progressSvc: ContentProgressService,
+    // private progressSvc: ContentProgressService,
     private actionSVC: ActionService,
   ) {
-    const historyData = history.state
-    if (historyData && historyData.path === 'Search') {
-     const searchurl = `/app/globalsearch`
-      const  qParam = {
-        q: historyData.param,
-      }
-      // tslint:disable-next-line:max-line-length
-      this.breadcrumbs = { url: 'home', titles: [{ title: 'Search', url: searchurl, queryParams: qParam }, { title: 'Details', url: 'none' }] }
-    } else {
-      // tslint:disable-next-line:max-line-length
-      this.breadcrumbs = { url: 'home', titles: [{ title: 'Learn', url: '/page/learn', icon: 'school' }, { title: 'Details', url: 'none' }] }
-    }
+    this.historyData = history.state
+    this.handleBreadcrumbs()
   }
 
   ngOnInit() {
@@ -236,18 +236,47 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         contentId: this.content.identifier,
         contentName: this.content.name,
         contentType: this.content.contentType,
+        primaryCategory: this.content.primaryCategory,
         mode: 'dialog',
       }
       this.btnGoalsConfig = {
         contentId: this.content.identifier,
         contentName: this.content.name,
         contentType: this.content.contentType,
+        primaryCategory: this.content.primaryCategory,
       }
     }
   }
 
   ngAfterViewInit() {
     // this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
+  }
+
+  handleBreadcrumbs() {
+    if (this.historyData) {
+      if (this.historyData.path === 'Search') {
+        const searchurl = `/app/globalsearch`
+         const  qParam = {
+           q: this.historyData.param,
+         }
+         // tslint:disable-next-line:max-line-length
+         this.breadcrumbs = { url: 'home', titles: [{ title: 'Search', url: searchurl, queryParams: qParam }, { title: 'Details', url: 'none' }] }
+       } else if (this.historyData.path === 'competency-details') {
+         const finalUrl = `/app/learn/browse-by/competency/${this.historyData.param}`
+         // tslint:disable-next-line: max-line-length
+         this.breadcrumbs = { url: 'home', titles: [{ title: this.historyData.param, url: finalUrl }, { title: 'Details', url: 'none' }] }
+       } else if (this.historyData.path === 'all-CBP') {
+         const finalURL = `/app/learn/browse-by/provider/${this.historyData.param}`
+         this.breadcrumbs = { url: 'home', titles: [{ title: `all CBP's`, url: finalURL }, { title: 'Details', url: 'none' }] }
+       } else if (this.historyData.path === 'all-competencies') {
+        const finalUrl = `/app/learn/browse-by/competency/all-competencies`
+        // tslint:disable-next-line: max-line-length
+        this.breadcrumbs = { url: 'home', titles: [{ title: 'all competencies', url: finalUrl }, { title: 'Details', url: 'none' }] }
+       } else {
+         // tslint:disable-next-line:max-line-length
+         this.breadcrumbs = { url: 'home', titles: [{ title: 'Learn', url: '/page/learn', icon: 'school' }, { title: 'Details', url: 'none' }] }
+       }
+    }
   }
   ngOnDestroy() {
     if (this.routeSubscription) {
@@ -286,8 +315,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   get isResource() {
     if (this.content) {
-      const isResource = this.content.contentType === NsContent.EContentTypes.KNOWLEDGE_ARTIFACT ||
-        this.content.contentType === NsContent.EContentTypes.RESOURCE || !this.content.children.length
+      const isResource = this.content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT ||
+        this.content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE || !this.content.children.length
       if (isResource) {
         this.mobileAppsSvc.sendViewerData(this.content)
       }
@@ -345,8 +374,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     if (this.content) {
       this.hasTocStructure = false
-      this.tocStructure.learningModule = this.content.contentType === 'Collection' ? -1 : 0
-      this.tocStructure.course = this.content.contentType === 'Course' ? -1 : 0
+      this.tocStructure.learningModule = this.content.primaryCategory === this.primaryCategory.MODULE ? -1 : 0
+      this.tocStructure.course = this.content.primaryCategory === this.primaryCategory.COURSE ? -1 : 0
       this.tocStructure = this.tocSvc.getTocStructure(this.content, this.tocStructure)
       for (const progType in this.tocStructure) {
         if (this.tocStructure[progType] > 0) {
@@ -419,7 +448,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   private getUserEnrollmentList() {
     // tslint:disable-next-line
-    if (this.content && this.content.identifier && this.content.primaryCategory !== this.contentTypes.COURSE && this.content.primaryCategory !== this.contentTypes.PROGRAMV2) {
+    if (this.content && this.content.identifier && this.content.primaryCategory !== this.primaryCategory.COURSE && this.content.primaryCategory !== this.primaryCategory.PROGRAM) {
       // const collectionId = this.isResource ? '' : this.content.identifier
       return this.getContinueLearningData(this.content.identifier)
     }
@@ -468,7 +497,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           } else {
             // It's understood that user is not already enrolled
             // Fetch the available batches and present to user
-            if (this.content.contentType === this.contentTypes.COURSE || this.content.contentType === this.contentTypes.PROGRAMV2) {
+            if (this.content.primaryCategory === this.primaryCategory.COURSE
+              || this.content.primaryCategory === this.primaryCategory.PROGRAM) {
               this.autoBatchAssign()
             } else {
               this.fetchBatchDetails()
@@ -675,7 +705,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     if (this.content) {
       return (
-        this.content.contentType === NsContent.EContentTypes.COURSE &&
+        this.content.primaryCategory === NsContent.EPrimaryCategory.COURSE &&
         this.content.learningMode === 'Instructor-Led'
       )
     }
@@ -764,9 +794,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   private getLearningUrls() {
     if (this.content) {
       if (!this.forPreview) {
-        this.progressSvc.getProgressFor(this.content.identifier).subscribe(data => {
-          this.contentProgress = data
-        })
+        // this.progressSvc.getProgressFor(this.content.identifier).subscribe(data => {
+        //   this.contentProgress = data
+        // })
       }
       // this.progressSvc.fetchProgressHashContentsId({
       //   "contentIds": [
@@ -936,5 +966,18 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     } catch (e) {
       return true
     }
+  }
+
+  openFeedbackDialog(content: any): void {
+    const dialogRef = this.dialog.open(ContentRatingV2DialogComponent, {
+      // height: '400px',
+      width: '770px',
+      data: { content },
+    })
+    // dialogRef.componentInstance.xyz = this.configSvc
+    dialogRef.afterClosed().subscribe((result: any) => {
+      // tslint:disable-next-line: no-console
+      console.log('result :', result)
+    })
   }
 }

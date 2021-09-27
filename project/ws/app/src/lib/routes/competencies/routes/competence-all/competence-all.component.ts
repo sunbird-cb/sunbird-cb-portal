@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 import { CompetenceViewComponent } from '../../components/competencies-view/competencies-view.component';
 import { MatSnackBar } from '@angular/material';
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
+import {ThemePalette} from '@angular/material/core'
 /* tslint:enable */
 
 @Component({
@@ -27,12 +28,16 @@ export class CompetenceAllComponent implements OnInit {
   successRemoveMsg!: ElementRef
   @ViewChild('searchInput', { static: true }) searchInput!: ElementRef
 
+  color: ThemePalette = 'primary'
+  value = 20
+
   sticky = false
   elementPosition: any
   currentFilter = 'recommended'
   myCompetencies: NSCompetencie.ICompetencie[] = []
   tabsData: NSCompetencie.ICompetenciesTab[]
   allCompetencies!: NSCompetencie.ICompetencie[]
+  watCompetencies: NSCompetencie.ICompetencie[] = []
   fracCompetencies!: NSCompetencie.ICompetencie[]
   filteredCompetencies!: NSCompetencie.ICompetencie[]
   searchJson!: NSCompetencie.ISearch[]
@@ -112,6 +117,7 @@ export class CompetenceAllComponent implements OnInit {
           this.userPosition = (_.isEmpty(designation) || _.isNil(designation)) ? null :  _.get(designation, 'designation')
         }
         this.fetchMapping()
+        this.fetchWatCompetency()
       }
     })
   }
@@ -143,11 +149,26 @@ export class CompetenceAllComponent implements OnInit {
     }
   }
 
-  filter(key: string | 'recommended' | 'added_by_you') {
+  filter(key: string | 'recommended' | 'added_by_you' | 'recommended_from_wat') {
     if (key) {
       this.currentFilter = key
       // this.refreshData()
     }
+  }
+
+  fetchWatCompetency() {
+    const userId = this.configSvc.unMappedUser.id
+    if (_.isEmpty(userId) || _.isNull(userId)) {
+      this.watCompetencies = []
+    }
+
+    this.competencySvc
+      .fetchWatCompetency(userId)
+      .subscribe((response: NSCompetencie.IWatCompetencieResponse) => {
+        if (response.result && response.result.status === 'OK') {
+          this.watCompetencies = response.result.data
+        }
+    })
   }
 
   updateQuery(key: string) {
