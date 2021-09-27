@@ -7,8 +7,7 @@ import {
   viewerRouteGenerator,
   NsPlaylist,
   NsGoal,
-  ContentProgressService,
-  ContentRatingV2DialogComponent } from '@sunbird-cb/collection'
+} from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, LoggerService, NsPage, TFetchStatus, UtilityService } from '@sunbird-cb/utils'
 import { Subscription, Observable } from 'rxjs'
@@ -40,6 +39,7 @@ const flattenItems = (items: any[], key: string | number) => {
       flattenedItems = flattenedItems.concat(flattenItems(item[key], key))
     }
     return flattenedItems
+    // tslint:disable-next-line
   }, [])
 }
 @Component({
