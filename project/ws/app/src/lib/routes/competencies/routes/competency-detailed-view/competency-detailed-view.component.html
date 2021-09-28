@@ -21,17 +21,17 @@
                 </div>
             </div>
 
-            <div class="right_button_box" *ngIf="routeType && routeType === 'ALL'">
+            <div class="right_button_box">
                 <mat-card>
                     <mat-card-content>
-                        <button mat-button color="default" type="button" class="margin-bottom-l small-button blue-border flex-auto-display mat-button" (click)=view(competencyData) *ngIf="isAdded === false">
+                        <button mat-button color="default" type="button" class="small-button blue-border flex-auto-display mat-button" (click)=view(competencyData) *ngIf="isAdded === false">
                         
-                            <span class="ws-mat-default-text" i18n>Add to your competency</span>
+                            <span class="ws-mat-default-text" i18n>Add to your competencies</span>
                         </button>
 
-                        <button mat-button color="default" type="button" class="margin-bottom-l small-button blue-border flex-auto-display mat-button" (click)=view(competencyData) *ngIf="isAdded === true">
+                        <button mat-button color="default" type="button" class="small-button blue-border flex-auto-display mat-button" (click)=view(competencyData) *ngIf="isAdded === true">
                         
-                            <span class="ws-mat-default-text" i18n>Remove from your competency</span>
+                            <span class="ws-mat-default-text" i18n>Remove from your competencies</span>
                         </button>
 
                         <!-- <button mat-button color="default" type="button" class="small-button view-all flex-auto-display mat-button">

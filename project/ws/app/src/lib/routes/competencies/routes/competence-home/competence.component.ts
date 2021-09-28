@@ -65,7 +65,9 @@ export class CompetenceComponent implements OnInit, OnDestroy {
   bindUrl(path: string) {
     if (path) {
       // console.log(path)
-      this.currentRoute = path
+      if (path !== '/app/competencies') {
+        this.currentRoute = path
+      }
       // if (this.titles.length > 1) {
       // this.titles.pop()
       // }

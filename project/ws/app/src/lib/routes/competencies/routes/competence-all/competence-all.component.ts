@@ -142,8 +142,8 @@ export class CompetenceAllComponent implements OnInit {
           if (_.isEmpty(response.responseData)) {
             this.userPosition = null
           }
-          this.allCompetencies = response.responseData
-          this.resetcomp()
+          this.filteredCompetencies = response.responseData
+          // this.resetcomp()
         }
       })
     }
