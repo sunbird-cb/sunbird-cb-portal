@@ -1,4 +1,4 @@
-<div class="container-balanced">
+<div class="container-balanced custom-container-width">
     <div *ngIf="competencyData">
         <div class="flex flex-row top_content_box">
             <div class="left_content_box">
@@ -81,6 +81,10 @@
             </ng-container> -->
             
         </div>
-        <ng-container [wsResolverWidget]="jsonConfigForCBP"></ng-container>
     </div>
+    <div class="margin-m">
+        <ng-template [wsResolverWidget]="jsonConfigForCBP"></ng-template>
+      </div>
+    
 </div>
+
