@@ -6,9 +6,10 @@
   flex: 1;
   height: auto;
   min-width: 346px;
-  min-width: 346px;
+  // min-width: 346px;
   box-shadow: none !important;
   height: fit-content;
+  width:750px;
 
   // width: max-content;
   @include breakpoint-xs {
@@ -133,4 +134,10 @@
 .example-header-image {
   // background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
   background-size: cover;
+}
+
+@media screen and (max-width:768px) {
+  .competency-view-card {
+    width:90%;
+  }
 }
