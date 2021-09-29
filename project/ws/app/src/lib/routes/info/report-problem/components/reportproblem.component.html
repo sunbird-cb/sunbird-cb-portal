@@ -1,0 +1,32 @@
+<!-- <div class="feedback_main_box">
+    <p class="mat-display-1 main_title_text margin-bottom-xl">Report a problem</p>
+    <form>
+        <div>
+            <label class="mat-body-2 margin-bottom-xs">Problem summary</label>
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="Please summarize your concern">
+              </mat-form-field>
+        </div>
+
+        <div>
+            <label class="mat-body-2 margin-bottom-xs">Description</label>
+            <mat-form-field appearance="outline" >
+                <textarea matInput placeholder="Please describe the issue or concern in as much detail as possible" class="report_textarea"></textarea>
+            </mat-form-field>
+        </div>
+
+        <div class="start-modal-buttons">
+            <button class="df-btn df-discard-btn" type="button">Cancel </button>
+            <button class="df-btn df-submit-btn df-btn-disabled"  type="submit" disabled="">
+                <span class="text-white">Send</span>
+            </button>
+        </div>
+
+        
+    </form>
+</div> -->
+
+<div class="feedback_main_box ">
+
+    <lib-micro-survey [apiData]="apiData" [surveyTitle]="surveyTitle"></lib-micro-survey>
+</div>

@@ -12,4 +12,14 @@ export class FaqComponent implements OnInit {
   ngOnInit() {
   }
 
+  showSideMenu: Boolean = true;
+
+  showMenuButton() {
+    this.showSideMenu = this.showSideMenu ? false : true;
+  }
+
+  closeNav() {
+    this.showSideMenu = this.showSideMenu ? false : true;
+  }
+
 }

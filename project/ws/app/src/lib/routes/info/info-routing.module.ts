@@ -7,6 +7,7 @@ import { QuickTourComponent } from './quick-tour/quick-tour.component'
 import { AboutVideoComponent } from './about-video/about-video.component'
 import { FeedbackComponent } from './micro-survey/components/feedback.component'
 import { FaqComponent } from './faq/components/faq.component'
+import { ReportproblemComponent } from './report-problem/components/reportproblem.component'
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
     resolve: {
       pageData: PageResolve,
     },
+  },
+  {
+    path: 'report-problem',
+    component: ReportproblemComponent,
   },
   {
     path: 'tour',
