@@ -6,6 +6,12 @@
     min-height: 400px;
 }
 
+.custom-container-width {
+    width: 1000px;
+    overflow-y: hidden;
+    box-sizing: border-box;
+}
+
 .top_content_box {
     padding-top: 35px;
 }

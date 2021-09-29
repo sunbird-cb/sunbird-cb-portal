@@ -73,8 +73,8 @@
             <div class="flex flex-col items-center justify-center post_image_box">
               <img src="/assets/images/banners/competencies.svg">
               <p class="mat-h4 ws-mat-black60-text">No competencies found</p>
-              <p class="mat-body ws-mat-black60-text">Find competencies to add from.</p>
-              <p class="mat-body"><a class="work_order_link" routerLink="/app/competencies/all">All Competencies</a></p>
+              <p class="mat-body ws-mat-black60-text">Find competencies to add from</p>
+              <p class="mat-body"><a class="work_order_link" routerLink="/app/competencies/all">All competencies</a></p>
               <br />
             </div>
           </div>
@@ -228,11 +228,28 @@
             </div>
           </div>
           <ng-container *ngIf="filteredCompetencies && filteredCompetencies.length > 0">
-            <ng-container *ngFor="let comp of filteredCompetencies | pipeFilterV2:'name': searchInput.value"> <!--  | pipeFilterV2:'name': searchInput.value -->
-              <app-competencies-proficency-card [data]="comp" [isSelected]="comp.id === selectedId"
+            <ng-container *ngFor="let comp of filteredCompetencies | pipeFilterV2:'name': searchInput.value">
+              <mat-card class="margin-bottom-m position-relative mat-card" [ngClass]="{'mat-copmetence': isSelected}" [routerLink]="['/app/competencies/all', comp?.id, comp?.name, 'FRAC']">
+                <a role="button">
+                  <mat-card-content>
+                      <div class="card_inner_content flex flex-row justify-between">
+                          <div class="card_inner_title_box flex-col">
+                              <h4 class="mat-h4">{{comp.name}}</h4>
+                              <p class="mat-body-2 ws-mat-black60-text">{{comp?.additionalProperties?.competencyType || comp?.competencyType}}</p>
+                          </div>
+          
+                          
+                          <div class="flex proficient_level_box">
+                              <p class="deactivate_text mat-body-2">Not enough data</p>
+                          </div>
+                      </div>
+                  </mat-card-content>
+                </a>
+              </mat-card>
+              <!-- <app-competencies-proficency-card [data]="comp" [isSelected]="comp.id === selectedId"
                 (setSelected)="setSelectedCompetency($event)" (addComp)="addCompetency($event)"
                 (delComp)="deleteCompetency($event)">
-              </app-competencies-proficency-card>
+              </app-competencies-proficency-card> -->
             </ng-container>
             <!-- <ng-container *ngIf="filteredCompetencies && filteredCompetencies.length === 0">
               <p>Not found</p>

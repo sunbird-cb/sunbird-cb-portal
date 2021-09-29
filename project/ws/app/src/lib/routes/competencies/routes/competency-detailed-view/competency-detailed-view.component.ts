@@ -102,6 +102,16 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
       if (response) {
         this.myCompetencies = response.profileDetails.competencies || []
         this.currentProfile = response.profileDetails
+        const vc = _.chain(this.myCompetencies)
+        .filter(i => {
+          return i.id === this.competencyId
+        })
+        .first()
+        .value()
+
+        if(vc && ('id' in vc) && !_.isEmpty(vc.id)) {
+          this.isAdded = true;
+        }
       }
     })
   }
