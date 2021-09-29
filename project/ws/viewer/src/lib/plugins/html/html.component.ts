@@ -153,13 +153,13 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         // if (this.htmlContent.status === 'Live') {
         //   this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
         //     // `https://igot.blob.core.windows.net/content/content/html/${this.htmlContent.identifier}-latest/index.html`
-             // tslint:disable-next-line: max-line-length
+        // tslint:disable-next-line: max-line-length
         //     `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-latest/index.html?timestamp='${new Date().getTime()}`
         //   )
         // } else {
         //   this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
         //     // `https://igot.blob.core.windows.net/content/content/html/${this.htmlContent.identifier}-snapshot/index.html`
-             // tslint:disable-next-line: max-line-length
+        // tslint:disable-next-line: max-line-length
         //     `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
         //   )
         // }
@@ -185,13 +185,13 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         }
       } else {
         setTimeout(
-            () => {
-              if (this.htmlContent && this.htmlContent.artifactUrl) {
-                this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.htmlContent.artifactUrl)
-              }
+          () => {
+            if (this.htmlContent && this.htmlContent.artifactUrl) {
+              this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.htmlContent.artifactUrl)
+            }
           },
-            1000,
-          )
+          1000,
+        )
         // this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.htmlContent.artifactUrl)
       }
       // testing purpose only
@@ -287,8 +287,12 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  raiseTelemetry(data: any) {
+  raiseTelemetry(data1: any) {
+    let data: any
     if (this.htmlContent) {
+      if (typeof data1 === 'string' || data1 instanceof String) {
+        data = JSON.parse(data1.toString())
+      }
       /* tslint:disable-next-line */
       if (this.activatedRoute.snapshot.queryParams.collectionId) {
         this.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
@@ -302,7 +306,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         rollup: {
           l1: this.collectionId || '',
         },
-        ver: this.htmlContent.version,
+        ver: `${this.htmlContent.version}${''}`,
         ...data,
       })
     }
