@@ -92,8 +92,7 @@
               "src/fusion-assets/fonts/montserrat/stylesheet.css",
 
               "node_modules/@sunbird-cb/discussions-ui-v8/assets/styles/global.scss",
-              "src/fusion-assets/stylesheet.css",
-
+              
               "src/dashboard-assets/fonts/lato/stylesheet.css",
               "src/dashboard-assets/fonts/montserrat/stylesheet.css"
              

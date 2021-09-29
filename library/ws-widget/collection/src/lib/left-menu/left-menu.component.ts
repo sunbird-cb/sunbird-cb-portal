@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ILeftMenu, IMenu } from './left-menu.model'
-import { defaultImg } from './base64.json'
+// tslint:disable-next-line: import-spacing
+// import  defaultImg  from './base64.json'
 @Component({
   selector: 'ws-widget-left-menu',
   templateUrl: './left-menu.component.html',
@@ -12,6 +13,7 @@ export class LeftMenuComponent extends WidgetBaseComponent
   implements OnInit, OnDestroy, NsWidgetResolver.IWidgetData<ILeftMenu>  {
   @Input() widgetData!: ILeftMenu
   currentFragment = ''
+  defaultImg = '/assets/instances/eagle/app_logos/default.png'
   // @Input() Source
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {
     super()
@@ -29,13 +31,13 @@ export class LeftMenuComponent extends WidgetBaseComponent
     // tslint:disable
     // console.log('defaultImage')
     // tslint:enable
-    return defaultImg
+    return this.defaultImg
   }
   changeToDefaultImg($event: any) {
     // tslint:disable
     // console.log('changeToDefaultImg')
     // tslint:enable
-    $event.target.src = defaultImg
+    $event.target.src = this.defaultImg
   }
   public isLinkActive(url: string, index: number): boolean {
     let returnVal = false
