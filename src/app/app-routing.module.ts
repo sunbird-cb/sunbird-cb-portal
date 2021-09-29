@@ -516,6 +516,17 @@ const routes: Routes = [
     },
   },
   {
+    path: 'public/faq',
+    component: PublicContactComponent,
+    data: {
+      pageType: 'feature',
+      pageKey: 'public-faq',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
+  {
     path: 'public/mobile-app',
     component: MobileAppHomeComponent,
     data: {
