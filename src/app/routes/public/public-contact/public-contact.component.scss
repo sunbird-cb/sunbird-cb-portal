@@ -9,8 +9,15 @@
 h2.main_title_text {
   font-weight: 600!important;
 }
+.full_width_box {
+  width: 100%;
+}
 .flex-4 {
   flex: 4;
+}
+.ws-active-route-menu:before {
+  left:0!important;
+  border-width: 0 0 0 4px;
 }
 .margin-fix {
   @include breakpoint-xs {
