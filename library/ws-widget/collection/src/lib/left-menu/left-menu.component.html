@@ -1,4 +1,4 @@
-<div class="flex flex-1 flex-column pad-l-4r min-wid">
+<div class="flex flex-1 flex-column min-wid">
   <div class="margin-top-xs flex flex-column max-width" *ngIf="widgetData.logo">
     <a href="javascript:void(0)" role="link" i18n class="flex flex-column margin-top-l">
       <img [src]="widgetData.logoPath || defaultImage" [alt]="widgetData.name" class="img"
@@ -20,7 +20,7 @@
         </a>
         <a mat-list-item disableRipple class="flex outline-1" [attr.data-index]="i"
           *ngIf="tab?.enabled && !tab.customRouting && tab.fragment && !tab.queryParams" [routerLink]="'.'"
-          [class.ws-active-route-menu]="isLinkActive(tab.key, i)" [fragment]="tab.fragment? tab.key : ''"
+          [class.ws-active-discuss-route]="isLinkActive(tab.key, i)" [fragment]="tab.fragment? tab.key : ''"
           queryParamsHandling="preserve">
           <span class="padding-left-xs">{{tab?.name}}</span>
         </a>

@@ -1,11 +1,13 @@
+<div class="box w-full">
+  <ws-widget-btn-page-back
+    [widgetData]="{ url: 'home',titles:[{title:'Frequently asked questions',url:'none'}] }" >
+  </ws-widget-btn-page-back>
+</div>
 <div class="container-balanced">
+
   <div class="flex flex-1 custom">
     <div class="flex-3">
-      <div class="flex flex-1 margin-left-xl">
-        <ws-widget-btn-page-back
-          [widgetData]="{ url: 'home',titles:[{title:'frequently asked questions',url:'none'}] }">
-        </ws-widget-btn-page-back>
-      </div>
+     
       <div class="flex flex-4 flex-column">
         <div class="flex flex-1 custom">
           <div class="flex-1" style="position: relative;">
@@ -14,27 +16,27 @@
             </div>
           </div>
           <div class="flex-3">
-            <div class="contact-info ws-mat-primary-lite-background"
+            <div class="contact-info margin-top-m ws-mat-primary-lite-background"
               *ngIf="contactPage.title || contactPage.description">
-              <h2 class="flex flex-middle flex-center mat-h2" *ngIf="contactPage.title">
-                <mat-icon>contact_support</mat-icon>
-                <span>
+              <h2 class="flex mat-display-1 main_title_text margin-bottom-xl" *ngIf="contactPage.title">
+                <!-- <mat-icon>contact_support</mat-icon> -->
+               
                   {{contactPage.title}}
-                </span>
+               
               </h2>
 
-              <p class="text-justify py-4" *ngIf="contactPage.description">
+              <!-- <p class="text-justify py-4" *ngIf="contactPage.description">
                 {{contactPage.description}}
-              </p>
+              </p> -->
             </div>
 
             <div class="faq-img-section flex flex-wrap flex-between items-stretch"
               *ngIf="contactPage.help && contactPage.help.length > 0">
               <ng-container *ngFor="let chelp of contactPage.help">
-                <div [attr.id]="chelp.fragment" class="info-section" [ngClass]="{ 'width-1-1': true}">
+                <div [attr.id]="chelp.fragment" class="info-section margin-bottom-xl" [ngClass]="{ 'width-1-1': true}">
                   <h3 class="flex flex-middle mat-h3">
-                    <mat-icon *ngIf="chelp.icon">{{ chelp.icon}}</mat-icon>
-                    <span class="padding-left-xs ws-mat-primary-text font-bold">{{chelp.title}}
+                    <!-- <mat-icon *ngIf="chelp.icon">{{ chelp.icon}}</mat-icon> -->
+                    <span class="mat-title">{{chelp.title}}
                     </span>
                   </h3>
                   <mat-accordion>
@@ -42,7 +44,7 @@
                       *ngFor="let helpContent of chelp.contents">
                       <mat-expansion-panel-header>
                         <mat-panel-description>
-                          <p>{{helpContent.heading}}</p>
+                          <p class="">{{helpContent.heading}}</p>
                         </mat-panel-description>
                       </mat-expansion-panel-header>
                       <p [innerHTML]="helpContent.value | pipeSafeSanitizer: 'html'">
