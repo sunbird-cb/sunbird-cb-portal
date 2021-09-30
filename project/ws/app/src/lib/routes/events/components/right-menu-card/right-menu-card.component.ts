@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core'
-import * as moment from 'moment'
+import moment from 'moment'
 // import { ActivatedRoute } from '@angular/router'
 // import { ConfigurationsService } from '@ws-widget/utils'
 // import { NSProfileDataV2 } from '../../models/profile-v2.model'

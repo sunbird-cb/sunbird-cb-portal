@@ -8,7 +8,7 @@ import {
   MatIconModule,
   MatExpansionModule,
 } from '@angular/material'
-import { BtnPageBackModule } from '@sunbird-cb/collection'
+import { BtnPageBackModule, LeftMenuModule } from '@sunbird-cb/collection'
 import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 
 @NgModule({
@@ -22,6 +22,7 @@ import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
     MatIconModule,
     MatExpansionModule,
     PipeSafeSanitizerModule,
+    LeftMenuModule,
   ],
   exports: [PublicContactComponent],
 })

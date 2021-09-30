@@ -1,5 +1,49 @@
-@import 'ws-vars';
-@import 'ws-common';
+@import "ws-vars";
+@import "ws-common";
+
+.container-balanced {
+  max-width: 99%;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+.flex-4 {
+  flex: 4;
+}
+.margin-fix {
+  @include breakpoint-xs {
+    margin: 0 $size-l 0 $size-l;
+  }
+
+  @include breakpoint-s {
+    margin: 0 $size-l 0 $size-l;
+  }
+}
+.custom {
+
+  @include breakpoint-xs {
+    flex-direction: column;
+  }
+
+  @include breakpoint-s {
+    flex-direction: column;
+  }
+}
+.flex-3 {
+  flex: 3;
+}
+.mob {
+  @include breakpoint-xs {
+    bottom: 0 !important;
+    position: unset !important;
+  }
+}
+.sticky {
+  position: sticky;
+  top: calc(#{$mat-toolbar-gt-xs});
+  overflow: hidden;
+  // z-index: 10;
+  // width: 100%;
+}
 .page-title {
   margin-bottom: $size-xl;
 }

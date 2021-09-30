@@ -17,7 +17,7 @@ import {
 import { BtnPageBackNavModule } from '@sunbird-cb/collection'
 import { HorizontalScrollerModule, PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
-import { ReportproblemComponent } from './components/reportproblem.component';
+import { ReportproblemComponent } from './components/reportproblem.component'
 
 import { MicroSurveyModule } from '@sunbird-cb/micro-surveys'
 
@@ -40,8 +40,8 @@ import { MicroSurveyModule } from '@sunbird-cb/micro-surveys'
     MatSidenavModule,
 
     MatFormFieldModule,
-    MatInputModule, 
-    MicroSurveyModule
+    MatInputModule,
+    MicroSurveyModule,
   ],
   exports: [ReportproblemComponent],
 })
