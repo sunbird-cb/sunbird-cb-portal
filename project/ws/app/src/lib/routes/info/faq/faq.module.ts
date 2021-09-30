@@ -37,10 +37,9 @@ import { FaqComponent } from './components/faq.component'
     MatSidenavModule,
 
     MatFormFieldModule,
-    MatInputModule, 
+    MatInputModule,
   ],
   exports: [FaqComponent],
 })
 
 export class FaqModule { }
-

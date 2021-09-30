@@ -11,6 +11,15 @@ import { ReportproblemModule } from './report-problem/reprotproblem.module'
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, InfoRoutingModule, AboutModule, ContactModule, QuickTourModule, AboutVideoModule, FeedBackModule, FaqModule, ReportproblemModule],
+  imports: [
+    CommonModule,
+    InfoRoutingModule,
+    AboutModule,
+    ContactModule,
+    QuickTourModule,
+    AboutVideoModule,
+    FeedBackModule,
+    FaqModule,
+    ReportproblemModule],
 })
 export class InfoModule { }
