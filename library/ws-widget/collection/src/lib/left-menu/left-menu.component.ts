@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ILeftMenu, IMenu } from './left-menu.model'
-
+// tslint:disable-next-line: import-spacing
+// import  defaultImg  from './base64.json'
 @Component({
   selector: 'ws-widget-left-menu',
   templateUrl: './left-menu.component.html',
@@ -11,6 +12,8 @@ import { ILeftMenu, IMenu } from './left-menu.model'
 export class LeftMenuComponent extends WidgetBaseComponent
   implements OnInit, OnDestroy, NsWidgetResolver.IWidgetData<ILeftMenu>  {
   @Input() widgetData!: ILeftMenu
+  currentFragment = ''
+  defaultImg = '/assets/instances/eagle/app_logos/default.png'
   // @Input() Source
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {
     super()
@@ -20,21 +23,37 @@ export class LeftMenuComponent extends WidgetBaseComponent
   }
 
   ngOnInit(): void {
-
+    this.activatedRoute.fragment.subscribe((fragment: string) => {
+      this.currentFragment = fragment
+    })
   }
-
+  get defaultImage() {
+    // tslint:disable
+    // console.log('defaultImage')
+    // tslint:enable
+    return this.defaultImg
+  }
   changeToDefaultImg($event: any) {
-    $event.target.src = '/assets/instances/eagle/app_logos/default.png'
+    // tslint:disable
+    // console.log('changeToDefaultImg')
+    // tslint:enable
+    $event.target.src = this.defaultImg
   }
-  public isLinkActive(url?: string, index?: number): boolean {
+  public isLinkActive(url: string, index: number): boolean {
     let returnVal = false
-    if (url && index) {
-      returnVal = (this.activatedRoute.snapshot.fragment === url)
-    } else if (index === 0) {
-      returnVal = true
+    if (this.currentFragment) {
+      if (url) {
+        returnVal = (this.activatedRoute.snapshot.fragment === url)
+        // else if (index === 0 && this.widgetData.menus) {
+        //   returnVal = true
+        // }
+      } else {
+        returnVal = false
+      }
     } else {
-      returnVal = false
+      returnVal = !!(this.widgetData.menus[index].isDefaultSelected)
     }
+
     return returnVal
   }
   public isLinkActive2(url?: string): boolean {

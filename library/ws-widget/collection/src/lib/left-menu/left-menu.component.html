@@ -1,8 +1,9 @@
 <div class="flex flex-1 flex-column pad-l-4r min-wid">
   <div class="margin-top-xs flex flex-column max-width" *ngIf="widgetData.logo">
     <a href="javascript:void(0)" role="link" i18n class="flex flex-column margin-top-l">
-      <img [src]="widgetData.logoPath" [alt]="widgetData.name" class="img" (error)="changeToDefaultImg($event)" />
-      <span i18n class="mat-subheading-2 margin-top-m padding-right-m">
+      <img [src]="widgetData.logoPath || defaultImage" [alt]="widgetData.name" class="img"
+        (error)="changeToDefaultImg($event)" />
+      <span i18n class="mat-subheading-2 margin-top-m">
         <!-- this will be dynamic -->
         {{widgetData.name}}
       </span>
