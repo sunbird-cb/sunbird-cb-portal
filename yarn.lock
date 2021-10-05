@@ -1173,17 +1173,24 @@
   resolved "https://registry.yarnpkg.com/@sunbird-cb/design-system/-/design-system-0.0.2.tgz#54793a7d5c5b6942319b6c1f3e4f63ef60548545"
   integrity sha512-oTZMfeNu+fi2muVbZUN9vw0mF28e/MvqFgYzgrLJ6vvw3JDxW3814U00x4Fym7Rm0tYc7vpckDFGSKXR3EFMaQ==
 
-"@sunbird-cb/discussions-ui-v8@^2.0.55":
-  version "2.0.56"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/discussions-ui-v8/-/discussions-ui-v8-2.0.56.tgz#1df55ce31281e5fde10bf0b050f6881e75e63972"
-  integrity sha512-vgtLSKR+KdXYgsPOThw+31O7jxePK4j268aUYNFvdjPwuia7vLCMUTCioWC7nMfzyhn38pwu8dbTumbz2+yI0A==
+"@sunbird-cb/discussions-ui-v8@^2.0.57":
+  version "2.0.61"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/discussions-ui-v8/-/discussions-ui-v8-2.0.61.tgz#07e7572dcd318304c3962c2727e7814fd358bb86"
+  integrity sha512-+gKWlX+mHF7qj9KXliSDxz9/FhfNqKX67oZr//LgjbilmMpCnBO2MWBv6LrhfqGoVTR7ZFwNhCcyGpLhTPnOrw==
   dependencies:
     tslib "^1.9.0"
 
-"@sunbird-cb/micro-surveys@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/micro-surveys/-/micro-surveys-1.0.4.tgz#cd391794f00202f458a123ed980f8b77041a72fe"
-  integrity sha512-i8ATo/i6KJss+bUK4BxXHyEJk+Ar8fa6aJWMtHMabn7UsuQyupzoXCRsnoq8qSAenVLySzQAhWpJul7jEPkiUA==
+"@sunbird-cb/micro-surveys@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/micro-surveys/-/micro-surveys-1.0.8.tgz#5afd6e0eea43264af117b9c6f551b505f57d9e16"
+  integrity sha512-GlLBU8++qFN011o1W1I404vLJJK1SOadBOvBjq+Oi0GPg5VSAty7/veFESEiVj3o0+G2OkUcbrxbn5Av5Iuv9A==
+  dependencies:
+    tslib "^1.9.0"
+
+"@sunbird-cb/rain-dashboards@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/rain-dashboards/-/rain-dashboards-0.1.7.tgz#09e790120729a822e662fbf073560dca1002fd4a"
+  integrity sha512-tWt3JdjlSoeTtTUr3x5IjTVtPpvPXyp3htq515Xi4SVIQr1GfSW0ntfCTSC5T7K8LraC8/Ldqh/moyvjRCXXpA==
   dependencies:
     tslib "^1.9.0"
 
@@ -1198,6 +1205,13 @@
   version "2.9.32"
   resolved "https://registry.yarnpkg.com/@types/chart.js/-/chart.js-2.9.32.tgz#b17d9a8c41ad348183a2ce041ebdeef892998251"
   integrity sha512-d45JiRQwEOlZiKwukjqmqpbqbYzUX2yrXdH9qVn6kXpPDsTYCo6YbfFOlnUaJ8S/DhJwbBJiLsMjKpW5oP8B2A==
+  dependencies:
+    moment "^2.10.2"
+
+"@types/chart.js@^2.9.24":
+  version "2.9.34"
+  resolved "https://registry.yarnpkg.com/@types/chart.js/-/chart.js-2.9.34.tgz#d41fb6b74b72a56bac70255bb4ed087386b66ed6"
+  integrity sha512-CtZVk+kh1IN67dv+fB0CWmCLCRrDJgqOj15qPic2B1VCMovNO6B7Vhf/TgPpNscjhAL1j+qUntDMWb9A4ZmPTg==
   dependencies:
     moment "^2.10.2"
 
@@ -4090,6 +4104,11 @@ dom-serialize@^2.2.0:
     extend "^3.0.0"
     void-elements "^2.0.0"
 
+dom-to-image@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/dom-to-image/-/dom-to-image-2.6.0.tgz#8a503608088c87b1c22f9034ae032e1898955867"
+  integrity sha1-ilA2CAiMh7HCL5A0rgMuGJiVWGc=
+
 dom-walk@^0.1.0:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/dom-walk/-/dom-walk-0.1.2.tgz#0c548bef048f4d1f2a97249002236060daa3fd84"
@@ -6634,7 +6653,7 @@ locate-path@^6.0.0:
   dependencies:
     p-locate "^5.0.0"
 
-lodash-es@^4.17.21:
+lodash-es@^4.17.15, lodash-es@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
   integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
@@ -7311,6 +7330,15 @@ ng2-ace-editor@^0.3.9:
   dependencies:
     ace-builds "^1.4.2"
     brace "^0.11.1"
+
+ng2-charts@^2.4.3:
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/ng2-charts/-/ng2-charts-2.4.3.tgz#e1de6cb55fe04248a5f92d342cf6423507fa532d"
+  integrity sha512-tPrhHSS2DfVyipXQ0gykOPc8zFNnj2b7sAebUVty392vHnEGYCwsP6YbFfpr1iXu4yBSRm4Gt5lffR5w0uyYSw==
+  dependencies:
+    "@types/chart.js" "^2.9.24"
+    lodash-es "^4.17.15"
+    tslib "^2.0.0"
 
 ng2-ckeditor@1.2.6:
   version "1.2.6"
@@ -10220,6 +10248,13 @@ toidentifier@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/toidentifier/-/toidentifier-1.0.0.tgz#7e1be3470f1e77948bc43d94a3c8f4d7752ba553"
   integrity sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==
+
+topojson-client@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/topojson-client/-/topojson-client-3.1.0.tgz#22e8b1ed08a2b922feeb4af6f53b6ef09a467b99"
+  integrity sha512-605uxS6bcYxGXw9qi62XyrV6Q3xwbndjachmNxu8HWTtVPxZfEJN9fd/SZS1Q54Sn2y0TMyMxFj/cJINqGHrKw==
+  dependencies:
+    commander "2"
 
 totalist@^1.0.0:
   version "1.1.0"
