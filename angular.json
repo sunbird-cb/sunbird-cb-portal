@@ -38,10 +38,14 @@
                 "input": "src/styles/libraries.scss",
                 "bundleName": "libraries"
               },
-              "node_modules/material-icons/iconfont/material-icons.scss",
-              "src/styles/mat-typography.scss",
-              "src/styles/styles.scss",
-              "node_modules/shepherd.js/dist/css/shepherd.css",
+              "./node_modules/material-icons/iconfont/material-icons.scss",
+              "./src/styles/mat-typography.scss",
+              "./src/styles/styles.scss",
+              "./node_modules/shepherd.js/dist/css/shepherd.css",
+              "./src/styles/styles.css",
+              "./node_modules/@project-sunbird/sb-styles/assets/_styles.scss",
+              "./quml-carousel.css",
+              "./node_modules/katex/dist/katex.min.css",
               {
                 "input": "src/themes/theme-deep-purple.scss",
                 "bundleName": "theme-deep-purple",
@@ -89,12 +93,13 @@
               },
               "node_modules/pdfjs-dist/web/pdf_viewer.css",
               "src/fusion-assets/fonts/lato/stylesheet.css",
-              "src/fusion-assets/fonts/montserrat/stylesheet.css",
-              "src/dashboard-assets/fonts/lato/stylesheet.css",
-              "src/dashboard-assets/fonts/montserrat/stylesheet.css",
+              "./src/fusion-assets/fonts/montserrat/stylesheet.css",
+              "./src/dashboard-assets/fonts/lato/stylesheet.css",
+              "./src/dashboard-assets/fonts/montserrat/stylesheet.css",
               "node_modules/@sunbird-cb/discussions-ui-v8/assets/styles/global.scss"
             ],
             "scripts": [
+              "node_modules/katex/dist/katex.min.js",
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/shepherd.js/dist/js/shepherd.min.js",
               "node_modules/@project-sunbird/telemetry-sdk/index.js"
@@ -313,7 +318,24 @@
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "project/ws/app/tsconfig.lib.json",
-            "project": "project/ws/app/ng-package.json"
+            "project": "project/ws/app/ng-package.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "node_modules/@project-sunbird/sunbird-quml-player-v8/lib/assets/",
+                "output": "/assets/"
+              }
+            ],
+            "styles": [
+              "./node_modules/@project-sunbird/sb-styles/assets/_styles.scss",
+              "./quml-carousel.css",
+              "./node_modules/katex/dist/katex.min.css"
+            ],
+            "scripts": [
+              "./node_modules/@project-sunbird/telemetry-sdk/index.js",
+              "./node_modules/katex/dist/katex.min.js",
+              "./node_modules/jquery/dist/jquery.min.js"
+            ]
           }
         },
         "test": {

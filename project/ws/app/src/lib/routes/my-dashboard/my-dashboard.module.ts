@@ -3,11 +3,15 @@ import { NgModule } from '@angular/core'
 import { MatButtonModule, MatCardModule, MatIconModule, MatToolbarModule } from '@angular/material'
 import { BreadcrumbsOrgModule } from '@sunbird-cb/collection'
 import { MyDashboardHomeComponent } from './components/my-dashboard-home/my-dashboard-home.component'
+import { QumlComponent } from './components/quml/quml.component'
 import { MyDashboardRoutingModule } from './my-dashboard-routing.module'
 import { RainDashboardsModule } from '@sunbird-cb/rain-dashboards'
+// import { CarouselModule } from 'ngx-bootstrap/carousel'
+import { QuestionCursorImplementationService } from './services/question-cursor-implementation.service'
+import { QumlLibraryModule, QuestionCursor } from '@project-sunbird/sunbird-quml-player-v8'
 
 @NgModule({
-  declarations: [MyDashboardHomeComponent],
+  declarations: [MyDashboardHomeComponent, QumlComponent],
   imports: [
     CommonModule,
     MyDashboardRoutingModule,
@@ -17,6 +21,12 @@ import { RainDashboardsModule } from '@sunbird-cb/rain-dashboards'
     MatToolbarModule,
     BreadcrumbsOrgModule,
     RainDashboardsModule,
-  ], exports: [MyDashboardHomeComponent],
+    QumlLibraryModule,
+  ],
+  providers: [{
+    provide: QuestionCursor,
+    useClass: QuestionCursorImplementationService,
+  }],
+  exports: [MyDashboardHomeComponent, QumlComponent],
 })
 export class MyDashboardModule { }
