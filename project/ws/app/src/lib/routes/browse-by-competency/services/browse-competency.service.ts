@@ -7,6 +7,7 @@ const API_ENDPOINTS = {
   SEARCH_V6: `/apis/proxies/v8/sunbirdigot/search`,
   GET_COMPETENCY_AREA: `/apis/protected/v8/frac/getAllNodes/competencyarea`,
   SEARCH_COMPETENCY: `apis/protected/v8/frac/searchNodes`,
+  SEARCH_COMPETENCY_V2 : 'apis/proxies/v8/searchBy/competency'
 }
 
 @Injectable({
@@ -39,6 +40,12 @@ export class BrowseCompetencyService {
   searchCompetency(searchData: any): Observable<any> {
     this.displayLoader$.next(true)
     return this.http.post<any>(API_ENDPOINTS.SEARCH_COMPETENCY, searchData)
+    .pipe(finalize(() => this.displayLoader$.next(false)))
+  }
+
+  searchCompetencyV2(): Observable<any> {
+    this.displayLoader$.next(true)
+    return this.http.get<any>(API_ENDPOINTS.SEARCH_COMPETENCY_V2)
     .pipe(finalize(() => this.displayLoader$.next(false)))
   }
 

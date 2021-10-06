@@ -38,4 +38,15 @@ export namespace NSBrowseCompetency {
     statusInfo: IWebResponse
   }
 
+  export interface ICompetencieResponseV2 {
+    competencyArea: string
+    competencyType: string
+    contentCount: number
+    description: string
+    id: string
+    name: string
+    source: string
+    status: string
+    type: string | null
+  }
 }

@@ -18,6 +18,7 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
   public displayLoader!: Observable<boolean>
   defaultThumbnail = ''
   allCompetencies!: NSBrowseCompetency.ICompetencie[]
+  allCompetencieV2!: NSBrowseCompetency.ICompetencieResponseV2[]
   competencyAreas: any
   searchForm: FormGroup | undefined
   appliedFilters: any = []
@@ -81,34 +82,41 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
     }
   }
 
-  searchCompetency(searchQuery: any, filters?: any) {
-    const searchJson = [
-      { type: 'COMPETENCY', field: 'name', keyword: searchQuery ? searchQuery : '' },
-      { type: 'COMPETENCY', field: 'description', keyword: searchQuery ? searchQuery : '' },
-      // { type: 'COMPETENCY', field: 'competencyType', keyword: 'Behavioural' },
-      { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
-    ]
-    const filterJson = []
-    if (filters && filters.length) {
-      const groups = _.groupBy(filters, 'mainType')
-      for (let key of Object.keys(groups)) {
-        const filter = { field: key, values: [''] }
-        const keywords = groups[key].map(x => x.name)
-        filter.values = keywords
-        filterJson.push(filter)
-      }
-    }
-    const req = {
-      searches: searchJson,
-      filter: filterJson,
-      sort: this.sortBy
-    }
+  searchCompetency(_searchQuery: any, _filters?: any) {
+    // const searchJson = [
+    //   { type: 'COMPETENCY', field: 'name', keyword: searchQuery ? searchQuery : '' },
+    //   { type: 'COMPETENCY', field: 'description', keyword: searchQuery ? searchQuery : '' },
+    //   // { type: 'COMPETENCY', field: 'competencyType', keyword: 'Behavioural' },
+    //   { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
+    // ]
+    // const filterJson = []
+    // if (filters && filters.length) {
+    //   const groups = _.groupBy(filters, 'mainType')
+    //   for (let key of Object.keys(groups)) {
+    //     const filter = { field: key, values: [''] }
+    //     const keywords = groups[key].map(x => x.name)
+    //     filter.values = keywords
+    //     filterJson.push(filter)
+    //   }
+    // }
+    // const req = {
+    //   searches: searchJson,
+    //   filter: filterJson,
+    //   sort: this.sortBy
+    // }
+    // this.browseCompServ
+    //   .searchCompetency(req)
+    //   .subscribe((reponse: NSBrowseCompetency.ICompetencieResponse) => {
+    //     if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
+    //       // this.allCompetencies = reponse.responseData
+    //     }
+    //   })
     this.browseCompServ
-      .searchCompetency(req)
-      .subscribe((reponse: NSBrowseCompetency.ICompetencieResponse) => {
-        if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
-          this.allCompetencies = reponse.responseData
-        }
+      .searchCompetencyV2()
+      .subscribe((reponse: NSBrowseCompetency.ICompetencieResponseV2[]) => {
+        console.log('reponse : ', reponse)
+        this.allCompetencieV2 = reponse
+
       })
   }
 

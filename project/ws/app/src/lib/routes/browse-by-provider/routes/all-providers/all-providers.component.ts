@@ -61,18 +61,22 @@ export class AllProvidersComponent implements OnInit {
     this.getAllProviders()
   }
 
-  getAllProviders(req?: any) {
-    const request = req || this.getAllProvidersReq
-    this.browseProviderSvc.fetchAllProviders(request).subscribe(res => {
-      if (res && res.result &&  res.result.response && res.result.response.content) {
-        this.allProviders = res.result.response.content
-        this.totalCount = res.result.response.count
-        if ((this.page * this.defaultLimit) >= this.totalCount) {
-          this.disableLoadMore = true
-        } else {
-          this.disableLoadMore = false
-        }
-      }
+  getAllProviders(_req?: any) {
+    // const request = req || this.getAllProvidersReq
+    // this.browseProviderSvc.fetchAllProviders(request).subscribe(res => {
+    //   if (res && res.result &&  res.result.response && res.result.response.content) {
+    //     this.allProviders = res.result.response.content
+    //     this.totalCount = res.result.response.count
+    //     if ((this.page * this.defaultLimit) >= this.totalCount) {
+    //       this.disableLoadMore = true
+    //     } else {
+    //       this.disableLoadMore = false
+    //     }
+    //   }
+    // })
+    this.browseProviderSvc.fetchAllProvidersV2().subscribe(res => {
+      console.log('res : ', res)
+      this.allProviders = res
     })
   }
 

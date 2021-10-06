@@ -4,67 +4,11 @@
   <div class="top_card_container">
     <h2 class="mat-h1 margin-bottom-m inline-block "> Popular competencies</h2>
     <div class="top_card_inner_box flex">
-      <ng-container *ngFor="let comp of allCompetencies | slice:0:8; let i=index">
+      <ng-container *ngFor="let comp of allCompetencieV2 | slice:0:8; let i=index">
         <ws-app-popular-competency-card [competency]="comp"></ws-app-popular-competency-card>
       </ng-container>
-      
-      <!-- <div class="card-box card_gradient bg_color_blue">
-        <img src="fusion-assets/images/competency.svg">
-        <div class="card_text_box">
-          <p class="mat-subheading-1 text-white margin-bottom-m">Vigilance and planning</p>
-          <p class="mat-body-2 text-white">Domain</p>
-        </div>
-      </div>
-
-      <div class="card-box card_gradient bg_color_blue">
-        <img src="fusion-assets/images/competency.svg">
-        <div class="card_text_box">
-          <p class="mat-subheading-1 text-white margin-bottom-m">Competency which has a long label</p>
-          <p class="mat-body-2 text-white">Domain</p>
-        </div>
-      </div>
-
-      <div class="card-box card_gradient bg_color_blue">
-        <img src="fusion-assets/images/competency.svg">
-        <div class="card_text_box">
-          <p class="mat-subheading-1 text-white margin-bottom-m">Competency which has a long label - time</p>
-          <p class="mat-body-2 text-white">Domain</p>
-        </div>
-      </div>
-
-      <div class="card-box card_gradient bg_color_blue">
-        <img src="fusion-assets/images/competency.svg">
-        <div class="card_text_box">
-          <p class="mat-subheading-1 text-white margin-bottom-m">Communication</p>
-          <p class="mat-body-2 text-white">Behavioural</p>
-        </div>
-      </div>
-
-      <div class="card-box card_gradient bg_color_blue">
-        <img src="fusion-assets/images/competency.svg">
-        <div class="card_text_box">
-          <p class="mat-subheading-1 text-white margin-bottom-m">Vigilance and planning</p>
-          <p class="mat-body-2 text-white">Domain</p>
-        </div>
-      </div>
-
-      <div class="card-box card_gradient bg_color_blue">
-        <img src="fusion-assets/images/competency.svg">
-        <div class="card_text_box">
-          <p class="mat-subheading-1 text-white margin-bottom-m">Competency which has a long label </p>
-          <p class="mat-body-2 text-white">Domain</p>
-        </div>
-      </div>
-
-      <div class="card-box card_gradient bg_color_blue">
-        <img src="fusion-assets/images/competency.svg">
-        <div class="card_text_box">
-          <p class="mat-subheading-1 text-white margin-bottom-m">Competency which has a long label - time</p>
-          <p class="mat-body-2 text-white">Domain</p>
-        </div>
-      </div> -->
     </div>
-    <h4 *ngIf="allCompetencies?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
+    <h4 *ngIf="allCompetencieV2?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
       No competencies found! 
    </h4>
     <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
@@ -127,10 +71,10 @@
                   <mat-spinner [diameter]="30"></mat-spinner>
               </div>
               <div>
-                <ng-container *ngFor="let comp of allCompetencies">
+                <ng-container *ngFor="let comp of allCompetencieV2">
                   <ws-app-competency-card [competency]="comp" [stateData]="stateData"></ws-app-competency-card>
                 </ng-container>
-                <h4 *ngIf="allCompetencies?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
+                <h4 *ngIf="allCompetencieV2?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
                    No competencies found! 
                 </h4>
               </div>

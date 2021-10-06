@@ -6,6 +6,7 @@ import { finalize } from 'rxjs/operators'
 const API_ENDPOINTS = {
   SEARCH_V6: `/apis/proxies/v8/sunbirdigot/search`,
   ALL_PROVIDERS: `/apis/proxies/v8/org/v1/search`,
+  ALL_PROVIDERS_V2: `/apis/proxies/v8/searchBy/provider`,
 }
 
 @Injectable({
@@ -33,6 +34,12 @@ export class BrowseProviderService {
   fetchAllProviders(request: any): Observable<any> {
     this.displayLoader$.next(true)
     return this.http.post<any>(API_ENDPOINTS.ALL_PROVIDERS, request)
+    .pipe(finalize(() => this.displayLoader$.next(false)))
+  }
+
+  fetchAllProvidersV2(): Observable<any> {
+    this.displayLoader$.next(true)
+    return this.http.get<any>(API_ENDPOINTS.ALL_PROVIDERS_V2)
     .pipe(finalize(() => this.displayLoader$.next(false)))
   }
 

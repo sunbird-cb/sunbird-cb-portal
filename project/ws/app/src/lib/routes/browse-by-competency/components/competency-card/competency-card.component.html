@@ -6,15 +6,20 @@
                 <div class="cursor-pointer flex-col"
                     [routerLink]="['/app/learn/browse-by/competency', competency?.name]">
                     <h4 class="mat-h4">{{competency?.name}}</h4>
-                    <p class="mat-body-2 ws-mat-black60-text">{{competency?.additionalProperties?.competencyType}}</p>
+                    <p class="mat-body-2 ws-mat-black60-text">{{competency?.competencyType}}</p>
                 </div>
                 <div class="flex-col text_icon_box">
-                    <!--TODO: Count has to be shown once we have data from backend  -->
-                    <!-- <mat-icon class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color" role="img"
+                    <mat-icon class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color" role="img"
                         aria-hidden="true">school</mat-icon>
                      <span class="icon_text mat-caption ws-mat-black60-text">
-                        4 CBPs
-                    </span> -->
+                        {{competency?.contentCount}} 
+                        <ng-container *ngIf="competency?.contentCount === 1">
+                            CBP
+                        </ng-container>
+                        <ng-container *ngIf="competency?.contentCount > 1">
+                            CBPs
+                        </ng-container>
+                    </span>
                 </div>
             </div>
             <div class="flex-1 card_right_txtbox flex-col">
