@@ -67,6 +67,9 @@ import { QuickTourModule } from '@ws/app/src/lib/routes/info/quick-tour/quick-to
 import { AppIntroComponent } from './component/app-intro/app-intro.component'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
+import { QuestionCursorImplementationService } from '@ws/app/src/lib/routes/my-dashboard/services/question-cursor-implementation.service'
+import { QuestionCursor } from '@project-sunbird/sunbird-quml-player-v8'
+
 
 @Injectable()
 export class HammerConfig extends GestureConfig {
@@ -168,6 +171,10 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
         diameter: 55,
         strokeWidth: 4,
       },
+    },
+    {
+      provide: QuestionCursor,
+      useClass: QuestionCursorImplementationService,
     },
     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptorService, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AppRetryInterceptorService, multi: true },

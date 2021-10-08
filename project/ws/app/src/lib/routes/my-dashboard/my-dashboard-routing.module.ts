@@ -14,9 +14,8 @@ const routes: Routes = []
         children: routes,
       },
       {
-        path: '/quml',
+        path: 'quml',
         component: QumlComponent,
-        children: routes,
       },
     ]),
   ],

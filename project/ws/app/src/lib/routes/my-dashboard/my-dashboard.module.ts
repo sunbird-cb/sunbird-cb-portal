@@ -6,9 +6,9 @@ import { MyDashboardHomeComponent } from './components/my-dashboard-home/my-dash
 import { QumlComponent } from './components/quml/quml.component'
 import { MyDashboardRoutingModule } from './my-dashboard-routing.module'
 import { RainDashboardsModule } from '@sunbird-cb/rain-dashboards'
-// import { CarouselModule } from 'ngx-bootstrap/carousel'
-import { QuestionCursorImplementationService } from './services/question-cursor-implementation.service'
-import { QumlLibraryModule, QuestionCursor } from '@project-sunbird/sunbird-quml-player-v8'
+import { CarouselModule } from 'ngx-bootstrap/carousel'
+// import { QuestionCursorImplementationService } from './services/question-cursor-implementation.service'
+import { QumlLibraryModule } from '@project-sunbird/sunbird-quml-player-v8'
 
 @NgModule({
   declarations: [MyDashboardHomeComponent, QumlComponent],
@@ -22,11 +22,9 @@ import { QumlLibraryModule, QuestionCursor } from '@project-sunbird/sunbird-quml
     BreadcrumbsOrgModule,
     RainDashboardsModule,
     QumlLibraryModule,
+    CarouselModule.forRoot(),
   ],
-  providers: [{
-    provide: QuestionCursor,
-    useClass: QuestionCursorImplementationService,
-  }],
+  providers: [],
   exports: [MyDashboardHomeComponent, QumlComponent],
 })
 export class MyDashboardModule { }

@@ -1,12 +1,16 @@
 import { QuestionCursor } from '@project-sunbird/sunbird-quml-player-v8'
-import { HttpClient } from '@angular/common/http'
-import { mergeMap, map } from 'rxjs/operators'
-import { of, throwError as observableThrowError, Observable } from 'rxjs'
-import * as _ from 'lodash'
+// import { HttpClient } from '@angular/common/http'
+// import { mergeMap, map } from 'rxjs/operators'
+import { of, throwError as observableThrowError, Observable } from 'rxjs' 
+import * as _ from 'lodash-es'
+// import { Injectable } from '@angular/core'
 
+// @Injectable({
+//     providedIn: 'root',
+// })
 export class QuestionCursorImplementationService implements QuestionCursor {
-    listUrl: string // Define this url to call list api in server
-    | undefined // Define this url to call list api in server
+    // listUrl: string // Define this url to call list api in server
+    // | undefined // Define this url to call list api in server
     questionsArray = {
         questions: [{
             copyright: 'tn',
@@ -447,54 +451,56 @@ export class QuestionCursorImplementationService implements QuestionCursor {
         }],
         count: 4,
     }
-    constructor(private http: HttpClient) { }
+    constructor(
+        //private http: HttpClient
+    ) { }
 
-    getQuestions(identifiers: string[]): Observable<any> {
-        if (this.listUrl) {
-            const option: any = {
-                url: this.listUrl,
-                data: {
-                    request: {
-                        search: { identifier: identifiers },
-                    },
-                },
-            }
-            return this.post(option).pipe(map(data => {
-                return data.result
-            }))
-        }
+    getQuestions(_identifiers: string[]): Observable<any> {
+        // if (this.listUrl) {
+        //     const option: any = {
+        //         url: this.listUrl,
+        //         data: {
+        //             request: {
+        //                 search: { identifier: identifiers },
+        //             },
+        //         },
+        //     }
+        //     return this.post(option).pipe(map(data => {
+        //         return data.result
+        //     }))
+        // }
             return of(this.questionsArray)
 
     }
 
-    getQuestion(identifier: string): Observable<any> {
-        if (this.listUrl) {
-            const option: any = {
-                url: this.listUrl,
-                data: {
-                    request: {
-                        search: { identifier: [identifier] },
-                    },
-                },
-            }
-            return this.post(option).pipe(map(data => {
-                return data.result
-            }))
-        }
+    getQuestion(_identifier: string): Observable<any> {
+        // if (this.listUrl) {
+        //     const option: any = {
+        //         url: this.listUrl,
+        //         data: {
+        //             request: {
+        //                 search: { identifier: [identifier] },
+        //             },
+        //         },
+        //     }
+        //     return this.post(option).pipe(map(data => {
+        //         return data.result
+        //     }))
+        // }
             return of(this.questionsArray)
 
     }
 
-    private post(requestParam: { url: string; data: any; }): Observable<any> {
-        const httpOptions = {
-            headers: { 'Content-Type': 'application/json' },
-        }
-        return this.http.post(requestParam.url, requestParam.data, httpOptions).pipe(
-            mergeMap((data: any) => {
-                if (data.responseCode !== 'OK') {
-                    return observableThrowError(data)
-                }
-                return of(data)
-            }))
-    }
+    // private post(requestParam: { url: string; data: any; }): Observable<any> {
+    //     const httpOptions = {
+    //         headers: { 'Content-Type': 'application/json' },
+    //     }
+    //     return this.http.post(requestParam.url, requestParam.data, httpOptions).pipe(
+    //         mergeMap((data: any) => {
+    //             if (data.responseCode !== 'OK') {
+    //                 return observableThrowError(data)
+    //             }
+    //             return of(data)
+    //         }))
+    // }
 }

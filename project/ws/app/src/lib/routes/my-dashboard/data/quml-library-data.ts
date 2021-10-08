@@ -5015,7 +5015,7 @@ export const data1 = {
             lastName: 'Mukherjee',
         },
     },
-    metadata: sectionContent,
+    metadata: singleContentRes,
     config: {
         traceId: '1234',
         sideMenu: {
