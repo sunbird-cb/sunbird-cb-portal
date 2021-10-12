@@ -10,14 +10,18 @@
 </mat-card> -->
 
 <div *ngIf="currentDashboard[0]" class="container-balanced mat-drawer-side">
-  <lib-rain-dashboards [layoutConfig]="currentDashboard[0].visualizationDetails"
-    [chartConfig]="currentDashboard[0].chartDetails" [dashboardConfig]="dashboardList"
-    [showFilters]="currentDashboard[0].showFilters" [showWidgets]="currentDashboard[0].showWidgets"
-    [filtersConfig]="currentDashboard[0].filtersDetails" [widgetConfig]="currentDashboard[0].widgetDetails"
-    [widgetData]="currentDashboard[0].widgetData" (libDashboardId)="getDashboardId($event)"
-    [showWidgetTitle]="currentDashboard[0].showWidgetTitle" [widgetTitle]="currentDashboard[0].widgetTitle"
-    [showMessage]="currentDashboard[0].showMessage" [messageType]="currentDashboard[0].messageType"
-    [message]="currentDashboard[0].message" (libDateFilterPreset)="getDateFilterPreset($event)"
-    [mapLayoutFilePath]="mapPath">
-  </lib-rain-dashboards>
+  <lib-rain-dashboards
+    [showFilters]="true"
+    [showMessage]="false"
+    [messageType]="currentDashboard[0].messageType"
+    [message]="currentDashboard[0].message"
+    [mapLayoutFilePath]="mapPath"
+    (libDashboardId)="getDashboardId($event)"
+    (libDateFilterPreset)="getDateFilterPreset($event)"
+    [authToken]="token"
+    [getDashboardForKM]="getDashboardForKM"
+    [getDashboardForProfile]="getDashboardForProfile"
+    [getChartV2]="getChartV2"
+    [isFrontPage]="false"
+  ></lib-rain-dashboards>
 </div>

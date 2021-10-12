@@ -1,6 +1,7 @@
 @import '~@sunbird-cb/design-system/src/styles/ws-common';
-@import '~@sunbird-cb/design-system/src/styles/ws-vars';
+// @import '~@sunbird-cb/design-system/src/styles/ws-vars';
 @import '~@sunbird-cb/design-system/src/styles/ws-mixins';
+@import 'ws-vars';
 
 .card-minimal-container {
   position: relative;
@@ -274,9 +275,9 @@
   }
 
   .card-img {
-    min-width: 269px;
-    max-width: 269px;
-    max-height: 152px;
+    min-width: 265px;
+    max-width: 265px;
+    max-height: 150px;
     display: block;
     object-fit: fill;
     /* border-top: 1px solid red; */
