@@ -3,8 +3,8 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ActivatedRoute, Data, Router } from '@angular/router'
 import { ConfigurationsService, LoggerService } from '@sunbird-cb/utils'
-import { Observable, Subscription } from 'rxjs'
-import { share } from 'rxjs/operators'
+import { Observable, Subscription, Subject } from 'rxjs'
+import { share, debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { NsAppToc, NsCohorts } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
 import { CreateBatchDialogComponent } from '../create-batch-dialog/create-batch-dialog.component'
@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import { ConnectionHoverService } from '@sunbird-cb/collection/src/lib/_common/connection-hover-card/connection-hover.servive'
 import { NsContent, NsAutoComplete } from '@sunbird-cb/collection/src/public-api'
+import { FormGroup, FormControl } from '@angular/forms';
 // import { IdiscussionConfig } from '@project-sunbird/discussions-ui-v8'
 
 @Component({
@@ -54,6 +55,10 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   showDiscussionForum: any
   competencies: any
   howerUser!: any
+  searchForm: FormGroup | undefined
+  private unsubscribe = new Subject<void>()
+  // TODO: TO be removed important
+  progress = 50
   // configSvc: any
 
   constructor(
@@ -88,6 +93,10 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.searchForm = new FormGroup({
+      sortByControl: new FormControl(''),
+      searchKey: new FormControl(''),
+    })
     if (!this.forPreview) {
       this.forPreview = window.location.href.includes('/author/')
     }
@@ -111,6 +120,18 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
       // if editor, create batch button will be shown
       this.isNotEditor = false
     }
+
+    this.searchForm.valueChanges
+      .pipe(
+        debounceTime(500),
+        switchMap(async formValue => {
+          // this.sortBy = formValue.sortByControl
+          // this.updateQuery(formValue.searchKey)
+          // tslint:disable-next-line: no-console
+          console.log('formValue.searchKey :: ',formValue.searchKey)
+        }),
+        takeUntil(this.unsubscribe)
+      ).subscribe()
 
   }
 
@@ -175,6 +196,10 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     // debugger
     const initData = this.tocSharedSvc.initData(data)
     this.content = initData.content
+    // TODO: TO be removed important
+    if (this.content) {
+      this.content.averageRating = 4
+    }
     const competenciesData = this.content && this.content.competencies ? this.content.competencies : []
     if (competenciesData && competenciesData.length) {
       const str = competenciesData.replace(/\\/g, '')
@@ -411,6 +436,38 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
         hasError: false,
       }
     }
+  }
+
+  getRatingIcon(ratingIndex: number): 'star' | 'star_border' | 'star_half' {
+    if (this.content && this.content.averageRating) {
+      const avgRating = this.content.averageRating
+      const ratingFloor = Math.floor(avgRating)
+      if (ratingIndex <= ratingFloor) {
+        return 'star'
+      }
+      if (ratingFloor === ratingIndex - 1 && avgRating % 1 > 0) {
+        return 'star_half'
+      }
+    }
+    return 'star'
+  }
+
+  getRatingIconClass(ratingIndex: number): boolean {
+    if (this.content && this.content.averageRating) {
+      const avgRating = this.content.averageRating
+      const ratingFloor = Math.floor(avgRating)
+      if (ratingIndex <= ratingFloor) {
+        return true
+      }
+      if (ratingFloor === ratingIndex - 1 && avgRating % 1 > 0) {
+        return true
+      }
+    }
+    return false
+  }
+
+  getStartRatingProgress() {
+    return Math.floor(Math.random() * 100) + 1
   }
 
   get usr() {
