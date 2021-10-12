@@ -57,15 +57,7 @@
 //     justify-content: center;
 //  }
 
-//  @media (max-width: 768px)  {
-//     .feedback_main_box {
-//         width: 95%;
-//         margin:30px auto;
-//         // margin-left: 8px;
-//         // margin-right: 8px;
 
-//     }
-//  }
 
 
 .feedback_main_box {
@@ -73,3 +65,14 @@
     display: block;
     margin:50px auto;
 }
+.card label {
+    font-size: 20px!important;
+}
+
+@media (max-width: 768px)  {
+    .feedback_main_box {
+        width: 95%;
+        margin:30px auto;
+
+    }
+ }

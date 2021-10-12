@@ -7,6 +7,8 @@ import {
   MatDividerModule,
   MatIconModule,
   MatExpansionModule,
+  MatFormFieldModule,
+  MatInputModule
 } from '@angular/material'
 import { BtnPageBackModule, LeftMenuModule } from '@sunbird-cb/collection'
 import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
@@ -23,6 +25,8 @@ import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
     MatExpansionModule,
     PipeSafeSanitizerModule,
     LeftMenuModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   exports: [PublicContactComponent],
 })

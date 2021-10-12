@@ -5,17 +5,18 @@
 </div>
 <div class="container-balanced">
 
-  <div class="flex flex-1 custom">
+  <div class="flex flex-1 custom faq_main_box">
     <div class="flex-3">
      
       <div class="flex flex-4 flex-column">
         <div class="flex flex-1 custom">
-          <div class="flex-1" style="position: relative;">
+          <!-- <div class="flex-1" style="position: relative;"> -->
+          <div class="faq_left_panel" style="position: relative;">
             <div #stickyMenu [class.sticky]="sticky">
               <ws-widget-left-menu [widgetData]="tabsData"></ws-widget-left-menu>
             </div>
           </div>
-          <div class="flex-3">
+          <div class="faq_right_panel flex-3">
             <div class="contact-info margin-top-m ws-mat-primary-lite-background"
               *ngIf="contactPage.title || contactPage.description">
               <h2 class="flex mat-display-1 main_title_text margin-bottom-xl" *ngIf="contactPage.title">
@@ -24,6 +25,14 @@
                   {{contactPage.title}}
                
               </h2>
+
+              <form class="flex-1">
+                <mat-form-field appearance="outline" class="margin-bottom-xl autocomplete-form search_faq_form" color="primary" >
+                  <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+                  <input type="search" #searchInput class="ml-2" i18n-placeholder="search content"
+                      [placeholder]="'Find question…'" i18-aria-label aria-label="Query" matInput />
+                </mat-form-field>
+              </form>
 
               <!-- <p class="text-justify py-4" *ngIf="contactPage.description">
                 {{contactPage.description}}
@@ -34,7 +43,7 @@
               *ngIf="contactPage.help && contactPage.help.length > 0">
               <ng-container *ngFor="let chelp of contactPage.help">
                 <div [attr.id]="chelp.fragment" class="info-section margin-bottom-xl" [ngClass]="{ 'width-1-1': true}">
-                  <h3 class="flex flex-middle mat-h3">
+                  <h3 class="flex flex-middle margin-remove">
                     <!-- <mat-icon *ngIf="chelp.icon">{{ chelp.icon}}</mat-icon> -->
                     <span class="mat-title">{{chelp.title}}
                     </span>
@@ -44,10 +53,10 @@
                       *ngFor="let helpContent of chelp.contents">
                       <mat-expansion-panel-header>
                         <mat-panel-description>
-                          <p class="">{{helpContent.heading}}</p>
+                          <p class="margin-remove">{{helpContent.heading}}</p>
                         </mat-panel-description>
                       </mat-expansion-panel-header>
-                      <p [innerHTML]="helpContent.value | pipeSafeSanitizer: 'html'">
+                      <p [innerHTML]="helpContent.value | pipeSafeSanitizer: 'html'" class="margin-remove">
 
                       </p>
                     </mat-expansion-panel>
