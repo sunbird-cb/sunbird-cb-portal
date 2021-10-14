@@ -18,6 +18,34 @@
   }
 }
 
+.learn-card {
+  border:1px solid rgba(0, 0, 0, 0.08);
+}
+.learn-card:hover {
+  border:1px solid #0074B6;
+  background-color: #0074B6;
+  opacity: 0.05;
+}
+
+.learn-card .card_inner_title_box{
+  width: 220px;
+  padding: 24px;
+  box-sizing: border-box;
+}
+.learn-card .card_right_txtbox {
+  float: right;
+  padding: 24px;
+  box-sizing: border-box;
+  width: calc(100% - 230px);
+  border-left: 1px solid rgba(0,0,0,.08);
+}
+.bold_text {
+  font-weight: 700!important;
+}
+.text_icon {
+  vertical-align: middle;
+}
+
 .responsive {
   @include breakpoint-xs {
     flex-direction: column-reverse;

@@ -82,7 +82,10 @@
   .title-text {
     display: block;
     margin: $size-s 0;
+    height: auto;
   }
+
+
 
   $flip-desc-line-count: 4;
   $flip-desc-line-height: 1.4em;
@@ -246,6 +249,37 @@
     background: bisque;
   }
 
+  .course_logo_box {
+    position: absolute;
+    z-index: 9;
+    width: 100px;
+    background: #fff;
+    padding: 5px 13px;
+    right: 0;
+    border-radius: 16px 16px;
+    box-sizing: border-box;
+    height: 32px;
+
+  
+    img {
+      height: 20px;
+      display: inline-block;
+      margin-right: 4px;
+    }
+    p {
+      display: inline-block;
+      vertical-align: top;
+    }
+   }
+
+   .course_widget {
+     margin-top: 65px;
+
+     .mat-icon {
+       vertical-align: middle;
+     }
+   }
+
   .source-div {
     position: relative;
     top: 100px;
@@ -304,10 +338,12 @@
       display: flex;
       margin-left: auto;
       order: 3;
+      font-weight: 700;
     }
 
     .time-text {
       margin: 0px 5px 0px 6px;
+      font-weight: 700;
     }
   }
 
@@ -323,7 +359,7 @@
     margin: $size-s 0;
     position: relative;
     overflow: hidden;
-    height: $title-line-count * $title-line-height;
+    // height: $title-line-count * $title-line-height;
     // line-height: $title-line-height;
   }
 
