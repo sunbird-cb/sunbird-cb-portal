@@ -22,7 +22,6 @@ export class WrapperModule {
 
     ) {
         this.discussionEventsService.telemetryEvent.subscribe(data => {
-            console.log('telemetry data', data)
             switch (data.eid) {
                 case 'IMPRESSION':
                    this.teleSvc.impression()
