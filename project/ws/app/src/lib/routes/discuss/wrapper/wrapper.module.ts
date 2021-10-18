@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { DiscussionUiModule } from '@sunbird-cb/discussions-ui-v8'
-
+import { DiscussionEventsService, DiscussionUiModule } from '@sunbird-cb/discussions-ui-v8'
+import { TelemetryService } from '@sunbird-cb/utils/src/lib/services/telemetry.service'
+import { EventService } from '@sunbird-cb/utils/src/lib/services/event.service'
+// import {TelemetryService }
 // import { ConfigService } from '../services/config.service'
 
 @NgModule({
@@ -14,7 +16,22 @@ import { DiscussionUiModule } from '@sunbird-cb/discussions-ui-v8'
 })
 export class WrapperModule {
     // processed: any
-    constructor() {
+    constructor(private discussionEventsService: DiscussionEventsService,
+                private teleSvc: TelemetryService,
+                private eventsSvc: EventService,
+
+    ) {
+        this.discussionEventsService.telemetryEvent.subscribe(data => {
+            console.log('telemetry data', data)
+            switch (data.eid) {
+                case 'IMPRESSION':
+                   this.teleSvc.impression()
+                    break
+                case 'INTERACT':
+                    this.eventsSvc.raiseInteractTelemetry(data.edata.type, data.edata.pageid, data.object)
+                    break
+            }
+        })
 
         // const lastSaved = localStorage.getItem('kc')
         // if (lastSaved) {

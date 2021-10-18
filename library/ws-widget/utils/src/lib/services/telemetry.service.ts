@@ -8,7 +8,6 @@ import { EventService } from './event.service'
 import { LoggerService } from './logger.service'
 import { NsContent } from './widget-content.model'
 import { environment } from 'src/environments/environment'
-import _ from 'lodash'
 
 declare var $t: any
 
@@ -19,7 +18,7 @@ export class TelemetryService {
   previousUrl: string | null = null
   telemetryConfig: NsInstanceConfig.ITelemetryConfig | null = null
   pData: any = null
-  contextCdata = [];
+  contextCdata = []
 
   externalApps: any = {
     RBCP: 'rbcp-web-ui',
@@ -152,26 +151,7 @@ export class TelemetryService {
       console.log('Error in telemetry audit', e)
     }
   }
-  logDiscussionTelemetryEvent(event: any) { 
-    const data = {
 
-      context: {
-        env: 'discussion',
-        cdata: _.union(_.get(event, 'context.cdata'), this.contextCdata)
-      },
-      edata: _.get(event, 'edata'),
-      object: _.get(event, 'context.object')
-    };
-
-    switch (event.eid) {
-      case 'IMPRESSION':
-        $t.impression(data);
-        break;
-      case 'INTERACT':
-        $t.interact(data);
-        break;
-    }
-  }
   heartbeat(type: string, id: string) {
     try {
       $t.heartbeat({
