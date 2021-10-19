@@ -18,6 +18,52 @@
   }
 }
 
+.learn-card {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.learn-card .card_inner_title_box {
+  width: 220px;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.learn-card .card_right_txtbox {
+  float: right;
+  padding: 24px;
+  box-sizing: border-box;
+  width: calc(100% - 230px);
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+}
+.learn-card:hover, .learn-card:active, .learn-card:focus {
+   border: 1px solid#0074B6
+ }
+ 
+.selected-card {
+  border: 1px solid#0074B6 !important
+}
+
+.learn-card-div {
+  overflow-y: scroll; height:400px;
+}
+
+//-webkit- (Chrome, Safari, newer versions of Opera):
+//element-selector::-webkit-scrollbar { width: 0 !important }
+.hideScrollbar::-webkit-scrollbar { width: 0 !important }
+
+//-moz- (Firefox):
+//element-selector{ overflow: -moz-scrollbars-none; }
+.hideScrollbar{ overflow: -moz-scrollbars-none; }
+
+//-ms- (Internet Explorer +10):
+//element-selector{ -ms-overflow-style: none; }
+.hideScrollbar{ -ms-overflow-style: none; }
+
+//  mat-dialog-container{
+//    height: 850px;
+//    margin-top: 100px;
+//  }
+
 .responsive {
   @include breakpoint-xs {
     flex-direction: column-reverse;
