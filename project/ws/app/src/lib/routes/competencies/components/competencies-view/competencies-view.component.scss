@@ -38,6 +38,26 @@
 .learn-card:hover, .learn-card:active, .learn-card:focus {
    border: 1px solid#0074B6
  }
+ 
+.selected-card {
+  border: 1px solid#0074B6 !important
+}
+
+.learn-card-div {
+  overflow-y: scroll; height:400px;
+}
+
+//-webkit- (Chrome, Safari, newer versions of Opera):
+//element-selector::-webkit-scrollbar { width: 0 !important }
+.hideScrollbar::-webkit-scrollbar { width: 0 !important }
+
+//-moz- (Firefox):
+//element-selector{ overflow: -moz-scrollbars-none; }
+.hideScrollbar{ overflow: -moz-scrollbars-none; }
+
+//-ms- (Internet Explorer +10):
+//element-selector{ -ms-overflow-style: none; }
+.hideScrollbar{ -ms-overflow-style: none; }
 
 //  mat-dialog-container{
 //    height: 850px;

@@ -101,6 +101,7 @@ export class CompetenceAllComponent implements OnInit {
   getProfile() {
     this.competencySvc.fetchProfileById(this.configSvc.unMappedUser.id).subscribe(response => {
       if (response) {
+        // console.log("My Comp", response.profileDetails.competencies)
         this.myCompetencies = response.profileDetails.competencies || []
         this.currentProfile = response.profileDetails
 
