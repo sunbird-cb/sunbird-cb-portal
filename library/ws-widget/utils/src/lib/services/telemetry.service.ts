@@ -344,7 +344,7 @@ export class TelemetryService {
                 type: event.data.type,
                 subtype: event.data.subType,
                 // object: event.data.object,
-                id: event.data.object.contentId || event.data.object.id || interactid || '',
+                id: (event.data.object) ? event.data.object.contentId || event.data.object.id || interactid || '' : '',
                 pageid: page.pageid,
                 // target: { page },
               },
