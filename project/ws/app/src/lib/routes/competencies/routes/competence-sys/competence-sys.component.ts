@@ -93,7 +93,6 @@ export class CompetenceSysComponent implements OnInit {
   getProfile() {
     this.competencySvc.fetchProfileById(this.configSvc.unMappedUser.id).subscribe(response => {
       if (response) {
-        console.log('My comp', response.profileDetails.competencies)
         this.myCompetencies = response.profileDetails.competencies || []
         this.currentProfile = response.profileDetails
       }
