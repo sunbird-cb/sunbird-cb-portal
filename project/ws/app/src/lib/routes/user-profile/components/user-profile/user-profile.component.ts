@@ -784,6 +784,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   private constructReq(form: any) {
+    const arrCompetencies = this.configSvc.unMappedUser.profileDetails.competencies
     const userid = this.userProfileData.userId || this.userProfileData.id
     const profileReq = {
       id: userid,
@@ -810,6 +811,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         pincode: form.value.pincode,
       },
       academics: this.getAcademics(form),
+      competencies: arrCompetencies,
       employmentDetails: {
         service: form.value.service,
         cadre: form.value.cadre,
@@ -887,6 +889,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         }
       case 'academics':
         return this.getAcademics(form)
+      case 'competencies':
+        return this.configSvc.unMappedUser.profileDetails.competencies
       case 'employmentDetails':
         return {
           service: form.value.service,
