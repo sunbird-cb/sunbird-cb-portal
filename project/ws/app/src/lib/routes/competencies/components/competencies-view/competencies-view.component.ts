@@ -17,18 +17,32 @@ export interface IDialogData {
 })
 
 export class CompetenceViewComponent implements OnInit {
-  @Input() isUpdate = false
+  selectedId: BigInteger | undefined
+  @Input() isUpdate!: boolean
+  selectedLevel: string | undefined
+  selectIndex: any
   constructor(
     public dialogRef: MatDialogRef<CompetenceViewComponent>,
     @Inject(MAT_DIALOG_DATA) public dData: NSCompetencie.ICompetencie
   ) { }
-  ngOnInit() { }
+  ngOnInit() {
+  }
   add() {
     this.dialogRef.close({
       id: this.dData.id,
       action: 'ADD',
+      levelId: this.selectIndex,
+      levelName: this.selectedLevel,
     })
   }
+
+  selectLevel(comp: any, indexOfelement: any) {
+    this.selectIndex = indexOfelement + 1
+    this.selectedId = comp.id
+    // tslint:disable-next-line: prefer-template
+    this.selectedLevel = comp.name + '(' + comp.level + ')'
+  }
+
   remove() {
     this.dialogRef.close({
       id: this.dData.id,
