@@ -330,8 +330,8 @@
                         <div class="margin-top-s mat-body-1 ws-mat-black60-text">
                             {{ 180 | pipeCountTransform }} ratings</div>
                         </div>
-                    <div class="flex items-center margin-bottom-xs" *ngFor="let rating of [1, 2, 3, 4, 5]">
-                        <div class="mat-body-2 bold-imp margin-right-m">5 star</div>
+                    <div class="flex items-center margin-bottom-xs" *ngFor="let rating of [5,4,3,2,1]">
+                        <div class="mat-body-2 bold-imp margin-right-m">{{rating}} star</div>
                         <div class="flex items-center rating-progress">
                             <mat-progress-bar [mode]="'determinate'" [matTooltip]="progress + ' %'" [value]="getStartRatingProgress()"
                                 class="rating-bar" [attr.aria-labelledby]="'m-c-'+ contentId"
