@@ -246,6 +246,49 @@
     background: bisque;
   }
 
+  .title-text {
+    margin: 12px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.description-text {
+  position: relative;
+  overflow: hidden;
+  height: 63px;
+}
+
+.course_logo_box {
+  position: absolute;
+  z-index: 9;
+  width: 100px;
+  background: #fff;
+  padding: 5px 13px;
+  right: 0;
+  border-radius: 16px 16px;
+  box-sizing: border-box;
+  height: 32px;
+
+
+  img {
+    height: 20px;
+    display: inline-block;
+    margin-right: 4px;
+  }
+  p {
+    display: inline-block;
+    vertical-align: top;
+  }
+ }
+
+.course_widget {
+   margin-top: 65px;
+
+   .mat-icon {
+     vertical-align: middle;
+   }
+ }
+
   .source-div {
     position: relative;
     top: 100px;
@@ -361,6 +404,8 @@
     margin-top: 62px;
     background: bisque;
   }
+
+ 
 
   .source-div {
     position: relative;
