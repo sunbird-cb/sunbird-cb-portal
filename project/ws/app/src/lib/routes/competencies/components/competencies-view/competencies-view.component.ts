@@ -13,7 +13,9 @@ export interface IDialogData {
   templateUrl: './competencies-view.component.html',
   styleUrls: ['./competencies-view.component.scss'],
   /* tslint:disable */
-  host: { class: 'flex flex-1 margin-right-xs margin-top-xs margin-bottom-s' },
+  /* host: { class: 'flex flex-1 margin-right-xs margin-top-xs margin-bottom-s' },*/
+  host: { class: 'flex flex-1' },
+ 
   /* tslint:enable */
 
 })
