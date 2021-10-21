@@ -1,6 +1,8 @@
 import { Component, OnInit, Inject, Input } from '@angular/core'
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material'
 import { NSCompetencie } from '../../models/competencies.model'
+// tslint:disable-next-line: import-name
+import _ from 'lodash'
 // import { Router } from '@angular/router'
 
 export interface IDialogData {
@@ -22,12 +24,17 @@ export class CompetenceViewComponent implements OnInit {
   selectedLevel: string | undefined
   selectIndex: any
   constructor(
+    private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<CompetenceViewComponent>,
     @Inject(MAT_DIALOG_DATA) public dData: NSCompetencie.ICompetencie
   ) { }
   ngOnInit() {
   }
   add() {
+    if (_.isEmpty(this.selectedId) || _.isUndefined(this.selectedId)) {
+      this.snackBar.open('Please select a level before adding competency', 'X')
+      return false
+    }
     this.dialogRef.close({
       id: this.dData.id,
       action: 'ADD',
