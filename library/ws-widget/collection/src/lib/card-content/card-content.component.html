@@ -621,6 +621,8 @@
     </div>
   </mat-card>
 </ng-template>
+
+
 <ng-template #cardStandard>
   <mat-card class="card-standard-container mr-6" [ngClass]="{
       greyOut:
@@ -652,7 +654,14 @@
           <img mat-card-image style="position: absolute; z-index: 2;" [src]="widgetData.content.posterImage"
             class="card-img ws-mat-primary-lite-background" [wsUtilsDefaultThumbnail]="defaultThumbnail"
             [alt]="widgetData.content.name" />
-          <div class="source-div">
+
+            <!-- image overlay box-->
+            <div class="course_logo_box">
+              <img [src]="widgetData.content.creatorLogo" class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
+              [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
+              <p class="mat-subheading-1 margin-remove">IGOT</p>
+            </div>
+          <div class="source-div" style="display: none;">
             <!-- [src]="sourseIcon(widgetData.content.sourceName)" -->
             <img [src]="widgetData.content.creatorLogo" class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
               [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
@@ -690,14 +699,24 @@
                 class="mode-tag px-2 ws-mat-accent-background">
                 Newly Added
               </div>
-              <div *ngIf="widgetData.content.duration" class="duration">
+              <!-- <div *ngIf="widgetData.content.duration" class="duration">
                 <mat-icon>access_time</mat-icon>
                 <span class="time-text">{{ widgetData.content.duration | pipeDurationTransform: 'hms' }}</span>
-              </div>
-              <div *ngIf="!widgetData.content.duration" class="duration">
+              </div> -->
+              <!-- <div *ngIf="!widgetData.content.duration" class="duration">
                 <mat-icon>access_time</mat-icon>
                 <span class="time-text">0.0m</span>
-              </div>
+              </div> -->
+            </div>
+
+            <div class="course_widget">
+              <mat-icon class="mat-icon ws-mat-default-text margin-right-xs">video_library</mat-icon>
+              <ws-widget-display-content-type i18n-title title="Content Type" *ngIf="widgetData.content?.primaryCategory"
+                class="ws-mat-primary-text font-normal" [displayContentType]="widgetData.content?.primaryCategory==='Course Unit'
+                ?'Module'
+                :widgetData.content?.primaryCategory">
+               
+              </ws-widget-display-content-type>
             </div>
 
             <div [id]="'m-c-'+ widgetData.content?.identifier"
@@ -706,6 +725,7 @@
             </div>
             <div class="mat-body-2 ws-mat-primary-text description-text ws-mat-text-block-fade-gradient mb-10">
               {{ widgetData.content.description | pipeHtmlTagRemoval }}
+            
               <!-- {{widgetData.content | json}} -->
               <!-- {{widgetData.content.sourceName}} -->
             </div>
@@ -719,16 +739,29 @@
               [displayContentType]="widgetData.content?.displayContentType"
             >
             </ws-widget-display-content-type> -->
-              <ws-widget-display-content-type i18n-title title="Content Type" *ngIf="widgetData.content?.primaryCategory"
+
+              <!-- <ws-widget-display-content-type i18n-title title="Content Type" *ngIf="widgetData.content?.primaryCategory"
               class="ws-mat-primary-text font-normal" [displayContentType]="widgetData.content?.primaryCategory==='Course Unit'
               ?'Module'
               :widgetData.content?.primaryCategory">
-            </ws-widget-display-content-type>
+            </ws-widget-display-content-type> -->
+
+             <div *ngIf="widgetData.content.duration" class="duration">
+                <!-- <mat-icon>access_time</mat-icon> -->
+                <span class="time-text ws-mat-black60-text">{{ widgetData.content.duration | pipeDurationTransform: 'hms' }}</span>
+              </div>
+              <!-- <div *ngIf="!widgetData.content.duration" class="duration">
+                <mat-icon>access_time</mat-icon>
+                <span class="time-text">0.0m</span>
+              </div> -->
+
             <div class="flex items-center">
-              <ng-container [ngTemplateOutlet]="rating"></ng-container>
+              <!-- <ng-container [ngTemplateOutlet]="rating"></ng-container>
               <button type="button" mat-icon-button i18n-aria-label [matMenuTriggerFor]="cardMenu">
                 <mat-icon>more_vertical</mat-icon>
-              </button>
+               
+              </button> -->
+              <mat-icon class="mat-icon ws-mat-black60-text">share</mat-icon>
             </div>
           </div>
         </mat-card-content>
