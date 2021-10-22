@@ -41,14 +41,14 @@ export class CompetenceViewComponent implements OnInit {
   add() {
     if (_.isEmpty(this.selectedId) || _.isUndefined(this.selectedId)) {
       this.snackBar.open('Please select a level before adding competency', 'X')
-      return false
+    } else {
+      this.dialogRef.close({
+        id: this.dData.id,
+        action: 'ADD',
+        levelId: this.selectIndex,
+        levelName: this.selectedLevel,
+      })
     }
-    this.dialogRef.close({
-      id: this.dData.id,
-      action: 'ADD',
-      levelId: this.selectIndex,
-      levelName: this.selectedLevel,
-    })
   }
 
   selectLevel(comp: any, indexOfelement: any) {
