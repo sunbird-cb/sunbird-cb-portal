@@ -30,6 +30,12 @@ export class CompetenceViewComponent implements OnInit {
   ) { }
   ngOnInit() {
   }
+
+  closeModal() {
+    this.dialogRef.close({})
+    return false
+  }
+
   add() {
     if (_.isEmpty(this.selectedId) || _.isUndefined(this.selectedId)) {
       this.snackBar.open('Please select a level before adding competency', 'X')
