@@ -27,9 +27,9 @@
 <mat-card class="competency-view-card" *ngIf="!isUpdate">
   <mat-card-content class="flex flex-1 custom">
     <div class="flex justify-between flex-row">
-      <span class="mat-h2 font-bold margin-bottom-xs">Select your competency level</span>
-      <mat-card-actions class="close_icon_box">
-        <a href="javascript:void(0)" class="mat-dialog-close"><mat-icon class="mat-icon ws-mat-black60-text">close</mat-icon></a>
+      <span class="mat-h2 font-medium">Select your competency level</span>
+      <mat-card-actions>
+        <a href="javascript:void(0)" class="mat-dialog-close" (click)="closeModal()"><mat-icon class="mat-icon ws-mat-black60-text">close</mat-icon></a>
       </mat-card-actions>
     </div>
     <h3 class="mat-h3 card_description margin-bottom-xl">You are self-declaring competency and you can also take the competency assessment to add further credibility</h3>
