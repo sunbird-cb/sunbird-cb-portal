@@ -292,22 +292,24 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     if (this.htmlContent) {
       if (typeof data1 === 'string' || data1 instanceof String) {
         data = JSON.parse(data1.toString())
+      } else {
+        data = { ...data1 }
       }
       /* tslint:disable-next-line */
       if (this.activatedRoute.snapshot.queryParams.collectionId) {
         this.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
       }
-      this.events.raiseInteractTelemetry(data.event, 'scrom', {
-        contentId: this.htmlContent.identifier,
-        contentType: this.htmlContent.primaryCategory,
+      this.events.raiseInteractTelemetry(data.event || data.type || 'type', 'scorm', {
+        ...data,
+        // contentId: this.htmlContent.identifier,
+        // contentType: this.htmlContent.primaryCategory,
         id: this.htmlContent.identifier,
-        type: this.htmlContent.contentType,
+        type: this.htmlContent.primaryCategory,
         context: this.htmlContent.context,
         rollup: {
           l1: this.collectionId || '',
         },
         ver: `${this.htmlContent.version}${''}`,
-        ...data,
       })
     }
   }

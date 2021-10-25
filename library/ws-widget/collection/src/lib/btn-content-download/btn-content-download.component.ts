@@ -87,10 +87,10 @@ export class BtnContentDownloadComponent extends WidgetBaseComponent
   raiseTelemetry() {
     this.events.raiseInteractTelemetry('download', 'content', {
       platform: this.platform,
-      contentId: this.widgetData.identifier,
-      contentType: this.widgetData.contentType, // cccc
+      // contentId: this.widgetData.identifier,
+      // contentType: this.widgetData.contentType, // cccc
       id: this.widgetData.identifier,
-      type: this.widgetData.contentType,
+      type: this.widgetData.primaryCategory,
     })
   }
 }

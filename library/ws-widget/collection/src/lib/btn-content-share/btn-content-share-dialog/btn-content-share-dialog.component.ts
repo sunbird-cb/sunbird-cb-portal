@@ -154,7 +154,7 @@ export class BtnContentShareDialogComponent implements OnInit {
   raiseTelemetry() {
     this.events.raiseInteractTelemetry('share', 'content', {
       id: this.data.content.identifier,
-      type: this.data.content.contentType,
+      type: this.data.content.primaryCategory,
     })
   }
 }
