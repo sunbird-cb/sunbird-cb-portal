@@ -126,10 +126,8 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
   raiseTelemetry(content: any) {
     if (content) {
       this.events.raiseInteractTelemetry('click', `card-learnSearch`, {
-        contentId: content.identifier || '',
-        contentType: content.primaryCategory,
         id: content.identifier || '',
-        type: content.contentType,
+        type: content.primaryCategory,
         // contentId: content.identifier || '',
         // contentType: content.primaryCategory,
         rollup: {},
