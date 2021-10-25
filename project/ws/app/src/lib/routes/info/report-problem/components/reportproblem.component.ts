@@ -16,7 +16,7 @@ export class ReportproblemComponent implements OnInit {
   tyPrimaryBtnLink = "/page/home";
   tySecondaryBtnLink = "/app/info/report-problem";
   tyPrimaryBtnText = "Go to";
-  tySecondaryBtnText = "More feedback";
+  tySecondaryBtnText = "Report Problem";
   apiData: object = {
     getAPI: `${this.domain}api/forms/getFormById?id=${this.surveyId}`,
     postAPI: `${this.domain}api/forms/saveFormSubmit`,

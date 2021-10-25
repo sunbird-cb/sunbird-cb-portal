@@ -63,7 +63,10 @@
 .feedback_main_box {
     width: 770px;
     display: block;
-    margin:50px auto;
+    margin:48px auto;
+    border-radius: 4px 4px;
+    padding-top: 16px;
+    background-color: #fff;
 }
 .card label {
     font-size: 20px!important;
