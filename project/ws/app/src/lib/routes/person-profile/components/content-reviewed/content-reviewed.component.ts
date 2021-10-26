@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, OnDestroy, EventEmitter, Output } from '@angular/core'
-import { ISearchContent, ISearchResult } from '../../../../../../../author/src/lib/interface/search'
+import { ISearchContent } from '../../../../../../../author/src/lib/interface/search'
 import { Subscription } from 'rxjs'
-import { MyContentService } from '../../../../../../../author/src/lib/routing/modules/my-content/services/my-content.service'
+// import { MyContentService } from '../../../../../../../author/src/lib/routing/modules/my-content/services/my-content.service'
 import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
-import { MatSnackBar } from '@angular/material'
+// import { MatSnackBar } from '@angular/material'
 
 @Component({
   selector: 'ws-app-content-reviewed',
@@ -37,9 +37,9 @@ export class ContentReviewedComponent implements OnInit, OnDestroy {
   viewedPageNo: number[] = []
 
   constructor(
-    private myContSvc: MyContentService,
+    // private myContSvc: MyContentService,
     private configSvc: ConfigurationsService,
-    private matSnackBar: MatSnackBar,
+    // private matSnackBar: MatSnackBar,
   ) {
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
@@ -65,51 +65,51 @@ export class ContentReviewedComponent implements OnInit, OnDestroy {
   fetchContentReviewed() {
     this.contentFetchStatus = 'fetching'
     this.fetching.emit(false)
-    const requestData = {
-      locale: [],
-      query: '',
-      filters: [{
-        andFilters: [{
-          status: ['Reviewed'],
-          trackContacts: [this.wid],
-        }],
-      }],
-      pageNo: this.apiPageNo,
-      sort: [{ lastUpdatedOn: 'desc' }],
-      pageSize: this.apiPageSize,
-      uuid: this.userWid,
-      rootOrg: this.configSvc.rootOrg,
-    }
-    this.contentSubscription = this.myContSvc.fetchFromSearchV6(requestData).subscribe(
-      (result: ISearchResult) => {
-        if (result) {
-          this.contentsReviewed = result.result
-          result.result.forEach(content => {
-            if (this.contentsReviewed.indexOf(content) === -1) {
-              this.contentsReviewed.push(content)
-            }
-          })
-          this.totalHits = result.totalHits
-          this.totalPages = Math.ceil(this.totalHits / this.pageDisplaySize)
+    // const requestData = {
+    //   locale: [],
+    //   query: '',
+    //   filters: [{
+    //     andFilters: [{
+    //       status: ['Reviewed'],
+    //       trackContacts: [this.wid],
+    //     }],
+    //   }],
+    //   pageNo: this.apiPageNo,
+    //   sort: [{ lastUpdatedOn: 'desc' }],
+    //   pageSize: this.apiPageSize,
+    //   uuid: this.userWid,
+    //   rootOrg: this.configSvc.rootOrg,
+    // }
+    // this.contentSubscription = this.myContSvc.fetchFromSearchV6(requestData).subscribe(
+    //   (result: ISearchResult) => {
+    //     if (result) {
+    //       this.contentsReviewed = result.result
+    //       result.result.forEach(content => {
+    //         if (this.contentsReviewed.indexOf(content) === -1) {
+    //           this.contentsReviewed.push(content)
+    //         }
+    //       })
+    //       this.totalHits = result.totalHits
+    //       this.totalPages = Math.ceil(this.totalHits / this.pageDisplaySize)
 
-          if (this.contentsReviewed.length > this.pageDisplaySize) {
-            this.contentCurrentDisplay = this.contentsReviewed.slice(this.startIndexContentArray, this.lastIndexContentArray)
-          } else {
-            this.contentCurrentDisplay = this.contentsReviewed
-          }
-          if (this.startIndexContentArray <= 0) {
-            this.previousContentDisable = true
-          }
-        }
-        this.count.emit(this.contentsReviewed.length)
-        this.contentFetchStatus = 'done'
-        this.fetching.emit(true)
-      },
-      () => {
-        this.contentFetchStatus = 'error'
-        this.openSnackBar('Error while fetching content reviewed.')
-        this.fetching.emit(true)
-      })
+    //       if (this.contentsReviewed.length > this.pageDisplaySize) {
+    //         this.contentCurrentDisplay = this.contentsReviewed.slice(this.startIndexContentArray, this.lastIndexContentArray)
+    //       } else {
+    //         this.contentCurrentDisplay = this.contentsReviewed
+    //       }
+    //       if (this.startIndexContentArray <= 0) {
+    //         this.previousContentDisable = true
+    //       }
+    //     }
+    //     this.count.emit(this.contentsReviewed.length)
+    //     this.contentFetchStatus = 'done'
+    //     this.fetching.emit(true)
+    //   },
+    //   () => {
+    //     this.contentFetchStatus = 'error'
+    //     this.openSnackBar('Error while fetching content reviewed.')
+    //     this.fetching.emit(true)
+    //   })
   }
 
   ngOnDestroy() {
@@ -162,8 +162,8 @@ export class ContentReviewedComponent implements OnInit, OnDestroy {
     this.contentCurrentDisplay = this.contentsReviewed.slice(this.startIndexContentArray, this.lastIndexContentArray)
   }
 
-  private openSnackBar(message: string) {
-    this.matSnackBar.open(message)
-  }
+  // private openSnackBar(message: string) {
+  //   this.matSnackBar.open(message)
+  // }
 
 }

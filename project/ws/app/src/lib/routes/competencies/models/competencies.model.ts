@@ -26,6 +26,8 @@ export namespace NSCompetencie {
     name: string
     source: null
     status: string
+    competencySelfAttestedLevel?: string
+    competencySelfAttestedLevelValue?: number
     type: string
   }
   export interface IWebResponse {

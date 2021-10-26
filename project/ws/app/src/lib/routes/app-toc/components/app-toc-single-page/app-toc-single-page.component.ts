@@ -219,7 +219,9 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
       this.fetchCohorts(this.cohortTypesEnum.AUTHORS, this.content.identifier)
     }
   }
-
+  sanitize(data: any) {
+    return this.domSanitizer.bypassSecurityTrustHtml(data)
+  }
   getContentParent() {
     if (this.content) {
       const contentParentReq: NsAppToc.IContentParentReq = {

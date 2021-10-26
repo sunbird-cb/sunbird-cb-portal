@@ -47,19 +47,14 @@ const routes: Routes = [
     loadChildren: () => import('./routes/route-frac.module').then(u => u.RouteFracModule),
     canActivate: [GeneralGuard],
   },
-  {
-    path: 'admin',
-    data: {
-      requiredRoles: ['register-admin', 'admin', 'content-assignment-admin'],
-    },
-    loadChildren: () => import('./routes/route-admin.module').then(u => u.RouteAdminModule),
-    canActivate: [GeneralGuard],
-  },
-  {
-    path: 'analytics',
-    loadChildren: () => import('./routes/route-analytics.module').then(u => u.RouteAnalyticsModule),
-    canActivate: [GeneralGuard],
-  },
+  // {
+  //   path: 'admin',
+  //   data: {
+  //     requiredRoles: ['register-admin', 'admin', 'content-assignment-admin'],
+  //   },
+  //   loadChildren: () => import('./routes/route-admin.module').then(u => u.RouteAdminModule),
+  //   canActivate: [GeneralGuard],
+  // },
   {
     path: 'app/careers',
     loadChildren: () =>
@@ -350,24 +345,24 @@ const routes: Routes = [
     loadChildren: () =>
       import('./routes/route-user-profile-app.module').then(u => u.RouteUserProfileAppModule),
   },
-  {
-    path: 'author',
-    data: {
-      requiredRoles: [
-        // 'content-creator',
-        // 'ka-creator',
-        // 'kb-creator',
-        // 'channel-creator',
-        // 'reviewer',
-        // 'publisher',
-        // 'editor',
-        // 'admin',
-      ],
-    },
-    canActivate: [GeneralGuard],
-    loadChildren: () =>
-      import('./routes/route-authoring-app.module').then(u => u.AuthoringAppModule),
-  },
+  // {
+  //   path: 'author',
+  //   data: {
+  //     requiredRoles: [
+  //       // 'content-creator',
+  //       // 'ka-creator',
+  //       // 'kb-creator',
+  //       // 'channel-creator',
+  //       // 'reviewer',
+  //       // 'publisher',
+  //       // 'editor',
+  //       // 'admin',
+  //     ],
+  //   },
+  //   canActivate: [GeneralGuard],
+  //   loadChildren: () =>
+  //     import('./routes/route-authoring-app.module').then(u => u.AuthoringAppModule),
+  // },
   {
     path: 'error-access-forbidden',
     component: ErrorResolverComponent,
@@ -423,12 +418,6 @@ const routes: Routes = [
     component: ErrorResolverComponent,
   },
   { path: 'home', redirectTo: 'page/home', pathMatch: 'full' },
-  {
-    path: 'learning-hub',
-    loadChildren: () =>
-      import('./routes/route-learning-hub-app.module').then(u => u.LearningHubAppModule),
-    canActivate: [GeneralGuard],
-  },
   {
     path: 'login',
     canActivate: [LoginGuard],

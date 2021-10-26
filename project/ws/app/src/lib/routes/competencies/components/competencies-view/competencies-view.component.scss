@@ -10,6 +10,11 @@
   box-shadow: none !important;
   height: fit-content;
   width:750px;
+  padding: 32px 8px!important;
+
+  h3.card_description {
+    font-weight: 400!important;
+  }
 
   // width: max-content;
   @include breakpoint-xs {
@@ -19,15 +24,13 @@
 }
 
 .learn-card {
-  border:1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
-.learn-card:hover {
-  border:1px solid #0074B6;
-  background-color: #0074B6;
-  opacity: 0.05;
+.learn-card:last-child {
+  margin-bottom: 0!important;
 }
 
-.learn-card .card_inner_title_box{
+.learn-card .card_inner_title_box {
   width: 220px;
   padding: 24px;
   box-sizing: border-box;
@@ -37,14 +40,54 @@
   padding: 24px;
   box-sizing: border-box;
   width: calc(100% - 230px);
-  border-left: 1px solid rgba(0,0,0,.08);
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
 }
-.bold_text {
-  font-weight: 700!important;
+.learn-card:hover, .learn-card:active, .learn-card:focus {
+   border: 1px solid#0074B6
+ }
+ 
+.selected-card {
+  border: 1px solid#0074B6 !important;
+  background-color: rgba(0, 116, 184, 0.05)!important;
 }
+
 .text_icon {
   vertical-align: middle;
 }
+p.competency_level_text {
+  margin-bottom:4px!important;
+}
+
+.close_icon_box {
+  padding: 0 !important;;
+  margin: 0 !important;
+}
+.learn-card-div {
+  overflow-y: scroll; 
+  min-height: 215px;
+    max-height: 400px;
+    margin-bottom: 30px;
+}
+.font-bold {
+  font-weight:700!important;
+}
+
+//-webkit- (Chrome, Safari, newer versions of Opera):
+//element-selector::-webkit-scrollbar { width: 0 !important }
+.hideScrollbar::-webkit-scrollbar { width: 0 !important }
+
+//-moz- (Firefox):
+//element-selector{ overflow: -moz-scrollbars-none; }
+.hideScrollbar{ overflow: -moz-scrollbars-none; }
+
+//-ms- (Internet Explorer +10):
+//element-selector{ -ms-overflow-style: none; }
+.hideScrollbar{ -ms-overflow-style: none; }
+
+//  mat-dialog-container{
+//    height: 850px;
+//    margin-top: 100px;
+//  }
 
 .responsive {
   @include breakpoint-xs {
@@ -149,6 +192,13 @@
   height: 48px;
   width: 48px;
   background: rgb(29, 137, 35) !important;
+}
+
+.card_actions {
+  margin-left: -32px;
+  margin-right: -32px;
+  padding: 24px 24px 0px 0px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .margin-0 {
