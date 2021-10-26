@@ -4,7 +4,7 @@ import { AuthInitService } from './services/init.service'
 import { ContentAndDataReadMultiLangTOCResolver } from './services/content-and-data-read-multi-lang.service'
 import { InitResolver } from './services/init-resolve.service'
 import { LoaderService } from './services/loader.service'
-import { HomeModule } from '@ws/author/src/lib/routing/modules/home/home.module'
+// import { HomeModule } from '@ws/author/src/lib/routing/modules/home/home.module'
 import { NgModule, ErrorHandler } from '@angular/core'
 import { CommonModule, APP_BASE_HREF, PlatformLocation } from '@angular/common'
 
@@ -13,10 +13,10 @@ import { AuthRootComponent } from './components/root/root.component'
 import { SharedModule } from './modules/shared/shared.module'
 import { AuthNavigationComponent } from './components/auth-navigation/auth-navigation.component'
 import { ContentTOCResolver } from './services/content-resolve.service'
-import { TocComponent } from './routing/components/toc/toc.component'
-import { CreateModule } from './routing/modules/create/create.module'
+// import { TocComponent } from './routing/components/toc/toc.component'
+// import { CreateModule } from './routing/modules/create/create.module'
 import { AuthoringErrorHandler } from './services/error-handler.service'
-import { ViewerComponent } from './routing/components/viewer/viewer.component'
+// import { ViewerComponent } from './routing/components/viewer/viewer.component'
 import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 import { BtnPageBackModule } from '@sunbird-cb/collection'
 import { ApiService } from './modules/shared/services/api.service'
@@ -40,12 +40,10 @@ export function getBaseHref(platformLocation: PlatformLocation): string {
 }
 
 @NgModule({
-  declarations: [AuthRootComponent, AuthNavigationComponent, TocComponent, ViewerComponent],
+  declarations: [AuthRootComponent, AuthNavigationComponent],
   imports: [
     CommonModule,
     SharedModule,
-    CreateModule,
-    HomeModule,
     WsAuthorRootRoutingModule,
     PipeSafeSanitizerModule,
     BtnPageBackModule,

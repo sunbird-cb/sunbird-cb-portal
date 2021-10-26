@@ -1187,10 +1187,10 @@
   dependencies:
     tslib "^1.9.0"
 
-"@sunbird-cb/rain-dashboards@^0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/rain-dashboards/-/rain-dashboards-0.1.7.tgz#09e790120729a822e662fbf073560dca1002fd4a"
-  integrity sha512-tWt3JdjlSoeTtTUr3x5IjTVtPpvPXyp3htq515Xi4SVIQr1GfSW0ntfCTSC5T7K8LraC8/Ldqh/moyvjRCXXpA==
+"@sunbird-cb/rain-dashboards@^0.1.9":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/rain-dashboards/-/rain-dashboards-0.1.9.tgz#4684e3227ede1dfc7084409f345478a076c96f88"
+  integrity sha512-Ce0/7y9udNxLWo8wADtO3hthM+C2/9MOGObeBYCZJTjfD3JxBcxYCIR1YQPjRnfFdFUdPFrOlP9lSzJ+4UnAmw==
   dependencies:
     tslib "^1.9.0"
 
@@ -2409,10 +2409,10 @@ bonjour@^3.5.0:
     multicast-dns "^6.0.1"
     multicast-dns-service-types "^1.1.0"
 
-bootstrap@4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.1.1.tgz#3aec85000fa619085da8d2e4983dfd67cf2114cb"
-  integrity sha512-SpiDSOcbg4J/PjVSt4ny5eY6j74VbVSjROY4Fb/WIUXBV9cnb5luyR4KnPvNoXuGnBK1T+nJIWqRsvU3yP8Mcg==
+bootstrap@5.1.2:
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.1.2.tgz#99e87134e656582bc126cf99be7ffb2bae9b8a2e"
+  integrity sha512-me838a7TSEkldKyplkx21dqFm16+9NbH/rCj3Myo+h2cByyjckqV4m0OnS8QBsSDEoBv8R2jHqfulGQXpvM8Bw==
 
 boxen@^3.0.0:
   version "3.2.0"

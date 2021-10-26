@@ -498,7 +498,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             // It's understood that user is not already enrolled
             // Fetch the available batches and present to user
             if (this.content.primaryCategory === this.primaryCategory.COURSE
-              || this.content.primaryCategory === this.primaryCategory.PROGRAM) {
+              || this.content.primaryCategory !== this.primaryCategory.PROGRAM) {
               this.autoBatchAssign()
             } else {
               this.fetchBatchDetails()
