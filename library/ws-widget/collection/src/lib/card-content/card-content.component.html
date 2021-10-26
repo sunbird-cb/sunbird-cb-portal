@@ -658,7 +658,7 @@
             <div class="course_logo_box">
               <img [src]="widgetData.content.creatorLogo" class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
               [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
-              <p class="mat-subheading-1 margin-remove">IGOT</p>
+              <!-- <p class="mat-subheading-1 margin-remove">IGOT</p> -->
             </div>
           <div class="source-div" style="display: none;">
             <!-- [src]="sourseIcon(widgetData.content.sourceName)" -->
@@ -709,9 +709,9 @@
             </div>
 
             <div class="course_widget">
-              <mat-icon class="mat-icon ws-mat-default-text margin-right-xs">video_library</mat-icon>
+              <mat-icon class="mat-icon main_icon  ws-mat-default-text margin-right-xs">video_library</mat-icon>
               <ws-widget-display-content-type i18n-title title="Content Type" *ngIf="widgetData.content?.primaryCategory"
-                class="ws-mat-primary-text font-normal" [displayContentType]="widgetData.content?.primaryCategory==='Course Unit'
+                class="ws-mat-black60-text font-normal mat-caption text-uppercase" [displayContentType]="widgetData.content?.primaryCategory==='Course Unit'
                 ?'Module'
                 :widgetData.content?.primaryCategory">
                
@@ -760,7 +760,7 @@
                 <mat-icon>more_vertical</mat-icon>
                
               </button> -->
-              <mat-icon class="mat-icon ws-mat-black60-text">share</mat-icon>
+              <!-- <mat-icon class="mat-icon ws-mat-black60-text">share</mat-icon> -->
             </div>
           </div>
         </mat-card-content>
