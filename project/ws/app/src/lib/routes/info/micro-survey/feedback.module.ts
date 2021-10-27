@@ -30,7 +30,7 @@ import { WidgetResolverModule } from '@sunbird-cb/resolver'
     WidgetResolverModule,
     PipeSafeSanitizerModule,
     MicroSurveyModule,
-    BtnPageBackModule
+    BtnPageBackModule,
 
   ],
   exports: [FeedbackComponent],

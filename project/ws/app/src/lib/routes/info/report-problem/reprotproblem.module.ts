@@ -42,7 +42,7 @@ import { MicroSurveyModule } from '@sunbird-cb/micro-surveys'
     MatFormFieldModule,
     MatInputModule,
     MicroSurveyModule,
-    BtnPageBackModule
+    BtnPageBackModule,
   ],
   exports: [ReportproblemComponent],
 })

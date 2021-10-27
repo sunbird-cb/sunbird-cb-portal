@@ -8,7 +8,7 @@ import {
   MatIconModule,
   MatExpansionModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
 } from '@angular/material'
 import { BtnPageBackModule, LeftMenuModule } from '@sunbird-cb/collection'
 import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
