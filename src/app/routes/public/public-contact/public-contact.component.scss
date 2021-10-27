@@ -6,6 +6,9 @@
   margin-left: auto !important;
   margin-right: auto !important;
 }
+.faq_main_box{
+  padding-top: 45px;
+}
 h2.main_title_text {
   font-weight: 600!important;
 }
@@ -14,6 +17,15 @@ h2.main_title_text {
 }
 .flex-4 {
   flex: 4;
+}
+.faq_left_panel {
+  width: 175px;
+}
+.faq_right_panel {
+  margin-left: 30px;
+}
+.search_faq_form {
+  width: 100%;
 }
 .ws-active-route-menu:before {
   left:0!important;
@@ -67,7 +79,7 @@ h2.main_title_text {
 
 .contact-info {
   // padding: 16px 64px;
-  padding: 16px 0px 16px 16px;
+ padding:0;
   text-align: center;
 
   @include breakpoint-xs {
@@ -76,7 +88,8 @@ h2.main_title_text {
 }
 
 .faq-img-section {
-  padding: 16px 0px 16px 16px;
+  // padding: 16px 0px 16px 16px;
+  padding: 0;
 
   @include breakpoint-xs {
     padding: 8px 16px;

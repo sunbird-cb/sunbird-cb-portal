@@ -8,16 +8,15 @@ import { map, startWith } from 'rxjs/operators'
 import { Notify } from '@ws/author/src/lib/constants/notificationMessage'
 import { NotificationComponent } from '@ws/author/src/lib/modules/shared/components/notification/notification.component'
 import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
-import { LoaderService } from '@ws/author/src/lib/services/loader.service'
-import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
-import {
-  REVIEW_ROLE,
-  PUBLISH_ROLE,
-  CREATE_ROLE,
-  RESOURCE,
-  KBOARD,
-  CHANNEL,
-} from '@ws/author/src/lib/constants/content-role'
+// import { LoaderService } from '@ws/author/src/lib/services/loader.service'
+// import {
+//   REVIEW_ROLE,
+//   PUBLISH_ROLE,
+//   CREATE_ROLE,
+//   RESOURCE,
+//   KBOARD,
+//   CHANNEL,
+// } from '@ws/author/src/lib/constants/content-role'
 
 @Component({
   selector: 'ws-auth-root-dashboard',
@@ -43,12 +42,11 @@ export class DashboardComponent implements OnInit {
     private snackBar: MatSnackBar,
     private svc: DashBoardService,
     private router: Router,
-    private loaderService: LoaderService,
-    private accessService: AccessControlService,
-  ) {}
+    // private loaderService: LoaderService,
+  ) { }
 
   ngOnInit() {
-    this.loaderService.changeLoadState(false)
+    // this.loaderService.changeLoadState(false)
   }
 
   private filter(value: string): string[] {
@@ -73,10 +71,10 @@ export class DashboardComponent implements OnInit {
         mimeType = 'application/vnd.ekstep.content-collection'
         break
     }
-    this.loaderService.changeLoad.next(true)
+    // this.loaderService.changeLoad.next(true)
     this.svc.create({ contentType, mimeType }).subscribe(
       (id: string) => {
-        this.loaderService.changeLoad.next(false)
+        // this.loaderService.changeLoad.next(false)
         this.snackBar.openFromComponent(NotificationComponent, {
           data: {
             type: Notify.SUCCESS,
@@ -86,7 +84,7 @@ export class DashboardComponent implements OnInit {
         this.router.navigateByUrl(`/author/editor/${id}`)
       },
       () => {
-        this.loaderService.changeLoad.next(false)
+        // this.loaderService.changeLoad.next(false)
         this.snackBar.openFromComponent(NotificationComponent, {
           data: {
             type: Notify.CONTENT_FAIL,
@@ -98,27 +96,31 @@ export class DashboardComponent implements OnInit {
   }
 
   canShow(role: string, type = 'access'): boolean {
-    if (type === 'access') {
-      switch (role) {
-        case 'review':
-          return this.accessService.hasRole(REVIEW_ROLE)
-        case 'publish':
-          return this.accessService.hasRole(PUBLISH_ROLE)
-        case 'author':
-          return this.accessService.hasRole(CREATE_ROLE)
-        default:
-          return false
-      }
+    if (role && type) {
+
     }
-    switch (role) {
-      case 'curate':
-        return this.accessService.hasRole(RESOURCE)
-      case 'kboard':
-        return this.accessService.hasRole(KBOARD)
-      case 'channel':
-        return this.accessService.hasRole(CHANNEL)
-      default:
-        return false
-    }
+    // if (type === 'access') {
+    //   switch (role) {
+    //     case 'review':
+    //       return this.accessService.hasRole(REVIEW_ROLE)
+    //     case 'publish':
+    //       return this.accessService.hasRole(PUBLISH_ROLE)
+    //     case 'author':
+    //       return this.accessService.hasRole(CREATE_ROLE)
+    //     default:
+    //       return false
+    //   }
+    // }
+    // switch (role) {
+    //   case 'curate':
+    //     return this.accessService.hasRole(RESOURCE)
+    //   case 'kboard':
+    //     return this.accessService.hasRole(KBOARD)
+    //   case 'channel':
+    //     return this.accessService.hasRole(CHANNEL)
+    //   default:
+    //     return false
+    // }
+    return false
   }
 }

@@ -403,10 +403,12 @@ a:not([href]):not([tabindex]) {
     vertical-align: top;
   }
 
-  a.work_order_link {
-    color: #0074B6;
-    text-decoration: underline;
-  }
+ 
+}
+
+a.work_order_link {
+  // color: #0074B6;
+  text-decoration: underline!important;
 }
 
 

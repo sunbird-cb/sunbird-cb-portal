@@ -23,16 +23,16 @@
                     {{user?.firstName}} {{user?.lastName}}
                 </div> -->
                 <ws-app-connection-name [hoverUser]="user"></ws-app-connection-name>
-                <div class="designation ws-mat-black60-text" *ngIf="user?.employmentDetails">
+                <div class="designation ws-mat-black60-text mat-body-2" *ngIf="user?.employmentDetails">
                     {{user?.employmentDetails?.departmentName}}
                 </div>
-                <div class="designation ws-mat-black60-text" *ngIf="!user?.employmentDetails">
+                <div class="designation ws-mat-black60-text mat-body-2" *ngIf="!user?.employmentDetails">
                     {{user?.channel}}
                 </div>
             </div>
         </div>
         <div class="action-container flex items-center justify-center">
-            <button mat-stroked-button color="accent" type="button" class=" mat-accent-border flex-auto-display"
+            <button mat-stroked-button color="accent" type="button" class="connect_btn mat-accent-border flex-auto-display"
                 (click)="connetToUser()">
                 <span class="" i18n>Connect</span>
             </button>

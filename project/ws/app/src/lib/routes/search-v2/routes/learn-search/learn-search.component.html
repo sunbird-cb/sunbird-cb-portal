@@ -59,14 +59,27 @@
                         <p class="mat-caption margin-bottom-xxs" *ngIf="content.contentType === 'Module'">
                             <img src="/assets/icons/content/module.svg" class="contenticon" alt="Module"> MODULE
                         </p> -->
-                        <p class="mat-caption margin-bottom-xxs text-uppercase" *ngIf="content.contentType === 'Resource' || content.contentType === 'Course' || content.contentType === 'Module'">
-                            <img src="/assets/icons/content/audio.svg" class="contenticon" alt="Audio"  *ngIf="content.mimeType === 'audio/mpeg'"> 
-                            <img src="/assets/icons/content/assessment.svg" class="contenticon" alt="Assessment"  *ngIf="content.mimeType === 'application/json' || content.mimeType === 'application/quiz'"> 
-                            <img src="/assets/icons/content/pdf.svg" alt="PDF" class="contenticon" *ngIf="content.mimeType === 'application/pdf'"> 
-                            <img src="/assets/icons/content/video.svg" alt="Video" class="contenticon"  *ngIf="content.mimeType === 'video/mp4' || content.mimeType === 'video/x-youtube' || content.mimeType === 'application/x-mpegURL'"> 
-                            <img src="/assets/icons/content/collection.svg" class="contenticon" alt="Course"  *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection'">
-                            <img src="/assets/icons/content/link.svg" class="contenticon" alt="HTML"  *ngIf="content.mimeType === 'application/vnd.ekstep.html-archive' || content.mimeType === 'application/vnd.ekstep.ecml-archive' || content.mimeType === 'text/x-url'">
-                            <img src="/assets/icons/content/image.svg" class="contenticon" alt="Module"  *ngIf="content.mimeType === 'image/jpeg' || content.mimeType === 'image/png'">
+                        <p class="mat-caption ws-mat-black60-text margin-bottom-xxs text-uppercase" *ngIf="content.contentType === 'Resource' || content.contentType === 'Course' || content.contentType === 'Module'">
+
+                        <!-- <img src="/assets/icons/content/audio.svg" class="contenticon" alt="Audio"  *ngIf="content.mimeType === 'audio/mpeg'">  -->
+                        <mat-icon class="mat-icon ws-mat-default-text margin-right-xs notranslate material-icons mat-icon-no-color" *ngIf="content.mimeType === 'audio/mpeg'">mic</mat-icon>
+
+                        <!-- <img src="/assets/icons/content/assessment.svg" class="contenticon" alt="Assessment"  *ngIf="content.mimeType === 'application/json' || content.mimeType === 'application/quiz'">  -->
+                        <mat-icon class="mat-icon ws-mat-default-text margin-right-xs notranslate material-icons mat-icon-no-color" *ngIf="content.mimeType === 'application/json' || content.mimeType === 'application/quiz'">assessment</mat-icon>
+                        <!-- <img src="/assets/icons/content/pdf.svg" alt="PDF" class="contenticon" *ngIf="content.mimeType === 'application/pdf'">  -->
+                        <mat-icon class="mat-icon ws-mat-default-text margin-right-xs notranslate material-icons mat-icon-no-color" *ngIf="content.mimeType === 'application/pdf'">picture_as_pdf</mat-icon>
+
+                        <!-- <img src="/assets/icons/content/video.svg" alt="Video" class="contenticon"  *ngIf="content.mimeType === 'video/mp4' || content.mimeType === 'video/x-youtube' || content.mimeType === 'application/x-mpegURL'">  -->
+                        <mat-icon class="mat-icon ws-mat-default-text margin-right-xs notranslate material-icons mat-icon-no-color" *ngIf="content.mimeType === 'video/mp4' || content.mimeType === 'video/x-youtube' || content.mimeType === 'application/x-mpegURL'">videocam</mat-icon>
+
+                        <!-- <img src="/assets/icons/content/collection.svg" class="contenticon" alt="Course"  *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection'"> -->
+                        <mat-icon class="mat-icon ws-mat-default-text margin-right-xs notranslate material-icons mat-icon-no-color" *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection'">video_library</mat-icon>
+
+                        <!-- <img src="/assets/icons/content/link.svg" class="contenticon" alt="HTML"  *ngIf="content.mimeType === 'application/vnd.ekstep.html-archive' || content.mimeType === 'application/vnd.ekstep.ecml-archive' || content.mimeType === 'text/x-url'"> -->
+                        <mat-icon class="mat-icon ws-mat-default-text margin-right-xs notranslate material-icons mat-icon-no-color" *ngIf="content.mimeType === 'application/vnd.ekstep.html-archive' || content.mimeType === 'application/vnd.ekstep.ecml-archive' || content.mimeType === 'text/x-url'">attachment</mat-icon>
+
+                        <!-- <img src="/assets/icons/content/image.svg" class="contenticon" alt="Module"  *ngIf="content.mimeType === 'image/jpeg' || content.mimeType === 'image/png'"> -->
+                        <mat-icon class="mat-icon ws-mat-default-text margin-right-xs notranslate material-icons mat-icon-no-color" *ngIf="content.mimeType === 'image/jpeg' || content.mimeType === 'image/png'">image</mat-icon>
                             {{content.primaryCategory || content.contentType}}
                         </p>
                         
