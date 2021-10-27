@@ -10,7 +10,7 @@ import {
   MatButtonModule,
   MatCardModule,
 } from '@angular/material'
-import { BtnPageBackNavModule } from '@sunbird-cb/collection'
+import { BtnPageBackModule, BtnPageBackNavModule } from '@sunbird-cb/collection'
 import { HorizontalScrollerModule, PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 
@@ -30,6 +30,7 @@ import { WidgetResolverModule } from '@sunbird-cb/resolver'
     WidgetResolverModule,
     PipeSafeSanitizerModule,
     MicroSurveyModule,
+    BtnPageBackModule,
 
   ],
   exports: [FeedbackComponent],
