@@ -28,7 +28,7 @@
                   <mat-progress-bar class="green-progress" [color]="color"
                   mode="determinate"
                   [value]="value"></mat-progress-bar>
-                  <p class="mat-h3 margin-remove">{{(filteredCompetencies) ? filteredCompetencies.length : 0}}</p>
+                  <p class="mat-h3 margin-remove">{{ ((filteredCompetencies) ? filteredCompetencies.length : 0 ) + ((watCompetencies) ? watCompetencies.length : 0 )}}</p>
                   <p class="mat-body-2">Recommended competencies</p>
                 </div>
               </div>
