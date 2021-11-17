@@ -54,6 +54,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   errorCode: NsAppToc.EWsTocErrorCode | null = null
   resumeData: any = null
   batchData: NsContent.IBatchListResponse | null = null
+  currentCourseBatchId: string | null = null
   userEnrollmentList = null
   routeSubscription: Subscription | null = null
   pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
@@ -256,26 +257,26 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (this.historyData) {
       if (this.historyData.path === 'Search') {
         const searchurl = `/app/globalsearch`
-         const  qParam = {
-           q: this.historyData.param,
-         }
-         // tslint:disable-next-line:max-line-length
-         this.breadcrumbs = { url: 'home', titles: [{ title: 'Search', url: searchurl, queryParams: qParam }, { title: 'Details', url: 'none' }] }
-       } else if (this.historyData.path === 'competency-details') {
-         const finalUrl = `/app/learn/browse-by/competency/${this.historyData.param}`
-         // tslint:disable-next-line: max-line-length
-         this.breadcrumbs = { url: 'home', titles: [{ title: this.historyData.param, url: finalUrl }, { title: 'Details', url: 'none' }] }
-       } else if (this.historyData.path === 'all-CBP') {
-         const finalURL = `/app/learn/browse-by/provider/${this.historyData.param}`
-         this.breadcrumbs = { url: 'home', titles: [{ title: `all CBP's`, url: finalURL }, { title: 'Details', url: 'none' }] }
-       } else if (this.historyData.path === 'all-competencies') {
+        const qParam = {
+          q: this.historyData.param,
+        }
+        // tslint:disable-next-line:max-line-length
+        this.breadcrumbs = { url: 'home', titles: [{ title: 'Search', url: searchurl, queryParams: qParam }, { title: 'Details', url: 'none' }] }
+      } else if (this.historyData.path === 'competency-details') {
+        const finalUrl = `/app/learn/browse-by/competency/${this.historyData.param}`
+        // tslint:disable-next-line: max-line-length
+        this.breadcrumbs = { url: 'home', titles: [{ title: this.historyData.param, url: finalUrl }, { title: 'Details', url: 'none' }] }
+      } else if (this.historyData.path === 'all-CBP') {
+        const finalURL = `/app/learn/browse-by/provider/${this.historyData.param}`
+        this.breadcrumbs = { url: 'home', titles: [{ title: `all CBP's`, url: finalURL }, { title: 'Details', url: 'none' }] }
+      } else if (this.historyData.path === 'all-competencies') {
         const finalUrl = `/app/learn/browse-by/competency/all-competencies`
         // tslint:disable-next-line: max-line-length
         this.breadcrumbs = { url: 'home', titles: [{ title: 'all competencies', url: finalUrl }, { title: 'Details', url: 'none' }] }
-       } else {
-         // tslint:disable-next-line:max-line-length
-         this.breadcrumbs = { url: 'home', titles: [{ title: 'Learn', url: '/page/learn', icon: 'school' }, { title: 'Details', url: 'none' }] }
-       }
+      } else {
+        // tslint:disable-next-line:max-line-length
+        this.breadcrumbs = { url: 'home', titles: [{ title: 'Learn', url: '/page/learn', icon: 'school' }, { title: 'Details', url: 'none' }] }
+      }
     }
   }
   ngOnDestroy() {
@@ -476,6 +477,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           }
           // If current course is present in the list of user enrolled course
           if (enrolledCourse && enrolledCourse.batchId) {
+            this.currentCourseBatchId = enrolledCourse.batchId
             // const collectionId = this.isResource ? '' : this.content.identifier
             this.content.completionPercentage = enrolledCourse.completionPercentage || 0
             this.content.completionStatus = enrolledCourse.status || 0
