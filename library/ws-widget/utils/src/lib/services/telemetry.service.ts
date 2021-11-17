@@ -18,6 +18,8 @@ export class TelemetryService {
   previousUrl: string | null = null
   telemetryConfig: NsInstanceConfig.ITelemetryConfig | null = null
   pData: any = null
+  contextCdata = []
+
   externalApps: any = {
     RBCP: 'rbcp-web-ui',
   }
@@ -216,13 +218,13 @@ export class TelemetryService {
             id: page.objectId,
           },
         } : {
-            context: {
-              pdata: {
-                ...this.pData,
-                id: this.externalApps[impressionData.subApplicationName],
-              },
+          context: {
+            pdata: {
+              ...this.pData,
+              id: this.externalApps[impressionData.subApplicationName],
             },
-          }
+          },
+        }
         $t.impression(impressionData.data, externalConfig)
       }
     } catch (e) {
@@ -342,7 +344,7 @@ export class TelemetryService {
                 type: event.data.type,
                 subtype: event.data.subType,
                 // object: event.data.object,
-                id: event.data.object.contentId || event.data.object.id || interactid || '',
+                id: (event.data.object) ? event.data.object.contentId || event.data.object.id || interactid || '' : '',
                 pageid: page.pageid,
                 // target: { page },
               },

@@ -68,7 +68,9 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     public createBatchDialog: MatDialog,
     private mobileAppsSvc: MobileAppsService,
     public configSvc: ConfigurationsService,
-    private connectionHoverService: ConnectionHoverService
+    private connectionHoverService: ConnectionHoverService,
+    // private discussionEventsService: DiscussionEventsService
+
   ) {
     if (this.configSvc.restrictedFeatures) {
       this.askAuthorEnabled = !this.configSvc.restrictedFeatures.has('askAuthor')
