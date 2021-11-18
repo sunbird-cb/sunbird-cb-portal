@@ -1,9 +1,15 @@
-
 h1 {
     text-align: center;
     font-family: Tahoma, Arial, sans-serif;
     color: #06D85F;
     margin: 80px 0;
+}
+
+.cdk-overlay-pane {
+    .mat-dialog-container {
+        background-color: transparent!important;
+        box-shadow: none!important;
+    }
 }
 
 .main-text-box {
@@ -12,6 +18,10 @@ h1 {
     background-size: cover;
     height: 620px;
     padding-top: 150px;
+    box-sizing: border-box;
+    // background-attachment: fixed;
+    // border-left: 5px solid #3C3E62;
+    // border-right: 5px solid #3C3E62;
 }
 
 .box {
@@ -64,7 +74,8 @@ h1 {
     // width: 1195px;
     height: 620px;
     position: relative;
-    border: 5px solid #3C3E62;
+    // border: 5px solid #3C3E62;
+    // overflow: hidden;
 }
 
 .popup h2 {
@@ -165,6 +176,7 @@ a.download_btn {
     font-weight: 600;
     margin-top: 16px;
 }
+
 .signing_name {
     font-size: 16px;
     line-height: 24px;
@@ -174,6 +186,7 @@ a.download_btn {
     margin: 0;
     text-align: center;
 }
+
 .signing_designation {
     font-size: 14px;
     line-height: 20px;
@@ -184,29 +197,40 @@ a.download_btn {
     text-align: center;
     margin-top: 5px;
 }
+
 .bottom_text_box {
-    margin: 250px auto 0px auto;
-    width: 70%;
+    margin: 110px auto 0px auto;
+    width: 80%;
 }
-.text_box_left{
-    width:48%;
+
+.text_box_left {
+    width: 48%;
     float: left;
 }
+
 .scan_img_box {
     width: 48%;
     float: right;
     text-align: center;
 }
+
 .scan_img_box img {
-    height: 65px;
-    width: 65px;
+    height: 45px;
+    width: 45px;
     margin-top: -45px;
 }
+
 .scan_font {
     font-size: 14px;
     color: #3B3D62;
-    margin-top: 5px;
+    margin-bottom: 0px;
 }
+
+.download_icon {
+    font-size: 16px;
+    vertical-align: text-top;
+}
+
 @media screen and (max-width: 700px) {
     .box {
         width: 70%;

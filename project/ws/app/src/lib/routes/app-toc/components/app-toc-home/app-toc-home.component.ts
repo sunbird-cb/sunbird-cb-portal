@@ -975,6 +975,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.dialog.open(CertificateDialogComponent,{
         // height: '400px',
         width: '1300px',
+        
     })
   }
 
