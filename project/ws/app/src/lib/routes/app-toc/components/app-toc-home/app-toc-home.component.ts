@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild } from '@angular/core'
+import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core'
 import { ActivatedRoute, Event, Data, Router, NavigationEnd } from '@angular/router'
 import {
   NsContent,
@@ -25,7 +25,7 @@ import _ from 'lodash'
 import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { ActionService } from '../../services/action.service'
 import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
-
+import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
 export enum ErrorType {
   internalServer = 'internalServer',
   serviceUnavailable = 'serviceUnavailable',
@@ -126,6 +126,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   disableEnrollBtn = false
   isAssessVisible = false
   isPracticeVisible = false
+  certificateOpen = false
   breadcrumbs: any
   historyData: any
   @HostListener('window:scroll', ['$event'])
@@ -968,6 +969,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     } catch (e) {
       return true
     }
+  }
+
+  openCertificateDialog(){
+    this.dialog.open(CertificateDialogComponent,{
+        // height: '400px',
+        width: '1300px',
+    })
   }
 
   openFeedbackDialog(content: any): void {

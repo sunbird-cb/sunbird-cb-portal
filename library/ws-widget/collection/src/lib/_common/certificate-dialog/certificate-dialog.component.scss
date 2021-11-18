@@ -1,0 +1,217 @@
+
+h1 {
+    text-align: center;
+    font-family: Tahoma, Arial, sans-serif;
+    color: #06D85F;
+    margin: 80px 0;
+}
+
+.main-text-box {
+    // background-image: url('Certificate.svg');
+    background-position: center;
+    background-size: cover;
+    height: 620px;
+    padding-top: 150px;
+}
+
+.box {
+    width: 40%;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 35px;
+    border: 2px solid #fff;
+    border-radius: 20px/50px;
+    background-clip: padding-box;
+    text-align: center;
+}
+
+.button {
+    font-size: 1em;
+    padding: 10px;
+    color: #fff;
+    border: 2px solid #06D85F;
+    border-radius: 20px/50px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+}
+
+.button:hover {
+    background: #06D85F;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    opacity: 0;
+    overflow-y: auto;
+}
+
+.overlay:target {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup {
+    margin: 0px auto;
+    background: transparent;
+    border-radius: 5px;
+    // width: 1195px;
+    height: 620px;
+    position: relative;
+    border: 5px solid #3C3E62;
+}
+
+.popup h2 {
+    margin-top: 0;
+    color: #333;
+    font-family: Tahoma, Arial, sans-serif;
+}
+
+.popup .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+}
+
+.popup .close:hover {
+    color: #06D85F;
+}
+
+.popup .content {
+    max-height: 30%;
+    overflow: auto;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.heading-text {
+    font-size: 36px;
+    font-family: 'Montserrat';
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 48px;
+    color: #3B3D62;
+    margin: 0;
+}
+
+.sub-heading-text {
+    font-size: 24px;
+    line-height: 36px;
+    font-family: 'Montserrat';
+    font-weight: 600;
+    text-transform: capitalize;
+    color: #3B3D62;
+    margin: 0;
+}
+
+.text-box {
+    width: 300px;
+    border: 1px solid #1C517B;
+    height: 40px;
+    text-align: center;
+    margin: 15px auto 30px auto;
+}
+
+.box-text {
+    font-size: 18px;
+    line-height: 40px;
+    font-family: 'Montserrat';
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #3B3D62;
+    margin: 0;
+}
+
+.bottom-line {
+    border-bottom: 1px solid #1C517B;
+    margin: 15px auto;
+    width: 410px;
+}
+
+.normal-text {
+    font-size: 16px;
+    line-height: 24px;
+    font-family: 'Montserrat';
+    font-weight: 400;
+    color: #3B3D62;
+    margin: 0;
+    text-align: center;
+}
+
+a.download_btn {
+    background-color: #f0f0f0;
+    border-radius: 4px 4px;
+    float: right;
+    height: 40px;
+    padding: 0px 16px;
+    text-align: center;
+    line-height: 40px;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 16px;
+}
+.signing_name {
+    font-size: 16px;
+    line-height: 24px;
+    font-family: 'Montserrat';
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.87);
+    margin: 0;
+    text-align: center;
+}
+.signing_designation {
+    font-size: 14px;
+    line-height: 20px;
+    font-family: 'Montserrat';
+    font-weight: 400;
+    color: #3B3D62;
+    margin: 0;
+    text-align: center;
+    margin-top: 5px;
+}
+.bottom_text_box {
+    margin: 250px auto 0px auto;
+    width: 70%;
+}
+.text_box_left{
+    width:48%;
+    float: left;
+}
+.scan_img_box {
+    width: 48%;
+    float: right;
+    text-align: center;
+}
+.scan_img_box img {
+    height: 65px;
+    width: 65px;
+    margin-top: -45px;
+}
+.scan_font {
+    font-size: 14px;
+    color: #3B3D62;
+    margin-top: 5px;
+}
+@media screen and (max-width: 700px) {
+    .box {
+        width: 70%;
+    }
+    .popup {
+        width: 70%;
+    }
+}

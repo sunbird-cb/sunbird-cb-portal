@@ -150,8 +150,7 @@ TODO: edit option while preview Mode
                 i18n>Register</a>
             </ng-container>
             <ng-container>
-              =====
-              {{content?.primaryCategory}} {{ currentCourseBatchId}}
+                {{content?.primaryCategory}} {{ currentCourseBatchId}}
             </ng-container>
           </div>
         </ng-container>
@@ -171,6 +170,18 @@ TODO: edit option while preview Mode
       </div>
 
       <p class="mt-5 mb-5 info-msg" *ngIf="content?.isInIntranet && showIntranetMsg">
+     <!--======== certificate section ========== -->
+
+     <div (click)="openCertificateDialog()" *ngIf='content?.completionStatus == 2' class="margin-bottom-xs">
+
+        <a  class="certificate_box">
+            <img src="assets/images/banners/certificate.jpg" class="certificate_banner" />
+            <div class="certificate_overlay"></div>
+            <p class="certificate_text mat-body-2 font-weight-bold text-center margin-bottom-xs">Completion certificate</p>
+        </a>
+    </div>
+
+    <p class="mt-5 mb-5 info-msg" *ngIf="content?.isInIntranet && showIntranetMsg">
         <mat-icon class="align-bottom">info</mat-icon>&nbsp;
         <ng-container i18n>This can be viewed only in the Intranet.</ng-container>
       </p>
