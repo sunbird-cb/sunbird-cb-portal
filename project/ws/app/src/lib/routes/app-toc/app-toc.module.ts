@@ -108,6 +108,7 @@ import { AllDiscussionWidgetComponent } from '../discuss/widget/all-discussion-w
 import { TagWidgetComponent } from '../discuss/widget/tag-widget/tag-widget.component'
 import { ActionService } from './services/action.service'
 import { ConnectionNameModule } from '@sunbird-cb/collection/src/lib/_common/connection-name/connection-name.module'
+import { CertificateDialogModule } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.module'
 
 @NgModule({
   declarations: [
@@ -180,6 +181,7 @@ import { ConnectionNameModule } from '@sunbird-cb/collection/src/lib/_common/con
     BtnContentFeedbackModule,
     BtnContentFeedbackV2Module,
     ContentRatingV2DialogModule,
+    CertificateDialogModule,  
     BtnGoalsModule,
     BtnPlaylistModule,
     BtnMailUserModule,
