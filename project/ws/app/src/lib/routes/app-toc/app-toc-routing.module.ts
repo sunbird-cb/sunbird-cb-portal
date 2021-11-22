@@ -21,6 +21,8 @@ const routes: Routes = [
     data: {
       pageType: 'feature',
       pageKey: 'toc',
+      pageId: ':do_ID',
+      module: 'Learn',
     },
     resolve: {
       pageData: PageResolve,
@@ -49,6 +51,10 @@ const routes: Routes = [
       {
         path: 'overview',
         component: AppTocSinglePageRootComponent,
+        data: {
+          pageId: 'overview',
+          module: 'Learn',
+        },
       },
       {
         path: 'discussion',
@@ -57,6 +63,10 @@ const routes: Routes = [
       {
         path: 'single-page-view',
         component: AppTocSinglePageRootComponent,
+        data: {
+          pageId: 'overview',
+          module: 'Learn',
+        },
       },
       {
         path: 'certification',

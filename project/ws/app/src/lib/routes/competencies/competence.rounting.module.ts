@@ -26,6 +26,10 @@ const routes: Routes = [
       {
         path: 'home',
         component: CompetenceAllComponent,
+        data: {
+          pageId: 'home',
+          module: 'competency',
+        },
         resolve: {
           profile: ProfileResolve,
           // configData: ConfigurationsService,
@@ -35,6 +39,10 @@ const routes: Routes = [
       {
         path: 'all',
         component: CompetencyAllWrapperComponent,
+        data: {
+          pageId: 'all',
+          module: 'competency',
+        },
         resolve: {
           profile: ProfileResolve,
           // configData: ConfigurationsService,
@@ -53,6 +61,10 @@ const routes: Routes = [
           {
             path: 'list',
             component: CompetenceSysComponent,
+            data: {
+              pageId: 'list',
+              module: 'competency',
+            },
             resolve: {
               profile: ProfileResolve,
               // configData: ConfigurationsService,
@@ -62,6 +74,10 @@ const routes: Routes = [
           {
             path: ':competencyId/:competencyName/:routeType',
             component: CompetencyDetailedViewComponent,
+            data: {
+              pageId: ':competencyId/:competencyName/:routeType',
+              module: 'competency',
+            },
           },
         ],
       },

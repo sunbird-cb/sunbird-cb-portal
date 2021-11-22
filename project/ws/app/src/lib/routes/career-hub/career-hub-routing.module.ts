@@ -19,6 +19,10 @@ const routes: Routes = [
       {
         path: 'home',
         component: CareersComponent,
+        data: {
+          pageId: 'home',
+          module: 'careers',
+        },
         resolve: {
           topics: CareerRecentResolve,
         },
@@ -26,9 +30,11 @@ const routes: Routes = [
       {
         path: 'home/:topicId/:topicName',
         component: CareerDetailComponent,
-        // data: {
-        //   load: ['ckeditor'],
-        // },
+        data: {
+          // load: ['ckeditor'],
+          pageId: 'home',
+          module: 'careers',
+        },
         resolve: {
           topic: CareerDetailResolve,
         },
