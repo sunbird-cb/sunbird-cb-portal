@@ -165,9 +165,13 @@ export class TelemetryService {
     }
   }
 
-  impression() {
+  impression(data?: any) {
     try {
       const page = this.getPageDetails()
+      if (data) {
+        page.pageid = data.pageId
+        page.module = data.pageModule
+      }
       const edata = {
         pageid: page.pageid, // Required. Unique page id
         type: page.pageUrlParts[0], // Required. Impression type (list, detail, view, edit, workflow, search)
@@ -180,6 +184,7 @@ export class TelemetryService {
               ...this.pData,
               id: this.pData.id,
             },
+            env: page.module || (this.telemetryConfig && this.telemetryConfig.env),
           },
           object: {
             id: page.objectId,
@@ -193,6 +198,7 @@ export class TelemetryService {
               ...this.pData,
               id: this.pData.id,
             },
+            env: page.module,
           },
         })
       }
@@ -506,6 +512,7 @@ export class TelemetryService {
       pageUrlParts: path.split('/'),
       refferUrl: this.previousUrl,
       objectId: this.extractContentIdFromUrlParts(path.split('/')),
+      module: '',
     }
   }
 
