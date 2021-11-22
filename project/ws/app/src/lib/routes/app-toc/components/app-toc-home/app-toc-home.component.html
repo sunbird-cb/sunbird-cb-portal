@@ -123,9 +123,19 @@ TODO: edit option while preview Mode
             </ng-container>
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.PROGRAM">
               <ng-container *ngIf="!(content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId)">
-                <span class="mat-subheading-1"> You are not invited for this Program.</span>
+                <span class="mat-subheading-1" i18n> You are not invited for this Program.</span>
+              </ng-container>
+              <ng-container *ngIf="!isBatchInProgress && !!currentCourseBatchId && getStartDate === 'NA'">
+                <span class="mat-subheading-1" i18n> No Active Batches!!.</span>
+              </ng-container>
+              <ng-container *ngIf="!isBatchInProgress && currentCourseBatchId && getStartDate !== 'NA'">
+                <span class="mat-subheading-1" i18n> Batch will start {{getStartDate}}!!.</span>
+              </ng-container>
+              <ng-container *ngIf="!this.content['batches'] || this.content['batches']?.length <= 0">
+                <span class="mat-subheading-1" i18n> No Active Batches!.</span>
               </ng-container>
               <ng-container *ngIf="
+              isBatchInProgress && 
               (actionBtnStatus === 'grant' &&
               !(isMobile && content?.isInIntranet) &&
              (content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId))
@@ -150,8 +160,6 @@ TODO: edit option while preview Mode
                 i18n>Register</a>
             </ng-container>
             <ng-container>
-              =====
-              {{content?.primaryCategory}} {{ currentCourseBatchId}}
             </ng-container>
           </div>
         </ng-container>
