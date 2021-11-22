@@ -25,6 +25,7 @@ import _ from 'lodash'
 import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { ActionService } from '../../services/action.service'
 import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
+import moment from 'moment'
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -325,7 +326,30 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     return false
   }
-
+  get getStartDate() {
+    if (this.content) {
+      const batch = _.first(_.filter(this.content['batches'], { batchId: this.currentCourseBatchId }) || [])
+      if (_.get(batch, 'startDate')) {
+        return moment(_.get(batch, 'startDate')).toNow(false)
+      }
+      return 'NA'
+    } return 'NA'
+  }
+  get isBatchInProgress() {
+    if (this.content && this.content['batches']) {
+      // const batches = this.content['batches'] as NsContent.IBatch
+      if (this.currentCourseBatchId) {
+        const now = moment()
+        const batch = _.first(_.filter(this.content['batches'], { batchId: this.currentCourseBatchId }) || [])
+        return (
+          // batch.status &&
+          moment(batch.startDate).isSameOrBefore(now)
+          && moment(batch.endDate || new Date()).isSameOrAfter(now)
+        )
+      }
+      return false
+    } return false
+  }
   private initData(data: Data) {
     const initData = this.tocSvc.initData(data, true)
     this.content = initData.content
