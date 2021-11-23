@@ -1,40 +1,4 @@
-<!-- <img src="assets/images/banners/certificate.jpg" class="certificate_banner" /> -->
-
-<div class="popup">
-    <div class="main-text-box text-center" [ngStyle]="{ 'background-image': 'url(assets/images/banners/Certificate.svg)' }">
-
-        <!-- <img src="assets/images/banners/Certificate.svg" /> -->
-        <div>
-            <h1 class="heading-text">CERTIFICATE</h1>
-        </div>
-
-        <div class="text-box">
-            <h4 class="box-text">PROUDLY PRESENTED TO</h4>
-        </div>
-        <div>
-            <h2 class="sub-heading-text">Shilpa Jain</h2>
-            <div class="bottom-line"></div>
-        </div>
-
-        <div>
-            <p class="normal-text">For completing the course <b>Overview of Administrative law </b>on <b>08/07/2021</b></p>
-        </div>
-
-        <div class="bottom_text_box">
-            <div class="text_box_left">
-                <h4 class="signing_name">Ravindu Krishna</h4>
-                <p class="scan_font">Secretary Karmayogi Bharat</p>
-            </div>
-            <div class="scan_img_box">
-                <img src="assets/images/banners/scan.jpg">
-                <p class="scan_font">Scan to verify</p>
-            </div>
-        </div>
-
-    </div>
-
-    <a href="" class="download_btn">
-        <mat-icon class="mat-icon material-icons-outlined download_icon margin-right-xs">cloud_download</mat-icon>
-        Download</a>
-
-</div>
+<img [src]="url| pipeSafeSanitizer: 'url'">
+<a class="download_btn" (click)='dwonloadCert()'>
+    <mat-icon class="mat-icon material-icons-outlined download_icon margin-right-xs">cloud_download</mat-icon>
+    Download</a>

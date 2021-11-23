@@ -165,7 +165,7 @@ TODO: edit option while preview Mode
                 <div (click)="openCertificateDialog()" class="margin-bottom-xs">
 
                     <a class="certificate_box">
-                        <img src="assets/images/banners/certificate.jpg" class="certificate_banner" />
+                        <img [src]="certData| pipeSafeSanitizer: 'url'" class="certificate_banner" />
                         <div class="certificate_overlay"></div>
                         <p class="certificate_text mat-body-2 font-weight-bold text-center margin-bottom-xs">Completion certificate</p>
                     </a>

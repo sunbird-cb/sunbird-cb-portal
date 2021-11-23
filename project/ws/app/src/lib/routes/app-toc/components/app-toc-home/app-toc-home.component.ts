@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core'
+import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild } from '@angular/core'
 import { ActivatedRoute, Event, Data, Router, NavigationEnd } from '@angular/router'
 import {
   NsContent,
@@ -26,6 +26,7 @@ import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/a
 import { ActionService } from '../../services/action.service'
 import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
 import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
+
 export enum ErrorType {
   internalServer = 'internalServer',
   serviceUnavailable = 'serviceUnavailable',
@@ -129,6 +130,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   certificateOpen = false
   breadcrumbs: any
   historyData: any
+  courseCompleteState: number = 2
+  certData: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -482,6 +485,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             // const collectionId = this.isResource ? '' : this.content.identifier
             this.content.completionPercentage = enrolledCourse.completionPercentage || 0
             this.content.completionStatus = enrolledCourse.status || 0
+            this.certificateDownloadTrigger(this.content.completionStatus, enrolledCourse.batchId)
             this.getContinueLearningData(this.content.identifier, enrolledCourse.batchId)
             this.batchData = {
               content: [enrolledCourse.batch],
@@ -525,6 +529,57 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     return batchId
   }
 
+  certificateDownloadTrigger(courseState: number, batchId: string) {
+    if (courseState === this.courseCompleteState && this.content && this.configSvc.userProfile) {
+      let body = {
+        request: {
+          courseId: this.content.identifier,
+          batchId: batchId,
+          userIds: [
+            this.configSvc.userProfile.userId
+          ]
+        }
+      }
+      this.contentSvc.issueCert(body).subscribe(resp => {
+        if (resp.responseCode === 'OK') {
+          this.checkIfCertIsReady(this.configSvc.userProfile.userId)
+        
+        }
+      })
+    }
+  }
+
+  downloadCert(certidArr: any){
+    let certId = certidArr[0].identifier
+    
+     this.contentSvc.downloadCert('4fab7ba4-ba44-4fec-820c-9c9e989c1e87').subscribe(response => {
+       let url = response.result.printUri
+       this.certData =  response.result.printUri
+      // var win = window.open();
+      // win.document.write('<iframe src="' + url  + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
+      // // const doc = new jsPDF();
+
+      // var str = doc.output(response.result.printUri);
+
+      // var iframe = "<iframe width='100%' height='100%' src='" + str + "'></iframe>"
+      // var x = window.open();
+      // x.document.open();
+      // x.document.write(iframe);
+      // x.document.close();
+          })
+  }
+
+  openCertificateDialog(){
+    let cet = this.certData
+    this.dialog.open(CertificateDialogComponent,{
+        // height: '400px',
+        width: '1300px',
+        data: {cet}
+    })
+  }
+
+
+
   public autoBatchAssign() {
     if (this.content && this.content.identifier) {
       this.contentSvc.autoAssignBatchApi(this.content.identifier).subscribe(
@@ -534,6 +589,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             enrolled: true,
           }
           if (this.getBatchId()) {
+            this.createCertTemplate(this.getBatchId(), this.content.identifier)
+
             this.router.navigate(
               [],
               {
@@ -545,6 +602,69 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         }
       )
     }
+  }
+
+  createCertTemplate(batchId: string, courseId: string) {
+    let body = {
+      "request": {
+        "batch": {
+          "batchId": batchId,
+          "courseId": courseId,
+          "template": {
+            "template": "https://igot.blob.core.windows.net/content/content/do_113415159382810624195/artifact/do_113415159382810624195_1637592756199_certificate-shilpa-jain-with-text-2.svg",
+            "identifier": "do_113415159382810624195",
+            "previewUrl": "https://igot.blob.core.windows.net/content/content/do_113415159382810624195/artifact/do_113415159382810624195_1637592756199_certificate-shilpa-jain-with-text-2.svg",            "criteria": {
+              "enrollment": {
+                "status": 2
+              }
+            },
+            "name": "Completion Certificate",
+            "issuer": {
+              "name": "in",
+              "url": "https://diksha.gov.in/gj/"
+            },
+            "signatoryList": [
+              {
+                "image": "https://diksha.gov.in/gj/header-logo.png",
+                "name": "Govt Of India",
+                "id": "in",
+                "designation": "Home Minister"
+              }
+            ]
+          }
+        }
+      }
+
+    }
+    this.contentSvc.addCertTemplate(body).subscribe(resp => {
+      console.log(resp)
+    })
+  }
+
+  checkIfCertIsReady(userId) {
+    this.userSvc.fetchUserBatchList(userId).subscribe(
+      (courses: NsContent.ICourse[]) => {
+        let enrolledCourse: NsContent.ICourse | undefined
+        if (this.content && this.content.identifier && !this.forPreview) {
+          if (courses && courses.length) {
+            enrolledCourse = courses.find(course => {
+              const identifier = this.content && this.content.identifier || ''
+              if (course.courseId !== identifier) {
+                return undefined
+              }
+              return course
+            })
+          }
+          // If current course is present in the list of user enrolled course
+          if (enrolledCourse && enrolledCourse.batchId) {
+           this.downloadCert(enrolledCourse.issuedCertificates )
+          }
+        }
+      },
+      (error: any) => {
+        this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
+      },
+    )
   }
 
   public fetchBatchDetails() {
@@ -969,14 +1089,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     } catch (e) {
       return true
     }
-  }
-
-  openCertificateDialog(){
-    this.dialog.open(CertificateDialogComponent,{
-        // height: '400px',
-        width: '1300px',
-        
-    })
   }
 
   openFeedbackDialog(content: any): void {
