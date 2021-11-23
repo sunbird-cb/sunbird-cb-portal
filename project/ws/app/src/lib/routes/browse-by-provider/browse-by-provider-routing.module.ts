@@ -15,12 +15,20 @@ const routes: Routes = [
   {
     path: 'all-providers',
     component: AllProvidersComponent,
+    data: {
+      pageId: 'all-providers',
+      module: 'Learn',
+    },
   },
   {
     path: ':provider',
     // pathMatch: 'full',
     component: ProviderDetailsComponent,
     // redirectTo: 'overview',
+    data: {
+      pageId: ':provider-name',
+      module: 'Learn',
+    },
     children: [
       {
         path: '',
@@ -29,14 +37,26 @@ const routes: Routes = [
       {
         path: 'overview',
         component: ProviderOverviewComponent,
+        data: {
+          pageId: 'overview',
+          module: 'explore',
+        },
       },
       {
         path: 'all-CBP',
         component: ProviderAllCbpComponent,
+        data: {
+          pageId: 'all-CBP',
+          module: 'explore',
+        },
       },
       {
         path: 'insights',
         component: InsightsComponent,
+        data: {
+          pageId: 'insights',
+          module: 'explore',
+        },
       },
     ],
   },

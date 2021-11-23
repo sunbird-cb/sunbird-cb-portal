@@ -16,6 +16,10 @@ const routes: Routes = [
       {
         path: 'me',
         component: ProfileViewComponent,
+        data: {
+          pageId: 'me',
+          module: 'profile',
+        },
         resolve: {
           profile: Profilev2Resolve,
           badges: Profilev2BadgesResolve,
@@ -25,6 +29,10 @@ const routes: Routes = [
       {
         path: ':userId',
         component: ProfileViewComponent,
+        data: {
+          pageId: ':userId',
+          module: 'newtwork',
+        },
         resolve: {
           profile: Profilev2Resolve,
           badges: Profilev2BadgesResolve,
