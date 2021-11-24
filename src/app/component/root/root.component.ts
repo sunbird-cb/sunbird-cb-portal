@@ -15,6 +15,8 @@ import {
   NavigationError,
   NavigationStart,
   Router,
+  ActivatedRoute,
+  ActivatedRouteSnapshot,
 } from '@angular/router'
 // import { interval, concat, timer } from 'rxjs'
 import { BtnPageBackService } from '@sunbird-cb/collection'
@@ -63,9 +65,11 @@ export class RootComponent implements OnInit, AfterViewInit {
   isSetupPage = false
   processed: any
   loginToken: any
+  currentRouteData: any = []
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private appRef: ApplicationRef,
     private logger: LoggerService,
     private swUpdate: SwUpdate,
@@ -188,7 +192,31 @@ export class RootComponent implements OnInit, AfterViewInit {
       }
 
       if (event instanceof NavigationEnd) {
-        this.telemetrySvc.impression()
+        // let snapshot = this.router.routerState.firstChild(this.activatedRoute).snapshot
+        // console.log('this.route.snapshot :: ', this.route.snapshot)
+        const snapshot = this.route.snapshot
+        // console.log('root.snapshot.root.firstChild ', snapshot.root.firstChild)
+        // console.log('firstChild ', snapshot.firstChild)
+        const firstChild = snapshot.root.firstChild
+        const data = {
+          pageId: '',
+          pageModule: '',
+        }
+        this.getChildRouteData(snapshot, firstChild)
+        // console.log('Final currentDataRoute', this.currentRouteData)
+        this.currentRouteData.map((rd: any) => {
+          data.pageId = `${data.pageId}/${rd.pageId}`
+          if (rd.module) {
+            data.pageModule = rd.module
+          }
+        })
+        // console.log('data: ', data)
+        if (data.pageId && data.pageModule) {
+          this.telemetrySvc.impression(data)
+        } else {
+          this.telemetrySvc.impression()
+        }
+        this.currentRouteData = []
         // if (this.appStartRaised) {
         //   this.telemetrySvc.audit(WsEvents.WsAuditTypes.Created, 'Login', {})
         //   this.appStartRaised = false
@@ -203,6 +231,18 @@ export class RootComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.initAppUpdateCheck()
+  }
+
+  getChildRouteData(snapshot: ActivatedRouteSnapshot, firstChild: ActivatedRouteSnapshot | null) {
+    if (firstChild) {
+      if (firstChild.data) {
+        // console.log('firstChild.data', firstChild.data)
+        this.currentRouteData.push(firstChild.data)
+      }
+      if (firstChild.firstChild) {
+        this.getChildRouteData(snapshot, firstChild.firstChild)
+      }
+    }
   }
 
   initAppUpdateCheck() {
