@@ -552,22 +552,24 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   // }
 
   downloadCert(certidArr: any) {
-    const certId = certidArr[0].identifier
+    if (certidArr.length > 0) {
+      const certId = certidArr[0].identifier
 
-    this.contentSvc.downloadCert(certId).subscribe(response => {
-      this.certData = response.result.printUri
-      // var win = window.open();
-      // win.document.write('<iframe src="' + url  + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
-      // // const doc = new jsPDF();
+      this.contentSvc.downloadCert(certId).subscribe(response => {
+        this.certData = response.result.printUri
+        // var win = window.open();
+        // win.document.write('<iframe src="' + url  + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
+        // // const doc = new jsPDF();
 
-      // var str = doc.output(response.result.printUri);
+        // var str = doc.output(response.result.printUri);
 
-      // var iframe = "<iframe width='100%' height='100%' src='" + str + "'></iframe>"
-      // var x = window.open();
-      // x.document.open();
-      // x.document.write(iframe);
-      // x.document.close();
-    })
+        // var iframe = "<iframe width='100%' height='100%' src='" + str + "'></iframe>"
+        // var x = window.open();
+        // x.document.open();
+        // x.document.write(iframe);
+        // x.document.close();
+      })
+    }
   }
 
   openCertificateDialog() {
