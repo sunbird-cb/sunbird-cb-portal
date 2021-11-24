@@ -107,6 +107,44 @@ mat-divider {
   }
 }
 
+// .mat-dialog-container {
+//   padding: 0px !important;
+// }
+.certificate_box {
+  height: 65px;
+  border-radius: 4px 4px;
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  overflow: hidden;
+  display: block;
+}
+
+img.certificate_banner {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.certificate_overlay {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, .69));
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+p.certificate_text {
+  font-weight: 700!important;
+  z-index: 99;
+  margin-top: -36px;
+  color: #fff;
+  position: relative;
+}
+
 .blue-border{
   border: 2px  solid #0074b6 !important;
   }
@@ -151,7 +189,7 @@ mat-divider {
   min-width: 250px;
 
   .custom-button{
-    background: #0074B6 0% 0% no-repeat padding-box;
+    background: #0074B6 0% 0% no-repeat padding-box !important;
     border-radius: 4px;
   }
 
