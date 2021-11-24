@@ -201,6 +201,12 @@
         </div>
 
         <div *ngIf="currentFilter && currentFilter === 'recommended_from_wat'">
+          <div class="recommendation_box flex flex-col justify-start margin-bottom-l margin-top-l">
+            <p class="mat-body margin-remove">
+              <mat-icon class="info_icon mat-icon ws-mat-black60-text">info</mat-icon>
+              Recommendations are based on your position and are coming from your Work Allocation Order. These are the competencies you need to acquire as part of your position
+            </p>
+          </div>
           <div *ngIf="watCompetencies && watCompetencies.length == 0">
             <div class="flex flex-col items-center justify-center post_image_box">
               <img src="/assets/images/banners/competencies.svg">
@@ -244,7 +250,7 @@
 
         <div class="flex flex-column flex-wrap margin-fix" *ngIf="currentFilter && currentFilter === 'recommended'">
 
-          <div *ngIf="userPosition == null">
+          <div>
             <div class="recommendation_box flex flex-col justify-start margin-bottom-l margin-top-l">
               <p class="mat-body margin-remove">
                 <mat-icon class="info_icon mat-icon ws-mat-black60-text">info</mat-icon>
@@ -252,7 +258,7 @@
                 <a class="work_order_link" routerLink="/app/person-profile/me">Profile</a> page to update your position
               </p>
             </div>
-            <div class="flex flex-col items-center justify-center post_image_box">
+            <div class="flex flex-col items-center justify-center post_image_box" *ngIf="userPosition == null">
               <img src="/assets/images/banners/competencies.svg">
               <p class="mat-h4 ws-mat-black60-text">No competencies found</p>
               <p class="mat-body ws-mat-black60-text">Competencies will be recommended based on your position.</p>
