@@ -5,15 +5,9 @@ h1 {
     margin: 80px 0;
 }
 
-.cdk-overlay-pane {
-    .mat-dialog-container {
-        background-color: transparent!important;
-        box-shadow: none!important;
-    }
-}
 
 .certificate-banner-image {
-    height: 550px;
+    height: 500px;
     display: flex;
     width: 100%;
 }
@@ -181,6 +175,7 @@ a.download_btn {
     font-size: 14px;
     font-weight: 600;
     margin-top: 16px;
+    margin-right: 61px;
 }
 
 .signing_name {

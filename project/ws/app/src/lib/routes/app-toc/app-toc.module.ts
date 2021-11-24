@@ -181,7 +181,7 @@ import { CertificateDialogModule } from '@sunbird-cb/collection/src/lib/_common/
     BtnContentFeedbackModule,
     BtnContentFeedbackV2Module,
     ContentRatingV2DialogModule,
-    CertificateDialogModule,  
+    CertificateDialogModule,
     BtnGoalsModule,
     BtnPlaylistModule,
     BtnMailUserModule,

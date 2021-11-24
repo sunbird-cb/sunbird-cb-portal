@@ -36,7 +36,7 @@ const API_END_POINTS = {
   ENROLL_BATCH: `/apis/proxies/v8/learner/course/v1/enrol`,
   CERT_ADD_TEMPLATE: `${PROTECTED_SLAG_V8}/cohorts/course/batch/cert/template/add`,
   CERT_ISSUE: `${PROTECTED_SLAG_V8}/cohorts/course/batch/cert/issue`,
-  CERT_DOWNLOAD: (certId: any) =>`${PROTECTED_SLAG_V8}/cohorts/course/batch/cert/download/${certId}`
+  CERT_DOWNLOAD: (certId: any) => `${PROTECTED_SLAG_V8}/cohorts/course/batch/cert/download/${certId}`,
 }
 
 @Injectable({
@@ -302,6 +302,5 @@ export class WidgetContentService {
   downloadCert(certId: any) {
     return this.http.get<any>(`${API_END_POINTS.CERT_DOWNLOAD(certId)}`)
   }
-
 
 }

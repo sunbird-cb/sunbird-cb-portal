@@ -21,7 +21,7 @@ import { PipeSafeSanitizerModule } from '@sunbird-cb/utils/src/lib/pipes/pipe-sa
       MatFormFieldModule,
       MatInputModule,
       MatSnackBarModule,
-      PipeSafeSanitizerModule
+      PipeSafeSanitizerModule,
   ],
   exports: [
     CertificateDialogComponent,

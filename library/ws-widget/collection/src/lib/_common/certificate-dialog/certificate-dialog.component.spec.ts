@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { CertificateDialogComponent } from './certificate-dialog.component';
+import { CertificateDialogComponent } from './certificate-dialog.component'
 
 describe('CertificateDialogComponent', () => {
-  let component: CertificateDialogComponent;
-  let fixture: ComponentFixture<CertificateDialogComponent>;
+  let component: CertificateDialogComponent
+  let fixture: ComponentFixture<CertificateDialogComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CertificateDialogComponent ]
+      declarations: [CertificateDialogComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CertificateDialogComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(CertificateDialogComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

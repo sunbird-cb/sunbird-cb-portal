@@ -162,7 +162,7 @@ TODO: edit option while preview Mode
                 <!--======== certificate section ========== -->
 
                 <!-- <div (click)="openCertificateDialog()" *ngIf='content?.completionStatus == 2' class="margin-bottom-xs"> -->
-                <div (click)="openCertificateDialog()" class="margin-bottom-xs">
+                <div  *ngIf="content?.completionStatus == 2" (click)="openCertificateDialog()" class="margin-bottom-xs">
 
                     <a class="certificate_box">
                         <img [src]="certData| pipeSafeSanitizer: 'url'" class="certificate_banner" />
@@ -184,11 +184,11 @@ TODO: edit option while preview Mode
                     <mat-icon class="align-bottom">info</mat-icon>&nbsp;
                     <ng-container i18n>Access to this YouTube content is blocked.</ng-container>
                 </p>
-                <ng-container *ngIf="content?.completionStatus == 2">
+                <!-- <ng-container *ngIf="content?.completionStatus == 2">
                     <p class="mat-body-2 font-bold-imp ws-mat-black60-text">Your progress</p>
                     <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier" [progress]="100" [progressType]="'percentage'">
                     </ws-widget-content-progress>
-                </ng-container>
+                </ng-container> -->
                 <ng-container *ngIf="content?.completionStatus < 2">
                     <p class="mat-body-2 font-bold-imp ws-mat-black60-text">Your progress</p>
                     <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier" [progress]="content?.completionPercentage" [progressType]="'percentage'">
