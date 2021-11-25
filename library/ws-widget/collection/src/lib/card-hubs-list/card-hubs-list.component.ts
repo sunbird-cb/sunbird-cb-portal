@@ -90,11 +90,11 @@ export class CardHubsListComponent extends WidgetBaseComponent
           label: 'Your discussion',
           enable: true,
         },
-        {
-          route: 'leaderboard',
-          label: 'Leader Board',
-          enable: true,
-        },
+        // {
+        //   route: 'leaderboard',
+        //   label: 'Leader Board',
+        //   enable: true,
+        // },
 
       ],
       userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
