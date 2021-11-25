@@ -1,11 +1,9 @@
-
-
 .certificate-banner-image {
     height: 500px;
     display: flex;
-    width: 100%;
+    width: auto;
+    margin: 0px auto;
 }
-
 
 a.download_btn {
     background-color: #f0f0f0;
@@ -20,12 +18,10 @@ a.download_btn {
     font-size: 14px;
     font-weight: 600;
     margin-top: 16px;
-    margin-right: 61px;
+    margin-right: 0px;
 }
-
 
 .download_icon {
     font-size: 16px;
     vertical-align: text-top;
 }
-
