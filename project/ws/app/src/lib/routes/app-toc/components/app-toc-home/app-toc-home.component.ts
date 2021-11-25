@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild } from '@angular/core'
+import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core'
 import { ActivatedRoute, Event, Data, Router, NavigationEnd } from '@angular/router'
 import {
   NsContent,
@@ -26,6 +26,7 @@ import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/a
 import { ActionService } from '../../services/action.service'
 import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
 import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
+import moment from 'moment'
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -47,6 +48,8 @@ const flattenItems = (items: any[], key: string | number) => {
   selector: 'ws-app-app-toc-home',
   templateUrl: './app-toc-home.component.html',
   styleUrls: ['./app-toc-home.component.scss'],
+  // tslint:disable-next-line: use-component-view-encapsulation
+  encapsulation: ViewEncapsulation.None,
 })
 export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
   banners: NsAppToc.ITocBanner | null = null
@@ -329,7 +332,30 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     return false
   }
-
+  get getStartDate() {
+    if (this.content) {
+      const batch = _.first(_.filter(this.content['batches'], { batchId: this.currentCourseBatchId }) || [])
+      if (_.get(batch, 'startDate')) {
+        return moment(_.get(batch, 'startDate')).fromNow()
+      }
+      return 'NA'
+    } return 'NA'
+  }
+  get isBatchInProgress() {
+    if (this.content && this.content['batches']) {
+      // const batches = this.content['batches'] as NsContent.IBatch
+      if (this.currentCourseBatchId) {
+        const now = moment()
+        const batch = _.first(_.filter(this.content['batches'], { batchId: this.currentCourseBatchId }) || [])
+        return (
+          // batch.status &&
+          moment(batch.startDate).isSameOrBefore(now)
+          && moment(batch.endDate || new Date()).isSameOrAfter(now)
+        )
+      }
+      return false
+    } return false
+  }
   private initData(data: Data) {
     const initData = this.tocSvc.initData(data, true)
     this.content = initData.content
@@ -557,9 +583,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.contentSvc.downloadCert(certId).subscribe(response => {
         this.certData = response.result.printUri
         // var win = window.open();
-        // win.document.write('<iframe src="' + url  + '" frameborder="0" 
-        // style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%;
-        // height:100%;" allowfullscreen></iframe>');
+        // win.document.write('<iframe src="' + url  +
+         // '" frameborder="0" style="border:0; top:0px;
+         // left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
         // // const doc = new jsPDF();
 
         // var str = doc.output(response.result.printUri);
@@ -610,18 +636,16 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   // createCertTemplate(batchId: string, courseId: string) {
   //   let body = {
   //     "request": {
-  //       "batch": {S
+  //       "batch": {
   //         "batchId": batchId,
   //         "courseId": courseId,
   //         "template": {
-  //           "template": "https://igot.blob.core.windows.net/content/
-  // 
-  // content/do_113415159382810624195/artifact/do_113415159382810624195_
- // 1637592756199_certificate-shilpa-jain-with-text-2.svg",
+  //           "template": "https://igot.blob.core.windows.net/content/content/
+  // do_113415159382810624195/artifact/do_113415159382810624195_1637592756199_certificate-shilpa-jain-with-text-2.svg",
   //           "identifier": "do_113415159382810624195",
   //           "previewUrl": "https://igot.blob.core.windows.net/content/
-  //content/do_113415159382810624195/artifact/do_113415159382810624195_
-  // 1637592756199_certificate-shilpa-jain-with-text-2.svg",            "criteria": {
+   // content/do_113415159382810624195/artifact/do_113415159382810624195
+   // _1637592756199_certificate-shilpa-jain-with-text-2.svg",            "criteria": {
   //             "enrollment": {
   //               "status": 2
   //             }
