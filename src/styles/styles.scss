@@ -583,3 +583,9 @@ h3.shepherd-title {
     display: none;
   }
 }
+
+.custom-dialog-container .mat-dialog-container {
+    padding: 0px !important;
+    background-color: transparent!important;
+    box-shadow: none!important;
+}

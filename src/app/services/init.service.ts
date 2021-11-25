@@ -26,7 +26,7 @@ import { environment } from '../../environments/environment'
 import _ from 'lodash'
 import { map } from 'rxjs/operators'
 import { v4 as uuid } from 'uuid'
-import { of } from 'rxjs'
+// import { of } from 'rxjs'
 /* tslint:enable */
 // interface IDetailsResponse {
 //   tncStatus: boolean
@@ -144,7 +144,7 @@ export class InitService {
       //   this.configSvc.profileSettings = this.configSvc.userPreference.profileSettings
       // }
       // await this.fetchUserProfileV2()
-      await this.createUserInNodebb()
+      // await this.createUserInNodebb()
       const appsConfigPromise = this.fetchAppsConfig()
       const instanceConfigPromise = this.fetchInstanceConfig() // config: depends only on details
       const widgetStatusPromise = this.fetchWidgetStatus() // widget: depends only on details & feature
@@ -304,6 +304,13 @@ export class InitService {
             dealerCode: null,
             isManager: false,
           }
+
+          if (!this.configSvc.nodebbUserProfile) {
+            this.configSvc.nodebbUserProfile = {
+              username: userPidProfile.userName,
+              email: 'null',
+            }
+          }
         } else {
           this.authSvc.logout()
         }
@@ -354,36 +361,36 @@ export class InitService {
     return publicConfig
   }
 
-  private async createUserInNodebb(): Promise<any> {
-    if (this.configSvc.nodebbUserProfile) {
-      return of()
-    }
-    const req = {
-      request: {
-        username: (this.configSvc.userProfile && this.configSvc.userProfile.userName) || '',
-        identifier: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
-        fullname: this.configSvc.userProfile ? `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}` : '',
-      },
-    }
-    let createUserRes: null
+  // private async createUserInNodebb(): Promise<any> {
+  //   if (this.configSvc.nodebbUserProfile) {
+  //     return of()
+  //   }
+  //   const req = {
+  //     request: {
+  //       username: (this.configSvc.userProfile && this.configSvc.userProfile.userName) || '',
+  //       identifier: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
+  //       fullname: this.configSvc.userProfile ? `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}` : '',
+  //     },
+  //   }
+  //   let createUserRes: null
 
-    try {
-      createUserRes = await this.http
-        .post<any>(endpoint.CREATE_USER_API, req)
-        .toPromise()
-    } catch (e) {
-      this.configSvc.nodebbUserProfile = null
-      throw new Error('Invalid user')
-    }
+  //   try {
+  //     createUserRes = await this.http
+  //       .post<any>(endpoint.CREATE_USER_API, req)
+  //       .toPromise()
+  //   } catch (e) {
+  //     this.configSvc.nodebbUserProfile = null
+  //     throw new Error('Invalid user')
+  //   }
 
-    const nodebbUserData: any = _.get(createUserRes, 'result')
-    if (createUserRes) {
-      this.configSvc.nodebbUserProfile = {
-        username: nodebbUserData.userName,
-        email: 'null',
-      }
-    }
-  }
+  //   const nodebbUserData: any = _.get(createUserRes, 'result')
+  //   if (createUserRes) {
+  //     this.configSvc.nodebbUserProfile = {
+  //       username: nodebbUserData.userName,
+  //       email: 'null',
+  //     }
+  //   }
+  // }
 
   private async fetchFeaturesStatus(): Promise<Set<string>> {
     // TODO: use the rootOrg and org to fetch the features

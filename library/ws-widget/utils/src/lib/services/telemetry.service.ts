@@ -18,6 +18,8 @@ export class TelemetryService {
   previousUrl: string | null = null
   telemetryConfig: NsInstanceConfig.ITelemetryConfig | null = null
   pData: any = null
+  contextCdata = []
+
   externalApps: any = {
     RBCP: 'rbcp-web-ui',
   }
@@ -163,9 +165,13 @@ export class TelemetryService {
     }
   }
 
-  impression() {
+  impression(data?: any) {
     try {
       const page = this.getPageDetails()
+      if (data) {
+        page.pageid = data.pageId
+        page.module = data.pageModule
+      }
       const edata = {
         pageid: page.pageid, // Required. Unique page id
         type: page.pageUrlParts[0], // Required. Impression type (list, detail, view, edit, workflow, search)
@@ -178,6 +184,7 @@ export class TelemetryService {
               ...this.pData,
               id: this.pData.id,
             },
+            env: page.module || (this.telemetryConfig && this.telemetryConfig.env),
           },
           object: {
             id: page.objectId,
@@ -191,6 +198,7 @@ export class TelemetryService {
               ...this.pData,
               id: this.pData.id,
             },
+            env: page.module,
           },
         })
       }
@@ -216,13 +224,13 @@ export class TelemetryService {
             id: page.objectId,
           },
         } : {
-            context: {
-              pdata: {
-                ...this.pData,
-                id: this.externalApps[impressionData.subApplicationName],
-              },
+          context: {
+            pdata: {
+              ...this.pData,
+              id: this.externalApps[impressionData.subApplicationName],
             },
-          }
+          },
+        }
         $t.impression(impressionData.data, externalConfig)
       }
     } catch (e) {
@@ -342,7 +350,7 @@ export class TelemetryService {
                 type: event.data.type,
                 subtype: event.data.subType,
                 // object: event.data.object,
-                id: event.data.object.contentId || event.data.object.id || interactid || '',
+                id: (event.data.object) ? event.data.object.contentId || event.data.object.id || interactid || '' : '',
                 pageid: page.pageid,
                 // target: { page },
               },
@@ -504,6 +512,7 @@ export class TelemetryService {
       pageUrlParts: path.split('/'),
       refferUrl: this.previousUrl,
       objectId: this.extractContentIdFromUrlParts(path.split('/')),
+      module: '',
     }
   }
 

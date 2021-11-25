@@ -14,11 +14,18 @@ const routes: Routes = [
   {
     path: 'home',
     component: TaxonomyHomeComponent,
+    data: {
+      pageId: 'home',
+      module: 'explore',
+    },
   },
   {
     path: ':topic',
     component: TaxonomyExplorerComponent,
-
+    data: {
+      pageId: ':topic',
+      module: 'explore',
+    },
   },
 ]
 

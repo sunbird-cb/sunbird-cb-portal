@@ -25,6 +25,8 @@ const routes: Routes = [
     component: AudioComponent,
     data: {
       resourceType: 'audio',
+      module: 'Learn',
+      pageId: 'audio/:resourceId',
     },
     resolve: {
       content: ViewerResolve,
@@ -40,6 +42,8 @@ const routes: Routes = [
     },
     resolve: {
       content: ViewerResolve,
+      module: 'Learn',
+      pageId: 'audio-native/:resourceId',
       // configData: ConfigurationsService,
       // profileData: ProfileResolverService,
     },
@@ -48,6 +52,8 @@ const routes: Routes = [
     path: 'certification',
     data: {
       resourceType: 'certification',
+      module: 'Learn',
+      pageId: 'certification',
     },
     resolve: {
       // configData: ConfigurationsService,
@@ -60,6 +66,8 @@ const routes: Routes = [
     path: 'class-diagram',
     data: {
       resourceType: 'class-diagram',
+      module: 'Learn',
+      pageId: 'class-diagram',
     },
     resolve: {
       // configData: ConfigurationsService,
@@ -72,6 +80,8 @@ const routes: Routes = [
     path: 'dnd-quiz',
     data: {
       resourceType: 'dnd-quiz',
+      module: 'Learn',
+      pageId: 'dnd-quiz',
     },
     resolve: {
       // configData: ConfigurationsService,
@@ -84,6 +94,8 @@ const routes: Routes = [
     path: 'hands-on',
     data: {
       resourceType: 'hands-on',
+      module: 'Learn',
+      pageId: 'hands-on',
     },
     resolve: {
       // configData: ConfigurationsService,
@@ -97,6 +109,8 @@ const routes: Routes = [
     component: HtmlComponent,
     data: {
       resourceType: 'html',
+      module: 'Learn',
+      pageId: 'html/:resourceId',
     },
     resolve: {
       content: ViewerResolve,
@@ -108,6 +122,8 @@ const routes: Routes = [
     path: 'html-picker',
     data: {
       resourceType: 'html-picker',
+      module: 'Learn',
+      pageId: 'html-picker',
     },
     loadChildren: () =>
       import('./routes/html-picker/html-picker.module').then(u => u.HtmlPickerModule),
@@ -116,6 +132,8 @@ const routes: Routes = [
     path: 'channel/:resourceId',
     data: {
       resourceType: 'channel',
+      module: 'Learn',
+      pageId: 'channel/:resourceId',
     },
     resolve: {
       content: ViewerResolve,
@@ -128,6 +146,8 @@ const routes: Routes = [
     path: 'iap',
     data: {
       resourceType: 'iap',
+      module: 'Learn',
+      pageId: 'iap',
     },
     resolve: {
       content: ViewerResolve,
@@ -141,6 +161,8 @@ const routes: Routes = [
     path: 'interactive-exercise',
     data: {
       resourceType: 'interactive-exercise',
+      module: 'Learn',
+      pageId: 'interactive-exercise',
     },
     resolve: {
       content: ViewerResolve,
@@ -155,6 +177,8 @@ const routes: Routes = [
     component: PdfComponent,
     data: {
       resourceType: 'pdf',
+      module: 'Learn',
+      pageId: 'pdf/:resourceId',
     },
     resolve: {
       content: ViewerResolve,
@@ -166,6 +190,8 @@ const routes: Routes = [
     path: 'quiz',
     data: {
       resourceType: 'quiz',
+      module: 'Learn',
+      pageId: 'quiz/:resourceId',
     },
     resolve: {
       content: ViewerResolve,
@@ -179,6 +205,8 @@ const routes: Routes = [
     path: 'assessment',
     data: {
       resourceType: 'assessment',
+      module: 'Learn',
+      pageId: 'assessment',
     },
     resolve: {
       content: ViewerResolve,
@@ -192,6 +220,8 @@ const routes: Routes = [
     path: 'rdbms-hands-on',
     data: {
       resourceType: 'rdbms-hands-on',
+      module: 'Learn',
+      pageId: 'rdbms-hands-on',
     },
     resolve: {
       content: ViewerResolve,
@@ -205,6 +235,8 @@ const routes: Routes = [
     path: 'resource-collection',
     data: {
       resourceType: 'resource-collection',
+      module: 'Learn',
+      pageId: 'resource-collection',
     },
     resolve: {
       content: ViewerResolve,
@@ -219,6 +251,8 @@ const routes: Routes = [
     component: VideoComponent,
     data: {
       resourceType: 'video',
+      module: 'Learn',
+      pageId: 'video/:resourceId',
     },
     resolve: {
       content: ViewerResolve,
@@ -230,6 +264,8 @@ const routes: Routes = [
     path: 'web-module',
     data: {
       resourceType: 'web-module',
+      module: 'Learn',
+      pageId: 'web-module',
     },
     resolve: {
       content: ViewerResolve,
@@ -244,6 +280,8 @@ const routes: Routes = [
     component: YoutubeComponent,
     data: {
       resourceType: 'youtube',
+      module: 'Learn',
+      pageId: 'youtube/:resourceId',
     },
     resolve: {
       content: ViewerResolve,
@@ -256,6 +294,8 @@ const routes: Routes = [
     component: ViewerComponent,
     data: {
       resourceType: 'unknown',
+      module: 'Learn',
+      pageId: ':resourceId',
     },
     resolve: {
       content: ViewerResolve,
@@ -267,6 +307,8 @@ const routes: Routes = [
     path: '**',
     data: {
       resourceType: 'error',
+      module: 'Learn',
+      pageId: '404',
     },
     resolve: {
       content: ViewerResolve,
@@ -290,6 +332,10 @@ const routes: Routes = [
         path: '',
         component: ViewerComponent,
         children: routes,
+        data: {
+          module: 'Player',
+          pageId: 'viewer',
+        },
       },
     ])],
   exports: [RouterModule],

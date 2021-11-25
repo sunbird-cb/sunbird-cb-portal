@@ -25,6 +25,10 @@ const routes: Routes = [
     path: '',
     // loadChildren: () => import('./wrapper/wrapper.module').then(u => u.WrapperModule),
     component: DiscussComponent,
+    data: {
+      pageId: 'discussion',
+      module: 'Discuss',
+    },
     children: [
       {
         path: '',
@@ -34,6 +38,10 @@ const routes: Routes = [
       {
         path: 'discussion-forum',
         loadChildren: () => import('./wrapper/wrapper.module').then(u => u.WrapperModule),
+        data: {
+          pageId: 'discussion-forum',
+          module: 'Discuss',
+        },
         resolve: {
           data: DiscussConfigResolve,
         },
