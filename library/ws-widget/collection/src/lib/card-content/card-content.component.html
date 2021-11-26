@@ -45,7 +45,7 @@
             [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link">
             {{ widgetData.content.name }}
           </a>
-          
+
         </h3>
         <div class="flex justify-between items-center">
           <div>
@@ -689,7 +689,7 @@
 
         <mat-card-content class="min-top">
           <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
-            [queryParams]="(widgetData.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData" 
+            [queryParams]="(widgetData.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData"
             role="link" i18n-aria-label>
 
             <div class="text-gray-time complexity flex-between flex-center">
@@ -716,7 +716,7 @@
                 class="ws-mat-black60-text font-normal mat-caption text-uppercase" [displayContentType]="widgetData.content?.primaryCategory==='Course Unit'
                 ?'Module'
                 :widgetData.content?.primaryCategory">
-               
+
               </ws-widget-display-content-type>
             </div>
 
@@ -726,7 +726,7 @@
             </div>
             <div class="mat-body-2 ws-mat-primary-text description-text ws-mat-text-block-fade-gradient mb-10">
               {{ widgetData.content.description | pipeHtmlTagRemoval }}
-            
+
               <!-- {{widgetData.content | json}} -->
               <!-- {{widgetData.content.sourceName}} -->
             </div>
@@ -760,7 +760,7 @@
               <!-- <ng-container [ngTemplateOutlet]="rating"></ng-container>
               <button type="button" mat-icon-button i18n-aria-label [matMenuTriggerFor]="cardMenu">
                 <mat-icon>more_vertical</mat-icon>
-               
+
               </button> -->
               <!-- <mat-icon class="mat-icon ws-mat-black60-text">share</mat-icon> -->
             </div>
@@ -797,13 +797,37 @@
     </div>
     <mat-card-content class="mat-text-box">
       <p class="flex items-center mat-caption margin-bottom-xxs text-uppercase" *ngIf="widgetData.content.contentType === 'Resource' || widgetData.content.contentType === 'Course' || widgetData.content.contentType === 'Module'">
-        <img src="/assets/icons/content/audio.svg" class="contenticon" alt="Audio"  *ngIf="widgetData.content.mimeType === 'audio/mpeg'"> 
-        <img src="/assets/icons/content/assessment.svg" class="contenticon" alt="Assessment"  *ngIf="widgetData.content.mimeType === 'application/json' || widgetData.content.mimeType === 'application/quiz'"> 
-        <img src="/assets/icons/content/pdf.svg" alt="PDF" class="contenticon" *ngIf="widgetData.content.mimeType === 'application/pdf'"> 
-        <img src="/assets/icons/content/video.svg" alt="Video" class="contenticon"  *ngIf="widgetData.content.mimeType === 'video/mp4' || widgetData.content.mimeType === 'video/x-youtube' || widgetData.content.mimeType === 'application/x-mpegURL'"> 
-        <img src="/assets/icons/content/collection.svg" class="contenticon" alt="Course"  *ngIf="widgetData.content.mimeType === 'application/vnd.ekstep.content-collection'">
-        <img src="/assets/icons/content/link.svg" class="contenticon" alt="HTML"  *ngIf="widgetData.content.mimeType === 'application/vnd.ekstep.html-archive' || widgetData.content.mimeType === 'application/vnd.ekstep.ecml-archive' || widgetData.content.mimeType === 'text/x-url'">
-        <img src="/assets/icons/content/image.svg" class="contenticon" alt="Module"  *ngIf="widgetData.content.mimeType === 'image/jpeg' || widgetData.content.mimeType === 'image/png'">
+
+        <!-- <img src="/assets/icons/content/audio.svg" class="contenticon" alt="Audio"  *ngIf="widgetData.content.mimeType === 'audio/mpeg'"> -->
+        <mat-icon  class="mat-icon ws-mat-default-text margin-right-xs" alt="Audio" *ngIf="widgetData.content.mimeType === 'audio/mpeg'">
+          mic</mat-icon>
+
+        <!-- <img src="/assets/icons/content/assessment.svg" class="contenticon" alt="Assessment"  *ngIf="widgetData.content.mimeType === 'application/json' || widgetData.content.mimeType === 'application/quiz'"> -->
+        <mat-icon  class="mat-icon ws-mat-default-text margin-right-xs" alt="Assessment" *ngIf="widgetData.content.mimeType === 'application/json' || widgetData.content.mimeType === 'application/quiz'">
+          assessment</mat-icon>
+
+        <!-- <img src="/assets/icons/content/pdf.svg" alt="PDF" class="contenticon" *ngIf="widgetData.content.mimeType === 'application/pdf'"> -->
+        <mat-icon  class="mat-icon ws-mat-default-text margin-right-xs" alt="PDF" *ngIf="widgetData.content.mimeType === 'application/pdf'">
+          picture_as_pdf</mat-icon>
+
+        <!-- <img src="/assets/icons/content/video.svg" alt="Video" class="contenticon"  *ngIf="widgetData.content.mimeType === 'video/mp4' || widgetData.content.mimeType === 'video/x-youtube' || widgetData.content.mimeType === 'application/x-mpegURL'"> -->
+        <mat-icon  class="mat-icon ws-mat-default-text margin-right-xs" alt="Video" *ngIf="widgetData.content.mimeType === 'video/mp4' || widgetData.content.mimeType === 'video/x-youtube' || widgetData.content.mimeType === 'application/x-mpegURL'">
+          videocam</mat-icon>
+
+        <!-- <img src="/assets/icons/content/collection.svg" class="contenticon" alt="Course"  *ngIf="widgetData.content.mimeType === 'application/vnd.ekstep.content-collection'"> -->
+        <mat-icon class="mat-icon main_icon ws-mat-default-text margin-right-xs" alt="Course"  *ngIf="widgetData.content.mimeType === 'application/vnd.ekstep.content-collection'">
+          video_library
+        </mat-icon>
+
+        <!-- <img src="/assets/icons/content/link.svg" class="contenticon" alt="HTML"  *ngIf="widgetData.content.mimeType === 'application/vnd.ekstep.html-archive' || widgetData.content.mimeType === 'application/vnd.ekstep.ecml-archive' || widgetData.content.mimeType === 'text/x-url'"> -->
+        <mat-icon class="mat-icon main_icon ws-mat-default-text margin-right-xs" alt="HTML"  *ngIf="widgetData.content.mimeType === 'application/vnd.ekstep.html-archive' || widgetData.content.mimeType === 'application/vnd.ekstep.ecml-archive' || widgetData.content.mimeType === 'text/x-url'">
+          attachment
+        </mat-icon>
+
+        <!-- <img src="/assets/icons/content/image.svg" class="contenticon" alt="Module"  *ngIf="widgetData.content.mimeType === 'image/jpeg' || widgetData.content.mimeType === 'image/png'"> -->
+        <mat-icon class="mat-icon main_icon ws-mat-default-text margin-right-xs" alt="Module"  *ngIf="widgetData.content.mimeType === 'image/jpeg' || widgetData.content.mimeType === 'image/png'">
+          image
+        </mat-icon>
         {{widgetData.content.primaryCategory || widgetData.content.contentType}}
       </p>
       <div class="flex main_title_box">
@@ -824,7 +848,7 @@
             <li *ngIf="widgetData.content.lastUpdatedOn">
               <!-- <img src="/assets/icons/content/separator.svg" class="text_seperator"> -->
                 {{ widgetData.content.lastUpdatedOn | date: "MMM yyyy"  }}
-            </li> 
+            </li>
             <li *ngIf="widgetData.content.duration">
                 <img class="text_seperator" src="/assets/icons/content/separator.svg">  {{ widgetData.content.duration | pipeDurationTransform: 'hms' }}
             </li>
