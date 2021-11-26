@@ -427,7 +427,7 @@
     background: bisque;
   }
 
- 
+
 
   .source-div {
     position: relative;
@@ -700,8 +700,20 @@ $title-line-count: 2;
       box-sizing: border-box;
       width: calc(100% - 315px);
 
-      p.mat-caption .title_icon {
-          vertical-align: middle;
+      p.mat-caption {
+
+          .mat-icon {
+              vertical-align: middle;
+              height: 18px !important;
+              width: 16px !important;
+              font-size: 16px !important;
+              line-height: 1.2;
+          }
+
+          .title_icon {
+            vertical-align: middle;
+        }
+
       }
   }
 
@@ -753,7 +765,7 @@ $title-line-count: 2;
           border-radius: 16px;
           /* z-index: 49; */
           display: inline-flex;
-      
+
           .source-icon {
             border-radius: 8px;
             margin-right: auto;
