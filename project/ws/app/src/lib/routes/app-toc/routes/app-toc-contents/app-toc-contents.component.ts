@@ -16,7 +16,7 @@ import { NsWidgetResolver } from '@sunbird-cb/resolver'
 export class AppTocContentsComponent implements OnInit, OnDestroy {
   @Input() batchId!: string
   @Input() content: NsContent.IContent | null = null
-  forPreview = false
+  @Input() forPreview = false
   isPlayable = false
   contentPlayWidgetConfig: NsWidgetResolver.IRenderConfigWithTypedData<any> | null = null
   defaultThumbnail = ''
@@ -36,7 +36,7 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.forPreview = window.location.href.includes('/author/')
+    // this.forPreview = window.location.href.includes('/author/')
     this.routeQuerySubscription = this.route.queryParamMap.subscribe(qParamsMap => {
       const contextId = qParamsMap.get('contextId')
       const contextPath = qParamsMap.get('contextPath')
