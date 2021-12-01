@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common'
 import { DiscussionEventsService, DiscussionUiModule } from '@sunbird-cb/discussions-ui-v8'
 import { TelemetryService } from '@sunbird-cb/utils/src/lib/services/telemetry.service'
 import { EventService } from '@sunbird-cb/utils/src/lib/services/event.service'
+import { WsEvents } from '@sunbird-cb/utils/src/public-api'
 // import {TelemetryService }
 // import { ConfigService } from '../services/config.service'
 
@@ -27,7 +28,10 @@ export class WrapperModule {
                    this.teleSvc.impression()
                     break
                 case 'INTERACT':
-                    this.eventsSvc.raiseInteractTelemetry(data.edata.type, data.edata.pageid, data.object)
+                    this.eventsSvc.raiseInteractTelemetry(data.edata.type, data.edata.pageid, data.object, {
+                        pageIdExt: data.edata.pageid,
+                        module: WsEvents.EnumTelemetrymodules.DISCUSS,
+                      })
                     break
             }
         })

@@ -26,6 +26,7 @@ import {
   LoggerService,
   TelemetryService,
   ValueService,
+  UtilityService,
 } from '@sunbird-cb/utils'
 import { delay, first } from 'rxjs/operators'
 import { MobileAppsService } from '../../services/mobile-apps.service'
@@ -83,6 +84,7 @@ export class RootComponent implements OnInit, AfterViewInit {
     private rootSvc: RootService,
     private btnBackSvc: BtnPageBackService,
     private changeDetector: ChangeDetectorRef,
+    private utilitySvc: UtilityService,
     // private dialogRef: MatDialogRef<any>,
 
   ) {
@@ -201,20 +203,13 @@ export class RootComponent implements OnInit, AfterViewInit {
         // console.log('root.snapshot.root.firstChild ', snapshot.root.firstChild)
         // console.log('firstChild ', snapshot.firstChild)
         const firstChild = snapshot.root.firstChild
-        const data = {
-          pageId: '',
-          pageModule: '',
-        }
         this.getChildRouteData(snapshot, firstChild)
+        // tslint:disable-next-line: no-console
         // console.log('Final currentDataRoute', this.currentRouteData)
-        this.currentRouteData.map((rd: any) => {
-          data.pageId = `${data.pageId}/${rd.pageId}`
-          if (rd.module) {
-            data.pageModule = rd.module
-          }
-        })
+        this.utilitySvc.setRouteData(this.currentRouteData)
+        const data = this.utilitySvc.routeData
         // console.log('data: ', data)
-        if (data.pageId && data.pageModule) {
+        if (data.pageId && data.module) {
           this.telemetrySvc.impression(data)
         } else {
           this.telemetrySvc.impression()

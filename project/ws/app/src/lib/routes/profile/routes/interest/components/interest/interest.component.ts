@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { MatSnackBar } from '@angular/material'
 import { ActivatedRoute } from '@angular/router'
-import { ConfigurationsService, EventService, IResolveResponse } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, IResolveResponse, WsEvents } from '@sunbird-cb/utils'
 // import { startWith, map } from 'rxjs/operators'
 import { Observable, of } from 'rxjs'
 import { debounceTime, distinctUntilChanged, startWith, switchMap } from 'rxjs/operators'
@@ -198,6 +198,9 @@ export class InterestComponent implements OnInit {
   }
 
   raiseTelemetry(action: 'add' | 'remove', interest: string) {
-    this.events.raiseInteractTelemetry('interest', action, { interest })
+    this.events.raiseInteractTelemetry('interest', action, { interest }, {
+      pageIdExt: 'interest',
+      module: WsEvents.EnumTelemetrymodules.LEARN,
+    })
   }
 }

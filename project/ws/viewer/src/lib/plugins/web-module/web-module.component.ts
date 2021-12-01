@@ -14,6 +14,8 @@ import { ValueService, ConfigurationsService, EventService } from '@sunbird-cb/u
 import { WidgetContentService, NsContent } from '@sunbird-cb/collection'
 import { ViewerUtilService } from '../../viewer-util.service'
 import { ActivatedRoute } from '@angular/router'
+/* tslint:disable*/
+import _ from 'lodash'
 @Component({
   selector: 'viewer-plugin-web-module',
   templateUrl: './web-module.component.html',
@@ -230,6 +232,9 @@ export class WebModuleComponent implements OnInit, OnChanges, OnDestroy {
     if (this.widgetData.identifier) {
       this.events.raiseInteractTelemetry(action, event, {
         id: this.widgetData.identifier,
+      },                                 {
+        pageIdExt: `${_.camelCase(this.widgetData.primaryCategory)}`,
+        module: _.camelCase(this.widgetData.primaryCategory),
       })
     }
     if (event === 'scroll') {
