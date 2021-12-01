@@ -310,6 +310,9 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
           l1: this.collectionId || '',
         },
         ver: `${this.htmlContent.version}${''}`,
+      },                                 {
+        pageIdExt: `${_.camelCase(this.htmlContent.content.primaryCategory)}`,
+        module: _.camelCase(this.htmlContent.content.primaryCategory),
       })
     }
   }

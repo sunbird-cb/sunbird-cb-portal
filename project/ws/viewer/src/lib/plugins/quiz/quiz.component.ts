@@ -15,7 +15,7 @@ import { QuestionComponent } from './components/question/question.component'
 import { SubmitQuizDialogComponent } from './components/submit-quiz-dialog/submit-quiz-dialog.component'
 import { OnConnectionBindInfo } from 'jsplumb'
 import { QuizService } from './quiz.service'
-import { EventService } from '@sunbird-cb/utils'
+import { EventService, WsEvents } from '@sunbird-cb/utils'
 import { ActivatedRoute } from '@angular/router'
 import { ViewerUtilService } from '../../viewer-util.service'
 export type FetchStatus = 'hasMore' | 'fetching' | 'done' | 'error' | 'none'
@@ -468,6 +468,9 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       this.events.raiseInteractTelemetry(action, event, {
         id: this.identifier,
+      },                                 {
+        pageIdExt: `quiz`,
+        module: WsEvents.EnumTelemetrymodules.LEARN,
       })
     }
   }

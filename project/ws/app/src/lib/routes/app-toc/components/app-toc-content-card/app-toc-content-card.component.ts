@@ -2,6 +2,8 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { NsContent, viewerRouteGenerator } from '@sunbird-cb/collection'
 import { NsAppToc } from '../../models/app-toc.model'
 import { EventService } from '@sunbird-cb/utils/src/public-api'
+/* tslint:disable*/
+import _ from 'lodash'
 
 @Component({
   selector: 'ws-app-toc-content-card',
@@ -178,6 +180,9 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
           l1: this.rootId || '',
         },
         ver: `${this.content.version}${''}`,
+      },                                 {
+        pageIdExt: `${_.camelCase(this.content.primaryCategory)}-card`,
+        module: _.camelCase(this.content.primaryCategory),
       })
     }
   }

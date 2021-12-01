@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router'
 import { ViewerUtilService } from '../../viewer-util.service'
 // import { EventService, ConfigurationsService } from '@sunbird-cb/utils';
 import { Subscription } from 'rxjs'
-import { EventService } from '@sunbird-cb/utils'
+import { EventService, WsEvents } from '@sunbird-cb/utils'
 // import { AccessControlService } from '@ws/author/src/public-api'
 @Component({
     selector: 'viewer-assessment',
@@ -989,6 +989,9 @@ export class AssessmentComponent implements OnInit {
     getTelemetryEvents(event: any) {
         // tslint:disable-next-line: no-console
         console.log('event is for telemetry', JSON.stringify(event))
-        this.eventSvc.raiseInteractTelemetry('QUML player', 'next_clicked', event)
+        this.eventSvc.raiseInteractTelemetry('QUML player', 'next_clicked', event, {
+            pageIdExt: 'QUML-player',
+            module: WsEvents.EnumTelemetrymodules.LEARN,
+          })
     }
 }

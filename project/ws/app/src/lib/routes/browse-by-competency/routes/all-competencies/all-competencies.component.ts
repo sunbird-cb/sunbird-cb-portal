@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core'
-import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
 import { FormGroup, FormControl } from '@angular/forms'
 import { BrowseCompetencyService } from '../../services/browse-competency.service'
 import { NSBrowseCompetency } from '../../models/competencies.model'
@@ -132,6 +132,9 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
         // contentType: content.primaryCategory,
         rollup: {},
         ver: `${content.version}${''}`,
+      }, {
+        pageIdExt: 'knowledge-card',
+        module: WsEvents.EnumTelemetrymodules.COMPETENCY,
       })
     }
   }

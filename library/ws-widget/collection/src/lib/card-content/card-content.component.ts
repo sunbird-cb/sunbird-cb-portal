@@ -7,6 +7,8 @@ import { NsGoal } from '../btn-goals/btn-goals.model'
 import { NsPlaylist } from '../btn-playlist/btn-playlist.model'
 import { NsContent } from '../_services/widget-content.model'
 import { NsCardContent } from './card-content.model'
+/* tslint:disable*/
+import _ from 'lodash'
 
 @Component({
   selector: 'ws-widget-card-content',
@@ -246,6 +248,9 @@ export class CardContentComponent extends WidgetBaseComponent
       context: this.widgetData.context,
       rollup: {},
       ver: `${this.widgetData.content.version}${''}`,
+    },                                 {
+      pageIdExt: `${_.camelCase(this.widgetData.content.primaryCategory)}-card`,
+      module: _.camelCase(this.widgetData.content.primaryCategory),
     })
   }
 
