@@ -36,12 +36,12 @@
           <ng-container *ngIf="content?.identifier && content?.completionPercentage">
             <ng-container *ngIf="content?.completionStatus == 2">
               <circle-progress class="flex items-center progress" [percent]="100" [radius]="12" [outerStrokeWidth]="3"
-                [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()" [innerStrokeColor]="'rgba(0,0,0,.16)'"
-                [animation]="true" [animationDuration]="300" [showTitle]="false" [showUnits]="false" [showSubtitle]="false"
-                [showInnerStroke]="true" [clockwise]="true" [backgroundOpacity]="0" [backgroundGradient]="false"
-                [backgroundStrokeWidth]="3" [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false"
-                [backgroundPadding]="0" [imageHeight]="24" [imageWidth]="24" [showBackground]="false"
-                [outerStrokeLinecap]="'butt'">
+                [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()"
+                [innerStrokeColor]="'rgba(0,0,0,.16)'" [animation]="true" [animationDuration]="300" [showTitle]="false"
+                [showUnits]="false" [showSubtitle]="false" [showInnerStroke]="true" [clockwise]="true"
+                [backgroundOpacity]="0" [backgroundGradient]="false" [backgroundStrokeWidth]="3"
+                [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false" [backgroundPadding]="0"
+                [imageHeight]="24" [imageWidth]="24" [showBackground]="false" [outerStrokeLinecap]="'butt'">
               </circle-progress>
               <!-- <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
                 [contentId]="content?.identifier" class="progress-bar-thin" [progress]="100" 
@@ -49,9 +49,10 @@
               </ws-widget-content-progress> -->
             </ng-container>
             <ng-container *ngIf="content?.completionStatus < 2">
-              <circle-progress class="flex items-center progress" [percent]="content?.completionPercentage" [radius]="12" [outerStrokeWidth]="3"
-                [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()" [innerStrokeColor]="'rgba(0,0,0,.16)'"
-                [animation]="true" [animationDuration]="300" [showTitle]="false" [showUnits]="false" [showSubtitle]="false"
+              <circle-progress class="flex items-center progress" [percent]="content?.completionPercentage"
+                [radius]="12" [outerStrokeWidth]="3" [innerStrokeWidth]="3" [space]="-3"
+                [outerStrokeColor]="progressColor()" [innerStrokeColor]="'rgba(0,0,0,.16)'" [animation]="true"
+                [animationDuration]="300" [showTitle]="false" [showUnits]="false" [showSubtitle]="false"
                 [showInnerStroke]="true" [clockwise]="true" [backgroundOpacity]="0" [backgroundGradient]="false"
                 [backgroundStrokeWidth]="3" [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false"
                 [backgroundPadding]="0" [imageHeight]="24" [imageWidth]="24" [showBackground]="false"
@@ -63,7 +64,7 @@
               </ws-widget-content-progress> -->
             </ng-container>
           </ng-container>
-          <button *ngIf="content?.artifactUrl" type="button" mat-icon-button [matMenuTriggerFor]="buttonMenu">
+          <button *ngIf="content?.artifactUrl && isAllowed" type="button" mat-icon-button [matMenuTriggerFor]="buttonMenu">
             <mat-icon>more_vertical</mat-icon>
           </button>
           <!-- <div *ngIf="hasContentStructure" class="child-meta-container">
@@ -187,7 +188,7 @@
     <!-- </div> -->
 
     <div class="flex flex-col sm:flex-row flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto">
-      <a [routerLink]="resourceLink.url" [queryParams]="resourceLink.queryParams">
+      <a [routerLink]="isAllowed ? resourceLink.url : null" [queryParams]="isAllowed ? resourceLink.queryParams : null">
         <div class="text-truncate cursor-pointer" (click)="viewChildren = !viewChildren; raiseTelemetry()">
           <div class="flex flex-col sm:flex-row flex-wrap">
             <p class="margin-remove text-truncate mat-subheading-1 flex-auto">
@@ -235,34 +236,34 @@
         <ng-container *ngIf="content?.identifier && content?.completionPercentage">
           <ng-container *ngIf="content?.completionStatus == 2">
             <circle-progress class="flex items-center progress" [percent]="100" [radius]="12" [outerStrokeWidth]="3"
-                [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()" [innerStrokeColor]="'rgba(0,0,0,.16)'"
-                [animation]="true" [animationDuration]="300" [showTitle]="false" [showUnits]="false" [showSubtitle]="false"
-                [showInnerStroke]="true" [clockwise]="true" [backgroundOpacity]="0" [backgroundGradient]="false"
-                [backgroundStrokeWidth]="3" [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false"
-                [backgroundPadding]="0" [imageHeight]="24" [imageWidth]="24" [showBackground]="false"
-                [outerStrokeLinecap]="'butt'">
-              </circle-progress>
-              <!-- <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
+              [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()"
+              [innerStrokeColor]="'rgba(0,0,0,.16)'" [animation]="true" [animationDuration]="300" [showTitle]="false"
+              [showUnits]="false" [showSubtitle]="false" [showInnerStroke]="true" [clockwise]="true"
+              [backgroundOpacity]="0" [backgroundGradient]="false" [backgroundStrokeWidth]="3"
+              [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false" [backgroundPadding]="0"
+              [imageHeight]="24" [imageWidth]="24" [showBackground]="false" [outerStrokeLinecap]="'butt'">
+            </circle-progress>
+            <!-- <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
                 [contentId]="content?.identifier" class="progress-bar-thin" [progress]="100" 
                 [progressType]="'percentage'">
               </ws-widget-content-progress> -->
-            </ng-container>
-            <ng-container *ngIf="content?.completionStatus < 2">
-              <circle-progress class="flex items-center progress" [percent]="content?.completionPercentage" [radius]="12" [outerStrokeWidth]="3"
-                [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()" [innerStrokeColor]="'rgba(0,0,0,.16)'"
-                [animation]="true" [animationDuration]="300" [showTitle]="false" [showUnits]="false" [showSubtitle]="false"
-                [showInnerStroke]="true" [clockwise]="true" [backgroundOpacity]="0" [backgroundGradient]="false"
-                [backgroundStrokeWidth]="3" [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false"
-                [backgroundPadding]="0" [imageHeight]="24" [imageWidth]="24" [showBackground]="false"
-                [outerStrokeLinecap]="'butt'">
-              </circle-progress>
+          </ng-container>
+          <ng-container *ngIf="content?.completionStatus < 2">
+            <circle-progress class="flex items-center progress" [percent]="content?.completionPercentage" [radius]="12"
+              [outerStrokeWidth]="3" [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()"
+              [innerStrokeColor]="'rgba(0,0,0,.16)'" [animation]="true" [animationDuration]="300" [showTitle]="false"
+              [showUnits]="false" [showSubtitle]="false" [showInnerStroke]="true" [clockwise]="true"
+              [backgroundOpacity]="0" [backgroundGradient]="false" [backgroundStrokeWidth]="3"
+              [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false" [backgroundPadding]="0"
+              [imageHeight]="24" [imageWidth]="24" [showBackground]="false" [outerStrokeLinecap]="'butt'">
+            </circle-progress>
             <!-- <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
               [contentId]="content?.identifier" class="progress-bar-thin" [progress]="content?.completionPercentage" 
               [progressType]="'percentage'">
             </ws-widget-content-progress> -->
           </ng-container>
         </ng-container>
-        <button *ngIf="content?.artifactUrl && !isXSmall" type="button" mat-icon-button class="text-right"
+        <button *ngIf="content?.artifactUrl && !isXSmall && isAllowed" type="button" mat-icon-button class="text-right"
           [matMenuTriggerFor]="buttonMenu">
           <mat-icon>more_vertical</mat-icon>
         </button>
