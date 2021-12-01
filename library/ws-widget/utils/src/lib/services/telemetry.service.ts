@@ -78,6 +78,7 @@ export class TelemetryService {
             type,
             mode,
             pageid: id,
+            duration: 1,
           },
           {
             context: {
@@ -85,6 +86,7 @@ export class TelemetryService {
                 ...this.pData,
                 id: this.pData.id,
               },
+              env: 'home',
             },
             object: {
               ...(data) && data,
@@ -170,7 +172,7 @@ export class TelemetryService {
       const page = this.getPageDetails()
       if (data) {
         page.pageid = data.pageId
-        page.module = data.pageModule
+        page.module = data.module
       }
       const edata = {
         pageid: page.pageid, // Required. Unique page id
@@ -351,7 +353,7 @@ export class TelemetryService {
                 subtype: event.data.subType,
                 // object: event.data.object,
                 id: (event.data.object) ? event.data.object.contentId || event.data.object.id || interactid || '' : '',
-                pageid: page.pageid,
+                pageid: event.data.context && event.data.context.pageId ||  page.pageid,
                 // target: { page },
               },
               {
@@ -360,6 +362,7 @@ export class TelemetryService {
                     ...this.pData,
                     id: this.pData.id,
                   },
+                  ...(event.data.context && event.data.context.module ? { env: event.data.context.module } : null),
                 },
                 object: {
                   ...event.data.object,
