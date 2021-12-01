@@ -55,6 +55,8 @@ export class RootComponent implements OnInit, AfterViewInit {
   @ViewChild('appUpdateBody', { static: true })
   appUpdateBodyRef: ElementRef | null = null
 
+  @ViewChild('skipper', { static: false }) skipper!: ElementRef
+
   isXSmall$ = this.valueSvc.isXSmall$
   routeChangeInProgress = false
   showNavbar = false
@@ -66,7 +68,6 @@ export class RootComponent implements OnInit, AfterViewInit {
   processed: any
   loginToken: any
   currentRouteData: any = []
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -150,7 +151,9 @@ export class RootComponent implements OnInit, AfterViewInit {
     }
     // this.snackBar.openFromTemplate(this.userIntro, { duration: 20000, verticalPosition: 'bottom', horizontalPosition: 'left' })
   }
-
+  public skipToMainContent(): void {
+    this.skipper.nativeElement.focus()
+  }
   ngOnInit() {
     try {
       this.isInIframe = window.self !== window.top
