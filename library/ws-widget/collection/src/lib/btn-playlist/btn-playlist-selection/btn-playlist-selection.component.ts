@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core'
 import { FormControl, Validators } from '@angular/forms'
 import { MatListOption, MatSnackBar } from '@angular/material'
-import { EventService, TFetchStatus } from '@sunbird-cb/utils'
+import { EventService, TFetchStatus, WsEvents } from '@sunbird-cb/utils'
 import { NsPlaylist } from '../btn-playlist.model'
 import { BtnPlaylistService } from '../btn-playlist.service'
 
@@ -112,6 +112,9 @@ export class BtnPlaylistSelectionComponent implements OnInit {
     this.eventSvc.raiseInteractTelemetry('playlist', `btn-playlist-${action}`, {
       playlistId,
       id: contentId,
+    },                                   {
+      pageIdExt: 'btn-playlist',
+      module: WsEvents.EnumTelemetrymodules.PROFILE,
     })
   }
 }

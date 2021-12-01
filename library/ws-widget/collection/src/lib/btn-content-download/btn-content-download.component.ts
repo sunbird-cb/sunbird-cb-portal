@@ -1,7 +1,7 @@
 import { Platform } from '@angular/cdk/platform'
 import { Component, HostBinding, Input, OnInit } from '@angular/core'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
 // import { MobileAppsService } from './mobile-apps.service'
 import { NsContent } from '../_services/widget-content.model'
 
@@ -91,6 +91,10 @@ export class BtnContentDownloadComponent extends WidgetBaseComponent
       // contentType: this.widgetData.contentType, // cccc
       id: this.widgetData.identifier,
       type: this.widgetData.primaryCategory,
-    })
+    },                                 {
+      pageIdExt: 'download',
+      module: WsEvents.EnumTelemetrymodules.CONTENT,
+    }
+    )
   }
 }

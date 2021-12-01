@@ -231,6 +231,8 @@ export class PlayerPdfComponent extends WidgetBaseComponent
           l1: this.widgetData.collectionId || '',
         },
         ver: `${this.widgetData.version}${''}`,
+      },                                   {
+        module: WsEvents.EnumTelemetrymodules.LEARN,
       })
     }
   }

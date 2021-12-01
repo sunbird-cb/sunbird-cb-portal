@@ -40,8 +40,7 @@ export class BtnCallDialogComponent implements OnInit {
       'call',
       subType,
       {
-        name: this.data.name,
-        phone: this.data.phone,
+        pageIdExt: 'btn-call-dialogue',
       },
     )
   }

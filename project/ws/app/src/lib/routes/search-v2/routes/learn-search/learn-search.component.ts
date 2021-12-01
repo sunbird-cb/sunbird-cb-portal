@@ -314,6 +314,9 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         type: content.primaryCategory,
         rollup: {},
         ver: `${content.version}${''}`,
+      },                                 {
+        pageIdExt: `${content.primaryCategory}-card`,
+        module: content.primaryCategory,
       })
     }
   }

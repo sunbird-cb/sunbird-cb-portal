@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
-import { EventService } from '@sunbird-cb/utils/src/public-api'
+import { EventService, WsEvents } from '@sunbird-cb/utils/src/public-api'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 
 @Component({
@@ -47,8 +47,11 @@ export class ContentRatingV2DialogComponent implements OnInit {
       this.formDisabled = false
     }
     this.events.raiseInteractTelemetry('rating', 'content', {
-      id: this.data.content.identifier || '',
-      rating: this.userRating,
+        id: this.data.content.identifier || '',
+        rating: this.userRating,
+      },                               {
+      pageIdExt: 'rating-popup',
+      module: WsEvents.EnumTelemetrymodules.FEEDBACK,
     })
     // tslint:disable-next-line: no-non-null-assertion
     this.feedbackForm.get('rating')!.setValue(this.userRating)

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { Subject } from 'rxjs'
 import { WsEvents } from './event.model'
+import { UtilityService } from './utility.service'
 @Injectable({
   providedIn: 'root',
 })
@@ -8,7 +9,9 @@ export class EventService {
   private eventsSubject = new Subject<WsEvents.IWsEvents<any>>()
   public events$ = this.eventsSubject.asObservable()
 
-  constructor() {
+  constructor(
+    private utilitySvc: UtilityService,
+  ) {
     // this.focusChangeEventListener()
   }
 
@@ -17,7 +20,7 @@ export class EventService {
   }
 
   // helper functions
-  raiseInteractTelemetry(type: string, subType: string | undefined, object: any, from?: string) {
+  raiseInteractTelemetry(type: string, subType: string | undefined, object: any, context?: WsEvents.ITelemetryContext) {
     this.dispatchEvent<WsEvents.IWsEventTelemetryInteract>({
       eventType: WsEvents.WsEventType.Telemetry,
       eventLogLevel: WsEvents.WsEventLogLevel.Info,
@@ -25,9 +28,10 @@ export class EventService {
         type,
         subType,
         object,
+        context: this.getContext(context),
         eventSubType: WsEvents.EnumTelemetrySubType.Interact,
       },
-      from: from || '',
+      from: '',
       to: 'Telemetry',
     })
   }
@@ -55,4 +59,29 @@ export class EventService {
   //     this.raiseInteractTelemetry('focus', 'lost', {})
   //   })
   // }
+
+  // Method to get the context information about the telemetry interact event
+  private getContext(context: WsEvents.ITelemetryContext | undefined): WsEvents.ITelemetryContext {
+    const routeDataContext = this.utilitySvc.routeData
+    // initialize with the route data configuration - current route's pageID & module
+    const finalContext: WsEvents.ITelemetryContext = {
+      pageId: routeDataContext.pageId,
+      module: routeDataContext.module,
+    }
+    if (context) {
+      // if context has pageIdExt, append it to the route's pageId
+      if (context.pageIdExt) {
+        finalContext.pageId = `${routeDataContext.pageId}_${context.pageIdExt}`
+      } else if (context.pageId) {
+        // else context has pageId, override it to the final pageID
+        finalContext.pageId = context.pageId
+      }
+      // if context has module, override it to the final module
+      if (context.module) {
+        finalContext.module = context.module
+      }
+    }
+
+    return finalContext
+  }
 }

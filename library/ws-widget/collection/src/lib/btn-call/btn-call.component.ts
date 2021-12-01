@@ -50,6 +50,9 @@ export class BtnCallComponent extends WidgetBaseComponent
         name: this.widgetData.userName,
         phone: this.widgetData.userPhone,
       },
+      {
+        pageIdExt: 'btn-call',
+      }
     )
   }
 }
