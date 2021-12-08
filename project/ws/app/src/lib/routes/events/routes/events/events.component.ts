@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { FormControl } from '@angular/forms'
 import { EventService } from '../../services/events.service'
 import * as moment from 'moment'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, WsEvents, EventService as EventServiceGlobal } from '@sunbird-cb/utils'
+import { MatTabChangeEvent } from '@angular/material'
 
 @Component({
   selector: 'ws-app-events',
@@ -32,6 +33,7 @@ export class EventsComponent implements OnInit {
     private router: Router,
     private eventSvc: EventService,
     private configSvc: ConfigurationsService,
+    private eventService: EventServiceGlobal,
   ) {
     this.data = this.route.snapshot.data.topics.data
     this.paginationData = this.data.pagination
@@ -251,5 +253,16 @@ export class EventsComponent implements OnInit {
     const readableDateMonth = moment(formatedDate).format(format)
     const finalDateTimeValue = `${readableDateMonth}`
     return finalDateTimeValue
+  }
+
+  public tabClicked(tabEvent: MatTabChangeEvent) {
+    const data: WsEvents.ITelemetryTabData = {
+      label: `${tabEvent.tab.textLabel}`,
+      index: tabEvent.index,
+    }
+    this.eventService.handleTabTelemetry(
+      WsEvents.EnumInteractSubTypes.COURSE_TAB,
+      data,
+    )
   }
 }
