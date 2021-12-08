@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core'
 import { Subject } from 'rxjs'
 import { WsEvents } from './event.model'
 import { UtilityService } from './utility.service'
+/* tslint:disable*/
+import _ from 'lodash'
 @Injectable({
   providedIn: 'root',
 })
@@ -51,6 +53,20 @@ export class EventService {
     })
   }
 
+  // Raise custom impression events eg:on tab change
+  raiseCustomImpression(context?: WsEvents.ITelemetryContext) {
+    this.dispatchEvent<WsEvents.IWsEventTelemetryImpression>({
+      eventType: WsEvents.WsEventType.Telemetry,
+      eventLogLevel: WsEvents.WsEventLogLevel.Info,
+      data: {
+        context: this.getContext(context),
+        eventSubType: WsEvents.EnumTelemetrySubType.Impression,
+      },
+      from: '',
+      to: 'Telemetry',
+    })
+  }
+
   // private focusChangeEventListener() {
   //   fromEvent(window, 'focus').subscribe(() => {
   //     this.raiseInteractTelemetry('focus', 'gained', {})
@@ -83,5 +99,26 @@ export class EventService {
     }
 
     return finalContext
+  }
+
+  public handleTabTelemetry(subType: string, data: WsEvents.ITelemetryTabData) {
+    // raise a tab click interact event
+    this.raiseInteractTelemetry(
+      WsEvents.EnumInteractTypes.CLICK,
+      subType,
+      {
+        id: `${_.camelCase(data.label)}`,
+        context: {
+          position: data.index,
+        },
+      },
+      {
+      pageIdExt: `${_.camelCase(data.label)}-tab`,
+    })
+
+    // raise a tab click impression event
+    this.raiseCustomImpression({
+      pageIdExt: `${_.camelCase(data.label)}-tab`,
+    })
   }
 }

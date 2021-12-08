@@ -52,6 +52,7 @@ export class TelemetryService {
       this.addTimeSpentListener()
       this.addSearchListener()
       this.addHearbeatListener()
+      this.addCustomImpressionListener()
     }
   }
 
@@ -200,7 +201,7 @@ export class TelemetryService {
               ...this.pData,
               id: this.pData.id,
             },
-            env: page.module,
+            env: page.module || '',
           },
         })
       }
@@ -414,6 +415,28 @@ export class TelemetryService {
         } catch (e) {
           // tslint:disable-next-line: no-console
           console.log('Error in telemetry interact', e)
+        }
+      })
+  }
+
+  addCustomImpressionListener() {
+    this.eventsSvc.events$
+      .pipe(
+        filter(
+          (event: WsEvents.WsEventTelemetryImpression) =>
+            event &&
+            event.data &&
+            event.eventType === WsEvents.WsEventType.Telemetry &&
+            event.data.eventSubType === WsEvents.EnumTelemetrySubType.Impression,
+        ),
+      )
+      .subscribe(event => {
+        try {
+          // console.log('event.data::', event.data)
+          this.impression(event.data.context)
+        } catch (e) {
+          // tslint:disable-next-line: no-console
+          console.log('Error in telemetry impression', e)
         }
       })
   }
