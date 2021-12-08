@@ -3,7 +3,7 @@ import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { NetworkV2Service } from '../../services/network-v2.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-network-my-mdo',
@@ -24,7 +24,8 @@ export class NetworkMyMdoComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private networkV2Service: NetworkV2Service,
-    private configSvc: ConfigurationsService
+    private configSvc: ConfigurationsService,
+    private eventSvc: EventService
   ) {
     // console.log('this.route.snapshot.data.myMdoList.data :', this.route.snapshot.data.myMdoList.data)
     this.currentUserDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName
@@ -90,6 +91,17 @@ export class NetworkMyMdoComponent implements OnInit {
           // this.openSnackbar(err.error.message.split('|')[1] || this.defaultError)
         })
     }
+  }
+
+  public tabTelemetry(label: string, index: number) {
+    const data: WsEvents.ITelemetryTabData = {
+      label,
+      index,
+    }
+    this.eventSvc.handleTabTelemetry(
+      WsEvents.EnumInteractSubTypes.CAREER_TAB,
+      data,
+    )
   }
 
 }

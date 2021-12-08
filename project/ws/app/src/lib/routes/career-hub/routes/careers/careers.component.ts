@@ -3,6 +3,7 @@ import { NSDiscussData } from '../../../discuss/models/discuss.model'
 import { ActivatedRoute, Router } from '@angular/router'
 import { FormControl } from '@angular/forms'
 import { DiscussService } from '../../../discuss/services/discuss.service'
+import { WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
   selector: 'ws-app-careers',
@@ -23,6 +24,7 @@ export class CareersComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private discussService: DiscussService,
+    private eventSvc: EventService,
   ) {
     this.data = this.route.snapshot.data.topics.data
     this.paginationData = this.data.pagination
@@ -89,6 +91,17 @@ export class CareersComponent implements OnInit {
       currentPage: this.paginationData.currentPage,
       totalPage: this.paginationData.pageCount,
     }
+  }
+
+  tabTelemetry(label: string, index: number) {
+    const data: WsEvents.ITelemetryTabData = {
+      label,
+      index,
+    }
+    this.eventSvc.handleTabTelemetry(
+      WsEvents.EnumInteractSubTypes.CAREER_TAB,
+      data,
+    )
   }
 
 }

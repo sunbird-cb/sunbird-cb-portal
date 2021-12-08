@@ -41,15 +41,15 @@
             <div class="flex flex-1 filter">
                 <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'recommended',
                                 'ws-mat-accent-border':currentFilter !== 'recommended'}"
-                    (click)="filter('recommended')">
+                    (click)="filter('recommended'); tabTelemetry('Recommended from FRAC', 0)">
                     Recommended from FRAC </a>
                 <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'recommended_from_wat',
                     'ws-mat-accent-border':currentFilter !== 'recommended_from_wat'}"
-                (click)="filter('recommended_from_wat')">
+                (click)="filter('recommended_from_wat'); tabTelemetry('Recommended from WAT', 1)">
                 Recommended from WAT </a>
                 <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'added_by_you',
                                 'ws-mat-accent-border':currentFilter !== 'added_by_you'}"
-                    (click)="filter('added_by_you')">
+                    (click)="filter('added_by_you'); tabTelemetry('Added by you', 2)">
                     Added by you </a>
             </div>
         </div>
