@@ -60,12 +60,18 @@ export namespace WsEvents {
     HeartBeat = 'HeartBeat',
     Search = 'Search',
     Feedback = 'Feedback',
+    Impression = 'Impression',
   }
 
   export interface ITelemetryContext {
     pageId?: string,
     module?: string,
     pageIdExt?: string
+  }
+
+  export interface ITelemetryTabData {
+    label: string,
+    index: number,
   }
 
   export interface IWsEventTelemetry {
@@ -95,12 +101,21 @@ export namespace WsEvents {
     type: string
     subType?: string
     object: any
+    context?: ITelemetryContext
   }
 
   export interface IWsEventTelemetryFeedback extends IWsEventTelemetry {
     type: string
     subType?: string
     object: any
+    context?: ITelemetryContext
+  }
+
+  export interface IWsEventTelemetryImpression extends IWsEventTelemetry {
+    type?: string
+    subType?: string
+    object?: any
+    context?: ITelemetryContext
   }
 
   export interface IWsEventTelemetrySearch extends IWsEventTelemetry {
@@ -120,6 +135,7 @@ export namespace WsEvents {
   }
   export type WsEventTelemetryInteract = IWsEvents<IWsEventTelemetryInteract>
   export type WsEventTelemetryFeedback = IWsEvents<IWsEventTelemetryFeedback>
+  export type WsEventTelemetryImpression = IWsEvents<IWsEventTelemetryImpression>
   export type WsEventTelemetrySearch = IWsEvents<IWsEventTelemetrySearch>
   export type WsEventTelemetryHeartBeat = IWsEvents<IWsEventTelemetryHeartBeat>
 
@@ -173,5 +189,13 @@ export namespace WsEvents {
     PROFILE = 'profile',
     NETWORK = 'network',
     SUPPORT = 'support',
+  }
+  export enum EnumInteractTypes {
+    CLICK = 'click',
+  }
+  export enum EnumInteractSubTypes {
+    COURSE_TAB = 'course-tab',
+    CAREER_TAB = 'career-tab',
+    PROFILE_EDIT_TAB = 'profile-edit-tab',
   }
 }

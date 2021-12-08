@@ -2,14 +2,14 @@ import { AccessControlService } from '@ws/author'
 import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ActivatedRoute, Data, Router } from '@angular/router'
-import { ConfigurationsService, LoggerService } from '@sunbird-cb/utils'
+import { ConfigurationsService, LoggerService, WsEvents, EventService } from '@sunbird-cb/utils'
 import { Observable, Subscription } from 'rxjs'
 import { share } from 'rxjs/operators'
 import { NsAppToc, NsCohorts } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
 import { CreateBatchDialogComponent } from '../create-batch-dialog/create-batch-dialog.component'
 import { TitleTagService } from '@ws/app/src/lib/routes/app-toc/services/title-tag.service'
-import { MatDialog } from '@angular/material'
+import { MatDialog, MatTabChangeEvent } from '@angular/material'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import { ConnectionHoverService } from '@sunbird-cb/collection/src/lib/_common/connection-hover-card/connection-hover.servive'
 import { NsContent, NsAutoComplete } from '@sunbird-cb/collection/src/public-api'
@@ -69,6 +69,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     private mobileAppsSvc: MobileAppsService,
     public configSvc: ConfigurationsService,
     private connectionHoverService: ConnectionHoverService,
+    private eventSvc: EventService,
     // private discussionEventsService: DiscussionEventsService
 
   ) {
@@ -419,5 +420,16 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
 
   get usr() {
     return this.howerUser
+  }
+
+  public tabClicked(tabEvent: MatTabChangeEvent) {
+    const data: WsEvents.ITelemetryTabData = {
+      label: `${tabEvent.tab.textLabel}`,
+      index: tabEvent.index,
+    }
+    this.eventSvc.handleTabTelemetry(
+      WsEvents.EnumInteractSubTypes.COURSE_TAB,
+      data,
+    )
   }
 }

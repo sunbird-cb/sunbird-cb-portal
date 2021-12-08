@@ -5,8 +5,8 @@
   <div class="profile-box">
     <form class="" [formGroup]="createUserForm">
       <mat-tab-group animationDuration="0ms" class="mat-tab-labels w-full" mat-stretch-tabs
-        [selectedIndex]="selectedIndex" (selectedTabChange)="selectedIndex = $event.index">
-        <mat-tab>
+        [selectedIndex]="selectedIndex" (selectedTabChange)="selectedIndex = $event.index; tabClicked($event)">
+        <mat-tab label="Personal Details">
           <ng-template mat-tab-label i18n>
             Personal Details
           </ng-template>
@@ -488,7 +488,7 @@
 
           </div>
         </mat-tab>
-        <mat-tab *ngIf="!isForcedUpdate">
+        <mat-tab label="Academics" *ngIf="!isForcedUpdate">
           <ng-template mat-tab-label i18n>
             Academics
           </ng-template>
@@ -712,7 +712,7 @@
             </div>
           </div>
         </mat-tab>
-        <mat-tab *ngIf="!isForcedUpdate">
+        <mat-tab label="Professional Details" *ngIf="!isForcedUpdate">
           <ng-template mat-tab-label i18n>
             Professional Details
           </ng-template>
@@ -1052,7 +1052,7 @@
             </div>
           </div>
         </mat-tab>
-        <mat-tab *ngIf="!isForcedUpdate">
+        <mat-tab label="Certification & Skills" *ngIf="!isForcedUpdate">
           <ng-template mat-tab-label i18n>
             Certification & Skills
           </ng-template>

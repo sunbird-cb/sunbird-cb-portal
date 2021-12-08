@@ -10,6 +10,10 @@ const routes: Routes = [
   {
     path: '',
     component: CareersHomeComponent,
+    data: {
+      pageId: '',
+      module: '',
+    },
     children: [
       {
         path: '',

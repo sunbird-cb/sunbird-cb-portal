@@ -30,6 +30,7 @@
     animation-name: blink;
     animation-iteration-count: infinite;
     animation-direction: alternate;
+    // tslint:disable-next-line
     -webkit-animation: blink 3000ms infinite;
     /* Safari and Chrome */
 

@@ -26,6 +26,7 @@ export class UtilityService {
     private platform: Platform,
     private router: Router,
     private route: ActivatedRoute,
+    // private events: EventService,
   ) {
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
@@ -135,7 +136,9 @@ export class UtilityService {
     // tslint:disable-next-line: no-console
     // console.log('Final currentDataRoute get routeData()', this.currentRouteData)
     this.currentRouteData.map((rd: any) => {
-      data.pageId = `${data.pageId}/${rd.pageId}`
+      if (rd.pageId) {
+        data.pageId = `${data.pageId}/${rd.pageId}`
+      }
       if (rd.module) {
         data.module = rd.module
       }
