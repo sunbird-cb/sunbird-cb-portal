@@ -5,7 +5,7 @@ import {
   Component,
   ElementRef,
   OnInit,
-  TemplateRef,
+  // TemplateRef,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core'
@@ -48,8 +48,9 @@ import { AppIntroComponent } from '../app-intro/app-intro.component'
   providers: [SwUpdate],
 })
 export class RootComponent implements OnInit, AfterViewInit {
+
   @ViewChild('previewContainer', { read: ViewContainerRef, static: true })
-  @ViewChild('userIntro', { static: true }) userIntro!: TemplateRef<any>
+  // @ViewChild('userIntro', { static: true }) userIntro!: TemplateRef<any>
   previewContainerViewRef: ViewContainerRef | null = null
   @ViewChild('appUpdateTitle', { static: true })
   appUpdateTitleRef: ElementRef | null = null

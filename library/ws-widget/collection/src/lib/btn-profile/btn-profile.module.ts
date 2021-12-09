@@ -23,8 +23,8 @@ import { WidgetUrlResolverDirective } from './widget-url-resolver.directive'
     MatSlideToggleModule,
     RouterModule,
     WidgetResolverModule,
-
   ],
+  exports: [BtnProfileComponent],
   entryComponents: [BtnProfileComponent],
 })
 export class BtnProfileModule { }
