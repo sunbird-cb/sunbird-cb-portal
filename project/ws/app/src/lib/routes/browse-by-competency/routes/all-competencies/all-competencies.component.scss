@@ -4,11 +4,18 @@
     margin-right: auto!important;
     height: auto;
     min-height: 400px;
-    
+
+    @media (max-width:1024px) {
+        margin-left: 8px!important;
+        margin-right: 8px!important;
+    }
+
+
+
 }
 .top_card_container {
     margin-top: 30px;
-    
+
     .top_card_inner_box {
         align-items: center;
         // enable for flex box layout
@@ -22,6 +29,10 @@
         grid-template-columns: repeat(auto-fill, 276px);
         justify-content: flex-start;
 
+        @media (max-width:768px) {
+            grid-gap: 16px;
+        }
+
     }
 }
 
@@ -33,15 +44,15 @@
         box-shadow: none!important;
         border: 0;
         padding: 0;
-    
-       
+
+
     }
 
     .mat-content {
         flex-direction: row-reverse!important;
         // border:1px solid red;
 
-        
+
     }
     .mat-expansion-panel-header-title  {
         flex-grow: initial;
@@ -53,7 +64,7 @@
     .mat-expansion-panel-content {
         .mat-expansion-panel-body {
             padding:10px 0;
-            border:1px solid red;
+            // border:1px solid red;
         }
     }
 }
@@ -83,24 +94,37 @@
             width: 75%;
             float: left;
 
+            @media (max-width:992px) {
+                width:100%;
+            }
+
             .top_search_box {
                 width: 100%;
                 overflow: hidden;
                 justify-content: space-between;
-               
+
 
                 .search_box_inner {
                     max-width: 585px;
                     float: left;
 
+                    @media (max-width:768px) {
+                        width: 49%;
+                        max-width: 49%;
+                    }
+
                     .search_box_main {
                         width: 100%;
                         max-width: 585px;
 
+                        @media (max-width:768px) {
+                            max-width: 100%;
+                        }
+
                         mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix{
                             border-top-width: 8px !important;
                             padding: 12px 10px 12px 12px;
-                            
+
                         }
 
                         form {
@@ -109,7 +133,7 @@
                             .search_form {
                                 width: 100%;
 
-                               
+
                             }
                         }
                     }
@@ -138,6 +162,10 @@
                     width: 210px;
                     box-sizing: border-box;
 
+                    @media (max-width:768px) {
+                        width: 49%;
+                    }
+
                     .item {
                         .mat-form-field-outline  {
                             background-color: #f0f3f4;
@@ -149,7 +177,7 @@
                         .theme-igot.day-mode .mat-form-field-appearance-legacy .mat-form-field-underline {
                             background-color:none;
                         }
-                        
+
                     }
                 }
             }
@@ -174,7 +202,11 @@
             border: 0!important;
             border-radius: 4px;
 
-           
+            @media (max-width:992px) {
+                width:100%;
+            }
+
+
         }
         .right_section_search_box {
             width:100%;
@@ -184,7 +216,7 @@
             //     position: absolute;
             // }
         }
-        
+
     }
 }
 

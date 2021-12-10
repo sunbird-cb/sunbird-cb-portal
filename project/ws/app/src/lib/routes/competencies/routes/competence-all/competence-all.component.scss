@@ -2,6 +2,7 @@
 @import 'ws-vars';
 @import 'ws-mixins';
 
+
 .buton {
   display: flex;
   border: 1px solid;
@@ -9,6 +10,57 @@
   background: red;
   align-content: center;
   text-align: center;
+}
+
+.competency_main_block {
+  width: 100%;
+
+
+}
+.competency_inner {
+  @media (max-width:1024px) {
+    padding:0px 8px;
+  }
+  @media (max-width:768px) {
+    width: 0;
+  }
+}
+
+.filter_outer_box {
+  @media (max-width:768px) {
+    width: 100%;
+    overflow-x: scroll;
+    margin: 0px !important;
+  }
+  .filter {
+    @media (max-width:768px) {
+      width: 500px;
+
+    }
+  }
+
+}
+
+.search {
+  @media (max-width:768px) {
+    width: 100%;
+    margin: 0px !important;
+  }
+  form.search_form {
+    .autocomplete-form {
+      @media (max-width:768px) {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.progress_data_box .mat-progress-bar-fill::after {
+  background: red!important;
+}
+
+.no-competency-card {
+  margin-right: 0!important;
 }
 
 .filter-option:hover, .tabs-active {
@@ -79,17 +131,17 @@
   text-align: center;
 }
 
-.margin-fix {
+// .margin-fix {
 
-  @include breakpoint-xs {
-    margin: 0 $size-l 0 $size-l;
-    flex-direction: column;
-  }
+//   @include breakpoint-xs {
+//     margin: 0 $size-l 0 $size-l;
+//     flex-direction: column;
+//   }
 
-  @include breakpoint-s {
-    margin: 0 $size-l 0 $size-l;
-  }
-}
+//   @include breakpoint-s {
+//     margin: 0 $size-l 0 $size-l;
+//   }
+// }
 
 .overflow {
   // @include breakpoint-xs {
@@ -322,7 +374,7 @@ a:not([href]):not([tabindex]) {
   //    display: column;
       width: 210px;
       padding: 24px;
-      
+
       box-sizing: border-box;
 
       h4.mat-h4 {
@@ -336,11 +388,11 @@ a:not([href]):not([tabindex]) {
               margin-right: 10px;
           }
           .icon_text {
-              margin-bottom: 0;  
-             
+              margin-bottom: 0;
+
           }
       }
-     
+
   }
   .card_right_txtbox {
       float: right;
@@ -366,18 +418,33 @@ a:not([href]):not([tabindex]) {
   background-position: center;
   background-size: cover;
   border-radius: 3px 3px;
+  box-sizing: border-box;
+
+  @media (max-width:768px) {
+    padding: 15px 15px;
+  }
+
 
   // background-color: #fff;
 
   .inner_progress_box {
     width: 100%;
 
+    @media (max-width:449px) {
+      flex-direction: column!important;
+    }
+
     .progress_data_box {
       width: 50%;
       padding-right: 30px;
       box-sizing: border-box;
+
+      @media (max-width:449px) {
+        padding-right: 0px;
+        width: 100%;
+      }
     }
-    
+
   }
 }
 
@@ -390,7 +457,7 @@ a:not([href]):not([tabindex]) {
 
 
   .post_image_box {
-    
+
     img {
       margin-top: 56px;
       margin-bottom: 24px;
@@ -403,7 +470,7 @@ a:not([href]):not([tabindex]) {
     vertical-align: top;
   }
 
- 
+
 }
 
 a.work_order_link {
@@ -520,7 +587,7 @@ p.proficiency_text {
 
 
   .post_image_box {
-    
+
     img {
       margin-top: 56px;
       margin-bottom: 24px;

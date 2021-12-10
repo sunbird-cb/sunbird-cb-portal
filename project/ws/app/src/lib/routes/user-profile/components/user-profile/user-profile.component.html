@@ -107,7 +107,7 @@
                         <mat-form-field appearance="outline" class="margin-top-xs">
                           <input id="birthDate" matInput #dob formControlName="dob" [matDatepicker]="picker"
                             i18n-placeholder (focus)="picker.open()" placeholder="Choose Date of Birth (dd-mm-yyyy)"
-                            [min]="" [max]="today" readonly>
+                            [min]="1/1/1900" [max]="today" readonly>
                           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                           <mat-datepicker #picker (closed)="dob.blur()" i18n-aria-label aria-label="Date picker">
                           </mat-datepicker>
@@ -435,7 +435,7 @@
                       Postal Address
                     </label>
                     <mat-form-field appearance="outline" class="w-full margin-top-xs">
-                      <textarea id="postalAddress" matInput [matTextareaAutosize] [matAutosizeMaxRows]="10"
+                      <textarea id="postalAddress" matInput [matTextareaAutosize]="true" [matAutosizeMaxRows]="10"
                         [matAutosizeMinRows]="3" maxlength="200" formControlName="residenceAddress"
                         placeholder="Type Your Residence Address Here" i18n-placeholder #residenceAddress
                         i18n-aria-label aria-label="Postal Address textarea input"></textarea>
