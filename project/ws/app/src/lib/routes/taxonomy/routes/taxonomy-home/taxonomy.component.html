@@ -12,27 +12,31 @@
         </div>
     </div>
 </div>
-<ng-template #userIndividualNew let-topic="topic">
-    <mat-card class="network-card mr-9" (click)="gotoNextLevel(topic)">
-        <img src="fusion-assets/images/explore_topic_background.svg" />
-        <div class="card_text_box">
-            <mat-card-header>
-                <mat-card-title class="text-capitalize text-oneline">
-                    <a href="javascript:void(0)" role="link" i18n-aria-label>
-                        <span class="mat-subheading-2"> {{topic.name}}
-          </span></a>
-                </mat-card-title>
-                <mat-card-subtitle>
-                    <span class="text-capitalize mat-body-2">Level 1</span>
-                </mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content class="content">
-            </mat-card-content>
-        </div>
 
-    </mat-card>
+
+<ng-template #userIndividualNew let-topic="topic">
+
+        <mat-card class="network-card mr-9" (click)="gotoNextLevel(topic)">
+            <img src="fusion-assets/images/explore_topic_background.svg" />
+            <div class="card_text_box">
+                <mat-card-header>
+                    <mat-card-title class="text-capitalize text-oneline">
+                        <a href="javascript:void(0)" role="link" i18n-aria-label>
+                            <span class="mat-subheading-2"> {{topic.name}}
+            </span></a>
+                    </mat-card-title>
+                    <mat-card-subtitle>
+                        <span class="text-capitalize mat-body-2">Level 1</span>
+                    </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content class="content">
+                </mat-card-content>
+            </div>
+
+        </mat-card>
 
 </ng-template>
+
 <div class="container-balanced min-height mt-24" align='center' *ngIf="resourceLoading">
     <mat-progress-spinner mode="indeterminate" diameter='20' strokeWidth='50'></mat-progress-spinner>
 </div>

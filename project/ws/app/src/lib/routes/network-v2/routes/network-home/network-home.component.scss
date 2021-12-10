@@ -33,15 +33,15 @@
   }
 }
 
-.margin-fix {
-  @include breakpoint-xs {
-    margin: 0 $size-l 0 $size-l;
-  }
+// .margin-fix {
+//   @include breakpoint-xs {
+//     margin: 0 $size-l 0 $size-l;
+//   }
 
-  @include breakpoint-s {
-    margin: 0 $size-l 0 $size-l;
-  }
-}
+//   @include breakpoint-s {
+//     margin: 0 $size-l 0 $size-l;
+//   }
+// }
 
 .height-48 {
   max-height: 48px;
@@ -136,3 +136,10 @@
 // ::ng-deep .mat-card-header-text {
 //   flex: 1 1 0%;
 // }
+
+.see_all_btn {
+  text-align: right;
+}
+.network_right {
+  margin-left: 18px;
+}
