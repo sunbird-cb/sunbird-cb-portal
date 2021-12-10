@@ -1,4 +1,4 @@
-<mat-tab-group [selectedIndex]="0" class="custom-tabgroup">
+<mat-tab-group [selectedIndex]="0" class="custom-tabgroup" (selectedTabChange)="tabClicked($event)">
     <mat-tab label="Overview">
         <ng-template matTabContent>
             <section id="overview">
@@ -314,16 +314,16 @@
             </section>
         </ng-template>
     </mat-tab>
-    <mat-tab label="Content" *ngIf="content?.children?.length">
+    <mat-tab label="Content" *ngIf="content?.children?.length" >
         <ng-template matTabContent>
             <section id="content">
                 <div class="fixed-width">
-                    <ws-app-app-toc-contents [batchId]="batchId" [content]="content"></ws-app-app-toc-contents>
+                    <ws-app-app-toc-contents [batchId]="batchId" [content]="content" [forPreview]="forPreview"></ws-app-app-toc-contents>
                 </div>
             </section>
         </ng-template>
     </mat-tab>
-    <mat-tab label="Discussion">
+    <mat-tab label="Discussion" >
         <ng-template matTabContent>
             <section id="discussion-forum">
                 <div class="fixed-width toc-discussion-container">

@@ -3,9 +3,9 @@ import { FormGroup, FormControl, Validators, FormArray, FormBuilder, AbstractCon
 import { ENTER, COMMA } from '@angular/cdk/keycodes'
 import { Subscription, Observable } from 'rxjs'
 import { startWith, map, debounceTime, distinctUntilChanged } from 'rxjs/operators'
-import { MatSnackBar, MatChipInputEvent, DateAdapter, MAT_DATE_FORMATS, MatDialog } from '@angular/material'
+import { MatSnackBar, MatChipInputEvent, DateAdapter, MAT_DATE_FORMATS, MatDialog, MatTabChangeEvent } from '@angular/material'
 import { AppDateAdapter, APP_DATE_FORMATS, changeformat } from '../../services/format-datepicker'
-import { ImageCropComponent, ConfigurationsService } from '@sunbird-cb/utils'
+import { ImageCropComponent, ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils'
 import { IMAGE_MAX_SIZE, IMAGE_SUPPORT_TYPES } from '@ws/author/src/lib/constants/upload'
 import { UserProfileService } from '../../services/user-profile.service'
 import { Router, ActivatedRoute } from '@angular/router'
@@ -115,6 +115,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     public dialog: MatDialog,
     private loader: LoaderService,
+    private eventSvc: EventService,
   ) {
     this.approvalConfig = this.route.snapshot.data.pageData.data
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
@@ -1310,5 +1311,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         }
       },
     })
+  }
+
+  public tabClicked(tabEvent: MatTabChangeEvent) {
+    const data: WsEvents.ITelemetryTabData = {
+      label: `${tabEvent.tab.textLabel}`,
+      index: tabEvent.index,
+    }
+    this.eventSvc.handleTabTelemetry(
+      WsEvents.EnumInteractSubTypes.PROFILE_EDIT_TAB,
+      data,
+    )
   }
 }

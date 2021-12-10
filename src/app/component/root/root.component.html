@@ -1,6 +1,10 @@
 <mat-progress-bar mode="indeterminate" color="warn" class="route-change" *ngIf="routeChangeInProgress">
 </mat-progress-bar>
-
+<!-- <p class="skipnav">
+  <a href="javascript:void(0);" (click)='skipToMainContent()' translate>
+    Skip to main content
+  </a>
+</p> -->
 <ws-app-public-nav-bar *ngIf=""></ws-app-public-nav-bar>
 <!-- <ws-widget-sticky-header> -->
 <ws-app-nav-bar class="top-nav-bar" *ngIf="
@@ -18,13 +22,14 @@
   }">
   <router-outlet></router-outlet>
 </div>
-<ws-app-footer class="app-footer" [ngClass]="{ 'padding-bottom: 56px': !isSetupPage}"
-  *ngIf="showNavbar"></ws-app-footer>
-<ws-app-nav-bar class="bottom-nav-bar" [hidden]="!showNavbar"
-  *ngIf="isNavBarRequired && (isXSmall$ | async) === true" [mode]="'bottom'">
+<ws-app-footer class="app-footer" [ngClass]="{ 'padding-bottom: 56px': !isSetupPage}" *ngIf="showNavbar">
+</ws-app-footer>
+<ws-app-nav-bar class="bottom-nav-bar" [hidden]="!showNavbar" *ngIf="isNavBarRequired && (isXSmall$ | async) === true"
+  [mode]="'bottom'">
 </ws-app-nav-bar>
 
 <ng-container #previewContainer></ng-container>
 
 <input #appUpdateTitle type="hidden" i18n-value value="App Update" />
 <input #appUpdateBody type="hidden" i18n-value value="App has been updated. Do you want to load new version?" />
+<div #skipper tabindex="-1"></div>

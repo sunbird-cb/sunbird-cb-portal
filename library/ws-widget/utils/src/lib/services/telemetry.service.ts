@@ -52,6 +52,7 @@ export class TelemetryService {
       this.addTimeSpentListener()
       this.addSearchListener()
       this.addHearbeatListener()
+      this.addCustomImpressionListener()
     }
   }
 
@@ -78,6 +79,7 @@ export class TelemetryService {
             type,
             mode,
             pageid: id,
+            duration: 1,
           },
           {
             context: {
@@ -85,6 +87,7 @@ export class TelemetryService {
                 ...this.pData,
                 id: this.pData.id,
               },
+              env: 'home',
             },
             object: {
               ...(data) && data,
@@ -170,7 +173,7 @@ export class TelemetryService {
       const page = this.getPageDetails()
       if (data) {
         page.pageid = data.pageId
-        page.module = data.pageModule
+        page.module = data.module
       }
       const edata = {
         pageid: page.pageid, // Required. Unique page id
@@ -198,7 +201,7 @@ export class TelemetryService {
               ...this.pData,
               id: this.pData.id,
             },
-            env: page.module,
+            env: page.module || '',
           },
         })
       }
@@ -351,7 +354,7 @@ export class TelemetryService {
                 subtype: event.data.subType,
                 // object: event.data.object,
                 id: (event.data.object) ? event.data.object.contentId || event.data.object.id || interactid || '' : '',
-                pageid: page.pageid,
+                pageid: event.data.context && event.data.context.pageId ||  page.pageid,
                 // target: { page },
               },
               {
@@ -360,6 +363,7 @@ export class TelemetryService {
                     ...this.pData,
                     id: this.pData.id,
                   },
+                  ...(event.data.context && event.data.context.module ? { env: event.data.context.module } : null),
                 },
                 object: {
                   ...event.data.object,
@@ -411,6 +415,28 @@ export class TelemetryService {
         } catch (e) {
           // tslint:disable-next-line: no-console
           console.log('Error in telemetry interact', e)
+        }
+      })
+  }
+
+  addCustomImpressionListener() {
+    this.eventsSvc.events$
+      .pipe(
+        filter(
+          (event: WsEvents.WsEventTelemetryImpression) =>
+            event &&
+            event.data &&
+            event.eventType === WsEvents.WsEventType.Telemetry &&
+            event.data.eventSubType === WsEvents.EnumTelemetrySubType.Impression,
+        ),
+      )
+      .subscribe(event => {
+        try {
+          // console.log('event.data::', event.data)
+          this.impression(event.data.context)
+        } catch (e) {
+          // tslint:disable-next-line: no-console
+          console.log('Error in telemetry impression', e)
         }
       })
   }

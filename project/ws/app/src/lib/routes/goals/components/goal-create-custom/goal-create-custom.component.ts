@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { NsGoal, NsContent, BtnGoalsService, NsAutoComplete } from '@sunbird-cb/collection'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
-import { TFetchStatus, EventService, ConfigurationsService } from '@sunbird-cb/utils'
+import { TFetchStatus, EventService, ConfigurationsService, WsEvents } from '@sunbird-cb/utils'
 import { MatSnackBar } from '@angular/material'
 import { Router, ActivatedRoute } from '@angular/router'
 
@@ -215,6 +215,9 @@ export class GoalCreateCustomComponent implements OnInit {
   raiseTelemetry(goalId: NsGoal.EGoalTypes) {
     this.events.raiseInteractTelemetry('goal', 'create', {
       goalId,
+    },                                 {
+      pageIdExt: 'create-goal',
+      module: WsEvents.EnumTelemetrymodules.LEARN,
     })
   }
 }

@@ -7,7 +7,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core'
-import { TFetchStatus, EventService } from '@sunbird-cb/utils'
+import { TFetchStatus, EventService, WsEvents } from '@sunbird-cb/utils'
 import { NsGoal } from '../btn-goals.model'
 import { BtnGoalsService } from '../btn-goals.service'
 import { MatSnackBar, MatListOption } from '@angular/material'
@@ -102,6 +102,9 @@ export class BtnGoalsSelectionComponent implements OnInit {
     this.eventSvc.raiseInteractTelemetry('goal', `btn-goal-${action}`, {
       goalId,
       id: contentId,
+    },                                   {
+      pageIdExt: 'btn-goals',
+      module: WsEvents.EnumTelemetrymodules.CONTENT,
     })
   }
 }

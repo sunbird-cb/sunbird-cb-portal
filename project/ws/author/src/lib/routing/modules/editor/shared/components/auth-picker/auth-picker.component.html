@@ -61,7 +61,7 @@
   <ng-template #noName i18n>Untitled Content</ng-template>
 </mat-dialog-content>
 <div mat-dialog-actions class="float-right">
-  <button mat-stroked-button [mat-dialog-close] cdkFocusInitial i18n>Cancel</button>
+  <button mat-stroked-button mat-dialog-close cdkFocusInitial i18n>Cancel</button>
   <button mat-raised-button (click)="close()" [disabled]="!selectedContents || !selectedContents.length" color="primary"
     i18n>
     Add

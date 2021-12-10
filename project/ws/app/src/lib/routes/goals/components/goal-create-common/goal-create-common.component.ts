@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { NsGoal, BtnGoalsService } from '@sunbird-cb/collection'
 import { ActivatedRoute } from '@angular/router'
-import { TFetchStatus, EventService } from '@sunbird-cb/utils'
+import { TFetchStatus, EventService, WsEvents } from '@sunbird-cb/utils'
 @Component({
   selector: 'ws-app-goal-create-common',
   templateUrl: './goal-create-common.component.html',
@@ -54,6 +54,9 @@ export class GoalCreateCommonComponent implements OnInit {
   raiseTelemetry(goalId: string) {
     this.events.raiseInteractTelemetry('goal', 'create', {
       goalId,
+    },                                 {
+      pageIdExt: 'create-goal',
+      module: WsEvents.EnumTelemetrymodules.LEARN,
     })
   }
 }

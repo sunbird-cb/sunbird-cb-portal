@@ -8,7 +8,7 @@ import _ from 'lodash';
 import { FormControl } from '@angular/forms';
 import { CompetenceViewComponent } from '../../components/competencies-view/competencies-view.component';
 import { MatSnackBar } from '@angular/material';
-import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
+import { ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
 import {ThemePalette} from '@angular/material/core'
 /* tslint:enable */
 
@@ -53,6 +53,7 @@ export class CompetenceAllComponent implements OnInit {
     private competencySvc: CompetenceService,
     private snackBar: MatSnackBar,
     private configSvc: ConfigurationsService,
+    private eventSvc: EventService,
   ) {
     this.tabsData =
       (this.route.parent &&
@@ -361,5 +362,16 @@ export class CompetenceAllComponent implements OnInit {
         this.deleteCompetency(response.id);
       }
     });
+  }
+
+  public tabTelemetry(label: string, index: number) {
+    const data: WsEvents.ITelemetryTabData = {
+      label,
+      index,
+    }
+    this.eventSvc.handleTabTelemetry(
+      WsEvents.EnumInteractSubTypes.CAREER_TAB,
+      data,
+    )
   }
 }
