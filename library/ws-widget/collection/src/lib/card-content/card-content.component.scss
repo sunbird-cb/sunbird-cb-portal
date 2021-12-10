@@ -672,7 +672,7 @@ $title-line-count: 2;
 
 
 .card-wide {
-   border-radius: 10px 0 0 10px;
+   border-radius: 10px 10px;
   .highlight_point_text {
     margin-top:15px;
   }
@@ -700,6 +700,13 @@ $title-line-count: 2;
       box-sizing: border-box;
       width: calc(100% - 315px);
 
+      @media (max-width:992px) {
+        width: 66%;
+        padding: 8px;
+        position: relative;
+        height: auto;
+      }
+
       p.mat-caption {
 
           .mat-icon {
@@ -719,6 +726,11 @@ $title-line-count: 2;
 
       .imageholder {
           width: 310px;
+
+          @media (max-width:992px) {
+            width: 34%;
+            height: auto;
+          }
       }
     ul.tag_list {
         list-style: none;
@@ -748,6 +760,10 @@ $title-line-count: 2;
             // object-fit: cover;
             // object-position: center;
             height: 100%;
+
+            @media (max-width:992px) {
+              height: auto;
+            }
 
         }
         .source-div {

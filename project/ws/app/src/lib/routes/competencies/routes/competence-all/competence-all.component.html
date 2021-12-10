@@ -1,4 +1,4 @@
-<div class="flex flex-4 flex-column margin-bottom-xl">
+<div class="flex flex-4 flex-column margin-bottom-xl competency_inner">
   <div class="flex flex-1 custom">
     <!-- <div class="flex-1" style="position: relative;">
       <div #stickyMenu [class.sticky]="sticky">
@@ -17,19 +17,25 @@
             <div class="flex flex-col items-center main_progress_box">
               <div class="flex flex-row inner_progress_box justify-between">
                 <div class="progress_data_box">
-                  <mat-progress-bar class="green-progress" [color]="color"
+                  <!-- <mat-progress-bar class="green-progress" [color]="color"
+                  mode="determinate"
+                  [value]="value"></mat-progress-bar> -->
+                  <mat-progress-bar class="red-progress"
                   mode="determinate"
                   [value]="value"></mat-progress-bar>
                   <p class="mat-h3 margin-remove">{{ myCompetencies.length }}</p>
                   <p class="mat-body-2">Your competencies</p>
                 </div>
-    
+
                 <div class="progress_data_box">
-                  <mat-progress-bar class="green-progress" [color]="color"
+                  <!-- <mat-progress-bar class="green-progress" [color]="color"
+                  mode="determinate"
+                  [value]="value"></mat-progress-bar> -->
+                  <mat-progress-bar class="red-progress"
                   mode="determinate"
                   [value]="value"></mat-progress-bar>
                   <p class="mat-h3 margin-remove">{{ ((filteredCompetencies) ? filteredCompetencies.length : 0 ) + ((watCompetencies) ? watCompetencies.length : 0 )}}</p>
-                  <p class="mat-body-2">Recommended competencies</p>
+                  <p class="mat-body-2 margin-remove">Recommended competencies</p>
                 </div>
               </div>
             </div>
@@ -37,7 +43,7 @@
         </mat-card>
       </div>
       <div class="w-full pt-5">
-        <div class="flex flex-1 flex-column margin-fix mt-5">
+        <div class="flex flex-1 flex-column margin-fix mt-5 filter_outer_box">
             <div class="flex flex-1 filter">
                 <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'recommended',
                                 'ws-mat-accent-border':currentFilter !== 'recommended'}"
@@ -55,7 +61,7 @@
         </div>
 
         <div class="flex flex-1 flex-row margin-fix search">
-          <form (submit)="updateQuery(queryControl.value)" class="flex-1">
+          <form (submit)="updateQuery(queryControl.value)" class="flex-1 search_form">
             <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'">
               <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
               <input type="search" #searchInput class="ml-2" i18n-placeholder="search content"
@@ -80,7 +86,7 @@
           </div>
 
           <!-- New -->
-          
+
           <div class="flex flex-column flex-wrap margin-fix">
             <ng-container *ngIf="myCompetencies && myCompetencies.length > 0" >
               <ng-container *ngFor="let comp of myCompetencies | pipeFilterV2:'name': searchInput.value"> <!--  | pipeFilterV2:'name': searchInput.value   -->
@@ -93,8 +99,8 @@
                                 <p class="mat-body-2 ws-mat-black60-text">{{comp.competencyType}}</p>
                             </div>
 
-                           
-            
+
+
                             <div class="flex-col proficiency_text_box">
                                 <!-- <div class="flex flex-row justify-between">
                                   <div>
@@ -110,7 +116,7 @@
                                     </ul>
                                   </div>
                                 </div>
-            
+
                                 <div class="flex flex-row justify-between">
                                   <div>
                                     <p>PIAA</p>
@@ -125,7 +131,7 @@
                                     </ul>
                                   </div>
                                 </div>
-            
+
                                 <div class="flex flex-row justify-between">
                                   <div>
                                       <p>CBP assessment</p>
@@ -140,7 +146,7 @@
                                     </ul>
                                   </div>
                                 </div> -->
-            
+
                                 <div class="flex flex-row justify-between">
                                   <div>
                                       <p>Self attestation</p>
@@ -186,8 +192,8 @@
                                   </div>
                                 </div>
                             </div>
-                    
-                
+
+
                             <div class="flex proficient_level_box">
                                 <p class="deactivate_text mat-body-2">Not enough data</p>
                             </div>
@@ -218,7 +224,7 @@
           </div>
 
           <!-- New -->
-          
+
           <div class="flex flex-column flex-wrap margin-fix">
             <ng-container *ngIf="watCompetencies && watCompetencies.length > 0" >
               <ng-container *ngFor="let comp of watCompetencies | pipeFilterV2:'name': searchInput.value"> <!--  | pipeFilterV2:'name': searchInput.value   -->
@@ -230,8 +236,8 @@
                                 <h4 class="mat-h4">{{comp.name}}</h4>
                                 <p class="mat-body-2 ws-mat-black60-text">{{comp?.additionalProperties?.competencyType || comp?.competencyType}}</p>
                             </div>
-            
-                            
+
+
                             <div class="flex proficient_level_box">
                                 <p class="deactivate_text mat-body-2">Not enough data</p>
                             </div>
@@ -246,7 +252,7 @@
             </ng-container>
           </div>
         </div>
-        
+
 
         <div class="flex flex-column flex-wrap margin-fix" *ngIf="currentFilter && currentFilter === 'recommended'">
 
@@ -275,8 +281,8 @@
                               <h4 class="mat-h4">{{comp.name}}</h4>
                               <p class="mat-body-2 ws-mat-black60-text">{{comp?.additionalProperties?.competencyType || comp?.competencyType}}</p>
                           </div>
-          
-                          
+
+
                           <div class="flex proficient_level_box">
                               <p class="deactivate_text mat-body-2">Not enough data</p>
                           </div>

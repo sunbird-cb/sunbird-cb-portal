@@ -75,17 +75,17 @@
   text-align: center;
 }
 
-.margin-fix {
+// .margin-fix {
 
-  @include breakpoint-xs {
-    margin: 0 $size-l 0 $size-l;
-    flex-direction: column;
-  }
+//   @include breakpoint-xs {
+//     margin: 0 $size-l 0 $size-l;
+//     flex-direction: column;
+//   }
 
-  @include breakpoint-s {
-    margin: 0 $size-l 0 $size-l;
-  }
-}
+//   @include breakpoint-s {
+//     margin: 0 $size-l 0 $size-l;
+//   }
+// }
 
 .overflow {
   // @include breakpoint-xs {
@@ -131,6 +131,12 @@
 .custom-content {
   flex-direction: column;
   margin-left: $size-m;
+}
+
+.search_form {
+  @media (max-width:425px) {
+    width: 100%;
+  }
 }
 
 .discuss-border {

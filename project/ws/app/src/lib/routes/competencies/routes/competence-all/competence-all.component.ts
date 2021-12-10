@@ -17,7 +17,7 @@ import {ThemePalette} from '@angular/material/core'
   templateUrl: './competence-all.component.html',
   styleUrls: ['./competence-all.component.scss'],
   /* tslint:disable */
-  host: { class: 'flex flex-1 margin-top-xl' },
+  host: { class: 'flex flex-1 margin-top-xl competency_main_block' },
   /* tslint:enable */
 })
 export class CompetenceAllComponent implements OnInit {
