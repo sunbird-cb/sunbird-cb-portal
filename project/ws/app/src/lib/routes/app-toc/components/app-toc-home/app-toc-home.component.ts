@@ -584,8 +584,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.certData = response.result.printUri
         // var win = window.open();
         // win.document.write('<iframe src="' + url  +
-         // '" frameborder="0" style="border:0; top:0px;
-         // left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
+        // '" frameborder="0" style="border:0; top:0px;
+        // left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
         // // const doc = new jsPDF();
 
         // var str = doc.output(response.result.printUri);
@@ -644,8 +644,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   // do_113415159382810624195/artifact/do_113415159382810624195_1637592756199_certificate-shilpa-jain-with-text-2.svg",
   //           "identifier": "do_113415159382810624195",
   //           "previewUrl": "https://igot.blob.core.windows.net/content/
-   // content/do_113415159382810624195/artifact/do_113415159382810624195
-   // _1637592756199_certificate-shilpa-jain-with-text-2.svg",            "criteria": {
+  // content/do_113415159382810624195/artifact/do_113415159382810624195
+  // _1637592756199_certificate-shilpa-jain-with-text-2.svg",            "criteria": {
   //             "enrollment": {
   //               "status": 2
   //             }
@@ -752,57 +752,60 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         fields: ['progressdetails'],
       },
     }
-    this.contentSvc.fetchContentHistoryV2(req).subscribe(
-      data => {
-        if (data && data.result && data.result.contentList && data.result.contentList.length) {
-          this.resumeData = _.get(data, 'result.contentList')
-          this.resumeData = _.map(this.resumeData, rr => {
-            // tslint:disable-next-line
-            const items = _.filter(flattenItems(_.get(this.content, 'children') || [], 'children'), { 'identifier': rr.contentId, primaryCategory: 'Learning Resource' })
-            _.set(rr, 'progressdetails.mimeType', _.get(_.first(items), 'mimeType'))
-            if (!_.get(rr, 'completionPercentage')) {
-              if (_.get(rr, 'status') === 2) {
-                _.set(rr, 'completionPercentage', 100)
-              } else {
-                _.set(rr, 'completionPercentage', 0)
+    if (this.content && this.content.primaryCategory !== NsContent.EPrimaryCategory.RESOURCE) {
+      this.contentSvc.fetchContentHistoryV2(req).subscribe(
+        data => {
+          if (data && data.result && data.result.contentList && data.result.contentList.length) {
+            this.resumeData = _.get(data, 'result.contentList')
+            this.resumeData = _.map(this.resumeData, rr => {
+              // tslint:disable-next-line
+              const items = _.filter(flattenItems(_.get(this.content, 'children') || [], 'children'), { 'identifier': rr.contentId, primaryCategory: 'Learning Resource' })
+              _.set(rr, 'progressdetails.mimeType', _.get(_.first(items), 'mimeType'))
+              if (!_.get(rr, 'completionPercentage')) {
+                if (_.get(rr, 'status') === 2) {
+                  _.set(rr, 'completionPercentage', 100)
+                } else {
+                  _.set(rr, 'completionPercentage', 0)
+                }
+              }
+              return rr
+            })
+            const progress = _.map(this.resumeData, 'completionPercentage')
+            const totalCount = _.toInteger(_.get(this.content, 'leafNodesCount')) || 1
+            if (progress.length < totalCount) {
+              const diff = totalCount - progress.length
+              if (diff) {
+                // tslint:disable-next-line
+                _.each(new Array(diff), () => {
+                  progress.push(0)
+                })
               }
             }
-            return rr
-          })
-          const progress = _.map(this.resumeData, 'completionPercentage')
-          const totalCount = _.toInteger(_.get(this.content, 'leafNodesCount')) || 1
-          if (progress.length < totalCount) {
-            const diff = totalCount - progress.length
-            if (diff) {
-              // tslint:disable-next-line
-              _.each(new Array(diff), () => {
-                progress.push(0)
-              })
-            }
-          }
 
-          const percentage = _.toInteger((_.sum(progress) / progress.length))
-          if (this.content) {
-            _.set(this.content, 'completionPercentage', percentage)
+            const percentage = _.toInteger((_.sum(progress) / progress.length))
+            if (this.content) {
+              _.set(this.content, 'completionPercentage', percentage)
+            }
+            // _.set(this.content, 'progress', _.map(this.resumeData, _d => {
+            //   return {
+            //     progressStatus: _.get(_d, ''),
+            //     showMarkAsComplete: _.get(_d, ''),
+            //     markAsCompleteReason: _.get(_d, ''),
+            //     progressSupported: _.get(_d, ''),
+            //     progress: _.get(_d, '') || 0
+            //   }
+            // }))
+            this.tocSvc.updateResumaData(this.resumeData)
+          } else {
+            this.resumeData = null
           }
-          // _.set(this.content, 'progress', _.map(this.resumeData, _d => {
-          //   return {
-          //     progressStatus: _.get(_d, ''),
-          //     showMarkAsComplete: _.get(_d, ''),
-          //     markAsCompleteReason: _.get(_d, ''),
-          //     progressSupported: _.get(_d, ''),
-          //     progress: _.get(_d, '') || 0
-          //   }
-          // }))
-          this.tocSvc.updateResumaData(this.resumeData)
-        } else {
-          this.resumeData = null
-        }
-      },
-      (error: any) => {
-        this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
-      },
-    )
+        },
+        (error: any) => {
+          this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
+        },
+      )
+    }
+
   }
 
   // @HostListener('window:scroll', [])

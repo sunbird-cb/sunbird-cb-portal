@@ -10,7 +10,7 @@ import { CardNetWorkService } from '@sunbird-cb/collection'
   templateUrl: './network-home.component.html',
   styleUrls: ['./network-home.component.scss'],
   /* tslint:disable */
-  host: { class: 'flex flex-1 mt-6 ' },
+  host: { class: 'flex flex-1 mt-6 network_right' },
   /* tslint:enable */
 })
 export class NetworkHomeComponent implements OnInit {

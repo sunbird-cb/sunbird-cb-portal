@@ -15,6 +15,14 @@
   }
 }
 
+.competency_main {
+  width:100%;
+
+  @media (max-width:1024px) {
+    width: 100%;
+  }
+}
+
 .font-medium {
   font-weight: 500 !important;
 }
@@ -122,6 +130,11 @@
       padding: 24px;
       box-sizing: border-box;
 
+      @media (max-width: 768px) {
+        width: 40%;
+        padding: 12px 12px;
+      }
+
       h4.mat-h4 {
           margin-bottom: 5px;
       }
@@ -133,11 +146,11 @@
               margin-right: 10px;
           }
           .icon_text {
-              margin-bottom: 0;  
-             
+              margin-bottom: 0;
+
           }
       }
-     
+
   }
   .card_right_txtbox {
       float: right;
@@ -145,6 +158,11 @@
       box-sizing: border-box;
       width: calc(100% - 230px);
       border-left:1px solid rgba(0, 0, 0, 0.08);
+
+      @media (max-width: 768px) {
+        width: 60%;
+        padding: 12px 12px;
+      }
 
   }
 }

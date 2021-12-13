@@ -6,6 +6,7 @@ import _ from 'lodash'
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
+import {  ValueService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-competency-details',
@@ -34,11 +35,18 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
   courses: any[] = []
   searchReq: any
   myAppliedFilters: any =  []
+  sideNavBarOpened = true
+  private defaultSideNavBarOpenedSubscription: any
+  public screenSizeIsLtMedium = false
+  isLtMedium$ = this.valueSvc.isLtMedium$
+
+
   stateData: {
     param: any, path: any
   } | undefined
   constructor(
     private browseCompServ: BrowseCompetencyService,
+    private valueSvc: ValueService,
     private activatedRoute: ActivatedRoute,
   ) {
     this.searchReq = {...this.activatedRoute.snapshot.data.searchPageData.data.search.searchReq}
@@ -55,6 +63,13 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
       this.titles.push({ title: this.competencyName , url: 'none', icon: '' })
       this.stateData = { param: this.competencyName, path: 'competency-details' }
     })
+
+    this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
+      this.sideNavBarOpened = !isLtMedium
+      this.screenSizeIsLtMedium = isLtMedium
+
+    })
+
     this.formatFacets()
 
     // Fetch initial data
@@ -310,7 +325,7 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
       this.resetFilters()
       this.getCbps()
     }
-  }  
+  }
 
   resetFilters() {
     this.searchReq = {...this.activatedRoute.snapshot.data.searchPageData.data.search.searchReq}
@@ -322,6 +337,11 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
     if (this.paramSubscription) {
       this.paramSubscription.unsubscribe()
     }
+
+    if (this.defaultSideNavBarOpenedSubscription) {
+      this.defaultSideNavBarOpenedSubscription.unsubscribe()
+    }
   }
+
 
 }
