@@ -200,7 +200,11 @@ export namespace WsEvents {
   export enum EnumInteractSubTypes {
     COURSE_TAB = 'course-tab',
     CAREER_TAB = 'career-tab',
+    NETWORK_TAB = 'network-tab',
+    COMPETENCY_TAB = 'competency-tab',
     PROFILE_EDIT_TAB = 'profile-edit-tab',
+    DISCUSS_TAB = 'discuss-tab',
+    EVENTS_TAB = 'events-tab',
     SIDE_MENU = 'side-menu',
   }
 }
