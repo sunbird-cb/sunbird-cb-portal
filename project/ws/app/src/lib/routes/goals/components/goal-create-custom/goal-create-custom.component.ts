@@ -213,11 +213,18 @@ export class GoalCreateCustomComponent implements OnInit {
   }
 
   raiseTelemetry(goalId: NsGoal.EGoalTypes) {
-    this.events.raiseInteractTelemetry('goal', 'create', {
-      goalId,
-    },                                 {
-      pageIdExt: 'create-goal',
-      module: WsEvents.EnumTelemetrymodules.LEARN,
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'goal',
+        subType: 'create',
+        id: goalId,
+      },
+      {
+        id: goalId,
+      },
+      {
+        pageIdExt: 'create-goal',
+        module: WsEvents.EnumTelemetrymodules.LEARN,
     })
   }
 }

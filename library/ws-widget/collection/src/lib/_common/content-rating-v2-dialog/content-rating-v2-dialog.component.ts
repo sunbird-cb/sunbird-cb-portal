@@ -30,7 +30,13 @@ export class ContentRatingV2DialogComponent implements OnInit {
 
   submitRating(feedbackForm: any) {
     if (!this.formDisabled) {
-      this.events.raiseFeedbackTelemetry(this.data.content.primaryCategory, 'rating', {
+      this.events.raiseFeedbackTelemetry(
+        {
+         type: this.data.content.primaryCategory,
+         subType: 'rating',
+         id: this.data.content.identifier || '',
+        },
+        {
         id: this.data.content.identifier || '',
         rating: this.userRating,
         version: `${this.data.content.version}${''}`,
@@ -46,10 +52,17 @@ export class ContentRatingV2DialogComponent implements OnInit {
     if (this.userRating) {
       this.formDisabled = false
     }
-    this.events.raiseInteractTelemetry('rating', 'content', {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'rating',
+        subType: 'content',
+        id: this.data.content.identifier || '',
+      },
+      {
         id: this.data.content.identifier || '',
         rating: this.userRating,
-      },                               {
+      },
+      {
       pageIdExt: 'rating-popup',
       module: WsEvents.EnumTelemetrymodules.FEEDBACK,
     })

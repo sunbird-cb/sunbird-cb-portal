@@ -379,7 +379,9 @@ export class SearchServService {
           filters,
           locale,
         },
-        type: 'search',
+        edata: {
+          type: 'search',
+        },
       },
       from: 'search',
       to: 'telemetry',

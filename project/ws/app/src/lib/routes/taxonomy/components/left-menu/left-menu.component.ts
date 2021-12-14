@@ -1,8 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
-// import { BreakpointObserver } from '@angular/cdk/layout'
-// import { DomSanitizer } from '@angular/platform-browser'
-// import { ConfigurationsService } from '@sunbird-cb/utils'
-
+import { WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
+/* tslint:disable*/
+import _ from 'lodash'
 @Component({
   selector: 'app-discuss-left-menu',
   templateUrl: './left-menu.component.html',
@@ -13,9 +12,22 @@ export class LeftMenuComponent implements OnInit {
   @Input() tabsData: any = []
   @Output() currentTab = new EventEmitter<any>()
 
+  constructor(
+    private events: EventService,
+  ) { }
+
   ngOnInit(): void {
   }
-  onChangeTab(tabName: any) {
-    this.currentTab.emit(tabName)
+  
+  onChangeTab(tab: any) {
+    this.currentTab.emit(tab)
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        subType: WsEvents.EnumInteractSubTypes.SIDE_MENU,
+        id: `${_.camelCase(tab.name)}-menu`,
+      },
+      { },
+    )
   }
 }

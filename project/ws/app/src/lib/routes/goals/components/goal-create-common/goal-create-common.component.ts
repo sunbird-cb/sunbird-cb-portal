@@ -52,11 +52,18 @@ export class GoalCreateCommonComponent implements OnInit {
     }
   }
   raiseTelemetry(goalId: string) {
-    this.events.raiseInteractTelemetry('goal', 'create', {
-      goalId,
-    },                                 {
-      pageIdExt: 'create-goal',
-      module: WsEvents.EnumTelemetrymodules.LEARN,
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'goal',
+        subType: 'create',
+        id: goalId,
+      },
+      {
+        id: goalId,
+      },
+      {
+        pageIdExt: 'create-goal',
+        module: WsEvents.EnumTelemetrymodules.LEARN,
     })
   }
 }

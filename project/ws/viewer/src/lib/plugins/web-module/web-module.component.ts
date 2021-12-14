@@ -230,11 +230,18 @@ export class WebModuleComponent implements OnInit, OnChanges, OnDestroy {
   }
   raiseTelemetry(action: string, event: string) {
     if (this.widgetData.identifier) {
-      this.events.raiseInteractTelemetry(action, event, {
-        id: this.widgetData.identifier,
-      },                                 {
-        pageIdExt: `${_.camelCase(this.widgetData.primaryCategory)}`,
-        module: _.camelCase(this.widgetData.primaryCategory),
+      this.events.raiseInteractTelemetry(
+        {
+          type: action,
+          subType: event,
+          id: this.widgetData.identifier,
+        }, 
+        {
+          id: this.widgetData.identifier,
+        },
+        {
+          pageIdExt: `${_.camelCase(this.widgetData.primaryCategory)}`,
+          module: _.camelCase(this.widgetData.primaryCategory),
       })
     }
     if (event === 'scroll') {

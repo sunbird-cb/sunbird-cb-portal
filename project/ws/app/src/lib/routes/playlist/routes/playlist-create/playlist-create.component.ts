@@ -119,8 +119,10 @@ export class PlaylistCreateComponent implements OnInit {
 
   raiseTelemetry() {
     this.events.raiseInteractTelemetry(
-      'playlist',
-      'create',
+      {
+        type: 'playlist',
+        subType: 'create',
+      },
       {},
       {
         pageIdExt: 'create-playlist',

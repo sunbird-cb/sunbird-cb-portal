@@ -84,8 +84,11 @@ export class BtnContentMailMeComponent extends WidgetBaseComponent
           (dialogResponse: IWidgetMailMeDialogComponentResponse): Observable<IMailMeResponseObj> => {
             if (dialogResponse && dialogResponse.send) {
               this.events.raiseInteractTelemetry(
-                'mailMe',
-                undefined,
+                {
+                  type: 'mailMe',
+                  subType: undefined,
+                  id: this.widgetData.identifier,
+                },
                 {
                   id: this.widgetData.identifier,
                   type: this.widgetData.contentType,
