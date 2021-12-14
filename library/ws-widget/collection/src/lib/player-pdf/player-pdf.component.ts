@@ -229,16 +229,17 @@ export class PlayerPdfComponent extends WidgetBaseComponent
           id: this.identifier,
         },
         {
-        // contentId: this.identifier,
-        // contentType: this.widgetData.primaryCategory,
-        id: this.identifier,
-        type: this.widgetData.primaryCategory,
-        rollup: {
-          l1: this.widgetData.collectionId || '',
+          // contentId: this.identifier,
+          // contentType: this.widgetData.primaryCategory,
+          id: this.identifier,
+          type: this.widgetData.primaryCategory,
+          rollup: {
+            l1: this.widgetData.collectionId || '',
+          },
+          ver: `${this.widgetData.version}${''}`,
         },
-        ver: `${this.widgetData.version}${''}`,
-      },                                   {
-        module: WsEvents.EnumTelemetrymodules.LEARN,
+        {
+          module: WsEvents.EnumTelemetrymodules.LEARN,
       })
     }
   }

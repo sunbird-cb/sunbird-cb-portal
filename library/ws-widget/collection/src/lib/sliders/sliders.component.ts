@@ -73,7 +73,7 @@ export class SlidersComponent extends WidgetBaseComponent
 
     this.events.raiseInteractTelemetry(
       {
-        type: 'click', 
+        type: 'click',
         subType: 'banner',
       },
       {
