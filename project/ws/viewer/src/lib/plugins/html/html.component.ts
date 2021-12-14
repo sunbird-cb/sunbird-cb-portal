@@ -299,20 +299,26 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       if (this.activatedRoute.snapshot.queryParams.collectionId) {
         this.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
       }
-      this.events.raiseInteractTelemetry(data.event || data.type || 'type', 'scorm', {
-        ...data,
-        // contentId: this.htmlContent.identifier,
-        // contentType: this.htmlContent.primaryCategory,
-        id: this.htmlContent.identifier,
-        type: this.htmlContent.primaryCategory,
-        context: this.htmlContent.context,
-        rollup: {
-          l1: this.collectionId || '',
+      this.events.raiseInteractTelemetry(
+        {
+          type: data.event || data.type || 'type',
+          subType: 'scorm',
+          id: this.htmlContent.identifier,
         },
-        ver: `${this.htmlContent.version}${''}`,
-      },                                 {
-        pageIdExt: `${_.camelCase(this.htmlContent.content.primaryCategory)}`,
-        module: _.camelCase(this.htmlContent.content.primaryCategory),
+        {
+          ...data,
+          // contentId: this.htmlContent.identifier,
+          // contentType: this.htmlContent.primaryCategory,
+          id: this.htmlContent.identifier,
+          type: this.htmlContent.primaryCategory,
+          context: this.htmlContent.context,
+          rollup: {
+            l1: this.collectionId || '',
+          },
+          ver: `${this.htmlContent.version}${''}`,
+        },                                 {
+          pageIdExt: `${_.camelCase(this.htmlContent.content.primaryCategory)}`,
+          module: _.camelCase(this.htmlContent.content.primaryCategory),
       })
     }
   }

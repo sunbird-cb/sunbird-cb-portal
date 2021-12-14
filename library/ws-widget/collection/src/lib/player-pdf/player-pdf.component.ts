@@ -222,7 +222,13 @@ export class PlayerPdfComponent extends WidgetBaseComponent
   }
   raiseTelemetry(action: string) {
     if (this.identifier) {
-      this.eventSvc.raiseInteractTelemetry(action, 'click', {
+      this.eventSvc.raiseInteractTelemetry(
+        {
+          type: action,
+          subType: 'click',
+          id: this.identifier,
+        },
+        {
         // contentId: this.identifier,
         // contentType: this.widgetData.primaryCategory,
         id: this.identifier,

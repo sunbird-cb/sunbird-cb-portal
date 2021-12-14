@@ -125,16 +125,23 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
 
   raiseTelemetry(content: any) {
     if (content) {
-      this.events.raiseInteractTelemetry('click', `card-learnSearch`, {
-        id: content.identifier || '',
-        type: content.primaryCategory,
-        // contentId: content.identifier || '',
-        // contentType: content.primaryCategory,
-        rollup: {},
-        ver: `${content.version}${''}`,
-      }, {
-        pageIdExt: 'knowledge-card',
-        module: WsEvents.EnumTelemetrymodules.COMPETENCY,
+      this.events.raiseInteractTelemetry(
+        {
+          type: 'click',
+          subType: `card-${content.primaryCategory || 'content'}`,
+          id: content.identifier || '',
+        },
+        {
+          id: content.identifier || '',
+          type: content.primaryCategory,
+          // contentId: content.identifier || '',
+          // contentType: content.primaryCategory,
+          rollup: {},
+          ver: `${content.version}${''}`,
+        },
+        {
+          pageIdExt: 'knowledge-card',
+          module: WsEvents.EnumTelemetrymodules.COMPETENCY,
       })
     }
   }

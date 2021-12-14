@@ -92,11 +92,17 @@ export class GoalCommonCardComponent implements OnInit {
   }
 
   raiseTelemetry() {
-    this.events.raiseInteractTelemetry('goal', 'create', {
-      goalType: this.type,
-    },                                 {
-      pageIdExt: 'create-goal',
-      module: WsEvents.EnumTelemetrymodules.LEARN,
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'goal',
+        subType: 'create',
+      },
+      {
+        goalType: this.type,
+      },
+      {
+        pageIdExt: 'create-goal',
+        module: WsEvents.EnumTelemetrymodules.LEARN,
     })
   }
 }

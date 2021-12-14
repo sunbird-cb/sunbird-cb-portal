@@ -136,8 +136,11 @@ export class BtnFollowService {
       eventLogLevel: WsEvents.WsEventLogLevel.Warn,
       data: {
         eventSubType: WsEvents.EnumTelemetrySubType.Interact,
-        type: action,
-        subType: type,
+        edata: {
+          type: action,
+          subType: type,
+          id: targetId,
+        },
         object: {
           id: targetId,
         },
