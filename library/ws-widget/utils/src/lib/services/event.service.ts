@@ -105,9 +105,9 @@ export class EventService {
       {
         subType,
         type: WsEvents.EnumInteractTypes.CLICK,
+        id: `${_.camelCase(data.label)}-tab`,
       },
       {
-        id: `${_.camelCase(data.label)}`,
         context: {
           position: data.index,
         },
