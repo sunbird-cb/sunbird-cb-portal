@@ -25,7 +25,6 @@ export class LeftMenuComponent implements OnInit, OnDestroy {
   }
 
   public menuClick(tab: any) {
-    console.log(tab)
     this.events.raiseInteractTelemetry(
       {
         type: WsEvents.EnumInteractTypes.CLICK,
