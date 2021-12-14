@@ -42,8 +42,11 @@ export class LearningCardComponent implements OnInit, OnChanges {
 
   raiseTelemetry() {
     this.events.raiseInteractTelemetry(
-      'click',
-      'cardSearch',
+      {
+        type: 'click',
+        subType: 'cardSearch',
+        id: this.content.identifier,
+      },
       {
         id: this.content.identifier,
         type: this.content.primaryCategory,
@@ -51,7 +54,6 @@ export class LearningCardComponent implements OnInit, OnChanges {
       {
         pageIdExt: `${_.camelCase(this.content.primaryCategory)}-card`,
         module: _.camelCase(this.content.primaryCategory),
-      }
-    )
+    })
   }
 }

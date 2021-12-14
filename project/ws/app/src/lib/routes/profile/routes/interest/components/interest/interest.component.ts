@@ -198,9 +198,15 @@ export class InterestComponent implements OnInit {
   }
 
   raiseTelemetry(action: 'add' | 'remove', interest: string) {
-    this.events.raiseInteractTelemetry('interest', action, { interest }, {
-      pageIdExt: 'interest',
-      module: WsEvents.EnumTelemetrymodules.LEARN,
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'interest',
+        subType: action,
+      },
+      { interest },
+      {
+        pageIdExt: 'interest',
+        module: WsEvents.EnumTelemetrymodules.LEARN,
     })
   }
 }

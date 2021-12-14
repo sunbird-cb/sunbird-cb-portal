@@ -99,12 +99,19 @@ export class BtnGoalsSelectionComponent implements OnInit {
   }
 
   raiseTelemetry(action: 'add' | 'remove', goalId: string, contentId: string) {
-    this.eventSvc.raiseInteractTelemetry('goal', `btn-goal-${action}`, {
-      goalId,
-      id: contentId,
-    },                                   {
-      pageIdExt: 'btn-goals',
-      module: WsEvents.EnumTelemetrymodules.CONTENT,
+    this.eventSvc.raiseInteractTelemetry(
+      {
+        type: 'goal',
+        subType: `btn-goal-${action}`,
+        id: contentId,
+      },
+      {
+        goalId,
+        id: contentId,
+      },
+      {
+        pageIdExt: 'btn-goals',
+        module: WsEvents.EnumTelemetrymodules.CONTENT,
     })
   }
 }

@@ -51,8 +51,11 @@ export class BtnMailUserComponent extends WidgetBaseComponent
 
   raiseTelemetry() {
     this.events.raiseInteractTelemetry(
-      'email',
-      'openDialog',
+      {
+        type: 'email',
+        subType: 'openDialog',
+        id: this.widgetData.content.identifier,
+      },
       {
         id: this.widgetData.content.identifier,
         emails: this.widgetData.emails,

@@ -22,13 +22,12 @@ export class EventService {
   }
 
   // helper functions
-  raiseInteractTelemetry(type: string, subType: string | undefined, object: any, context?: WsEvents.ITelemetryContext) {
+  raiseInteractTelemetry(edata: WsEvents.ITelemetryEdata, object: any, context?: WsEvents.ITelemetryContext) {
     this.dispatchEvent<WsEvents.IWsEventTelemetryInteract>({
       eventType: WsEvents.WsEventType.Telemetry,
       eventLogLevel: WsEvents.WsEventLogLevel.Info,
       data: {
-        type,
-        subType,
+        edata,
         object,
         context: this.getContext(context),
         eventSubType: WsEvents.EnumTelemetrySubType.Interact,
@@ -38,13 +37,12 @@ export class EventService {
     })
   }
 
-  raiseFeedbackTelemetry(type: string, subType: string | undefined, object: any, from?: string) {
+  raiseFeedbackTelemetry(edata: WsEvents.ITelemetryEdata, object: any, from?: string) {
     this.dispatchEvent<WsEvents.IWsEventTelemetryInteract>({
       eventType: WsEvents.WsEventType.Telemetry,
       eventLogLevel: WsEvents.WsEventLogLevel.Info,
       data: {
-        type,
-        subType,
+        edata,
         object,
         eventSubType: WsEvents.EnumTelemetrySubType.Feedback,
       },
@@ -104,10 +102,12 @@ export class EventService {
   public handleTabTelemetry(subType: string, data: WsEvents.ITelemetryTabData) {
     // raise a tab click interact event
     this.raiseInteractTelemetry(
-      WsEvents.EnumInteractTypes.CLICK,
-      subType,
       {
-        id: `${_.camelCase(data.label)}`,
+        subType,
+        type: WsEvents.EnumInteractTypes.CLICK,
+        id: `${_.camelCase(data.label)}-tab`,
+      },
+      {
         context: {
           position: data.index,
         },

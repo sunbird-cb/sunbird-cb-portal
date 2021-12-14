@@ -109,12 +109,19 @@ export class BtnPlaylistSelectionComponent implements OnInit {
   }
 
   raiseTelemetry(action: 'add' | 'remove', playlistId: string, contentId: string) {
-    this.eventSvc.raiseInteractTelemetry('playlist', `btn-playlist-${action}`, {
-      playlistId,
-      id: contentId,
-    },                                   {
-      pageIdExt: 'btn-playlist',
-      module: WsEvents.EnumTelemetrymodules.PROFILE,
+    this.eventSvc.raiseInteractTelemetry(
+      {
+        type: 'playlist',
+        subType: `btn-playlist-${action}`,
+        id: contentId,
+      },
+      {
+        playlistId,
+        id: contentId,
+      },
+      {
+        pageIdExt: 'btn-playlist',
+        module: WsEvents.EnumTelemetrymodules.PROFILE,
     })
   }
 }

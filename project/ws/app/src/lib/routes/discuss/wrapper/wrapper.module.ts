@@ -25,11 +25,18 @@ export class WrapperModule {
         this.discussionEventsService.telemetryEvent.subscribe(data => {
             switch (data.eid) {
                 case 'IMPRESSION':
-                   this.teleSvc.impression()
+                   this.teleSvc.impression({ pageId: data.edata.pageid,  module: WsEvents.EnumTelemetrymodules.DISCUSS })
                     break
                 case 'INTERACT':
-                    this.eventsSvc.raiseInteractTelemetry(data.edata.type, data.edata.pageid, data.object, {
-                        pageIdExt: data.edata.pageid,
+                    this.eventsSvc.raiseInteractTelemetry(
+                        {
+                            type: data.edata.type,
+                            subType: data.edata.pageid,
+                            id: (data.object && data.object.id) || '',
+                        },
+                        data.object,
+                        {
+                        pageId: data.edata.pageid,
                         module: WsEvents.EnumTelemetrymodules.DISCUSS,
                       })
                     break
