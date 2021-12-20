@@ -47,9 +47,19 @@
     margin: 0px !important;
   }
   form.search_form {
+    @include breakpoint-xs  {
+      width: 55%;
+    }
     .autocomplete-form {
-      @media (max-width:768px) {
-        width: 100%;
+      // @media (max-width:768px) {
+      //   width: calc(100%- 170px);
+      // }
+
+      @include breakpoint-s  {
+        width: 90%;
+      }
+      @include breakpoint-xs  {
+        width: 95%;
       }
     }
   }
@@ -504,6 +514,14 @@ a.work_order_link {
   height: 56px;
   margin: 0;
   color: #fff!important;
+
+  @include breakpoint-s  {
+    margin-top: 5px;
+  }
+  @include breakpoint-xs  {
+    margin-top: 5px;
+    width: 130px;
+  }
 }
 
 
@@ -512,11 +530,7 @@ a.work_order_link {
 
 // competency box with proficiency
 
-.proficency-card {
-  // padding: 24px !important;
-  // overflow: hidden;
-  // width: 100%;
-}
+
 
 ul.tagIconList {
   padding: 0;
@@ -557,12 +571,21 @@ a.disableTagIcon, a.disableLevelIcon {
 
   .card_inner_title_box {
     width: 30%;
+    @include breakpoint-xs {
+      word-wrap: break-word;
+      white-space: initial;
+    }
   }
   .proficiency_text_box {
     width: 30%;
   }
   .proficient_level_box {
     width: 25%;
+  }
+  .prof_txt_data {
+    @include breakpoint-xs {
+      flex-direction: column;
+    }
   }
 }
 
