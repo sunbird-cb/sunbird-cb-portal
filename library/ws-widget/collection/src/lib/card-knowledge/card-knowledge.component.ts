@@ -54,16 +54,18 @@ export class CardKnowledgeComponent implements OnInit, OnDestroy {
 
   raiseTelemetry() {
     this.events.raiseInteractTelemetry(
-      'click',
-      NsContent.EContentTypes.KNOWLEDGE_BOARD,
+      {
+        type: 'click',
+        subType: NsContent.EContentTypes.KNOWLEDGE_BOARD,
+        id: this.widgetData.content.identifier,
+      },
       {
         id: this.widgetData.content.identifier,
       },
       {
         pageIdExt: 'knowledge-card',
         module: WsEvents.EnumTelemetrymodules.CONTENT,
-      }
-    )
+    })
   }
 
   greyOut() {

@@ -28,7 +28,14 @@ export class WrapperModule {
                    this.teleSvc.impression({ pageId: data.edata.pageid,  module: WsEvents.EnumTelemetrymodules.DISCUSS })
                     break
                 case 'INTERACT':
-                    this.eventsSvc.raiseInteractTelemetry(data.edata.type, data.edata.pageid, data.object, {
+                    this.eventsSvc.raiseInteractTelemetry(
+                        {
+                            type: data.edata.type,
+                            subType: data.edata.pageid,
+                            id: (data.object && data.object.id) || '',
+                        },
+                        data.object,
+                        {
                         pageId: data.edata.pageid,
                         module: WsEvents.EnumTelemetrymodules.DISCUSS,
                       })

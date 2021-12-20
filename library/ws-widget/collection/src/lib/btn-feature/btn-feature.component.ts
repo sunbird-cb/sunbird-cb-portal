@@ -141,11 +141,18 @@ export class BtnFeatureComponent extends WidgetBaseComponent
   togglePin(featureId: string, event: any) {
     event.preventDefault()
     event.stopPropagation()
-    this.events.raiseInteractTelemetry('pin', 'feature', {
-      featureId,
-    },                                 {
-      pageIdExt: 'btn-feature',
-      module: WsEvents.EnumTelemetrymodules.CONTENT,
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'pin',
+        subType: 'feature',
+        id: featureId,
+      },
+      {
+        id: featureId,
+      },
+      {
+        pageIdExt: 'btn-feature',
+        module: WsEvents.EnumTelemetrymodules.CONTENT,
     })
     this.configurationsSvc.pinnedApps.pipe(take(1)).subscribe(pinnedApps => {
       const newPinnedApps = new Set(pinnedApps)

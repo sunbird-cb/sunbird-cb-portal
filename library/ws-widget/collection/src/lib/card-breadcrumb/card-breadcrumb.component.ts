@@ -32,8 +32,10 @@ export class CardBreadcrumbComponent extends WidgetBaseComponent
 
   raiseTelemetry(clickedItem: IBreadcrumbPath) {
     this.events.raiseInteractTelemetry(
-      'click',
-      'breadcrumb',
+      {
+        type: 'click',
+        subType: 'breadcrumb',
+      },
       {
         clickedItem,
         path: this.widgetData.path,
@@ -41,7 +43,6 @@ export class CardBreadcrumbComponent extends WidgetBaseComponent
       {
         pageIdExt: 'btn-breadcrumb',
         module: WsEvents.EnumTelemetrymodules.PROFILE,
-      }
-    )
+    })
   }
 }

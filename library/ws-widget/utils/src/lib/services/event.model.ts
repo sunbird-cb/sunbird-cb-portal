@@ -69,6 +69,13 @@ export namespace WsEvents {
     pageIdExt?: string
   }
 
+  export interface ITelemetryEdata {
+    type: string
+    subType?: string
+    id?: string
+    pageid?: string
+  }
+
   export interface ITelemetryTabData {
     label: string,
     index: number,
@@ -98,22 +105,19 @@ export namespace WsEvents {
 
   // Interact Telemetry Event
   export interface IWsEventTelemetryInteract extends IWsEventTelemetry {
-    type: string
-    subType?: string
+    edata: ITelemetryEdata
     object: any
     context?: ITelemetryContext
   }
 
   export interface IWsEventTelemetryFeedback extends IWsEventTelemetry {
-    type: string
-    subType?: string
+    edata: ITelemetryEdata
     object: any
     context?: ITelemetryContext
   }
 
   export interface IWsEventTelemetryImpression extends IWsEventTelemetry {
-    type?: string
-    subType?: string
+    edata?: ITelemetryEdata
     object?: any
     context?: ITelemetryContext
   }
@@ -196,6 +200,11 @@ export namespace WsEvents {
   export enum EnumInteractSubTypes {
     COURSE_TAB = 'course-tab',
     CAREER_TAB = 'career-tab',
+    NETWORK_TAB = 'network-tab',
+    COMPETENCY_TAB = 'competency-tab',
     PROFILE_EDIT_TAB = 'profile-edit-tab',
+    DISCUSS_TAB = 'discuss-tab',
+    EVENTS_TAB = 'events-tab',
+    SIDE_MENU = 'side-menu',
   }
 }

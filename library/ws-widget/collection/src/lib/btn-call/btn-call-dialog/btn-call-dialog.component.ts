@@ -37,8 +37,10 @@ export class BtnCallDialogComponent implements OnInit {
 
   raiseTelemetry(subType: 'copyToClipboard' | 'callSME') {
     this.events.raiseInteractTelemetry(
-      'call',
-      subType,
+      {
+        subType,
+        type: 'call',
+      },
       {
         pageIdExt: 'btn-call-dialogue',
       },

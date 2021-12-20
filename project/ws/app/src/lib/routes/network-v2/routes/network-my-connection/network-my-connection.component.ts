@@ -79,7 +79,7 @@ export class NetworkMyConnectionComponent implements OnInit {
       index,
     }
     this.eventSvc.handleTabTelemetry(
-      WsEvents.EnumInteractSubTypes.CAREER_TAB,
+      WsEvents.EnumInteractSubTypes.NETWORK_TAB,
       data,
     )
   }

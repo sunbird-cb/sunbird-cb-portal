@@ -85,16 +85,23 @@ export class BtnContentDownloadComponent extends WidgetBaseComponent
   }
 
   raiseTelemetry() {
-    this.events.raiseInteractTelemetry('download', 'content', {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'download',
+        subType: 'content',
+        id: this.widgetData.identifier,
+      },
+      {
       platform: this.platform,
       // contentId: this.widgetData.identifier,
       // contentType: this.widgetData.contentType, // cccc
       id: this.widgetData.identifier,
       type: this.widgetData.primaryCategory,
-    },                                 {
-      pageIdExt: 'download',
-      module: WsEvents.EnumTelemetrymodules.CONTENT,
-    }
+      },
+      {
+        pageIdExt: 'download',
+        module: WsEvents.EnumTelemetrymodules.CONTENT,
+      }
     )
   }
 }

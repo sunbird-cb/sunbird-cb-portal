@@ -989,9 +989,15 @@ export class AssessmentComponent implements OnInit {
     getTelemetryEvents(event: any) {
         // tslint:disable-next-line: no-console
         console.log('event is for telemetry', JSON.stringify(event))
-        this.eventSvc.raiseInteractTelemetry('QUML player', 'next_clicked', event, {
-            pageIdExt: 'QUML-player',
-            module: WsEvents.EnumTelemetrymodules.LEARN,
+        this.eventSvc.raiseInteractTelemetry(
+            {
+                type: 'QUML player',
+                subType: 'next_clicked',
+            },
+            event,
+            {
+                pageIdExt: 'QUML-player',
+                module: WsEvents.EnumTelemetrymodules.LEARN,
           })
     }
 }
