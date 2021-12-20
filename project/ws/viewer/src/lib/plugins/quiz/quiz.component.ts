@@ -459,18 +459,28 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
   raiseTelemetry(action: string, optionId: string | null, event: string) {
     if (optionId) {
       this.events.raiseInteractTelemetry(
-        action,
-        event,
         {
-          optionId,
+          type: action,
+          subType: event,
+          id: optionId,
+        },
+        {
+          id: optionId,
         },
       )
     } else {
-      this.events.raiseInteractTelemetry(action, event, {
-        id: this.identifier,
-      },                                 {
-        pageIdExt: `quiz`,
-        module: WsEvents.EnumTelemetrymodules.LEARN,
+      this.events.raiseInteractTelemetry(
+        {
+          type: action,
+          subType: event,
+          id: this.identifier,
+        },
+        {
+          id: this.identifier,
+        },
+        {
+          pageIdExt: `quiz`,
+          module: WsEvents.EnumTelemetrymodules.LEARN,
       })
     }
   }

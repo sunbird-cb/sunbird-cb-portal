@@ -59,8 +59,11 @@ export class BtnMailUserDialogComponent implements OnInit {
 
   raiseTelemetry() {
     this.events.raiseInteractTelemetry(
-      'email',
-      'emailSME',
+      {
+        type: 'email',
+        subType: 'emailSME',
+        id: this.data.content.identifier,
+      },
       {
         id: this.data.content.identifier,
         emails: this.data.emails,

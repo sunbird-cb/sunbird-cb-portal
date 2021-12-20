@@ -242,15 +242,22 @@ export class CardContentComponent extends WidgetBaseComponent
   }
 
   raiseTelemetry() {
-    this.events.raiseInteractTelemetry('click', `${this.widgetType}-${this.widgetSubType}`, {
-      id: this.widgetData.content.identifier,
-      type: this.widgetData.content.primaryCategory,
-      context: this.widgetData.context,
-      rollup: {},
-      ver: `${this.widgetData.content.version}${''}`,
-    },                                 {
-      pageIdExt: `${_.camelCase(this.widgetData.content.primaryCategory)}-card`,
-      module: _.camelCase(this.widgetData.content.primaryCategory),
+    this.events.raiseInteractTelemetry(
+      { 
+        type: 'click',
+        subType: `${this.widgetType}-${this.widgetSubType}`,
+        id: this.widgetData.content.identifier,
+      },
+      {
+        id: this.widgetData.content.identifier,
+        type: this.widgetData.content.primaryCategory,
+        context: this.widgetData.context,
+        rollup: {},
+        ver: `${this.widgetData.content.version}${''}`,
+      }, 
+      {
+        pageIdExt: `${_.camelCase(this.widgetData.content.primaryCategory)}-card`,
+        module: _.camelCase(this.widgetData.content.primaryCategory),
     })
   }
 

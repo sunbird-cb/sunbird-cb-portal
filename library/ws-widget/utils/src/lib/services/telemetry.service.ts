@@ -343,17 +343,19 @@ export class TelemetryService {
             console.log('Error in telemetry interact', e)
           }
         } else {
-          let interactid
-          if (event.data.type === 'goal') {
-            interactid = page.pageUrlParts[4]
-          }
+          // let interactid
+          // if (event.data.edata.type === 'goal') {
+          //   interactid = page.pageUrlParts[4]
+          // }
           try {
             $t.interact(
               {
-                type: event.data.type,
-                subtype: event.data.subType,
+                type: event.data.edata.type,
+                subtype: event.data.edata.subType,
                 // object: event.data.object,
-                id: (event.data.object) ? event.data.object.contentId || event.data.object.id || interactid || '' : '',
+                id: (event.data.edata && event.data.edata.id) ?
+                    event.data.edata.id
+                    : '',
                 pageid: event.data.context && event.data.context.pageId ||  page.pageid,
                 // target: { page },
               },
@@ -407,7 +409,7 @@ export class TelemetryService {
               },
               object: {
                 id: event.data.object.contentId || event.data.object.id || '',
-                type: event.data.type || '',
+                type: event.data.edata.type || '',
                 ver: `${(event.data.object.version || '1')}${''}`,
                 rollup: {},
               },

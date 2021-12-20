@@ -77,12 +77,18 @@ export class SlidersMobComponent extends WidgetBaseComponent
     const path = window.location.pathname.replace('/', '')
     const url = path + window.location.search
 
-    this.events.raiseInteractTelemetry('click', 'banner', {
-      pageUrl: url,
-      bannerRedirectUrl: bannerUrl,
-    },                                 {
-      pageIdExt: 'knowledge-card',
-      module: WsEvents.EnumTelemetrymodules.CONTENT,
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType: 'banner',
+      },
+      {
+        pageUrl: url,
+        bannerRedirectUrl: bannerUrl,
+      },
+      {
+        pageIdExt: 'knowledge-card',
+        module: WsEvents.EnumTelemetrymodules.CONTENT,
     })
   }
 }

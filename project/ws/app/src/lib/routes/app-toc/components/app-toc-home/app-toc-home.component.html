@@ -92,7 +92,7 @@ TODO: edit option while preview Mode
           content?.status !== 'Expired'
         ">
           <div [hidden]="isResource && !content?.artifactUrl?.length" class="text-center">
-            <ng-container *ngIf="content?.primaryCategory === primaryCategory.COURSE">
+            <ng-container *ngIf="content?.primaryCategory !== primaryCategory.PROGRAM">
               <ng-container *ngIf="
           (actionBtnStatus === 'grant' &&
           !(isMobile && content?.isInIntranet) &&
