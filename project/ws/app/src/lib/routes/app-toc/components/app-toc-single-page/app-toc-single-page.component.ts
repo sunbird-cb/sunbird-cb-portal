@@ -430,6 +430,10 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     this.eventSvc.handleTabTelemetry(
       WsEvents.EnumInteractSubTypes.COURSE_TAB,
       data,
+      {
+        id: this.content && this.content.identifier,
+        type: this.content && this.content.primaryCategory,
+      }
     )
   }
 }

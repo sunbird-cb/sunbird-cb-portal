@@ -129,7 +129,7 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
         {
           type: 'click',
           subType: `card-${content.primaryCategory || 'content'}`,
-          id: content.identifier || '',
+          // id: content.identifier || '',
         },
         {
           id: content.identifier || '',

@@ -313,7 +313,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         {
           type: 'click',
           subType: `card-learnSearch`,
-          id: content.identifier || '',
+          // id: content.identifier || '',
         },
         {
           id: content.identifier || '',

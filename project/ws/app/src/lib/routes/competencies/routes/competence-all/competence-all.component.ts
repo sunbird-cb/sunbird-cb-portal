@@ -370,7 +370,7 @@ export class CompetenceAllComponent implements OnInit {
       index,
     }
     this.eventSvc.handleTabTelemetry(
-      WsEvents.EnumInteractSubTypes.CAREER_TAB,
+      WsEvents.EnumInteractSubTypes.COMPETENCY_TAB,
       data,
     )
   }

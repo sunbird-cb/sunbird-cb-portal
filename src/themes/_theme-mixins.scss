@@ -66,6 +66,10 @@
     width: 48px;
   }
 
+  .green-progress .mat-progress-bar-fill::after {
+    background-color: red !important;
+  }
+
   @if $is-dark {
     .app-logo {
       filter: contrast(0.5);
