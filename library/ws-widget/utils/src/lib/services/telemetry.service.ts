@@ -171,9 +171,9 @@ export class TelemetryService {
   impression(data?: any) {
     try {
       const page = this.getPageDetails()
-      if (data) {
-        page.pageid = data.pageId
-        page.module = data.module
+      if (data && data.pageContext) {
+        page.pageid = data.pageContext.pageId
+        page.module = data.pageContext.module
       }
       const edata = {
         pageid: page.pageid, // Required. Unique page id
@@ -191,6 +191,8 @@ export class TelemetryService {
           },
           object: {
             id: page.objectId,
+            // This will override above id if the data has object in it.
+            ...(data.object),
           },
         }
         $t.impression(edata, config)
@@ -202,6 +204,9 @@ export class TelemetryService {
               id: this.pData.id,
             },
             env: page.module || '',
+          },
+          object: {
+            ...(data.object),
           },
         })
       }
@@ -240,6 +245,28 @@ export class TelemetryService {
       // tslint:disable-next-line: no-console
       console.log('Error in telemetry externalImpression', e)
     }
+  }
+
+  addCustomImpressionListener() {
+    this.eventsSvc.events$
+      .pipe(
+        filter(
+          (event: WsEvents.WsEventTelemetryImpression) =>
+            event &&
+            event.data &&
+            event.eventType === WsEvents.WsEventType.Telemetry &&
+            event.data.eventSubType === WsEvents.EnumTelemetrySubType.Impression,
+        ),
+      )
+      .subscribe(event => {
+        try {
+          // console.log('event.data::', event.data)
+          this.impression(event.data)
+        } catch (e) {
+          // tslint:disable-next-line: no-console
+          console.log('Error in telemetry impression', e)
+        }
+      })
   }
 
   addTimeSpentListener() {
@@ -356,7 +383,7 @@ export class TelemetryService {
                 id: (event.data.edata && event.data.edata.id) ?
                     event.data.edata.id
                     : '',
-                pageid: event.data.context && event.data.context.pageId ||  page.pageid,
+                pageid: event.data.pageContext && event.data.pageContext.pageId ||  page.pageid,
                 // target: { page },
               },
               {
@@ -365,7 +392,7 @@ export class TelemetryService {
                     ...this.pData,
                     id: this.pData.id,
                   },
-                  ...(event.data.context && event.data.context.module ? { env: event.data.context.module } : null),
+                  ...(event.data.pageContext && event.data.pageContext.module ? { env: event.data.pageContext.module } : null),
                 },
                 object: {
                   ...event.data.object,
@@ -417,28 +444,6 @@ export class TelemetryService {
         } catch (e) {
           // tslint:disable-next-line: no-console
           console.log('Error in telemetry interact', e)
-        }
-      })
-  }
-
-  addCustomImpressionListener() {
-    this.eventsSvc.events$
-      .pipe(
-        filter(
-          (event: WsEvents.WsEventTelemetryImpression) =>
-            event &&
-            event.data &&
-            event.eventType === WsEvents.WsEventType.Telemetry &&
-            event.data.eventSubType === WsEvents.EnumTelemetrySubType.Impression,
-        ),
-      )
-      .subscribe(event => {
-        try {
-          // console.log('event.data::', event.data)
-          this.impression(event.data.context)
-        } catch (e) {
-          // tslint:disable-next-line: no-console
-          console.log('Error in telemetry impression', e)
         }
       })
   }

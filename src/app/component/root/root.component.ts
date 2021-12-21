@@ -208,9 +208,12 @@ export class RootComponent implements OnInit, AfterViewInit {
         // tslint:disable-next-line: no-console
         // console.log('Final currentDataRoute', this.currentRouteData)
         this.utilitySvc.setRouteData(this.currentRouteData)
-        const data = this.utilitySvc.routeData
+        const pageContext = this.utilitySvc.routeData
+        const data = {
+          pageContext,
+        }
         // console.log('data: ', data)
-        if (data.pageId && data.module) {
+        if (data.pageContext.pageId && data.pageContext.module) {
           this.telemetrySvc.impression(data)
         } else {
           this.telemetrySvc.impression()
