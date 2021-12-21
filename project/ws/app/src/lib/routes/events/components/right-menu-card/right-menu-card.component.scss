@@ -1,9 +1,14 @@
 @import 'ws-vars';
+@import 'ws-mixins';
 
 .right-menu-card {
   padding-left: 20px;
   padding-right: 20px;
-  width: 200px;  
+  width: 200px;
+
+  @include breakpoint-xs {
+    width: 100%;
+  }
 }
 .timediv {
   background:rgba(0, 0, 0, 0.04); padding:15px;

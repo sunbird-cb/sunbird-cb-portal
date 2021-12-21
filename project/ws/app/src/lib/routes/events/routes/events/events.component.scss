@@ -4,11 +4,74 @@
 
 .buton {
   display: flex;
-  border: 1px solid;
   flex: 1;
   background: red;
   align-content: center;
   text-align: center;
+}
+
+.event_main_box {
+  width: 100%;
+  height: 290px;
+  // overflow:hidden;
+
+  @include breakpoint-xs {
+    height: auto;
+  }
+
+  .event_image_box {
+    width: 225px;
+
+    @include breakpoint-xs {
+      margin:0px auto;
+    }
+    // @include breakpoint-s {
+    //   width: 30%;
+    // }
+
+
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  // .event_text_box {
+  //   @include breakpoint-s {
+  //     width: 69%;
+  //   }
+  // }
+}
+
+.event_card_main_box {
+  box-sizing: border-box;
+
+  @include breakpoint-xs {
+
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  @include breakpoint-s {
+
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+.mat-tab-nav-bar {
+  border-bottom: 0!important;
+}
+
+.event_outer_box {
+  @include breakpoint-xs {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  @include breakpoint-s {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
 }
 
 .text-box {
@@ -56,9 +119,9 @@
     flex-direction: column;
   }
 
-  @include breakpoint-s {
-    flex-direction: column;
-  }
+  // @include breakpoint-s {
+  //   flex-direction: column;
+  // }
 }
 
 .flex-3 {
@@ -203,8 +266,30 @@
   }
 }
 
+ws-app-events-card {
+  margin-right: 32px;
+
+  @include breakpoint-xs {
+    margin-right: 0;
+  }
+}
+
+ws-app-events-card:nth-child(3n) {
+  margin-right: 0;
+
+  @include breakpoint-s {
+    margin-right: 32px;
+  }
+
+}
+
+ws-app-events-card:nth-child(2n) {
+  @include breakpoint-s {
+    margin-right: 0;
+  }
+}
+
 .today-events-box {
-  border: 1px solid red;
   min-height: 278px;
   width:auto;
   flex: 1;
