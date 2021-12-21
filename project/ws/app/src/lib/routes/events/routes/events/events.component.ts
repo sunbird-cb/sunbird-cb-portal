@@ -261,7 +261,7 @@ export class EventsComponent implements OnInit {
       index: tabEvent.index,
     }
     this.eventService.handleTabTelemetry(
-      WsEvents.EnumInteractSubTypes.COURSE_TAB,
+      WsEvents.EnumInteractSubTypes.EVENTS_TAB,
       data,
     )
   }

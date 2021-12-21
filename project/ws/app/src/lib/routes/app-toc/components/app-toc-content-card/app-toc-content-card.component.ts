@@ -175,7 +175,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
         {
           type: 'click',
           subType: `card-tocContentCard`,
-          id: this.content.identifier || '',
+          // id: this.content.identifier || '',
         },
         {
           // contentId: this.content.identifier || '',
