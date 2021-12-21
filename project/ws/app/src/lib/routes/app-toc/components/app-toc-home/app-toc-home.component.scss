@@ -16,11 +16,14 @@
   padding: 0 !important;
 
   @include breakpoint-s {
-    padding: 0 15px !important;
+    padding: 0 8px !important;
   }
 
   @include breakpoint-xs {
-    padding: 0 15px !important;
+    padding: 0 8px !important;
+  }
+  @include breakpoint-m {
+    padding: 0 8px !important;
   }
 }
 
@@ -195,7 +198,7 @@ p.certificate_text {
 
   @include breakpoint-xs {
     width: 100%;
-    margin-left: 0;
+    margin-left: 0!important;
   }
 
   .glance-container {

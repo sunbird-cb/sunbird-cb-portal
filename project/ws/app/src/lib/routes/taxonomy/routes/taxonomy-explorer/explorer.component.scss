@@ -15,6 +15,7 @@
     box-sizing: border-box;
   }
 }
+
 .search{
   margin-top: 20px;
   margin-left: 8.5%;
@@ -31,6 +32,11 @@ ws-widget-breadcrumbs-org{
   width: auto;
   min-width: 380px;
   min-height: 900px;
+
+  @include breakpoint-xs {
+    width: 290px;
+    min-width: 290px;
+  }
 
 }
 .min-height{

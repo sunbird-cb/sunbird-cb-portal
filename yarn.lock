@@ -1173,10 +1173,10 @@
   resolved "https://registry.yarnpkg.com/@sunbird-cb/design-system/-/design-system-0.0.2.tgz#54793a7d5c5b6942319b6c1f3e4f63ef60548545"
   integrity sha512-oTZMfeNu+fi2muVbZUN9vw0mF28e/MvqFgYzgrLJ6vvw3JDxW3814U00x4Fym7Rm0tYc7vpckDFGSKXR3EFMaQ==
 
-"@sunbird-cb/discussions-ui-v8@2.0.65":
-  version "2.0.65"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/discussions-ui-v8/-/discussions-ui-v8-2.0.65.tgz#746484bf7fa98ab7802b9dbd55891fe9fcfc91c6"
-  integrity sha512-4d/oPz7wpyej/oFMBwMlsbmO/cA4pvKwWIfW/WwAgV3TOu1Ejd0R5M+NAa9rV5aEwOOqrwiPRcMcP/qZuJ7FhA==
+"@sunbird-cb/discussions-ui-v8@2.0.69":
+  version "2.0.69"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/discussions-ui-v8/-/discussions-ui-v8-2.0.69.tgz#cdb92188f3e88e536e6390e874356f14633d0397"
+  integrity sha512-NQrkgHShtQEFTNWEVIMELh8832dc6FpcBjphhGKfsT5rOcNW3TQDNZ3pxnwImwQgavmMXJ2arTUz+KhKW8qIPQ==
   dependencies:
     tslib "^1.9.0"
 
@@ -1187,10 +1187,10 @@
   dependencies:
     tslib "^1.9.0"
 
-"@sunbird-cb/rain-dashboards@^0.1.9":
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/rain-dashboards/-/rain-dashboards-0.1.9.tgz#4684e3227ede1dfc7084409f345478a076c96f88"
-  integrity sha512-Ce0/7y9udNxLWo8wADtO3hthM+C2/9MOGObeBYCZJTjfD3JxBcxYCIR1YQPjRnfFdFUdPFrOlP9lSzJ+4UnAmw==
+"@sunbird-cb/rain-dashboards@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/rain-dashboards/-/rain-dashboards-0.2.0.tgz#c924fbcd50b4f5b01a13da185ea86609e57a4980"
+  integrity sha512-lOgTwWlynknDrUC52nMq3xZznMJbt6oCdyRlfOFuq2gibvESzj3QpkfaNnW8HjJVrnCO/p7lL/HeAkFWGiQuKw==
   dependencies:
     tslib "^1.9.0"
 
