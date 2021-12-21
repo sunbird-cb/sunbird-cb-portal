@@ -128,8 +128,8 @@ export class UtilityService {
     this.currentRouteData = data
   }
 
-  get routeData(): WsEvents.ITelemetryContext {
-    const data: WsEvents.ITelemetryContext = {
+  get routeData(): WsEvents.ITelemetryPageContext {
+    const data: WsEvents.ITelemetryPageContext = {
       module: '',
       pageId: '',
     }

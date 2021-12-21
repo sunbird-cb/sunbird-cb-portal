@@ -63,7 +63,7 @@ export namespace WsEvents {
     Impression = 'Impression',
   }
 
-  export interface ITelemetryContext {
+  export interface ITelemetryPageContext {
     pageId?: string,
     module?: string,
     pageIdExt?: string
@@ -83,7 +83,7 @@ export namespace WsEvents {
 
   export interface IWsEventTelemetry {
     eventSubType: EnumTelemetrySubType
-    context?: ITelemetryContext
+    pageContext?: ITelemetryPageContext
   }
 
   // PDF Telemetry Event
@@ -107,19 +107,19 @@ export namespace WsEvents {
   export interface IWsEventTelemetryInteract extends IWsEventTelemetry {
     edata: ITelemetryEdata
     object: any
-    context?: ITelemetryContext
+    pageContext?: ITelemetryPageContext
   }
 
   export interface IWsEventTelemetryFeedback extends IWsEventTelemetry {
     edata: ITelemetryEdata
     object: any
-    context?: ITelemetryContext
+    pageContext?: ITelemetryPageContext
   }
 
   export interface IWsEventTelemetryImpression extends IWsEventTelemetry {
     edata?: ITelemetryEdata
     object?: any
-    context?: ITelemetryContext
+    pageContext?: ITelemetryPageContext
   }
 
   export interface IWsEventTelemetrySearch extends IWsEventTelemetry {

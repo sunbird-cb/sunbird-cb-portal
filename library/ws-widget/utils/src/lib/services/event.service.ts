@@ -22,14 +22,14 @@ export class EventService {
   }
 
   // helper functions
-  raiseInteractTelemetry(edata: WsEvents.ITelemetryEdata, object: any, context?: WsEvents.ITelemetryContext) {
+  raiseInteractTelemetry(edata: WsEvents.ITelemetryEdata, object: any, pageContext?: WsEvents.ITelemetryPageContext) {
     this.dispatchEvent<WsEvents.IWsEventTelemetryInteract>({
       eventType: WsEvents.WsEventType.Telemetry,
       eventLogLevel: WsEvents.WsEventLogLevel.Info,
       data: {
         edata,
         object,
-        context: this.getContext(context),
+        pageContext: this.getContext(pageContext),
         eventSubType: WsEvents.EnumTelemetrySubType.Interact,
       },
       from: '',
@@ -52,12 +52,13 @@ export class EventService {
   }
 
   // Raise custom impression events eg:on tab change
-  raiseCustomImpression(context?: WsEvents.ITelemetryContext) {
+  raiseCustomImpression(object: any, pageContext?: WsEvents.ITelemetryPageContext) {
     this.dispatchEvent<WsEvents.IWsEventTelemetryImpression>({
       eventType: WsEvents.WsEventType.Telemetry,
       eventLogLevel: WsEvents.WsEventLogLevel.Info,
       data: {
-        context: this.getContext(context),
+        object,
+        pageContext: this.getContext(pageContext),
         eventSubType: WsEvents.EnumTelemetrySubType.Impression,
       },
       from: '',
@@ -75,31 +76,31 @@ export class EventService {
   // }
 
   // Method to get the context information about the telemetry interact event
-  private getContext(context: WsEvents.ITelemetryContext | undefined): WsEvents.ITelemetryContext {
+  private getContext(pageContext: WsEvents.ITelemetryPageContext | undefined): WsEvents.ITelemetryPageContext {
     const routeDataContext = this.utilitySvc.routeData
     // initialize with the route data configuration - current route's pageID & module
-    const finalContext: WsEvents.ITelemetryContext = {
+    const finalContext: WsEvents.ITelemetryPageContext = {
       pageId: routeDataContext.pageId,
       module: routeDataContext.module,
     }
-    if (context) {
+    if (pageContext) {
       // if context has pageIdExt, append it to the route's pageId
-      if (context.pageIdExt) {
-        finalContext.pageId = `${routeDataContext.pageId}_${context.pageIdExt}`
-      } else if (context.pageId) {
+      if (pageContext.pageIdExt) {
+        finalContext.pageId = `${routeDataContext.pageId}_${pageContext.pageIdExt}`
+      } else if (pageContext.pageId) {
         // else context has pageId, override it to the final pageID
-        finalContext.pageId = context.pageId
+        finalContext.pageId = pageContext.pageId
       }
       // if context has module, override it to the final module
-      if (context.module) {
-        finalContext.module = context.module
+      if (pageContext.module) {
+        finalContext.module = pageContext.module
       }
     }
 
     return finalContext
   }
 
-  public handleTabTelemetry(subType: string, data: WsEvents.ITelemetryTabData) {
+  public handleTabTelemetry(subType: string, data: WsEvents.ITelemetryTabData, object?:any) {
     // raise a tab click interact event
     this.raiseInteractTelemetry(
       {
@@ -111,6 +112,7 @@ export class EventService {
         context: {
           position: data.index,
         },
+        ...object
       },
       {
       pageIdExt: `${_.camelCase(data.label)}-tab`,
@@ -118,6 +120,11 @@ export class EventService {
 
     // raise a tab click impression event
     this.raiseCustomImpression({
+      context: {
+            position: data.index,
+          },
+          ...object
+      },{
       pageIdExt: `${_.camelCase(data.label)}-tab`,
     })
   }
