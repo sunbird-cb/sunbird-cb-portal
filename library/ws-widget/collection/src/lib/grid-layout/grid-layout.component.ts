@@ -37,4 +37,12 @@ export class GridLayoutComponent extends WidgetBaseComponent
       ),
     )
   }
+  tracker(index: number, item: any) {
+    if (index >= 0) { }
+    return item
+  }
+  tracker2(index: number, item: any) {
+    if (index >= 0) { }
+    return item
+  }
 }

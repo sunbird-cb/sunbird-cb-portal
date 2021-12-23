@@ -162,6 +162,14 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
   //   return filters
   // }
 
+  identify(index: number, item: any) {
+    if (index >= 0) { }
+    return item
+  }
+  tracker(index: number, item: any) {
+    if (index >= 0) { }
+    return _.get(item, 'widgetData.content.identifier')
+  }
   private getFiltersFromArray(v6filters: any) {
     const filters: any = {}
     if (v6filters.constructor === Array) {
@@ -453,7 +461,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
                 tab: 'Learn',
                 q: strip.request && strip.request.searchV6 && strip.request.searchV6.request,
                 f:
-                    searchRequest.request &&
+                  searchRequest.request &&
                     searchRequest.request.filters
                     ? JSON.stringify(
                       this.transformSearchV6FiltersV2(
