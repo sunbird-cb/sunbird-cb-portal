@@ -183,7 +183,8 @@ export class BtnSettingsService {
     if (!this.loadedThemeStyles.has(theme.themeClass)) {
       if (this.useLinkForThemeInjection) {
         const elem = document.createElement('link')
-        elem.rel = 'stylesheet'
+        elem.rel = 'preload'
+        elem.as = 'stylesheet'
         elem.type = 'text/css'
         elem.href = `${theme.themeFile}.css`
         document.head.appendChild(elem)
