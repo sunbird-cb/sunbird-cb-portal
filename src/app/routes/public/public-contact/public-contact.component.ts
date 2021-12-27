@@ -16,6 +16,7 @@ export class PublicContactComponent implements OnInit, AfterViewInit, OnDestroy 
   platform = 'iGot'
   panelOpenState = false
   currentTab = 'personalInfo'
+  searchText!: string
   tabsData!: any
   elementPosition: any
   sticky = false
@@ -82,14 +83,33 @@ export class PublicContactComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   get getHelp() {
+    const normalize = (str: string) => _.toLower(_.deburr(str))
+
+    const includesValue = (val: string, obj: any) => {
+      const search = normalize(val)
+      return _.some(obj, v => normalize(v).includes(search))
+    }
+    if (!this.searchText) {
+      return this.contactPage.help
+    }
     const contents: any[] = []
-    if(this.contactPage.help) {
-       _.each(this.contactPage.help, m=>{
-        if(_.filter(m.contents, {'heading':'a'}).length) {
+    if (this.contactPage.help) {
+      _.each(this.contactPage.help, m => {
+        const newVal = { ...m }
+        newVal.contents = []
+        if (this.searchText) {
+          _.each(_.get(m, 'contents'), c => {
+            if (includesValue(this.searchText || '', c)) {
+              newVal.contents.push(c)
+              // contents.push(m)
+            }
+          })
+          contents.push(newVal)
+        } else {
           contents.push(m)
         }
       })
     }
-    return contents
+    return _.compact(contents)
   }
 }
