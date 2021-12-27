@@ -7,7 +7,7 @@
 
   <div class="flex flex-1 custom faq_main_box">
     <div class="flex-3">
-     
+
       <div class="flex flex-4 flex-column">
         <div class="flex flex-1 custom">
           <!-- <div class="flex-1" style="position: relative;"> -->
@@ -21,9 +21,9 @@
               *ngIf="contactPage.title || contactPage.description">
               <h2 class="flex mat-display-1 main_title_text margin-bottom-xl" *ngIf="contactPage.title">
                 <!-- <mat-icon>contact_support</mat-icon> -->
-               
+
                   {{contactPage.title}}
-               
+
               </h2>
 
               <form class="flex-1">
@@ -40,8 +40,8 @@
             </div>
 
             <div class="faq-img-section flex flex-wrap flex-between items-stretch"
-              *ngIf="contactPage.help && contactPage.help.length > 0">
-              <ng-container *ngFor="let chelp of contactPage.help">
+              *ngIf="getHelp && contactPage.help && contactPage.help.length > 0">
+              <ng-container *ngFor="let chelp of getHelp">
                 <div [attr.id]="chelp.fragment" class="info-section margin-bottom-xl" [ngClass]="{ 'width-1-1': true}">
                   <h3 class="flex flex-middle margin-remove">
                     <!-- <mat-icon *ngIf="chelp.icon">{{ chelp.icon}}</mat-icon> -->

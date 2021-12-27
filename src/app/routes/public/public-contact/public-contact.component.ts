@@ -80,4 +80,16 @@ export class PublicContactComponent implements OnInit, AfterViewInit, OnDestroy 
       el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
     }
   }
+
+  get getHelp() {
+    const contents: any[] = []
+    if(this.contactPage.help) {
+       _.each(this.contactPage.help, m=>{
+        if(_.filter(m.contents, {'heading':'a'}).length) {
+          contents.push(m)
+        }
+      })
+    }
+    return contents
+  }
 }
