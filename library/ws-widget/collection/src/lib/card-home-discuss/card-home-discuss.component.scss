@@ -122,17 +122,29 @@
     height: $description-line-count * $description-line-height;
     line-height: $description-line-height;
   }
+
+  .post_tag {
+    display: inline-block;
+    border-radius: 100px 4px 4px 100px;
+    padding: 4px 12px;
+    width: auto;
+    justify-content: space-between;
+    background-color: rgba(0,0,0,.04);
+    border: 1px solid rgba(0,0,0,.08);
+    box-sizing: border-box;
+}
+
 }
 
 .title-margin
   {
-    margin-left: -18%; 
+    margin-left: -18%;
     margin-top: -32px;
   }
 
   .mat-card-header-margin
   {
-    margin-left: -9%; 
+    margin-left: -9%;
     margin-top: -1%;
   }
 

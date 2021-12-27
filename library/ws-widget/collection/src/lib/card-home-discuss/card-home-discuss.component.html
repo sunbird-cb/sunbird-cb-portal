@@ -17,7 +17,7 @@
 				<ws-widget-avatar-photo mat-card-avatar [name]="getUserFullName(discuss.user)" [size]="'s'">
 				</ws-widget-avatar-photo>
 			</span>
-			
+
 			<span class="ws-mat-black60-text mat-body-2 flex-1 text-capitalize mar-16 i18n-aria-label" *ngIf="discuss?.user?.username"> Asked by
 				{{discuss?.user?.fullname != null ? discuss?.user?.fullname : discuss?.user?.username }}</span>
 			<span class="dot mat-body-2" *ngIf="!(discuss?.user?.username)">{{'Asked by Anonymous'}}</span>
@@ -27,7 +27,7 @@
 				<span class="cursor-pointer mat-subheading-1" [innerHTML]="discuss?.title"></span>
 			</a>
 		</mat-card-title> -->
-  
+
 		<mat-card-title class="responsive title-margin">
 			<a href="javascript:void(0)">
 				<span class="cursor-pointer mat-subheading-1" [innerHTML]="discuss?.title"></span>
@@ -38,12 +38,15 @@
 			<span class="flex ws-mat-default-text mat-body-2">
 				<mat-icon svgIcon="category_xs"></mat-icon>&nbsp;{{discuss.category.name}}
 			</span>
-			
+
 			<!-- <span class="margin-left-l">{{discuss.timestamp | pipeRelativeTime}}</span> -->
 			<mat-card-content class="flex flex-2">
 				<div class="tags margin-bottom-s">
 					<ng-container *ngIf="discuss && discuss.tags && discuss.tags.length > 0">
-					  <span *ngFor="let tag of discuss.tags" class="tag" [ngStyle]="getBgColor(tag.value)">
+					  <!-- <span *ngFor="let tag of discuss.tags" class="tag post_tag" [ngStyle]="getBgColor(tag.value)">
+						{{tag.value}}
+					  </span> -->
+					  <span *ngFor="let tag of discuss.tags" class="tag post_tag">
 						{{tag.value}}
 					  </span>
 					</ng-container>
@@ -52,7 +55,7 @@
 		</mat-card-subtitle>
 
     </mat-card-header>
-  
+
 	<!-- <mat-card-actions>
 
 	</mat-card-actions> -->

@@ -7,7 +7,7 @@
 
   <div class="flex flex-1 custom faq_main_box">
     <div class="flex-3">
-     
+
       <div class="flex flex-4 flex-column">
         <div class="flex flex-1 custom">
           <!-- <div class="flex-1" style="position: relative;"> -->
@@ -21,15 +21,15 @@
               *ngIf="contactPage.title || contactPage.description">
               <h2 class="flex mat-display-1 main_title_text margin-bottom-xl" *ngIf="contactPage.title">
                 <!-- <mat-icon>contact_support</mat-icon> -->
-               
+
                   {{contactPage.title}}
-               
+
               </h2>
 
               <form class="flex-1">
                 <mat-form-field appearance="outline" class="margin-bottom-xl autocomplete-form search_faq_form" color="primary" >
                   <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
-                  <input type="search" #searchInput class="ml-2" i18n-placeholder="search content"
+                  <input  [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" type="search" class="ml-2" i18n-placeholder="search content"
                       [placeholder]="'Find question…'" i18-aria-label aria-label="Query" matInput />
                 </mat-form-field>
               </form>
@@ -41,7 +41,7 @@
 
             <div class="faq-img-section flex flex-wrap flex-between items-stretch"
               *ngIf="contactPage.help && contactPage.help.length > 0">
-              <ng-container *ngFor="let chelp of contactPage.help">
+              <ng-container *ngFor="let chelp of contactPage.help  | filter : searchText">
                 <div [attr.id]="chelp.fragment" class="info-section margin-bottom-xl" [ngClass]="{ 'width-1-1': true}">
                   <h3 class="flex flex-middle margin-remove">
                     <!-- <mat-icon *ngIf="chelp.icon">{{ chelp.icon}}</mat-icon> -->
@@ -50,7 +50,7 @@
                   </h3>
                   <mat-accordion>
                     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
-                      *ngFor="let helpContent of chelp.contents">
+                      *ngFor="let helpContent of chelp.contents | filter : searchText">
                       <mat-expansion-panel-header>
                         <mat-panel-description>
                           <p class="margin-remove">{{helpContent.heading}}</p>
