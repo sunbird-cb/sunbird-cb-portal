@@ -25,7 +25,7 @@
                 <mat-card>
                     <mat-card-content>
                         <button mat-button color="default" type="button" class="small-button blue-border flex-auto-display mat-button" (click)=view(competencyData) *ngIf="isAdded === false">
-                        
+
                             <!-- <span class="ws-mat-default-text" i18n>Add to your competencies</span> -->
                             <span class="ws-mat-default-text" i18n>Self attest competency</span>
                         </button>
@@ -35,7 +35,7 @@
                         </button>
 
                         <!-- <button mat-button color="default" type="button" class="small-button view-all flex-auto-display mat-button">
-                        
+
                             <span class="ws-mat-default-text" i18n>Mark as desired competency</span>
                         </button> -->
                     </mat-card-content>
@@ -79,12 +79,14 @@
                     </ng-template>
                 </div>
             </ng-container> -->
-            
+
         </div>
     </div>
-    <div class="margin-m">
-        <ng-template [wsResolverWidget]="jsonConfigForCBP"></ng-template>
-      </div>
-    
+    <div class="flex flex-wrap fix-w related_cbp_box">
+        <div class="margin-top-m border-bottom-m box new-box w-full">
+            <ng-template [wsResolverWidget]="jsonConfigForCBP"></ng-template>
+          </div>
+    </div>
+
 </div>
 

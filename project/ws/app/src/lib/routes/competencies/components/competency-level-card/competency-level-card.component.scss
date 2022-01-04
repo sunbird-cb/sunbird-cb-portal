@@ -126,6 +126,15 @@
       padding: 24px;
       box-sizing: border-box;
 
+      @include breakpoint-xs {
+        width: 45%;
+      }
+
+      @include breakpoint-s {
+        width: 45%;
+
+    }
+
       h4.mat-h4 {
           margin-bottom: 5px;
       }
@@ -137,11 +146,11 @@
               margin-right: 10px;
           }
           .icon_text {
-              margin-bottom: 0;  
-             
+              margin-bottom: 0;
+
           }
       }
-     
+
   }
   .card_right_txtbox {
       float: right;
@@ -149,6 +158,14 @@
       box-sizing: border-box;
       width: calc(100% - 230px);
       border-left:1px solid rgba(0, 0, 0, 0.08);
+
+      @include breakpoint-xs {
+        width: 55%;
+      }
+
+    @include breakpoint-s {
+      width: 55%;
+    }
 
   }
 }
