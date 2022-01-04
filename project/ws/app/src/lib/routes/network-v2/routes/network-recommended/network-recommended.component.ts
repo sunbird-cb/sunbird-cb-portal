@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { FormControl } from '@angular/forms'
 import { NetworkV2Service } from '../../services/network-v2.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils'
 import { ActivatedRoute } from '@angular/router'
 
 @Component({
@@ -24,6 +24,7 @@ export class NetworkRecommendedComponent implements OnInit {
     private networkV2Service: NetworkV2Service,
     private configSvc: ConfigurationsService,
     private route: ActivatedRoute,
+    private eventSvc: EventService,
   ) {
     this.currentUserDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName
     this.data = this.route.snapshot.data.recommendedList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
@@ -96,6 +97,17 @@ export class NetworkRecommendedComponent implements OnInit {
           // this.openSnackbar(err.error.message.split('|')[1] || this.defaultError)
         })
     }
+  }
+
+  public tabTelemetry(label: string, index: number) {
+    const data: WsEvents.ITelemetryTabData = {
+      label,
+      index,
+    }
+    this.eventSvc.handleTabTelemetry(
+      WsEvents.EnumInteractSubTypes.NETWORK_TAB,
+      data,
+    )
   }
 
 }

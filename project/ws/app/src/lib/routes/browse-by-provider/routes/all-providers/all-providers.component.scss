@@ -4,7 +4,12 @@
     margin-right: auto!important;
     height: auto;
     min-height: 400px;
-    
+
+    @media (max-width:1024px) {
+        margin-left: 8px!important;
+        margin-right: 8px!important;
+    }
+
 }
 
 .top_card_container {
@@ -21,10 +26,14 @@
         grid-gap: 32px;
         grid-template-columns: repeat(auto-fill, 276px);
         justify-content: flex-start;
+
+        @media (max-width:768px) {
+            grid-gap: 16px;
+        }
     }
 }
 
-// all providers 
+// all providers
 .all_provider_box {
     width: 100%;
     margin-bottom: 150px;
@@ -38,20 +47,29 @@
         width: 100%;
         overflow: hidden;
         justify-content: space-between;
-       
+
 
         .search_box_inner {
             max-width: 585px;
             float: left;
 
+            @media (max-width:768px) {
+                width: 49%;
+                max-width: 49%;
+            }
+
             .search_box_main {
                 width: 100%;
                 max-width: 585px;
 
+                @media (max-width:768px) {
+                    max-width: 100%;
+                }
+
                 mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix{
                     border-top-width: 8px !important;
                     padding: 12px 10px 12px 12px;
-                    
+
                 }
 
                 form {
@@ -68,6 +86,10 @@
             float: right;
             width: 210px;
             box-sizing: border-box;
+
+            @media (max-width:768px) {
+                width: 49%;
+            }
             .item {
                 .mat-form-field {
                     // background-color: #f0f3f4;
@@ -75,11 +97,15 @@
                     // padding: 0px 12px;
                     // border-radius: 4px 4px;
                     // box-sizing: border-box;
+
+                    @media (max-width:768px) {
+                        width: 100%;
+                    }
                 }
                 .theme-igot.day-mode .mat-form-field-appearance-legacy .mat-form-field-underline {
                     background-color:none;
                 }
-                
+
             }
         }
     }
@@ -93,12 +119,16 @@
         // display: flex;
         // justify-content: space-between;
 
-        // disable if flex layout is needed and not grid 
+        // disable if flex layout is needed and not grid
         display: grid;
         grid-gap: 32px;
         grid-template-columns: repeat(auto-fill, 275px);
         justify-content: space-between;
-        
+
+        @media (max-width:1024px) {
+            justify-content: flex-start;
+        }
+
     }
 
     a.load_more_link {

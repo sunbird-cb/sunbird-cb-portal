@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { IWidgetCardBreadcrumb, IBreadcrumbPath } from './card-breadcrumb.model'
-import { EventService } from '@sunbird-cb/utils'
+import { EventService, WsEvents } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-widget-card-breadcrumb',
@@ -32,12 +32,17 @@ export class CardBreadcrumbComponent extends WidgetBaseComponent
 
   raiseTelemetry(clickedItem: IBreadcrumbPath) {
     this.events.raiseInteractTelemetry(
-      'click',
-      'breadcrumb',
+      {
+        type: 'click',
+        subType: 'breadcrumb',
+      },
       {
         clickedItem,
         path: this.widgetData.path,
       },
-    )
+      {
+        pageIdExt: 'btn-breadcrumb',
+        module: WsEvents.EnumTelemetrymodules.PROFILE,
+    })
   }
 }

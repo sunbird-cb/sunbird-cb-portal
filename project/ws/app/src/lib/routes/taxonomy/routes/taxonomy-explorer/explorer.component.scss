@@ -6,7 +6,16 @@
   @extend %page-center;
   height: auto;
   min-height: 400px;
+
+  @media (max-width:1024px) {
+    padding-left: 8px!important;
+    padding-right: 8px!important;
+    min-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
 }
+
 .search{
   margin-top: 20px;
   margin-left: 8.5%;
@@ -23,6 +32,11 @@ ws-widget-breadcrumbs-org{
   width: auto;
   min-width: 380px;
   min-height: 900px;
+
+  @include breakpoint-xs {
+    width: 290px;
+    min-width: 290px;
+  }
 
 }
 .min-height{

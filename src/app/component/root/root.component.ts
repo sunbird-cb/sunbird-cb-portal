@@ -5,7 +5,7 @@ import {
   Component,
   ElementRef,
   OnInit,
-  TemplateRef,
+  // TemplateRef,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core'
@@ -15,6 +15,8 @@ import {
   NavigationError,
   NavigationStart,
   Router,
+  ActivatedRoute,
+  ActivatedRouteSnapshot,
 } from '@angular/router'
 // import { interval, concat, timer } from 'rxjs'
 import { BtnPageBackService } from '@sunbird-cb/collection'
@@ -24,6 +26,7 @@ import {
   LoggerService,
   TelemetryService,
   ValueService,
+  UtilityService,
 } from '@sunbird-cb/utils'
 import { delay, first } from 'rxjs/operators'
 import { MobileAppsService } from '../../services/mobile-apps.service'
@@ -45,13 +48,16 @@ import { AppIntroComponent } from '../app-intro/app-intro.component'
   providers: [SwUpdate],
 })
 export class RootComponent implements OnInit, AfterViewInit {
+
   @ViewChild('previewContainer', { read: ViewContainerRef, static: true })
-  @ViewChild('userIntro', { static: true }) userIntro!: TemplateRef<any>
+  // @ViewChild('userIntro', { static: true }) userIntro!: TemplateRef<any>
   previewContainerViewRef: ViewContainerRef | null = null
   @ViewChild('appUpdateTitle', { static: true })
   appUpdateTitleRef: ElementRef | null = null
   @ViewChild('appUpdateBody', { static: true })
   appUpdateBodyRef: ElementRef | null = null
+
+  @ViewChild('skipper', { static: false }) skipper!: ElementRef
 
   isXSmall$ = this.valueSvc.isXSmall$
   routeChangeInProgress = false
@@ -63,9 +69,10 @@ export class RootComponent implements OnInit, AfterViewInit {
   isSetupPage = false
   processed: any
   loginToken: any
-
+  currentRouteData: any = []
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private appRef: ApplicationRef,
     private logger: LoggerService,
     private swUpdate: SwUpdate,
@@ -78,6 +85,7 @@ export class RootComponent implements OnInit, AfterViewInit {
     private rootSvc: RootService,
     private btnBackSvc: BtnPageBackService,
     private changeDetector: ChangeDetectorRef,
+    private utilitySvc: UtilityService,
     // private dialogRef: MatDialogRef<any>,
 
   ) {
@@ -146,7 +154,9 @@ export class RootComponent implements OnInit, AfterViewInit {
     }
     // this.snackBar.openFromTemplate(this.userIntro, { duration: 20000, verticalPosition: 'bottom', horizontalPosition: 'left' })
   }
-
+  public skipToMainContent(): void {
+    this.skipper.nativeElement.focus()
+  }
   ngOnInit() {
     try {
       this.isInIframe = window.self !== window.top
@@ -188,7 +198,27 @@ export class RootComponent implements OnInit, AfterViewInit {
       }
 
       if (event instanceof NavigationEnd) {
-        this.telemetrySvc.impression()
+        // let snapshot = this.router.routerState.firstChild(this.activatedRoute).snapshot
+        // console.log('this.route.snapshot :: ', this.route.snapshot)
+        const snapshot = this.route.snapshot
+        // console.log('root.snapshot.root.firstChild ', snapshot.root.firstChild)
+        // console.log('firstChild ', snapshot.firstChild)
+        const firstChild = snapshot.root.firstChild
+        this.getChildRouteData(snapshot, firstChild)
+        // tslint:disable-next-line: no-console
+        // console.log('Final currentDataRoute', this.currentRouteData)
+        this.utilitySvc.setRouteData(this.currentRouteData)
+        const pageContext = this.utilitySvc.routeData
+        const data = {
+          pageContext,
+        }
+        // console.log('data: ', data)
+        if (data.pageContext.pageId && data.pageContext.module) {
+          this.telemetrySvc.impression(data)
+        } else {
+          this.telemetrySvc.impression()
+        }
+        this.currentRouteData = []
         // if (this.appStartRaised) {
         //   this.telemetrySvc.audit(WsEvents.WsAuditTypes.Created, 'Login', {})
         //   this.appStartRaised = false
@@ -203,6 +233,18 @@ export class RootComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.initAppUpdateCheck()
+  }
+
+  getChildRouteData(snapshot: ActivatedRouteSnapshot, firstChild: ActivatedRouteSnapshot | null) {
+    if (firstChild) {
+      if (firstChild.data) {
+        // console.log('firstChild.data', firstChild.data)
+        this.currentRouteData.push(firstChild.data)
+      }
+      if (firstChild.firstChild) {
+        this.getChildRouteData(snapshot, firstChild.firstChild)
+      }
+    }
   }
 
   initAppUpdateCheck() {

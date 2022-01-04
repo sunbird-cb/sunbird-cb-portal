@@ -8,7 +8,7 @@ import _ from 'lodash';
 import { FormControl } from '@angular/forms';
 import { CompetenceViewComponent } from '../../components/competencies-view/competencies-view.component';
 import { MatSnackBar } from '@angular/material';
-import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
+import { ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
 import {ThemePalette} from '@angular/material/core'
 /* tslint:enable */
 
@@ -17,7 +17,7 @@ import {ThemePalette} from '@angular/material/core'
   templateUrl: './competence-all.component.html',
   styleUrls: ['./competence-all.component.scss'],
   /* tslint:disable */
-  host: { class: 'flex flex-1 margin-top-l' },
+  host: { class: 'flex flex-1 margin-top-xl competency_main_block' },
   /* tslint:enable */
 })
 export class CompetenceAllComponent implements OnInit {
@@ -53,6 +53,7 @@ export class CompetenceAllComponent implements OnInit {
     private competencySvc: CompetenceService,
     private snackBar: MatSnackBar,
     private configSvc: ConfigurationsService,
+    private eventSvc: EventService,
   ) {
     this.tabsData =
       (this.route.parent &&
@@ -101,6 +102,7 @@ export class CompetenceAllComponent implements OnInit {
   getProfile() {
     this.competencySvc.fetchProfileById(this.configSvc.unMappedUser.id).subscribe(response => {
       if (response) {
+        // console.log("My Comp", response.profileDetails.competencies)
         this.myCompetencies = response.profileDetails.competencies || []
         this.currentProfile = response.profileDetails
 
@@ -360,5 +362,16 @@ export class CompetenceAllComponent implements OnInit {
         this.deleteCompetency(response.id);
       }
     });
+  }
+
+  public tabTelemetry(label: string, index: number) {
+    const data: WsEvents.ITelemetryTabData = {
+      label,
+      index,
+    }
+    this.eventSvc.handleTabTelemetry(
+      WsEvents.EnumInteractSubTypes.COMPETENCY_TAB,
+      data,
+    )
   }
 }

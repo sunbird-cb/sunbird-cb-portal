@@ -2,6 +2,8 @@ import { Platform } from '@angular/cdk/platform'
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
+import { Router, NavigationEnd, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router'
+import { WsEvents } from './event.model'
 interface IWindowMobileAppModified extends Window {
   appRef?: any
   webkit?: any
@@ -18,10 +20,38 @@ interface IRecursiveData {
   providedIn: 'root',
 })
 export class UtilityService {
+  currentRouteData: any[] = []
   constructor(
     private http: HttpClient,
     private platform: Platform,
-  ) { }
+    private router: Router,
+    private route: ActivatedRoute,
+    // private events: EventService,
+  ) {
+    this.router.events.subscribe((event: any) => {
+      if (event instanceof NavigationEnd) {
+        // let snapshot = this.router.routerState.firstChild(this.activatedRoute).snapshot
+        // console.log('this.route.snapshot :: ', this.route.snapshot)
+        const snapshot = this.route.snapshot
+        // console.log('root.snapshot.root.firstChild ', snapshot.root.firstChild)
+        // console.log('firstChild ', snapshot.firstChild)
+        const firstChild = snapshot.root.firstChild
+        this.getChildRouteData(snapshot, firstChild)
+      }
+    })
+  }
+
+  private getChildRouteData(snapshot: ActivatedRouteSnapshot, firstChild: ActivatedRouteSnapshot | null) {
+    if (firstChild) {
+      if (firstChild.data) {
+        // console.log('firstChild.data', firstChild.data)
+        this.currentRouteData.push(firstChild.data)
+      }
+      if (firstChild.firstChild) {
+        this.getChildRouteData(snapshot, firstChild.firstChild)
+      }
+    }
+  }
 
   get randomId() {
     return RANDOM_ID_PER_USER + 1
@@ -92,5 +122,27 @@ export class UtilityService {
       return window.webkit.messageHandlers.appRef
     }
     return null
+  }
+
+  public setRouteData(data: any) {
+    this.currentRouteData = data
+  }
+
+  get routeData(): WsEvents.ITelemetryPageContext {
+    const data: WsEvents.ITelemetryPageContext = {
+      module: '',
+      pageId: '',
+    }
+    // tslint:disable-next-line: no-console
+    // console.log('Final currentDataRoute get routeData()', this.currentRouteData)
+    this.currentRouteData.map((rd: any) => {
+      if (rd.pageId) {
+        data.pageId = `${data.pageId}/${rd.pageId}`
+      }
+      if (rd.module) {
+        data.module = rd.module
+      }
+    })
+    return data
   }
 }

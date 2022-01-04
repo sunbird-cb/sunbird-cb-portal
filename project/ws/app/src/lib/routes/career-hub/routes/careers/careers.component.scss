@@ -24,11 +24,13 @@
 
 .margin-fix {
   @include breakpoint-xs {
-    margin: 0 $size-l 0 $size-l;
+    // margin: 0 $size-l 0 $size-l;
+    margin:0;
   }
 
   @include breakpoint-s {
-    margin: 0 $size-l 0 $size-l;
+    // margin: 0 $size-l 0 $size-l;
+    margin:0;
   }
 }
 
@@ -65,13 +67,16 @@
 }
 
 .w-fix {
-    width: calc(100% - 20px);
-    // @include breakpoint-s {
-    //   width: 100%;
-    // }
+    width: calc(100% - 0px);
+    @include breakpoint-s {
+      width: 100%;
+    }
     @include breakpoint-xs {
       width: 100%;
     }
+    // @include breakpoint-s {
+    //   width: 100%;
+    // }
 }
 
 .filter {

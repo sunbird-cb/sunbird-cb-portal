@@ -309,11 +309,21 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
 
   raiseTelemetry(content: any) {
     if (content) {
-      this.events.raiseInteractTelemetry('click', `card-learnSearch`, {
-        id: content.identifier || '',
-        type: content.contentType,
-        rollup: {},
-        ver: `${content.version}${''}`,
+      this.events.raiseInteractTelemetry(
+        {
+          type: 'click',
+          subType: `card-learnSearch`,
+          // id: content.identifier || '',
+        },
+        {
+          id: content.identifier || '',
+          type: content.primaryCategory,
+          rollup: {},
+          ver: `${content.version}${''}`,
+        },
+        {
+          pageIdExt: `${content.primaryCategory}-card`,
+          module: content.primaryCategory,
       })
     }
   }

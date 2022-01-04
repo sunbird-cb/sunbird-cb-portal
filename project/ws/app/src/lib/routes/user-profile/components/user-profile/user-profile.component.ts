@@ -3,9 +3,9 @@ import { FormGroup, FormControl, Validators, FormArray, FormBuilder, AbstractCon
 import { ENTER, COMMA } from '@angular/cdk/keycodes'
 import { Subscription, Observable } from 'rxjs'
 import { startWith, map, debounceTime, distinctUntilChanged } from 'rxjs/operators'
-import { MatSnackBar, MatChipInputEvent, DateAdapter, MAT_DATE_FORMATS, MatDialog } from '@angular/material'
+import { MatSnackBar, MatChipInputEvent, DateAdapter, MAT_DATE_FORMATS, MatDialog, MatTabChangeEvent } from '@angular/material'
 import { AppDateAdapter, APP_DATE_FORMATS, changeformat } from '../../services/format-datepicker'
-import { ImageCropComponent, ConfigurationsService } from '@sunbird-cb/utils'
+import { ImageCropComponent, ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils'
 import { IMAGE_MAX_SIZE, IMAGE_SUPPORT_TYPES } from '@ws/author/src/lib/constants/upload'
 import { UserProfileService } from '../../services/user-profile.service'
 import { Router, ActivatedRoute } from '@angular/router'
@@ -115,6 +115,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     public dialog: MatDialog,
     private loader: LoaderService,
+    private eventSvc: EventService,
   ) {
     this.approvalConfig = this.route.snapshot.data.pageData.data
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
@@ -228,27 +229,27 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       (_err: any) => {
       })
 
-      const desreq = {
-        searches: [
-          {
-            type: 'POSITION',
-            field: 'name',
-            keyword: '',
-          },
-          {
-            field: 'status',
-            keyword: 'VERIFIED',
-            type: 'POSITION',
-          },
-        ],
-      }
-
-      this.userProfileSvc.getDesignations(desreq).subscribe(
-        (data: any) => {
-          this.designationsMeta = data.responseData
+    const desreq = {
+      searches: [
+        {
+          type: 'POSITION',
+          field: 'name',
+          keyword: '',
         },
-        (_err: any) => {
-        })
+        {
+          field: 'status',
+          keyword: 'VERIFIED',
+          type: 'POSITION',
+        },
+      ],
+    }
+
+    this.userProfileSvc.getDesignations(desreq).subscribe(
+      (data: any) => {
+        this.designationsMeta = data.responseData
+      },
+      (_err: any) => {
+      })
   }
   createDegree(): FormGroup {
     return this.fb.group({
@@ -715,7 +716,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       isGovtOrg: organisation.isGovtOrg,
       // orgName: organisation.orgName,
       industry: organisation.industry,
-      designation: organisation.designation ||  _.get(data, 'professionalDetails.designation'),
+      designation: organisation.designation || _.get(data, 'professionalDetails.designation'),
       location: organisation.location,
       doj: organisation.doj,
       orgDesc: organisation.orgDesc,
@@ -784,6 +785,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   private constructReq(form: any) {
+    const arrCompetencies = this.configSvc.unMappedUser.profileDetails ? this.configSvc.unMappedUser.profileDetails.competencies : []
     const userid = this.userProfileData.userId || this.userProfileData.id
     const profileReq = {
       id: userid,
@@ -810,6 +812,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         pincode: form.value.pincode,
       },
       academics: this.getAcademics(form),
+      competencies: arrCompetencies,
       employmentDetails: {
         service: form.value.service,
         cadre: form.value.cadre,
@@ -887,6 +890,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         }
       case 'academics':
         return this.getAcademics(form)
+      case 'competencies':
+        return this.configSvc.unMappedUser.profileDetails.competencies
       case 'employmentDetails':
         return {
           service: form.value.service,
@@ -1306,5 +1311,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         }
       },
     })
+  }
+
+  public tabClicked(tabEvent: MatTabChangeEvent) {
+    const data: WsEvents.ITelemetryTabData = {
+      label: `${tabEvent.tab.textLabel}`,
+      index: tabEvent.index,
+    }
+    this.eventSvc.handleTabTelemetry(
+      WsEvents.EnumInteractSubTypes.PROFILE_EDIT_TAB,
+      data,
+    )
   }
 }

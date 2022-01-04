@@ -1,91 +1,85 @@
 <!-- <div [ngStyle]="{'background-color': ((content?.draftImage || '').length === 7? content?.draftImage : '#F8AD1E')}"> -->
-  <div class="header-synopsis fixed-width margin-top-xl" [ngClass]="{ 'header-synopsis-gradient': bannerUrl }" *ngIf="content">
+<div class="header-synopsis fixed-width margin-top-xl" [ngClass]="{ 'header-synopsis-gradient': bannerUrl }" *ngIf="content">
     <div class="flex flex-row">
-      <div class="flex-auto">
-        <div class="header-title flex-col sm:flex-row">
-          <!-- image -->
-          <div *ngIf="content?.posterImage" class="float-left">
-            <img [src]="content?.posterImage" [id]="'source_' + content.identifier" class="app-icon"
-              [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
-          </div>
-          <div *ngIf="!content?.posterImage" class="float-left">
-            <img src="/assets/instances/eagle/app_logos/default.png" [id]="'source_' + content.identifier" class="app-icon"
-             [alt]="content.sourceName || iGOT" />
-          </div>
-          <!-- data -->
-          <div class="sm:ml-5 flex flex-auto" [id]="'m-c-'+ content.identifier">
-            
-            <div class="sm:ml-5 flex flex-col flex-auto">
-              <h1 class="mat-headline margin-remove-bottom padding-bottom-xs hidden sm:block" [title]="content?.name">
-                {{ content?.name }}
-              </h1>
-              <h1 class="mat-headline margin-remove-bottom padding-bottom-xs block sm:hidden" [title]="content?.name">
-                {{ content?.name }}
-              </h1>
-              <span *ngIf="contentProgress === 1" class="margin-left-s">
+        <div class="flex-auto">
+            <div class="header-title flex-col sm:flex-row">
+                <!-- image -->
+                <div *ngIf="content?.posterImage" class="float-left">
+                    <img [src]="content?.posterImage" [id]="'source_' + content.identifier" class="app-icon" [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
+                </div>
+                <div *ngIf="!content?.posterImage" class="float-left">
+                    <img src="/assets/instances/eagle/app_logos/default.png" [id]="'source_' + content.identifier" class="app-icon" [alt]="content.sourceName || iGOT" />
+                </div>
+                <!-- data -->
+                <div class="sm:ml-5 flex flex-auto" [id]="'m-c-'+ content.identifier">
+
+                    <div class="sm:ml-5 flex flex-col flex-auto">
+                        <h1 class="mat-headline margin-remove-bottom padding-bottom-xs hidden sm:block" [title]="content?.name">
+                            {{ content?.name }}
+                        </h1>
+                        <h1 class="mat-headline margin-remove-bottom padding-bottom-xs block sm:hidden" [title]="content?.name">
+                            {{ content?.name }}
+                        </h1>
+                        <span *ngIf="contentProgress === 1" class="margin-left-s">
                 <mat-icon class="ws-mat-accent-text">check_circle</mat-icon>
               </span>
-              <div [ngSwitch]="routePath" class="header-meta" [ngClass]="{ 'header-meta-banner': bannerUrl }">
-                <!-- Overview Section -->
-                <div class="banner-overview-container" [hidden]="!content?.purpose && showSubtitleOnBanner"
-                  *ngSwitchCase="'overview'">
-                  <h3 class="overview-description mat-body-1" *ngIf="showSubtitleOnBanner" i18n-title title="Subtitle">
-                    {{ content?.purpose | pipeLimitTo: 250 }}
-                  </h3>
-                  <p class="overview-description mat-body-1" *ngIf="!showSubtitleOnBanner" i18n-title title="Description">
-                    {{ content?.instructions | pipeLimitTo: 450 }}
-                  </p>
-                  <div *ngIf="sanitizedIntroductoryVideoIcon" class="overview-intro ws-mat-primary-lite-background"
-                    [style.backgroundImage]="sanitizedIntroductoryVideoIcon" role="button" (click)="playIntroVideo()">
-                    <mat-icon role="button" class="overview-intro-overlay">play_arrow</mat-icon>
-                  </div>
-                </div>
-                <!-- Toc Section -->
-                <div *ngSwitchCase="'contents'">
-                  <!-- Contents Bannner -->
-                </div>
-                <!-- Analytics Section -->
-                <div class="banner-overview-container mat-body-1" [hidden]="!content?.purpose && showSubtitleOnBanner"
-                  *ngSwitchCase="'analytics'">
-                  <h3 class="overview-description mat-body-1" *ngIf="showSubtitleOnBanner" i18n-title title="Subtitle">
-                    {{ content?.purpose | pipeLimitTo: 250 }}
-                  </h3>
-                  <p class="overview-description mat-body-1" *ngIf="!showSubtitleOnBanner" i18n-title title="Description">
-                    {{ content?.instructions | pipeLimitTo: 450 }}
-                  </p>
-                  <div *ngIf="sanitizedIntroductoryVideoIcon" class="overview-intro ws-mat-primary-lite-background"
-                    [style.backgroundImage]="sanitizedIntroductoryVideoIcon" role="button" (click)="playIntroVideo()">
-                    <mat-icon role="button" class="overview-intro-overlay">play_arrow</mat-icon>
-                  </div>
-                </div>
-              </div>
-              <div *ngIf="content?.averageRating" class="flex items-center rating margin-bottom-s">
-                <span class="rating-number mat-body-2">{{ content?.averageRating }}&nbsp;</span>
-                <mat-icon class="mat-icon material-icons" *ngFor="let rating of [1, 2, 3, 4, 5]">
-                  {{ getRatingIcon(rating) }}</mat-icon>
-                <!--  <span i18n>from</span> -->
-                <span class="margin-left-xs rating-count mat-body-2" *ngIf="content?.totalRating">
+                        <div [ngSwitch]="routePath" class="header-meta" [ngClass]="{ 'header-meta-banner': bannerUrl }">
+                            <!-- Overview Section -->
+                            <div class="banner-overview-container" [hidden]="!content?.purpose && showSubtitleOnBanner" *ngSwitchCase="'overview'">
+                                <h3 class="overview-description mat-body-1" *ngIf="showSubtitleOnBanner" i18n-title title="Subtitle">
+                                    {{ content?.purpose | pipeLimitTo: 250 }}
+                                </h3>
+                                <p class="overview-description mat-body-1" *ngIf="!showSubtitleOnBanner" i18n-title title="Description">
+                                    {{ content?.instructions | pipeLimitTo: 450 }}
+                                </p>
+                                <div *ngIf="sanitizedIntroductoryVideoIcon" class="overview-intro ws-mat-primary-lite-background" [style.backgroundImage]="sanitizedIntroductoryVideoIcon" role="button" (click)="playIntroVideo()">
+                                    <mat-icon role="button" class="overview-intro-overlay">play_arrow</mat-icon>
+                                </div>
+                            </div>
+                            <!-- Toc Section -->
+                            <div *ngSwitchCase="'contents'">
+                                <!-- Contents Bannner -->
+                            </div>
+                            <!-- Analytics Section -->
+                            <div class="banner-overview-container mat-body-1" [hidden]="!content?.purpose && showSubtitleOnBanner" *ngSwitchCase="'analytics'">
+                                <h3 class="overview-description mat-body-1" *ngIf="showSubtitleOnBanner" i18n-title title="Subtitle">
+                                    {{ content?.purpose | pipeLimitTo: 250 }}
+                                </h3>
+                                <p class="overview-description mat-body-1" *ngIf="!showSubtitleOnBanner" i18n-title title="Description">
+                                    {{ content?.instructions | pipeLimitTo: 450 }}
+                                </p>
+                                <div *ngIf="sanitizedIntroductoryVideoIcon" class="overview-intro ws-mat-primary-lite-background" [style.backgroundImage]="sanitizedIntroductoryVideoIcon" role="button" (click)="playIntroVideo()">
+                                    <mat-icon role="button" class="overview-intro-overlay">play_arrow</mat-icon>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="content?.averageRating" class="flex items-center rating margin-bottom-s">
+                            <span class="rating-number mat-body-2">{{ content?.averageRating }}&nbsp;</span>
+                            <mat-icon class="mat-icon material-icons" *ngFor="let rating of [1, 2, 3, 4, 5]">
+                                {{ getRatingIcon(rating) }}</mat-icon>
+                            <!--  <span i18n>from</span> -->
+                            <span class="margin-left-xs rating-count mat-body-2" *ngIf="content?.totalRating">
                   ( {{ content?.totalRating | pipeCountTransform }} )</span>
-              </div>
-              <div *ngIf="!content?.averageRating" class="flex items-center rating margin-bottom-s">
-                <span class="rating-number mat-body-2"> 0.0 &nbsp;</span>
-                <mat-icon class="mat-icon material-icons" *ngFor="let rating of [1, 2, 3, 4, 5]">
-                  {{ getRatingIcon(rating) }}</mat-icon>
-                <!--  <span i18n>from</span> -->
-                <span class="margin-left-xs rating-count mat-body-2" *ngIf="!content?.totalRating">
+                        </div>
+                        <div *ngIf="!content?.averageRating" class="flex items-center rating margin-bottom-s">
+                            <span class="rating-number mat-body-2"> 0.0 &nbsp;</span>
+                            <mat-icon class="mat-icon material-icons" *ngFor="let rating of [1, 2, 3, 4, 5]">
+                                {{ getRatingIcon(rating) }}</mat-icon>
+                            <!--  <span i18n>from</span> -->
+                            <span class="margin-left-xs rating-count mat-body-2" *ngIf="!content?.totalRating">
                   ( {{ 0 | pipeCountTransform }} )</span>
-              </div>
-              <div *ngIf="content?.appIcon" class="apIcon float-left">
-                <img [src]="content?.creatorLogo" [id]="'source_' + content.identifier" class="source-icon"
-                [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
-              </div>
-              <!-- tags -->
-              <div class="tags margin-top-m margin-bottom-s" *ngIf="content?.keywords && content?.keywords?.length > 0">
-                  <span *ngFor="let tag of content.keywords" class="tag" [ngStyle]="getBgColor(tag)">
-                    {{tag}}
-                  </span>
-              </div>
-              <!-- <div class="header-actions margin-top-m">
+                        </div>
+                        <div *ngIf="content?.appIcon" class="apIcon float-left">
+                            <img [src]="content?.creatorLogo" [id]="'source_' + content.identifier" class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
+                        </div>
+                        <!-- tags -->
+                        <div class="tags margin-top-m margin-bottom-s" *ngIf="content?.keywords && content?.keywords?.length > 0">
+                            <!-- <span *ngFor="let tag of content.keywords" class="tag" [ngStyle]="getBgColor(tag)"> -->
+                            <span *ngFor="let tag of content.keywords" class="tag">
+                            {{tag}}
+                            </span>
+                        </div>
+                        <!-- <div class="header-actions margin-top-m">
                 <ng-container *ngIf="
                     actionBtnStatus !== 'wait' &&
                     content?.status !== 'Deleted' &&
@@ -137,10 +131,10 @@
                   The content is in review.
                 </h3>
               </div> -->
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
     <!-- <p class="mt-5 mb-5 info-msg" *ngIf="content?.isInIntranet && showIntranetMsg">
       <mat-icon class="align-bottom">info</mat-icon>&nbsp;
@@ -165,47 +159,42 @@
       [className]="'thick'" [progress]="content?.completionPercentage" [progressType]="'percentage'">
       </ws-widget-content-progress>
     </ng-container> -->
-  </div>
+</div>
 <!-- </div> -->
 
 
 <mat-menu #actionMenu="matMenu">
-  <div mat-menu-item>
-    <ng-container *ngIf="content" [ngTemplateOutlet]="actions"></ng-container>
-  </div>
+    <div mat-menu-item>
+        <ng-container *ngIf="content" [ngTemplateOutlet]="actions"></ng-container>
+    </div>
 </mat-menu>
 
 <ng-template #actions>
-  <!-- <a i18n-aria-label aria-label="Edit" mat-icon-button *ngIf="editButton"
+    <!-- <a i18n-aria-label aria-label="Edit" mat-icon-button *ngIf="editButton"
     [routerLink]="['/author/editor/' + content?.identifier]" color="primary">
     <mat-icon>edit</mat-icon>
   </a> -->
-  <a i18n-aria-label aria-label="Take Action" mat-icon-button *ngIf="reviewButton"
-    [routerLink]="['/author/editor/' + content?.identifier]">
-    <mat-icon>publish</mat-icon>
-  </a>
-  <ws-widget-btn-content-download id="prevfordownload" [forPreview]="forPreview" [widgetData]="
+    <a i18n-aria-label aria-label="Take Action" mat-icon-button *ngIf="reviewButton" [routerLink]="['/author/editor/' + content?.identifier]">
+        <mat-icon>publish</mat-icon>
+    </a>
+    <ws-widget-btn-content-download id="prevfordownload" [forPreview]="forPreview" [widgetData]="
       content
         | pipePartialContent
           : ['identifier', 'contentType', 'resourceType', 'mimeType', 'downloadUrl', 'isExternal',
                   'artifactUrl']
     "></ws-widget-btn-content-download>
-  <!-- <ws-widget-btn-content-like id="prevforlike" [forPreview]="forPreview"
+    <!-- <ws-widget-btn-content-like id="prevforlike" [forPreview]="forPreview"
     [widgetData]="content | pipePartialContent: ['identifier']" [color]="default">
   </ws-widget-btn-content-like> -->
-  <ws-widget-btn-content-share id="prevforshare" [forPreview]="forPreview" [widgetData]="content">
-  </ws-widget-btn-content-share>
-  <ws-widget-btn-kb [forPreview]="forPreview" id="prev" [contentId]="content?.identifier" [contentName]="content?.name"
-    [contentType]="content?.contentType" [status]="content?.status">
-  </ws-widget-btn-kb>
-  <ws-widget-btn-goals [forPreview]="forPreview" id="goalsforprev" *ngIf="isGoalsEnabled && btnGoalsConfig"
-    [widgetData]="btnGoalsConfig">
-  </ws-widget-btn-goals>
-  <ws-widget-btn-playlist [forPreview]="forPreview" id="playlistforprev" *ngIf="btnPlaylistConfig"
-    [widgetData]="btnPlaylistConfig">
-  </ws-widget-btn-playlist>
-  <ws-widget-btn-content-feedback-v2 [forPreview]="forPreview" id="feedbackforprev"
-    [widgetData]="content | pipePartialContent: ['identifier', 'name']">
-  </ws-widget-btn-content-feedback-v2>
+    <ws-widget-btn-content-share id="prevforshare" [forPreview]="forPreview" [widgetData]="content">
+    </ws-widget-btn-content-share>
+    <ws-widget-btn-kb [forPreview]="forPreview" id="prev" [contentId]="content?.identifier" [contentName]="content?.name" [contentType]="content?.contentType" [status]="content?.status">
+    </ws-widget-btn-kb>
+    <ws-widget-btn-goals [forPreview]="forPreview" id="goalsforprev" *ngIf="isGoalsEnabled && btnGoalsConfig" [widgetData]="btnGoalsConfig">
+    </ws-widget-btn-goals>
+    <ws-widget-btn-playlist [forPreview]="forPreview" id="playlistforprev" *ngIf="btnPlaylistConfig" [widgetData]="btnPlaylistConfig">
+    </ws-widget-btn-playlist>
+    <ws-widget-btn-content-feedback-v2 [forPreview]="forPreview" id="feedbackforprev" [widgetData]="content | pipePartialContent: ['identifier', 'name']">
+    </ws-widget-btn-content-feedback-v2>
 </ng-template>
 <ng-template #authView i18n>View</ng-template>

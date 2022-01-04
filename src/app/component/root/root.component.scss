@@ -59,3 +59,32 @@ ws-app-nav-bar {
     padding: 0;
   }
 }
+
+
+.skipnav a {
+  width: 12em;
+  display: block;
+  color: #fff;
+  background: #333;
+  text-decoration: none;
+  padding: 15px;
+  position: absolute;
+  left: -1000em;
+  top: 0;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+.skipnav a:visited {
+  color: #fff;
+}
+
+.skipnav a:focus,
+.skipnav a:active {
+  z-index: 9999;
+  top: 0rem;
+  left: 1rem;
+  border: solid #777 2px;
+  color: #fff;
+  background: #333 !important;
+}

@@ -5,25 +5,34 @@
 </div>
 <div class="container-balanced">
 
-  <div class="flex flex-1 custom">
+  <div class="flex flex-1 custom faq_main_box">
     <div class="flex-3">
-     
+
       <div class="flex flex-4 flex-column">
         <div class="flex flex-1 custom">
-          <div class="flex-1" style="position: relative;">
+          <!-- <div class="flex-1" style="position: relative;"> -->
+          <div class="faq_left_panel" style="position: relative;">
             <div #stickyMenu [class.sticky]="sticky">
               <ws-widget-left-menu [widgetData]="tabsData"></ws-widget-left-menu>
             </div>
           </div>
-          <div class="flex-3">
+          <div class="faq_right_panel flex-3">
             <div class="contact-info margin-top-m ws-mat-primary-lite-background"
               *ngIf="contactPage.title || contactPage.description">
               <h2 class="flex mat-display-1 main_title_text margin-bottom-xl" *ngIf="contactPage.title">
                 <!-- <mat-icon>contact_support</mat-icon> -->
-               
+
                   {{contactPage.title}}
-               
+
               </h2>
+
+              <form class="flex-1">
+                <mat-form-field appearance="outline" class="margin-bottom-xl autocomplete-form search_faq_form" color="primary" >
+                  <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+                  <input  [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" type="search" class="ml-2" i18n-placeholder="search content"
+                      [placeholder]="'Find question…'" i18-aria-label aria-label="Query" matInput />
+                </mat-form-field>
+              </form>
 
               <!-- <p class="text-justify py-4" *ngIf="contactPage.description">
                 {{contactPage.description}}
@@ -31,23 +40,23 @@
             </div>
 
             <div class="faq-img-section flex flex-wrap flex-between items-stretch"
-              *ngIf="contactPage.help && contactPage.help.length > 0">
-              <ng-container *ngFor="let chelp of contactPage.help">
+              *ngIf="contactPage.help && contactPage.help.length > 0" >
+              <ng-container *ngFor="let chelp of contactPage.help  | filter : searchText">
                 <div [attr.id]="chelp.fragment" class="info-section margin-bottom-xl" [ngClass]="{ 'width-1-1': true}">
-                  <h3 class="flex flex-middle mat-h3">
+                  <h3 class="flex flex-middle margin-remove">
                     <!-- <mat-icon *ngIf="chelp.icon">{{ chelp.icon}}</mat-icon> -->
                     <span class="mat-title">{{chelp.title}}
                     </span>
                   </h3>
                   <mat-accordion>
                     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
-                      *ngFor="let helpContent of chelp.contents">
+                      *ngFor="let helpContent of chelp.contents | filter : searchText">
                       <mat-expansion-panel-header>
                         <mat-panel-description>
-                          <p class="">{{helpContent.heading}}</p>
+                          <p class="margin-remove">{{helpContent.heading}}</p>
                         </mat-panel-description>
                       </mat-expansion-panel-header>
-                      <p [innerHTML]="helpContent.value | pipeSafeSanitizer: 'html'">
+                      <p [innerHTML]="helpContent.value | pipeSafeSanitizer: 'html'" class="margin-remove">
 
                       </p>
                     </mat-expansion-panel>
@@ -55,6 +64,14 @@
                 </div>
               </ng-container>
             </div>
+
+            <!-- <ng-template #notFound>
+              <div class="margin-xl text-center ng-star-inserted">
+                <img alt="No results" class="margin-top-l margin-bottom-s" src="/assets/common/error-pages/empty_search.svg" wsutilsimageresponsive="">
+                <h2 class="mat-h2" i18n> No results found</h2>
+                <h3 class="mat-h3" i18n> Try removing the filters or search using different keywords</h3>
+              </div>
+            </ng-template> -->
 
           </div>
         </div>

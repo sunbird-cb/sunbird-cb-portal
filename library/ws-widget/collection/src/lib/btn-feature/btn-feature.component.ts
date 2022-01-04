@@ -1,7 +1,7 @@
 import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core'
 import { Event, NavigationEnd, Router } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, EventService, NsPage } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, NsPage, WsEvents } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { take } from 'rxjs/operators'
 import { MobileAppsService } from '../_services/mobile-apps.service'
@@ -141,8 +141,18 @@ export class BtnFeatureComponent extends WidgetBaseComponent
   togglePin(featureId: string, event: any) {
     event.preventDefault()
     event.stopPropagation()
-    this.events.raiseInteractTelemetry('pin', 'feature', {
-      featureId,
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'pin',
+        subType: 'feature',
+        id: featureId,
+      },
+      {
+        id: featureId,
+      },
+      {
+        pageIdExt: 'btn-feature',
+        module: WsEvents.EnumTelemetrymodules.CONTENT,
     })
     this.configurationsSvc.pinnedApps.pipe(take(1)).subscribe(pinnedApps => {
       const newPinnedApps = new Set(pinnedApps)

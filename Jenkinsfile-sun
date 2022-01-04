@@ -31,6 +31,7 @@ node('build-slave') {
                 }
 		
 		stage('Build') {
+		// Docker build
                 env.NODE_ENV = "build"
                 print "Environment will be : ${env.NODE_ENV}"
                 sh('chmod 777 build.sh')

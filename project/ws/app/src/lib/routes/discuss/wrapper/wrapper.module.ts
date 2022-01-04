@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { DiscussionUiModule } from '@sunbird-cb/discussions-ui-v8'
-
+import { DiscussionEventsService, DiscussionUiModule } from '@sunbird-cb/discussions-ui-v8'
+import { TelemetryService } from '@sunbird-cb/utils/src/lib/services/telemetry.service'
+import { EventService } from '@sunbird-cb/utils/src/lib/services/event.service'
+import { WsEvents } from '@sunbird-cb/utils/src/public-api'
+// import {TelemetryService }
 // import { ConfigService } from '../services/config.service'
 
 @NgModule({
@@ -14,7 +17,31 @@ import { DiscussionUiModule } from '@sunbird-cb/discussions-ui-v8'
 })
 export class WrapperModule {
     // processed: any
-    constructor() {
+    constructor(private discussionEventsService: DiscussionEventsService,
+                private teleSvc: TelemetryService,
+                private eventsSvc: EventService,
+
+    ) {
+        this.discussionEventsService.telemetryEvent.subscribe(data => {
+            switch (data.eid) {
+                case 'IMPRESSION':
+                   this.teleSvc.impression({ pageId: data.edata.pageid,  module: WsEvents.EnumTelemetrymodules.DISCUSS })
+                    break
+                case 'INTERACT':
+                    this.eventsSvc.raiseInteractTelemetry(
+                        {
+                            type: data.edata.type,
+                            subType: data.edata.pageid,
+                            id: (data.object && data.object.id) || '',
+                        },
+                        data.object,
+                        {
+                        pageId: data.edata.pageid,
+                        module: WsEvents.EnumTelemetrymodules.DISCUSS,
+                      })
+                    break
+            }
+        })
 
         // const lastSaved = localStorage.getItem('kc')
         // if (lastSaved) {

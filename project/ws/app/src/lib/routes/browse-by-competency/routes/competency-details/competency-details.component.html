@@ -31,10 +31,20 @@
             <div>
                 <p class="mat-body-2 ws-mat-black60-text"> {{courses?.length || 0 }} CBPs for “{{competencyData?.name}}”</p>
             </div>
+
+
         </div>
 
         <mat-sidenav-container class="custom">
+            <div *ngIf="screenSizeIsLtMedium" class="flex justify-end">
+                <button type="button" mat-icon-button (click)="sideNavBarOpened = !sideNavBarOpened"
+                  id="ws-auth-root-home-btn-menu" name="ws-auth-root-home-btn-menu">
+                  <mat-icon>menu</mat-icon>
+                </button>
+            </div>
             <mat-sidenav-content class="custom-sidecontent">
+
+
 
                 <ng-container *ngIf="courses && courses.length; else noData">
                     <ng-container *ngFor="let c of courses">
@@ -55,9 +65,15 @@
                 <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
                     <mat-spinner [diameter]="30"></mat-spinner>
                 </div>
+
+
             </mat-sidenav-content>
 
+
+
             <mat-sidenav mode="side" position="end" opened class="custom-sidenav" >
+
+
                 <form class="filter-form" [formGroup]="filterForm">
                     <p class="mat-subheading-2 margin-bottom-m font-bold-imp">Filter by</p>
                     <!-- TODO: Tags feature has to be implemented -->
@@ -67,11 +83,11 @@
                         <form>
                             <mat-form-field appearance="outline" class="autocomplete-form search_form" color="primary">
                                 <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
-                                <input type="search"  #searchInput class="ml-2" i18-aria-label aria-label="Search"  i18n-placeholder="search" [placeholder]="'Search'"  matInput 
+                                <input type="search"  #searchInput class="ml-2" i18-aria-label aria-label="Search"  i18n-placeholder="search" [placeholder]="'Search'"  matInput
                                  />
                             </mat-form-field>
 
-                           
+
                         </form>
                     </div>
                 </div> -->

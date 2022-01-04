@@ -11,6 +11,8 @@ const routes: Routes = [
     data: {
         pageType: 'feature',
         pageKey: 'edit-profile',
+        pageId: 'details',
+        module: 'Profile',
       },
     resolve: {
         profileData: ProfileResolverService,

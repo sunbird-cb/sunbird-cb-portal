@@ -7,6 +7,10 @@
   height: auto;
   // min-height: 400px;
   min-height: calc(100vh - 160px);
+
+  @media (max-width:1024px) {
+    padding:0px 8px;
+  }
 }
 
 .container-balanced-banner {
@@ -57,4 +61,22 @@
   overflow: hidden;
   // z-index: 10;
   // width: 100%;
+}
+
+.margin-fix {
+  @media (max-width:1024px) {
+    margin:0;
+  }
+}
+
+.sidenav_inner {
+  width: 260px;
+}
+
+.main_network_box {
+  margin-left: 32px;
+
+  @media (max-width:992px) {
+    margin-left: 0;
+  }
 }

@@ -8,7 +8,7 @@ import {
   ElementRef,
 } from '@angular/core'
 import { NsGoal, BtnGoalsService } from '@sunbird-cb/collection'
-import { TFetchStatus, EventService, ConfigurationsService } from '@sunbird-cb/utils'
+import { TFetchStatus, EventService, ConfigurationsService, WsEvents } from '@sunbird-cb/utils'
 import { Router } from '@angular/router'
 import { MatSnackBar } from '@angular/material'
 
@@ -92,8 +92,17 @@ export class GoalCommonCardComponent implements OnInit {
   }
 
   raiseTelemetry() {
-    this.events.raiseInteractTelemetry('goal', 'create', {
-      goalType: this.type,
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'goal',
+        subType: 'create',
+      },
+      {
+        goalType: this.type,
+      },
+      {
+        pageIdExt: 'create-goal',
+        module: WsEvents.EnumTelemetrymodules.LEARN,
     })
   }
 }

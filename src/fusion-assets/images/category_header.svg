@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="687px" height="133px" viewBox="0 0 687 133" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 2</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="435" height="133"></rect>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-2">
+            <g id="Cards/4px-radius">
+                <rect id="shadow" x="0" y="0" width="686" height="133" rx="4"></rect>
+                <rect id="colour" fill="#FFFFFF" x="0" y="0" width="686" height="133" rx="4"></rect>
+                <rect id="border" x="0" y="0" width="686" height="133" rx="4"></rect>
+            </g>
+            <g id="Oval-+-Oval-Copy-Mask-Copy" transform="translate(252.000000, 0.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Mask"></g>
+                <path d="M395,383 C494.411255,383 575,302.411255 575,203 C575,103.588745 494.411255,23 395,23 C328.72583,23 268.72583,83 215,203 C268.72583,323 328.72583,383 395,383 Z" id="Oval" fill="#F69953" opacity="0.2" mask="url(#mask-2)"></path>
+                <path d="M169.513539,85.8812155 C227.412453,85.8812155 280.594994,57.2541437 329.061162,0 C252.23097,-14 203.874749,-21 183.992498,-21 C164.110247,-21 110.216274,-14 22.3105774,0 C62.5469707,57.2541437 111.614625,85.8812155 169.513539,85.8812155 Z" id="Oval-Copy" fill="#F69953" opacity="0.2" mask="url(#mask-2)"></path>
+            </g>
+        </g>
+    </g>
+</svg>

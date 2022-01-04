@@ -2,14 +2,14 @@ import { AccessControlService } from '@ws/author'
 import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ActivatedRoute, Data, Router } from '@angular/router'
-import { ConfigurationsService, LoggerService } from '@sunbird-cb/utils'
+import { ConfigurationsService, LoggerService, WsEvents, EventService } from '@sunbird-cb/utils'
 import { Observable, Subscription, Subject } from 'rxjs'
 import { share, debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { NsAppToc, NsCohorts } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
 import { CreateBatchDialogComponent } from '../create-batch-dialog/create-batch-dialog.component'
 import { TitleTagService } from '@ws/app/src/lib/routes/app-toc/services/title-tag.service'
-import { MatDialog } from '@angular/material'
+import { MatDialog, MatTabChangeEvent } from '@angular/material'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import { ConnectionHoverService } from '@sunbird-cb/collection/src/lib/_common/connection-hover-card/connection-hover.servive'
 import { NsContent, NsAutoComplete } from '@sunbird-cb/collection/src/public-api'
@@ -74,6 +74,8 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     private mobileAppsSvc: MobileAppsService,
     public configSvc: ConfigurationsService,
     private connectionHoverService: ConnectionHoverService,
+    private eventSvc: EventService,
+    // private discussionEventsService: DiscussionEventsService
   ) {
     if (this.configSvc.restrictedFeatures) {
       this.askAuthorEnabled = !this.configSvc.restrictedFeatures.has('askAuthor')
@@ -244,7 +246,9 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
       this.fetchCohorts(this.cohortTypesEnum.AUTHORS, this.content.identifier)
     }
   }
-
+  sanitize(data: any) {
+    return this.domSanitizer.bypassSecurityTrustHtml(data)
+  }
   getContentParent() {
     if (this.content) {
       const contentParentReq: NsAppToc.IContentParentReq = {
@@ -472,5 +476,20 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
 
   get usr() {
     return this.howerUser
+  }
+
+  public tabClicked(tabEvent: MatTabChangeEvent) {
+    const data: WsEvents.ITelemetryTabData = {
+      label: `${tabEvent.tab.textLabel}`,
+      index: tabEvent.index,
+    }
+    this.eventSvc.handleTabTelemetry(
+      WsEvents.EnumInteractSubTypes.COURSE_TAB,
+      data,
+      {
+        id: this.content && this.content.identifier,
+        type: this.content && this.content.primaryCategory,
+      }
+    )
   }
 }

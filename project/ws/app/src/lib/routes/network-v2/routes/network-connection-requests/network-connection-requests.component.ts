@@ -3,6 +3,7 @@ import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { NetworkV2Service } from '../../services/network-v2.service'
+import { WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
   selector: 'ws-app-network-connection-requests',
@@ -20,6 +21,7 @@ export class NetworkConnectionRequestsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private networkV2Service: NetworkV2Service,
+    private eventSvc: EventService,
   ) {
     this.data = this.route.snapshot.data.connectionRequests.data.result.data
     this.data = this.data.map((v: NSNetworkDataV2.INetworkUser) => {
@@ -56,6 +58,17 @@ export class NetworkConnectionRequestsComponent implements OnInit {
           // this.openSnackbar(err.error.message.split('|')[1] || this.defaultError)
         })
     }
+  }
+
+  public tabTelemetry(label: string, index: number) {
+    const data: WsEvents.ITelemetryTabData = {
+      label,
+      index,
+    }
+    this.eventSvc.handleTabTelemetry(
+      WsEvents.EnumInteractSubTypes.NETWORK_TAB,
+      data,
+    )
   }
 
 }

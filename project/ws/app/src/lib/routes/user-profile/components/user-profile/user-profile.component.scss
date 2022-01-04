@@ -30,6 +30,7 @@
     animation-name: blink;
     animation-iteration-count: infinite;
     animation-direction: alternate;
+    // tslint:disable-next-line
     -webkit-animation: blink 3000ms infinite;
     /* Safari and Chrome */
 
@@ -146,7 +147,6 @@ input[type=number] {
 
 
   .heading {
-    // font: 16px 'Poppins-Medium';
     color: #222222;
 
     &.mt-10 {
@@ -181,7 +181,6 @@ input[type=number] {
   .radio-toolbar label {
     display: inline-block;
     padding: 7px 21px;
-    // font-family: Poppins;
     font-size: 14px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     border: 1px solid #5F5F5F;
@@ -340,7 +339,6 @@ input[type=number] {
 }
 
 .form-label {
-  // font-family: Poppins-regular;
   color: #222222;
   font-size: 14px;
   margin-bottom: .5rem;
@@ -348,11 +346,9 @@ input[type=number] {
 
 input.mat-input-element {
   color: #5F5F5F;
-  // font-family: "Poppins-regular";
 }
 
 ::ng-deep.mat-radio-group {
-  // font-family: "Poppins-regular";
   padding-bottom: 1.34375em;
 }
 
@@ -365,7 +361,6 @@ input.mat-input-element {
   background: #F1F9FF 0% 0% no-repeat padding-box !important;
   border-radius: 12px !important;
   color: #0074b6 !important;
-  // font-family: Poppins-regular;
 
   &:hover {
 
@@ -403,7 +398,6 @@ input.mat-input-element {
 ::ng-deep .mat-tab-label-container .mat-tab-list {
   .mat-tab-labels .mat-tab-label {
     font-size: 18px;
-    // font-family: Poppins-Medium;
     color: #222222;
   }
 
@@ -428,7 +422,6 @@ input.mat-input-element {
   &::placeholder {
     color: #BEBEBE;
     font-size: 14px;
-    // font-family: 'Poppins Regular', 'Noto Sans', sans-serif;
   }
 
   &:focus {

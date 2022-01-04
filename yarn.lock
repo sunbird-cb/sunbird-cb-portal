@@ -1173,24 +1173,24 @@
   resolved "https://registry.yarnpkg.com/@sunbird-cb/design-system/-/design-system-0.0.2.tgz#54793a7d5c5b6942319b6c1f3e4f63ef60548545"
   integrity sha512-oTZMfeNu+fi2muVbZUN9vw0mF28e/MvqFgYzgrLJ6vvw3JDxW3814U00x4Fym7Rm0tYc7vpckDFGSKXR3EFMaQ==
 
-"@sunbird-cb/discussions-ui-v8@^2.0.57":
-  version "2.0.61"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/discussions-ui-v8/-/discussions-ui-v8-2.0.61.tgz#07e7572dcd318304c3962c2727e7814fd358bb86"
-  integrity sha512-+gKWlX+mHF7qj9KXliSDxz9/FhfNqKX67oZr//LgjbilmMpCnBO2MWBv6LrhfqGoVTR7ZFwNhCcyGpLhTPnOrw==
+"@sunbird-cb/discussions-ui-v8@2.0.69":
+  version "2.0.69"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/discussions-ui-v8/-/discussions-ui-v8-2.0.69.tgz#cdb92188f3e88e536e6390e874356f14633d0397"
+  integrity sha512-NQrkgHShtQEFTNWEVIMELh8832dc6FpcBjphhGKfsT5rOcNW3TQDNZ3pxnwImwQgavmMXJ2arTUz+KhKW8qIPQ==
   dependencies:
     tslib "^1.9.0"
 
-"@sunbird-cb/micro-surveys@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/micro-surveys/-/micro-surveys-1.0.8.tgz#5afd6e0eea43264af117b9c6f551b505f57d9e16"
-  integrity sha512-GlLBU8++qFN011o1W1I404vLJJK1SOadBOvBjq+Oi0GPg5VSAty7/veFESEiVj3o0+G2OkUcbrxbn5Av5Iuv9A==
+"@sunbird-cb/micro-surveys@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/micro-surveys/-/micro-surveys-1.2.1.tgz#216c3e8bc948de04e945dc925a85cb3e86e9b9b2"
+  integrity sha512-5mSQ6rn+v/Cvq2p3toy8uOGzU9NLZvwSOVmv9aONbdSefoYdbV03wxBNWNcCMeck5//3kKuTyQah755KtEnG1g==
   dependencies:
     tslib "^1.9.0"
 
-"@sunbird-cb/rain-dashboards@^0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/rain-dashboards/-/rain-dashboards-0.1.7.tgz#09e790120729a822e662fbf073560dca1002fd4a"
-  integrity sha512-tWt3JdjlSoeTtTUr3x5IjTVtPpvPXyp3htq515Xi4SVIQr1GfSW0ntfCTSC5T7K8LraC8/Ldqh/moyvjRCXXpA==
+"@sunbird-cb/rain-dashboards@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/rain-dashboards/-/rain-dashboards-0.2.0.tgz#c924fbcd50b4f5b01a13da185ea86609e57a4980"
+  integrity sha512-lOgTwWlynknDrUC52nMq3xZznMJbt6oCdyRlfOFuq2gibvESzj3QpkfaNnW8HjJVrnCO/p7lL/HeAkFWGiQuKw==
   dependencies:
     tslib "^1.9.0"
 
@@ -2409,10 +2409,10 @@ bonjour@^3.5.0:
     multicast-dns "^6.0.1"
     multicast-dns-service-types "^1.1.0"
 
-bootstrap@4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.1.1.tgz#3aec85000fa619085da8d2e4983dfd67cf2114cb"
-  integrity sha512-SpiDSOcbg4J/PjVSt4ny5eY6j74VbVSjROY4Fb/WIUXBV9cnb5luyR4KnPvNoXuGnBK1T+nJIWqRsvU3yP8Mcg==
+bootstrap@5.1.2:
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.1.2.tgz#99e87134e656582bc126cf99be7ffb2bae9b8a2e"
+  integrity sha512-me838a7TSEkldKyplkx21dqFm16+9NbH/rCj3Myo+h2cByyjckqV4m0OnS8QBsSDEoBv8R2jHqfulGQXpvM8Bw==
 
 boxen@^3.0.0:
   version "3.2.0"
@@ -2791,9 +2791,9 @@ caniuse-lite@1.0.30001035:
   integrity sha512-C1ZxgkuA4/bUEdMbU5WrGY4+UhMFFiXrgNAfxiMIqWgFTWfv/xsZCS2xEHT2LMq7xAZfuAnu6mcqyDl0ZR6wLQ==
 
 caniuse-lite@^1.0.30000980, caniuse-lite@^1.0.30001035, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001214:
-  version "1.0.30001219"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001219.tgz#5bfa5d0519f41f993618bd318f606a4c4c16156b"
-  integrity sha512-c0yixVG4v9KBc/tQ2rlbB3A/bgBFRvl8h8M4IeUbqCca4gsiCfvtaheUssbnux/Mb66Vjz7x8yYjDgYcNQOhyQ==
+  version "1.0.30001292"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001292.tgz"
+  integrity sha512-jnT4Tq0Q4ma+6nncYQVe7d73kmDmE9C3OGTx3MvW7lBM/eY1S1DZTMBON7dqV481RhNiS5OxD7k9JQvmDOTirw==
 
 canonical-path@1.0.0:
   version "1.0.0"
@@ -7353,6 +7353,11 @@ ng2-material-dropdown@0.10.1:
   integrity sha512-dOmk4+T6Rbtk60Un7sxOOFU546z5JEYupSL+RiG0/rN4DmJvxPp297AvA2Qm9LSMNszUZMi55cRzj79zQYu85g==
   dependencies:
     tslib "^1.9.0"
+
+ng2-search-filter@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/ng2-search-filter/-/ng2-search-filter-0.5.1.tgz#6d5f4e26bd2b2c8c8cc4aad658aabae6a33fb4af"
+  integrity sha512-noN8R+Gyxo5ZuboEOvq+u0zKio6pEf1IVYQTCZfAfXm6ONmzWu/M2xK0di9oVUprDbPBQXCGUuvD5i2GD+35HA==
 
 ngx-bootstrap@^5.6.2:
   version "5.6.2"

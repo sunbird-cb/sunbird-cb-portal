@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core'
-import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
 import { FormGroup, FormControl } from '@angular/forms'
 import { BrowseCompetencyService } from '../../services/browse-competency.service'
 import { NSBrowseCompetency } from '../../models/competencies.model'
@@ -125,15 +125,23 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
 
   raiseTelemetry(content: any) {
     if (content) {
-      this.events.raiseInteractTelemetry('click', `card-learnSearch`, {
-        contentId: content.identifier || '',
-        contentType: content.primaryCategory,
-        id: content.identifier || '',
-        type: content.contentType,
-        // contentId: content.identifier || '',
-        // contentType: content.primaryCategory,
-        rollup: {},
-        ver: `${content.version}${''}`,
+      this.events.raiseInteractTelemetry(
+        {
+          type: 'click',
+          subType: `card-${content.primaryCategory || 'content'}`,
+          // id: content.identifier || '',
+        },
+        {
+          id: content.identifier || '',
+          type: content.primaryCategory,
+          // contentId: content.identifier || '',
+          // contentType: content.primaryCategory,
+          rollup: {},
+          ver: `${content.version}${''}`,
+        },
+        {
+          pageIdExt: 'knowledge-card',
+          module: WsEvents.EnumTelemetrymodules.COMPETENCY,
       })
     }
   }

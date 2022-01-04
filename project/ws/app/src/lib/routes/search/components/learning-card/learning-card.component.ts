@@ -2,6 +2,8 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { NsContent } from '@sunbird-cb/collection'
 import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser'
+/* tslint:disable*/
+import _ from 'lodash'
 @Component({
   selector: 'ws-app-learning-card',
   templateUrl: './learning-card.component.html',
@@ -40,12 +42,18 @@ export class LearningCardComponent implements OnInit, OnChanges {
 
   raiseTelemetry() {
     this.events.raiseInteractTelemetry(
-      'click',
-      'cardSearch',
+      {
+        type: 'click',
+        subType: 'cardSearch',
+        id: this.content.identifier,
+      },
       {
         id: this.content.identifier,
-
+        type: this.content.primaryCategory,
       },
-    )
+      {
+        pageIdExt: `${_.camelCase(this.content.primaryCategory)}-card`,
+        module: _.camelCase(this.content.primaryCategory),
+    })
   }
 }

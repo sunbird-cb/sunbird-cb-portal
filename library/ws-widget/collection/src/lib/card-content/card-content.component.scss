@@ -82,7 +82,10 @@
   .title-text {
     display: block;
     margin: $size-s 0;
+    height: auto;
   }
+
+
 
   $flip-desc-line-count: 4;
   $flip-desc-line-height: 1.4em;
@@ -246,6 +249,63 @@
     background: bisque;
   }
 
+
+  .main_icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+  .icon_text {
+    font-size: 12px;
+    line-height: 16px;
+    text-transform: uppercase;
+  }
+
+
+  .title-text {
+    margin: 12px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.description-text {
+  position: relative;
+  overflow: hidden;
+  height: 63px;
+}
+
+.course_logo_box {
+  position: absolute;
+  z-index: 9;
+  width: 100px;
+  background: #fff;
+  padding: 5px 13px;
+  right: 0;
+  border-radius: 16px 16px;
+  box-sizing: border-box;
+  height: 32px;
+
+
+  img {
+    height: 20px;
+    display: inline-block;
+    margin-right: 4px;
+  }
+  p {
+    display: inline-block;
+    vertical-align: top;
+  }
+ }
+
+.course_widget {
+   margin-top: 65px;
+
+   .mat-icon {
+     vertical-align: middle;
+   }
+ }
+
+
   .source-div {
     position: relative;
     top: 100px;
@@ -304,10 +364,12 @@
       display: flex;
       margin-left: auto;
       order: 3;
+      font-weight: 700;
     }
 
     .time-text {
       margin: 0px 5px 0px 6px;
+      font-weight: 700;
     }
   }
 
@@ -323,8 +385,11 @@
     margin: $size-s 0;
     position: relative;
     overflow: hidden;
-    height: $title-line-count * $title-line-height;
+    // height: $title-line-count * $title-line-height;
     // line-height: $title-line-height;
+
+    word-break: break-word;
+    white-space: initial;
   }
 
   $description-line-count: 3;
@@ -361,6 +426,8 @@
     margin-top: 62px;
     background: bisque;
   }
+
+
 
   .source-div {
     position: relative;
@@ -605,7 +672,7 @@ $title-line-count: 2;
 
 
 .card-wide {
-   border-radius: 10px 0 0 10px;
+   border-radius: 10px 10px;
   .highlight_point_text {
     margin-top:15px;
   }
@@ -633,13 +700,37 @@ $title-line-count: 2;
       box-sizing: border-box;
       width: calc(100% - 315px);
 
-      p.mat-caption .title_icon {
-          vertical-align: middle;
+      @media (max-width:992px) {
+        width: 66%;
+        padding: 8px;
+        position: relative;
+        height: auto;
+      }
+
+      p.mat-caption {
+
+          .mat-icon {
+              vertical-align: middle;
+              height: 18px !important;
+              width: 16px !important;
+              font-size: 16px !important;
+              line-height: 1.2;
+          }
+
+          .title_icon {
+            vertical-align: middle;
+        }
+
       }
   }
 
       .imageholder {
           width: 310px;
+
+          @media (max-width:992px) {
+            width: 34%;
+            height: auto;
+          }
       }
     ul.tag_list {
         list-style: none;
@@ -670,6 +761,10 @@ $title-line-count: 2;
             // object-position: center;
             height: 100%;
 
+            @media (max-width:992px) {
+              height: auto;
+            }
+
         }
         .source-div {
           position: absolute;
@@ -686,7 +781,7 @@ $title-line-count: 2;
           border-radius: 16px;
           /* z-index: 49; */
           display: inline-flex;
-      
+
           .source-icon {
             border-radius: 8px;
             margin-right: auto;

@@ -20,7 +20,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
   @ViewChild('failMsg', { static: true }) failureMsg!: ElementRef
   @ViewChild('successRemoveMsg', { static: true })
   successRemoveMsg!: ElementRef
-  
+
   private paramSubscription: Subscription | null = null
   competencyName: any = null
   routeType: any = 'ALL'
@@ -66,8 +66,8 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private competencySvc: CompetenceService,
     private configSvc: ConfigurationsService,
-  ) { 
-    this.getProfile() 
+  ) {
+    this.getProfile()
   }
 
   ngOnInit() {
@@ -93,7 +93,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
           this.competencyData = []
         }
       })
-    
+
     // this.getCbps()
   }
 
@@ -122,7 +122,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  addCompetency(id: string) {
+  addCompetency(id: string, levelId: any, levelName: any) {
     if (id) {
       // API is not available
       const data = [this.competencyData]
@@ -135,7 +135,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
 
       console.log(vc)
       // this.myCompetencies.push(vc)
-      this.addToProfile(vc)
+      this.addToProfile(vc, levelId, levelName)
       // this.reset()
     }
   }
@@ -187,7 +187,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  addToProfile(item: NSCompetencie.ICompetencie) {
+  addToProfile(item: NSCompetencie.ICompetencie, levelId: any, levelName: any) {
     if (item) {
       const newCompetence = {
         type: item.type || 'COMPETENCY',
@@ -197,6 +197,8 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
         status: item.status || '',
         source: item.source || '',
         competencyType: _.get(item, 'additionalProperties.competencyType') || item.type,
+        competencySelfAttestedLevel: levelId || '',
+        competencySelfAttestedLevelValue: levelName || '',
       }
 
       console.log(newCompetence)
@@ -238,6 +240,8 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(CompetenceViewComponent, {
       minHeight: 'auto',
       // width: '80%',
+      // width:'100%',
+      maxWidth: '95vw',
       panelClass: 'remove-pad',
       data: item,
     });
@@ -246,7 +250,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((response: any) => {
       console.log(response)
       if (response && response.action === 'ADD') {
-        this.addCompetency(response.id);
+        this.addCompetency(response.id, response.levelId, response.levelName);
         // this.refreshData(this.currentActivePage)
       } else if (response && response.action === 'DELETE') {
         this.deleteCompetency(response.id);

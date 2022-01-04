@@ -18,6 +18,8 @@ export class TelemetryService {
   previousUrl: string | null = null
   telemetryConfig: NsInstanceConfig.ITelemetryConfig | null = null
   pData: any = null
+  contextCdata = []
+
   externalApps: any = {
     RBCP: 'rbcp-web-ui',
   }
@@ -50,6 +52,7 @@ export class TelemetryService {
       this.addTimeSpentListener()
       this.addSearchListener()
       this.addHearbeatListener()
+      this.addCustomImpressionListener()
     }
   }
 
@@ -76,6 +79,7 @@ export class TelemetryService {
             type,
             mode,
             pageid: id,
+            duration: 1,
           },
           {
             context: {
@@ -83,6 +87,7 @@ export class TelemetryService {
                 ...this.pData,
                 id: this.pData.id,
               },
+              env: 'home',
             },
             object: {
               ...(data) && data,
@@ -163,9 +168,13 @@ export class TelemetryService {
     }
   }
 
-  impression() {
+  impression(data?: any) {
     try {
       const page = this.getPageDetails()
+      if (data && data.pageContext) {
+        page.pageid = data.pageContext.pageId
+        page.module = data.pageContext.module
+      }
       const edata = {
         pageid: page.pageid, // Required. Unique page id
         type: page.pageUrlParts[0], // Required. Impression type (list, detail, view, edit, workflow, search)
@@ -178,9 +187,12 @@ export class TelemetryService {
               ...this.pData,
               id: this.pData.id,
             },
+            env: page.module || (this.telemetryConfig && this.telemetryConfig.env),
           },
           object: {
             id: page.objectId,
+            // This will override above id if the data has object in it.
+            ...(data.object),
           },
         }
         $t.impression(edata, config)
@@ -191,6 +203,10 @@ export class TelemetryService {
               ...this.pData,
               id: this.pData.id,
             },
+            env: page.module || '',
+          },
+          object: {
+            ...(data.object),
           },
         })
       }
@@ -216,19 +232,41 @@ export class TelemetryService {
             id: page.objectId,
           },
         } : {
-            context: {
-              pdata: {
-                ...this.pData,
-                id: this.externalApps[impressionData.subApplicationName],
-              },
+          context: {
+            pdata: {
+              ...this.pData,
+              id: this.externalApps[impressionData.subApplicationName],
             },
-          }
+          },
+        }
         $t.impression(impressionData.data, externalConfig)
       }
     } catch (e) {
       // tslint:disable-next-line: no-console
       console.log('Error in telemetry externalImpression', e)
     }
+  }
+
+  addCustomImpressionListener() {
+    this.eventsSvc.events$
+      .pipe(
+        filter(
+          (event: WsEvents.WsEventTelemetryImpression) =>
+            event &&
+            event.data &&
+            event.eventType === WsEvents.WsEventType.Telemetry &&
+            event.data.eventSubType === WsEvents.EnumTelemetrySubType.Impression,
+        ),
+      )
+      .subscribe(event => {
+        try {
+          // console.log('event.data::', event.data)
+          this.impression(event.data)
+        } catch (e) {
+          // tslint:disable-next-line: no-console
+          console.log('Error in telemetry impression', e)
+        }
+      })
   }
 
   addTimeSpentListener() {
@@ -332,18 +370,20 @@ export class TelemetryService {
             console.log('Error in telemetry interact', e)
           }
         } else {
-          let interactid
-          if (event.data.type === 'goal') {
-            interactid = page.pageUrlParts[4]
-          }
+          // let interactid
+          // if (event.data.edata.type === 'goal') {
+          //   interactid = page.pageUrlParts[4]
+          // }
           try {
             $t.interact(
               {
-                type: event.data.type,
-                subtype: event.data.subType,
+                type: event.data.edata.type,
+                subtype: event.data.edata.subType,
                 // object: event.data.object,
-                id: event.data.object.contentId || event.data.object.id || interactid || '',
-                pageid: page.pageid,
+                id: (event.data.edata && event.data.edata.id) ?
+                    event.data.edata.id
+                    : '',
+                pageid: event.data.pageContext && event.data.pageContext.pageId ||  page.pageid,
                 // target: { page },
               },
               {
@@ -352,6 +392,7 @@ export class TelemetryService {
                     ...this.pData,
                     id: this.pData.id,
                   },
+                  ...(event.data.pageContext && event.data.pageContext.module ? { env: event.data.pageContext.module } : null),
                 },
                 object: {
                   ...event.data.object,
@@ -395,7 +436,7 @@ export class TelemetryService {
               },
               object: {
                 id: event.data.object.contentId || event.data.object.id || '',
-                type: event.data.type || '',
+                type: event.data.edata.type || '',
                 ver: `${(event.data.object.version || '1')}${''}`,
                 rollup: {},
               },
@@ -504,6 +545,7 @@ export class TelemetryService {
       pageUrlParts: path.split('/'),
       refferUrl: this.previousUrl,
       objectId: this.extractContentIdFromUrlParts(path.split('/')),
+      module: '',
     }
   }
 

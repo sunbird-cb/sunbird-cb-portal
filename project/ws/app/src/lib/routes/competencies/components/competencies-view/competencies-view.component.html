@@ -1,6 +1,6 @@
-<mat-card class="competency-view-card">
+<mat-card class="competency-view-card" *ngIf="isUpdate">
   <mat-card-content class="flex flex-1 custom">
-    <span class="mat-h2 font-medium">{{dData.name}}</span>
+    <span class="mat-h2 font-bold margin-bottom-m">{{dData.name}}</span>
     <h3 class="mat-h3">{{dData.description}}</h3>
     <div class="flex">
       <h3 class="mat-h3">Competency type: &nbsp;</h3>
@@ -17,6 +17,61 @@
       <a href="javascript:void(0)" mat-button i18n-aria-label *ngIf="isUpdate" (click)="remove()">
         <span i18n>{{'Remove from your list'}}</span>
       </a>
+      <a href="javascript:void(0)" mat-button i18n-aria-label *ngIf="!isUpdate" (click)="add()">
+        <span i18n>{{'Add to your competencies'}}</span>
+      </a>
+    </div>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card class="competency-view-card" *ngIf="!isUpdate">
+  <mat-card-content class="flex flex-1 custom">
+    <div class="flex justify-between flex-row">
+      <span class="mat-h2 font-medium">Select your competency level</span>
+      <mat-card-actions>
+        <a href="javascript:void(0)" class="mat-dialog-close" (click)="closeModal()"><mat-icon class="mat-icon ws-mat-black60-text">close</mat-icon></a>
+      </mat-card-actions>
+    </div>
+    <h3 class="mat-h3 card_description margin-bottom-xl">You are self-declaring competency and you can also take the competency assessment to add further credibility</h3>
+    <!-- new card added -->
+    <ng-container *ngIf="dData && dData?.children && dData?.children.length > 0">
+      <div class="learn-card-div hideScrollbar">
+        <ng-container *ngFor="let comp of dData?.children; let indexOfelement=index;">
+            <mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card" [class.selected-card]="comp.id === selectedId">
+              <a>
+                <mat-card-content class="margin-remove" (click)="selectLevel(comp, indexOfelement)">
+                  <div class="card_inner_content flex" >
+                    <div class="card_inner_title_box flex-col">
+                      <div class="cursor-pointer flex-col">
+                        <p class="mat-body-2 ws-mat-black60-text competency_level_text">{{comp.level}}</p>
+                        <p class="mat-body font-bold margin-remove">{{comp.name}}</p>
+                      </div>
+                    </div>
+                    <div class="flex-1 card_right_txtbox flex-col">
+                      <p class="cursor-pointer mat-body-1 ws-mat-black60-text margin-remove-bottom">
+                        {{comp.description}}
+                      </p>
+                    </div>
+                  </div>
+                </mat-card-content>
+              </a>
+            </mat-card>
+        </ng-container>
+      </div>
+    </ng-container>
+
+    <p class="mat-body-2 margin-top-x">	<mat-icon class="mat-icon text_icon margin-right-m ws-mat-black60-text">info</mat-icon> You can take a <a class="ws-mat-default-text">competency assessment</a> to have higher credibility</p>
+  </mat-card-content>
+  <mat-card-actions class="flex flex-row-reverse responsive card_actions">
+    <!-- <div class="mb-2 ws-mat-accent-text view-all ws-mat-primary-lite-background-important wid-auro">
+      <a href="javascript:void(0)" mat-button mat-dialog-close i18n-aria-label class="flex">
+        <span i18n>&nbsp; {{'Cancel'}}</span>
+      </a>
+    </div> -->
+    <div class="flex view-more text-white others margin-right-xs">
+      <!-- <a href="javascript:void(0)" mat-button i18n-aria-label *ngIf="isUpdate" (click)="remove()">
+        <span i18n>{{'Remove from your list'}}</span>
+      </a> -->
       <a href="javascript:void(0)" mat-button i18n-aria-label *ngIf="!isUpdate" (click)="add()">
         <span i18n>{{'Add to your competencies'}}</span>
       </a>

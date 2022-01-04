@@ -3,15 +3,15 @@ import { AuthViewerModule } from '@ws/author/src/lib/modules/viewer/viewer.modul
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { EditorService } from './services/editor.service'
-import { EditorComponent } from './components/editor/editor.component'
+// import { EditorComponent } from './components/editor/editor.component'
 import { EditorRoutingModule } from './editor-routing.module'
 import { SharedModule } from '@ws/author/src/lib/modules/shared/shared.module'
 import { EditorSharedModule } from './shared/shared.module'
-import { WebPageModule } from './routing/modules/web-page/web-page.module'
+// import { WebPageModule } from './routing/modules/web-page/web-page.module'
 
 @NgModule({
   declarations: [
-    EditorComponent,
+    // EditorComponent,
   ],
   imports: [
     AuthViewerModule,
@@ -19,7 +19,7 @@ import { WebPageModule } from './routing/modules/web-page/web-page.module'
     EditorRoutingModule,
     EditorSharedModule,
     SharedModule,
-    WebPageModule,
+    // WebPageModule,
   ],
   providers: [
     EditorService,

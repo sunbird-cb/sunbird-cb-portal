@@ -16,11 +16,14 @@
   padding: 0 !important;
 
   @include breakpoint-s {
-    padding: 0 15px !important;
+    padding: 0 8px !important;
   }
 
   @include breakpoint-xs {
-    padding: 0 15px !important;
+    padding: 0 8px !important;
+  }
+  @include breakpoint-m {
+    padding: 0 8px !important;
   }
 }
 
@@ -107,6 +110,44 @@ mat-divider {
   }
 }
 
+// .mat-dialog-container {
+//   padding: 0px !important;
+// }
+.certificate_box {
+  height: 65px;
+  border-radius: 4px 4px;
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  overflow: hidden;
+  display: block;
+}
+
+img.certificate_banner {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.certificate_overlay {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, .69));
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+p.certificate_text {
+  font-weight: 700!important;
+  z-index: 99;
+  margin-top: -36px;
+  color: #fff;
+  position: relative;
+}
+
 .blue-border{
   border: 2px  solid #0074b6 !important;
   }
@@ -151,13 +192,13 @@ mat-divider {
   min-width: 250px;
 
   .custom-button{
-    background: #0074B6 0% 0% no-repeat padding-box;
+    background: #0074B6 0% 0% no-repeat padding-box !important;
     border-radius: 4px;
   }
 
   @include breakpoint-xs {
     width: 100%;
-    margin-left: 0;
+    margin-left: 0!important;
   }
 
   .glance-container {
@@ -193,7 +234,6 @@ mat-divider {
       }
 
       .item-value {
-        // font: 14px/20px Poppins-Regular;
         letter-spacing: 0px;
         color: #5F5F5F;
       }
@@ -270,7 +310,6 @@ mat-divider {
   border-color: #ECECEC;
 
   .contacts-head {
-    // font: 18px/30px Poppins-Medium;
     letter-spacing: 0px;
     color: #222222;
     background: transparent;
@@ -295,13 +334,11 @@ mat-divider {
     }
 
     .user-name {
-      // font: 14px/22px Poppins-Medium;
       letter-spacing: 0px;
       color: #5F5F5F;
     }
 
     .user-university {
-      // font: 14px/30px Poppins-Regular;
       letter-spacing: 0px;
       color: #00A9F4;
     }
@@ -310,7 +347,6 @@ mat-divider {
       background: #FFFFFF 0% 0% no-repeat padding-box;
       border: 1px solid #F58634;
       border-radius: 15px;
-      // font: 12px/12px Poppins-Medium;
       letter-spacing: 0px;
       color: #F58634;
       max-width: 60px;

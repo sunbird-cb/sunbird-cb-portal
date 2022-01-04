@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { interval, Subscription } from 'rxjs'
-import { EventService } from '@sunbird-cb/utils'
+import { EventService, WsEvents } from '@sunbird-cb/utils'
 import { ICarousel } from '../sliders/sliders.model'
 
 @Component({
@@ -77,9 +77,18 @@ export class SlidersMobComponent extends WidgetBaseComponent
     const path = window.location.pathname.replace('/', '')
     const url = path + window.location.search
 
-    this.events.raiseInteractTelemetry('click', 'banner', {
-      pageUrl: url,
-      bannerRedirectUrl: bannerUrl,
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType: 'banner',
+      },
+      {
+        pageUrl: url,
+        bannerRedirectUrl: bannerUrl,
+      },
+      {
+        pageIdExt: 'knowledge-card',
+        module: WsEvents.EnumTelemetrymodules.CONTENT,
     })
   }
 }

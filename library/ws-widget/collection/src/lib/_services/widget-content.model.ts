@@ -19,6 +19,7 @@ export namespace NsContent {
     appIcon: string
     artifactUrl: string
     averageRating?: any
+    batches: any
     body?: string
     certificationList?: IRelatedContentMeta[]
     certificationStatus?: TCertificationStatus
@@ -458,4 +459,11 @@ export namespace NsContent {
   export enum ETagType {
     NEWLY_ADDED = 'NEWLY ADDED',
   }
+
+  export const UN_SUPPORTED_DATA_TYPES_FOR_NON_BATCH_USERS: string[] = [
+    EMimeTypes.QUIZ,
+    EMimeTypes.APPLICATION_JSON,
+    EMimeTypes.WEB_MODULE_EXERCISE,
+
+  ]
 }

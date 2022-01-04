@@ -1,107 +1,114 @@
 @import '~@sunbird-cb/design-system/src/styles/ws-common';
 @import '~@sunbird-cb/design-system/src/styles/ws-vars';
 @import '~@sunbird-cb/design-system/src/styles/ws-mixins';
-
 .user-image {
-  $icon-size: 36px;
-  font-size: $icon-size;
-  height: $icon-size;
-  width: $icon-size;
-  margin-right: 16px;
+    $icon-size: 36px;
+    font-size: $icon-size;
+    height: $icon-size;
+    width: $icon-size;
+    margin-right: 16px;
 }
 
 .title {
-  // font-weight: bold !important;
-  // font-weight: 300 !important;
-  // font-size: 24px !important;
-  display: flex;
+    // font-weight: bold !important;
+    // font-weight: 300 !important;
+    // font-size: 24px !important;
+    display: flex;
 }
-.mat-subheading-1-1{
-  font-size: 20px;
-}
-.mat-expansion-panel-header-title {
-  margin-left: 5px;
-  ;
-}
-.card-min-hei{
-  min-height: 100px;
-}
-.title-margin{
-  margin: 25px 0 0 0;
-}
-mat-expansion-panel-header {
-  padding: 0;
-}
-.blue-border{
-border: 2px  solid #0074b6;
-}
-.mat-card>.mat-card-actions:last-child{
-  margin: 0 5px 5px;
-}
-.activity-button {
-  border-radius: 2px !important;
-  background-color: #05a7c9 !important;
 
+.mat-subheading-1-1 {
+    font-size: 20px;
+}
+
+.mat-expansion-panel-header-title {
+    margin-left: 5px;
+    ;
+}
+
+.card-min-hei {
+    min-height: 100px;
+}
+
+.title-margin {
+    margin: 25px 0 0 0;
+}
+
+mat-expansion-panel-header {
+    padding: 0;
+}
+
+.blue-border {
+    border: 2px solid #0074b6;
+}
+
+.mat-card>.mat-card-actions:last-child {
+    margin: 0 5px 5px;
+}
+
+.activity-button {
+    border-radius: 2px !important;
+    background-color: #05a7c9 !important;
 }
 
 .expansion-panel {
-  border-radius: 4px;
-  opacity: 1;
-  box-shadow: none !important;
+    border-radius: 4px;
+    opacity: 1;
+    box-shadow: none !important;
 }
 
 .divider {
-  margin-bottom: 1.5rem !important;
-  padding-right: 24px !important;
-
-  @include breakpoint-lt-m {
-    margin-top: 0.5rem !important;
     margin-bottom: 1.5rem !important;
-  }
-
+    padding-right: 24px !important;
+    @include breakpoint-lt-m {
+        margin-top: 0.5rem !important;
+        margin-bottom: 1.5rem !important;
+    }
 }
 
 mat-expansion-panel-body {
-  padding-right: 0px !important;
+    padding-right: 0px !important;
 }
 
 .activity-card {
-  margin: 0.5rem;
-  min-width: 194px !important;
-  min-height: 171px !important;
+    margin: 0.5rem;
+    min-width: 194px !important;
+    min-height: 171px !important;
 }
 
 .subtitle {
-  margin-top: 0.5rem !important;
+    margin-top: 0.5rem !important;
 }
 
 .btn-display-top {
-  margin-top: 0.25rem !important;
-
-  @include breakpoint-lt-m {
-    display: none;
-  }
+    margin-top: 0.25rem !important;
+    @include breakpoint-lt-m {
+        display: none;
+    }
 }
 
 .btn-display-bottom {
-  margin-top: 0.25rem !important;
-
-  @include breakpoint-gt-m {
-    display: none
-  }
-
-  @include breakpoint-m {
-    display: none;
-
-  }
-
+    margin-top: 0.25rem !important;
+    @include breakpoint-gt-m {
+        display: none
+    }
+    @include breakpoint-m {
+        display: none;
+    }
 }
 
 .row-justify {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .icon-margin {
-  margin: 0 0.5rem 0 0.1rem;
+    margin: 0 0.5rem 0 0.1rem;
+}
+
+.explore_btn {
+    background-color: #fff!important;
+
+    @media (max-width:768px) {
+        margin-bottom: 8px;
+    }
 }

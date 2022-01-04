@@ -18,6 +18,16 @@
   flex: 1;
   min-width: 1px;
 
+  @include breakpoint-xs {
+    padding:0px 8px;
+  }
+  @include breakpoint-s {
+    padding:0px 8px;
+  }
+
+  @include breakpoint-m {
+    padding:0px 0px 0px 8px;
+  }
   .unit-meta-item {
     border-radius: 2px;
     box-sizing: border-box;
@@ -30,22 +40,55 @@
     width: 100%;
   }
 }
+.top_banner_box {
+  @include breakpoint-xs {
+    flex-direction: column;
+  }
+  @include breakpoint-s {
+    flex-direction: column;
+  }
+}
+
+.title_box {
+  @include breakpoint-s {
+    margin-left: 0!important;
+  }
+}
+
+
+
 .info-section{
   width: 20%;
   min-width: 250px;
+
+  @include breakpoint-xs {
+    width: 100%;
+    margin-left: 8px!important;
+    margin-right: 8px!important;
+  }
 }
 .custom-height {
   height: 167px;
 }
+.event_img_box {
+  display: flex;
+}
 .event-card-image {
   width: 276px;
   height: 166px;
+  border-radius: 4px 4px;
 }
 
 .event-details-card {
   box-shadow: none !important;
   background:none !important;
   padding-left: 0;
+}
+
+.presenter_main_box {
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 ::ng-deep.event-details-card .mat-card-header-text {
@@ -62,10 +105,6 @@
 
 .flex-3 {
   flex: 3;
-}
-
-.f-medium {
-  // font-family: "Poppins-Medium";
 }
 
 .related-discussion {

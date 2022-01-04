@@ -47,7 +47,6 @@ mat-divider {
     }
 
     .mat-tab-link {
-      // font: 18px/34px Poppins-Medium;
       color: #5F5F5F;
       text-align: left;
       padding-left: 0;
@@ -140,7 +139,6 @@ mat-divider {
       margin-bottom: $size-l;
 
       .at-glance-heading {
-        // font: 18px/30px Poppins-Medium;
         letter-spacing: 0px;
         color: #222222;
       }
@@ -160,13 +158,11 @@ mat-divider {
           min-width: 80px;
           max-width: 140px;
           text-align: left;
-          // font: 14px/20px Poppins-Regular;
           letter-spacing: 0px;
           // color: #00A9F4 !important;
         }
 
         .item-value {
-          // font: 14px/20px Poppins-Regular;
           letter-spacing: 0px;
           color: #5F5F5F;
         }
@@ -244,7 +240,6 @@ mat-divider {
   border-color: #ECECEC;
 
   .contacts-head {
-    // font: 18px/30px Poppins-Medium;
     letter-spacing: 0px;
     color: #222222;
     background: transparent;
@@ -269,13 +264,11 @@ mat-divider {
     }
 
     .user-name {
-      // font: 14px/22px Poppins-Medium;
       letter-spacing: 0px;
       color: #5F5F5F;
     }
 
     .user-university {
-      // font: 14px/30px Poppins-Regular;
       letter-spacing: 0px;
       color: #00A9F4;
     }
@@ -284,7 +277,6 @@ mat-divider {
       background: #FFFFFF 0% 0% no-repeat padding-box;
       border: 1px solid #F58634;
       border-radius: 15px;
-      // font: 12px/12px Poppins-Medium;
       letter-spacing: 0px;
       color: #F58634;
       max-width: 60px;
@@ -300,13 +292,11 @@ mat-divider {
 }
 
 .section-heading {
-  // font: 18px/24px Poppins-Medium;
   letter-spacing: 0px;
   color: #222222;
 }
 
 .section-content {
-  // font: 15px/24px Poppins-Regular;
   letter-spacing: 0px;
   color: #222222;
 }
@@ -322,7 +312,6 @@ mat-divider {
   color: #fff !important;
 
   ::ng-deep.mat-button-wrapper {
-    // font: 14px/21px Poppins-SemiBold;
     letter-spacing: 0px;
     color: #fff;
     text-transform: capitalize;

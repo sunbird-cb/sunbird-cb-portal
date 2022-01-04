@@ -4,7 +4,7 @@
   <div *ngIf="currentRoute === 'home'" class="margin-top-s">
     <ng-container [wsResolverWidget]="banner"></ng-container>
   </div>
-  <mat-sidenav-container name="discuss-menu" class="min-height min-wid">
+  <mat-sidenav-container name="discuss-menu" class="min-height">
     <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 sidenav-align">
       <app-discuss-left-menu [unseen]="unread" [tabsData] = "firstLevelTopic" (currentTab)="onTabLeftMenu($event)"></app-discuss-left-menu>
     </mat-sidenav>

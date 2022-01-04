@@ -2,6 +2,8 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { NsContent, viewerRouteGenerator } from '@sunbird-cb/collection'
 import { NsAppToc } from '../../models/app-toc.model'
 import { EventService } from '@sunbird-cb/utils/src/public-api'
+/* tslint:disable*/
+import _ from 'lodash'
 
 @Component({
   selector: 'ws-app-toc-content-card',
@@ -169,16 +171,31 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
 
   public raiseTelemetry() {
     if (this.content) {
-      this.events.raiseInteractTelemetry('click', `card-tocContentCard`, {
-        contentId: this.content.identifier || '',
-        contentType: this.content.primaryCategory,
-        id: this.content.identifier || '',
-        type: this.content.contentType,
-        rollup: {
-          l1: this.rootId || '',
+      this.events.raiseInteractTelemetry(
+        {
+          type: 'click',
+          subType: `card-tocContentCard`,
+          // id: this.content.identifier || '',
         },
-        ver: `${this.content.version}${''}`,
+        {
+          // contentId: this.content.identifier || '',
+          // contentType: this.content.primaryCategory,
+          id: this.content.identifier || '',
+          type: this.content.primaryCategory,
+          rollup: {
+            l1: this.rootId || '',
+          },
+          ver: `${this.content.version}${''}`,
+        },
+        {
+          pageIdExt: `${_.camelCase(this.content.primaryCategory)}-card`,
+          module: _.camelCase(this.content.primaryCategory),
       })
     }
+  }
+  get isAllowed(): boolean {
+    if (this.content) {
+      return !(NsContent.UN_SUPPORTED_DATA_TYPES_FOR_NON_BATCH_USERS.indexOf(this.content.mimeType) >= 0)
+    } return false
   }
 }

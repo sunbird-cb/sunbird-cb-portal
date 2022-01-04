@@ -12,10 +12,22 @@
     // display: flex;
     display: inline-table;
     width: 94%;
+    box-sizing: border-box;
+    min-height: 180px;
   }
   .mat-card-footer{
     justify-self: flex-end;
-    align-items: center;
+    // align-items: center;
+
+    @include breakpoint-xs {
+      // align-items:
+      flex-direction: row;
+    }
+
+    @include breakpoint-s {
+      // align-items: inherit;
+      flex-direction: row;
+    }
   }
 }
 .dot:before {
@@ -48,7 +60,7 @@
 
 .mobile2 {
   @include breakpoint-xs {
-    margin-top: $size-s;
+    // margin-top: $size-s;
   }
 
   // @include breakpoint-s {

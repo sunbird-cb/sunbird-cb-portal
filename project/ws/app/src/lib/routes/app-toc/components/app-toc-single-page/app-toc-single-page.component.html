@@ -1,4 +1,4 @@
-<mat-tab-group [selectedIndex]="0" class="custom-tabgroup">
+<mat-tab-group [selectedIndex]="0" class="custom-tabgroup" (selectedTabChange)="tabClicked($event)">
     <mat-tab label="Overview">
         <ng-template matTabContent>
             <section id="overview">
@@ -13,14 +13,14 @@
                         " class="unit-meta-item">
                             <h2 class="section-heading">{{ tocConfig?.overview?.description?.displayName }}</h2>
                             <mat-card-content>
-                                <div class="section-content mat-body-1" [innerHTML]="content?.description"></div>
+                                <div class="section-content mat-body-1" [innerHTML]="sanitize(content?.description)"></div>
                             </mat-card-content>
                         </mat-card>
                         <!-- Content Body -->
                         <mat-card *ngIf="tocConfig?.overview?.body?.enabled && content?.instructions" class="unit-meta-item">
                             <h2 class="section-heading">{{ tocConfig?.overview?.body?.displayName }}</h2>
                             <mat-card-content>
-                                <div class="section-content mat-body-1" [innerHTML]="content?.instructions"></div>
+                                <div class="section-content mat-body-1" [innerHTML]="sanitize(content?.instructions)"></div>
                             </mat-card-content>
                         </mat-card>
                         <!-- Learning objective -->
@@ -416,16 +416,16 @@
             </section>
         </ng-template>
     </mat-tab>
-    <mat-tab label="Content" *ngIf="content?.children?.length">
+    <mat-tab label="Content" *ngIf="content?.children?.length" >
         <ng-template matTabContent>
             <section id="content">
                 <div class="fixed-width">
-                    <ws-app-app-toc-contents [batchId]="batchId" [content]="content"></ws-app-app-toc-contents>
+                    <ws-app-app-toc-contents [batchId]="batchId" [content]="content" [forPreview]="forPreview"></ws-app-app-toc-contents>
                 </div>
             </section>
         </ng-template>
     </mat-tab>
-    <mat-tab label="Discussion">
+    <mat-tab label="Discussion" >
         <ng-template matTabContent>
             <section id="discussion-forum">
                 <div class="fixed-width toc-discussion-container">
