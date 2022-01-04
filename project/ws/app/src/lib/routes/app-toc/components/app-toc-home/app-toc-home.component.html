@@ -211,7 +211,7 @@ TODO: edit option while preview Mode
           [contentId]="content?.identifier" [progress]="100" [progressType]="'percentage'">
         </ws-widget-content-progress>
       </ng-container> -->
-      <ng-container *ngIf="content?.completionStatus < 2">
+      <ng-container *ngIf="content?.completionStatus < 2 && isBatchInProgress">
         <p class="mat-body-2 font-bold-imp ws-mat-black60-text">Your progress</p>
         <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
           [contentId]="content?.identifier" [progress]="content?.completionPercentage" [progressType]="'percentage'">

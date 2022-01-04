@@ -335,8 +335,11 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   get getStartDate() {
     if (this.content) {
       const batch = _.first(_.filter(this.content['batches'], { batchId: this.currentCourseBatchId }) || [])
-      if (_.get(batch, 'startDate')) {
+      if (_.get(batch, 'startDate') && moment(_.get(batch, 'startDate')).isAfter()) {
         return moment(_.get(batch, 'startDate')).fromNow()
+      }
+      if (_.get(batch, 'endDate') && moment(_.get(batch, 'endDate')).isBefore()) {
+       return 'NA'
       }
       return 'NA'
     } return 'NA'
@@ -701,7 +704,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   public fetchBatchDetails() {
     if (this.content && this.content.identifier) {
-      this.resumeData = null
       const req = {
         request: {
           filters: {

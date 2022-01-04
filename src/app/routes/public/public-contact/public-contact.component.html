@@ -40,7 +40,7 @@
             </div>
 
             <div class="faq-img-section flex flex-wrap flex-between items-stretch"
-              *ngIf="contactPage.help && contactPage.help.length > 0">
+              *ngIf="contactPage.help && contactPage.help.length > 0" >
               <ng-container *ngFor="let chelp of contactPage.help  | filter : searchText">
                 <div [attr.id]="chelp.fragment" class="info-section margin-bottom-xl" [ngClass]="{ 'width-1-1': true}">
                   <h3 class="flex flex-middle margin-remove">
@@ -64,6 +64,14 @@
                 </div>
               </ng-container>
             </div>
+
+            <!-- <ng-template #notFound>
+              <div class="margin-xl text-center ng-star-inserted">
+                <img alt="No results" class="margin-top-l margin-bottom-s" src="/assets/common/error-pages/empty_search.svg" wsutilsimageresponsive="">
+                <h2 class="mat-h2" i18n> No results found</h2>
+                <h3 class="mat-h3" i18n> Try removing the filters or search using different keywords</h3>
+              </div>
+            </ng-template> -->
 
           </div>
         </div>
