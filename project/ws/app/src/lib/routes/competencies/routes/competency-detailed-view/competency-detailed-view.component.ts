@@ -20,7 +20,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
   @ViewChild('failMsg', { static: true }) failureMsg!: ElementRef
   @ViewChild('successRemoveMsg', { static: true })
   successRemoveMsg!: ElementRef
-  
+
   private paramSubscription: Subscription | null = null
   competencyName: any = null
   routeType: any = 'ALL'
@@ -66,8 +66,8 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private competencySvc: CompetenceService,
     private configSvc: ConfigurationsService,
-  ) { 
-    this.getProfile() 
+  ) {
+    this.getProfile()
   }
 
   ngOnInit() {
@@ -93,7 +93,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
           this.competencyData = []
         }
       })
-    
+
     // this.getCbps()
   }
 
@@ -240,6 +240,8 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(CompetenceViewComponent, {
       minHeight: 'auto',
       // width: '80%',
+      // width:'100%',
+      maxWidth: '95vw',
       panelClass: 'remove-pad',
       data: item,
     });

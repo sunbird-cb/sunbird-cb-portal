@@ -20,8 +20,10 @@
   @include breakpoint-xs {
     width: auto;
     min-width: auto;
+    padding: 16px 0px!important;
   }
 }
+
 
 .learn-card {
   border: 1px solid rgba(0, 0, 0, 0.08);
@@ -34,6 +36,14 @@
   width: 220px;
   padding: 24px;
   box-sizing: border-box;
+
+  @include breakpoint-xs {
+    width: 45%;
+    padding: 16px;
+  }
+  @include breakpoint-s {
+    width: 45%;
+  }
 }
 .learn-card .card_right_txtbox {
   float: right;
@@ -41,11 +51,20 @@
   box-sizing: border-box;
   width: calc(100% - 230px);
   border-left: 1px solid rgba(0, 0, 0, 0.08);
+
+  @include breakpoint-xs {
+    width: 55%;
+    padding: 16px;
+  }
+  @include breakpoint-s {
+    width: 55%;
+  }
+
 }
 .learn-card:hover, .learn-card:active, .learn-card:focus {
    border: 1px solid#0074B6
  }
- 
+
 .selected-card {
   border: 1px solid#0074B6 !important;
   background-color: rgba(0, 116, 184, 0.05)!important;
@@ -63,10 +82,17 @@ p.competency_level_text {
   margin: 0 !important;
 }
 .learn-card-div {
-  overflow-y: scroll; 
+  overflow-y: scroll;
   min-height: 215px;
-    max-height: 400px;
-    margin-bottom: 30px;
+  max-height: 400px;
+  margin-bottom: 30px;
+
+  @include breakpoint-xs {
+    max-height: 270px;
+  }
+  @include breakpoint-s {
+    max-height: 270px;
+  }
 }
 .font-bold {
   font-weight:700!important;
@@ -199,6 +225,11 @@ p.competency_level_text {
   margin-right: -32px;
   padding: 24px 24px 0px 0px;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
+
+  @include breakpoint-xs {
+    padding: 16px 16px 0px 0px;
+  }
+
 }
 
 .margin-0 {

@@ -58,6 +58,15 @@
   box-shadow: 0px 10px 30p;
   /*#99999933*/
   border-radius: 8px;
+  height: 40px;
+
+  @include breakpoint-xs {
+    margin-top: 16px;
+  }
+
+  a.mat-button {
+    height: 36px;
+  }
 }
 
 .sticky {
@@ -213,6 +222,10 @@ a:not([href]):not([tabindex]) {
   @extend %page-center;
 }
 
+.discussion-card {
+  padding:16px 0;
+}
+
 .flex-3 {
   flex: 3;
 }
@@ -235,6 +248,13 @@ a:not([href]):not([tabindex]) {
   // @include breakpoint-xs {
   flex-direction: column;
   // }
+
+  @include breakpoint-xs {
+    margin: 0 8px;
+  }
+  @include breakpoint-s {
+    margin: 0 8px;
+  }
 }
 
 .flex-custom-m {
