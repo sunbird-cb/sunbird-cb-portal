@@ -49,6 +49,7 @@ export namespace WsEvents {
     to: string
     data: T
     passThroughData?: any
+    pageContext?: any
   }
 
   export enum EnumTelemetrySubType {
