@@ -6,6 +6,10 @@ const routes: Routes = [
   {
     path: ':resourceId',
     component: QuizComponent,
+    data: {
+      module: 'Learn',
+      pageId: ':resourceId',
+    },
     resolve: {
       content: ViewerResolve,
     },

@@ -191,7 +191,7 @@ const routes: Routes = [
     data: {
       resourceType: 'quiz',
       module: 'Learn',
-      pageId: 'quiz/:resourceId',
+      pageId: 'quiz',
     },
     resolve: {
       content: ViewerResolve,
@@ -334,7 +334,7 @@ const routes: Routes = [
         children: routes,
         data: {
           module: 'Player',
-          pageId: 'viewer',
+          pageId: '',
         },
       },
     ])],
