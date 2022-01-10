@@ -14,7 +14,8 @@ import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import { ConnectionHoverService } from '@sunbird-cb/collection/src/lib/_common/connection-hover-card/connection-hover.servive'
 import { NsContent, NsAutoComplete } from '@sunbird-cb/collection/src/public-api'
 // import { IdiscussionConfig } from '@project-sunbird/discussions-ui-v8'
-
+// tslint:disable-next-line
+import _ from 'lodash'
 @Component({
   selector: 'ws-app-app-toc-single-page',
   templateUrl: './app-toc-single-page.component.html',
@@ -397,7 +398,21 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
       this.tocSharedSvc.fetchContentCohorts(cohortType, contentID).subscribe(
         (data: any) => {
           this.cohortResults[cohortType] = {
-            contents: data || [],
+            contents: _.map(data, d => {
+              return {
+                first_name: _.get(d, 'first_name'),
+                last_name: _.get(d, 'last_name'),
+                department: _.get(d, 'department'),
+                designation: _.get(d, 'designation'),
+                email: _.get(d, 'email'),
+                desc: _.get(d, 'desc'),
+                uid: _.get(d, 'user_id'),
+                last_ts: _.get(d, 'last_ts'),
+                phone_No: _.get(d, 'phone_No'),
+                city: _.get(d, 'city'),
+                userLocation: _.get(d, 'userLocation'),
+              }
+            }) || [],
             hasError: false,
           }
         },

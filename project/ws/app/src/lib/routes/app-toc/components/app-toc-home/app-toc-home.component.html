@@ -20,7 +20,8 @@ TODO: edit option while preview Mode
         [analytics]="analytics" [resumeData]="resumeData" [batchData]="batchData">
       </ws-app-toc-banner>
       <div role="none" class="toc-body margin-top-xl">
-        <ws-app-app-toc-single-page [content]="content" [initialrouteData]="initialrouteData" [forPreview]="!isBatchInProgress">
+        <!-- isBatchInProgress : commented as we seperated the CBP -->
+        <ws-app-app-toc-single-page [content]="content" [initialrouteData]="initialrouteData" [forPreview]="false">
         </ws-app-app-toc-single-page>
         <!-- <div class="flex mat-app-background" #stickyMenu >
         <nav mat-tab-nav-bar class="toc-links fixed-width" aria-label="content navigation">

@@ -27,6 +27,8 @@ import {
   TelemetryService,
   ValueService,
   UtilityService,
+  EventService,
+  WsEvents,
 } from '@sunbird-cb/utils'
 import { delay, first } from 'rxjs/operators'
 import { MobileAppsService } from '../../services/mobile-apps.service'
@@ -81,6 +83,7 @@ export class RootComponent implements OnInit, AfterViewInit {
     public configSvc: ConfigurationsService,
     private valueSvc: ValueService,
     private telemetrySvc: TelemetryService,
+    private eventSvc: EventService,
     private mobileAppsSvc: MobileAppsService,
     private rootSvc: RootService,
     private btnBackSvc: BtnPageBackService,
@@ -165,9 +168,7 @@ export class RootComponent implements OnInit, AfterViewInit {
     }
 
     this.btnBackSvc.initialize()
-    // Application start telemetry
-    this.telemetrySvc.start('app', 'view', '')
-    this.appStartRaised = true
+
     // if (this.authSvc.isAuthenticated) {
 
     // }
@@ -212,6 +213,7 @@ export class RootComponent implements OnInit, AfterViewInit {
         const data = {
           pageContext,
         }
+        this.raiseAppStartTelemetry()
         // console.log('data: ', data)
         if (data.pageContext.pageId && data.pageContext.module) {
           this.telemetrySvc.impression(data)
@@ -229,6 +231,28 @@ export class RootComponent implements OnInit, AfterViewInit {
     this.rootSvc.showNavbarDisplay$.pipe(delay(500)).subscribe(display => {
       this.showNavbar = display
     })
+  }
+
+  raiseAppStartTelemetry() {
+    if (!this.appStartRaised) {
+      // Application start telemetry
+      const event = {
+        eventType: WsEvents.WsEventType.Telemetry,
+        eventLogLevel: WsEvents.WsEventLogLevel.Info,
+        data: {
+          edata: { type: '' },
+          object: {},
+          state: WsEvents.EnumTelemetrySubType.Loaded,
+          eventSubType: WsEvents.EnumTelemetrySubType.Loaded,
+          type: 'app',
+          mode: 'view',
+        },
+        from: '',
+        to: 'Telemetry',
+      }
+      this.eventSvc.dispatchEvent<WsEvents.IWsEventTelemetryInteract>(event)
+      this.appStartRaised = true
+    }
   }
 
   ngAfterViewInit() {
