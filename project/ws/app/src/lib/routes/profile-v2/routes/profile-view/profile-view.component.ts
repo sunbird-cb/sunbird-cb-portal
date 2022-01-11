@@ -10,6 +10,7 @@ import _ from 'lodash'
 import { NetworkV2Service } from '../../../network-v2/services/network-v2.service'
 import { NSNetworkDataV2 } from '../../../network-v2/models/network-v2.model'
 import { ConfigurationsService, ValueService } from '@sunbird-cb/utils';
+import { map } from 'rxjs/operators'
 /* tslint:enable */
 // import {  } from '@sunbird-cb/utils'
 
@@ -44,6 +45,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   private defaultSideNavBarOpenedSubscription: any
   public screenSizeIsLtMedium = false
   isLtMedium$ = this.valueSvc.isLtMedium$
+  mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -127,6 +129,10 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
       this.sideNavBarOpened = !isLtMedium
       this.screenSizeIsLtMedium = isLtMedium
+      console.log('-----------')
+      console.log(this.sideNavBarOpened)
+      console.log(this.screenSizeIsLtMedium)
+      console.log('--++++++++++---------')
     })
   }
 

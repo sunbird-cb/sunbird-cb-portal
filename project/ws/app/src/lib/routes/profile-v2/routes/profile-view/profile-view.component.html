@@ -66,8 +66,18 @@
 
   <mat-sidenav-container name="discuss-menu" class="min-height margin-top-m">
 
-    <!-- <div class="flex-1" style="position: relative;" [(opened)]="sideNavBarOpened"> -->
-    <mat-sidenav  [(opened)]="sideNavBarOpened" class="border-0">
+    <!-- <div class="flex-1" style="position: relative;"> -->
+    <!-- <mat-sidenav  [(opened)]="sideNavBarOpened" class="border-0">
+      <div class="contain">
+
+          <div #stickyMenu [class.sticky]="sticky">
+            <app-profile-v2-left-menu [tabsData]="tabsData" class="flex flex-1"></app-profile-v2-left-menu>
+          </div>
+
+      </div>
+    </mat-sidenav> -->
+
+    <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 sidenav_inner" [ngClass]="{'margin-top-48': currentRoute === 'profileInfo'}">
       <div class="contain">
         <div class="flex-1" style="position: relative;">
           <div #stickyMenu [class.sticky]="sticky">
@@ -76,11 +86,12 @@
         </div>
       </div>
     </mat-sidenav>
-    <!-- </div> -->
-  <!-- </div> -->
 
-  <mat-sidenav-content class="">
-    <!-- <div class="flex-3"> -->
+
+
+
+  <mat-sidenav-content class="sidenav_content">
+
       <div *ngIf="screenSizeIsLtMedium">
         <button type="button" mat-icon-button (click)="sideNavBarOpened = !sideNavBarOpened"
           id="ws-auth-root-home-btn-menu" name="ws-auth-root-home-btn-menu">
@@ -88,7 +99,9 @@
         </button>
       </div>
 
-    <!-- <div class="flex-3"> -->
+    <div class="main_network_box">
+
+
       <ng-container *ngFor="let tab of tabsData">
         <!-- <ws-widget-profile-v2-academics *ngIf="pdfData" [widgetData]="tab"></ws-widget-profile-v2-academics> -->
         <ng-container *ngIf="tab && tab.render && tab.enabled" [wsResolverWidget]="{
@@ -107,9 +120,7 @@
           style="box-shadow: none;">
         <!-- <mat-card [attr.id]='discussions' class="margin-left-xs margin-top-xs margin-botton-xs dark-card discussion-card"
           style="box-shadow: none;"> -->
-          <!-- <mat-card-header> -->
 
-          <!-- </mat-card-header> -->
           <!-- <mat-card-content> -->
             <div class="flex flex-1">
               <span class="margin-bottom-xs margin-top-l mat-title flex-1 ">{{'Discussions'}}</span>
@@ -164,9 +175,9 @@
         </div>
 
       </ng-container>
-    <!-- </div> -->
+    </div>
 
-  <!-- </div> -->
+
   </mat-sidenav-content>
 
     <div class="flex flex-1 custom">
@@ -179,4 +190,6 @@
 
   <!-- </div> -->
 </mat-sidenav-container>
+
+</div>
 

@@ -77,6 +77,26 @@
   }
 }
 
+.sidenav_inner {
+  width: 260px;
+}
+
+// .sidenav_content {
+//   margin-left: 260px;
+// }
+
+.main_network_box {
+  margin-left: 32px;
+
+  @media (max-width:992px) {
+    margin-left: 0;
+  }
+}
+
+// ::ng-deep .mat-sidenav-backdrop.mat-sidenav-shown {
+//   visibility: hidden!important;
+// }
+
 .sticky {
   position: sticky;
   top: calc(#{$mat-toolbar-gt-xs});

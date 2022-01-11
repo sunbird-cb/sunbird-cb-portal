@@ -16,6 +16,18 @@
               <ws-widget-left-menu [widgetData]="tabsData"></ws-widget-left-menu>
             </div>
           </div>
+
+          <button type="button" class="openbtn" (click)="showMenuButton()">☰</button>
+                <div class="overlay-sidebar" *ngIf="!showSideMenu">
+                  <div class="overlay-sidebar__menu">
+                    <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+                    <div #stickyMenu [class.sticky]="sticky">
+                      <ws-widget-left-menu [widgetData]="tabsData"></ws-widget-left-menu>
+                    </div>
+                  </div>
+                </div>
+
+          <!-- right section ---->
           <div class="faq_right_panel flex-3">
             <div class="contact-info margin-top-m ws-mat-primary-lite-background"
               *ngIf="contactPage.title || contactPage.description">

@@ -32,14 +32,18 @@
 [wsTooltipDirective] {
     position: relative;
   }
-  
+
   .tooltip {
     position: absolute;
     opacity: 1;
-    z-index: 99;
+    z-index: 999;
     // top:auto;
     // left: auto;
     padding: 5px;
     // background: #fff;
     // box-shadow: 0 2px 1px rgba(0,0,0,.6);
+
+    // @include breakpoint-xs {
+    //     left: 0;
+    // }
   }
