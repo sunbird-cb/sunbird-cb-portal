@@ -79,6 +79,18 @@
 
 .sidenav_inner {
   width: 260px;
+  background-color: transparent!important;
+  border-right: 0!important;
+
+  @include breakpoint-xs {
+    background-color: #fff!important;
+    // border-right: 1px solid !important;
+  }
+  @include breakpoint-s {
+    background-color: #fff!important;
+    // border-right: 1px solid !important;
+  }
+
 }
 
 // .sidenav_content {

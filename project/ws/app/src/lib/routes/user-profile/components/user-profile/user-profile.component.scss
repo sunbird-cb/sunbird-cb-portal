@@ -67,6 +67,20 @@
   color: #333232 !important;
 }
 
+.text-input-col {
+  @include breakpoint-xs {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+}
+
+.language-box {
+  @include breakpoint-xs {
+    margin-top: 16px;
+  }
+}
+
 .margin-right-10 {
   margin-right: 10px !important;
 }
@@ -94,17 +108,33 @@ input[type=number] {
 
   ::ng-deep .mat-tab-header {
     margin: 0 3rem;
+    border-bottom: none!important;
+
+    @include breakpoint-xs {
+      margin: 0 0.5rem;
+    }
   }
+
+  ::ng-deep .mat-tab-header-pagination  {
+    box-shadow: none!important;
+  }
+
+
 
   .profile-cols {
     margin: 0 1rem;
     padding: 1rem 3rem;
+
+    @include breakpoint-xs {
+      margin: 0 0.5rem;
+    }
 
     .section-input {
       .item {
         min-width: 340px;
         margin-right: 30px;
         display: contents;
+
 
         &:last-child {
           margin-right: 0;
@@ -126,6 +156,11 @@ input[type=number] {
       .item {
         min-width: 340px;
         margin-right: 30px;
+        width: 340px;
+
+        @include breakpoint-xs {
+          width:auto;
+        }
 
         // display: contents;
         &:last-child {
@@ -342,6 +377,13 @@ input[type=number] {
   color: #222222;
   font-size: 14px;
   margin-bottom: .5rem;
+
+  @include breakpoint-xs {
+    display: block;
+  }
+  @include breakpoint-s {
+    display: block;
+  }
 }
 
 input.mat-input-element {
@@ -500,7 +542,17 @@ input.mat-input-element {
 }
 
 .w-minus-w80 {
-  max-width: calc(100% - 80px);
+  max-width: calc(100% - 80px)!important;
+}
+
+
+.btn-success {
+  @include breakpoint-xs {
+    margin:0px 8px!important;
+  }
+  @include breakpoint-s {
+    margin-right:1rem!important;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -511,7 +563,8 @@ input.mat-input-element {
     padding: 10px 0;
 
     .btn-success {
-      margin-right: 0;
+      // margin-right: 0;
+      // margin: 0 8px!important;
     }
 
     .profile-cols {
@@ -542,7 +595,7 @@ input.mat-input-element {
         .item {
           min-width: 100%;
           margin-right: 30px;
-          display: contents;
+          display: block;
         }
       }
     }

@@ -77,7 +77,7 @@
       </div>
     </mat-sidenav> -->
 
-    <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 sidenav_inner" [ngClass]="{'margin-top-48': currentRoute === 'profileInfo'}">
+    <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 sidenav_inner">
       <div class="contain">
         <div class="flex-1" style="position: relative;">
           <div #stickyMenu [class.sticky]="sticky">
