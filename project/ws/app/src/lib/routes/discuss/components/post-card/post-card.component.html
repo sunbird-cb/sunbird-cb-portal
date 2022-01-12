@@ -20,7 +20,7 @@
   <!-- <mat-card-actions>
 
   </mat-card-actions> -->
-  <mat-card-footer class="flex flex-1 custom margin-0">
+  <mat-card-footer class="flex flex-1 margin-0">
     <div class="flex flex-1 flex-row margin-left-xs">
       <!-- <span class="flex margin-right-l mobile">
         <mat-icon (click)="upvote(discuss)" class="cursor-pointer">arrow_upward</mat-icon>
@@ -39,7 +39,7 @@
         <span class="pad-4">{{discuss.viewcount || 0}} Views</span>
       </span> -->
     </div>
-    <div class="flex flex-1" class="cursor-pointer text-right mobile2" role="link" tabindex="0"
+    <div class="flex flex-1" class="cursor-pointer text-right" role="link" tabindex="0"
       aria-label="total comments">
       <span class="noocoments ws-mat-default-text">{{((discuss?.topic?.postcount || 1) -1) }}
         comments</span>

@@ -11,6 +11,14 @@
   text-align: center;
 }
 
+.container-balanced {
+  max-width: 1202px;
+  margin-left: auto!important;
+  margin-right: auto!important;
+  height: auto;
+  min-height: 400px;
+}
+
 .flex-4 {
   flex: 4;
 }
@@ -61,13 +69,45 @@
   height: 40px;
 
   @include breakpoint-xs {
-    margin-top: 16px;
+    margin: 8px 0;
   }
 
   a.mat-button {
     height: 36px;
   }
 }
+
+.sidenav_inner {
+  width: 260px;
+  background-color: transparent!important;
+  border-right: 0!important;
+
+  @include breakpoint-xs {
+    background-color: #fff!important;
+    // border-right: 1px solid !important;
+  }
+  @include breakpoint-s {
+    background-color: #fff!important;
+    // border-right: 1px solid !important;
+  }
+
+}
+
+// .sidenav_content {
+//   margin-left: 260px;
+// }
+
+.main_network_box {
+  margin-left: 32px;
+
+  @media (max-width:992px) {
+    margin-left: 0;
+  }
+}
+
+// ::ng-deep .mat-sidenav-backdrop.mat-sidenav-shown {
+//   visibility: hidden!important;
+// }
 
 .sticky {
   position: sticky;
@@ -76,6 +116,22 @@
   // z-index: 10;
   // width: 100%;
 }
+
+@media (max-width: 768px) {
+  .filter_outer_box {
+    width: 100%;
+    overflow-x: scroll;
+    margin: 0!important;
+    display: none!important;
+
+    .filter {
+      width: 480px;
+  }
+
+  }
+}
+
+
 
 .text-box {
   display: flex;
@@ -223,7 +279,8 @@ a:not([href]):not([tabindex]) {
 }
 
 .discussion-card {
-  padding:16px 0;
+  padding:16px 8px;
+  box-sizing: border-box;
 }
 
 .flex-3 {
@@ -266,6 +323,17 @@ a:not([href]):not([tabindex]) {
 .example-header-image {
   width: auto;
   height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidenav-align {
+  overflow: auto;
+  width: auto;
+  min-width: 380px;
+  min-height: 900px;
+
 }
 
 .margin-0 {
