@@ -6,7 +6,9 @@
   // display: flex;
   flex: 1;
   height: auto;
+  box-sizing: border-box;
 }
+
 
 .dot:before {
   content: '•';
