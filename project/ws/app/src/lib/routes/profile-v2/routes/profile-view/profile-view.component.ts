@@ -128,11 +128,6 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
       this.sideNavBarOpened = !isLtMedium
-      this.screenSizeIsLtMedium = isLtMedium
-      console.log('-----------')
-      console.log(this.sideNavBarOpened)
-      console.log(this.screenSizeIsLtMedium)
-      console.log('--++++++++++---------')
     })
   }
 
