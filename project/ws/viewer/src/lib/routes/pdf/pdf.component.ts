@@ -178,11 +178,19 @@ export class PdfComponent implements OnInit, OnDestroy {
         state,
         type: WsEvents.WsTimeSpentType.Player,
         mode: WsEvents.WsTimeSpentMode.Play,
-        content: data,
+        object: {
+          id: data.identifier,
+          type: data.primaryCategory,
+          ver: `${data.version}${''}`,
+          rollup: {
+            l1: this.widgetResolverPdfData.widgetData.collectionId || '',
+          },
+        },
         identifier: data ? data.identifier : null,
         mimeType: NsContent.EMimeTypes.PDF,
         url: data ? data.artifactUrl : null,
       },
+      
     }
     this.eventSvc.dispatchEvent(event)
   }

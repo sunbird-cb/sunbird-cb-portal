@@ -94,7 +94,14 @@ export class QuizComponent implements OnInit, OnDestroy {
         state,
         type: WsEvents.WsTimeSpentType.Player,
         mode: WsEvents.WsTimeSpentMode.Play,
-        content: data,
+        object: {
+          id: data.identifier,
+          type: data.primaryCategory,
+          ver: `${data.version}${''}`,
+          rollup: {
+            l1: this.activatedRoute.snapshot.queryParams.collectionId || '',
+          },
+        },
         identifier: data ? data.identifier : null,
         mimeType: NsContent.EMimeTypes.QUIZ,
         url: data ? data.artifactUrl : null,
