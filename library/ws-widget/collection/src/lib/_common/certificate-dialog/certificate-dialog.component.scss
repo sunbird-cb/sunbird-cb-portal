@@ -1,8 +1,17 @@
+@import "ws-mixins";
+.no-shadow {
+    box-shadow: none !important;
+}
 .certificate-banner-image {
     height: 500px;
     display: flex;
     width: auto;
     margin: 0px auto;
+    @include breakpoint-lt-l {
+        width: 100%;
+        height: auto;
+        flex: 1;
+    }
 }
 
 a.download_btn {
@@ -24,4 +33,38 @@ a.download_btn {
 .download_icon {
     font-size: 16px;
     vertical-align: text-top;
+}
+.close-button {
+    float: right;
+    top: -24px;
+    right: -24px;
+}
+
+.close-icon {
+    transition: 1s ease-in-out;
+}
+
+.close-icon:hover {
+    transform: rotate(180deg);
+}
+
+::ng-deep .icon-outside .close-button {
+    float: right;
+    top: -52px;
+    right: -52px;
+}
+::ng-deep .icon-outside .mat-dialog-container {
+    overflow: unset;
+}
+
+.certificate-banner-image {
+    svg {
+        width: 500;
+        height: 500;
+        @include breakpoint-lt-l {
+            width: auto;
+            height: auto;
+            flex: 1;
+        }
+    }
 }
