@@ -35,10 +35,10 @@ export class HtmlComponent implements OnInit, OnDestroy {
   uuid: string | null | undefined = null
   realTimeProgressRequest = {
     content_type: 'Resource',
-    primaryCategory: 'Learning Resource',
+    primaryCategory: NsContent.EPrimaryCategory.RESOURCE,
     current: ['0'],
     max_size: 0,
-    mime_type: NsContent.EMimeTypes.HTML,
+    mime_type: NsContent.EMimeTypes.ZIP,
     user_id_type: 'uuid',
   }
   realTimeProgressTimer: any
@@ -55,7 +55,6 @@ export class HtmlComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-
     // this.activatedRoute.data.subscribe(data => {
     //   this.uuid = data.profileData.data.userId
     // })
@@ -331,7 +330,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
       this.hasFiredRealTimeProgress = true
       this.fireRealTimeProgress()
       // tslint:disable-next-line: align
-    }, 2 * 60 * 1000)
+    },  6 * 1000)
   }
 
   private fireRealTimeProgress() {
@@ -361,19 +360,23 @@ export class HtmlComponent implements OnInit, OnDestroy {
         return
       }
     }
-    this.realTimeProgressRequest.content_type = this.htmlData ? this.htmlData.contentType : ''
-    this.realTimeProgressRequest.primaryCategory = this.htmlData ? this.htmlData.primaryCategory : ''
+    if (this.htmlData) {
+      this.realTimeProgressRequest.content_type = this.htmlData.contentType
+      this.realTimeProgressRequest.primaryCategory = this.htmlData.primaryCategory
 
-    // const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-    //           this.activatedRoute.snapshot.queryParams.collectionId : ''
-    //   const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-    //           this.activatedRoute.snapshot.queryParams.batchId : ''
-    // this.viewerSvc.realTimeProgressUpdate(
-    //   this.htmlData ? this.htmlData.identifier : '',
-    //   this.realTimeProgressRequest,
-    //   collectionId,
-    //   batchId
-    // )
+      const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+        this.activatedRoute.snapshot.queryParams.collectionId : ''
+
+      const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+        this.activatedRoute.snapshot.queryParams.batchId : ''
+
+      this.viewerSvc.realTimeProgressUpdate(
+        this.htmlData.identifier,
+        this.realTimeProgressRequest,
+        collectionId,
+        batchId
+      )
+    }
     return
   }
 }
