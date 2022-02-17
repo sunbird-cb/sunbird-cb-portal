@@ -13,12 +13,12 @@
             <p class="mat-body-1 ws-mat-black60-text highlight_point_text">
                 Competency type:
                 <span
-                    class="mat-primary mat-subheading-1">{{competencyData?.additionalProperties?.competencyType}}</span>
+                    class="mat-primary mat-subheading-1">{{competencyData?.additionalProperties?.competencyType || currentComp?.competencyType}}</span>
             </p>
             <p class="mat-body-1 ws-mat-black60-text highlight_point_text">
                 Competency area:
                 <span
-                    class="mat-primary mat-subheading-1">{{competencyData?.additionalProperties?.competencyArea}}</span>
+                    class="mat-primary mat-subheading-1">{{competencyData?.additionalProperties?.competencyArea || currentComp?.competencyArea}}</span>
             </p>
 
         </div>

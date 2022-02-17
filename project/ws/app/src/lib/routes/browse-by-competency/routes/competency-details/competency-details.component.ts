@@ -6,7 +6,8 @@ import _ from 'lodash'
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
-import {  ValueService } from '@sunbird-cb/utils'
+import { ValueService } from '@sunbird-cb/utils'
+import { LocalDataService } from '../../services/localService';
 
 @Component({
   selector: 'ws-app-competency-details',
@@ -29,12 +30,12 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
   facets: any
   titles = [
     { title: 'Learn', url: '/page/learn', icon: 'school' },
-    { title: 'All Competencies' , url: '/app/learn/browse-by/competency', icon: '' },
+    { title: 'All Competencies', url: '/app/learn/browse-by/competency', icon: '' },
   ]
   competencyName = ''
   courses: any[] = []
   searchReq: any
-  myAppliedFilters: any =  []
+  myAppliedFilters: any = []
   sideNavBarOpened = true
   private defaultSideNavBarOpenedSubscription: any
   public screenSizeIsLtMedium = false
@@ -44,14 +45,16 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
   stateData: {
     param: any, path: any
   } | undefined
+  currentComp!: NSBrowseCompetency.ICompetencie | undefined
   constructor(
     private browseCompServ: BrowseCompetencyService,
     private valueSvc: ValueService,
     private activatedRoute: ActivatedRoute,
+    private localService: LocalDataService,
   ) {
-    this.searchReq = {...this.activatedRoute.snapshot.data.searchPageData.data.search.searchReq}
+    this.searchReq = { ...this.activatedRoute.snapshot.data.searchPageData.data.search.searchReq }
     this.facets = this.activatedRoute.snapshot.data.searchPageData.data.search.defaultsearch || []
-   }
+  }
 
   ngOnInit() {
     this.displayLoader = this.browseCompServ.isLoading()
@@ -60,7 +63,9 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
     })
     this.paramSubscription = this.activatedRoute.params.subscribe(async params => {
       this.competencyName = _.get(params, 'competency')
-      this.titles.push({ title: this.competencyName , url: 'none', icon: '' })
+      const allComp = this.localService.compentecies.getValue()
+      this.currentComp = _.first(_.filter(allComp, { 'name': this.competencyName }))
+      this.titles.push({ title: this.competencyName, url: 'none', icon: '' })
       this.stateData = { param: this.competencyName, path: 'competency-details' }
     })
 
@@ -148,8 +153,8 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
       .searchCompetency(req)
       .subscribe((response: NSBrowseCompetency.ICompetencieResponse) => {
         if (response.statusInfo && response.statusInfo.statusCode === 200) {
-          console.log('response.responseData :: ',response.responseData)
-          if(response.responseData && response.responseData.length) {
+          console.log('response.responseData :: ', response.responseData)
+          if (response.responseData && response.responseData.length) {
             this.competencyData = response.responseData[0]
           }
         }
@@ -161,21 +166,21 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
     //   this.searchReq = this.activatedRoute.snapshot.data.searchPageData.data.search.searchReq
     // }
     this.searchReq.request.filters['competencies_v3.name'].splice(0, 1, this.competencyName)
-      this.browseCompServ.fetchSearchData(this.searchReq).subscribe((res: any) => {
-        if (res && res.result &&  res.result ) {
-          this.courses = res.result.content || []
-        }
-        if (res && res.result &&  res.result && res.result.facets) {
-          // this.facets = res.result.facets
-          this.primaryCategoryType = []
-          this.contentType = []
-          this.mimeType = []
-          this.sourceType = []
-          this.mediaType = []
-          this.getFacets(res.result.facets)
-          // this.formatFacets()
-        }
-      })
+    this.browseCompServ.fetchSearchData(this.searchReq).subscribe((res: any) => {
+      if (res && res.result && res.result) {
+        this.courses = res.result.content || []
+      }
+      if (res && res.result && res.result && res.result.facets) {
+        // this.facets = res.result.facets
+        this.primaryCategoryType = []
+        this.contentType = []
+        this.mimeType = []
+        this.sourceType = []
+        this.mediaType = []
+        this.getFacets(res.result.facets)
+        // this.formatFacets()
+      }
+    })
   }
 
   getFacets(facets: any) {
@@ -187,7 +192,7 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
             const ispresent = this.userFilters.filter((x: any) => x.name === val.name)
             if (ispresent.length > 0) {
               val.ischecked = true
-            } else  {
+            } else {
               val.ischecked = false
             }
           })
@@ -328,7 +333,7 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
   }
 
   resetFilters() {
-    this.searchReq = {...this.activatedRoute.snapshot.data.searchPageData.data.search.searchReq}
+    this.searchReq = { ...this.activatedRoute.snapshot.data.searchPageData.data.search.searchReq }
     this.searchReq.request.filters.source = []
     this.searchReq.request.filters.primaryCategory = []
   }

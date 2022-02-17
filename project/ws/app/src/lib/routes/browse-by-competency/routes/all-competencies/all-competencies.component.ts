@@ -85,6 +85,7 @@ export class AllCompetenciesComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   searchCompetency(searchQuery: any, filters?: any) {
+    this.allCompetencies = []
     const searchJson = [
       { type: 'COMPETENCY', field: 'name', keyword: searchQuery ? searchQuery : '' },
       { type: 'COMPETENCY', field: 'description', keyword: searchQuery ? searchQuery : '' },
@@ -95,7 +96,7 @@ export class AllCompetenciesComponent implements OnInit, OnDestroy, OnChanges {
     if (filters && filters.length) {
       const groups = _.groupBy(filters, 'mainType')
       for (const key of Object.keys(groups)) {
-        const filter = { field: key, values: [''] }
+        const filter: { field: string, values: string[] } = { field: key, values: [''] }
         const keywords = groups[key].map(x => x.name)
         filter.values = keywords
         filterJson.push(filter)
@@ -106,17 +107,44 @@ export class AllCompetenciesComponent implements OnInit, OnDestroy, OnChanges {
       filter: filterJson,
       sort: this.sortBy,
     }
-    this.browseCompServ
-      .searchCompetency(req)
-      .subscribe((reponse: NSBrowseCompetency.ICompetencie[]) => {
-        // if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
-        //   this.allCompetencies = reponse.responseData
-        // }
-        if (reponse) {
-          this.allCompetencies = reponse
-          this.localDataService.initData(reponse)
-        }
-      })
+    if (!(this.localDataService.compentecies.value
+      && this.localDataService.compentecies.getValue().length > 0)) {
+      this.browseCompServ
+        .searchCompetency(req)
+        .subscribe((reponse: NSBrowseCompetency.ICompetencie[]) => {
+          // if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
+          //   this.allCompetencies = reponse.responseData
+          // }
+          if (reponse) {
+            // this.allCompetencies
+            if (req && req.filter && req.filter.length > 0) {
+              _.each(reponse, r => {
+                return _.each(req.filter, f => {
+                  if (_.includes(f.values, _.get(r, f.field))) {
+                    this.allCompetencies.push(r)
+                  }
+                })
+              })
+            } else {
+              this.allCompetencies = reponse
+            }
+            this.localDataService.initData(reponse)
+          }
+        })
+    } else {
+      const data = this.localDataService.compentecies.getValue()
+      if (data && req && req.filter && req.filter.length > 0) {
+        _.each(data, r => {
+          _.each(req.filter, f => {
+            if (_.includes(f.values, _.get(r, f.field))) {
+              this.allCompetencies.push(r)
+            }
+          })
+        })
+      } else {
+        this.allCompetencies = data
+      }
+    }
   }
 
   updateQuery(key: string) {
