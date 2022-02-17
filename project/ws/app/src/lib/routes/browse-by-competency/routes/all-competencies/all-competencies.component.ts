@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core'
+import { Component, OnInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core'
 import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
 import { FormGroup, FormControl } from '@angular/forms'
 import { BrowseCompetencyService } from '../../services/browse-competency.service'
@@ -7,13 +7,15 @@ import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { Subject, Observable } from 'rxjs'
 // tslint:disable
 import _ from 'lodash'
+// tslint:enable
+import { LocalDataService } from '../../services/localService'
 
 @Component({
   selector: 'ws-app-all-competencies',
   templateUrl: './all-competencies.component.html',
   styleUrls: ['./all-competencies.component.scss'],
 })
-export class AllCompetenciesComponent implements OnInit, OnChanges {
+export class AllCompetenciesComponent implements OnInit, OnDestroy, OnChanges {
   private unsubscribe = new Subject<void>()
   public displayLoader!: Observable<boolean>
   defaultThumbnail = ''
@@ -21,8 +23,8 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
   competencyAreas: any
   searchForm: FormGroup | undefined
   appliedFilters: any = []
-  searchQuery: string = ''
-  sortBy:any
+  searchQuery = ''
+  sortBy: any
   stateData: {
     param: any, path: any
   } | undefined
@@ -37,7 +39,8 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
   constructor(
     private configSvc: ConfigurationsService,
     private events: EventService,
-    private browseCompServ: BrowseCompetencyService
+    private browseCompServ: BrowseCompetencyService,
+    private localDataService: LocalDataService,
   ) { }
 
   ngOnInit() {
@@ -91,7 +94,7 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
     const filterJson = []
     if (filters && filters.length) {
       const groups = _.groupBy(filters, 'mainType')
-      for (let key of Object.keys(groups)) {
+      for (const key of Object.keys(groups)) {
         const filter = { field: key, values: [''] }
         const keywords = groups[key].map(x => x.name)
         filter.values = keywords
@@ -101,17 +104,20 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
     const req = {
       searches: searchJson,
       filter: filterJson,
-      sort: this.sortBy
+      sort: this.sortBy,
     }
     this.browseCompServ
       .searchCompetency(req)
-      .subscribe((reponse: NSBrowseCompetency.ICompetencieResponse) => {
-        if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
-          this.allCompetencies = reponse.responseData
+      .subscribe((reponse: NSBrowseCompetency.ICompetencie[]) => {
+        // if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
+        //   this.allCompetencies = reponse.responseData
+        // }
+        if (reponse) {
+          this.allCompetencies = reponse
+          this.localDataService.initData(reponse)
         }
       })
   }
-
 
   updateQuery(key: string) {
     this.searchQuery = key
@@ -142,7 +148,7 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
         {
           pageIdExt: 'knowledge-card',
           module: WsEvents.EnumTelemetrymodules.COMPETENCY,
-      })
+        })
     }
   }
 
@@ -153,7 +159,7 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
       this.searchCompetency(this.searchQuery, this.appliedFilters)
       // const queryparam = this.searchRequestObject
     }
-    console.log('Filter', filter)
+    // console.log('Filter', filter)
   }
 
   removeFilter(filter: any) {
