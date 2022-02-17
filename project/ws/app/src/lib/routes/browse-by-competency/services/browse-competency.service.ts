@@ -5,8 +5,8 @@ import { finalize } from 'rxjs/operators'
 
 const API_ENDPOINTS = {
   SEARCH_V6: `/apis/proxies/v8/sunbirdigot/search`,
-  GET_COMPETENCY_AREA: `/apis/protected/v8/frac/getAllNodes/competencyarea`,
-  SEARCH_COMPETENCY: `apis/protected/v8/frac/searchNodes`,
+  // GET_COMPETENCY_AREA: `/apis/protected/v8/frac/getAllNodes/competencyarea`,
+  SEARCH_COMPETENCY: `/apis/proxies/v8/searchBy/competency`,
 }
 
 @Injectable({
@@ -36,15 +36,15 @@ export class BrowseCompetencyService {
     .pipe(finalize(() => this.displaySearchLoader$.next(false)))
   }
 
-  searchCompetency(searchData: any): Observable<any> {
+  searchCompetency(_searchData: any): Observable<any> {
     this.displayLoader$.next(true)
-    return this.http.post<any>(API_ENDPOINTS.SEARCH_COMPETENCY, searchData)
+    return this.http.get<any>(API_ENDPOINTS.SEARCH_COMPETENCY)
     .pipe(finalize(() => this.displayLoader$.next(false)))
   }
 
-  fetchCompetencyAreas(): Observable<any> {
-    return this.http.get<any>(API_ENDPOINTS.GET_COMPETENCY_AREA)
-  }
+  // fetchCompetencyAreas(): Observable<any> {
+  //   return this.http.get<any>(API_ENDPOINTS.GET_COMPETENCY_AREA)
+  // }
 
   public notifyOther(data: any) {
     if (data) {

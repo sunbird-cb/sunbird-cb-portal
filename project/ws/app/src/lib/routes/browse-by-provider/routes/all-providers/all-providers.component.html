@@ -73,10 +73,10 @@
             <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
                 <mat-spinner [diameter]="30"></mat-spinner>
             </div>
-            <a (click)="loadMore()" class="cursor-pointer ws-mat-default-text mat-subheading-2 load_more_link"
+            <!-- <a (click)="loadMore()" class="cursor-pointer ws-mat-default-text mat-subheading-2 load_more_link"
             [hidden]="disableLoadMore || (displayLoader | async)" >
                 Load more
-            </a>
+            </a> -->
 
         </div>
     </div>
