@@ -130,8 +130,8 @@ export class CompetencyFiltersComponent implements OnInit, OnDestroy {
     this.localDataService.compentecies.subscribe((data: NSBrowseCompetency.ICompetencie[]) => {
       // this.filters[0].values=[] // not needed
       _.each(data, (d: NSBrowseCompetency.ICompetencie) => {
-        if (d.name) {
-          this.filters[1].values.push({ name: d.name })
+        if (d.competencyArea) {
+          this.filters[1].values.push({ name: d.competencyArea })
         }
       })
     })
