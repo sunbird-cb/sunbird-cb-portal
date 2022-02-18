@@ -119,12 +119,13 @@ export class AllCompetenciesComponent implements OnInit, OnDestroy, OnChanges {
             // this.allCompetencies
             if (req && req.filter && req.filter.length > 0) {
               _.each(reponse, r => {
-                return _.each(req.filter, f => {
+                _.each(req.filter, f => {
                   if (_.includes(f.values, _.get(r, f.field))) {
                     this.allCompetencies.push(r)
                   }
                 })
               })
+              // this.allCompetencies = _.orderBy(this.allCompetencies, ['name'], [req.sort === 'Descending'])
             } else {
               this.allCompetencies = reponse
             }
@@ -141,8 +142,28 @@ export class AllCompetenciesComponent implements OnInit, OnDestroy, OnChanges {
             }
           })
         })
+        if (req.sort) {
+          this.allCompetencies = _.orderBy(this.allCompetencies, ['name'], [req.sort === 'Descending' ? 'desc' : 'asc'])
+        }
       } else {
-        this.allCompetencies = data
+        const fData: NSBrowseCompetency.ICompetencie[] = []
+        if (req.searches && req.searches.length > 0) {
+          _.each(data, (d: NSBrowseCompetency.ICompetencie) => {
+            let found = false
+            _.each(_.initial(req.searches), s => {
+              found = found || _.includes(_.lowerCase(_.get(d, s.field)), _.lowerCase(s.keyword))
+            })
+            if (found) {
+              fData.push(d)
+            }
+          })
+          this.allCompetencies = fData
+        }
+        if (req.sort) {
+          this.allCompetencies = _.orderBy(fData || data, ['name'], [req.sort === 'Descending' ? 'desc' : 'asc'])
+        } else {
+          this.allCompetencies = fData || data
+        }
       }
     }
   }
@@ -179,7 +200,9 @@ export class AllCompetenciesComponent implements OnInit, OnDestroy, OnChanges {
         })
     }
   }
-
+  get allComp() {
+    return this.allCompetencies
+  }
   applyFilter(filter: any) {
     if (filter) {
       this.appliedFilters = filter

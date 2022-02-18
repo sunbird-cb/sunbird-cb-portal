@@ -7,7 +7,7 @@
       <ng-container *ngFor="let comp of allCompetencies | slice:0:8; let i=index">
         <ws-app-popular-competency-card [competency]="comp"></ws-app-popular-competency-card>
       </ng-container>
-      
+
       <!-- <div class="card-box card_gradient bg_color_blue">
         <img src="fusion-assets/images/competency.svg">
         <div class="card_text_box">
@@ -64,11 +64,12 @@
         </div>
       </div> -->
     </div>
-    <h4 *ngIf="allCompetencies?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
-      No competencies found! 
-   </h4>
+    <h4 *ngIf="allCompetencies?.length <=0 && ((displayLoader | async) === false)"
+      class="w-full text-left ws-mat-black60-text ">
+      No competencies found!
+    </h4>
     <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
-        <mat-spinner [diameter]="30"></mat-spinner>
+      <mat-spinner [diameter]="30"></mat-spinner>
     </div>
   </div>
 
@@ -107,8 +108,7 @@
                 <div class="item">
 
                   <mat-form-field class="" appearance="outline">
-                    <mat-select #sortBySelect formControlName="sortByControl" i18n-placeholder
-                      placeholder="Sort by">
+                    <mat-select #sortBySelect formControlName="sortByControl" i18n-placeholder placeholder="Sort by">
                       <mat-option [value]="'Ascending'" slected>Ascending ( A - Z )</mat-option>
                       <mat-option [value]="'Descending'">Descending ( Z - A )</mat-option>
                     </mat-select>
@@ -124,14 +124,18 @@
             <!-- search cards -->
             <mat-sidenav-content class="custom-sidecontent  mat-drawer-content mat-sidenav-content">
               <div *ngIf="displayLoader | async" class="mb-5 pr-4 flex items-center justify-center">
-                  <mat-spinner [diameter]="30"></mat-spinner>
+                <mat-spinner [diameter]="30"></mat-spinner>
               </div>
               <div>
-                <ng-container *ngFor="let comp of allCompetencies">
-                  <ws-app-competency-card [competency]="comp" [stateData]="stateData"></ws-app-competency-card>
+                <ng-container *ngIf="allCompetencies && allCompetencies.length>0">
+                  ========{{allComp.length}}=========
+                  <ng-container *ngFor="let comp of allCompetencies">
+                    <ws-app-competency-card [competency]="comp" [stateData]="stateData"></ws-app-competency-card>
+                  </ng-container>
                 </ng-container>
-                <h4 *ngIf="allCompetencies?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
-                   No competencies found! 
+                <h4 *ngIf="allCompetencies?.length <=0 && ((displayLoader | async) === false)"
+                  class="w-full text-left ws-mat-black60-text ">
+                  No competencies found!
                 </h4>
               </div>
             </mat-sidenav-content>
