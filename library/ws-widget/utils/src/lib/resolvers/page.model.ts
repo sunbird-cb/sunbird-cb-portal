@@ -5,6 +5,7 @@ import { NsWidgetResolver } from '../services/widget-resolver.model'
 export namespace NsPage {
   export interface IPage {
     contentType: string
+    primaryCategory?: string
     navigationBar: INavBar
     pageLayout: NsWidgetResolver.IRenderConfigWithAnyData
     tourGuide?: string[][]

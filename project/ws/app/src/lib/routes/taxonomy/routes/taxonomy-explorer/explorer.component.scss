@@ -1,0 +1,94 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.container-balanced {
+  @extend %page-center;
+  height: auto;
+  min-height: 400px;
+
+  @media (max-width:1024px) {
+    padding-left: 8px!important;
+    padding-right: 8px!important;
+    min-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.search{
+  margin-top: 20px;
+  margin-left: 8.5%;
+}
+ws-widget-breadcrumbs-org{
+  margin-left: -30px;
+  margin-top: 15px;
+}
+.bot{
+  margin-bottom: 40px;
+}
+.sidenav-align{
+  overflow: auto;
+  width: auto;
+  min-width: 380px;
+  min-height: 900px;
+
+  @include breakpoint-xs {
+    width: 290px;
+    min-width: 290px;
+  }
+
+}
+.min-height{
+  min-height: 900px;
+}
+.container-balanced-banner {
+  max-width: 1600px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  height: auto;
+}
+.container-balanced-local {
+  max-width: 1600px;
+  min-height: 1000px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  height: auto;
+}
+.min-wid {
+  min-width: 300;
+}
+.flex-3 {
+  flex: 3;
+}
+
+.flex-5 {
+  flex: 5;
+}
+
+.border-0 {
+  border-right: none !important;
+  background: inherit !important;
+}
+
+.flex-update {
+  flex-direction: row;
+
+  @include breakpoint-xs {
+    flex-direction: column;
+  }
+
+  @include breakpoint-s {
+    flex-direction: column;
+  }
+}
+.unit-cohort{
+  background-color: green;
+}
+.min-wid{
+  min-width: 1400px;
+}
+.max-height{
+  max-height: 815px;
+}
+

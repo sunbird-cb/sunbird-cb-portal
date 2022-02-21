@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
 import { WidgetContentService } from '../../_services/widget-content.service'
 
 @Component({
@@ -41,9 +41,19 @@ export class UserContentRatingComponent implements OnInit {
       const previousRating = this.userRating
       if (this.userRating !== index + 1) {
         this.userRating = index + 1
-        this.events.raiseInteractTelemetry('rating', 'content', {
-          contentId: this.contentId,
-          rating: this.userRating,
+        this.events.raiseInteractTelemetry(
+          {
+            type: 'rating',
+            subType: 'content',
+            id: this.contentId,
+          },
+          {
+            id: this.contentId,
+            rating: this.userRating,
+          },
+          {
+          pageIdExt: 'rating-popup',
+          module: WsEvents.EnumTelemetrymodules.FEEDBACK,
         })
         this.contentSvc.addContentRating(this.contentId, { rating: this.userRating }).subscribe(
           _ => {

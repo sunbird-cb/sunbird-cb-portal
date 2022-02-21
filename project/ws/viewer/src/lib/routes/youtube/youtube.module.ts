@@ -7,6 +7,7 @@ import {
   MatDividerModule,
   MatIconModule,
   MatSnackBarModule,
+  MatProgressSpinnerModule,
 } from '@angular/material'
 
 import {
@@ -49,6 +50,7 @@ import { YoutubeModule as YoutubeViewContainerModule } from '../../route-view-co
     MatCardModule,
     MatDividerModule,
     MatIconModule,
+    MatProgressSpinnerModule,
     MatSnackBarModule,
     PipeDurationTransformModule,
     PipeLimitToModule,

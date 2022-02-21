@@ -3,9 +3,9 @@ import { FormGroup, FormControl, Validators, FormArray, FormBuilder, AbstractCon
 import { ENTER, COMMA } from '@angular/cdk/keycodes'
 import { Subscription, Observable } from 'rxjs'
 import { startWith, map, debounceTime, distinctUntilChanged } from 'rxjs/operators'
-import { MatSnackBar, MatChipInputEvent, DateAdapter, MAT_DATE_FORMATS, MatDialog } from '@angular/material'
+import { MatSnackBar, MatChipInputEvent, DateAdapter, MAT_DATE_FORMATS, MatDialog, MatTabChangeEvent } from '@angular/material'
 import { AppDateAdapter, APP_DATE_FORMATS, changeformat } from '../../services/format-datepicker'
-import { ImageCropComponent, ConfigurationsService } from '@sunbird-cb/utils'
+import { ImageCropComponent, ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils'
 import { IMAGE_MAX_SIZE, IMAGE_SUPPORT_TYPES } from '@ws/author/src/lib/constants/upload'
 import { UserProfileService } from '../../services/user-profile.service'
 import { Router, ActivatedRoute } from '@angular/router'
@@ -115,6 +115,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     public dialog: MatDialog,
     private loader: LoaderService,
+    private eventSvc: EventService,
   ) {
     this.approvalConfig = this.route.snapshot.data.pageData.data
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
@@ -217,16 +218,38 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.govtOrgMeta = data.govtOrg
         this.industriesMeta = data.industries
         this.degreesMeta = data.degrees
-        this.designationsMeta = data.designations
+        // this.designationsMeta = data.designations
       },
       (_err: any) => {
       })
-      this.userProfileSvc.getAllDepartments().subscribe(
-        (data: any) => {
-          this.allDept = data
+    this.userProfileSvc.getAllDepartments().subscribe(
+      (data: any) => {
+        this.allDept = data
+      },
+      (_err: any) => {
+      })
+
+    const desreq = {
+      searches: [
+        {
+          type: 'POSITION',
+          field: 'name',
+          keyword: '',
         },
-        (_err: any) => {
-        })
+        {
+          field: 'status',
+          keyword: 'VERIFIED',
+          type: 'POSITION',
+        },
+      ],
+    }
+
+    this.userProfileSvc.getDesignations(desreq).subscribe(
+      (data: any) => {
+        this.designationsMeta = data.responseData
+      },
+      (_err: any) => {
+      })
   }
   createDegree(): FormGroup {
     return this.fb.group({
@@ -486,48 +509,63 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   getUserDetails() {
-    if (this.configSvc.profileDetailsStatus) {
-        this.userProfileSvc.getUserdetailsFromRegistry().subscribe(
-          (data: any) => {
-            const userData = data.result.UserProfile
-            if (data && data.result && data.result.UserProfile && userData.length) {
-              const academics = this.populateAcademics(userData[0])
-              this.setDegreeValuesArray(academics)
-              this.setPostDegreeValuesArray(academics)
-              const organisations = this.populateOrganisationDetails(userData[0])
-              this.constructFormFromRegistry(userData[0], academics, organisations)
-              this.populateChips(userData[0])
-              this.userProfileData = userData[0]
-            } else {
-              if (this.configSvc.userProfile) {
-                this.createUserForm.patchValue({
-                  firstname: this.configSvc.userProfile.firstName,
-                  surname: this.configSvc.userProfile.lastName,
-                  primaryEmail: this.configSvc.userProfile.email,
-                  orgName: this.configSvc.userProfile.rootOrgName,
-                })
-              }
-            }
-            // this.handleFormData(data[0])
-          },
-          (_err: any) => {
-          })
-    } else {
-      if (this.configSvc.userProfile) {
-        this.userProfileSvc.getUserdetails(this.configSvc.userProfile.email).subscribe(
-          data => {
-            if (data && data.length) {
+    // if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.id) {
+    //   console.log(this.configSvc.unMappedUser)
+    // }
+    if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.id) {
+      // if (this.configSvc.userProfile) {
+      this.userProfileSvc.getUserdetailsFromRegistry(this.configSvc.unMappedUser.id).subscribe(
+        (data: any) => {
+          const userData = data.profileDetails || _.get(this.configSvc.unMappedUser, 'profileDetails')
+          if (data.profileDetails && (userData.id || userData.userId)) {
+            const academics = this.populateAcademics(userData)
+            this.setDegreeValuesArray(academics)
+            this.setPostDegreeValuesArray(academics)
+            const organisations = this.populateOrganisationDetails(userData)
+            this.constructFormFromRegistry(userData, academics, organisations)
+            this.populateChips(userData)
+            this.userProfileData = userData
+          } else {
+            if (this.configSvc.userProfile) {
+              this.userProfileData = { ...userData, id: this.configSvc.userProfile.userId, userId: this.configSvc.userProfile.userId }
               this.createUserForm.patchValue({
-                firstname: data[0].first_name,
-                surname: data[0].last_name,
-                primaryEmail: data[0].email,
-                orgName: data[0].department_name,
+                firstname: this.configSvc.userProfile.firstName,
+                surname: this.configSvc.userProfile.lastName,
+                primaryEmail: _.get(this.userProfileData, 'personalDetails.primaryEmail') || this.configSvc.userProfile.email,
+                orgName: this.configSvc.userProfile.rootOrgName,
               })
             }
-          },
-          () => {
-            // console.log('err :', err)
-          })
+          }
+          // this.handleFormData(data[0])
+        },
+        (_err: any) => {
+        })
+    } else {
+      // if (this.configSvc.userProfile) {
+      //   this.userProfileSvc.getUserdetails(this.configSvc.userProfile.email).subscribe(
+      //     data => {
+      //       if (data && data.length) {
+      //         this.createUserForm.patchValue({
+      //           firstname: data[0].first_name,
+      //           surname: data[0].last_name,
+      //           primaryEmail: data[0].email,
+      //           orgName: data[0].department_name,
+      //         })
+      //       }
+      //     },
+      //     () => {
+      //       // console.log('err :', err)
+      //     })
+      // }
+      if (this.configSvc.userProfile) {
+        const tempData = this.configSvc.userProfile
+        this.userProfileData = _.get(this.configSvc, 'unMappedUser.profileDetails')
+        this.createUserForm.patchValue({
+          firstname: tempData.firstName,
+          surname: tempData.lastName,
+          primaryEmail: _.get(this.configSvc.unMappedUser, 'profileDetails.personalDetails.primaryEmail') || tempData.email,
+          orgName: tempData.rootOrgName,
+        })
       }
     }
   }
@@ -678,7 +716,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       isGovtOrg: organisation.isGovtOrg,
       // orgName: organisation.orgName,
       industry: organisation.industry,
-      designation: organisation.designation,
+      designation: organisation.designation || _.get(data, 'professionalDetails.designation'),
       location: organisation.location,
       doj: organisation.doj,
       orgDesc: organisation.orgDesc,
@@ -710,8 +748,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   checkvalue(value: any) {
     if (value && value === 'undefined') {
-        // tslint:disable-next-line:no-parameter-reassignment
-        value = ''
+      // tslint:disable-next-line:no-parameter-reassignment
+      value = ''
     } else {
       return value
     }
@@ -747,6 +785,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   private constructReq(form: any) {
+    const arrCompetencies = this.configSvc.unMappedUser.profileDetails ? this.configSvc.unMappedUser.profileDetails.competencies : []
     const userid = this.userProfileData.userId || this.userProfileData.id
     const profileReq = {
       id: userid,
@@ -773,6 +812,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         pincode: form.value.pincode,
       },
       academics: this.getAcademics(form),
+      competencies: arrCompetencies,
       employmentDetails: {
         service: form.value.service,
         cadre: form.value.cadre,
@@ -850,6 +890,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         }
       case 'academics':
         return this.getAcademics(form)
+      case 'competencies':
+        return this.configSvc.unMappedUser.profileDetails.competencies
       case 'employmentDetails':
         return {
           service: form.value.service,
@@ -872,12 +914,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         return {
           additionalSkills: form.value.skillAquiredDesc,
           certificateDetails: form.value.certificationDesc,
-          }
+        }
       case 'interests':
         return {
           professional: form.value.interests,
           hobbies: form.value.hobbies,
-          }
+        }
       default:
         return undefined
     }
@@ -1016,15 +1058,21 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     // Construct the request structure for open saber
     const profileRequest = this.constructReq(form)
-    let appdata = [] as  any
+    let appdata = [] as any
     appdata = profileRequest.approvalData !== undefined ? profileRequest.approvalData : []
-    this.userProfileSvc.updateProfileDetails(profileRequest.profileReq).subscribe(
+    const reqUpdate = {
+      request: {
+        userId: this.configSvc.unMappedUser.id,
+        profileDetails: profileRequest.profileReq,
+      },
+    }
+    this.userProfileSvc.updateProfileDetails(reqUpdate).subscribe(
       () => {
         if (appdata !== undefined && appdata.length > 0) {
           if (this.configSvc.userProfile) {
-            this.userProfileSvc.getUserdetailsFromRegistry().subscribe(
+            this.userProfileSvc.getUserdetailsFromRegistry(this.configSvc.unMappedUser.id).subscribe(
               (data: any) => {
-                const dat = data.result.UserProfile[0]
+                const dat = data.profileDetails
                 if (dat) {
                   const academics = this.populateAcademics(dat.academics)
                   this.setDegreeValuesArray(academics)
@@ -1059,6 +1107,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
                       if (!this.isForcedUpdate && this.userProfileData) {
                         this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
                       } else {
+                        setTimeout(() => {
+                          // do nothing
+                          // tslint:disable-next-line
+                        }, 1000)
                         this.router.navigate(['page', 'home'])
                       }
                     }
@@ -1077,6 +1129,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
                       // this.constructFormFromRegistry(data[0], academics, organisations)
                       this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
                     } else {
+                      setTimeout(() => {
+                        // do nothing
+                        // tslint:disable-next-line
+                      }, 1000)
                       this.router.navigate(['page', 'home'])
                     }
                   }
@@ -1088,12 +1144,19 @@ export class UserProfileComponent implements OnInit, OnDestroy {
                   if (!this.isForcedUpdate && this.userProfileData) {
                     this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
                   } else {
+                    setTimeout(() => {
+                      // do nothing
+                      // tslint:disable-next-line
+                    }, 1000)
                     this.router.navigate(['page', 'home'])
                   }
                 }
                 // this.handleFormData(data[0])
               },
               (_err: any) => {
+                if (_err) {
+                  window.location.reload()
+                }
               })
           }
         } else {
@@ -1104,6 +1167,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           if (!this.isForcedUpdate && this.userProfileData) {
             this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
           } else {
+            setTimeout(() => {
+              // do nothing
+              // tslint:disable-next-line
+            }, 1000)
             this.router.navigate(['page', 'home'])
           }
         }
@@ -1244,5 +1311,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         }
       },
     })
+  }
+
+  public tabClicked(tabEvent: MatTabChangeEvent) {
+    const data: WsEvents.ITelemetryTabData = {
+      label: `${tabEvent.tab.textLabel}`,
+      index: tabEvent.index,
+    }
+    this.eventSvc.handleTabTelemetry(
+      WsEvents.EnumInteractSubTypes.PROFILE_EDIT_TAB,
+      data,
+    )
   }
 }

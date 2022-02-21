@@ -1,5 +1,5 @@
 <ng-container *ngIf="!showActivities; else activities">
-  <!-- <div class="mat-toolbar px-4 sm:px-8 md:px-0 py-4 flex items-center">
+    <!-- <div class="mat-toolbar px-4 sm:px-8 md:px-0 py-4 flex items-center">
     <ws-widget-user-image class="user-image" [email]="userEmail"></ws-widget-user-image>
     <h3>
     <ng-container i18n>Hey, </ng-container>
@@ -9,44 +9,65 @@
   </div> -->
 </ng-container>
 
-<mat-card class="flex-1 remove-botton-radius card-min-hei">
-  <mat-card-header>
-    <mat-card-title class="margin-l-0 f-medium">
-      <span class="mat-subheading-1">Explore courses</span>
-    </mat-card-title>
-  </mat-card-header>
-  <mat-card-content class="margin-left-m mb-0-imp">
-    <!-- <ng-container *ngFor="let post of data.posts | pipeFilter:'index': '0'"> -->
-    <!-- <h4 class="w-full title-margin ws-mat-black60-text">
+<!-- <mat-card class="flex-1 remove-botton-radius card-min-hei"> -->
+<div class="flex-1 remove-botton-radius card-min-hei">
+    <!-- <mat-card-header>
+        <mat-card-title class="margin-l-0 f-medium">
+            <span class="mat-subheading-1 mat-subheading-1-1">Explore courses</span>
+        </mat-card-title>
+    </mat-card-header> -->
+    <mat-card-content class="margin-left-m mb-0-imp">
+
+        <!-- <ng-container *ngFor="let post of data.posts | pipeFilter:'index': '0'"> -->
+        <!-- <h4 class="w-full title-margin ws-mat-black60-text">
       Explore Career Options
     </h4> -->
-    <!-- </ng-container> -->
-  </mat-card-content>
-  <mat-card-actions align="left" class="marg">
-    <button mat-button color="default" type="button" class="margin-left-xs small-button blue-border flex-auto-display" (click)="goToTaxonomyHome()">
-      <span class="ws-mat-default-text" i18n>Browse by topic</span>
+        <!-- </ng-container> -->
+
+    </mat-card-content>
+    <mat-card-actions align="left" class="marg">
+        <button mat-button type="button" class="explore_btn margin-left-xs margin-right-xs small-button blue-border flex-auto-display" (click)="goToTaxonomyHome()">
+      <mat-icon  class="ws-mat-default-text icon-margin mat-icon notranslate material-icons mat-icon-no-color">
+        school
+      </mat-icon>
+      <span class="ws-mat-default-text" i18n>Explore by topic</span>
     </button>
 
-    <!-- <button mat-button color="default" type="button" class="margin-left-xs small-button blue-border flex-auto-display">
+        <button mat-button type="button" class="explore_btn margin-left-xs small-button blue-border flex-auto-display" (click)="goToCompentencyBrowse()">
+      <mat-icon  class="ws-mat-default-text icon-margin mat-icon notranslate material-icons mat-icon-no-color">
+        extension
+      </mat-icon>
+      <span class="ws-mat-default-text" i18n>
+        Explore by competency
+      </span>
+    </button>
+
+        <button mat-button type="button" class="explore_btn margin-left-xs small-button blue-border flex-auto-display" (click)="goToProviderBrowse()">
+      <mat-icon  class="ws-mat-default-text icon-margin mat-icon notranslate material-icons mat-icon-no-color">
+        scatter_plot
+      </mat-icon>
+      <span class="ws-mat-default-text" i18n>
+        Explore by provider
+      </span>
+    </button>
+
+        <!-- <button mat-button color="default" type="button" class="margin-left-xs small-button blue-border flex-auto-display">
       <span class="ws-mat-default-text" i18n>Explore by compentency</span>
     </button> -->
 
-    <!-- <button mat-button color="default" type="button" class="margin-left-xs small-button blue-border flex-auto-display">
-      <span class="ws-mat-default-text" i18n>Explore by compentency</span>
-    </button> -->
+    </mat-card-actions>
 
-  </mat-card-actions>
-
-</mat-card>
+    <!-- </mat-card> -->
+</div>
 
 <ng-template #activities>
-  <div class="px-4 sm:px-8 md:px-0 py-4 my-1">
+    <div class="px-4 sm:px-8 md:px-0 py-4 my-1">
 
-    <!-- <h2 class="title" i18n>Welcome,
+        <!-- <h2 class="title" i18n>Welcome,
       <ng-container>{{ givenName }}</ng-container>
     </h2> -->
-    <div class="row-justify flex-wrap">
-      <ws-widget-activity-card *ngFor="let card of activityCards" [widgetData]="{
+        <div class="row-justify flex-wrap">
+            <ws-widget-activity-card *ngFor="let card of activityCards" [widgetData]="{
             id : card.id,
             title : card.title,
             description : card.description,
@@ -56,7 +77,7 @@
             tag : card.tag,
             class: 'activity-learning-card'
             }">
-      </ws-widget-activity-card>
+            </ws-widget-activity-card>
+        </div>
     </div>
-  </div>
 </ng-template>

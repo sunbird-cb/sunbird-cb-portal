@@ -1,0 +1,135 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+
+.container-balanced {
+    max-width: 1202px;
+    margin-left: auto!important;
+    margin-right: auto!important;
+    height: auto;
+    min-height: 400px;
+}
+
+.custom-container-width {
+    width: 1000px;
+    overflow-y: hidden;
+    box-sizing: border-box;
+
+    @include breakpoint-xs {
+         width: 100%;
+    }
+
+    @include breakpoint-s {
+         width: 100%;
+    }
+
+}
+
+.top_content_box {
+    padding-top: 35px;
+
+    @include breakpoint-xs {
+        flex-direction: column;
+      }
+
+      @include breakpoint-s {
+        flex-direction: column;
+      }
+
+}
+.left_content_box  {
+
+    width: calc(100% - 400px);
+
+    @include breakpoint-xs {
+        width: 100%;
+   }
+
+   @include breakpoint-s {
+        width: 100%;
+   }
+}
+.right_button_box {
+    width: 380px;
+    margin-left: 10px;
+
+    @include breakpoint-xs {
+        width: 100%;
+        margin-left: 0px;
+    }
+
+   @include breakpoint-s {
+        width: 100%;
+        margin-left: 0px;
+    }
+
+    .mat-card {
+        width: 100%;
+        box-sizing: border-box;
+
+        .mat-button {
+            width: 100%;
+        }
+    }
+
+}
+.blue-border {
+    border: 2px solid #0074b6;
+}
+.view-all {
+    border: 2px solid #d3d3d3;
+}
+.card_title_box {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+.left_title_div {
+    width: 220px;
+    padding: 10px 24px;
+    box-sizing: border-box;
+
+    @include breakpoint-xs {
+        width: 45%;
+
+    }
+
+   @include breakpoint-s {
+    width: 45%;
+
+    }
+
+}
+.right_title_div {
+    width: calc(100% - 230px);
+    padding: 10px 24px;
+    box-sizing: border-box;
+
+    @include breakpoint-xs {
+        width: 55%;
+    }
+
+   @include breakpoint-s {
+    width: 55%;
+    }
+
+}
+.margin-top-56 {
+    margin-top: 56px;
+}
+
+.new-box {
+    max-width: 1202px;
+    display: inline-block;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+
+.related_cbp_box {
+    @include breakpoint-xs {
+        display: none!important;
+    }
+    @include breakpoint-s {
+        display: none!important;
+    }
+}

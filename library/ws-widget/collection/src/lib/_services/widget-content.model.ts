@@ -19,6 +19,7 @@ export namespace NsContent {
     appIcon: string
     artifactUrl: string
     averageRating?: any
+    batches: any
     body?: string
     certificationList?: IRelatedContentMeta[]
     certificationStatus?: TCertificationStatus
@@ -30,7 +31,7 @@ export namespace NsContent {
     collections?: IContent[]
     completionPercentage?: number | null
     completionStatus?: number
-    complexityLevel: string
+    difficultyLevel: string
     contentId: string
     contentType: EContentTypes
     contentUrlAtSource: string
@@ -85,7 +86,7 @@ export namespace NsContent {
       currency: string
       value: number
     }
-    primaryCategory: string,
+    primaryCategory: EPrimaryCategory,
     proctorUrl?: string
     progress?: IMarkAsCompleteProgress
     publishedOn: string
@@ -158,17 +159,17 @@ export namespace NsContent {
     name: string,
     startDate: string,
     status: number
-    cert_templates: null
+    cert_templates?: null
     collectionId: string
     courseId: string
     createdDate: string
     createdFor: string[]
-    description: null
+    description?: null
     enrollmentEndDate: string | null
     id: string
-    mentors: string[] | null
-    tandc: null
-    updatedDate: string | null
+    mentors?: string[] | null
+    tandc?: null
+    updatedDate?: string | null
   }
 
   export interface IBatchListResponse {
@@ -208,7 +209,7 @@ export namespace NsContent {
   export interface IContentMinimal {
     appIcon: string
     artifactUrl: string
-    complexityLevel: string
+    difficultyLevel: string
     contentType: EContentTypes
     description: string
     displayContentType?: EDisplayContentTypes
@@ -222,6 +223,7 @@ export namespace NsContent {
     creatorDetails: ICreator[]
     creatorContacts: ICreator[]
     PosterImage: string
+    primaryCategory: EPrimaryCategory
     resourceType?: string
     totalRating?: number
   }
@@ -317,16 +319,44 @@ export namespace NsContent {
     dateAccessed: number
     contextType?: string
   }
-
+  /**
+    * @deprecated Enum EContentTypes should not be used in future
+    */
   export enum EContentTypes {
+    PROGRAMV2 = 'Program',
     PROGRAM = 'Learning Path',
     CHANNEL = 'Channel',
     COURSE = 'Course',
     KNOWLEDGE_ARTIFACT = 'Knowledge Artifact',
     KNOWLEDGE_BOARD = 'Knowledge Board',
     LEARNING_JOURNEY = 'Learning Journeys',
-    MODULE = 'Collection',
+    MODULE = 'CourseUnit',
     RESOURCE = 'Resource',
+  }
+  export enum EPrimaryCategory {
+    PROGRAM = 'Program',
+    COURSE = 'Course',
+    MODULE = 'Course Unit',
+    RESOURCE = 'Learning Resource',
+    GOALS = 'GOALS',
+    PLAYLIST = 'PLAYLIST',
+    // following will not be available soon
+    /**
+     * @deprecated The type should not be used
+     */
+    KNOWLEDGE_ARTIFACT = 'Knowledge Artifact',
+    /**
+    * @deprecated The type should not be used
+    */
+    KNOWLEDGE_BOARD = 'Knowledge Board',
+    /**
+    * @deprecated The type should not be used
+    */
+    LEARNING_JOURNEY = 'Learning Journeys',
+    /**
+    * @deprecated The type should not be used
+    */
+    CHANNEL = 'Channel',
   }
 
   export enum EResourcePrimaryCategories {
@@ -337,26 +367,27 @@ export namespace NsContent {
     PLAYLIST = 'Playlist',
   }
   export const PLAYER_SUPPORTED_COLLECTION_TYPES: string[] = [
-    EContentTypes.COURSE,
-    EContentTypes.MODULE,
-    EContentTypes.PROGRAM,
+    EPrimaryCategory.COURSE,
+    EPrimaryCategory.MODULE,
+    EPrimaryCategory.PROGRAM,
     EMiscPlayerSupportedCollectionTypes.PLAYLIST,
   ]
-  export const KB_SUPPORTED_CONTENT_TYPES: EContentTypes[] = [
-    EContentTypes.COURSE,
-    EContentTypes.MODULE,
-    EContentTypes.PROGRAM,
-    EContentTypes.RESOURCE,
+  export const KB_SUPPORTED_CONTENT_TYPES: EPrimaryCategory[] = [
+    EPrimaryCategory.COURSE,
+    EPrimaryCategory.MODULE,
+    EPrimaryCategory.PROGRAM,
+    EPrimaryCategory.RESOURCE,
   ]
-  export const PLAYLIST_SUPPORTED_CONTENT_TYPES: EContentTypes[] = [
-    EContentTypes.COURSE,
-    EContentTypes.MODULE,
-    EContentTypes.PROGRAM,
-    EContentTypes.RESOURCE,
+  export const PLAYLIST_SUPPORTED_CONTENT_TYPES: EPrimaryCategory[] = [
+    EPrimaryCategory.COURSE,
+    EPrimaryCategory.MODULE,
+    EPrimaryCategory.PROGRAM,
+    EPrimaryCategory.RESOURCE,
   ]
   export enum EMimeTypes {
     COLLECTION = 'application/vnd.ekstep.content-collection',
     ZIP = 'application/vnd.ekstep.html-archive',
+    ZIP2 = 'application/vnd.ekstep.ecml-archive',
     HTML = 'application/html',
     HTML_TEXT = 'text/html',
     ILP_FP = 'application/ilpfp',
@@ -428,4 +459,11 @@ export namespace NsContent {
   export enum ETagType {
     NEWLY_ADDED = 'NEWLY ADDED',
   }
+
+  export const UN_SUPPORTED_DATA_TYPES_FOR_NON_BATCH_USERS: string[] = [
+    EMimeTypes.QUIZ,
+    EMimeTypes.APPLICATION_JSON,
+    EMimeTypes.WEB_MODULE_EXERCISE,
+
+  ]
 }

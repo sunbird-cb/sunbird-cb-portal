@@ -27,12 +27,15 @@
   $iconColor: mat-color($foreground, icon);
   $colorGreen: #5fa800;
   $colorRed: #ff0000;
+  $colorOrange: rgba(246, 153, 83, 1);
   $footerColor: #373434;
   $footerTextColor: #dedfe0;
   $colorWhite: #ffffff;
   $colorBlack: rgba(0, 0, 0, 0.87);
   $colorBlack60: rgba(0, 0, 0, 0.60);
   $colorBlack40: rgba(0, 0, 0, 0.40);
+  $colorBlack16: rgba(0, 0, 0, 0.16);
+  $colorBlack040: rgba(0, 0, 0, 0.040);
   $colorLighterGrey: #bbbcbc;
 
   outline-color: mat-color($accent, lighter);
@@ -61,6 +64,10 @@
   .mat-mini-fab {
     height: 48px;
     width: 48px;
+  }
+
+  .green-progress .mat-progress-bar-fill::after {
+    background-color: red !important;
   }
 
   @if $is-dark {
@@ -370,7 +377,22 @@
         position: absolute;
         border-color: #347bb6;
         border-style: solid;
+        border-width: 0 0 0 4px;
+        height: inherit;
+      }
+    }
+    .ws-active-route-menu {
+      background-color: $colorBlack040 !important;
+      font-weight: 700;
+      font: bold 14px Lato !important;
+
+      &::after {
+        content: '';
+        position: absolute;
+        border-color: #347bb6;
+        border-style: solid;
         border-width: 0 0 0 2px;
+        right: 0;
         height: inherit;
       }
     }
@@ -492,6 +514,10 @@
       color: $colorBlack60;
     }
 
+    .ws-mat-black16-text {
+      color: $colorBlack16;
+    }
+
     .ws-mat-black40-text {
       color: $colorBlack40;
     }
@@ -514,6 +540,10 @@
 
     .ws-mat-red-text {
       color: $colorRed !important;
+    }
+
+    .ws-mat-orange-text {
+      color: $colorOrange !important;
     }
 
     .ws-mat-primary-border {

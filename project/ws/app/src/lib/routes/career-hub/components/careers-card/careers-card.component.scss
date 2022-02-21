@@ -5,17 +5,29 @@
 .career-card {
   // display: flex;
   flex: 1;
-  height: 100%;
+  height: 80%;
   // height: calc(100% - 2rem);
   &.mat-card{
     // flex-direction: column;
     // display: flex;
     display: inline-table;
     width: 94%;
+    box-sizing: border-box;
+    min-height: 180px;
   }
   .mat-card-footer{
     justify-self: flex-end;
-    align-items: center;
+    // align-items: center;
+
+    @include breakpoint-xs {
+      // align-items:
+      flex-direction: row;
+    }
+
+    @include breakpoint-s {
+      // align-items: inherit;
+      flex-direction: row;
+    }
   }
 }
 .dot:before {
@@ -48,7 +60,7 @@
 
 .mobile2 {
   @include breakpoint-xs {
-    margin-top: $size-s;
+    // margin-top: $size-s;
   }
 
   // @include breakpoint-s {
@@ -95,4 +107,8 @@
 
 .pad-4 {
   padding: 4px;
+}
+.career-mat-title {
+  word-break: break-all;
+  white-space: initial;
 }

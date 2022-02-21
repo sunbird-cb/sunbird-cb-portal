@@ -1,3 +1,5 @@
+import { AccountPasswordSettingsComponent } from './routes/settings/components/account-password-settings/account-password-settings.component'
+import { PrivacySettingsComponent } from './routes/settings/components/privacy-settings/privacy-settings.component'
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { PageResolve } from '@sunbird-cb/utils'
@@ -22,6 +24,7 @@ import { SettingsComponent } from './routes/settings/settings.component'
 import { BadgesComponent } from './routes/badges/badges.component'
 import { GeneralGuard } from '../../../../../../../src/app/guards/general.guard'
 import { ProfileResolverService } from './resolvers/profile-resolver.service'
+import { NotificationSettingsComponent } from './routes/settings/components/notification-settings/notification-settings.component'
 
 const routes: Routes = [
   {
@@ -35,6 +38,8 @@ const routes: Routes = [
     data: {
       pageType: 'feature',
       pageKey: 'profile',
+      pageId: 'dashboard',
+      module: 'profile',
     },
     resolve: {
       pageData: PageResolve,
@@ -54,6 +59,10 @@ const routes: Routes = [
       {
         path: 'badges',
         component: BadgesComponent,
+        data: {
+          pageId: 'badges',
+          module: 'profile',
+        },
         resolve: {
           badges: BadgesResolver2,
           profileData: ProfileResolverService,
@@ -63,6 +72,10 @@ const routes: Routes = [
       {
         path: ':type',
         component: AchievementsComponent,
+        data: {
+          pageId: ':type',
+          module: 'profile',
+        },
         resolve: {
           competencyData: CompetencyResolverService,
           profileData: ProfileResolverService,
@@ -71,11 +84,17 @@ const routes: Routes = [
       {
         path: ':type/details',
         component: CardDetailComponent,
+        data: {
+          pageId: ':type/details',
+          module: 'profile',
+        },
       },
     ],
     data: {
       pageType: 'feature',
       pageKey: 'profile',
+      pageId: 'competency',
+      module: 'profile',
     },
     resolve: {
       pageData: PageResolve,
@@ -102,6 +121,8 @@ const routes: Routes = [
         data: {
           pageType: 'feature',
           pageKey: 'profile',
+          pageId: 'time',
+          module: 'profile',
         },
         runGuardsAndResolvers: 'paramsOrQueryParamsChange',
       },
@@ -111,6 +132,8 @@ const routes: Routes = [
         data: {
           pageType: 'feature',
           pageKey: 'profile',
+          pageId: 'history',
+          module: 'profile',
         },
         resolve: {
           learningHistory: LearningHistoryResolver,
@@ -122,6 +145,8 @@ const routes: Routes = [
     data: {
       pageType: 'feature',
       pageKey: 'profile',
+      pageId: 'learning',
+      module: 'profile',
     },
     resolve: {
       pageData: PageResolve,
@@ -130,6 +155,10 @@ const routes: Routes = [
   {
     path: 'interest',
     component: InterestComponent,
+    data: {
+      pageId: 'interest',
+      module: 'profile',
+    },
     resolve: {
       interests: InterestUserResolve,
       profileData: ProfileResolverService,
@@ -138,14 +167,50 @@ const routes: Routes = [
   {
     path: 'plans',
     component: PlansComponent,
+    data: {
+      pageId: 'plans',
+      module: 'profile',
+    },
   },
   {
     path: 'collaborators',
     component: LearningComponent,
+    data: {
+      pageId: 'collaborators',
+      module: 'profile',
+    },
   },
   {
     path: 'settings',
     component: SettingsComponent,
+    data: {
+      pageId: 'notification',
+      module: 'profile',
+    },
+  },
+  {
+    path: 'notification',
+    component: NotificationSettingsComponent,
+    data: {
+      pageId: 'notification',
+      module: 'profile',
+    },
+  },
+  {
+    path: 'privacy',
+    component: PrivacySettingsComponent,
+    data: {
+      pageId: 'privacy',
+      module: 'profile',
+    },
+  },
+  {
+    path: 'accountandpassword',
+    component: AccountPasswordSettingsComponent,
+    data: {
+      pageId: 'accountandpassword',
+      module: 'profile',
+    },
   },
 ]
 

@@ -53,7 +53,6 @@ export class DiscussAllComponent implements OnInit, AfterViewInit {
   }
   start() {
     const dialogRef = this.dialog.open(DiscussStartComponent, {
-      minHeight: 'auto',
       width: '80%',
       panelClass: 'remove-pad',
     })

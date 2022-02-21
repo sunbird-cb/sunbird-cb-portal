@@ -73,9 +73,10 @@ export class PageComponent extends WidgetBaseComponent
     })
     this.activateRoute.data.subscribe(routeData => {
 
-      if (this.alreadyRaised && this.oldData) {
-        this.raiseEvent(WsEvents.EnumTelemetrySubType.Unloaded)
-      }
+      // Disabling end telemetry for page unloaded event
+      // if (this.alreadyRaised && this.oldData) {
+      //   this.raiseEvent(WsEvents.EnumTelemetrySubType.Unloaded)
+      // }
       if (routeData.pageData && routeData.pageData.data) {
         this.error = null
         this.pageData = routeData.pageData.data
@@ -97,9 +98,10 @@ export class PageComponent extends WidgetBaseComponent
         this.logger.warn('No page data available')
       }
       if (this.pageData) {
-        this.oldData = this.pageData
-        this.alreadyRaised = true
-        this.raiseEvent(WsEvents.EnumTelemetrySubType.Loaded)
+        // Disabling start telemetry for page loaded event
+        // this.oldData = this.pageData
+        // this.alreadyRaised = true
+        // this.raiseEvent(WsEvents.EnumTelemetrySubType.Loaded)
         this.responseSubscription = fromEvent<MessageEvent>(window, 'message')
           .pipe(
             filter(
@@ -182,7 +184,8 @@ export class PageComponent extends WidgetBaseComponent
   }
   ngOnDestroy() {
     if (this.pageData) {
-      this.raiseEvent(WsEvents.EnumTelemetrySubType.Unloaded)
+      // Disabling end telemetry for page unloaded event
+      // this.raiseEvent(WsEvents.EnumTelemetrySubType.Unloaded)
     }
     this.configSvc.tourGuideNotifier.next(false)
   }

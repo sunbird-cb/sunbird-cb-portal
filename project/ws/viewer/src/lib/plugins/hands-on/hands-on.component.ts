@@ -611,8 +611,14 @@ export class HandsOnComponent implements OnInit, OnChanges, OnDestroy {
 
   raiseInteractTelemetry(action: string, event: string) {
     if (this.identifier) {
-      this.eventSvc.raiseInteractTelemetry(action, event, {
-        contentId: this.identifier,
+      this.eventSvc.raiseInteractTelemetry(
+      {
+        type: action,
+        subType: event,
+        id: this.identifier,
+      },
+      {
+        id: this.identifier,
       })
     }
     if (event === 'codeinput') {

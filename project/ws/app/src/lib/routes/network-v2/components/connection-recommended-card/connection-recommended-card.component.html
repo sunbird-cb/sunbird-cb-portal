@@ -7,17 +7,23 @@
         </div>
         <div class="name-container flex flex-col width-expand">
             <a href="javascript:void(0)" class="" i18n-aria-label role="link" (click)="goToUserProfile(user)">
-                <div class="name ws-mat-black-text cursor-pointer">
+                <div class="name ws-mat-black-text cursor-pointer" *ngIf="user && user?.personalDetails">
                     {{user?.personalDetails?.firstname}} {{user?.personalDetails?.middlename}}
                     {{user?.personalDetails?.surname}}
                 </div>
-                <div class="designation ws-mat-black60-text">
+                <div class="name ws-mat-black-text cursor-pointer" *ngIf="user && !user?.personalDetails">
+                    {{user?.firstName}} {{user?.lastName}}
+                </div>
+                <div class="designation ws-mat-black60-text" *ngIf="user?.employmentDetails">
                     {{user?.employmentDetails?.departmentName}}
+                </div>
+                <div class="designation ws-mat-black60-text" *ngIf="!user?.employmentDetails">
+                    {{user?.channel}}
                 </div>
             </a>
         </div>
         <div class="action-container flex items-center justify-center">
-            <button mat-stroked-button color="accent" type="button" class=" mat-accent-border flex-auto-display"
+            <button mat-stroked-button color="accent" type="button" class="connect_btn mat-accent-border flex-auto-display"
                 (click)="connetToUser()">
                 <span class="" i18n>Connect</span>
             </button>

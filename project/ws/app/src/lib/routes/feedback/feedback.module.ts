@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common'
 import { FeedbackRoutingModule } from './feedback-routing.module'
 import { FeedbackComponent } from '../feedback/components/feedback/feedback.component'
 import { FormsModule } from '@angular/forms'
-
 import {
   MatToolbarModule,
   MatIconModule,

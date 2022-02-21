@@ -3,18 +3,26 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment: IEnvironment = {
+  name: (window as { [key: string]: any })['env']['name'],
   production: false,
-  sitePath: 'localhost_3000',
-  organisation: 'igot-karmayogi',
-  framework: 'igot',
-  channelId: '0131397178949058560',
-  azureHost: 'https://igot.blob.core.windows.net',
-  azureBucket: 'content',
-
-  azureOldHost: 'https://staas-bbs1.cloud.gov.in',
-  azureOldBuket: 'igot',
+  sitePath: (window as { [key: string]: any })['env']['sitePath'] || '',
+  organisation: (window as { [key: string]: any })['env']['organisation'] || '',
+  framework: (window as { [key: string]: any })['env']['framework'] || '',
+  channelId: (window as { [key: string]: any })['env']['channelId'] || '',
+  azureHost: (window as { [key: string]: any })['env']['azureHost'] || '',
+  contentHost: (window as { [key: string]: any })['env']['contentHost'] || '',
+  azureBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
+  mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
+  spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',
+  cbcPortal: (window as { [key: string]: any })['env']['cbcPath'] || '',
+  cbpPortal: (window as { [key: string]: any })['env']['cbpPath'] || '',
+  fracPortal: (window as { [key: string]: any })['env']['fracPath'] || '',
+  azureOldHost: (window as { [key: string]: any })['env']['azureOldHost'] || '',
+  azureOldBuket: (window as { [key: string]: any })['env']['azureOldBuket'] || '',
+  portalRoles: (((window as { [key: string]: any })['env']['portalRoles'] || '').split(',')) || [],
 }
 interface IEnvironment {
+  name: string,
   production: boolean
   sitePath: null | string
   organisation: string
@@ -24,6 +32,13 @@ interface IEnvironment {
   azureBucket: string,
   azureOldHost: string,
   azureOldBuket: string
+  contentHost: string
+  portalRoles: string[]
+  mdoPortal: string,
+  spvPortal: string,
+  cbcPortal: string,
+  cbpPortal: string,
+  fracPortal: string
 }
 
 /*

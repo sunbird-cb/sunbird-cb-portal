@@ -20,6 +20,7 @@ export class CardNetworkComponent extends WidgetBaseComponent
   keyTag: string[] = []
   newUserReq: any
   deptUserReq: any
+  howerUser!: any
   nameFilter = ''
   searchSpinner = false
   deptpeopleSpinner = false

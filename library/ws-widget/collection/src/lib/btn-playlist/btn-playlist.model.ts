@@ -69,6 +69,7 @@ export namespace NsPlaylist {
     contentId: string
     contentName: string
     contentType: NsContent.EContentTypes
+    primaryCategory: NsContent.EPrimaryCategory
     mode: 'dialog' | 'menu'
     isDisabled?: false
   }

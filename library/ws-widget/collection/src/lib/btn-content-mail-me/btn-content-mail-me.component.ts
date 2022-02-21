@@ -3,7 +3,7 @@ import { switchMap, map, catchError } from 'rxjs/operators'
 import { of, Observable } from 'rxjs'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
 import { NsContent } from '../_services/widget-content.model'
 import {
   BtnContentMailMeDialogComponent,
@@ -84,12 +84,19 @@ export class BtnContentMailMeComponent extends WidgetBaseComponent
           (dialogResponse: IWidgetMailMeDialogComponentResponse): Observable<IMailMeResponseObj> => {
             if (dialogResponse && dialogResponse.send) {
               this.events.raiseInteractTelemetry(
-                'mailMe',
-                undefined,
                 {
-                  contentId: this.widgetData.identifier,
-                  contentType: this.widgetData.contentType,
+                  type: 'mailMe',
+                  subType: undefined,
+                  id: this.widgetData.identifier,
                 },
+                {
+                  id: this.widgetData.identifier,
+                  type: this.widgetData.contentType,
+                },
+                {
+                  pageIdExt: 'btn-mailme',
+                  module: WsEvents.EnumTelemetrymodules.CONTENT,
+                }
               )
               return this.shareSvc.shareContent(this.widgetData, [], dialogResponse.mailBody, 'attachment').pipe(
                 map(({ response }): boolean => response === 'Success'),

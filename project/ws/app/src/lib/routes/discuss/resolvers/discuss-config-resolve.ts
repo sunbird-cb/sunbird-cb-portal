@@ -41,7 +41,7 @@ export class DiscussConfigResolve
         },
         {
           route: 'my-discussion',
-          label: 'My discussion',
+          label: 'Your discussion',
           enable: true,
         },
       ],

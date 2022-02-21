@@ -26,6 +26,8 @@ export namespace NSCompetencie {
     name: string
     source: null
     status: string
+    competencySelfAttestedLevel?: string
+    competencySelfAttestedLevelValue?: number
     type: string
   }
   export interface IWebResponse {
@@ -36,6 +38,14 @@ export namespace NSCompetencie {
   export interface ICompetencieResponse {
     responseData: ICompetencie[]
     statusInfo: IWebResponse
+  }
+
+  export interface IWatCompetencieResponse {
+    result: {
+      data: ICompetencie[]
+      message: string
+      status: string
+    }
   }
 
 }

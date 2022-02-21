@@ -176,6 +176,7 @@ iframe {
 
 .mat-menu-panel {
   max-width: 290px !important;
+  min-width: 14em !important;
 }
 
 // Material Over-rides
@@ -581,4 +582,12 @@ h3.shepherd-title {
   mat-tab-header {
     display: none;
   }
+}
+
+.custom-dialog-container .mat-dialog-container {
+    padding: 0px !important;
+    background-color: transparent!important;
+    box-shadow: none!important;
+    width: auto!important;
+    margin:0px auto!important;
 }

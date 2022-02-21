@@ -3,7 +3,7 @@ import { MatDialog, MatSnackBar } from '@angular/material'
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router'
 import {
-  ContentProgressService,
+  // ContentProgressService,
   NsContent,
   NsGoal,
   NsPlaylist,
@@ -21,6 +21,8 @@ import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import { FormControl, Validators } from '@angular/forms'
 import * as dayjs from 'dayjs'
 import * as  lodash from 'lodash'
+import { TitleTagService } from '../../services/title-tag.service'
+import { ActionService } from '../../services/action.service'
 
 @Component({
   selector: 'ws-app-toc-banner',
@@ -78,12 +80,14 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private tocSvc: AppTocService,
-    private progressSvc: ContentProgressService,
+    // private progressSvc: ContentProgressService,
     private contentSvc: WidgetContentService,
     private utilitySvc: UtilityService,
     private mobileAppsSvc: MobileAppsService,
     private snackBar: MatSnackBar,
     public configSvc: ConfigurationsService,
+    private tagSvc: TitleTagService,
+    private actionSVC: ActionService,
   ) {
 
   }
@@ -152,12 +156,14 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         contentId: this.content.identifier,
         contentName: this.content.name,
         contentType: this.content.contentType,
+        primaryCategory: this.content.primaryCategory,
         mode: 'dialog',
       }
       this.btnGoalsConfig = {
         contentId: this.content.identifier,
         contentName: this.content.name,
         contentType: this.content.contentType,
+        primaryCategory: this.content.primaryCategory,
       }
     }
   }
@@ -179,7 +185,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     }
     if (this.content) {
       return (
-        this.content.contentType === NsContent.EContentTypes.COURSE &&
+        this.content.primaryCategory === NsContent.EPrimaryCategory.COURSE &&
         this.content.learningMode === 'Instructor-Led'
       )
     }
@@ -215,6 +221,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         'Learning Resource',
         this.getBatchId()
       )
+      this.actionSVC.setUpdateCompGroupO = this.resumeDataLink
     }
     this.batchControl.valueChanges.subscribe((batch: NsContent.IBatch) => {
       this.disableEnrollBtn = true
@@ -362,9 +369,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   private getLearningUrls() {
     if (this.content) {
       if (!this.forPreview) {
-        this.progressSvc.getProgressFor(this.content.identifier).subscribe(data => {
-          this.contentProgress = data
-        })
+        // this.progressSvc.getProgressFor(this.content.identifier).subscribe(data => {
+        //   this.contentProgress = data
+        // })
       }
       // this.progressSvc.fetchProgressHashContentsId({
       //   "contentIds": [
@@ -534,5 +541,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     } catch (e) {
       return true
     }
+  }
+
+  public getBgColor(tagTitle: any) {
+    const bgColor = this.tagSvc.stringToColor(tagTitle.toLowerCase())
+    const color = this.tagSvc.getContrast(bgColor)
+    return { color, 'background-color': bgColor }
   }
 }

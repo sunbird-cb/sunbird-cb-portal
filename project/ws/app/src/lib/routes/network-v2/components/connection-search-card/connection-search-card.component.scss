@@ -3,9 +3,9 @@
 @import 'ws-mixins';
 
 .card-container {
-    height: 231px;
-    width:  268px;
-    border: 1px solid rgba(0,0,0,8%);
+    height: 255px;
+    width: 268px;
+    border: 1px solid rgba(0, 0, 0, 0.08); 
 }
 
 .photo-container{
@@ -22,6 +22,8 @@
     text-transform: capitalize;
 }
 .designation{
+    height: 60px;
+    overflow: hidden;
     line-height: 21px;
 }
 .action-container{

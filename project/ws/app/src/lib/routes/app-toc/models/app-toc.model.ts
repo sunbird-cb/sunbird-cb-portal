@@ -52,6 +52,7 @@ export namespace NsAppToc {
     webModule: number
     webPage: number
     youtube: number
+    interactivecontent: number
     [key: string]: number
   }
 }
@@ -67,6 +68,8 @@ export namespace NsCohorts {
   export interface ICohortsContent {
     first_name: string
     last_name: string
+    department?: string
+    designation?: string
     email: string
     desc: string
     uid: string

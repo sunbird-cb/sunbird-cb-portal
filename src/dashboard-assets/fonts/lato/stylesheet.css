@@ -1,0 +1,20 @@
+@import "../../../fusion-assets/fonts/lato/stylesheet.css";
+
+.widget-box {
+    background-image: url("../../images/wave-light.svg");
+    background-repeat: no-repeat;
+    background-position: 90%;
+}
+
+.thank-you-image-1 {
+    width: 11.75rem;
+    height: 11.75rem;
+    background-image: url("../../images/rating.svg");
+    background-repeat: no-repeat;
+}
+
+.home-image-1 {
+    background-image: url("../../images/home_black_24dp.svg");
+    background-repeat: no-repeat;
+    background-position: 75% 40%;
+}

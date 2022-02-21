@@ -35,9 +35,10 @@ export class HtmlComponent implements OnInit, OnDestroy {
   uuid: string | null | undefined = null
   realTimeProgressRequest = {
     content_type: 'Resource',
+    primaryCategory: NsContent.EPrimaryCategory.RESOURCE,
     current: ['0'],
     max_size: 0,
-    mime_type: NsContent.EMimeTypes.HTML,
+    mime_type: NsContent.EMimeTypes.ZIP,
     user_id_type: 'uuid',
   }
   realTimeProgressTimer: any
@@ -54,7 +55,6 @@ export class HtmlComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-
     // this.activatedRoute.data.subscribe(data => {
     //   this.uuid = data.profileData.data.userId
     // })
@@ -73,24 +73,26 @@ export class HtmlComponent implements OnInit, OnDestroy {
         .getContent(this.activatedRoute.snapshot.paramMap.get('resourceId') || '')
         .subscribe(
           async data => {
-            data.artifactUrl = (data.artifactUrl.startsWith('https://')
-              ? data.artifactUrl
-              : data.artifactUrl.startsWith('http://')
+            if (data && data.artifactUrl) {
+              data.artifactUrl = (data.artifactUrl.startsWith('https://')
                 ? data.artifactUrl
-                : `https://${data.artifactUrl}`).replace(/ /ig, '').replace(/%20/ig, '').replace(/\n/ig, '')
-            if (this.accessControlSvc.hasAccess(data as any, true)) {
-              if (data && data.artifactUrl.indexOf('content-store') >= 0) {
-                await this.setS3Cookie(data.identifier)
-                this.htmlData = data
-              } else {
-                this.htmlData = data
-              }
+                : data.artifactUrl.startsWith('http://')
+                  ? data.artifactUrl
+                  : `https://${data.artifactUrl}`).replace(/ /ig, '').replace(/%20/ig, '').replace(/\n/ig, '')
+              if (this.accessControlSvc.hasAccess(data as any, true)) {
+                if (data && data.artifactUrl.indexOf('content-store') >= 0) {
+                  await this.setS3Cookie(data.identifier)
+                  this.htmlData = data
+                } else {
+                  this.htmlData = data
+                }
 
-            }
-            if (this.htmlData) {
-              this.formDiscussionForumWidget(this.htmlData)
-              if (this.discussionForumWidget) {
-                this.discussionForumWidget.widgetData.isDisabled = true
+              }
+              if (this.htmlData) {
+                this.formDiscussionForumWidget(this.htmlData)
+                if (this.discussionForumWidget) {
+                  this.discussionForumWidget.widgetData.isDisabled = true
+                }
               }
             }
           })
@@ -108,7 +110,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
           if (this.alreadyRaised && this.oldData) {
             this.raiseEvent(WsEvents.EnumTelemetrySubType.Unloaded, this.oldData)
             if (!this.hasFiredRealTimeProgress) {
-              this.fireRealTimeProgress()
+              // this.fireRealTimeProgress()
               if (this.realTimeProgressTimer) {
                 clearTimeout(this.realTimeProgressTimer)
               }
@@ -233,7 +235,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
     return newUrl
   }
 
-  async  ngOnDestroy() {
+  async ngOnDestroy() {
     if (this.htmlData) {
       if (!this.subApp || this.activatedRoute.snapshot.queryParams.collectionId) {
         await this.saveContinueLearning(this.htmlData)
@@ -252,12 +254,12 @@ export class HtmlComponent implements OnInit, OnDestroy {
     if (this.viewerDataSubscription) {
       this.viewerDataSubscription.unsubscribe()
     }
-    if (!this.hasFiredRealTimeProgress && !this.forPreview) {
-      this.fireRealTimeProgress()
-      if (this.realTimeProgressTimer) {
-        clearTimeout(this.realTimeProgressTimer)
-      }
-    }
+    // if (!this.hasFiredRealTimeProgress && !this.forPreview) {
+    //   this.fireRealTimeProgress()
+    //   if (this.realTimeProgressTimer) {
+    //     clearTimeout(this.realTimeProgressTimer)
+    //   }
+    // }
   }
 
   formDiscussionForumWidget(content: NsContent.IContent) {
@@ -328,7 +330,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
       this.hasFiredRealTimeProgress = true
       this.fireRealTimeProgress()
       // tslint:disable-next-line: align
-    }, 2 * 60 * 1000)
+    },  6 * 1000)
   }
 
   private fireRealTimeProgress() {
@@ -337,7 +339,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
     }
     if (this.htmlData) {
       if (
-        this.htmlData.contentType === NsContent.EContentTypes.COURSE &&
+        this.htmlData.primaryCategory === NsContent.EPrimaryCategory.COURSE &&
         this.htmlData.isExternal
       ) {
         return
@@ -358,17 +360,23 @@ export class HtmlComponent implements OnInit, OnDestroy {
         return
       }
     }
-    this.realTimeProgressRequest.content_type = this.htmlData ? this.htmlData.contentType : ''
-    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-              this.activatedRoute.snapshot.queryParams.collectionId : ''
+    if (this.htmlData) {
+      this.realTimeProgressRequest.content_type = this.htmlData.contentType
+      this.realTimeProgressRequest.primaryCategory = this.htmlData.primaryCategory
+
+      const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+        this.activatedRoute.snapshot.queryParams.collectionId : ''
+
       const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-              this.activatedRoute.snapshot.queryParams.batchId : ''
-    this.viewerSvc.realTimeProgressUpdate(
-      this.htmlData ? this.htmlData.identifier : '',
-      this.realTimeProgressRequest,
-      collectionId,
-      batchId
-    )
+        this.activatedRoute.snapshot.queryParams.batchId : ''
+
+      this.viewerSvc.realTimeProgressUpdate(
+        this.htmlData.identifier,
+        this.realTimeProgressRequest,
+        collectionId,
+        batchId
+      )
+    }
     return
   }
 }

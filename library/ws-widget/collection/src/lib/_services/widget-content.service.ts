@@ -21,10 +21,12 @@ const API_END_POINTS = {
   MULTIPLE_CONTENT: `${PROTECTED_SLAG_V8}/content/multiple`,
   CONTENT_SEARCH_V5: `${PROTECTED_SLAG_V8}/content/searchV5`,
   CONTENT_SEARCH_V6: `/apis/proxies/v8/sunbirdigot/read`,
+  CONTENT_SEARCH_RELATED_CBP_V6: `/apis/proxies/v8/sunbirdigot/search`,
   CONTENT_SEARCH_REGION_RECOMMENDATION: `${PROTECTED_SLAG_V8}/content/searchRegionRecommendation`,
   CONTENT_HISTORY: `${PROTECTED_SLAG_V8}/user/history`,
   CONTENT_HISTORYV2: `/apis/proxies/v8/read/content-progres`,
   COURSE_BATCH_LIST: `/apis/proxies/v8/learner/course/v1/batch/list`,
+  AUTO_ASSIGN_BATCH: `/apis/protected/v8/cohorts/user/autoenrollment/`,
   USER_CONTINUE_LEARNING: `${PROTECTED_SLAG_V8}/user/history/continue`,
   CONTENT_RATING: `${PROTECTED_SLAG_V8}/user/rating`,
   COLLECTION_HIERARCHY: (type: string, id: string) =>
@@ -32,6 +34,9 @@ const API_END_POINTS = {
   REGISTRATION_STATUS: `${PROTECTED_SLAG_V8}/admin/userRegistration/checkUserRegistrationContent`,
   MARK_AS_COMPLETE_META: (contentId: string) => `${PROTECTED_SLAG_V8}/user/progress/${contentId}`,
   ENROLL_BATCH: `/apis/proxies/v8/learner/course/v1/enrol`,
+  CERT_ADD_TEMPLATE: `${PROTECTED_SLAG_V8}/cohorts/course/batch/cert/template/add`,
+  CERT_ISSUE: `${PROTECTED_SLAG_V8}/cohorts/course/batch/cert/issue`,
+  CERT_DOWNLOAD: (certId: any) => `${PROTECTED_SLAG_V8}/cohorts/course/batch/cert/download/${certId}`,
 }
 
 @Injectable({
@@ -52,8 +57,11 @@ export class WidgetContentService {
   }
 
   fetchMarkAsCompleteMeta(identifier: string): Promise<any> {
+    // tslint:disable-next-line
     const url = API_END_POINTS.MARK_AS_COMPLETE_META(identifier)
-    return this.http.get(url).toPromise()
+    // return this.http.get(url).toPromise()
+    if (url) { }
+    return of().toPromise()
   }
 
   fetchContent(
@@ -109,6 +117,16 @@ export class WidgetContentService {
       )
   }
 
+  autoAssignBatchApi(identifier: any): Observable<NsContent.IBatchListResponse> {
+    return this.http.get<NsContent.IBatchListResponse>(`${API_END_POINTS.AUTO_ASSIGN_BATCH}${identifier}`)
+      .pipe(
+        retry(1),
+        map(
+          (data: any) => data.result.response
+        )
+      )
+  }
+
   enrollUserToBatch(req: any) {
     return this.http
       .post(API_END_POINTS.ENROLL_BATCH, req)
@@ -121,9 +139,11 @@ export class WidgetContentService {
       .toPromise()
   }
   fetchContentRatings(contentIds: { contentIds: string[] }) {
-    return this.http
-      .post(`${API_END_POINTS.CONTENT_RATING}/rating`, contentIds)
-      .toPromise()
+    if (contentIds) { }
+    // return this.http
+    //   .post(`${API_END_POINTS.CONTENT_RATING}/rating`, contentIds)
+    //   .toPromise()
+    return of().toPromise()
   }
 
   fetchContentHistory(contentId: string): Observable<NsContent.IContinueLearningData> {
@@ -171,8 +191,12 @@ export class WidgetContentService {
     })
   }
   saveContinueLearning(content: NsContent.IViewerContinueLearningRequest): Observable<any> {
-    const url = API_END_POINTS.USER_CONTINUE_LEARNING
-    return this.http.post<any>(url, content)
+    // const url = API_END_POINTS.USER_CONTINUE_LEARNING
+    // return this.http.post<any>(url, content)
+    if (content) {
+
+    }
+    return of() as any
   }
 
   setS3Cookie(
@@ -223,6 +247,10 @@ export class WidgetContentService {
     return this.http.post<NSSearch.ISearchV6ApiResultV2>(API_END_POINTS.CONTENT_SEARCH_V6, req)
   }
 
+  searchRelatedCBPV6(req: NSSearch.ISearchV6RequestV2): Observable<NSSearch.ISearchV6ApiResultV2> {
+    return this.http.post<NSSearch.ISearchV6ApiResultV2>(API_END_POINTS.CONTENT_SEARCH_RELATED_CBP_V6, req)
+  }
+
   fetchContentRating(contentId: string): Observable<{ rating: number }> {
     return this.http.get<{ rating: number }>(`${API_END_POINTS.CONTENT_RATING}/${contentId}`)
   }
@@ -238,16 +266,16 @@ export class WidgetContentService {
       return content
     }
     if (
-      content.contentType === 'Learning Path' &&
+      content.primaryCategory === NsContent.EPrimaryCategory.PROGRAM &&
       !(content.artifactUrl && content.artifactUrl.length)
     ) {
       const child = content.children[0]
       return this.getFirstChildInHierarchy(child)
     }
     if (
-      content.contentType === 'Resource' ||
-      content.contentType === 'Knowledge Artifact' ||
-      content.contentType === 'Learning Path'
+      content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE ||
+      content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT ||
+      content.primaryCategory === NsContent.EPrimaryCategory.PROGRAM
     ) {
       return content
     }
@@ -262,6 +290,17 @@ export class WidgetContentService {
 
   fetchConfig(url: string) {
     return this.http.get<any>(url)
+  }
+
+  addCertTemplate(body: any) {
+    return this.http.patch<any>(`${API_END_POINTS.CERT_ADD_TEMPLATE}`, body)
+  }
+
+  issueCert(body: any) {
+    return this.http.post<any>(`${API_END_POINTS.CERT_ISSUE}`, body)
+  }
+  downloadCert(certId: any) {
+    return this.http.get<any>(`${API_END_POINTS.CERT_DOWNLOAD(certId)}`)
   }
 
 }

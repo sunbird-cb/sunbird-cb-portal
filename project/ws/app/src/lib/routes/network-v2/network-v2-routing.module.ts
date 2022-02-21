@@ -18,6 +18,10 @@ const routes: Routes = [
   {
     path: '',
     component: NetworkComponent,
+    data: {
+      pageId: '',
+      module: 'network',
+    },
     resolve: {
       me: MyProfileResolve,
       // profileData: ProfileResolverService,
@@ -31,6 +35,10 @@ const routes: Routes = [
       {
         path: 'home',
         component: NetworkHomeComponent,
+        data: {
+          pageId: 'home',
+          module: 'network',
+        },
         resolve: {
           recommendedUsers: MyMdoResolveService,
           connectionRequests: ConnectionRequestResolveService,
@@ -41,6 +49,10 @@ const routes: Routes = [
       {
         path: 'my-connection',
         component: NetworkMyConnectionComponent,
+        data: {
+          pageId: 'my-connection',
+          module: 'network',
+        },
         resolve: {
           myConnectionList: MyConnectionResolveService,
           // profileData: ProfileResolverService,
@@ -49,6 +61,10 @@ const routes: Routes = [
       {
         path: 'connection-requests',
         component: NetworkConnectionRequestsComponent,
+        data: {
+          pageId: 'connection-requests',
+          module: 'network',
+        },
         resolve: {
           connectionRequests: ConnectionRequestResolveService,
           // profileData: ProfileResolverService,
@@ -57,6 +73,10 @@ const routes: Routes = [
       {
         path: 'my-mdo',
         component: NetworkMyMdoComponent,
+        data: {
+          pageId: 'my-mdo',
+          module: 'network',
+        },
         resolve: {
           myMdoList: MyMdoResolveService,
           // profileData: ProfileResolverService,
@@ -65,6 +85,10 @@ const routes: Routes = [
       {
         path: 'recommended',
         component: NetworkRecommendedComponent,
+        data: {
+          pageId: 'recommended',
+          module: 'network',
+        },
         resolve: {
           recommendedList: RecommendedResolveService,
           // profileData: ProfileResolverService,

@@ -127,8 +127,18 @@ export class BtnContentLikeComponent extends WidgetBaseComponent
   }
 
   raiseTelemetry(action: 'like' | 'unlike') {
-    this.events.raiseInteractTelemetry(action, 'content', {
-      contentId: this.widgetData.identifier,
+    this.events.raiseInteractTelemetry(
+      {
+        type: action,
+        subType: 'content',
+        id: this.widgetData.identifier,
+      },
+      {
+        id: this.widgetData.identifier,
+      },
+      {
+        pageIdExt: 'btn-like',
+        module: WsEvents.EnumTelemetrymodules.FEEDBACK,
     })
   }
 }

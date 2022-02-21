@@ -17,6 +17,8 @@
   // padding: 32px 0px !important;
 }
 
+
+
 .fluid-width {
   width: 100%;
 }
@@ -47,7 +49,6 @@ mat-divider {
     }
 
     .mat-tab-link {
-      // font: 18px/34px Poppins-Medium;
       color: #5F5F5F;
       text-align: left;
       padding-left: 0;
@@ -66,7 +67,9 @@ mat-divider {
   }
 }
 
-
+.section-content {
+  word-break: break-word;
+}
 
 .rounded-icon {
   background: #FFFFFF 0% 0% no-repeat padding-box;
@@ -110,9 +113,10 @@ mat-divider {
   .unit-meta-item {
     border-radius: 2px;
     box-sizing: border-box;
-    margin-bottom: $size-m;
+    margin-bottom: $size-l;
     box-shadow: none;
-    padding-left: 0;
+    padding: 0 !important;
+    background: transparent !important;
   }
 
   @include breakpoint-xs {
@@ -137,7 +141,6 @@ mat-divider {
       margin-bottom: $size-l;
 
       .at-glance-heading {
-        // font: 18px/30px Poppins-Medium;
         letter-spacing: 0px;
         color: #222222;
       }
@@ -157,13 +160,11 @@ mat-divider {
           min-width: 80px;
           max-width: 140px;
           text-align: left;
-          // font: 14px/20px Poppins-Regular;
           letter-spacing: 0px;
           // color: #00A9F4 !important;
         }
 
         .item-value {
-          // font: 14px/20px Poppins-Regular;
           letter-spacing: 0px;
           color: #5F5F5F;
         }
@@ -233,7 +234,7 @@ mat-divider {
 .contacts-container {
   background: #F5F6FA 0% 0% no-repeat padding-box;
   // border: 1px solid #ECECEC;
-  padding: 30px 0;
+  padding: 22px 0 10px;
   border: 0;
   border-top: 1px;
   border-style: solid;
@@ -241,7 +242,6 @@ mat-divider {
   border-color: #ECECEC;
 
   .contacts-head {
-    // font: 18px/30px Poppins-Medium;
     letter-spacing: 0px;
     color: #222222;
     background: transparent;
@@ -266,13 +266,11 @@ mat-divider {
     }
 
     .user-name {
-      // font: 14px/22px Poppins-Medium;
       letter-spacing: 0px;
       color: #5F5F5F;
     }
 
     .user-university {
-      // font: 14px/30px Poppins-Regular;
       letter-spacing: 0px;
       color: #00A9F4;
     }
@@ -281,7 +279,6 @@ mat-divider {
       background: #FFFFFF 0% 0% no-repeat padding-box;
       border: 1px solid #F58634;
       border-radius: 15px;
-      // font: 12px/12px Poppins-Medium;
       letter-spacing: 0px;
       color: #F58634;
       max-width: 60px;
@@ -292,18 +289,20 @@ mat-divider {
   }
 }
 
+::ng-deep.mat-elevation-z4 {
+  box-shadow: none!important;
+}
+
 .divider-transparent {
   border-top-color: transparent !important
 }
 
 .section-heading {
-  // font: 18px/24px Poppins-Medium;
   letter-spacing: 0px;
   color: #222222;
 }
 
 .section-content {
-  // font: 15px/24px Poppins-Regular;
   letter-spacing: 0px;
   color: #222222;
 }
@@ -319,9 +318,83 @@ mat-divider {
   color: #fff !important;
 
   ::ng-deep.mat-button-wrapper {
-    // font: 14px/21px Poppins-SemiBold;
     letter-spacing: 0px;
     color: #fff;
     text-transform: capitalize;
+  }
+}
+.compt-table {
+  border-spacing: 0px 6px !important;
+  th {
+    background: rgba(0, 0, 0, 0.04);
+    font-weight: 700 !important;
+  }
+  td {
+    background: #FFFFFF;
+  }
+}
+
+.custom-tabgroup {
+  .fixed-width {
+    padding: 0 !important;
+  }
+
+  .unit-cohort {
+    background: #E7EAEB;
+    margin: 10px 0;
+    padding: 10px 15px;
+    border-radius: 4px;
+    // .datadiv {
+      // margin-left: 60px;
+    // }
+
+    .circle-l-xs, .circle-l-s, .circle-l, .circle-xl, .circle-m, .circle-xxl {
+      width: 56px !important;
+      height: 56px !important;
+    }
+  }
+}
+::ng-deep.mat-tab-header {
+  border: 0 !important;
+}
+::ng-deep.mat-tab-body {
+  padding: 15px 0 220px 0!important;
+  box-sizing: border-box;
+  overflow-y: initial!important;
+
+
+  // .mat-tab-body-active {
+  //   overflow-x: initial !important;
+  //   overflow-y: initial !important;
+  // }
+
+}
+::ng-deep.mat-tab-body.mat-tab-body-active {
+
+  // @include breakpoint-s {
+
+  // }
+
+  @media(min-width: 767px) and (max-width:1050px) {
+    overflow-x: initial !important;
+  }
+
+}
+
+::ng-deep.mat-tab-body-wrapper {
+    overflow: inherit!important;
+}
+
+
+::ng-deep.mat-tab-label {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  margin-right: 3%;
+  .mat-tab-label-content {
+    text-transform: uppercase;
+  }
+}
+::ng-deep.mat-tab-label-active {
+  .mat-tab-label-content {
+    font-weight: 700 !important;
   }
 }

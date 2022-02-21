@@ -15,8 +15,8 @@ import { NsWidgetResolver } from '@sunbird-cb/resolver'
 })
 export class AppTocContentsComponent implements OnInit, OnDestroy {
   @Input() batchId!: string
-  content: NsContent.IContent | null = null
-  forPreview = false
+  @Input() content: NsContent.IContent | null = null
+  @Input() forPreview = false
   isPlayable = false
   contentPlayWidgetConfig: NsWidgetResolver.IRenderConfigWithTypedData<any> | null = null
   defaultThumbnail = ''
@@ -36,7 +36,7 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.forPreview = window.location.href.includes('/author/')
+    // this.forPreview = window.location.href.includes('/author/')
     this.routeQuerySubscription = this.route.queryParamMap.subscribe(qParamsMap => {
       const contextId = qParamsMap.get('contextId')
       const contextPath = qParamsMap.get('contextPath')
@@ -70,12 +70,12 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
 
   private initData(data: Data) {
     const initData = this.tocSvc.initData(data, true)
-    this.content = initData.content
+    // this.content = initData.content
     this.errorCode = initData.errorCode
     if (this.content) {
       if (!this.contextId || !this.contextPath) {
         this.contextId = this.content.identifier
-        this.contextPath = this.content.contentType
+        this.contextPath = this.content.primaryCategory
       }
       this.fetchContentParents(this.content.identifier)
       this.populateContentPlayWidget(this.content)
@@ -88,8 +88,8 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
   }
   private populateContentPlayWidget(content: NsContent.IContent) {
     if (
-      content.contentType === NsContent.EContentTypes.RESOURCE ||
-      content.contentType === NsContent.EContentTypes.KNOWLEDGE_ARTIFACT
+      content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE ||
+      content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT
     ) {
       switch (content.mimeType) {
         case NsContent.EMimeTypes.M3U8:

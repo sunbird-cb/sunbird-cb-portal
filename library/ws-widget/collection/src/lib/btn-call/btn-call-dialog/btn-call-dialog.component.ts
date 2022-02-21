@@ -37,11 +37,12 @@ export class BtnCallDialogComponent implements OnInit {
 
   raiseTelemetry(subType: 'copyToClipboard' | 'callSME') {
     this.events.raiseInteractTelemetry(
-      'call',
-      subType,
       {
-        name: this.data.name,
-        phone: this.data.phone,
+        subType,
+        type: 'call',
+      },
+      {
+        pageIdExt: 'btn-call-dialogue',
       },
     )
   }

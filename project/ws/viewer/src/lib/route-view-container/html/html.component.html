@@ -19,7 +19,7 @@
                     | pipePartialContent
                       : [
                           'identifier',
-                          'contentType',
+                          'primaryCategory',
                           'resourceType',
                           'mimeType',
                           'downloadUrl',
@@ -28,45 +28,46 @@
                         ]
                 ">
               </ws-widget-btn-content-download>
+              <!-- TODO: Blocking this button for now, as the functionality is not working -->
               <!-- <ws-widget-btn-content-like
                               [widgetData]="htmlData | pipePartialContent: ['identifier']"
                             ></ws-widget-btn-content-like> -->
-              <ws-widget-btn-content-like [forPreview]="forPreview" [widgetData]="{
+              <!-- <ws-widget-btn-content-like [forPreview]="forPreview" [widgetData]="{
                   identifier: htmlData.identifier,
                   isDisabled: isPreviewMode
                 }">
-              </ws-widget-btn-content-like>
-              <ws-widget-btn-content-share [forPreview]="forPreview" [widgetData]="htmlData"
+              </ws-widget-btn-content-like> -->
+              <!-- <ws-widget-btn-content-share [forPreview]="forPreview" [widgetData]="htmlData"
                 [isDisabled]="isPreviewMode">
-              </ws-widget-btn-content-share>
-              <ws-widget-btn-goals [forPreview]="forPreview"></ws-widget-btn-goals>
-              <ws-widget-btn-playlist [forPreview]="forPreview" [widgetData]="{
+              </ws-widget-btn-content-share> -->
+              <!-- <ws-widget-btn-goals [forPreview]="forPreview"></ws-widget-btn-goals> -->
+              <!-- <ws-widget-btn-playlist [forPreview]="forPreview" [widgetData]="{
                   contentId: htmlData?.identifier,
                   contentName: htmlData?.name,
                   contentType: 'Resource',
                   mode: 'dialog',
                   isDisabled: isPreviewMode
                 }">
-              </ws-widget-btn-playlist>
+              </ws-widget-btn-playlist> -->
               <!-- <ws-widget-btn-content-feedback></ws-widget-btn-content-feedback> -->
-              <ws-widget-btn-content-feedback-v2 [forPreview]="forPreview" [widgetData]="{
+              <!-- <ws-widget-btn-content-feedback-v2 [forPreview]="forPreview" [widgetData]="{
                   identifier: htmlData.identifier,
                   name: htmlData.name,
                   isDisabled: isPreviewMode
                 }">
-              </ws-widget-btn-content-feedback-v2>
+              </ws-widget-btn-content-feedback-v2> -->
             </div>
           </mat-card-content>
         </mat-card>
       </div>
     </div>
   </div>
-  <div class="padding-m" *ngIf="discussionForumWidget && isRestricted">
+  <!-- <div class="padding-m" *ngIf="discussionForumWidget && isRestricted">
     <div class="video-discussion-forum-in">
       <h2 class="mat-toolbar discussion-head">Discussion Forum</h2>
       <ng-container [wsResolverWidget]="discussionForumWidget"></ng-container>
     </div>
-  </div>
+  </div> -->
 </div>
 <div class="full-height-width-iframe" *ngIf="!isNotEmbed">
   <viewer-plugin-html [htmlContent]="htmlData"></viewer-plugin-html>

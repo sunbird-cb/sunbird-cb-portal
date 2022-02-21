@@ -3,7 +3,8 @@
 @import 'ws-mixins';
 
 .card-container {
-    height: 231px;
+    // height: 231px;
+    height: 255px;
     width:  268px;
     border: 1px solid rgba(0,0,0,8%);
 }
@@ -23,7 +24,13 @@
 }
 .designation{
     line-height: 21px;
+    height: 60px;
+    overflow: hidden;
+    font-size: 14px;
 }
 .action-container{
     padding: $size-m 0;
+}
+.connect_btn {
+    width:230px;
 }

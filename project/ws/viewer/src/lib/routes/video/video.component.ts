@@ -63,6 +63,11 @@ export class VideoComponent implements OnInit, OnDestroy {
             this.formDiscussionForumWidget(this.videoData)
           }
           this.widgetResolverVideoData = this.initWidgetResolverVideoData(this.videoData)
+          if (this.activatedRoute.snapshot.queryParams.collectionId) {
+            this.widgetResolverVideoData.widgetData.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
+          } else {
+            this.widgetResolverVideoData.widgetData.collectionId = ''
+          }
           let url = ''
           // if (this.videoData.artifactUrl.indexOf('/content-store/') > -1) {
           //   url = `/apis/authContent/${new URL(this.videoData.artifactUrl).pathname}`
@@ -101,6 +106,11 @@ export class VideoComponent implements OnInit, OnDestroy {
             this.formDiscussionForumWidget(this.videoData)
           }
           this.widgetResolverVideoData = this.initWidgetResolverVideoData(this.videoData as any)
+          if (this.activatedRoute.snapshot.queryParams.collectionId) {
+            this.widgetResolverVideoData.widgetData.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
+          } else {
+            this.widgetResolverVideoData.widgetData.collectionId = ''
+          }
           if (this.videoData && this.videoData.identifier) {
             if (this.activatedRoute.snapshot.queryParams.collectionId) {
               await this.fetchContinueLearning(
@@ -121,6 +131,10 @@ export class VideoComponent implements OnInit, OnDestroy {
             ? this.videoData.identifier
             : ''
           this.widgetResolverVideoData.widgetData.mimeType = data.content.data.mimeType
+          this.widgetResolverVideoData.widgetData.contentType = data.content.data.contentType
+          this.widgetResolverVideoData.widgetData.primaryCategory = data.content.data.primaryCategory
+
+          this.widgetResolverVideoData.widgetData.version = `${data.content.data.version}${''}`
 
           if (data.content.data.length > 0 && data.content.data.subTitles[0]) {
 
@@ -212,6 +226,7 @@ export class VideoComponent implements OnInit, OnDestroy {
         resumePoint: 0,
         continueLearning: true,
         subtitles: [],
+        collectionId: '',
       },
       widgetHostClass: 'video-full',
     }

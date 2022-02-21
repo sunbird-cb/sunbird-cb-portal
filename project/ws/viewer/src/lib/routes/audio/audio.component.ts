@@ -62,6 +62,11 @@ export class AudioComponent implements OnInit, OnDestroy {
             this.formDiscussionForumWidget(this.audioData)
           }
           this.widgetResolverAudioData = this.initWidgetResolverAudioData()
+          if (this.activatedRoute.snapshot.queryParams.collectionId) {
+            this.widgetResolverAudioData.widgetData.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
+          } else {
+            this.widgetResolverAudioData.widgetData.collectionId = ''
+          }
           // this.widgetResolverAudioData.widgetData.url = this.audioData
           //   ? `/apis/authContent/${encodeURIComponent(this.audioData.artifactUrl)}`
           //   : ''
@@ -103,6 +108,11 @@ export class AudioComponent implements OnInit, OnDestroy {
             await this.setS3Cookie(this.audioData.identifier)
           }
           this.widgetResolverAudioData = this.initWidgetResolverAudioData()
+          if (this.activatedRoute.snapshot.queryParams.collectionId) {
+            this.widgetResolverAudioData.widgetData.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
+          } else {
+            this.widgetResolverAudioData.widgetData.collectionId = ''
+          }
           if (this.audioData && this.audioData.identifier) {
             if (this.activatedRoute.snapshot.queryParams.collectionId) {
               await this.fetchContinueLearning(
@@ -116,6 +126,12 @@ export class AudioComponent implements OnInit, OnDestroy {
           if (this.forPreview) {
             this.widgetResolverAudioData.widgetData.disableTelemetry = true
           }
+
+          this.widgetResolverAudioData.widgetData.mimeType = data.content.data.mimeType
+          this.widgetResolverAudioData.widgetData.contentType = data.content.data.contentType
+          this.widgetResolverAudioData.widgetData.primaryCategory = data.content.data.primaryCategory
+
+          this.widgetResolverAudioData.widgetData.version = `${data.content.data.version}${''}`
 
           if (data.content.data && data.content.data.subTitles && data.content.data.subTitles[0]) {
 
@@ -192,6 +208,8 @@ export class AudioComponent implements OnInit, OnDestroy {
         identifier: '',
         resumePoint: 0,
         continueLearning: true,
+        mimeType: '',
+        collectionId: '',
       },
       widgetHostClass: 'video-full',
     }

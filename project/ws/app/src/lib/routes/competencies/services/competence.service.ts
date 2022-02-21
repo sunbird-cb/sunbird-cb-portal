@@ -3,15 +3,20 @@ import { HttpClient } from '@angular/common/http'
 import { NsUser } from '@sunbird-cb/utils'
 import { Observable } from 'rxjs'
 import { ConfigurationsService } from 'library/ws-widget/utils/src/public-api'
+import { map } from 'rxjs/operators'
+import { IUserProfileDetailsFromRegistry } from '../../user-profile/models/user-profile.model'
 
 const API_ENDPOINTS = {
+  SEARCH_V6: `/apis/proxies/v8/sunbirdigot/search`,
   searchCompetency: 'apis/protected/v8/frac/searchNodes',
+  filterByMappings: 'apis/protected/v8/frac/filterByMappings',
   // searchCompetency: '/apis/protected/v8/competency/searchCompetency',
-  fetchProfileNyId: (id: string) => `/apis/protected/v8/user/profileDetails/getUserRegistryById${id}`,
+  fetchProfileNyId: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`,
   // fetchProfile: '/apis/protected/v8/user/profileDetails/getUserRegistry',
-  fetchProfile: '/apis/protected/v8/user/profileRegistry/getUserRegistryById',
-  updateProfile: '/apis/protected/v8/user/profileRegistry/createUserRegistry',
-
+  fetchCompetencyDetails: (id: string, type: string) => `/apis/protected/v8/frac/getNodeById/${id}/${type}`,
+  fetchProfile: '/apis/proxies/v8/api/user/v2/read',
+  updateProfile: '/apis/protected/v8/user/profileDetails/updateUser',
+  fetchWatCompetency: (id: string) => `/apis/protected/v8/workallocation/getUserCompetencies/${id}`,
 }
 /* this page needs refactor*/
 @Injectable({
@@ -21,7 +26,7 @@ export class CompetenceService {
   usr: any
   constructor(
     private http: HttpClient, private configSvc: ConfigurationsService) {
-      this.usr = this.configSvc.userProfile
+    this.usr = this.configSvc.userProfile
   }
 
   get getUserProfile(): NsUser.IUserProfile {
@@ -39,14 +44,27 @@ export class CompetenceService {
   }
 
   fetchProfileById(id: any): Observable<any> {
-    return this.http.get<any>(API_ENDPOINTS.fetchProfileNyId(id))
+    return this.http.get<[IUserProfileDetailsFromRegistry]>(API_ENDPOINTS.fetchProfileNyId(id))
+      .pipe(map((res: any) => res.result.response))
   }
 
-  fetchProfile(): Observable<any> {
-    return this.http.get<any>(API_ENDPOINTS.fetchProfile)
+  fetchCompetencyDetails(id: any, type: string): Observable<any> {
+    return this.http.get<any>(API_ENDPOINTS.fetchCompetencyDetails(id, type))
+  }
+
+  fetchWatCompetency(id: any): Observable<any> {
+    return this.http.get<any>(API_ENDPOINTS.fetchWatCompetency(id))
+  }
+
+  fetchMappings(positionData: any): Observable<any> {
+    return this.http.post<any>(API_ENDPOINTS.filterByMappings, positionData)
   }
 
   updateProfile(profileData: any): Observable<any> {
-    return this.http.post<any>(API_ENDPOINTS.updateProfile, profileData)
+    return this.http.patch<any>(API_ENDPOINTS.updateProfile, profileData)
+  }
+
+  fetchSearchData(request: any): Observable<any> {
+    return this.http.post<any>(API_ENDPOINTS.SEARCH_V6, request)
   }
 }

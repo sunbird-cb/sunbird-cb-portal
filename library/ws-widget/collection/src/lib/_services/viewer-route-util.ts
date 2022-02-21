@@ -16,8 +16,9 @@ export const VIEWER_ROUTE_FROM_MIME = (mimeType: NsContent.EMimeTypes) => {
     case NsContent.EMimeTypes.HTML_TEXT:
     case NsContent.EMimeTypes.HTML:
     case NsContent.EMimeTypes.ZIP:
-    case NsContent.EMimeTypes.TEXT_WEB:
       return 'html'
+    case NsContent.EMimeTypes.TEXT_WEB:
+      return 'youtube'
     case NsContent.EMimeTypes.IAP:
       return 'iap'
     case NsContent.EMimeTypes.ILP_FP:
@@ -28,8 +29,8 @@ export const VIEWER_ROUTE_FROM_MIME = (mimeType: NsContent.EMimeTypes) => {
     case NsContent.EMimeTypes.M3U8:
       return 'video'
     case NsContent.EMimeTypes.YOUTUBE:
-      // return 'youtube'
-      return 'html'
+      return 'youtube'
+      // return 'html'
     case NsContent.EMimeTypes.WEB_MODULE:
       return 'web-module'
     case NsContent.EMimeTypes.WEB_MODULE_EXERCISE:

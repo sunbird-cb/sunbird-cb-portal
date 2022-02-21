@@ -1,0 +1,42 @@
+<ws-widget-btn-page-back [widgetData]="{ url: 'home',titles: title  }">
+</ws-widget-btn-page-back>
+<div class="container-balanced min-height" *ngIf="!resourceLoading">
+  <div *ngIf="currentRoute === 'home'" class="margin-top-s">
+    <ng-container [wsResolverWidget]="banner"></ng-container>
+  </div>
+  <mat-sidenav-container name="discuss-menu" class="min-height">
+    <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 sidenav-align">
+      <app-discuss-left-menu [unseen]="unread" [tabsData] = "firstLevelTopic" (currentTab)="onTabLeftMenu($event)"></app-discuss-left-menu>
+    </mat-sidenav>
+    <mat-sidenav-content class="sidenav-align-cont">
+      <div *ngIf="screenSizeIsLtMedium">
+        <button type="button" mat-icon-button (click)="sideNavBarOpened = !sideNavBarOpened"
+          id="ws-auth-root-home-btn-menu" name="ws-auth-root-home-btn-menu">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+      <div class="flex flex-4">
+      <ws-widget-breadcrumbs-org (currentSelection)="getTab($event)"[widgetData]="{titles: tempArr, data: currentObj,  tab: currentTab1}" *ngIf="currentObj">
+      </ws-widget-breadcrumbs-org>
+      </div>
+      <div class="flex flex-4 bot max-height">
+        <taxonomy-level-card [tags]="nextLevelTopic"  (clickedTab)="getClickedTab($event)"></taxonomy-level-card>
+      </div>
+
+      <h2 *ngIf="relatedResource.length>0">CBPs</h2>
+      <div class="flex flex-1" *ngIf="nextLevelTopic">
+
+        <div class="margin-left-xll mb-1-imp flex flex-wrap">
+      <div *ngFor="let content of relatedResource" class="mb-8">
+        <ws-widget-card-content *ngIf="content" [widgetData]="content"></ws-widget-card-content>
+      </div>
+        </div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+</div>
+
+<div class="container-balanced min-height mt-24" align='center' *ngIf="resourceLoading">
+  <mat-progress-spinner mode="indeterminate" diameter='20' strokeWidth='50'></mat-progress-spinner>
+  </div>

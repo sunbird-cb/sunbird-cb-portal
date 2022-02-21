@@ -11,6 +11,7 @@ import { ConnectionHoverService } from '../connection-name/connection-hover.serv
 export class MyConnectionCardComponent implements OnInit {
   @Input() user!: NSNetworkDataV2.INetworkUser
   howerUser!: any
+  unmappedUser!: any
   constructor(
     private router: Router,
     private connectionHoverService: ConnectionHoverService,
@@ -18,8 +19,14 @@ export class MyConnectionCardComponent implements OnInit {
 
   ngOnInit() {
     const userId = this.user.id || this.user.identifier
-    this.connectionHoverService.fetchProfile(userId).subscribe(res => {
-      this.howerUser = res || {}
+    this.connectionHoverService.fetchProfile(userId).subscribe((res: any) => {
+      if (res.profileDetails !== null) {
+        this.howerUser = res.profileDetails
+        this.unmappedUser = res
+      } else {
+        this.howerUser = res || {}
+        this.unmappedUser = res
+      }
       return this.howerUser
     })
   }
@@ -31,10 +38,24 @@ export class MyConnectionCardComponent implements OnInit {
   }
 
   getUseravatarName() {
-    if (this.user) {
-      return `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
+     // if (this.user) {
+    //   return `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
+    // }
+    // return ''
+    let name = ''
+    if (this.user && !this.user.personalDetails) {
+      if (this.user.firstName) {
+        name = `${this.user.firstName} ${this.user.lastName}`
+      }
+    } else if (this.user && this.user.personalDetails) {
+      if (this.user.personalDetails.middlename) {
+        // tslint:disable-next-line: max-line-length
+        name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.middlename} ${this.user.personalDetails.surname}`
+      } else {
+        name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
+      }
     }
-      return ''
+    return name
   }
   get usr() {
     return this.howerUser

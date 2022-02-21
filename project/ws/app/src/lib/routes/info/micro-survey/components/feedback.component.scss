@@ -1,0 +1,17 @@
+
+.feedback_main_box {
+    width: 770px;
+    display: block;
+    margin:48px auto;
+    border-radius: 4px 4px;
+    padding-top: 16px;
+    background-color: #fff;
+}
+
+@media (max-width: 768px)  {
+    .feedback_main_box {
+        width: 95%;
+        margin:30px auto;
+
+    }
+ }

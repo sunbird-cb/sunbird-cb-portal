@@ -1,6 +1,9 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
 import { NsContent, viewerRouteGenerator } from '@sunbird-cb/collection'
 import { NsAppToc } from '../../models/app-toc.model'
+import { EventService } from '@sunbird-cb/utils/src/public-api'
+/* tslint:disable*/
+import _ from 'lodash'
 
 @Component({
   selector: 'ws-app-toc-content-card',
@@ -30,10 +33,13 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
     webModule: 0,
     webPage: 0,
     youtube: 0,
+    interactivecontent: 0,
   }
   defaultThumbnail = ''
   viewChildren = false
-  constructor() {}
+  constructor(
+    private events: EventService,
+  ) { }
 
   ngOnInit() {
     this.evaluateImmediateChildrenStructure()
@@ -58,7 +64,8 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
   get isResource(): boolean {
     if (this.content) {
       return (
-        this.content.contentType === 'Resource' || this.content.contentType === 'Knowledge Artifact'
+        this.content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE
+        || this.content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT
       )
     }
     return false
@@ -78,16 +85,28 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
     return { url: '', queryParams: {} }
   }
 
+  public progressColor(): string {
+    // if (this.currentProgress <= 30) {
+    //   return '#D13924'
+    // } if (this.currentProgress > 30 && this.currentProgress <= 70) {
+    //   return '#E99E38'
+    // }
+    // if (this.currentProgress > 70 && this.currentProgress <= 100) {
+    //   return '#1D8923'
+    // }
+    return '#1D8923'
+  }
+
   private evaluateImmediateChildrenStructure() {
     if (this.content && this.content.children && this.content.children.length) {
       this.content.children.forEach((child: NsContent.IContent) => {
-        if (child.contentType === NsContent.EContentTypes.COURSE) {
+        if (child.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
           this.contentStructure.course += 1
-        } else if (child.contentType === NsContent.EContentTypes.KNOWLEDGE_ARTIFACT) {
+        } else if (child.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT) {
           this.contentStructure.other += 1
-        } else if (child.contentType === NsContent.EContentTypes.MODULE) {
+        } else if (child.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
           this.contentStructure.learningModule += 1
-        } else if (child.contentType === NsContent.EContentTypes.RESOURCE) {
+        } else if (child.primaryCategory === NsContent.EPrimaryCategory.RESOURCE) {
           switch (child.mimeType) {
             case NsContent.EMimeTypes.HANDS_ON:
               this.contentStructure.handsOn += 1
@@ -148,5 +167,35 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
       return null
     }
     return content.identifier
+  }
+
+  public raiseTelemetry() {
+    if (this.content) {
+      this.events.raiseInteractTelemetry(
+        {
+          type: 'click',
+          subType: `card-tocContentCard`,
+          // id: this.content.identifier || '',
+        },
+        {
+          // contentId: this.content.identifier || '',
+          // contentType: this.content.primaryCategory,
+          id: this.content.identifier || '',
+          type: this.content.primaryCategory,
+          rollup: {
+            l1: this.rootId || '',
+          },
+          ver: `${this.content.version}${''}`,
+        },
+        {
+          pageIdExt: `${_.camelCase(this.content.primaryCategory)}-card`,
+          module: _.camelCase(this.content.primaryCategory),
+      })
+    }
+  }
+  get isAllowed(): boolean {
+    if (this.content) {
+      return !(NsContent.UN_SUPPORTED_DATA_TYPES_FOR_NON_BATCH_USERS.indexOf(this.content.mimeType) >= 0)
+    } return false
   }
 }

@@ -2,13 +2,14 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core'
 import { MatDialog } from '@angular/material'
 import { NSCompetencie } from '../../models/competencies.model'
 import { CompetenceViewComponent } from '../competencies-view/competencies-view.component'
+
 // import { Router } from '@angular/router'
 @Component({
   selector: 'app-competence-card',
   templateUrl: './competencies-card.component.html',
   styleUrls: ['./competencies-card.component.scss'],
   /* tslint:disable */
-  host: { class: 'flex flex-1 margin-right-xs margin-top-xs margin-bottom-s' },
+  host: { class: 'flex flex-row margin-right-xs margin-top-xs margin-bottom-s competency_main' },
   /* tslint:enable */
 
 })

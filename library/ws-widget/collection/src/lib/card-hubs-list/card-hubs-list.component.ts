@@ -68,7 +68,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
   }
 
   navigate() {
-    this.discussUtilitySvc.setDiscussionConfig({
+    const config = {
       menuOptions: [
         {
           route: 'all-discussions',
@@ -87,9 +87,15 @@ export class CardHubsListComponent extends WidgetBaseComponent
         },
         {
           route: 'my-discussion',
-          label: 'My discussion',
+          label: 'Your discussion',
           enable: true,
         },
+        // {
+        //   route: 'leaderboard',
+        //   label: 'Leader Board',
+        //   enable: true,
+        // },
+
       ],
       userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
       context: {
@@ -99,8 +105,10 @@ export class CardHubsListComponent extends WidgetBaseComponent
       routerSlug: '/app',
       headerOptions: false,
       bannerOption: true,
-    })
-    this.router.navigate(['/app/discussion-forum'])
+    }
+    this.discussUtilitySvc.setDiscussionConfig(config)
+    localStorage.setItem('home', JSON.stringify(config))
+    this.router.navigate(['/app/discussion-forum'], { queryParams: { page: 'home' }, queryParamsHandling: 'merge' })
   }
 
   getUserFullName(user: any) {

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { AppTocRoutingModule } from './app-toc-routing.module'
+import { NgCircleProgressModule } from 'ng-circle-progress'
 
 import {
   MatToolbarModule,
@@ -28,6 +29,7 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
 } from '@angular/material'
+import { DiscussionUiModule } from '@sunbird-cb/discussions-ui-v8'
 
 // comps
 import { AppTocAnalyticsComponent } from './routes/app-toc-analytics/app-toc-analytics.component'
@@ -81,6 +83,8 @@ import {
   PlayerBriefModule,
   CardContentModule,
   UserAutocompleteModule,
+  AvatarPhotoModule,
+  ContentRatingV2DialogModule,
 } from '@sunbird-cb/collection'
 import { AppTocDialogIntroVideoComponent } from './components/app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { CertificationMetaResolver } from './routes/app-toc-certification/resolvers/certification-meta.resolver'
@@ -100,6 +104,12 @@ import { AppTocSinglePageComponent } from './components/app-toc-single-page/app-
 import { AppTocSinglePageComponent as AppTocSinglePageRootComponent } from './routes/app-toc-single-page/app-toc-single-page.component'
 import { AppTocSinglePageDirective } from './routes/app-toc-single-page/app-toc-single-page.directive'
 import { CreateBatchDialogComponent } from './components/create-batch-dialog/create-batch-dialog.component'
+import { AllDiscussionWidgetComponent } from '../discuss/widget/all-discussion-widget/category-widget/all-discussion-widget.component'
+import { TagWidgetComponent } from '../discuss/widget/tag-widget/tag-widget.component'
+import { ActionService } from './services/action.service'
+import { ConnectionNameModule } from '@sunbird-cb/collection/src/lib/_common/connection-name/connection-name.module'
+import { CertificateDialogModule } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.module'
+
 @NgModule({
   declarations: [
     AppTocAnalyticsComponent,
@@ -123,6 +133,8 @@ import { CreateBatchDialogComponent } from './components/create-batch-dialog/cre
     AppTocSinglePageRootComponent,
     AppTocSinglePageDirective,
     CreateBatchDialogComponent,
+    AllDiscussionWidgetComponent,
+    TagWidgetComponent,
   ],
   imports: [
     CommonModule,
@@ -168,6 +180,8 @@ import { CreateBatchDialogComponent } from './components/create-batch-dialog/cre
     BtnContentLikeModule,
     BtnContentFeedbackModule,
     BtnContentFeedbackV2Module,
+    ContentRatingV2DialogModule,
+    CertificateDialogModule,
     BtnGoalsModule,
     BtnPlaylistModule,
     BtnMailUserModule,
@@ -186,6 +200,10 @@ import { CreateBatchDialogComponent } from './components/create-batch-dialog/cre
     CardContentModule,
     BtnContentShareModule,
     UserAutocompleteModule,
+    AvatarPhotoModule,
+    DiscussionUiModule,
+    ConnectionNameModule,
+    NgCircleProgressModule.forRoot({}),
   ],
   providers: [
     AppTocResolverService,
@@ -198,6 +216,7 @@ import { CreateBatchDialogComponent } from './components/create-batch-dialog/cre
     ApiService,
     AccessControlService,
     ProfileResolverService,
+    ActionService,
   ],
   exports: [AppTocDiscussionComponent],
   entryComponents: [

@@ -7,6 +7,8 @@ import { NsGoal } from '../btn-goals/btn-goals.model'
 import { NsPlaylist } from '../btn-playlist/btn-playlist.model'
 import { NsContent } from '../_services/widget-content.model'
 import { NsCardContent } from './card-content.model'
+/* tslint:disable*/
+import _ from 'lodash'
 
 @Component({
   selector: 'ws-widget-card-content',
@@ -59,12 +61,15 @@ export class CardContentComponent extends WidgetBaseComponent
         contentId: this.widgetData.content.identifier,
         contentName: this.widgetData.content.name,
         contentType: this.widgetData.content.contentType,
+        primaryCategory: this.widgetData.content.primaryCategory,
         mode: 'dialog',
       }
       this.btnGoalsConfig = {
         contentId: this.widgetData.content.identifier,
         contentName: this.widgetData.content.name,
         contentType: this.widgetData.content.contentType,
+        primaryCategory: this.widgetData.content.primaryCategory,
+
       }
       this.modifySensibleContentRating()
     }
@@ -237,10 +242,22 @@ export class CardContentComponent extends WidgetBaseComponent
   }
 
   raiseTelemetry() {
-    this.events.raiseInteractTelemetry('click', `${this.widgetType}-${this.widgetSubType}`, {
-      contentId: this.widgetData.content.identifier,
-      contentType: this.widgetData.content.contentType,
-      context: this.widgetData.context,
+    this.events.raiseInteractTelemetry(
+      { 
+        type: 'click',
+        subType: `${this.widgetType}-${this.widgetSubType}`,
+        // id: this.widgetData.content.identifier,
+      },
+      {
+        id: this.widgetData.content.identifier,
+        type: this.widgetData.content.primaryCategory,
+        context: this.widgetData.context,
+        rollup: {},
+        ver: `${this.widgetData.content.version}${''}`,
+      }, 
+      {
+        pageIdExt: `${_.camelCase(this.widgetData.content.primaryCategory)}-card`,
+        module: _.camelCase(this.widgetData.content.primaryCategory),
     })
   }
 

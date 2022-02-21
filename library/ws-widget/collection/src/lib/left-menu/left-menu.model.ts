@@ -9,6 +9,7 @@ export interface IMenu {
   name: string
   key: string
   render: boolean
+  isDefaultSelected?: boolean
   fragment?: boolean
   badges?: {
     enabled: boolean

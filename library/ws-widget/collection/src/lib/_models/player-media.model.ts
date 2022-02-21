@@ -1,4 +1,5 @@
 export interface IWidgetsPlayerMediaData {
+  size?: any
   subtitles?: {
     srclang: string;
     label: string;
@@ -17,4 +18,8 @@ export interface IWidgetsPlayerMediaData {
   platform?: any
   mimeType?: any
   continueLearning?: boolean
+  collectionId?: string
+  contentType?: string
+  primaryCategory?: string
+  version?: string
 }

@@ -1,7 +1,7 @@
 import { COMMA, ENTER, SEMICOLON } from '@angular/cdk/keycodes'
 import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material'
-import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
 import { NsAutoComplete } from '../../_common/user-autocomplete/user-autocomplete.model'
 import { WidgetContentShareService } from '../../_services/widget-content-share.service'
 import { NsContent } from '../../_services/widget-content.model'
@@ -152,9 +152,19 @@ export class BtnContentShareDialogComponent implements OnInit {
   }
 
   raiseTelemetry() {
-    this.events.raiseInteractTelemetry('share', 'content', {
-      contentId: this.data.content.identifier,
-      contentType: this.data.content.contentType,
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'share',
+        subType: 'content',
+        id: this.data.content.identifier,
+      },
+      {
+        id: this.data.content.identifier,
+        type: this.data.content.primaryCategory,
+      },
+      {
+        pageIdExt: 'btn-share',
+        module: WsEvents.EnumTelemetrymodules.CONTENT,
     })
   }
 }

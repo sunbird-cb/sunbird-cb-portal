@@ -17,7 +17,7 @@
                     | pipePartialContent
                       : [
                           'identifier',
-                          'contentType',
+                          'primaryCategory',
                           'resourceType',
                           'mimeType',
                           'downloadUrl',
@@ -45,11 +45,10 @@
       </div>
     </div>
   </div>
-  <div class="padding-m" *ngIf="discussionForumWidget && isRestricted">
+  <!-- <div class="padding-m" *ngIf="discussionForumWidget && isRestricted">
     <div class="video-discussion-forum-in">
       <h2 class="mat-toolbar discussion-head">Discussion Forum</h2>
       <ng-container [wsResolverWidget]="discussionForumWidget"></ng-container>
-      <!-- <ng-container [wsResolverWidget]="''"></ng-container> -->
     </div>
-  </div>
+  </div> -->
 </div>

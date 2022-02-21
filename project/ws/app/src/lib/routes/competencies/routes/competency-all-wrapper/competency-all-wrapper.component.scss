@@ -1,0 +1,51 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.container-balanced {
+  @extend %page-center;
+  height: auto;
+  min-height: 400px;
+
+  @media (max-width:1024px) {
+    max-width: 100%;
+    margin:0px 8px!important
+  }
+}
+
+.competency_main_wrapper {
+  width: 100%;
+  @media (max-width:1024px) {
+    width: 100%;
+  }
+}
+
+.container-balanced-banner {
+  @extend %page-center;
+  height: auto;
+}
+
+.flex-3 {
+  flex: 3;
+}
+
+.flex-5 {
+  flex: 5;
+}
+
+.border-0 {
+  border-right: none !important;
+  background: inherit !important;
+}
+
+.flex-update {
+  flex-direction: row;
+
+  @include breakpoint-xs {
+    flex-direction: column;
+  }
+
+  @include breakpoint-s {
+    flex-direction: column;
+  }
+}

@@ -8,7 +8,7 @@
               <ng-container *ngIf="isFetchingDataComplete">
                 <viewer-plugin-quiz [identifier]="quizData?.identifier" [artifactUrl]="quizData?.artifactUrl"
                   [name]="quizData?.name" [learningObjective]="quizData?.learningObjective"
-                  [complexityLevel]="quizData?.complexityLevel" [duration]="quizData?.duration" [quizJson]="quizJson"
+                  [complexityLevel]="quizData?.difficultyLevel" [duration]="quizData?.duration" [quizJson]="quizJson"
                   [collectionId]="collectionId"></viewer-plugin-quiz>
               </ng-container>
             </div>
@@ -18,7 +18,7 @@
                     | pipePartialContent
                       : [
                           'identifier',
-                          'contentType',
+                          'primaryCategory',
                           'resourceType',
                           'mimeType',
                           'downloadUrl',
@@ -26,7 +26,8 @@
                   'artifactUrl'
                         ]
                 "></ws-widget-btn-content-download>
-              <ws-widget-btn-content-like [forPreview]="forPreview"
+              <!-- TODO: Blocking this button for now, as the functionality is not working -->
+              <!-- <ws-widget-btn-content-like [forPreview]="forPreview"
                 [widgetData]="quizData | pipePartialContent: ['identifier']">
               </ws-widget-btn-content-like>
               <ws-widget-btn-content-share [forPreview]="forPreview"></ws-widget-btn-content-share>
@@ -34,7 +35,7 @@
               <ws-widget-btn-playlist [forPreview]="forPreview"></ws-widget-btn-playlist>
               <ws-widget-btn-content-feedback-v2 [forPreview]="forPreview"
                 [widgetData]="quizData | pipePartialContent: ['identifier', 'name']">
-              </ws-widget-btn-content-feedback-v2>
+              </ws-widget-btn-content-feedback-v2> -->
             </div>
           </mat-card-content>
         </mat-card>

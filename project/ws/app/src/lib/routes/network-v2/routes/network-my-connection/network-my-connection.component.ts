@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { ConnectionHoverService } from '../../components/connection-name/connection-hover.servive'
+import { WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
   selector: 'ws-app-network-my-connection',
@@ -21,6 +22,7 @@ export class NetworkMyConnectionComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private connectionHoverService: ConnectionHoverService,
+    private eventSvc: EventService,
   ) {
     // this.data = this.route.snapshot.data.myConnectionList.data.result.data
     // this.data = this.route.snapshot.data.myConnectionList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
@@ -69,6 +71,17 @@ export class NetworkMyConnectionComponent implements OnInit {
       this.currentFilter = key
       this.currentFilterSort = order
     }
+  }
+
+  public tabTelemetry(label: string, index: number) {
+    const data: WsEvents.ITelemetryTabData = {
+      label,
+      index,
+    }
+    this.eventSvc.handleTabTelemetry(
+      WsEvents.EnumInteractSubTypes.NETWORK_TAB,
+      data,
+    )
   }
 
 }

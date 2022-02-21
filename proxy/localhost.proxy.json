@@ -6,6 +6,9 @@
     "changeOrigin": true,
     "pathRewrite": {
       "/apis": "/apis"
+    },
+    "headers": {
+      "Cookie": "connect.sid=s%3AJ4S8k-yWuHzESwVCqI4ScagNGrARwfak.RvHCjkUDbjR1yEIrwH4dbzzD44poPOhZDHsa2k4WMtY"
     }
   },
   "/content-api/*": {
@@ -60,6 +63,15 @@
     "changeOrigin": true,
     "pathRewrite": {
       "/apis": ""
+    }
+  },
+  "/abcd/*": {
+    "target": "https://igot-dev.in",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "/abcd": ""
     }
   }
 }

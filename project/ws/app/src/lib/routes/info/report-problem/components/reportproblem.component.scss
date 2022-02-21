@@ -1,0 +1,81 @@
+// .feedback_main_box {
+//     width: 770px;
+//     background-color: #fff;
+//     border-radius: 4px 4px;
+//     overflow: hidden;
+//     display: block;
+//     margin:50px auto;
+//     padding: 32px 32px;
+//     box-sizing: border-box;
+// }
+// p.main_title_text {
+//     font-weight: 600;
+// }
+// .mat-form-field {
+//     display: block;
+//     width: 100%;
+// }
+// .report_textarea {
+//     height: 145px;
+//     width: 100%;
+// }
+// .start-modal-buttons {
+//     float: right;
+//     display: flex;
+// }
+// .df-discard-btn {
+//     outline: 0;
+//     font-weight: 700;
+//     border: 1px solid!important;
+//     border-radius: .25rem;
+//     background: #fff;
+//     color: #024f9d;
+//     padding: .5rem .75rem;
+//     font-size: .75rem;
+//     display: flex;
+//     align-items: center;
+//     height: 2rem;
+//     margin: 0 1rem;
+//     cursor: pointer;
+//     width: 87px;
+//     justify-content: center;
+//  }
+//  .df-submit-btn  {
+//     height: 2rem;
+//     outline: 0;
+//     font-weight: 700;
+//     border: none;
+//     border-radius: .25rem;
+//     background: #024f9d;
+//     color: #fff;
+//     padding: .5rem .75rem;
+//     font-size: .75rem;
+//     display: flex;
+//     align-items: center;
+//     cursor: pointer;
+//     width: 87px;
+//     justify-content: center;
+//  }
+
+
+
+
+.feedback_main_box {
+    width: 770px;
+    display: block;
+    margin:48px auto;
+    border-radius: 4px 4px;
+    padding-top: 16px;
+    background-color: #fff;
+}
+.card label {
+    font-size: 20px!important;
+}
+
+@media (max-width: 768px)  {
+    .feedback_main_box {
+        width: 95%;
+        margin:30px auto;
+
+    }
+ }

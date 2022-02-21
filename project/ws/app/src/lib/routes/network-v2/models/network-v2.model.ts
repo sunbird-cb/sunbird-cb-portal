@@ -69,9 +69,13 @@ export namespace NSNetworkDataV2 {
         last_name: string,
         rank: number,
         wid: string,
+        firstName: string,
+        lastName: string,
+        channel: string,
     }
 
     export interface IAutocompleteUser {
+        rootOrgName: any,
         employmentDetails: IEmploymentDetails,
         personalDetails: IPersonalDetails,
         id: string,
@@ -90,6 +94,9 @@ export namespace NSNetworkDataV2 {
         photo?: string | null | undefined
         requestRecieved?: boolean,
         connectionEstablished?: boolean,
+        firstName: string,
+        lastName: string,
+        channel: string,
     }
 
     export interface IRecommendedUserResponse {

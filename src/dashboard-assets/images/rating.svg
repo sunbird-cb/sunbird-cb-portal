@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="188px" height="190px" viewBox="0 0 188 190" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Illustrations/web/rating</title>
+    <defs>
+        <polygon id="path-1" points="102 130.047847 96.1221475 133.147874 97.2447174 126.581911 92.4894348 121.931871 99.0610737 120.97391 102 115 104.938926 120.97391 111.510565 121.931871 106.755283 126.581911 107.877853 133.147874"></polygon>
+        <filter x="-122.6%" y="-114.6%" width="345.1%" height="339.7%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="8" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.949019608   0 0 0 0 0.941176471   0 0 0 0 0.933333333  0 0 0 0.16 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <polygon id="path-3" points="126 130.047847 120.122147 133.147874 121.244717 126.581911 116.489435 121.931871 123.061074 120.97391 126 115 128.938926 120.97391 135.510565 121.931871 130.755283 126.581911 131.877853 133.147874"></polygon>
+        <filter x="-122.6%" y="-114.6%" width="345.1%" height="339.7%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="8" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.949019608   0 0 0 0 0.941176471   0 0 0 0 0.933333333  0 0 0 0.16 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <polygon id="path-5" points="149 130.047847 143.122147 133.147874 144.244717 126.581911 139.489435 121.931871 146.061074 120.97391 149 115 151.938926 120.97391 158.510565 121.931871 153.755283 126.581911 154.877853 133.147874"></polygon>
+        <filter x="-122.6%" y="-114.6%" width="345.1%" height="339.7%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="8" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.949019608   0 0 0 0 0.941176471   0 0 0 0 0.933333333  0 0 0 0.16 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Illustrations/web/rating" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" x="0" y="0" width="188" height="190"></rect>
+        <g id="discussion_empty" transform="translate(0.000000, 1.000000)">
+            <path d="M125.496155,63 C159.957004,63 187.99231,91.0353057 187.99231,125.496155 C187.99231,136.648754 185.04321,147.511679 179.442741,157.064301 L188,188 L157.064301,179.442741 C147.719703,184.921461 137.120801,187.862835 126.2231,187.988131 L125.496155,187.99231 C91.0353057,187.99231 63,159.956638 63,125.496155 C63,91.0356719 91.0353057,63 125.496155,63 Z" id="Combined-Shape" fill="#C8C8C8"></path>
+            <path d="M62.5038452,0 L63.5357214,0.00838909437 C97.5225965,0.561356286 124.999963,28.3803134 124.996338,62.4998169 L124.996338,62.4998169 L124.988,62.507 L125,62.5075059 C124.994199,96.6183097 97.5188916,124.431437 63.5320587,124.977183 L62.503,124.985 C51.593336,124.99231 40.9603928,122.170038 31.5605201,116.804227 L30.9356992,116.442741 L0,125 L8.55725933,94.0643008 C2.95679,84.5116792 0.0076904372,73.6487536 0.0076904372,62.4961548 C0.0076904372,28.0356719 28.0429961,0 62.5038452,0 L62.5038452,0 Z" id="Combined-Shape" fill="#DEDEDF" fill-rule="nonzero"></path>
+            <rect id="Rectangle" fill="#FBFBFB" x="34" y="43" width="56" height="4" rx="2"></rect>
+            <rect id="Rectangle-Copy-2" fill="#FBFBFB" x="34" y="55" width="56" height="4" rx="2"></rect>
+            <rect id="Rectangle-Copy-3" fill="#FBFBFB" x="34" y="67" width="56" height="4" rx="2"></rect>
+            <rect id="Rectangle-Copy-4" fill="#FBFBFB" x="34" y="79" width="28" height="4" rx="2"></rect>
+            <g id="Star">
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use fill="#EFEFEF" fill-rule="evenodd" xlink:href="#path-1"></use>
+            </g>
+            <g id="Star-Copy">
+                <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+                <use fill="#EFEFEF" fill-rule="evenodd" xlink:href="#path-3"></use>
+            </g>
+            <g id="Star-Copy-2">
+                <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                <use fill="#EFEFEF" fill-rule="evenodd" xlink:href="#path-5"></use>
+            </g>
+        </g>
+    </g>
+</svg>

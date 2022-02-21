@@ -1,13 +1,12 @@
 <ws-widget-btn-page-back
-  [widgetData]="{ url: 'home', titles: [{ title: 'NETWORK', url: '/app/network-v2', icon: 'group' }, 
-  { title: 'My profile', url: 'none'}, {title:'Update Profile', url:'none'}] }">
+  [widgetData]="{ url: 'home', titles: [{ title: 'NETWORK', url: '/app/network-v2', icon: 'group' }, {title:'Update profile', url:'none'}] }">
 </ws-widget-btn-page-back>
 <div class="profile-container container-balanced">
   <div class="profile-box">
     <form class="" [formGroup]="createUserForm">
       <mat-tab-group animationDuration="0ms" class="mat-tab-labels w-full" mat-stretch-tabs
-        [selectedIndex]="selectedIndex" (selectedTabChange)="selectedIndex = $event.index">
-        <mat-tab>
+        [selectedIndex]="selectedIndex" (selectedTabChange)="selectedIndex = $event.index; tabClicked($event)">
+        <mat-tab label="Personal Details">
           <ng-template mat-tab-label i18n>
             Personal Details
           </ng-template>
@@ -35,7 +34,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="input-column px-2">
+                    <div class="input-column px-2 text-input-col">
                       <div class="input-wrapper margin-top-s">
                         <label for="firstName" class=" margin-remove-bottom form-label required"
                           i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
@@ -108,7 +107,7 @@
                         <mat-form-field appearance="outline" class="margin-top-xs">
                           <input id="birthDate" matInput #dob formControlName="dob" [matDatepicker]="picker"
                             i18n-placeholder (focus)="picker.open()" placeholder="Choose Date of Birth (dd-mm-yyyy)"
-                            [min]="" [max]="today" readonly>
+                            [min]="1/1/1900" [max]="today" readonly>
                           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                           <mat-datepicker #picker (closed)="dob.blur()" i18n-aria-label aria-label="Date picker">
                           </mat-datepicker>
@@ -310,7 +309,8 @@
                   </div>
                 </div>
               </div>
-              <div class="flex flex-column w-full md:w-1/2 ">
+
+              <div class="flex flex-column w-full md:w-1/2 language-box">
                 <div class="profile-cols bg-grey">
                   <div class="input-wrapper margin-top-s" *ngIf="!isForcedUpdate">
                     <p class=" margin-remove-bottom form-label"
@@ -436,7 +436,7 @@
                       Postal Address
                     </label>
                     <mat-form-field appearance="outline" class="w-full margin-top-xs">
-                      <textarea id="postalAddress" matInput [matTextareaAutosize] [matAutosizeMaxRows]="10"
+                      <textarea id="postalAddress" matInput [matTextareaAutosize]="true" [matAutosizeMaxRows]="10"
                         [matAutosizeMinRows]="3" maxlength="200" formControlName="residenceAddress"
                         placeholder="Type Your Residence Address Here" i18n-placeholder #residenceAddress
                         i18n-aria-label aria-label="Postal Address textarea input"></textarea>
@@ -489,7 +489,7 @@
 
           </div>
         </mat-tab>
-        <mat-tab *ngIf="!isForcedUpdate">
+        <mat-tab label="Academics" *ngIf="!isForcedUpdate">
           <ng-template mat-tab-label i18n>
             Academics
           </ng-template>
@@ -713,7 +713,7 @@
             </div>
           </div>
         </mat-tab>
-        <mat-tab *ngIf="!isForcedUpdate">
+        <mat-tab label="Professional Details" *ngIf="!isForcedUpdate">
           <ng-template mat-tab-label i18n>
             Professional Details
           </ng-template>
@@ -803,7 +803,7 @@
                       <mat-select #designation formControlName="designation" i18n-placeholder placeholder="--Select--"
                         (selectionChange)="otherDropDownChange(designation.value, 'designation')">
                         <mat-option [value]="designation.name"
-                          *ngFor="let designation of designationsMeta?.designations">
+                          *ngFor="let designation of designationsMeta">
                           {{designation.name}}
                         </mat-option>
                         <mat-option [value]="'Other'">Other</mat-option>
@@ -1053,7 +1053,7 @@
             </div>
           </div>
         </mat-tab>
-        <mat-tab *ngIf="!isForcedUpdate">
+        <mat-tab label="Certification & Skills" *ngIf="!isForcedUpdate">
           <ng-template mat-tab-label i18n>
             Certification & Skills
           </ng-template>

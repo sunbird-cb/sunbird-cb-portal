@@ -16,11 +16,14 @@
   padding: 0 !important;
 
   @include breakpoint-s {
-    padding: 0 15px !important;
+    padding: 0 8px !important;
   }
 
   @include breakpoint-xs {
-    padding: 0 15px !important;
+    padding: 0 8px !important;
+  }
+  @include breakpoint-m {
+    padding: 0 8px !important;
   }
 }
 
@@ -107,6 +110,48 @@ mat-divider {
   }
 }
 
+// .mat-dialog-container {
+//   padding: 0px !important;
+// }
+.certificate_box {
+  height: 65px;
+  border-radius: 4px 4px;
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  overflow: hidden;
+  display: block;
+}
+
+img.certificate_banner {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.certificate_overlay {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, .69));
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+p.certificate_text {
+  font-weight: 700!important;
+  z-index: 99;
+  margin-top: -36px;
+  color: #fff;
+  position: relative;
+}
+
+.blue-border{
+  border: 2px  solid #0074b6 !important;
+  }
+
 .hidden-xs-inline {
   display: inline;
 
@@ -139,62 +184,66 @@ mat-divider {
     width: 100%;
   }
 }
-
+.font-bold-imp {
+  font-weight: 700 !important;
+}
 .info-section {
-  width: 28%;
-  padding: 0 8px;
+  width: 20%;
   min-width: 250px;
-  margin-left: 24px;
+
+  .custom-button{
+    background: #0074B6 0% 0% no-repeat padding-box !important;
+    border-radius: 4px;
+  }
 
   @include breakpoint-xs {
     width: 100%;
-    margin-left: 0;
+    margin-left: 0!important;
   }
 
   .glance-container {
-    .info-container {
-      // padding: $size-s $size-m;
-      margin-bottom: $size-l;
+    .at-glance-heading {
+      letter-spacing: 0px;
+      color: #222222;
+    }
 
-      .at-glance-heading {
-        // font: 18px/30px Poppins-Medium;
-        letter-spacing: 0px;
-        color: #222222;
+    .info-item {
+      // display: flex;
+      // align-items: center;
+      // padding: $size-xs 0;
+      // box-sizing: border-box;
+
+      .cs-icons {
+        .mat-icon {
+          color: #666666;
+          vertical-align: middle;
+          font-size: 20px;
+        }
+        img {
+          width: 20px;
+          height: 20px;
+          vertical-align: middle;
+        }
       }
 
-      .info-item {
-        display: flex;
-        align-items: center;
-        padding: $size-xs 0;
-        box-sizing: border-box;
+      .item-heading {
+        font: 600 14px/21px Lato;
+        margin: 0 0 4px;
+        letter-spacing: 0px;
+        color: #00A9F4 !important;
+      }
 
-        h3 {
-          margin: 0;
-        }
+      .item-value {
+        letter-spacing: 0px;
+        color: #5F5F5F;
+      }
 
-        .item-heading {
-          width: 40%;
-          min-width: 80px;
-          max-width: 140px;
-          text-align: left;
-          // font: 14px/20px Poppins-Regular;
-          letter-spacing: 0px;
-          color: #00A9F4 !important;
-        }
-
-        .item-value {
-          // font: 14px/20px Poppins-Regular;
-          letter-spacing: 0px;
-          color: #5F5F5F;
-        }
-
-        .item-icon {
-          $icon-size: 20px;
-          width: $icon-size;
-          height: $icon-size;
-          font-size: $icon-size;
-          margin-left: $size-xs;
-        }
+      .item-icon {
+        $icon-size: 20px;
+        width: $icon-size;
+        height: $icon-size;
+        font-size: $icon-size;
+        margin-left: $size-xs;
       }
     }
   }
@@ -253,7 +302,7 @@ mat-divider {
 .contacts-container {
   background: #F5F6FA 0% 0% no-repeat padding-box;
   // border: 1px solid #ECECEC;
-  padding: 30px 0;
+  padding: 22px 0 10px;
   border: 0;
   border-top: 1px;
   border-style: solid;
@@ -261,7 +310,6 @@ mat-divider {
   border-color: #ECECEC;
 
   .contacts-head {
-    // font: 18px/30px Poppins-Medium;
     letter-spacing: 0px;
     color: #222222;
     background: transparent;
@@ -286,13 +334,11 @@ mat-divider {
     }
 
     .user-name {
-      // font: 14px/22px Poppins-Medium;
       letter-spacing: 0px;
       color: #5F5F5F;
     }
 
     .user-university {
-      // font: 14px/30px Poppins-Regular;
       letter-spacing: 0px;
       color: #00A9F4;
     }
@@ -301,7 +347,6 @@ mat-divider {
       background: #FFFFFF 0% 0% no-repeat padding-box;
       border: 1px solid #F58634;
       border-radius: 15px;
-      // font: 12px/12px Poppins-Medium;
       letter-spacing: 0px;
       color: #F58634;
       max-width: 60px;
@@ -350,4 +395,14 @@ mat-divider {
   background: #fff;
   z-index: 999;
   top: auto;
+}
+
+.actbutton{
+  border: 1px solid rgba(0,0,0,0.16);
+  border-radius: 4px;
+  padding: 0 15px;
+
+  .mat-icon{
+    margin-right: 6px;
+  }
 }

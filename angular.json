@@ -20,7 +20,9 @@
             "assets": [
               "src/favicon.ico",
               "src/favicon.png",
-              "src/fusion-assets",
+              "src/fusion-assets/icons/",
+              "src/fusion-assets/images/",
+              "src/dashboard-assets/",
               {
                 "glob": "**/*.*",
                 "input": "./node_modules/@sunbird-cb/discussions-ui-v8/assets",
@@ -42,46 +44,6 @@
               "src/styles/styles.scss",
               "node_modules/shepherd.js/dist/css/shepherd.css",
               {
-                "input": "src/themes/theme-deep-purple.scss",
-                "bundleName": "theme-deep-purple",
-                "lazy": true
-              },
-              {
-                "input": "src/themes/theme-grey.scss",
-                "bundleName": "theme-grey",
-                "lazy": true
-              },
-              {
-                "input": "src/themes/theme-indigo.scss",
-                "bundleName": "theme-indigo",
-                "lazy": true
-              },
-              {
-                "input": "src/themes/theme-lite-blue.scss",
-                "bundleName": "theme-lite-blue",
-                "lazy": true
-              },
-              {
-                "input": "src/themes/theme-orange.scss",
-                "bundleName": "theme-orange",
-                "lazy": true
-              },
-              {
-                "input": "src/themes/theme-teal.scss",
-                "bundleName": "theme-teal",
-                "lazy": true
-              },
-              {
-                "input": "src/themes/theme-blue.scss",
-                "bundleName": "theme-blue",
-                "lazy": true
-              },
-              {
-                "input": "src/themes/theme-deep-blue.scss",
-                "bundleName": "theme-deep-blue",
-                "lazy": true
-              },
-              {
                 "input": "src/themes/theme-igot.scss",
                 "bundleName": "theme-igot",
                 "lazy": true
@@ -89,11 +51,12 @@
               "node_modules/pdfjs-dist/web/pdf_viewer.css",
               "src/fusion-assets/fonts/lato/stylesheet.css",
               "src/fusion-assets/fonts/montserrat/stylesheet.css",
-              "node_modules/@sunbird-cb/discussions-ui-v8/assets/styles/global.scss"
+              "node_modules/@sunbird-cb/discussions-ui-v8/assets/styles/global.scss",
+              "src/dashboard-assets/fonts/lato/stylesheet.css",
+              "src/dashboard-assets/fonts/montserrat/stylesheet.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "src/fusion-assets/telemetry.min.js",
               "node_modules/shepherd.js/dist/js/shepherd.min.js",
               "node_modules/@project-sunbird/telemetry-sdk/index.js"
             ]
@@ -104,6 +67,32 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "15mb"
+                }
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
+            },
+            "np": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.np.ts"
                 }
               ],
               "optimization": true,
@@ -156,6 +145,32 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.preprod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "5mb",
+                  "maximumError": "20mb"
+                }
+              ],
+              "serviceWorker": false,
+              "ngswConfigPath": "ngsw-config.json"
+            },
+            "benchmark": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.bm.ts"
                 }
               ],
               "optimization": true,
@@ -311,41 +326,6 @@
             "tsConfig": [
               "project/ws/author/tsconfig.lib.json",
               "project/ws/author/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "@ws/admin": {
-      "projectType": "library",
-      "root": "project/ws/admin",
-      "sourceRoot": "project/ws/admin/src",
-      "prefix": "ws-admin",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "project/ws/admin/tsconfig.lib.json",
-            "project": "project/ws/admin/ng-package.json"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "project/ws/admin/src/test.ts",
-            "tsConfig": "project/ws/admin/tsconfig.spec.json",
-            "karmaConfig": "project/ws/admin/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "project/ws/admin/tsconfig.lib.json",
-              "project/ws/admin/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

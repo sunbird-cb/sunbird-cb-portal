@@ -19,7 +19,7 @@
     <mat-form-field appearance="outline" class="w-full margin-top-xs">
       <mat-label>{{ 'Elaborate your query' }}</mat-label>
       <textarea matInput i18n-placeholder placeholder="I need your help in 'Elaborate your query'" #mailBody rows="5"
-        [matTextareaAutosize] [matAutosizeMinRows]="10"></textarea>
+        [matTextareaAutosize]="'enabled'" [matAutosizeMinRows]="10"></textarea>
     </mat-form-field>
     <div class="mat-caption" *ngIf="sendStatus === 'INVALID_ID'" i18n>
       Invalid Ids. Failed to send mail.

@@ -1,0 +1,17 @@
+<mat-card class="no-shadow">
+    <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+        <mat-icon class="close-icon" color="warn">close</mat-icon>
+    </button>
+    <mat-card-title>
+        <span i18n>Download Certificate</span>
+    </mat-card-title>
+    <mat-card-content>
+        <img [src]="url| pipeSafeSanitizer: 'url'" alt="Certificate" role="image" class="certificate-banner-image">
+    </mat-card-content>
+    <mat-card-actions class="flex flex-row-reverse">
+        <a mat-button (click)='dwonloadCert()' class="ws-mat-accent-border-active mat-accent">
+            <mat-icon class="mat-icon material-icons-outlined download_icon margin-right-xs">cloud_download</mat-icon>
+            Download
+        </a>
+    </mat-card-actions>
+</mat-card>

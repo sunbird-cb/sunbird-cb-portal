@@ -1,0 +1,124 @@
+<!-- ===================== single card ===================-->
+<mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card">
+    <mat-card-content>
+        <div class="card_inner_content flex">
+            <div class="card_inner_title_box flex-col">
+                <div class="cursor-pointer flex-col"
+                    [routerLink]="['/app/learn/browse-by/competency', competency?.name]">
+                    <h4 class="mat-h4">{{competency?.name}}</h4>
+                    <p class="mat-body-2 ws-mat-black60-text">{{competency?.additionalProperties?.competencyType}}</p>
+                </div>
+                <div class="flex-col text_icon_box">
+                    <!--TODO: Count has to be shown once we have data from backend  -->
+                    <!-- <mat-icon class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color" role="img"
+                        aria-hidden="true">school</mat-icon>
+                     <span class="icon_text mat-caption ws-mat-black60-text">
+                        4 CBPs
+                    </span> -->
+                </div>
+            </div>
+            <div class="flex-1 card_right_txtbox flex-col">
+                <p class="cursor-pointer mat-body-1 ws-mat-black60-text"
+                    [routerLink]="['/app/learn/browse-by/competency', competency?.name]">
+                    {{competency?.description}}
+                </p>
+
+                <div class="bottomsection">
+                    <div class="contentdata margin-bottom-xm">
+                        <a class="cursor-pointer ws-mat-default-text mat-subheading-2 explore_link"
+                            (click)="competency.viewChildren = !competency.viewChildren; getCbps(competency.viewChildren)">
+                            Quick explore
+                            <mat-icon class="ml-5 mat-icon1 mat-icon notranslate material-icons mat-icon-no-color"
+                                *ngIf="!competency.viewChildren">
+                                expand_more</mat-icon>
+                            <mat-icon class="ml-5 mat-icon1 mat-icon notranslate material-icons mat-icon-no-color"
+                                *ngIf="competency.viewChildren">
+                                expand_less</mat-icon>
+                        </a>
+                    </div>
+
+                    <!--=============== div for hidden cards for quick explore =============-->
+                </div>
+            </div>
+        </div>
+        <ng-container [ngTemplateOutlet]="explore" [ngTemplateOutletContext]="{competency:competency}">
+        </ng-container>
+        <ng-template #explore>
+            <div class="mt-4 flex flex-col " [hidden]="!competency.viewChildren">
+                <div *ngIf="displayLoader" class="mt-5 pr-4 flex items-center justify-center">
+                    <mat-spinner [diameter]="30"></mat-spinner>
+                </div>
+                <ng-container *ngIf="competency?.contentData && competency?.contentData.length; else noData">
+                    <div class="flex">
+                        <ng-container *ngFor="let content of competency?.contentData| slice:0:3">
+                            <ws-widget-card-content [widgetData]="{
+                                    content: content,
+                                    stateData: stateData
+                                }">
+                            </ws-widget-card-content>
+                        </ng-container>
+                    </div>
+                    <a class="margin-top-m ws-mat-default-text mat-subheading-2 load_more_link text-center"
+                        [routerLink]="['/app/learn/browse-by/competency', competency?.name]">
+                        See all
+                    </a>
+                </ng-container>
+                <ng-template #noData>
+                    <h4 *ngIf="allCompetencies?.length <=0 && !displayLoader"
+                        class="w-full text-center ws-mat-black60-text ">
+                        No CBPs found!
+                    </h4>
+                </ng-template>
+            </div>
+        </ng-template>
+    </mat-card-content>
+</mat-card>
+<!-- single card end -->
+
+<!-- ===================== single card ===================-->
+<mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card" [hidden]="true">
+    <mat-card-content>
+        <div class="card_inner_content flex">
+            <div class="card_inner_title_box flex-col">
+                <div class="flex-col">
+                    <h4 class="mat-h4">Competency label</h4>
+                </div>
+                <div class="flex-col">
+                    <p class="mat-body-2 ws-mat-black60-text">Domain</p>
+                </div>
+
+
+                <div class="flex-col text_icon_box">
+                    <mat-icon class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color" role="img"
+                        aria-hidden="true">school</mat-icon>
+                    <span class="icon_text mat-caption ws-mat-black60-text"> 18
+                        CBPs</span>
+                </div>
+            </div>
+            <div class="card_right_txtbox flex-col">
+                <p class="mat-body-1 ws-mat-black60-text">
+                    Sed sit amet arcu aliquet, molestie justo at, auctor nunc. Phasellus
+                    ligula ipsum, volutpat eget semper id, viverra eget nibh.
+                    Suspendisse luctus mattis cursus. Nam consectetur ante at nisl
+                    hendrerit gravida.
+                </p>
+
+                <div class="bottomsection">
+                    <div class="contentdata margin-bottom-xm">
+                        <a class="ws-mat-default-text mat-subheading-2 explore_link">Quick
+                            explore
+                            <mat-icon class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color">
+                                expand_more</mat-icon>
+                        </a>
+                    </div>
+
+                    <!--=============== div for hidden cards for quick explore =============-->
+                    <div class="">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+<!-- single card end -->

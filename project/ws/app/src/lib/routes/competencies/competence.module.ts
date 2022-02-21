@@ -5,6 +5,8 @@ import { CompetenceComponent } from './routes/competence-home/competence.compone
 import { CompetencieRoutingModule } from './competence.rounting.module'
 import { CompetenceCardComponent } from './components/competencies-card/competencies-card.component'
 import { CompetenceViewComponent } from './components/competencies-view/competencies-view.component'
+import { CompetenceProficiencyCardComponent } from './components/competencies-proficency-card/competencies-proficency-card.component'
+import { CompetencyLevelCardComponent } from './components/competency-level-card/competency-level-card.component'
 import { LeftMenuComponent } from './components/left-menu/left-menu.component'
 import { RightMenuComponent } from './components/right-menu/right-menu.component'
 // import { BasicCKEditorComponent } from './components/basic-ckeditor/basic-ckeditor.component'
@@ -25,21 +27,30 @@ import {
   MatProgressSpinnerModule,
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
+import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 /*CkEditorModule, CKEditorService,*/
 import {  AvatarPhotoModule, BtnPageBackModule } from '@sunbird-cb/collection'
-import { EditorSharedModule } from '@ws/author/src/lib/routing/modules/editor/shared/shared.module'
 import { LoaderService } from '@ws/author/src/lib/services/loader.service'
 import { InitResolver } from './resolvers/init-resolve.service'
 import { CompetenceAllComponent } from './routes/competence-all/competence-all.component'
+import { CompetenceSysComponent } from './routes/competence-sys/competence-sys.component'
+import { CompetencyDetailedViewComponent } from './routes/competency-detailed-view/competency-detailed-view.component'
+import { CompetencyAllWrapperComponent } from './routes/competency-all-wrapper/competency-all-wrapper.component'
+import { EditorSharedModule } from '@ws/author/src/lib/routing/modules/editor/shared/shared.module'
 
 @NgModule({
   declarations: [
     CompetenceCardComponent,
+    CompetenceProficiencyCardComponent,
+    CompetencyLevelCardComponent,
     CompetenceComponent,
     LeftMenuComponent,
     RightMenuComponent,
     CompetenceAllComponent,
+    CompetenceSysComponent,
+    CompetencyDetailedViewComponent,
+    CompetencyAllWrapperComponent,
     CompetenceViewComponent,
   ],
   imports: [
@@ -61,6 +72,7 @@ import { CompetenceAllComponent } from './routes/competence-all/competence-all.c
     MatInputModule,
     MatDialogModule,
     MatButtonModule,
+    MatProgressBarModule,
     MatSidenavModule,
     MatProgressSpinnerModule,
     PipeFilterModule,

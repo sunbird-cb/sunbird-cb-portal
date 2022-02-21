@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild, OnDestroy } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { NsContent } from '@sunbird-cb/collection'
 import { ConfigurationsService, EventService, TFetchStatus } from '@sunbird-cb/utils'
 import { MobileAppsService } from '../../../../../../../src/app/services/mobile-apps.service'
@@ -28,6 +28,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   isUserInIntranet = false
   intranetUrlPatterns: string[] | undefined = []
   isIntranetUrl = false
+  collectionId = ''
   progress = 100
   constructor(
     private domSanitizer: DomSanitizer,
@@ -37,6 +38,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     private configSvc: ConfigurationsService,
     private snackBar: MatSnackBar,
     private events: EventService,
+    private activatedRoute: ActivatedRoute,
   ) {
     (window as any).API = this.scormAdapterService
     // if (window.addEventListener) {
@@ -58,7 +60,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     if (this.htmlContent && this.htmlContent.identifier) {
       this.scormAdapterService.contentId = this.htmlContent.identifier
-      this.scormAdapterService.loadData()
+      this.scormAdapterService.loadDataV2()
     }
   }
   ngOnDestroy() {
@@ -151,29 +153,45 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         // if (this.htmlContent.status === 'Live') {
         //   this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
         //     // `https://igot.blob.core.windows.net/content/content/html/${this.htmlContent.identifier}-latest/index.html`
-             // tslint:disable-next-line: max-line-length
+        // tslint:disable-next-line: max-line-length
         //     `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-latest/index.html?timestamp='${new Date().getTime()}`
         //   )
         // } else {
         //   this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
         //     // `https://igot.blob.core.windows.net/content/content/html/${this.htmlContent.identifier}-snapshot/index.html`
-             // tslint:disable-next-line: max-line-length
+        // tslint:disable-next-line: max-line-length
         //     `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
         //   )
         // }
-        this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
-          // tslint:disable-next-line: max-line-length
-          `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
-        )
+        if (this.htmlContent.streamingUrl) {
+          this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
+            `${this.htmlContent.streamingUrl}?timestamp='${new Date().getTime()}`)
+        } else {
+          if (environment.production) {
+            this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
+              // tslint:disable-next-line: max-line-length
+              // `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
+              // tslint:disable-next-line: max-line-length
+              `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
+            )
+          } else {
+            this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
+              // tslint:disable-next-line: max-line-length
+              // `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
+              // tslint:disable-next-line: max-line-length
+              `/abcd/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
+            )
+          }
+        }
       } else {
         setTimeout(
-            () => {
-              if (this.htmlContent && this.htmlContent.artifactUrl) {
-                this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.htmlContent.artifactUrl)
-              }
+          () => {
+            if (this.htmlContent && this.htmlContent.artifactUrl) {
+              this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.htmlContent.artifactUrl)
+            }
           },
-            1000,
-          )
+          1000,
+        )
         // this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.htmlContent.artifactUrl)
       }
       // testing purpose only
@@ -269,13 +287,39 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  raiseTelemetry(data: any) {
+  raiseTelemetry(data1: any) {
+    let data: any
     if (this.htmlContent) {
+      if (typeof data1 === 'string' || data1 instanceof String) {
+        data = JSON.parse(data1.toString())
+      } else {
+        data = { ...data1 }
+      }
       /* tslint:disable-next-line */
-      console.log(this.htmlContent.identifier)
-      this.events.raiseInteractTelemetry(data.event, 'scrom', {
-        contentId: this.htmlContent.identifier,
-        ...data,
+      if (this.activatedRoute.snapshot.queryParams.collectionId) {
+        this.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
+      }
+      this.events.raiseInteractTelemetry(
+        {
+          type: data.event || data.type || 'type',
+          subType: 'scorm',
+          id: this.htmlContent.identifier,
+        },
+        {
+          ...data,
+          // contentId: this.htmlContent.identifier,
+          // contentType: this.htmlContent.primaryCategory,
+          id: this.htmlContent.identifier,
+          type: this.htmlContent.primaryCategory,
+          context: this.htmlContent.context,
+          rollup: {
+            l1: this.collectionId || '',
+          },
+          ver: `${this.htmlContent.version}${''}`,
+        },
+        {
+          pageIdExt: `${_.camelCase(this.htmlContent.primaryCategory)}`,
+          module: _.camelCase(this.htmlContent.primaryCategory),
       })
     }
   }

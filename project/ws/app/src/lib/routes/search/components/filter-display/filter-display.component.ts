@@ -82,7 +82,7 @@ export class FilterDisplayComponent implements OnInit {
     return filter.id
   }
   applyFilters(unitFilterObject: { unitFilter: IFilterUnitItem; filterType: string }) {
-
+    this.displayLoader('true')
     this.filtersResponse = []
     const filterItem = {
       key: unitFilterObject.filterType,
@@ -115,7 +115,7 @@ export class FilterDisplayComponent implements OnInit {
     } else {
       filters[key] = [value]
     }
-
+    this.displayLoader('false')
     this.router.navigate([], {
       queryParams: { f: JSON.stringify(filters) },
       relativeTo: this.activated.parent,
@@ -133,6 +133,7 @@ export class FilterDisplayComponent implements OnInit {
           delete filters[fil]
         }
       }
+      this.displayLoader('false')
       this.router.navigate([], {
         queryParams: { f: JSON.stringify(filters) },
         relativeTo: this.activated.parent,
@@ -156,5 +157,15 @@ export class FilterDisplayComponent implements OnInit {
         this.lowerCaseFilter(filterObj[data].value, Object.keys(filterObj[data].value))
       }
     })
+  }
+
+  displayLoader(value: any) {
+    // tslint:disable-next-line:no-non-null-assertion
+    const vart = document.getElementById('loader')!
+    if (value === 'true') {
+      vart.style.display = 'block'
+    } else {
+      vart.style.display = 'none'
+    }
   }
 }

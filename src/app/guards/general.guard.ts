@@ -4,6 +4,7 @@ import {
   CanActivate,
   Router,
   RouterStateSnapshot,
+  // RouterStateSnapshot,
   UrlTree,
 } from '@angular/router'
 import { ConfigurationsService, AuthKeycloakService } from '@sunbird-cb/utils'
@@ -15,67 +16,89 @@ export class GeneralGuard implements CanActivate {
   constructor(
     private router: Router,
     private configSvc: ConfigurationsService,
-    private authSvc: AuthKeycloakService
+    private authSvc: AuthKeycloakService,
   ) { }
 
   async canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot,
+    _state: RouterStateSnapshot,
   ): Promise<boolean | UrlTree> {
     const requiredFeatures = (next.data && next.data.requiredFeatures) || []
     const requiredRoles = (next.data && next.data.requiredRoles) || []
-    return await this.shouldAllow<boolean | UrlTree>(state, requiredFeatures, requiredRoles)
+    return await this.shouldAllow<boolean | UrlTree>(_state, requiredFeatures, requiredRoles)
   }
 
+  hasRole(role: string[]): boolean {
+    let returnValue = false
+    role.forEach(v => {
+      if ((this.configSvc.userRoles || new Set()).has((v || '').toLocaleLowerCase())) {
+        returnValue = true
+      }
+    })
+    return returnValue
+  }
   private async shouldAllow<T>(
     state: RouterStateSnapshot,
     requiredFeatures: string[],
     requiredRoles: string[],
   ): Promise<T | UrlTree | boolean> {
     /**
-     * Test IF User is authenticated
+     * Test IF User is authenticated===> in now from backend
      */
-    if (!this.configSvc.isAuthenticated) {
-      let refAppend = ''
-      if (state.url) {
-        refAppend = `?ref=${encodeURIComponent(state.url)}`
-      }
-      // return this.router.parseUrl(`/login${refAppend}`)
+    // if (!this.configSvc.isAuthenticated) {
+    // let refAppend = ''
+    // if (state.url) {
+    //   refAppend = `?ref=${encodeURIComponent(state.url)}`
+    // }
+    // return this.router.parseUrl(`/login${refAppend}`)
 
-      let redirectUrl
-      if (refAppend) {
-        redirectUrl = document.baseURI + refAppend
-      } else {
-        redirectUrl = document.baseURI
-      }
+    // let redirectUrl
+    // if (refAppend) {
+    //   redirectUrl = document.baseURI + refAppend
+    // } else {
+    //   redirectUrl = document.baseURI
+    // }
 
-      try {
-        Promise.resolve(this.authSvc.login('S', redirectUrl))
-        return true
-      } catch (e) {
-        return false
-      }
-    }
+    //   try {
+    //     // Promise.resolve(this.authSvc.login('S', redirectUrl))
+    //     return true
+    //   } catch (e) {
+    //     return false
+    //   }
+    // }
+
+     // if Invalid Role: now checking in init.service
+    //  if (
+    //   state.url &&
+    //   // !state.url.includes('/app/setup/') &&
+    //   !(state.url.includes('/app/tnc') ||
+    //     state.url.includes('/app/setup/'))
+    // ) {
+    //   if (!this.hasRole(environment.portalRoles)) {
+    //     this.authSvc.logout()
+    //     return false
+    //   }
+    // }
     // If invalid user
     if (
       this.configSvc.userProfile === null &&
       this.configSvc.instanceConfig &&
       !Boolean(this.configSvc.instanceConfig.disablePidCheck)
     ) {
-      // return this.router.parseUrl('/app/invalid-user')
+      return this.router.parseUrl('/app/invalid-user')
     }
     /**
      * Test IF User Tnc Is Accepted
      */
     if (!this.configSvc.hasAcceptedTnc) {
-      // if (
-      //   state.url &&
-      //   !state.url.includes('/app/setup/') &&
-      //   !state.url.includes('/app/tnc') &&
-      //   !state.url.includes('/page/home')
-      // ) {
-      //   this.configSvc.userUrl = state.url
-      // }
+      if (
+        state.url &&
+        !state.url.includes('/app/setup/') &&
+        !state.url.includes('/app/tnc') &&
+        !state.url.includes('/page/home')
+      ) {
+        this.configSvc.userUrl = state.url
+      }
       // if (
       //   this.configSvc.restrictedFeatures &&
       //   !this.configSvc.restrictedFeatures.has('firstTimeSetupV2')

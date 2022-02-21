@@ -13,7 +13,7 @@
                     | pipePartialContent
                       : [
                           'identifier',
-                          'contentType',
+                          'primaryCategory',
                           'resourceType',
                           'mimeType',
                           'downloadUrl',
@@ -21,7 +21,8 @@
                   'artifactUrl'
                         ]
                 "></ws-widget-btn-content-download>
-              <ws-widget-btn-content-like [forPreview]="forPreview" [widgetData]="{
+              <!-- TODO: Blocking this button for now, as the functionality is not working -->
+              <!-- <ws-widget-btn-content-like [forPreview]="forPreview" [widgetData]="{
                   identifier: pdfData.identifier,
                   isDisabled: isPreviewMode
                 }"></ws-widget-btn-content-like>
@@ -40,17 +41,17 @@
                   identifier: pdfData.identifier,
                   name: pdfData.name,
                   isDisabled: isPreviewMode
-                }"></ws-widget-btn-content-feedback-v2>
+                }"></ws-widget-btn-content-feedback-v2> -->
             </div>
           </mat-card-content>
         </mat-card>
       </div>
     </div>
   </div>
-  <div *ngIf="discussionForumWidget && isRestricted" class="padding-m">
+  <!-- <div *ngIf="discussionForumWidget && isRestricted" class="padding-m">
     <div class="video-discussion-forum-in margin-top-m margin-bottom-m">
       <h2 class="mat-toolbar discussion-head">Discussion Forum</h2>
       <ng-container [wsResolverWidget]="discussionForumWidget"></ng-container>
     </div>
-  </div>
+  </div> -->
 </div>

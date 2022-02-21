@@ -64,9 +64,13 @@
   }
   .mat-card-subtitle{
     margin-top: -12px;
+    word-break: break-all;
+    white-space: initial;
   }
 .mat-card-header-text{
   margin-right: 16px;
+  word-break: break-all;
+  white-space: initial;
 }
   mat-card-content {
     margin: 0 -0.25 * $card-padding;
@@ -123,6 +127,8 @@
     overflow: hidden;
     height: $title-line-count * $title-line-height;
     line-height: $title-line-height;
+    word-break: break-all;
+    white-space: initial;
   }
 
   $description-line-count: 3;
@@ -179,7 +185,6 @@ mat-grid-list {
   background: #fff !important;
   border-radius: 8px 8px 0 0;
   color: #222222 !important;
-  // font: 18px/30px Poppins-Medium;
 }
 
 .unit-cohort {
@@ -200,7 +205,6 @@ mat-grid-list {
   color: #5f5f5f;
   font-size: 0.9rem;
   font-weight: normal;
-  // font-family: Poppins-regular;
 }
 
 .cohortSection {
@@ -233,6 +237,11 @@ mat-grid-list {
   margin: 0.5rem auto 0.5rem auto;
   // padding-top: 15px;
 }
-.text-capitalize{
-  margin-left: 16px;
+// .text-capitalize{
+//   margin-left: 16px;
+// }
+
+.netword_card_subtitle, .network_title_text {
+  word-break: break-all;
+  white-space: initial;
 }

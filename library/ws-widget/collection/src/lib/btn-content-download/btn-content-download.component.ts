@@ -1,13 +1,14 @@
 import { Platform } from '@angular/cdk/platform'
 import { Component, HostBinding, Input, OnInit } from '@angular/core'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
 // import { MobileAppsService } from './mobile-apps.service'
 import { NsContent } from '../_services/widget-content.model'
 
 export interface IWidgetBtnDownload {
   identifier: string
   contentType: NsContent.EContentTypes
+  primaryCategory: NsContent.EPrimaryCategory
   resourceType: string
   mimeType: NsContent.EMimeTypes
   downloadUrl: string
@@ -47,7 +48,7 @@ export class BtnContentDownloadComponent extends WidgetBaseComponent
   private get isContentDownloadable(): boolean {
     if (this.widgetData.identifier) {
       if (
-        this.widgetData.contentType === NsContent.EContentTypes.PROGRAM ||
+        this.widgetData.primaryCategory === NsContent.EPrimaryCategory.PROGRAM ||
         this.widgetData.resourceType === 'Assessment' ||
         this.widgetData.resourceType === 'Competition' ||
         this.widgetData.resourceType === 'Classroom Training' ||
@@ -84,10 +85,23 @@ export class BtnContentDownloadComponent extends WidgetBaseComponent
   }
 
   raiseTelemetry() {
-    this.events.raiseInteractTelemetry('download', 'content', {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'download',
+        subType: 'content',
+        id: this.widgetData.identifier,
+      },
+      {
       platform: this.platform,
-      contentId: this.widgetData.identifier,
-      contentType: this.widgetData.contentType,
-    })
+      // contentId: this.widgetData.identifier,
+      // contentType: this.widgetData.contentType, // cccc
+      id: this.widgetData.identifier,
+      type: this.widgetData.primaryCategory,
+      },
+      {
+        pageIdExt: 'download',
+        module: WsEvents.EnumTelemetrymodules.CONTENT,
+      }
+    )
   }
 }

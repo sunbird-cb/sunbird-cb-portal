@@ -10,7 +10,7 @@ import { CardNetWorkService } from '@sunbird-cb/collection'
   templateUrl: './network-home.component.html',
   styleUrls: ['./network-home.component.scss'],
   /* tslint:disable */
-  host: { class: 'flex flex-1 mt-6 ' },
+  host: { class: 'flex flex-1 mt-6 network_right' },
   /* tslint:enable */
 })
 export class NetworkHomeComponent implements OnInit {
@@ -136,7 +136,7 @@ export class NetworkHomeComponent implements OnInit {
       if (this.searchResultUserArray && this.searchResultUserArray.length === 0) {
         this.cardNetworkService.fetchSearchUserInfo(val).subscribe(data => {
           this.searchResultUserArray = []
-          this.searchResultUserArray = data
+          this.searchResultUserArray = data.result.response.content
           // this.searchResultUserArray.forEach((usr: any) => {
             // this.networkV2Service.fetchProfile(usr.wid).subscribe((res: any) => {
               // const resdata = res.result.UserProfile[0]

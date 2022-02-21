@@ -1,7 +1,11 @@
 import { Injectable, LOCALE_ID, Inject } from '@angular/core'
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http'
-import { Observable } from 'rxjs'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http'
+import { Observable, throwError } from 'rxjs'
+import { ConfigurationsService, AuthKeycloakService } from '@sunbird-cb/utils'
+import { catchError } from 'rxjs/operators'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { NOTIFICATION_TIME } from '@sunbird-cb/collection/src/lib/_common/ck-editor/constants/constant'
+// import 'rxjs/add/operator/do'
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +13,8 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 export class AppInterceptorService implements HttpInterceptor {
   constructor(
     private configSvc: ConfigurationsService,
+    private snackBar: MatSnackBar,
+    private authSvc: AuthKeycloakService,
     @Inject(LOCALE_ID) private locale: string,
   ) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -28,14 +34,64 @@ export class AppInterceptorService implements HttpInterceptor {
     if (this.configSvc.activeOrg && this.configSvc.rootOrg) {
       const modifiedReq = req.clone({
         setHeaders: {
+          Authorization: '',
           org: this.configSvc.activeOrg,
           rootOrg: this.configSvc.rootOrg,
           locale: lang.join(','),
-          wid: (this.configSvc.userProfile && this.configSvc.userProfile.userId) ||  '',
+          wid: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
+          // wid:'',
           hostPath: this.configSvc.hostPath,
         },
       })
       return next.handle(modifiedReq)
+        // .do(event => {
+        //   debugger
+        //   if (event instanceof HttpResponseBase) {
+        //     const response = event as HttpResponseBase
+        //     if (response && response.ok && response.url && response.url.toLowerCase().indexOf(this.logoPartialUrl) >= 0) {
+        //       // Modify this portion appropriately to match your redirect page
+        //       const queryStringIndex = response.url.indexOf('?')
+        //       const loginUrl = queryStringIndex && queryStringIndex > 0 ? response.url.substring(0, queryStringIndex) : response.url;
+        //       console.log('User logout detected, redirecting to login page: %s', loginUrl)
+        //       window.location.href = loginUrl
+        //     }
+        //   }
+        // })
+        .pipe(
+          catchError(error => {
+            if (error instanceof HttpErrorResponse) {
+              const localUrl = location.origin
+              const pageName = '/page/home'
+              switch (error.status) {
+                case 0:
+                  if (localUrl.includes('localhost')) {
+                    this.snackBar.open('Please login Again and Apply new TOKEN', undefined, { duration: NOTIFICATION_TIME * 3 })
+                  }
+                  this.authSvc.logout()
+                  break
+                case 200:
+                  if (!error.ok && error.url) {
+                    window.location.href = error.url
+                  }
+                  break
+                // case 0:
+                case 419:      // login
+                  if (localStorage.getItem('telemetrySessionId')) {
+                    localStorage.removeItem('telemetrySessionId')
+                  }
+                  if (localUrl.includes('localhost')) {
+                    // tslint:disable-next-line: prefer-template
+                    window.location.href = error.error.redirectUrl + `?q=${localUrl}${pageName}`
+                  } else {
+                    // tslint:disable-next-line: prefer-template
+                    window.location.href = error.error.redirectUrl + `?q=${pageName}`
+                  }
+                  break
+              }
+            }
+            return throwError(error)
+          })
+        )
     }
     return next.handle(req)
   }

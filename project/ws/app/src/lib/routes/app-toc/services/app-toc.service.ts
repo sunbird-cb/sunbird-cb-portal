@@ -33,10 +33,12 @@ export class AppTocService {
   analyticsReplaySubject: Subject<any> = new Subject()
   analyticsFetchStatus: TFetchStatus = 'none'
   batchReplaySubject: Subject<any> = new Subject()
+  setBatchDataSubject: Subject<any> = new Subject()
   resumeData: Subject<NsContent.IContinueLearningData | null> = new Subject<NsContent.IContinueLearningData | null>()
   private showSubtitleOnBanners = false
   private canShowDescription = false
   resumeDataSubscription: Subscription | null = null
+  primaryCategory = NsContent.EPrimaryCategory
 
   constructor(private http: HttpClient, private configSvc: ConfigurationsService) { }
 
@@ -55,6 +57,10 @@ export class AppTocService {
 
   updateBatchData() {
     this.batchReplaySubject.next()
+  }
+
+  setBatchData(data: NsContent.IBatchListResponse) {
+    this.setBatchDataSubject.next(data)
   }
 
   updateResumaData(data: any) {
@@ -144,11 +150,11 @@ export class AppTocService {
   ): NsAppToc.ITocStructure {
     if (
       content &&
-      !(content.contentType === 'Resource' || content.contentType === 'Knowledge Artifact')
+      !(content.primaryCategory === this.primaryCategory.RESOURCE || content.primaryCategory === this.primaryCategory.KNOWLEDGE_ARTIFACT)
     ) {
-      if (content.contentType === 'Course') {
+      if (content.primaryCategory === 'Course') {
         tocStructure.course += 1
-      } else if (content.contentType === 'Collection') {
+      } else if (content.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
         tocStructure.learningModule += 1
       }
       content.children.forEach(child => {
@@ -160,38 +166,45 @@ export class AppTocService {
       (content.contentType === 'Resource' || content.contentType === 'Knowledge Artifact')
     ) {
       switch (content.mimeType) {
-        case NsContent.EMimeTypes.HANDS_ON:
-          tocStructure.handsOn += 1
-          break
+        // case NsContent.EMimeTypes.HANDS_ON:
+        //   tocStructure.handsOn += 1
+        //   break
         case NsContent.EMimeTypes.MP3:
           tocStructure.podcast += 1
           break
         case NsContent.EMimeTypes.MP4:
         case NsContent.EMimeTypes.M3U8:
+        case NsContent.EMimeTypes.YOUTUBE:
           tocStructure.video += 1
           break
-        case NsContent.EMimeTypes.INTERACTION:
-          tocStructure.interactiveVideo += 1
-          break
+        // case NsContent.EMimeTypes.INTERACTION:
+        //   tocStructure.interactiveVideo += 1
+        //   break
         case NsContent.EMimeTypes.PDF:
           tocStructure.pdf += 1
           break
-        case NsContent.EMimeTypes.HTML:
+        // case NsContent.EMimeTypes.HTML:
+        case NsContent.EMimeTypes.TEXT_WEB:
           tocStructure.webPage += 1
           break
         case NsContent.EMimeTypes.QUIZ:
-          if (content.resourceType === 'Assessment') {
-            tocStructure.assessment += 1
-          } else {
-            tocStructure.quiz += 1
-          }
+        case NsContent.EMimeTypes.APPLICATION_JSON:
+          // if (content.resourceType === 'Assessment') {
+          tocStructure.assessment += 1
+          // } else {
+          //   tocStructure.quiz += 1
+          // }
           break
-        case NsContent.EMimeTypes.WEB_MODULE:
-          tocStructure.webModule += 1
+        // case NsContent.EMimeTypes.WEB_MODULE:
+        //   tocStructure.webModule += 1
+        //   break
+        case NsContent.EMimeTypes.ZIP2:
+        case NsContent.EMimeTypes.ZIP:
+          tocStructure.interactivecontent += 1
           break
-        case NsContent.EMimeTypes.YOUTUBE:
-          tocStructure.youtube += 1
-          break
+        // case NsContent.EMimeTypes.YOUTUBE:
+        //   tocStructure.youtube += 1
+        //   break
         default:
           tocStructure.other += 1
           break
@@ -248,7 +261,7 @@ export class AppTocService {
     this.analyticsFetchStatus = 'fetching'
     const url = `${PROXY_SLAG_V8}/LA/api/la/contentanalytics?content_id=${contentId}&type=course`
     this.http.get(url).subscribe(
-      result => {
+      (result: any) => {
         this.analyticsFetchStatus = 'done'
         this.analyticsReplaySubject.next(result)
       },
@@ -271,7 +284,7 @@ export class AppTocService {
       '"source":["iGot","Learning Hub"]',
     )}$${encodeURIComponent(`"courseCode": ["${contentId}"]`)}`
     this.http.get(url).subscribe(
-      result => {
+      (result: any) => {
         this.analyticsFetchStatus = 'done'
         this.analyticsReplaySubject.next(result)
       },
@@ -292,7 +305,7 @@ export class AppTocService {
     // return this.http.get<NsContent.IContentMinimal[]>(
     //   `${API_END_POINTS.CONTENT_PARENTS}/${contentId}`,
     // )
-    if (contentId) {}
+    if (contentId) { }
     return EMPTY
   }
   fetchContentWhatsNext(
@@ -329,7 +342,9 @@ export class AppTocService {
     cohortType: NsCohorts.ECohortTypes,
     contentId: string,
   ): Observable<NsCohorts.ICohortsContent[]> {
-    return this.http.get<NsCohorts.ICohortsContent[]>(API_END_POINTS.COHORTS(cohortType, contentId))
+    return this.http.get<NsCohorts.ICohortsContent[]>(API_END_POINTS.COHORTS(cohortType, contentId), {
+      headers: { rootOrg: this.configSvc.rootOrg || '', org: this.configSvc.org ? this.configSvc.org[0] : '' },
+    })
   }
   fetchExternalContentAccess(contentId: string): Observable<{ hasAccess: boolean }> {
     return this.http.get<{ hasAccess: boolean }>(API_END_POINTS.EXTERNAL_CONTENT(contentId))
@@ -365,7 +380,7 @@ export class AppTocService {
   createBatch(batchData: any) {
     return this.http.post(
       API_END_POINTS.BATCH_CREATE,
-      { request : batchData },
+      { request: batchData },
     )
   }
 }

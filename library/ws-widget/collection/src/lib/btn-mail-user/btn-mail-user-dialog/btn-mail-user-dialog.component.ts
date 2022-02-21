@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core'
 import { MatSnackBar, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { WidgetContentShareService } from '../../_services/widget-content-share.service'
 import { IBtnMailUser } from '../btn-mail-user.component'
-import { EventService } from '@sunbird-cb/utils'
+import { EventService, WsEvents } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-widget-btn-mail-user-dialog',
@@ -59,12 +59,19 @@ export class BtnMailUserDialogComponent implements OnInit {
 
   raiseTelemetry() {
     this.events.raiseInteractTelemetry(
-      'email',
-      'emailSME',
       {
-        contentId: this.data.content.identifier,
+        type: 'email',
+        subType: 'emailSME',
+        id: this.data.content.identifier,
+      },
+      {
+        id: this.data.content.identifier,
         emails: this.data.emails,
       },
+      {
+        pageIdExt: 'btn-mail-user',
+        module: WsEvents.EnumTelemetrymodules.PROFILE,
+      }
     )
   }
 

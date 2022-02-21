@@ -3,7 +3,7 @@ import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { NsContent } from '../_services/widget-content.model'
 import { MatDialog } from '@angular/material'
 import { BtnMailUserDialogComponent } from './btn-mail-user-dialog/btn-mail-user-dialog.component'
-import { EventService, ConfigurationsService } from '@sunbird-cb/utils'
+import { EventService, ConfigurationsService, WsEvents } from '@sunbird-cb/utils'
 
 export interface IBtnMailUser {
   content: NsContent.IContent
@@ -51,12 +51,19 @@ export class BtnMailUserComponent extends WidgetBaseComponent
 
   raiseTelemetry() {
     this.events.raiseInteractTelemetry(
-      'email',
-      'openDialog',
       {
-        contentId: this.widgetData.content.identifier,
+        type: 'email',
+        subType: 'openDialog',
+        id: this.widgetData.content.identifier,
+      },
+      {
+        id: this.widgetData.content.identifier,
         emails: this.widgetData.emails,
       },
+      {
+        pageIdExt: 'btn-mail-user',
+        module: WsEvents.EnumTelemetrymodules.PROFILE,
+      }
     )
   }
 

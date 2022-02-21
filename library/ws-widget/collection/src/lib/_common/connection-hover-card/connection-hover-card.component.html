@@ -1,0 +1,67 @@
+<mat-card class="flex flex-col card-container">
+    <!-- ==========={{hoverUser | json}}================ -->
+    <!-- <div class="flex flex-col card-container"> -->
+    <div class="photo-container flex items-center justify-center">
+        <div class="fixd" i18n-aria-label role="link" aria-label="click on it to visit user profile">
+            <ws-widget-avatar-photo [name]="getUseravatarName()" [photoUrl]="hoverUser?.photo" size="l-s">
+            </ws-widget-avatar-photo>
+        </div>
+    </div>
+    <mat-card-content class="name-container flex flex-col width-expand">
+        <div *ngIf="hoverUser" class="margin-top-xs" i18n-aria-label role="link">
+            <div class="mat-title name ws-mat-black-text truncate">
+                <!-- {{hoverUser?.personalDetails?.firstname}}{{' '}}{{hoverUser?.personalDetails?.middlename}}
+                {{' '}}{{hoverUser?.personalDetails?.surname}} -->
+                {{getUserName}}
+            </div>
+            <!-- *ngFor="let pro of hoverUser?.professionalDetails" -->
+            <div class="flex flex-1" >
+                <span class="mat-body-1 ws-mat-black60-text truncate">
+                    {{hoverUser?.designation || hoverUser?.designationOther}}
+                </span>
+                <span *ngIf="hoverUser?.designation || hoverUser?.designationOther" class="mat-body-1 ws-mat-black60-text">&nbsp;at &nbsp;</span>
+                <div class="designation ws-mat-black60-text truncate">
+                    {{hoverUser?.department}}
+                </div>
+            </div>
+            <!-- <mat-divider class="p-inherit margin-top-s margin-bottom-s"></mat-divider> -->
+
+            <div class="flex flex-1 flex-column">
+                <!-- <div class="flex flex-1 m-margin cursor-pointer">
+                    <mat-icon>call</mat-icon>
+                    <a *ngIf="hoverUser?.personalDetails?.mobile" href="tel:{{hoverUser?.personalDetails?.mobile}}">
+                        <span class="mat-body-2 margin-left-s ws-mat-black60-text">
+                            {{hoverUser?.personalDetails?.mobile || 'Not available'}}
+                        </span>
+                    </a>
+                    <span *ngIf="!hoverUser?.personalDetails?.mobile" class="mat-body-2 margin-left-s">
+                        {{'Not available'}}
+                    </span>
+                </div> -->
+                <!-- <div class="flex flex-1 m-margin cursor-pointer">
+                    <mat-icon>email</mat-icon>
+                    <a *ngIf="hoverUser?.personalDetails?.primaryEmail"
+                        href="mailto:{{hoverUser?.personalDetails?.primaryEmail}}">
+                        <span class="mat-body-2 margin-left-s ws-mat-black60-text">
+                            {{hoverUser?.personalDetails?.primaryEmail || 'Not available'}}
+                        </span>
+                    </a>
+                    <span *ngIf="!hoverUser?.personalDetails?.primaryEmail" class="mat-body-2 margin-left-s">
+                        {{'Not available'}}
+                    </span>
+                </div> -->
+                <div class="flex flex-1 m-margin margin-bottom-s cursor-pointer">
+                    <a role="link" class="flex ws-mat-default-text" (click)="goToUserProfile()">
+                        <mat-icon>group</mat-icon>
+                        <span class="mat-body-2 margin-left-s" i18n>{{'Network Profile'}}</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </mat-card-content>
+    <!-- </div> -->
+</mat-card>
+
+
+<!-- (click)="goToUserProfile(user)" -->

@@ -6,10 +6,11 @@ import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { RouterModule } from '@angular/router'
 import { LogoutModule } from '@sunbird-cb/utils'
 import { AvatarPhotoModule } from '../_common/avatar-photo/avatar-photo.module'
+import { WidgetUrlResolverDirective } from './widget-url-resolver.directive'
 // import { TreeCatalogModule } from '../tree-catalog/tree-catalog.module'
 
 @NgModule({
-  declarations: [BtnProfileComponent],
+  declarations: [BtnProfileComponent, WidgetUrlResolverDirective],
   imports: [
     AvatarPhotoModule,
     CommonModule,
@@ -22,8 +23,8 @@ import { AvatarPhotoModule } from '../_common/avatar-photo/avatar-photo.module'
     MatSlideToggleModule,
     RouterModule,
     WidgetResolverModule,
-
   ],
+  exports: [BtnProfileComponent],
   entryComponents: [BtnProfileComponent],
 })
 export class BtnProfileModule { }

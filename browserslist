@@ -11,4 +11,6 @@
 # not dead
 # not IE 9-11 # For IE 9-11 support, remove 'not'.
 
-last 2 Chrome versions
+last 2 Chrome major versions
+last 2 iOS major versions
+last 2 Safari major versions

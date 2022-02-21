@@ -15,7 +15,8 @@ import { Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
 // import { NSSearch } from '@sunbird-cb/utils/src/lib/services/widget-search.model'
 import { WidgetUserService } from '../_services/widget-user.service'
-
+// tslint:disable-next-line
+import _ from 'lodash'
 interface IStripUnitContentData {
   key: string
   canHideStrip: boolean
@@ -161,14 +162,22 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
   //   return filters
   // }
 
+  identify(index: number, item: any) {
+    if (index >= 0) { }
+    return item
+  }
+  tracker(index: number, item: any) {
+    if (index >= 0) { }
+    return _.get(item, 'widgetData.content.identifier')
+  }
   private getFiltersFromArray(v6filters: any) {
     const filters: any = {}
     if (v6filters.constructor === Array) {
       v6filters.forEach(((f: any) => {
-            Object.keys(f).forEach(key => {
-              filters[key] = f[key]
-            })
-        }))
+        Object.keys(f).forEach(key => {
+          filters[key] = f[key]
+        })
+      }))
       return filters
     }
     return v6filters
@@ -178,10 +187,10 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     const filters: any = {}
     if (v6filters.constructor === Array) {
       v6filters.forEach(((f: any) => {
-            Object.keys(f).forEach(key => {
-              filters[key] = f[key]
-            })
-        }))
+        Object.keys(f).forEach(key => {
+          filters[key] = f[key]
+        })
+      }))
       return filters
     }
     return v6filters
@@ -199,6 +208,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     this.fetchFromSearchV6(strip, calculateParentStatus)
     this.fetchFromIds(strip, calculateParentStatus)
     this.fetchFromEnrollmentList(strip, calculateParentStatus)
+    this.fetchRelatedCBP(strip, calculateParentStatus)
   }
   fetchFromApi(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.api && Object.keys(strip.request.api).length) {
@@ -232,8 +242,9 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           )
           const viewMoreUrl = showViewMore
             ? {
-              path: '/app/search/learning',
+              path: '/app/globalsearch',
               queryParams: {
+                tab: 'Learn',
                 q: strip.request && strip.request.search && strip.request.search.query,
                 f: JSON.stringify(
                   strip.request && strip.request.search && strip.request.search.filters,
@@ -296,10 +307,10 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         strip.request.searchV6 &&
         strip.request.searchV6.request &&
         strip.request.searchV6.request.filters) {
-          originalFilters = strip.request.searchV6.request.filters
-          strip.request.searchV6.request.filters = this.getFiltersFromArray(
-            strip.request.searchV6.request.filters,
-          )
+        originalFilters = strip.request.searchV6.request.filters
+        strip.request.searchV6.request.filters = this.getFiltersFromArray(
+          strip.request.searchV6.request.filters,
+        )
       }
       this.contentSvc.searchV6(strip.request.searchV6).subscribe(
         results => {
@@ -308,20 +319,21 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           )
           const viewMoreUrl = showViewMore
             ? {
-              path: '/app/search/learning',
+              path: '/app/globalsearch',
               queryParams: {
+                tab: 'Learn',
                 q: strip.request && strip.request.searchV6 && strip.request.searchV6.request,
                 f:
-                strip.request &&
-                strip.request.searchV6 &&
-                strip.request.searchV6.request &&
-                strip.request.searchV6.request.filters
-                  ? JSON.stringify(
-                    this.transformSearchV6FiltersV2(
-                      originalFilters,
+                  strip.request &&
+                    strip.request.searchV6 &&
+                    strip.request.searchV6.request &&
+                    strip.request.searchV6.request.filters
+                    ? JSON.stringify(
+                      this.transformSearchV6FiltersV2(
+                        originalFilters,
+                      )
                     )
-                  )
-                  : {},
+                    : {},
               },
             }
             : null
@@ -365,19 +377,22 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     if (strip.request && strip.request.enrollmentList && Object.keys(strip.request.enrollmentList).length) {
       let userId = ''
       let content: NsContent.IContent[]
+      let contentNew: NsContent.IContent[]
+      const queryParams = _.get(strip.request.enrollmentList, 'queryParams')
       if (this.configSvc.userProfile) {
         userId = this.configSvc.userProfile.userId
       }
       // tslint:disable-next-line: deprecation
-      this.userSvc.fetchUserBatchList(userId).subscribe(
+      this.userSvc.fetchUserBatchList(userId, queryParams).subscribe(
         courses => {
           const showViewMore = Boolean(
             courses.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
           )
           const viewMoreUrl = showViewMore
             ? {
-              path: '/app/search/learning',
+              path: '/app/globalsearch',
               queryParams: {
+                tab: 'Learn',
                 q: strip.request && strip.request.searchV6 && strip.request.searchV6.query,
                 f:
                   strip.request && strip.request.searchV6 && strip.request.searchV6.filters
@@ -392,15 +407,25 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
             : null
           if (courses && courses.length) {
             content = courses.map(c => {
-              const contentTemp: NsContent.IContent =  c.content
+              const contentTemp: NsContent.IContent = c.content
               contentTemp.completionPercentage = c.completionPercentage || 0
               contentTemp.completionStatus = c.completionStatus || 0
               return contentTemp
             })
           }
+          // To filter content with completionPercentage > 0,
+          // so that only those content will show in home page
+          // continue learing strip
+          if (content && content.length) {
+            contentNew = content.filter((c: any) => {
+              if (c.completionPercentage && c.completionPercentage > 0) {
+                return c
+              }
+            })
+          }
           this.processStrip(
             strip,
-            this.transformContentsToWidgets(content, strip),
+            this.transformContentsToWidgets(contentNew, strip),
             'done',
             calculateParentStatus,
             viewMoreUrl,
@@ -409,6 +434,58 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         () => {
           this.processStrip(strip, [], 'error', calculateParentStatus, null)
         }
+      )
+    }
+  }
+
+  fetchRelatedCBP(strip: any, calculateParentStatus = true) {
+    if (strip.request && strip.request.comprelatedCbp && Object.keys(strip.request.comprelatedCbp).length) {
+      // let userId = ''
+      // let content: NsContent.IContent[]
+      // let contentNew: NsContent.IContent[]
+      const searchRequest = strip.payload
+      // if (this.configSvc.userProfile) {
+      //   userId = this.configSvc.userProfile.userId
+      // }
+      let originalFilters: any = []
+      originalFilters = searchRequest.request.filters
+      this.contentSvc.searchRelatedCBPV6(searchRequest).subscribe(
+        results => {
+          const showViewMore = Boolean(
+            results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
+          )
+          const viewMoreUrl = showViewMore
+            ? {
+              path: '/app/globalsearch',
+              queryParams: {
+                tab: 'Learn',
+                q: strip.request && strip.request.searchV6 && strip.request.searchV6.request,
+                f:
+                  searchRequest.request &&
+                    searchRequest.request.filters
+                    ? JSON.stringify(
+                      this.transformSearchV6FiltersV2(
+                        originalFilters,
+                      )
+                    )
+                    : {},
+              },
+            }
+            : null
+          // if (viewMoreUrl && viewMoreUrl.queryParams) {
+          //   viewMoreUrl.queryParams = viewMoreUrl.queryParams
+          // }
+          this.processStrip(
+            strip,
+            this.transformContentsToWidgets(results.result.content, strip),
+            'done',
+            calculateParentStatus,
+            viewMoreUrl,
+          )
+        },
+        () => {
+          this.processStrip(strip, [], 'error', calculateParentStatus, null)
+        },
       )
     }
   }
@@ -556,7 +633,8 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           Object.keys(strip.request.searchRegionRecommendation).length) ||
         (strip.request.searchV6 && Object.keys(strip.request.searchV6).length) ||
         (strip.request.ids && Object.keys(strip.request.ids).length) ||
-        (strip.request.enrollmentList && Object.keys(strip.request.enrollmentList).length)
+        (strip.request.enrollmentList && Object.keys(strip.request.enrollmentList).length) ||
+        (strip.request.comprelatedCbp && Object.keys(strip.request.comprelatedCbp).length)
       )
     ) {
       return true

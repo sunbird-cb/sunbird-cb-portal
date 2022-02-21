@@ -25,7 +25,7 @@
                           </span>
                     </div>
                 </div>
-    
+
               </mat-card-content>
               <mat-card-actions align="end">
 
@@ -37,7 +37,7 @@
         <div *ngIf="fetchSingleCategoryLoader" class="w-full flex items-center justify-center">
             <mat-spinner [diameter]="30"></mat-spinner>
         </div>
-        <ws-app-related-posts class="margin-left-l " *ngIf="!fetchSingleCategoryLoader" [relatedDiscussions]="similarPosts">
+        <ws-app-related-posts class="margin-left-l related_post_div" *ngIf="!fetchSingleCategoryLoader" [relatedDiscussions]="similarPosts">
         </ws-app-related-posts>
     </div>
 </div>

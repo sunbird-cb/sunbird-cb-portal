@@ -1,14 +1,19 @@
 <ws-widget-btn-page-back [widgetData]="{ url: 'home',titles: titles }">
 </ws-widget-btn-page-back>
 
-<div *ngIf="currentRoute === 'home'" class="container-balanced-banner margin-top-s">
+<div *ngIf="currentRoute === 'home'" class="container-balanced-banner margin-top-s margin-bottom-l">
   <ng-container [wsResolverWidget]="banner"></ng-container>
 </div>
-<!--
+
 <mat-sidenav-container class="container-balanced" autosize name="discuss-menu">
-  <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0">
+
+  <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 " [ngClass]="{'margin-top-48': currentRoute === 'home'}">
     <div class="contain">
-      <app-profile-v2-left-menu [unseen]="unread"></app-profile-v2-left-menu>
+      <div class="flex-1" style="position: relative;">
+        <div #stickyMenu [class.sticky]="sticky">
+          <app-competence-left-menu [tabsData]="tabsData" class="flex flex-1"></app-competence-left-menu>
+        </div>
+      </div>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -17,9 +22,30 @@
         id="ws-auth-root-home-btn-menu" name="ws-auth-root-home-btn-menu">
         <mat-icon>menu</mat-icon>
       </button>
-    </div> -->
-<div class="container-balanced">
-  <router-outlet></router-outlet>
-</div>
-<!-- </mat-sidenav-content>
+    </div>
+    <div class="flex flex-5 marbot" [ngClass]="{'margin-top-56': currentRoute === 'home'}">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
+<!-- <mat-sidenav-container class="container-balanced" autosize name="discuss-menu">
+  <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0">
+    <div class="contain">
+      <app-competence-left-menu [tabsData]="tabsData" class="flex flex-1"></app-competence-left-menu>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div *ngIf="screenSizeIsLtMedium">
+      <button type="button" mat-icon-button (click)="sideNavBarOpened = !sideNavBarOpened"
+        id="ws-auth-root-home-btn-menu" name="ws-auth-root-home-btn-menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+    <div class="flex flex-5 marbot" [ngClass]="{'margin-top-56': currentRoute === 'home'}">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
 </mat-sidenav-container> -->

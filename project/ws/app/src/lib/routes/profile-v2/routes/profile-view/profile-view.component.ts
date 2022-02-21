@@ -9,8 +9,10 @@ import { DiscussService } from '../../../discuss/services/discuss.service'
 import _ from 'lodash'
 import { NetworkV2Service } from '../../../network-v2/services/network-v2.service'
 import { NSNetworkDataV2 } from '../../../network-v2/models/network-v2.model'
-import { ConfigurationsService } from '@sunbird-cb/utils';
+import { ConfigurationsService, ValueService } from '@sunbird-cb/utils';
+import { map } from 'rxjs/operators'
 /* tslint:enable */
+// import {  } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'app-profile-view',
@@ -38,6 +40,13 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   currentUser!: string | null
   connectionRequests!: NSNetworkDataV2.INetworkUser[]
   currentUsername: any
+
+  sideNavBarOpened = true
+  private defaultSideNavBarOpenedSubscription: any
+  public screenSizeIsLtMedium = false
+  isLtMedium$ = this.valueSvc.isLtMedium$
+  mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
+
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -55,48 +64,83 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     private networkV2Service: NetworkV2Service,
     private configSvc: ConfigurationsService,
     public router: Router,
+    private valueSvc: ValueService,
   ) {
     this.Math = Math
     this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     this.tabs = this.route.data.subscribe(data => {
-      this.portalProfile = data.profile
-        && data.profile.data
-        && data.profile.data.length > 0
-        && data.profile.data[0]
+      if (data.profile.data.profileDetails) {
+        this.portalProfile = data.profile.data.profileDetails
+      } else {
+        this.portalProfile = data.profile.data
+        _.set(this.portalProfile, 'personalDetails.firstname', _.get(data.profile.data, 'firstName'))
+        _.set(this.portalProfile, 'personalDetails.surname', _.get(data.profile.data, 'lastName'))
+        _.set(this.portalProfile, 'personalDetails.email', _.get(data.profile.data, 'email'))
+        _.set(this.portalProfile, 'personalDetails.userId', _.get(data.profile.data, 'userId'))
+        _.set(this.portalProfile, 'personalDetails.userName', _.get(data.profile.data, 'userName'))
 
-      if (this.portalProfile.id === this.currentUser) {
-        this.currentUsername = this.configSvc.userProfile && this.configSvc.userProfile.userName
-      } else  {
-        this.currentUsername = this.portalProfile.personalDetails.userName
       }
+
+      const user = this.portalProfile.userId || this.portalProfile.id || _.get(data, 'profile.data.id') || ''
+      if (this.portalProfile && !(this.portalProfile.id && this.portalProfile.userId)) {
+        this.portalProfile.id = user
+        this.portalProfile.userId = user
+      }
+
+      /** // for loged in user only */
+      if (user === this.currentUser) {
+        this.currentUsername = this.configSvc.userProfile && this.configSvc.userProfile.userName
+      } else {
+        this.currentUsername = this.portalProfile.personalDetails && this.portalProfile.personalDetails !== null
+          ? this.portalProfile.personalDetails.userName
+          : this.portalProfile.userName
+      }
+
+      if (!this.portalProfile.personalDetails && user === this.currentUser) {
+        _.set(this.portalProfile, 'personalDetails.firstname', _.get(this.configSvc, 'userProfile.firstName'))
+        _.set(this.portalProfile, 'personalDetails.surname', _.get(this.configSvc, 'userProfile.lastName'))
+      }
+      /** // for loged in user only */
       this.decideAPICall()
     })
   }
   decideAPICall() {
-    if (this.portalProfile && this.portalProfile.id) {
+    const user = this.portalProfile.userId || this.portalProfile.id || ''
+    if (this.portalProfile && user) {
       this.fetchUserDetails(this.currentUsername)
-      this.fetchConnectionDetails(this.portalProfile.id)
+      this.fetchConnectionDetails(user)
     } else {
 
       if (this.configSvc.userProfile) {
-        const me = this.configSvc.userProfile.userId || ''
+        const me = this.configSvc.userProfile.userName || ''
         if (me) {
           this.fetchUserDetails(me)
-          this.fetchConnectionDetails(me)
+          this.fetchConnectionDetails(this.configSvc.userProfile.userId)
         }
       }
 
     }
   }
+
+  ngOnInit() {
+    // int left blank
+
+    this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
+      this.sideNavBarOpened = !isLtMedium
+    })
+  }
+
   ngOnDestroy() {
     if (this.tabs) {
       this.tabs.unsubscribe()
     }
+
+    if (this.defaultSideNavBarOpenedSubscription) {
+      this.defaultSideNavBarOpenedSubscription.unsubscribe()
+    }
   }
-  ngOnInit() {
-    // int left blank
-  }
+
   ngAfterViewInit() {
     this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
   }

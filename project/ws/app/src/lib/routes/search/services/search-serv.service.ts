@@ -74,7 +74,7 @@ export class SearchServService {
         fields: request.request.fields,
       },
     }
-    return this.searchApi.getSearchV6Results(v6Request)
+    return this.searchApi.getSearchV6Results(v6Request, this.searchConfig.defaultsearch)
   }
   fetchSocialSearchUsers(request: ISearchSocialSearchPartialRequest) {
     const req: ISocialSearchRequest = {
@@ -378,7 +378,9 @@ export class SearchServService {
           filters,
           locale,
         },
-        type: 'search',
+        edata: {
+          type: 'search',
+        },
       },
       from: 'search',
       to: 'telemetry',

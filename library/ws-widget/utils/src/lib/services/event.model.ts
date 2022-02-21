@@ -49,6 +49,7 @@ export namespace WsEvents {
     to: string
     data: T
     passThroughData?: any
+    pageContext?: any
   }
 
   export enum EnumTelemetrySubType {
@@ -59,10 +60,31 @@ export namespace WsEvents {
     StateChange = 'StateChange',
     HeartBeat = 'HeartBeat',
     Search = 'Search',
+    Feedback = 'Feedback',
+    Impression = 'Impression',
+  }
+
+  export interface ITelemetryPageContext {
+    pageId?: string,
+    module?: string,
+    pageIdExt?: string
+  }
+
+  export interface ITelemetryEdata {
+    type: string
+    subType?: string
+    id?: string
+    pageid?: string
+  }
+
+  export interface ITelemetryTabData {
+    label: string,
+    index: number,
   }
 
   export interface IWsEventTelemetry {
     eventSubType: EnumTelemetrySubType
+    pageContext?: ITelemetryPageContext
   }
 
   // PDF Telemetry Event
@@ -78,14 +100,27 @@ export namespace WsEvents {
     currentPage: number
     totalPage: number
     activityStartedAt: Date | null
+    object: any
   }
   export type WsEventTelemetryPDF = IWsEvents<IWsEventTelemetryPdfData>
 
   // Interact Telemetry Event
   export interface IWsEventTelemetryInteract extends IWsEventTelemetry {
-    type: string
-    subType?: string
+    edata: ITelemetryEdata
     object: any
+    pageContext?: ITelemetryPageContext
+  }
+
+  export interface IWsEventTelemetryFeedback extends IWsEventTelemetry {
+    edata: ITelemetryEdata
+    object: any
+    pageContext?: ITelemetryPageContext
+  }
+
+  export interface IWsEventTelemetryImpression extends IWsEventTelemetry {
+    edata?: ITelemetryEdata
+    object?: any
+    pageContext?: ITelemetryPageContext
   }
 
   export interface IWsEventTelemetrySearch extends IWsEventTelemetry {
@@ -104,6 +139,8 @@ export namespace WsEvents {
     // mimeType: string
   }
   export type WsEventTelemetryInteract = IWsEvents<IWsEventTelemetryInteract>
+  export type WsEventTelemetryFeedback = IWsEvents<IWsEventTelemetryFeedback>
+  export type WsEventTelemetryImpression = IWsEvents<IWsEventTelemetryImpression>
   export type WsEventTelemetrySearch = IWsEvents<IWsEventTelemetrySearch>
   export type WsEventTelemetryHeartBeat = IWsEvents<IWsEventTelemetryHeartBeat>
 
@@ -139,4 +176,36 @@ export namespace WsEvents {
     activityStartedAt?: Date | null
   }
   export type WsEventTelemetryMedia = IWsEvents<IWsEventTelemetryMediaData>
+
+  export enum EnumTelemetrymodules {
+    CONTENT = 'content',
+    FEEDBACK = 'feedback',
+    COURSE = 'course',
+    PROGRAM = 'program',
+    EXPLORE = 'explore',
+    LEARN = 'learn',
+    HOME = 'home',
+    DASHBOARD = 'dashboard',
+    SEARCH = 'search',
+    DISCUSS = 'discuss',
+    COMPETENCY = 'competency',
+    EVENTS = 'events',
+    CAREER = 'career',
+    PROFILE = 'profile',
+    NETWORK = 'network',
+    SUPPORT = 'support',
+  }
+  export enum EnumInteractTypes {
+    CLICK = 'click',
+  }
+  export enum EnumInteractSubTypes {
+    COURSE_TAB = 'course-tab',
+    CAREER_TAB = 'career-tab',
+    NETWORK_TAB = 'network-tab',
+    COMPETENCY_TAB = 'competency-tab',
+    PROFILE_EDIT_TAB = 'profile-edit-tab',
+    DISCUSS_TAB = 'discuss-tab',
+    EVENTS_TAB = 'events-tab',
+    SIDE_MENU = 'side-menu',
+  }
 }

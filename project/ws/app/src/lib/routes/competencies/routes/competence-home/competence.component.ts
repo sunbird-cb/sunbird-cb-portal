@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core'
+import { NSCompetencie } from '../../models/competencies.model'
 import { Router, Event, NavigationEnd, NavigationError, ActivatedRoute } from '@angular/router'
 import { ValueService } from '@sunbird-cb/utils'
 import { map } from 'rxjs/operators'
@@ -16,9 +17,11 @@ import _ from 'lodash'
   /* tslint:enable */
 })
 export class CompetenceComponent implements OnInit, OnDestroy {
+  @ViewChild('stickyMenu', { static: true }) menuElement!: ElementRef
+  sticky = false
   sideNavBarOpened = true
   panelOpenState = false
-  titles = [{ title: 'Competencies', url: '/page/competencies', icon: 'extension' }]
+  titles = [{ title: 'Competencies', url: '/app/competencies/home', icon: 'extension' }]
   unread = 0
   currentRoute = 'home'
   banner!: NsWidgetResolver.IWidgetData<any>
@@ -27,12 +30,17 @@ export class CompetenceComponent implements OnInit, OnDestroy {
   isLtMedium$ = this.valueSvc.isLtMedium$
   mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
   userRouteName = ''
+  tabsData: NSCompetencie.ICompetenciesTab[]
   private defaultSideNavBarOpenedSubscription: any
   constructor(
     private valueSvc: ValueService,
     private router: Router,
     private route: ActivatedRoute
   ) {
+    this.tabsData =
+      (this.route.parent &&
+        this.route.parent.snapshot.data.pageData.data.tabs) ||
+      []
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.bindUrl(event.url.replace('/app/competencies/', ''))
@@ -56,7 +64,10 @@ export class CompetenceComponent implements OnInit, OnDestroy {
 
   bindUrl(path: string) {
     if (path) {
-      // this.currentRoute = path
+      // console.log(path)
+      if (path !== '/app/competencies') {
+        this.currentRoute = path
+      }
       // if (this.titles.length > 1) {
       // this.titles.pop()
       // }

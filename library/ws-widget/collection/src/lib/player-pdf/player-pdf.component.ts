@@ -222,8 +222,24 @@ export class PlayerPdfComponent extends WidgetBaseComponent
   }
   raiseTelemetry(action: string) {
     if (this.identifier) {
-      this.eventSvc.raiseInteractTelemetry(action, 'click', {
-        contentId: this.identifier,
+      this.eventSvc.raiseInteractTelemetry(
+        {
+          type: action,
+          subType: 'click',
+          id: this.identifier,
+        },
+        {
+          // contentId: this.identifier,
+          // contentType: this.widgetData.primaryCategory,
+          id: this.identifier,
+          type: this.widgetData.primaryCategory,
+          rollup: {
+            l1: this.widgetData.collectionId || '',
+          },
+          ver: `${this.widgetData.version}${''}`,
+        },
+        {
+          module: WsEvents.EnumTelemetrymodules.LEARN,
       })
     }
   }
@@ -362,6 +378,14 @@ export class PlayerPdfComponent extends WidgetBaseComponent
         currentPage: this.currentPage.value,
         totalPage: this.totalPages,
         activityStartedAt: this.activityStartedAt,
+        object: {
+          id: this.widgetData.identifier,
+          type: this.widgetData.contentType,
+          ver: `${this.widgetData.version}${''}`,
+          rollup: {
+            l1: this.widgetData.collectionId || '',
+          },
+        },
       },
       passThroughData: this.widgetData.passThroughData,
     }

@@ -10,12 +10,13 @@
   flex: 3;
 }
 
-.f-medium {
-  // font-family: "Poppins-Medium";
-}
 
 .related-discussion {
   justify-content: space-between;
+}
+
+.related_post_div {
+  width: 100%;
 }
 
 // .display-hide {
@@ -111,4 +112,9 @@ mat-icon.downvoted {
   @include breakpoint-xs {
     display: none !important;
   }
+}
+
+.post-content, .mat-card-title {
+  word-break: break-all;
+  white-space: initial;
 }

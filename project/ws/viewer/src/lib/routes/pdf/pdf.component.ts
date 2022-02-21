@@ -29,6 +29,8 @@ export class PdfComponent implements OnInit, OnDestroy {
       identifier: '',
       disableTelemetry: false,
       hideControls: true,
+      mimeType: '',
+      collectionId: '',
     },
   }
   isPreviewMode = false
@@ -44,7 +46,7 @@ export class PdfComponent implements OnInit, OnDestroy {
     private eventSvc: EventService,
     private accessControlSvc: AccessControlService,
     private configSvc: ConfigurationsService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (
@@ -65,6 +67,11 @@ export class PdfComponent implements OnInit, OnDestroy {
           // this.widgetResolverPdfData.widgetData.pdfUrl = this.pdfData
           //   ? `/apis/authContent/${encodeURIComponent(this.pdfData.artifactUrl)}`
           //   : ''
+          if (this.activatedRoute.snapshot.queryParams.collectionId) {
+            this.widgetResolverPdfData.widgetData.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
+          } else {
+            this.widgetResolverPdfData.widgetData.collectionId = ''
+          }
           this.widgetResolverPdfData.widgetData.pdfUrl = this.generateUrl(this.pdfData.artifactUrl)
           this.widgetResolverPdfData.widgetData.disableTelemetry = true
           this.isFetchingDataComplete = true
@@ -83,6 +90,11 @@ export class PdfComponent implements OnInit, OnDestroy {
           if (this.pdfData && this.pdfData.artifactUrl.indexOf('content-store') >= 0) {
             await this.setS3Cookie(this.pdfData.identifier)
           }
+          if (this.activatedRoute.snapshot.queryParams.collectionId) {
+            this.widgetResolverPdfData.widgetData.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
+          } else {
+            this.widgetResolverPdfData.widgetData.collectionId = ''
+          }
           this.widgetResolverPdfData.widgetData.resumePage = 1
           if (this.pdfData && this.pdfData.identifier) {
             if (this.activatedRoute.snapshot.queryParams.collectionId) {
@@ -99,7 +111,14 @@ export class PdfComponent implements OnInit, OnDestroy {
               ? this.viewerSvc.getAuthoringUrl(this.pdfData.artifactUrl)
               : this.pdfData.artifactUrl
             : ''
-          this.widgetResolverPdfData.widgetData.identifier = this.pdfData && this.pdfData.identifier
+          if (this.pdfData) {
+            this.widgetResolverPdfData.widgetData.identifier = this.pdfData.identifier
+            this.widgetResolverPdfData.widgetData.mimeType = this.pdfData.mimeType
+            this.widgetResolverPdfData.widgetData.contentType = this.pdfData.contentType
+            this.widgetResolverPdfData.widgetData.primaryCategory = this.pdfData.primaryCategory
+
+            this.widgetResolverPdfData.widgetData.version = `${this.pdfData.version}${''}`
+          }
           this.widgetResolverPdfData = JSON.parse(JSON.stringify(this.widgetResolverPdfData))
           if (this.pdfData) {
             this.oldData = this.pdfData
@@ -108,7 +127,7 @@ export class PdfComponent implements OnInit, OnDestroy {
           }
           this.isFetchingDataComplete = true
         },
-        () => {},
+        () => { },
       )
     }
   }

@@ -44,12 +44,17 @@ export class BtnCallComponent extends WidgetBaseComponent
 
   raiseTelemetry() {
     this.events.raiseInteractTelemetry(
-      'call',
-      'openDialog',
+      {
+        type: 'call',
+        subType: 'openDialog',
+      },
       {
         name: this.widgetData.userName,
         phone: this.widgetData.userPhone,
       },
+      {
+        pageIdExt: 'btn-call',
+      }
     )
   }
 }

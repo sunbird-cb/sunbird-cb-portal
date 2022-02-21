@@ -1,0 +1,61 @@
+
+  <mat-card class="right-menu-card">
+    <mat-card-content role="link" tabindex="0">
+      <ng-container>
+        <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all" *ngIf="pastEvent">
+          <p mat-button class="flex-1 margin-top-xs margin-bottom-xs">
+            <span i18n>Event is completed</span>
+          </p>
+        </div>
+        <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all ws-mat-accent-background" *ngIf="currentEvent">
+          <a mat-button class="flex-1" href="{{eventData?.registrationLink}}" target="_blank">
+            <span class="text-white" i18n>Attend Live Event</span>
+          </a>
+        </div>
+        <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all" *ngIf="futureEvent">
+          <p mat-button class="flex-1  margin-top-xs margin-bottom-xs">
+            <span i18n>Event is yet to start</span>
+          </p>
+        </div>
+      </ng-container>
+    </mat-card-content>
+    <mat-card-content>
+      <div class="timediv">
+        <span class="mat-subheading-2" role="link" tabindex="0">{{eventData?.startDate | date }}</span>
+        <div class="flex flex-wrap" role="link" tabindex="0">
+            <span class="flex-wrap ws-mat-accent-text" role="link" tabindex="0">
+              {{startTime}} - {{endTime}}
+            </span>
+        </div>
+      </div>
+      <div class="margin-top-m">
+        <span class="mat-subheading-2 ws-mat-accent-text" role="link" tabindex="0">Event Type</span>
+        <div class="flex flex-wrap" role="link" tabindex="0">
+            <span class="flex-wrap mat-body-2" role="link" tabindex="0">
+              {{eventData?.resourceType}}
+            </span>
+        </div>
+      </div>
+      <div class="margin-top-m">
+        <span class="mat-subheading-2 ws-mat-accent-text" role="link" tabindex="0">Hosted By</span>
+        <div class="flex flex-wrap" role="link" tabindex="0">
+            <span class="flex-wrap mat-body-2" role="link" tabindex="0">
+              {{eventData?.owner}}
+            </span>
+        </div>
+      </div>
+      <div class="margin-top-m">
+        <span class="mat-subheading-2 ws-mat-black60-text" role="link" tabindex="0">
+        Last updated on {{eventData?.lastUpdatedOn | date}}
+        </span>
+      </div>
+    </mat-card-content>
+    <!-- <mat-card-content>
+      <span role="link" tabindex="0" class="mat-subheading-2">Recently Earned</span>
+      <div class="flex flex-wrap" role="link" tabindex="0">        
+      </div>
+    </mat-card-content>
+    <mat-card-content >
+      <span class="mat-subtitle" role="link" tabindex="0">No Information Available</span>
+    </mat-card-content> -->
+  </mat-card>

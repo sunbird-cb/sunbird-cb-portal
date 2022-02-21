@@ -33,15 +33,22 @@ export class ConnectionSearchCardComponent implements OnInit {
   }
 
   getUseravatarName() {
-    if (this.user) {
-      if (this.user.personalDetails) {
-        return `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
+    let name = ''
+    if (this.user && !this.user.personalDetails) {
+      if (this.user.firstName) {
+        name = `${this.user.firstName} ${this.user.lastName}`
+      } else {
+        name = `${this.user.first_name} ${this.user.last_name}`
       }
-      if (!this.user.personalDetails && this.user.first_name) {
-        return `${this.user.first_name} ${this.user.last_name}`
+    } else if (this.user && this.user.personalDetails) {
+      if (this.user.personalDetails.middlename) {
+        // tslint:disable-next-line: max-line-length
+        name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.middlename} ${this.user.personalDetails.surname}`
+      } else {
+        name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
       }
     }
-    return ''
+    return name
   }
 
   connetToUser() {
@@ -51,20 +58,24 @@ export class ConnectionSearchCardComponent implements OnInit {
       const req = {
         connectionId: this.user.id || this.user.identifier || this.user.wid,
         userIdFrom: this.me ? this.me.userId : '',
-        userNameFrom: this.me ? this.me.userName : '',
+        userNameFrom: this.me ? this.me.userId : '',
         userDepartmentFrom: this.me && this.me.departmentName ? this.me.departmentName : 'IGOT',
         userIdTo: this.user.id || this.user.identifier || this.user.wid,
-        userNameTo: '',
-        userDepartmentTo: '',
+        userNameTo:  this.user.id || this.user.identifier || this.user.wid,
+        userDepartmentTo: this.user.rootOrgName,
       }
-      if (this.user.personalDetails) {
-        req.userNameTo = `${this.user.personalDetails.firstname}${this.user.personalDetails.surname}`
-        req.userDepartmentTo =  this.user.employmentDetails.departmentName
-      }
-      if (!this.user.personalDetails && this.user.first_name) {
-        req.userNameTo = `${this.user.first_name}${this.user.last_name}`
-        req.userDepartmentTo =  this.user.department_name
-      }
+      // if (this.user.personalDetails) {
+      //   req.userNameTo = `${this.user.personalDetails.firstname}${this.user.personalDetails.surname}`
+      //   req.userDepartmentTo =  this.user.employmentDetails.departmentName
+      // }
+      // if (!this.user.personalDetails && this.user.first_name) {
+      //   req.userNameTo = `${this.user.first_name}${this.user.last_name}`
+      //   req.userDepartmentTo =  this.user.department_name
+      // }
+      // if (!this.user.personalDetails && this.user.firstName) {
+      //   req.userNameTo = `${this.user.firstName}${this.user.lastName}`
+      //   req.userDepartmentTo =  this.user.channel
+      // }
 
       this.networkV2Service.createConnection(req).subscribe(
         () => {

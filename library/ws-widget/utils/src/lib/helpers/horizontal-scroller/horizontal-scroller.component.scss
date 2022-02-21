@@ -1,5 +1,5 @@
 // @import 'ws-vars';
-$size-m:16px;
+$size-m: 16px;
 $size-xs: 8px;
 $spaceFromEnd: -$size-m;
 
@@ -7,6 +7,7 @@ $spaceFromEnd: -$size-m;
   position: relative;
   width: 100%;
   min-height: 100px;
+  // height: 350px;
 }
 
 %btn {
@@ -38,8 +39,9 @@ $spaceFromEnd: -$size-m;
 
 // Changing scrollbar
 .horizontal-scroll-content {
-  overflow-x: hidden;
-  /* white-space: nowrap; */
+  // overflow-x: hidden;
+  overflow-y: auto;
+  white-space: nowrap;
   -webkit-overflow-scrolling: touch;
   height: 100%;
   flex-wrap: nowrap;

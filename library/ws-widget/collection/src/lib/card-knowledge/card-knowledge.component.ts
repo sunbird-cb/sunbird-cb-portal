@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { Subscription } from 'rxjs'
-import { ConfigurationsService, EventService, UtilityService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, UtilityService, WsEvents } from '@sunbird-cb/utils'
 import { NsContent } from '../_services/widget-content.model'
 import { IKBContentCard } from './card-knowledge.model'
 
@@ -54,12 +54,18 @@ export class CardKnowledgeComponent implements OnInit, OnDestroy {
 
   raiseTelemetry() {
     this.events.raiseInteractTelemetry(
-      'click',
-      NsContent.EContentTypes.KNOWLEDGE_BOARD,
       {
-        contentId: this.widgetData.content.identifier,
+        type: 'click',
+        subType: NsContent.EContentTypes.KNOWLEDGE_BOARD,
+        id: this.widgetData.content.identifier,
       },
-    )
+      {
+        id: this.widgetData.content.identifier,
+      },
+      {
+        pageIdExt: 'knowledge-card',
+        module: WsEvents.EnumTelemetrymodules.CONTENT,
+    })
   }
 
   greyOut() {

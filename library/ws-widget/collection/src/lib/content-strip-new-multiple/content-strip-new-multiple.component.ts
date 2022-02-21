@@ -14,6 +14,8 @@ import {
 import { Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
 import { WidgetUserService } from '../_services/widget-user.service'
+ // tslint:disable-next-line
+import _ from 'lodash'
 // import { SearchServService } from '../_services/search-serv.service'
 
 interface IStripUnitContentData {
@@ -317,11 +319,13 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
     if (strip.request && strip.request.enrollmentList && Object.keys(strip.request.enrollmentList).length) {
       let userId = ''
       let content: NsContent.IContent[]
+      let contentNew: NsContent.IContent[]
+      const queryParams = _.get(strip.request.enrollmentList, 'queryParams')
       if (this.configSvc.userProfile) {
         userId = this.configSvc.userProfile.userId
       }
       // tslint:disable-next-line: deprecation
-      this.userSvc.fetchUserBatchList(userId).subscribe(
+      this.userSvc.fetchUserBatchList(userId, queryParams).subscribe(
         courses => {
           const showViewMore = Boolean(
             courses.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
@@ -344,15 +348,26 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
             : null
           if (courses && courses.length) {
             content = courses.map(c => {
-              const contentTemp: NsContent.IContent =  c.content
-              contentTemp.completionPercentage = c.completionPercentage || 0
-              contentTemp.completionStatus = c.completionStatus || 0
+              const contentTemp: NsContent.IContent = c.content
+              contentTemp.completionPercentage = c.completionPercentage || c.progress || 0
+              contentTemp.completionStatus = c.completionStatus || c.status || 0
               return contentTemp
+            })
+          }
+          // To filter content with completionPercentage > 0,
+          // so that only those content will show in home page
+          // continue learing strip
+          if (content && content.length) {
+            contentNew = content.filter((c: any) => {
+              /** commented as both are 0 after enrolll */
+              if (c.completionPercentage && c.completionPercentage > 0) {
+                return c
+              }
             })
           }
           this.processStrip(
             strip,
-            this.transformContentsToWidgets(content, strip),
+            this.transformContentsToWidgets(contentNew, strip),
             'done',
             calculateParentStatus,
             viewMoreUrl,

@@ -7,9 +7,13 @@ import {
   MatDividerModule,
   MatIconModule,
   MatExpansionModule,
+  MatFormFieldModule,
+  MatInputModule,
 } from '@angular/material'
-import { BtnPageBackModule } from '@sunbird-cb/collection'
+import { BtnPageBackModule, LeftMenuModule } from '@sunbird-cb/collection'
 import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
+import { FormsModule } from '@angular/forms'
+import { Ng2SearchPipeModule } from 'ng2-search-filter'
 
 @NgModule({
   declarations: [PublicContactComponent],
@@ -22,6 +26,11 @@ import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
     MatIconModule,
     MatExpansionModule,
     PipeSafeSanitizerModule,
+    LeftMenuModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    Ng2SearchPipeModule,
   ],
   exports: [PublicContactComponent],
 })

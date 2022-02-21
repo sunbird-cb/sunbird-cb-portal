@@ -18,7 +18,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   basicBtnAppsConfig: NsWidgetResolver.IRenderConfigWithTypedData<IBtnAppsConfig> = {
     widgetType: 'actionButton',
     widgetSubType: 'actionButtonApps',
-    widgetData: { allListingUrl: '/app/features' },
+    widgetData: { allListingUrl: '' }, // /app/features
   }
   instanceVal = ''
   btnAppsConfig!: NsWidgetResolver.IRenderConfigWithTypedData<IBtnAppsConfig>

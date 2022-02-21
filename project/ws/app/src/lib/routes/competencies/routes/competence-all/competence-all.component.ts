@@ -8,6 +8,8 @@ import _ from 'lodash';
 import { FormControl } from '@angular/forms';
 import { CompetenceViewComponent } from '../../components/competencies-view/competencies-view.component';
 import { MatSnackBar } from '@angular/material';
+import { ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
+import {ThemePalette} from '@angular/material/core'
 /* tslint:enable */
 
 @Component({
@@ -15,7 +17,7 @@ import { MatSnackBar } from '@angular/material';
   templateUrl: './competence-all.component.html',
   styleUrls: ['./competence-all.component.scss'],
   /* tslint:disable */
-  host: { class: 'flex flex-1 margin-top-l' },
+  host: { class: 'flex flex-1 margin-top-xl competency_main_block' },
   /* tslint:enable */
 })
 export class CompetenceAllComponent implements OnInit {
@@ -26,23 +28,32 @@ export class CompetenceAllComponent implements OnInit {
   successRemoveMsg!: ElementRef
   @ViewChild('searchInput', { static: true }) searchInput!: ElementRef
 
+  color: ThemePalette = 'primary'
+  value = 20
+
   sticky = false
   elementPosition: any
-  currentFilter = 'recent'
+  currentFilter = 'recommended'
   myCompetencies: NSCompetencie.ICompetencie[] = []
   tabsData: NSCompetencie.ICompetenciesTab[]
   allCompetencies!: NSCompetencie.ICompetencie[]
+  watCompetencies: NSCompetencie.ICompetencie[] = []
+  fracCompetencies!: NSCompetencie.ICompetencie[]
   filteredCompetencies!: NSCompetencie.ICompetencie[]
   searchJson!: NSCompetencie.ISearch[]
   searchKey = ''
   queryControl = new FormControl('')
+  queryFracControl = new FormControl('')
   selectedId = ''
   currentProfile: any
+  userPosition: any = null
   constructor(
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private competencySvc: CompetenceService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private configSvc: ConfigurationsService,
+    private eventSvc: EventService,
   ) {
     this.tabsData =
       (this.route.parent &&
@@ -70,30 +81,95 @@ export class CompetenceAllComponent implements OnInit {
   }
   ngOnInit() {
     // load page based on 'page' query param or default to 1
-    this.searchJson = [
-      { type: 'COMPETENCY', field: 'name', keyword: '' },
-      { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
-    ]
+    // this.searchJson = [
+    //   { type: 'COMPETENCY', field: 'name', keyword: '' },
+    //   { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
+    // ]
 
-    const searchObj = {
-      searches: this.searchJson,
-    }
-    this.competencySvc
-      .fetchCompetency(searchObj)
-      .subscribe((reponse: NSCompetencie.ICompetencieResponse) => {
-        if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
-          this.allCompetencies = reponse.responseData
-          this.resetcomp()
-        }
-      })
+    // const searchObj = {
+    //   searches: this.searchJson,
+    // }
+    // this.competencySvc
+    //   .fetchCompetency(searchObj)
+    //   .subscribe((reponse: NSCompetencie.ICompetencieResponse) => {
+    //     if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
+    //       this.allCompetencies = reponse.responseData
+    //       this.resetcomp()
+    //     }
+    //   })
   }
 
   getProfile() {
-    this.competencySvc.fetchProfile().subscribe(response => {
+    this.competencySvc.fetchProfileById(this.configSvc.unMappedUser.id).subscribe(response => {
       if (response) {
-        this.myCompetencies = response.result.UserProfile[0].competencies || []
-        this.currentProfile = response.result.UserProfile[0]
+        // console.log("My Comp", response.profileDetails.competencies)
+        this.myCompetencies = response.profileDetails.competencies || []
+        this.currentProfile = response.profileDetails
+
+        const profDetails = response.profileDetails.professionalDetails
+        // tslint:disable-next-line: ter-prefer-arrow-callback
+        const designation = _.find(profDetails, function (o) { return o.designation })
+        let designationOther = ''
+        if (_.isEmpty(designation) || _.isNil(designation)) {
+          // tslint:disable-next-line: ter-prefer-arrow-callback
+          designationOther = _.find(profDetails, function (o) { return o.designationOther })
+          // tslint:disable-next-line: max-line-length
+          this.userPosition = (_.isEmpty(designationOther) || _.isNil(designationOther)) ? null :  _.get(designationOther, 'designationOther')
+        } else {
+          this.userPosition = (_.isEmpty(designation) || _.isNil(designation)) ? null :  _.get(designation, 'designation')
+        }
+        this.fetchMapping()
+        this.fetchWatCompetency()
       }
+    })
+  }
+
+  fetchMapping() {
+    if (this.userPosition !== null) {
+      const positionData = {
+        type: 'COMPETENCY',
+        mappings: [
+          {
+            type: 'POSITION',
+            name: this.userPosition,
+            relation: 'parent',
+          },
+        ],
+      }
+
+      this.competencySvc
+      .fetchMappings(positionData)
+      .subscribe((response: NSCompetencie.ICompetencieResponse) => {
+        if (response.statusInfo && response.statusInfo.statusCode === 200) {
+          if (_.isEmpty(response.responseData)) {
+            this.userPosition = null
+          }
+          this.filteredCompetencies = response.responseData
+          // this.resetcomp()
+        }
+      })
+    }
+  }
+
+  filter(key: string | 'recommended' | 'added_by_you' | 'recommended_from_wat') {
+    if (key) {
+      this.currentFilter = key
+      // this.refreshData()
+    }
+  }
+
+  fetchWatCompetency() {
+    const userId = this.configSvc.unMappedUser.id
+    if (_.isEmpty(userId) || _.isNull(userId)) {
+      this.watCompetencies = []
+    }
+
+    this.competencySvc
+      .fetchWatCompetency(userId)
+      .subscribe((response: NSCompetencie.IWatCompetencieResponse) => {
+        if (response.result && response.result.status === 'OK') {
+          this.watCompetencies = response.result.data
+        }
     })
   }
 
@@ -105,6 +181,7 @@ export class CompetenceAllComponent implements OnInit {
   reset() {
     this.searchKey = ''
     this.queryControl.setValue('')
+    this.queryFracControl.setValue('')
     this.selectedId = ''
     this.refreshData()
   }
@@ -122,6 +199,7 @@ export class CompetenceAllComponent implements OnInit {
         .first()
         .value()
       this.myCompetencies.push(vc)
+      // console.log(vc)
       this.addToProfile(vc)
       this.reset()
     }
@@ -166,7 +244,14 @@ export class CompetenceAllComponent implements OnInit {
         updatedProfile.competencies = []
         updatedProfile.competencies.push(newCompetence)
       }
-      this.competencySvc.updateProfile(updatedProfile).subscribe(response => {
+      const reqUpdate = {
+        request: {
+          userId: this.configSvc.unMappedUser.id,
+          profileDetails: updatedProfile,
+        },
+      }
+
+      this.competencySvc.updateProfile(reqUpdate).subscribe(response => {
         if (response) {
           // success
           // this.myCompetencies.push(item)
@@ -187,7 +272,13 @@ export class CompetenceAllComponent implements OnInit {
       if (updatedProfile) {
         updatedProfile.competencies = currentCompetencies;
       }
-      this.competencySvc.updateProfile(updatedProfile).subscribe(
+      const reqUpdate = {
+        request: {
+          userId: this.configSvc.unMappedUser.id,
+          profileDetails: updatedProfile,
+        },
+      }
+      this.competencySvc.updateProfile(reqUpdate).subscribe(
         (response) => {
           if (response) {
             // success => removed
@@ -222,32 +313,33 @@ export class CompetenceAllComponent implements OnInit {
     }
   }
   refreshData() {
-    this.searchJson = [
-      { type: 'COMPETENCY', field: 'name', keyword: this.searchKey },
-      { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
-    ];
-    const searchObj = {
-      searches: this.searchJson,
-    };
-    this.competencySvc
-      .fetchCompetency(searchObj)
-      .subscribe((reponse: NSCompetencie.ICompetencieResponse) => {
-        if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
-          let data = reponse.responseData;
-          if (this.myCompetencies && this.myCompetencies.length > 0) {
-            data = _.flatten(
-              _.map(this.myCompetencies, (item) => {
-                return _.filter(reponse.responseData, (i) => i.id === item.id);
-              })
-            );
-            this.filteredCompetencies = reponse.responseData.filter((obj) => {
-              return data.indexOf(obj) === -1;
-            });
-          } else {
-            this.filteredCompetencies = reponse.responseData;
-          }
-        }
-      });
+    this.fetchMapping()
+    // this.searchJson = [
+    //   { type: 'COMPETENCY', field: 'name', keyword: this.searchKey },
+    //   { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
+    // ];
+    // const searchObj = {
+    //   searches: this.searchJson,
+    // };
+    // this.competencySvc
+    //   .fetchCompetency(searchObj)
+    //   .subscribe((reponse: NSCompetencie.ICompetencieResponse) => {
+    //     if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
+    //       let data = reponse.responseData;
+    //       if (this.myCompetencies && this.myCompetencies.length > 0) {
+    //         data = _.flatten(
+    //           _.map(this.myCompetencies, (item) => {
+    //             return _.filter(reponse.responseData, (i) => i.id === item.id);
+    //           })
+    //         );
+    //         this.filteredCompetencies = reponse.responseData.filter((obj) => {
+    //           return data.indexOf(obj) === -1;
+    //         });
+    //       } else {
+    //         this.filteredCompetencies = reponse.responseData;
+    //       }
+    //     }
+    //   });
   }
   setSelectedCompetency(id: string) {
     this.selectedId = id;
@@ -270,5 +362,16 @@ export class CompetenceAllComponent implements OnInit {
         this.deleteCompetency(response.id);
       }
     });
+  }
+
+  public tabTelemetry(label: string, index: number) {
+    const data: WsEvents.ITelemetryTabData = {
+      label,
+      index,
+    }
+    this.eventSvc.handleTabTelemetry(
+      WsEvents.EnumInteractSubTypes.COMPETENCY_TAB,
+      data,
+    )
   }
 }

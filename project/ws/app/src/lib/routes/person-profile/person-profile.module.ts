@@ -35,7 +35,7 @@ import { ViewFollowpersonComponent } from './components/view-followperson/view-f
 import { FollowListComponent } from './components/follow-list/follow-list.component'
 import { ProfileSettingsComponent } from './module/profile-settings/profile-settings.component'
 import { ContentAuthoredComponent } from './components/content-authored/content-authored.component'
-import { MyContentService } from '../../../../../author/src/lib/routing/modules/my-content/services/my-content.service'
+// import { MyContentService } from '../../../../../author/src/lib/routing/modules/my-content/services/my-content.service'
 import { AuthInitService } from '../../../../../author/src/lib/services/init.service'
 import { ApiService, AccessControlService } from '../../../../../author/src/public-api'
 import { FollowingListComponent } from './components/following-list/following-list.component'
@@ -85,7 +85,7 @@ import { FollowingListComponent } from './components/following-list/following-li
   ],
   exports: [UserdetailallComponent, ProfileSettingsComponent],
   entryComponents: [UserdetailallComponent],
-  providers: [MyContentService, AuthInitService, ApiService, AccessControlService],
+  providers: [AuthInitService, ApiService, AccessControlService],
 
 })
 export class PersonProfileModule { }

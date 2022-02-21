@@ -10,6 +10,7 @@
   <ng-container *ngSwitchCase="'card-description-back'" [ngTemplateOutlet]="cardDescriptionBack"></ng-container>
   <ng-container *ngSwitchCase="'basic-details'" [ngTemplateOutlet]="cardBasicDetails"></ng-container>
   <ng-container *ngSwitchCase="'card-discussion'" [ngTemplateOutlet]="cardDiscussion"></ng-container>
+  <ng-container *ngSwitchCase="'card-wide'" [ngTemplateOutlet]="cardWide"></ng-container>
   <ng-container *ngSwitchDefault [ngTemplateOutlet]="cardStandard"></ng-container>
 </ng-container>
 
@@ -44,6 +45,7 @@
             [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link">
             {{ widgetData.content.name }}
           </a>
+
         </h3>
         <div class="flex justify-between items-center">
           <div>
@@ -60,18 +62,18 @@
           </button>
         </div>
       </div>
-      <ng-container *ngIf="widgetData.content?.completionStatus == 2">
+      <!-- <ng-container *ngIf="widgetData.content?.completionStatus == 2">
         <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-          [contentId]="widgetData.content?.identifier" [progress]="100" 
+          [contentId]="widgetData.content?.identifier" [progress]="100"
           [progressType]="'percentage'">
         </ws-widget-content-progress>
       </ng-container>
       <ng-container *ngIf="widgetData.content?.completionStatus < 2">
         <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-        [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.completionPercentage" 
+        [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.completionPercentage"
         [progressType]="'percentage'">
       </ws-widget-content-progress>
-      </ng-container>
+      </ng-container> -->
 
     </div>
   </div>
@@ -79,6 +81,16 @@
 <mat-menu #cardMenu="matMenu">
   <ng-template matMenuContent>
     <div mat-menu-item>
+
+      <!-- TODO: Added this view details, as a temp replacement for share and other functionalities, as they are not working-->
+      <a mat-menu-item (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
+        [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" class="flex flex-middle">
+        <mat-icon>toc</mat-icon>
+        <h3 class="margin-remove" i18n>
+          View details
+        </h3>
+      </a>
+
       <ws-widget-btn-content-download [widgetData]="
           widgetData.content
             | pipePartialContent
@@ -95,7 +107,8 @@
       <!-- <ws-widget-btn-content-like [widgetData]="widgetData.content | pipePartialContent: ['identifier']">
       </ws-widget-btn-content-like> -->
       <ws-widget-btn-content-mail-me [widgetData]="widgetData.content"></ws-widget-btn-content-mail-me>
-      <ws-widget-btn-content-share [widgetData]="widgetData.content"></ws-widget-btn-content-share>
+      <!-- TODO: Hiding this for now, as its not working -->
+      <!-- <ws-widget-btn-content-share [widgetData]="widgetData.content"></ws-widget-btn-content-share> -->
       <ws-widget-btn-channel-analytics [widgetData]="widgetData.content"></ws-widget-btn-channel-analytics>
       <ws-widget-btn-kb [contentId]="widgetData?.content?.identifier" [forPreview]="false"
         [contentName]="widgetData?.content?.name" [contentType]="widgetData?.content?.contentType">
@@ -104,9 +117,10 @@
           targetId: widgetData?.content?.identifier,
           type: widgetData?.content?.contentType
         }" *ngIf="isKnowledgeBoard"></ws-widget-btn-follow> -->
-      <ws-widget-btn-goals *ngIf="btnGoalsConfig" [widgetData]="btnGoalsConfig"></ws-widget-btn-goals>
+      <!-- TODO: Hiding this for now, as its not working -->
+      <!-- <ws-widget-btn-goals *ngIf="btnGoalsConfig" [widgetData]="btnGoalsConfig"></ws-widget-btn-goals>
       <ws-widget-btn-playlist *ngIf="btnPlaylistConfig" [widgetData]="btnPlaylistConfig">
-      </ws-widget-btn-playlist>
+      </ws-widget-btn-playlist> -->
       <ws-widget-btn-kb-analytics [widgetData]="
           widgetData.content
             | pipePartialContent
@@ -151,18 +165,18 @@
             [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
             [title]="widgetData.content.name" />
         </a>
-        <ng-container *ngIf="widgetData.content?.completionStatus == 2">
+        <!-- <ng-container *ngIf="widgetData.content?.completionStatus == 2">
           <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-            [contentId]="widgetData.content?.identifier" [progress]="100" 
+            [contentId]="widgetData.content?.identifier" [progress]="100"
             [progressType]="'percentage'">
           </ws-widget-content-progress>
         </ng-container>
         <ng-container *ngIf="widgetData.content?.completionStatus < 2">
           <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.completionPercentage" 
+          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.completionPercentage"
           [progressType]="'percentage'">
         </ws-widget-content-progress>
-        </ng-container>
+        </ng-container> -->
         <mat-card-content>
           <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
             [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" aria-label="Content"
@@ -280,18 +294,18 @@
         <img mat-card-image [src]="widgetData.content.appIcon" class="card-img ws-mat-primary-lite-background"
           [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
           [title]="widgetData.content.name" />
-          <ng-container *ngIf="widgetData.content?.completionStatus == 2">
+        <!-- <ng-container *ngIf="widgetData.content?.completionStatus == 2">
             <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-              [contentId]="widgetData.content?.identifier" [progress]="100" 
+              [contentId]="widgetData.content?.identifier" [progress]="100"
               [progressType]="'percentage'">
             </ws-widget-content-progress>
           </ng-container>
           <ng-container *ngIf="widgetData.content?.completionStatus < 2">
             <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-            [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.completionPercentage" 
+            [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.completionPercentage"
             [progressType]="'percentage'">
           </ws-widget-content-progress>
-          </ng-container>
+          </ng-container> -->
       </a>
 
       <mat-card-content class="m-small">
@@ -366,15 +380,14 @@
         </button>
         <ng-container *ngIf="widgetData.content?.completionStatus == 2">
           <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-            [contentId]="widgetData.content?.identifier" [progress]="100" 
-            [progressType]="'percentage'">
+            [contentId]="widgetData.content?.identifier" [progress]="100" [progressType]="'percentage'">
           </ws-widget-content-progress>
         </ng-container>
         <ng-container *ngIf="widgetData.content?.completionStatus < 2">
           <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.completionPercentage" 
-          [progressType]="'percentage'">
-        </ws-widget-content-progress>
+            [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.completionPercentage"
+            [progressType]="'percentage'">
+          </ws-widget-content-progress>
         </ng-container>
         <mat-card-content>
           <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
@@ -475,7 +488,7 @@
         matTooltip="Available only in Company's network"
         *ngIf="widgetData?.intranetMode === 'greyOut' && showIntranetContent"></div>
       <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
-        [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" class="rounded-t"
+        [queryParams]="(widgetData.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData" role="link" class="rounded-t"
         aria-label="Content" i18n-aria-label="Content | Click to view">
         <img mat-card-image [src]="widgetData.content.appIcon" class="card-img ws-mat-primary-lite-background"
           [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
@@ -483,7 +496,7 @@
       </a>
       <mat-card-content>
         <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
-          [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" aria-label="Content"
+          [queryParams]="(widgetData.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData" role="link" aria-label="Content"
           i18n-aria-label>
           <div class="text-gray-600 complexity flex-between flex-center">
             <div *ngIf="widgetData.content.duration" class="duration" i18n-title title="Duration">
@@ -609,6 +622,8 @@
     </div>
   </mat-card>
 </ng-template>
+
+
 <ng-template #cardStandard>
   <mat-card class="card-standard-container mr-6" [ngClass]="{
       greyOut:
@@ -637,10 +652,17 @@
           [queryParams]="(widgetData.content | pipeContentRoute).queryParams" class="rounded-t" role="link"
           aria-label="Content" i18n-aria-label="Content | Click to view"> -->
         <div style="position: relative; z-index: 1;">
-          <img mat-card-image style="position: absolute; z-index: 2;" [src]="widgetData.content.appIcon"
+          <img mat-card-image [src]="widgetData.content.posterImage" loading="lazy" style="position: absolute; z-index: 2;"
             class="card-img ws-mat-primary-lite-background" [wsUtilsDefaultThumbnail]="defaultThumbnail"
             [alt]="widgetData.content.name" />
-          <div class="source-div">
+
+            <!-- image overlay box-->
+            <div class="course_logo_box">
+              <img [src]="widgetData.content.creatorLogo" class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
+              [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
+              <!-- <p class="mat-subheading-1 margin-remove">IGOT</p> -->
+            </div>
+          <div class="source-div" style="display: none;">
             <!-- [src]="sourseIcon(widgetData.content.sourceName)" -->
             <img [src]="widgetData.content.creatorLogo" class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
               [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
@@ -652,22 +674,23 @@
           (click)="isCardFlipped = true" aria-label="Details" i18n-aria-label="Details | Click to see details">
           <mat-icon>flip_to_back</mat-icon>
         </button>
-        <ng-container *ngIf="widgetData.content?.completionStatus == 2">
+        <!-- <ng-container *ngIf="widgetData.content?.completionStatus == 2">
           <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-            [contentId]="widgetData.content?.identifier" [progress]="100" 
+            [contentId]="widgetData.content?.identifier" [progress]="100"
             [progressType]="'percentage'">
           </ws-widget-content-progress>
         </ng-container>
         <ng-container *ngIf="widgetData.content?.completionStatus < 2">
           <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.completionPercentage" 
+          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.completionPercentage"
           [progressType]="'percentage'">
         </ws-widget-content-progress>
-        </ng-container>
+        </ng-container> -->
 
-        <mat-card-content>
+        <mat-card-content class="min-top">
           <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
-            [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" i18n-aria-label>
+            [queryParams]="(widgetData.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData"
+            role="link" i18n-aria-label>
 
             <div class="text-gray-time complexity flex-between flex-center">
               <!-- <div *ngIf="widgetData.content.complexityLevel" i18n-title title="Complexity Level">
@@ -677,10 +700,24 @@
                 class="mode-tag px-2 ws-mat-accent-background">
                 Newly Added
               </div>
-              <div *ngIf="widgetData.content.duration" class="duration">
+              <!-- <div *ngIf="widgetData.content.duration" class="duration">
                 <mat-icon>access_time</mat-icon>
                 <span class="time-text">{{ widgetData.content.duration | pipeDurationTransform: 'hms' }}</span>
-              </div>
+              </div> -->
+              <!-- <div *ngIf="!widgetData.content.duration" class="duration">
+                <mat-icon>access_time</mat-icon>
+                <span class="time-text">0.0m</span>
+              </div> -->
+            </div>
+
+            <div class="course_widget">
+              <mat-icon class="mat-icon main_icon  ws-mat-default-text margin-right-xs">video_library</mat-icon>
+              <ws-widget-display-content-type i18n-title title="Content Type" *ngIf="widgetData.content?.primaryCategory"
+                class="ws-mat-black60-text font-normal mat-caption text-uppercase" [displayContentType]="widgetData.content?.primaryCategory==='Course Unit'
+                ?'Module'
+                :widgetData.content?.primaryCategory">
+
+              </ws-widget-display-content-type>
             </div>
 
             <div [id]="'m-c-'+ widgetData.content?.identifier"
@@ -689,6 +726,7 @@
             </div>
             <div class="mat-body-2 ws-mat-primary-text description-text ws-mat-text-block-fade-gradient mb-10">
               {{ widgetData.content.description | pipeHtmlTagRemoval }}
+
               <!-- {{widgetData.content | json}} -->
               <!-- {{widgetData.content.sourceName}} -->
             </div>
@@ -702,16 +740,29 @@
               [displayContentType]="widgetData.content?.displayContentType"
             >
             </ws-widget-display-content-type> -->
-            <ws-widget-display-content-type i18n-title title="Content Type" *ngIf="widgetData.content?.contentType"
-              class="ws-mat-primary-text font-normal" [displayContentType]="widgetData.content?.contentType==='Collection'
+
+              <!-- <ws-widget-display-content-type i18n-title title="Content Type" *ngIf="widgetData.content?.primaryCategory"
+              class="ws-mat-primary-text font-normal" [displayContentType]="widgetData.content?.primaryCategory==='Course Unit'
               ?'Module'
-              :(widgetData.content?.contentType==='Learning Path'?'Program':widgetData.content?.contentType)">
-            </ws-widget-display-content-type>
+              :widgetData.content?.primaryCategory">
+            </ws-widget-display-content-type> -->
+
+             <div *ngIf="widgetData.content.duration" class="duration">
+                <!-- <mat-icon>access_time</mat-icon> -->
+                <span class="time-text ws-mat-black60-text">{{ widgetData.content.duration | pipeDurationTransform: 'hms' }}</span>
+              </div>
+              <!-- <div *ngIf="!widgetData.content.duration" class="duration">
+                <mat-icon>access_time</mat-icon>
+                <span class="time-text">0.0m</span>
+              </div> -->
+
             <div class="flex items-center">
-              <ng-container [ngTemplateOutlet]="rating"></ng-container>
+              <!-- <ng-container [ngTemplateOutlet]="rating"></ng-container>
               <button type="button" mat-icon-button i18n-aria-label [matMenuTriggerFor]="cardMenu">
                 <mat-icon>more_vertical</mat-icon>
-              </button>
+
+              </button> -->
+              <!-- <mat-icon class="mat-icon ws-mat-black60-text">share</mat-icon> -->
             </div>
           </div>
         </mat-card-content>
@@ -728,6 +779,109 @@
         </p>
       </ng-container>
     </div>
+  </mat-card>
+</ng-template>
+
+<ng-template #cardWide>
+  <mat-card class="card-wide margin-bottom-m padding-remove position-relative flex">
+    <div class="imageholder ">
+      <img mat-card-image class="margin-remove"
+      [src]="widgetData.content.appIcon" [wsUtilsDefaultThumbnail]="defaultThumbnail"
+      [alt]="widgetData.content.name">
+      <div class="source-div" [hidden]="true">
+        <!-- [src]="sourseIcon(widgetData.content.sourceName)" -->
+        <img [src]="widgetData.content.creatorLogo" class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
+          [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
+        <!-- [title]="widgetData.content.sourceName" -->
+      </div>
+    </div>
+    <mat-card-content class="mat-text-box">
+      <p class="flex items-center mat-caption margin-bottom-xxs text-uppercase" *ngIf="widgetData.content.contentType === 'Resource' || widgetData.content.contentType === 'Course' || widgetData.content.contentType === 'Module'">
+
+        <!-- <img src="/assets/icons/content/audio.svg" class="contenticon" alt="Audio"  *ngIf="widgetData.content.mimeType === 'audio/mpeg'"> -->
+        <mat-icon  class="mat-icon ws-mat-default-text margin-right-xs" alt="Audio" *ngIf="widgetData.content.mimeType === 'audio/mpeg'">
+          mic</mat-icon>
+
+        <!-- <img src="/assets/icons/content/assessment.svg" class="contenticon" alt="Assessment"  *ngIf="widgetData.content.mimeType === 'application/json' || widgetData.content.mimeType === 'application/quiz'"> -->
+        <mat-icon  class="mat-icon ws-mat-default-text margin-right-xs" alt="Assessment" *ngIf="widgetData.content.mimeType === 'application/json' || widgetData.content.mimeType === 'application/quiz'">
+          assessment</mat-icon>
+
+        <!-- <img src="/assets/icons/content/pdf.svg" alt="PDF" class="contenticon" *ngIf="widgetData.content.mimeType === 'application/pdf'"> -->
+        <mat-icon  class="mat-icon ws-mat-default-text margin-right-xs" alt="PDF" *ngIf="widgetData.content.mimeType === 'application/pdf'">
+          picture_as_pdf</mat-icon>
+
+        <!-- <img src="/assets/icons/content/video.svg" alt="Video" class="contenticon"  *ngIf="widgetData.content.mimeType === 'video/mp4' || widgetData.content.mimeType === 'video/x-youtube' || widgetData.content.mimeType === 'application/x-mpegURL'"> -->
+        <mat-icon  class="mat-icon ws-mat-default-text margin-right-xs" alt="Video" *ngIf="widgetData.content.mimeType === 'video/mp4' || widgetData.content.mimeType === 'video/x-youtube' || widgetData.content.mimeType === 'application/x-mpegURL'">
+          videocam</mat-icon>
+
+        <!-- <img src="/assets/icons/content/collection.svg" class="contenticon" alt="Course"  *ngIf="widgetData.content.mimeType === 'application/vnd.ekstep.content-collection'"> -->
+        <mat-icon class="mat-icon main_icon ws-mat-default-text margin-right-xs" alt="Course"  *ngIf="widgetData.content.mimeType === 'application/vnd.ekstep.content-collection'">
+          video_library
+        </mat-icon>
+
+        <!-- <img src="/assets/icons/content/link.svg" class="contenticon" alt="HTML"  *ngIf="widgetData.content.mimeType === 'application/vnd.ekstep.html-archive' || widgetData.content.mimeType === 'application/vnd.ekstep.ecml-archive' || widgetData.content.mimeType === 'text/x-url'"> -->
+        <mat-icon class="mat-icon main_icon ws-mat-default-text margin-right-xs" alt="HTML"  *ngIf="widgetData.content.mimeType === 'application/vnd.ekstep.html-archive' || widgetData.content.mimeType === 'application/vnd.ekstep.ecml-archive' || widgetData.content.mimeType === 'text/x-url'">
+          attachment
+        </mat-icon>
+
+        <!-- <img src="/assets/icons/content/image.svg" class="contenticon" alt="Module"  *ngIf="widgetData.content.mimeType === 'image/jpeg' || widgetData.content.mimeType === 'image/png'"> -->
+        <mat-icon class="mat-icon main_icon ws-mat-default-text margin-right-xs" alt="Module"  *ngIf="widgetData.content.mimeType === 'image/jpeg' || widgetData.content.mimeType === 'image/png'">
+          image
+        </mat-icon>
+        {{widgetData.content.primaryCategory || widgetData.content.contentType}}
+      </p>
+      <div class="flex main_title_box">
+        <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title">
+          <a [routerLink]="['/app/toc/',widgetData.content.identifier,'overview']"
+            [queryParams]="{primaryCategory: widgetData.content.primaryCategory}" [state]="widgetData?.stateData">
+            {{widgetData.content.name}}
+          </a>
+      </p>
+      </div>
+      <!-- <p class="mat-body-2 margin-bottom-s"></p> -->
+      <div class="bottomsection">
+        <p class="mat-body-2 ws-mat-black-text margin-bottom-xxs" *ngIf="widgetData.content.creator">By {{widgetData.content.creator}}</p>
+        <div class="contentdata margin-bottom-xm">
+          <ul
+            class="mat-body-2 margin-remove-top margin-bottom-xs padding-remove ws-mat-black60-text highlighting_list">
+            <!-- <li>Health social science</li> -->
+            <li *ngIf="widgetData.content.lastUpdatedOn">
+              <!-- <img src="/assets/icons/content/separator.svg" class="text_seperator"> -->
+                {{ widgetData.content.lastUpdatedOn | date: "MMM yyyy"  }}
+            </li>
+            <li *ngIf="widgetData.content.duration">
+                <img class="text_seperator" src="/assets/icons/content/separator.svg">  {{ widgetData.content.duration | pipeDurationTransform: 'hms' }}
+            </li>
+            <!-- TODO: Rating have to enabled once data is available -->
+            <!-- <li class="rating"><img src="/assets/icons/content/separator.svg" class="text_seperator">
+              <span class="rating-number mat-body-2"> 4.5 &nbsp;</span>
+              <mat-icon>star</mat-icon>
+              <mat-icon>star</mat-icon>
+              <mat-icon>star</mat-icon>
+              <mat-icon>star</mat-icon>
+              <mat-icon>star_half</mat-icon>
+            </li> -->
+          </ul>
+        </div>
+        <!-- <div class="flex"> -->
+          <div class="tags" *ngIf="widgetData.content.keywords && widgetData.content.keywords.length > 0">
+            <ul class="mat-caption margin-remove-top padding-remove tag_list">
+              <li *ngFor="let tag of widgetData.content.keywords">
+                <span class="tag">{{tag}}</span>
+              </li>
+            </ul>
+          </div>
+          <!-- <div class="flex-col">
+            <p class="display-inline-block ws-mat-black60-text actionbtns">
+              <mat-icon class="margin-right-s">playlist_add</mat-icon>
+              <mat-icon>more_vert_outlined</mat-icon>
+
+            </p>
+          </div> -->
+        <!-- </div> -->
+
+      </div>
+    </mat-card-content>
   </mat-card>
 </ng-template>
 

@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
 import { MatSnackBar } from '@angular/material'
 
-import { TFetchStatus, NsPage, ConfigurationsService, EventService } from '@sunbird-cb/utils'
+import { TFetchStatus, NsPage, ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
 import { NsPlaylist, IPickerContentData, BtnPlaylistService, NsContent, NsAutoComplete } from '@sunbird-cb/collection'
 import {
   PLAYLIST_TITLE_MIN_LENGTH, PLAYLIST_TITLE_MAX_LENGTH,
@@ -119,9 +119,15 @@ export class PlaylistCreateComponent implements OnInit {
 
   raiseTelemetry() {
     this.events.raiseInteractTelemetry(
-      'playlist',
-      'create',
+      {
+        type: 'playlist',
+        subType: 'create',
+      },
       {},
+      {
+        pageIdExt: 'create-playlist',
+        module: WsEvents.EnumTelemetrymodules.LEARN,
+      }
     )
   }
 }
