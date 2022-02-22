@@ -85,7 +85,7 @@
           </div>
           <div class="flex flex-1">
             <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">
-              <a class="flex flex-wrap mb-4" role="menuitem" href="https://frac-dictionary.igot-dev.in/" target="_blank">
+              <a class="flex flex-wrap mb-4" role="menuitem" [attr.href]="environment.fracPortal" target="_blank">
                 <div class="icon ws-mat-primary-tags">
                   <mat-icon class="m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">local_library</mat-icon>
                 </div>
@@ -95,7 +95,7 @@
                 </div>
               </a>
 
-              <a class="flex flex-wrap mb-4" role="menuitem" href="https://cbp.igot-dev.in/" target="_blank">
+              <a class="flex flex-wrap mb-4" role="menuitem" [attr.href]="environment.cbpPortal" target="_blank">
                 <div class="icon ws-mat-primary-tags">
                   <mat-icon aria-hidden="false" class="mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-label="bar_chart" aria-labelledby="bar_chart"> bar_chart </mat-icon>
                 </div>
@@ -105,7 +105,7 @@
                 </div>
               </a>
 
-              <a class="flex flex-wrap mb-4" role="menuitem" href="https://mdo.igot-dev.in" target="_blank">
+              <a class="flex flex-wrap mb-4" role="menuitem" [attr.href]="environment.mdoPortal" target="_blank">
                 <div class="icon ws-mat-primary-tags">
                   <mat-icon class=" m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">settings</mat-icon>
                 </div>
