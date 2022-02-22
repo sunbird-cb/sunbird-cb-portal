@@ -44,6 +44,7 @@ import { CompetencyDetailsComponent } from './routes/competency-details/competen
 import { CompetencyFiltersComponent } from './components/competency-filters/competency-filters.component'
 import { CompetencyCardComponent } from './components/competency-card/competency-card.component'
 import { PopularCompetencyCardComponent } from './components/popular-competency-card/popular-competency-card.component'
+import { LocalDataService } from './services/localService'
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { PopularCompetencyCardComponent } from './components/popular-competency-
   ],
   providers: [
     LoaderService,
+    LocalDataService,
   ],
 })
 export class BrowseByCompetencyModule { }

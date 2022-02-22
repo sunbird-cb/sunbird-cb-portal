@@ -62,3 +62,8 @@ import 'zone.js/dist/zone' // Included with Angular CLI.
  */
 import 'hammerjs'
 import 'typeface-roboto'
+// these changes are for SVG Preview
+(window as any).global = window
+global.Buffer = global.Buffer || require('buffer').Buffer
+global.process = require('process')
+// END : changes

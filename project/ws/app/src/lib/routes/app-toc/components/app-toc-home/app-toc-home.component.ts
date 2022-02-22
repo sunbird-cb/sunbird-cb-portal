@@ -608,7 +608,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       // height: '400px',
       width: '1300px',
       data: { cet },
-      panelClass: 'custom-dialog-container',
+      // panelClass: 'custom-dialog-container',
     })
   }
 
