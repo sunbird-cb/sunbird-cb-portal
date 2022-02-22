@@ -15,14 +15,14 @@ export namespace NSKnowledgeResource {
     }
 
     export interface IResourceData {
-        additionalProperties: { files: [], krFiles:[], URL: [] }
+        additionalProperties: { files: [], krFiles: [], URL: [] }
         files?: IFiles[]
-        krFiles?:IKrFiles[]
+        krFiles?: IKrFiles[]
         URL?: IUrl[]
-        name : string
-        resourceId : any
-        description : string
-        url : string
+        name: string
+        resourceId: any
+        description: string
+        url: string
         bookmark: boolean
         type: string
         source: string
@@ -37,7 +37,6 @@ export namespace NSKnowledgeResource {
     export interface IUrl {
         url: string
     }
-
 
     export interface IKrFiles {
         name: string
@@ -54,6 +53,5 @@ export namespace NSKnowledgeResource {
         responseData: IResourceData[]
         statusInfo: IWebResponse
       }
-
 
 }

@@ -12,7 +12,7 @@
 
       <div class="flex flex-col">
         <!-- <a *ngFor="let resource of allResources" [routerLink]="['/app/knowledge-resource/all', resource.id]"> -->
-        <div *ngIf="allResources; else notFound" >
+        <div *ngIf="allResources; else nodata" >
           <a *ngFor="let resource of allResources | filter : searchText">
 
             <ws-app-knowledge-card [resource]="resource" (resourceBookmarkEvent)="refresh()">

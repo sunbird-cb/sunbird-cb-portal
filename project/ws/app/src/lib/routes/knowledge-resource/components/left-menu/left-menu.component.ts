@@ -1,13 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { EventService, WsEvents } from '@sunbird-cb/utils/src/public-api';
-import _ from 'lodash';
-import { NSKnowledgeResource } from '../../models/knowledge-resource.models';
+import { Component, Input, OnInit } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
+import { EventService, WsEvents } from '@sunbird-cb/utils/src/public-api'
+// tslint:disable
+import _ from 'lodash'
+// tslint:enable
+
+import { NSKnowledgeResource } from '../../models/knowledge-resource.models'
 
 @Component({
   selector: 'ws-app-knowledge-left-menu',
   templateUrl: './left-menu.component.html',
-  styleUrls: ['./left-menu.component.scss']
+  styleUrls: ['./left-menu.component.scss'],
 })
 export class LeftMenuComponent implements OnInit {
   @Input()

@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { KnowledgeCardComponent } from './knowledge-card.component';
+import { KnowledgeCardComponent } from './knowledge-card.component'
 
 describe('KnowledgeCardComponent', () => {
-  let component: KnowledgeCardComponent;
-  let fixture: ComponentFixture<KnowledgeCardComponent>;
+  let component: KnowledgeCardComponent
+  let fixture: ComponentFixture<KnowledgeCardComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ KnowledgeCardComponent ]
+      declarations: [KnowledgeCardComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KnowledgeCardComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(KnowledgeCardComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

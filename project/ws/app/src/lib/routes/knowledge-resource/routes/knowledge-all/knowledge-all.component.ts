@@ -1,31 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { map } from 'rxjs/operators'
 import { ValueService } from '@sunbird-cb/utils'
-import { KnowledgeResourceService } from '../../services/knowledge-resource.service';
-import { NSKnowledgeResource } from '../../models/knowledge-resource.models';
-import { ActivatedRoute } from '@angular/router';
-/** tslint:disable */
-import _ from 'lodash';
-/* tslint:enable */
-
+import { KnowledgeResourceService } from '../../services/knowledge-resource.service'
+import { NSKnowledgeResource } from '../../models/knowledge-resource.models'
+import { ActivatedRoute } from '@angular/router'
+// tslint:disable
+import _ from 'lodash'
+// tslint:enable
 
 @Component({
   selector: 'ws-app-knowledge-all',
   templateUrl: './knowledge-all.component.html',
   styleUrls: ['./knowledge-all.component.scss'],
+  // tslint:disable-next-line
   host: { class: 'flex flex-1 mt-6 knowledge_right' },
 })
-export class KnowledgeAllComponent implements OnInit {
+export class KnowledgeAllComponent implements OnInit, OnDestroy {
 
   isLtMedium$ = this.valueSvc.isLtMedium$
   private defaultSideNavBarOpenedSubscription: any
   sideNavBarOpened = true
   public screenSizeIsLtMedium = false
   sticky = false
+  searchText = ''
 
   mode$ = this.isLtMedium$.pipe(map((isMedium: any) => (isMedium ? 'over' : 'side')))
 
-  allResources!:NSKnowledgeResource.IResourceData[]
+  allResources!: NSKnowledgeResource.IResourceData[]
 
   constructor(
     private valueSvc: ValueService,
@@ -33,9 +34,6 @@ export class KnowledgeAllComponent implements OnInit {
     private activateRoute: ActivatedRoute
     ) {
       this.allResources = _.get(this.activateRoute.snapshot, 'data.allResources.data.responseData') || []
-
-      // console.log("+++++++++++++++++++++++")
-      // console.log( this.allResources)
 
       // this.kwResources.getAllResources().subscribe((reponse: NSKnowledgeResource.IResourceResponse) => {
       //   if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
@@ -52,7 +50,6 @@ export class KnowledgeAllComponent implements OnInit {
       this.screenSizeIsLtMedium = isLtMedium
     })
 
-
   }
 
   ngOnDestroy() {
@@ -66,9 +63,7 @@ export class KnowledgeAllComponent implements OnInit {
         this.kwResources.getAllResources().subscribe((reponse: NSKnowledgeResource.IResourceResponse) => {
       if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
         this.allResources = reponse.responseData
-        // console.log('ts file refresh is _--' + this.allResources)
       }
     })
   }
 }
-

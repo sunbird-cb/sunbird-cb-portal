@@ -1,13 +1,12 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import _ from 'lodash'
 import moment from 'moment'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-// import { KnowledgeResources } from '../mock-data'
 import { NSKnowledgeResource } from '../models/knowledge-resource.models'
-
-
+// tslint:disable
+import _ from 'lodash'
+// tslint:enable
 
 const API_ENDPOINTS = {
   getAllResource: '/apis/protected/v8/frac/getAllNodes/knowledgeResource',
@@ -17,30 +16,23 @@ const API_ENDPOINTS = {
   getBookmarkedObject: '/apis/protected/v8/frac/bookmarkDataNode',
 }
 
-
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class KnowledgeResourceService {
   knowledgeResource: NSKnowledgeResource.IResourceData | undefined
 
-  constructor(private http:HttpClient) {}
-
+  constructor(private http: HttpClient) {}
 
   getAllResources(): Observable<any> {
     return this.http.get<NSKnowledgeResource.IResourceData[]>(API_ENDPOINTS.getBookmarkedResources)
-
    }
 
-
-
-  addBookmark(data:any):Observable<any> {
+  addBookmark(data: any): Observable<any> {
     return this.http.post<NSKnowledgeResource.IResourceData>(API_ENDPOINTS.getBookmarkedObject, data)
-
   }
 
-  getBookmarkedResource():Observable<any> {
+  getBookmarkedResource(): Observable<any> {
     return this.http.get<NSKnowledgeResource.IResourceData[]>(API_ENDPOINTS.getBookmarkedResources)
   }
 
@@ -50,17 +42,16 @@ export class KnowledgeResourceService {
     return this.http.get<any>(API_ENDPOINTS.getSingleResource(id, type))
     .pipe(map((data: any) => {
       _.each(_.get(data, 'responseData.additionalProperties.krFiles'), files => {
-        const isPng = ((_.get(files, 'url')|| '').search(regularExpressionPdf)) > -1
-        const isJpg = ((_.get(files, 'url')|| '').search(regularExpressionPDF)) > -1
-        if(isPng || isJpg) {
+        const isPng = ((_.get(files, 'url') || '').search(regularExpressionPdf)) > -1
+        const isJpg = ((_.get(files, 'url') || '').search(regularExpressionPDF)) > -1
+        if (isPng || isJpg) {
           _.set(files, 'fileType', 'IMAGE')
         } else {
           _.set(files, 'fileType', 'PDF')
         }
 
         })
-      // })
-      _.set(data, "responseData.time", moment().calendar())
+      _.set(data, 'responseData.time', moment().calendar())
       // _.set(data, "responseData.additionalProperties.krFiles.fileType", regularExpressionPdf)
 
       // _.set(data, "responseData.time", moment(data.data frm db).calendar())
@@ -69,22 +60,5 @@ export class KnowledgeResourceService {
     }
     ))
 
-    // .pipe(value => map(value:any) => {
-    //   value.time = moment().calendar()
-    // })
-
-    // For now, assume that a hero with the specified `id` always exists.
-    // Error handling will be added in the next step of the tutorial.
-    // const knowledgeResource = KnowledgeResources.find((data) => {
-    //   console.log('===+++++')
-    //   console.log(data)
-    //   data.resourceId === id &&  data.type === type
-    // })!
-    // return of(knowledgeResource)
-
-    // return this.http.get<NSKnowledgeResource.IResourceData> ('url', id)
-
-    //  return this.http.get<NSKnowledgeResource.IResourceData> ('url', id)
   }
 }
-

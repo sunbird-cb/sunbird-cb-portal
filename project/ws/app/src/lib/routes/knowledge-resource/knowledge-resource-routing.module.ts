@@ -1,14 +1,12 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AllResourceResolveService } from './resolvers/all-resources-resolver.service';
-import { ResourceDetailResolveService } from './resolvers/resource-resolver.service';
-import { SavedResourceResolveService } from './resolvers/saved-resource-resolver.services';
-import { KnowledgeAllComponent } from './routes/knowledge-all/knowledge-all.component';
-import { KnowledgeDetailComponent } from './routes/knowledge-detail/knowledge-detail.component';
-import { KnowledgeHomeComponent } from './routes/knowledge-home/knowledge-home.component';
-import { KnowledgeSavedComponent } from './routes/knowledge-saved/knowledge-saved.component';
-
-
+import { NgModule } from '@angular/core'
+import { Routes, RouterModule } from '@angular/router'
+import { AllResourceResolveService } from './resolvers/all-resources-resolver.service'
+import { ResourceDetailResolveService } from './resolvers/resource-resolver.service'
+import { SavedResourceResolveService } from './resolvers/saved-resource-resolver.services'
+import { KnowledgeAllComponent } from './routes/knowledge-all/knowledge-all.component'
+import { KnowledgeDetailComponent } from './routes/knowledge-detail/knowledge-detail.component'
+import { KnowledgeHomeComponent } from './routes/knowledge-home/knowledge-home.component'
+import { KnowledgeSavedComponent } from './routes/knowledge-saved/knowledge-saved.component'
 
 const routes: Routes = [
   { path: '',
@@ -32,7 +30,7 @@ const routes: Routes = [
         module: 'knowledge-resource',
       },
       resolve: {
-        allResources : AllResourceResolveService
+        allResources : AllResourceResolveService,
       },
     },
 
@@ -44,7 +42,7 @@ const routes: Routes = [
         module: 'knowledge-resource',
       },
       resolve: {
-        allSavedResources : SavedResourceResolveService
+        allSavedResources : SavedResourceResolveService,
       },
     },
     {
@@ -55,16 +53,20 @@ const routes: Routes = [
         module: 'knowledge-resource',
       },
       resolve: {
-        resourceDetail:ResourceDetailResolveService
+        resourceDetail: ResourceDetailResolveService,
       },
     },
-  ]
-}
-];
+  ],
+},
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [ResourceDetailResolveService, AllResourceResolveService, SavedResourceResolveService]  // Don't forget to pass RouteResolver into the providers array
+  providers: [ResourceDetailResolveService,
+    AllResourceResolveService,
+    SavedResourceResolveService,
+  ],
+  // Don't forget to pass RouteResolver into the providers array
 })
 export class KnowledgeResourceRoutingModule { }

@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { KnowledgeAllComponent } from './knowledge-all.component';
+import { KnowledgeAllComponent } from './knowledge-all.component'
 
 describe('KnowledgeAllComponent', () => {
-  let component: KnowledgeAllComponent;
-  let fixture: ComponentFixture<KnowledgeAllComponent>;
+  let component: KnowledgeAllComponent
+  let fixture: ComponentFixture<KnowledgeAllComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ KnowledgeAllComponent ]
+      declarations: [KnowledgeAllComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KnowledgeAllComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(KnowledgeAllComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

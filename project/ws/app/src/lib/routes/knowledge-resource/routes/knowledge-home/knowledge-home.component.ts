@@ -1,16 +1,16 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core'
 import { map } from 'rxjs/operators'
 import { ValueService } from '@sunbird-cb/utils'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ActivatedRoute, Router, Event, NavigationEnd, NavigationError } from '@angular/router';
-import { NSKnowledgeResource } from '../../models/knowledge-resource.models';
+import { ActivatedRoute, Router, Event, NavigationEnd, NavigationError } from '@angular/router'
+import { NSKnowledgeResource } from '../../models/knowledge-resource.models'
 
 @Component({
   selector: 'ws-app-knowledge-home',
   templateUrl: './knowledge-home.component.html',
-  styleUrls: ['./knowledge-home.component.scss']
+  styleUrls: ['./knowledge-home.component.scss'],
 })
-export class KnowledgeHomeComponent implements OnInit {
+export class KnowledgeHomeComponent implements OnInit, OnDestroy {
   @ViewChild('stickyMenu', { static: true }) menuElement!: ElementRef
   isLtMedium$ = this.valueSvc.isLtMedium$
   private defaultSideNavBarOpenedSubscription: any
@@ -33,7 +33,6 @@ export class KnowledgeHomeComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
     ) {
-
 
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     this.router.events.subscribe((event: Event) => {
@@ -64,7 +63,6 @@ export class KnowledgeHomeComponent implements OnInit {
             this.titles.push({ title: 'saved', icon: '', url: 'none' })
             break
 
-
           default:
             break
         }
@@ -76,8 +74,6 @@ export class KnowledgeHomeComponent implements OnInit {
       this.sideNavBarOpened = !isLtMedium
       this.screenSizeIsLtMedium = isLtMedium
     })
-
-    console.log(this.banner);
   }
 
   ngOnDestroy() {
@@ -88,6 +84,5 @@ export class KnowledgeHomeComponent implements OnInit {
       this.bannerSubscription.unsubscribe()
     }
   }
-
 
 }

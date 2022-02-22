@@ -7,7 +7,6 @@ import { IResolveResponse } from '@sunbird-cb/utils'
 import { NSKnowledgeResource } from '../models/knowledge-resource.models'
 import { KnowledgeResourceService } from '../services/knowledge-resource.service'
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -24,7 +23,7 @@ export class AllResourceResolveService implements
     return this.knowledeResource.getAllResources().pipe(
       map((data: any) => ({
            data,
-           error: null
+           error: null,
         })),
 
       catchError(error => of({ error, data: null })),
@@ -32,5 +31,3 @@ export class AllResourceResolveService implements
 
   }
 }
-
-

@@ -7,7 +7,6 @@ import { IResolveResponse } from '@sunbird-cb/utils'
 import { NSKnowledgeResource } from '../models/knowledge-resource.models'
 import { KnowledgeResourceService } from '../services/knowledge-resource.service'
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -21,11 +20,10 @@ export class ResourceDetailResolveService implements
     _state: RouterStateSnapshot,
   ): Observable<IResolveResponse<NSKnowledgeResource.IResourceData>> {
 
-
     return this.knowledeResource.getResource('id' , 'type').pipe(
       map((data: any) => ({
            data,
-           error: null
+           error: null,
         })),
 
       catchError(error => of({ error, data: null })),
@@ -33,5 +31,3 @@ export class ResourceDetailResolveService implements
 
   }
 }
-
-

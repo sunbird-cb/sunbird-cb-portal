@@ -1,24 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-// import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
-// import { Input } from 'hammerjs';
-// import { KnowledgeResourceService } from "../../services/knowledge-resource.service"
-import { NSKnowledgeResource } from "../../models/knowledge-resource.models";
-import { ActivatedRoute } from '@angular/router';
-import { KnowledgeResourceService } from '../../services/knowledge-resource.service';
-import _ from 'lodash';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-
+import { Component, OnInit } from '@angular/core'
+import { NSKnowledgeResource } from '../../models/knowledge-resource.models'
+import { ActivatedRoute } from '@angular/router'
+import { KnowledgeResourceService } from '../../services/knowledge-resource.service'
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
+// tslint:disable
+import _ from 'lodash'
+// tslint:enable
 
 @Component({
   selector: 'ws-app-knowledge-detail',
   templateUrl: './knowledge-detail.component.html',
   styleUrls: ['./knowledge-detail.component.scss'],
+  // tslint:disable-next-line
   host: { class: 'flex flex-1 knowledge_box_full' },
 })
 export class KnowledgeDetailComponent implements OnInit {
   resource!: any
-  type:string = 'KNOWLEDGERESOURCE'
-  id: string = '/'
+  type = 'KNOWLEDGERESOURCE'
+  id = '/'
+  searchText = ''
 
   constructor(
     private route: ActivatedRoute,
@@ -27,7 +27,6 @@ export class KnowledgeDetailComponent implements OnInit {
     ) {
       // this.resource = _.get(this.route.snapshot, 'data.resource.data.responseData') || []
    }
-
 
   ngOnInit() {
     this.route.params.subscribe(async params => {
@@ -46,7 +45,7 @@ export class KnowledgeDetailComponent implements OnInit {
     })
   }
 
-  updateResource(resource:NSKnowledgeResource.IResourceData) {
+  updateResource(resource: NSKnowledgeResource.IResourceData) {
     resource.bookmark = true
     this.kwResources.addBookmark(resource).subscribe(data => {
       if (data) {
@@ -55,8 +54,8 @@ export class KnowledgeDetailComponent implements OnInit {
     })
 }
 
-getSafeUrl(url:string):SafeUrl | null {
-  if(url) {
+getSafeUrl(url: string): SafeUrl | null {
+  if (url) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url)
   }
   return null
@@ -66,7 +65,7 @@ addBookmark(resource: NSKnowledgeResource.IResourceData) {
   resource.bookmark = !resource.bookmark
   this.kwResources.addBookmark(resource).subscribe(data => {
     if (data) {
-      this.refresh();
+      this.refresh()
     }
   })
 }
