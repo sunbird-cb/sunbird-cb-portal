@@ -1,0 +1,11 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.autocomplete-form {
+    width: 100%;
+}
+.empty_search {
+    width: 200px;
+    margin: auto;
+}

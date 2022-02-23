@@ -55,6 +55,13 @@ $color-thin-gray: #d8d8d8;
   flex: 1;
 }
 
+a[target=_blank] {
+  color: #000!important;
+}
+
+h4.nav_sub_heading {
+  margin:0!important;
+}
 .next-b {
   width: $size-s;
   height: $size-m;
@@ -124,11 +131,22 @@ mat-grid-list {
   margin: 0 !important;
 }
 
+// .icon {
+//   width: 60px;
+//   height: 60px;
+//   border-radius: 3px;
+//   text-align: center;
+// }
+
 .icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 3px;
+  width: 71px;
+  height: 64px;
+  border-radius: 4px;
   text-align: center;
+
+  .mat-icon {
+    padding:18px 16px;
+  }
 }
 
 .base-header {

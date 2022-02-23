@@ -126,6 +126,21 @@ const routes: Routes = [
     },
   },
   {
+    path: 'app/knowledge-resource',
+    loadChildren: () =>
+      import('./routes/route-knowledge-resource.module').then(u => u.RouteKnowledgeResourceModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'knowledge-resource',
+      pageId: 'app/knowledge-resource',
+      module: 'knowledge-resource',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
+  {
     path: 'app/taxonomy',
     loadChildren: () =>
       import('./routes/route-taxonomy.module').then(u => u.RouteTaxonomyModule),
