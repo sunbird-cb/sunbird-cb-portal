@@ -58,6 +58,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   getContentData(e: any) {
+    debugger
     e.activatedRoute.data.subscribe((data: { content: { data: NsContent.IContent } }) => {
       if (data.content && data.content.data) {
         this.content = data.content.data

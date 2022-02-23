@@ -150,9 +150,11 @@ export class AppTocService {
   ): NsAppToc.ITocStructure {
     if (
       content &&
-      !(content.primaryCategory === this.primaryCategory.RESOURCE || content.primaryCategory === this.primaryCategory.KNOWLEDGE_ARTIFACT)
-    ) {
-      if (content.primaryCategory === 'Course') {
+      !(content.primaryCategory === this.primaryCategory.RESOURCE
+        // || content.primaryCategory === this.primaryCategory.KNOWLEDGE_ARTIFACT)
+        || content.primaryCategory === this.primaryCategory.PRACTICE_RESOURCE
+      )) {
+      if (content.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
         tocStructure.course += 1
       } else if (content.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
         tocStructure.learningModule += 1
@@ -163,7 +165,10 @@ export class AppTocService {
       })
     } else if (
       content &&
-      (content.contentType === 'Resource' || content.contentType === 'Knowledge Artifact')
+      (
+        content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE
+        // || content.contentType === 'Knowledge Artifact'
+        || content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE)
     ) {
       switch (content.mimeType) {
         // case NsContent.EMimeTypes.HANDS_ON:
@@ -195,6 +200,9 @@ export class AppTocService {
           //   tocStructure.quiz += 1
           // }
           break
+        case NsContent.EMimeTypes.PRACTICE_RESOURCE:
+          tocStructure.practiceTest += 1
+          break
         // case NsContent.EMimeTypes.WEB_MODULE:
         //   tocStructure.webModule += 1
         //   break
@@ -218,7 +226,9 @@ export class AppTocService {
     content: NsContent.IContent,
     filterCategory: NsContent.EFilterCategory = NsContent.EFilterCategory.ALL,
   ): NsContent.IContent | null {
-    if (content.contentType === 'Resource' || content.contentType === 'Knowledge Artifact') {
+    if (content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE
+      //  || content.contentType === 'Knowledge Artifact'
+      || content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
       return this.filterUnitContent(content, filterCategory) ? content : null
     }
     const filteredChildren: NsContent.IContent[] = content.children
@@ -324,16 +334,14 @@ export class AppTocService {
 
   fetchMoreLikeThisPaid(contentId: string): Observable<NsContent.IContentMinimal[]> {
     return this.http.get<NsContent.IContentMinimal[]>(
-      `${
-      API_END_POINTS.CONTENT_NEXT
+      `${API_END_POINTS.CONTENT_NEXT
       }/${contentId}?exclusiveContent=true&ts=${new Date().getTime()}`,
     )
   }
 
   fetchMoreLikeThisFree(contentId: string): Observable<NsContent.IContentMinimal[]> {
     return this.http.get<NsContent.IContentMinimal[]>(
-      `${
-      API_END_POINTS.CONTENT_NEXT
+      `${API_END_POINTS.CONTENT_NEXT
       }/${contentId}?exclusiveContent=false&ts=${new Date().getTime()}`,
     )
   }

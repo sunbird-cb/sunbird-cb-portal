@@ -150,6 +150,7 @@ export class KnowledgeArtifactDetailsComponent implements OnInit, OnDestroy {
       other: 0,
       pdf: 0,
       podcast: 0,
+      practiceTest: 0,
       quiz: 0,
       video: 0,
       webModule: 0,
@@ -159,7 +160,7 @@ export class KnowledgeArtifactDetailsComponent implements OnInit, OnDestroy {
     }
     if (this.content) {
       this.hasTocStructure = true
-      this.tocStructure.learningModule = this.content.primaryCategory ===  NsContent.EPrimaryCategory.MODULE ? -1 : 0
+      this.tocStructure.learningModule = this.content.primaryCategory === NsContent.EPrimaryCategory.MODULE ? -1 : 0
       this.tocStructure.course = this.content.primaryCategory === NsContent.EPrimaryCategory.COURSE ? -1 : 0
       this.tocStructure = this.tocSharedSvc.getTocStructure(this.content, this.tocStructure)
       for (const progType in this.tocStructure) {

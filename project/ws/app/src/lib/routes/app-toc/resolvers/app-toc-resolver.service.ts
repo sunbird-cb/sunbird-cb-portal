@@ -97,12 +97,13 @@ export class AppTocResolverService
           } else if (
             resolveData.data &&
             !forPreview &&
-            (resolveData.data.contentType === NsContent.EContentTypes.CHANNEL ||
-              resolveData.data.contentType === NsContent.EContentTypes.KNOWLEDGE_BOARD)
+            (resolveData.data.primaryCategory === NsContent.EPrimaryCategory.CHANNEL ||
+              resolveData.data.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_BOARD)
           ) {
             const urlObj = this.routePipe.transform(resolveData.data, forPreview)
             this.router.navigate([urlObj.url], { queryParams: urlObj.queryParams })
-          }
+          } 
+          return of({ error: null, data: resolveData.data })
         }),
         catchError((error: any) => of({ error, data: null })),
       )
