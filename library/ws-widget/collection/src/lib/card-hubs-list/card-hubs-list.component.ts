@@ -5,6 +5,7 @@ import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+import { environment } from 'src/environments/environment'
 @Component({
   selector: 'ws-widget-card-hubs-list',
   templateUrl: './card-hubs-list.component.html',
@@ -40,6 +41,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
   visible = false
   searchSpinner = false
   isMobile = false
+  environment!: any
   @HostBinding('id')
   public id = `hub_${Math.random()}`
 
@@ -53,6 +55,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
   hubsList!: NsInstanceConfig.IHubs[]
 
   ngOnInit() {
+    this.environment = environment
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
       this.hubsList = (instanceConfig.hubs || []).filter(i => i.active)
