@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http'
 import { NsContent, NsContentConstants } from '@sunbird-cb/collection'
 import { NsAppToc, NsCohorts } from '../models/app-toc.model'
 import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
+// tslint:disable-next-line
+import _ from 'lodash'
 
 // TODO: move this in some common place
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'
@@ -159,7 +161,7 @@ export class AppTocService {
       } else if (content.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
         tocStructure.learningModule += 1
       }
-      content.children.forEach(child => {
+      _.each(content.children, child => {
         // tslint:disable-next-line: no-parameter-reassignment
         tocStructure = this.getTocStructure(child, tocStructure)
       })
@@ -231,8 +233,8 @@ export class AppTocService {
       || content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
       return this.filterUnitContent(content, filterCategory) ? content : null
     }
-    const filteredChildren: NsContent.IContent[] = content.children
-      .map(childContent => this.filterToc(childContent, filterCategory))
+    const filteredChildren: NsContent.IContent[] = _.map(_.get(content, 'children'),
+      childContent => this.filterToc(childContent, filterCategory))
       .filter(unitContent => Boolean(unitContent)) as NsContent.IContent[]
     if (filteredChildren && filteredChildren.length) {
       return {
