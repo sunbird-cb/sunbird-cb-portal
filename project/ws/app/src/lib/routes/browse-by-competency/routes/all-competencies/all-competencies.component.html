@@ -128,7 +128,6 @@
               </div>
               <div>
                 <ng-container *ngIf="allCompetencies && allCompetencies.length>0">
-                  ========{{allComp.length}}=========
                   <ng-container *ngFor="let comp of allCompetencies">
                     <ws-app-competency-card [competency]="comp" [stateData]="stateData"></ws-app-competency-card>
                   </ng-container>
