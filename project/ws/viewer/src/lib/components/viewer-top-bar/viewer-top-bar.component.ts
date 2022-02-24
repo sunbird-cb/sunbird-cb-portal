@@ -67,26 +67,26 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
         this.prevResourceUrl = data.prevResource.viewerUrl
         this.prevResourceUrlParams = {
           queryParams: {
-            'primaryCategory': data.prevResource.primaryCategory,
-            'collectionId': data.prevResource.collectionId,
-            'collectionType': data.prevResource.collectionType,
-            'batchId': data.prevResource.batchId,
-            'viewMode': data.prevResource.viewMode
+            primaryCategory: data.prevResource.primaryCategory,
+            collectionId: data.prevResource.collectionId,
+            collectionType: data.prevResource.collectionType,
+            batchId: data.prevResource.batchId,
+            viewMode: data.prevResource.viewMode,
           },
-          fragment: ''
+          fragment: '',
         }
       }
       if (data.nextResource) {
         this.nextResourceUrl = data.nextResource.viewerUrl
         this.nextResourceUrlParams = {
           queryParams: {
-            'primaryCategory': data.nextResource.primaryCategory,
-            'collectionId': data.nextResource.collectionId,
-            'collectionType': data.nextResource.collectionType,
-            'batchId': data.nextResource.batchId,
-            'viewMode': data.nextResource.viewMode
+            primaryCategory: data.nextResource.primaryCategory,
+            collectionId: data.nextResource.collectionId,
+            collectionType: data.nextResource.collectionType,
+            batchId: data.nextResource.batchId,
+            viewMode: data.nextResource.viewMode,
           },
-          fragment: ''
+          fragment: '',
         }
       }
       if (this.resourceId !== this.viewerDataSvc.resourceId) {

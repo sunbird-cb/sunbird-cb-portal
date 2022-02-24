@@ -71,7 +71,7 @@ export class ViewerResolve
         }
 
         if (resourceType === 'unknown') {
-          this.router.navigate([ //app/toc/do_113477192567939072124/overview?
+          this.router.navigate([ // app/toc/do_113477192567939072124/overview?
             `${forPreview ? '/author' : ''}/app/toc/${content.identifier}/overview`,
           ])
         } else if (resourceType === VIEWER_ROUTE_FROM_MIME(content.mimeType)) {

@@ -81,9 +81,8 @@ export class AppTocResolverService
           currentRoute = currentRoute[currentRoute.length - 1]
           if (forPreview && currentRoute !== 'contents' && currentRoute !== 'overview') {
             this.router.navigate([
-              `${forPreview ? '/author' : '/app'}/toc/${resolveData.data.identifier}/${
-              resolveData.data.children.length ? 'contents' : 'overview'
-              }?primaryCategory=${resolveData.data.primaryCategory}`,
+              // tslint:disable-next-line
+              `${forPreview ? '/author' : '/app'}/toc/${resolveData.data.identifier}/${resolveData.data.children.length ? 'contents' : 'overview'}?primaryCategory=${resolveData.data.primaryCategory}`,
             ])
           } else if (
             currentRoute === 'contents' &&
@@ -102,7 +101,7 @@ export class AppTocResolverService
           ) {
             const urlObj = this.routePipe.transform(resolveData.data, forPreview)
             this.router.navigate([urlObj.url], { queryParams: urlObj.queryParams })
-          } 
+          }
           return of({ error: null, data: resolveData.data })
         }),
         catchError((error: any) => of({ error, data: null })),

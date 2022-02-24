@@ -180,13 +180,13 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
   getParams(content: IViewerTocCard): NavigationExtras {
     return {
       queryParams: {
-        'primaryCategory': content.primaryCategory,
-        'collectionId': content.collectionId,
-        'collectionType': content.collectionType,
-        'batchId': content.batchId,
-        'viewMode': content.viewMode
+        primaryCategory: content.primaryCategory,
+        collectionId: content.collectionId,
+        collectionType: content.collectionType,
+        batchId: content.batchId,
+        viewMode: content.viewMode,
       },
-      fragment: ''
+      fragment: '',
     }
   }
   private processCurrentResourceChange() {
@@ -299,12 +299,13 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
     //   children: Array.isArray(content.children) && content.children.length ?
     //     content.children.map(child => this.convertContentToIViewerTocCard(child)) : null,
     // }
-    debugger
     return {
       identifier: content.identifier,
       viewerUrl: `${this.forPreview ? '/author' : ''}/viewer/${VIEWER_ROUTE_FROM_MIME(
         content.mimeType,
-        // )}/${content.identifier}?primaryCategory=${content.primaryCategory}&collectionId=${this.viewerDataSvc.collectionId}&collectionType=${this.collectionType}&batchId=${this.batchId}&viewMode=${this.viewMode}`,
+        // )}/${content.identifier}?primaryCategory=${content.primaryCategory}
+        // &collectionId=${this.viewerDataSvc.collectionId}&collectionType=${this.collectionType}
+        // &batchId=${this.batchId}&viewMode=${this.viewMode}`,
       )}/${content.identifier}`,
       thumbnailUrl: this.forPreview
         ? this.viewSvc.getAuthoringUrl(content.appIcon)

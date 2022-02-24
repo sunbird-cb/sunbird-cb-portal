@@ -1,7 +1,6 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { AccessControlService } from "@ws/author/src/public-api";
-
+import { Component, OnInit } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
+import { AccessControlService } from '@ws/author/src/public-api'
 @Component({
     selector: 'viewer-practice',
     templateUrl: './practice-test.component.html',

@@ -233,9 +233,10 @@ export class AppTocService {
       || content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
       return this.filterUnitContent(content, filterCategory) ? content : null
     }
-    const filteredChildren: NsContent.IContent[] = _.map(_.get(content, 'children'),
-      childContent => this.filterToc(childContent, filterCategory))
-      .filter(unitContent => Boolean(unitContent)) as NsContent.IContent[]
+    const filteredChildren: NsContent.IContent[] =
+      _.map(_.get(content, 'children'), childContent =>
+        this.filterToc(childContent, filterCategory))
+        .filter(unitContent => Boolean(unitContent)) as NsContent.IContent[]
     if (filteredChildren && filteredChildren.length) {
       return {
         ...content,

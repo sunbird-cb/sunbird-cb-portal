@@ -362,7 +362,7 @@ export namespace NsContent {
 
   export enum EResourcePrimaryCategories {
     LEARNING_RESOURCE = 'Learning Resource',
-    PRACTICE_RESOURCE = 'Practice Question Set'
+    PRACTICE_RESOURCE = 'Practice Question Set',
   }
 
   export enum EMiscPlayerSupportedCollectionTypes {
