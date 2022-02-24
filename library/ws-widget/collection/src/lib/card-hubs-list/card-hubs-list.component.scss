@@ -15,6 +15,13 @@
   // min-height: 400px;
 }
 
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  background-color: #2196F3;
+  padding: 10px;
+}
+
 .base-header {
   margin-left: 5px;
 }
@@ -34,12 +41,24 @@
   height: 64px;
   border-radius: 4px;
   text-align: center;
+
+  .mat-icon {
+    padding:18px 16px;
+  }
 }
 
 h2 {
   width: 98%;
 }
-
+a[target=_blank] {
+  color: rgba(0, 0, 0, 0.87)!important;
+}
+h4.nav_sub_heading {
+  margin:0!important;
+}
+.more_btn {
+  color: rgba(0, 0, 0, 0.6)!important;
+}
 mat-form-field {
   width: 100%;
 }

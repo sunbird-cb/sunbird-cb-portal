@@ -1,8 +1,9 @@
-import { environment } from './../../../environments/environment'
+// import { environment } from './../../../environments/environment'
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'ws-app-footer',
