@@ -45,6 +45,14 @@ export class BtnSettingsService {
   }
 
   changeFont(fontClass = this.fallbackFont && this.fallbackFont.fontClass) {
+    const localFontSetting = localStorage.getItem('setting')
+    if (localFontSetting !== null) {
+      const font = this.getFontForKey(localFontSetting)
+      if (font) {
+        this.applyFont(font)
+        return
+      }
+    }
     if (fontClass) {
       const font = this.getFontForKey(fontClass)
       if (font) {
