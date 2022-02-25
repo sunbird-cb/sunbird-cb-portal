@@ -47,7 +47,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
   // Subscriptions
   modeChangeSubs: Subscription | null = null
   prefChangeSubs: Subscription | null = null
-
   appLanguage = ''
   chosenLanguage = ''
   contentLanguage: string[] = []
@@ -183,6 +182,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   // change font
   changeFont(fontClass: string) {
+    localStorage.setItem('setting' , fontClass)
     // this.loggerSvc.log('Font', fontClass)
     this.btnSettingsSvc.changeFont(fontClass)
   }
