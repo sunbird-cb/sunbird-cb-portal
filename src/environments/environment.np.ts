@@ -16,4 +16,5 @@ export const environment = {
   cbcPortal: (window as { [key: string]: any })['env']['cbcPath'] || '',
   cbpPortal: (window as { [key: string]: any })['env']['cbpPath'] || '',
   fracPortal: (window as { [key: string]: any })['env']['fracPath'] || '',
+  otherPortalRoles: ((window as { [key: string]: any })['env']['otherPortalRoles'] || '') || {},
   }

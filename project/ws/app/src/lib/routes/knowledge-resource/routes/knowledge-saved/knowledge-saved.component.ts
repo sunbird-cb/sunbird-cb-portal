@@ -45,4 +45,27 @@ export class KnowledgeSavedComponent implements OnInit {
     })
 }
 
+getFormathours(time: number) {
+  var totalHours, totalMinutes, totalSeconds, hours, minutes, seconds, result='';
+  totalSeconds = time / 1000;
+  totalMinutes = totalSeconds / 60;
+  totalHours = totalMinutes / 60;
+
+  // seconds = Math.floor(totalSeconds) % 60;
+  minutes = Math.floor(totalMinutes) % 60;
+  hours = Math.floor(totalHours) % 60;
+
+  console.log (hours + ' : '  + minutes + ' : ' + seconds);
+  if (hours !== 0) {
+      result += hours+' hr';
+
+      if (minutes.toString().length == 1) {
+          minutes = '0'+minutes;
+      }
+  }
+
+  result += minutes+' min';
+  return result;
+}
+
 }

@@ -6,6 +6,13 @@ import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-
 import { Subscription } from 'rxjs'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 import { environment } from 'src/environments/environment'
+import _ from 'lodash'
+import { AccessControlService } from '@ws/author/src/public-api'
+
+// interface IGroupWithFeatureWidgets extends NsAppsConfig.IGroup {
+//   featureWidgets: NsWidgetResolver.IRenderConfigWithTypedData<NsPage.INavLink>[]
+// }
+
 @Component({
   selector: 'ws-widget-card-hubs-list',
   templateUrl: './card-hubs-list.component.html',
@@ -45,10 +52,15 @@ export class CardHubsListComponent extends WidgetBaseComponent
   @HostBinding('id')
   public id = `hub_${Math.random()}`
 
+  // private readonly featuresConfig: IGroupWithFeatureWidgets[] = []
+
+
   constructor(private configSvc: ConfigurationsService,
               private discussUtilitySvc: DiscussUtilsService,
               private router: Router,
-              private valueSvc: ValueService) {
+              private valueSvc: ValueService,
+              private accessService: AccessControlService
+              ) {
     super()
   }
 
@@ -144,4 +156,20 @@ export class CardHubsListComponent extends WidgetBaseComponent
   toggleVisibility() {
     this.visible = !this.visible
   }
+
+  isAllowed(portalName:string) {
+    const roles =  _.get(environment.otherPortalRoles, portalName) || []
+    const userRoles = this.configSvc.userRoles
+    console.log("------")
+    console.log(this.configSvc.userRoles)
+    console.log("------")
+    console.log('roles are' + roles)
+    const value = this.accessService.hasRole(roles)
+    console.log('values are' + value)
+    console.log("______++")
+    console.log('user roles are' + userRoles)
+    console.log("______++")
+    return true
+  }
+
 }

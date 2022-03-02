@@ -3,7 +3,9 @@
    <div class="flex flex-row">
         <div class="flex flex-1">
             <p class="mat-body-2 ws-mat-black60-text">
-                <span class="mdo_name margin-right-s" i18n>{{ resource?.source}}</span> <span class="post_timing" i18n>12h</span>
+                <span class="mdo_name margin-right-s" i18n>{{ resource?.source}}</span>
+
+                <span class="post_timing" i18n *ngIf="resource.createdDate">{{ getFormathours(resource.createdDate) }}</span>
             </p>
         </div>
 

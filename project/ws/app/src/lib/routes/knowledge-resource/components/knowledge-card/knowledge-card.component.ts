@@ -14,6 +14,7 @@ export class KnowledgeCardComponent implements OnInit {
 
   @Input() resource!: any
   @Output() resourceBookmarkEvent = new EventEmitter<NSKnowledgeResource.IResourceData>()
+  time:number | undefined
 
   constructor(
     private kwResources: KnowledgeResourceService,
@@ -34,5 +35,35 @@ export class KnowledgeCardComponent implements OnInit {
 
     })
   }
+
+  getFormathours(time: number) {
+    var totalHours, totalMinutes, totalSeconds, hours, minutes, seconds, result='';
+    totalSeconds = time / 1000;
+    totalMinutes = totalSeconds / 60;
+    totalHours = totalMinutes / 60;
+
+    // seconds = Math.floor(totalSeconds) % 60;
+    minutes = Math.floor(totalMinutes) % 60;
+    hours = Math.floor(totalHours) % 60;
+
+    console.log (hours + ' : '  + minutes + ' : ' + seconds);
+    if (hours !== 0) {
+        result += hours+' hr';
+
+        if (minutes.toString().length == 1) {
+            minutes = '0'+minutes;
+        }
+    }
+
+    result += minutes+' min';
+
+      // if (seconds.toString().length == 1) {
+      //     seconds = '0'+seconds;
+      // }
+
+      // result += seconds;
+
+    return result;
+}
 
 }
