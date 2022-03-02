@@ -159,17 +159,11 @@ export class CardHubsListComponent extends WidgetBaseComponent
 
   isAllowed(portalName:string) {
     const roles =  _.get(environment.otherPortalRoles, portalName) || []
-    const userRoles = this.configSvc.userRoles
-    console.log("------")
-    console.log(this.configSvc.userRoles)
-    console.log("------")
-    console.log('roles are' + roles)
+    if(!(roles && roles.length))  {
+      return true
+    }
     const value = this.accessService.hasRole(roles)
-    console.log('values are' + value)
-    console.log("______++")
-    console.log('user roles are' + userRoles)
-    console.log("______++")
-    return true
+    return value
   }
 
 }
