@@ -57,7 +57,6 @@ export class AllDiscussionWidgetComponent extends BaseWrapperComponent {
     this.previousState = this.state
     this.state = event.action
     if (event.action === this.detailsPage) {
-      debugger;
       this.tid = event.tid
       this.slug = event.title
       this.showTrendTagPost = 0
