@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { EventService, WsEvents, LoggerService } from '@sunbird-cb/utils/src/public-api'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
-import { RatingService } from '@ws/app/src/lib/routes/app-toc/services/rating.service';
+import { RatingService } from '@ws/app/src/lib/routes/app-toc/services/rating.service'
 
 @Component({
   selector: 'ws-widget-content-rating-v2-dialog',

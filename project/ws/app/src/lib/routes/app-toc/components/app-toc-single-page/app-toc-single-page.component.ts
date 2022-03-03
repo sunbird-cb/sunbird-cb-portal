@@ -16,7 +16,7 @@ import { NsContent, NsAutoComplete } from '@sunbird-cb/collection/src/public-api
 // import { IdiscussionConfig } from '@project-sunbird/discussions-ui-v8'
 // tslint:disable-next-line
 import _ from 'lodash'
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms'
 @Component({
   selector: 'ws-app-app-toc-single-page',
   templateUrl: './app-toc-single-page.component.html',
@@ -132,7 +132,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
           // this.sortBy = formValue.sortByControl
           // this.updateQuery(formValue.searchKey)
           // tslint:disable-next-line: no-console
-          console.log('formValue.searchKey :: ',formValue.searchKey)
+          console.log('formValue.searchKey :: ', formValue.searchKey)
         }),
         takeUntil(this.unsubscribe)
       ).subscribe()
