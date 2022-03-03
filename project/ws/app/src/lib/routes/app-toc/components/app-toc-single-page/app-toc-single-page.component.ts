@@ -204,8 +204,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     if (this.content) {
       this.content.averageRating = 4
     }
-    // tslint:disable-next-line: no-non-null-assertion
-    const competencies = this.content!.competencies_v3 || this.content!.competencies
+    const competencies = this.content && this.content.competencies_v3 || this.content &&  this.content.competencies
     const competenciesData = this.content && competencies ? competencies : []
     if (competenciesData && competenciesData.length) {
       const str = competenciesData.replace(/\\/g, '')
