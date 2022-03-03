@@ -38,31 +38,58 @@
                     {{ resource?.description }}
                 </p>
                 <span class="margin-right-m attach_links" *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0">
-                   <p class="mat-body-2"> <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs"> {{ resource.additionalProperties.krFiles.length }} PDFs </p>
+                   <div *ngFor="let item of resource.additionalProperties.krFiles">
+
+                       <!-- {{ item.fileType }} -->
+                    <!-- <div *ngIf="item.url && item.fileType === 'IMAGE'" >
+                        <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs"> {{ item.length }} Images
+                    </div> -->
+
+                    <!-- <div *ngIf="item.url && item.fileType !== 'IMAGE'">
+                        <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs"> {{ item.length }} PDFs
+                    </div> -->
+                   </div>
+                   <p class="mat-body-2" i18n>   <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs">  {{ resource.additionalProperties.krFiles.length }} PDFs </p>
                 </span>
                 <span class="attach_links" *ngIf="resource.additionalProperties.URL && resource.additionalProperties.URL.length > 0">
-                    <p class="mat-body-2">    <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>
+                    <p class="mat-body-2" i18n>    <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>
                        {{ resource.additionalProperties.URL.length }} URL </p>
 
                 </span>
             </mat-card>
 
 
-            <div *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0">
-                <mat-card  *ngFor="let item of resource.additionalProperties.krFiles | filter : searchText" class="padding-m mat-card margin-bottom-s w-full" role="contentinfo" tabindex="0" >
-                    <mat-card-title><a class="mat-h4" i18n role="heading" >{{ item.name }}</a></mat-card-title>
-                    <div *ngIf="item.url && item.fileType === 'IMAGE'" >
-                        <!-- <a [href]="getSafeUrl(item.url)" target="_blank">Open in new tab</a> -->
-                        <!-- <iframe class="iframe iframe_box" [src]="getSafeUrl(item.url)" height="500" width="100%"></iframe> -->
-                        <img [src]="getSafeUrl(item.url)" class="resource_img"/>
-                    </div>
 
-                    <div *ngIf="item.url && item.fileType !== 'IMAGE'">
-                        <!-- <a [href]="getSafeUrl(item.url)" target="_blank">Open in new tab</a> -->
-                        <iframe class="iframe iframe_box" [src]="getSafeUrl(item.url)" height="800" width="100%"></iframe>
+            <!-- <div *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0"> -->
+            <mat-accordion *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0">
+                <mat-expansion-panel  *ngFor="let item of resource.additionalProperties.krFiles | filter : searchText" class="padding-m mat-card margin-bottom-s w-full">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+
+                                <a class="mat-h3 margin-remove-bottom" i18n role="title"  *ngIf="item.url && item.fileType === 'IMAGE'" >
+                                    <mat-icon class="align-bottom ws-mat-default-text margin-right-xs">image</mat-icon>{{ item.name }}
+                                </a>
+                                <a class="mat-h3 margin-remove-bottom" i18n role="title" *ngIf="item.url && item.fileType !== 'IMAGE'" >
+                                    <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs"> {{ item.name }}
+                                </a>
+
+
+                            <!-- <div >
+                            </div> -->
+                        </mat-panel-title>
+
+                    </mat-expansion-panel-header>
+                    <div class="mat-panel-body">
+                        <div *ngIf="item.url && item.fileType === 'IMAGE'" >
+                            <img [src]="getSafeUrl(item.url)" class="resource_img"/>
+                        </div>
+
+                        <div *ngIf="item.url && item.fileType !== 'IMAGE'">
+                            <iframe class="iframe iframe_box" [src]="getSafeUrl(item.url)" height="800" width="100%"></iframe>
+                        </div>
                     </div>
-                 </mat-card>
-            </div>
+                </mat-expansion-panel>
+            </mat-accordion>
         </div>
 
     </div>

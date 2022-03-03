@@ -14,6 +14,7 @@ import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { KnowledgeDetailComponent } from './routes/knowledge-detail/knowledge-detail.component'
 import { Ng2SearchPipeModule } from 'ng2-search-filter'
 import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
+import {MatExpansionModule} from '@angular/material/expansion'
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
     WidgetResolverModule,
     Ng2SearchPipeModule,
     PipeSafeSanitizerModule,
+    MatExpansionModule,
   ],
 })
 export class KnowledgeResourceModule { }

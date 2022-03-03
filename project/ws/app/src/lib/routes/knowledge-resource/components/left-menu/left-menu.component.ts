@@ -24,6 +24,8 @@ export class LeftMenuComponent implements OnInit {
   }
 
   public isLinkActive(url: string): boolean {
+    console.log("+++++++")
+    console.log(this.activatedRoute.snapshot.fragment === url)
     return (this.activatedRoute.snapshot.fragment === url)
   }
 
