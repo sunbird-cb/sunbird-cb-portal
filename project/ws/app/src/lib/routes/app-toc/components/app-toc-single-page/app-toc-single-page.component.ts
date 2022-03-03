@@ -179,7 +179,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     // debugger
     const initData = this.tocSharedSvc.initData(data)
     this.content = initData.content
-    const competencies = this.content!.competencies_v3 || this.content!.competencies
+    const competencies = this.content && this.content.competencies_v3 || this.content &&  this.content.competencies
     const competenciesData = this.content && competencies ? competencies : []
     if (competenciesData && competenciesData.length) {
       const str = competenciesData.replace(/\\/g, '')
