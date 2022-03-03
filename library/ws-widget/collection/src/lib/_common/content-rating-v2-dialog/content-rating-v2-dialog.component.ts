@@ -52,7 +52,7 @@ export class ContentRatingV2DialogComponent implements OnInit {
       }
 
       this.ratingSvc.addOrUpdateRating(req).subscribe(
-        (res: any) =>  {
+        (_res: any) =>  {
           this.raiseFeedbackTelemetry(feedbackForm)
           this.showSuccessScreen = true
         },
