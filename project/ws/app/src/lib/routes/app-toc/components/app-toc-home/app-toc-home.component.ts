@@ -27,6 +27,7 @@ import { ActionService } from '../../services/action.service'
 import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
 import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
 import moment from 'moment'
+import { RatingService } from '../../services/rating.service';
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -135,6 +136,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   historyData: any
   courseCompleteState = 2
   certData: any
+  userId: any
+  userRating: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -161,6 +164,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private utilitySvc: UtilityService,
     // private progressSvc: ContentProgressService,
     private actionSVC: ActionService,
+    private ratingSvc: RatingService,
   ) {
     this.historyData = history.state
     this.handleBreadcrumbs()
@@ -381,6 +385,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         break
       }
     }
+    this.getUserRating()
     this.getUserEnrollmentList()
     this.body = this.domSanitizer.bypassSecurityTrustHtml(
       this.content && this.content.body
@@ -478,6 +483,34 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         })
       }
     })
+  }
+
+  getUserRating() {
+    if (this.configSvc.userProfile) {
+      this.userId = this.configSvc.userProfile.userId || ''
+    }
+    if (this.content && this.content.identifier && this.content.primaryCategory) {
+        this.ratingSvc.getRating(this.content.identifier, this.content.primaryCategory, this.userId).subscribe(
+          (res: any) =>  {
+            this.userRating = res.result.response[0]
+            // this.userRating = {
+            //   commentupdatedon: null,
+            //   commentby: null,
+            //   review: 'Very Nice course but missed few content',
+            //   activity_type: 'Course',
+            //   activity_id: 'Course 17',
+            //   rating: 4.4,
+            //   comment: null,
+            //   updatedon: '67655da0-7900-11ec-9e2e-2bb786397b6b',
+            //   userId: 'user 1',
+            //   createdon: '67655da0-7900-11ec-9e2e-2bb786397b6b',
+            // }
+          },
+          (err: any) => {
+            this.loggerSvc.error('USER RATING FETCH ERROR >', err)
+          }
+        )
+    }
   }
 
   private getUserEnrollmentList() {
@@ -1132,7 +1165,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     const dialogRef = this.dialog.open(ContentRatingV2DialogComponent, {
       // height: '400px',
       width: '770px',
-      data: { content },
+      data: { content, userId: this.userId, userRating: this.userRating },
     })
     // dialogRef.componentInstance.xyz = this.configSvc
     dialogRef.afterClosed().subscribe((result: any) => {
