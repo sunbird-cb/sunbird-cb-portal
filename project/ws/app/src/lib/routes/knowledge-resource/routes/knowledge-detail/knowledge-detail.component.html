@@ -41,14 +41,15 @@
                    <div *ngFor="let item of resource.additionalProperties.krFiles">
 
                        <!-- {{ item.fileType }} -->
-                    <!-- <div *ngIf="item.url && item.fileType === 'IMAGE'" >
-                        <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs"> {{ item.length }} Images
-                    </div> -->
+                        <!-- <div *ngIf="item.url && item.fileType === 'IMAGE'" >
+                            <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs"> {{ item.length }} Images
+                        </div>
 
-                    <!-- <div *ngIf="item.url && item.fileType !== 'IMAGE'">
-                        <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs"> {{ item.length }} PDFs
-                    </div> -->
+                        <div *ngIf="item.url && item.fileType !== 'IMAGE'">
+                            <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs"> {{ item.length }} PDFs
+                        </div> -->
                    </div>
+
                    <p class="mat-body-2" i18n>   <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs">  {{ resource.additionalProperties.krFiles.length }} PDFs </p>
                 </span>
                 <span class="attach_links" *ngIf="resource.additionalProperties.URL && resource.additionalProperties.URL.length > 0">
@@ -61,6 +62,39 @@
 
 
             <!-- <div *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0"> -->
+            <mat-accordion *ngIf="resource.additionalProperties.URL && resource.additionalProperties.URL.length > 0 && resource.additionalProperties.URL != []">
+                <mat-expansion-panel  *ngFor="let item of resource.additionalProperties.URL | filter : searchText" class="padding-m mat-card margin-bottom-s w-full">
+                    <!-- <div *ngIf="item !==[] && item != '' "> -->
+
+
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+
+                                <!-- <a class="mat-h3 margin-remove-bottom" i18n role="title"  *ngIf="item.url && item.fileType === 'IMAGE'" >
+                                    <mat-icon class="align-bottom ws-mat-default-text margin-right-xs">image</mat-icon>{{ item.name }}
+                                </a>
+                                <a class="mat-h3 margin-remove-bottom" i18n role="title" *ngIf="item.url && item.fileType !== 'IMAGE'" >
+                                    <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs"> {{ item.name }}
+                                </a> -->
+                                <a class="mat-h3  margin-remove-bottom" i18n role="title"><mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>Url Title</a>
+
+                            <!-- <div >
+                            </div> -->
+                        </mat-panel-title>
+
+                    </mat-expansion-panel-header>
+                    <div class="mat-panel-body">
+                        <div class="flex flex-row justify-between item_box">
+                            <p>{{item}}  </p>
+                          <a href="{{item}}" target="_blank" class="share_link"> <mat-icon class="align-bottom ws-mat-default-text margin-right-xs">open_in_new</mat-icon></a>
+                        </div>
+
+                    </div>
+                <!-- </div> -->
+                </mat-expansion-panel>
+            </mat-accordion>
+
+
             <mat-accordion *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0">
                 <mat-expansion-panel  *ngFor="let item of resource.additionalProperties.krFiles | filter : searchText" class="padding-m mat-card margin-bottom-s w-full">
                     <mat-expansion-panel-header>
@@ -90,6 +124,7 @@
                     </div>
                 </mat-expansion-panel>
             </mat-accordion>
+
         </div>
 
     </div>

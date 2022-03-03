@@ -54,3 +54,23 @@
       }
     }
   }
+
+
+  .item_box{
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 4px 4px;
+    height: 55px;
+    line-height: 55px;
+    padding: 0px 8px;
+    box-sizing: border-box;
+
+    mat-icon {
+        line-height: 55px;
+    }
+}
+
+a.share_link {
+    background-color: transparent!important;
+    height: 55px;
+    display: flex;
+}

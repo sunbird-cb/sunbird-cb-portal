@@ -39,7 +39,7 @@ export class KnowledgeHomeComponent implements OnInit, OnDestroy {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         console.log('event url is ' +  event.url)
-        this.bindUrl(event.url.replace('/app/knowledge-resource/all', ''))
+        this.bindUrl(event.url.replace('/app/knowledge-resource/', ''))
       }
       if (event instanceof NavigationError) {
       }
@@ -54,8 +54,6 @@ export class KnowledgeHomeComponent implements OnInit, OnDestroy {
     bindUrl(path: string) {
       if (path) {
         this.currentRoute = path
-        console.log("___++++")
-        console.log('current route is ' + this.currentRoute)
         if (this.titles.length > 1) {
           this.titles.pop()
         }
