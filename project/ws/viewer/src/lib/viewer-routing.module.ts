@@ -10,7 +10,7 @@ import { HtmlComponent } from './routes/html/html.component'
 import { HtmlModule } from './routes/html/html.module'
 import { PdfComponent } from './routes/pdf/pdf.component'
 import { PdfModule } from './routes/pdf/pdf.module'
-import { PracticeTestComponent } from './routes/practice-test/practice-test.component'
+// import { PracticeTestComponent } from './routes/practice-test/practice-test.component'
 import { PracticeTestModule } from './routes/practice-test/practice-test.module'
 import { ChannelComponent } from './routes/channel/channel.component'
 import { ChannelModule } from './routes/channel/channel.module'
@@ -204,17 +204,17 @@ const routes: Routes = [
       import('./routes/quiz/quiz.module').then(u => u.QuizModule),
   },
   {
-    path: 'practice/:resourceId',
-    component: PracticeTestComponent,
+    path: 'practice',
+    // component: PracticeTestComponent,
     data: {
       resourceType: 'practice',
       module: 'Learn',
-      pageId: 'practice/:resourceId',
+      pageId: 'practice',
     },
     resolve: {
       content: ViewerResolve,
     },
-    // loadChildren: () => import('./routes/practice-test/practice-test.module').then(p => p.PracticeTestModule),
+    loadChildren: () => import('./routes/practice-test/practice-test.module').then(p => p.PracticeTestModule),
   },
   {
     path: 'assessment',

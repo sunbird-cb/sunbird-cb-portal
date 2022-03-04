@@ -34,19 +34,16 @@ import {
 } from '@sunbird-cb/utils'
 
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
-
-// import { QuizComponent } from './quiz.component'
-// import { QuizRoutingModule } from './quiz-routing.module'
-
-// import { QuizModule as QuizPluginModule } from '../../plugins/quiz/quiz.module'
-import { PracticeTestComponent } from './practice-test.component'
+import { PracticePlModule as PracticePluginModule } from '../../plugins/practice/practice.module'
+import { PracticeComponent } from './practice.component'
+import { PracticeRoutingModule } from './practice-routing.module'
 
 @NgModule({
-  declarations: [PracticeTestComponent],
+  declarations: [PracticeComponent],
   imports: [
     CommonModule,
-    // QuizRoutingModule,
-    // QuizPluginModule,
+    PracticeRoutingModule,
+    PracticePluginModule,
     MatCardModule,
     MatDividerModule,
     MatButtonModule,
@@ -72,7 +69,7 @@ import { PracticeTestComponent } from './practice-test.component'
     PlayerBriefModule,
   ],
   exports: [
-    PracticeTestComponent,
+    PracticeComponent,
   ],
 })
-export class PracticeTestModule { }
+export class PracticeModule { }
