@@ -1169,8 +1169,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     })
     // dialogRef.componentInstance.xyz = this.configSvc
     dialogRef.afterClosed().subscribe((result: any) => {
-      // tslint:disable-next-line: no-console
-      console.log('result :', result)
+      if (result) {
+        this.getUserRating()
+      }
     })
   }
 }
