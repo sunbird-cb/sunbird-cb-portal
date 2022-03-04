@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { EventService, WsEvents, LoggerService } from '@sunbird-cb/utils/src/public-api'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { RatingService } from '@ws/app/src/lib/routes/app-toc/services/rating.service'
+import { switchMap, takeUntil } from 'rxjs/operators'
+import { Subject } from 'rxjs'
 
 @Component({
   selector: 'ws-widget-content-rating-v2-dialog',
@@ -14,6 +16,9 @@ export class ContentRatingV2DialogComponent implements OnInit {
   feedbackForm: FormGroup
   showSuccessScreen = false
   formDisabled = true
+  isEditMode = false
+  isEdited = false
+  private unsubscribe = new Subject<void>()
 
   constructor(
     public dialogRef: MatDialogRef<ContentRatingV2DialogComponent>,
@@ -37,8 +42,23 @@ export class ContentRatingV2DialogComponent implements OnInit {
       this.userRating = this.data.userRating.rating
       if (this.userRating) {
         this.formDisabled = false
+        this.isEditMode = true
       }
     }
+
+    this.feedbackForm.valueChanges
+      .pipe(
+        switchMap(async formValue => {
+          // tslint:disable-next-line: no-console
+          console.log('formValue.review :: ', formValue.review)
+          if (formValue.review !== this.data.userRating.review || formValue.rating !== this.data.userRating.rating) {
+            this.isEdited = true
+          } else {
+            this.isEdited = false
+          }
+        }),
+        takeUntil(this.unsubscribe)
+      ).subscribe()
   }
 
   submitRating(feedbackForm: any) {
@@ -54,10 +74,16 @@ export class ContentRatingV2DialogComponent implements OnInit {
       this.ratingSvc.addOrUpdateRating(req).subscribe(
         (_res: any) =>  {
           this.raiseFeedbackTelemetry(feedbackForm)
-          this.showSuccessScreen = true
+          if (this.isEditMode) {
+            this.dialogRef.close(true)
+          } else {
+            this.showSuccessScreen = true
+          }
+          // this.dialogRef.close(true)
         },
         (err: any) => {
           this.loggerSvc.error('ADD OR UPDATE USER RATING ERROR >', err)
+          // this.dialogRef.close(false)
         }
       )
     }
@@ -100,6 +126,10 @@ export class ContentRatingV2DialogComponent implements OnInit {
     })
     // tslint:disable-next-line: no-non-null-assertion
     this.feedbackForm.get('rating')!.setValue(this.userRating)
+  }
+
+  closeDialog(val: boolean) {
+    this.dialogRef.close(val)
   }
 
 }

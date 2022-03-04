@@ -17,6 +17,7 @@ import { NsContent, NsAutoComplete } from '@sunbird-cb/collection/src/public-api
 // tslint:disable-next-line
 import _ from 'lodash'
 import { FormGroup, FormControl } from '@angular/forms'
+import { RatingService } from '../../services/rating.service';
 @Component({
   selector: 'ws-app-app-toc-single-page',
   templateUrl: './app-toc-single-page.component.html',
@@ -60,6 +61,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   private unsubscribe = new Subject<void>()
   // TODO: TO be removed important
   progress = 50
+  ratingSummary:any
   // configSvc: any
 
   constructor(
@@ -76,6 +78,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     public configSvc: ConfigurationsService,
     private connectionHoverService: ConnectionHoverService,
     private eventSvc: EventService,
+    private ratingSvc: RatingService,
     // private discussionEventsService: DiscussionEventsService
 
   ) {
@@ -203,6 +206,9 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     // TODO: TO be removed important
     if (this.content) {
       this.content.averageRating = 4
+    }
+    if (this.content && this.content.identifier) {
+      this.fetchRatingSummary()
     }
     const competencies = this.content && this.content.competencies_v3 || this.content &&  this.content.competencies
     const competenciesData = this.content && competencies ? competencies : []
@@ -456,6 +462,20 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
         contents: [],
         hasError: false,
       }
+    }
+  }
+
+  fetchRatingSummary() {
+    if (this.content && this.content.identifier && this.content.primaryCategory) {
+        this.ratingSvc.getRatingSummary(this.content.identifier, this.content.primaryCategory).subscribe(
+          (res: any) =>  {
+            // console.log('Rating summary res ', res)
+            this.ratingSummary = res.result.response[0]
+          },
+          (err: any) => {
+            this.logger.error('USER RATING FETCH ERROR >', err)
+          }
+        )
     }
   }
 
