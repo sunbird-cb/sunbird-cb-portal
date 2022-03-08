@@ -8,7 +8,7 @@ import { ApiService } from '@ws/author/src/public-api'
 const urls = {
   HIERARCHY: 'course/v1/hierarchy',
   LEARNER_PREFIX: '/api/',
-  PROXIES_PREFIX: '/proxies/v8/',
+  PROXIES_PREFIX: '/apis/proxies/v8/',
   VALIDATE_CERTIFICATE: 'certreg/v1/certs/validate',
   DOWNLOAD_CERTIFICATE: (id: string) => `certreg/v2/certs/download/${id}`,
   SEARCH_CERTIFICATE: 'certreg/v1/certs/search',
