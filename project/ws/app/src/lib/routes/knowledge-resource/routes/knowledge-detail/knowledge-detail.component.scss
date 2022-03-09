@@ -23,7 +23,14 @@
 .attach_links {
     display: inline-block;
 }
-
+.url_text {
+    word-break: break-all;
+}
+@media screen and (max-width:920px) {
+    .url_text {
+        line-height: 1.5;
+    }
+}
 .pdfIcon {
     width: 24px;
     vertical-align: middle;

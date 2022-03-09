@@ -13,7 +13,7 @@ import _ from 'lodash'
   templateUrl: './knowledge-detail.component.html',
   styleUrls: ['./knowledge-detail.component.scss'],
   // tslint:disable-next-line
-  host: { class: 'flex flex-1 knowledge_box_full' },
+  host: { class: 'flex flex-1 overflow-hidden' },
 })
 export class KnowledgeDetailComponent implements OnInit {
   resource!: any
