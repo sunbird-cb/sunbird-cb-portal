@@ -3,8 +3,8 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ActivatedRoute, Data, Router } from '@angular/router'
 import { ConfigurationsService, LoggerService, WsEvents, EventService } from '@sunbird-cb/utils'
-import { Observable, Subscription } from 'rxjs'
-import { share } from 'rxjs/operators'
+import { Observable, Subscription, Subject } from 'rxjs'
+import { share, debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { NsAppToc, NsCohorts } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
 import { CreateBatchDialogComponent } from '../create-batch-dialog/create-batch-dialog.component'
@@ -16,6 +16,8 @@ import { NsContent, NsAutoComplete } from '@sunbird-cb/collection/src/public-api
 // import { IdiscussionConfig } from '@project-sunbird/discussions-ui-v8'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { FormGroup, FormControl } from '@angular/forms'
+import { RatingService } from '../../services/rating.service';
 @Component({
   selector: 'ws-app-app-toc-single-page',
   templateUrl: './app-toc-single-page.component.html',
@@ -55,6 +57,11 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   showDiscussionForum: any
   competencies: any
   howerUser!: any
+  searchForm: FormGroup | undefined
+  private unsubscribe = new Subject<void>()
+  // TODO: TO be removed important
+  progress = 50
+  ratingSummary:any
   // configSvc: any
 
   constructor(
@@ -71,6 +78,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     public configSvc: ConfigurationsService,
     private connectionHoverService: ConnectionHoverService,
     private eventSvc: EventService,
+    private ratingSvc: RatingService,
     // private discussionEventsService: DiscussionEventsService
 
   ) {
@@ -92,6 +100,10 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.searchForm = new FormGroup({
+      sortByControl: new FormControl(''),
+      searchKey: new FormControl(''),
+    })
     if (!this.forPreview) {
       this.forPreview = window.location.href.includes('/author/')
     }
@@ -115,6 +127,18 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
       // if editor, create batch button will be shown
       this.isNotEditor = false
     }
+
+    this.searchForm.valueChanges
+      .pipe(
+        debounceTime(500),
+        switchMap(async formValue => {
+          // this.sortBy = formValue.sortByControl
+          // this.updateQuery(formValue.searchKey)
+          // tslint:disable-next-line: no-console
+          console.log('formValue.searchKey :: ', formValue.searchKey)
+        }),
+        takeUntil(this.unsubscribe)
+      ).subscribe()
 
   }
 
@@ -179,7 +203,14 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
     // debugger
     const initData = this.tocSharedSvc.initData(data)
     this.content = initData.content
-    const competencies = this.content!.competencies_v3 || this.content!.competencies
+    // TODO: TO be removed important
+    if (this.content) {
+      this.content.averageRating = 4
+    }
+    if (this.content && this.content.identifier) {
+      this.fetchRatingSummary()
+    }
+    const competencies = this.content && this.content.competencies_v3 || this.content &&  this.content.competencies
     const competenciesData = this.content && competencies ? competencies : []
     if (competenciesData && competenciesData.length) {
       const str = competenciesData.replace(/\\/g, '')
@@ -432,6 +463,52 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
         hasError: false,
       }
     }
+  }
+
+  fetchRatingSummary() {
+    if (this.content && this.content.identifier && this.content.primaryCategory) {
+        this.ratingSvc.getRatingSummary(this.content.identifier, this.content.primaryCategory).subscribe(
+          (res: any) =>  {
+            // console.log('Rating summary res ', res)
+            this.ratingSummary = res.result.response[0]
+          },
+          (err: any) => {
+            this.logger.error('USER RATING FETCH ERROR >', err)
+          }
+        )
+    }
+  }
+
+  getRatingIcon(ratingIndex: number): 'star' | 'star_border' | 'star_half' {
+    if (this.content && this.content.averageRating) {
+      const avgRating = this.content.averageRating
+      const ratingFloor = Math.floor(avgRating)
+      if (ratingIndex <= ratingFloor) {
+        return 'star'
+      }
+      if (ratingFloor === ratingIndex - 1 && avgRating % 1 > 0) {
+        return 'star_half'
+      }
+    }
+    return 'star'
+  }
+
+  getRatingIconClass(ratingIndex: number): boolean {
+    if (this.content && this.content.averageRating) {
+      const avgRating = this.content.averageRating
+      const ratingFloor = Math.floor(avgRating)
+      if (ratingIndex <= ratingFloor) {
+        return true
+      }
+      if (ratingFloor === ratingIndex - 1 && avgRating % 1 > 0) {
+        return true
+      }
+    }
+    return false
+  }
+
+  getStartRatingProgress() {
+    return Math.floor(Math.random() * 100) + 1
   }
 
   get usr() {
