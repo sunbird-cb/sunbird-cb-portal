@@ -16,7 +16,7 @@
                     <div class="flex flex-1">
                         <p class="mat-body-2 ws-mat-black60-text">
                             <span class="mdo_name margin-right-s" i18n>{{ resource?.source}}</span>
-                            <span class="post_timing" i18n> {{ resource?.time }} </span>
+                            <span class="post_timing" i18n *ngIf="resource.createdDate">{{ getFormathours(resource.createdDate) }}</span>
                         </p>
                     </div>
 
@@ -38,17 +38,9 @@
                     {{ resource?.description }}
                 </p>
                 <span class="margin-right-m attach_links" *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0">
-                   <div *ngFor="let item of resource.additionalProperties.krFiles">
+                    {{ resource.additionalProperties.krFiles[0].fileType }}//
+                   <!-- {{  getNbOccur('IMAGE', resource.additionalProperties.krFiles) }} -->
 
-                       <!-- {{ item.fileType }} -->
-                        <!-- <div *ngIf="item.url && item.fileType === 'IMAGE'" >
-                            <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs"> {{ item.length }} Images
-                        </div>
-
-                        <div *ngIf="item.url && item.fileType !== 'IMAGE'">
-                            <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs"> {{ item.length }} PDFs
-                        </div> -->
-                   </div>
 
                    <p class="mat-body-2" i18n>   <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs">  {{ resource.additionalProperties.krFiles.length }} PDFs </p>
                 </span>
@@ -94,6 +86,18 @@
                 </mat-expansion-panel>
             </mat-accordion>
 
+            <!-- <div *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0">
+                <!-- <span *ngFor="let item of resource.additionalProperties.krFiles | filter : searchText"> -->
+                    {{ getNbOccur('IMAGE', resource.additionalProperties.krFiles ) }}
+                <!-- </span> -->
+            </div> -->
+            <!-- <div *ngFor="let item of resource.additionalProperties.krFiles | keyvalue">
+              <h2 class="flex">{{ item }}</h2>//
+
+                {{ item.key }}//
+                {{ item.value.name }} //
+                {{ item.value.fileType }} //
+            </div> -->
 
             <mat-accordion *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0">
                 <mat-expansion-panel  *ngFor="let item of resource.additionalProperties.krFiles | filter : searchText" class="padding-m mat-card margin-bottom-s w-full">

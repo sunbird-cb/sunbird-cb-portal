@@ -19,6 +19,10 @@ export class KnowledgeDetailComponent implements OnInit {
   type = 'KNOWLEDGERESOURCE'
   id = '/'
   searchText = ''
+  objectArray:[] | undefined
+  fileType!:string
+  acc:any
+  obj:any
 
   constructor(
     private route: ActivatedRoute,
@@ -43,6 +47,8 @@ export class KnowledgeDetailComponent implements OnInit {
         this.resource = []
       }
     })
+
+    // const count = array.reduce((acc, cur:any) => cur.fileType === id ? ++acc : acc, 0);
   }
 
   updateResource(resource: NSKnowledgeResource.IResourceData) {
@@ -77,4 +83,73 @@ refresh() {
       }
     })
   }
+
+  getFormathours(time: number) {
+    var totalHours, totalMinutes, totalSeconds, hours, minutes, result='';
+    totalSeconds = time / 1000;
+    totalMinutes = totalSeconds / 60;
+    totalHours = totalMinutes / 60;
+
+    // seconds = Math.floor(totalSeconds) % 60;
+    minutes = Math.floor(totalMinutes) % 60;
+    hours = Math.floor(totalHours) % 60;
+    if (hours !== 0) {
+        result += hours+' hr';
+
+        if (minutes.toString().length == 1) {
+            minutes = '0'+minutes;
+        }
+    }
+
+    result += minutes+' min';
+    return result;
+}
+
+// groupBy(objectArray:any, property:any) {
+//   return Array.isArray(objectArray) ? objectArray.reduce((acc:any, obj:any) => {
+//      const key = obj[property];
+//      if (!acc[key]) {
+//         acc[key] = [];
+//      }
+//      // Add object to list for given key's value
+//      acc[key].push(obj);
+//      console.log(acc);
+//      return acc;
+//   },
+//    {}) : {}
+// }
+
+//  getNbOccur(fileType:string, objectArray:[]) {
+//   var occurs = 0;
+//   // var fileType:string = ''
+//   /****  */
+//   console.log('+++++++++++++++++++')
+//   console.log('objectArray is ' + JSON.stringify(objectArray))
+//   console.log('++++++++++-------------+++++++++')
+//   for (var i=0; i<objectArray.length; i++) {
+//     console.log('index is ' + i)
+
+//     console.log('typeof objectArray is' + typeof objectArray)
+//     console.log('objectArray.length is '+ objectArray.length)
+//     // console.log('----=+++++'+objectArray[0])
+//     // console.log('objectArray[i] is ' + JSON.stringify(objectArray[i]))
+//     // console.log('objectArray[i] is ' + JSON.stringify(objectArray[i]).name)
+//     // console.log('objectArray[i].fileType is' + objectArray[i].fileType)
+//     // console.log('objectArray[i].fileType === "IMAGE"' + objectArray[i].fileType === 'IMAGE')
+//     if ( fileType in objectArray[i] && objectArray[i].fileType === 'IMAGE' ) {
+
+//       occurs++
+//       console.log('objectArray[i].fileType is ' + objectArray[i].fileType)
+//       console.log('occurs is ' + occurs)
+//       return occurs
+//     }
+//     else {
+//       return 'no dara'
+//     }
+
+
+//     }
+//     return occurs
+//  }
+
 }
