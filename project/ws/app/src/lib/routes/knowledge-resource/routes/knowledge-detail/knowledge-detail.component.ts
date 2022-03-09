@@ -20,9 +20,9 @@ export class KnowledgeDetailComponent implements OnInit {
   type = 'KNOWLEDGERESOURCE'
   id = '/'
   searchText = ''
-  fileType!:string
-  acc:any
-  obj:any
+  fileType!: string
+  acc: any
+  obj: any
 
   constructor(
     private route: ActivatedRoute,
@@ -47,8 +47,6 @@ export class KnowledgeDetailComponent implements OnInit {
         this.resource = []
       }
     })
-
-    // const count = array.reduce((acc, cur:any) => cur.fileType === id ? ++acc : acc, 0);
   }
 
   updateResource(resource: NSKnowledgeResource.IResourceData) {
@@ -85,53 +83,33 @@ refresh() {
   }
 
   getFormathours(time: number) {
-    var totalHours, totalMinutes, totalSeconds, hours, minutes, result='';
-    totalSeconds = time / 1000;
-    totalMinutes = totalSeconds / 60;
-    totalHours = totalMinutes / 60;
+    let totalHours, totalMinutes, totalSeconds, hours, minutes, result = ''
+    totalSeconds = time / 1000
+    totalMinutes = totalSeconds / 60
+    totalHours = totalMinutes / 60
 
     // seconds = Math.floor(totalSeconds) % 60;
-    minutes = Math.floor(totalMinutes) % 60;
-    hours = Math.floor(totalHours) % 60;
+    minutes = Math.floor(totalMinutes) % 60
+    hours = Math.floor(totalHours) % 60
     if (hours !== 0) {
-        result += hours+' hr';
+        result += `${hours}hr`
 
-        if (minutes.toString().length == 1) {
-            minutes = '0'+minutes;
+        if (minutes.toString().length === 1) {
+            minutes = `0${minutes}`
         }
     }
-
-    result += minutes+' min';
-    return result;
+    result += `${minutes}min`
+    return result
 }
 
-// groupBy(objectArray:any, property:any) {
-//   return Array.isArray(objectArray) ? objectArray.reduce((acc:any, obj:any) => {
-//      const key = obj[property];
-//      if (!acc[key]) {
-//         acc[key] = [];
-//      }
-//      // Add object to list for given key's value
-//      acc[key].push(obj);
-//      console.log(acc);
-//      return acc;
-//   },
-//    {}) : {}
-// }
-
- getNbOccur(fileType:string, objectArray:NSKnowledgeResource.IKrFiles[]) {
-  var occurs = 0;
-  console.log('objectArray[i].fileType is ' + JSON.stringify(objectArray))
-  for (var i=0; i<objectArray.length; i++) {
-
-    if ( objectArray[i] && objectArray[i].fileType === fileType ) {
-
-      occurs+=1
-      console.log('occurs is ' + occurs)
+ getNbOccur(fileType: string, objectArray: NSKnowledgeResource.IKrFiles[]) {
+  let occurs = 0
+  for (let i = 0; i < objectArray.length; i+=1) {
+    if (objectArray[i] && objectArray[i].fileType === fileType) {
+        occurs += 1
+      }
     }
-    }
-    return occurs
-
+  return occurs
  }
 
 }

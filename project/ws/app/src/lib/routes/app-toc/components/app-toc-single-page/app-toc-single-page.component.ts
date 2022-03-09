@@ -17,7 +17,7 @@ import { NsContent, NsAutoComplete } from '@sunbird-cb/collection/src/public-api
 // tslint:disable-next-line
 import _ from 'lodash'
 import { FormGroup, FormControl } from '@angular/forms'
-import { RatingService } from '../../services/rating.service';
+import { RatingService } from '../../services/rating.service'
 @Component({
   selector: 'ws-app-app-toc-single-page',
   templateUrl: './app-toc-single-page.component.html',
@@ -61,7 +61,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   private unsubscribe = new Subject<void>()
   // TODO: TO be removed important
   progress = 50
-  ratingSummary:any
+  ratingSummary: any
   // configSvc: any
 
   constructor(

@@ -36,25 +36,41 @@ export class KnowledgeCardComponent implements OnInit {
   }
 
   getFormathours(time: number) {
-    var totalHours, totalMinutes, totalSeconds, hours, minutes, result='';
-    totalSeconds = time / 1000;
-    totalMinutes = totalSeconds / 60;
-    totalHours = totalMinutes / 60;
-
-    // seconds = Math.floor(totalSeconds) % 60;
-    minutes = Math.floor(totalMinutes) % 60;
-    hours = Math.floor(totalHours) % 60;
+    let totalHours
+    let totalMinutes
+    let totalSeconds
+    let hours
+    let minutes
+    let result = ''
+    totalSeconds = time / 1000
+    totalMinutes = totalSeconds / 60
+    totalHours = totalMinutes / 60
+    minutes = Math.floor(totalMinutes) % 60
+    hours = Math.floor(totalHours) % 60
     if (hours !== 0) {
-        result += hours+' hr';
+        result += `${hours}hr`
 
-        if (minutes.toString().length == 1) {
-            minutes = '0'+minutes;
+        if (minutes.toString().length === 1) {
+
+            minutes = `0${minutes}`
         }
     }
 
-    result += minutes+' min';
-    return result;
+    result += `${minutes}min`
+    return result
 }
 
+//  getFormathours(time: number) {
+//   var h = Math.floor(time / 3600);
+//   var m = Math.floor(time % 3600 / 60);
+//   // var s = Math.floor(d % 3600 % 60);
+
+//   var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+//   var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+//   // var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+//   console.log(hDisplay + mDisplay)
+//   return hDisplay + mDisplay
+
+// }
 
 }

@@ -25,6 +25,7 @@
     <span class="margin-right-m attach_links" *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0">
         <p class="mat-body-2" i18n >  <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs"> {{ resource.additionalProperties.krFiles.length }} PDFs </p>
     </span>
+
     <span class="attach_links" *ngIf="resource.additionalProperties.URL && resource.additionalProperties.URL.length > 0">
         <p class="mat-body-2" i18n>  <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>
             {{ resource.additionalProperties.URL.length }} URL </p>

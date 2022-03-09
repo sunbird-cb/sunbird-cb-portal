@@ -41,7 +41,7 @@ export namespace NSKnowledgeResource {
     export interface IKrFiles {
         name: string
         url: string
-        fileType:string
+        fileType: string
     }
 
     export interface IWebResponse {
