@@ -15,6 +15,7 @@ import { KnowledgeDetailComponent } from './routes/knowledge-detail/knowledge-de
 import { Ng2SearchPipeModule } from 'ng2-search-filter'
 import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 
+
 @NgModule({
   declarations: [
   KnowledgeAllComponent,
@@ -38,7 +39,7 @@ import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
     BtnPageBackModule,
     WidgetResolverModule,
     Ng2SearchPipeModule,
-    PipeSafeSanitizerModule,
+    PipeSafeSanitizerModule
   ],
 })
 export class KnowledgeResourceModule { }
