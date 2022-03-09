@@ -7,7 +7,8 @@ import { ApiService } from '@ws/author/src/public-api'
 
 const urls = {
   HIERARCHY: 'course/v1/hierarchy',
-  LEARNER_PREFIX: '/learner/',
+  LEARNER_PREFIX: '/api/',
+  PROXIES_PREFIX: '/apis/proxies/v8/',
   VALIDATE_CERTIFICATE: 'certreg/v1/certs/validate',
   DOWNLOAD_CERTIFICATE: (id: string) => `certreg/v2/certs/download/${id}`,
   SEARCH_CERTIFICATE: 'certreg/v1/certs/search',
@@ -23,7 +24,7 @@ export class CertificateService {
   validateCertificate(data: any): Observable<ServerResponse> {
     const option = {
       data,
-      url: `${urls.LEARNER_PREFIX}${urls.VALIDATE_CERTIFICATE}`,
+      url: `${urls.PROXIES_PREFIX}learner/${urls.VALIDATE_CERTIFICATE}`,
     }
     return this.apiService.post(option.url, option.data)
   }
