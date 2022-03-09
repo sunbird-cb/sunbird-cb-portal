@@ -83,7 +83,12 @@ refresh() {
   }
 
   getFormathours(time: number) {
-    let totalHours, totalMinutes, totalSeconds, hours, minutes, result = ''
+    let totalHours
+    let totalMinutes
+    let totalSeconds
+    let hours
+    let minutes
+    let result = ''
     totalSeconds = time / 1000
     totalMinutes = totalSeconds / 60
     totalHours = totalMinutes / 60
@@ -104,7 +109,7 @@ refresh() {
 
  getNbOccur(fileType: string, objectArray: NSKnowledgeResource.IKrFiles[]) {
   let occurs = 0
-  for (let i = 0; i < objectArray.length; i+=1) {
+  for (let i = 0; i < objectArray.length; i += 1) {
     if (objectArray[i] && objectArray[i].fileType === fileType) {
         occurs += 1
       }
