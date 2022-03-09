@@ -3,6 +3,7 @@ import { NSKnowledgeResource } from '../../models/knowledge-resource.models'
 import { ActivatedRoute } from '@angular/router'
 import { KnowledgeResourceService } from '../../services/knowledge-resource.service'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
+
 // tslint:disable
 import _ from 'lodash'
 // tslint:enable
@@ -19,7 +20,6 @@ export class KnowledgeDetailComponent implements OnInit {
   type = 'KNOWLEDGERESOURCE'
   id = '/'
   searchText = ''
-  objectArray:[] | undefined
   fileType!:string
   acc:any
   obj:any
@@ -119,37 +119,19 @@ refresh() {
 //    {}) : {}
 // }
 
-//  getNbOccur(fileType:string, objectArray:[]) {
-//   var occurs = 0;
-//   // var fileType:string = ''
-//   /****  */
-//   console.log('+++++++++++++++++++')
-//   console.log('objectArray is ' + JSON.stringify(objectArray))
-//   console.log('++++++++++-------------+++++++++')
-//   for (var i=0; i<objectArray.length; i++) {
-//     console.log('index is ' + i)
+ getNbOccur(fileType:string, objectArray:NSKnowledgeResource.IKrFiles[]) {
+  var occurs = 0;
+  console.log('objectArray[i].fileType is ' + JSON.stringify(objectArray))
+  for (var i=0; i<objectArray.length; i++) {
 
-//     console.log('typeof objectArray is' + typeof objectArray)
-//     console.log('objectArray.length is '+ objectArray.length)
-//     // console.log('----=+++++'+objectArray[0])
-//     // console.log('objectArray[i] is ' + JSON.stringify(objectArray[i]))
-//     // console.log('objectArray[i] is ' + JSON.stringify(objectArray[i]).name)
-//     // console.log('objectArray[i].fileType is' + objectArray[i].fileType)
-//     // console.log('objectArray[i].fileType === "IMAGE"' + objectArray[i].fileType === 'IMAGE')
-//     if ( fileType in objectArray[i] && objectArray[i].fileType === 'IMAGE' ) {
+    if ( objectArray[i] && objectArray[i].fileType === fileType ) {
 
-//       occurs++
-//       console.log('objectArray[i].fileType is ' + objectArray[i].fileType)
-//       console.log('occurs is ' + occurs)
-//       return occurs
-//     }
-//     else {
-//       return 'no dara'
-//     }
+      occurs+=1
+      console.log('occurs is ' + occurs)
+    }
+    }
+    return occurs
 
-
-//     }
-//     return occurs
-//  }
+ }
 
 }

@@ -37,18 +37,24 @@
                 <p class="mat-body-2 ws-mat-black60-text margin-bottom-s" i18n>
                     {{ resource?.description }}
                 </p>
-                <span class="margin-right-m attach_links" *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0">
-                    {{ resource.additionalProperties.krFiles[0].fileType }}//
-                   <!-- {{  getNbOccur('IMAGE', resource.additionalProperties.krFiles) }} -->
-
-
-                   <p class="mat-body-2" i18n>   <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs">  {{ resource.additionalProperties.krFiles.length }} PDFs </p>
+                <span class="attach_links margin-right-s" *ngIf="resource?.additionalProperties?.krFiles?.length > 0">
+                    <ng-container *ngIf="getNbOccur('PDF', resource.additionalProperties.krFiles ) || 0">
+                        <p class="mat-body-2" i18n> <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs">  {{ getNbOccur('PDF', resource.additionalProperties.krFiles ) || 0 }} PDF</p>
+                    </ng-container>
                 </span>
-                <span class="attach_links" *ngIf="resource.additionalProperties.URL && resource.additionalProperties.URL.length > 0">
+
+                <span class="attach_links margin-right-s" *ngIf="resource.additionalProperties.URL && resource.additionalProperties.URL.length > 0">
                     <p class="mat-body-2" i18n>    <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>
                        {{ resource.additionalProperties.URL.length }} URL </p>
 
                 </span>
+                <span class="attach_links" *ngIf="resource?.additionalProperties?.krFiles?.length > 0 ">
+                    <ng-container *ngIf="getNbOccur('IMAGE', resource.additionalProperties.krFiles ) || 0">
+                        <p class="mat-body-2" i18n> <mat-icon class="align-bottom ws-mat-default-text margin-right-xs">image</mat-icon>  {{ getNbOccur('IMAGE', resource.additionalProperties.krFiles ) || 0 }} IMAGE</p>
+                    </ng-container>
+                </span>
+
+
             </mat-card>
 
 
@@ -56,22 +62,11 @@
             <!-- <div *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0"> -->
             <mat-accordion *ngIf="resource.additionalProperties.URL && resource.additionalProperties.URL.length > 0 && resource.additionalProperties.URL != []">
                 <mat-expansion-panel  *ngFor="let item of resource.additionalProperties.URL | filter : searchText" class="padding-m mat-card margin-bottom-s w-full">
-                    <!-- <div *ngIf="item !==[] && item != '' "> -->
-
 
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-
-                                <!-- <a class="mat-h3 margin-remove-bottom" i18n role="title"  *ngIf="item.url && item.fileType === 'IMAGE'" >
-                                    <mat-icon class="align-bottom ws-mat-default-text margin-right-xs">image</mat-icon>{{ item.name }}
-                                </a>
-                                <a class="mat-h3 margin-remove-bottom" i18n role="title" *ngIf="item.url && item.fileType !== 'IMAGE'" >
-                                    <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs"> {{ item.name }}
-                                </a> -->
                                 <a class="mat-h3  margin-remove-bottom" i18n role="title"><mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>Url Title</a>
 
-                            <!-- <div >
-                            </div> -->
                         </mat-panel-title>
 
                     </mat-expansion-panel-header>
@@ -82,22 +77,10 @@
                         </div>
 
                     </div>
-                <!-- </div> -->
                 </mat-expansion-panel>
             </mat-accordion>
 
-            <!-- <div *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0">
-                <!-- <span *ngFor="let item of resource.additionalProperties.krFiles | filter : searchText"> -->
-                    {{ getNbOccur('IMAGE', resource.additionalProperties.krFiles ) }}
-                <!-- </span> -->
-            </div> -->
-            <!-- <div *ngFor="let item of resource.additionalProperties.krFiles | keyvalue">
-              <h2 class="flex">{{ item }}</h2>//
 
-                {{ item.key }}//
-                {{ item.value.name }} //
-                {{ item.value.fileType }} //
-            </div> -->
 
             <mat-accordion *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0">
                 <mat-expansion-panel  *ngFor="let item of resource.additionalProperties.krFiles | filter : searchText" class="padding-m mat-card margin-bottom-s w-full">

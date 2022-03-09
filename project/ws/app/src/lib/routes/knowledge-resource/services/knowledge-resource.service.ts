@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators'
 import { NSKnowledgeResource } from '../models/knowledge-resource.models'
 // tslint:disable
 import _ from 'lodash'
+
 // tslint:enable
 
 const API_ENDPOINTS = {
@@ -26,6 +27,7 @@ export class KnowledgeResourceService {
 
   getAllResources(): Observable<any> {
     return this.http.get<NSKnowledgeResource.IResourceData[]>(API_ENDPOINTS.getBookmarkedResources)
+
    }
 
   addBookmark(data: any): Observable<any> {
@@ -42,6 +44,7 @@ export class KnowledgeResourceService {
     return this.http.get<any>(API_ENDPOINTS.getSingleResource(id, type))
     .pipe(map((data: any) => {
       _.each(_.get(data, 'responseData.additionalProperties.krFiles'), files => {
+
         const isPng = ((_.get(files, 'url') || '').search(regularExpressionPdf)) > -1
         const isJpg = ((_.get(files, 'url') || '').search(regularExpressionPDF)) > -1
         if (isPng || isJpg) {

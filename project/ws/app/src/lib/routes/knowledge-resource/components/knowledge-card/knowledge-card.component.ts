@@ -36,7 +36,7 @@ export class KnowledgeCardComponent implements OnInit {
   }
 
   getFormathours(time: number) {
-    var totalHours, totalMinutes, totalSeconds, hours, minutes, seconds, result='';
+    var totalHours, totalMinutes, totalSeconds, hours, minutes, result='';
     totalSeconds = time / 1000;
     totalMinutes = totalSeconds / 60;
     totalHours = totalMinutes / 60;
@@ -44,8 +44,6 @@ export class KnowledgeCardComponent implements OnInit {
     // seconds = Math.floor(totalSeconds) % 60;
     minutes = Math.floor(totalMinutes) % 60;
     hours = Math.floor(totalHours) % 60;
-
-    console.log (hours + ' : '  + minutes + ' : ' + seconds);
     if (hours !== 0) {
         result += hours+' hr';
 
@@ -57,5 +55,6 @@ export class KnowledgeCardComponent implements OnInit {
     result += minutes+' min';
     return result;
 }
+
 
 }

@@ -33,6 +33,7 @@ export class KnowledgeAllComponent implements OnInit, OnDestroy {
     private kwResources: KnowledgeResourceService,
     private activateRoute: ActivatedRoute
     ) {
+
       this.allResources = _.get(this.activateRoute.snapshot, 'data.allResources.data.responseData') || []
 
       // this.kwResources.getAllResources().subscribe((reponse: NSKnowledgeResource.IResourceResponse) => {
