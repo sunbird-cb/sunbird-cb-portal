@@ -23,8 +23,61 @@
 .attach_links {
     display: inline-block;
 }
-
+.url_text {
+    word-break: break-all;
+}
+@media screen and (max-width:920px) {
+    .url_text {
+        line-height: 1.5;
+    }
+}
 .pdfIcon {
     width: 24px;
     vertical-align: middle;
+}
+.mat-expansion-panel-header {
+    height: auto!important;
+    padding: 0;
+}
+.mat-expansion-panel-header:not([aria-disabled=true]) {
+    cursor: pointer;
+    background-color: #fff!important;
+}
+
+.mat-panel-body {
+    border-top:1px solid rgba(0, 0, 0, 0.08);
+    padding:24px 0px;
+    box-sizing: border-box;
+    margin-top: 10px;
+}
+.mat-expansion-panel-body {
+    padding: 0px 0px 0px!important;
+
+}
+.mat-expansion-panel {
+    .mat-expansion-indicator {
+      .mat-expansion-indicator::after{
+        content: "e5e1";
+      }
+    }
+  }
+
+
+  .item_box{
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 4px 4px;
+    height: 55px;
+    line-height: 55px;
+    padding: 0px 8px;
+    box-sizing: border-box;
+
+    mat-icon {
+        line-height: 55px;
+    }
+}
+
+a.share_link {
+    background-color: transparent!important;
+    height: 55px;
+    display: flex;
 }
