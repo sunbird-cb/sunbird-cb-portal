@@ -21,6 +21,7 @@ const API_ENDPOINTS = {
   approveRequest: '/apis/protected/v8/workflowhandler/transition',
   getPendingFields: '/apis/protected/v8/workflowhandler/userWFApplicationFieldsSearch',
   getDesignation: '/apis/protected/v8/frac/searchNodes',
+  editProfileDetails: '/apis/proxies/v8/user/v1/extPatch',
 }
 
 @Injectable()
@@ -28,6 +29,9 @@ export class UserProfileService {
   constructor(
     private http: HttpClient,
   ) {
+  }
+  editProfileDetails(data: any) {
+    return this.http.post<any>(API_ENDPOINTS.editProfileDetails, data)
   }
   updateProfileDetails(data: any) {
     return this.http.patch<any>(API_ENDPOINTS.updateProfileDetails, data)
