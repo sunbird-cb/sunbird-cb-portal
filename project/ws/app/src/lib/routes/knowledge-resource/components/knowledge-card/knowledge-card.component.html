@@ -28,7 +28,7 @@
 
     <span class="attach_links" *ngIf="resource.additionalProperties.URL && resource.additionalProperties.URL.length > 0">
         <p class="mat-body-2" i18n>  <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>
-            {{ resource.additionalProperties.URL.length }} URL </p>
+            {{ itemCount(resource.additionalProperties.URL) }} </p>
 
     </span>
 

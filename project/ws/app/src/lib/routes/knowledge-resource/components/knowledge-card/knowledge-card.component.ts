@@ -60,17 +60,15 @@ export class KnowledgeCardComponent implements OnInit {
     return result
 }
 
-//  getFormathours(time: number) {
-//   var h = Math.floor(time / 3600);
-//   var m = Math.floor(time % 3600 / 60);
-//   // var s = Math.floor(d % 3600 % 60);
-
-//   var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
-//   var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
-//   // var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-//   console.log(hDisplay + mDisplay)
-//   return hDisplay + mDisplay
-
-// }
+itemCount(items: NSKnowledgeResource.IUrl[]) {
+  let occurs = 0
+  for (let i = 0; i < items.length; i += 1) {
+    if (items[i].toString() !== '[]' ) {
+      console.log(items[i])
+        occurs += 1
+      }
+    }
+  return occurs
+ }
 
 }
