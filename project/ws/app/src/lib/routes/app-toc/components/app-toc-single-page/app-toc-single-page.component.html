@@ -327,24 +327,24 @@
                     <div class="flex-col items-center rating margin-bottom-l">
                         <div class="flex items-center ">
                             <mat-icon class="mr-2 mat-icon material-icons rating-icon ws-mat-black16-text"
-                                [ngClass]="{'ws-mat-orange-text': getRatingIconClass(rating)}"
+                                [ngClass]="{'ws-mat-orange-text': getRatingIconClass(rating, ratingSummaryProcessed?.avgRating)}"
                                 *ngFor="let rating of [1, 2, 3, 4, 5]">
-                                {{ getRatingIcon(rating) }}</mat-icon>
+                                {{ getRatingIcon(rating, ratingSummaryProcessed?.avgRating) }}</mat-icon>
                             <!--  <span i18n>from</span> -->
-                            <span class="margin-left-s rating-number mat-body-1"> 4 out of 5 </span>
+                            <span class="margin-left-s rating-number mat-body-1"> {{ratingSummaryProcessed?.avgRating}} out of 5 </span>
                         </div>
                         <div class="margin-top-s mat-body-1 ws-mat-black60-text">
-                            {{ 180 | pipeCountTransform }} ratings</div>
+                            {{ ratingSummaryProcessed?.total_number_of_ratings | pipeCountTransform }} ratings</div>
                     </div>
-                    <div class="flex items-center margin-bottom-xs" *ngFor="let rating of [5,4,3,2,1]">
-                        <div class="mat-body-2 bold-imp margin-right-m">{{rating}} star</div>
+                    <div class="flex items-center margin-bottom-xs" *ngFor="let rating of ratingSummaryProcessed?.breakDown">
+                        <div class="mat-body-2 bold-imp margin-right-m">{{rating.key}} star</div>
                         <div class="flex items-center rating-progress">
-                            <mat-progress-bar [mode]="'determinate'" [matTooltip]="progress + ' %'"
-                                [value]="50" class="rating-bar"
+                            <mat-progress-bar [mode]="'determinate'" [matTooltip]="rating?.percent + ' %'"
+                                [value]="rating?.percent" class="rating-bar"
                                 [attr.aria-labelledby]="'m-c-'+ contentId"
-                                [ngClass]="{ 'visibility-0': progress === undefined, 'thick': className}"
+                                [ngClass]="{ 'visibility-0': rating === undefined, 'thick': className}"
                                 i18n-aria-label>
-                                50 %
+                                {{rating?.percent}} %
                             </mat-progress-bar>
                         </div>
                     </div>
@@ -388,46 +388,54 @@
                     </div>
 
                     <div class="rating-comments">
-                        <mat-card class="comments-card margin-bottom-m position-relative mat-card"
-                            *ngFor="let c of [1,2,3]">
-                            <a href="javascript:void(0)" role="button">
-                                <mat-card-content>
-                                    <div class="card_inner_content flex">
-                                        <div class="margin-right-m">
-                                            <ws-widget-avatar-photo [name]="'Christopher Fernandes'" [size]="'m'"
-                                                [photoUrl]=""></ws-widget-avatar-photo>
-                                        </div>
-
-                                        <div class="flex-col align-left">
-                                            <div class="name margin-bottom-xs">Christopher B Fernandes</div>
-                                            <div class="flex items-center ">
-                                                <span class="margin-right-xs ws-mat-orange-text mat-body-1"> 4 </span>
-                                                <mat-icon
-                                                    class="comments-rating mr-1 mat-icon material-icons ws-mat-black16-text"
-                                                    [ngClass]="{'ws-mat-orange-text': getRatingIconClass(rating)}"
-                                                    *ngFor="let rating of [1, 2, 3, 4, 5]">
-                                                    {{ getRatingIcon(rating) }}</mat-icon>
-                                                <!--  <span i18n>from</span> -->
-                                                <span class="margin-left-s  ws-mat-black60-text mat-body-1"> 3 monts ago
-                                                </span>
+                        <ng-container *ngFor="let c of ratingSummaryProcessed?.latest50reviews| 
+                        pipeFilterV3:{ 'user_id': searchKey.value, 'review': searchKey.value } : false |
+                        slice:0:ratingViewCount; let i= index; let last = last">
+                            <mat-card class="comments-card margin-bottom-m position-relative mat-card">
+                                <a href="javascript:void(0)" role="button">
+                                    <mat-card-content>
+                                        <div class="card_inner_content flex">
+                                            <div class="margin-right-m">
+                                                <ws-widget-avatar-photo [name]="c.user_id" [size]="'m'"
+                                                    [photoUrl]=""></ws-widget-avatar-photo>
                                             </div>
-                                            <div class="margin-top-m mat-body-1">
-                                                Curabitur lobortis id lorem id bibendum. Ut id consectetur magna.
-                                                Quisque volutpat augue enim, pulvinar lobortis nibh lacinia at.
-                                                Vestibulum nec erat ut mi sollicitudin porttitor id sit amet risus. Nam
-                                                tempus vel odio vitae aliquam.
+    
+                                            <div class="flex-col align-left">
+                                                <div class="name margin-bottom-xs">{{c.user_id}}</div>
+                                                <div class="flex items-center ">
+                                                    <span class="margin-right-xs ws-mat-orange-text mat-body-1"> {{c.rating}} </span>
+                                                    <mat-icon
+                                                        class="comments-rating mr-1 mat-icon material-icons ws-mat-black16-text"
+                                                        [ngClass]="{'ws-mat-orange-text': getRatingIconClass(rating, c.rating )}"
+                                                        *ngFor="let rating of [1, 2, 3, 4, 5]">
+                                                        {{ getRatingIcon(rating, c.rating) }}</mat-icon>
+                                                    <!--  <span i18n>from</span> -->
+                                                    <span class="margin-left-s  ws-mat-black60-text mat-body-1"> {{c.date | pipeRelativeTime}}
+                                                    </span>
+                                                </div>
+                                                <div class="margin-top-m mat-body-1">
+                                                    {{c.review}}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </mat-card-content>
-                            </a>
-                        </mat-card>
-
-                        <div class="flex items-center justify-center mb-2 mt-8 ws-mat-accent-text view-all">
-                            <a mat-button class="padding-top-xs padding-bottom-xs w-full ">
-                                <span i18n>SEE ALL {{16}} REVIEWS</span>
-                            </a>
-                        </div>
+                                    </mat-card-content>
+                                </a>
+                            </mat-card>
+    
+                            <div class="flex items-center justify-center mb-2 mt-8 ws-mat-accent-text view-all" 
+                            *ngIf="ratingSummaryProcessed?.latest50reviews?.length > 3 && ratingViewCount <=3 && i>=2 && last">
+                                <a mat-button class="padding-top-xs padding-bottom-xs w-full " 
+                                (click)="showALLReviews(ratingSummaryProcessed?.latest50reviews?.length)">
+                                    <span i18n>SEE ALL {{ratingSummaryProcessed?.latest50reviews?.length}} REVIEWS</span>
+                                </a>
+                            </div>
+                            <div class="flex items-center justify-center mb-2 mt-8 ws-mat-accent-text view-all" 
+                            *ngIf="ratingSummaryProcessed?.latest50reviews?.length > 3 && ratingViewCount > 3 && i>=2 && last">
+                                <a mat-button class="padding-top-xs padding-bottom-xs w-full " (click)="showALLReviews(3)">
+                                    <span i18n>SEE LESS REVIEWS</span>
+                                </a>
+                            </div>
+                        </ng-container>
                     </div>
                 </div>
             </section>
