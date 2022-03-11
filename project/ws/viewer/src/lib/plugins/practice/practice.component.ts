@@ -44,6 +44,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     questions: [
       {
         multiSelection: false,
+        section: '',
         question: '',
         questionId: '',
         questionType: '',
@@ -72,7 +73,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   numIncorrectAnswers = 0
   numUnanswered = 0
   passPercentage = 0
-  questionAnswerHash: { [questionId: string]: string[] } = {}
+  questionAnswerHash: NSPractice.IQAnswer = {}
   result = 0
   sidenavMode = 'start'
   sidenavOpenDefault = false
@@ -95,6 +96,9 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     private viewerSvc: ViewerUtilService,
   ) {
     // this.getSections()
+    if (quizSvc.questionAnswerHash.value) {
+      this.questionAnswerHash = quizSvc.questionAnswerHash.getValue()
+    }
   }
 
 
@@ -102,15 +106,16 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
 
   }
   getSections(_event: NSPractice.TUserSelectionType) {
-    this.quizSvc.getSection(this.identifier).subscribe((section: NSPractice.ISectionResponse) => {
+    // this.identifier
+    this.quizSvc.getSection('do_1134922417267752961130').subscribe((section: NSPractice.ISectionResponse) => {
       console.log(section)
       if (section.responseCode && section.responseCode === 'OK') {
         this.quizSvc.paperSections.next(section.result)
         let tempObj = _.get(section, 'result.questionSet.children')
         this.paperSections = []
-        _.each([1, 2, 3, 4, 5, 6, 7], () => {
+        _.each(tempObj, (o) => {
           if (this.paperSections) {
-            this.paperSections.push(tempObj[0])
+            this.paperSections.push(o)
           }
         })
         // this.paperSections = _.get(section, 'result.questionSet.children')
@@ -124,16 +129,20 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.selectedSection = section
       this.quizSvc.getQuestions(_.map(section.children, 'identifier')).subscribe(qqr => {
         const question = _.get(qqr, 'result')
+        const codes = _.compact(_.map(this.quizJson.questions, 'section') || [])
         _.eachRight(question.questions, q => {
           // const qHtml = document.createElement("div")
           // qHtml.innerHTML = q.editorState.question
-          this.quizJson.questions.push({
-            question: q.editorState.question, // qHtml.textContent || qHtml.innerText || "",
-            multiSelection: (q.qType == 'SA' ? 'fitb' : 'mcq-mca') === 'mcq-mca' ? true : false,
-            questionType: q.qType == 'SA' ? 'fitb' : 'mcq-mca',
-            questionId: q.identifier,
-            options: this.getOptions(q)
-          })
+          if (codes.indexOf(section.code) === -1) {
+            this.quizJson.questions.push({
+              section: section.code,
+              question: q.editorState.question, // qHtml.textContent || qHtml.innerText || "",
+              multiSelection: ((q.qType || '').toLowerCase() === 'mcq-mca' ? true : false),
+              questionType: (q.qType || '').toLowerCase(),
+              questionId: q.identifier,
+              options: this.getOptions(q),
+            })
+          }
         })
         this.overViewed('start')
       })
@@ -148,7 +157,9 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       switch (qTyp) {
         // 'mcq-sca' | 'mcq-mca' | 'fitb' | 'mtf'
         case 'mcq-sca':
+        case 'MCQ-SCA':
         case 'mcq-mca':
+        case 'MCQ-MCA':
         case 'MCQ':
           _.each(question.editorState.options, o => {
             const aHtml = document.createElement("div")
@@ -168,7 +179,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
             })
           })
           break
-        case 'fitb':
+        case 'ftb':
+        case 'FTB':
         // tslint:disable
         case 'SA':
         case 'sa':
@@ -186,6 +198,19 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           })
           break
         case 'mtf':
+        case 'MTF':
+          _.each(question.editorState.options, o => {
+            options.push({
+              isCorrect: true,
+              optionId: o.value.value,
+              text: o.answer,
+              hint: '',
+              response: '',
+              userSelected: false,
+              matchForView: o.value.value,
+              match: o.value.body
+            })
+          })
           break
       }
     }
@@ -228,6 +253,13 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
   get currentIndex() {
     return this.currentQuestionIndex
+  }
+  get totalQCount(): number {
+    const questions = _.get(this.quizJson, 'questions') || []
+    return questions.length
+  }
+  backToSections() {
+    this.viewState = 'detail'
   }
   ngOnDestroy() {
     if (this.timerSubscription) {
@@ -317,6 +349,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       this.questionAnswerHash[question.questionId] = [optionId]
     }
+    this.quizSvc.qAnsHash(this.questionAnswerHash)
   }
 
   proceedToSubmit() {

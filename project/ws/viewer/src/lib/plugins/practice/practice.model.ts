@@ -7,6 +7,7 @@ export namespace NSPractice {
 
   export interface IQuestion {
     multiSelection: boolean
+    section: string
     question: string
     questionId: string
     options: IOption[]
@@ -205,4 +206,8 @@ export namespace NSPractice {
     responseCode: string
     result: IQPaper
   }
+  export interface IQAnswer {
+    [questionId: string]: string[]
+  }
 }
+

@@ -5,14 +5,16 @@
 
 <div #quizContainer *ngIf="viewState !== 'initial' && viewState !== 'detail'" class="quiz-container">
   <nav class="quiz-nav-bar mat-toolbar mat-caption">
-    <span>
-      <!-- <button mat-icon-button aria-label="menu toggle" i18n-aria-label (click)="sidenav.toggle()">
+    <!-- <span> -->
+    <!-- <button mat-icon-button aria-label="menu toggle" i18n-aria-label (click)="sidenav.toggle()">
         <mat-icon aria-label="open questions navigation">menu</mat-icon>
       </button> -->
-      <ws-widget-btn-fullscreen [widgetType]="'actionButton'" [widgetSubType]="'actionButtonFullscreen'"
-        [widgetData]="{ fsContainer: quizContainer }"></ws-widget-btn-fullscreen>
-    </span>
-    <div class="flex flex-middle flex-center">
+    <a *ngIf="!isSubmitted" (click)="backToSections()" class="flex cursor-pointer">
+      <mat-icon class="ws-mat-default-text">arrow_back</mat-icon>
+      <span class="ws-mat-default-text subheading-1">Back to sections</span>
+    </a>
+    <!-- </span> -->
+    <div *ngIf="timeLeft" class="flex flex-middle flex-center">
       <mat-icon>alarm</mat-icon>&nbsp;&nbsp;
       <div [ngClass]="{ 'mat-body-strong': !isSubmitted }">
         {{ timeLeft | pipeDurationTransform: 'hms' }}
@@ -21,6 +23,8 @@
         (Submitted)
       </div>
     </div>
+    <ws-widget-btn-fullscreen [widgetType]="'actionButton'" [widgetSubType]="'actionButtonFullscreen'"
+      [widgetData]="{ fsContainer: quizContainer }"></ws-widget-btn-fullscreen>
   </nav>
   <mat-sidenav-container class="sidenav-container" autosize>
     <mat-sidenav [mode]="sidenavMode" class="sidenav" #sidenav [opened]="sidenavOpenDefault">
@@ -47,7 +51,7 @@
       </div> -->
     </mat-sidenav>
     <mat-sidenav-content>
-      <div class="flex flex-1">
+      <div *ngIf="!isSubmitted" class="flex flex-1">
         <div class="flex flex-wrapped margin-right-s margin-left-s">
           <div class="col" *ngFor="let question of quizJson?.questions; let i = index">
             <div (click)="scroll(i + 1)" [ngClass]="{
@@ -71,25 +75,40 @@
       </div>
       <!-- {{current_Question | json}}
       {{currentQuestionIndex}} -->
-      <div class="margin-m">
-        <ng-container *ngIf="!(viewState === 'answer' && quizJson?.isAssessment)">
-          <div class="flex flex-1">
-            <span class="mat-title">{{selectedSection.name}}</span>
+      <mat-card class="flex flex-1 flex-column margin-m pad-0">
+        <ng-container *ngIf="!(viewState === 'answer' && quizJson?.isAssessment) && !isSubmitted">
+          <div class="flex flex-1 padding-l">
+            <span class="mat-title margin-zero">{{selectedSection.name}}</span>
             <span class="spacer"></span>
-            <a class="ws-mat-accent-border margin-xs m-auto" mat-button (click)="getNextQuestion(currentQuestionIndex - 1)">
+            <a *ngIf="currentQuestionIndex !== 0" class="ws-mat-accent-border margin-xs m-auto" mat-button
+              (click)="getNextQuestion(currentQuestionIndex - 1)">
               <mat-icon>arrow_back</mat-icon>
               PREVIOUS
             </a>
             &nbsp;&nbsp;
-            <a class="text-white ws-mat-primary-background margin-xs m-auto" mat-button (click)="getNextQuestion(currentQuestionIndex + 1)">NEXT QUESTION</a>
+            <a *ngIf="(currentQuestionIndex+1) !== totalQCount"
+              class="text-white ws-mat-primary-background margin-xs m-auto" mat-button
+              (click)="getNextQuestion(currentQuestionIndex + 1)">NEXT QUESTION</a>
+
+            <button class="text-white ws-mat-primary-background margin-xs m-auto" mat-raised-button
+              *ngIf="!(viewState === 'answer' && quizJson?.isAssessment) && !((currentQuestionIndex+1) !== totalQCount)"
+              (click)="proceedToSubmit()" i18n="button quiz submit">
+              Submit
+            </button>
           </div>
+          <div class="flex flex-1">
+            <mat-progress-bar class="quiz-progress" [color]="secondary" [mode]="determinate"
+              [value]="((currentQuestionIndex + 1)/totalQCount)*100" [bufferValue]="100">
+            </mat-progress-bar>
+          </div>
+          {{current_Question?.questionId}}====
+          {{current_Question?.questionType}}
+          {{questionAnswerHash[(current_Question?.questionId)] | json}}
           <viewer-question #questionsReference [id]="'question' + (i + 1)"
             *ngFor="let question of quizJson?.questions; let i = index" [markedQuestions]="markedQuestions"
-            [artifactUrl]="artifactUrl" [questionNumber]="i + 1" [total]="quizJson?.questions.length"
-            [viewState]="viewState" [question]="question"
-            [itemSelectedList]="questionAnswerHash[(question?.questionId)]"
-            (itemSelected)="fillSelectedItems(question, $event)"
-            [hidden]="i !== currentQuestionIndex">
+            [artifactUrl]="artifactUrl" [questionNumber]="i + 1" [total]="totalQCount" [viewState]="viewState"
+            [question]="question" [itemSelectedList]="questionAnswerHash[(question?.questionId)]"
+            (itemSelected)="fillSelectedItems(question, $event)" [hidden]="i !== currentQuestionIndex">
           </viewer-question>
           <!-- <ng-container *ngIf="current_Question">
             <viewer-question #questionsReference [id]="'question' + (currentQuestionIndex + 1)"
@@ -100,6 +119,8 @@
             </viewer-question>
           </ng-container> -->
         </ng-container>
+      </mat-card>
+      <ng-container *ngIf="isSubmitted">
         <mat-card class="margin-bottom-m margin-top-m" *ngIf="viewState === 'review' || viewState === 'answer'">
           <div class="margin-m" *ngIf="fetchingResultsStatus === 'fetching'">
             <!-- <ws-spinner></ws-spinner> -->
@@ -149,31 +170,33 @@
             </div>
           </ng-container>
         </mat-card>
-        <div class="text-center">
-          <button class="margin-right-m" mat-raised-button color="primary"
+        <!-- <div class="text-center">
+          <button class="margin-right-m ws-mat-accent-border-active" mat-button
             *ngIf="!(viewState === 'answer' && quizJson?.isAssessment)" (click)="proceedToSubmit()"
             i18n="button quiz submit">
-            Submit
+            <span class="ws-mat-default-text">Submit</span>
           </button>
-          <button mat-raised-button color="primary" *ngIf="viewState === 'review'" (click)="showAnswers()"
-            i18n="button quiz show answers">
-            Show Answers
+          <button class="margin-right-m ws-mat-accent-border-active" mat-button *ngIf="viewState === 'review'"
+            (click)="showAnswers()" i18n="button quiz show answers">
+            <span class="ws-mat-default-text">Show Answers</span>
           </button>
-        </div>
-      </div>
+        </div> -->
+      </ng-container>
       <div id="quiz-end"></div>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
-<div *ngIf="viewState === 'detail'" class="flex flex-1">
+<div *ngIf="viewState === 'detail'" class="flex flex-1 flex-column">
   <!-- <div class="flex flex-1"></div> -->
   <ng-container *ngIf="this.paperSections && this.paperSections?.length > 0">
-    <div class="flex flex-1 flex-column margin-right-m margin-left-m">
-      <a mat-button disableRipple *ngIf="primaryCategory === ePrimaryCategory.PRACTICE_RESOURCE" i18n-aria-label
-        aria-label="Back" (click)="back()" class="padding-s no-border width-1-10">
-        <mat-icon>arrow_back</mat-icon>
-        Back to home
+    <div class="flex flex-1">
+      <a disableRipple *ngIf="primaryCategory === ePrimaryCategory.PRACTICE_RESOURCE" i18n-aria-label aria-label="Back"
+        (click)="back()" class="no-border flex cursor-pointer">
+        <mat-icon class="ws-mat-default-text">arrow_back</mat-icon>
+        <span class="ws-mat-default-text subheading-1">Back to home </span>
       </a>
+    </div>
+    <div class="flex flex-1 flex-column margin-right-m margin-left-m">
       <div class="flex flex-1 flex-wrap">
         <ng-container *ngFor="let section of this.paperSections">
           <mat-card class="min-w padding-s ws-mat-accent-border br-8 no-border margin-m">

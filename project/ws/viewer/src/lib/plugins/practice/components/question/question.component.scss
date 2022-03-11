@@ -73,6 +73,7 @@
 // }
 .respo {
   flex-direction: row;
+  padding: $size-m 0 $size-m 0;
   @include breakpoint-lt-m {
     flex-direction: column;
   }
@@ -88,4 +89,7 @@
 }
 .b-r {
   border-radius: #{$size-xs / 2};
+}
+.no-shadow {
+  box-shadow: none !important;
 }

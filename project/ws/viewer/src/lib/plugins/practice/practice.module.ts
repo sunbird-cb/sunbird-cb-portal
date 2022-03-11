@@ -19,6 +19,7 @@ import {
   MatTableModule,
   MatButtonModule,
   MatProgressSpinnerModule,
+  MatProgressBarModule,
 } from '@angular/material'
 
 import {
@@ -37,6 +38,7 @@ import {
     MatFormFieldModule,
     MatIconModule,
     MatListModule,
+    MatProgressBarModule,
     MatRadioModule,
     MatSidenavModule,
     MatTableModule,

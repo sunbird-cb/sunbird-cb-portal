@@ -1,4 +1,4 @@
-<mat-card class="flex flex-1 respo margin-bottom-m">
+<mat-card class="flex flex-1 respo margin-bottom-m no-shadow">
   <div class="respo flex flex-1 flex-column padding-top-m padding-left-l ws-mat-accent-border right-border">
     <div class="flex flex-1- flex-column">
       <div class="flex flex-middle">
@@ -8,14 +8,15 @@
           {{ total }}
         </h3>
       </div>
+      {{question?.options?.length}}=========
       <div class="flex flex-1">
-        <h2 *ngIf="question.questionType !== 'fitb'" class="mat-h2" [innerHTML]="question?.question"
+        <h2 *ngIf="question.questionType !== 'ftb'" class="mat-h2" [innerHTML]="question?.question"
           class="quiz-question">
         </h2>
-        <h2 *ngIf="question.questionType === 'fitb'" class="mat-h2" [innerHTML]="safeQuestion" class="quiz-question">
+        <h2 *ngIf="question.questionType === 'ftb'" class="mat-h2" [innerHTML]="safeQuestion" class="quiz-question">
         </h2>
 
-        <div *ngIf="question.questionType === 'fitb'">
+        <div *ngIf="question.questionType === 'ftb'">
 
           <div *ngFor="let option of question?.options; let i = index">
             <div [ngClass]="{

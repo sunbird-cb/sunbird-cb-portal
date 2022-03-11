@@ -16,6 +16,7 @@ const API_END_POINTS = {
 
 export class PracticeService {
   paperSections: BehaviorSubject<NSPractice.IQPaper | null> = new BehaviorSubject<NSPractice.IQPaper | null>(null)
+  questionAnswerHash: BehaviorSubject<NSPractice.IQAnswer> = new BehaviorSubject<NSPractice.IQAnswer>({})
   constructor(
     private http: HttpClient,
   ) { }
@@ -27,6 +28,10 @@ export class PracticeService {
   //   }
   //   return throwError(errorMessage)
   // }
+
+  qAnsHash(value: any) {
+    this.questionAnswerHash.next(value)
+  }
   submitQuizV2(req: NSPractice.IQuizSubmitRequest): Observable<NSPractice.IQuizSubmitResponse> {
     return this.http.post<NSPractice.IQuizSubmitResponse>(API_END_POINTS.ASSESSMENT_SUBMIT_V2, req)
   }

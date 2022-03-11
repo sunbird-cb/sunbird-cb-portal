@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input
 import { NSPractice } from '../../practice.model'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { jsPlumb, OnConnectionBindInfo } from 'jsplumb'
+import { PracticeService } from '../../practice.service'
 
 @Component({
   selector: 'viewer-question',
@@ -17,6 +18,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
   @Input() viewState = 'initial'
   @Input() question: NSPractice.IQuestion = {
     multiSelection: false,
+    section: '',
     question: '',
     questionId: '',
     options: [
@@ -42,6 +44,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
   constructor(
     private domSanitizer: DomSanitizer,
     private elementRef: ElementRef,
+    private practiceSvc: PracticeService,
   ) { }
 
   ngOnInit() {
@@ -58,19 +61,29 @@ export class QuestionComponent implements OnInit, AfterViewInit {
         this.question.question = this.question.question.replace(toBeReplaced, `src="${newUrl}"`)
       }
     }
-    if (this.question.questionType === 'fitb') {
-      const iterationNumber = (this.question.question.match(/<input/g) || this.question.question.match(/______/g) || []).length
-      for (let i = 0; i < iterationNumber; i += 1) {
-        this.question.question = this.question.question.replace('<input', 'idMarkerForReplacement').replace('______', 'idMarkerForReplacement')
-        this.correctOption.push(false)
-        this.unTouchedBlank.push(true)
+    if (this.question.questionType === 'ftb') {
+      let needToModify = true
+      if (this.practiceSvc.questionAnswerHash.value && this.practiceSvc.questionAnswerHash.value[this.question.questionId]) {
+        needToModify = false
       }
-      for (let i = 0; i < iterationNumber; i += 1) {
-        this.question.question = this.question.question.replace(
-          'idMarkerForReplacement',
-          `<input matInput autocomplete="off" style="border-style: none none solid none;
+      if (needToModify) {
+        const iterationNumber = (this.question.question.match(/<input/g) || this.question.question.match(/______/g) || []).length
+        for (let i = 0; i < iterationNumber; i += 1) {
+          this.question.question = this.question.question.replace('<input', 'idMarkerForReplacement').replace('______', 'idMarkerForReplacement')
+          this.correctOption.push(false)
+          this.unTouchedBlank.push(true)
+        }
+        for (let i = 0; i < iterationNumber; i += 1) {
+          this.question.question = this.question.question.replace(
+            'idMarkerForReplacement',
+            `<input matInput autocomplete="off" style="border-style: none none solid none;
           border-width: 1px; padding: 8px 12px;" type="text" id="${this.question.questionId}${i}" />`,
-        )
+          )
+        }
+      } else {
+        // for (let i = 0; i < (this.question.question.match(/<input/g) || this.question.question.match(/______/g) || []).length; i += 1) {
+        //   console.log(this.elementRef.nativeElement.querySelector(`#${this.question.questionId}${i}`)) 
+        // }
       }
       this.safeQuestion = this.domSanitizer.bypassSecurityTrustHtml(this.question.question)
     }
@@ -149,7 +162,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
           ],
         })
       })
-    } else if (this.question.questionType === 'fitb') {
+    } else if (this.question.questionType === 'ftb') {
       for (let i = 0; i < (this.question.question.match(/<input/g) || this.question.question.match(/______/g) || []).length; i += 1) {
         this.elementRef.nativeElement
           .querySelector(`#${this.question.questionId}${i}`)
@@ -264,7 +277,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
   }
 
   reset() {
-    if (this.question.questionType === 'fitb') {
+    if (this.question.questionType === 'ftb') {
       this.resetBlankBorder()
     } else if (this.question.questionType === 'mtf') {
       this.resetColor()
@@ -347,7 +360,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
   }
 
   functionChangeBlankBorder() {
-    if (this.question.questionType === 'fitb') {
+    if (this.question.questionType === 'ftb') {
       for (let i = 0; i < (this.question.question.match(/<input/g) || []).length; i += 1) {
         if (this.correctOption[i] && !this.unTouchedBlank[i]) {
           this.elementRef.nativeElement
