@@ -143,6 +143,7 @@ export namespace NsInstanceConfig {
   export interface ILogos {
     app: string
     appTransparent: string
+    appSecondary: string
     aboutFooter: string
     aboutHeader: string
     appBottomNav?: string
