@@ -36,7 +36,7 @@ export namespace NSKnowledgeResource {
 
     export interface IUrl {
         url: string
-        
+
     }
 
     export interface IKrFiles {

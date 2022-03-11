@@ -120,27 +120,20 @@ refresh() {
  itemCount(items: NSKnowledgeResource.IUrl[]) {
   let occurs = 0
   for (let i = 0; i < items.length; i += 1) {
-    if (items[i].toString() !== '[]' ) {
-      console.log(items[i])
+    if (items[i].toString() !== '[]') {
         occurs += 1
       }
     }
   return occurs
  }
 
-
    /* To copy Text from Textbox */
-  copyInputMessage(value:string):void {
-    const data:any = document.getElementsByClassName('url_value')
-    console.log(data)
-    navigator.clipboard.writeText(value).then(()=> {
+  copyInputMessage(value: string): void {
+    navigator.clipboard.writeText(value).then(() => {
       alert('Copied!')
-    }, ()=> {
+    },() => {
       alert('Not copied!')
-    });
+    })
   }
 
-
-
 }
-

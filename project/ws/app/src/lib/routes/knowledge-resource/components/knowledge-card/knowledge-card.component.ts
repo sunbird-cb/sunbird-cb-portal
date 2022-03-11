@@ -63,8 +63,7 @@ export class KnowledgeCardComponent implements OnInit {
 itemCount(items: NSKnowledgeResource.IUrl[]) {
   let occurs = 0
   for (let i = 0; i < items.length; i += 1) {
-    if (items[i].toString() !== '[]' ) {
-      console.log(items[i])
+    if (items[i].toString() !== '[]') {
         occurs += 1
       }
     }
