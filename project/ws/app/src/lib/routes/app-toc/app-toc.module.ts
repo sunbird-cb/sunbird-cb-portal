@@ -59,6 +59,8 @@ import {
   DefaultThumbnailModule,
   PipeNameTransformModule,
   PipeCountTransformModule,
+  PipeFilterV3Module,
+  PipeRelativeTimeModule,
 } from '@sunbird-cb/utils'
 import {
   BtnCallModule,
@@ -174,6 +176,8 @@ import { CertificateDialogModule } from '@sunbird-cb/collection/src/lib/_common/
     PipeNameTransformModule,
     PipeCountTransformModule,
     PipePartialContentModule,
+    PipeFilterV3Module,
+    PipeRelativeTimeModule,
     PipeContentRouteModule,
     BtnCallModule,
     BtnContentDownloadModule,

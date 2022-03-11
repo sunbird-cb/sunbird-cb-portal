@@ -57,10 +57,19 @@
                     class="ws-mat-accent-border flex-auto-display margin-right-xs">
                     <span class="ws-mat-default-text" i18n>Cancel</span>
                 </button> -->
-                <button mat-stroked-button type="submit" class="text-white ws-mat-primary-background flex-auto-display"
-                    [disabled]="feedbackForm?.invalid || formDisabled" (click)="submitRating(feedbackForm)">
-                    <span class="text-white" i18n>Submit</span>
-                </button>
+                <ng-container *ngIf="!isEditMode">
+                    <button mat-stroked-button type="submit" class="text-white ws-mat-primary-background flex-auto-display"
+                        [disabled]="feedbackForm?.invalid || formDisabled" (click)="submitRating(feedbackForm)">
+                        <span class="text-white" i18n>Submit</span>
+                    </button>
+                </ng-container>
+                <ng-container *ngIf="isEditMode">
+                    <button mat-stroked-button type="submit" class="text-white ws-mat-primary-background flex-auto-display"
+                        [disabled]="feedbackForm?.invalid ||  !isEdited || formDisabled" (click)="submitRating(feedbackForm)">
+                        <span class="text-white" i18n>Update</span>
+                    </button>
+                </ng-container>
+                
     
     
                 <!--  <mat-progress-spinner [color]="'primary'" [diameter]="40" [strokeWidth]="4" [mode]="'indeterminate'" *ngIf="
@@ -73,7 +82,7 @@
 
     <div *ngIf="showSuccessScreen" class="flex-col align-center justify-center">
         <div class="text-right">
-            <button mat-icon-button aria-label="close dialog" mat-dialog-close>
+            <button mat-icon-button aria-label="close dialog" (click)="closeDialog(true)">
                 <mat-icon>close</mat-icon>
             </button>
         </div>
@@ -88,9 +97,9 @@
                 <div class="w-full flex align-center justify-between ">
                     <h2 class="mat-headline margin-bottom-xxs ws-mat-black-text">Thank you for the rating!!!</h2>
                 </div>
-                <!-- <div _ngcontent-anh-c23="" class="section-content mat-body-1">
+                <div _ngcontent-anh-c23="" class="section-content mat-body-1">
                     You can update your rating at anytime.
-                </div> -->
+                </div>
             </div>
         </div>
     </div>

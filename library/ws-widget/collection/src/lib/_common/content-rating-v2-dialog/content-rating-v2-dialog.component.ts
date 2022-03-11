@@ -1,7 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
-import { EventService, WsEvents } from '@sunbird-cb/utils/src/public-api'
+import { EventService, WsEvents, LoggerService } from '@sunbird-cb/utils/src/public-api'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
+import { RatingService } from '@ws/app/src/lib/routes/app-toc/services/rating.service'
+import { switchMap, takeUntil } from 'rxjs/operators'
+import { Subject } from 'rxjs'
 
 @Component({
   selector: 'ws-widget-content-rating-v2-dialog',
@@ -13,11 +16,16 @@ export class ContentRatingV2DialogComponent implements OnInit {
   feedbackForm: FormGroup
   showSuccessScreen = false
   formDisabled = true
+  isEditMode = false
+  isEdited = false
+  private unsubscribe = new Subject<void>()
 
   constructor(
     public dialogRef: MatDialogRef<ContentRatingV2DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private events: EventService,
+    private ratingSvc: RatingService,
+    private loggerSvc: LoggerService,
   ) {
     this.feedbackForm = new FormGroup({
       review: new FormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
@@ -26,15 +34,67 @@ export class ContentRatingV2DialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.data.userRating) {
+      this.feedbackForm.patchValue({
+        review: this.data.userRating.review,
+        rating: this.data.userRating.rating,
+      })
+      this.userRating = this.data.userRating.rating
+      if (this.userRating) {
+        this.formDisabled = false
+        this.isEditMode = true
+      }
+    }
+
+    this.feedbackForm.valueChanges
+      .pipe(
+        switchMap(async formValue => {
+          // tslint:disable-next-line: no-console
+          console.log('formValue.review :: ', formValue.review)
+          if (formValue.review !== this.data.userRating.review || formValue.rating !== this.data.userRating.rating) {
+            this.isEdited = true
+          } else {
+            this.isEdited = false
+          }
+        }),
+        takeUntil(this.unsubscribe)
+      ).subscribe()
   }
 
   submitRating(feedbackForm: any) {
     if (!this.formDisabled) {
+      const req = {
+        activity_Id: this.data.content.identifier || '',
+        userId: this.data.userId || '',
+        activity_type: this.data.content.primaryCategory || '',
+        rating: this.userRating,
+        review: feedbackForm.value.review || '',
+      }
+
+      this.ratingSvc.addOrUpdateRating(req).subscribe(
+        (_res: any) =>  {
+          this.raiseFeedbackTelemetry(feedbackForm)
+          if (this.isEditMode) {
+            this.dialogRef.close(true)
+          } else {
+            this.showSuccessScreen = true
+          }
+          // this.dialogRef.close(true)
+        },
+        (err: any) => {
+          this.loggerSvc.error('ADD OR UPDATE USER RATING ERROR >', err)
+          // this.dialogRef.close(false)
+        }
+      )
+    }
+  }
+
+  raiseFeedbackTelemetry(feedbackForm: any) {
       this.events.raiseFeedbackTelemetry(
         {
-         type: this.data.content.primaryCategory,
-         subType: 'rating',
-         id: this.data.content.identifier || '',
+          type: this.data.content.primaryCategory,
+          subType: 'rating',
+          id: this.data.content.identifier || '',
         },
         {
         id: this.data.content.identifier || '',
@@ -43,8 +103,6 @@ export class ContentRatingV2DialogComponent implements OnInit {
         // tslint:disable-next-line: no-non-null-assertion
         commenttxt: feedbackForm.value.review || '',
       })
-      this.showSuccessScreen = true
-    }
   }
 
   addRating(index: number) {
@@ -68,6 +126,10 @@ export class ContentRatingV2DialogComponent implements OnInit {
     })
     // tslint:disable-next-line: no-non-null-assertion
     this.feedbackForm.get('rating')!.setValue(this.userRating)
+  }
+
+  closeDialog(val: boolean) {
+    this.dialogRef.close(val)
   }
 
 }
