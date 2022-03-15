@@ -188,7 +188,7 @@ export namespace NSPractice {
     question: string
   }
   export interface IOptionsV2 {
-    answer: boolean
+    answer: boolean | any
     value: {
       body: string | any
       value: number | any
@@ -208,6 +208,14 @@ export namespace NSPractice {
   }
   export interface IQAnswer {
     [questionId: string]: string[]
+  }
+  export interface ISecAttempted {
+    identifier: string
+    isAttempted: boolean // attempted
+    fullAttempted: boolean // full attempted
+    totalQueAttempted: number
+    nextSection: string | null
+    attemptData?: { questionId: string, answers: any[] } | null
   }
 }
 

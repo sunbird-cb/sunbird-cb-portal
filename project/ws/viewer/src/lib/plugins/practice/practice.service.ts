@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { NSPractice } from './practice.model'
 import { BehaviorSubject, Observable } from 'rxjs'
+import { retry } from 'rxjs/operators'
 
 
 const API_END_POINTS = {
@@ -15,8 +16,10 @@ const API_END_POINTS = {
 })
 
 export class PracticeService {
+
   paperSections: BehaviorSubject<NSPractice.IQPaper | null> = new BehaviorSubject<NSPractice.IQPaper | null>(null)
   questionAnswerHash: BehaviorSubject<NSPractice.IQAnswer> = new BehaviorSubject<NSPractice.IQAnswer>({})
+  secAttempted: BehaviorSubject<NSPractice.ISecAttempted[] | []> = new BehaviorSubject<NSPractice.ISecAttempted[] | []>([])
   constructor(
     private http: HttpClient,
   ) { }
@@ -28,7 +31,17 @@ export class PracticeService {
   //   }
   //   return throwError(errorMessage)
   // }
-
+  startSection(section: NSPractice.IPaperSection) {
+    if (section) {
+      let sections = this.secAttempted.getValue()
+      for (let i = 0; sections && i < sections.length; i += 1) {
+        if (sections[i] && section.identifier === sections[i].identifier) {
+          sections[i].isAttempted = true
+        }
+      }
+      this.secAttempted.next(sections)
+    }
+  }
   qAnsHash(value: any) {
     this.questionAnswerHash.next(value)
   }
@@ -97,7 +110,7 @@ export class PracticeService {
   }
 
   getSection(sectionId: string): Observable<NSPractice.ISectionResponse> {
-    return this.http.get<NSPractice.ISectionResponse>(`${API_END_POINTS.QUESTION_PAPER_SECTIONS}/${sectionId}`)
+    return this.http.get<NSPractice.ISectionResponse>(`${API_END_POINTS.QUESTION_PAPER_SECTIONS}/${sectionId}`).pipe(retry(2))
   }
   getQuestions(identifiers: string[]): Observable<{ count: Number, questions: any[] }> {
     const data = {

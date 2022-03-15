@@ -46,7 +46,7 @@
   <div class="flex flex-1 flex-column margin-left-l ws-mat-accent-border border-custom">
     <div class="flex flex-1 flex-column margin-top-m">
       <span class="mat-headline text-justify">{{learningObjective | pipeLimitTo: 300 }}</span>
-      <a mat-button (click)="userSelection.emit('start')" class="ws-mat-primary-background text-white m-w padding-xs">
+      <a mat-button (click)="overviewed('start')" [class.spinner]="loading" [disabled]="loading" class="ws-mat-primary-background text-white m-w padding-xs">
         <span class="padding-xs" i18n>Start assessment now</span>
       </a>
       <div class="flex margin-top-l flex-column">

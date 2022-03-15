@@ -25,9 +25,10 @@ import {
 import {
   BtnFullscreenModule,
 } from '@sunbird-cb/collection'
+import { ResultComponent } from './components/result/result.component'
 
 @NgModule({
-  declarations: [PracticeComponent, OverviewComponent, QuestionComponent, SubmitQuizDialogComponent],
+  declarations: [PracticeComponent, OverviewComponent, QuestionComponent,ResultComponent, SubmitQuizDialogComponent],
   entryComponents: [SubmitQuizDialogComponent],
   imports: [
     CommonModule,

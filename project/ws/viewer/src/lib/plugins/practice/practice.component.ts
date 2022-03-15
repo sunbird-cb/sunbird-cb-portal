@@ -65,6 +65,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   currentQuestionIndex = 0
   currentTheme = ''
   fetchingResultsStatus: FetchStatus = 'none'
+  fetchingSectionsStatus: FetchStatus = 'none'
+  fetchingQuestionsStatus: FetchStatus = 'none'
   isCompleted = false
   isIdeal = false
   isSubmitted = false
@@ -80,6 +82,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   startTime = 0
   submissionState: NSPractice.TQuizSubmissionState = 'unanswered'
   telemetrySubscription: Subscription | null = null
+  attemptSubData!: NSPractice.ISecAttempted[]
+  attemptSubscription: Subscription | null = null
   timeLeft = 0
   timerSubscription: Subscription | null = null
   viewState: NSPractice.TQuizViewMode = 'initial'
@@ -103,15 +107,21 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
 
 
   ngOnInit() {
-
+    this.attemptSubscription = this.quizSvc.secAttempted.subscribe(data => {
+      this.attemptSubData = data
+    })
   }
+
   getSections(_event: NSPractice.TUserSelectionType) {
     // this.identifier
+    this.fetchingSectionsStatus = 'fetching'
     this.quizSvc.getSection('do_1134922417267752961130').subscribe((section: NSPractice.ISectionResponse) => {
       console.log(section)
+      this.fetchingSectionsStatus = 'done'
       if (section.responseCode && section.responseCode === 'OK') {
         this.quizSvc.paperSections.next(section.result)
         let tempObj = _.get(section, 'result.questionSet.children')
+        this.updataDB(tempObj)
         this.paperSections = []
         _.each(tempObj, (o) => {
           if (this.paperSections) {
@@ -124,12 +134,32 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       }
     })
   }
+  updataDB(sections: NSPractice.IPaperSection[]) {
+    const data: NSPractice.ISecAttempted[] = []
+    for (let i = 0; i < sections.length; i += 1) {
+      const nextsec = sections[i + 1]
+      data.push({
+        identifier: sections[i].identifier,
+        fullAttempted: false,
+        isAttempted: false,
+        nextSection: nextsec && nextsec.identifier ? nextsec.identifier : null,
+        totalQueAttempted: 0,
+        attemptData: null,
+      })
+    }
+    console.log(data)
+    this.quizSvc.secAttempted.next(data)
+  }
   startSection(section: NSPractice.IPaperSection) {
     if (section) {
+      this.fetchingQuestionsStatus = 'fetching'
       this.selectedSection = section
       this.quizSvc.getQuestions(_.map(section.children, 'identifier')).subscribe(qqr => {
+        this.fetchingQuestionsStatus = 'done'
         const question = _.get(qqr, 'result')
         const codes = _.compact(_.map(this.quizJson.questions, 'section') || [])
+        this.quizSvc.startSection(section)
+        console.log(this.quizSvc.secAttempted.value)
         _.eachRight(question.questions, q => {
           // const qHtml = document.createElement("div")
           // qHtml.innerHTML = q.editorState.question
@@ -203,7 +233,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
             options.push({
               isCorrect: true,
               optionId: o.value.value,
-              text: o.answer,
+              text: (o.answer || '').toString(),
               hint: '',
               response: '',
               userSelected: false,
@@ -215,6 +245,20 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       }
     }
     return options
+  }
+  getClass(section: NSPractice.ISecAttempted) {
+    let storeData = _.first(_.filter(this.attemptSubData, { 'identifier': section.identifier }))
+    let className = 'not-started'
+    if (storeData) {
+      if (storeData.fullAttempted) {
+        className = 'complete'
+      } else {
+        if (storeData.isAttempted) {
+          className = 'incomplete'
+        }
+      }
+    }
+    return className
   }
   scroll(qIndex: number) {
     if (qIndex > 0) {
@@ -262,6 +306,9 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     this.viewState = 'detail'
   }
   ngOnDestroy() {
+    if (this.attemptSubscription) {
+      this.attemptSubscription.unsubscribe()
+    }
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe()
     }
@@ -324,8 +371,9 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   fillSelectedItems(question: NSPractice.IQuestion, optionId: string) {
-    this.raiseTelemetry('mark', optionId, 'click')
-    if (this.viewState === 'answer') {
+    if (typeof (optionId) === 'string') {
+      this.raiseTelemetry('mark', optionId, 'click')
+    } if (this.viewState === 'answer') {
       if (this.questionsReference) {
         this.questionsReference.forEach(questionReference => {
           questionReference.reset()

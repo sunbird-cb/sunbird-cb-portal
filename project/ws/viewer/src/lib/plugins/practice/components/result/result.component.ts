@@ -3,11 +3,11 @@ import { NsContent } from '@sunbird-cb/utils/src/public-api'
 import { NSPractice } from '../../practice.model'
 
 @Component({
-  selector: 'viewer-overview',
-  templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.scss'],
+  selector: 'viewer-result',
+  templateUrl: './result.component.html',
+  styleUrls: ['./result.component.scss'],
 })
-export class OverviewComponent implements OnInit {
+export class ResultComponent implements OnInit {
   @Input() learningObjective = ''
   @Input() complexityLevel = ''
   @Input() primaryCategory = NsContent.EPrimaryCategory.PRACTICE_RESOURCE
@@ -16,8 +16,7 @@ export class OverviewComponent implements OnInit {
   @Input() noOfQuestions = 0
   @Output() userSelection = new EventEmitter<NSPractice.TUserSelectionType>()
   questionTYP = NsContent.EPrimaryCategory
-  staticImage = '/assets/images/exam/practice-test.png'
-  loading = false
+  staticImage = '/assets/images/exam/practice-result.png'
   points = [
     { icon: 'info', text: 'No negative mark' },
     { icon: 'info', text: 'Assessment will have no time duration' },
@@ -29,7 +28,6 @@ export class OverviewComponent implements OnInit {
   }
 
   overviewed(event: NSPractice.TUserSelectionType) {
-    this.loading = true
     this.userSelection.emit(event)
   }
 }

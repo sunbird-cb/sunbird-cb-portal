@@ -8,7 +8,7 @@
           {{ total }}
         </h3>
       </div>
-      {{question?.options?.length}}=========
+      <!-- {{question?.options?.length}}========= -->
       <div class="flex flex-1">
         <h2 *ngIf="question.questionType !== 'ftb'" class="mat-h2" [innerHTML]="question?.question"
           class="quiz-question">
@@ -59,12 +59,10 @@
           (viewState === 'answer' && option?.isCorrect),
         'incorrect-answer': viewState === 'review' && !option?.isCorrect && isSelected(option)
       }" *ngFor="let option of question?.options">
-            <mat-list-option #lo checkboxPosition="before" class="margin-top-s"
-            [ngClass]="{
+            <mat-list-option #lo checkboxPosition="before" class="margin-top-s" [ngClass]="{
               'ws-mat-accent-border': !(lo.selected),
               'ws-mat-accent-border-active ': (lo.selected)
-            }"
-              (click)="itemSelected.emit(option.optionId)">
+            }" (click)="itemSelected.emit(option.optionId)">
               <mat-error *ngIf="viewState === 'review' && !option?.isCorrect && isSelected(option)">
                 {{ option?.text }}
               </mat-error>
@@ -144,19 +142,19 @@
           </div>
         </mat-radio-group>
 
-        <div *ngIf="question.questionType === 'mtf'">
-          <div (scroll)="repaintEveryThing()" (resize)="repaintEveryThing()">
-            <div style="height:auto">
-              <div style="display: flex;flex-direction: column;" [id]="question.questionId">
+        <div class="flex flex-1" *ngIf="question.questionType === 'mtf'">
+          <div class="flex flex-1" (scroll)="repaintEveryThing()" (resize)="repaintEveryThing()">
+            <div style="height:auto" class="flex flex-1">
+              <div class="flex flex-1 flex-column" [id]="question.questionId">
                 <div *ngFor="let option of question.options; let i = index">
                   <div style="display: flex;justify-content: space-around;flex-wrap: wrap;  height:auto;">
                     <div [class]="'question' + question.questionId + ' question'"
                       [id]="'c1' + question.questionId + (i + 1)">
-                      {{ option.text }}
+                      <span class="mat-body-2"> {{ option.text }}</span>
                     </div>
                     <div [class]="'answer' + question.questionId + ' answer'"
                       [id]="'c2' + question.questionId + (i + 1)">
-                      {{ option.matchForView }}
+                      <span class="mat-body-2">{{ option.matchForView }}</span>
                     </div>
                   </div>
                   <br />
