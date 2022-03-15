@@ -15,7 +15,7 @@ import {
   IChipItems,
   IGovtOrgMeta,
   IIndustriesMeta,
-  IProfileAcademics,
+  // IProfileAcademics,
   INation,
   IdegreesMeta,
   IdesignationsMeta,
@@ -105,6 +105,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   allDept: any = []
   approvalConfig!: NsUserProfileDetails.IApprovals
   unApprovedField!: any[]
+  changedProperties: any = {}
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -784,260 +785,371 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     academics.postDegree.map((degree: any) => { this.addPostDegreeValues(degree as FormArray) })
   }
 
-  private constructReq(form: any) {
-    const arrCompetencies = this.configSvc.unMappedUser.profileDetails ? this.configSvc.unMappedUser.profileDetails.competencies : []
-    const userid = this.userProfileData.userId || this.userProfileData.id
-    const profileReq = {
-      id: userid,
-      userId: userid,
-      photo: form.value.photo,
-      personalDetails: {
-        firstname: form.value.firstname,
-        middlename: form.value.middlename,
-        surname: form.value.surname,
-        dob: form.value.dob,
-        nationality: form.value.nationality,
-        domicileMedium: form.value.domicileMedium,
-        gender: form.value.gender,
-        maritalStatus: form.value.maritalStatus,
-        category: form.value.category,
-        knownLanguages: form.value.knownLanguages,
-        countryCode: form.value.countryCode,
-        mobile: form.value.mobile,
-        telephone: `${form.value.telephone}` || '',
-        primaryEmail: form.value.primaryEmail,
-        officialEmail: '',
-        personalEmail: '',
-        postalAddress: form.value.residenceAddress,
-        pincode: form.value.pincode,
-      },
-      academics: this.getAcademics(form),
-      competencies: arrCompetencies,
-      employmentDetails: {
-        service: form.value.service,
-        cadre: form.value.cadre,
-        allotmentYearOfService: form.value.allotmentYear,
-        dojOfService: form.value.otherDetailsDoj,
-        payType: form.value.payType,
-        civilListNo: form.value.civilListNo,
-        employeeCode: form.value.employeeCode,
-        officialPostalAddress: form.value.otherDetailsOfficeAddress,
-        pinCode: form.value.otherDetailsOfficePinCode,
-        departmentName: form.value.orgName || form.value.orgNameOther || '',
-      },
-      professionalDetails: [
-        ...this.getOrganisationsHistory(form),
-      ],
-      skills: {
-        additionalSkills: form.value.skillAquiredDesc,
-        certificateDetails: form.value.certificationDesc,
-      },
-      interests: {
-        professional: form.value.interests,
-        hobbies: form.value.hobbies,
-      },
-    }
-    if (form.value.primaryEmailType === this.ePrimaryEmailType.OFFICIAL) {
-      profileReq.personalDetails.officialEmail = form.value.primaryEmail
-    } else {
-      profileReq.personalDetails.officialEmail = ''
-    }
-    profileReq.personalDetails.personalEmail = form.value.secondaryEmail
+  // private constructReq(form: any) {
+  //   const arrCompetencies = this.configSvc.unMappedUser.profileDetails ? this.configSvc.unMappedUser.profileDetails.competencies : []
+  //   const userid = this.userProfileData.userId || this.userProfileData.id
+  //   const profileReq = {
+  //     id: userid,
+  //     userId: userid,
+  //     photo: form.value.photo,
+  //     personalDetails: {
+  //       firstname: form.value.firstname,
+  //       middlename: form.value.middlename,
+  //       surname: form.value.surname,
+  //       dob: form.value.dob,
+  //       nationality: form.value.nationality,
+  //       domicileMedium: form.value.domicileMedium,
+  //       gender: form.value.gender,
+  //       maritalStatus: form.value.maritalStatus,
+  //       category: form.value.category,
+  //       knownLanguages: form.value.knownLanguages,
+  //       countryCode: form.value.countryCode,
+  //       mobile: form.value.mobile,
+  //       telephone: `${form.value.telephone}` || '',
+  //       primaryEmail: form.value.primaryEmail,
+  //       officialEmail: '',
+  //       personalEmail: '',
+  //       postalAddress: form.value.residenceAddress,
+  //       pincode: form.value.pincode,
+  //     },
+  //     academics: this.getAcademics(form),
+  //     competencies: arrCompetencies,
+  //     employmentDetails: {
+  //       service: form.value.service,
+  //       cadre: form.value.cadre,
+  //       allotmentYearOfService: form.value.allotmentYear,
+  //       dojOfService: form.value.otherDetailsDoj,
+  //       payType: form.value.payType,
+  //       civilListNo: form.value.civilListNo,
+  //       employeeCode: form.value.employeeCode,
+  //       officialPostalAddress: form.value.otherDetailsOfficeAddress,
+  //       pinCode: form.value.otherDetailsOfficePinCode,
+  //       departmentName: form.value.orgName || form.value.orgNameOther || '',
+  //     },
+  //     professionalDetails: [
+  //       ...this.getOrganisationsHistory(form),
+  //     ],
+  //     skills: {
+  //       additionalSkills: form.value.skillAquiredDesc,
+  //       certificateDetails: form.value.certificationDesc,
+  //     },
+  //     interests: {
+  //       professional: form.value.interests,
+  //       hobbies: form.value.hobbies,
+  //     },
+  //   }
+  //   if (form.value.primaryEmailType === this.ePrimaryEmailType.OFFICIAL) {
+  //     profileReq.personalDetails.officialEmail = form.value.primaryEmail
+  //   } else {
+  //     profileReq.personalDetails.officialEmail = ''
+  //   }
+  //   profileReq.personalDetails.personalEmail = form.value.secondaryEmail
 
-    let approvalData
-    _.forOwn(this.approvalConfig, (v, k) => {
-      if (!v.approvalRequired) {
-        _.set(profileReq, k, this.getDataforK(k, form))
-      } else {
-        _.set(profileReq, k, this.getDataforKRemove(k, v.approvalFiels, form))
-        approvalData = this.getDataforKAdd(k, v.approvalFiels, form)
+  //   let approvalData
+  //   _.forOwn(this.approvalConfig, (v, k) => {
+  //     if (!v.approvalRequired) {
+  //       _.set(profileReq, k, this.getDataforK(k, form))
+  //     } else {
+  //       _.set(profileReq, k, this.getDataforKRemove(k, v.approvalFiels, form))
+  //       approvalData = this.getDataforKAdd(k, v.approvalFiels, form)
+  //     }
+  //   })
+  //   return { profileReq, approvalData }
+  // }
+
+  // private getDataforK(k: string, form: any) {
+  //   switch (k) {
+  //     case 'personalDetails':
+  //       let officeEmail = ''
+  //       let personalEmail = ''
+  //       if (form.value.primaryEmailType === this.ePrimaryEmailType.OFFICIAL) {
+  //         officeEmail = form.value.primaryEmail
+  //       } else {
+  //         officeEmail = ''
+  //       }
+  //       personalEmail = form.value.secondaryEmail
+  //       return {
+  //         personalEmail,
+  //         firstname: form.value.firstname,
+  //         middlename: form.value.middlename,
+  //         surname: form.value.surname,
+  //         dob: form.value.dob,
+  //         nationality: form.value.nationality,
+  //         domicileMedium: form.value.domicileMedium,
+  //         gender: form.value.gender,
+  //         maritalStatus: form.value.maritalStatus,
+  //         category: form.value.category,
+  //         knownLanguages: form.value.knownLanguages,
+  //         countryCode: form.value.countryCode,
+  //         mobile: form.value.mobile,
+  //         telephone: `${form.value.telephone}` || '',
+  //         primaryEmail: form.value.primaryEmail,
+  //         officialEmail: officeEmail,
+  //         postalAddress: form.value.residenceAddress,
+  //         pincode: form.value.pincode,
+  //         osid: _.get(this.userProfileData, 'personalDetails.osid') || undefined,
+  //       }
+  //     case 'academics':
+  //       return this.getAcademics(form)
+  //     case 'competencies':
+  //       return this.configSvc.unMappedUser.profileDetails.competencies
+  //     case 'employmentDetails':
+  //       return {
+  //         service: form.value.service,
+  //         cadre: form.value.cadre,
+  //         allotmentYearOfService: form.value.allotmentYear,
+  //         dojOfService: form.value.otherDetailsDoj || undefined,
+  //         payType: form.value.payType,
+  //         civilListNo: form.value.civilListNo,
+  //         employeeCode: form.value.employeeCode,
+  //         officialPostalAddress: form.value.otherDetailsOfficeAddress,
+  //         pinCode: form.value.otherDetailsOfficePinCode,
+  //         departmentName: form.value.orgName || form.value.orgNameOther || '',
+  //         osid: _.get(this.userProfileData, 'employmentDetails.osid') || undefined,
+  //       }
+  //     case 'professionalDetails':
+  //       return [
+  //         ...this.getOrganisationsHistory(form),
+  //       ]
+  //     case 'skills':
+  //       return {
+  //         additionalSkills: form.value.skillAquiredDesc,
+  //         certificateDetails: form.value.certificationDesc,
+  //       }
+  //     case 'interests':
+  //       return {
+  //         professional: form.value.interests,
+  //         hobbies: form.value.hobbies,
+  //       }
+  //     default:
+  //       return undefined
+  //   }
+  // }
+  // private getDataforKRemove(k: string, fields: string[], form: any) {
+  //   const datak = this.getDataforK(k, form)
+  //   _.each(datak, (dk, idx) => {
+  //     for (let i = 0; i <= fields.length && dk; i += 1) {
+  //       const oldVal = _.get(this.userProfileData, `${k}[${idx}].${fields[i]}`)
+  //       const newVal = _.get(dk, `${fields[i]}`)
+  //       if (oldVal !== newVal) {
+  //         _.set(dk, fields[i], oldVal)
+  //       }
+  //     }
+  //   })
+  //   return datak
+  // }
+  // private getDataforKAdd(k: string, fields: string[], form: any) {
+  //   const datak = this.getDataforK(k, form)
+  //   const lst: any = []
+  //   _.each(datak, (dk, idx) => {
+  //     for (let i = 0; i <= fields.length && dk; i += 1) {
+  //       const oldVal = _.get(this.userProfileData, `${k}[${idx}].${fields[i]}`)
+  //       const newVal = _.get(dk, `${fields[i]}`)
+  //       if ((oldVal !== newVal) && dk && _.get(dk, fields[i]) && typeof (_.get(dk, fields[i])) !== 'object') {
+  //         lst.push({
+  //           fieldKey: k,
+  //           fromValue: { [fields[i]]: oldVal || '' },
+  //           toValue: { [fields[i]]: newVal || '' },
+  //           osid: _.get(this.userProfileData, `${k}[${idx}].osid`),
+  //         })
+  //       }
+  //     }
+  //   })
+  //   return lst
+  // }
+
+  // private getOrganisationsHistory(form: any) {
+  //   const organisations: any = []
+  //   const org = {
+  //     organisationType: '',
+  //     name: form.value.orgName,
+  //     nameOther: form.value.orgNameOther,
+  //     industry: form.value.industry,
+  //     industryOther: form.value.industryOther,
+  //     designation: form.value.designation,
+  //     designationOther: form.value.designationOther,
+  //     location: form.value.location,
+  //     responsibilities: '',
+  //     doj: form.value.doj,
+  //     description: form.value.orgDesc,
+  //     completePostalAddress: '',
+  //     additionalAttributes: {},
+  //     osid: _.get(this.userProfileData, 'professionalDetails[0].osid') || undefined,
+  //   }
+  //   if (form.value.isGovtOrg) {
+  //     org.organisationType = 'Government'
+  //   } else {
+  //     org.organisationType = 'Non-Government'
+  //   }
+  //   organisations.push(org)
+  //   return organisations
+  // }
+
+  // private getAcademics(form: any) {
+  //   const academics = []
+  //   academics.push(this.getClass10(form))
+  //   academics.push(this.getClass12(form))
+  //   academics.push(...this.getDegree(form, 'GRADUATE'))
+  //   academics.push(...this.getPostDegree(form, 'POSTGRADUATE'))
+  //   return academics
+  // }
+
+  // getClass10(form: any): IProfileAcademics {
+  //   return ({
+  //     nameOfQualification: '',
+  //     type: 'X_STANDARD',
+  //     nameOfInstitute: form.value.schoolName10,
+  //     yearOfPassing: `${form.value.yop10}`,
+  //   })
+  // }
+
+  // getClass12(form: any): IProfileAcademics {
+  //   return ({
+  //     nameOfQualification: '',
+  //     type: 'XII_STANDARD',
+  //     nameOfInstitute: form.value.schoolName12,
+  //     yearOfPassing: `${form.value.yop12}`,
+  //   })
+  // }
+
+  // getDegree(form: any, degreeType: string): IProfileAcademics[] {
+  //   const formatedDegrees: IProfileAcademics[] = []
+  //   form.value.degrees.map((degree: any) => {
+  //     formatedDegrees.push({
+  //       nameOfQualification: degree.degree,
+  //       type: degreeType,
+  //       nameOfInstitute: degree.instituteName,
+  //       yearOfPassing: `${degree.yop}`,
+  //     })
+  //   })
+  //   return formatedDegrees
+  // }
+
+  // getPostDegree(form: any, degreeType: string): IProfileAcademics[] {
+  //   const formatedDegrees: IProfileAcademics[] = []
+  //   form.value.postDegrees.map((degree: any) => {
+  //     formatedDegrees.push({
+  //       nameOfQualification: degree.degree,
+  //       type: degreeType,
+  //       nameOfInstitute: degree.instituteName,
+  //       yearOfPassing: `${degree.yop}`,
+  //     })
+  //   })
+  //   return formatedDegrees
+  // }
+
+  getEditedValues(form: any) {
+
+    const personalDetail: any = {}
+    const personalDetailsFields = ['firstname', 'middlename', 'surname',
+      'dob', 'nationality', 'domicileMedium', 'gender', 'maritalStatus',
+      'category', 'knownLanguages', 'countryCode', 'mobile', 'telephone',
+      'primaryEmail', 'officialEmail', 'personalEmail', 'postalAddress',
+      'pincode']
+    const skillsFields = ['skillAquiredDesc', 'certificationDesc']
+    const skills: any = {}
+    const interestsFields = ['interests', 'hobbies']
+    const interests: any = {}
+    const employmentDetails: any = {}
+    const employmentDetailsFields = ['service', 'cadre', 'allotmentYear',
+      'otherDetailsDoj', 'payType', 'civilListNo', 'employeeCode',
+      'otherDetailsOfficeAddress', 'otherDetailsOfficePinCode', 'orgName', 'orgNameOther',
+    ]
+    const professionalDetailsFields = ['isGovtOrg', 'industry', 'designation', 'location',
+    'doj', 'orgDesc', 'orgNameOther', 'industryOther', 'designationOther', 'locationOther', 'orgName']
+    const professionalDetails: any = []
+    const organisations: any = {}
+    // let academics = {}
+    // let academicsFields = ['schoolName10','yearOfPassing', 'schoolName',
+    //   'yearOfPassing12', 'instituteName','yOP', 'institute', 'yOP1' ]
+    // let ProfessionalDetails = ['govtOrg']
+
+    Object.keys(this.createUserForm.controls).forEach(name => {
+      const currentControl = this.createUserForm.controls[name]
+      if (currentControl.dirty) {
+        personalDetailsFields.forEach(item => {
+          if (item === name) {
+            switch (name) {
+              case 'knownLanguages': return personalDetail['knownLanguages'] = form.value.knownLanguages
+              case 'dob': return personalDetail['dob'] = form.value.dob
+            }
+            personalDetail[name] = currentControl.value
+
+          }
+        })
+        skillsFields.forEach(item => {
+          if (item === name) {
+            if (name === 'skillAquiredDesc') { skills['additionalSkills'] = currentControl.value }
+            if (name === 'certificationDesc') { skills['certificateDetails'] = currentControl.value }
+          }
+        })
+        interestsFields.forEach(item => {
+          if (item === name) {
+            if (name === 'interests') { interests['professional'] = form.value.interests }
+            if (name === 'hobbies') { interests['hobbies'] = form.value.hobbies }
+
+          }
+        })
+        employmentDetailsFields.forEach(item => {
+          if (item === name) {
+            switch (name) {
+              case 'allotmentYear': return employmentDetails['allotmentYearOfService'] = form.value.allotmentYear
+              case 'civilListNo': return employmentDetails['civilListNo'] = form.value.civilListNo
+              case 'employeeCode': return employmentDetails['employeeCode'] = form.value.employeeCode
+              case 'otherDetailsDoj': return employmentDetails['dojOfService'] = form.value.otherDetailsDoj
+              case 'otherDetailsOfficeAddress': return employmentDetails['officialPostalAddress'] = currentControl.value
+              case 'otherDetailsOfficePinCode': return employmentDetails['pinCode'] = form.value.otherDetailsOfficePinCode
+              case 'orgName' || 'orgNameOther': return employmentDetails['departmentName'] = currentControl.value
+              default: return employmentDetails[name] = currentControl.value
+            }
+
+          }
+        })
+        professionalDetailsFields.forEach(item => {
+
+          if (item === name) {
+            // console.log(name)
+            switch (name) {
+              case 'orgName': return organisations['name'] = form.value.orgName
+              case 'orgNameOther': return organisations['nameOther'] = form.value.orgNameOther
+              case 'doj': return organisations['doj'] = form.value.doj
+              case 'orgNameOther': return organisations['nameOther'] = form.value.orgNameOther
+              default: return organisations[name] = currentControl.value
+            }
+          }
+
+        })
+
+        // let obj:any = { }
+        // obj[name] = currentControl.value
+        // this.changedProperties.push(name);
+        // this.changedProperties = Object.assign({name: currentControl.value},   )
+        // this object will have dirty field key and value
+        // this.changedProperties.push(name)
       }
-    })
-    return { profileReq, approvalData }
-  }
 
-  private getDataforK(k: string, form: any) {
-    switch (k) {
-      case 'personalDetails':
-        let officeEmail = ''
-        let personalEmail = ''
-        if (form.value.primaryEmailType === this.ePrimaryEmailType.OFFICIAL) {
-          officeEmail = form.value.primaryEmail
-        } else {
-          officeEmail = ''
-        }
-        personalEmail = form.value.secondaryEmail
-        return {
-          personalEmail,
-          firstname: form.value.firstname,
-          middlename: form.value.middlename,
-          surname: form.value.surname,
-          dob: form.value.dob,
-          nationality: form.value.nationality,
-          domicileMedium: form.value.domicileMedium,
-          gender: form.value.gender,
-          maritalStatus: form.value.maritalStatus,
-          category: form.value.category,
-          knownLanguages: form.value.knownLanguages,
-          countryCode: form.value.countryCode,
-          mobile: form.value.mobile,
-          telephone: `${form.value.telephone}` || '',
-          primaryEmail: form.value.primaryEmail,
-          officialEmail: officeEmail,
-          postalAddress: form.value.residenceAddress,
-          pincode: form.value.pincode,
-          osid: _.get(this.userProfileData, 'personalDetails.osid') || undefined,
-        }
-      case 'academics':
-        return this.getAcademics(form)
-      case 'competencies':
-        return this.configSvc.unMappedUser.profileDetails.competencies
-      case 'employmentDetails':
-        return {
-          service: form.value.service,
-          cadre: form.value.cadre,
-          allotmentYearOfService: form.value.allotmentYear,
-          dojOfService: form.value.otherDetailsDoj || undefined,
-          payType: form.value.payType,
-          civilListNo: form.value.civilListNo,
-          employeeCode: form.value.employeeCode,
-          officialPostalAddress: form.value.otherDetailsOfficeAddress,
-          pinCode: form.value.otherDetailsOfficePinCode,
-          departmentName: form.value.orgName || form.value.orgNameOther || '',
-          osid: _.get(this.userProfileData, 'employmentDetails.osid') || undefined,
-        }
-      case 'professionalDetails':
-        return [
-          ...this.getOrganisationsHistory(form),
-        ]
-      case 'skills':
-        return {
-          additionalSkills: form.value.skillAquiredDesc,
-          certificateDetails: form.value.certificationDesc,
-        }
-      case 'interests':
-        return {
-          professional: form.value.interests,
-          hobbies: form.value.hobbies,
-        }
-      default:
-        return undefined
+    })
+
+    if (Object.keys(organisations).length > 0) { professionalDetails.push(organisations) }
+    // console.log(organisations, professionalDetails);
+
+    this.changedProperties = {
+      profileDetails: {
+        ...(Object.keys(personalDetail).length > 0) && { personalDetails: personalDetail },
+        ...(Object.keys(skills).length > 0) && { skills },
+        ...(Object.keys(interests).length > 0) && { interests },
+        ...(Object.keys(employmentDetails).length > 0) && { employmentDetails },
+        ...(Object.keys(professionalDetails).length > 0) && { professionalDetails },
+
+      },
     }
-  }
-  private getDataforKRemove(k: string, fields: string[], form: any) {
-    const datak = this.getDataforK(k, form)
-    _.each(datak, (dk, idx) => {
-      for (let i = 0; i <= fields.length && dk; i += 1) {
-        const oldVal = _.get(this.userProfileData, `${k}[${idx}].${fields[i]}`)
-        const newVal = _.get(dk, `${fields[i]}`)
-        if (oldVal !== newVal) {
-          _.set(dk, fields[i], oldVal)
-        }
-      }
-    })
-    return datak
-  }
-  private getDataforKAdd(k: string, fields: string[], form: any) {
-    const datak = this.getDataforK(k, form)
-    const lst: any = []
-    _.each(datak, (dk, idx) => {
-      for (let i = 0; i <= fields.length && dk; i += 1) {
-        const oldVal = _.get(this.userProfileData, `${k}[${idx}].${fields[i]}`)
-        const newVal = _.get(dk, `${fields[i]}`)
-        if ((oldVal !== newVal) && dk && _.get(dk, fields[i]) && typeof (_.get(dk, fields[i])) !== 'object') {
-          lst.push({
-            fieldKey: k,
-            fromValue: { [fields[i]]: oldVal || '' },
-            toValue: { [fields[i]]: newVal || '' },
-            osid: _.get(this.userProfileData, `${k}[${idx}].osid`),
-          })
-        }
-      }
-    })
-    return lst
-  }
 
-  private getOrganisationsHistory(form: any) {
-    const organisations: any = []
-    const org = {
-      organisationType: '',
-      name: form.value.orgName,
-      nameOther: form.value.orgNameOther,
-      industry: form.value.industry,
-      industryOther: form.value.industryOther,
-      designation: form.value.designation,
-      designationOther: form.value.designationOther,
-      location: form.value.location,
-      responsibilities: '',
-      doj: form.value.doj,
-      description: form.value.orgDesc,
-      completePostalAddress: '',
-      additionalAttributes: {},
-      osid: _.get(this.userProfileData, 'professionalDetails[0].osid') || undefined,
-    }
-    if (form.value.isGovtOrg) {
-      org.organisationType = 'Government'
-    } else {
-      org.organisationType = 'Non-Government'
-    }
-    organisations.push(org)
-    return organisations
-  }
+    // console.log(this.changedProperties)
 
-  private getAcademics(form: any) {
-    const academics = []
-    academics.push(this.getClass10(form))
-    academics.push(this.getClass12(form))
-    academics.push(...this.getDegree(form, 'GRADUATE'))
-    academics.push(...this.getPostDegree(form, 'POSTGRADUATE'))
-    return academics
-  }
-
-  getClass10(form: any): IProfileAcademics {
-    return ({
-      nameOfQualification: '',
-      type: 'X_STANDARD',
-      nameOfInstitute: form.value.schoolName10,
-      yearOfPassing: `${form.value.yop10}`,
-    })
-  }
-
-  getClass12(form: any): IProfileAcademics {
-    return ({
-      nameOfQualification: '',
-      type: 'XII_STANDARD',
-      nameOfInstitute: form.value.schoolName12,
-      yearOfPassing: `${form.value.yop12}`,
-    })
-  }
-
-  getDegree(form: any, degreeType: string): IProfileAcademics[] {
-    const formatedDegrees: IProfileAcademics[] = []
-    form.value.degrees.map((degree: any) => {
-      formatedDegrees.push({
-        nameOfQualification: degree.degree,
-        type: degreeType,
-        nameOfInstitute: degree.instituteName,
-        yearOfPassing: `${degree.yop}`,
-      })
-    })
-    return formatedDegrees
-  }
-
-  getPostDegree(form: any, degreeType: string): IProfileAcademics[] {
-    const formatedDegrees: IProfileAcademics[] = []
-    form.value.postDegrees.map((degree: any) => {
-      formatedDegrees.push({
-        nameOfQualification: degree.degree,
-        type: degreeType,
-        nameOfInstitute: degree.instituteName,
-        yearOfPassing: `${degree.yop}`,
-      })
-    })
-    return formatedDegrees
   }
 
   async onSubmit(form: any) {
+
     // DO some customization on the input data
     form.value.knownLanguages = this.selectedKnowLangs
     form.value.interests = this.personalInterests
@@ -1055,131 +1167,179 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
 
     this.uploadSaveData = true
-
+    this.getEditedValues(form)
     // Construct the request structure for open saber
-    const profileRequest = this.constructReq(form)
-    let appdata = [] as any
-    appdata = profileRequest.approvalData !== undefined ? profileRequest.approvalData : []
-    const reqUpdate = {
+    // const profileRequest = this.constructReq(form)
+    // let appdata = [] as any
+    // appdata = profileRequest.approvalData !== undefined ? profileRequest.approvalData : []
+    // const reqUpdate = {
+    //   request: {
+    //     userId: this.configSvc.unMappedUser.id,
+    //     profileDetails: profileRequest.profileReq,
+    //   },
+    // }
+
+    const reqUpdates = {
       request: {
         userId: this.configSvc.unMappedUser.id,
-        profileDetails: profileRequest.profileReq,
+        ...this.changedProperties,
       },
     }
-    this.userProfileSvc.updateProfileDetails(reqUpdate).subscribe(
-      () => {
-        if (appdata !== undefined && appdata.length > 0) {
-          if (this.configSvc.userProfile) {
-            this.userProfileSvc.getUserdetailsFromRegistry(this.configSvc.unMappedUser.id).subscribe(
-              (data: any) => {
-                const dat = data.profileDetails
-                if (dat) {
-                  const academics = this.populateAcademics(dat.academics)
-                  this.setDegreeValuesArray(academics)
-                  this.setPostDegreeValuesArray(academics)
-                  // const organisations = this.populateOrganisationDetails(data[0])
-                  // this.constructFormFromRegistry(data[0], academics, organisations)
-                  this.populateChips(dat)
-                  this.userProfileData = dat
-                  let deptNameValue = ''
-                  if (this.userProfileData && this.userProfileData.professionalDetails
-                    && this.userProfileData.professionalDetails.length > 0) {
-                    deptNameValue = form.value.orgName || form.value.orgNameOther || ''
-                  }
-                  const profDetails = {
-                    state: 'INITIATE',
-                    action: 'INITIATE',
-                    userId: this.userProfileData.userId,
-                    applicationId: this.userProfileData.userId,
-                    actorUserId: this.userProfileData.userId,
-                    serviceName: 'profile',
-                    comment: '',
-                    wfId: '',
-                    deptName: deptNameValue,
-                    updateFieldValues: profileRequest.approvalData,
-                  }
-                  if (deptNameValue && (profDetails.updateFieldValues || []).length > 0) {
-                    this.userProfileSvc.approveRequest(profDetails).subscribe(() => {
-                      form.reset()
-                      this.uploadSaveData = false
-                      this.configSvc.profileDetailsStatus = true
-                      this.openSnackbar(this.toastSuccess.nativeElement.value)
-                      if (!this.isForcedUpdate && this.userProfileData) {
-                        this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
-                      } else {
-                        setTimeout(() => {
-                          // do nothing
-                          // tslint:disable-next-line
-                        }, 1000)
-                        this.router.navigate(['page', 'home'])
-                      }
-                    }
-                      ,
-                      // tslint:disable-next-line:align
-                      () => {
-                        this.openSnackbar(this.toastError.nativeElement.value)
-                        this.uploadSaveData = false
-                      })
-                  } else {
-                    this.uploadSaveData = false
-                    this.configSvc.profileDetailsStatus = true
-                    this.openSnackbar(this.toastSuccess.nativeElement.value)
-                    if (!this.isForcedUpdate && this.userProfileData) {
-                      // const organisations = this.populateOrganisationDetails(data[0])
-                      // this.constructFormFromRegistry(data[0], academics, organisations)
-                      this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
-                    } else {
-                      setTimeout(() => {
-                        // do nothing
-                        // tslint:disable-next-line
-                      }, 1000)
-                      this.router.navigate(['page', 'home'])
-                    }
-                  }
-                } else {
-                  form.reset()
-                  this.uploadSaveData = false
-                  this.configSvc.profileDetailsStatus = true
-                  this.openSnackbar(this.toastSuccess.nativeElement.value)
-                  if (!this.isForcedUpdate && this.userProfileData) {
-                    this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
-                  } else {
-                    setTimeout(() => {
-                      // do nothing
-                      // tslint:disable-next-line
-                    }, 1000)
-                    this.router.navigate(['page', 'home'])
-                  }
-                }
-                // this.handleFormData(data[0])
-              },
-              (_err: any) => {
-                if (_err) {
-                  window.location.reload()
-                }
-              })
-          }
-        } else {
-          form.reset()
-          this.uploadSaveData = false
-          this.configSvc.profileDetailsStatus = true
-          this.openSnackbar(this.toastSuccess.nativeElement.value)
-          if (!this.isForcedUpdate && this.userProfileData) {
-            this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+
+    // console.log(reqUpdates, reqUpdate)
+    this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(res => {
+
+        if (res.params.status === 'success') {
+         if ('professionalDetails' in reqUpdates.request.profileDetails) {
+            if ('personalDetails' in reqUpdates.request.profileDetails ||
+              'employmentDetails' in reqUpdates.request.profileDetails ||
+              'interests' in reqUpdates.request.profileDetails ||
+              'skills' in reqUpdates.request.profileDetails) {
+              if (res.result.personalDetails.status === 'success' && res.result.transitionDetails.status === 'success') {
+                this.openSnackbar(this.toastSuccess.nativeElement.value)
+                this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+              }
+            } else {
+              if (res.result.transitionDetails.status === 'success') {
+                this.openSnackbar(this.toastSuccess.nativeElement.value)
+                this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+              }
+
+            }
           } else {
-            setTimeout(() => {
-              // do nothing
-              // tslint:disable-next-line
-            }, 1000)
-            this.router.navigate(['page', 'home'])
+            if ('personalDetails' in reqUpdates.request.profileDetails ||
+              'employmentDetails' in reqUpdates.request.profileDetails ||
+              'interests' in reqUpdates.request.profileDetails ||
+              'skills' in reqUpdates.request.profileDetails) {
+              if (res.result.personalDetails.status === 'success') {
+                this.openSnackbar(this.toastSuccess.nativeElement.value)
+                this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+              }
+            } else {
+              this.openSnackbar(this.toastError.nativeElement.value)
+            }
           }
+
+        } else {
+          this.openSnackbar(this.toastError.nativeElement.value)
         }
       }
-      ,
-      () => {
-        this.openSnackbar(this.toastError.nativeElement.value)
-        this.uploadSaveData = false
-      })
+
+    )
+    // this.userProfileSvc.updateProfileDetails(reqUpdate).subscribe(
+    //   () => {
+    //     if (appdata !== undefined && appdata.length > 0) {
+    //       if (this.configSvc.userProfile) {
+    //         this.userProfileSvc.getUserdetailsFromRegistry(this.configSvc.unMappedUser.id).subscribe(
+    //           (data: any) => {
+    //             const dat = data.profileDetails
+    //             if (dat) {
+    //               const academics = this.populateAcademics(dat.academics)
+    //               this.setDegreeValuesArray(academics)
+    //               this.setPostDegreeValuesArray(academics)
+    //               // const organisations = this.populateOrganisationDetails(data[0])
+    //               // this.constructFormFromRegistry(data[0], academics, organisations)
+    //               this.populateChips(dat)
+    //               this.userProfileData = dat
+    //               let deptNameValue = ''
+    //               if (this.userProfileData && this.userProfileData.professionalDetails
+    //                 && this.userProfileData.professionalDetails.length > 0) {
+    //                 deptNameValue = form.value.orgName || form.value.orgNameOther || ''
+    //               }
+    //               const profDetails = {
+    //                 state: 'INITIATE',
+    //                 action: 'INITIATE',
+    //                 userId: this.userProfileData.userId,
+    //                 applicationId: this.userProfileData.userId,
+    //                 actorUserId: this.userProfileData.userId,
+    //                 serviceName: 'profile',
+    //                 comment: '',
+    //                 wfId: '',
+    //                 deptName: deptNameValue,
+    //                 updateFieldValues: profileRequest.approvalData,
+    //               }
+    //               if (deptNameValue && (profDetails.updateFieldValues || []).length > 0) {
+    //                 this.userProfileSvc.approveRequest(profDetails).subscribe(() => {
+    //                   form.reset()
+    //                   this.uploadSaveData = false
+    //                   this.configSvc.profileDetailsStatus = true
+    //                   this.openSnackbar(this.toastSuccess.nativeElement.value)
+    //                   if (!this.isForcedUpdate && this.userProfileData) {
+    //                     this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+    //                   } else {
+    //                     setTimeout(() => {
+    //                       // do nothing
+    //                       // tslint:disable-next-line
+    //                     }, 1000)
+    //                     this.router.navigate(['page', 'home'])
+    //                   }
+    //                 }
+    //                   ,
+    //                   // tslint:disable-next-line:align
+    //                   () => {
+    //                     this.openSnackbar(this.toastError.nativeElement.value)
+    //                     this.uploadSaveData = false
+    //                   })
+    //               } else {
+    //                 this.uploadSaveData = false
+    //                 this.configSvc.profileDetailsStatus = true
+    //                 this.openSnackbar(this.toastSuccess.nativeElement.value)
+    //                 if (!this.isForcedUpdate && this.userProfileData) {
+    //                   // const organisations = this.populateOrganisationDetails(data[0])
+    //                   // this.constructFormFromRegistry(data[0], academics, organisations)
+    //                   this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+    //                 } else {
+    //                   setTimeout(() => {
+    //                     // do nothing
+    //                     // tslint:disable-next-line
+    //                   }, 1000)
+    //                   this.router.navigate(['page', 'home'])
+    //                 }
+    //               }
+    //             } else {
+    //               form.reset()
+    //               this.uploadSaveData = false
+    //               this.configSvc.profileDetailsStatus = true
+    //               this.openSnackbar(this.toastSuccess.nativeElement.value)
+    //               if (!this.isForcedUpdate && this.userProfileData) {
+    //                 this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+    //               } else {
+    //                 setTimeout(() => {
+    //                   // do nothing
+    //                   // tslint:disable-next-line
+    //                 }, 1000)
+    //                 this.router.navigate(['page', 'home'])
+    //               }
+    //             }
+    //             // this.handleFormData(data[0])
+    //           },
+    //           (_err: any) => {
+    //             if (_err) {
+    //               window.location.reload()
+    //             }
+    //           })
+    //       }
+    //     } else {
+    //       form.reset()
+    //       this.uploadSaveData = false
+    //       this.configSvc.profileDetailsStatus = true
+    //       this.openSnackbar(this.toastSuccess.nativeElement.value)
+    //       if (!this.isForcedUpdate && this.userProfileData) {
+    //         this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+    //       } else {
+    //         setTimeout(() => {
+    //           // do nothing
+    //           // tslint:disable-next-line
+    //         }, 1000)
+    //         this.router.navigate(['page', 'home'])
+    //       }
+    //     }
+    //   }
+    //   ,
+    //   () => {
+    //     this.openSnackbar(this.toastError.nativeElement.value)
+    //     this.uploadSaveData = false
+    //   })
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {

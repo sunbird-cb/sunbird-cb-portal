@@ -260,20 +260,20 @@
                     </div>
                 </div>
             </section>
-            <section id="authors" *ngIf="(content?.creatorDetails && content?.creatorDetails.length > 0) ||
+            <section id="authors" *ngIf="(content?.creatorDetails && content?.creatorDetails.length > 0) || (content?.creatorContacts && content?.creatorContacts.length > 0)  ||
                 (cohortResults[cohortTypesEnum.AUTHORS] && cohortResults[cohortTypesEnum.AUTHORS].length > 0)">
                 <div class="fluid-width contacts-container">
                     <div class="fixed-width flex flex-col flex-wrap">
                         <h2 _ngcontent-qml-c28="" class="mat-toolbar contacts-head">Authors and curators</h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 col-gap-4">
                             <!-- authors -->
-                            <div *ngFor="let author of parseJsonData(content?.creatorDetails)"
+                            <div *ngFor="let author of parseJsonData(content?.creatorDetails || content?.creatorContacts)"
                                 class="unit-cohort sm:pr-8 md:pr-10">
                                 <!-- <ws-widget-user-image class="user-image" [imageType]="'user-photo'" [userName]="author.name || ''"
                                     [email]="author.email" [imageUrl]="author.photo || ''"></ws-widget-user-image> -->
                                 <ws-widget-avatar-photo class="float-left margin-right-s" [randomColor]="true"
-                                    [datalen]="parseJsonData(content?.creatorDetails).length" [size]="'m'"
-                                    [photoUrl]="author.photo || ''" [name]="author.name" size="l-xs">
+                                    [datalen]="parseJsonData(content?.creatorDetails || content?.creatorContacts).length"
+                                    [size]="'m'" [photoUrl]="author.photo || ''" [name]="author.name" size="l-xs">
                                 </ws-widget-avatar-photo>
                                 <div class="margin-left-xl">
                                     <div class="user-name">{{ author.name }}</div>
@@ -299,7 +299,8 @@
                     </div>
                 </div>
             </section>
-            <section id="competencies" *ngIf="content?.competencies && competencies.length">
+            <section id="competencies"
+                *ngIf="(content?.competencies_v3 && competencies.length) || (content?.competencies && competencies.length)">
                 <div class="fluid-width contacts-container mb-10">
                     <div class="fixed-width flex flex-col flex-wrap">
                         <h2 class="mat-toolbar contacts-head">Competencies</h2>
@@ -315,6 +316,126 @@
                                 <td class="padding-xs mat-body-1">{{comp.competencyType}}</td>
                             </tr>
                         </table>
+                    </div>
+                </div>
+            </section>
+            <section id="rating" *ngIf="true">
+                <div class="fluid-width contacts-container mb-10">
+                    <div class="fixed-width flex flex-col flex-wrap">
+                        <h2 class="mat-toolbar contacts-head">Ratings and reviews</h2>
+                    </div>
+                    <div class="flex-col items-center rating margin-bottom-l">
+                        <div class="flex items-center ">
+                            <mat-icon class="mr-2 mat-icon material-icons rating-icon ws-mat-black16-text"
+                                [ngClass]="{'ws-mat-orange-text': getRatingIconClass(rating, ratingSummaryProcessed?.avgRating)}"
+                                *ngFor="let rating of [1, 2, 3, 4, 5]">
+                                {{ getRatingIcon(rating, ratingSummaryProcessed?.avgRating) }}</mat-icon>
+                            <!--  <span i18n>from</span> -->
+                            <span class="margin-left-s rating-number mat-body-1"> {{ratingSummaryProcessed?.avgRating}} out of 5 </span>
+                        </div>
+                        <div class="margin-top-s mat-body-1 ws-mat-black60-text">
+                            {{ ratingSummaryProcessed?.total_number_of_ratings | pipeCountTransform }} ratings</div>
+                    </div>
+                    <div class="flex items-center margin-bottom-xs" *ngFor="let rating of ratingSummaryProcessed?.breakDown">
+                        <div class="mat-body-2 bold-imp margin-right-m">{{rating.key}} star</div>
+                        <div class="flex items-center rating-progress">
+                            <mat-progress-bar [mode]="'determinate'" [matTooltip]="rating?.percent + ' %'"
+                                [value]="rating?.percent" class="rating-bar"
+                                [attr.aria-labelledby]="'m-c-'+ contentId"
+                                [ngClass]="{ 'visibility-0': rating === undefined, 'thick': className}"
+                                i18n-aria-label>
+                                {{rating?.percent}} %
+                            </mat-progress-bar>
+                        </div>
+                    </div>
+
+                    <div class="search">
+                        <form [formGroup]="searchForm">
+                            <div class="flex top_search_box">
+                                <div class="flex-1 search_box_inner">
+                                    <div class="flex flex-1 flex-column margin-fix search search_box_main">
+                                        <mat-form-field appearance="outline"
+                                            class="autocomplete-form search_form margin-right-s" color="primary">
+                                            <mat-icon matPrefix
+                                                class="search-home flex items-center justify-center mr-2">search
+                                            </mat-icon>
+                                            <!-- <mat-label>Search</mat-label> -->
+                                            <input type="search" name="searchKey" #searchKey class="ml-2" i18-aria-label
+                                                aria-label="Search" formControlName="searchKey"
+                                                i18n-placeholder="search" [placeholder]="'Search'" matInput />
+                                            <!-- (input)="updateQuery(searchKey.value)" -->
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="item_dropdown_box">
+                                    <div class="flex flex-1 flex-wrap section-input">
+                                        <div class="item">
+
+                                            <mat-form-field class="" appearance="outline">
+                                                <mat-select #sortBySelect formControlName="sortByControl"
+                                                    i18n-placeholder placeholder="Sort by">
+                                                    <mat-option [value]="'Ascending'" slected>Ascending ( A - Z )
+                                                    </mat-option>
+                                                    <mat-option [value]="'Descending'">Descending ( Z - A )</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="rating-comments">
+                        <ng-container *ngFor="let c of ratingSummaryProcessed?.latest50reviews| 
+                        pipeFilterV3:{ 'user_id': searchKey.value, 'review': searchKey.value } : false |
+                        slice:0:ratingViewCount; let i= index; let last = last">
+                            <mat-card class="comments-card margin-bottom-m position-relative mat-card">
+                                <a href="javascript:void(0)" role="button">
+                                    <mat-card-content>
+                                        <div class="card_inner_content flex">
+                                            <div class="margin-right-m">
+                                                <ws-widget-avatar-photo [name]="c.user_id" [size]="'m'"
+                                                    [photoUrl]=""></ws-widget-avatar-photo>
+                                            </div>
+    
+                                            <div class="flex-col align-left">
+                                                <div class="name margin-bottom-xs">{{c.user_id}}</div>
+                                                <div class="flex items-center ">
+                                                    <span class="margin-right-xs ws-mat-orange-text mat-body-1"> {{c.rating}} </span>
+                                                    <mat-icon
+                                                        class="comments-rating mr-1 mat-icon material-icons ws-mat-black16-text"
+                                                        [ngClass]="{'ws-mat-orange-text': getRatingIconClass(rating, c.rating )}"
+                                                        *ngFor="let rating of [1, 2, 3, 4, 5]">
+                                                        {{ getRatingIcon(rating, c.rating) }}</mat-icon>
+                                                    <!--  <span i18n>from</span> -->
+                                                    <span class="margin-left-s  ws-mat-black60-text mat-body-1"> {{c.date | pipeRelativeTime}}
+                                                    </span>
+                                                </div>
+                                                <div class="margin-top-m mat-body-1">
+                                                    {{c.review}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-card-content>
+                                </a>
+                            </mat-card>
+    
+                            <div class="flex items-center justify-center mb-2 mt-8 ws-mat-accent-text view-all" 
+                            *ngIf="ratingSummaryProcessed?.latest50reviews?.length > 3 && ratingViewCount <=3 && i>=2 && last">
+                                <a mat-button class="padding-top-xs padding-bottom-xs w-full " 
+                                (click)="showALLReviews(ratingSummaryProcessed?.latest50reviews?.length)">
+                                    <span i18n>SEE ALL {{ratingSummaryProcessed?.latest50reviews?.length}} REVIEWS</span>
+                                </a>
+                            </div>
+                            <div class="flex items-center justify-center mb-2 mt-8 ws-mat-accent-text view-all" 
+                            *ngIf="ratingSummaryProcessed?.latest50reviews?.length > 3 && ratingViewCount > 3 && i>=2 && last">
+                                <a mat-button class="padding-top-xs padding-bottom-xs w-full " (click)="showALLReviews(3)">
+                                    <span i18n>SEE LESS REVIEWS</span>
+                                </a>
+                            </div>
+                        </ng-container>
                     </div>
                 </div>
             </section>
