@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core'
 import { KnowledgeResourceService } from '../../services/knowledge-resource.service'
 import { NSKnowledgeResource } from '../../models/knowledge-resource.models'
+import { compact } from 'lodash'
 // import {  Router } from '@angular/router';
 
 @Component({
@@ -93,5 +94,21 @@ itemCount(items: NSKnowledgeResource.IUrl[]) {
 //     }
 //   return occurs
 //  }
+
+changeFileType(objectArray: NSKnowledgeResource.IKrFiles[]) {
+  // console.log(fileType)
+  console.log(objectArray + '------------')
+  for (let i = 0; i < objectArray.length; i += 1) {
+    if (objectArray[i]  && objectArray[i].fileType ) {
+        if(objectArray[i].fileType === 'jpg' || objectArray[i].fileType === 'png') {
+          console.log(objectArray[i].fileType + 'file type updated')
+        }
+
+      }
+
+
+    }
+
+}
 
 }

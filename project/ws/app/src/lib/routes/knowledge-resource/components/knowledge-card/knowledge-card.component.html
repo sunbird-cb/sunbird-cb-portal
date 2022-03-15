@@ -29,6 +29,8 @@
             <p class="mat-body-2" i18n > {{item.fileType == 'APP/IMAGE', 'PDF', }} </p>
          </span> -->
          <!-- <p>{{ changeFileType() }}</p> -->
+
+         <p>{{ changeFileType(resource.additionalProperties.krFiles) }}</p>
     </span>
 
     <span class="attach_links" *ngIf="resource.additionalProperties.URL && resource.additionalProperties.URL.length > 0">
