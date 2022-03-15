@@ -34,15 +34,8 @@ export class KnowledgeAllComponent implements OnInit, OnDestroy {
     private kwResources: KnowledgeResourceService,
     private activateRoute: ActivatedRoute
     ) {
-      this.allResources = _.get(this.activateRoute.snapshot, 'data.allResources.data.responseData') || []
 
-      // this.kwResources.getAllResources().subscribe((reponse: NSKnowledgeResource.IResourceResponse) => {
-      //   if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
-      //     this.allResources = reponse.responseData
-      //     console.log('ts file refresh is _--' + this.allResources)
-      //   }
-      // }
-      // )
+      this.allResources = _.get(this.activateRoute.snapshot, 'data.allResources.data.responseData') || []
      }
 
   ngOnInit() {

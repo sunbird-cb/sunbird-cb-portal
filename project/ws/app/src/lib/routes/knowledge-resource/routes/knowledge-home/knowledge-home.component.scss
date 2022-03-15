@@ -76,6 +76,7 @@
 
 .sidenav_inner {
   width: 260px;
+  left: 0;
 }
 
 .main_network_box {
@@ -84,4 +85,8 @@
   @media (max-width:992px) {
     margin-left: 0;
   }
+}
+
+.knowledge_box_full {
+  overflow: hidden;
 }

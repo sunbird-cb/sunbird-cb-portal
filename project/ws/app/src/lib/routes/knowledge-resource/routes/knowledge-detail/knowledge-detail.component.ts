@@ -3,6 +3,7 @@ import { NSKnowledgeResource } from '../../models/knowledge-resource.models'
 import { ActivatedRoute } from '@angular/router'
 import { KnowledgeResourceService } from '../../services/knowledge-resource.service'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
+
 // tslint:disable
 import _ from 'lodash'
 // tslint:enable
@@ -12,13 +13,16 @@ import _ from 'lodash'
   templateUrl: './knowledge-detail.component.html',
   styleUrls: ['./knowledge-detail.component.scss'],
   // tslint:disable-next-line
-  host: { class: 'flex flex-1 knowledge_box_full' },
+  host: { class: 'flex flex-1 overflow-hidden' },
 })
 export class KnowledgeDetailComponent implements OnInit {
   resource!: any
   type = 'KNOWLEDGERESOURCE'
   id = '/'
   searchText = ''
+  fileType!: string
+  acc: any
+  obj: any
 
   constructor(
     private route: ActivatedRoute,
@@ -78,28 +82,39 @@ refresh() {
     })
   }
 
-
   getFormathours(time: number) {
-    var totalHours, totalMinutes, totalSeconds, hours, minutes, seconds, result='';
-    totalSeconds = time / 1000;
-    totalMinutes = totalSeconds / 60;
-    totalHours = totalMinutes / 60;
+    let totalHours
+    let totalMinutes
+    let totalSeconds
+    let hours
+    let minutes
+    let result = ''
+    totalSeconds = time / 1000
+    totalMinutes = totalSeconds / 60
+    totalHours = totalMinutes / 60
 
     // seconds = Math.floor(totalSeconds) % 60;
-    minutes = Math.floor(totalMinutes) % 60;
-    hours = Math.floor(totalHours) % 60;
-
-    console.log (hours + ' : '  + minutes + ' : ' + seconds);
+    minutes = Math.floor(totalMinutes) % 60
+    hours = Math.floor(totalHours) % 60
     if (hours !== 0) {
-        result += hours+' hr';
+        result += `${hours}hr`
 
-        if (minutes.toString().length == 1) {
-            minutes = '0'+minutes;
+        if (minutes.toString().length === 1) {
+            minutes = `0${minutes}`
         }
     }
-
-    result += minutes+' min';
-    return result;
+    result += `${minutes}min`
+    return result
 }
+
+ getNbOccur(fileType: string, objectArray: NSKnowledgeResource.IKrFiles[]) {
+  let occurs = 0
+  for (let i = 0; i < objectArray.length; i += 1) {
+    if (objectArray[i] && objectArray[i].fileType === fileType) {
+        occurs += 1
+      }
+    }
+  return occurs
+ }
 
 }

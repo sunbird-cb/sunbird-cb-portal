@@ -17,7 +17,7 @@ import { NsContent, NsAutoComplete } from '@sunbird-cb/collection/src/public-api
 // tslint:disable-next-line
 import _ from 'lodash'
 import { FormGroup, FormControl } from '@angular/forms'
-import { RatingService } from '../../services/rating.service';
+import { RatingService } from '../../services/rating.service'
 @Component({
   selector: 'ws-app-app-toc-single-page',
   templateUrl: './app-toc-single-page.component.html',
@@ -61,7 +61,9 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   private unsubscribe = new Subject<void>()
   // TODO: TO be removed important
   progress = 50
-  ratingSummary:any
+  ratingSummary: any
+  ratingSummaryProcessed: any
+  ratingViewCount = 3
   // configSvc: any
 
   constructor(
@@ -470,38 +472,179 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
         this.ratingSvc.getRatingSummary(this.content.identifier, this.content.primaryCategory).subscribe(
           (res: any) =>  {
             // console.log('Rating summary res ', res)
-            this.ratingSummary = res.result.response[0]
+            if (res && res.result && res.result.response) {
+              this.ratingSummary = res.result.response[0]
+            }
+
+            // TODO: To be removed
+            this.hardcodeData()
+            this.ratingSummaryProcessed = this.processRatingSummary()
           },
           (err: any) => {
             this.logger.error('USER RATING FETCH ERROR >', err)
+            // TODO: To be removed
+            this.hardcodeData()
+            this.ratingSummaryProcessed = this.processRatingSummary()
           }
         )
     }
   }
 
-  getRatingIcon(ratingIndex: number): 'star' | 'star_border' | 'star_half' {
-    if (this.content && this.content.averageRating) {
-      const avgRating = this.content.averageRating
+  showALLReviews(length: number) {
+    this.ratingViewCount = length
+  }
+
+  processRatingSummary() {
+    const breakDownArray: any[] = []
+    const ratingSummaryPr = {
+      breakDown: breakDownArray,
+      latest50reviews: breakDownArray,
+      ratingsNumber: breakDownArray,
+      total_number_of_ratings: this.ratingSummary.total_number_of_ratings || 0,
+      avgRating: 0,
+    }
+    const totRatings = this.ratingSummary.sum_of_total_ratings
+    ratingSummaryPr.breakDown.push({
+      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount1stars'), totRatings),
+      key: 1,
+      value: _.get(this.ratingSummary, 'totalcount1stars'),
+    })
+    ratingSummaryPr.breakDown.push({
+      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount2stars'), totRatings),
+      key: 2,
+      value: _.get(this.ratingSummary, 'totalcount2stars'),
+    })
+    ratingSummaryPr.breakDown.push({
+      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount3stars'), totRatings),
+      key: 3,
+      value: _.get(this.ratingSummary, 'totalcount3stars'),
+    })
+    ratingSummaryPr.breakDown.push({
+      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount4stars'), totRatings),
+      key: 4,
+      value: _.get(this.ratingSummary, 'totalcount4stars'),
+    })
+    ratingSummaryPr.breakDown.push({
+      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount5stars'), totRatings),
+      key: 5,
+      value: _.get(this.ratingSummary, 'totalcount5stars'),
+    })
+    // ratingSummaryPr.latest50reviews = JSON.parse(this.ratingSummary.latest50reviews)
+    ratingSummaryPr.latest50reviews = this.ratingSummary.latest50reviews
+    // ratingSummaryPr.avgRating = parseFloat(((((totRatings / this.ratingSummary.total_number_of_ratings) * 100) * 5) / 100).toFixed(1))
+    const meanRating = ratingSummaryPr.breakDown.reduce((val, item) => {
+      // console.log('item', item)
+      return val + (item.key * item.value)
+    // tslint:disable-next-line: align
+    }, 0)
+    ratingSummaryPr.avgRating = parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1))
+    // ratingSummaryPr.avgRating = 5
+    return ratingSummaryPr
+  }
+
+  countStarsPercentage(value: any, total: any) {
+    return ((value / total) * 100).toFixed(2)
+  }
+
+  hardcodeData () {
+    const data = {
+      id: 'api.ratings.summary',
+      ver: 'v1',
+      ts: '2022-01-2717:53:09.359',
+      params: {
+        resmsgid: null,
+        msgid: null,
+        err: null,
+        status: null,
+        errmsg: null,
+      },
+      responseCode: 'OK',
+      result: {
+        response: [
+          {
+            totalcount3stars: 200,
+            totalcount1stars: 200,
+            totalcount4stars: 200,
+            totalcount5stars: 350,
+            activity_type: 'Course',
+            total_number_of_ratings: 1000,
+            activity_id: '100',
+            totalcount2stars: 200,
+            sum_of_total_ratings: 855,
+            // tslint:disable-next-line: max-line-length
+            latest50reviews: [{
+              type : 'review',
+              user_id: 'user1',
+              date: 1642052031800,
+              rating : 3,
+              review : 'nice course',
+
+          },
+          {
+              type : 'review',
+              user_id: 'user2',
+              date: 1642052031800,
+              rating : 5,
+              review : 'nice course',
+
+          },
+          {
+            type : 'review',
+            user_id: 'user2',
+            date: 1642052031800,
+            rating : 3.2,
+            review : `Curabitur lobortis id lorem id bibendum. Ut id consectetur magna.
+            Quisque volutpat augue enim, pulvinar lobortis nibh lacinia at.
+            Vestibulum nec erat ut mi sollicitudin porttitor id sit amet risus. Nam
+            tempus vel odio vitae aliquam.`,
+
+          },
+          {
+              type : 'review',
+              user_id: 'user3',
+              date: 1642052031820,
+              rating : 4.5,
+              review : 'nice course',
+
+          }],
+          },
+        ],
+        message: 'Successful',
+      },
+    }
+    this.ratingSummary = data.result.response[0]
+  }
+
+  getRatingIcon(ratingIndex: number, avg: number): 'star' | 'star_border' | 'star_half' {
+    if (avg) {
+      const avgRating = avg
       const ratingFloor = Math.floor(avgRating)
+      // const difference =  avgRating - ratingIndex
       if (ratingIndex <= ratingFloor) {
         return 'star'
       }
-      if (ratingFloor === ratingIndex - 1 && avgRating % 1 > 0) {
+      if (ratingFloor === ratingIndex - 1 && avgRating % 1 >= 0.29 && avgRating % 1 < 0.71) {
         return 'star_half'
       }
     }
     return 'star'
   }
 
-  getRatingIconClass(ratingIndex: number): boolean {
-    if (this.content && this.content.averageRating) {
-      const avgRating = this.content.averageRating
+  getRatingIconClass(ratingIndex: number, avg: number): boolean {
+    if (avg) {
+      const avgRating = avg
       const ratingFloor = Math.floor(avgRating)
       if (ratingIndex <= ratingFloor) {
         return true
       }
-      if (ratingFloor === ratingIndex - 1 && avgRating % 1 > 0) {
+      if (ratingFloor === ratingIndex - 1 && avgRating % 1 >= 0.29 && avgRating % 1 < 0.71) {
         return true
+      }
+      if (ratingFloor === ratingIndex - 1 && avgRating % 1 > 0.71) {
+        return true
+      }
+      if (ratingFloor === ratingIndex - 1 && avgRating % 1 < 0.29) {
+        return false
       }
     }
     return false
