@@ -23,12 +23,17 @@
     <mat-card-title><a class="mat-h4" i18n role="heading" [routerLink]="['/app/knowledge-resource/all', resource?.id, resource?.type]">{{ resource?.name }}</a></mat-card-title>
     <mat-card-subtitle><p class="mat-body-2 ws-mat-black60-text" i18n>{{ resource?.id }}</p></mat-card-subtitle>
     <span class="margin-right-m attach_links" *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0">
-        <p class="mat-body-2" i18n >  <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs"> {{ resource.additionalProperties.krFiles.length }} PDFs </p>
+        <!-- <p class="mat-body-2" i18n >  <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs"> {{ resource.additionalProperties.krFiles.length }} PDFs </p>
+         -->
+         <!-- <span *ngFor="let item of resource.additionalProperties.krFiles">
+            <p class="mat-body-2" i18n > {{item.fileType == 'APP/IMAGE', 'PDF', }} </p>
+         </span> -->
+         <!-- <p>{{ changeFileType() }}</p> -->
     </span>
 
     <span class="attach_links" *ngIf="resource.additionalProperties.URL && resource.additionalProperties.URL.length > 0">
         <p class="mat-body-2" i18n>  <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>
-            {{ itemCount(resource.additionalProperties.URL) }} </p>
+            {{ itemCount(resource.additionalProperties.URL) }} URL</p>
 
     </span>
 

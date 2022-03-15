@@ -68,7 +68,7 @@
 
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            <a class="mat-h3  margin-remove-bottom" i18n role="title"><mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>URL </a>
+                            <a class="mat-h3  margin-remove-bottom" i18n role="title"><mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>{{item.name}} </a>
 
                         </mat-panel-title>
 
@@ -76,10 +76,10 @@
                     <div class="mat-panel-body">
                         <div class="flex flex-row justify-between item_box ">
                              <div class="flex w-full">
-                                <input type="text" [value]="item" #userinput class="w-full url_value border-0">
+                                <input type="text" [value]="item.value" #userinput class="w-full url_value border-0">
                              </div>
                              <div class="flex flew-row margin-left-s">
-                                <a href="{{item}}" target="_blank" class="share_link">
+                                <a href="{{item.value}}" target="_blank" class="share_link">
                                     <mat-icon class="align-bottom ws-mat-default-text margin-right-xs">open_in_new</mat-icon>
                                  </a>
 

@@ -70,4 +70,28 @@ itemCount(items: NSKnowledgeResource.IUrl[]) {
   return occurs
  }
 
+ getNbOccur(fileType: string, objectArray: NSKnowledgeResource.IKrFiles[]) {
+  let occurs = 0
+  for (let i = 0; i < objectArray.length; i += 1) {
+    if (objectArray[i] && objectArray[i].fileType === fileType) {
+        occurs += 1
+      }
+    }
+  return occurs
+ }
+
+//  changeFileType(fileType: string, objectArray: NSKnowledgeResource.IKrFiles[]) {
+//   let occurs = 0
+//   // let file_type = fileType
+//   // if(fileType === 'jpg' || fileType === 'png') {
+//   //   return fileType = 'IMAGE'
+//   // }
+//   for (let i = 0; i < objectArray.length; i += 1) {
+//     if (objectArray[i] && objectArray[i].fileType === fileType) {
+//         occurs += 1
+//       }
+//     }
+//   return occurs
+//  }
+
 }
