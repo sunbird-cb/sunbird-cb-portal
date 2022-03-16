@@ -312,6 +312,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
       other: 0,
       pdf: 0,
       podcast: 0,
+      practiceTest: 0,
       quiz: 0,
       video: 0,
       webModule: 0,

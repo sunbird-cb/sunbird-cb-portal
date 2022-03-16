@@ -1,0 +1,38 @@
+@import "ws-mixins";
+@import "ws-vars";
+.auto-w {
+    width: 100% !important;
+    flex-direction: row;
+    @include breakpoint-lt-s {
+        width: 100%;
+        flex-direction: column;
+        // margin: 1em 12em 2em -1em;
+    }
+}
+
+.max-w {
+    max-width: 424px;
+    @include breakpoint-lt-s {
+        max-width: fit-content;
+    }
+}
+.m-w {
+    max-width: fit-content;
+}
+.text-white {
+    color: #fff !important;
+}
+.customcard {
+    box-shadow: none !important;
+}
+.border-custom {
+    border-top: none !important;
+    border-left: none !important;
+    border-bottom: none !important;
+}
+.flex-05 {
+    flex: 0.49;
+}
+.max-card-w {
+    max-width: 75% !important;
+}
