@@ -83,7 +83,7 @@
                                     <mat-icon class="align-bottom ws-mat-default-text margin-right-xs">open_in_new</mat-icon>
                                  </a>
 
-                                 <a (click)="copyInputMessage(item)" class="share_link">
+                                 <a (click)="copyInputMessage(item.value)" class="share_link">
                                      <mat-icon class="align-bottom ws-mat-default-text">content_copy</mat-icon>
                                  </a>
                              </div>
@@ -107,10 +107,6 @@
                                 <a class="mat-h3 margin-remove-bottom" i18n role="title" *ngIf="item.url && item.fileType !== 'IMAGE'" >
                                     <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs"> {{ item.name }}
                                 </a>
-
-
-                            <!-- <div >
-                            </div> -->
                         </mat-panel-title>
 
                     </mat-expansion-panel-header>
@@ -120,13 +116,12 @@
                         </div>
 
                         <div *ngIf="item.url && item.fileType !== 'IMAGE'">
-                            <iframe class="iframe iframe_box" [src]="getSafeUrl(item.url)" height="800" width="100%"></iframe>
+                            <iframe class="iframe iframe_box" [src]="getSafeUrl(item.url)" maxHeight="800" width="100%"></iframe>
                         </div>
                     </div>
                 </mat-expansion-panel>
             </mat-accordion>
 
         </div>
-
     </div>
 </div>

@@ -131,7 +131,7 @@ refresh() {
   copyInputMessage(value: string): void {
     navigator.clipboard.writeText(value).then(() => {
       alert('Copied!')
-    },                                        () => {
+    },() => {
       alert('Not copied!')
     })
   }

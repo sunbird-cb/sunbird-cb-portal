@@ -87,3 +87,10 @@ a.share_link {
     display: flex;
     cursor: pointer;
 }
+
+
+@media screen and (max-width:480px) {
+    .resource_img {
+        width: 100%;
+    }
+}
