@@ -325,8 +325,8 @@ export namespace NsContent {
     // Added on UI Only
     CERTIFICATION = 'application/certification',
     PLAYLIST = 'application/playlist',
-    QUESTION_SET = "application/vnd.sunbird.questionset",
-    QUESTION = "application/vnd.sunbird.question",
+    QUESTION_SET = 'application/vnd.sunbird.questionset',
+    QUESTION = 'application/vnd.sunbird.question',
     UNKNOWN = 'application/unknown',
   }
   export enum EDisplayContentTypes {
