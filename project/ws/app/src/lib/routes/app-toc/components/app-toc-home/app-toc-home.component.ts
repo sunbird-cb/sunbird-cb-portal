@@ -27,7 +27,7 @@ import { ActionService } from '../../services/action.service'
 import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
 import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
 import moment from 'moment'
-import { RatingService } from '../../services/rating.service'
+import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
 
 export enum ErrorType {
   internalServer = 'internalServer',
