@@ -49,14 +49,14 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
                 .getContent(this.activatedRoute.snapshot.paramMap.get('resourceId') || '')
                 .subscribe(data => {
                     this.testData = data
-                    console.log(data)
+                 //   console.log(data)
                     this.init()
                 })
         } else {
             this.dataSubscription = this.activatedRoute.data.subscribe(
                 async data => {
                     this.testData = data.content.data
-                    console.log(this.testData)
+                 //   console.log(this.testData)
                     this.init()
                 })
         }
@@ -93,7 +93,7 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
                                 try {
                                     const progressdetails = JSON.parse(content.progressdetails)
                                     // this.widgetResolverTestData.widgetData.resumePage = Number(content.progressdetails.current.pop())
-                                    console.log(progressdetails)
+                                   // console.log(progressdetails)
                                 } catch { }
 
                             }
