@@ -13,7 +13,7 @@
         </section>
         <form [formGroup]="feedbackForm" >
             <section class=" mb-5">
-                <h3 class="mat-h3 margin-bottom-xs required" i18n>Rate this CBP</h3>
+                <h3 class="mat-h3 margin-bottom-xs required" i18n>Rate this {{content?.primaryCategory | lowercase}}</h3>
                 <div class="" (click)="$event.stopPropagation();">
                     <ng-container *ngFor="let start of [1, 2, 3, 4, 5]; let i = index">
                         <button i18n-aria-label aria-label="Rating" aria-labelledby="rate-heading"
@@ -35,7 +35,7 @@
                     <mat-form-field appearance="outline" class="w-full">
                         <textarea id="review" matInput [matTextareaAutosize] [matAutosizeMaxRows]="10"
                             [matAutosizeMinRows]="3" maxlength="200" formControlName="review"
-                            placeholder="Add a review for this CBP (optional)" i18n-placeholder #review i18n-aria-label
+                            placeholder="Add a review for this {{content?.primaryCategory | lowercase}} (optional)" i18n-placeholder #review i18n-aria-label
                             aria-label="Review textarea input" class="mat-body-2"></textarea>
                         <!-- <input matInput #review formControlName="review" i18n-placeholder
                           placeholder="Enter review Here" [required]="true" /> -->
@@ -43,7 +43,7 @@
                         <mat-error [hidden]="false" i18n="review error |Explains review is required"
                             *ngIf="feedbackForm?.controls['review'].errors?.required" i18n-aria-label
                             aria-label="review error |Explains review is required">
-                            Add a review for this CBP (optional)
+                            Add a review for this {{content?.primaryCategory | lowercase}} (optional)
                         </mat-error>
                         <mat-error i18n *ngIf="feedbackForm?.controls['review'].errors?.maxlength" i18n-aria-label
                             aria-label="review error |You have exceeded 200 characters">
