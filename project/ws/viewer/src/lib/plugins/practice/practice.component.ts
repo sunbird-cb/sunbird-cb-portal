@@ -116,7 +116,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     // this.identifier
     this.fetchingSectionsStatus = 'fetching'
     this.quizSvc.getSection('do_1134922417267752961130').subscribe((section: NSPractice.ISectionResponse) => {
-      console.log(section)
+     // console.log(section)
       this.fetchingSectionsStatus = 'done'
       if (section.responseCode && section.responseCode === 'OK') {
         this.quizSvc.paperSections.next(section.result)
@@ -147,7 +147,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         attemptData: null,
       })
     }
-    console.log(data)
+    // console.log(data)
     this.quizSvc.secAttempted.next(data)
   }
   startSection(section: NSPractice.IPaperSection) {
@@ -159,7 +159,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         const question = _.get(qqr, 'result')
         const codes = _.compact(_.map(this.quizJson.questions, 'section') || [])
         this.quizSvc.startSection(section)
-        console.log(this.quizSvc.secAttempted.value)
+        // console.log(this.quizSvc.secAttempted.value)
         _.eachRight(question.questions, q => {
           // const qHtml = document.createElement("div")
           // qHtml.innerHTML = q.editorState.question
@@ -179,7 +179,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
   getOptions(question: NSPractice.IQuestionV2): NSPractice.IOption[] {
-    debugger
+    // debugger
     const options: NSPractice.IOption[] = []
     if (question && question.qType) {
       const qTyp = question.qType
@@ -263,7 +263,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   scroll(qIndex: number) {
     if (qIndex > 0) {
       this.getNextQuestion(qIndex - 1)
-    }// if (!this.sidenavOpenDefault) {
+    } // if (!this.sidenavOpenDefault) {
     //   if (this.sideNav) {
     //     this.sideNav.close()
     //   }
