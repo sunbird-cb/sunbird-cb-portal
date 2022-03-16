@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils/src/public-api'
+import { ConfigurationsService, EventService, LoggerService, WsEvents } from '@sunbird-cb/utils/src/public-api'
 import { AccessControlService } from '@ws/author/src/public-api'
 import { Subscription } from 'rxjs'
 import { ViewerUtilService } from '../../viewer-util.service'
@@ -36,6 +36,7 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
         private configSvc: ConfigurationsService,
         private eventSvc: EventService,
         private contentSvc: WidgetContentService,
+        private log: LoggerService
     ) {
 
     }
@@ -49,14 +50,14 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
                 .getContent(this.activatedRoute.snapshot.paramMap.get('resourceId') || '')
                 .subscribe(data => {
                     this.testData = data
-                 //   console.log(data)
+                    //   console.log(data)
                     this.init()
                 })
         } else {
             this.dataSubscription = this.activatedRoute.data.subscribe(
                 async data => {
                     this.testData = data.content.data
-                 //   console.log(this.testData)
+                    //   console.log(this.testData)
                     this.init()
                 })
         }
@@ -90,9 +91,9 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
                         for (const content of data.result.contentList) {
                             if (content.contentId === identifier && content.progressdetails) {
                                 try {
-                                   // const progressdetails = JSON.parse(content.progressdetails)
+                                    // const progressdetails = JSON.parse(content.progressdetails)
                                     // this.widgetResolverTestData.widgetData.resumePage = Number(content.progressdetails.current.pop())
-                                   // console.log(progressdetails)
+                                    // console.log(progressdetails)
                                 } catch { }
 
                             }
@@ -103,6 +104,9 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
                 () => resolve(true),
             )
         })
+    }
+    isErrorOccured(event: any) {
+        this.log.error(event)
     }
     raiseEvent(state: WsEvents.EnumTelemetrySubType, data: NsContent.IContent) {
         if (this.forPreview) {
