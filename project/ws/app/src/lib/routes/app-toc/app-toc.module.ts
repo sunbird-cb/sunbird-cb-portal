@@ -87,6 +87,8 @@ import {
   UserAutocompleteModule,
   AvatarPhotoModule,
   ContentRatingV2DialogModule,
+  RatingSummaryModule,
+  CardRatingCommentModule,
 } from '@sunbird-cb/collection'
 import { AppTocDialogIntroVideoComponent } from './components/app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { CertificationMetaResolver } from './routes/app-toc-certification/resolvers/certification-meta.resolver'
@@ -111,6 +113,7 @@ import { TagWidgetComponent } from '../discuss/widget/tag-widget/tag-widget.comp
 import { ActionService } from './services/action.service'
 import { ConnectionNameModule } from '@sunbird-cb/collection/src/lib/_common/connection-name/connection-name.module'
 import { CertificateDialogModule } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.module'
+import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 
 @NgModule({
   declarations: [
@@ -185,6 +188,7 @@ import { CertificateDialogModule } from '@sunbird-cb/collection/src/lib/_common/
     BtnContentFeedbackModule,
     BtnContentFeedbackV2Module,
     ContentRatingV2DialogModule,
+    RatingSummaryModule,
     CertificateDialogModule,
     BtnGoalsModule,
     BtnPlaylistModule,
@@ -207,6 +211,8 @@ import { CertificateDialogModule } from '@sunbird-cb/collection/src/lib/_common/
     AvatarPhotoModule,
     DiscussionUiModule,
     ConnectionNameModule,
+    CardRatingCommentModule,
+    InfiniteScrollModule,
     NgCircleProgressModule.forRoot({}),
   ],
   providers: [

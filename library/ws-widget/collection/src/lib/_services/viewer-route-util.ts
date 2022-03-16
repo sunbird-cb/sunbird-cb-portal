@@ -30,7 +30,7 @@ export const VIEWER_ROUTE_FROM_MIME = (mimeType: NsContent.EMimeTypes) => {
       return 'video'
     case NsContent.EMimeTypes.YOUTUBE:
       return 'youtube'
-      // return 'html'
+    // return 'html'
     case NsContent.EMimeTypes.WEB_MODULE:
       return 'web-module'
     case NsContent.EMimeTypes.WEB_MODULE_EXERCISE:
@@ -46,6 +46,8 @@ export const VIEWER_ROUTE_FROM_MIME = (mimeType: NsContent.EMimeTypes) => {
     case NsContent.EMimeTypes.QUIZ:
     case NsContent.EMimeTypes.APPLICATION_JSON:
       return 'quiz'
+    case NsContent.EMimeTypes.PRACTICE_RESOURCE:
+      return 'practice'
     case NsContent.EMimeTypes.COLLECTION_RESOURCE:
       return 'resource-collection'
     default:

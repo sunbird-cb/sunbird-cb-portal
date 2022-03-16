@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, NavigationExtras } from '@angular/router'
 import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ViewerDataService } from '../../viewer-data.service'
@@ -22,6 +22,8 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   collectionType: string | null = null
   prevResourceUrl: string | null = null
   nextResourceUrl: string | null = null
+  prevResourceUrlParams!: NavigationExtras
+  nextResourceUrlParams!: NavigationExtras
   pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
   resourceId: string = (this.viewerDataSvc.resourceId as string) || ''
   resourceName: string | null = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.name : ''
@@ -55,14 +57,38 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
         this.configSvc.instanceConfig.logos.app,
       )
     }
-  //   this.route.data.subscribe((data: any) => {
-  //     this.appIcon =
-  //     this.domSanitizer.bypassSecurityTrustResourceUrl(data.configData.data.logos.app)
-  //   }
-  // )
+    //   this.route.data.subscribe((data: any) => {
+    //     this.appIcon =
+    //     this.domSanitizer.bypassSecurityTrustResourceUrl(data.configData.data.logos.app)
+    //   }
+    // )
     this.viewerDataServiceSubscription = this.viewerDataSvc.tocChangeSubject.subscribe(data => {
-      this.prevResourceUrl = data.prevResource
-      this.nextResourceUrl = data.nextResource
+      if (data.prevResource) {
+        this.prevResourceUrl = data.prevResource.viewerUrl
+        this.prevResourceUrlParams = {
+          queryParams: {
+            primaryCategory: data.prevResource.primaryCategory,
+            collectionId: data.prevResource.collectionId,
+            collectionType: data.prevResource.collectionType,
+            batchId: data.prevResource.batchId,
+            viewMode: data.prevResource.viewMode,
+          },
+          fragment: '',
+        }
+      }
+      if (data.nextResource) {
+        this.nextResourceUrl = data.nextResource.viewerUrl
+        this.nextResourceUrlParams = {
+          queryParams: {
+            primaryCategory: data.nextResource.primaryCategory,
+            collectionId: data.nextResource.collectionId,
+            collectionType: data.nextResource.collectionType,
+            batchId: data.nextResource.batchId,
+            viewMode: data.nextResource.viewMode,
+          },
+          fragment: '',
+        }
+      }
       if (this.resourceId !== this.viewerDataSvc.resourceId) {
         this.resourceId = this.viewerDataSvc.resourceId as string
         this.resourceName = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.name : ''

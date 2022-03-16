@@ -222,8 +222,14 @@ TODO: edit option while preview Mode
         <button mat-stroked-button color="accent" type="button"
           class="w-full text-left actbutton mat-body-2 blue-border" (click)="openFeedbackDialog(content)">
           <mat-icon class=" icon-margin mat-icon notranslate material-icons mat-icon-no-color">star_purple500</mat-icon>
-          <span> Rate this </span>
-          <span class="lowercase"> {{content?.primaryCategory}} </span>
+          <ng-container *ngIf="!userRating">
+            <span> Rate this </span>
+            <span class="lowercase"> {{content?.primaryCategory}} </span>
+          </ng-container>
+          <ng-container *ngIf="userRating">
+            <span> Edit rating </span>
+            <!-- <span class="lowercase"> {{content?.primaryCategory}} </span> -->
+          </ng-container>
         </button>
       </div>
 
@@ -320,6 +326,12 @@ TODO: edit option while preview Mode
               tocStructure?.assessment }}
               <span *ngIf="tocStructure?.assessment === 1" i18n> Assessment</span>
               <span *ngIf="tocStructure?.assessment > 1" i18n> Assessments</span>
+            </p>
+            <p *ngIf="tocStructure?.practiceTest > 0" class="mat-body-2 cs-icons">
+              <img src="/assets/icons/content/grey/assessment.svg" alt="Assessment" class="margin-right-xs"> {{
+              tocStructure?.practiceTest }}
+              <span *ngIf="tocStructure?.practiceTest === 1" i18n> Practice test</span>
+              <span *ngIf="tocStructure?.practiceTest > 1" i18n> Practice Tests</span>
             </p>
             <p *ngIf="tocStructure?.other > 0" class="mat-body-2 cs-icons">
               <img src="/assets/icons/content/grey/course.svg" alt="Course" class="margin-right-xs"> {{

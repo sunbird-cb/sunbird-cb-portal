@@ -2,7 +2,7 @@ import { NestedTreeControl } from '@angular/cdk/tree'
 import { Component, EventEmitter, OnDestroy, OnInit, Output, Input } from '@angular/core'
 import { MatTreeNestedDataSource } from '@angular/material'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
-import { ActivatedRoute, Params } from '@angular/router'
+import { ActivatedRoute, NavigationExtras, Params } from '@angular/router'
 import {
   ContentProgressService,
   NsContent,
@@ -19,7 +19,7 @@ import { of, Subscription } from 'rxjs'
 import { delay } from 'rxjs/operators'
 import { ViewerDataService } from '../../viewer-data.service'
 import { ViewerUtilService } from '../../viewer-util.service'
-interface IViewerTocCard {
+export interface IViewerTocCard {
   identifier: string
   viewerUrl: string
   thumbnailUrl: string
@@ -28,6 +28,11 @@ interface IViewerTocCard {
   type: string
   complexity: string
   children: null | IViewerTocCard[]
+  primaryCategory: NsContent.EPrimaryCategory
+  collectionId: string | null
+  collectionType: string,
+  batchId: string | number,
+  viewMode: string,
 }
 
 export type TCollectionCardType = 'content' | 'playlist' | 'goals'
@@ -69,7 +74,10 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
   }
   resourceId: string | null = null
   collection: IViewerTocCard | null = null
+  collectionType = 'course'
+  collectionId: string | null = ''
   batchId: any
+  viewMode = 'START'
   queue: IViewerTocCard[] = []
   tocMode: 'FLAT' | 'TREE' = 'FLAT'
   nestedTreeControl: NestedTreeControl<IViewerTocCard>
@@ -102,26 +110,28 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       this.defaultThumbnail = this.domSanitizer.bypassSecurityTrustResourceUrl(logo)
     }
     this.paramSubscription = this.activatedRoute.queryParamMap.subscribe(async params => {
-      const collectionId = params.get('collectionId')
-      const collectionType = params.get('collectionType')
+      this.collectionId = params.get('collectionId')
+      this.collectionType = params.get('collectionType') || 'course'
+      const primaryCategory = params.get('primaryCategory')
+      this.viewMode = params.get('viewMode') || 'START'
       try {
         this.batchId = params.get('batchId')
       } catch {
         this.batchId = 0
       }
 
-      if (collectionId && collectionType) {
+      if (this.collectionId && this.collectionType && primaryCategory) {
         if (
-          collectionType.toLowerCase() ===
+          this.collectionType.toLowerCase() ===
           NsContent.EMiscPlayerSupportedCollectionTypes.PLAYLIST.toLowerCase()
         ) {
-          this.collection = await this.getPlaylistContent(collectionId, collectionType)
+          this.collection = await this.getPlaylistContent(this.collectionId, primaryCategory)
         } else if (
-          collectionType.toLowerCase() === NsContent.EPrimaryCategory.MODULE.toLowerCase() ||
-          collectionType.toLowerCase() === NsContent.EPrimaryCategory.COURSE.toLowerCase() ||
-          collectionType.toLowerCase() === NsContent.EPrimaryCategory.PROGRAM.toLowerCase()
+          this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.MODULE.toLowerCase() ||
+          this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.COURSE.toLowerCase() ||
+          this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.PROGRAM.toLowerCase()
         ) {
-          this.collection = await this.getCollection(collectionId, collectionType)
+          this.collection = await this.getCollection(this.collectionId, this.collectionType)
         } else {
           this.isErrorOccurred = true
         }
@@ -167,17 +177,28 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       this.tocMode = 'FLAT'
     }
   }
-
+  getParams(content: IViewerTocCard): NavigationExtras {
+    return {
+      queryParams: {
+        primaryCategory: content.primaryCategory,
+        collectionId: content.collectionId,
+        collectionType: content.collectionType,
+        batchId: content.batchId,
+        viewMode: content.viewMode,
+      },
+      fragment: '',
+    }
+  }
   private processCurrentResourceChange() {
     if (this.collection && this.resourceId) {
       const currentIndex = this.queue.findIndex(c => c.identifier === this.resourceId)
       const next =
-        currentIndex + 1 < this.queue.length ? this.queue[currentIndex + 1].viewerUrl : null
-      const prev = currentIndex - 1 >= 0 ? this.queue[currentIndex - 1].viewerUrl : null
+        currentIndex + 1 < this.queue.length ? this.queue[currentIndex + 1] : null
+      const prev = currentIndex - 1 >= 0 ? this.queue[currentIndex - 1] : null
       this.viewerDataSvc.updateNextPrevResource(Boolean(this.collection), prev, next)
       this.processCollectionForTree()
       this.expandThePath()
-      if (next === '0') { // temp
+      if (next && next.viewerUrl === '0') { // temp
         this.getContentProgressHash()
       }
     }
@@ -282,14 +303,22 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       identifier: content.identifier,
       viewerUrl: `${this.forPreview ? '/author' : ''}/viewer/${VIEWER_ROUTE_FROM_MIME(
         content.mimeType,
+        // )}/${content.identifier}?primaryCategory=${content.primaryCategory}
+        // &collectionId=${this.viewerDataSvc.collectionId}&collectionType=${this.collectionType}
+        // &batchId=${this.batchId}&viewMode=${this.viewMode}`,
       )}/${content.identifier}`,
       thumbnailUrl: this.forPreview
         ? this.viewSvc.getAuthoringUrl(content.appIcon)
         : content.appIcon,
       title: content.name,
       duration: content.duration,
+      collectionId: this.collectionId,
+      collectionType: this.collectionType,
+      batchId: this.batchId,
+      viewMode: this.viewMode,
       type: content.primaryCategory,
       complexity: content.difficultyLevel,
+      primaryCategory: content.primaryCategory,
       children:
         Array.isArray(content.children) && content.children.length
           ? content.children.map(child => this.convertContentToIViewerTocCard(child))

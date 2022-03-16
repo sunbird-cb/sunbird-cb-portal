@@ -399,37 +399,11 @@ mat-divider {
   }
 }
 
-.rating-bar.mat-progress-bar {
-  height: 8px;
-  border-radius: 12px;
-}
-
-.rating-bar {
-  & .mat-progress-bar-fill::after {
-    background: red;
-  }
-}
-
-// #rating {
-  ::ng-deep.theme-igot.day-mode .rating-bar .mat-progress-bar-fill::after {
-    background: rgb(246, 153, 83);
-  }
-// }
-
-.rating-icon {
-  transform: scale(1.2);
-}
-
-.comments-card{
-  padding: 24px 16px;
-  .comments-rating {
-    height: 16px;
-    width: 16px;
-    font-size: 16px;
-  }
-  .name {
-    font: 600 16px/21px Lato;
-  }
+.rating-comments {
+  height:auto;
+  max-height: 400px;
+  padding: 0 15px 0 0;
+  overflow-y: scroll;
 }
 
 .view-all {
