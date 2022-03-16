@@ -8,7 +8,9 @@
     padding: $size-m $size-l;
   }
 }
-
+.text-white{
+  color: #fff !important;
+}
 .fixed-width {
   max-width: $max-width;
   display: block;

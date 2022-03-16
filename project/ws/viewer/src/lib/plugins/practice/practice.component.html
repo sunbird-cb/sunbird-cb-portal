@@ -1,0 +1,255 @@
+<viewer-overview *ngIf="viewState === 'initial'" [learningObjective]="learningObjective"
+  [complexityLevel]="complexityLevel" [duration]="duration" [timeLimit]="quizJson?.timeLimit"
+  [primaryCategory]="primaryCategory" [noOfQuestions]="quizJson?.questions?.length"
+  (userSelection)="getSections($event)"></viewer-overview>
+
+<div #quizContainer *ngIf="viewState !== 'initial' && viewState !== 'detail'" class="quiz-container">
+  <nav class="quiz-nav-bar mat-toolbar mat-caption">
+    <!-- <span> -->
+    <!-- <button mat-icon-button aria-label="menu toggle" i18n-aria-label (click)="sidenav.toggle()">
+        <mat-icon aria-label="open questions navigation">menu</mat-icon>
+      </button> -->
+    <a *ngIf="!isSubmitted" (click)="backToSections()" class="flex cursor-pointer">
+      <mat-icon class="ws-mat-default-text">arrow_back</mat-icon>
+      <span class="ws-mat-default-text subheading-1">Back to sections</span>
+    </a>
+    <!-- </span> -->
+    <div *ngIf="timeLeft" class="flex flex-middle flex-center">
+      <mat-icon>alarm</mat-icon>&nbsp;&nbsp;
+      <div [ngClass]="{ 'mat-body-strong': !isSubmitted }">
+        {{ timeLeft | pipeDurationTransform: 'hms' }}
+      </div>
+      <div *ngIf="isSubmitted" class="margin-left-xs mat-body-strong" i18n>
+        (Submitted)
+      </div>
+    </div>
+    <ws-widget-btn-fullscreen [widgetType]="'actionButton'" [widgetSubType]="'actionButtonFullscreen'"
+      [widgetData]="{ fsContainer: quizContainer }"></ws-widget-btn-fullscreen>
+  </nav>
+  <mat-sidenav-container class="sidenav-container" autosize>
+    <mat-sidenav [mode]="sidenavMode" class="sidenav" #sidenav [opened]="sidenavOpenDefault">
+      <!-- <h2 class="mat-title margin-top-s text-center" i18n>Questions</h2>
+      <div class="flex flex-wrapped margin-right-s margin-left-s">
+        <div class="col" *ngFor="let question of quizJson?.questions; let i = index">
+          <div (click)="scroll(i + 1)" [ngClass]="{
+              'marked-question': isQuestionMarked(question?.questionId),
+              'attempted-question':
+                !isQuestionMarked(question?.questionId) &&
+                isQuestionAttempted(question?.questionId),
+              'white-border':
+                !isQuestionMarked(question?.questionId) &&
+                !isQuestionAttempted(question?.questionId) &&
+                currentTheme === 'black-theme',
+              'dark-border':
+                !isQuestionMarked(question?.questionId) &&
+                !isQuestionAttempted(question?.questionId) &&
+                currentTheme !== 'black-theme'
+            }" class="margin-xs circle">
+            <div class="question-number">{{ i + 1 }}</div>
+          </div>
+        </div>
+      </div> -->
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div *ngIf="!isSubmitted" class="flex flex-1">
+        <div class="margin-m" *ngIf="fetchingQuestionsStatus === 'fetching'">
+          <div class="flex flex-center">
+            <mat-spinner></mat-spinner>
+          </div>
+        </div>
+        <div class="flex flex-wrapped margin-right-s margin-left-s" *ngIf="fetchingQuestionsStatus === 'done'">
+          <div class="col" *ngFor="let question of quizJson?.questions; let i = index">
+            <div (click)="scroll(i + 1)" [ngClass]="{
+              'marked-question': isQuestionMarked(question?.questionId),
+              'attempted-question':
+                !isQuestionMarked(question?.questionId) &&
+                isQuestionAttempted(question?.questionId),
+              'white-border':
+                !isQuestionMarked(question?.questionId) &&
+                !isQuestionAttempted(question?.questionId) &&
+                currentTheme === 'black-theme',
+              'dark-border':
+                !isQuestionMarked(question?.questionId) &&
+                !isQuestionAttempted(question?.questionId) &&
+                currentTheme !== 'black-theme'
+            }" class="margin-xs ovel">
+              <div class="question-number"><span class="mat-body-2">{{ i + 1 }}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- {{current_Question | json}}
+      {{currentQuestionIndex}} -->
+      <mat-card class="flex flex-1 flex-column margin-m pad-0" *ngIf="fetchingQuestionsStatus === 'done'">
+        <ng-container *ngIf="!(viewState === 'answer' && quizJson?.isAssessment) && !isSubmitted">
+          <div class="flex flex-1 padding-l">
+            <span class="mat-title margin-zero">{{selectedSection.name}}</span>
+            <span class="spacer"></span>
+            <a *ngIf="currentQuestionIndex !== 0" class="ws-mat-accent-border margin-xs m-auto" mat-button
+              (click)="getNextQuestion(currentQuestionIndex - 1)">
+              <mat-icon>arrow_back</mat-icon>
+              PREVIOUS
+            </a>
+            &nbsp;&nbsp;
+            <a *ngIf="(currentQuestionIndex+1) !== totalQCount"
+              class="text-white ws-mat-primary-background margin-xs m-auto" mat-button
+              (click)="getNextQuestion(currentQuestionIndex + 1)">NEXT QUESTION</a>
+
+            <button class="text-white ws-mat-primary-background margin-xs m-auto" mat-raised-button
+              *ngIf="!(viewState === 'answer' && quizJson?.isAssessment) && !((currentQuestionIndex+1) !== totalQCount)"
+              (click)="proceedToSubmit()" i18n="button quiz submit">
+              Submit
+            </button>
+          </div>
+          <div class="flex flex-1">
+            <mat-progress-bar class="quiz-progress" [color]="secondary" [mode]="determinate"
+              [value]="((currentQuestionIndex + 1)/totalQCount)*100" [bufferValue]="100">
+            </mat-progress-bar>
+          </div>
+          <!-- {{current_Question?.questionId}}====
+          {{current_Question?.questionType}}
+          {{questionAnswerHash[(current_Question?.questionId)] | json}} -->
+
+          <viewer-question #questionsReference [id]="'question' + (i + 1)"
+            *ngFor="let question of quizJson?.questions; let i = index" [markedQuestions]="markedQuestions"
+            [artifactUrl]="artifactUrl" [questionNumber]="i + 1" [total]="totalQCount" [viewState]="viewState"
+            [question]="question" [itemSelectedList]="questionAnswerHash[(question?.questionId)]"
+            (itemSelected)="fillSelectedItems(question, $event)" [hidden]="i !== currentQuestionIndex">
+          </viewer-question>
+          <!-- <ng-container *ngIf="current_Question">
+            <viewer-question #questionsReference [id]="'question' + (currentQuestionIndex + 1)"
+              [markedQuestions]="markedQuestions" [artifactUrl]="artifactUrl"
+              [questionNumber]="currentQuestionIndex + 1" [total]="quizJson?.questions.length" [viewState]="viewState"
+              [question]="current_Question" [itemSelectedList]="questionAnswerHash[(current_Question?.questionId)]"
+              (itemSelected)="fillSelectedItems(current_Question, $event)">
+            </viewer-question>
+          </ng-container> -->
+        </ng-container>
+      </mat-card>
+      <div id="quiz-end"></div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+<div *ngIf="viewState === 'detail'" class="flex flex-1 flex-column">
+  <!-- <div class="flex flex-1"></div> -->
+  <ng-container *ngIf="this.paperSections && this.paperSections?.length > 0">
+    <div class="flex flex-1">
+      <a disableRipple *ngIf="primaryCategory === ePrimaryCategory.PRACTICE_RESOURCE" i18n-aria-label aria-label="Back"
+        (click)="back()" class="no-border flex cursor-pointer">
+        <mat-icon class="ws-mat-default-text">arrow_back</mat-icon>
+        <span class="ws-mat-default-text subheading-1">Back to home </span>
+      </a>
+    </div>
+    <div class="flex flex-1 flex-column margin-right-m margin-left-m">
+      <div class="margin-m" *ngIf="fetchingSectionsStatus === 'fetching'">
+        <div class="flex flex-center">
+          <mat-spinner></mat-spinner>
+        </div>
+      </div>
+      <div class="flex flex-1 flex-column margin-right-m margin-left-m">
+        <div class="margin-m">
+          <div class="flex flex-end">
+            <span class="flex">
+              <div class="sbox complete"></div>
+              Completed
+            </span>
+            <span class="flex">
+              <div class="sbox incomplete"></div>
+              Incomplete
+            </span>
+            <span class="flex">
+              <div class="sbox not-started"></div>
+              Not Started
+            </span>
+            <span class="flex">
+              <div class="sbox selected"></div>
+              Selected
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-1 flex-wrap">
+        <ng-container *ngFor="let section of this.paperSections">
+          <mat-card [ngClass]="getClass(section)" class="min-w padding-s ws-mat-accent-border br-8 no-border margin-m">
+            <mat-card-content class="cursor-pointer"
+              [class.spinner]="fetchingQuestionsStatus === 'fetching' && section.identifier === selectedSection.identifier"
+              [attr.disabled]="fetchingQuestionsStatus === 'fetching' && section.identifier === selectedSection.identifier"
+              (click)="startSection(section)">
+              <div class="flex flex-1 flex-column margin-left-s margin-top-s">
+                <span class="flex mat-subheading-1 text-truncate ">{{section.name || 'Name'}}</span>
+                <span class="flex mat-body-2">Percentage to pass - <ng-container>{{'80%'}}</ng-container></span>
+                <span class="flex mat-body-2">Total questions -<ng-container>{{section?.children?.length || '0'}}
+                  </ng-container></span>
+                <span class="flex mat-body-2 text-justify">{{section.description || 'Description'}}</span>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+  <!-- <div class="flex flex-1"></div> -->
+</div>
+
+<ng-container *ngIf="isSubmitted && (viewState === 'answer' || viewState === 'review')">
+  <viewer-result></viewer-result>
+  <mat-card class="margin-bottom-m margin-top-m">
+    <div class="margin-m" *ngIf="fetchingResultsStatus === 'fetching'">
+      <div class="flex flex-center">
+        <mat-spinner></mat-spinner>
+      </div>
+    </div>
+    <h2 i18n class="mat-title" *ngIf="fetchingResultsStatus === 'error'">
+      Unable to Submit
+    </h2>
+    <ng-container *ngIf="fetchingResultsStatus === 'done'">
+      <h2 *ngIf="!quizJson.isAssessment" class="mat-title" i18n="quiz end message">
+        Thank you for your attempt.
+      </h2>
+      <!-- <h2 *ngIf="quizJson.isAssessment" class="mat-title">
+        <ng-container i18n="quiz result label">Result:</ng-container>
+        <ng-container i18n *ngIf="isCompleted">PASS</ng-container>
+        <ng-container i18n *ngIf="!isCompleted">FAIL</ng-container>
+      </h2> -->
+      <div class="flex flex-wrapped flex-center text-center">
+        <div class="card-section">
+          <h2 class="mat-title">{{ numCorrectAnswers }}</h2>
+          <h2 class="mat-title" i18n="label number of correct answers">
+            Correct
+          </h2>
+        </div>
+        <div class="card-section">
+          <h2 class="mat-title">{{ numIncorrectAnswers }}</h2>
+          <h2 class="mat-title" i18n="label number of incorrect answers">
+            Incorrect
+          </h2>
+        </div>
+        <div class="card-section">
+          <h2 class="mat-title">{{ numUnanswered }}</h2>
+          <h2 class="mat-title" i18n="label of unanswered questions">
+            Unanswered
+          </h2>
+        </div>
+        <div class="card-section">
+          <h2 class="mat-title">
+            {{ result | number: '1.0-0' }}
+          </h2>
+          <h2 class="mat-title" i18n="label quiz percentage">
+            Percentage
+          </h2>
+        </div>
+      </div>
+    </ng-container>
+  </mat-card>
+  <!-- <div class="text-center">
+    <button class="margin-right-m ws-mat-accent-border-active" mat-button
+      *ngIf="!(viewState === 'answer' && quizJson?.isAssessment)" (click)="proceedToSubmit()"
+      i18n="button quiz submit">
+      <span class="ws-mat-default-text">Submit</span>
+    </button>
+    <button class="margin-right-m ws-mat-accent-border-active" mat-button *ngIf="viewState === 'review'"
+      (click)="showAnswers()" i18n="button quiz show answers">
+      <span class="ws-mat-default-text">Show Answers</span>
+    </button>
+  </div> -->
+</ng-container>

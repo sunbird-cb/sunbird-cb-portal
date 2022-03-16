@@ -210,12 +210,12 @@
             <img src="/assets/icons/content/grey/link.svg" alt="InteractiveContent" class="float-left margin-right-xs"
               *ngIf="content?.mimeType === 'application/vnd.ekstep.html-archive' || content?.mimeType === 'text/x-url'">
             <img src="/assets/icons/content/grey/assessment.svg" alt="Assessment" class="float-left margin-right-xs"
-              *ngIf="content?.mimeType === 'application/json' || content?.mimeType === 'application/quiz'">
+              *ngIf="content?.mimeType === 'application/json' || content?.mimeType === 'application/quiz' || content?.mimeType === 'application/vnd.sunbird.questionset'">
             <img src="/assets/icons/content/grey/image.svg" alt="Image" class="float-left margin-right-xs"
               *ngIf="content?.mimeType === 'image/png' || content?.mimeType === 'image/jpeg'">
             <img src="/assets/icons/content/grey/content_copy.svg" class="contenticon" alt="Course"
               *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection'">
-            <span class="ws-mat-black60-text">{{ content?.duration | pipeDurationTransform: 'hms' }}</span>
+            <span class="ws-mat-black60-text">{{ (content?.duration || 120)| pipeDurationTransform: 'hms' }}</span>
             <!-- </span> -->
           </div>
         </div>
