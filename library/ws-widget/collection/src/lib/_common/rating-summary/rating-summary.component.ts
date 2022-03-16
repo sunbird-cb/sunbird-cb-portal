@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, OnChanges } from '@angular/core'
+import { Component, OnInit, Input, OnChanges } from '@angular/core'
 import { RatingService } from '../../_services/rating.service'
 
 @Component({
