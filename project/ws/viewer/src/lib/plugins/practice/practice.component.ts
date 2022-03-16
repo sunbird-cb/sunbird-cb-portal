@@ -18,11 +18,9 @@ import { PracticeService } from './practice.service'
 import { EventService, NsContent, WsEvents } from '@sunbird-cb/utils'
 import { ActivatedRoute } from '@angular/router'
 import { ViewerUtilService } from '../../viewer-util.service'
-// tslint: disable-next-line
+// tslint:disable-next-line
 import _ from 'lodash'
 export type FetchStatus = 'hasMore' | 'fetching' | 'done' | 'error' | 'none'
-
-
 @Component({
   selector: 'viewer-plugin-practice',
   templateUrl: './practice.component.html',
@@ -104,26 +102,23 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.questionAnswerHash = quizSvc.questionAnswerHash.getValue()
     }
   }
-
-
   ngOnInit() {
     this.attemptSubscription = this.quizSvc.secAttempted.subscribe(data => {
       this.attemptSubData = data
     })
   }
-
   getSections(_event: NSPractice.TUserSelectionType) {
     // this.identifier
     this.fetchingSectionsStatus = 'fetching'
     this.quizSvc.getSection('do_1134922417267752961130').subscribe((section: NSPractice.ISectionResponse) => {
-     // console.log(section)
+      // console.log(section)
       this.fetchingSectionsStatus = 'done'
       if (section.responseCode && section.responseCode === 'OK') {
         this.quizSvc.paperSections.next(section.result)
-        let tempObj = _.get(section, 'result.questionSet.children')
+        const tempObj = _.get(section, 'result.questionSet.children')
         this.updataDB(tempObj)
         this.paperSections = []
-        _.each(tempObj, (o) => {
+        _.each(tempObj, o => {
           if (this.paperSections) {
             this.paperSections.push(o)
           }
@@ -161,12 +156,12 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         this.quizSvc.startSection(section)
         // console.log(this.quizSvc.secAttempted.value)
         _.eachRight(question.questions, q => {
-          // const qHtml = document.createElement("div")
+          // const qHtml = document.createElement('div')
           // qHtml.innerHTML = q.editorState.question
           if (codes.indexOf(section.code) === -1) {
             this.quizJson.questions.push({
               section: section.code,
-              question: q.editorState.question, // qHtml.textContent || qHtml.innerText || "",
+              question: q.editorState.question, // qHtml.textContent || qHtml.innerText || '',
               multiSelection: ((q.qType || '').toLowerCase() === 'mcq-mca' ? true : false),
               questionType: (q.qType || '').toLowerCase(),
               questionId: q.identifier,
@@ -192,14 +187,14 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         case 'MCQ-MCA':
         case 'MCQ':
           _.each(question.editorState.options, o => {
-            const aHtml = document.createElement("div")
+            const aHtml = document.createElement('div')
             aHtml.innerHTML = o.value.body
 
-            const vHtml = document.createElement("div")
+            const vHtml = document.createElement('div')
             vHtml.innerHTML = o.value.value
             options.push({
-              optionId: vHtml.textContent || vHtml.innerText || "",
-              text: aHtml.textContent || aHtml.innerText || "",
+              optionId: vHtml.textContent || vHtml.innerText || '',
+              text: aHtml.textContent || aHtml.innerText || '',
               isCorrect: o.answer,
               // hint: '',
               // match: '',
@@ -215,10 +210,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         case 'SA':
         case 'sa':
           // tslint:enable
-          const ansHtml = document.createElement("div")
+          const ansHtml = document.createElement('div')
           ansHtml.innerHTML = question.editorState.answer || '<p></p>'
 
-          const opIdHtml = document.createElement("div")
+          const opIdHtml = document.createElement('div')
           opIdHtml.innerHTML = question.answer || '<p></p>'
 
           options.push({
@@ -238,7 +233,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               response: '',
               userSelected: false,
               matchForView: o.value.value,
-              match: o.value.body
+              match: o.value.body,
             })
           })
           break
@@ -247,7 +242,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     return options
   }
   getClass(section: NSPractice.ISecAttempted) {
-    let storeData = _.first(_.filter(this.attemptSubData, { 'identifier': section.identifier }))
+    const storeData = _.first(_.filter(this.attemptSubData, { identifier: section.identifier }))
     let className = 'not-started'
     if (storeData) {
       if (storeData.fullAttempted) {

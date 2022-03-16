@@ -1,5 +1,7 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener,
-  Input, OnInit, Output, ViewEncapsulation } from '@angular/core'
+import {
+  AfterViewInit, Component, ElementRef, EventEmitter, HostListener,
+  Input, OnInit, Output, ViewEncapsulation,
+} from '@angular/core'
 import { NSPractice } from '../../practice.model'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { jsPlumb, OnConnectionBindInfo } from 'jsplumb'
@@ -9,11 +11,10 @@ import { PracticeService } from '../../practice.service'
   selector: 'viewer-question',
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.scss'],
-// tslint:disable-next-line 
+  // tslint:disable-next-line
   encapsulation: ViewEncapsulation.None
 })
 export class QuestionComponent implements OnInit, AfterViewInit {
-
   @Input() artifactUrl = ''
   @Input() questionNumber = 0
   @Input() total = 0
@@ -72,7 +73,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
         // tslint:disable-next-line
         const iterationNumber = (this.question.question.match(/<input/g) || this.question.question.match(/______/g) || []).length
         for (let i = 0; i < iterationNumber; i += 1) {
-       // tslint:disable-next-line
+          // tslint:disable-next-line
           this.question.question = this.question.question.replace('<input', 'idMarkerForReplacement').replace('______', 'idMarkerForReplacement')
           this.correctOption.push(false)
           this.unTouchedBlank.push(true)
@@ -85,9 +86,9 @@ export class QuestionComponent implements OnInit, AfterViewInit {
           )
         }
       } else {
-        // for (let i = 0; i < (this.question.question.match(/<input/g) || 
+        // for (let i = 0; i < (this.question.question.match(/<input/g) ||
         // this.question.question.match(/______/g) || []).length; i += 1) {
-        //   console.log(this.elementRef.nativeElement.querySelector(`#${this.question.questionId}${i}`)) 
+        //   console.log(this.elementRef.nativeElement.querySelector(`#${this.question.questionId}${i}`))
         // }
       }
       this.safeQuestion = this.domSanitizer.bypassSecurityTrustHtml(this.question.question)

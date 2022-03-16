@@ -218,4 +218,3 @@ export namespace NSPractice {
     attemptData?: { questionId: string, answers: any[] } | null
   }
 }
-
