@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core'
+import { Component, OnInit, Input, OnChanges, OnChanges } from '@angular/core'
 import { RatingService } from '../../_services/rating.service'
 
 @Component({
@@ -6,7 +6,7 @@ import { RatingService } from '../../_services/rating.service'
   templateUrl: './rating-summary.component.html',
   styleUrls: ['./rating-summary.component.scss'],
 })
-export class RatingSummaryComponent implements OnInit {
+export class RatingSummaryComponent implements OnInit, OnChanges {
   @Input() ratingSummary: any | null = null
 
   constructor(
@@ -14,9 +14,14 @@ export class RatingSummaryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-   if (this.ratingSummary && this.ratingSummary.breakDown) {
-     this.ratingSummary.breakDown = this.ratingSummary.breakDown.reverse()
-   }
+
+  }
+
+  ngOnChanges() {
+     if (this.ratingSummary && this.ratingSummary.breakDown) {
+      this.ratingSummary.breakDown = this.ratingSummary.breakDown.reverse()
+      // console.log('this.ratingSummary.breakDown', this.ratingSummary.breakDown)
+    }
   }
 
   getRatingIcon(ratingIndex: number, avg: number): 'star' | 'star_border' | 'star_half' {
