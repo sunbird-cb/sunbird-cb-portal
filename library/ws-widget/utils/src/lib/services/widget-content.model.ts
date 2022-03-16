@@ -134,6 +134,7 @@ export namespace NsContent {
     RESOURCE = 'Learning Resource',
     GOALS = 'GOALS',
     PLAYLIST = 'PLAYLIST',
+    PRACTICE_RESOURCE = 'Practice Question Set',
     // following will not be available soon
     /**
      * @deprecated The type should not be used
@@ -324,6 +325,8 @@ export namespace NsContent {
     // Added on UI Only
     CERTIFICATION = 'application/certification',
     PLAYLIST = 'application/playlist',
+    QUESTION_SET = 'application/vnd.sunbird.questionset',
+    QUESTION = 'application/vnd.sunbird.question',
     UNKNOWN = 'application/unknown',
   }
   export enum EDisplayContentTypes {

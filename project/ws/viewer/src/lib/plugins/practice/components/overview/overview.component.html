@@ -1,0 +1,110 @@
+<!-- <div class="overview-container">
+  <mat-card>
+    <div class="flex flex-wrapped flex-center padding-s">
+      <div class="card-section">
+        <h3 class="mat-h3 text-justify">
+          {{ learningObjective | pipeLimitTo: 300 }}
+        </h3>
+      </div>
+      <div class="card-section">
+        <h3 class="mat-h3">
+          <ng-container i18n="quiz difficulty label">Difficulty : </ng-container>
+          {{ complexityLevel }}
+        </h3>
+        <h3 class="mat-h3">
+          <ng-container i18n="quiz duration label">Duration : </ng-container>
+          <ng-container *ngIf="duration">{{
+            duration | pipeDurationTransform: 'hms'
+          }}</ng-container>
+          <ng-container *ngIf="!duration">{{
+            timeLimit | pipeDurationTransform: 'hms'
+          }}</ng-container>
+        </h3>
+        <h3 class="mat-h3">
+          <ng-container i18n="quiz number of questions label">Questions : </ng-container>
+          {{ noOfQuestions }}
+        </h3>
+      </div>
+    </div>
+    <div class="text-center">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="userSelection.emit('start')"
+        class="margin-right-m"
+        i18n="button start quiz"
+      >
+        Start
+      </button>
+    </div>
+  </mat-card>
+</div> -->
+<div class="flex auto-w ws-mat-primary-lite-background-important">
+  <div class="flex flex-1 max-w margin-right-m">
+    <img [src]="staticImage" alt="exam image" />
+  </div>
+  <div class="flex flex-1 flex-column margin-left-l ws-mat-accent-border border-custom">
+    <div class="flex flex-1 flex-column margin-top-m">
+      <span class="mat-headline text-justify">{{learningObjective | pipeLimitTo: 300 }}</span>
+      <a mat-button (click)="overviewed('start')" [class.spinner]="loading" [disabled]="loading" class="ws-mat-primary-background text-white m-w padding-xs">
+        <span class="padding-xs" i18n>Start assessment now</span>
+      </a>
+      <div class="flex margin-top-l flex-column">
+        <span class="mat-subheading-2">Summary</span>
+        <ng-container [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{
+                  icon: '/assets/icons/content/assessment.svg',
+                  isSVG: true,
+                  text: noOfQuestions + ' questions'
+                }"></ng-container>
+        <ng-container *ngIf="questionTYP.PRACTICE_RESOURCE === primaryCategory"
+          [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{
+                  icon: 'replay',
+                  isSVG: false,
+                  text: 'Unlimited retakes allowed'
+                }"></ng-container>
+        <ng-container *ngIf="complexityLevel"
+          [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{
+                        icon: 'replay',
+                        isSVG: false,
+                        text: complexityLevel
+                      }"></ng-container>
+        <ng-container *ngIf="timeLimit"
+          [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{
+                              icon: 'replay',
+                              isSVG: false,
+                              text: ( timeLimit | pipeDurationTransform: 'hms')
+                            }"></ng-container>
+        <ng-container *ngIf="questionTYP.PRACTICE_RESOURCE  !==primaryCategory"
+          [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{
+                  icon: 'replay',
+                  isSVG: false,
+                  text: 'Unlimited retakes not allowed'
+                }"></ng-container>
+      </div>
+      <div class="flex flex-1 flex-column margin-top-l">
+        <span class="mat-subheading-2">Points to note</span>
+        <div class="flex flex-column">
+          <ng-container *ngFor="let c of points" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{
+                  icon: c.icon,
+                  text: c.text
+                }"></ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-1"></div>
+</div>
+<ng-template #detail let-icon="icon" let-text="text">
+  <mat-card class="flex max-card-w customcard margin-top-xs ws-mat-primary-tags">
+    <mat-icon>{{icon}}</mat-icon>
+    <span class="mat-body-2 margin-left-xs">{{text}}</span>
+  </mat-card>
+</ng-template>
+
+<ng-template #testdetail let-icon="icon" let-text="text" let-isSVG="isSVG">
+  <mat-card class="flex max-card-w customcard margin-top-xs ws-mat-primary-tags">
+    <mat-icon color="accent" *ngIf="!isSVG">{{icon}}</mat-icon>
+    <img *ngIf="isSVG" [src]="icon" alt="Assessment" class="margin-right-xs">
+    <span class="mat-body-2 margin-left-xs">{{text}}</span>
+  </mat-card>
+</ng-template>

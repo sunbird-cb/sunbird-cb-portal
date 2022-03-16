@@ -89,7 +89,8 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
   private populateContentPlayWidget(content: NsContent.IContent) {
     if (
       content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE ||
-      content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT
+      // content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT
+       content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
     ) {
       switch (content.mimeType) {
         case NsContent.EMimeTypes.M3U8:

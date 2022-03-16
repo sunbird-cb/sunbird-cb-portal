@@ -340,6 +340,7 @@ export namespace NsContent {
     RESOURCE = 'Learning Resource',
     GOALS = 'GOALS',
     PLAYLIST = 'PLAYLIST',
+    PRACTICE_RESOURCE = 'Practice Question Set',
     // following will not be available soon
     /**
      * @deprecated The type should not be used
@@ -361,6 +362,7 @@ export namespace NsContent {
 
   export enum EResourcePrimaryCategories {
     LEARNING_RESOURCE = 'Learning Resource',
+    PRACTICE_RESOURCE = 'Practice Question Set',
   }
 
   export enum EMiscPlayerSupportedCollectionTypes {
@@ -410,6 +412,7 @@ export namespace NsContent {
     CHANNEL = 'application/channel',
     COLLECTION_RESOURCE = 'resource/collection',
     APPLICATION_JSON = 'application/json',
+    PRACTICE_RESOURCE = 'application/vnd.sunbird.questionset',
     // Added on UI Only
     CERTIFICATION = 'application/certification',
     PLAYLIST = 'application/playlist',
