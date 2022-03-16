@@ -69,7 +69,6 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
         }
         this.isFetchingDataComplete = true
     }
-    
     async fetchContinueLearning(collectionId: string, identifier: string): Promise<boolean> {
         return new Promise(resolve => {
             let userId
@@ -91,7 +90,7 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
                         for (const content of data.result.contentList) {
                             if (content.contentId === identifier && content.progressdetails) {
                                 try {
-                                    const progressdetails = JSON.parse(content.progressdetails)
+                                   // const progressdetails = JSON.parse(content.progressdetails)
                                     // this.widgetResolverTestData.widgetData.resumePage = Number(content.progressdetails.current.pop())
                                    // console.log(progressdetails)
                                 } catch { }

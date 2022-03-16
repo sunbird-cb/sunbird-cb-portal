@@ -4,13 +4,11 @@ import { NSPractice } from './practice.model'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { retry } from 'rxjs/operators'
 
-
 const API_END_POINTS = {
   ASSESSMENT_SUBMIT_V2: `/apis/protected/v8/user/evaluate/assessment/submit/v2`,
   QUESTION_PAPER_SECTIONS: `/apis/proxies/v8/assessment/read`,
-  QUESTION_PAPER_QUESTIONS: `/apis/proxies/v8/question/read`
+  QUESTION_PAPER_QUESTIONS: `/apis/proxies/v8/question/read`,
 }
-
 @Injectable({
   providedIn: 'root',
 })
@@ -33,7 +31,7 @@ export class PracticeService {
   // }
   startSection(section: NSPractice.IPaperSection) {
     if (section) {
-      let sections = this.secAttempted.getValue()
+      const sections = this.secAttempted.getValue()
       for (let i = 0; sections && i < sections.length; i += 1) {
         if (sections[i] && section.identifier === sections[i].identifier) {
           sections[i].isAttempted = true
@@ -114,11 +112,11 @@ export class PracticeService {
   }
   getQuestions(identifiers: string[]): Observable<{ count: Number, questions: any[] }> {
     const data = {
-      "request": {
-        "search": {
-          "identifier": identifiers
-        }
-      }
+      request: {
+        search: {
+          identifier: identifiers,
+        },
+      },
     }
     return this.http.post<{ count: Number, questions: any[] }>(API_END_POINTS.QUESTION_PAPER_QUESTIONS, data)
   }
