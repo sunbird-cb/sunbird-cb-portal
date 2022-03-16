@@ -2,9 +2,10 @@ import { Component, OnInit, Inject } from '@angular/core'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { EventService, WsEvents, LoggerService } from '@sunbird-cb/utils/src/public-api'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
-import { RatingService } from '@ws/app/src/lib/routes/app-toc/services/rating.service'
+import { RatingService } from '@sunbird-cb/collection/src/lib/_services/rating.service'
 import { switchMap, takeUntil } from 'rxjs/operators'
 import { Subject } from 'rxjs'
+import { NsAppRating } from '@ws/app/src/lib/routes/app-toc/models/rating.model'
 
 @Component({
   selector: 'ws-widget-content-rating-v2-dialog',
@@ -63,11 +64,11 @@ export class ContentRatingV2DialogComponent implements OnInit {
 
   submitRating(feedbackForm: any) {
     if (!this.formDisabled) {
-      const req = {
+      const req: NsAppRating.IRating = {
         activity_Id: this.data.content.identifier || '',
         userId: this.data.userId || '',
         activity_type: this.data.content.primaryCategory || '',
-        rating: this.userRating,
+        rating: this.userRating || 0,
         review: feedbackForm.value.review || '',
       }
 
