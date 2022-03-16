@@ -14,6 +14,9 @@ export class RatingSummaryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+   if (this.ratingSummary && this.ratingSummary.breakDown) {
+     this.ratingSummary.breakDown = this.ratingSummary.breakDown.reverse()
+   }
   }
 
   getRatingIcon(ratingIndex: number, avg: number): 'star' | 'star_border' | 'star_half' {
