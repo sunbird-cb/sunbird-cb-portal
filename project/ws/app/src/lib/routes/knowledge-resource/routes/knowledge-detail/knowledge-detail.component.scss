@@ -25,8 +25,13 @@
 }
 .url_text {
     word-break: break-all;
+    overflow: hidden;
 }
-@media screen and (max-width:920px) {
+.url_value {
+    width: 100%;
+    background-color: transparent;
+}
+@media screen and (max-width:768px) {
     .url_text {
         line-height: 1.5;
     }
@@ -80,4 +85,12 @@ a.share_link {
     background-color: transparent!important;
     height: 55px;
     display: flex;
+    cursor: pointer;
+}
+
+
+@media screen and (max-width:480px) {
+    .resource_img {
+        width: 100%;
+    }
 }
