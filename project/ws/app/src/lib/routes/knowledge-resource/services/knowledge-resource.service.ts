@@ -66,7 +66,7 @@ export class KnowledgeResourceService {
   countFileType(fileList: NSKnowledgeResource.IKrFiles[], flType: string) {
       let count = 0
       if (fileList && fileList.length > 0 && fileType.includes(flType)) {
-        if (flType = 'image') {
+        if (flType === 'image') {
           count = (_.filter(fileList, f => _.includes(imageTypes, f.fileType)) || []).length
         } else {
           count = (_.filter(fileList, { fileType: flType }) || []).length
