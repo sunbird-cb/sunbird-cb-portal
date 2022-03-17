@@ -1,6 +1,22 @@
 @import "ws-common";
 @import "ws-vars";
 
+.percent-div {
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    z-index: 2;
+    width: 309px;
+    height: 369px;
+    background: #fff;
+    box-shadow: 2px 5px 11px rgb(0 0 0 / 21%);
+}
+.transform15 {
+    transform: scale(1.5);
+}
+.center {
+    align-items: center;
+}
 .auto-w {
     width: 100% !important;
     flex-direction: row;
@@ -71,3 +87,23 @@
     margin: $size-xs;
     box-shadow: none !important;
 }
+.foldtl {
+    position: relative;
+    -webkit-box-shadow: 5px 5px 5px rgba(0,0,0,0.8);
+    -moz-box-shadow: 5px 5px 5px rgba(0,0,0,0.8);
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.8);
+  }
+   
+  .foldl:before {
+    content: "";
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 0px;
+    height: 0px;
+    border-bottom: 70px solid #eee;
+    border-left: 70px solid #272822; /*Set to background color, not transparent!*/
+    -webkit-box-shadow: 7px 7px 7px rgba(0,0,0,0.3);
+    -moz-box-shadow: 7px 7px 7px rgba(0,0,0,0.3);
+    box-shadow: 7px 7px 7px rgba(0,0,0,0.3);
+  }

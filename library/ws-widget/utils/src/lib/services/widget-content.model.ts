@@ -133,8 +133,11 @@ export namespace NsContent {
     MODULE = 'Course Unit',
     RESOURCE = 'Learning Resource',
     GOALS = 'GOALS',
-    PLAYLIST = 'PLAYLIST',
     PRACTICE_RESOURCE = 'Practice Question Set',
+    FTB_QUESTION = 'FTB Question',
+    MTF_QUESTION = 'MTF Question',
+    MULTIPLE_CHOICE_QUESTION = 'Multiple Choice Question',
+    SINGLE_CHOICE_QUESTION = 'Single Choice Question',
     // following will not be available soon
     /**
      * @deprecated The type should not be used

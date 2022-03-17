@@ -1,3 +1,5 @@
+import { NsContent } from '@sunbird-cb/collection/src/public-api'
+
 export namespace NSPractice {
   export interface IQuiz {
     timeLimit: number
@@ -216,5 +218,61 @@ export namespace NSPractice {
     totalQueAttempted: number
     nextSection: string | null
     attemptData?: { questionId: string, answers: any[] } | null
+  }
+
+  export interface IResponseOptions {
+    selectedAnswer: string | boolean
+    index: number
+  }
+  export interface IRScratch {
+    identifier: string
+    primaryCategory: string
+    mimeType: string
+    objectType: 'Question'
+    qType: string
+    editorState: {
+      options?: any[]
+      selectedAnswer?: string | null
+    }
+  }
+  export interface IMCQ_SCA extends IRScratch {
+    primaryCategory: NsContent.EPrimaryCategory.SINGLE_CHOICE_QUESTION
+    mimeType: NsContent.EMimeTypes.QUESTION
+    qType: 'MCQ-MCA',
+    editorState: {
+      options: IResponseOptions[]
+    }
+  }
+  export interface IMCQ_MCA extends IRScratch{
+    primaryCategory: NsContent.EPrimaryCategory.MULTIPLE_CHOICE_QUESTION
+    mimeType: NsContent.EMimeTypes.QUESTION
+    qType: 'MCQ-MCA',
+    editorState: {
+      options: IResponseOptions[]
+    }
+  }
+  export interface IMCQ_MTF extends IRScratch{
+    primaryCategory: NsContent.EPrimaryCategory.MTF_QUESTION
+    mimeType: NsContent.EMimeTypes.QUESTION
+    qType: 'MTF',
+    editorState: {
+      options: IResponseOptions[]
+    }
+  }
+  export interface IMCQ_FTB extends IRScratch{
+    primaryCategory: NsContent.EPrimaryCategory.FTB_QUESTION
+    mimeType: NsContent.EMimeTypes.QUESTION
+    qType: 'FTB'
+    editorState: {
+      selectedAnswer: string | null
+    }
+  }
+  export interface IQuizSubmit {
+    timeLimit: Number
+    isAssessment: boolean
+    identifier: string
+    objectType: 'QuestionSet',
+    primaryCategory: NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+    children: IRScratch[]
   }
 }

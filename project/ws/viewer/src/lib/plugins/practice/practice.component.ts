@@ -180,7 +180,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       const qTyp = question.qType
 
       switch (qTyp) {
-        // 'mcq-sca' | 'mcq-mca' | 'fitb' | 'mtf'
+        // 'mcq-sca' | 'mcq-mca' | 'ftb' | 'mtf'
         case 'mcq-sca':
         case 'MCQ-SCA':
         case 'mcq-mca':
@@ -422,10 +422,37 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   back() {
     this.viewState = 'initial'
   }
+  get generateRequest(): NSPractice.IQuizSubmit {
+    let request: NSPractice.IQuizSubmit = {
+      identifier: this.identifier,
+      primaryCategory: NsContent.EPrimaryCategory.PRACTICE_RESOURCE,
+      isAssessment: true,
+      objectType: 'QuestionSet',
+      timeLimit: this.quizJson.timeLimit,
+      children: []
+    }
+    console.log(request)
+    return request
+  }
   submitQuiz() {
     this.raiseTelemetry('quiz', null, 'submit')
     this.isSubmitted = true
     this.ngOnDestroy()
+    debugger
+    let response = this.generateRequest
+    if (response.identifier) {
+      const submitQuizJson = JSON.parse(JSON.stringify(this.quizJson))
+      let req = this.quizSvc.createAssessmentSubmitRequest(
+        this.identifier,
+        this.name,
+        {
+          ...submitQuizJson,
+          timeLimit: this.quizJson.timeLimit * 1000,
+        },
+        this.questionAnswerHash,
+      )
+      console.log(req)
+    }
     if (!this.quizJson.isAssessment) {
       this.viewState = 'review'
       this.calculateResults()
@@ -525,7 +552,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           correctOptions: question.options
             .filter(option => option.isCorrect)
             .map(option =>
-              question.questionType === 'fitb' ? option.text : option.optionId,
+              question.questionType === 'ftb' ? option.text : option.optionId,
             ),
           correctMtfOptions: question.options
             .filter(option => option.isCorrect)
@@ -544,7 +571,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       let selectedOptions: any =
         this.questionAnswerHash[answer.questionId] || []
       if (
-        answer.questionType === 'fitb' &&
+        answer.questionType === 'ftb' &&
         this.questionAnswerHash[answer.questionId] &&
         this.questionAnswerHash[answer.questionId][0]
       ) {

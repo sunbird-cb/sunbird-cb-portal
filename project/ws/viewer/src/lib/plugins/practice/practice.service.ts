@@ -72,7 +72,7 @@ export class PracticeService {
           }
           return option
         })
-      } if (question.questionType === 'fitb') {
+      } if (question.questionType === 'ftb') {
         for (let i = 0; i < question.options.length; i += 1) {
           if (questionAnswerHash[question.questionId]) {
             question.options[i].response = questionAnswerHash[question.questionId][0].split(',')[i]
@@ -101,7 +101,7 @@ export class PracticeService {
       question.question = ''
       question.options.map(option => {
         option.hint = ''
-        option.text = question.questionType === 'fitb' || question.questionType === 'mtf' ? option.text : ''
+        option.text = question.questionType === 'ftb' || question.questionType === 'mtf' ? option.text : ''
       })
     })
     return requestData

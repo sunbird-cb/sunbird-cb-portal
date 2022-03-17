@@ -12,7 +12,7 @@
 }
 
 .max-w {
-    max-width: 424px;
+    width: 424px;
     @include breakpoint-lt-s {
         max-width: fit-content;
     }
