@@ -44,8 +44,10 @@
                 </span>
 
                 <span class="attach_links margin-right-s" *ngIf="resource.additionalProperties.URL && resource.additionalProperties.URL.length > 0">
-                    <p class="mat-body-2" i18n>    <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>
-                       {{ resource.additionalProperties.URL.length }} URL </p>
+                    <p class="mat-body-2">
+
+                          <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>
+                       {{ itemCount(resource.additionalProperties.URL) }} URL </p>
 
                 </span>
                 <span class="attach_links" *ngIf="resource?.additionalProperties?.krFiles?.length > 0 ">
@@ -58,29 +60,41 @@
             </mat-card>
 
 
+    <ng-container *ngIf="resource.additionalProperties.URL && resource.additionalProperties.URL.length > 0 && resource.additionalProperties.URL !== []">
 
-            <!-- <div *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0"> -->
-            <mat-accordion *ngIf="resource.additionalProperties.URL && resource.additionalProperties.URL.length > 0 && resource.additionalProperties.URL != []">
-                <mat-expansion-panel  *ngFor="let item of resource.additionalProperties.URL | filter : searchText" class="padding-m mat-card margin-bottom-s w-full">
+        <ng-container  *ngFor="let item of resource.additionalProperties.URL | filter : searchText">           <!-- <div *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0"> -->
+            <mat-accordion *ngIf="item !== '[]'">
+                <mat-expansion-panel   class="padding-m mat-card margin-bottom-s w-full">
 
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                                <a class="mat-h3  margin-remove-bottom" i18n role="title"><mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>URL </a>
+                            <a class="mat-h3  margin-remove-bottom" i18n role="title"><mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>{{item.name}} </a>
 
                         </mat-panel-title>
 
                     </mat-expansion-panel-header>
                     <div class="mat-panel-body">
-                        <div class="flex flex-row justify-between item_box">
-                            <p class="url_text">{{item}}  </p>
-                          <a href="{{item}}" target="_blank" class="share_link"> <mat-icon class="align-bottom ws-mat-default-text margin-right-xs">open_in_new</mat-icon></a>
+                        <div class="flex flex-row justify-between item_box ">
+                             <div class="flex w-full">
+                                <input type="text" [value]="item.value" #userinput class="w-full url_value border-0">
+                             </div>
+                             <div class="flex flew-row margin-left-s">
+                                <a href="{{item.value}}" target="_blank" class="share_link">
+                                    <mat-icon class="align-bottom ws-mat-default-text margin-right-xs">open_in_new</mat-icon>
+                                 </a>
+
+                                 <a (click)="copyInputMessage(item.value)" class="share_link">
+                                     <mat-icon class="align-bottom ws-mat-default-text">content_copy</mat-icon>
+                                 </a>
+                             </div>
+
                         </div>
 
                     </div>
                 </mat-expansion-panel>
             </mat-accordion>
-
-
+        </ng-container>
+    </ng-container>
 
             <mat-accordion *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0">
                 <mat-expansion-panel  *ngFor="let item of resource.additionalProperties.krFiles | filter : searchText" class="padding-m mat-card margin-bottom-s w-full">
@@ -93,10 +107,6 @@
                                 <a class="mat-h3 margin-remove-bottom" i18n role="title" *ngIf="item.url && item.fileType !== 'IMAGE'" >
                                     <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs"> {{ item.name }}
                                 </a>
-
-
-                            <!-- <div >
-                            </div> -->
                         </mat-panel-title>
 
                     </mat-expansion-panel-header>
@@ -113,6 +123,5 @@
             </mat-accordion>
 
         </div>
-
     </div>
 </div>
