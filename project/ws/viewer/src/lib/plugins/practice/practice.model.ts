@@ -113,6 +113,7 @@ export namespace NSPractice {
     identifier: string
     description: string
     containsUserData: string
+    minimumPassPercentage: number
     allowSkip: string
     compatibilityLevel: number
     trackable: {

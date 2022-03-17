@@ -18,6 +18,7 @@ export class PracticeService {
   paperSections: BehaviorSubject<NSPractice.IQPaper | null> = new BehaviorSubject<NSPractice.IQPaper | null>(null)
   questionAnswerHash: BehaviorSubject<NSPractice.IQAnswer> = new BehaviorSubject<NSPractice.IQAnswer>({})
   secAttempted: BehaviorSubject<NSPractice.ISecAttempted[] | []> = new BehaviorSubject<NSPractice.ISecAttempted[] | []>([])
+  // questionAnswerHashV2:BehaviorSubject<NSPractice.IQAnswer> = new BehaviorSubject<NSPractice.IQAnswer>({})
   constructor(
     private http: HttpClient,
   ) { }
@@ -35,6 +36,19 @@ export class PracticeService {
       for (let i = 0; sections && i < sections.length; i += 1) {
         if (sections[i] && section.identifier === sections[i].identifier) {
           sections[i].isAttempted = true
+          sections[i].fullAttempted = false
+        }
+      }
+      this.secAttempted.next(sections)
+    }
+  }
+  setFullAttemptSection(section: NSPractice.IPaperSection) {
+    if (section) {
+      const sections = this.secAttempted.getValue()
+      for (let i = 0; sections && i < sections.length; i += 1) {
+        if (sections[i] && section.identifier === sections[i].identifier) {
+          sections[i].isAttempted = true
+          sections[i].fullAttempted = true
         }
       }
       this.secAttempted.next(sections)

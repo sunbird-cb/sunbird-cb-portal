@@ -30,9 +30,11 @@
     flex: 2;
 }
 .max-w {
-    max-width: 424px;
+    width: 424px;
+    flex: 1;
     @include breakpoint-lt-s {
         max-width: fit-content;
+        flex: 1;
     }
 }
 .m-w {

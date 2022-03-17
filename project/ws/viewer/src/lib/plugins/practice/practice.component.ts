@@ -98,36 +98,48 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     private viewerSvc: ViewerUtilService,
   ) {
     // this.getSections()
-    if (quizSvc.questionAnswerHash.value) {
-      this.questionAnswerHash = quizSvc.questionAnswerHash.getValue()
-    }
+    this.markedQuestions = new Set([])
+    this.questionAnswerHash = {}
+    // quizSvc.questionAnswerHash.subscribe(qaHash => {
+    //   this.questionAnswerHash = qaHash
+    // })
   }
   ngOnInit() {
     this.attemptSubscription = this.quizSvc.secAttempted.subscribe(data => {
       this.attemptSubData = data
     })
+    if (this.quizSvc.questionAnswerHash.value) {
+      this.questionAnswerHash = this.quizSvc.questionAnswerHash.getValue()
+    }
   }
   getSections(_event: NSPractice.TUserSelectionType) {
     // this.identifier
     this.fetchingSectionsStatus = 'fetching'
-    this.quizSvc.getSection('do_1134922417267752961130').subscribe((section: NSPractice.ISectionResponse) => {
-      // console.log(section)
+    if (this.quizSvc.paperSections && this.quizSvc.paperSections.value
+      && _.get(this.quizSvc.paperSections, 'value.questionSet.children')) {
+      this.paperSections = _.get(this.quizSvc.paperSections, 'value.questionSet.children')
       this.fetchingSectionsStatus = 'done'
-      if (section.responseCode && section.responseCode === 'OK') {
-        this.quizSvc.paperSections.next(section.result)
-        const tempObj = _.get(section, 'result.questionSet.children')
-        this.updataDB(tempObj)
-        this.paperSections = []
-        _.each(tempObj, o => {
-          if (this.paperSections) {
-            this.paperSections.push(o)
-          }
-        })
-        // this.paperSections = _.get(section, 'result.questionSet.children')
-        this.viewState = 'detail'
-        // this.overViewed(event)
-      }
-    })
+      this.viewState = 'detail'
+    } else {
+      this.quizSvc.getSection('do_1134922417267752961130').subscribe((section: NSPractice.ISectionResponse) => {
+        // console.log(section)
+        this.fetchingSectionsStatus = 'done'
+        if (section.responseCode && section.responseCode === 'OK') {
+          this.quizSvc.paperSections.next(section.result)
+          const tempObj = _.get(section, 'result.questionSet.children')
+          this.updataDB(tempObj)
+          this.paperSections = []
+          _.each(tempObj, o => {
+            if (this.paperSections) {
+              this.paperSections.push(o)
+            }
+          })
+          // this.paperSections = _.get(section, 'result.questionSet.children')
+          this.viewState = 'detail'
+          // this.overViewed(event)
+        }
+      })
+    }
   }
   updataDB(sections: NSPractice.IPaperSection[]) {
     const data: NSPractice.ISecAttempted[] = []
@@ -145,32 +157,44 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     // console.log(data)
     this.quizSvc.secAttempted.next(data)
   }
+  get secQuestions(): any[] {
+    if (!(this.quizJson && this.quizJson.questions) || !(this.selectedSection && this.selectedSection.identifier)) {
+      return []
+    }
+    const qq = _.filter(this.quizJson.questions, { 'section': this.selectedSection.identifier })
+    return qq
+  }
   startSection(section: NSPractice.IPaperSection) {
     if (section) {
       this.fetchingQuestionsStatus = 'fetching'
       this.selectedSection = section
-      this.quizSvc.getQuestions(_.map(section.children, 'identifier')).subscribe(qqr => {
+      if (this.secQuestions && this.secQuestions.length > 0) {
         this.fetchingQuestionsStatus = 'done'
-        const question = _.get(qqr, 'result')
-        const codes = _.compact(_.map(this.quizJson.questions, 'section') || [])
-        this.quizSvc.startSection(section)
-        // console.log(this.quizSvc.secAttempted.value)
-        _.eachRight(question.questions, q => {
-          // const qHtml = document.createElement('div')
-          // qHtml.innerHTML = q.editorState.question
-          if (codes.indexOf(section.code) === -1) {
-            this.quizJson.questions.push({
-              section: section.code,
-              question: q.editorState.question, // qHtml.textContent || qHtml.innerText || '',
-              multiSelection: ((q.qType || '').toLowerCase() === 'mcq-mca' ? true : false),
-              questionType: (q.qType || '').toLowerCase(),
-              questionId: q.identifier,
-              options: this.getOptions(q),
-            })
-          }
-        })
         this.overViewed('start')
-      })
+      } else {
+        this.quizSvc.getQuestions(_.map(section.children, 'identifier')).subscribe(qqr => {
+          this.fetchingQuestionsStatus = 'done'
+          const question = _.get(qqr, 'result')
+          const codes = _.compact(_.map(this.quizJson.questions, 'section') || [])
+          this.quizSvc.startSection(section)
+          // console.log(this.quizSvc.secAttempted.value)
+          _.eachRight(question.questions, q => {
+            // const qHtml = document.createElement('div')
+            // qHtml.innerHTML = q.editorState.question
+            if (codes.indexOf(section.code) === -1) {
+              this.quizJson.questions.push({
+                section: section.identifier,
+                question: q.editorState.question, // qHtml.textContent || qHtml.innerText || '',
+                multiSelection: ((q.qType || '').toLowerCase() === 'mcq-mca' ? true : false),
+                questionType: (q.qType || '').toLowerCase(),
+                questionId: q.identifier,
+                options: this.getOptions(q),
+              })
+            }
+          })
+          this.overViewed('start')
+        })
+      }
     }
   }
   getOptions(question: NSPractice.IQuestionV2): NSPractice.IOption[] {
@@ -294,13 +318,15 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     return this.currentQuestionIndex
   }
   get totalQCount(): number {
-    const questions = _.get(this.quizJson, 'questions') || []
+    const questions = this.secQuestions || []
     return questions.length
   }
   backToSections() {
     this.viewState = 'detail'
   }
   ngOnDestroy() {
+    // this.markedQuestions = new Set([])
+    // this.questionAnswerHash = {}
     if (this.attemptSubscription) {
       this.attemptSubscription.unsubscribe()
     }
@@ -338,8 +364,6 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     this.viewState = 'attempt'
     this.getNextQuestion(this.currentQuestionIndex)
     this.startTime = Date.now()
-    this.markedQuestions = new Set([])
-    this.questionAnswerHash = {}
     this.currentQuestionIndex = 0
     this.timeLeft = this.quizJson.timeLimit
     if (this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
@@ -393,8 +417,22 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.questionAnswerHash[question.questionId] = [optionId]
     }
     this.quizSvc.qAnsHash(this.questionAnswerHash)
-  }
+    const answered = _.mapKeys(this.quizSvc.questionAnswerHash.getValue())
+    if (this.markSectionAsComplete(answered) && this.selectedSection) {
+      this.quizSvc.setFullAttemptSection(this.selectedSection)
+    }
 
+
+  }
+  markSectionAsComplete(answered: any): boolean {
+    let seted = false
+    _.each(this.secQuestions, q => {
+      if (!answered[q.questionId]) {
+        seted = true
+      }
+    })
+    return seted
+  }
   proceedToSubmit() {
     if (this.timeLeft || this.primaryCategory === this.ePrimaryCategory.PRACTICE_RESOURCE) {
       if (
