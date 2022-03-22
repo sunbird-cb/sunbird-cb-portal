@@ -69,7 +69,7 @@
                         text: complexityLevel
                       }"></ng-container>
         <ng-container *ngIf="timeLimit" [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{
-                              icon: 'replay',
+                              icon: 'timer',
                               isSVG: false,
                               text: ( timeLimit | pipeDurationTransform: 'hms')
                             }"></ng-container>

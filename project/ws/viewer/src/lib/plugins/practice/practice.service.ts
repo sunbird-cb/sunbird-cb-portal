@@ -6,6 +6,7 @@ import { retry } from 'rxjs/operators'
 
 const API_END_POINTS = {
   ASSESSMENT_SUBMIT_V2: `/apis/protected/v8/user/evaluate/assessment/submit/v2`,
+  ASSESSMENT_SUBMIT_V3: `/apis/protected/v8/user/evaluate/assessment/submit/v2`,
   QUESTION_PAPER_SECTIONS: `/apis/proxies/v8/assessment/read`,
   QUESTION_PAPER_QUESTIONS: `/apis/proxies/v8/question/read`,
 }
@@ -55,12 +56,16 @@ export class PracticeService {
     }
   }
   qAnsHash(value: any) {
+    // tslint:disable-next-line
+    console.log(value, '=====')
     this.questionAnswerHash.next(value)
   }
   submitQuizV2(req: NSPractice.IQuizSubmitRequest): Observable<NSPractice.IQuizSubmitResponse> {
     return this.http.post<NSPractice.IQuizSubmitResponse>(API_END_POINTS.ASSESSMENT_SUBMIT_V2, req)
   }
-
+  submitQuizV3(req: NSPractice.IQuizSubmit): Observable<NSPractice.IQuizSubmitResponseV2> {
+    return this.http.post<NSPractice.IQuizSubmitResponseV2>(API_END_POINTS.ASSESSMENT_SUBMIT_V3, req)
+  }
   createAssessmentSubmitRequest(
     identifier: string,
     title: string,
@@ -133,5 +138,24 @@ export class PracticeService {
       },
     }
     return this.http.post<{ count: Number, questions: any[] }>(API_END_POINTS.QUESTION_PAPER_QUESTIONS, data)
+  }
+  shuffle(array: any[] | (string | undefined)[]) {
+    let currentIndex = array.length
+    let temporaryValue
+    let randomIndex
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex)
+      currentIndex -= 1
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex]
+      array[currentIndex] = array[randomIndex]
+      array[randomIndex] = temporaryValue
+    }
+
+    return array
   }
 }

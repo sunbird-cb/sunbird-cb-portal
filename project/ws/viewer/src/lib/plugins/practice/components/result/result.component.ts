@@ -7,9 +7,9 @@ import { NsContent } from '@sunbird-cb/utils/src/public-api'
   styleUrls: ['./result.component.scss'],
 })
 export class ResultComponent implements OnInit {
-  @Input() percentage: number = 0
-  @Input() levelText: string = 'Level 2 Passed'
-  @Input() isPassed: boolean = false
+  @Input() percentage = 0
+  @Input() levelText = 'Level 2 Passed'
+  @Input() isPassed = false
   staticImage = '/assets/images/exam/practice-test.png'
   questionTYP = NsContent.EPrimaryCategory
   constructor() { }

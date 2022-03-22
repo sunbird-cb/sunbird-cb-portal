@@ -28,7 +28,6 @@ export type FetchStatus = 'hasMore' | 'fetching' | 'done' | 'error' | 'none'
 })
 // ComponentCanDeactivate
 export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
-
   @Input() identifier = ''
   @Input() artifactUrl = ''
   @Input() name = ''
@@ -37,7 +36,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   @Input() duration = 0
   @Input() collectionId = ''
   @Input() primaryCategory = NsContent.EPrimaryCategory.PRACTICE_RESOURCE
-  @Input() quizJson = {
+  @Input() quizJson: { timeLimit: number, questions: NSPractice.IQuestion[], isAssessment: boolean } = {
     timeLimit: 0,
     questions: [
       {
@@ -118,13 +117,23 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     if (this.quizSvc.paperSections && this.quizSvc.paperSections.value
       && _.get(this.quizSvc.paperSections, 'value.questionSet.children')) {
       this.paperSections = _.get(this.quizSvc.paperSections, 'value.questionSet.children')
+      const showTimer = _.toLower(_.get(this.quizSvc.paperSections, 'value.questionSet.showTimer')) === 'yes'
+      if (showTimer) {
+        this.quizJson.timeLimit = (_.get(this.quizSvc.paperSections, 'value.questionSet.expectedDuration') || 0) * 60
+      }
       this.fetchingSectionsStatus = 'done'
       this.viewState = 'detail'
+      this.updateTimer()
     } else {
-      this.quizSvc.getSection('do_1134922417267752961130').subscribe((section: NSPractice.ISectionResponse) => {
+      this.quizSvc.getSection('do_11349706286239744011').subscribe((section: NSPractice.ISectionResponse) => {
         // console.log(section)
         this.fetchingSectionsStatus = 'done'
         if (section.responseCode && section.responseCode === 'OK') {
+          /** this is to enable or disable Timer */
+          const showTimer = _.toLower(_.get(section, 'result.questionSet.showTimer')) === 'yes'
+          if (showTimer) {
+            this.quizJson.timeLimit = section.result.questionSet.expectedDuration * 60
+          }
           this.quizSvc.paperSections.next(section.result)
           const tempObj = _.get(section, 'result.questionSet.children')
           this.updataDB(tempObj)
@@ -136,7 +145,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           })
           // this.paperSections = _.get(section, 'result.questionSet.children')
           this.viewState = 'detail'
-          // this.overViewed(event)
+          this.updateTimer()
         }
       })
     }
@@ -161,7 +170,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     if (!(this.quizJson && this.quizJson.questions) || !(this.selectedSection && this.selectedSection.identifier)) {
       return []
     }
-    const qq = _.filter(this.quizJson.questions, { 'section': this.selectedSection.identifier })
+    const qq = _.filter(this.quizJson.questions, { section: this.selectedSection.identifier })
     return qq
   }
   startSection(section: NSPractice.IPaperSection) {
@@ -230,21 +239,20 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           break
         case 'ftb':
         case 'FTB':
-        // tslint:disable
-        case 'SA':
-        case 'sa':
-          // tslint:enable
-          const ansHtml = document.createElement('div')
-          ansHtml.innerHTML = question.editorState.answer || '<p></p>'
+          _.each(question.editorState.options, op => {
+            const ansHtml = document.createElement('div')
+            ansHtml.innerHTML = op.value.body || '<p></p>'
 
-          const opIdHtml = document.createElement('div')
-          opIdHtml.innerHTML = question.answer || '<p></p>'
+            const opIdHtml = document.createElement('div')
+            opIdHtml.innerHTML = op.value.value || '<p></p>'
 
-          options.push({
-            optionId: opIdHtml.textContent || opIdHtml.innerText || '',
-            text: ansHtml.textContent || ansHtml.innerText || opIdHtml.textContent || opIdHtml.innerText || '',
-            isCorrect: true,
+            options.push({
+              optionId: op.value.value,
+              text: ansHtml.textContent || ansHtml.innerText || opIdHtml.textContent || opIdHtml.innerText || '',
+              isCorrect: op.answer,
+            })
           })
+
           break
         case 'mtf':
         case 'MTF':
@@ -253,7 +261,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               isCorrect: true,
               optionId: o.value.value,
               text: (o.answer || '').toString(),
-              hint: '',
+              hint: o.value.body || '',
               response: '',
               userSelected: false,
               matchForView: o.value.value,
@@ -361,13 +369,15 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   startQuiz() {
     // this.sidenavOpenDefault = true
     // setTimeout(() => { this.sidenavOpenDefault = false }, 500)
+    this.currentQuestionIndex = 0
     this.viewState = 'attempt'
     this.getNextQuestion(this.currentQuestionIndex)
+  }
+  updateTimer() {
     this.startTime = Date.now()
-    this.currentQuestionIndex = 0
     this.timeLeft = this.quizJson.timeLimit
-    if (this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
-      && this.quizJson.timeLimit > -1) {
+    // this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
+    if (this.quizJson.timeLimit > 0) {
       this.timerSubscription = interval(100)
         .pipe(
           map(
@@ -390,6 +400,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   fillSelectedItems(question: NSPractice.IQuestion, optionId: string) {
+    // debugger
     if (typeof (optionId) === 'string') {
       this.raiseTelemetry('mark', optionId, 'click')
     } if (this.viewState === 'answer') {
@@ -416,19 +427,20 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       this.questionAnswerHash[question.questionId] = [optionId]
     }
+    // tslint:disable-next-line
+    debugger
+    console.log(this.questionAnswerHash, '+++++')
     this.quizSvc.qAnsHash(this.questionAnswerHash)
-    const answered = _.mapKeys(this.quizSvc.questionAnswerHash.getValue())
+    const answered = (this.quizSvc.questionAnswerHash.getValue() || [])
     if (this.markSectionAsComplete(answered) && this.selectedSection) {
       this.quizSvc.setFullAttemptSection(this.selectedSection)
     }
-
-
   }
   markSectionAsComplete(answered: any): boolean {
-    let seted = false
+    let seted = true
     _.each(this.secQuestions, q => {
       if (!answered[q.questionId]) {
-        seted = true
+        seted = false
       }
     })
     return seted
@@ -458,48 +470,11 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
   back() {
-    this.viewState = 'initial'
+    this.proceedToSubmit()
   }
   get generateRequest(): NSPractice.IQuizSubmit {
-    let request: NSPractice.IQuizSubmit = {
-      identifier: this.identifier,
-      primaryCategory: NsContent.EPrimaryCategory.PRACTICE_RESOURCE,
-      isAssessment: true,
-      objectType: 'QuestionSet',
-      timeLimit: this.quizJson.timeLimit,
-      children: []
-    }
-    console.log(request)
-    return request
-  }
-  submitQuiz() {
-    this.raiseTelemetry('quiz', null, 'submit')
-    this.isSubmitted = true
-    this.ngOnDestroy()
-    debugger
-    let response = this.generateRequest
-    if (response.identifier) {
-      const submitQuizJson = JSON.parse(JSON.stringify(this.quizJson))
-      let req = this.quizSvc.createAssessmentSubmitRequest(
-        this.identifier,
-        this.name,
-        {
-          ...submitQuizJson,
-          timeLimit: this.quizJson.timeLimit * 1000,
-        },
-        this.questionAnswerHash,
-      )
-      console.log(req)
-    }
-    if (!this.quizJson.isAssessment) {
-      this.viewState = 'review'
-      this.calculateResults()
-    } else {
-      this.viewState = 'answer'
-    }
     const submitQuizJson = JSON.parse(JSON.stringify(this.quizJson))
-    this.fetchingResultsStatus = 'fetching'
-    const requestData: NSPractice.IQuizSubmitRequest = this.quizSvc.createAssessmentSubmitRequest(
+    const req = this.quizSvc.createAssessmentSubmitRequest(
       this.identifier,
       this.name,
       {
@@ -508,11 +483,148 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       },
       this.questionAnswerHash,
     )
+    const request: NSPractice.IQuizSubmit = {
+      identifier: this.identifier,
+      primaryCategory: NsContent.EPrimaryCategory.PRACTICE_RESOURCE,
+      isAssessment: true,
+      objectType: 'QuestionSet',
+      timeLimit: this.quizJson.timeLimit,
+      children: _.map(this.paperSections, (ps: NSPractice.IPaperSection) => {
+        return {
+          identifier: ps.identifier,
+          objectType: ps.objectType,
+          primaryCategory: ps.primaryCategory,
+          scoreCutoffType: ps.scoreCutoffType,
+          children: this.getQuestions(ps, req),
+        } as NSPractice.ISubSec
+      }),
+    }
+    // // tslint:disable-next-line
+    // console.log(request)
+    return request
+  }
+  getQuestions(section: NSPractice.IPaperSection, req: NSPractice.IQuizSubmitRequest): NSPractice.IRScratch[] {
+    const responseQ: NSPractice.IRScratch[] = []
+    if (section && section.identifier) {
+      const secQues = _.filter(req.questions, q => q.section === section.identifier)
+      _.each(secQues, sq => {
+        switch (_.toLower(sq.questionType || '')) {
+          case 'mcq-mca':
+            const mcqMca: NSPractice.IMCQ_MCA = {
+              identifier: sq.questionId,
+              mimeType: NsContent.EMimeTypes.QUESTION,
+              objectType: 'Question',
+              primaryCategory: NsContent.EPrimaryCategory.MULTIPLE_CHOICE_QUESTION,
+              qType: 'MCQ-MCA',
+              editorState: {
+                options: _.map(sq.options, (_o: NSPractice.IOption) => {
+                  return {
+                    index: (_o.optionId || '').toString(),
+                    selectedAnswer: !!_o.userSelected,
+                  } as NSPractice.IResponseOptions
+                }),
+              },
+            }
+            responseQ.push(mcqMca)
+            break
+          case 'mcq-sca':
+            const mcqSca: NSPractice.IMCQ_SCA = {
+              identifier: sq.questionId,
+              mimeType: NsContent.EMimeTypes.QUESTION,
+              objectType: 'Question',
+              primaryCategory: NsContent.EPrimaryCategory.SINGLE_CHOICE_QUESTION,
+              qType: 'MCQ-SCA',
+              editorState: {
+                options: _.map(sq.options, (_o: NSPractice.IOption) => {
+                  return {
+                    index: (_o.optionId || '').toString(),
+                    selectedAnswer: !!_o.userSelected,
+                  } as NSPractice.IResponseOptions
+                }),
+              },
+            }
+            responseQ.push(mcqSca)
+            break
+          case 'ftb':
+            const ftb: NSPractice.IMCQ_FTB = {
+              identifier: sq.questionId,
+              mimeType: NsContent.EMimeTypes.QUESTION,
+              objectType: 'Question',
+              primaryCategory: NsContent.EPrimaryCategory.FTB_QUESTION,
+              qType: 'FTB',
+              editorState: {
+                selectedAnswer: _.join(_.map(sq.options, (_o: NSPractice.IOption) => {
+                  return _o.response
+                }), ','),
+              },
+            }
+            responseQ.push(ftb)
+            break
+          case 'mtf':
+            const mtf: NSPractice.IMCQ_MTF = {
+              identifier: sq.questionId,
+              mimeType: NsContent.EMimeTypes.QUESTION,
+              objectType: 'Question',
+              primaryCategory: NsContent.EPrimaryCategory.MTF_QUESTION,
+              qType: 'MTF',
+              editorState: {
+                options: _.map(sq.options, (_o: NSPractice.IOption) => {
+                  return {
+                    index: _o.optionId,
+                    selectedAnswer: _o.response,
+                  } as NSPractice.IResponseOptions
+                }),
+              },
+            }
+            responseQ.push(mtf)
+            break
+        }
+      })
+    }
+    return responseQ
+  }
+  submitQuiz() {
+    this.raiseTelemetry('quiz', null, 'submit')
+    this.isSubmitted = true
+    this.ngOnDestroy()
+    // debugger
+    //  this.generateRequest
+    /// this above line have new response
+    // if (response.identifier) {
+    //   const submitQuizJson = JSON.parse(JSON.stringify(this.quizJson))
+    //   let req = this.quizSvc.createAssessmentSubmitRequest(
+    //     this.identifier,
+    //     this.name,
+    //     {
+    //       ...submitQuizJson,
+    //       timeLimit: this.quizJson.timeLimit * 1000,
+    //     },
+    //     this.questionAnswerHash,
+    //   )
+    //   console.log(req)
+    // }
+    if (!this.quizJson.isAssessment) {
+      this.viewState = 'review'
+      this.calculateResults()
+    } else {
+      this.viewState = 'answer'
+    }
+    // const submitQuizJson = JSON.parse(JSON.stringify(this.quizJson))
+    this.fetchingResultsStatus = 'fetching'
+    // const requestData: NSPractice.IQuizSubmitRequest = this.quizSvc.createAssessmentSubmitRequest(
+    //   this.identifier,
+    //   this.name,
+    //   {
+    //     ...submitQuizJson,
+    //     timeLimit: this.quizJson.timeLimit * 1000,
+    //   },
+    //   this.questionAnswerHash,
+    // )
 
-    const sanitizedRequestData: NSPractice.IQuizSubmitRequest = this.quizSvc.sanitizeAssessmentSubmitRequest(requestData)
+    // const sanitizedRequestData: NSPractice.IQuizSubmitRequest = this.quizSvc.sanitizeAssessmentSubmitRequest(requestData)
 
-    this.quizSvc.submitQuizV2(sanitizedRequestData).subscribe(
-      (res: NSPractice.IQuizSubmitResponse) => {
+    this.quizSvc.submitQuizV3(this.generateRequest).subscribe(
+      (res: NSPractice.IQuizSubmitResponseV2) => {
         // call content progress with status 2 i.e, completed
         this.updateProgress(2)
 
@@ -524,7 +636,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         this.numIncorrectAnswers = res.inCorrect
         this.numUnanswered = res.blank
         this.passPercentage = res.passPercent
-        this.result = res.result
+        this.result = res.overallResult
         if (this.result >= this.passPercentage) {
           this.isCompleted = true
         }
@@ -550,6 +662,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         if (top !== null) {
           top.scrollIntoView({ behavior: 'smooth', block: 'start' })
         }
+        this.clearStorage()
       },
       (_error: any) => {
         this.fetchingResultsStatus = 'error'
@@ -557,7 +670,13 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     )
     // this.fetchingResultsStatus = 'done'
   }
-
+  clearStorage() {
+    this.quizSvc.paperSections.next(null)
+    this.quizSvc.questionAnswerHash.next({})
+    this.quizSvc.qAnsHash({})
+    this.quizSvc.secAttempted.next([])
+    // this.isSubmitted = true
+  }
   showAnswers() {
     this.showMtfAnswers()
     this.showFitbAnswers()
@@ -565,18 +684,18 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   showMtfAnswers() {
-    if (this.questionsReference) {
-      this.questionsReference.forEach(questionReference => {
-        questionReference.matchShowAnswer()
-      })
-    }
+    // if (this.questionsReference) {
+    //   this.questionsReference.forEach(questionReference => {
+    //     questionReference.matchShowAnswer()
+    //   })
+    // }
   }
 
   showFitbAnswers() {
     if (this.questionsReference) {
-      this.questionsReference.forEach(questionReference => {
-        questionReference.functionChangeBlankBorder()
-      })
+      // this.questionsReference.forEach(questionReference => {
+      //   questionReference.functionChangeBlankBorder()
+      // })
     }
   }
 

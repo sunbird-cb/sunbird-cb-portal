@@ -19,7 +19,7 @@ $nav-height: 40px;
 .quiz-nav-bar {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  // align-items: center;
   min-height: $nav-height;
   overflow: hidden;
   font: inherit;
@@ -139,7 +139,7 @@ $nav-height: 40px;
   border-radius: $size-xs;
 }
 .not-started {
-  background-color: transparent;
+  background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.08) !important;
   border-radius: $size-xs;
 }
