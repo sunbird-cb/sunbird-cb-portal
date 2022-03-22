@@ -6,7 +6,9 @@ import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-
 import { Subscription } from 'rxjs'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 import { environment } from 'src/environments/environment'
+// tslint:disable
 import _ from 'lodash'
+// tslint:enable
 // import { AccessControlService } from '@ws/author/src/public-api'
 
 // interface IGroupWithFeatureWidgets extends NsAppsConfig.IGroup {
@@ -53,7 +55,6 @@ export class CardHubsListComponent extends WidgetBaseComponent
   public id = `hub_${Math.random()}`
 
   // private readonly featuresConfig: IGroupWithFeatureWidgets[] = []
-
 
   constructor(private configSvc: ConfigurationsService,
               private discussUtilitySvc: DiscussUtilsService,
@@ -157,7 +158,6 @@ export class CardHubsListComponent extends WidgetBaseComponent
     this.visible = !this.visible
   }
 
-
   hasRole(role: string[]): boolean {
     let returnValue = false
     role.forEach(v => {
@@ -168,9 +168,9 @@ export class CardHubsListComponent extends WidgetBaseComponent
     return returnValue
   }
 
-  isAllowed(portalName:string) {
+  isAllowed(portalName: string) {
     const roles =  _.get(environment.otherPortalRoles, portalName) || []
-    if(!(roles && roles.length))  {
+    if (!(roles && roles.length))  {
       return true
     }
     const value = this.hasRole(roles)

@@ -1,8 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core'
 import { KnowledgeResourceService } from '../../services/knowledge-resource.service'
 import { NSKnowledgeResource } from '../../models/knowledge-resource.models'
-// import { compact } from 'lodash'
-// import {  Router } from '@angular/router';
+
 
 @Component({
   selector: 'ws-app-knowledge-card',
@@ -15,7 +14,7 @@ export class KnowledgeCardComponent implements OnInit {
 
   @Input() resource!: any
   @Output() resourceBookmarkEvent = new EventEmitter<NSKnowledgeResource.IResourceData>()
-  time:number | undefined
+  time: number | undefined
 
   constructor(
     private kwResources: KnowledgeResourceService,

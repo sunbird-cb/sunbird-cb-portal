@@ -24,7 +24,6 @@ export class KnowledgeAllComponent implements OnInit, OnDestroy {
   sticky = false
   searchText = ''
 
-
   mode$ = this.isLtMedium$.pipe(map((isMedium: any) => (isMedium ? 'over' : 'side')))
 
   allResources!: NSKnowledgeResource.IResourceData[]
@@ -51,8 +50,6 @@ export class KnowledgeAllComponent implements OnInit, OnDestroy {
     }
 
   }
-
-
 
   refresh() {
         this.kwResources.getAllResources().subscribe((reponse: NSKnowledgeResource.IResourceResponse) => {

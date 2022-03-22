@@ -16,7 +16,6 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter'
 import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 import { MatExpansionModule } from '@angular/material/expansion'
 
-
 @NgModule({
   declarations: [
   KnowledgeAllComponent,

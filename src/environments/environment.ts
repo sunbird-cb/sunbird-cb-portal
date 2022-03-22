@@ -35,7 +35,7 @@ interface IEnvironment {
   azureOldBuket: string
   contentHost: string
   portalRoles: string[]
-  otherPortalRoles: {cbp: string[], mdo: string[], cbc:string[], frac:string[]}
+  otherPortalRoles: {cbp: string[], mdo: string[], cbc: string[], frac: string[]}
   mdoPortal: string,
   spvPortal: string,
   cbcPortal: string,
