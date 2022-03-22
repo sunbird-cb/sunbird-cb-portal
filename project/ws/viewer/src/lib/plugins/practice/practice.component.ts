@@ -428,8 +428,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.questionAnswerHash[question.questionId] = [optionId]
     }
     // tslint:disable-next-line
-    debugger
-    console.log(this.questionAnswerHash, '+++++')
+    // debugger
+    // console.log(this.questionAnswerHash, '+++++')
     this.quizSvc.qAnsHash(this.questionAnswerHash)
     const answered = (this.quizSvc.questionAnswerHash.getValue() || [])
     if (this.markSectionAsComplete(answered) && this.selectedSection) {
