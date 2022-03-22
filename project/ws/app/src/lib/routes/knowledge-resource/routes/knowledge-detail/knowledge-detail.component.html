@@ -37,10 +37,20 @@
                 <p class="mat-body-2 ws-mat-black60-text margin-bottom-s" i18n>
                     {{ resource?.description }}
                 </p>
-                <span class="attach_links margin-right-s" *ngIf="resource?.additionalProperties?.krFiles?.length > 0">
+                <!-- <span class="attach_links margin-right-s" *ngIf="resource?.additionalProperties?.krFiles?.length > 0">
                     <ng-container *ngIf="getNbOccur('PDF', resource.additionalProperties.krFiles ) || 0">
                         <p class="mat-body-2" i18n> <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs">  {{ getNbOccur('PDF', resource.additionalProperties.krFiles ) || 0 }} PDF</p>
                     </ng-container>
+                </span> -->
+                <!-- {{ resource.additionalProperties.totalFiles.length }} //
+                {{ resource.additionalProperties.totalFiles.images }} //
+                {{ resource.additionalProperties.totalFiles.pdf }} // -->
+                <span class="attach_links margin-right-m" *ngIf="resource.additionalProperties.totalFiles.pdf || resource.additionalProperties.totalFiles.pdf > 0">
+                    <p class="mat-body-2" i18n>  <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs">
+                        {{ resource?.additionalProperties?.totalFiles?.pdf }}
+
+                    </p>
+
                 </span>
 
                 <span class="attach_links margin-right-s" *ngIf="resource.additionalProperties.URL && resource.additionalProperties.URL.length > 0">
@@ -50,12 +60,21 @@
                        {{ itemCount(resource.additionalProperties.URL) }} URL </p>
 
                 </span>
-                <span class="attach_links" *ngIf="resource?.additionalProperties?.krFiles?.length > 0 ">
-                    <ng-container *ngIf="getNbOccur('IMAGE', resource.additionalProperties.krFiles ) || 0">
-                        <p class="mat-body-2" i18n> <mat-icon class="align-bottom ws-mat-default-text margin-right-xs">image</mat-icon>  {{ getNbOccur('IMAGE', resource.additionalProperties.krFiles ) || 0 }} IMAGE</p>
-                    </ng-container>
-                </span>
 
+
+                <span class="attach_links margin-right-m" *ngIf="resource.additionalProperties.totalFiles.images || resource.additionalProperties.totalFiles.images>0" >
+                    <p class="mat-body-2" i18n>  <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">image</mat-icon>
+                        {{ resource?.additionalProperties?.totalFiles?.images }}
+                    </p>
+
+                </span>
+                <span class="attach_links margin-right-m" *ngIf="resource.additionalProperties.totalFiles.doc || resource.additionalProperties.totalFiles.doc>0">
+                    <p class="mat-body-2" i18n>  <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">description</mat-icon>
+
+                        {{ resource?.additionalProperties?.totalFiles?.doc }}
+                    </p>
+
+                </span>
 
             </mat-card>
 
@@ -101,22 +120,34 @@
                     <mat-expansion-panel-header>
                         <mat-panel-title>
 
-                                <a class="mat-h3 margin-remove-bottom" i18n role="title"  *ngIf="item.url && item.fileType === 'IMAGE'" >
+                                <a class="mat-h3 margin-remove-bottom" i18n role="title"  *ngIf="item.url && item.fileType === 'jpg' || item.fileType === 'png' || item.fileType === 'PNG' || item.fileType === 'image/png' || item.fileType === 'JPG' || item.fileType === 'image/jpg'" >
                                     <mat-icon class="align-bottom ws-mat-default-text margin-right-xs">image</mat-icon>{{ item.name }}
                                 </a>
-                                <a class="mat-h3 margin-remove-bottom" i18n role="title" *ngIf="item.url && item.fileType !== 'IMAGE'" >
+                                <a class="mat-h3 margin-remove-bottom" i18n role="title" *ngIf="item.url && item.fileType === 'pdf' || item.fileType === 'PDF' ">
                                     <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs"> {{ item.name }}
+                                </a>
+                                <a class="mat-h3 margin-remove-bottom" i18n role="title"  *ngIf="item.url && item.fileType === 'doc' || item.fileType === 'DOC'" >
+                                    <mat-icon class="align-bottom ws-mat-default-text margin-right-xs">description</mat-icon>{{ item.name }}
                                 </a>
                         </mat-panel-title>
 
                     </mat-expansion-panel-header>
                     <div class="mat-panel-body">
-                        <div *ngIf="item.url && item.fileType === 'IMAGE'" >
+                        <div *ngIf="item.url && item.url !== '' && item.fileType === 'jpg' || item.fileType === 'png' || item.fileType === 'PNG' || item.fileType === 'image/png' || item.fileType === 'JPG' || item.fileType === 'image/jpg'">
                             <img [src]="getSafeUrl(item.url)" class="resource_img"/>
                         </div>
 
-                        <div *ngIf="item.url && item.fileType !== 'IMAGE'">
+                        <div *ngIf="item.url && item.url !== '' && item.fileType === 'pdf'">
+                            <!-- <iframe class="iframe iframe_box" [src]="getSafeUrl(item.url)" height="800" width="100%"></iframe> -->
+                            <object [data]="getSafeUrl(item.url)" type="application/pdf" class="iframe iframe_box" height="800" width="100%"></object>
+
+
+                        </div>
+                        <div *ngIf="item.url && item.url !== ' ' && item.fileType === 'doc'">
                             <iframe class="iframe iframe_box" [src]="getSafeUrl(item.url)" height="800" width="100%"></iframe>
+                            <!-- <object [data]="getSafeUrl(item.url)" type="application/doc" class="iframe iframe_box" height="800" width="100%"></object> -->
+
+
                         </div>
                     </div>
                 </mat-expansion-panel>
