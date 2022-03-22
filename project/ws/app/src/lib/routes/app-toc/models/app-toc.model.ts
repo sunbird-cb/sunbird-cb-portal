@@ -53,6 +53,7 @@ export namespace NsAppToc {
     webPage: number
     youtube: number
     interactivecontent: number
+    practiceTest: number
     [key: string]: number
   }
 }

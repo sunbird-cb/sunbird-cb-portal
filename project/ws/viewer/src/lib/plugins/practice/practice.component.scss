@@ -1,0 +1,157 @@
+@import "ws-vars";
+@import "ws-common";
+
+$nav-height: 40px;
+
+.quiz-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+// Contents of SideNav Menu
+.sidenav {
+  width: 206px;
+  background: inherit;
+}
+
+.quiz-nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: $nav-height;
+  overflow: hidden;
+  font: inherit;
+  flex-wrap: wrap;
+  // padding: 0 $size-s;
+  padding: 0;
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+}
+
+.sidenav-container {
+  flex: 1 1 auto;
+  height: calc(100% - #{$nav-height});
+}
+
+.circle {
+  position: relative;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 40px;
+}
+.ovel {
+  position: relative;
+  cursor: pointer;
+  width: 40px;
+  height: 26px;
+  border-radius: 43%;
+  text-align: center;
+  line-height: 23px;
+}
+
+.attempted-question {
+  border: solid #00e676 2px;
+  color: #00e676;
+}
+
+.marked-question {
+  border: solid orange 2px;
+  color: orange;
+}
+
+.add-goal-info {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.white-border {
+  border: solid white 2px;
+}
+
+.dark-border {
+  border: solid #666666 2px;
+}
+
+.card-section {
+  width: 40%;
+  margin: $size-s;
+
+  @include breakpoint-gt-xs {
+    width: 20%;
+    margin: $size-s;
+  }
+}
+.no-border {
+  box-shadow: none !important;
+}
+
+.min-w {
+  width: 437px;
+  max-height: 176px;
+  height: auto;
+}
+.br-8 {
+  border-radius: $size-s;
+}
+.text-white {
+  color: #fff !important;
+}
+.m-auto {
+  margin: auto !important;
+}
+.pad-0 {
+  padding: 0 !important;
+}
+.margin-zero {
+  margin: 0 !important;
+}
+.spinner:before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-top-color: #000000;
+  animation: spinner 0.8s linear infinite;
+}
+.complete {
+  background-color: RGBA(209, 57, 36, 0.1) !important;
+  border: 1px solid #1d8923 !important;
+  border-radius: $size-xs;
+}
+.incomplete {
+  background-color: RGBA(209, 57, 36, 0.1) !important;
+  border: 1px solid #d13924 !important;
+  border-radius: $size-xs;
+}
+.not-started {
+  background-color: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: $size-xs;
+}
+.selected {
+  background-color: RGBA(0, 116, 182, 0.05) !important;
+  border: 1px solid #0074b6 !important;
+  border-radius: $size-xs;
+}
+.sbox {
+  width: 16px;
+  height: 16px;
+  border-radius: 0;
+  margin-right: 4px;
+  margin-left: 12px;
+}

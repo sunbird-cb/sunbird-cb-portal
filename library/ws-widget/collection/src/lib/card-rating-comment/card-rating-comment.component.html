@@ -1,0 +1,30 @@
+<mat-card class="comments-card margin-bottom-m position-relative mat-card">
+    <a href="javascript:void(0)" role="button">
+        <mat-card-content>
+            <div class="card_inner_content flex">
+                <div class="margin-right-m">
+                    <ws-widget-avatar-photo [name]="review.user_id" [size]="'m'"
+                        [photoUrl]=""></ws-widget-avatar-photo>
+                </div>
+
+                <div class="flex-col align-left">
+                    <div class="name margin-bottom-xs">{{review.user_id}}</div>
+                    <div class="flex items-center ">
+                        <span class="margin-right-xs ws-mat-orange-text mat-body-1"> {{review.rating}} </span>
+                        <mat-icon
+                            class="comments-rating mr-1 mat-icon material-icons ws-mat-black16-text"
+                            [ngClass]="{'ws-mat-orange-text': getRatingIconClass(rating, review.rating )}"
+                            *ngFor="let rating of [1, 2, 3, 4, 5]">
+                            {{ getRatingIcon(rating, review.rating) }}</mat-icon>
+                        <!--  <span i18n>from</span> -->
+                        <span class="margin-left-s  ws-mat-black60-text mat-body-1"> {{review.date | pipeRelativeTime}}
+                        </span>
+                    </div>
+                    <div class="margin-top-m mat-body-1">
+                        {{review.review}}
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </a>
+</mat-card>

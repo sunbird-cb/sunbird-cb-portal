@@ -1,5 +1,5 @@
 import { ConfigurationsService } from '@sunbird-cb/utils'
-import { Injectable  } from '@angular/core'
+import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { noop, Observable } from 'rxjs'
 import dayjs from 'dayjs'
@@ -13,6 +13,7 @@ export class ViewerUtilService {
     setS3Cookie: `/apis/v8/protected/content/setCookie`,
     // PROGRESS_UPDATE: `/apis/protected/v8/user/realTimeProgress/update`,
     PROGRESS_UPDATE: `/apis/proxies/v8/content-progres`,
+    ASSESSMENT_SECTION: `/apis/proxies/v8/assessment/read`,
   }
   downloadRegex = new RegExp(`(/content-store/.*?)(\\\)?\\\\?['"])`, 'gm')
   authoringBase = '/apis/authContent/'
@@ -157,7 +158,8 @@ export class ViewerUtilService {
   getContent(contentId: string): Observable<NsContent.IContent> {
     return this.http.get<NsContent.IContent>(
       // tslint:disable-next-line:max-line-length
-      `/apis/authApi/action/content/hierarchy/${contentId}?rootOrg=${this.configservice.rootOrg || 'igot'}&org=${this.configservice.activeOrg || 'dopt'}`,
+      // `/apis/authApi/action/content/hierarchy/${contentId}?rootOrg=${this.configservice.rootOrg || 'igot'}&org=${this.configservice.activeOrg || 'dopt'}`,
+      `apis/proxies/v8/action/content/v3/read/${contentId}`
     )
   }
 
@@ -180,5 +182,7 @@ export class ViewerUtilService {
       ),
     )
   }
-
+  readSections(assessmentId: string) {
+    return `${this.API_ENDPOINTS}/${assessmentId}`
+  }
 }

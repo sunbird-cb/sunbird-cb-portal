@@ -1,0 +1,49 @@
+<div class="flex auto-w ws-mat-primary-lite-background-important">
+  <div class="flex flex-1 max-w margin-right-m">
+    <img [src]="staticImage" alt="exam image" />
+  </div>
+  <div class="flex flex-2 flex-row margin-left-l">
+    <div class="flex flex-1 flex-row flex-wrap margin-top-m">
+      <ng-container *ngFor="let _parts of [1,2,3,4]">
+        <mat-card *ngIf="_parts" class="ws-mat-accent-border box-c">
+          <mat-card-title>
+            <span class="mat-subheading-1">{{'Part ' +_parts + ' - Easy '}}</span>
+            <span class="mat-subheading-2">{{'Insights'}}</span>
+          </mat-card-title>
+          <mat-card-content class="flex flex-1 flex-column">
+            <ng-container *ngFor="let _result of [1,2,3,4]">
+              <ng-container *ngIf="_result">
+                <ng-container *ngIf="_result % 2 == 1" [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{
+              icon: 'done',
+              isSVG: false,
+              colorClass: 'green',
+              text: '7 Correct'
+            }"></ng-container>
+                <ng-container *ngIf="_result % 2 == 0" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{
+              icon: 'close',
+              isSVG: false,
+              colorClass: 'red',
+              text: '7 incorrect'
+            }"></ng-container>
+              </ng-container>
+            </ng-container>
+          </mat-card-content>
+        </mat-card>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<ng-template #detail let-icon="icon" let-text="text" let-colorClass='colorClass'>
+  <mat-card class="flex max-card-w customcard margin-top-xs ws-mat-primary-tags">
+    <mat-icon [style.color]="colorClass">{{icon}}</mat-icon>
+    <span class="mat-body-2 margin-left-xs">{{text}}</span>
+  </mat-card>
+</ng-template>
+
+<ng-template #testdetail let-icon="icon" let-text="text" let-isSVG="isSVG" let-colorClass='colorClass'>
+  <mat-card class="flex max-card-w customcard margin-top-xs ws-mat-primary-tags">
+    <mat-icon [style.color]="colorClass" *ngIf="!isSVG">{{icon}}</mat-icon>
+    <img *ngIf="isSVG" [style.color]="colorClass" [src]="icon" alt="Assessment" class="margin-right-xs">
+    <span class="mat-body-2 margin-left-xs">{{text}}</span>
+  </mat-card>
+</ng-template>

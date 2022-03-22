@@ -457,8 +457,14 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       if (ratingIndex <= ratingFloor) {
         return 'star'
       }
-      if (ratingFloor === ratingIndex - 1 && avgRating % 1 > 0) {
+      if (ratingFloor === ratingIndex - 1 && avgRating % 1 >= 0.29 && avgRating % 1 < 0.71) {
         return 'star_half'
+      }
+      if (ratingFloor === ratingIndex - 1 && avgRating % 1 > 0.71) {
+        return 'star'
+      }
+      if (ratingFloor === ratingIndex - 1 && avgRating % 1 < 0.29) {
+        return 'star_border'
       }
     }
     return 'star_border'

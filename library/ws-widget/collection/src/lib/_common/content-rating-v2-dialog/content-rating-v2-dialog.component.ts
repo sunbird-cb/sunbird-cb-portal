@@ -1,10 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
-import { EventService, WsEvents, LoggerService } from '@sunbird-cb/utils/src/public-api'
+import { EventService, WsEvents, LoggerService, NsContent } from '@sunbird-cb/utils/src/public-api'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
-import { RatingService } from '@ws/app/src/lib/routes/app-toc/services/rating.service'
+import { RatingService } from '@sunbird-cb/collection/src/lib/_services/rating.service'
 import { switchMap, takeUntil } from 'rxjs/operators'
 import { Subject } from 'rxjs'
+import { NsAppRating } from '@ws/app/src/lib/routes/app-toc/models/rating.model'
 
 @Component({
   selector: 'ws-widget-content-rating-v2-dialog',
@@ -12,6 +13,7 @@ import { Subject } from 'rxjs'
   styleUrls: ['./content-rating-v2-dialog.component.scss'],
 })
 export class ContentRatingV2DialogComponent implements OnInit {
+  content: NsContent.IContent | null = null
   userRating = 0
   feedbackForm: FormGroup
   showSuccessScreen = false
@@ -45,16 +47,21 @@ export class ContentRatingV2DialogComponent implements OnInit {
         this.isEditMode = true
       }
     }
+    if (this.data.content) {
+      this.content = this.data.content
+    }
 
     this.feedbackForm.valueChanges
       .pipe(
         switchMap(async formValue => {
           // tslint:disable-next-line: no-console
           console.log('formValue.review :: ', formValue.review)
-          if (formValue.review !== this.data.userRating.review || formValue.rating !== this.data.userRating.rating) {
-            this.isEdited = true
-          } else {
-            this.isEdited = false
+          if (this.data.userRating) {
+            if (formValue.review !== this.data.userRating.review || formValue.rating !== this.data.userRating.rating) {
+              this.isEdited = true
+            } else {
+              this.isEdited = false
+            }
           }
         }),
         takeUntil(this.unsubscribe)
@@ -63,14 +70,13 @@ export class ContentRatingV2DialogComponent implements OnInit {
 
   submitRating(feedbackForm: any) {
     if (!this.formDisabled) {
-      const req = {
+      const req: NsAppRating.IRating = {
         activity_Id: this.data.content.identifier || '',
         userId: this.data.userId || '',
         activity_type: this.data.content.primaryCategory || '',
-        rating: this.userRating,
+        rating: this.userRating || 0,
         review: feedbackForm.value.review || '',
       }
-
       this.ratingSvc.addOrUpdateRating(req).subscribe(
         (_res: any) =>  {
           this.raiseFeedbackTelemetry(feedbackForm)

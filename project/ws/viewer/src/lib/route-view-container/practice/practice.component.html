@@ -1,0 +1,46 @@
+<div class="padding-dynamic" *ngIf="quizData">
+    <div class="flex flex-around flex-wrapped">
+      <div class="w-full">
+        <div class>
+          <div class="no-border">
+            <mat-card-content>
+              <div id="fullScreenContainer" class="video-player">
+                <ng-container *ngIf="isFetchingDataComplete">
+                  <viewer-plugin-practice [identifier]="quizData?.identifier" [artifactUrl]="quizData?.artifactUrl"
+                    [name]="quizData?.name" [learningObjective]="quizData?.name"
+                    [primaryCategory]="quizData?.primaryCategory"
+                    [complexityLevel]="quizData?.difficultyLevel" [duration]="quizData?.duration || 0" [quizJson]="quizJson"
+                    [collectionId]="collectionId"></viewer-plugin-practice>
+                </ng-container>
+              </div>
+              <div class="flex justify-end mt-3">
+                <ws-widget-btn-content-download [forPreview]="forPreview" [widgetData]="
+                    quizData
+                      | pipePartialContent
+                        : [
+                            'identifier',
+                            'primaryCategory',
+                            'resourceType',
+                            'mimeType',
+                            'downloadUrl',
+                            'isExternal',
+                    'artifactUrl'
+                          ]
+                  "></ws-widget-btn-content-download>
+                <!-- TODO: Blocking this button for now, as the functionality is not working -->
+                <!-- <ws-widget-btn-content-like [forPreview]="forPreview"
+                  [widgetData]="quizData | pipePartialContent: ['identifier']">
+                </ws-widget-btn-content-like>
+                <ws-widget-btn-content-share [forPreview]="forPreview"></ws-widget-btn-content-share>
+                <ws-widget-btn-goals [forPreview]="forPreview"></ws-widget-btn-goals>
+                <ws-widget-btn-playlist [forPreview]="forPreview"></ws-widget-btn-playlist>
+                <ws-widget-btn-content-feedback-v2 [forPreview]="forPreview"
+                  [widgetData]="quizData | pipePartialContent: ['identifier', 'name']">
+                </ws-widget-btn-content-feedback-v2> -->
+              </div>
+            </mat-card-content>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

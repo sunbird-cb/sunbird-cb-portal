@@ -27,7 +27,7 @@ import { ActionService } from '../../services/action.service'
 import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
 import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
 import moment from 'moment'
-import { RatingService } from '../../services/rating.service'
+import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -328,7 +328,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   get isResource() {
     if (this.content) {
       const isResource = this.content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT ||
-        this.content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE || !this.content.children.length
+        this.content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE
+        || this.content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+        || !(this.content.children && this.content.children.length)
       if (isResource) {
         this.mobileAppsSvc.sendViewerData(this.content)
       }
@@ -343,7 +345,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         return moment(_.get(batch, 'startDate')).fromNow()
       }
       if (_.get(batch, 'endDate') && moment(_.get(batch, 'endDate')).isBefore()) {
-       return 'NA'
+        return 'NA'
       }
       return 'NA'
     } return 'NA'
@@ -354,11 +356,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       if (this.currentCourseBatchId) {
         const now = moment()
         const batch = _.first(_.filter(this.content['batches'], { batchId: this.currentCourseBatchId }) || [])
-        return (
-          // batch.status &&
-          moment(batch.startDate).isSameOrBefore(now)
-          && moment(batch.endDate || new Date()).isSameOrAfter(now)
-        )
+        if (batch) {
+          return (
+            // batch.status &&
+            moment(batch.startDate).isSameOrBefore(now)
+            && moment(batch.endDate || new Date()).isSameOrAfter(now)
+          )
+        }
+        return false
       }
       return false
     } return false
@@ -404,6 +409,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       other: 0,
       pdf: 0,
       podcast: 0,
+      practiceTest: 0,
       quiz: 0,
       video: 0,
       webModule: 0,
@@ -817,10 +823,12 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               }
             }
 
-            const percentage = _.toInteger((_.sum(progress) / progress.length))
-            if (this.content) {
-              _.set(this.content, 'completionPercentage', percentage)
-            }
+            // commenting this as the completion percentage value for course is fetched from enrolled courses API response
+            // const percentage = _.toInteger((_.sum(progress) / progress.length))
+            // if (this.content) {
+            //   _.set(this.content, 'completionPercentage', percentage)
+            // }
+
             // _.set(this.content, 'progress', _.map(this.resumeData, _d => {
             //   return {
             //     progressStatus: _.get(_d, ''),

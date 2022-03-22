@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core'
 import { KnowledgeResourceService } from '../../services/knowledge-resource.service'
 import { NSKnowledgeResource } from '../../models/knowledge-resource.models'
+// import { compact } from 'lodash'
 // import {  Router } from '@angular/router';
 
 @Component({
@@ -61,17 +62,23 @@ export class KnowledgeCardComponent implements OnInit {
     return result
 }
 
-//  getFormathours(time: number) {
-//   var h = Math.floor(time / 3600);
-//   var m = Math.floor(time % 3600 / 60);
-//   // var s = Math.floor(d % 3600 % 60);
+itemCount(items: NSKnowledgeResource.IUrl[]) {
+  let occurs = 0
+  for (let i = 0; i < items.length; i += 1) {
+    if (items[i].toString() !== '[]') {
+        occurs += 1
+      }
+    }
+  return occurs
+ }
 
-//   var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
-//   var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
-//   // var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-//   console.log(hDisplay + mDisplay)
-//   return hDisplay + mDisplay
-
-// }
-
+ getNbOccur(fileType: string, objectArray: NSKnowledgeResource.IKrFiles[]) {
+  let occurs = 0
+  for (let i = 0; i < objectArray.length; i += 1) {
+    if (objectArray[i] && objectArray[i].fileType === fileType) {
+        occurs += 1
+      }
+    }
+  return occurs
+ }
 }

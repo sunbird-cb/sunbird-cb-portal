@@ -11,6 +11,7 @@ export namespace NsContentConstants {
     'Exercise',
     'Capstone Project',
     'Tryout',
+    NsContent.EPrimaryCategory.PRACTICE_RESOURCE,
   ])
   export const VALID_ASSESSMENT_RESOURCES = new Set(['Quiz', 'Assessment'])
 }
