@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 import { environment } from 'src/environments/environment'
 import _ from 'lodash'
-import { AccessControlService } from '@ws/author/src/public-api'
+// import { AccessControlService } from '@ws/author/src/public-api'
 
 // interface IGroupWithFeatureWidgets extends NsAppsConfig.IGroup {
 //   featureWidgets: NsWidgetResolver.IRenderConfigWithTypedData<NsPage.INavLink>[]
@@ -59,7 +59,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
               private discussUtilitySvc: DiscussUtilsService,
               private router: Router,
               private valueSvc: ValueService,
-              private accessService: AccessControlService
+              // private accessService: AccessControlService
               ) {
     super()
   }
@@ -157,12 +157,24 @@ export class CardHubsListComponent extends WidgetBaseComponent
     this.visible = !this.visible
   }
 
+
+  hasRole(role: string[]): boolean {
+    console.log(this.configSvc.userRoles)
+    let returnValue = false
+    role.forEach(v => {
+      if ((this.configSvc.userRoles || new Set()).has(v)) {
+        returnValue = true
+      }
+    })
+    return returnValue
+  }
+
   isAllowed(portalName:string) {
     const roles =  _.get(environment.otherPortalRoles, portalName) || []
     if(!(roles && roles.length))  {
       return true
     }
-    const value = this.accessService.hasRole(roles)
+    const value = this.hasRole(roles)
     return value
   }
 
