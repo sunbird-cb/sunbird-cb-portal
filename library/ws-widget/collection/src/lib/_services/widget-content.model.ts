@@ -341,6 +341,10 @@ export namespace NsContent {
     GOALS = 'GOALS',
     PLAYLIST = 'PLAYLIST',
     PRACTICE_RESOURCE = 'Practice Question Set',
+    FTB_QUESTION = 'FTB Question',
+    MTF_QUESTION = 'MTF Question',
+    MULTIPLE_CHOICE_QUESTION = 'Multiple Choice Question',
+    SINGLE_CHOICE_QUESTION = 'Single Choice Question',
     // following will not be available soon
     /**
      * @deprecated The type should not be used
@@ -417,6 +421,8 @@ export namespace NsContent {
     CERTIFICATION = 'application/certification',
     PLAYLIST = 'application/playlist',
     TEXT_WEB = 'text/x-url',
+    QUESTION_SET = 'application/vnd.sunbird.questionset',
+    QUESTION = 'application/vnd.sunbird.question',
     UNKNOWN = 'application/unknown',
   }
   export enum EDisplayContentTypes {

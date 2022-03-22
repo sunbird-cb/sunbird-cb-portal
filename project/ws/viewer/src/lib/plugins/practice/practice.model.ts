@@ -1,3 +1,5 @@
+import { NsContent } from '@sunbird-cb/collection/src/public-api'
+
 export namespace NSPractice {
   export interface IQuiz {
     timeLimit: number
@@ -30,7 +32,7 @@ export namespace NSPractice {
     maxAttempts: number
   }
 
-  export type TQuizQuestionType = 'mcq-sca' | 'mcq-mca' | 'fitb' | 'mtf' | string // need to remove string from next ittration
+  export type TQuizQuestionType = 'mcq-sca' | 'mcq-mca' | 'fitb' | 'ftb' | 'mtf' | string // need to remove string from next ittration
   export type TUserSelectionType = 'start' | 'skip'
   export type TQuizSubmissionState = 'unanswered' | 'marked' | 'answered'
   export type TQuizViewMode = 'initial' | 'detail' | 'attempt' | 'review' | 'answer'
@@ -51,6 +53,34 @@ export namespace NSPractice {
     result: number
     total: number
   }
+  export interface IQuizSubmitResSec {
+    identifier: string
+    objectType: string
+    primaryCategory: NsContent.EPrimaryCategory
+    scoreCutoffType: string
+    minimumPassPercentage: number
+    result: number
+    total: number
+    blank: number
+    correct: number
+    passPercent: number
+    inCorrect: number
+    pass: boolean
+  }
+  export interface IQuizSubmitResponseV2 {
+    identifier: string
+    isAssessment: boolean
+    objectType: string
+    primaryCategory: NsContent.EPrimaryCategory
+    children: IQuizSubmitResSec[]
+    overallResult: number
+    total: number
+    blank: number
+    correct: number
+    passPercent: number
+    inCorrect: number
+    pass: boolean
+  }
 
   export interface IQPaper {
     questionSet: {
@@ -63,6 +93,7 @@ export namespace NSPractice {
       generateDIALCodes: 'No' | 'Yes'
       lastUpdatedOn: string
       showTimer: 'No' | 'Yes'
+      expectedDuration: number
       identifier: string
       containsUserData: 'No' | 'Yes'
       allowSkip: 'Yes' | 'No'
@@ -111,6 +142,7 @@ export namespace NSPractice {
     identifier: string
     description: string
     containsUserData: string
+    minimumPassPercentage: number
     allowSkip: string
     compatibilityLevel: number
     trackable: {
@@ -136,6 +168,7 @@ export namespace NSPractice {
     contentEncoding: string
     depth: number
     allowAnonymousAccess: string
+    scoreCutoffType: string
     contentDisposition: string
     visibility: string
     showSolutions: 'Yes' | 'No'
@@ -216,5 +249,72 @@ export namespace NSPractice {
     totalQueAttempted: number
     nextSection: string | null
     attemptData?: { questionId: string, answers: any[] } | null
+  }
+
+  export interface IResponseOptions {
+    selectedAnswer: string | boolean
+    index: number | string
+  }
+  export interface IRScratch {
+    identifier: string
+    primaryCategory: string
+    mimeType: string
+    objectType: 'Question'
+    qType: string
+    editorState: {
+      options?: any[]
+      selectedAnswer?: string | null
+    }
+  }
+  // tslint:disable-next-line
+  export interface IMCQ_SCA extends IRScratch {
+    primaryCategory: NsContent.EPrimaryCategory.SINGLE_CHOICE_QUESTION
+    mimeType: NsContent.EMimeTypes.QUESTION
+    qType: 'MCQ-SCA',
+    editorState: {
+      options: IResponseOptions[]
+    }
+  }
+  // tslint:disable-next-line
+  export interface IMCQ_MCA extends IRScratch {
+    primaryCategory: NsContent.EPrimaryCategory.MULTIPLE_CHOICE_QUESTION
+    mimeType: NsContent.EMimeTypes.QUESTION
+    qType: 'MCQ-MCA',
+    editorState: {
+      options: IResponseOptions[]
+    }
+  }
+  // tslint:disable-next-line
+  export interface IMCQ_MTF extends IRScratch {
+    primaryCategory: NsContent.EPrimaryCategory.MTF_QUESTION
+    mimeType: NsContent.EMimeTypes.QUESTION
+    qType: 'MTF',
+    editorState: {
+      options: IResponseOptions[]
+    }
+  }
+  // tslint:disable-next-line
+  export interface IMCQ_FTB extends IRScratch {
+    primaryCategory: NsContent.EPrimaryCategory.FTB_QUESTION
+    mimeType: NsContent.EMimeTypes.QUESTION
+    qType: 'FTB'
+    editorState: {
+      selectedAnswer: string | null
+    }
+  }
+  export interface ISubSec {
+    identifier: string
+    objectType: string
+    primaryCategory: NsContent.EPrimaryCategory
+    scoreCutoffType: String
+    children: IRScratch[]
+  }
+  export interface IQuizSubmit {
+    timeLimit: Number
+    isAssessment: boolean
+    identifier: string
+    objectType: 'QuestionSet',
+    primaryCategory: NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+    children: ISubSec[]
   }
 }
