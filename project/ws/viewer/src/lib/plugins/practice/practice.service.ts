@@ -6,6 +6,7 @@ import { retry } from 'rxjs/operators'
 
 const API_END_POINTS = {
   ASSESSMENT_SUBMIT_V2: `/apis/protected/v8/user/evaluate/assessment/submit/v2`,
+  ASSESSMENT_SUBMIT_V3: `/apis/protected/v8/user/evaluate/assessment/submit/v2`,
   QUESTION_PAPER_SECTIONS: `/apis/proxies/v8/assessment/read`,
   QUESTION_PAPER_QUESTIONS: `/apis/proxies/v8/question/read`,
 }
@@ -18,6 +19,7 @@ export class PracticeService {
   paperSections: BehaviorSubject<NSPractice.IQPaper | null> = new BehaviorSubject<NSPractice.IQPaper | null>(null)
   questionAnswerHash: BehaviorSubject<NSPractice.IQAnswer> = new BehaviorSubject<NSPractice.IQAnswer>({})
   secAttempted: BehaviorSubject<NSPractice.ISecAttempted[] | []> = new BehaviorSubject<NSPractice.ISecAttempted[] | []>([])
+  // questionAnswerHashV2:BehaviorSubject<NSPractice.IQAnswer> = new BehaviorSubject<NSPractice.IQAnswer>({})
   constructor(
     private http: HttpClient,
   ) { }
@@ -35,18 +37,35 @@ export class PracticeService {
       for (let i = 0; sections && i < sections.length; i += 1) {
         if (sections[i] && section.identifier === sections[i].identifier) {
           sections[i].isAttempted = true
+          sections[i].fullAttempted = false
+        }
+      }
+      this.secAttempted.next(sections)
+    }
+  }
+  setFullAttemptSection(section: NSPractice.IPaperSection) {
+    if (section) {
+      const sections = this.secAttempted.getValue()
+      for (let i = 0; sections && i < sections.length; i += 1) {
+        if (sections[i] && section.identifier === sections[i].identifier) {
+          sections[i].isAttempted = true
+          sections[i].fullAttempted = true
         }
       }
       this.secAttempted.next(sections)
     }
   }
   qAnsHash(value: any) {
+    // tslint:disable-next-line
+    console.log(value, '=====')
     this.questionAnswerHash.next(value)
   }
   submitQuizV2(req: NSPractice.IQuizSubmitRequest): Observable<NSPractice.IQuizSubmitResponse> {
     return this.http.post<NSPractice.IQuizSubmitResponse>(API_END_POINTS.ASSESSMENT_SUBMIT_V2, req)
   }
-
+  submitQuizV3(req: NSPractice.IQuizSubmit): Observable<NSPractice.IQuizSubmitResponseV2> {
+    return this.http.post<NSPractice.IQuizSubmitResponseV2>(API_END_POINTS.ASSESSMENT_SUBMIT_V3, req)
+  }
   createAssessmentSubmitRequest(
     identifier: string,
     title: string,
@@ -72,7 +91,7 @@ export class PracticeService {
           }
           return option
         })
-      } if (question.questionType === 'fitb') {
+      } if (question.questionType === 'ftb') {
         for (let i = 0; i < question.options.length; i += 1) {
           if (questionAnswerHash[question.questionId]) {
             question.options[i].response = questionAnswerHash[question.questionId][0].split(',')[i]
@@ -101,7 +120,7 @@ export class PracticeService {
       question.question = ''
       question.options.map(option => {
         option.hint = ''
-        option.text = question.questionType === 'fitb' || question.questionType === 'mtf' ? option.text : ''
+        option.text = question.questionType === 'ftb' || question.questionType === 'mtf' ? option.text : ''
       })
     })
     return requestData
@@ -119,5 +138,24 @@ export class PracticeService {
       },
     }
     return this.http.post<{ count: Number, questions: any[] }>(API_END_POINTS.QUESTION_PAPER_QUESTIONS, data)
+  }
+  shuffle(array: any[] | (string | undefined)[]) {
+    let currentIndex = array.length
+    let temporaryValue
+    let randomIndex
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex)
+      currentIndex -= 1
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex]
+      array[currentIndex] = array[randomIndex]
+      array[randomIndex] = temporaryValue
+    }
+
+    return array
   }
 }

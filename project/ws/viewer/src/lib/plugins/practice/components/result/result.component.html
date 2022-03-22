@@ -1,6 +1,15 @@
 <div class="flex auto-w ws-mat-primary-lite-background-important">
-  <div class="flex flex-1 max-w margin-right-m">
-    <img [src]="staticImage" alt="exam image" />
+  <div class="flex flex-1 max-w margin-right-m relative">
+    <div class="flex percent-div foldl">
+      <div class="flex flex-1 flex-column flex-center center">
+        <mat-icon *ngIf="isPassed" class="ws-mat-green-2-text transform15 margin-top-m">check_circle</mat-icon>
+        <mat-icon *ngIf="!isPassed" class="ws-mat-red-text transform15 margin-top-m">highlight_off</mat-icon>
+        <span class="mat-title ws-mat-black60-text margin-top-s">{{levelText}}</span>
+        <span class="mat-heading-1 ws-mat-default-text">{{percentage}}%</span>
+        <span class="mat-body-1 ws-mat-black60-text">your score</span>
+      </div>
+    </div>
+    <img class="flex-1" [src]="staticImage" alt="exam image" />
   </div>
   <div class="flex flex-2 flex-row margin-left-l">
     <div class="flex flex-1 flex-row flex-wrap margin-top-m">

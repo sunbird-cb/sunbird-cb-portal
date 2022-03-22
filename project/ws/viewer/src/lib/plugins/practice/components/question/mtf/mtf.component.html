@@ -1,0 +1,22 @@
+<div class="flex flex-1">
+    <div class="flex flex-1" (scroll)="repaintEveryThing()" (resize)="repaintEveryThing()">
+      <div style="height:auto" class="flex flex-1">
+        <div class="flex flex-1 flex-column" [id]="question.questionId">
+          <div *ngFor="let option of question.options; let i = index">
+            <div style="display: flex;justify-content: space-around;flex-wrap: wrap;  height:auto;">
+              <div [class]="'question' + question.questionId + ' question'"
+                [id]="'c1' + question.questionId + (i + 1)">
+                <span class="mat-body-2"> {{ option.text }}</span>
+              </div>
+              <div [class]="'answer' + question.questionId + ' answer'"
+                [id]="'c2' + question.questionId + (i + 1)">
+                <span class="mat-body-2">{{ option.matchForView }}</span>
+              </div>
+            </div>
+            <br />
+            <br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -88,6 +88,8 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
           },
           fragment: '',
         }
+      } else {
+        this.nextResourceUrl = null
       }
       if (this.resourceId !== this.viewerDataSvc.resourceId) {
         this.resourceId = this.viewerDataSvc.resourceId as string
