@@ -70,6 +70,10 @@
   .green-progress .mat-progress-bar-fill::after {
     background-color: red !important;
   }
+
+  .accent-progress .mat-progress-bar-fill::after {
+    background-color: $colorAccent !important;
+  }
   .quiz-progress .mat-progress-bar-fill::after {
     background-color: $colorAccent !important;
   }
