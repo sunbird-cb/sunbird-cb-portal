@@ -59,7 +59,7 @@ export class PracticeService {
   }
   qAnsHash(value: any) {
     // tslint:disable-next-line
-    console.log(value, '=====')
+    // console.log(value, '=====')
     this.questionAnswerHash.next(value)
   }
   submitQuizV2(req: NSPractice.IQuizSubmitRequest): Observable<NSPractice.IQuizSubmitResponse> {

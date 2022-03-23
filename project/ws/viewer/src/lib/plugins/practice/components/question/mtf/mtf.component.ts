@@ -97,8 +97,7 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
             //     }
             // }
             if (!this.edit) {
-                const all= [...this.jsPlumbInstance.getAllConnections()]
-                this.update.emit(all)
+                this.update.emit([...this.jsPlumbInstance.getAllConnections()])
             }
         })
         this.jsPlumbInstance.bind('connectionDetached', (i: OnConnectionBindInfo, _c: any) => {
@@ -232,7 +231,7 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
                                 PaintStyle: {
                                     stroke: 'rgba(0,0,0,0.5)',
                                     strokeWidth: 3,
-                                }
+                                },
                             }],
                             source: this.jsPlumbInstance.getSelector(questionSelector) as unknown as Element,
                             target: this.jsPlumbInstance.getSelector(answerSelector) as unknown as Element,
@@ -246,8 +245,11 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
         // this.changeColor()
         setTimeout(() => {
             this.repaintEveryThing()
-        },100)
-        
+        },
+        // tslint:disable-next-line:align
+            100
+        )
+
     }
     ngOnDestroy(): void {
         this.resetMtf()

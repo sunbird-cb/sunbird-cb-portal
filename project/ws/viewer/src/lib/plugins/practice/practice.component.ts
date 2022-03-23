@@ -413,7 +413,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     const currentSectionId = _.get(this.selectedSection, 'identifier') || _.get(this.quizSvc, 'currentSection.value.identifier')
     const nextId = _.get(_.first(_.filter(_.get(this.quizSvc.secAttempted, 'value'), { identifier: currentSectionId })), 'nextSection')
     const next = _.first(_.filter(_.get(this.quizSvc.paperSections.value, 'questionSet.children'), { identifier: nextId }))
-    return { full: fullAttempted, next }
+    return { next, full: fullAttempted }
   }
   fillSelectedItems(question: NSPractice.IQuestion, optionId: string) {
     // debugger
@@ -447,7 +447,13 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     // debugger
     // console.log(this.questionAnswerHash, '+++++')
     if (question.questionType && question.questionType === 'mtf') {
-      this.quizSvc.mtfSrc.next({ [question.questionId]: { source: _.map(optionId, 'source.innerText'), target: _.map(optionId, 'target.innerText') } })
+      this.quizSvc.mtfSrc.next(
+        {
+          [question.questionId]: {
+            source: _.map(optionId, 'source.innerText'),
+            target: _.map(optionId, 'target.innerText'),
+          },
+        })
     }
     this.quizSvc.qAnsHash({ ...this.questionAnswerHash })
     const answered = (this.quizSvc.questionAnswerHash.getValue() || [])
@@ -575,7 +581,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               editorState: {
                 selectedAnswer: _.join(_.map(sq.options, (_o: NSPractice.IOption) => {
                   return _o.response
-                }), ','),
+                }),
+                // tslint:disable-next-line:align
+                  ','
+                ),
               },
             }
             responseQ.push(ftb)
