@@ -20,7 +20,7 @@
 
 
             <a *ngFor="let resource of allResources | filter : searchText">
-
+    
                 <ws-app-knowledge-card [resource]="resource" (resourceBookmarkEvent)="refresh()" >
 
                 </ws-app-knowledge-card>

@@ -23,7 +23,7 @@
     <mat-card-title><a class="mat-h4" i18n role="heading" [routerLink]="['/app/knowledge-resource/all', resource?.id, resource?.type]">{{ resource?.name }}</a></mat-card-title>
     <mat-card-subtitle><p class="mat-body-2 ws-mat-black60-text" i18n>{{ resource?.id }}</p></mat-card-subtitle>
 
-    <span class="attach_links margin-right-m" *ngIf="resource.totalFiles.pdf>0">
+    <span class="attach_links margin-right-m" *ngIf="resource.totalFiles.pdf || resource.totalFiles.pdf >0">
         <p class="mat-body-2" i18n>  <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs">
             {{ resource?.totalFiles?.pdf }}
 
@@ -50,7 +50,7 @@
         </p>
 
     </span>
-    
+
 </mat-card>
 
 
