@@ -360,9 +360,9 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
           if (content && content.length) {
             contentNew = content.filter((c: any) => {
               /** commented as both are 0 after enrolll */
-              if (c.completionPercentage && c.completionPercentage > 0) {
+              // if (c.completionPercentage && c.completionPercentage > 0) {
                 return c
-              }
+              // }
             })
           }
           this.processStrip(
