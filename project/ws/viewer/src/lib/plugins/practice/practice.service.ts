@@ -6,7 +6,7 @@ import { retry } from 'rxjs/operators'
 
 const API_END_POINTS = {
   ASSESSMENT_SUBMIT_V2: `/apis/protected/v8/user/evaluate/assessment/submit/v2`,
-  ASSESSMENT_SUBMIT_V3: `/apis/protected/v8/user/evaluate/assessment/submit/v2`,
+  ASSESSMENT_SUBMIT_V3: `/apis/protected/v8/user/evaluate/assessment/submit/v3`,
   QUESTION_PAPER_SECTIONS: `/apis/proxies/v8/assessment/read`,
   QUESTION_PAPER_QUESTIONS: `/apis/proxies/v8/question/read`,
 }
@@ -19,6 +19,8 @@ export class PracticeService {
   paperSections: BehaviorSubject<NSPractice.IQPaper | null> = new BehaviorSubject<NSPractice.IQPaper | null>(null)
   questionAnswerHash: BehaviorSubject<NSPractice.IQAnswer> = new BehaviorSubject<NSPractice.IQAnswer>({})
   secAttempted: BehaviorSubject<NSPractice.ISecAttempted[] | []> = new BehaviorSubject<NSPractice.ISecAttempted[] | []>([])
+  mtfSrc: BehaviorSubject<NSPractice.IMtfSrc> = new BehaviorSubject<NSPractice.IMtfSrc>({})
+  currentSection: BehaviorSubject<Partial<NSPractice.IPaperSection>> = new BehaviorSubject<Partial<NSPractice.IPaperSection>>({})
   // questionAnswerHashV2:BehaviorSubject<NSPractice.IQAnswer> = new BehaviorSubject<NSPractice.IQAnswer>({})
   constructor(
     private http: HttpClient,
@@ -57,7 +59,7 @@ export class PracticeService {
   }
   qAnsHash(value: any) {
     // tslint:disable-next-line
-    console.log(value, '=====')
+    // console.log(value, '=====')
     this.questionAnswerHash.next(value)
   }
   submitQuizV2(req: NSPractice.IQuizSubmitRequest): Observable<NSPractice.IQuizSubmitResponse> {
@@ -71,6 +73,12 @@ export class PracticeService {
     title: string,
     quiz: NSPractice.IQuiz,
     questionAnswerHash: { [questionId: string]: any[] },
+    mtfSrc: {
+      [questionId: string]: {
+        source: string[],
+        target: string[]
+      }
+    }
   ): NSPractice.IQuizSubmitRequest {
     const quizWithAnswers = {
       ...quiz,
@@ -99,16 +107,28 @@ export class PracticeService {
         }
       } else if (question.questionType === 'mtf') {
         for (let i = 0; i < question.options.length; i += 1) {
-          if (questionAnswerHash[question.questionId] && questionAnswerHash[question.questionId][0][i]) {
-            for (let j = 0; j < questionAnswerHash[question.questionId][0].length; j += 1) {
-              if (question.options[i].text.trim() === questionAnswerHash[question.questionId][0][j].source.innerText.trim()) {
-                question.options[i].response = questionAnswerHash[question.questionId][0][j].target.innerText
+          // this.mtfSrc['']
+          if (mtfSrc[question.questionId] && mtfSrc[question.questionId].source[i] && mtfSrc[question.questionId].target[i]) {
+            for (let j = 0; j < mtfSrc[question.questionId].source.length; j += 1) {
+              if (question.options[i].text.trim() === mtfSrc[question.questionId].source[j].trim()) {
+                question.options[i].response = mtfSrc[question.questionId].target[j].trim()
               }
             }
           } else {
             question.options[i].response = ''
           }
         }
+        // for (let i = 0; i < question.options.length; i += 1) {
+        //   if (questionAnswerHash[question.questionId] && questionAnswerHash[question.questionId][0][i]) {
+        //     for (let j = 0; j < questionAnswerHash[question.questionId][0].length; j += 1) {
+        //       if (question.options[i].text.trim() === questionAnswerHash[question.questionId][0][j].source.innerText.trim()) {
+        //         question.options[i].response = questionAnswerHash[question.questionId][0][j].target.innerText
+        //       }
+        //     }
+        //   } else {
+        //     question.options[i].response = ''
+        //   }
+        // }
       }
       return question
     })
