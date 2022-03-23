@@ -37,6 +37,7 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
     }
     @Output() update = new EventEmitter<string | Object>()
     jsPlumbInstance: any
+    edit = false
     matchHintDisplay: NSPractice.IOption[] = []
     localQuestion: string = this.question.question
     constructor(
@@ -46,9 +47,7 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
     }
     @HostListener('window:resize')
     onResize(_event: any) {
-        if (this.question.questionType === 'mtf') {
-            this.jsPlumbInstance.repaintEverything()
-        }
+        this.repaintEveryThing()
     }
     ngOnInit() {
         // console.log(this.practiceSvc.questionAnswerHash.value)
@@ -65,7 +64,6 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
                 this.matchHintDisplay.push(element)
             }
         })
-
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -85,13 +83,27 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
         })
         const connectorType = ['Bezier', { curviness: 10 }]
         this.jsPlumbInstance.bind('connection', (_i: any, _c: any) => {
-            // debugger 
+            // debugger
             // root cause
-            this.update.emit([...this.jsPlumbInstance.getAllConnections()])
+            // const allConnection = this.jsPlumbInstance.getAllConnections()
+            // const finalConnection=[]
+            // if (allConnection) {
+            //     const allHast = this.practiceSvc.questionAnswerHash.getValue()
+            //     const qHash = allHast[this.question.questionId]
+            //     if (qHash && qHash[0]) {
+
+            //         console.log(allHast, qHash[0])
+            //         finalConnection.push()
+            //     }
+            // }
+            if (!this.edit) {
+                this.update.emit([...this.jsPlumbInstance.getAllConnections()])
+            }
         })
         this.jsPlumbInstance.bind('connectionDetached', (i: OnConnectionBindInfo, _c: any) => {
             this.setBorderColor(i, '')
             this.resetColor()
+            this.edit = false
         })
         this.jsPlumbInstance.bind(
             'connectionMoved',
@@ -100,6 +112,7 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
                 this.setBorderColorById(i.newSourceId, '')
                 this.setBorderColorById(i.originalTargetId, '')
                 this.resetColor()
+                this.edit = false
             })
         // get the list of ".smallWindow" elements.
         const questionSelector = `.question${this.question.questionId}`
@@ -155,6 +168,7 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
     }
     resetMtf() {
         this.jsPlumbInstance.deleteEveryConnection()
+        this.edit = false
     }
 
     resetColor() {
@@ -201,7 +215,9 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
             // for (let j = 1; j <= this.question.options.length; j += 1) {
             const selectedOptions = _.first(this.practiceSvc.questionAnswerHash.value[this.question.questionId] || []) || []
             // tslint:disable-next-line
-            console.log(selectedOptions)
+            if (selectedOptions.length) {
+                this.edit = true
+            }
             for (let j = 1; j <= selectedOptions.length; j += 1) {
                 const answerSelector = `#c2${this.question.questionId}${j}`
                 const options = this.question.options[i - 1]
@@ -211,24 +227,29 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
                     if (match && match.trim() === selectors[0].innerText.trim()) {
                         this.jsPlumbInstance.connect({
                             endpoint: ['Dot', {
-                                cssClass: '',
-                                //  PaintStyle: {
-                                //     stroke: 'yellow',
-                                //     fill: 'orange',
-                                //     strokeWidth: 8
-                                // }
+                                cssClass: 'amit icon-svg',
+                                PaintStyle: {
+                                    stroke: 'rgba(0,0,0,0.5)',
+                                    strokeWidth: 3,
+                                },
                             }],
                             source: this.jsPlumbInstance.getSelector(questionSelector) as unknown as Element,
                             target: this.jsPlumbInstance.getSelector(answerSelector) as unknown as Element,
                             anchors: ['Right', 'Left'],
-                            ConnectionsDetachable: true,
+                            ConnectionsDetachable: false,
                         })
                     }
                 }
             }
         }
         // this.changeColor()
-        this.repaintEveryThing()
+        setTimeout(() => {
+            this.repaintEveryThing()
+        },
+        // tslint:disable-next-line:align
+            100
+        )
+
     }
     ngOnDestroy(): void {
         this.resetMtf()

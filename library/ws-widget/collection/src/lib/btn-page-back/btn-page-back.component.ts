@@ -7,6 +7,10 @@ import { ConfigurationsService, NsInstanceConfig } from '@sunbird-cb/utils'
 import { BtnPageBackService } from './btn-page-back.service'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 import { environment } from 'src/environments/environment'
+// tslint:disable
+import _ from 'lodash'
+// tslint:enable
+
 type TUrl = undefined | 'none' | 'back' | string
 @Component({
   selector: 'ws-widget-btn-page-back',
@@ -143,4 +147,24 @@ export class BtnPageBackComponent extends WidgetBaseComponent
   toggleVisibility() {
     this.visible = !this.visible
   }
+
+  hasRole(role: string[]): boolean {
+    let returnValue = false
+    role.forEach(v => {
+      if ((this.configSvc.userRoles || new Set()).has(v)) {
+        returnValue = true
+      }
+    })
+    return returnValue
+  }
+
+  isAllowed(portalName: string) {
+    const roles =  _.get(environment.otherPortalRoles, portalName) || []
+    if (!(roles && roles.length))  {
+      return true
+    }
+    const value = this.hasRole(roles)
+    return value
+  }
+
 }

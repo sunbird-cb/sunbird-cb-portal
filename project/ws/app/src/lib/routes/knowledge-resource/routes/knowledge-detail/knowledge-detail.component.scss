@@ -88,6 +88,17 @@ a.share_link {
     cursor: pointer;
 }
 
+.iframe_doc {
+    visibility: hidden;
+}
+
+.button_box {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px 4px;
+    border: 1px solid #0074b6;
+}
+
 
 @media screen and (max-width:480px) {
     .resource_img {

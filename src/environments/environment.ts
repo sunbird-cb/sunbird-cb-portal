@@ -20,6 +20,7 @@ export const environment: IEnvironment = {
   azureOldHost: (window as { [key: string]: any })['env']['azureOldHost'] || '',
   azureOldBuket: (window as { [key: string]: any })['env']['azureOldBuket'] || '',
   portalRoles: (((window as { [key: string]: any })['env']['portalRoles'] || '').split(',')) || [],
+  otherPortalRoles: ((window as { [key: string]: any })['env']['otherPortalRoles'] || '') || {},
 }
 interface IEnvironment {
   name: string,
@@ -34,6 +35,7 @@ interface IEnvironment {
   azureOldBuket: string
   contentHost: string
   portalRoles: string[]
+  otherPortalRoles: {cbp: string[], mdo: string[], cbc: string[], frac: string[]}
   mdoPortal: string,
   spvPortal: string,
   cbcPortal: string,

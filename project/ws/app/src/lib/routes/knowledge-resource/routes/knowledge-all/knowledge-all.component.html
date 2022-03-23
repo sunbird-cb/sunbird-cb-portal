@@ -14,7 +14,6 @@
         <!-- <a *ngFor="let resource of allResources" [routerLink]="['/app/knowledge-resource/all', resource.id]"> -->
         <div *ngIf="allResources; else nodata" >
           <a *ngFor="let resource of allResources | filter : searchText">
-
             <ws-app-knowledge-card [resource]="resource" (resourceBookmarkEvent)="refresh()">
 
             </ws-app-knowledge-card>
