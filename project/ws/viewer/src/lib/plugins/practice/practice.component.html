@@ -137,7 +137,7 @@
             [question]="question" [itemSelectedList]="questionAnswerHash[(question?.questionId)]"
             (itemSelected)="fillSelectedItems(question, $event)" [hidden]="i !== currentQuestionIndex">
           </viewer-question> -->
-            <ng-container *ngIf="current_Question">
+            <ng-container *ngIf="current_Question && !process">
               <viewer-question #questionsReference [id]="'question' + (currentQuestionIndex + 1)"
                 [markedQuestions]="markedQuestions" [artifactUrl]="artifactUrl"
                 [questionNumber]="currentQuestionIndex + 1" [total]="secQuestions.length" [viewState]="viewState"

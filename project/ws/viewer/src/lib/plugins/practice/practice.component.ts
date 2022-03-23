@@ -89,6 +89,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   selectedSection: NSPractice.IPaperSection | null = null
   ePrimaryCategory = NsContent.EPrimaryCategory
   currentQuestion!: NSPractice.IQuestionV2 | any
+  process = false
   constructor(
     private events: EventService,
     public dialog: MatDialog,
@@ -318,11 +319,15 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
   getNextQuestion(idx: any) {
+    this.process = true
     if (idx !== this.currentQuestionIndex) {
       this.currentQuestionIndex = idx
     }
     const questions = _.get(this.quizJson, 'questions')
     this.currentQuestion = questions && questions[idx] ? questions[idx] : null
+    setTimeout(() => {
+      this.process = false
+    },         10)
   }
   get current_Question() {
     return this.currentQuestion
@@ -582,7 +587,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
                 selectedAnswer: _.join(_.map(sq.options, (_o: NSPractice.IOption) => {
                   return _o.response
                 }),
-                // tslint:disable-next-line:align
+                  // tslint:disable-next-line:align
                   ','
                 ),
               },
