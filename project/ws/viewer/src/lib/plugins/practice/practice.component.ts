@@ -444,8 +444,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.questionAnswerHash[question.questionId] = [optionId]
     }
     // tslint:disable-next-line
-    debugger
-    console.log(this.questionAnswerHash, '+++++')
+    // debugger
+    // console.log(this.questionAnswerHash, '+++++')
     if (question.questionType && question.questionType === 'mtf') {
       this.quizSvc.mtfSrc.next({ [question.questionId]: { source: _.map(optionId, 'source.innerText'), target: _.map(optionId, 'target.innerText') } })
     }
@@ -607,7 +607,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     this.raiseTelemetry('quiz', null, 'submit')
     this.isSubmitted = true
     this.ngOnDestroy()
-    debugger
+    // debugger
     //  this.generateRequest
     /// this above line have new response
     // if (response.identifier) {
