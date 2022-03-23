@@ -133,20 +133,16 @@
 
                     </mat-expansion-panel-header>
                     <div class="mat-panel-body">
-                        <div *ngIf="item.url && item.url !== '' && item.fileType === 'jpg' || item.fileType === 'png' || item.fileType === 'PNG' || item.fileType === 'image/png' || item.fileType === 'JPG' || item.fileType === 'image/jpg'">
-                            <img [src]="getSafeUrl(item.url)" class="resource_img"/>
+                        <div *ngIf="item.url && item.url !== null && item.fileType === 'jpg' || item.fileType === 'png' || item.fileType === 'PNG' || item.fileType === 'image/png' || item.fileType === 'JPG' || item.fileType === 'image/jpg'">
+                            <img [src]="getSafeUrl(item.url)" class="resource_img" alt="{{ item.name }}" />
                         </div>
 
                         <div *ngIf="item.url && item.url !== '' && item.fileType === 'pdf'">
-                            <!-- <iframe class="iframe iframe_box" [src]="getSafeUrl(item.url)" height="800" width="100%"></iframe> -->
                             <object [data]="getSafeUrl(item.url)" type="application/pdf" class="iframe iframe_box" height="800" width="100%"></object>
-
-
                         </div>
-                        <div *ngIf="item.url && item.url !== ' ' && item.fileType === 'doc'">
-                            <iframe class="iframe iframe_box" [src]="getSafeUrl(item.url)" height="800" width="100%"></iframe>
-                            <!-- <object [data]="getSafeUrl(item.url)" type="application/doc" class="iframe iframe_box" height="800" width="100%"></object> -->
+                        <div *ngIf="item.url && item.url !== '' && item.fileType === 'doc'">
 
+                             <a [href]="getSafeUrl(item.url)" class="mat-button-base blue-border button-outline button_box" download>Download attachment</a>
 
                         </div>
                     </div>
