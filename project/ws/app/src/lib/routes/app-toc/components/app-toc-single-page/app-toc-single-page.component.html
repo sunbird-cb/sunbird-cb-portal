@@ -267,12 +267,12 @@
                         <h2 _ngcontent-qml-c28="" class="mat-toolbar contacts-head">Authors and curators</h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 col-gap-4">
                             <!-- authors -->
-                            <div *ngFor="let author of parseJsonData(content?.creatorDetails || content?.creatorContacts)"
+                            <div *ngFor="let author of parseJsonData(content?.creatorDetails)"
                                 class="unit-cohort sm:pr-8 md:pr-10">
                                 <!-- <ws-widget-user-image class="user-image" [imageType]="'user-photo'" [userName]="author.name || ''"
                                     [email]="author.email" [imageUrl]="author.photo || ''"></ws-widget-user-image> -->
-                                <ws-widget-avatar-photo class="float-left margin-right-s" [randomColor]="true"
-                                    [datalen]="parseJsonData(content?.creatorDetails || content?.creatorContacts).length"
+                                <ws-widget-avatar-photo class="float-left margin-right-s " [randomColor]="true"
+                                    [datalen]="parseJsonData(content?.creatorDetails).length"
                                     [size]="'m'" [photoUrl]="author.photo || ''" [name]="author.name" size="l-xs">
                                 </ws-widget-avatar-photo>
                                 <div class="margin-left-xl">
@@ -281,8 +281,21 @@
                                 </div>
                             </div>
                             <!-- curators -->
-                            <div *ngIf="cohortResults[cohortTypesEnum.AUTHORS]">
-                                <!--  <h3 *ngIf="cohortResults[cohortTypesEnum.AUTHORS].hasError" class="mat-error text-center" i18n>
+                            <div *ngFor="let author of parseJsonData(content?.creatorContacts)"
+                            class="unit-cohort sm:pr-8 md:pr-10">
+                            <!-- <ws-widget-user-image class="user-image" [imageType]="'user-photo'" [userName]="author.name || ''"
+                                [email]="author.email" [imageUrl]="author.photo || ''"></ws-widget-user-image> -->
+                            <ws-widget-avatar-photo class="float-left margin-right-s" [randomColor]="true"
+                                [datalen]="parseJsonData(content?.creatorContacts).length"
+                                [size]="'m'" [photoUrl]="author.photo || ''" [name]="author.name" size="l-xs">
+                            </ws-widget-avatar-photo>
+                            <div class="margin-left-xl">
+                                <div class="user-name">{{ author.name }}</div>
+                                <p class="mat-body-2 ws-mat-black60-text">Curator</p>
+                            </div>
+                        </div>
+                            <!-- <div *ngIf="cohortResults[cohortTypesEnum.AUTHORS]">
+                                 <h3 *ngIf="cohortResults[cohortTypesEnum.AUTHORS].hasError" class="mat-error text-center" i18n>
                                     Failed to fetch curators
                                 </h3>
                                 <h3 *ngIf="
@@ -290,11 +303,11 @@
                                     !cohortResults[cohortTypesEnum.AUTHORS].contents.length
                                     " class="text-center" i18n>
                                     None
-                                </h3> -->
+                                </h3> 
                                 <ng-container *ngFor="let cohort of cohortResults[cohortTypesEnum.AUTHORS].contents"
                                     [ngTemplateOutlet]="unitCohortNew1" [ngTemplateOutletContext]="{ user: cohort }">
                                 </ng-container>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

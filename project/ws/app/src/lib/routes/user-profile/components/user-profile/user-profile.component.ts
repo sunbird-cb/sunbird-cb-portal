@@ -15,7 +15,7 @@ import {
   IChipItems,
   IGovtOrgMeta,
   IIndustriesMeta,
-  // IProfileAcademics,
+  IProfileAcademics,
   INation,
   IdegreesMeta,
   IdesignationsMeta,
@@ -121,6 +121,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.approvalConfig = this.route.snapshot.data.pageData.data
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
     this.fetchPendingFields()
+    // console.log('page data', this.approvalConfig)
     this.createUserForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       middlename: new FormControl('', [Validators.pattern(this.namePatern)]),
@@ -264,6 +265,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.userProfileSvc.listApprovalPendingFields().subscribe(res => {
       if (res && res.result && res.result.data) {
         this.unApprovedField = _.get(res, 'result.data')
+        // console.log('unApprovedField ', this.unApprovedField, res)
       }
     })
   }
@@ -517,6 +519,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       // if (this.configSvc.userProfile) {
       this.userProfileSvc.getUserdetailsFromRegistry(this.configSvc.unMappedUser.id).subscribe(
         (data: any) => {
+          // console.log('userdata', data)
           const userData = data.profileDetails || _.get(this.configSvc.unMappedUser, 'profileDetails')
           if (data.profileDetails && (userData.id || userData.userId)) {
             const academics = this.populateAcademics(userData)
@@ -985,58 +988,58 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   //   return organisations
   // }
 
-  // private getAcademics(form: any) {
-  //   const academics = []
-  //   academics.push(this.getClass10(form))
-  //   academics.push(this.getClass12(form))
-  //   academics.push(...this.getDegree(form, 'GRADUATE'))
-  //   academics.push(...this.getPostDegree(form, 'POSTGRADUATE'))
-  //   return academics
-  // }
+  private getAcademics(form: any) {
+    const academics = []
+    academics.push(this.getClass10(form))
+    academics.push(this.getClass12(form))
+    academics.push(...this.getDegree(form, 'GRADUATE'))
+    academics.push(...this.getPostDegree(form, 'POSTGRADUATE'))
+    return academics
+  }
 
-  // getClass10(form: any): IProfileAcademics {
-  //   return ({
-  //     nameOfQualification: '',
-  //     type: 'X_STANDARD',
-  //     nameOfInstitute: form.value.schoolName10,
-  //     yearOfPassing: `${form.value.yop10}`,
-  //   })
-  // }
+  getClass10(form: any): IProfileAcademics {
+    return ({
+      nameOfQualification: '',
+      type: 'X_STANDARD',
+      nameOfInstitute: form.value.schoolName10,
+      yearOfPassing: `${form.value.yop10}`,
+    })
+  }
 
-  // getClass12(form: any): IProfileAcademics {
-  //   return ({
-  //     nameOfQualification: '',
-  //     type: 'XII_STANDARD',
-  //     nameOfInstitute: form.value.schoolName12,
-  //     yearOfPassing: `${form.value.yop12}`,
-  //   })
-  // }
+  getClass12(form: any): IProfileAcademics {
+    return ({
+      nameOfQualification: '',
+      type: 'XII_STANDARD',
+      nameOfInstitute: form.value.schoolName12,
+      yearOfPassing: `${form.value.yop12}`,
+    })
+  }
 
-  // getDegree(form: any, degreeType: string): IProfileAcademics[] {
-  //   const formatedDegrees: IProfileAcademics[] = []
-  //   form.value.degrees.map((degree: any) => {
-  //     formatedDegrees.push({
-  //       nameOfQualification: degree.degree,
-  //       type: degreeType,
-  //       nameOfInstitute: degree.instituteName,
-  //       yearOfPassing: `${degree.yop}`,
-  //     })
-  //   })
-  //   return formatedDegrees
-  // }
+  getDegree(form: any, degreeType: string): IProfileAcademics[] {
+    const formatedDegrees: IProfileAcademics[] = []
+    form.value.degrees.map((degree: any) => {
+      formatedDegrees.push({
+        nameOfQualification: degree.degree,
+        type: degreeType,
+        nameOfInstitute: degree.instituteName,
+        yearOfPassing: `${degree.yop}`,
+      })
+    })
+    return formatedDegrees
+  }
 
-  // getPostDegree(form: any, degreeType: string): IProfileAcademics[] {
-  //   const formatedDegrees: IProfileAcademics[] = []
-  //   form.value.postDegrees.map((degree: any) => {
-  //     formatedDegrees.push({
-  //       nameOfQualification: degree.degree,
-  //       type: degreeType,
-  //       nameOfInstitute: degree.instituteName,
-  //       yearOfPassing: `${degree.yop}`,
-  //     })
-  //   })
-  //   return formatedDegrees
-  // }
+  getPostDegree(form: any, degreeType: string): IProfileAcademics[] {
+    const formatedDegrees: IProfileAcademics[] = []
+    form.value.postDegrees.map((degree: any) => {
+      formatedDegrees.push({
+        nameOfQualification: degree.degree,
+        type: degreeType,
+        nameOfInstitute: degree.instituteName,
+        yearOfPassing: `${degree.yop}`,
+      })
+    })
+    return formatedDegrees
+  }
 
   getEditedValues(form: any) {
 
@@ -1045,7 +1048,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       'dob', 'nationality', 'domicileMedium', 'gender', 'maritalStatus',
       'category', 'knownLanguages', 'countryCode', 'mobile', 'telephone',
       'primaryEmail', 'officialEmail', 'personalEmail', 'postalAddress',
-      'pincode']
+      'pincode', 'secondaryEmail']
     const skillsFields = ['skillAquiredDesc', 'certificationDesc']
     const skills: any = {}
     const interestsFields = ['interests', 'hobbies']
@@ -1067,11 +1070,15 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     Object.keys(this.createUserForm.controls).forEach(name => {
       const currentControl = this.createUserForm.controls[name]
       if (currentControl.dirty) {
+        // console.log(name)
         personalDetailsFields.forEach(item => {
           if (item === name) {
             switch (name) {
               case 'knownLanguages': return personalDetail['knownLanguages'] = form.value.knownLanguages
               case 'dob': return personalDetail['dob'] = form.value.dob
+              case 'secondaryEmail' : return personalDetail['personalEmail'] = form.value.secondaryEmail
+              case 'primaryEmailType' : return personalDetail['officialEmail'] = form.value.primaryEmail
+
             }
             personalDetail[name] = currentControl.value
 
@@ -1119,6 +1126,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           }
 
         })
+        // academicsFields.forEach((item)=>{
+        //   if(item === name ){
+        //     academics = this.getAcademics(form);
+        //   }
+        // })
 
         // let obj:any = { }
         // obj[name] = currentControl.value
@@ -1141,6 +1153,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         ...(Object.keys(employmentDetails).length > 0) && { employmentDetails },
         ...(Object.keys(professionalDetails).length > 0) && { professionalDetails },
 
+        academics: this.getAcademics(form),
       },
     }
 
@@ -1186,13 +1199,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       },
     }
 
-    // console.log(reqUpdates, reqUpdate)
+    // console.log( reqUpdate)
     this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(res => {
 
         if (res.params.status === 'success') {
          if ('professionalDetails' in reqUpdates.request.profileDetails) {
             if ('personalDetails' in reqUpdates.request.profileDetails ||
               'employmentDetails' in reqUpdates.request.profileDetails ||
+              'academics' in reqUpdates.request.profileDetails ||
               'interests' in reqUpdates.request.profileDetails ||
               'skills' in reqUpdates.request.profileDetails) {
               if (res.result.personalDetails.status === 'success' && res.result.transitionDetails.status === 'success') {
@@ -1210,6 +1224,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             if ('personalDetails' in reqUpdates.request.profileDetails ||
               'employmentDetails' in reqUpdates.request.profileDetails ||
               'interests' in reqUpdates.request.profileDetails ||
+              'academics' in reqUpdates.request.profileDetails ||
               'skills' in reqUpdates.request.profileDetails) {
               if (res.result.personalDetails.status === 'success') {
                 this.openSnackbar(this.toastSuccess.nativeElement.value)
