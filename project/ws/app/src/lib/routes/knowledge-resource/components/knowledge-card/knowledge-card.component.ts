@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core'
 import { KnowledgeResourceService } from '../../services/knowledge-resource.service'
 import { NSKnowledgeResource } from '../../models/knowledge-resource.models'
 
-
 @Component({
   selector: 'ws-app-knowledge-card',
   templateUrl: './knowledge-card.component.html',
