@@ -44,7 +44,12 @@ export namespace NSPractice {
     timeLimit: number
     title: string
   }
-
+  export interface IMtfSrc {
+    [questionId: string]: {
+      source: string[]
+      target: string[]
+    }
+  }
   export interface IQuizSubmitResponse {
     blank: number
     correct: number

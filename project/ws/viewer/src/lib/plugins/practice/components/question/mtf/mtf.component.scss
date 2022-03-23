@@ -4,6 +4,20 @@
     overflow-x: auto;
 }
 .amit {
-    color: red;
-    background-color: blue;
+    svg {
+        width: 3;
+        height: 3;
+        circle {
+            r: 3;
+        }
+        circle:hover {
+            r: 10;
+        }
+    }
+}
+.jtk-connector {
+    path {
+        stroke: green;
+        stroke-width: 4;
+    }
 }

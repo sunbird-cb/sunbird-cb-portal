@@ -125,7 +125,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.viewState = 'detail'
       this.updateTimer()
     } else {
-      this.quizSvc.getSection('do_11349706286239744011').subscribe((section: NSPractice.ISectionResponse) => {
+      this.quizSvc.getSection(this.identifier).subscribe((section: NSPractice.ISectionResponse) => {
         // console.log(section)
         this.fetchingSectionsStatus = 'done'
         if (section.responseCode && section.responseCode === 'OK') {
@@ -173,8 +173,13 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     const qq = _.filter(this.quizJson.questions, { section: this.selectedSection.identifier })
     return qq
   }
+  nextSection(section: NSPractice.IPaperSection) {
+    this.quizSvc.currentSection.next(section)
+    this.startSection(section)
+  }
   startSection(section: NSPractice.IPaperSection) {
     if (section) {
+      this.quizSvc.currentSection.next(section)
       this.fetchingQuestionsStatus = 'fetching'
       this.selectedSection = section
       if (this.secQuestions && this.secQuestions.length > 0) {
@@ -398,7 +403,18 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         })
     }
   }
-
+  get allSecAttempted(): { full: boolean, next: NSPractice.IPaperSection | null } {
+    const sections = this.quizSvc.secAttempted.getValue()
+    let fullAttempted = false
+    if (sections && sections.length) {
+      const attemped = _.filter(sections, s => s.fullAttempted || s.isAttempted)
+      fullAttempted = (attemped || []).length === sections.length
+    }
+    const currentSectionId = _.get(this.selectedSection, 'identifier') || _.get(this.quizSvc, 'currentSection.value.identifier')
+    const nextId = _.get(_.first(_.filter(_.get(this.quizSvc.secAttempted, 'value'), { identifier: currentSectionId })), 'nextSection')
+    const next = _.first(_.filter(_.get(this.quizSvc.paperSections.value, 'questionSet.children'), { identifier: nextId }))
+    return { full: fullAttempted, next }
+  }
   fillSelectedItems(question: NSPractice.IQuestion, optionId: string) {
     // debugger
     if (typeof (optionId) === 'string') {
@@ -428,9 +444,12 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.questionAnswerHash[question.questionId] = [optionId]
     }
     // tslint:disable-next-line
-    // debugger
-    // console.log(this.questionAnswerHash, '+++++')
-    this.quizSvc.qAnsHash(this.questionAnswerHash)
+    debugger
+    console.log(this.questionAnswerHash, '+++++')
+    if (question.questionType && question.questionType === 'mtf') {
+      this.quizSvc.mtfSrc.next({ [question.questionId]: { source: _.map(optionId, 'source.innerText'), target: _.map(optionId, 'target.innerText') } })
+    }
+    this.quizSvc.qAnsHash({ ...this.questionAnswerHash })
     const answered = (this.quizSvc.questionAnswerHash.getValue() || [])
     if (this.markSectionAsComplete(answered) && this.selectedSection) {
       this.quizSvc.setFullAttemptSection(this.selectedSection)
@@ -482,6 +501,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         timeLimit: this.quizJson.timeLimit * 1000,
       },
       this.questionAnswerHash,
+      this.quizSvc.mtfSrc.getValue()
     )
     const request: NSPractice.IQuizSubmit = {
       identifier: this.identifier,
@@ -587,7 +607,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     this.raiseTelemetry('quiz', null, 'submit')
     this.isSubmitted = true
     this.ngOnDestroy()
-    // debugger
+    debugger
     //  this.generateRequest
     /// this above line have new response
     // if (response.identifier) {
@@ -605,7 +625,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     // }
     if (!this.quizJson.isAssessment) {
       this.viewState = 'review'
-      this.calculateResults()
+      // this.calculateResults()
     } else {
       this.viewState = 'answer'
     }
