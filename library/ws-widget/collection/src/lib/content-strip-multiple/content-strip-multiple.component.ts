@@ -416,13 +416,20 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           // To filter content with completionPercentage > 0,
           // so that only those content will show in home page
           // continue learing strip
-          if (content && content.length) {
-            contentNew = content.filter((c: any) => {
-              // if (c.completionPercentage && c.completionPercentage > 0) {
-                return c
-              // }
-            })
-          }
+          // if (content && content.length) {
+          //   contentNew = content.filter((c: any) => {
+          //     if (c.completionPercentage && c.completionPercentage > 0) {
+          //       return c
+          //     }
+          //   })
+          // }
+
+          // To sort in descending order of the enrolled date
+          contentNew = content.sort((a: any, b: any) => {
+            const dateA: any = new Date(a.enrolledDate || 0)
+            const dateB: any = new Date(b.enrolledDate || 0)
+            return dateB - dateA
+          })
           this.processStrip(
             strip,
             this.transformContentsToWidgets(contentNew, strip),

@@ -47,6 +47,7 @@ export namespace NsContent {
     displayContentType: EDisplayContentTypes // For UI
     downloadUrl?: string
     duration: number
+    enrolledDate?: string
     exclusiveContent?: boolean
     expiryDate?: string
     equivalentCertifications?: IRelatedContentMeta[]
