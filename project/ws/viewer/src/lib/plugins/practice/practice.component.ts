@@ -327,7 +327,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     this.currentQuestion = questions && questions[idx] ? questions[idx] : null
     setTimeout(() => {
       this.process = false
-    },         10)
+      // tslint:disable-next-line
+    }, 10)
   }
   get current_Question() {
     return this.currentQuestion
@@ -338,6 +339,9 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   get totalQCount(): number {
     const questions = this.secQuestions || []
     return questions.length
+  }
+  get noOfQuestions(): number {
+    return 0
   }
   backToSections() {
     this.viewState = 'detail'

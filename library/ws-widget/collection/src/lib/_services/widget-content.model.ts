@@ -47,6 +47,7 @@ export namespace NsContent {
     displayContentType: EDisplayContentTypes // For UI
     downloadUrl?: string
     duration: number
+    enrolledDate?: string
     exclusiveContent?: boolean
     expiryDate?: string
     equivalentCertifications?: IRelatedContentMeta[]
@@ -427,6 +428,7 @@ export namespace NsContent {
   }
   export enum EDisplayContentTypes {
     ASSESSMENT = 'ASSESSMENT',
+    PRACTICE_RESOURCE = 'Practice Question Set',
     AUDIO = 'AUDIO',
     CERTIFICATION = 'CERTIFICATION',
     CHANNEL = 'Channel',
