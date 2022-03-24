@@ -20,7 +20,7 @@
             <span class="mat-subheading-2">{{'Insights'}}</span>
           </mat-card-title>
           <mat-card-content class="flex flex-1 flex-column">
-            <ng-container *ngFor="let _result of [1,2,3,4]">
+            <ng-container *ngFor="let _result of [1,2]">
               <ng-container *ngIf="_result">
                 <ng-container *ngIf="_result % 2 == 1" [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{
               icon: 'done',
