@@ -373,8 +373,6 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
             const dateB: any = new Date(b.enrolledDate || 0)
             return dateB - dateA
           })
-          console.log('contentNew :', contentNew)
-          console.log('content :', content)
           this.processStrip(
             strip,
             this.transformContentsToWidgets(contentNew, strip),
