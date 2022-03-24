@@ -427,6 +427,7 @@ export namespace NsContent {
   }
   export enum EDisplayContentTypes {
     ASSESSMENT = 'ASSESSMENT',
+    PRACTICE_RESOURCE = 'Practice Question Set',
     AUDIO = 'AUDIO',
     CERTIFICATION = 'CERTIFICATION',
     CHANNEL = 'Channel',

@@ -268,19 +268,18 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   getMimeType(content: NsContent.IContent, identifier: string): NsContent.EMimeTypes {
     if (content.identifier === identifier) {
       return content.mimeType
-    } else if (content.children.length === 0) {
+    }
+    if (content.children.length === 0) {
       if (content.children[0].identifier === identifier) {
         return content.mimeType
-      } else {
-        // big blunder in data
-        this.logger.log(content.identifier, 'Wrong mimetypes for resume')
-        return content.mimeType
       }
-    } else {
-      for (let i = 0; i < content.children.length; i++) {
-        if (content.children[i].identifier === identifier) {
-          return this.getMimeType(content.children[i], identifier)
-        }
+      // big blunder in data
+      this.logger.log(content.identifier, 'Wrong mimetypes for resume')
+      return content.mimeType
+    }
+    for (let i = 0; i < content.children.length; i += 1) {
+      if (content.children[i].identifier === identifier) {
+        return this.getMimeType(content.children[i], identifier)
       }
     }
     return content.mimeType

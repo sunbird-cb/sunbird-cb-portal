@@ -8,7 +8,6 @@ import { IResolveResponse, AuthMicrosoftService, ConfigurationsService } from '@
 import { ViewerDataService } from './viewer-data.service'
 import { MobileAppsService } from '../../../../../src/app/services/mobile-apps.service'
 import { Platform } from '@angular/cdk/platform'
-
 const ADDITIONAL_FIELDS_IN_CONTENT = ['creatorContacts', 'source', 'exclusiveContent']
 @Injectable()
 export class ViewerResolve
