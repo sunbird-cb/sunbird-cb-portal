@@ -1,4 +1,4 @@
-<mat-tab-group [selectedIndex]="0" class="custom-tabgroup" (selectedTabChange)="tabClicked($event)">
+<mat-tab-group [selectedIndex]="tabSelectedIndex" class="custom-tabgroup" (selectedTabChange)="tabClicked($event)">
     <mat-tab label="Overview">
         <ng-template matTabContent>
             <section id="overview">
