@@ -5,7 +5,7 @@ import {
 import { NSPractice } from '../../practice.model'
 import { SafeHtml } from '@angular/platform-browser'
 // import { jsPlumb, OnConnectionBindInfo } from 'jsplumb'
-// import { PracticeService } from '../../practice.service'
+import { PracticeService } from '../../practice.service'
 // tslint:disable-next-line
 import _ from 'lodash'
 
@@ -40,6 +40,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   @Input()
   quizAnswerHash: { [questionId: string]: string[] } = {}
   title = 'match'
+  itemSelectedList1: any
   jsPlumbInstance: any
   safeQuestion: SafeHtml = ''
   correctOption: boolean[] = []
@@ -49,7 +50,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   constructor(
     // private domSanitizer: DomSanitizer,
     // private elementRef: ElementRef,
-    // private practiceSvc: PracticeService,
+    private practiceSvc: PracticeService,
   ) { }
 
   ngOnInit() {
@@ -58,6 +59,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit() {
+
   }
 
   init() {
@@ -74,11 +76,14 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
         this.question.question = this.question.question.replace(toBeReplaced, `src="${newUrl}"`)
       }
     }
+    this.practiceSvc.questionAnswerHash.subscribe(val => {
+      this.itemSelectedList1 = val[this.question.questionId]
+    })
   }
 
   ngOnChanges(changes: SimpleChanges) {
     for (const change in changes) {
-      if (change === 'questionNumber') {
+      if (change === 'questionNumber' || change === 'itemSelectedList') {
         this.init()
       }
     }
@@ -97,7 +102,9 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   isSelected(option: NSPractice.IOption) {
     return this.itemSelectedList && this.itemSelectedList.indexOf(option.optionId) !== -1
   }
-
+  get selectedList() {
+    return this.itemSelectedList || []
+  }
   isQuestionMarked() {
     return this.markedQuestions.has(this.question.questionId)
   }

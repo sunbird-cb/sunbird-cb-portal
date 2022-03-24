@@ -31,13 +31,13 @@
       <div class="flex flex-1 padding-l">
         <!-- {{log(question)}} -->
         <ng-container *ngIf="question.questionType === 'mcq-mca'">
-          <viewer-mcq-mca-question class="flex-1" [question]="question" [itemSelectedList]="itemSelectedList"
+          <viewer-mcq-mca-question class="flex-1" [question]="question" [itemSelectedList]="itemSelectedList1"
             (update)="update($event)">
           </viewer-mcq-mca-question>
         </ng-container>
 
         <ng-container *ngIf="question.questionType === 'mcq-sca'">
-          <viewer-mcq-sca-question class="flex-1" [question]="question" [itemSelectedList]="itemSelectedList"
+          <viewer-mcq-sca-question class="flex-1" [question]="question" [itemSelectedList]="itemSelectedList1"
             (update)="update($event)"></viewer-mcq-sca-question>
         </ng-container>
         <ng-container *ngIf="question.questionType === 'mtf'">
