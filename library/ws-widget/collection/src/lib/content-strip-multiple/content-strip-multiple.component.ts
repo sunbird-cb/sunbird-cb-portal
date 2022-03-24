@@ -418,9 +418,9 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           // continue learing strip
           if (content && content.length) {
             contentNew = content.filter((c: any) => {
-              if (c.completionPercentage && c.completionPercentage > 0) {
+              // if (c.completionPercentage && c.completionPercentage > 0) {
                 return c
-              }
+              // }
             })
           }
           this.processStrip(
