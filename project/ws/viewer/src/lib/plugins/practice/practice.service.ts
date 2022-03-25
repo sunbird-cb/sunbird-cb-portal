@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { NSPractice } from './practice.model'
 import { BehaviorSubject, Observable } from 'rxjs'
-import { retry } from 'rxjs/operators'
+import { map, retry } from 'rxjs/operators'
 
 const API_END_POINTS = {
   ASSESSMENT_SUBMIT_V2: `/apis/protected/v8/user/evaluate/assessment/submit/v2`,
@@ -66,7 +66,9 @@ export class PracticeService {
     return this.http.post<NSPractice.IQuizSubmitResponse>(API_END_POINTS.ASSESSMENT_SUBMIT_V2, req)
   }
   submitQuizV3(req: NSPractice.IQuizSubmit): Observable<NSPractice.IQuizSubmitResponseV2> {
-    return this.http.post<NSPractice.IQuizSubmitResponseV2>(API_END_POINTS.ASSESSMENT_SUBMIT_V3, req)
+    return this.http.post<{ result: NSPractice.IQuizSubmitResponseV2 }>(API_END_POINTS.ASSESSMENT_SUBMIT_V3, req).pipe(map(response => {
+      return response.result
+    }))
     // if (req) {
     // const response = {
     //   "id": "api.questions.list",
