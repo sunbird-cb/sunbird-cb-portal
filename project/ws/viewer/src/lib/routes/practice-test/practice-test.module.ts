@@ -9,6 +9,7 @@ import {
   MatIconModule,
   MatSnackBarModule,
   MatChipsModule,
+  MatProgressSpinnerModule,
 
 } from '@angular/material'
 
@@ -54,6 +55,7 @@ import { PracticeRoutingModule } from './practice-routing.module'
     MatChipsModule,
     MatIconModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
     BtnContentDownloadModule,
     BtnContentFeedbackModule,
     BtnContentLikeModule,

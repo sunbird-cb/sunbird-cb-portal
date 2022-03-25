@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute, NavigationExtras } from '@angular/router'
+// import { NsContent } from '@sunbird-cb/collection'
 import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ViewerDataService } from '../../viewer-data.service'
@@ -28,10 +29,13 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   resourceId: string = (this.viewerDataSvc.resourceId as string) || ''
   resourceName: string | null = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.name : ''
   resourcePrimaryCategory: string | null = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.primaryCategory : ''
+  // previousResourcePrimaryCategory!: NsContent.EPrimaryCategory
+  // nextResourcePrimaryCategory!: NsContent.EPrimaryCategory
   collectionId = ''
   logo = true
   isPreview = false
   forChannel = false
+  // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
     private domSanitizer: DomSanitizer,
@@ -65,6 +69,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     this.viewerDataServiceSubscription = this.viewerDataSvc.tocChangeSubject.subscribe(data => {
       if (data.prevResource) {
         this.prevResourceUrl = data.prevResource.viewerUrl
+        // this.previousResourcePrimaryCategory = data.prevResource.primaryCategory
         this.prevResourceUrlParams = {
           queryParams: {
             primaryCategory: data.prevResource.primaryCategory,
@@ -75,9 +80,12 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
           },
           fragment: '',
         }
+      } else {
+        this.prevResourceUrl = null
       }
       if (data.nextResource) {
         this.nextResourceUrl = data.nextResource.viewerUrl
+        // this.nextResourcePrimaryCategory = data.nextResource.primaryCategory
         this.nextResourceUrlParams = {
           queryParams: {
             primaryCategory: data.nextResource.primaryCategory,

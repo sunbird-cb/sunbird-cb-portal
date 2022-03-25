@@ -2,6 +2,7 @@
   [complexityLevel]="complexityLevel" [duration]="duration" [timeLimit]="quizJson?.timeLimit || 300"
   [primaryCategory]="primaryCategory" [noOfQuestions]="noOfQuestions" (userSelection)="getSections($event)">
 </viewer-overview>
+{{viewState}}==={{isSubmitted}}==={{quizJson?.isAssessment}}
 <div #quizContainer class="quiz-container" *ngIf="viewState !== 'initial'">
   <div class="flex flex-1 flex-column">
     <nav class="quiz-nav-bar mat-toolbar mat-caption flex-column">
@@ -65,11 +66,7 @@
       </mat-sidenav>
       <mat-sidenav-content>
         <div *ngIf="!isSubmitted" class="flex flex-1">
-          <div class="margin-m" *ngIf="fetchingQuestionsStatus === 'fetching'">
-            <div class="flex flex-center">
-              <mat-spinner></mat-spinner>
-            </div>
-          </div>
+          <ng-template *ngIf="fetchingQuestionsStatus === 'fetching'" [ngTemplateOutlet]="showLoading"></ng-template>
           <div class="flex flex-wrapped margin-right-s margin-left-s" *ngIf="fetchingQuestionsStatus === 'done'">
             <div class="col" *ngFor="let question of secQuestions; let i = index">
               <div (click)="scroll(i + 1)" [ngClass]="{
@@ -95,7 +92,7 @@
       {{currentQuestionIndex}} -->
         <mat-card class="flex flex-1 flex-column margin-m pad-0"
           *ngIf="fetchingQuestionsStatus === 'done' && viewState !== 'detail' ">
-          <ng-container *ngIf="!(viewState === 'answer' && quizJson?.isAssessment) && !isSubmitted">
+          <ng-container *ngIf="!(viewState === 'answer') && !isSubmitted">
             <div class="flex flex-1 padding-l">
               <span class="mat-title margin-zero">{{selectedSection.name}}</span>
               <span class="spacer"></span>
@@ -145,11 +142,12 @@
                 (itemSelected)="fillSelectedItems(current_Question, $event)">
               </viewer-question>
             </ng-container>
+            <ng-template *ngIf="!(current_Question && !process)"  [ngTemplateOutlet]="showLoading"></ng-template>
           </ng-container>
         </mat-card>
         <div id="quiz-end"></div>
         <ng-container *ngIf="isSubmitted && (viewState === 'answer' || viewState === 'review')">
-          <viewer-result [percentage]="result" [isPassed]="true"></viewer-result>
+          <viewer-result [quizResponse]="finalResponse" [percentage]="result" [isPassed]="true"></viewer-result>
           <!-- <mat-card class="margin-bottom-m margin-top-m">
             <div class="margin-m" *ngIf="fetchingResultsStatus === 'fetching'">
               <div class="flex flex-center">
@@ -286,6 +284,14 @@
         <div class="sbox selected"></div>
         Selected
       </span>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #showLoading>
+  <div class="margin-m">
+    <div class="flex flex-center">
+      <mat-spinner></mat-spinner>
     </div>
   </div>
 </ng-template>
