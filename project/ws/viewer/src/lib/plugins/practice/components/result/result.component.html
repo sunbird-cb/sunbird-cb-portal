@@ -13,7 +13,7 @@
   </div>
   <div class="flex flex-2 flex-row margin-left-l">
     <div class="flex flex-1 flex-row flex-wrap margin-top-m">
-      <ng-container *ngFor="let _parts of quizResponse.children; let i = index">
+      <ng-container *ngFor="let _parts of quizResponse?.children; let i = index">
         <mat-card *ngIf="_parts" class="ws-mat-accent-border box-c">
           <mat-card-title>
             <span class="mat-subheading-1">{{'Section ' + (i+1) + ' - Easy '}}</span>
