@@ -21,7 +21,7 @@ import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
 import { ViewerUtilService } from '../../viewer-util.service'
 // tslint:disable-next-line
 import _ from 'lodash'
-import { ViewerDataService } from '../../viewer-data.service'
+// import { ViewerDataService } from '../../viewer-data.service'
 export type FetchStatus = 'hasMore' | 'fetching' | 'done' | 'error' | 'none'
 @Component({
   selector: 'viewer-plugin-practice',
@@ -100,7 +100,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private viewerSvc: ViewerUtilService,
     private router: Router,
-    private vws: ViewerDataService,
+    // private vws: ViewerDataService,
   ) {
     // this.getSections()
     this.markedQuestions = new Set([])
