@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  HostListener,
   Input,
   OnChanges, OnDestroy, OnInit,
   QueryList,
@@ -9,17 +10,18 @@ import {
 } from '@angular/core'
 import { MatDialog, MatSidenav } from '@angular/material'
 import { interval, Subscription } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { filter, map } from 'rxjs/operators'
 import { NSPractice } from './practice.model'
 import { QuestionComponent } from './components/question/question.component'
 import { SubmitQuizDialogComponent } from './components/submit-quiz-dialog/submit-quiz-dialog.component'
 import { OnConnectionBindInfo } from 'jsplumb'
 import { PracticeService } from './practice.service'
 import { EventService, NsContent, WsEvents } from '@sunbird-cb/utils'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
 import { ViewerUtilService } from '../../viewer-util.service'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { ViewerDataService } from '../../viewer-data.service'
 export type FetchStatus = 'hasMore' | 'fetching' | 'done' | 'error' | 'none'
 @Component({
   selector: 'viewer-plugin-practice',
@@ -76,6 +78,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   result = 0
   sidenavMode = 'start'
   sidenavOpenDefault = false
+  finalResponse!: NSPractice.IQuizSubmitResponseV2
   startTime = 0
   submissionState: NSPractice.TQuizSubmissionState = 'unanswered'
   telemetrySubscription: Subscription | null = null
@@ -96,6 +99,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     private quizSvc: PracticeService,
     private activatedRoute: ActivatedRoute,
     private viewerSvc: ViewerUtilService,
+    private router: Router,
+    private vws: ViewerDataService,
   ) {
     // this.getSections()
     this.markedQuestions = new Set([])
@@ -103,6 +108,33 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     // quizSvc.questionAnswerHash.subscribe(qaHash => {
     //   this.questionAnswerHash = qaHash
     // })
+    // console.log(activatedRoute.snapshot.data)
+    this.router.events.pipe(
+      filter(e => e instanceof NavigationStart && e.navigationTrigger === 'imperative'),
+      // switchMap(() => this.router.events.pipe(
+      //   filter(e => e instanceof NavigationEnd
+      //     || e instanceof NavigationCancel
+      //     || e instanceof NavigationError
+      //   ),
+      //   take(1),
+      //   filter(e => e instanceof NavigationEnd)
+      // ))
+    ).subscribe(() => {
+      if (this.viewState !== 'initial' && !this.isSubmitted) {
+        this.submitQuiz()
+      }
+      // console.log(val)
+    })
+  }
+  @HostListener('window:beforeunload', ['$event'])
+  beforeUnloadHander(e: any) {
+    // or directly false
+    const confirmationMessage = `\o/`
+    if (this.viewState !== 'initial' && !this.isSubmitted) {
+      e.returnValue = confirmationMessage
+      return confirmationMessage
+    }
+    return
   }
   ngOnInit() {
     this.attemptSubscription = this.quizSvc.secAttempted.subscribe(data => {
@@ -111,6 +143,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     if (this.quizSvc.questionAnswerHash.value) {
       this.questionAnswerHash = this.quizSvc.questionAnswerHash.getValue()
     }
+    // console.log(this.vws.resource)
   }
   getSections(_event: NSPractice.TUserSelectionType) {
     // this.identifier
@@ -125,6 +158,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.fetchingSectionsStatus = 'done'
       this.viewState = 'detail'
       this.updateTimer()
+      this.startIfonlySection()
     } else {
       this.quizSvc.getSection(this.identifier).subscribe((section: NSPractice.ISectionResponse) => {
         // console.log(section)
@@ -147,8 +181,19 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           // this.paperSections = _.get(section, 'result.questionSet.children')
           this.viewState = 'detail'
           this.updateTimer()
+          this.startIfonlySection()
         }
       })
+    }
+  }
+  startIfonlySection() {
+    // directly start section if only section is there is set
+    if (this.paperSections && this.paperSections.length === 1) {
+      const firstSection = _.first(this.paperSections) || null
+      if (firstSection) {
+        this.nextSection(firstSection)
+        this.overViewed('start')
+      }
     }
   }
   updataDB(sections: NSPractice.IPaperSection[]) {
@@ -217,7 +262,6 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     const options: NSPractice.IOption[] = []
     if (question && question.qType) {
       const qTyp = question.qType
-
       switch (qTyp) {
         // 'mcq-sca' | 'mcq-mca' | 'ftb' | 'mtf'
         case 'mcq-sca':
@@ -232,7 +276,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
             const vHtml = document.createElement('div')
             vHtml.innerHTML = o.value.value
             options.push({
-              optionId: vHtml.textContent || vHtml.innerText || '',
+              optionId: o.value.value,
               text: aHtml.textContent || aHtml.innerText || '',
               isCorrect: o.answer,
               // hint: '',
@@ -308,12 +352,19 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
   ngOnChanges(changes: SimpleChanges) {
     for (const change in changes) {
-      if (change === 'quiz') {
-        if (
-          this.quizJson &&
-          this.quizJson.timeLimit
-        ) {
-          this.quizJson.timeLimit *= 1000
+      if (change) {
+        if (change === 'quiz') {
+          if (
+            this.quizJson &&
+            this.quizJson.timeLimit
+          ) {
+            this.quizJson.timeLimit *= 1000
+          }
+        }
+        if (change === 'name') {
+          // this.quizJson.questions = []
+          // this.quizJson.timeLimit = 0
+          this.clearStorage()
         }
       }
     }
@@ -345,19 +396,6 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
   backToSections() {
     this.viewState = 'detail'
-  }
-  ngOnDestroy() {
-    // this.markedQuestions = new Set([])
-    // this.questionAnswerHash = {}
-    if (this.attemptSubscription) {
-      this.attemptSubscription.unsubscribe()
-    }
-    if (this.timerSubscription) {
-      this.timerSubscription.unsubscribe()
-    }
-    if (this.telemetrySubscription) {
-      this.telemetrySubscription.unsubscribe()
-    }
   }
 
   overViewed(event: NSPractice.TUserSelectionType) {
@@ -554,7 +592,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               editorState: {
                 options: _.map(sq.options, (_o: NSPractice.IOption) => {
                   return {
-                    index: (_o.optionId || '').toString(),
+                    index: (_o.optionId).toString(),
                     selectedAnswer: !!_o.userSelected,
                   } as NSPractice.IResponseOptions
                 }),
@@ -572,8 +610,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               editorState: {
                 options: _.map(sq.options, (_o: NSPractice.IOption) => {
                   return {
-                    index: (_o.optionId || '').toString(),
-                    selectedAnswer: !!_o.userSelected,
+                    index: (_o.optionId).toString(),
+                    selectedAnswer: _o.userSelected,
                   } as NSPractice.IResponseOptions
                 }),
               },
@@ -588,12 +626,18 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               primaryCategory: NsContent.EPrimaryCategory.FTB_QUESTION,
               qType: 'FTB',
               editorState: {
-                selectedAnswer: _.join(_.map(sq.options, (_o: NSPractice.IOption) => {
-                  return _o.response
+                options: _.map(sq.options, (_o: NSPractice.IOption) => {
+                  return {
+                    index: (_o.optionId).toString(),
+                    selectedAnswer: _o.response,
+                  } as NSPractice.IResponseOptions
                 }),
-                  // tslint:disable-next-line:align
-                  ','
-                ),
+                // selectedAnswer: _.join(_.map(sq.options, (_o: NSPractice.IOption) => {
+                //   return _o.response
+                // }),
+                //   // tslint:disable-next-line:align
+                //   ','
+                // ),
               },
             }
             responseQ.push(ftb)
@@ -608,7 +652,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               editorState: {
                 options: _.map(sq.options, (_o: NSPractice.IOption) => {
                   return {
-                    index: _o.optionId,
+                    index: (_o.optionId).toString(),
                     selectedAnswer: _o.response,
                   } as NSPractice.IResponseOptions
                 }),
@@ -665,7 +709,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       (res: NSPractice.IQuizSubmitResponseV2) => {
         // call content progress with status 2 i.e, completed
         this.updateProgress(2)
-
+        this.finalResponse = res
         if (this.quizJson.isAssessment) {
           this.isIdeal = true
         }
@@ -700,20 +744,13 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         if (top !== null) {
           top.scrollIntoView({ behavior: 'smooth', block: 'start' })
         }
-        this.clearStorage()
+        this.clearStoragePartial()
       },
       (_error: any) => {
         this.fetchingResultsStatus = 'error'
       },
     )
     // this.fetchingResultsStatus = 'done'
-  }
-  clearStorage() {
-    this.quizSvc.paperSections.next(null)
-    this.quizSvc.questionAnswerHash.next({})
-    this.quizSvc.qAnsHash({})
-    this.quizSvc.secAttempted.next([])
-    // this.isSubmitted = true
   }
   showAnswers() {
     this.showMtfAnswers()
@@ -902,6 +939,41 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           pageIdExt: `quiz`,
           module: WsEvents.EnumTelemetrymodules.LEARN,
         })
+    }
+  }
+  clearStorage() {
+    this.quizSvc.paperSections.next(null)
+    this.quizSvc.questionAnswerHash.next({})
+    this.quizSvc.qAnsHash({})
+    this.quizSvc.secAttempted.next([])
+    // this.markedQuestions = new Set([])
+    // this.questionAnswerHash = {}
+    this.attemptSubData = []
+    this.viewState = 'initial'
+    // this.isSubmitted = true
+  }
+  clearStoragePartial() {
+    this.quizSvc.paperSections.next(null)
+    this.quizSvc.questionAnswerHash.next({})
+    this.quizSvc.qAnsHash({})
+    this.quizSvc.secAttempted.next([])
+    // this.markedQuestions = new Set([])
+    // this.questionAnswerHash = {}
+    this.attemptSubData = []
+    this.currentQuestionIndex = 0
+    // this.viewState = 'initial'
+    // this.isSubmitted = true
+  }
+  ngOnDestroy() {
+    this.clearStorage()
+    if (this.attemptSubscription) {
+      this.attemptSubscription.unsubscribe()
+    }
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe()
+    }
+    if (this.telemetrySubscription) {
+      this.telemetrySubscription.unsubscribe()
     }
   }
 }
