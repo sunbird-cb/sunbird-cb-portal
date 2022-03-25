@@ -36,11 +36,12 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
         private configSvc: ConfigurationsService,
         private eventSvc: EventService,
         private contentSvc: WidgetContentService,
-        private log: LoggerService
+        private log: LoggerService,
     ) {
 
     }
     ngOnInit(): void {
+        this.isFetchingDataComplete = false
         if (
             this.activatedRoute.snapshot.queryParamMap.get('preview') &&
             !this.accessControlSvc.authoringConfig.newDesign
@@ -49,6 +50,7 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
             this.viewerDataSubscription = this.viewerSvc
                 .getContent(this.activatedRoute.snapshot.paramMap.get('resourceId') || '')
                 .subscribe(data => {
+                    this.isFetchingDataComplete = false
                     this.testData = data
                     //   console.log(data)
                     this.init()
@@ -56,6 +58,7 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
         } else {
             this.dataSubscription = this.activatedRoute.data.subscribe(
                 async data => {
+                    this.isFetchingDataComplete = false
                     this.testData = data.content.data
                     //   console.log(this.testData)
                     this.init()
@@ -68,8 +71,16 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
             this.alreadyRaised = true
             this.raiseEvent(WsEvents.EnumTelemetrySubType.Loaded, this.testData)
         }
-        this.isFetchingDataComplete = true
+        setTimeout(() => { this.isFetchingDataComplete = true }, 100)
+        // this.isFetchingDataComplete = true
     }
+    // ngOnChanges(changes: SimpleChanges): void {
+    //     for (const change in changes) {
+    //         if (change) {
+    //             console.log(change)
+    //         }
+    //     }
+    // }
     async fetchContinueLearning(collectionId: string, identifier: string): Promise<boolean> {
         return new Promise(resolve => {
             let userId

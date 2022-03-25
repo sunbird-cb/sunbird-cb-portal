@@ -304,7 +304,8 @@ export namespace NSPractice {
     mimeType: NsContent.EMimeTypes.QUESTION
     qType: 'FTB'
     editorState: {
-      selectedAnswer: string | null
+      // selectedAnswer: string | null
+      options: IResponseOptions[]
     }
   }
   export interface ISubSec {

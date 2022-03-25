@@ -323,7 +323,8 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       complexity: content.difficultyLevel,
       primaryCategory: content.primaryCategory,
       children:
-        Array.isArray(content.children) && content.children.length && content.mimeType !== NsContent.EMimeTypes.QUESTION_SET
+        Array.isArray(content.children) && content.children.length
+          && content.mimeType !== NsContent.EMimeTypes.QUESTION_SET // this is because of ne api ( questionset structure)
           ? content.children.map(child => this.convertContentToIViewerTocCard(child))
           : null,
     }

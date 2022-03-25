@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { NsContent } from '@sunbird-cb/utils/src/public-api'
+import { NSPractice } from '../../practice.model'
 
 @Component({
   selector: 'viewer-result',
@@ -10,6 +11,7 @@ export class ResultComponent implements OnInit {
   @Input() percentage = 0
   @Input() levelText = 'Level 2 Passed'
   @Input() isPassed = false
+  @Input() quizResponse!: NSPractice.IQuizSubmitResponseV2
   staticImage = '/assets/images/exam/practice-test.png'
   questionTYP = NsContent.EPrimaryCategory
   constructor() { }

@@ -67,6 +67,66 @@ export class PracticeService {
   }
   submitQuizV3(req: NSPractice.IQuizSubmit): Observable<NSPractice.IQuizSubmitResponseV2> {
     return this.http.post<NSPractice.IQuizSubmitResponseV2>(API_END_POINTS.ASSESSMENT_SUBMIT_V3, req)
+    // if (req) {
+    // const response = {
+    //   "id": "api.questions.list",
+    //   "ver": "3.0",
+    //   "ts": "2022-03-14T09:35:34ZZ",
+    //   "params": {
+    //     "resmsgid": "92ae178e-3f81-4fe5-8d48-47859a8d3c0e",
+    //     "msgid": null,
+    //     "err": null,
+    //     "status": "successful",
+    //     "errmsg": null
+    //   },
+    //   "responseCode": "OK",
+    //   "result": {
+    //     "identifier": "do_11331189852786688015725",
+    //     "isAssessment": true,
+    //     "objectType": "QuestionSet",
+    //     "primaryCategory": "Practice Question Set",
+    //     "children": [
+    //       {
+    //         "identifier": "do_113471599969681408116",
+    //         "objectType": "QuestionSet",
+    //         "primaryCategory": "Practice Question Set",
+    //         "scoreCutoffType": "SectionLevel",
+    //         "minimumPassPercentage": 60,
+    //         "result": 50,
+    //         "total": 4,
+    //         "blank": 0,
+    //         "correct": 2,
+    //         "passPercent": 60,
+    //         "inCorrect": 2,
+    //         "pass": false
+    //       },
+    //       {
+    //         "identifier": "xyz",
+    //         "objectType": "QuestionSet",
+    //         "primaryCategory": "Practice Question Set",
+    //         "scoreCutoffType": "SectionLevel",
+    //         "result": 66.66666666666667,
+    //         "total": 3,
+    //         "blank": 0,
+    //         "correct": 2,
+    //         "passPercent": 60,
+    //         "inCorrect": 1,
+    //         "pass": true
+    //       }
+    //     ],
+    //     "overallResult": 66.66666666666667,
+    //     "total": 7,
+    //     "blank": 0,
+    //     "correct": 6,
+    //     "passPercent": 60,
+    //     "inCorrect": 1,
+    //     "pass": false
+    //   },
+    // }
+    // tslint:disable-next-line
+    //   return of(JSON.parse(JSON.stringify(response.result)))
+    // }
+    // return EMPTY
   }
   createAssessmentSubmitRequest(
     identifier: string,

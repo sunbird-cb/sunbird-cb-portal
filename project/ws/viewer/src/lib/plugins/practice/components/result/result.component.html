@@ -5,7 +5,7 @@
         <mat-icon *ngIf="isPassed" class="ws-mat-green-2-text transform15 margin-top-m">check_circle</mat-icon>
         <mat-icon *ngIf="!isPassed" class="ws-mat-red-text transform15 margin-top-m">highlight_off</mat-icon>
         <span class="mat-title ws-mat-black60-text margin-top-s">{{levelText}}</span>
-        <span class="mat-heading-1 ws-mat-default-text">{{percentage}}%</span>
+        <span class="mat-heading-1 ws-mat-default-text">{{percentage | number: '1.2-2'}}%</span>
         <span class="mat-body-1 ws-mat-black60-text">your score</span>
       </div>
     </div>
@@ -13,26 +13,32 @@
   </div>
   <div class="flex flex-2 flex-row margin-left-l">
     <div class="flex flex-1 flex-row flex-wrap margin-top-m">
-      <ng-container *ngFor="let _parts of [1,2,3,4]">
+      <ng-container *ngFor="let _parts of quizResponse.children; let i = index">
         <mat-card *ngIf="_parts" class="ws-mat-accent-border box-c">
           <mat-card-title>
-            <span class="mat-subheading-1">{{'Part ' +_parts + ' - Easy '}}</span>
+            <span class="mat-subheading-1">{{'Section ' + (i+1) + ' - Easy '}}</span>
             <span class="mat-subheading-2">{{'Insights'}}</span>
           </mat-card-title>
           <mat-card-content class="flex flex-1 flex-column">
-            <ng-container *ngFor="let _result of [1,2]">
-              <ng-container *ngIf="_result">
-                <ng-container *ngIf="_result % 2 == 1" [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{
+            <ng-container *ngFor="let _result of ['correct','inCorrect','blank']">
+              <ng-container *ngIf="_parts[_result]">
+                <ng-container *ngIf="_result == 'correct'" [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{
               icon: 'done',
               isSVG: false,
               colorClass: 'green',
-              text: '7 Correct'
+              text: _parts[_result] +' Correct'
             }"></ng-container>
-                <ng-container *ngIf="_result % 2 == 0" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{
+                <ng-container *ngIf="_result == 'inCorrect'" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{
               icon: 'close',
               isSVG: false,
               colorClass: 'red',
-              text: '7 incorrect'
+              text: _parts[_result] + ' incorrect'
+            }"></ng-container>
+                <ng-container *ngIf="_result == 'blank'" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{
+              icon: 'close',
+              isSVG: false,
+              colorClass: 'red',
+              text: _parts[_result] + ' not Attemped'
             }"></ng-container>
               </ng-container>
             </ng-container>
