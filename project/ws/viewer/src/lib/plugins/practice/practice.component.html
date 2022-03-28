@@ -2,7 +2,6 @@
   [complexityLevel]="complexityLevel" [duration]="duration" [timeLimit]="quizJson?.timeLimit || 300"
   [primaryCategory]="primaryCategory" [noOfQuestions]="noOfQuestions" (userSelection)="getSections($event)">
 </viewer-overview>
-{{viewState}}==={{isSubmitted}}==={{quizJson?.isAssessment}}
 <div #quizContainer class="quiz-container" *ngIf="viewState !== 'initial'">
   <div class="flex flex-1 flex-column">
     <nav class="quiz-nav-bar mat-toolbar mat-caption flex-column">
