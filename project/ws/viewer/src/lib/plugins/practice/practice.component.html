@@ -22,7 +22,7 @@
           <mat-icon class="ws-mat-default-text">arrow_back</mat-icon>
           <span class="ws-mat-default-text subheading-1">Back to home </span>
         </a>
-        <ng-container *ngIf="(!isSubmitted && viewState !== 'detail') || 
+        <ng-container *ngIf="(!isSubmitted && viewState !== 'detail') ||
         (primaryCategory === ePrimaryCategory.PRACTICE_RESOURCE && !isSubmitted && viewState === 'detail')">
           <span class="spacer"></span>
         </ng-container>
@@ -205,7 +205,7 @@
              <button class="margin-right-m ws-mat-accent-border-active" mat-button *ngIf="viewState === 'review'"
               (click)="showAnswers()" i18n="button quiz show answers">
               <span class="ws-mat-default-text">Show Answers</span>
-            </button> 
+            </button>
           </div> -->
         </ng-container>
       </mat-sidenav-content>
@@ -223,12 +223,12 @@
         <div class="flex flex-1 flex-wrap margin-top-l">
           <ng-container *ngFor="let section of this.paperSections">
             <mat-card [ngClass]="getClass(section)"
-              class="min-w padding-s ws-mat-accent-border br-8 no-border margin-m">
+              class="min-w assessment_card ws-mat-accent-border br-8 no-border margin-m">
               <mat-card-content class="cursor-pointer"
                 [class.spinner]="fetchingQuestionsStatus === 'fetching' && section.identifier === selectedSection.identifier"
                 [attr.disabled]="fetchingQuestionsStatus === 'fetching' && section.identifier === selectedSection.identifier"
                 (click)="startSection(section)">
-                <div class="flex flex-1 flex-column margin-left-s margin-top-s">
+                <div class="flex flex-1 flex-column">
                   <span class="flex mat-subheading-1 text-truncate ">{{section.name || 'Section'}}</span>
                   <span class="flex mat-body-2">Percentage to pass - <ng-container>
                       {{section.minimumPassPercentage}}
