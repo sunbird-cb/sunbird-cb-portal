@@ -40,18 +40,18 @@
   </mat-card>
 </div> -->
 <div class="flex auto-w ws-mat-primary-lite-background-important">
-  <div class="flex flex-1 max-w margin-right-m">
-    <img class="flex-1" [src]="staticImage" alt="exam image" />
+  <div class="flex flex-1 max-w">
+    <img class="flex-1 exam_image" [src]="staticImage" alt="exam image" />
   </div>
-  <div class="flex flex-1 flex-column margin-left-l ws-mat-accent-border border-custom">
-    <div class="flex flex-1 flex-column margin-top-m">
-      <span class="mat-headline text-justify">{{learningObjective | pipeLimitTo: 300 }}</span>
+  <div class="flex flex-1 flex-column margin-left-xl ws-mat-accent-border border-custom assessment_summary_box">
+    <div class="flex flex-1 flex-column">
+      <span class="mat-headline text-justify margin-bottom-xl">{{learningObjective | pipeLimitTo: 300 }}</span>
       <a mat-button (click)="overviewed('start')" [class.spinner]="loading" [disabled]="loading"
         class="ws-mat-primary-background text-white m-w padding-xs">
         <span class="padding-xs" i18n>Start assessment now</span>
       </a>
-      <div class="flex margin-top-l flex-column">
-        <span class="mat-subheading-2">Summary</span>
+      <div class="flex margin-top-xl flex-column">
+        <span class="mat-subheading-2 ws-mat-black60-text">Summary</span>
         <ng-container [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{
                   icon: '/assets/icons/content/assessment.svg',
                   isSVG: true,
@@ -80,8 +80,8 @@
                   text: 'Unlimited retakes not allowed'
                 }"></ng-container>
       </div>
-      <div class="flex flex-1 flex-column margin-top-l">
-        <span class="mat-subheading-2">Points to note</span>
+      <div class="flex flex-1 flex-column margin-top-xl">
+        <span class="mat-subheading-2 ws-mat-black60-text">Points to note</span>
         <div class="flex flex-column">
           <ng-container *ngFor="let c of points" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{
                   icon: c.icon,
@@ -91,7 +91,7 @@
       </div>
     </div>
   </div>
-  <div class="flex flex-1"></div>
+  <div class="flex flex-1 blank_box"></div>
 </div>
 <ng-template #detail let-icon="icon" let-text="text">
   <mat-card class="flex max-card-w customcard margin-top-xs ws-mat-primary-tags">

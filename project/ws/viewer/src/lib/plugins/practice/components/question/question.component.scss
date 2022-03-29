@@ -73,6 +73,7 @@
 // }
 .respo {
   flex-direction: row;
+
   padding: $size-m 0 $size-m 0;
   @include breakpoint-lt-m {
     flex-direction: column;
@@ -82,6 +83,21 @@
   //   flex-direction: column;
   // }
 }
+
+.respo_inner {
+   padding: 0px 100px;
+   @include breakpoint-lt-m {
+    padding: 0px 20px;
+  }
+}
+.viewer_quest_box {
+  padding: 24px 100px;
+  @include breakpoint-lt-m {
+    padding: 16px 20px;
+  }
+}
+
+
 .right-border {
   border-top: none !important;
   border-left: none !important;
