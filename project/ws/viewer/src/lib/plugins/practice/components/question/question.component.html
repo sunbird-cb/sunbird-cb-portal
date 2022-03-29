@@ -1,8 +1,8 @@
 <mat-card class="flex flex-1 respo margin-bottom-m no-shadow">
   <div class="respo flex flex-1 flex-column padding-top-m padding-left-l ws-mat-accent-border right-border">
-    <div class="flex flex-1- flex-column">
+    <div class="flex flex-1- flex-column respo_inner">
       <div class="flex flex-middle">
-        <h3 class="mat-subheading-2 ws-mat-black60-text margin-remove-bottom">
+        <h3 class="mat-subheading-2 ws-mat-black60-text margin-bottom-m">
           <ng-container i18n="question number label">Question &nbsp;</ng-container>{{ questionNumber }}
           <ng-container i18n="question number of total questions">of</ng-container>
           {{ total }}
@@ -28,7 +28,7 @@
           <mat-icon *ngIf="isQuestionMarked()">flag</mat-icon>
         </button>
       </div>
-      <div class="flex flex-1 padding-l">
+      <div class="flex flex-1 viewer_quest_box">
         <!-- {{log(question)}} -->
         <ng-container *ngIf="question.questionType === 'mcq-mca'">
           <viewer-mcq-mca-question class="flex-1" [question]="question" [itemSelectedList]="itemSelectedList1"
