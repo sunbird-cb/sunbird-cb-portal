@@ -161,3 +161,29 @@ $nav-height: 40px;
   margin-right: 4px;
   margin-left: 12px;
 }
+.quest_num_box {
+  overflow-y: auto;
+}
+
+
+.card_inner_box {
+  @include breakpoint-lt-m {
+    flex-direction: column;
+  }
+}
+
+.butto_box {
+  @include breakpoint-lt-xs {
+    flex-direction: column!important;
+  }
+  @include breakpoint-lt-m {
+    margin-top: 16px;
+  }
+}
+
+
+.quest_btn {
+  @include breakpoint-lt-xs {
+    width: 100%;
+  }
+}

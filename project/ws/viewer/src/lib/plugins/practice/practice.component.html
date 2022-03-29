@@ -66,7 +66,7 @@
       <mat-sidenav-content>
         <div *ngIf="!isSubmitted" class="flex flex-1">
           <ng-template *ngIf="fetchingQuestionsStatus === 'fetching'" [ngTemplateOutlet]="showLoading"></ng-template>
-          <div class="flex flex-wrapped margin-right-s margin-left-s" *ngIf="fetchingQuestionsStatus === 'done'">
+          <div class="flex flex-nowrap margin-right-s margin-left-s quest_num_box" *ngIf="fetchingQuestionsStatus === 'done'">
             <div class="col" *ngFor="let question of secQuestions; let i = index">
               <div (click)="scroll(i + 1)" [ngClass]="{
               'marked-question': isQuestionMarked(question?.questionId),
@@ -92,31 +92,33 @@
         <mat-card class="flex flex-1 flex-column margin-m pad-0"
           *ngIf="fetchingQuestionsStatus === 'done' && viewState !== 'detail' ">
           <ng-container *ngIf="!(viewState === 'answer') && !isSubmitted">
-            <div class="flex flex-1 padding-l">
-              <span class="mat-title margin-zero">{{selectedSection.name}}</span>
-              <span class="spacer"></span>
-              <a *ngIf="currentQuestionIndex !== 0" class="ws-mat-accent-border margin-xs m-auto" mat-button
-                (click)="getNextQuestion(currentQuestionIndex - 1)">
-                <mat-icon>arrow_back</mat-icon>
-                PREVIOUS
-              </a>
-              &nbsp;&nbsp;
-              <a *ngIf="(currentQuestionIndex+1) !== totalQCount"
-                class="text-white ws-mat-primary-background margin-xs m-auto" mat-button
-                (click)="getNextQuestion(currentQuestionIndex + 1)">NEXT QUESTION</a>
-              <ng-container
-                *ngIf="!allSecAttempted.full && allSecAttempted.next && ((currentQuestionIndex+1) === totalQCount)">
-                <button class="text-white ws-mat-primary-background margin-xs m-auto" mat-raised-button
-                  (click)="nextSection(allSecAttempted.next)" i18n="button quiz submit">
-                  Next Section
-                </button>
-              </ng-container>
-              <ng-container *ngIf="((currentQuestionIndex+1) === totalQCount) && allSecAttempted.full">
-                <button *ngIf="!isSubmitted" class="text-white ws-mat-primary-background margin-xs m-auto"
-                  mat-raised-button (click)="proceedToSubmit()" i18n="button quiz submit">
-                  Submit
-                </button>
-              </ng-container>
+            <div class="flex flex-1 padding-l card_inner_box flex-row">
+              <span class="mat-title margin-zero flex flex-1">{{selectedSection.name}}</span>
+              <!-- <span class="spacer"></span> -->
+              <div class="flex flex-row butto_box">
+                <a *ngIf="currentQuestionIndex !== 0" class="ws-mat-accent-border margin-xs m-auto quest_btn" mat-button
+                  (click)="getNextQuestion(currentQuestionIndex - 1)">
+                  <mat-icon>arrow_back</mat-icon>
+                  PREVIOUS
+                </a>
+                &nbsp;&nbsp;
+                <a *ngIf="(currentQuestionIndex+1) !== totalQCount"
+                  class="text-white ws-mat-primary-background margin-xs m-auto quest_btn" mat-button
+                  (click)="getNextQuestion(currentQuestionIndex + 1)">NEXT QUESTION</a>
+                <ng-container
+                  *ngIf="!allSecAttempted.full && allSecAttempted.next && ((currentQuestionIndex+1) === totalQCount)">
+                  <button class="text-white ws-mat-primary-background margin-xs m-auto quest_btn" mat-raised-button
+                    (click)="nextSection(allSecAttempted.next)" i18n="button quiz submit">
+                    Next Section
+                  </button>
+                </ng-container>
+                <ng-container *ngIf="((currentQuestionIndex+1) === totalQCount) && allSecAttempted.full">
+                  <button *ngIf="!isSubmitted" class="text-white ws-mat-primary-background margin-xs m-auto"
+                    mat-raised-button (click)="proceedToSubmit()" i18n="button quiz submit">
+                    Submit
+                  </button>
+                </ng-container>
+              </div>
             </div>
             <div class="flex flex-1">
               <mat-progress-bar class="quiz-progress" [color]="secondary" [mode]="determinate"
