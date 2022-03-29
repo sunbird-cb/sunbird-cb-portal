@@ -16,7 +16,7 @@ import { QuestionComponent } from './components/question/question.component'
 import { SubmitQuizDialogComponent } from './components/submit-quiz-dialog/submit-quiz-dialog.component'
 import { OnConnectionBindInfo } from 'jsplumb'
 import { PracticeService } from './practice.service'
-import { EventService, NsContent, WsEvents } from '@sunbird-cb/utils'
+import { EventService, NsContent, ValueService, WsEvents } from '@sunbird-cb/utils'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
 import { ViewerUtilService } from '../../viewer-util.service'
 // tslint:disable-next-line
@@ -93,6 +93,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   ePrimaryCategory = NsContent.EPrimaryCategory
   currentQuestion!: NSPractice.IQuestionV2 | any
   process = false
+  isXsmall = false
   constructor(
     private events: EventService,
     public dialog: MatDialog,
@@ -100,6 +101,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private viewerSvc: ViewerUtilService,
     private router: Router,
+    private valueSvc: ValueService,
     // private vws: ViewerDataService,
   ) {
     // this.getSections()
@@ -124,6 +126,9 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         this.submitQuiz()
       }
       // console.log(val)
+    })
+    this.valueSvc.isXSmall$.subscribe(isXSmall => {
+      this.isXsmall = isXSmall
     })
   }
   @HostListener('window:beforeunload', ['$event'])
@@ -340,11 +345,12 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   scroll(qIndex: number) {
     if (qIndex > 0) {
       this.getNextQuestion(qIndex - 1)
-    } // if (!this.sidenavOpenDefault) {
-    //   if (this.sideNav) {
-    //     this.sideNav.close()
-    //   }
-    // }
+    }
+    if (!this.sidenavOpenDefault && this.isXsmall) {
+      if (this.sideNav) {
+        this.sideNav.close()
+      }
+    }
     // const questionElement = document.getElementById(`question${qIndex}`)
     // if (questionElement) {
     //   questionElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -419,8 +425,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   startQuiz() {
-    // this.sidenavOpenDefault = true
-    // setTimeout(() => { this.sidenavOpenDefault = false }, 500)
+    if (this.isXsmall) {
+      this.sidenavOpenDefault = true
+      setTimeout(() => { this.sidenavOpenDefault = false }, 500)
+    }
     this.currentQuestionIndex = 0
     this.viewState = 'attempt'
     this.getNextQuestion(this.currentQuestionIndex)

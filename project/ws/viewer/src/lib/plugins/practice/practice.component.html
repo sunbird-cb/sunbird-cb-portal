@@ -7,11 +7,12 @@
     <nav class="quiz-nav-bar mat-toolbar mat-caption flex-column">
       <div class="flex flex-1">
         <!-- <span> -->
-        <!-- <button mat-icon-button aria-label="menu toggle" i18n-aria-label (click)="sidenav.toggle()">
-        <mat-icon aria-label="open questions navigation">menu</mat-icon>
-      </button> -->
-        <a *ngIf="!isSubmitted && viewState !== 'detail'" (click)="backToSections()" class="flex cursor-pointer">
-          <mat-icon class="ws-mat-default-text">arrow_back</mat-icon>
+        <button *ngIf="isXsmall" mat-icon-button aria-label="menu toggle" i18n-aria-label (click)="sidenav.toggle()">
+          <mat-icon aria-label="open questions navigation">menu</mat-icon>
+        </button>
+        <a mat-button *ngIf="!isSubmitted && viewState !== 'detail'" (click)="backToSections()"
+          class="flex cursor-pointer">
+          <mat-icon class="ws-mat-default-text m-auto">arrow_back</mat-icon>
           <span class="ws-mat-default-text subheading-1">Back to sections</span>
         </a>
         <!-- <div class="flex"> -->
@@ -41,10 +42,10 @@
     </nav>
     <mat-sidenav-container class="sidenav-container" autosize>
       <mat-sidenav [mode]="sidenavMode" class="sidenav" #sidenav [opened]="sidenavOpenDefault">
-        <!-- <h2 class="mat-title margin-top-s text-center" i18n>Questions</h2>
-      <div class="flex flex-wrapped margin-right-s margin-left-s">
-        <div class="col" *ngFor="let question of secQuestions; let i = index">
-          <div (click)="scroll(i + 1)" [ngClass]="{
+        <h2 class="mat-title margin-top-s text-center" i18n>Questions</h2>
+        <div *ngIf="isXsmall" class="flex flex-wrapped margin-right-s margin-left-s">
+          <div class="col" *ngFor="let question of secQuestions; let i = index">
+            <div (click)="scroll(i + 1)" [ngClass]="{
               'marked-question': isQuestionMarked(question?.questionId),
               'attempted-question':
                 !isQuestionMarked(question?.questionId) &&
@@ -58,15 +59,16 @@
                 !isQuestionAttempted(question?.questionId) &&
                 currentTheme !== 'black-theme'
             }" class="margin-xs circle">
-            <div class="question-number">{{ i + 1 }}</div>
+              <div class="question-number">{{ i + 1 }}</div>
+            </div>
           </div>
         </div>
-      </div> -->
       </mat-sidenav>
       <mat-sidenav-content>
-        <div *ngIf="!isSubmitted" class="flex flex-1">
+        <div *ngIf="!isSubmitted && !isXsmall" class="flex flex-1">
           <ng-template *ngIf="fetchingQuestionsStatus === 'fetching'" [ngTemplateOutlet]="showLoading"></ng-template>
-          <div class="flex flex-nowrap margin-right-s margin-left-s quest_num_box" *ngIf="fetchingQuestionsStatus === 'done'">
+          <div class="flex flex-nowrap margin-right-s margin-left-s quest_num_box"
+            *ngIf="fetchingQuestionsStatus === 'done'">
             <div class="col" *ngFor="let question of secQuestions; let i = index">
               <div (click)="scroll(i + 1)" [ngClass]="{
               'marked-question': isQuestionMarked(question?.questionId),
@@ -99,12 +101,17 @@
                 <a *ngIf="currentQuestionIndex !== 0" class="ws-mat-accent-border margin-xs m-auto quest_btn" mat-button
                   (click)="getNextQuestion(currentQuestionIndex - 1)">
                   <mat-icon>arrow_back</mat-icon>
-                  PREVIOUS
+                  <ng-container *ngIf="!isXsmall">PREVIOUS</ng-container>
                 </a>
                 &nbsp;&nbsp;
                 <a *ngIf="(currentQuestionIndex+1) !== totalQCount"
                   class="text-white ws-mat-primary-background margin-xs m-auto quest_btn" mat-button
-                  (click)="getNextQuestion(currentQuestionIndex + 1)">NEXT QUESTION</a>
+                  (click)="getNextQuestion(currentQuestionIndex + 1)">
+                  <ng-container *ngIf="isXsmall">
+                    <mat-icon>arrow_forward</mat-icon>
+                  </ng-container>
+                  <ng-container *ngIf="!isXsmall">NEXT QUESTION</ng-container>
+                </a>
                 <ng-container
                   *ngIf="!allSecAttempted.full && allSecAttempted.next && ((currentQuestionIndex+1) === totalQCount)">
                   <button class="text-white ws-mat-primary-background margin-xs m-auto quest_btn" mat-raised-button
@@ -143,7 +150,7 @@
                 (itemSelected)="fillSelectedItems(current_Question, $event)">
               </viewer-question>
             </ng-container>
-            <ng-template *ngIf="!(current_Question && !process)"  [ngTemplateOutlet]="showLoading"></ng-template>
+            <ng-template *ngIf="!(current_Question && !process)" [ngTemplateOutlet]="showLoading"></ng-template>
           </ng-container>
         </mat-card>
         <div id="quiz-end"></div>

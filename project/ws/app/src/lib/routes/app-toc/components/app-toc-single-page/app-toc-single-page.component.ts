@@ -1,5 +1,5 @@
 import { AccessControlService } from '@ws/author'
-import { Component, Input, OnDestroy, OnInit } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit, OnChanges } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ActivatedRoute, Data, Router } from '@angular/router'
 import { ConfigurationsService, LoggerService, WsEvents, EventService } from '@sunbird-cb/utils'
@@ -23,7 +23,7 @@ import { RatingService } from '../../../../../../../../../library/ws-widget/coll
   templateUrl: './app-toc-single-page.component.html',
   styleUrls: ['./app-toc-single-page.component.scss'],
 })
-export class AppTocSinglePageComponent implements OnInit, OnDestroy {
+export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   contentTypes = NsContent.EContentTypes
   primaryCategory = NsContent.EPrimaryCategory
   showMoreGlance = false
@@ -42,6 +42,8 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   @Input() initialrouteData: any
   routeSubscription: Subscription | null = null
   @Input() forPreview = false
+  @Input() resumeData: NsContent.IContinueLearningData | null = null
+  @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   tocConfig: any = null
   loggedInUserId!: any
   private routeQuerySubscription: Subscription | null = null
@@ -52,7 +54,6 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   } = {}
   cohortTypesEnum = NsCohorts.ECohortTypes
   discussionConfig: any = {}
-  batchData: any
   batchDataLoaded = false
   showDiscussionForum: any
   competencies: any
@@ -75,6 +76,7 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   reviewDefaultLimit = 2
   disableLoadMore = false
   displayLoader = false
+  tabSelectedIndex = 0
   // configSvc: any
 
   constructor(
@@ -155,6 +157,13 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
         takeUntil(this.unsubscribe)
       ).subscribe()
 
+  }
+
+  ngOnChanges() {
+    if (this.batchData) {
+      // setting tab to focus on "CONTENT tab" if already user is enrolled
+      this.tabSelectedIndex = 1
+    }
   }
 
   detailUrl(data: any) {
