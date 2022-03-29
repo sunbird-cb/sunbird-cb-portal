@@ -153,6 +153,15 @@
             <ng-template *ngIf="!(current_Question && !process)" [ngTemplateOutlet]="showLoading"></ng-template>
           </ng-container>
         </mat-card>
+
+         <!-- Finish assessment button -->
+         <div class="flex flex-end margin-top-xl margin-right-m">
+          <button  class="text-white ws-mat-primary-background"
+            mat-raised-button  i18n="button quiz submit">
+            Finish assessment
+          </button>
+        </div>
+
         <div id="quiz-end"></div>
         <ng-container *ngIf="isSubmitted && (viewState === 'answer' || viewState === 'review')">
           <viewer-result [quizResponse]="finalResponse" [percentage]="result" [isPassed]="true"></viewer-result>

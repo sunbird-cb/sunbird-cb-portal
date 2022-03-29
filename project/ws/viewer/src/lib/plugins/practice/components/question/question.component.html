@@ -23,7 +23,7 @@
     <div class="flex flex-1 flex-column">
       <div class="flex flex-1">
         <span class="spacer"></span>
-        <button aria-label="flag" i18n-aria-label mat-icon-button (click)="markQuestion()">
+        <button aria-label="flag" i18n-aria-label mat-icon-button (click)="markQuestion()" class="flag_btn">
           <mat-icon *ngIf="!isQuestionMarked()">outlined_flag</mat-icon>
           <mat-icon *ngIf="isQuestionMarked()">flag</mat-icon>
         </button>

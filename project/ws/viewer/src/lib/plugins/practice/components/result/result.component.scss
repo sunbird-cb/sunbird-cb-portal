@@ -138,5 +138,11 @@
 }
 
 .result_box {
-    padding: 32px 32px;
+    padding: $size-xl;
+}
+
+.result_main {
+    @include breakpoint-lt-s {
+        flex-direction: column;
+    }
 }
