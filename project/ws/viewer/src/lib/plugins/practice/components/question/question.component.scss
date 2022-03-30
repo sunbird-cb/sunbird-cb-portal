@@ -75,6 +75,7 @@
   flex-direction: row;
 
   padding: $size-m 0 $size-m 0;
+  box-sizing: border-box;
   @include breakpoint-lt-m {
     flex-direction: column;
   }
@@ -87,7 +88,7 @@
 .respo_inner {
    padding: 0px 100px;
    @include breakpoint-lt-m {
-    padding: 0px 20px;
+    padding: 0px 0px;
   }
 }
 .viewer_quest_box {
@@ -108,4 +109,10 @@
 }
 .no-shadow {
   box-shadow: none !important;
+}
+.flag_btn {
+  margin-right: 100px;
+  @include breakpoint-lt-m {
+    margin-right: $size-m;
+  }
 }
