@@ -34,7 +34,6 @@
       <!-- </div> -->
       <!-- </span> -->
       <div class="flex flex-column flex-end">
-        <ng-container [ngTemplateOutlet]="timer"></ng-container>
         <div *ngIf="viewState === 'detail'" class="flex flex-column">
           <ng-container [ngTemplateOutlet]="indicator"></ng-container>
         </div>
@@ -97,34 +96,36 @@
             <div class="flex flex-1 padding-l card_inner_box flex-row">
               <span class="mat-title margin-zero flex flex-1">{{selectedSection.name}}</span>
               <!-- <span class="spacer"></span> -->
-              <div class="flex flex-row butto_box">
-                <a *ngIf="currentQuestionIndex !== 0" class="ws-mat-accent-border margin-xs m-auto quest_btn" mat-button
-                  (click)="getNextQuestion(currentQuestionIndex - 1)">
-                  <mat-icon>arrow_back</mat-icon>
-                  <ng-container *ngIf="!isXsmall">PREVIOUS</ng-container>
-                </a>
-                &nbsp;&nbsp;
+              <ng-container [ngTemplateOutlet]="timer"></ng-container>
+              <div class="flex flex-1 flex-row-reverse butto_box end">
+                <ng-container
+                  *ngIf="!allSecAttempted.full && allSecAttempted.next && ((currentQuestionIndex+1) === totalQCount)">
+                  <button class="text-white ws-mat-primary-background margin-xs quest_btn" mat-raised-button
+                    (click)="nextSection(allSecAttempted.next)" i18n="button quiz submit">
+                    Next Section
+                  </button>
+                </ng-container>
+
                 <a *ngIf="(currentQuestionIndex+1) !== totalQCount"
-                  class="text-white ws-mat-primary-background margin-xs m-auto quest_btn" mat-button
+                  class="text-white ws-mat-primary-background margin-xs quest_btn" mat-button
                   (click)="getNextQuestion(currentQuestionIndex + 1)">
                   <ng-container *ngIf="isXsmall">
                     <mat-icon>arrow_forward</mat-icon>
                   </ng-container>
                   <ng-container *ngIf="!isXsmall">NEXT QUESTION</ng-container>
                 </a>
-                <ng-container
-                  *ngIf="!allSecAttempted.full && allSecAttempted.next && ((currentQuestionIndex+1) === totalQCount)">
-                  <button class="text-white ws-mat-primary-background margin-xs m-auto quest_btn" mat-raised-button
-                    (click)="nextSection(allSecAttempted.next)" i18n="button quiz submit">
-                    Next Section
-                  </button>
-                </ng-container>
-                <ng-container *ngIf="((currentQuestionIndex+1) === totalQCount) && allSecAttempted.full">
+                &nbsp;&nbsp;
+                <a *ngIf="currentQuestionIndex !== 0" class="ws-mat-accent-border margin-xs quest_btn" mat-button
+                  (click)="getNextQuestion(currentQuestionIndex - 1)">
+                  <mat-icon class="margin-right-s">arrow_back</mat-icon>
+                  <ng-container *ngIf="!isXsmall">PREVIOUS</ng-container>
+                </a>
+                <!-- <ng-container *ngIf="((currentQuestionIndex+1) === totalQCount) && allSecAttempted.full">
                   <button *ngIf="!isSubmitted" class="text-white ws-mat-primary-background margin-xs m-auto"
                     mat-raised-button (click)="proceedToSubmit()" i18n="button quiz submit">
                     Submit
                   </button>
-                </ng-container>
+                </ng-container> -->
               </div>
             </div>
             <div class="flex flex-1">
@@ -142,6 +143,7 @@
             [question]="question" [itemSelectedList]="questionAnswerHash[(question?.questionId)]"
             (itemSelected)="fillSelectedItems(question, $event)" [hidden]="i !== currentQuestionIndex">
           </viewer-question> -->
+
             <ng-container *ngIf="current_Question && !process">
               <viewer-question #questionsReference [id]="'question' + (currentQuestionIndex + 1)"
                 [markedQuestions]="markedQuestions" [artifactUrl]="artifactUrl"
@@ -153,6 +155,23 @@
             <ng-template *ngIf="!(current_Question && !process)" [ngTemplateOutlet]="showLoading"></ng-template>
           </ng-container>
         </mat-card>
+        <ng-container *ngIf="fetchingQuestionsStatus === 'done'  && current_Question && !process">
+          <ng-container *ngIf="viewState === 'attempt' && !isSubmitted">
+            <div class="flex flex-1 margin-top-l margin-left-xs">
+              <div class="flex flex-1 cen">
+                <mat-icon class="flex margin-left-xs margin-top-xs margin-bottom-xs">info_outline</mat-icon>
+                <span class="flex mat-body-2 padding-xs" i18n>Attempt all questions to finish assessment</span>
+              </div>
+              <div class="flex flex-end margin-right-m">
+                <button class="text-white ws-mat-primary-background" mat-raised-button i18n="button quiz submit"
+                  (click)="proceedToSubmit()">
+                  Finish assessment
+                </button>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+
         <div id="quiz-end"></div>
         <ng-container *ngIf="isSubmitted && (viewState === 'answer' || viewState === 'review')">
           <viewer-result [quizResponse]="finalResponse" [percentage]="result" [isPassed]="true"></viewer-result>
@@ -258,7 +277,7 @@
 
 
 <ng-template #timer>
-  <div *ngIf="timeLeft" class="flex flex-1 flex-end">
+  <div *ngIf="timeLeft" class="flex flex-1 flex-center">
     <mat-icon>timelapse</mat-icon>
     &nbsp;&nbsp;
     <div *ngIf="timeLeft > 180" [ngClass]="{ 'mat-body-strong': !isSubmitted }">
