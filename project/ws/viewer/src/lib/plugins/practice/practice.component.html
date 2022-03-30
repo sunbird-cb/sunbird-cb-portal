@@ -119,12 +119,12 @@
                     Next Section
                   </button>
                 </ng-container>
-                <ng-container *ngIf="((currentQuestionIndex+1) === totalQCount) && allSecAttempted.full">
+                <!-- <ng-container *ngIf="((currentQuestionIndex+1) === totalQCount) && allSecAttempted.full">
                   <button *ngIf="!isSubmitted" class="text-white ws-mat-primary-background margin-xs m-auto"
                     mat-raised-button (click)="proceedToSubmit()" i18n="button quiz submit">
                     Submit
                   </button>
-                </ng-container>
+                </ng-container> -->
               </div>
             </div>
             <div class="flex flex-1">
@@ -142,6 +142,7 @@
             [question]="question" [itemSelectedList]="questionAnswerHash[(question?.questionId)]"
             (itemSelected)="fillSelectedItems(question, $event)" [hidden]="i !== currentQuestionIndex">
           </viewer-question> -->
+
             <ng-container *ngIf="current_Question && !process">
               <viewer-question #questionsReference [id]="'question' + (currentQuestionIndex + 1)"
                 [markedQuestions]="markedQuestions" [artifactUrl]="artifactUrl"
@@ -153,14 +154,16 @@
             <ng-template *ngIf="!(current_Question && !process)" [ngTemplateOutlet]="showLoading"></ng-template>
           </ng-container>
         </mat-card>
-
-         <!-- Finish assessment button -->
-         <div class="flex flex-end margin-top-xl margin-right-m">
-          <button  class="text-white ws-mat-primary-background"
-            mat-raised-button  i18n="button quiz submit">
-            Finish assessment
-          </button>
-        </div>
+        <ng-container *ngIf="fetchingQuestionsStatus === 'done'  || !(current_Question && !process)">
+          <ng-container *ngIf="viewState === 'attempt' && !isSubmitted">
+            <div class="flex flex-end margin-top-xl margin-right-m">
+              <button class="text-white ws-mat-primary-background" mat-raised-button i18n="button quiz submit"
+                (click)="proceedToSubmit()">
+                Finish assessment
+              </button>
+            </div>
+          </ng-container>
+        </ng-container>
 
         <div id="quiz-end"></div>
         <ng-container *ngIf="isSubmitted && (viewState === 'answer' || viewState === 'review')">

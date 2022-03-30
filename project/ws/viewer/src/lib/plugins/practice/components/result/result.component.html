@@ -20,7 +20,7 @@
             <span class="mat-subheading-2 block ws-mat-black60-text">{{'Insights'}}</span>
           </mat-card-title>
           <mat-card-content class="flex flex-1 flex-column">
-            <ng-container *ngFor="let _result of ['correct','inCorrect','blank']">
+            <ng-container *ngFor="let _result of ['correct','inCorrect','incorrect','blank']">
               <ng-container *ngIf="_parts[_result]">
                 <ng-container *ngIf="_result == 'correct'" [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{
               icon: 'done',
@@ -28,7 +28,7 @@
               colorClass: 'green',
               text: _parts[_result] +' Correct'
             }"></ng-container>
-                <ng-container *ngIf="_result == 'inCorrect'" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{
+                <ng-container *ngIf="_result === 'inCorrect' || _result ===  'incorrect'" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{
               icon: 'close',
               isSVG: false,
               colorClass: 'red',
