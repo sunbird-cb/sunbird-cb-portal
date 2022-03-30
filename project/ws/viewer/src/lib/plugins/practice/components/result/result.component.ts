@@ -12,7 +12,7 @@ export class ResultComponent implements OnInit {
   @Input() levelText = 'Level 2 Passed'
   @Input() isPassed = false
   @Input() quizResponse!: NSPractice.IQuizSubmitResponseV2
-  staticImage = '/assets/images/exam/practice-test.png'
+  staticImage = '/assets/images/exam/practice-result.png'
   questionTYP = NsContent.EPrimaryCategory
   constructor() { }
 
