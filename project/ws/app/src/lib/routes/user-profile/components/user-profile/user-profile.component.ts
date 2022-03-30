@@ -189,7 +189,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     this.getUserDetails()
     this.fetchMeta()
-    this.assignPrimaryEmailType(this.isOfficialEmail)
+    // this.assignPrimaryEmailType(this.isOfficialEmail)
   }
   fetchMeta() {
     this.userProfileSvc.getMasterNationlity().subscribe(
@@ -519,8 +519,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       // if (this.configSvc.userProfile) {
       this.userProfileSvc.getUserdetailsFromRegistry(this.configSvc.unMappedUser.id).subscribe(
         (data: any) => {
-          // console.log('userdata', data)
-          const userData = data.profileDetails || _.get(this.configSvc.unMappedUser, 'profileDetails')
+          const userData = {
+            ...data.profileDetails || _.get(this.configSvc.unMappedUser, 'profileDetails'),
+            id: data.id, userId: data.userId,
+          }
           if (data.profileDetails && (userData.id || userData.userId)) {
             const academics = this.populateAcademics(userData)
             this.setDegreeValuesArray(academics)
@@ -590,6 +592,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       designationOther: '',
     }
     if (data && data.professionalDetails && data.professionalDetails.length > 0) {
+      // console.log("org", data.professionalDetails[0].industryOther);
+
       const organisation = data.professionalDetails[0]
       org = {
         isGovtOrg: organisation.organisationType,
@@ -1048,7 +1052,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       'dob', 'nationality', 'domicileMedium', 'gender', 'maritalStatus',
       'category', 'knownLanguages', 'countryCode', 'mobile', 'telephone',
       'primaryEmail', 'officialEmail', 'personalEmail', 'postalAddress',
-      'pincode', 'secondaryEmail']
+      'pincode', 'secondaryEmail', 'residenceAddress', 'primaryEmailType']
     const skillsFields = ['skillAquiredDesc', 'certificationDesc']
     const skills: any = {}
     const interestsFields = ['interests', 'hobbies']
@@ -1059,7 +1063,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       'otherDetailsOfficeAddress', 'otherDetailsOfficePinCode', 'orgName', 'orgNameOther',
     ]
     const professionalDetailsFields = ['isGovtOrg', 'industry', 'designation', 'location',
-    'doj', 'orgDesc', 'orgNameOther', 'industryOther', 'designationOther', 'locationOther', 'orgName']
+      'doj', 'orgDesc', 'orgNameOther', 'industryOther', 'designationOther', 'locationOther', 'orgName']
     const professionalDetails: any = []
     const organisations: any = {}
     // let academics = {}
@@ -1069,17 +1073,25 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     Object.keys(this.createUserForm.controls).forEach(name => {
       const currentControl = this.createUserForm.controls[name]
+      // console.log(name, form.value.primaryEmailType)
+      if (form.value.primaryEmailType === this.ePrimaryEmailType.OFFICIAL) {
+        personalDetail['officialEmail'] = form.value.primaryEmail
+      } else {
+        personalDetail['officialEmail'] = ''
+      }
       if (currentControl.dirty) {
-        // console.log(name)
         personalDetailsFields.forEach(item => {
+
           if (item === name) {
             switch (name) {
               case 'knownLanguages': return personalDetail['knownLanguages'] = form.value.knownLanguages
               case 'dob': return personalDetail['dob'] = form.value.dob
-              case 'secondaryEmail' : return personalDetail['personalEmail'] = form.value.secondaryEmail
-              case 'primaryEmailType' : return personalDetail['officialEmail'] = form.value.primaryEmail
+              case 'secondaryEmail': return personalDetail['personalEmail'] = form.value.secondaryEmail
+              case 'residenceAddress': return personalDetail['postalAddress'] = form.value.residenceAddress
+              case 'telephone': return personalDetail['telephone'] = `${form.value.telephone}` || ''
 
             }
+
             personalDetail[name] = currentControl.value
 
           }
@@ -1106,7 +1118,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               case 'otherDetailsDoj': return employmentDetails['dojOfService'] = form.value.otherDetailsDoj
               case 'otherDetailsOfficeAddress': return employmentDetails['officialPostalAddress'] = currentControl.value
               case 'otherDetailsOfficePinCode': return employmentDetails['pinCode'] = form.value.otherDetailsOfficePinCode
-              case 'orgName' || 'orgNameOther': return employmentDetails['departmentName'] = currentControl.value
+              case 'orgName' || 'orgNameOther': return employmentDetails['departmentName'] = currentControl.value || ''
               default: return employmentDetails[name] = currentControl.value
             }
 
@@ -1120,7 +1132,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               case 'orgName': return organisations['name'] = form.value.orgName
               case 'orgNameOther': return organisations['nameOther'] = form.value.orgNameOther
               case 'doj': return organisations['doj'] = form.value.doj
-              case 'orgNameOther': return organisations['nameOther'] = form.value.orgNameOther
+              case 'orgDesc': return organisations['description'] = form.value.orgDesc
+              case 'isGovtOrg': {
+                if (form.value.isGovtOrg) {
+                  return organisations['organisationType'] = 'Government'
+                }
+                return organisations['organisationType'] = 'Non-Government'
+              }
               default: return organisations[name] = currentControl.value
             }
           }
@@ -1156,8 +1174,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         academics: this.getAcademics(form),
       },
     }
-
-    // console.log(this.changedProperties)
 
   }
 
@@ -1202,43 +1218,43 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     // console.log( reqUpdate)
     this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(res => {
 
-        if (res.params.status === 'success') {
-         if ('professionalDetails' in reqUpdates.request.profileDetails) {
-            if ('personalDetails' in reqUpdates.request.profileDetails ||
-              'employmentDetails' in reqUpdates.request.profileDetails ||
-              'academics' in reqUpdates.request.profileDetails ||
-              'interests' in reqUpdates.request.profileDetails ||
-              'skills' in reqUpdates.request.profileDetails) {
-              if (res.result.personalDetails.status === 'success' && res.result.transitionDetails.status === 'success') {
-                this.openSnackbar(this.toastSuccess.nativeElement.value)
-                this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
-              }
-            } else {
-              if (res.result.transitionDetails.status === 'success') {
-                this.openSnackbar(this.toastSuccess.nativeElement.value)
-                this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
-              }
-
+      if (res.params.status === 'success') {
+        if ('professionalDetails' in reqUpdates.request.profileDetails) {
+          if ('personalDetails' in reqUpdates.request.profileDetails ||
+            'employmentDetails' in reqUpdates.request.profileDetails ||
+            'academics' in reqUpdates.request.profileDetails ||
+            'interests' in reqUpdates.request.profileDetails ||
+            'skills' in reqUpdates.request.profileDetails) {
+            if (res.result.personalDetails.status === 'success' && res.result.transitionDetails.status === 'success') {
+              this.openSnackbar(this.toastSuccess.nativeElement.value)
+              this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
             }
           } else {
-            if ('personalDetails' in reqUpdates.request.profileDetails ||
-              'employmentDetails' in reqUpdates.request.profileDetails ||
-              'interests' in reqUpdates.request.profileDetails ||
-              'academics' in reqUpdates.request.profileDetails ||
-              'skills' in reqUpdates.request.profileDetails) {
-              if (res.result.personalDetails.status === 'success') {
-                this.openSnackbar(this.toastSuccess.nativeElement.value)
-                this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
-              }
-            } else {
-              this.openSnackbar(this.toastError.nativeElement.value)
+            if (res.result.transitionDetails.status === 'success') {
+              this.openSnackbar(this.toastSuccess.nativeElement.value)
+              this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
             }
-          }
 
+          }
         } else {
-          this.openSnackbar(this.toastError.nativeElement.value)
+          if ('personalDetails' in reqUpdates.request.profileDetails ||
+            'employmentDetails' in reqUpdates.request.profileDetails ||
+            'interests' in reqUpdates.request.profileDetails ||
+            'academics' in reqUpdates.request.profileDetails ||
+            'skills' in reqUpdates.request.profileDetails) {
+            if (res.result.personalDetails.status === 'success') {
+              this.openSnackbar(this.toastSuccess.nativeElement.value)
+              this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+            }
+          } else {
+            this.openSnackbar(this.toastError.nativeElement.value, this.userProfileData.id)
+          }
         }
+
+      } else {
+        this.openSnackbar(this.toastError.nativeElement.value)
       }
+    }
 
     )
     // this.userProfileSvc.updateProfileDetails(reqUpdate).subscribe(
