@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { NsContent } from '@sunbird-cb/utils/src/public-api'
 import { NSPractice } from '../../practice.model'
 
@@ -8,26 +8,18 @@ import { NSPractice } from '../../practice.model'
   styleUrls: ['./result.component.scss'],
 })
 export class ResultComponent implements OnInit {
-  @Input() learningObjective = ''
-  @Input() complexityLevel = ''
-  @Input() primaryCategory = NsContent.EPrimaryCategory.PRACTICE_RESOURCE
-  @Input() duration = 0
-  @Input() timeLimit = 0
-  @Input() noOfQuestions = 0
-  @Output() userSelection = new EventEmitter<NSPractice.TUserSelectionType>()
+  @Input() percentage = 0
+  @Input() levelText = 'Level 2 Passed'
+  @Input() isPassed = false
+  @Input() quizResponse!: NSPractice.IQuizSubmitResponseV2
+  staticImage = '/assets/images/exam/practice-test.png'
   questionTYP = NsContent.EPrimaryCategory
-  staticImage = '/assets/images/exam/practice-result.png'
-  points = [
-    { icon: 'info', text: 'No negative mark' },
-    { icon: 'info', text: 'Assessment will have no time duration' },
-    { icon: 'info', text: 'Skipped question can be attempted again before submitting' },
-  ]
   constructor() { }
 
   ngOnInit() {
   }
 
-  overviewed(event: NSPractice.TUserSelectionType) {
-    this.userSelection.emit(event)
-  }
+  // overviewed(event: NSPractice.TUserSelectionType) {
+  //   // this.userSelection.emit(event)
+  // }
 }

@@ -15,6 +15,8 @@ import {
   ConfigurationsService,
   UtilityService,
 } from '@sunbird-cb/utils'
+// tslint:disable-next-line
+import _ from 'lodash'
 import { of, Subscription } from 'rxjs'
 import { delay } from 'rxjs/operators'
 import { ViewerDataService } from '../../viewer-data.service'
@@ -98,6 +100,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
   isErrorOccurred = false
   private paramSubscription: Subscription | null = null
   private viewerDataServiceSubscription: Subscription | null = null
+  // tslint:disable-next-line
   hasNestedChild = (_: number, nodeData: IViewerTocCard) =>
     nodeData && nodeData.children && nodeData.children.length
   private _getChildren = (node: IViewerTocCard) => {
@@ -321,6 +324,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       primaryCategory: content.primaryCategory,
       children:
         Array.isArray(content.children) && content.children.length
+          && content.mimeType !== NsContent.EMimeTypes.QUESTION_SET // this is because of ne api ( questionset structure)
           ? content.children.map(child => this.convertContentToIViewerTocCard(child))
           : null,
     }

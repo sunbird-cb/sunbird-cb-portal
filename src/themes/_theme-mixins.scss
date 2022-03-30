@@ -26,6 +26,7 @@
   $colorText: mat-color($foreground, text);
   $iconColor: mat-color($foreground, icon);
   $colorGreen: #5fa800;
+  $colorGreen2: #1d8923;
   $colorRed: #ff0000;
   $colorOrange: rgba(246, 153, 83, 1);
   $footerColor: #373434;
@@ -68,6 +69,10 @@
 
   .green-progress .mat-progress-bar-fill::after {
     background-color: red !important;
+  }
+
+  .accent-progress .mat-progress-bar-fill::after {
+    background-color: $colorAccent !important;
   }
   .quiz-progress .mat-progress-bar-fill::after {
     background-color: $colorAccent !important;
@@ -571,6 +576,9 @@
 
     .ws-mat-green-text {
       color: $colorGreen !important;
+    }
+    .ws-mat-green-2-text {
+      color: $colorGreen2 !important;
     }
 
     .ws-mat-red-text {

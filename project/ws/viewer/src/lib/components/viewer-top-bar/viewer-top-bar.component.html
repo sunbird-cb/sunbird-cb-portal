@@ -25,7 +25,7 @@
   <a *ngIf="logo" mat-button routerLink="/page/home">
     <img [src]="appIcon" alt="Application Logo" class="app-logo" />
   </a>
-  <a mat-icon-button class="width-auto" [routerLink]="prevResourceUrl" *ngIf="isTypeOfCollection"
+  <a mat-icon-button class="width-auto" [routerLink]="prevResourceUrl" *ngIf="isTypeOfCollection && prevResourceUrl"
     [disabled]="!prevResourceUrl" queryParamsHandling="" [queryParams]="prevResourceUrlParams?.queryParams" accesskey="<">
     <mat-icon>skip_previous</mat-icon><span *ngIf="logo">PREV</span>
   </a>
@@ -33,6 +33,7 @@
     {{ resourceName }}
   </h1>
   <!-- [disabled]="!nextResourceUrl" -->
+  <!-- {{nextResourceUrl}} -->
   <a mat-icon-button class="width-auto mr-10" [routerLink]="nextResourceUrl" [queryParams]="nextResourceUrlParams?.queryParams"
     *ngIf="isTypeOfCollection && nextResourceUrl" queryParamsHandling="" accesskey=">">
     <span *ngIf="logo">NEXT</span>

@@ -575,7 +575,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             // Fetch the available batches and present to user
             if (this.content.primaryCategory === this.primaryCategory.COURSE
               || this.content.primaryCategory !== this.primaryCategory.PROGRAM) {
-              this.autoBatchAssign()
+              // Disabling auto enrollment to batch
+              // this.autoBatchAssign()
             } else {
               this.fetchBatchDetails()
             }
@@ -823,10 +824,12 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               }
             }
 
-            const percentage = _.toInteger((_.sum(progress) / progress.length))
-            if (this.content) {
-              _.set(this.content, 'completionPercentage', percentage)
-            }
+            // commenting this as the completion percentage value for course is fetched from enrolled courses API response
+            // const percentage = _.toInteger((_.sum(progress) / progress.length))
+            // if (this.content) {
+            //   _.set(this.content, 'completionPercentage', percentage)
+            // }
+
             // _.set(this.content, 'progress', _.map(this.resumeData, _d => {
             //   return {
             //     progressStatus: _.get(_d, ''),

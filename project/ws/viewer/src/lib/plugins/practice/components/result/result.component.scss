@@ -1,22 +1,46 @@
 @import "ws-common";
 @import "ws-vars";
 
+
+.percent-div {
+    position: absolute;
+    top: 15%;
+    left: 14%;
+    z-index: 2;
+    width: 312px;
+    height: 369px;
+    background: #fff;
+    // box-shadow: 2px 5px 11px rgb(0 0 0 / 21%);
+}
+.transform15 {
+    transform: scale(1.5);
+}
+.center {
+    align-items: center;
+}
 .auto-w {
     width: 100% !important;
     flex-direction: row;
-    @include breakpoint-lt-s {
+    @include breakpoint-lt-m {
         width: 100%;
-        flex-direction: column;
+        // flex-direction: column;
         // margin: 1em 12em 2em -1em;
     }
 }
 .flex-2 {
     flex: 2;
 }
+
+.result_text_box {
+    padding: $size-m;
+}
 .max-w {
-    max-width: 424px;
-    @include breakpoint-lt-s {
+    width: 424px;
+    flex: 1;
+    @include breakpoint-lt-m {
         max-width: fit-content;
+        flex: 1;
+
     }
 }
 .m-w {
@@ -67,7 +91,52 @@
 .box-c {
     min-width: 428px;
     max-width: 428.66px;
-    min-height: 235px;
+    // min-height: 235px;
+    height: fit-content;
     margin: $size-xs;
     box-shadow: none !important;
+
+    @include breakpoint-lt-m  {
+        min-width: 95%;
+        max-width: 95%;
+    }
+}
+.blank_box {
+    @include breakpoint-lt-m {
+        // flex-basis: 0;
+        display: none!important;
+    }
+}
+.border-custom[_ngcontent-syh-c63] {
+    border-top: none!important;
+    border-left: none!important;
+    border-bottom: none!important;
+}
+.mat-card {
+    box-sizing: border-box;
+}
+.foldtl {
+    position: relative;
+    -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
+    -moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
+}
+
+.foldl:before {
+    content: "";
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 0px;
+    height: 0px;
+    border-bottom: 70px solid #eee;
+    // border-left: 70px solid #272822; /*Set to background color, not transparent!*/
+    border-left: 70px solid #343131; /*Set to background color, not transparent!*/
+    -webkit-box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3);
+    box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3);
+}
+
+.result_box {
+    padding: 32px 32px;
 }

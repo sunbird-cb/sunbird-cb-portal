@@ -42,7 +42,6 @@ export class KnowledgeAllComponent implements OnInit, OnDestroy {
       this.sideNavBarOpened = !isLtMedium
       this.screenSizeIsLtMedium = isLtMedium
     })
-
   }
 
   ngOnDestroy() {

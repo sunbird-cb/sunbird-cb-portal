@@ -26,9 +26,23 @@ import {
   BtnFullscreenModule,
 } from '@sunbird-cb/collection'
 import { ResultComponent } from './components/result/result.component'
+import { FillInTheBlankComponent } from './components/question/fitb/fitb.component'
+import { MultipleChoiseQuesComponent } from './components/question/mcq-mca/mcq-mca.component'
+import { SingleChoiseQuesComponent } from './components/question/mcq-sca/mcq-sca.component'
+import { MatchTheFollowingQuesComponent } from './components/question/mtf/mtf.component'
 
 @NgModule({
-  declarations: [PracticeComponent, OverviewComponent, QuestionComponent, ResultComponent, SubmitQuizDialogComponent],
+  declarations: [
+    FillInTheBlankComponent,
+    MatchTheFollowingQuesComponent,
+    MultipleChoiseQuesComponent,
+    OverviewComponent,
+    PracticeComponent,
+    QuestionComponent,
+    ResultComponent,
+    SingleChoiseQuesComponent,
+    SubmitQuizDialogComponent,
+  ],
   entryComponents: [SubmitQuizDialogComponent],
   imports: [
     CommonModule,

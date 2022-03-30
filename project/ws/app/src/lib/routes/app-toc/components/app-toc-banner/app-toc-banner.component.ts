@@ -10,7 +10,7 @@ import {
   viewerRouteGenerator,
   WidgetContentService,
 } from '@sunbird-cb/collection'
-import { TFetchStatus, UtilityService, ConfigurationsService } from '@sunbird-cb/utils'
+import { TFetchStatus, UtilityService, ConfigurationsService, LoggerService } from '@sunbird-cb/utils'
 import { AccessControlService } from '@ws/author'
 import { Subscription } from 'rxjs'
 import { NsAnalytics } from '../../models/app-toc-analytics.model'
@@ -88,6 +88,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     public configSvc: ConfigurationsService,
     private tagSvc: TitleTagService,
     private actionSVC: ActionService,
+    private logger: LoggerService,
   ) {
 
   }
@@ -211,6 +212,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     }
     if (this.resumeData && this.content) {
       const resumeDataV2 = this.getResumeDataFromList()
+      if (!resumeDataV2.mimeType) {
+        resumeDataV2.mimeType = this.getMimeType(this.content, resumeDataV2.identifier)
+      }
       this.resumeDataLink = viewerRouteGenerator(
         resumeDataV2.identifier,
         resumeDataV2.mimeType,
@@ -260,6 +264,25 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         })
       }
     })
+  }
+  getMimeType(content: NsContent.IContent, identifier: string): NsContent.EMimeTypes {
+    if (content.identifier === identifier) {
+      return content.mimeType
+    }
+    if (content.children.length === 0) {
+      if (content.children[0].identifier === identifier) {
+        return content.mimeType
+      }
+      // big blunder in data
+      this.logger.log(content.identifier, 'Wrong mimetypes for resume')
+      return content.mimeType
+    }
+    for (let i = 0; i < content.children.length; i += 1) {
+      if (content.children[i].identifier === identifier) {
+        return this.getMimeType(content.children[i], identifier)
+      }
+    }
+    return content.mimeType
   }
 
   private getBatchId(): string {
