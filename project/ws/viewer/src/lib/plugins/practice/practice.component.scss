@@ -167,6 +167,9 @@ $nav-height: 40px;
 .cen{
   align-items: center;
 }
+.end{
+  align-items: flex-end;
+}
 
 .card_inner_box {
   @include breakpoint-lt-m {

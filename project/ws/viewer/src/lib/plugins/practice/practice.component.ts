@@ -39,7 +39,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   @Input() collectionId = ''
   @Input() primaryCategory = NsContent.EPrimaryCategory.PRACTICE_RESOURCE
   @Input() quizJson: { timeLimit: number, questions: NSPractice.IQuestion[], isAssessment: boolean } = {
-    timeLimit: 0,
+    timeLimit: this.duration,
     questions: [
       {
         multiSelection: false,
@@ -159,6 +159,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       const showTimer = _.toLower(_.get(this.quizSvc.paperSections, 'value.questionSet.showTimer')) === 'yes'
       if (showTimer) {
         this.quizJson.timeLimit = (_.get(this.quizSvc.paperSections, 'value.questionSet.expectedDuration') || 0) * 60
+      } else {
+        this.quizJson.timeLimit = this.duration * 60
       }
       this.fetchingSectionsStatus = 'done'
       this.viewState = 'detail'
@@ -173,6 +175,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           const showTimer = _.toLower(_.get(section, 'result.questionSet.showTimer')) === 'yes'
           if (showTimer) {
             this.quizJson.timeLimit = section.result.questionSet.expectedDuration * 60
+          } else {
+            this.quizJson.timeLimit = this.duration * 60
           }
           this.quizSvc.paperSections.next(section.result)
           const tempObj = _.get(section, 'result.questionSet.children')
