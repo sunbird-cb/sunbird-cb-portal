@@ -117,7 +117,7 @@
                 &nbsp;&nbsp;
                 <a *ngIf="currentQuestionIndex !== 0" class="ws-mat-accent-border margin-xs quest_btn" mat-button
                   (click)="getNextQuestion(currentQuestionIndex - 1)">
-                  <mat-icon>arrow_back</mat-icon>
+                  <mat-icon class="margin-right-s">arrow_back</mat-icon>
                   <ng-container *ngIf="!isXsmall">PREVIOUS</ng-container>
                 </a>
                 <!-- <ng-container *ngIf="((currentQuestionIndex+1) === totalQCount) && allSecAttempted.full">

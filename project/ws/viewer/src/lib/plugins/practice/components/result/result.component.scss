@@ -5,11 +5,11 @@
 .percent-div {
     position: absolute;
     top: 15%;
-    left: 14%;
+    left: 20%;
     z-index: 2;
     width: 312px;
     height: 369px;
-    background: #fff;
+    // background: #fff;
     // box-shadow: 2px 5px 11px rgb(0 0 0 / 21%);
 }
 .transform15 {
@@ -26,6 +26,9 @@
         // flex-direction: column;
         // margin: 1em 12em 2em -1em;
     }
+}
+.result_image_box {
+    overflow:hidden;
 }
 .flex-2 {
     flex: 2;
