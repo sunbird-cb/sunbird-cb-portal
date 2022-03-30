@@ -156,11 +156,17 @@
         </mat-card>
         <ng-container *ngIf="fetchingQuestionsStatus === 'done'  || !(current_Question && !process)">
           <ng-container *ngIf="viewState === 'attempt' && !isSubmitted">
-            <div class="flex flex-end margin-top-xl margin-right-m">
-              <button class="text-white ws-mat-primary-background" mat-raised-button i18n="button quiz submit"
-                (click)="proceedToSubmit()">
-                Finish assessment
-              </button>
+            <div class="flex flex-1 margin-top-l margin-left-xs">
+              <div class="flex flex-1 cen">
+                <mat-icon class="flex margin-xs">info_outline</mat-icon>
+                <span class="flex mat-body-2" i18n>Attempt all questions to finish assessment</span>
+              </div>
+              <div class="flex flex-end margin-right-m">
+                <button class="text-white ws-mat-primary-background" mat-raised-button i18n="button quiz submit"
+                  (click)="proceedToSubmit()">
+                  Finish assessment
+                </button>
+              </div>
             </div>
           </ng-container>
         </ng-container>
