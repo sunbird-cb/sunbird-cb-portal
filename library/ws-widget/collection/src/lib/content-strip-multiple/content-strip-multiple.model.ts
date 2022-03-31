@@ -35,6 +35,8 @@ export namespace NsContentStripMultiple {
       ids?: string[]
       enrollmentList?: any
       comprelatedCbp?: any
+      recommendedCourses?: any
+      masterCompetency?: any
     }
     searchV6Type?: 'KB' | 'Collections' | 'searchQuery' | null
     stripBackground?: string
