@@ -87,10 +87,10 @@ export class FillInTheBlankComponent implements OnInit, OnChanges, AfterViewInit
             let value = (this.practiceSvc.questionAnswerHash.value[this.question.questionId] || '')
             value = value.toString().split(',')
             // tslint:disable-next-line
-            const iterationNumber = (this.localQuestion.match(/______/g) || []).length
+            const iterationNumber = (this.localQuestion.match(/_______________/g) || []).length
             for (let i = 0; i < iterationNumber; i += 1) {
                 // tslint:disable-next-line
-                this.localQuestion = this.localQuestion.replace('______', 'idMarkerForReplacement')
+                this.localQuestion = this.localQuestion.replace('_______________', 'idMarkerForReplacement')
                 // this.correctOption.push(false)
                 // this.unTouchedBlank.push(true)
             }
@@ -125,7 +125,7 @@ export class FillInTheBlankComponent implements OnInit, OnChanges, AfterViewInit
     }
     functionChangeBlankBorder() {
         // if (this.question.questionType === 'ftb') {
-        //   for (let i = 0; i < (this.question.question.match(/______/g) || []).length; i += 1) {
+        //   for (let i = 0; i < (this.question.question.match(/_______________/g) || []).length; i += 1) {
         //     if (this.correctOption[i] && !this.unTouchedBlank[i]) {
         //       this.elementRef.nativeElement
         //         .querySelector(`#${this.question.questionId}${i}`)
