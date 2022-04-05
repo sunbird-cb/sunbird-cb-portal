@@ -43,9 +43,7 @@
                     [queryParams]="widgetData.strips[0]?.viewMoreUrl?.queryParams">
                     <!-- <span i18n>SEE ALL</span> -->
                     <span i18n>{{widgetData.strips[0].viewMoreUrl.viewMoreText || 'See all'}}</span>
-                    {{widgetData.strips[0] | json}}
                   </a>
-                  {{widgetData.strips[0]?.viewMoreUrl?.queryParams |json}}
                 </div>
               </div>
               <button mat-icon-button (click)="setHiddenForStrip(key)" *ngIf="stripsResultDataMap[key]?.canHideStrip">

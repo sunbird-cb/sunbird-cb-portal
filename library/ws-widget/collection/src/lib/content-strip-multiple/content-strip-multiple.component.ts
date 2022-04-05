@@ -451,10 +451,9 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
 
   fetchRecommendedCourses(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.recommendedCourses && Object.keys(strip.request.recommendedCourses).length) {
-      let content: NsContent.IContent[]
-      let contentNew: NsContent.IContent[]
-      console.log('NEW this.configSvc.userProfileV2 : ', this.configSvc.userProfileV2)
-      if (this.configSvc.userProfileV2 && this.configSvc.userProfileV2.competencies) {
+      if (this.configSvc.userProfileV2 &&
+        this.configSvc.userProfileV2.competencies &&
+        this.configSvc.userProfileV2.competencies.length) {
         // this.http.get(`${this.baseUrl}/common/master-competencies.json`).pipe(
         //   map(data => {
         //     console.log('data ::: ', data)
@@ -467,38 +466,31 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         this.http
         .get(`${strip.request.masterCompetency.request.url}/${strip.request.masterCompetency.request.filename}`)
         .subscribe((masterCompetencies: any) => {
-            console.log('masterCompetencies ::: ', masterCompetencies)
             // const competencyDiff = _.differenceWith(masterCompetencies, userCompetenies, _.isEqual)
             const competencyDiff = masterCompetencies.filter((a: any) => !userCompetenies.some((b: any) => a.name === b.name))
             const competencyDiffNames = _.map(competencyDiff, 'name')
-            console.log('competencyDiff:', competencyDiff)
-            console.log('competencyDiffNames:', competencyDiffNames)
-            const filters: any = strip.request && strip.request.recommendedCourses && strip.request.recommendedCourses.filters
-                    ? JSON.stringify(
-                      // this.searchServSvc.transformSearchV6Filters(
-                      strip.request.recommendedCourses.filters
-                      // ),
-                    )
-                    : {}
-                filters['competencies_v3.name'] = competencyDiffNames
+            const originalFilters: any = strip.request &&
+            strip.request.recommendedCourses &&
+            strip.request.recommendedCourses.request.filters
+            originalFilters['competencies_v3.name'] = competencyDiffNames
             if (strip.request) {
               strip.request.recommendedCourses.request.filters = this.getFiltersFromArray(
-                filters,
+                originalFilters,
               )
             }
-            // if (strip.request && strip.request.recommendedCourses) {
-            //   strip.request.recommendedCourses.request.filters['competencies_v3.name'] = competencyDiffNames
-            // }
             this.contentSvc.searchV6(strip.request && strip.request.recommendedCourses).subscribe(
               results => {
                 const showViewMore = Boolean(
                   results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
                 )
-                const viewMoreUrl = showViewMore
+                const viewMoreUrl: any = showViewMore
                   ? {
-                    path: '/app/search/learning',
+                    tab: 'Learn',
+                    path: strip.viewMoreUrl && strip.viewMoreUrl.path,
+                    viewMoreText: (strip.viewMoreUrl && strip.viewMoreUrl.viewMoreText) || '',
                     queryParams: {
-                      q: strip.request && strip.request.recommendedCourses && strip.request.recommendedCourses.query,
+                      filtersPanel: 'hide',
+                      q: `${strip.request && strip.request.recommendedCourses && strip.request.recommendedCourses.query}` ,
                       f:
                       strip.request &&
                         strip.request.recommendedCourses &&
@@ -506,13 +498,15 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
                         strip.request.recommendedCourses.request.filters
                         ? JSON.stringify(
                           this.transformSearchV6FiltersV2(
-                            filters,
+                            originalFilters,
                           )
                         )
                         : {},
                     },
                   }
                   : null
+
+                strip.viewMoreUrl = viewMoreUrl
                 this.processStrip(
                   strip,
                   this.transformContentsToWidgets(results.result.content, strip),

@@ -20,6 +20,7 @@ export namespace NsContentStripMultiple {
     viewMoreUrl?: {
       queryParams?: string
       path?: string
+      viewMoreText?: string
     }
     preWidgets?: NsWidgetResolver.IRenderConfigWithAnyData[]
     postWidgets?: NsWidgetResolver.IRenderConfigWithAnyData[]
