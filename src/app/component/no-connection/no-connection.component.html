@@ -1,0 +1,9 @@
+<mat-card *ngIf="display" class="flex flex-1">
+    <p style.color="{{ isOnline  ? 'green' : 'red'}}"> {{ isOnline ? 'Online' : 'Offline'}}
+    </p>
+    <div id="blackout" class="noselect" style.display="{{isOnline ? 'none' : 'block'}}">
+        <br><br><br><br><br>
+        <p>No Internet connection!</p>
+        <br>
+    </div>
+</mat-card>
