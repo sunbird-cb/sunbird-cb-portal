@@ -1,11 +1,10 @@
-<h2 *ngIf="question.questionType === 'ftb'" 
-class="mat-h2" 
-[innerHTML]="safeQuestion" class="quiz-question">
-</h2>
+<mat-card class="flex flex-1 flex-column padding-xl ws-mat-accent-border no-shadow">
+  <span class="mat-subheading-2" i18n>Instruction</span>
+  <span class="mat-body-2 margin-bottom-l" i18n>{{ question?.instructions || 'Fill in the blank with the best word'}}</span>
+  <h2 *ngIf="question.questionType === 'ftb'" class="mat-h2" [innerHTML]="safeQuestion" class="quiz-question">
+  </h2>
 
-
-<div *ngIf="question.questionType === 'ftb'">
-
+  <div *ngIf="question.questionType === 'ftb'">
     <div *ngFor="let option of question?.options; let i = index">
       <div [ngClass]="{
     'correct-option': viewState === 'answer' && option?.isCorrect
@@ -27,3 +26,4 @@ class="mat-h2"
       </div>
     </div>
   </div>
+</mat-card>

@@ -164,7 +164,12 @@ $nav-height: 40px;
 .quest_num_box {
   overflow-y: auto;
 }
-
+.cen{
+  align-items: center;
+}
+.end{
+  align-items: flex-end;
+}
 
 .card_inner_box {
   @include breakpoint-lt-m {

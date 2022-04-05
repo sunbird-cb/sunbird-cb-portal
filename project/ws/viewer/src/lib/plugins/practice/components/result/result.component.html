@@ -1,10 +1,11 @@
-<div class="flex auto-w ws-mat-primary-lite-background-important">
+<div class="flex auto-w ws-mat-primary-lite-background-important result_main">
   <div class="flex flex-1 max-w relative result_image_box">
-    <div class="flex percent-div foldl">
+    <div class="flex percent-div">
       <div class="flex flex-1 flex-column flex-center center">
         <mat-icon *ngIf="isPassed" class="ws-mat-green-2-text transform15 margin-top-m">check_circle</mat-icon>
         <mat-icon *ngIf="!isPassed" class="ws-mat-red-text transform15 margin-top-m">highlight_off</mat-icon>
-        <span class="mat-title ws-mat-black60-text margin-top-s">{{levelText}}</span>
+        <span *ngIf="isPassed" class="mat-title ws-mat-black60-text margin-top-s">{{levelText || 'Passed'}}</span>
+        <span *ngIf="!isPassed" class="mat-title ws-mat-black60-text margin-top-s">{{levelText || 'Failed'}}</span>
         <span class="mat-heading-1 ws-mat-default-text">{{percentage | number: '1.2-2'}}%</span>
         <span class="mat-body-1 ws-mat-black60-text">your score</span>
       </div>
@@ -16,11 +17,11 @@
       <ng-container *ngFor="let _parts of quizResponse?.children; let i = index">
         <mat-card *ngIf="_parts" class="ws-mat-accent-border box-c result_box">
           <mat-card-title>
-            <span class="mat-subheading-1">{{'Section ' + (i+1) + ' - Easy '}}</span>
+            <span class="mat-subheading-1">{{'Section ' + (i+1)}}</span>
             <span class="mat-subheading-2 block ws-mat-black60-text">{{'Insights'}}</span>
           </mat-card-title>
           <mat-card-content class="flex flex-1 flex-column">
-            <ng-container *ngFor="let _result of ['correct','inCorrect','blank']">
+            <ng-container *ngFor="let _result of ['correct','inCorrect','incorrect','blank']">
               <ng-container *ngIf="_parts[_result]">
                 <ng-container *ngIf="_result == 'correct'" [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{
               icon: 'done',
@@ -28,7 +29,8 @@
               colorClass: 'green',
               text: _parts[_result] +' Correct'
             }"></ng-container>
-                <ng-container *ngIf="_result == 'inCorrect'" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{
+                <ng-container *ngIf="_result === 'inCorrect' || _result ===  'incorrect'" [ngTemplateOutlet]="detail"
+                  [ngTemplateOutletContext]="{
               icon: 'close',
               isSVG: false,
               colorClass: 'red',
@@ -44,6 +46,12 @@
             </ng-container>
           </mat-card-content>
         </mat-card>
+      </ng-container>
+      <ng-container>
+        <div class="flex flex-1 flex-center text-center flex-middle">
+          <span class="mat-heading" i18n>We are calculating!! ....</span>
+          <mat-spinner></mat-spinner>
+        </div>
       </ng-container>
     </div>
   </div>
