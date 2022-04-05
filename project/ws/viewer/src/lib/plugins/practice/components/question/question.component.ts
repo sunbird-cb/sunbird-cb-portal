@@ -24,6 +24,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() question: NSPractice.IQuestion = {
     multiSelection: false,
     section: '',
+    instructions:'',
     question: '',
     questionId: '',
     options: [
@@ -180,7 +181,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   // }
 
   resetBlankBorder() {
-    // for (let i = 0; i < (this.question.question.match(/______/g) || []).length; i += 1) {
+    // for (let i = 0; i < (this.question.question.match(/_______________/g) || []).length; i += 1) {
     //   this.elementRef.nativeElement
     //     .querySelector(`#${this.question.questionId}${i}`)
     //     .setAttribute('style', 'border-style: none none solid none; border-width: 1px; padding: 8px 12px;')

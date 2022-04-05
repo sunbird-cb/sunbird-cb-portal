@@ -46,6 +46,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         section: '',
         question: '',
         questionId: '',
+        instructions: '',
         questionType: '',
         options: [
           {
@@ -104,6 +105,9 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     private valueSvc: ValueService,
     // private vws: ViewerDataService,
   ) {
+    this.init()
+  }
+  init() {
     // this.getSections()
     this.markedQuestions = new Set([])
     this.questionAnswerHash = {}
@@ -257,6 +261,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
                 multiSelection: ((q.qType || '').toLowerCase() === 'mcq-mca' ? true : false),
                 questionType: (q.qType || '').toLowerCase(),
                 questionId: q.identifier,
+                instructions: q.name,
                 options: this.getOptions(q),
               })
             }
@@ -531,23 +536,22 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
   proceedToSubmit() {
     if (this.timeLeft || this.primaryCategory === this.ePrimaryCategory.PRACTICE_RESOURCE) {
-      if (
-        Object.keys(this.questionAnswerHash).length !==
-        this.quizJson.questions.length
-      ) {
-        this.submissionState = 'unanswered'
-      } else if (this.markedQuestions.size) {
-        this.submissionState = 'marked'
-      } else {
-        this.submissionState = 'answered'
-      }
       const dialogRef = this.dialog.open(SubmitQuizDialogComponent, {
         width: '250px',
         data: this.submissionState,
       })
-
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
+          if (
+            Object.keys(this.questionAnswerHash).length !==
+            this.quizJson.questions.length
+          ) {
+            this.submissionState = 'unanswered'
+          } else if (this.markedQuestions.size) {
+            this.submissionState = 'marked'
+          } else {
+            this.submissionState = 'answered'
+          }
           this.submitQuiz()
         }
       })
@@ -924,7 +928,16 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.markedQuestions.add(questionId as unknown as never)
     }
   }
-
+  action($event: string) {
+    switch ($event) {
+      case 'retake':
+        // raise telemetry
+        this.clearStoragePartial()
+        this.clearStorage()
+        this.init()
+        break
+    }
+  }
   raiseTelemetry(action: string, optionId: string | null, event: string) {
     if (optionId) {
       this.events.raiseInteractTelemetry(
