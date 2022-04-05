@@ -25,6 +25,7 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
     @Input() question: NSPractice.IQuestion = {
         multiSelection: false,
         section: '',
+        instructions:'',
         question: '',
         questionId: '',
         options: [

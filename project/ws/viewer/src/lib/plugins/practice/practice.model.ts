@@ -9,6 +9,7 @@ export namespace NSPractice {
 
   export interface IQuestion {
     multiSelection: boolean
+    instructions: string
     section: string
     question: string
     questionId: string

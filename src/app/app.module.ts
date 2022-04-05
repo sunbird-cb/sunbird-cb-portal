@@ -65,6 +65,7 @@ import { ServiceWorkerModule } from '@angular/service-worker'
 import { environment } from 'src/environments/environment'
 import { QuickTourModule } from '@ws/app/src/lib/routes/info/quick-tour/quick-tour.module'
 import { AppIntroComponent } from './component/app-intro/app-intro.component'
+import { NoConnectionComponent } from './component/no-connection/no-connection.component'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -101,6 +102,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     DialogConfirmComponent,
     LoginRootComponent,
     LoginRootDirective,
+    NoConnectionComponent,
   ],
   imports: [
     FormsModule,

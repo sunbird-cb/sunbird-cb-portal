@@ -22,6 +22,7 @@ export class MultipleChoiseQuesComponent implements OnInit, OnChanges, AfterView
         multiSelection: false,
         section: '',
         question: '',
+        instructions:'',
         questionId: '',
         options: [
             {
