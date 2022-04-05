@@ -24,6 +24,7 @@ export class FillInTheBlankComponent implements OnInit, OnChanges, AfterViewInit
         multiSelection: false,
         section: '',
         question: '',
+        instructions:'',
         questionId: '',
         options: [
             {
@@ -101,14 +102,14 @@ export class FillInTheBlankComponent implements OnInit, OnChanges, AfterViewInit
                         this.localQuestion = this.localQuestion.replace(
                             'idMarkerForReplacement',
                             `<input matInput autocomplete="off" style="border-style: none none solid none;
-                  border-width: 1px; padding: 8px 12px;" type="text" id="${this.question.questionId}${i}"
+                   padding: 8px 12px;" type="text" id="${this.question.questionId}${i}"
                   value="${value[i]}" />`,
                         )
                     } else {
                         this.localQuestion = this.localQuestion.replace(
                             'idMarkerForReplacement',
                             `<input matInput autocomplete="off" style="border-style: none none solid none;
-                  border-width: 1px; padding: 8px 12px;" type="text" id="${this.question.questionId}${i}"
+                   padding: 8px 12px;" type="text" id="${this.question.questionId}${i}"
                    />`,
                         )
                     }

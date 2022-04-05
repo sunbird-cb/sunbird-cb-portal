@@ -29,7 +29,8 @@
               colorClass: 'green',
               text: _parts[_result] +' Correct'
             }"></ng-container>
-                <ng-container *ngIf="_result === 'inCorrect' || _result ===  'incorrect'" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{
+                <ng-container *ngIf="_result === 'inCorrect' || _result ===  'incorrect'" [ngTemplateOutlet]="detail"
+                  [ngTemplateOutletContext]="{
               icon: 'close',
               isSVG: false,
               colorClass: 'red',
@@ -45,6 +46,12 @@
             </ng-container>
           </mat-card-content>
         </mat-card>
+      </ng-container>
+      <ng-container>
+        <div class="flex flex-1 flex-center text-center flex-middle">
+          <span class="mat-heading" i18n>We are calculating!! ....</span>
+          <mat-spinner></mat-spinner>
+        </div>
       </ng-container>
     </div>
   </div>
