@@ -1,0 +1,34 @@
+import { Component, OnInit, Input } from '@angular/core'
+import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
+import { Router } from '@angular/router'
+
+@Component({
+  selector: 'ws-widget-card-notify',
+  templateUrl: './card-notify.component.html',
+  styleUrls: ['./card-notify.component.scss'],
+})
+export class CardNotifyComponent extends WidgetBaseComponent
+  implements OnInit, NsWidgetResolver.IWidgetData<any> {
+  @Input() widgetData: any
+  showMsg = true
+
+  constructor(
+    private configSvc: ConfigurationsService,
+    private router: Router,
+  ) {
+    super()
+  }
+
+  ngOnInit() {
+    if (this.configSvc.userProfileV2 &&
+      this.configSvc.userProfileV2.competencies && this.configSvc.userProfileV2.competencies.length) {
+      this.showMsg = false
+    }
+  }
+
+  navigate() {
+    this.router.navigate(['/app/competencies/home'])
+  }
+
+}
