@@ -25,7 +25,7 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
     @Input() question: NSPractice.IQuestion = {
         multiSelection: false,
         section: '',
-        instructions:'',
+        instructions: '',
         question: '',
         questionId: '',
         options: [
@@ -247,7 +247,7 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
         setTimeout(() => {
             this.repaintEveryThing()
         },
-        // tslint:disable-next-line:align
+            // tslint:disable-next-line:align
             100
         )
 

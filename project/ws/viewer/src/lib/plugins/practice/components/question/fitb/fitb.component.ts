@@ -24,7 +24,7 @@ export class FillInTheBlankComponent implements OnInit, OnChanges, AfterViewInit
         multiSelection: false,
         section: '',
         question: '',
-        instructions:'',
+        instructions: '',
         questionId: '',
         options: [
             {
