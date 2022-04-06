@@ -5,7 +5,7 @@ import { mapTo } from 'rxjs/operators'
 @Component({
     selector: 'app-no-connection',
     templateUrl: './no-connection.component.html',
-    styleUrls: ['./no-connection.component.scss']
+    styleUrls: ['./no-connection.component.scss'],
 })
 export class NoConnectionComponent {
     online$: Observable<boolean>
@@ -29,6 +29,8 @@ export class NoConnectionComponent {
     updateUnlineStatus() {
         setTimeout(() => {
             this.display = false
-        }, 30000)
+        },
+            // tslint:disable-next-line
+            3000)
     }
 }
