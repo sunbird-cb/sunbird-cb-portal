@@ -84,12 +84,22 @@
   //   flex-direction: column;
   // }
 }
+.respo-new {
+  flex-direction: column;
+
+  padding: $size-m 0 $size-m 0;
+  box-sizing: border-box;
+}
 
 .respo_inner {
-   padding: 0px 100px;
-   @include breakpoint-lt-m {
+  padding: 0px 100px;
+  @include breakpoint-lt-m {
     padding: 0px 0px;
   }
+}
+.mtf-flag {
+  margin-left: auto;
+  margin-right: 55px;
 }
 .viewer_quest_box {
   padding: 24px 100px;
@@ -97,7 +107,6 @@
     padding: 16px 20px;
   }
 }
-
 
 .right-border {
   border-top: none !important;
@@ -114,5 +123,12 @@
   margin-right: 100px;
   @include breakpoint-lt-m {
     margin-right: $size-m;
+  }
+}
+.mtf-flag_btn{
+  margin-right: #{$size-l * 2};
+  position: absolute;
+  @include breakpoint-lt-m {
+    margin-right: $size-xs;
   }
 }
