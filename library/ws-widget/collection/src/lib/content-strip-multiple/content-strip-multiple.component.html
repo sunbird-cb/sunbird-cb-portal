@@ -41,7 +41,8 @@
                   class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all">
                   <a mat-button [routerLink]="widgetData.strips[0]?.viewMoreUrl?.path"
                     [queryParams]="widgetData.strips[0]?.viewMoreUrl?.queryParams">
-                    <span i18n>SEE ALL</span>
+                    <!-- <span i18n>SEE ALL</span> -->
+                    <span i18n>{{widgetData.strips[0].viewMoreUrl.viewMoreText || 'See all'}}</span>
                   </a>
                 </div>
               </div>

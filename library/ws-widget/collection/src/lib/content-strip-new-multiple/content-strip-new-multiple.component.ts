@@ -16,6 +16,7 @@ import { filter } from 'rxjs/operators'
 import { WidgetUserService } from '../_services/widget-user.service'
  // tslint:disable-next-line
 import _ from 'lodash'
+import { HttpClient } from '@angular/common/http'
 // import { SearchServService } from '../_services/search-serv.service'
 
 interface IStripUnitContentData {
@@ -66,6 +67,7 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
   searchArray = ['preview', 'channel', 'author']
   contentAvailable = true
   isFromAuthoring = false
+  baseUrl = this.configSvc.sitePath || ''
 
   changeEventSubscription: Subscription | null = null
 
@@ -76,6 +78,7 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
     private eventSvc: EventService,
     private configSvc: ConfigurationsService,
     public utilitySvc: UtilityService,
+    private http: HttpClient,
     // private searchServSvc: SearchServService,
     private userSvc: WidgetUserService,
   ) {
@@ -139,6 +142,32 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
     }
   }
 
+  private getFiltersFromArray(v6filters: any) {
+    const filters: any = {}
+    if (v6filters.constructor === Array) {
+      v6filters.forEach(((f: any) => {
+        Object.keys(f).forEach(key => {
+          filters[key] = f[key]
+        })
+      }))
+      return filters
+    }
+    return v6filters
+  }
+
+  private transformSearchV6FiltersV2(v6filters: any) {
+    const filters: any = {}
+    if (v6filters.constructor === Array) {
+      v6filters.forEach(((f: any) => {
+        Object.keys(f).forEach(key => {
+          filters[key] = f[key]
+        })
+      }))
+      return filters
+    }
+    return v6filters
+  }
+
   private fetchStripFromRequestData(
     strip: NsContentStripNewMultiple.IContentStripUnit,
     calculateParentStatus = true,
@@ -152,6 +181,7 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
     this.fetchFromSearchV6(strip, calculateParentStatus)
     this.fetchFromIds(strip, calculateParentStatus)
     this.fetchFromEnrollmentList(strip, calculateParentStatus)
+    this.fetchRecommendedCourses(strip, calculateParentStatus)
     // } else {
     //   this.fetchNetworkUsers(strip, calculateParentStatus)
     // }
@@ -388,6 +418,84 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
     }
   }
 
+  fetchRecommendedCourses(strip: NsContentStripNewMultiple.IContentStripUnit, calculateParentStatus = true) {
+    if (strip.request && strip.request.recommendedCourses && Object.keys(strip.request.recommendedCourses).length) {
+      if (this.configSvc.userProfileV2 &&
+        this.configSvc.userProfileV2.competencies &&
+        this.configSvc.userProfileV2.competencies.length) {
+        // this.http.get(`${this.baseUrl}/common/master-competencies.json`).pipe(
+        //   map(data => {
+        //     console.log('data ::: ', data)
+        //     // _.differenceWith(data, this.configSvc.userProfileV2.competencies, 'name')
+        //   },
+        //   (err => of({ data: null, error: err }),
+        // )
+        const userCompetenies = this.configSvc.userProfileV2.competencies
+
+        this.http
+        .get(`${strip.request.masterCompetency.request.url}/${strip.request.masterCompetency.request.filename}`)
+        .subscribe((masterCompetencies: any) => {
+            // const competencyDiff = _.differenceWith(masterCompetencies, userCompetenies, _.isEqual)
+            const competencyDiff = masterCompetencies.filter((a: any) => !userCompetenies.some((b: any) => a.name === b.name))
+            const competencyDiffNames = _.map(competencyDiff, 'name')
+            const originalFilters: any = strip.request &&
+            strip.request.recommendedCourses &&
+            strip.request.recommendedCourses.request.filters
+            originalFilters['competencies_v3.name'] = competencyDiffNames
+            if (strip.request) {
+              strip.request.recommendedCourses.request.filters = this.getFiltersFromArray(
+                originalFilters,
+              )
+            }
+            this.contentSvc.searchV6(strip.request && strip.request.recommendedCourses).subscribe(
+              results => {
+                const showViewMore = Boolean(
+                  results.result && results.result.content && results.result.content.length > 5 &&
+                  strip.stripConfig && strip.stripConfig.postCardForSearch,
+                )
+                const viewMoreUrl: any = showViewMore
+                  ? {
+                    tab: 'Learn',
+                    path: strip.viewMoreUrl && strip.viewMoreUrl.path,
+                    viewMoreText: (strip.viewMoreUrl && strip.viewMoreUrl.viewMoreText) || '',
+                    queryParams: {
+                      filtersPanel: 'hide',
+                      q: `${strip.request && strip.request.recommendedCourses && strip.request.recommendedCourses.query}` ,
+                      f:
+                      strip.request &&
+                        strip.request.recommendedCourses &&
+                        strip.request.recommendedCourses.request &&
+                        strip.request.recommendedCourses.request.filters
+                        ? JSON.stringify(
+                          this.transformSearchV6FiltersV2(
+                            originalFilters,
+                          )
+                        )
+                        : {},
+                    },
+                  }
+                  : null
+
+                strip.viewMoreUrl = viewMoreUrl
+                this.processStrip(
+                  strip,
+                  this.transformContentsToWidgets(results.result.content, strip),
+                  'done',
+                  calculateParentStatus,
+                  viewMoreUrl,
+                )
+              },
+              () => {
+                this.processStrip(strip, [], 'error', calculateParentStatus, null)
+              },
+            )
+          },       () => {
+              this.processStrip(strip, [], 'error', calculateParentStatus, null)
+        })
+      }
+    }
+  }
+
   private transformContentsToWidgets(
     contents: NsContent.IContent[],
     strip: NsContentStripNewMultiple.IContentStripUnit,
@@ -534,7 +642,8 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
           Object.keys(strip.request.searchRegionRecommendation).length) ||
         (strip.request.searchV6 && Object.keys(strip.request.searchV6).length) ||
         (strip.request.enrollmentList && Object.keys(strip.request.enrollmentList).length) ||
-        (strip.request.ids && Object.keys(strip.request.ids).length))
+        (strip.request.ids && Object.keys(strip.request.ids).length) ||
+        (strip.request.recommendedCourses && Object.keys(strip.request.recommendedCourses).length))
     ) {
       return true
     }

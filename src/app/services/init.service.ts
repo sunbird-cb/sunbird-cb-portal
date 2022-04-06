@@ -272,7 +272,7 @@ export class InitService {
           }
           localStorage.setItem('telemetrySessionId', uuid())
           this.configSvc.unMappedUser = userPidProfile
-          const profileV2 = _.get(userPidProfile, 'profiledetails')
+          const profileV2 = _.get(userPidProfile, 'profileDetails')
           this.configSvc.userProfile = {
             country: _.get(profileV2, 'personalDetails.countryCode') || null,
             email: _.get(profileV2, 'profileDetails.officialEmail') || userPidProfile.email,
@@ -303,6 +303,7 @@ export class InitService {
             profileImage: _.get(profileV2, 'photo') || userPidProfile.thumbnail,
             dealerCode: null,
             isManager: false,
+            competencies: _.get(profileV2, 'competencies') || [],
           }
 
           if (!this.configSvc.nodebbUserProfile) {

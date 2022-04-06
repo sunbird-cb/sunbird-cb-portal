@@ -28,6 +28,9 @@
 .custom-sidecontent {
     width: 73%;
     min-height: 94vh;
+    &.full{
+        width: 100%;
+    }
     .learn-card {
         border-radius: 10px;
         background: #ffffff;

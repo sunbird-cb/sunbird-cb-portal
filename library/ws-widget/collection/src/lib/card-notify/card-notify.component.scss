@@ -1,0 +1,35 @@
+@import '~@sunbird-cb/design-system/src/styles/ws-common';
+@import '~@sunbird-cb/design-system/src/styles/ws-vars';
+@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
+
+%page-center {
+  // max-width: $page-center;
+  max-width: $max-screen;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.container-balanced {
+  @extend %page-center;
+  height: auto;
+  // min-height: 400px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  background-color: #2196F3;
+  padding: 10px;
+}
+
+.base-header {
+  margin-left: 5px;
+}
+
+.card-notify {
+    min-height: 74px;
+}
+
+.blue-border {
+    border: 2px solid #0074b6!important;
+}

@@ -17,6 +17,7 @@ import { filter } from 'rxjs/operators'
 import { WidgetUserService } from '../_services/widget-user.service'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { HttpClient } from '@angular/common/http'
 interface IStripUnitContentData {
   key: string
   canHideStrip: boolean
@@ -62,6 +63,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
   searchArray = ['preview', 'channel', 'author']
   contentAvailable = true
   isFromAuthoring = false
+  baseUrl = this.configSvc.sitePath || ''
 
   changeEventSubscription: Subscription | null = null
 
@@ -73,6 +75,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     private configSvc: ConfigurationsService,
     protected utilitySvc: UtilityService,
     private userSvc: WidgetUserService,
+    private http: HttpClient,
   ) {
     super()
   }
@@ -209,6 +212,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     this.fetchFromIds(strip, calculateParentStatus)
     this.fetchFromEnrollmentList(strip, calculateParentStatus)
     this.fetchRelatedCBP(strip, calculateParentStatus)
+    this.fetchRecommendedCourses(strip, calculateParentStatus)
   }
   fetchFromApi(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.api && Object.keys(strip.request.api).length) {
@@ -445,6 +449,84 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     }
   }
 
+  fetchRecommendedCourses(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
+    if (strip.request && strip.request.recommendedCourses && Object.keys(strip.request.recommendedCourses).length) {
+      if (this.configSvc.userProfileV2 &&
+        this.configSvc.userProfileV2.competencies &&
+        this.configSvc.userProfileV2.competencies.length) {
+        // this.http.get(`${this.baseUrl}/common/master-competencies.json`).pipe(
+        //   map(data => {
+        //     console.log('data ::: ', data)
+        //     // _.differenceWith(data, this.configSvc.userProfileV2.competencies, 'name')
+        //   },
+        //   (err => of({ data: null, error: err }),
+        // )
+        const userCompetenies = this.configSvc.userProfileV2.competencies
+
+        this.http
+        .get(`${strip.request.masterCompetency.request.url}/${strip.request.masterCompetency.request.filename}`)
+        .subscribe((masterCompetencies: any) => {
+            // const competencyDiff = _.differenceWith(masterCompetencies, userCompetenies, _.isEqual)
+            const competencyDiff = masterCompetencies.filter((a: any) => !userCompetenies.some((b: any) => a.name === b.name))
+            const competencyDiffNames = _.map(competencyDiff, 'name')
+            const originalFilters: any = strip.request &&
+            strip.request.recommendedCourses &&
+            strip.request.recommendedCourses.request.filters
+            originalFilters['competencies_v3.name'] = competencyDiffNames
+            if (strip.request) {
+              strip.request.recommendedCourses.request.filters = this.getFiltersFromArray(
+                originalFilters,
+              )
+            }
+            this.contentSvc.searchV6(strip.request && strip.request.recommendedCourses).subscribe(
+              results => {
+                const showViewMore = Boolean(
+                  results.result && results.result.content && results.result.content.length > 5 &&
+                  strip.stripConfig && strip.stripConfig.postCardForSearch,
+                )
+                const viewMoreUrl: any = showViewMore
+                  ? {
+                    tab: 'Learn',
+                    path: strip.viewMoreUrl && strip.viewMoreUrl.path,
+                    viewMoreText: (strip.viewMoreUrl && strip.viewMoreUrl.viewMoreText) || '',
+                    queryParams: {
+                      filtersPanel: 'hide',
+                      q: `${strip.request && strip.request.recommendedCourses && strip.request.recommendedCourses.query}` ,
+                      f:
+                      strip.request &&
+                        strip.request.recommendedCourses &&
+                        strip.request.recommendedCourses.request &&
+                        strip.request.recommendedCourses.request.filters
+                        ? JSON.stringify(
+                          this.transformSearchV6FiltersV2(
+                            originalFilters,
+                          )
+                        )
+                        : {},
+                    },
+                  }
+                  : null
+
+                strip.viewMoreUrl = viewMoreUrl
+                this.processStrip(
+                  strip,
+                  this.transformContentsToWidgets(results.result.content, strip),
+                  'done',
+                  calculateParentStatus,
+                  viewMoreUrl,
+                )
+              },
+              () => {
+                this.processStrip(strip, [], 'error', calculateParentStatus, null)
+              },
+            )
+          },       () => {
+              this.processStrip(strip, [], 'error', calculateParentStatus, null)
+        })
+      }
+    }
+  }
+
   fetchRelatedCBP(strip: any, calculateParentStatus = true) {
     if (strip.request && strip.request.comprelatedCbp && Object.keys(strip.request.comprelatedCbp).length) {
       // let userId = ''
@@ -641,7 +723,8 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         (strip.request.searchV6 && Object.keys(strip.request.searchV6).length) ||
         (strip.request.ids && Object.keys(strip.request.ids).length) ||
         (strip.request.enrollmentList && Object.keys(strip.request.enrollmentList).length) ||
-        (strip.request.comprelatedCbp && Object.keys(strip.request.comprelatedCbp).length)
+        (strip.request.comprelatedCbp && Object.keys(strip.request.comprelatedCbp).length) ||
+        (strip.request.recommendedCourses && Object.keys(strip.request.recommendedCourses).length)
       )
     ) {
       return true
