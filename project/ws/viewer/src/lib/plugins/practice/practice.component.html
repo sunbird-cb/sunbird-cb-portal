@@ -33,7 +33,7 @@
       </div>
       <!-- </div> -->
       <!-- </span> -->
-      <div  *ngIf="viewState === 'detail'" class="flex flex-column flex-center">
+      <div *ngIf="viewState === 'detail'" class="flex flex-column flex-center">
         <ng-container [ngTemplateOutlet]="timer"></ng-container>
       </div>
       <div class="flex flex-column flex-end">
@@ -176,7 +176,8 @@
 
         <div id="quiz-end"></div>
         <ng-container *ngIf="isSubmitted && (viewState === 'answer' || viewState === 'review')">
-          <viewer-result [quizResponse]="finalResponse" [percentage]="result" [isPassed]="finalResponse?.pass" (userSelection)="action($event)">
+          <viewer-result [quizCategory]="primaryCategory" [quizResponse]="finalResponse" [percentage]="result"
+            [isPassed]="finalResponse?.pass" (userSelection)="action($event)">
           </viewer-result>
           <!-- <mat-card class="margin-bottom-m margin-top-m">
             <div class="margin-m" *ngIf="fetchingResultsStatus === 'fetching'">
@@ -277,7 +278,14 @@
     <!-- <div class="flex flex-1"></div> -->
   </div>
 </div>
-
+<!-- do not delete this
+  {{'current Q'}}===={{current_Question | json}}
+<br>
+{{'process'}}===={{!process}}
+<br>
+{{'viewState'}} ===>{{viewState }}
+<br>
+{{'isSubmitted'}}=====>{{isSubmitted}} -->
 
 <ng-template #timer>
   <div *ngIf="timeLeft" class="flex flex-1 flex-center">
