@@ -7,7 +7,7 @@
     <nav class="quiz-nav-bar mat-toolbar mat-caption flex-column">
       <div class="flex flex-1">
         <!-- <span> -->
-        <button *ngIf="isXsmall" mat-icon-button aria-label="menu toggle" i18n-aria-label (click)="sidenav.toggle()">
+        <button *ngIf="isXsmall && !isSubmitted" mat-icon-button aria-label="menu toggle" i18n-aria-label (click)="sidenav.toggle()">
           <mat-icon aria-label="open questions navigation">menu</mat-icon>
         </button>
         <a mat-button *ngIf="!isSubmitted && viewState !== 'detail'" (click)="backToSections()"
@@ -44,8 +44,8 @@
     </nav>
     <mat-sidenav-container class="sidenav-container" autosize>
       <mat-sidenav [mode]="sidenavMode" class="sidenav" #sidenav [opened]="sidenavOpenDefault">
-        <h2 class="mat-title margin-top-s text-center" i18n>Questions</h2>
-        <div *ngIf="isXsmall" class="flex flex-wrapped margin-right-s margin-left-s">
+        <h2 *ngIf="isXsmall && !isSubmitted" class="mat-title margin-top-s text-center" i18n>Questions</h2>
+        <div *ngIf="isXsmall && !isSubmitted" class="flex flex-wrapped margin-right-s margin-left-s">
           <div class="col" *ngFor="let question of secQuestions; let i = index">
             <div (click)="scroll(i + 1)" [ngClass]="{
               'marked-question': isQuestionMarked(question?.questionId),
@@ -94,8 +94,8 @@
         <!-- {{current_Question | json}}
       {{currentQuestionIndex}} -->
         <mat-card class="flex flex-1 flex-column margin-m pad-0"
-          *ngIf="fetchingQuestionsStatus === 'done' && viewState !== 'detail' ">
-          <ng-container *ngIf="!(viewState === 'answer') && !isSubmitted">
+          *ngIf="fetchingQuestionsStatus === 'done' && viewState !== 'detail' && !(viewState === 'answer') && !isSubmitted">
+          <ng-container *ngIf="true">
             <div class="flex flex-1 padding-l card_inner_box flex-row">
               <span class="mat-title margin-zero flex flex-1">{{selectedSection.name}}</span>
               <!-- <span class="spacer"></span> -->

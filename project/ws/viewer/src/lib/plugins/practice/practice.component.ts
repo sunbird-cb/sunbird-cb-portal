@@ -448,7 +448,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     this.timeLeft = this.quizJson.timeLimit
     // this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
     if (this.quizJson.timeLimit > 0) {
-      this.timerSubscription = interval(100)
+      this.timerSubscription = interval(1000)
         .pipe(
           map(
             () =>
@@ -456,7 +456,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           ),
         )
         .subscribe(_timeRemaining => {
-          this.timeLeft -= 0.1
+          this.timeLeft -= 1
+          console.log(this.timeLeft)
           if (this.timeLeft < 0) {
             this.isIdeal = true
             this.timeLeft = 0
