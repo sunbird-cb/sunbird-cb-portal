@@ -25,7 +25,7 @@ export class SingleChoiseQuesComponent implements OnInit {
         multiSelection: false,
         section: '',
         question: '',
-        instructions:'',
+        instructions: '',
         questionId: '',
         options: [
             {
