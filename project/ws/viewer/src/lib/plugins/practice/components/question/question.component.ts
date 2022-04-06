@@ -24,7 +24,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() question: NSPractice.IQuestion = {
     multiSelection: false,
     section: '',
-    instructions:'',
+    instructions: '',
     question: '',
     questionId: '',
     options: [
