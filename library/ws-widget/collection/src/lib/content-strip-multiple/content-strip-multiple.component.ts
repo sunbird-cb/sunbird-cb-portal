@@ -17,7 +17,7 @@ import { filter } from 'rxjs/operators'
 import { WidgetUserService } from '../_services/widget-user.service'
 // tslint:disable-next-line
 import _ from 'lodash'
-import { HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http'
 interface IStripUnitContentData {
   key: string
   canHideStrip: boolean
