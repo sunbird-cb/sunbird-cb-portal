@@ -29,6 +29,6 @@ export class NoConnectionComponent {
     updateUnlineStatus() {
         setTimeout(() => {
             this.display = false
-        }, 3000)
+        }, 30000)
     }
 }
