@@ -1,11 +1,10 @@
 @import "ws-common";
 @import "ws-vars";
 
-
 .percent-div {
     position: absolute;
     top: 15%;
-    left: 20%;
+    left: 18%;
     z-index: 2;
     width: 312px;
     height: 369px;
@@ -28,7 +27,7 @@
     }
 }
 .result_image_box {
-    overflow:hidden;
+    overflow: hidden;
 }
 .flex-2 {
     flex: 2;
@@ -43,7 +42,6 @@
     @include breakpoint-lt-m {
         max-width: fit-content;
         flex: 1;
-
     }
 }
 .m-w {
@@ -99,7 +97,7 @@
     margin: $size-xs;
     box-shadow: none !important;
 
-    @include breakpoint-lt-m  {
+    @include breakpoint-lt-m {
         min-width: 95%;
         max-width: 95%;
     }
@@ -107,13 +105,13 @@
 .blank_box {
     @include breakpoint-lt-m {
         // flex-basis: 0;
-        display: none!important;
+        display: none !important;
     }
 }
 .border-custom[_ngcontent-syh-c63] {
-    border-top: none!important;
-    border-left: none!important;
-    border-bottom: none!important;
+    border-top: none !important;
+    border-left: none !important;
+    border-bottom: none !important;
 }
 .mat-card {
     box-sizing: border-box;
@@ -148,4 +146,8 @@
     @include breakpoint-lt-s {
         flex-direction: column;
     }
+}
+.retake{
+    max-height: 36px;
+    max-width: fit-content;
 }
