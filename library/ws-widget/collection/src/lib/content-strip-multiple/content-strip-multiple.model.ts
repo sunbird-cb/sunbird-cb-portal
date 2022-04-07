@@ -20,6 +20,7 @@ export namespace NsContentStripMultiple {
     viewMoreUrl?: {
       queryParams?: string
       path?: string
+      viewMoreText?: string
     }
     preWidgets?: NsWidgetResolver.IRenderConfigWithAnyData[]
     postWidgets?: NsWidgetResolver.IRenderConfigWithAnyData[]
@@ -35,6 +36,8 @@ export namespace NsContentStripMultiple {
       ids?: string[]
       enrollmentList?: any
       comprelatedCbp?: any
+      recommendedCourses?: any
+      masterCompetency?: any
     }
     searchV6Type?: 'KB' | 'Collections' | 'searchQuery' | null
     stripBackground?: string

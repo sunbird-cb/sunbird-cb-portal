@@ -33,6 +33,8 @@ export namespace NsContentStripNewMultiple {
       api?: IStripRequestApi
       networkApi?: INetworkRequestApi
       ids?: string[]
+      recommendedCourses?: any,
+      masterCompetency?: any
     }
     searchV6Type?: 'KB' | 'Collections' | 'searchQuery' | null
     stripBackground?: string
