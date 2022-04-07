@@ -47,12 +47,27 @@
           </mat-card-content>
         </mat-card>
       </ng-container>
+<<<<<<< HEAD
       <ng-container>
+=======
+      <ng-container *ngIf="!(quizResponse?.children && quizResponse?.children?.length > 0)">
+>>>>>>> origin/cbrelease-4.0.1
         <div class="flex flex-1 flex-center text-center flex-middle">
           <span class="mat-heading" i18n>We are calculating!! ....</span>
           <mat-spinner></mat-spinner>
         </div>
       </ng-container>
+<<<<<<< HEAD
+=======
+      <ng-container
+        *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory && (quizResponse?.children && quizResponse?.children?.length > 0)">
+        <div class="flex flex-1 flex-row-reverse">
+          <a mat-button (click)="action('retake')" class="width-1-1 text-white ws-mat-primary-background retake">
+            Retake assessment
+          </a>
+        </div>
+      </ng-container>
+>>>>>>> origin/cbrelease-4.0.1
     </div>
   </div>
   <div class="flex flex-1 blank_box"></div>

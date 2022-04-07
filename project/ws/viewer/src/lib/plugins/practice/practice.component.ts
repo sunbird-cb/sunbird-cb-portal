@@ -109,6 +109,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
   init() {
     // this.getSections()
+<<<<<<< HEAD
+=======
+    this.isSubmitted = false
+>>>>>>> origin/cbrelease-4.0.1
     this.markedQuestions = new Set([])
     this.questionAnswerHash = {}
     // quizSvc.questionAnswerHash.subscribe(qaHash => {
@@ -447,7 +451,11 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     this.timeLeft = this.quizJson.timeLimit
     // this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
     if (this.quizJson.timeLimit > 0) {
+<<<<<<< HEAD
       this.timerSubscription = interval(100)
+=======
+      this.timerSubscription = interval(1000)
+>>>>>>> origin/cbrelease-4.0.1
         .pipe(
           map(
             () =>
@@ -455,7 +463,12 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           ),
         )
         .subscribe(_timeRemaining => {
+<<<<<<< HEAD
           this.timeLeft -= 0.1
+=======
+          this.timeLeft -= 1
+          // console.log(this.timeLeft)
+>>>>>>> origin/cbrelease-4.0.1
           if (this.timeLeft < 0) {
             this.isIdeal = true
             this.timeLeft = 0
@@ -536,12 +549,26 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
   proceedToSubmit() {
     if (this.timeLeft || this.primaryCategory === this.ePrimaryCategory.PRACTICE_RESOURCE) {
+<<<<<<< HEAD
+=======
+      if (
+        Object.keys(this.questionAnswerHash).length !==
+        this.quizJson.questions.length
+      ) {
+        this.submissionState = 'unanswered'
+      } else if (this.markedQuestions.size) {
+        this.submissionState = 'marked'
+      } else {
+        this.submissionState = 'answered'
+      }
+>>>>>>> origin/cbrelease-4.0.1
       const dialogRef = this.dialog.open(SubmitQuizDialogComponent, {
         width: '250px',
         data: this.submissionState,
       })
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
+<<<<<<< HEAD
           if (
             Object.keys(this.questionAnswerHash).length !==
             this.quizJson.questions.length
@@ -552,6 +579,9 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           } else {
             this.submissionState = 'answered'
           }
+=======
+
+>>>>>>> origin/cbrelease-4.0.1
           this.submitQuiz()
         }
       })
@@ -729,6 +759,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         if (this.quizJson.isAssessment) {
           this.isIdeal = true
         }
+<<<<<<< HEAD
+=======
+        this.clearQuizJson()
+>>>>>>> origin/cbrelease-4.0.1
         this.fetchingResultsStatus = 'done'
         this.numCorrectAnswers = res.correct
         this.numIncorrectAnswers = res.inCorrect
@@ -975,6 +1009,11 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     // this.questionAnswerHash = {}
     this.attemptSubData = []
     this.viewState = 'initial'
+<<<<<<< HEAD
+=======
+    this.currentQuestion = null
+    this.currentQuestionIndex = 0
+>>>>>>> origin/cbrelease-4.0.1
     // this.isSubmitted = true
   }
   clearStoragePartial() {
@@ -986,9 +1025,19 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     // this.questionAnswerHash = {}
     this.attemptSubData = []
     this.currentQuestionIndex = 0
+<<<<<<< HEAD
     // this.viewState = 'initial'
     // this.isSubmitted = true
   }
+=======
+    this.currentQuestion = null
+    // this.viewState = 'initial'
+    // this.isSubmitted = true
+  }
+  clearQuizJson() {
+    this.quizJson = { isAssessment: false, questions: [], timeLimit: 0 }
+  }
+>>>>>>> origin/cbrelease-4.0.1
   ngOnDestroy() {
     this.clearStorage()
     if (this.attemptSubscription) {
