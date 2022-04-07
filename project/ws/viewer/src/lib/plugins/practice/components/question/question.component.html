@@ -1,0 +1,143 @@
+<mat-card *ngIf="!(question?.questionType === 'mtf' || question?.questionType === 'ftb')"
+  class="flex flex-1 respo margin-bottom-m no-shadow">
+  <div class="respo flex flex-1 flex-column padding-top-m padding-left-l ws-mat-accent-border right-border">
+    <div class="flex flex-1- flex-column respo_inner">
+      <div class="flex flex-middle">
+        <h3 class="mat-subheading-2 ws-mat-black60-text margin-bottom-m">
+          <ng-container i18n="question number label">Question &nbsp;</ng-container>{{ questionNumber }}
+          <ng-container i18n="question number of total questions">of</ng-container>
+          {{ total }}
+        </h3>
+      </div>
+
+      <div class="flex flex-1">
+        <h2 *ngIf="question.questionType !== 'ftb'" class="mat-h2" [innerHTML]="question?.question"
+          class="quiz-question">
+        </h2>
+        <ng-container *ngIf="question.questionType === 'ftb'">
+          <viewer-fitb-question class="flex-1" [question]="question" (update)="update($event)"></viewer-fitb-question>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-1">
+    <div class="flex flex-1 flex-column">
+      <div class="flex flex-1">
+        <span class="spacer"></span>
+        <button aria-label="flag" i18n-aria-label mat-icon-button (click)="markQuestion()" class="flag_btn">
+          <mat-icon *ngIf="!isQuestionMarked()">outlined_flag</mat-icon>
+          <mat-icon *ngIf="isQuestionMarked()">flag</mat-icon>
+        </button>
+      </div>
+      <div class="flex flex-1 viewer_quest_box">
+        <!-- {{log(question)}} -->
+        <ng-container *ngIf="question.questionType === 'mcq-mca'">
+          <viewer-mcq-mca-question class="flex-1" [question]="question" [itemSelectedList]="itemSelectedList1"
+            (update)="update($event)">
+          </viewer-mcq-mca-question>
+        </ng-container>
+
+        <ng-container *ngIf="question.questionType === 'mcq-sca'">
+          <viewer-mcq-sca-question class="flex-1" [question]="question" [itemSelectedList]="itemSelectedList1"
+            (update)="update($event)"></viewer-mcq-sca-question>
+        </ng-container>
+        <ng-container *ngIf="question.questionType === 'mtf'">
+          <viewer-mtf-question class="flex-1" [question]="question" (update)="update($event)"></viewer-mtf-question>
+          <div *ngIf="
+          viewState !== 'review' &&
+          numConnections &&
+          matchHintDisplay.length !== 0
+        " style="display: flex;flex-direction: column;">
+            <p i18n="option explanation label">Explanation</p>
+            <table mat-table [dataSource]="matchHintDisplay" class="mat-elevation-z8">
+              <ng-container matColumnDef="text">
+                <th mat-header-cell *matHeaderCellDef i18n="mtf explanation Option">
+                  Option
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.text }}</td>
+              </ng-container>
+              <ng-container matColumnDef="hint">
+                <th mat-header-cell *matHeaderCellDef i18n="mtf explanation Hint">
+                  Hint
+                </th>
+                <td mat-cell *matCellDef="let element" [innerHTML]="element.hint"></td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="['text', 'hint']"></tr>
+              <tr mat-row *matRowDef="let row; columns: ['text', 'hint']"></tr>
+            </table>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</mat-card>
+<!-- created a duplicate as design changed -->
+<mat-card *ngIf="(question?.questionType === 'mtf' || question?.questionType === 'ftb')"
+  class="flex flex-1 respo-new margin-bottom-m no-shadow flex-column">
+  <div class="mtf-flag">
+    <button aria-label="flag" i18n-aria-label mat-icon-button (click)="markQuestion()" class="mtf-flag_btn">
+      <mat-icon *ngIf="!isQuestionMarked()">outlined_flag</mat-icon>
+      <mat-icon *ngIf="isQuestionMarked()">flag</mat-icon>
+    </button>
+  </div>
+  <div class="respo-new flex flex-1 flex-column padding-top-m padding-left-l">
+    <div class="flex flex-1- flex-column respo_inner">
+      <div [ngClass]="{'flex-middle flex-center' : question?.questionType === 'mtf'}" class="flex">
+        <h3 class="mat-subheading-2 ws-mat-black60-text margin-bottom-m">
+          <ng-container i18n="question number label">Question &nbsp;</ng-container>{{ questionNumber }}
+          <ng-container i18n="question number of total questions">of</ng-container>
+          {{ total }}
+        </h3>
+      </div>
+      <div class="flex flex-1 flex-center flex-column">
+        <ng-container *ngIf="question.questionType !== 'ftb'">
+          <h2 [innerHTML]="question?.question" class="m-auto quiz-question mat-h2 flex-center text-center">
+          </h2>
+          <span *ngIf="question?.instructions" class="flex-center mat-caption text-center" i18n>
+            {{ question?.instructions}}
+          </span>
+          <span class="flex-center mat-caption text-center" i18n>
+            Drag and drop numbers on the left to the corresponding
+            circles on the right
+          </span>
+        </ng-container>
+        <ng-container *ngIf="question.questionType === 'ftb'">
+          <viewer-fitb-question class="flex-1" [question]="question" (update)="update($event)"></viewer-fitb-question>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-1">
+    <div class="flex flex-1 flex-column">
+      <div class="flex flex-1 viewer_quest_box">
+        <!-- {{log(question)}} -->
+        <ng-container *ngIf="question.questionType === 'mtf'">
+          <viewer-mtf-question class="flex-1" [question]="question" (update)="update($event)"></viewer-mtf-question>
+          <div *ngIf="
+          viewState !== 'review' &&
+          numConnections &&
+          matchHintDisplay.length !== 0
+        " style="display: flex;flex-direction: column;">
+            <p i18n="option explanation label">Explanation</p>
+            <table mat-table [dataSource]="matchHintDisplay" class="mat-elevation-z8">
+              <ng-container matColumnDef="text">
+                <th mat-header-cell *matHeaderCellDef i18n="mtf explanation Option">
+                  Option
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.text }}</td>
+              </ng-container>
+              <ng-container matColumnDef="hint">
+                <th mat-header-cell *matHeaderCellDef i18n="mtf explanation Hint">
+                  Hint
+                </th>
+                <td mat-cell *matCellDef="let element" [innerHTML]="element.hint"></td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="['text', 'hint']"></tr>
+              <tr mat-row *matRowDef="let row; columns: ['text', 'hint']"></tr>
+            </table>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</mat-card>

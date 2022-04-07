@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router'
 export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
   @Input() param: any
   @Input() paramFilters: any = []
+  @Input() filtersPanel!: string
   searchResults: any = []
   searchRequestObject = {
     request: {
@@ -21,11 +22,12 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         source: [],
         mediaType: [],
         status: ['Live'],
+        'competencies_v3.name': [],
       },
       query: '',
       sort_by: { lastUpdatedOn: 'desc' },
       fields: [],
-      facets: ['primaryCategory', 'mimeType', 'source'],
+      facets: ['primaryCategory', 'mimeType', 'source', 'competencies_v3.name'],
       limit: 100,
       offset: 0,
     },
@@ -39,6 +41,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
   mimeType: any = []
   sourceType: any = []
   mediaType: any = []
+  competencNames: any = []
   facets: any = []
   throttle = 100
   scrollDistance = 0.2
@@ -260,6 +263,9 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         } else if (mf.mainType === 'mediaType') {
           this.mediaType.push(mf.name)
           queryparam.request.filters.mediaType = this.mediaType
+        } else if (mf.mainType === 'competencies_v3.name') {
+          this.competencNames = (mf.values)
+          queryparam.request.filters['competencies_v3.name'] = mf.values
         }
       })
 

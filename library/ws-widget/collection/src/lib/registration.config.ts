@@ -145,6 +145,7 @@ import { CardNetworkHomeComponent } from './card-network-home/card-network-home.
 import { CardHomeDiscussComponent } from './card-home-discuss/card-home-discuss.component'
 import { CardBrowseCourseComponent } from './card-browse-course/card-browse-course.component'
 import { CardHubsListModule } from './card-hubs-list/card-hubs-list.module'
+import { CardNotifyModule } from './card-notify/card-notify.module'
 import { CardNetworkHomeModule } from './card-network-home/card-network-home.module'
 import { CardCourseComponent } from './card-course/card-course.component'
 import { CardCourseModule } from './card-course/card-course.module'
@@ -165,6 +166,7 @@ import { LeftMenuComponent } from './left-menu/left-menu.component'
 import { UIORGTableModule } from './ui-org-table/ui-org-table.module'
 
 import { BreadcrumbsOrgModule } from './breadcrumbs-org/breadcrumbs-org.module'
+import { CardNotifyComponent } from './card-notify/card-notify.component'
 
 export const WIDGET_REGISTERED_MODULES = [
   AvatarPhotoModule,
@@ -238,6 +240,7 @@ export const WIDGET_REGISTERED_MODULES = [
   VideoWrapperModule,
   SlidersMobModule,
   CardHubsListModule,
+  CardNotifyModule,
   CardNetworkHomeModule,
   CardCourseModule,
   CardCarrierHomeModule,
@@ -608,6 +611,11 @@ export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] 
     widgetType: ROOT_WIDGET_CONFIG.card._type,
     widgetSubType: ROOT_WIDGET_CONFIG.card.home_hubs,
     component: CardHubsListComponent,
+  },
+  {
+    widgetType: ROOT_WIDGET_CONFIG.card._type,
+    widgetSubType: ROOT_WIDGET_CONFIG.card.home_notify,
+    component: CardNotifyComponent,
   },
   {
     widgetType: ROOT_WIDGET_CONFIG.card._type,

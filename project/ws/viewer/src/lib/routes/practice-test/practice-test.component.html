@@ -1,0 +1,10 @@
+<div class="margin-m" *ngIf="!isFetchingDataComplete || !testData">
+    <div class="flex flex-center">
+        <mat-spinner></mat-spinner>
+    </div>
+</div>
+<ng-container *ngIf="testData && isFetchingDataComplete">
+    <viewer-practice-container *ngIf="isFetchingDataComplete" [isFetchingDataComplete]="isFetchingDataComplete"
+        [isErrorOccured]="isErrorOccured" [quizData]="testData" [forPreview]="forPreview" [quizJson]="quizJson">
+    </viewer-practice-container>
+</ng-container>

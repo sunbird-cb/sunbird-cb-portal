@@ -1,0 +1,18 @@
+<!-- <mat-nav-list class="margin-left-xs margin-right-xl margin-top-xl" aria-label="menu">
+    <ng-container >
+      <a mat-list-item matRipple routerLink="/app/knowledge-resource/all"> All knowledge resources</a>
+      <a mat-list-item matRipple routerLink="/app/knowledge-resource/saved"> Saved knowledge resources </a>
+    </ng-container>
+
+  </mat-nav-list> -->
+
+
+  <mat-nav-list class="margin-left-xs margin-right-xl margin-top-xl" aria-label="menu">
+    <ng-container *ngFor="let tab of tabsData">
+      <a mat-list-item *ngIf="tab?.enabled" matRipple active routerLinkActive="ws-active-discuss-route"
+        [routerLink]="tab.routerLink" (click)="menuClick(tab)" class="tab_link">
+        <!-- <mat-icon>account_circle</mat-icon> -->
+        <span class="padding-left-xs">{{tab?.name}}</span>
+      </a>
+    </ng-container>
+  </mat-nav-list>

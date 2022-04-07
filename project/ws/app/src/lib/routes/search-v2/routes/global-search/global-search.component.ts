@@ -9,10 +9,15 @@ import { ActivatedRoute } from '@angular/router'
 export class GlobalSearchComponent implements OnInit {
   searchParam: any
   searchparamFilters: any
+  filtersPanel!: string | null
   selectedTab = 1
   tabs = ['All', 'Learn', 'Network', 'Discuss', 'Careers']
 
   constructor(private activated: ActivatedRoute) {
+
+  }
+
+  ngOnInit() {
     this.activated.queryParamMap.subscribe(queryParams => {
       if (queryParams.has('tab')) {
         const tabn = queryParams.get('tab')
@@ -32,13 +37,20 @@ export class GlobalSearchComponent implements OnInit {
           name: sfilters.contentType[0].toLowerCase(),
           count: '',
           ischecked: true,
+        }, {
+          mainType:  'competencies_v3.name',
+          name: 'competencies_v3.name',
+          count: '',
+          values: sfilters['competencies_v3.name'],
+          ischecked: true,
         }]
         this.searchparamFilters = paramfilter
       }
-    })
-  }
 
-  ngOnInit() {
+      if (queryParams.has('filtersPanel')) {
+        this.filtersPanel = queryParams.get('filtersPanel')
+      }
+    })
   }
 
 }

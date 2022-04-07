@@ -1,0 +1,26 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+
+.knowledge_card_full {
+    width: 100%;
+}
+
+.pdfIcon {
+    width: 24px;
+    vertical-align: middle;
+}
+
+
+.linkBtn {
+    cursor: pointer;
+}
+
+.mat-card {
+    box-sizing: border-box;
+}
+
+.attach_links {
+    display: inline-block;
+}

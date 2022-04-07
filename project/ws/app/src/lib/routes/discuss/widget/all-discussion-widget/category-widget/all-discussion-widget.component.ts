@@ -27,6 +27,7 @@ export class AllDiscussionWidgetComponent extends BaseWrapperComponent {
   alldiscussPage = 'alldiscuss'
   previousState: any
   cIds: any = {}
+  cid: any
 
   constructor(
     @Inject(ConfigService)
@@ -59,6 +60,7 @@ export class AllDiscussionWidgetComponent extends BaseWrapperComponent {
       this.tid = event.tid
       this.slug = event.title
       this.showTrendTagPost = 0
+      this.cid = event.cId[0]
     }
 
     if (event.action === this.tagAllDiscussPage) {
