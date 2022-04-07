@@ -457,7 +457,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         )
         .subscribe(_timeRemaining => {
           this.timeLeft -= 1
-          console.log(this.timeLeft)
+          // console.log(this.timeLeft)
           if (this.timeLeft < 0) {
             this.isIdeal = true
             this.timeLeft = 0
