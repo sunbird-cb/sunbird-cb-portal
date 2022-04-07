@@ -34,7 +34,7 @@ export namespace NSPractice {
   }
 
   export type TQuizQuestionType = 'mcq-sca' | 'mcq-mca' | 'fitb' | 'ftb' | 'mtf' | string // need to remove string from next ittration
-  export type TUserSelectionType = 'start' | 'skip'
+  export type TUserSelectionType = 'start' | 'skip' | 'retake'
   export type TQuizSubmissionState = 'unanswered' | 'marked' | 'answered'
   export type TQuizViewMode = 'initial' | 'detail' | 'attempt' | 'review' | 'answer'
 
