@@ -1,16 +1,16 @@
-<mat-card class="flex flex-1 items-center justify-center">
+<!-- <mat-card class="flex flex-1 items-center justify-center" [ngClass]="{isOnline:true}"> -->
     <!-- <p style.color="{{ isOnline  ? 'green' : 'red'}}"> {{ isOnline ? 'Online' : 'Offline'}}
     </p> -->
-    <div id="blackout" class="noselect no-connection-modal" style.display="{{isOnline ? 'none' : 'block'}}">
+    <div id="blackout" class="noselect no-connection-modal"  style.display="{{isOnline ? 'none' : 'block'}}">
 
         <!-- <p>No Internet connection!</p> -->
         <div class="no_internet_box no-connection-modal-content">
             <mat-icon class="mat-icon no_net_icon">perm_scan_wifi</mat-icon>
-            <h1 class="mat-h1 ws-mat-primary-text margin-bottom-xs">No internet conncetion</h1>
-            <p class="mat-body-2 ws-mat-primary-text margin-bottom-l">Please, check your connection and try again  </p>
-            <button class="mat-button text-white ws-mat-primary-background padding-xs"> Try again</button>
+            <!-- <h1 class="mat-h1 ws-mat-primary-text margin-bottom-xs">No internet conncetion</h1> -->
+            <p class="mat-body-2 ws-mat-primary-text margin-remove-bottom">No internet conncetion! Please, check your connection and try again  </p>
+            <!-- <button class="mat-button text-white ws-mat-primary-background padding-xs"> Try again</button> -->
         </div>
 
 
     </div>
-</mat-card>
+<!-- </mat-card> -->
