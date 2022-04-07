@@ -1,18 +1,10 @@
 @import "ws-common";
 @import "ws-vars";
 
-<<<<<<< HEAD
-
-.percent-div {
-    position: absolute;
-    top: 15%;
-    left: 20%;
-=======
 .percent-div {
     position: absolute;
     top: 15%;
     left: 18%;
->>>>>>> origin/cbrelease-4.0.1
     z-index: 2;
     width: 312px;
     height: 369px;
@@ -35,11 +27,7 @@
     }
 }
 .result_image_box {
-<<<<<<< HEAD
-    overflow:hidden;
-=======
     overflow: hidden;
->>>>>>> origin/cbrelease-4.0.1
 }
 .flex-2 {
     flex: 2;
@@ -54,10 +42,6 @@
     @include breakpoint-lt-m {
         max-width: fit-content;
         flex: 1;
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/cbrelease-4.0.1
     }
 }
 .m-w {
@@ -113,11 +97,7 @@
     margin: $size-xs;
     box-shadow: none !important;
 
-<<<<<<< HEAD
-    @include breakpoint-lt-m  {
-=======
     @include breakpoint-lt-m {
->>>>>>> origin/cbrelease-4.0.1
         min-width: 95%;
         max-width: 95%;
     }
@@ -125,15 +105,6 @@
 .blank_box {
     @include breakpoint-lt-m {
         // flex-basis: 0;
-<<<<<<< HEAD
-        display: none!important;
-    }
-}
-.border-custom[_ngcontent-syh-c63] {
-    border-top: none!important;
-    border-left: none!important;
-    border-bottom: none!important;
-=======
         display: none !important;
     }
 }
@@ -141,7 +112,6 @@
     border-top: none !important;
     border-left: none !important;
     border-bottom: none !important;
->>>>>>> origin/cbrelease-4.0.1
 }
 .mat-card {
     box-sizing: border-box;
@@ -177,10 +147,7 @@
         flex-direction: column;
     }
 }
-<<<<<<< HEAD
-=======
-.retake{
+.retake {
     max-height: 36px;
     max-width: fit-content;
 }
->>>>>>> origin/cbrelease-4.0.1
