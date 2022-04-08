@@ -14,6 +14,10 @@
 //     color: white;
 // }
 
+.isOnline {
+    display: none!important;
+}
+
 .no-connection-modal {
   position: fixed;
   left: 0;
@@ -28,8 +32,10 @@
 
 .no-connection-modal-content {
     background-color: #fff;
-    margin: 15% auto;
-    padding: 20px;
+    // margin: 15% auto;
+    // padding: 20px;
+    margin: 3% auto;
+    padding: 12px 16px;
     border: 1px solid #888;
     width: 40%;
     text-align: center;

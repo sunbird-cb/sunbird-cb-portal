@@ -93,10 +93,10 @@
         <ng-container *ngIf="question.questionType !== 'ftb'">
           <h2 [innerHTML]="question?.question" class="m-auto quiz-question mat-h2 flex-center text-center">
           </h2>
-          <span *ngIf="question?.instructions" class="flex-center mat-caption text-center" i18n>
+          <span *ngIf="question?.instructions" class="flex-center text-center mat-subheading-2" i18n>
             {{ question?.instructions}}
           </span>
-          <span class="flex-center mat-caption text-center" i18n>
+          <span class="flex-center text-center mat-subheading-2" i18n>
             Drag and drop numbers on the left to the corresponding
             circles on the right
           </span>
