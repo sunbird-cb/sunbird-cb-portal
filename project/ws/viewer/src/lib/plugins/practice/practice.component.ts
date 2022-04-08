@@ -255,7 +255,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           _.eachRight(question.questions, q => {
             // const qHtml = document.createElement('div')
             // qHtml.innerHTML = q.editorState.question
-            if (codes.indexOf(section.code) === -1) {
+            if (codes.indexOf(section.identifier) === -1) {
               this.quizJson.questions.push({
                 section: section.identifier,
                 question: q.editorState.question, // qHtml.textContent || qHtml.innerText || '',
@@ -390,7 +390,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     if (idx !== this.currentQuestionIndex) {
       this.currentQuestionIndex = idx
     }
-    const questions = _.get(this.quizJson, 'questions')
+    const questions = this.secQuestions
     this.currentQuestion = questions && questions[idx] ? questions[idx] : null
     setTimeout(() => {
       this.process = false
