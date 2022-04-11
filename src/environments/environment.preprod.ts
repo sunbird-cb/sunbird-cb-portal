@@ -1,6 +1,4 @@
-import { IEnvironment } from "./environment";
-
-export const environment : IEnvironment= {
+export const environment = {
   production: true,
   name: (window as { [key: string]: any })['env']['name'],
   sitePath: (window as { [key: string]: any })['env']['sitePath'] || '',
@@ -13,7 +11,7 @@ export const environment : IEnvironment= {
   azureOldHost: (window as { [key: string]: any })['env']['azureOldHost'] || '',
   azureOldBuket: (window as { [key: string]: any })['env']['azureOldBuket'] || '',
   portalRoles: (((window as { [key: string]: any })['env']['portalRoles'] || '').split(',')) || [],
-  portals: (window as { [key: string]: any} )['env']['portals'] || [],
+  portals: (window as { [key: string]: any })['env']['portals'] || [],
 
   // mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
   // spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',

@@ -22,7 +22,7 @@ export const environment: IEnvironment = {
   azureOldBuket: (window as { [key: string]: any })['env']['azureOldBuket'] || '',
   portalRoles: (((window as { [key: string]: any })['env']['portalRoles'] || '').split(',')) || [],
 }
-export interface IEnvironment {
+interface IEnvironment {
   name: string,
   production: boolean
   sitePath: null | string

@@ -56,7 +56,8 @@ export class CardHubsListComponent extends WidgetBaseComponent
 
   // private readonly featuresConfig: IGroupWithFeatureWidgets[] = []
 
-  constructor(private configSvc: ConfigurationsService,
+  constructor(
+    private configSvc: ConfigurationsService,
     private discussUtilitySvc: DiscussUtilsService,
     private router: Router,
     private valueSvc: ValueService,

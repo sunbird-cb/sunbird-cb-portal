@@ -1,6 +1,4 @@
-import { IEnvironment } from "./environment";
-
-export const environment: IEnvironment = {
+export const environment = {
     production: true,
     name: (window as { [key: string]: any })['env']['name'],
     sitePath: (window as { [key: string]: any })['env']['sitePath'] || '',
