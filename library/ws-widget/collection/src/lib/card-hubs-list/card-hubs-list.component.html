@@ -100,7 +100,7 @@
           <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">
             <ng-container *ngFor="let portal of environment.portals | orderBy: 'sr'">
               <ng-container *ngIf="portal.isPublic || isAllowed(portal.id)">
-                <a class="flex flex-wrap mb-4" role="menuitem" [attr.href]="environment.uriPath" target="_blank">
+                <a class="flex flex-wrap mb-4" role="menuitem" [attr.href]="portal.uriPath" target="_blank">
                   <div class="icon ws-mat-primary-tags">
                     <mat-icon class="m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
                       aria-hidden="true">{{portal.icon || 'info'}}</mat-icon>
