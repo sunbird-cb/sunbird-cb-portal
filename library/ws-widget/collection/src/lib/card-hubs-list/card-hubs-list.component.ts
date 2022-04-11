@@ -56,12 +56,13 @@ export class CardHubsListComponent extends WidgetBaseComponent
 
   // private readonly featuresConfig: IGroupWithFeatureWidgets[] = []
 
-  constructor(private configSvc: ConfigurationsService,
-              private discussUtilitySvc: DiscussUtilsService,
-              private router: Router,
-              private valueSvc: ValueService,
-              // private accessService: AccessControlService
-              ) {
+  constructor(
+    private configSvc: ConfigurationsService,
+    private discussUtilitySvc: DiscussUtilsService,
+    private router: Router,
+    private valueSvc: ValueService,
+    // private accessService: AccessControlService
+  ) {
     super()
   }
 
@@ -169,8 +170,8 @@ export class CardHubsListComponent extends WidgetBaseComponent
   }
 
   isAllowed(portalName: string) {
-    const roles =  _.get(environment.otherPortalRoles, portalName) || []
-    if (!(roles && roles.length))  {
+    const roles = _.get(_.first(_.filter(environment.portals, { id: portalName })), 'roles') || []
+    if (!(roles && roles.length)) {
       return true
     }
     const value = this.hasRole(roles)
