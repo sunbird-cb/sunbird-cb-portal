@@ -29,7 +29,7 @@ import {
   StickyHeaderModule,
 } from '@sunbird-cb/collection'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
-import { LoggerService, PipeSafeSanitizerModule, ConfigurationsService } from '@sunbird-cb/utils'
+import { LoggerService, PipeSafeSanitizerModule, ConfigurationsService, PipeOrderByModule } from '@sunbird-cb/utils'
 import { SearchModule } from '@ws/app/src/public-api'
 import 'hammerjs'
 import { KeycloakAngularModule } from 'keycloak-angular'
@@ -136,6 +136,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     MatTooltipModule,
     SearchModule,
     BtnFeatureModule,
+    PipeOrderByModule,
     PublicAboutModule,
     PublicContactModule,
     MobileAppModule,

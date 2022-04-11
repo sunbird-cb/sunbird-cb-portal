@@ -1,7 +1,6 @@
 <mat-card class="base-layout" role="navigation" id="back-nav" aria-label="navigation">
   <mat-card-content class="container-balanced">
     <div class="flex flex-1 flex-column">
-
       <div class="flex flex-1 flex-column">
         <div class="flex flex-1 flex-wrap margin-bottom-xs margin-top-xs" role="menubar">
           <a class="flex cursor-pointer simple-hubs-link margin-left-0" (click)="toggleVisibility()"
@@ -9,7 +8,6 @@
             <mat-icon class="margin-right-xs ws-mat-default-text">menu</mat-icon>
             <span class="margin-auto ws-mat-default-text mat-subheading-2">EXPLORE</span>
           </a>
-
           <ng-container *ngIf="widgetData.titles && widgetData.titles.length>0">
             <div class="flex" *ngFor="let title of widgetData.titles">
               <mat-icon class="main-back m-auto">keyboard_arrow_right</mat-icon>
@@ -85,7 +83,20 @@
           </div>
           <div class="flex flex-1">
             <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">
-              <a class="flex flex-wrap mb-4" role="menuitem" [attr.href]="environment.fracPortal" target="_blank" *ngIf="isAllowed('frac')">
+              <ng-container *ngFor="let portal of environment.portals | orderBy: 'sr'">
+                <ng-container *ngIf="portal.isPublic || isAllowed(portal.id)">
+                  <a class="flex flex-wrap mb-4" role="menuitem" [attr.href]="portal.uriPath" target="_blank">
+                    <div class="icon ws-mat-primary-tags">
+                      <mat-icon class="m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">{{portal.icon || 'info'}}</mat-icon>
+                    </div>
+                    <div class="width-expand padding-left-xs cursor-pointer">
+                      <div class="margin-0 mat-subheading-2"> {{portal.name}} </div>
+                      <div class="mat-caption cohorts-desc ws-mat-black60-text">{{portal.desc}}</div>
+                    </div>
+                  </a>
+                </ng-container>
+              </ng-container>
+              <!-- <a class="flex flex-wrap mb-4" role="menuitem" [attr.href]="environment.fracPortal" target="_blank" *ngIf="isAllowed('frac')">
                 <div class="icon ws-mat-primary-tags">
                   <mat-icon class="m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">local_library</mat-icon>
                 </div>
@@ -114,7 +125,7 @@
                   <div class="margin-0 mat-subheading-2"> MDO portal </div>
                   <div class="mat-caption cohorts-desc ws-mat-black60-text">Manage MDO user access, work orders and events</div>
                 </div>
-              </a>
+              </a> -->
             </div>
           </div>
 
