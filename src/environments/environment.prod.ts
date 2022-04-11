@@ -1,4 +1,6 @@
-export const environment = {
+import { IEnvironment } from "./environment";
+
+export const environment: IEnvironment = {
   production: true,
   name: (window as { [key: string]: any })['env']['name'],
   sitePath: (window as { [key: string]: any })['env']['sitePath'] || '',
@@ -11,10 +13,11 @@ export const environment = {
   azureOldHost: (window as { [key: string]: any })['env']['azureOldHost'] || '',
   azureOldBuket: (window as { [key: string]: any })['env']['azureOldBuket'] || '',
   portalRoles: (((window as { [key: string]: any })['env']['portalRoles'] || '').split(',')) || [],
-  mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
-  spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',
-  cbcPortal: (window as { [key: string]: any })['env']['cbcPath'] || '',
-  cbpPortal: (window as { [key: string]: any })['env']['cbpPath'] || '',
-  fracPortal: (window as { [key: string]: any })['env']['fracPath'] || '',
-  otherPortalRoles: ((window as { [key: string]: any })['env']['otherPortalRoles'] || '') || {},
+  portals: (window as { [key: string]: any })['env']['portals'] || [],
+  // mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
+  // spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',
+  // cbcPortal: (window as { [key: string]: any })['env']['cbcPath'] || '',
+  // cbpPortal: (window as { [key: string]: any })['env']['cbpPath'] || '',
+  // fracPortal: (window as { [key: string]: any })['env']['fracPath'] || '',
+  // otherPortalRoles: ((window as { [key: string]: any })['env']['otherPortalRoles'] || '') || {},
 }

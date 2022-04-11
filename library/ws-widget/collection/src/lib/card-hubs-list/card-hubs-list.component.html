@@ -38,47 +38,52 @@
           <h4 class="mat-h4 nav_sub_heading">Hubs</h4>
         </div>
         <!-- <div class="flex"> -->
-          <div class="flex flex-1">
-            <h3 class="mat-error text-center" *ngIf="hubsList.length === 0" i18n>
-              No hubs Info Available
-            </h3>
-            <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2" role="menubar">
-              <ng-container *ngFor="let hubsObj of hubsList" [ngTemplateOutlet]="userIndividualNew"
-                [ngTemplateOutletContext]="{ hubs: hubsObj }">
+        <div class="flex flex-1">
+          <h3 class="mat-error text-center" *ngIf="hubsList.length === 0" i18n>
+            No hubs Info Available
+          </h3>
+          <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2" role="menubar">
+            <ng-container *ngFor="let hubsObj of hubsList" [ngTemplateOutlet]="userIndividualNew"
+              [ngTemplateOutletContext]="{ hubs: hubsObj }">
 
-              </ng-container>
+            </ng-container>
 
-            </div>
           </div>
+        </div>
 
         <div class="flex flex-1 margin-xs">
           <h4 class="mat-h4 nav_sub_heading">Do more</h4>
         </div>
         <div class="flex flex-1">
           <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">
-            <a class="flex flex-wrap mb-4" role="menuitem" [routerLink]="['/app/knowledge-resource/all']" >
+            <a class="flex flex-wrap mb-4" role="menuitem" [routerLink]="['/app/knowledge-resource/all']">
               <div class="icon ws-mat-primary-tags">
-                <mat-icon class=" m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">menu_book</mat-icon>
+                <mat-icon class=" m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
+                  aria-hidden="true">menu_book</mat-icon>
               </div>
               <div class="width-expand padding-left-xs cursor-pointer">
                 <div class="margin-0 mat-subheading-2"> Knowledge resources </div>
-                <div class="mat-caption cohorts-desc ws-mat-black60-text">Find the latest policies, circulars and all available knowledge resources.</div>
+                <div class="mat-caption cohorts-desc ws-mat-black60-text">Find the latest policies, circulars and all
+                  available knowledge resources.</div>
               </div>
             </a>
 
-            <a class="flex flex-wrap mb-4" role="menuitem" [routerLink]="['/app/my-dashboard']" >
+            <a class="flex flex-wrap mb-4" role="menuitem" [routerLink]="['/app/my-dashboard']">
               <div class="icon ws-mat-primary-tags">
-                <mat-icon aria-hidden="false" class="mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-label="bar_chart" aria-labelledby="bar_chart"> bar_chart </mat-icon>
+                <mat-icon aria-hidden="false" class="mat-icon notranslate material-icons mat-icon-no-color" role="img"
+                  aria-label="bar_chart" aria-labelledby="bar_chart"> bar_chart </mat-icon>
               </div>
               <div class="width-expand padding-left-xs cursor-pointer">
                 <div class="margin-0 mat-subheading-2"> Dashboard </div>
-                <div class="mat-caption cohorts-desc ws-mat-black60-text">All your data represented as simple visualizations.</div>
+                <div class="mat-caption cohorts-desc ws-mat-black60-text">All your data represented as simple
+                  visualizations.</div>
               </div>
             </a>
 
-            <a class="flex flex-wrap mb-4" role="menuitem" [routerLink]="['/app/profile/settings']" >
+            <a class="flex flex-wrap mb-4" role="menuitem" [routerLink]="['/app/profile/settings']">
               <div class="icon ws-mat-primary-tags">
-                <mat-icon class=" m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">settings</mat-icon>
+                <mat-icon class=" m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
+                  aria-hidden="true">settings</mat-icon>
               </div>
               <div class="width-expand padding-left-xs cursor-pointer">
                 <div class="margin-0 mat-subheading-2"> Settings </div>
@@ -93,7 +98,21 @@
         </div>
         <div class="flex flex-1">
           <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">
-            <a class="flex flex-wrap mb-4" role="menuitem" [attr.href]="environment.fracPortal" target="_blank" *ngIf="isAllowed('frac')">
+            <ng-container *ngFor="let portal of environment.portals | orderBy: 'sr'">
+              <ng-container *ngIf="portal.isPublic || isAllowed(portal.id)">
+                <a class="flex flex-wrap mb-4" role="menuitem" [attr.href]="environment.uriPath" target="_blank">
+                  <div class="icon ws-mat-primary-tags">
+                    <mat-icon class="m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
+                      aria-hidden="true">{{portal.icon || 'info'}}</mat-icon>
+                  </div>
+                  <div class="width-expand padding-left-xs cursor-pointer">
+                    <div class="margin-0 mat-subheading-2"> {{portal.name}} </div>
+                    <div *ngIf="portal.desc" class="mat-caption cohorts-desc ws-mat-black60-text">{{portal.desc}}</div>
+                  </div>
+                </a>
+              </ng-container>
+            </ng-container>
+            <!-- <a class="flex flex-wrap mb-4" role="menuitem" [attr.href]="environment.fracPortal" target="_blank" *ngIf="isAllowed('frac')">
               <div class="icon ws-mat-primary-tags">
                 <mat-icon class="m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">local_library</mat-icon>
               </div>
@@ -123,7 +142,7 @@
                 <div class="margin-0 mat-subheading-2"> MDO portal </div>
                 <div class="mat-caption cohorts-desc ws-mat-black60-text">Manage MDO user access, work orders and events</div>
               </div>
-            </a>
+            </a> -->
           </div>
         </div>
 
@@ -146,8 +165,7 @@
       <div class="icon ws-mat-primary-tags">
         <!-- {{hubs.icon | json}} -->
         <!-- <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon> -->
-        <img class="mat-icon1" src="/assets/icons/hubs/{{hubs.icon}}.svg" id="draft"
-        alt="draft" title="draft" />
+        <img class="mat-icon1" src="/assets/icons/hubs/{{hubs.icon}}.svg" id="draft" alt="draft" title="draft" />
       </div>
       <div [ngClass]="{'cursor-pointer': enablePeopleSearch}" class="width-expand padding-left-xs">
         <div class="margin-0 mat-subheading-2">
@@ -163,8 +181,7 @@
       <div class="icon ws-mat-primary-tags">
         <!-- {{hubs.icon | json}}
         <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon> -->
-        <img class="mat-icon1" src="/assets/icons/hubs/{{hubs.icon}}.svg" id="draft"
-        alt="draft" title="draft" />
+        <img class="mat-icon1" src="/assets/icons/hubs/{{hubs.icon}}.svg" id="draft" alt="draft" title="draft" />
       </div>
       <div [ngClass]="{'cursor-pointer': enablePeopleSearch}" class="width-expand padding-left-xs">
         <div class="margin-0 mat-subheading-2">

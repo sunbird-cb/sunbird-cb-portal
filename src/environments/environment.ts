@@ -12,17 +12,17 @@ export const environment: IEnvironment = {
   azureHost: (window as { [key: string]: any })['env']['azureHost'] || '',
   contentHost: (window as { [key: string]: any })['env']['contentHost'] || '',
   azureBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
-  mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
-  spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',
-  cbcPortal: (window as { [key: string]: any })['env']['cbcPath'] || '',
-  cbpPortal: (window as { [key: string]: any })['env']['cbpPath'] || '',
-  fracPortal: (window as { [key: string]: any })['env']['fracPath'] || '',
+  portals: (window as { [key: string]: any })['env']['portals'] || [],
+  // mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
+  // spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',
+  // cbcPortal: (window as { [key: string]: any })['env']['cbcPath'] || '',
+  // cbpPortal: (window as { [key: string]: any })['env']['cbpPath'] || '',
+  // fracPortal: (window as { [key: string]: any })['env']['fracPath'] || '',
   azureOldHost: (window as { [key: string]: any })['env']['azureOldHost'] || '',
   azureOldBuket: (window as { [key: string]: any })['env']['azureOldBuket'] || '',
   portalRoles: (((window as { [key: string]: any })['env']['portalRoles'] || '').split(',')) || [],
-  otherPortalRoles: ((window as { [key: string]: any })['env']['otherPortalRoles'] || '') || {},
 }
-interface IEnvironment {
+export interface IEnvironment {
   name: string,
   production: boolean
   sitePath: null | string
@@ -35,12 +35,8 @@ interface IEnvironment {
   azureOldBuket: string
   contentHost: string
   portalRoles: string[]
-  otherPortalRoles: {cbp: string[], mdo: string[], cbc: string[], frac: string[]}
-  mdoPortal: string,
-  spvPortal: string,
-  cbcPortal: string,
-  cbpPortal: string,
-  fracPortal: string
+  // otherPortalRoles: { cbp: string[], mdo: string[], cbc: string[], frac: string[] }
+  portals: [{ sr: number, id: string, name: string, desc: string, icon?: string, uriPath: string, roles: [], isPublic: boolean }]
 }
 
 /*

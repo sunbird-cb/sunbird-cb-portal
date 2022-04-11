@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+// tslint:disable-next-line
+import _ from 'lodash'
 import { environment } from 'src/environments/environment'
 
 @Component({
@@ -39,7 +41,7 @@ export class AppFooterComponent implements OnInit {
   ngOnInit() {
     const instanceConfig = this.configSvc.instanceConfig
     if (this.configSvc.portalUrls) {
-    this.portalUrls = this.configSvc.portalUrls
+      this.portalUrls = this.configSvc.portalUrls
     }
     if (instanceConfig) {
       this.hubsList = (instanceConfig.hubs || []).filter(i => i.active)
@@ -84,5 +86,22 @@ export class AppFooterComponent implements OnInit {
     localStorage.setItem('home', JSON.stringify(config))
     this.router.navigate(['/app/discussion-forum'], { queryParams: { page: 'home' }, queryParamsHandling: 'merge' })
   }
+  hasRole(role: string[]): boolean {
+    let returnValue = false
+    role.forEach(v => {
+      if ((this.configSvc.userRoles || new Set()).has(v)) {
+        returnValue = true
+      }
+    })
+    return returnValue
+  }
 
+  isAllowed(portalName: string) {
+    const roles = _.get(_.first(_.filter(environment.portals, { id: portalName })), 'roles') || []
+    if (!(roles && roles.length)) {
+      return true
+    }
+    const value = this.hasRole(roles)
+    return value
+  }
 }
