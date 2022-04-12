@@ -1180,10 +1180,10 @@
   dependencies:
     tslib "^1.9.0"
 
-"@sunbird-cb/micro-surveys@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/micro-surveys/-/micro-surveys-1.2.1.tgz#216c3e8bc948de04e945dc925a85cb3e86e9b9b2"
-  integrity sha512-5mSQ6rn+v/Cvq2p3toy8uOGzU9NLZvwSOVmv9aONbdSefoYdbV03wxBNWNcCMeck5//3kKuTyQah755KtEnG1g==
+"@sunbird-cb/micro-surveys@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/micro-surveys/-/micro-surveys-1.2.3.tgz#32413eee0ce7addcb54b7c00186364b38f1e53ea"
+  integrity sha512-aJ99ZydR8d5Qa0LoslMSBQ6Vb1/vUglHXGRXGwlWvXbdhFZptw/REBTYGP0pjEsraI1t6bf1I965I2LyGgDaxQ==
   dependencies:
     tslib "^1.9.0"
 
@@ -3490,6 +3490,11 @@ crypto-browserify@^3.11.0:
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
     randomfill "^1.0.3"
+
+crypto-js@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.1.1.tgz#9e485bcf03521041bd85844786b83fb7619736cf"
+  integrity sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==
 
 crypto-random-string@^1.0.0:
   version "1.0.0"

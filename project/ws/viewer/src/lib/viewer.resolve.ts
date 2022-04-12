@@ -8,7 +8,6 @@ import { IResolveResponse, AuthMicrosoftService, ConfigurationsService } from '@
 import { ViewerDataService } from './viewer-data.service'
 import { MobileAppsService } from '../../../../../src/app/services/mobile-apps.service'
 import { Platform } from '@angular/cdk/platform'
-
 const ADDITIONAL_FIELDS_IN_CONTENT = ['creatorContacts', 'source', 'exclusiveContent']
 @Injectable()
 export class ViewerResolve
@@ -30,7 +29,7 @@ export class ViewerResolve
   resolve(route: ActivatedRouteSnapshot): Observable<IResolveResponse<NsContent.IContent>> | null {
     const resourceType = route.data.resourceType
     this.viewerDataSvc.reset(
-      route.paramMap.get('resourceId'),
+      route.paramMap.get('resourceId') || route.queryParamMap.get('resourceId'),
       'none',
       route.queryParams['primaryCategory'],
       route.queryParams['collectionId']
@@ -71,9 +70,8 @@ export class ViewerResolve
         }
 
         if (resourceType === 'unknown') {
-          this.router.navigate([
-            `${forPreview ? '/author' : ''}/viewer/${VIEWER_ROUTE_FROM_MIME(content.mimeType)}/${content.identifier
-            }`,
+          this.router.navigate([ // app/toc/do_113477192567939072124/overview?
+            `${forPreview ? '/author' : ''}/app/toc/${content.identifier}/overview`,
           ])
         } else if (resourceType === VIEWER_ROUTE_FROM_MIME(content.mimeType)) {
           this.viewerDataSvc.updateResource(content, null)

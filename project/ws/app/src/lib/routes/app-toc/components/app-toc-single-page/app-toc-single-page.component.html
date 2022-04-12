@@ -1,4 +1,4 @@
-<mat-tab-group [selectedIndex]="0" class="custom-tabgroup" (selectedTabChange)="tabClicked($event)">
+<mat-tab-group [selectedIndex]="tabSelectedIndex" class="custom-tabgroup" (selectedTabChange)="tabClicked($event)">
     <mat-tab label="Overview">
         <ng-template matTabContent>
             <section id="overview">
@@ -13,14 +13,17 @@
                         " class="unit-meta-item">
                             <h2 class="section-heading">{{ tocConfig?.overview?.description?.displayName }}</h2>
                             <mat-card-content>
-                                <div class="section-content mat-body-1" [innerHTML]="sanitize(content?.description)"></div>
+                                <div class="section-content mat-body-1" [innerHTML]="sanitize(content?.description)">
+                                </div>
                             </mat-card-content>
                         </mat-card>
                         <!-- Content Body -->
-                        <mat-card *ngIf="tocConfig?.overview?.body?.enabled && content?.instructions" class="unit-meta-item">
+                        <mat-card *ngIf="tocConfig?.overview?.body?.enabled && content?.instructions"
+                            class="unit-meta-item">
                             <h2 class="section-heading">{{ tocConfig?.overview?.body?.displayName }}</h2>
                             <mat-card-content>
-                                <div class="section-content mat-body-1" [innerHTML]="sanitize(content?.instructions)"></div>
+                                <div class="section-content mat-body-1" [innerHTML]="sanitize(content?.instructions)">
+                                </div>
                             </mat-card-content>
                         </mat-card>
                         <!-- Learning objective -->
@@ -257,19 +260,20 @@
                     </div>
                 </div>
             </section>
-            <section id="authors" *ngIf="(content?.creatorDetails && content?.creatorDetails.length > 0) ||
-                            (cohortResults[cohortTypesEnum.AUTHORS] && cohortResults[cohortTypesEnum.AUTHORS].length > 0)">
+            <section id="authors" *ngIf="(content?.creatorDetails && content?.creatorDetails.length > 0) || (content?.creatorContacts && content?.creatorContacts.length > 0)  ||
+                (cohortResults[cohortTypesEnum.AUTHORS] && cohortResults[cohortTypesEnum.AUTHORS].length > 0)">
                 <div class="fluid-width contacts-container">
                     <div class="fixed-width flex flex-col flex-wrap">
                         <h2 _ngcontent-qml-c28="" class="mat-toolbar contacts-head">Authors and curators</h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 col-gap-4">
                             <!-- authors -->
-                            <div *ngFor="let author of parseJsonData(content?.creatorDetails)" class="unit-cohort sm:pr-8 md:pr-10">
+                            <div *ngFor="let author of parseJsonData(content?.creatorDetails)"
+                                class="unit-cohort sm:pr-8 md:pr-10">
                                 <!-- <ws-widget-user-image class="user-image" [imageType]="'user-photo'" [userName]="author.name || ''"
-                                                [email]="author.email" [imageUrl]="author.photo || ''"></ws-widget-user-image> -->
-                                <ws-widget-avatar-photo class="float-left margin-right-s" [randomColor]="true"
-                                    [datalen]="parseJsonData(content?.creatorDetails).length" [size]="'m'"
-                                    [photoUrl]="author.photo || ''" [name]="author.name" size="l-xs">
+                                    [email]="author.email" [imageUrl]="author.photo || ''"></ws-widget-user-image> -->
+                                <ws-widget-avatar-photo class="float-left margin-right-s " [randomColor]="true"
+                                    [datalen]="parseJsonData(content?.creatorDetails).length"
+                                    [size]="'m'" [photoUrl]="author.photo || ''" [name]="author.name" size="l-xs">
                                 </ws-widget-avatar-photo>
                                 <div class="margin-left-xl">
                                     <div class="user-name">{{ author.name }}</div>
@@ -277,24 +281,39 @@
                                 </div>
                             </div>
                             <!-- curators -->
-                            <div *ngIf="cohortResults[cohortTypesEnum.AUTHORS]">
-                                <!--  <h3 *ngIf="cohortResults[cohortTypesEnum.AUTHORS].hasError" class="mat-error text-center" i18n>
-                                                Failed to fetch curators
-                                            </h3>
-                                            <h3 *ngIf="
-                                                !cohortResults[cohortTypesEnum.AUTHORS].hasError &&
-                                                !cohortResults[cohortTypesEnum.AUTHORS].contents.length
-                                                " class="text-center" i18n>
-                                                None
-                                            </h3> -->
-                                <ng-container *ngFor="let cohort of cohortResults[cohortTypesEnum.AUTHORS].contents"
-                                    [ngTemplateOutlet]="unitCohortNew1" [ngTemplateOutletContext]="{ user: cohort }"></ng-container>
+                            <div *ngFor="let author of parseJsonData(content?.creatorContacts)"
+                            class="unit-cohort sm:pr-8 md:pr-10">
+                            <!-- <ws-widget-user-image class="user-image" [imageType]="'user-photo'" [userName]="author.name || ''"
+                                [email]="author.email" [imageUrl]="author.photo || ''"></ws-widget-user-image> -->
+                            <ws-widget-avatar-photo class="float-left margin-right-s" [randomColor]="true"
+                                [datalen]="parseJsonData(content?.creatorContacts).length"
+                                [size]="'m'" [photoUrl]="author.photo || ''" [name]="author.name" size="l-xs">
+                            </ws-widget-avatar-photo>
+                            <div class="margin-left-xl">
+                                <div class="user-name">{{ author.name }}</div>
+                                <p class="mat-body-2 ws-mat-black60-text">Curator</p>
                             </div>
+                        </div>
+                            <!-- <div *ngIf="cohortResults[cohortTypesEnum.AUTHORS]">
+                                 <h3 *ngIf="cohortResults[cohortTypesEnum.AUTHORS].hasError" class="mat-error text-center" i18n>
+                                    Failed to fetch curators
+                                </h3>
+                                <h3 *ngIf="
+                                    !cohortResults[cohortTypesEnum.AUTHORS].hasError &&
+                                    !cohortResults[cohortTypesEnum.AUTHORS].contents.length
+                                    " class="text-center" i18n>
+                                    None
+                                </h3> 
+                                <ng-container *ngFor="let cohort of cohortResults[cohortTypesEnum.AUTHORS].contents"
+                                    [ngTemplateOutlet]="unitCohortNew1" [ngTemplateOutletContext]="{ user: cohort }">
+                                </ng-container>
+                            </div> -->
                         </div>
                     </div>
                 </div>
             </section>
-            <section id="competencies" *ngIf="content?.competencies && competencies.length">
+            <section id="competencies"
+                *ngIf="(content?.competencies_v3 && competencies.length) || (content?.competencies && competencies.length)">
                 <div class="fluid-width contacts-container mb-10">
                     <div class="fixed-width flex flex-col flex-wrap">
                         <h2 class="mat-toolbar contacts-head">Competencies</h2>
@@ -313,47 +332,27 @@
                     </div>
                 </div>
             </section>
-            <section id="rating" *ngIf="true">
+            <section id="rating" *ngIf="false">
                 <div class="fluid-width contacts-container mb-10">
                     <div class="fixed-width flex flex-col flex-wrap">
                         <h2 class="mat-toolbar contacts-head">Ratings and reviews</h2>
                     </div>
-                    <div class="flex-col items-center rating margin-bottom-l">
-                        <div class="flex items-center ">
-                            <mat-icon class="mr-2 mat-icon material-icons rating-icon ws-mat-black16-text"
-                                [ngClass]="{'ws-mat-orange-text': getRatingIconClass(rating)}"
-                                *ngFor="let rating of [1, 2, 3, 4, 5]">
-                                {{ getRatingIcon(rating) }}</mat-icon>
-                            <!--  <span i18n>from</span> -->
-                            <span class="margin-left-s rating-number mat-body-1"> 4 out of 5 </span>
-                        </div>
-                        <div class="margin-top-s mat-body-1 ws-mat-black60-text">
-                            {{ 180 | pipeCountTransform }} ratings</div>
-                        </div>
-                    <div class="flex items-center margin-bottom-xs" *ngFor="let rating of [5,4,3,2,1]">
-                        <div class="mat-body-2 bold-imp margin-right-m">{{rating}} star</div>
-                        <div class="flex items-center rating-progress">
-                            <mat-progress-bar [mode]="'determinate'" [matTooltip]="progress + ' %'" [value]="getStartRatingProgress()"
-                                class="rating-bar" [attr.aria-labelledby]="'m-c-'+ contentId"
-                                [ngClass]="{ 'visibility-0': progress === undefined, 'thick': className}" i18n-aria-label>
-                                {{getStartRatingProgress()}} %
-                            </mat-progress-bar>
-                        </div>
-                    </div>
-            
+                    <ws-widget-rating-summary [ratingSummary]="ratingSummaryProcessed"></ws-widget-rating-summary>
+
                     <div class="search">
                         <form [formGroup]="searchForm">
                             <div class="flex top_search_box">
                                 <div class="flex-1 search_box_inner">
                                     <div class="flex flex-1 flex-column margin-fix search search_box_main">
-                                        <mat-form-field appearance="outline" class="autocomplete-form search_form margin-right-s"
-                                            color="primary">
-                                            <mat-icon matPrefix class="search-home flex items-center justify-center mr-2">search
+                                        <mat-form-field appearance="outline"
+                                            class="autocomplete-form search_form margin-right-s" color="primary">
+                                            <mat-icon matPrefix
+                                                class="search-home flex items-center justify-center mr-2">search
                                             </mat-icon>
                                             <!-- <mat-label>Search</mat-label> -->
                                             <input type="search" name="searchKey" #searchKey class="ml-2" i18-aria-label
-                                                aria-label="Search" formControlName="searchKey" i18n-placeholder="search"
-                                                [placeholder]="'Search'" matInput />
+                                                aria-label="Search" formControlName="searchKey"
+                                                i18n-placeholder="search" [placeholder]="'Search'" matInput />
                                             <!-- (input)="updateQuery(searchKey.value)" -->
                                         </mat-form-field>
                                     </div>
@@ -361,71 +360,81 @@
                                 <div class="item_dropdown_box">
                                     <div class="flex flex-1 flex-wrap section-input">
                                         <div class="item">
-            
+
                                             <mat-form-field class="" appearance="outline">
-                                                <mat-select #sortBySelect formControlName="sortByControl" i18n-placeholder
-                                                    placeholder="Sort by">
-                                                    <mat-option [value]="'Ascending'" slected>Ascending ( A - Z )</mat-option>
-                                                    <mat-option [value]="'Descending'">Descending ( Z - A )</mat-option>
+                                                <mat-select #sortBySelect formControlName="sortByControl"
+                                                    i18n-placeholder placeholder="Sort by">
+                                                    <mat-option [value]="'topReviews'" slected>Top reviews
+                                                    </mat-option>
+                                                    <mat-option [value]="'latestReviews'">Latest reviews</mat-option>
                                                 </mat-select>
                                             </mat-form-field>
-            
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
-            
-                    <div class="rating-comments">
-                        <mat-card class="comments-card margin-bottom-m position-relative mat-card" *ngFor="let c of [1,2,3]">
-                            <a href="javascript:void(0)" role="button">
-                                <mat-card-content >
-                                    <div class="card_inner_content flex">
-                                        <div class="margin-right-m">
-                                            <ws-widget-avatar-photo [name]="'Christopher Fernandes'" [size]="'m'" [photoUrl]=""></ws-widget-avatar-photo>
-                                        </div>
 
-                                        <div class="flex-col align-left">
-                                            <div class="name margin-bottom-xs">Christopher B Fernandes</div>
-                                            <div class="flex items-center ">
-                                                <span class="margin-right-xs ws-mat-orange-text mat-body-1"> 4 </span>
-                                                <mat-icon class="comments-rating mr-1 mat-icon material-icons ws-mat-black16-text"
-                                                    [ngClass]="{'ws-mat-orange-text': getRatingIconClass(rating)}"
-                                                    *ngFor="let rating of [1, 2, 3, 4, 5]">
-                                                    {{ getRatingIcon(rating) }}</mat-icon>
-                                                <!--  <span i18n>from</span> -->
-                                                <span class="margin-left-s  ws-mat-black60-text mat-body-1"> 3 monts ago </span>
-                                            </div>
-                                            <div class="margin-top-m mat-body-1">
-                                                Curabitur lobortis id lorem id bibendum. Ut id consectetur magna. Quisque volutpat augue enim, pulvinar lobortis nibh lacinia at. Vestibulum nec erat ut mi sollicitudin porttitor id sit amet risus. Nam tempus vel odio vitae aliquam.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </mat-card-content>
-                            </a>
-                        </mat-card>
-
-                        <div class="flex items-center justify-center mb-2 mt-8 ws-mat-accent-text view-all">
-                            <a mat-button class="padding-top-xs padding-bottom-xs w-full ">
-                                <span i18n>SEE ALL {{16}} REVIEWS</span>
-                            </a>
+                    <!-- <div class="rating-comments">
+                        <ng-container *ngFor="let c of ratingReviews| 
+                        pipeFilterV3:{ 'user_id': searchKey.value, 'review': searchKey.value } : false |
+                        slice:0:ratingViewCount; let i= index; let last = last">
+                            <ws-widget-card-rating-comment [review]="c"></ws-widget-card-rating-comment>
+    
+                            <div class="flex items-center justify-center mb-2 mt-8 ws-mat-accent-text view-all" 
+                            *ngIf="ratingReviews?.length > 3 && ratingViewCount <=3 && i>=2 && last">
+                                <a mat-button class="padding-top-xs padding-bottom-xs w-full " 
+                                (click)="showALLReviews(ratingReviews?.length)">
+                                    <span i18n>SEE ALL {{ratingReviews?.length}} REVIEWS</span>
+                                </a>
+                            </div>
+                            <div class="flex items-center justify-center mb-2 mt-8 ws-mat-accent-text view-all" 
+                            *ngIf="ratingReviews?.length > 3 && ratingViewCount > 3 && i>=2 && last">
+                                <a mat-button class="padding-top-xs padding-bottom-xs w-full " (click)="showALLReviews(3)">
+                                    <span i18n>SEE LESS REVIEWS</span>
+                                </a>
+                            </div>
+                        </ng-container>
+                    </div> -->
+                    <div class="rating-comments" *ngIf="ratingReviews; else ">
+                        <div infiniteScroll
+                        [infiniteScrollDistance]="2"
+                        [infiniteScrollThrottle]="50"
+                        [infiniteScrollContainer]="'.rating-comments'"
+                        [fromRoot]="true"
+                        [scrollWindow]="false"
+                        (scrolled)="loadMore()">
+                            <ng-container *ngFor="let c of ratingReviews| 
+                            pipeFilterV3:{ 'user_id': searchKey.value, 'review': searchKey.value } : false |
+                            slice:0:ratingViewCount; let i= index; let last = last">
+                                <ws-widget-card-rating-comment [review]="c"></ws-widget-card-rating-comment>
+                            </ng-container>
                         </div>
+                        <div *ngIf="displayLoader" class="mt-5 pr-4 flex items-center justify-center">
+                            <mat-spinner [diameter]="30"></mat-spinner>
+                        </div>
+                        <h4 *ngIf="(ratingReviews | pipeFilterV3:{ 'user_id': searchKey.value, 'review': searchKey.value } : false)?.length <=0 
+                        && (displayLoader  === false)" class="w-full text-left ws-mat-black60-text ">
+                            No reviews found! 
+                         </h4>
                     </div>
                 </div>
             </section>
         </ng-template>
     </mat-tab>
-    <mat-tab label="Content" *ngIf="content?.children?.length" >
+    <mat-tab label="Content" *ngIf="content?.children?.length">
         <ng-template matTabContent>
             <section id="content">
                 <div class="fixed-width">
-                    <ws-app-app-toc-contents [batchId]="batchId" [content]="content" [forPreview]="forPreview"></ws-app-app-toc-contents>
+                    <ws-app-app-toc-contents [batchId]="batchId" [content]="content" [forPreview]="forPreview">
+                    </ws-app-app-toc-contents>
                 </div>
             </section>
         </ng-template>
     </mat-tab>
-    <mat-tab label="Discussion" >
+    <mat-tab label="Discussion">
         <ng-template matTabContent>
             <section id="discussion-forum">
                 <div class="fixed-width toc-discussion-container">
@@ -449,7 +458,7 @@
                 </h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 col-gap-4">
                     <ng-container *ngFor="let cohort of cohortResults[cohortTypesEnum.ACTIVE_USERS].contents"
-                    [ngTemplateOutlet]="unitCohortNew" [ngTemplateOutletContext]="{ user: cohort }">
+                        [ngTemplateOutlet]="unitCohortNew" [ngTemplateOutletContext]="{ user: cohort }">
                     </ng-container>
                 </div>
             </div>
@@ -467,18 +476,19 @@
 
 <ng-template #unitCohortNew1 let-user="user">
     <div class="unit-cohort sm:pr-8 md:pr-10">
-        <ws-widget-avatar-photo class="float-left margin-right-s" [size]="'m'" [photoUrl]="user.photo || ''" [name]="getUserFullName(user)" size="l-xs">
-            </ws-widget-avatar-photo>
+        <ws-widget-avatar-photo class="float-left margin-right-s" [size]="'m'" [photoUrl]="user.photo || ''"
+            [name]="getUserFullName(user)" size="l-xs">
+        </ws-widget-avatar-photo>
         <div class="margin-left-l">
             <div (click)="goToUserProfile(user)" [ngClass]="{'cursor-pointer': enablePeopleSearch}"
-            class="width-expand padding-left-xs">
-            <div class="mat-body-1 cohorts-name">
-                {{
+                class="width-expand padding-left-xs">
+                <div class="mat-body-1 cohorts-name">
+                    {{
                     { firstName: user.first_name, lastName: user.last_name, email: user.email }
                     | pipeNameTransform
-                }}
-            </div>
-            <p class="mat-body-2 ws-mat-black60-text">Curator</p>
+                    }}
+                </div>
+                <p class="mat-body-2 ws-mat-black60-text">Curator</p>
             </div>
         </div>
     </div>
@@ -487,21 +497,24 @@
     <div class="unit-cohort sm:pr-8 md:pr-10">
         <!-- <ws-widget-user-image class="user-image" [imageType]="'user-photo'" [userName]="getUserFullName(user)"
         [imageSize]="'small'" [email]="user.email" [imageUrl]="user.photo || ''"></ws-widget-user-image> -->
-        <ws-widget-avatar-photo class="float-left margin-right-s" [size]="'m'" [photoUrl]="user.photo || ''" [name]="getUserFullName(user)" size="l-xs">
-            </ws-widget-avatar-photo>
+        <ws-widget-avatar-photo class="float-left margin-right-s" [size]="'m'" [photoUrl]="user.photo || ''"
+            [name]="getUserFullName(user)" size="l-xs">
+        </ws-widget-avatar-photo>
         <div class="margin-left-l">
             <div (click)="goToUserProfile(user)" [ngClass]="{'cursor-pointer': enablePeopleSearch}"
-            class="width-expand padding-left-xs">
-            <!-- <div class="mat-body-1 cohorts-name">
+                class="width-expand padding-left-xs">
+                <!-- <div class="mat-body-1 cohorts-name">
                 {{
                     { firstName: user.first_name, lastName: user.last_name, email: user.email }
                     | pipeNameTransform
                 }}
             </div> -->
-            <ws-widget-connection-name [hoverUser]="{firstName: user.first_name, lastName:user.last_name}"></ws-widget-connection-name>
-            <!-- {{user | json}} -->
-            <p class="mat-body-2 ws-mat-black60-text">{{user.designation}}</p>
-            <!-- <div class="mat-caption cohorts-desc">{{ user.desc }}</div>
+                <ws-widget-connection-name
+                    [hoverUser]="{firstName: user.first_name, lastName:user.last_name , id:user.uid,designation: user.designation,department:user.department}">
+                </ws-widget-connection-name>
+                <!-- {{user | json}} -->
+                <p class="mat-body-2 ws-mat-black60-text">{{user.designation}}</p>
+                <!-- <div class="mat-caption cohorts-desc">{{ user.desc }}</div>
             </div>
             <div class="width-auto user-action-container">
             <ws-widget-btn-mail-user [widgetData]="{ content: content, emails: [user.email], user: user }">

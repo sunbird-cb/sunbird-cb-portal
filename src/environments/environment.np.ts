@@ -1,3 +1,4 @@
+
 export const environment = {
   production: true,
   name: (window as { [key: string]: any })['env']['name'],
@@ -11,9 +12,11 @@ export const environment = {
   azureOldHost: (window as { [key: string]: any })['env']['azureOldHost'] || '',
   azureOldBuket: (window as { [key: string]: any })['env']['azureOldBuket'] || '',
   portalRoles: (((window as { [key: string]: any })['env']['portalRoles'] || '').split(',')) || [],
-  mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
-  spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',
-  cbcPortal: (window as { [key: string]: any })['env']['cbcPath'] || '',
-  cbpPortal: (window as { [key: string]: any })['env']['cbpPath'] || '',
-  fracPortal: (window as { [key: string]: any })['env']['fracPath'] || '',
-  }
+  portals: (window as { [key: string]: any })['env']['portals'] || [],
+  // mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
+  // spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',
+  // cbcPortal: (window as { [key: string]: any })['env']['cbcPath'] || '',
+  // cbpPortal: (window as { [key: string]: any })['env']['cbpPath'] || '',
+  // fracPortal: (window as { [key: string]: any })['env']['fracPath'] || '',
+  // otherPortalRoles: ((window as { [key: string]: any })['env']['otherPortalRoles'] || '') || {},
+}

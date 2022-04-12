@@ -5,6 +5,8 @@ import { BrowseCompetencyService } from '../../services/browse-competency.servic
 import { NSBrowseCompetency } from '../../models/competencies.model'
 // tslint:disable
 import _ from 'lodash'
+// tslint:enable
+import { LocalDataService } from '../../services/localService'
 
 @Component({
   selector: 'ws-app-competency-filters',
@@ -38,7 +40,8 @@ export class CompetencyFiltersComponent implements OnInit, OnDestroy {
     },
   ]
   constructor(
-    private browseCompServ: BrowseCompetencyService
+    private browseCompServ: BrowseCompetencyService,
+    private localDataService: LocalDataService,
   ) { }
 
   ngOnInit() {
@@ -113,17 +116,25 @@ export class CompetencyFiltersComponent implements OnInit, OnDestroy {
   }
 
   getAllCompetencyAreas() {
-    this.browseCompServ
-      .fetchCompetencyAreas()
-      .subscribe((reponse: NSBrowseCompetency.ICompetencieResponse) => {
-        if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
-          // this.filters.name.values = reponse.responseData
-          const foundIndex = this.filters.findIndex(x => x.name === 'competencyArea')
-          console.log('foundIndex: ', foundIndex)
-          this.filters[foundIndex].values = reponse.responseData
-          console.log('this.filters: ', this.filters)
+    // this.browseCompServ
+    //   .fetchCompetencyAreas()
+    //   .subscribe((reponse: NSBrowseCompetency.ICompetencieResponse) => {
+    //     if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
+    //       // this.filters.name.values = reponse.responseData
+    //       const foundIndex = this.filters.findIndex(x => x.name === 'competencyArea')
+    //       console.log('foundIndex: ', foundIndex)
+    //       this.filters[foundIndex].values = reponse.responseData
+    //       console.log('this.filters: ', this.filters)
+    //     }
+    //   })
+    this.localDataService.compentecies.subscribe((data: NSBrowseCompetency.ICompetencie[]) => {
+      // this.filters[0].values=[] // not needed
+      _.each(data, (d: NSBrowseCompetency.ICompetencie) => {
+        if (d.competencyArea) {
+          this.filters[1].values.push({ name: d.competencyArea })
         }
       })
+    })
   }
 
   ngOnDestroy() {

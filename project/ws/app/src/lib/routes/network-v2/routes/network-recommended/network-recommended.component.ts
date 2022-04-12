@@ -44,7 +44,7 @@ export class NetworkRecommendedComponent implements OnInit {
         this.enableSearchFeature = true
       }
     })
-    // this.getRecommnededUsers()
+    this.getRecommnededUsers()
   }
   getFullUserData() {
     const fulldata = this.data

@@ -50,7 +50,8 @@ export class WidgetContentService {
 
   isResource(primaryCategory: string) {
     if (primaryCategory) {
-      const isResource = primaryCategory === NsContent.EResourcePrimaryCategories.LEARNING_RESOURCE
+      const isResource = (primaryCategory === NsContent.EResourcePrimaryCategories.LEARNING_RESOURCE) ||
+       (primaryCategory === NsContent.EResourcePrimaryCategories.PRACTICE_RESOURCE)
       return isResource
     }
     return false
@@ -275,7 +276,8 @@ export class WidgetContentService {
     if (
       content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE ||
       content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT ||
-      content.primaryCategory === NsContent.EPrimaryCategory.PROGRAM
+      content.primaryCategory === NsContent.EPrimaryCategory.PROGRAM ||
+      content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
     ) {
       return content
     }

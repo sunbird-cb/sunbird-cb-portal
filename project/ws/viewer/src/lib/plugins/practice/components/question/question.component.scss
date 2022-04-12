@@ -1,0 +1,134 @@
+@import "ws-vars";
+@import "ws-common";
+
+.app-class .mat-list-option {
+  padding-top: $size-m;
+  padding-bottom: $size-m;
+  height: auto;
+}
+
+.wrap-mat-radio-label {
+  white-space: normal;
+}
+
+.quiz-question {
+  overflow-x: auto;
+}
+
+.quiz-radio-group {
+  display: inline-flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.quiz-radio-button {
+  margin: 5px;
+  padding: 8px;
+}
+
+.quiz-selected-value {
+  margin: 15px 0;
+}
+
+.margin-bottom-m {
+  margin-bottom: $size-m;
+}
+
+.correct-option {
+  color: #357a38 !important;
+}
+
+.incorrect-option {
+  color: #f0506e;
+}
+
+.question {
+  width: 40%;
+  max-width: 200px;
+  height: auto;
+  border: 2px solid;
+  border-radius: 5px;
+  padding: 4px 0px 4px 0px;
+  word-wrap: break-word;
+  text-align: center;
+}
+.answer {
+  width: 40%;
+  max-width: 200px;
+  height: auto;
+  border: 2px solid;
+  border-radius: 5px;
+  padding: 2px 0px 2px 0px;
+  word-wrap: break-word;
+  text-align: center;
+}
+
+.background-well {
+  background: #eee;
+}
+// .no-margin-p {
+// p {
+//   margin: 0 !important;
+// }
+// }
+.respo {
+  flex-direction: row;
+
+  padding: $size-m 0 $size-m 0;
+  box-sizing: border-box;
+  @include breakpoint-lt-m {
+    flex-direction: column;
+  }
+
+  // @include breakpoint-xs {
+  //   flex-direction: column;
+  // }
+}
+.respo-new {
+  flex-direction: column;
+
+  padding: $size-m 0 $size-m 0;
+  box-sizing: border-box;
+}
+
+.respo_inner {
+  padding: 0px 100px;
+  @include breakpoint-lt-m {
+    padding: 0px 0px;
+  }
+}
+.mtf-flag {
+  margin-left: auto;
+  margin-right: 55px;
+}
+.viewer_quest_box {
+  padding: 24px 100px;
+  @include breakpoint-lt-m {
+    padding: 16px 20px;
+  }
+}
+
+.right-border {
+  border-top: none !important;
+  border-left: none !important;
+  border-bottom: none !important;
+}
+.b-r {
+  border-radius: #{$size-xs / 2};
+}
+.no-shadow {
+  box-shadow: none !important;
+}
+.flag_btn {
+  margin-right: 100px;
+  @include breakpoint-lt-m {
+    margin-right: $size-m;
+  }
+}
+.mtf-flag_btn{
+  margin-right: #{$size-l * 2};
+  position: absolute;
+  @include breakpoint-lt-m {
+    margin-right: $size-xs;
+  }
+}

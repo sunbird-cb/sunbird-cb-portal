@@ -28,6 +28,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
     other: 0,
     pdf: 0,
     podcast: 0,
+    practiceTest: 0,
     quiz: 0,
     video: 0,
     webModule: 0,
@@ -65,7 +66,8 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
     if (this.content) {
       return (
         this.content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE
-        || this.content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT
+        // || this.content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT
+        || this.content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
       )
     }
     return false
@@ -134,6 +136,9 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
                 this.contentStructure.quiz += 1
               }
               break
+            case NsContent.EMimeTypes.PRACTICE_RESOURCE:
+              this.contentStructure.practiceTest += 1
+              break
             case NsContent.EMimeTypes.WEB_MODULE:
               this.contentStructure.webModule += 1
               break
@@ -190,7 +195,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
         {
           pageIdExt: `${_.camelCase(this.content.primaryCategory)}-card`,
           module: _.camelCase(this.content.primaryCategory),
-      })
+        })
     }
   }
   get isAllowed(): boolean {

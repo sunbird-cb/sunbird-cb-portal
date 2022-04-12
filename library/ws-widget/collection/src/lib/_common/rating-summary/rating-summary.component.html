@@ -1,0 +1,26 @@
+<ng-container *ngIf="ratingSummary">
+    <div class="flex-col items-center rating margin-bottom-l">
+        <div class="flex items-center ">
+            <mat-icon class="mr-2 mat-icon material-icons rating-icon ws-mat-black16-text"
+                [ngClass]="{'ws-mat-orange-text': getRatingIconClass(rating, ratingSummary?.avgRating)}"
+                *ngFor="let rating of [1, 2, 3, 4, 5]">
+                {{ getRatingIcon(rating, ratingSummary?.avgRating) }}</mat-icon>
+            <!--  <span i18n>from</span> -->
+            <span class="margin-left-s rating-number mat-body-1"> {{ratingSummary?.avgRating}} out of 5 </span>
+        </div>
+        <div class="margin-top-s mat-body-1 ws-mat-black60-text">
+            {{ ratingSummary?.total_number_of_ratings | pipeCountTransform }} ratings</div>
+    </div>
+    <div class="flex items-center margin-bottom-xs" *ngFor="let rating of ratingSummary?.breakDown">
+        <div class="mat-body-2 bold-imp margin-right-m">{{rating.key}} star</div>
+        <div class="flex items-center rating-progress">
+            <mat-progress-bar [mode]="'determinate'" [matTooltip]="rating?.percent + ' %'"
+                [value]="rating?.percent" class="rating-bar"
+                [attr.aria-labelledby]="'m-c-'+ contentId"
+                [ngClass]="{ 'visibility-0': rating === undefined, 'thick': className}"
+                i18n-aria-label>
+                {{rating?.percent}} %
+            </mat-progress-bar>
+        </div>
+    </div>
+</ng-container>

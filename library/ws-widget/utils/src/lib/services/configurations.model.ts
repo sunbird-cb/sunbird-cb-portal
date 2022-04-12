@@ -143,6 +143,7 @@ export namespace NsInstanceConfig {
   export interface ILogos {
     app: string
     appTransparent: string
+    appSecondary: string
     aboutFooter: string
     aboutHeader: string
     appBottomNav?: string
@@ -263,6 +264,7 @@ export namespace NsUser {
     source_profile_picture?: null | string
     dealerCode?: null | string
     isManager?: boolean
+    competencies?: any
   }
 
   export interface INodebbUserProfile {

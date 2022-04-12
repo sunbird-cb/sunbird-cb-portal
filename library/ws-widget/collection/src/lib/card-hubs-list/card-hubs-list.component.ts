@@ -5,6 +5,16 @@ import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+import { environment } from 'src/environments/environment'
+// tslint:disable
+import _ from 'lodash'
+// tslint:enable
+// import { AccessControlService } from '@ws/author/src/public-api'
+
+// interface IGroupWithFeatureWidgets extends NsAppsConfig.IGroup {
+//   featureWidgets: NsWidgetResolver.IRenderConfigWithTypedData<NsPage.INavLink>[]
+// }
+
 @Component({
   selector: 'ws-widget-card-hubs-list',
   templateUrl: './card-hubs-list.component.html',
@@ -40,19 +50,26 @@ export class CardHubsListComponent extends WidgetBaseComponent
   visible = false
   searchSpinner = false
   isMobile = false
+  environment!: any
   @HostBinding('id')
   public id = `hub_${Math.random()}`
 
-  constructor(private configSvc: ConfigurationsService,
-              private discussUtilitySvc: DiscussUtilsService,
-              private router: Router,
-              private valueSvc: ValueService) {
+  // private readonly featuresConfig: IGroupWithFeatureWidgets[] = []
+
+  constructor(
+    private configSvc: ConfigurationsService,
+    private discussUtilitySvc: DiscussUtilsService,
+    private router: Router,
+    private valueSvc: ValueService,
+    // private accessService: AccessControlService
+  ) {
     super()
   }
 
   hubsList!: NsInstanceConfig.IHubs[]
 
   ngOnInit() {
+    this.environment = environment
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
       this.hubsList = (instanceConfig.hubs || []).filter(i => i.active)
@@ -141,4 +158,24 @@ export class CardHubsListComponent extends WidgetBaseComponent
   toggleVisibility() {
     this.visible = !this.visible
   }
+
+  hasRole(role: string[]): boolean {
+    let returnValue = false
+    role.forEach(v => {
+      if ((this.configSvc.userRoles || new Set()).has(v)) {
+        returnValue = true
+      }
+    })
+    return returnValue
+  }
+
+  isAllowed(portalName: string) {
+    const roles = _.get(_.first(_.filter(environment.portals, { id: portalName })), 'roles') || []
+    if (!(roles && roles.length)) {
+      return true
+    }
+    const value = this.hasRole(roles)
+    return value
+  }
+
 }

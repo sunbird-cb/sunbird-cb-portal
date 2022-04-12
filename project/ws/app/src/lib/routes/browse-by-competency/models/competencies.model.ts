@@ -21,6 +21,7 @@ export namespace NSBrowseCompetency {
   export interface ICompetencie {
     additionalProperties: { competencyType: string }
     competencyType?: string
+    competencyArea?: string
     description: string
     id: string
     name: string

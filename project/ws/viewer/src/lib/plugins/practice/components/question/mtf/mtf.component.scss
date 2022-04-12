@@ -1,0 +1,23 @@
+@import "ws-vars";
+@import "ws-common";
+.quiz-question {
+    overflow-x: auto;
+}
+.amit {
+    svg {
+        width: 3;
+        height: 3;
+        circle {
+            r: 3;
+        }
+        circle:hover {
+            r: 10;
+        }
+    }
+}
+.jtk-connector {
+    path {
+        stroke: green;
+        stroke-width: 4;
+    }
+}

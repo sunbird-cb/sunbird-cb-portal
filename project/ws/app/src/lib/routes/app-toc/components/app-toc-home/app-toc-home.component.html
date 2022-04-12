@@ -20,7 +20,9 @@ TODO: edit option while preview Mode
         [analytics]="analytics" [resumeData]="resumeData" [batchData]="batchData">
       </ws-app-toc-banner>
       <div role="none" class="toc-body margin-top-xl">
-        <ws-app-app-toc-single-page [content]="content" [initialrouteData]="initialrouteData" [forPreview]="!isBatchInProgress">
+        <!-- isBatchInProgress : commented as we seperated the CBP -->
+        <ws-app-app-toc-single-page [content]="content" [initialrouteData]="initialrouteData" [forPreview]="false"
+        [resumeData]="resumeData" [batchData]="batchData">
         </ws-app-app-toc-single-page>
         <!-- <div class="flex mat-app-background" #stickyMenu >
         <nav mat-tab-nav-bar class="toc-links fixed-width" aria-label="content navigation">
@@ -118,6 +120,26 @@ TODO: edit option while preview Mode
                 <a *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" [routerLink]="firstResourceLink?.url"
                   class="mat-button mat-button-base custom-button">
                   <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>Take Assessment</ng-container>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="
+                (actionBtnStatus === 'grant' &&
+                !(isMobile && content?.isInIntranet) &&
+                !(
+                  content?.primaryCategory === primaryCategory.COURSE &&
+                  content?.children.length === 0 &&
+                  !content?.artifactUrl?.length
+                ) &&
+                !(
+                  content?.primaryCategory === primaryCategory.COURSE && batchData?.enrolled
+                ) &&
+                !(content?.primaryCategory === primaryCategory.RESOURCE && !content?.artifactUrl))
+                && !(content?.primaryCategory === primaryCategory.PROGRAM)
+              ">
+                <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" (click)="autoBatchAssign()">
+                  <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
+                    Enroll
+                  </ng-container>
                 </a>
               </ng-container>
             </ng-container>
@@ -221,8 +243,14 @@ TODO: edit option while preview Mode
         <button mat-stroked-button color="accent" type="button"
           class="w-full text-left actbutton mat-body-2 blue-border" (click)="openFeedbackDialog(content)">
           <mat-icon class=" icon-margin mat-icon notranslate material-icons mat-icon-no-color">star_purple500</mat-icon>
-          <span> Rate this </span>
-          <span class="lowercase"> {{content?.primaryCategory}} </span>
+          <ng-container *ngIf="!userRating">
+            <span> Rate this </span>
+            <span class="lowercase"> {{content?.primaryCategory}} </span>
+          </ng-container>
+          <ng-container *ngIf="userRating">
+            <span> Edit rating </span>
+            <!-- <span class="lowercase"> {{content?.primaryCategory}} </span> -->
+          </ng-container>
         </button>
       </div>
 
@@ -319,6 +347,12 @@ TODO: edit option while preview Mode
               tocStructure?.assessment }}
               <span *ngIf="tocStructure?.assessment === 1" i18n> Assessment</span>
               <span *ngIf="tocStructure?.assessment > 1" i18n> Assessments</span>
+            </p>
+            <p *ngIf="tocStructure?.practiceTest > 0" class="mat-body-2 cs-icons">
+              <img src="/assets/icons/content/grey/assessment.svg" alt="Assessment" class="margin-right-xs"> {{
+              tocStructure?.practiceTest }}
+              <span *ngIf="tocStructure?.practiceTest === 1" i18n> Practice test</span>
+              <span *ngIf="tocStructure?.practiceTest > 1" i18n> Practice Tests</span>
             </p>
             <p *ngIf="tocStructure?.other > 0" class="mat-body-2 cs-icons">
               <img src="/assets/icons/content/grey/course.svg" alt="Course" class="margin-right-xs"> {{

@@ -9,8 +9,10 @@ import { DiscussService } from '../../../discuss/services/discuss.service'
 import _ from 'lodash'
 import { NetworkV2Service } from '../../../network-v2/services/network-v2.service'
 import { NSNetworkDataV2 } from '../../../network-v2/models/network-v2.model'
-import { ConfigurationsService } from '@sunbird-cb/utils';
+import { ConfigurationsService, ValueService } from '@sunbird-cb/utils';
+import { map } from 'rxjs/operators'
 /* tslint:enable */
+// import {  } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'app-profile-view',
@@ -38,6 +40,13 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   currentUser!: string | null
   connectionRequests!: NSNetworkDataV2.INetworkUser[]
   currentUsername: any
+
+  sideNavBarOpened = true
+  private defaultSideNavBarOpenedSubscription: any
+  public screenSizeIsLtMedium = false
+  isLtMedium$ = this.valueSvc.isLtMedium$
+  mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
+
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -55,6 +64,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     private networkV2Service: NetworkV2Service,
     private configSvc: ConfigurationsService,
     public router: Router,
+    private valueSvc: ValueService,
   ) {
     this.Math = Math
     this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
@@ -112,14 +122,25 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
 
     }
   }
+
+  ngOnInit() {
+    // int left blank
+
+    this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
+      this.sideNavBarOpened = !isLtMedium
+    })
+  }
+
   ngOnDestroy() {
     if (this.tabs) {
       this.tabs.unsubscribe()
     }
+
+    if (this.defaultSideNavBarOpenedSubscription) {
+      this.defaultSideNavBarOpenedSubscription.unsubscribe()
+    }
   }
-  ngOnInit() {
-    // int left blank
-  }
+
   ngAfterViewInit() {
     this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
   }

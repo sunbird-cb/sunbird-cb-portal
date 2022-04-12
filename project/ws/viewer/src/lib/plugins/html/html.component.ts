@@ -163,9 +163,9 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         //     `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
         //   )
         // }
-        if (this.htmlContent.streamingUrl) {
+        if (this.htmlContent.streamingUrl && this.htmlContent.initFile) {
           this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
-            `${this.htmlContent.streamingUrl}?timestamp='${new Date().getTime()}`)
+            `${this.htmlContent.streamingUrl}/${this.htmlContent.initFile}?timestamp='${new Date().getTime()}`)
         } else {
           if (environment.production) {
             this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
@@ -318,8 +318,8 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
           ver: `${this.htmlContent.version}${''}`,
         },
         {
-          pageIdExt: `${_.camelCase(this.htmlContent.content.primaryCategory)}`,
-          module: _.camelCase(this.htmlContent.content.primaryCategory),
+          pageIdExt: `${_.camelCase(this.htmlContent.primaryCategory)}`,
+          module: _.camelCase(this.htmlContent.primaryCategory),
       })
     }
   }

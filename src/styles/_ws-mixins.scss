@@ -48,6 +48,12 @@
   }
 }
 
+@mixin breakpoint-lt-xs {
+  @media only screen and (max-width: 329px) {
+    @content;
+  }
+}
+
 @mixin breakpoint-lt-s {
   @media only screen and (max-width: 599px) {
     @content;

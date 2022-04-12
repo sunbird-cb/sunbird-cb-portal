@@ -14,14 +14,14 @@
                 {{' '}}{{hoverUser?.personalDetails?.surname}} -->
                 {{getUserName}}
             </div>
-            <div class="flex flex-1" *ngFor="let pro of hoverUser?.professionalDetails">
-
+            <!-- *ngFor="let pro of hoverUser?.professionalDetails" -->
+            <div class="flex flex-1" >
                 <span class="mat-body-1 ws-mat-black60-text truncate">
-                    {{pro?.designation || pro?.designationOther}}
+                    {{hoverUser?.designation || hoverUser?.designationOther}}
                 </span>
-                <span *ngIf="pro?.designation || pro?.designationOther" class="mat-body-1 ws-mat-black60-text">&nbsp;at &nbsp;</span>
+                <span *ngIf="hoverUser?.designation || hoverUser?.designationOther" class="mat-body-1 ws-mat-black60-text">&nbsp;at &nbsp;</span>
                 <div class="designation ws-mat-black60-text truncate">
-                    {{pro?.name}}
+                    {{hoverUser?.department}}
                 </div>
             </div>
             <!-- <mat-divider class="p-inherit margin-top-s margin-bottom-s"></mat-divider> -->
@@ -51,9 +51,9 @@
                     </span>
                 </div> -->
                 <div class="flex flex-1 m-margin margin-bottom-s cursor-pointer">
-                    <a i18n role="link" class="flex ws-mat-default-text" (click)="goToUserProfile()">
+                    <a role="link" class="flex ws-mat-default-text" (click)="goToUserProfile()">
                         <mat-icon>group</mat-icon>
-                        <span class="mat-body-2 margin-left-s">{{'Network Profile'}}</span>
+                        <span class="mat-body-2 margin-left-s" i18n>{{'Network Profile'}}</span>
                     </a>
                 </div>
             </div>

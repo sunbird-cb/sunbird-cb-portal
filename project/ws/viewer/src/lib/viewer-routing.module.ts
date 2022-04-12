@@ -10,6 +10,8 @@ import { HtmlComponent } from './routes/html/html.component'
 import { HtmlModule } from './routes/html/html.module'
 import { PdfComponent } from './routes/pdf/pdf.component'
 import { PdfModule } from './routes/pdf/pdf.module'
+// import { PracticeTestComponent } from './routes/practice-test/practice-test.component'
+import { PracticeTestModule } from './routes/practice-test/practice-test.module'
 import { ChannelComponent } from './routes/channel/channel.component'
 import { ChannelModule } from './routes/channel/channel.module'
 import { VideoComponent } from './routes/video/video.component'
@@ -191,7 +193,7 @@ const routes: Routes = [
     data: {
       resourceType: 'quiz',
       module: 'Learn',
-      pageId: 'quiz/:resourceId',
+      pageId: 'quiz',
     },
     resolve: {
       content: ViewerResolve,
@@ -200,6 +202,19 @@ const routes: Routes = [
     },
     loadChildren: () =>
       import('./routes/quiz/quiz.module').then(u => u.QuizModule),
+  },
+  {
+    path: 'practice',
+    // component: PracticeTestComponent,
+    data: {
+      resourceType: 'practice',
+      module: 'Learn',
+      pageId: 'practice',
+    },
+    resolve: {
+      content: ViewerResolve,
+    },
+    loadChildren: () => import('./routes/practice-test/practice-test.module').then(p => p.PracticeTestModule),
   },
   {
     path: 'assessment',
@@ -324,6 +339,7 @@ const routes: Routes = [
     AudioNativeModule,
     HtmlModule,
     PdfModule,
+    PracticeTestModule,
     VideoModule,
     YoutubeModule,
     ChannelModule,
@@ -334,7 +350,7 @@ const routes: Routes = [
         children: routes,
         data: {
           module: 'Player',
-          pageId: 'viewer',
+          pageId: '',
         },
       },
     ])],

@@ -674,18 +674,7 @@
           (click)="isCardFlipped = true" aria-label="Details" i18n-aria-label="Details | Click to see details">
           <mat-icon>flip_to_back</mat-icon>
         </button>
-        <!-- <ng-container *ngIf="widgetData.content?.completionStatus == 2">
-          <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-            [contentId]="widgetData.content?.identifier" [progress]="100"
-            [progressType]="'percentage'">
-          </ws-widget-content-progress>
-        </ng-container>
-        <ng-container *ngIf="widgetData.content?.completionStatus < 2">
-          <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.completionPercentage"
-          [progressType]="'percentage'">
-        </ws-widget-content-progress>
-        </ng-container> -->
+
 
         <mat-card-content class="min-top">
           <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
@@ -731,7 +720,7 @@
               <!-- {{widgetData.content.sourceName}} -->
             </div>
           </a>
-          <div class="mt-4 flex justify-between items-center absolute bottom-0 left-0 right-0 px-3 py-2">
+          <div class="mt-4 mb-2 flex justify-between items-center absolute bottom-0 left-0 right-0 px-3 py-2">
             <!-- <ws-widget-display-content-type
               i18n-title
               title="Content Type"
@@ -765,6 +754,19 @@
               <!-- <mat-icon class="mat-icon ws-mat-black60-text">share</mat-icon> -->
             </div>
           </div>
+          <ng-container *ngIf="widgetData.content?.completionStatus == 2">
+            <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
+              [contentId]="widgetData.content?.identifier" [progress]="100"
+              [progressType]="'percentage'">
+            </ws-widget-content-progress>
+          </ng-container>
+          <ng-container *ngIf="widgetData.content?.completionStatus < 2">
+            <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
+            [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.completionPercentage"
+            [progressType]="'percentage'">
+          </ws-widget-content-progress>
+          </ng-container>
+
         </mat-card-content>
       </ng-container>
       <ng-container *ngIf="isCardFlipped">
@@ -778,6 +780,9 @@
           {{ widgetData.content.reason }}
         </p>
       </ng-container>
+
+
+
     </div>
   </mat-card>
 </ng-template>

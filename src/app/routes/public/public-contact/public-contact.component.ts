@@ -20,6 +20,9 @@ export class PublicContactComponent implements OnInit, AfterViewInit, OnDestroy 
   tabsData!: any
   elementPosition: any
   sticky = false
+
+  showSideMenu: Boolean = true
+
   @ViewChild('stickyMenu', { static: true }) menuElement!: ElementRef
 
   pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
@@ -111,5 +114,12 @@ export class PublicContactComponent implements OnInit, AfterViewInit, OnDestroy 
       })
     }
     return _.compact(contents)
+  }
+
+  showMenuButton() {
+    this.showSideMenu = this.showSideMenu ? false : true
+  }
+  closeNav() {
+    this.showSideMenu = this.showSideMenu ? false : true
   }
 }

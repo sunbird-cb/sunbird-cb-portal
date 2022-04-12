@@ -17,6 +17,8 @@
   // padding: 32px 0px !important;
 }
 
+
+
 .fluid-width {
   width: 100%;
 }
@@ -287,6 +289,10 @@ mat-divider {
   }
 }
 
+::ng-deep.mat-elevation-z4 {
+  box-shadow: none!important;
+}
+
 .divider-transparent {
   border-top-color: transparent !important
 }
@@ -336,8 +342,9 @@ mat-divider {
   .unit-cohort {
     background: #E7EAEB;
     margin: 10px 0;
-    padding: 10px 15px;
+    padding: 22px 15px;
     border-radius: 4px;
+    align-self: center;
     // .datadiv {
       // margin-left: 60px;
     // }
@@ -352,8 +359,34 @@ mat-divider {
   border: 0 !important;
 }
 ::ng-deep.mat-tab-body {
-  padding: 15px 0 !important;
+  padding: 15px 0 220px 0!important;
+  box-sizing: border-box;
+  overflow-y: initial!important;
+
+
+  // .mat-tab-body-active {
+  //   overflow-x: initial !important;
+  //   overflow-y: initial !important;
+  // }
+
 }
+::ng-deep.mat-tab-body.mat-tab-body-active {
+
+  // @include breakpoint-s {
+
+  // }
+
+  @media(min-width: 767px) and (max-width:1050px) {
+    overflow-x: initial !important;
+  }
+
+}
+
+::ng-deep.mat-tab-body-wrapper {
+    overflow: inherit!important;
+}
+
+
 ::ng-deep.mat-tab-label {
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   margin-right: 3%;
@@ -367,37 +400,11 @@ mat-divider {
   }
 }
 
-.rating-bar.mat-progress-bar {
-  height: 8px;
-  border-radius: 12px;
-}
-
-.rating-bar {
-  & .mat-progress-bar-fill::after {
-    background: red;
-  }
-}
-
-// #rating {
-  ::ng-deep.theme-igot.day-mode .rating-bar .mat-progress-bar-fill::after {
-    background: rgb(246, 153, 83);
-  }
-// }
-
-.rating-icon {
-  transform: scale(1.2);
-}
-
-.comments-card{
-  padding: 24px 16px;
-  .comments-rating {
-    height: 16px;
-    width: 16px;
-    font-size: 16px;
-  }
-  .name {
-    font: 600 16px/21px Lato;
-  }
+.rating-comments {
+  height:auto;
+  max-height: 400px;
+  padding: 0 15px 0 0;
+  overflow-y: scroll;
 }
 
 .view-all {
@@ -412,11 +419,3 @@ mat-divider {
 .bold-imp {
   font-weight: bold !important;
 }
-
-// ::ng-deep.theme-igot.day-mode .mat-progress-bar-fill::after {
-//   background: #34D6A4 0% 0% no-repeat padding-box;
-// }
-
-// ::ng-deep.theme-igot.day-mode .mat-progress-bar-buffer {
-//   background-color: #EDEDED;
-// }

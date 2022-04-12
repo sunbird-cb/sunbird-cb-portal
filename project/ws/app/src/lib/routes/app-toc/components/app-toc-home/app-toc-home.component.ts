@@ -27,6 +27,7 @@ import { ActionService } from '../../services/action.service'
 import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
 import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
 import moment from 'moment'
+import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -135,6 +136,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   historyData: any
   courseCompleteState = 2
   certData: any
+  userId: any
+  userRating: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -161,6 +164,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private utilitySvc: UtilityService,
     // private progressSvc: ContentProgressService,
     private actionSVC: ActionService,
+    private ratingSvc: RatingService,
   ) {
     this.historyData = history.state
     this.handleBreadcrumbs()
@@ -324,7 +328,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   get isResource() {
     if (this.content) {
       const isResource = this.content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT ||
-        this.content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE || !this.content.children.length
+        this.content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE
+        || this.content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+        || !(this.content.children && this.content.children.length)
       if (isResource) {
         this.mobileAppsSvc.sendViewerData(this.content)
       }
@@ -339,7 +345,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         return moment(_.get(batch, 'startDate')).fromNow()
       }
       if (_.get(batch, 'endDate') && moment(_.get(batch, 'endDate')).isBefore()) {
-       return 'NA'
+        return 'NA'
       }
       return 'NA'
     } return 'NA'
@@ -350,11 +356,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       if (this.currentCourseBatchId) {
         const now = moment()
         const batch = _.first(_.filter(this.content['batches'], { batchId: this.currentCourseBatchId }) || [])
-        return (
-          // batch.status &&
-          moment(batch.startDate).isSameOrBefore(now)
-          && moment(batch.endDate || new Date()).isSameOrAfter(now)
-        )
+        if (batch) {
+          return (
+            // batch.status &&
+            moment(batch.startDate).isSameOrBefore(now)
+            && moment(batch.endDate || new Date()).isSameOrAfter(now)
+          )
+        }
+        return false
       }
       return false
     } return false
@@ -381,6 +390,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         break
       }
     }
+    this.getUserRating()
     this.getUserEnrollmentList()
     this.body = this.domSanitizer.bypassSecurityTrustHtml(
       this.content && this.content.body
@@ -399,6 +409,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       other: 0,
       pdf: 0,
       podcast: 0,
+      practiceTest: 0,
       quiz: 0,
       video: 0,
       webModule: 0,
@@ -480,6 +491,34 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     })
   }
 
+  getUserRating() {
+    if (this.configSvc.userProfile) {
+      this.userId = this.configSvc.userProfile.userId || ''
+    }
+    if (this.content && this.content.identifier && this.content.primaryCategory) {
+        this.ratingSvc.getRating(this.content.identifier, this.content.primaryCategory, this.userId).subscribe(
+          (res: any) =>  {
+            this.userRating = res.result.response[0]
+            // this.userRating = {
+            //   commentupdatedon: null,
+            //   commentby: null,
+            //   review: 'Very Nice course but missed few content',
+            //   activity_type: 'Course',
+            //   activity_id: 'Course 17',
+            //   rating: 4.4,
+            //   comment: null,
+            //   updatedon: '67655da0-7900-11ec-9e2e-2bb786397b6b',
+            //   userId: 'user 1',
+            //   createdon: '67655da0-7900-11ec-9e2e-2bb786397b6b',
+            // }
+          },
+          (err: any) => {
+            this.loggerSvc.error('USER RATING FETCH ERROR >', err)
+          }
+        )
+    }
+  }
+
   private getUserEnrollmentList() {
     // tslint:disable-next-line
     if (this.content && this.content.identifier && this.content.primaryCategory !== this.primaryCategory.COURSE && this.content.primaryCategory !== this.primaryCategory.PROGRAM) {
@@ -536,7 +575,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             // Fetch the available batches and present to user
             if (this.content.primaryCategory === this.primaryCategory.COURSE
               || this.content.primaryCategory !== this.primaryCategory.PROGRAM) {
-              this.autoBatchAssign()
+              // Disabling auto enrollment to batch
+              // this.autoBatchAssign()
             } else {
               this.fetchBatchDetails()
             }
@@ -608,7 +648,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       // height: '400px',
       width: '1300px',
       data: { cet },
-      panelClass: 'custom-dialog-container',
+      // panelClass: 'custom-dialog-container',
     })
   }
 
@@ -784,10 +824,12 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               }
             }
 
-            const percentage = _.toInteger((_.sum(progress) / progress.length))
-            if (this.content) {
-              _.set(this.content, 'completionPercentage', percentage)
-            }
+            // commenting this as the completion percentage value for course is fetched from enrolled courses API response
+            // const percentage = _.toInteger((_.sum(progress) / progress.length))
+            // if (this.content) {
+            //   _.set(this.content, 'completionPercentage', percentage)
+            // }
+
             // _.set(this.content, 'progress', _.map(this.resumeData, _d => {
             //   return {
             //     progressStatus: _.get(_d, ''),
@@ -1132,12 +1174,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     const dialogRef = this.dialog.open(ContentRatingV2DialogComponent, {
       // height: '400px',
       width: '770px',
-      data: { content },
+      data: { content, userId: this.userId, userRating: this.userRating },
     })
     // dialogRef.componentInstance.xyz = this.configSvc
     dialogRef.afterClosed().subscribe((result: any) => {
-      // tslint:disable-next-line: no-console
-      console.log('result :', result)
+      if (result) {
+        this.getUserRating()
+      }
     })
   }
 }

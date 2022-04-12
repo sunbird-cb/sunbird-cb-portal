@@ -29,7 +29,7 @@ import {
   StickyHeaderModule,
 } from '@sunbird-cb/collection'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
-import { LoggerService, PipeSafeSanitizerModule, ConfigurationsService } from '@sunbird-cb/utils'
+import { LoggerService, PipeSafeSanitizerModule, ConfigurationsService, PipeOrderByModule } from '@sunbird-cb/utils'
 import { SearchModule } from '@ws/app/src/public-api'
 import 'hammerjs'
 import { KeycloakAngularModule } from 'keycloak-angular'
@@ -65,6 +65,7 @@ import { ServiceWorkerModule } from '@angular/service-worker'
 import { environment } from 'src/environments/environment'
 import { QuickTourModule } from '@ws/app/src/lib/routes/info/quick-tour/quick-tour.module'
 import { AppIntroComponent } from './component/app-intro/app-intro.component'
+import { NoConnectionComponent } from './component/no-connection/no-connection.component'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -101,6 +102,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     DialogConfirmComponent,
     LoginRootComponent,
     LoginRootDirective,
+    NoConnectionComponent,
   ],
   imports: [
     FormsModule,
@@ -134,6 +136,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     MatTooltipModule,
     SearchModule,
     BtnFeatureModule,
+    PipeOrderByModule,
     PublicAboutModule,
     PublicContactModule,
     MobileAppModule,

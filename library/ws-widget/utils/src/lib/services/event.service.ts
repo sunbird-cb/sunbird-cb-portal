@@ -18,6 +18,7 @@ export class EventService {
   }
 
   dispatchEvent<T>(event: WsEvents.IWsEvents<T>) {
+    event.pageContext = this.getContext(event.pageContext)
     this.eventsSubject.next(event)
   }
 

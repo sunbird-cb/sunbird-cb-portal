@@ -1,10 +1,16 @@
 import { animate, style, transition, trigger } from '@angular/animations'
 import { Component, HostBinding, Input, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
+// import { environment } from './../../../environments/environment'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ConfigurationsService, NsInstanceConfig } from '@sunbird-cb/utils'
 import { BtnPageBackService } from './btn-page-back.service'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+import { environment } from 'src/environments/environment'
+// tslint:disable
+import _ from 'lodash'
+// tslint:enable
+
 type TUrl = undefined | 'none' | 'back' | string
 @Component({
   selector: 'ws-widget-btn-page-back',
@@ -33,6 +39,7 @@ export class BtnPageBackComponent extends WidgetBaseComponent
   public id = 'nav-back'
   visible = false
   enablePeopleSearch = true
+  environment!: any
   hubsList!: NsInstanceConfig.IHubs[]
   constructor(
     private btnBackSvc: BtnPageBackService,
@@ -44,6 +51,7 @@ export class BtnPageBackComponent extends WidgetBaseComponent
   }
 
   ngOnInit() {
+    this.environment = environment
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
       this.hubsList = (instanceConfig.hubs || []).filter(i => i.active)
@@ -139,4 +147,24 @@ export class BtnPageBackComponent extends WidgetBaseComponent
   toggleVisibility() {
     this.visible = !this.visible
   }
+
+  hasRole(role: string[]): boolean {
+    let returnValue = false
+    role.forEach(v => {
+      if ((this.configSvc.userRoles || new Set()).has(v)) {
+        returnValue = true
+      }
+    })
+    return returnValue
+  }
+
+  isAllowed(portalName: string) {
+    const roles = _.get(_.first(_.filter(environment.portals, { id: portalName })), 'roles') || []
+    if (!(roles && roles.length)) {
+      return true
+    }
+    const value = this.hasRole(roles)
+    return value
+  }
+
 }

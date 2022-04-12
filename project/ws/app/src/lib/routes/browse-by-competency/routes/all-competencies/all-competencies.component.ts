@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core'
+import { Component, OnInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core'
 import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
 import { FormGroup, FormControl } from '@angular/forms'
 import { BrowseCompetencyService } from '../../services/browse-competency.service'
@@ -7,13 +7,15 @@ import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { Subject, Observable } from 'rxjs'
 // tslint:disable
 import _ from 'lodash'
+// tslint:enable
+import { LocalDataService } from '../../services/localService'
 
 @Component({
   selector: 'ws-app-all-competencies',
   templateUrl: './all-competencies.component.html',
   styleUrls: ['./all-competencies.component.scss'],
 })
-export class AllCompetenciesComponent implements OnInit, OnChanges {
+export class AllCompetenciesComponent implements OnInit, OnDestroy, OnChanges {
   private unsubscribe = new Subject<void>()
   public displayLoader!: Observable<boolean>
   defaultThumbnail = ''
@@ -21,8 +23,8 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
   competencyAreas: any
   searchForm: FormGroup | undefined
   appliedFilters: any = []
-  searchQuery: string = ''
-  sortBy:any
+  searchQuery = ''
+  sortBy: any
   stateData: {
     param: any, path: any
   } | undefined
@@ -37,7 +39,8 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
   constructor(
     private configSvc: ConfigurationsService,
     private events: EventService,
-    private browseCompServ: BrowseCompetencyService
+    private browseCompServ: BrowseCompetencyService,
+    private localDataService: LocalDataService,
   ) { }
 
   ngOnInit() {
@@ -82,6 +85,7 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
   }
 
   searchCompetency(searchQuery: any, filters?: any) {
+    this.allCompetencies = []
     const searchJson = [
       { type: 'COMPETENCY', field: 'name', keyword: searchQuery ? searchQuery : '' },
       { type: 'COMPETENCY', field: 'description', keyword: searchQuery ? searchQuery : '' },
@@ -91,8 +95,8 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
     const filterJson = []
     if (filters && filters.length) {
       const groups = _.groupBy(filters, 'mainType')
-      for (let key of Object.keys(groups)) {
-        const filter = { field: key, values: [''] }
+      for (const key of Object.keys(groups)) {
+        const filter: { field: string, values: string[] } = { field: key, values: [''] }
         const keywords = groups[key].map(x => x.name)
         filter.values = keywords
         filterJson.push(filter)
@@ -101,17 +105,68 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
     const req = {
       searches: searchJson,
       filter: filterJson,
-      sort: this.sortBy
+      sort: this.sortBy,
     }
-    this.browseCompServ
-      .searchCompetency(req)
-      .subscribe((reponse: NSBrowseCompetency.ICompetencieResponse) => {
-        if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
-          this.allCompetencies = reponse.responseData
+    if (!(this.localDataService.compentecies.value
+      && this.localDataService.compentecies.getValue().length > 0)) {
+      this.browseCompServ
+        .searchCompetency(req)
+        .subscribe((reponse: NSBrowseCompetency.ICompetencie[]) => {
+          // if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
+          //   this.allCompetencies = reponse.responseData
+          // }
+          if (reponse) {
+            // this.allCompetencies
+            if (req && req.filter && req.filter.length > 0) {
+              _.each(reponse, r => {
+                _.each(req.filter, f => {
+                  if (_.includes(f.values, _.get(r, f.field))) {
+                    this.allCompetencies.push(r)
+                  }
+                })
+              })
+              // this.allCompetencies = _.orderBy(this.allCompetencies, ['name'], [req.sort === 'Descending'])
+            } else {
+              this.allCompetencies = reponse
+            }
+            this.localDataService.initData(reponse)
+          }
+        })
+    } else {
+      const data = this.localDataService.compentecies.getValue()
+      if (data && req && req.filter && req.filter.length > 0) {
+        _.each(data, r => {
+          _.each(req.filter, f => {
+            if (_.includes(f.values, _.get(r, f.field))) {
+              this.allCompetencies.push(r)
+            }
+          })
+        })
+        if (req.sort) {
+          this.allCompetencies = _.orderBy(this.allCompetencies, ['name'], [req.sort === 'Descending' ? 'desc' : 'asc'])
         }
-      })
+      } else {
+        const fData: NSBrowseCompetency.ICompetencie[] = []
+        if (req.searches && req.searches.length > 0) {
+          _.each(data, (d: NSBrowseCompetency.ICompetencie) => {
+            let found = false
+            _.each(_.initial(req.searches), s => {
+              found = found || _.includes(_.lowerCase(_.get(d, s.field)), _.lowerCase(s.keyword))
+            })
+            if (found) {
+              fData.push(d)
+            }
+          })
+          this.allCompetencies = fData
+        }
+        if (req.sort) {
+          this.allCompetencies = _.orderBy(fData || data, ['name'], [req.sort === 'Descending' ? 'desc' : 'asc'])
+        } else {
+          this.allCompetencies = fData || data
+        }
+      }
+    }
   }
-
 
   updateQuery(key: string) {
     this.searchQuery = key
@@ -142,10 +197,12 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
         {
           pageIdExt: 'knowledge-card',
           module: WsEvents.EnumTelemetrymodules.COMPETENCY,
-      })
+        })
     }
   }
-
+  get allComp() {
+    return this.allCompetencies
+  }
   applyFilter(filter: any) {
     if (filter) {
       this.appliedFilters = filter
@@ -153,7 +210,7 @@ export class AllCompetenciesComponent implements OnInit, OnChanges {
       this.searchCompetency(this.searchQuery, this.appliedFilters)
       // const queryparam = this.searchRequestObject
     }
-    console.log('Filter', filter)
+    // console.log('Filter', filter)
   }
 
   removeFilter(filter: any) {
