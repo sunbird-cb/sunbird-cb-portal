@@ -7,6 +7,7 @@ import { ViewerUtilService } from '../../viewer-util.service'
 import { NsContent } from '@sunbird-cb/collection/src/lib/_services/widget-content.model'
 import { WidgetContentService } from '@sunbird-cb/collection/src/public-api'
 import { NSQuiz } from '../../plugins/quiz/quiz.model'
+// import { ViewerDataService } from '../../viewer-data.service'
 
 @Component({
     selector: 'viewer-practice',
@@ -37,8 +38,11 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
         private eventSvc: EventService,
         private contentSvc: WidgetContentService,
         private log: LoggerService,
+        // private _viewerDataService: ViewerDataService,
     ) {
-
+        // this._viewerDataService.resourceChangedSubject.subscribe(() => {
+        //     // console.log(this._viewerDataService.resource)
+        // })
     }
     ngOnInit(): void {
         this.isFetchingDataComplete = false

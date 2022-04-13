@@ -57,7 +57,7 @@ export class CompetenceComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
-      this.sideNavBarOpened = !isLtMedium
+      this.sideNavBarOpened = !isLtMedium && this.currentRoute !== 'all/assessment'
       this.screenSizeIsLtMedium = isLtMedium
     })
   }
