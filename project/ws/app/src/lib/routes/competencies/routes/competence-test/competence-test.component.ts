@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material';
     templateUrl: './competence-test.component.html',
     styleUrls: ['./competence-test.component.scss'],
 
-    // host: { class: 'competency_main_wrapper' },
+    host: { class: 'competency_main_test_wrapper' },
 })
 export class CompetencyTestComponent implements OnInit {
     constructor(

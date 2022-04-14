@@ -10,7 +10,7 @@ import { NSCompetencie } from '../../models/competencies.model'
     templateUrl: './competencies-assessment.component.html',
     styleUrls: ['./competencies-assessment.component.scss'],
     /* tslint:disable */
-    host: { class: 'flex flex-row margin-right-xs margin-top-xs margin-bottom-s competency_main' },
+    host: { class: 'flex flex-row margin-right-xs margin-top-xs margin-bottom-s competency_main_box' },
     /* tslint:enable */
 
 })

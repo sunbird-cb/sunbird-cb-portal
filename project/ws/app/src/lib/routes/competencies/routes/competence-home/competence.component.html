@@ -10,11 +10,11 @@
     <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 "
       [ngClass]="{'margin-top-48': currentRoute === 'home'}">
       <div class="contain">
-        <div class="flex-1" style="position: relative;">
-          <div #stickyMenu [class.sticky]="sticky">
+        <!-- <div class="flex-1" style="position: relative;">
+          <div #stickyMenu [class.sticky]="sticky"> -->
             <app-competence-left-menu [tabsData]="tabsData" class="flex flex-1"></app-competence-left-menu>
-          </div>
-        </div>
+          <!-- </div>
+        </div> -->
       </div>
     </mat-sidenav>
   </ng-container>
