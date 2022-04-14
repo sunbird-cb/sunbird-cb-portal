@@ -4,20 +4,17 @@
 <div *ngIf="currentRoute === 'home'" class="container-balanced-banner margin-top-s margin-bottom-l">
   <ng-container [wsResolverWidget]="banner"></ng-container>
 </div>
-
 <mat-sidenav-container class="container-balanced" autosize name="discuss-menu">
-  <ng-container *ngIf="currentRoute !== 'all/assessment'">
-    <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 "
-      [ngClass]="{'margin-top-48': currentRoute === 'home'}">
-      <div class="contain">
-        <div class="flex-1" style="position: relative;">
-          <div #stickyMenu [class.sticky]="sticky">
-            <app-competence-left-menu [tabsData]="tabsData" class="flex flex-1"></app-competence-left-menu>
-          </div>
+  <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 "
+    [ngClass]="{'margin-top-48': currentRoute === 'home','display-none' : currentRoute === 'all/assessment'}">
+    <div class="contain">
+      <div class="flex-1" style="position: relative;">
+        <div #stickyMenu [class.sticky]="sticky">
+          <app-competence-left-menu [tabsData]="tabsData" class="flex flex-1"></app-competence-left-menu>
         </div>
       </div>
-    </mat-sidenav>
-  </ng-container>
+    </div>
+  </mat-sidenav>
   <mat-sidenav-content>
     <div *ngIf="screenSizeIsLtMedium">
       <button type="button" mat-icon-button (click)="sideNavBarOpened = !sideNavBarOpened"
