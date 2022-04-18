@@ -13,7 +13,6 @@ import { MatDialog, MatTabChangeEvent } from '@angular/material'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import { ConnectionHoverService } from '@sunbird-cb/collection/src/lib/_common/connection-hover-card/connection-hover.servive'
 import { NsContent, NsAutoComplete } from '@sunbird-cb/collection/src/public-api'
-import { FormGroup, FormControl } from '@angular/forms'
 // import { IdiscussionConfig } from '@project-sunbird/discussions-ui-v8'
 // tslint:disable-next-line
 import _ from 'lodash'
@@ -517,9 +516,10 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     this.displayLoader = true
     if (this.content && this.content.identifier && this.content.primaryCategory) {
       const req = {
-        activity_Id: this.content.identifier,
-        activity_Type: this.content.primaryCategory,
-        rating: 0,
+        activityId: this.content.identifier,
+        activityType: this.content.primaryCategory,
+        // this field can be enabled if specific ratings have to be looked up
+        // rating: 0,
         limit: this.lookupLimit,
         updateOn: (this.lastLookUp && this.lastLookUp.updatedon) || '',
       }
@@ -636,9 +636,9 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
             totalcount1stars: 200,
             totalcount4stars: 200,
             totalcount5stars: 350,
-            activity_type: 'Course',
+            activitytype: 'Course',
             total_number_of_ratings: 1000,
-            activity_id: '100',
+            activityid: '100',
             totalcount2stars: 200,
             sum_of_total_ratings: 855,
             // tslint:disable-next-line: max-line-length
@@ -796,7 +796,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     const data = {
       id: 'api.ratings.lookup',
       ver: 'v1',
-      ts: '2022-02-22 13:27:32.996',
+      ts: '2022-04-12 11:48:34.315',
       params: {
       resmsgid: null,
       msgid: null,
@@ -808,54 +808,65 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
       result: {
       response: [
       {
-      activity_type: 'Course',
-      activity_id: '100',
-      rating: 4.0,
-      updatedon: '21565610-7d98-11ec-b465-6d2c86545d91',
-      user_id: 'user 100',
+      activityId: 'course1',
+      review: 'hellozcourseisawesome',
+      rating: '4.1',
+      updatedon: 'a1310b90-7da3-11ec-b465-6d2c86545d91',
+      activityType: 'course',
+      userId: '101',
+      firstName: 'anjani',
+      lastName: 'kumar',
       },
       {
-      activity_type: 'Course',
-      activity_id: '100',
-      rating: 4.0,
-      updatedon: '1e938c90-7d98-11ec-b465-6d2c86545d91',
-      user_id: 'user 99',
+      activityId: 'course1',
+      review: 'hellozcourseisawesome',
+      rating: '4.3',
+      updatedon: 'a1310b90-7da3-11ec-b465-6d2c86545d91',
+      activityType: 'course',
+      userId: '102',
+      firstName: 'rakesh',
+      lastName: 'kumar',
       },
       {
-      activity_type: 'Course',
-      activity_id: '100',
-      rating: 4.0,
-      updatedon: '1c917b00-7d98-11ec-b465-6d2c86545d91',
-      user_id: 'user 98',
+      activityId: 'course1',
+      review: 'hellozcourseisawesome',
+      rating: '4.4',
+      updatedon: 'a1310b90-7da3-11ec-b465-6d2c86545d91',
+      activityType: 'course',
+      userId: '103',
+      firstName: 'raman',
+      lastName: 'kumar',
       },
       {
-      activity_type: 'Course',
-      activity_id: '100',
-      rating: 4.0,
-      updatedon: '1aaf9ba0-7d98-11ec-b465-6d2c86545d91',
-      user_id: 'user 97',
+      activityId: 'course1',
+      review: 'hellozcourseisawesome',
+      rating: '4.5',
+      updatedon: 'a1310b90-7da3-11ec-b465-6d2c86545d91',
+      activityType: 'course',
+      userId: '104',
+      firstName: 'girish',
+      lastName: 'kumar',
       },
       {
-      activity_type: 'Course',
-      activity_id: '100',
-      rating: 4.4,
-      updatedon: '185ad630-7d98-11ec-b465-6d2c86545d91',
-      user_id: 'user 96',
+      activityId: 'course1',
+      review: 'hellozcourseisawesome',
+      rating: '4.6',
+      updatedon: 'a1310b90-7da3-11ec-b465-6d2c86545d91',
+      activityType: 'course',
+      userId: '105',
+      firstName: 'raju',
+      lastName: 'kumar',
       },
       {
-        activity_type: 'Course',
-        activity_id: '100',
-        rating: 4.4,
-        updatedon: '185ad630-7d98-11ec-b465-6d2c86545d91',
-        user_id: 'user 96',
-        },
-        {
-          activity_type: 'Course',
-          activity_id: '100',
-          rating: 4.4,
-          updatedon: '185ad630-7d98-11ec-b465-6d2c86545d91',
-          user_id: 'user 96',
-          },
+      activityId: 'course1',
+      review: 'hellozcourseisawesome',
+      rating: '3.6',
+      updatedon: 'a1310b90-7da3-11ec-b465-6d2c86545d91',
+      activityType: 'course',
+      userId: '106',
+      firstName: 'saji',
+      lastName: 'kumar',
+      },
       ],
       message: 'Successful',
       },
@@ -877,7 +888,6 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
       // console.log('Fetching rating summary')
       this.fetchRatingSummary()
     } else {
-      // console.log('Fetching lookup')
       this.fetchRatingLookup()
     }
   }
@@ -902,7 +912,6 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   loadMore() {
-    // console.log('inside loadmore:: this.disableLoadMore', this.disableLoadMore)
     if (!this.disableLoadMore) {
       // tslint:disable-next-line: no-non-null-assertion
       if ((this.searchForm!.get!('sortByControl')!.value === this.sortReviewValues[0])) {
@@ -913,7 +922,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
         this.ratingViewCount = this.reviewPage * this.ratingViewCount
       } else {
         this.reviewPage = this.reviewPage + 1
-        this.ratingViewCount = this.reviewPage * this.ratingViewCount
+        this.ratingViewCount = this.reviewPage * this.reviewDefaultLimit
         this.fetchRatingLookup()
       }
     }

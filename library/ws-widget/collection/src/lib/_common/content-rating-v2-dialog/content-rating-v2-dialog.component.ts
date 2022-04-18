@@ -71,9 +71,9 @@ export class ContentRatingV2DialogComponent implements OnInit {
   submitRating(feedbackForm: any) {
     if (!this.formDisabled) {
       const req: NsAppRating.IRating = {
-        activity_Id: this.data.content.identifier || '',
+        activityId: this.data.content.identifier || '',
         userId: this.data.userId || '',
-        activity_type: this.data.content.primaryCategory || '',
+        activityType: this.data.content.primaryCategory || '',
         rating: this.userRating || 0,
         review: feedbackForm.value.review || '',
       }

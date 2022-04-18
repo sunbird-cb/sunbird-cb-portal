@@ -3,12 +3,25 @@
         <mat-card-content>
             <div class="card_inner_content flex">
                 <div class="margin-right-m">
-                    <ws-widget-avatar-photo [name]="review.user_id" [size]="'m'"
-                        [photoUrl]=""></ws-widget-avatar-photo>
+                    <ng-container *ngIf="review?.firstName">
+                        <ws-widget-avatar-photo [name]="getFullName(review)" [size]="'m'"
+                            [photoUrl]=""></ws-widget-avatar-photo>
+                    </ng-container>
+                    <ng-container *ngIf="!review?.firstName">
+                        <ws-widget-avatar-photo [name]="review?.user_id" [size]="'m'"
+                            [photoUrl]=""></ws-widget-avatar-photo>
+                    </ng-container>
                 </div>
 
                 <div class="flex-col align-left">
-                    <div class="name margin-bottom-xs">{{review.user_id}}</div>
+                    <div class="name margin-bottom-xs">
+                        <ng-container *ngIf="review?.firstName">
+                            {{getFullName(review)}}
+                        </ng-container>
+                        <ng-container *ngIf="!review?.firstName">
+                            {{review.user_id}}
+                        </ng-container>
+                    </div>
                     <div class="flex items-center ">
                         <span class="margin-right-xs ws-mat-orange-text mat-body-1"> {{review.rating}} </span>
                         <mat-icon
