@@ -102,7 +102,7 @@
                 {{ nestedTreeControl.isExpanded(node) ? 'expand_less' : 'expand_more' }}
               </mat-icon>
             </button>
-            <ws-widget-display-content-type-icon class="flex" [displayContentType]="node?.type">
+            <ws-widget-display-content-type-icon class="flex" [mimeType]="node?.mimeType">
             </ws-widget-display-content-type-icon>
             <span role="button" [ngClass]="{ 'content-active': pathSet.has(node.identifier) }" matRipple
               matTreeNodeToggle class="flat-list-content-title width-expand margin-left-xs">
@@ -144,8 +144,10 @@
   <a class="width-expand flat-list-content margin-xs" [ngClass]="{ 'content-active': pathSet.has(content.identifier) }"
     matRipple (click)="minimizenav()" [routerLink]="content.viewerUrl" [queryParams]="getParams(content)?.queryParams" queryParamsHandling="">
     <span class="width-expand flex flex-middle">
-      <img i18n-alt alt="thumbnail" class="viewer-toc-thumbnail align-self-start margin-auto mat-app-background"
-        [src]="content.thumbnailUrl" [wsUtilsDefaultThumbnail]="defaultThumbnail" />
+      <!-- <img i18n-alt alt="thumbnail" class="viewer-toc-thumbnail align-self-start margin-auto mat-app-background"
+        [src]="content.thumbnailUrl" [wsUtilsDefaultThumbnail]="defaultThumbnail" /> -->
+        <ws-widget-display-content-type-icon class="flex margin-left-xs" [mimeType]="content?.mimeType">
+        </ws-widget-display-content-type-icon>
       <span class="width-1-1 margin-left-m flex flex-wrapped align-self-start">
         <div class="width-1-1 flex flex-between" [ngClass]="{ 'content-active': pathSet.has(content.identifier) }">
           <div class="mat-subheading-1 text-truncate flex">
@@ -193,7 +195,7 @@
   <div class="resource-container">
     <ws-widget-display-content-type-icon
       class="flex margin-left-xs"
-      [displayContentType]="content?.type"
+      [mimeType]="content?.mimeType"
     >
     </ws-widget-display-content-type-icon>
     <div class="resource-meta width-expand">

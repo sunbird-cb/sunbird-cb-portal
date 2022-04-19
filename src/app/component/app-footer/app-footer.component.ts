@@ -1,6 +1,6 @@
 // import { environment } from './../../../environments/environment'
 import { Component, OnInit } from '@angular/core'
-import { Router } from '@angular/router'
+import { NavigationEnd, Router } from '@angular/router'
 import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 // tslint:disable-next-line
@@ -17,7 +17,7 @@ export class AppFooterComponent implements OnInit {
   isXSmall = false
   termsOfUser = true
   environment!: any
-
+  currentRoute = 'page/home'
   hubsList!: NsInstanceConfig.IHubs[]
   portalUrls!: NsInstanceConfig.IPortalUrls
 
@@ -36,6 +36,11 @@ export class AppFooterComponent implements OnInit {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.isXSmall = isXSmall
     })
+    this.router.events.subscribe(event => {
+     if (event instanceof NavigationEnd) {
+        this.bindUrl(event.url.replace('/app/competencies/', ''))
+      }
+    })
   }
 
   ngOnInit() {
@@ -48,7 +53,14 @@ export class AppFooterComponent implements OnInit {
     }
 
   }
-
+  bindUrl(path: string) {
+    if (path) {
+      // console.log(path)
+      if (path !== '/app/competencies') {
+        this.currentRoute = path
+      }
+    }
+  }
   navigate() {
     const config = {
       menuOptions: [
