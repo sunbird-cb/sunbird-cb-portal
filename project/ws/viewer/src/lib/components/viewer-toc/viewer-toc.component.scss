@@ -54,7 +54,10 @@ app-content-icon {
   height: auto !important;
   margin: auto;
 }
-
+.pad-ztb {
+  padding: #{$size-s / 4} 0 #{$size-s / 4} 0;
+  border-bottom: 0.5px solid;
+}
 .flat-list-content {
   display: flex;
   align-items: center;
