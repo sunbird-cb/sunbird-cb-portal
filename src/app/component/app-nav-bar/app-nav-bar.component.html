@@ -1,4 +1,4 @@
-<mat-toolbar [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
+<mat-toolbar *ngIf="currentRoute !== 'all/assessment'" [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
   class="mat-elevation-z3 custom mobile">
   <div class="fix-ww" id="root-tool-bar" title="toolbar" i18n-aria-label role="toolbar">
     <ng-container *ngIf="mode === 'top'">

@@ -455,6 +455,7 @@ export namespace NsContent {
     WEB_MODULE = 'WEB_MODULE',
     WEB_PAGE = 'WEB_PAGE',
     YOUTUBE = 'YOUTUBE',
+    LINK = 'LINK',
     KNOWLEDGE_BOARD = 'Knowledge Board',
     LEARNING_JOURNEY = 'Learning Journeys',
   }

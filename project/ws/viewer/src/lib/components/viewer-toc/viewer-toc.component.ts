@@ -28,6 +28,7 @@ export interface IViewerTocCard {
   title: string
   duration: number
   type: string
+  mimeType: NsContent.EMimeTypes
   complexity: string
   children: null | IViewerTocCard[]
   primaryCategory: NsContent.EPrimaryCategory
@@ -320,6 +321,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       batchId: this.batchId,
       viewMode: this.viewMode,
       type: content.primaryCategory,
+      mimeType: content.mimeType,
       complexity: content.difficultyLevel,
       primaryCategory: content.primaryCategory,
       children:

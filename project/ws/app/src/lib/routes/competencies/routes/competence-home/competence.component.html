@@ -1,13 +1,12 @@
-<ws-widget-btn-page-back [widgetData]="{ url: 'home',titles: titles }">
+<ws-widget-btn-page-back *ngIf="currentRoute !== 'all/assessment'" [widgetData]="{ url: 'home',titles: titles }">
 </ws-widget-btn-page-back>
 
 <div *ngIf="currentRoute === 'home'" class="container-balanced-banner margin-top-s margin-bottom-l">
   <ng-container [wsResolverWidget]="banner"></ng-container>
 </div>
-
 <mat-sidenav-container class="container-balanced" autosize name="discuss-menu">
-
-  <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 " [ngClass]="{'margin-top-48': currentRoute === 'home'}">
+  <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 "
+    [ngClass]="{'margin-top-48': currentRoute === 'home','display-none' : currentRoute === 'all/assessment'}">
     <div class="contain">
       <div class="flex-1" style="position: relative;">
         <div #stickyMenu [class.sticky]="sticky">

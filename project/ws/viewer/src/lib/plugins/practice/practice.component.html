@@ -2,12 +2,14 @@
   [complexityLevel]="complexityLevel" [duration]="duration" [timeLimit]="quizJson?.timeLimit || 300"
   [primaryCategory]="primaryCategory" [noOfQuestions]="noOfQuestions" (userSelection)="getSections($event)">
 </viewer-overview>
+{{viewState}}===========
 <div #quizContainer class="quiz-container" *ngIf="viewState !== 'initial'">
   <div class="flex flex-1 flex-column">
     <nav class="quiz-nav-bar mat-toolbar mat-caption flex-column">
       <div class="flex flex-1">
         <!-- <span> -->
-        <button *ngIf="isXsmall && !isSubmitted" mat-icon-button aria-label="menu toggle" i18n-aria-label (click)="sidenav.toggle()">
+        <button *ngIf="isXsmall && !isSubmitted" mat-icon-button aria-label="menu toggle" i18n-aria-label
+          (click)="sidenav.toggle()">
           <mat-icon aria-label="open questions navigation">menu</mat-icon>
         </button>
         <a mat-button *ngIf="!isSubmitted && viewState !== 'detail'" (click)="backToSections()"
@@ -33,11 +35,13 @@
       </div>
       <!-- </div> -->
       <!-- </span> -->
+
       <div *ngIf="viewState === 'detail'" class="flex flex-column flex-center">
         <ng-container [ngTemplateOutlet]="timer"></ng-container>
       </div>
       <div class="flex flex-column flex-end">
         <div *ngIf="viewState === 'detail'" class="flex flex-column">
+          {{viewState === 'detail'}}
           <ng-container [ngTemplateOutlet]="indicator"></ng-container>
         </div>
       </div>

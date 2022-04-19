@@ -321,7 +321,7 @@ export namespace NSPractice {
     isAssessment: boolean
     identifier: string
     objectType: 'QuestionSet',
-    primaryCategory: NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+    primaryCategory: NsContent.EPrimaryCategory
     children: ISubSec[]
   }
 }
