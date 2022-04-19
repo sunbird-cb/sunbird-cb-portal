@@ -32,6 +32,9 @@ export class DisplayContentTypeIconComponent implements OnInit {
         case NsContent.EMimeTypes.YOUTUBE:
           this.displayContentType = NsContent.EDisplayContentTypes.YOUTUBE
           break;
+        case NsContent.EMimeTypes.TEXT_WEB:
+          this.displayContentType = NsContent.EDisplayContentTypes.LINK
+          break;
         case NsContent.EMimeTypes.PRACTICE_RESOURCE:
         case NsContent.EMimeTypes.APPLICATION_JSON:
         case NsContent.EMimeTypes.QUIZ:
@@ -40,14 +43,14 @@ export class DisplayContentTypeIconComponent implements OnInit {
         case NsContent.EMimeTypes.HTML:
         case NsContent.EMimeTypes.ZIP2:
         case NsContent.EMimeTypes.ZIP:
-          this.displayContentType = NsContent.EDisplayContentTypes.WEB_PAGE
+          this.displayContentType = NsContent.EDisplayContentTypes.LINK
           break;
         case NsContent.EMimeTypes.COLLECTION_RESOURCE:
         case NsContent.EMimeTypes.COLLECTION:
           this.displayContentType = NsContent.EDisplayContentTypes.MODULE
           break;
-        case NsContent.EMimeTypes.TEXT_WEB:
-          this.displayContentType = NsContent.EDisplayContentTypes.WEB_MODULE
+        default:
+          this.displayContentType = NsContent.EDisplayContentTypes.DEFAULT
           break;
       }
     }
