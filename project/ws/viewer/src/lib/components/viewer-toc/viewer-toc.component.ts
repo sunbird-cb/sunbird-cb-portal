@@ -322,7 +322,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       viewMode: this.viewMode,
       type: content.primaryCategory,
       mimeType: content.mimeType,
-      complexity: content.difficultyLevel,
+      complexity: content.difficultyLevel || 'Easy',
       primaryCategory: content.primaryCategory,
       children:
         Array.isArray(content.children) && content.children.length
