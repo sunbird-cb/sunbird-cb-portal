@@ -34,6 +34,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   isTourGuideClosed = false
   showAppNavBar = false
   popupTour: any
+  currentRoute = 'page/home'
   constructor(
     private domSanitizer: DomSanitizer,
     private configSvc: ConfigurationsService,
@@ -49,6 +50,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
         this.cancelTour()
       } else if (event instanceof NavigationEnd) {
         this.cancelTour()
+        this.bindUrl(event.url.replace('/app/competencies/', ''))
       }
     })
   }
@@ -139,5 +141,13 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       this.isTourGuideClosed = false
     }
 
+  }
+  bindUrl(path: string) {
+    if (path) {
+      // console.log(path)
+      if (path !== '/app/competencies') {
+        this.currentRoute = path
+      }
+    }
   }
 }
