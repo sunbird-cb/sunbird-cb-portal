@@ -7,6 +7,7 @@ import { CompetencyDetailedViewComponent } from './routes/competency-detailed-vi
 import { CompetencyAllWrapperComponent } from './routes/competency-all-wrapper/competency-all-wrapper.component'
 import { InitResolver } from './resolvers/init-resolve.service'
 import { ProfileResolve } from './resolvers/profile-fetch'
+import { CompetencyTestComponent } from './routes/competence-test/competence-test.component'
 // import { ProfileResolverService } from './resolvers/profile-resolver.service'
 // import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
 const routes: Routes = [
@@ -79,6 +80,13 @@ const routes: Routes = [
               module: 'competency',
             },
           },
+          {
+            path: 'assessment',
+            component: CompetencyTestComponent,
+            resolve: {
+
+            }
+          }
         ],
       },
       {

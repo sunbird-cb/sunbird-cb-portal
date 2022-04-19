@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material'
 import { NSCompetencie } from '../../models/competencies.model'
 // tslint:disable-next-line: import-name
 import _ from 'lodash'
+import { Router } from '@angular/router'
 // import { Router } from '@angular/router'
 
 export interface IDialogData {
@@ -15,7 +16,7 @@ export interface IDialogData {
   /* tslint:disable */
   /* host: { class: 'flex flex-1 margin-right-xs margin-top-xs margin-bottom-s' },*/
   host: { class: 'flex flex-1' },
- 
+
   /* tslint:enable */
 
 })
@@ -28,7 +29,8 @@ export class CompetenceViewComponent implements OnInit {
   constructor(
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<CompetenceViewComponent>,
-    @Inject(MAT_DIALOG_DATA) public dData: NSCompetencie.ICompetencie
+    @Inject(MAT_DIALOG_DATA) public dData: NSCompetencie.ICompetencie,
+    private router: Router,
   ) { }
   ngOnInit() {
   }
@@ -63,5 +65,9 @@ export class CompetenceViewComponent implements OnInit {
       id: this.dData.id,
       action: 'DELETE',
     })
+  }
+  test() {
+    this.closeModal()
+    this.router.navigate(['app', 'competencies', 'all', 'assessment'])
   }
 }

@@ -1,6 +1,6 @@
-@import 'ws-mixins';
-@import 'ws-vars';
-@import 'ws-common';
+@import "ws-mixins";
+@import "ws-vars";
+@import "ws-common";
 
 .visible-inline-s {
   display: inline;
@@ -166,7 +166,9 @@
 .display-block {
   display: block !important;
 }
-
+.display-none {
+  display: none !important;
+}
 // flex handlers
 .flex {
   display: flex !important;

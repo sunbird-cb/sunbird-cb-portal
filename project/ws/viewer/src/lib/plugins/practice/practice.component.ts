@@ -537,28 +537,27 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     return seted
   }
   proceedToSubmit() {
-    if (this.timeLeft || this.primaryCategory === this.ePrimaryCategory.PRACTICE_RESOURCE) {
-      if (
-        Object.keys(this.questionAnswerHash).length !==
-        this.quizJson.questions.length
-      ) {
-        this.submissionState = 'unanswered'
-      } else if (this.markedQuestions.size) {
-        this.submissionState = 'marked'
-      } else {
-        this.submissionState = 'answered'
-      }
-      const dialogRef = this.dialog.open(SubmitQuizDialogComponent, {
-        width: '250px',
-        data: this.submissionState,
-      })
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-
-          this.submitQuiz()
-        }
-      })
+    // if (this.timeLeft || this.primaryCategory === this.ePrimaryCategory.PRACTICE_RESOURCE) {
+    if (
+      Object.keys(this.questionAnswerHash).length !==
+      this.quizJson.questions.length
+    ) {
+      this.submissionState = 'unanswered'
+    } else if (this.markedQuestions.size) {
+      this.submissionState = 'marked'
+    } else {
+      this.submissionState = 'answered'
     }
+    const dialogRef = this.dialog.open(SubmitQuizDialogComponent, {
+      width: '250px',
+      data: this.submissionState,
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.submitQuiz()
+      }
+    })
+    // }
   }
   back() {
     this.proceedToSubmit()
@@ -577,7 +576,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     )
     const request: NSPractice.IQuizSubmit = {
       identifier: this.identifier,
-      primaryCategory: NsContent.EPrimaryCategory.PRACTICE_RESOURCE,
+      primaryCategory: this.primaryCategory,
       isAssessment: true,
       objectType: 'QuestionSet',
       timeLimit: this.quizJson.timeLimit,
