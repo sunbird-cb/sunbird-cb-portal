@@ -1,4 +1,4 @@
-@import 'ws-vars';
+@import "ws-vars";
 
 .treemode-slider {
   text-align: right;
@@ -18,7 +18,9 @@
 .toc-tree-invisible {
   display: none;
 }
-
+.margin-0 {
+  margin: 0 !important;
+}
 .toc-tree {
   padding-inline-start: 0px;
 
