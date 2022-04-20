@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { EventService, WsEvents, LoggerService, NsContent } from '@sunbird-cb/utils/src/public-api'
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material'
 import { RatingService } from '@sunbird-cb/collection/src/lib/_services/rating.service'
 import { switchMap, takeUntil } from 'rxjs/operators'
 import { Subject } from 'rxjs'
@@ -28,6 +28,7 @@ export class ContentRatingV2DialogComponent implements OnInit {
     private events: EventService,
     private ratingSvc: RatingService,
     private loggerSvc: LoggerService,
+    private snackBar: MatSnackBar,
   ) {
     this.feedbackForm = new FormGroup({
       review: new FormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
@@ -89,6 +90,11 @@ export class ContentRatingV2DialogComponent implements OnInit {
         },
         (err: any) => {
           this.loggerSvc.error('ADD OR UPDATE USER RATING ERROR >', err)
+          if (err.error && err.error.params && err.error.params.errmsg) {
+            this.openSnackbar(err.error.params.errmsg)
+          } else {
+            this.openSnackbar('Something went wrong, please try again later!')
+          }
           // this.dialogRef.close(false)
         }
       )
@@ -136,6 +142,12 @@ export class ContentRatingV2DialogComponent implements OnInit {
 
   closeDialog(val: boolean) {
     this.dialogRef.close(val)
+  }
+
+  private openSnackbar(primaryMsg: string, duration: number = 5000) {
+    this.snackBar.open(primaryMsg, 'X', {
+      duration,
+    })
   }
 
 }

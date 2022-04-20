@@ -497,16 +497,15 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
             }
 
             // TODO: To be removed
-            this.hardcodeData()
-
+            // this.hardcodeData()
             this.ratingSummaryProcessed = this.processRatingSummary()
           },
           (err: any) => {
             this.displayLoader = false
             this.logger.error('USER RATING FETCH ERROR >', err)
             // TODO: To be removed
-            this.hardcodeData()
-            this.ratingSummaryProcessed = this.processRatingSummary()
+            // this.hardcodeData()
+            // this.ratingSummaryProcessed = this.processRatingSummary()
           }
         )
     }
@@ -524,23 +523,23 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
         updateOn: (this.lastLookUp && this.lastLookUp.updatedon) || '',
       }
       this.ratingSvc.getRatingLookup(req).subscribe(
-        (_res: any) =>  {
+        (res: any) =>  {
           this.displayLoader = false
           // // console.log('Rating summary res ', res)
-          // if (res && res.result && res.result.response) {
-          //   this.ratingSummary = res.result.response[0]
-          // }
+          if (res && res.result && res.result.response) {
+            this.ratingLookup = res.result.response
+          }
 
           // TODO: To be removed
-          this.hardcodeData1()
+          // this.hardcodeData1()
           this.processRatingLookup()
         },
         (err: any) => {
           this.displayLoader = false
           this.logger.error('USER RATING FETCH ERROR >', err)
           // TODO: To be removed
-          this.hardcodeData1()
-          this.processRatingLookup()
+          // this.hardcodeData1()
+          // this.processRatingLookup()
         }
       )
   }
@@ -585,8 +584,8 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
       key: 5,
       value: _.get(this.ratingSummary, 'totalcount5stars'),
     })
-    // ratingSummaryPr.latest50reviews = JSON.parse(this.ratingSummary.latest50reviews)
-    ratingSummaryPr.latest50reviews = this.ratingSummary.latest50reviews
+    ratingSummaryPr.latest50reviews = JSON.parse(this.ratingSummary.latest50reviews)
+    // ratingSummaryPr.latest50reviews = this.ratingSummary.latest50reviews
     this.ratingReviews = this.ratingSummary.latest50reviews
     // ratingSummaryPr.avgRating = parseFloat(((((totRatings / this.ratingSummary.total_number_of_ratings) * 100) * 5) / 100).toFixed(1))
     const meanRating = ratingSummaryPr.breakDown.reduce((val, item) => {
@@ -608,270 +607,12 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       this.disableLoadMore = false
     }
-    this.lastLookUp = this.ratingLookup.pop()
+    this.lastLookUp = this.ratingLookup[this.ratingLookup.length - 1]
     this.ratingReviews = this.ratingLookup
   }
 
   countStarsPercentage(value: any, total: any) {
     return ((value / total) * 100).toFixed(2)
-  }
-
-  hardcodeData() {
-    const data = {
-      id: 'api.ratings.summary',
-      ver: 'v1',
-      ts: '2022-01-2717:53:09.359',
-      params: {
-        resmsgid: null,
-        msgid: null,
-        err: null,
-        status: null,
-        errmsg: null,
-      },
-      responseCode: 'OK',
-      result: {
-        response: [
-          {
-            totalcount3stars: 200,
-            totalcount1stars: 200,
-            totalcount4stars: 200,
-            totalcount5stars: 350,
-            activitytype: 'Course',
-            total_number_of_ratings: 1000,
-            activityid: '100',
-            totalcount2stars: 200,
-            sum_of_total_ratings: 855,
-            // tslint:disable-next-line: max-line-length
-            latest50reviews: [{
-              type: 'review',
-              user_id: 'user1',
-              date: 1642052031800,
-              rating: 3,
-              review: 'nice course',
-
-            },
-            {
-              type: 'review',
-              user_id: 'user2',
-              date: 1642052031800,
-              rating: 5,
-              review: 'nice course',
-
-            },
-            {
-              type: 'review',
-              user_id: 'user2',
-              date: 1642052031800,
-              rating: 3.2,
-              review: `Curabitur lobortis id lorem id bibendum. Ut id consectetur magna.
-            Quisque volutpat augue enim, pulvinar lobortis nibh lacinia at.
-            Vestibulum nec erat ut mi sollicitudin porttitor id sit amet risus. Nam
-            tempus vel odio vitae aliquam.`,
-
-            },
-            {
-              type: 'review',
-              user_id: 'user3',
-              date: 1642052031820,
-              rating: 4.5,
-              review: 'nice course',
-
-            },
-            {
-              type: 'review',
-              user_id: 'user3',
-              date: 1642052031820,
-              rating: 4.5,
-              review: 'nice course',
-
-            },
-            {
-              type: 'review',
-              user_id: 'user3',
-              date: 1642052031820,
-              rating: 4.5,
-              review: 'nice course',
-
-            }, {
-              type: 'review',
-              user_id: 'user3',
-              date: 1642052031820,
-              rating: 4.5,
-              review: 'nice course',
-
-            }, {
-              type: 'review',
-              user_id: 'user3',
-              date: 1642052031820,
-              rating: 4.5,
-              review: 'nice course',
-
-            }, {
-              type: 'review',
-              user_id: 'user3',
-              date: 1642052031820,
-              rating: 4.5,
-              review: 'nice course',
-
-            }, {
-              type: 'review',
-              user_id: 'user3',
-              date: 1642052031820,
-              rating: 4.5,
-              review: 'nice course',
-
-            }, {
-              type: 'review',
-              user_id: 'user3',
-              date: 1642052031820,
-              rating: 4.5,
-              review: 'nice course',
-
-            }, {
-              type: 'review',
-              user_id: 'user3',
-              date: 1642052031820,
-              rating: 4.5,
-              review: 'nice course',
-
-            }, {
-              type: 'review',
-              user_id: 'user3',
-              date: 1642052031820,
-              rating: 4.5,
-              review: 'nice course',
-
-            }, {
-              type: 'review',
-              user_id: 'user3',
-              date: 1642052031820,
-              rating: 4.5,
-              review: 'nice course',
-
-            }, {
-              type: 'review',
-              user_id: 'user3',
-              date: 1642052031820,
-              rating: 4.5,
-              review: 'nice course',
-
-            }, {
-              type: 'review',
-              user_id: 'user3',
-              date: 1642052031820,
-              rating: 4.5,
-              review: 'nice course',
-
-            }, {
-              type: 'review',
-              user_id: 'user3',
-              date: 1642052031820,
-              rating: 4.5,
-              review: 'nice course',
-
-            }, {
-              type: 'review',
-              user_id: 'user3',
-              date: 1642052031820,
-              rating: 4.5,
-              review: 'nice course',
-
-            }, {
-              type: 'review',
-              user_id: 'Christy',
-              date: 1642052031820,
-              rating: 4.5,
-              review: 'nice course',
-
-            }],
-          },
-        ],
-        message: 'Successful',
-      },
-    }
-    this.ratingSummary = data.result.response[0]
-  }
-
-  hardcodeData1 () {
-    const data = {
-      id: 'api.ratings.lookup',
-      ver: 'v1',
-      ts: '2022-04-12 11:48:34.315',
-      params: {
-      resmsgid: null,
-      msgid: null,
-      err: null,
-      status: null,
-      errmsg: null,
-      },
-      responseCode: 'OK',
-      result: {
-      response: [
-      {
-      activityId: 'course1',
-      review: 'hellozcourseisawesome',
-      rating: '4.1',
-      updatedon: 'a1310b90-7da3-11ec-b465-6d2c86545d91',
-      activityType: 'course',
-      userId: '101',
-      firstName: 'anjani',
-      lastName: 'kumar',
-      },
-      {
-      activityId: 'course1',
-      review: 'hellozcourseisawesome',
-      rating: '4.3',
-      updatedon: 'a1310b90-7da3-11ec-b465-6d2c86545d91',
-      activityType: 'course',
-      userId: '102',
-      firstName: 'rakesh',
-      lastName: 'kumar',
-      },
-      {
-      activityId: 'course1',
-      review: 'hellozcourseisawesome',
-      rating: '4.4',
-      updatedon: 'a1310b90-7da3-11ec-b465-6d2c86545d91',
-      activityType: 'course',
-      userId: '103',
-      firstName: 'raman',
-      lastName: 'kumar',
-      },
-      {
-      activityId: 'course1',
-      review: 'hellozcourseisawesome',
-      rating: '4.5',
-      updatedon: 'a1310b90-7da3-11ec-b465-6d2c86545d91',
-      activityType: 'course',
-      userId: '104',
-      firstName: 'girish',
-      lastName: 'kumar',
-      },
-      {
-      activityId: 'course1',
-      review: 'hellozcourseisawesome',
-      rating: '4.6',
-      updatedon: 'a1310b90-7da3-11ec-b465-6d2c86545d91',
-      activityType: 'course',
-      userId: '105',
-      firstName: 'raju',
-      lastName: 'kumar',
-      },
-      {
-      activityId: 'course1',
-      review: 'hellozcourseisawesome',
-      rating: '3.6',
-      updatedon: 'a1310b90-7da3-11ec-b465-6d2c86545d91',
-      activityType: 'course',
-      userId: '106',
-      firstName: 'saji',
-      lastName: 'kumar',
-      },
-      ],
-      message: 'Successful',
-      },
-      }
-      this.ratingLookup = data.result.response
   }
 
   getRatingIcon(ratingIndex: number, avg: number): 'star' | 'star_border' | 'star_half' {
@@ -883,9 +624,12 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   sortReviews(sort: string) {
+    // Reset the counters/ previous values before changing the filter and view
     this.ratingViewCount  = this.ratingViewCountDefault
+    this.lastLookUp = ''
+    this.ratingReviews = []
+
     if (sort === this.sortReviewValues[0]) {
-      // console.log('Fetching rating summary')
       this.fetchRatingSummary()
     } else {
       this.fetchRatingLookup()
