@@ -147,7 +147,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
         debounceTime(500),
         switchMap(async formValue => {
           // tslint:disable-next-line: no-console
-          console.log('formValue :: ', formValue)
+          // console.log('formValue :: ', formValue)
           if (this.previousFilter !== formValue.sortByControl) {
             this.previousFilter = formValue.sortByControl
             this.sortReviews(formValue.sortByControl)
@@ -493,7 +493,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
             this.displayLoader = false
             // console.log('Rating summary res ', res)
             if (res && res.result && res.result.response) {
-              this.ratingSummary = res.result.response[0]
+              this.ratingSummary = res.result.response
             }
 
             // TODO: To be removed
@@ -553,7 +553,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     const breakDownArray: any[] = []
     const ratingSummaryPr = {
       breakDown: breakDownArray,
-      latest50reviews: breakDownArray,
+      latest50Reviews: breakDownArray,
       ratingsNumber: breakDownArray,
       total_number_of_ratings: this.ratingSummary.total_number_of_ratings || 0,
       avgRating: 0,
@@ -584,9 +584,9 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
       key: 5,
       value: _.get(this.ratingSummary, 'totalcount5stars'),
     })
-    ratingSummaryPr.latest50reviews = JSON.parse(this.ratingSummary.latest50reviews)
-    // ratingSummaryPr.latest50reviews = this.ratingSummary.latest50reviews
-    this.ratingReviews = this.ratingSummary.latest50reviews
+    ratingSummaryPr.latest50Reviews = JSON.parse(this.ratingSummary.latest50Reviews)
+    // ratingSummaryPr.latest50Reviews = this.ratingSummary.latest50Reviews
+    this.ratingReviews = JSON.parse(this.ratingSummary.latest50Reviews)
     // ratingSummaryPr.avgRating = parseFloat(((((totRatings / this.ratingSummary.total_number_of_ratings) * 100) * 5) / 100).toFixed(1))
     const meanRating = ratingSummaryPr.breakDown.reduce((val, item) => {
       // console.log('item', item)
