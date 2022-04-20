@@ -23,4 +23,11 @@ export class CardRatingCommentComponent implements OnInit {
     return this.ratingService.getRatingIconClass(ratingIndex, avg)
   }
 
+  getFullName(review: any) {
+    if (!review && !review.firstName) {
+        return ''
+    }
+    return `${review.firstName} ${review.lastName}`
+  }
+
 }
