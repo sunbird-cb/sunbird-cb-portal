@@ -141,10 +141,10 @@
 </ng-template>
 <!-- Template -->
 <ng-template let-content #TocContentCard>
-  <a class="width-expand flat-list-content margin-xs" [ngClass]="{ 'content-active': pathSet.has(content.identifier) }"
+  <a class="width-expand flat-list-content pad-ztb" [ngClass]="{ 'content-active': pathSet.has(content.identifier) }"
     matRipple (click)="minimizenav()" [routerLink]="content.viewerUrl" [queryParams]="getParams(content)?.queryParams"
     queryParamsHandling="">
-    <span class="width-expand flex flex-middle">
+    <span class="width-expand flex flex-middle margin-xs">
       <!-- <img i18n-alt alt="thumbnail" class="viewer-toc-thumbnail align-self-start margin-auto mat-app-background"
         [src]="content.thumbnailUrl" [wsUtilsDefaultThumbnail]="defaultThumbnail" /> -->
       <ws-widget-display-content-type-icon class="flex margin-left-xs" [mimeType]="content?.mimeType">
@@ -163,10 +163,12 @@
               check_circle_outline</mat-icon>
           </div>
         </div>
-        <span class="mat-body-2">
-          <span>{{ content.type | pipeLimitTo: 300 }}</span> </span><span class="mat-body-1 margin-left-xxs"
-          *ngIf="content?.complexity"><span>| {{ content?.complexity | pipeLimitTo: 300 }}</span>
-        </span>
+        <!--  <span class="mat-body-2">
+          <span>{{ content.type | pipeLimitTo: 300 }}</span>
+        </span> -->
+        <!-- <span class="mat-body-1 margin-left-xxs" *ngIf="content?.complexity"><span> {{ content?.complexity |
+            pipeLimitTo: 300 }}</span>
+        </span> -->
         <!-- <div class="width-1-1">
               <btn-content-download></btn-content-download>
               <btn-content-like></btn-content-like>
