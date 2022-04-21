@@ -1,0 +1,71 @@
+<mat-card class="no-shadow flex flex-1">
+ 
+  <mat-card-content>
+      <img
+        [src]="url | pipeSafeSanitizer: 'url'"
+        alt="Certificate"
+        role="image"
+        class="certificate-banner-image"
+      />
+
+  </mat-card-content>
+
+  <div class="flex flex-col">
+    <mat-card-title>
+      <span i18n>About the course</span>
+    </mat-card-title>
+
+    <div>
+      <div *ngIf="this.data.value.content?.appIcon" class="float-left">
+        <img
+          [src]="this.data.value.content?.appIcon"
+          class="app-icon course-image"
+          [alt]="this.data.value.content.name || iGOT"
+        />
+      </div>
+      <div *ngIf="!this.data.value.content?.appIcon" class="float-left">
+        <img
+          src="/assets/instances/eagle/app_logos/default.png"
+          class="app-icon course-image"
+          [alt]="this.data.value.content.name || iGOT"
+        />
+      </div>
+    </div>
+    <div
+      class="subheading pb-1 cursor-pointer"
+      
+    >
+     {{ this.data.value.content?.name }}
+    </div>
+    <div>
+      {{ this.data.value.content?.description }}
+    </div>
+    <a  (click)="navigate(this.data.value.collectionId)" [mat-dialog-close]="true" class="link-course cursor-pointer">
+      View Course
+    </a>
+    <div class="flex flex-row gap-3 mtop">
+      <a
+        mat-button
+        (click)="dwonloadCert()"
+        class="ws-mat-accent-border-active mat-accent px-3"
+      >
+        <mat-icon
+          class="mat-icon material-icons-outlined download_icon margin-right-xs"
+          >cloud_download</mat-icon
+        >
+        Download
+      </a>
+      <a
+        mat-button
+        (click)="shareCert()"
+        class="ws-mat-accent-border-active mat-accent"
+      >
+        <mat-icon
+          class="mat-icon material-icons-outlined download_icon margin-right-xs"
+          >share</mat-icon
+        >
+        Share
+      </a>
+    </div>
+  </div>
+</mat-card>

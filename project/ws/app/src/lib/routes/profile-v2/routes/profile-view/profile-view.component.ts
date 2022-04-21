@@ -11,6 +11,11 @@ import { NetworkV2Service } from '../../../network-v2/services/network-v2.servic
 import { NSNetworkDataV2 } from '../../../network-v2/models/network-v2.model'
 import { ConfigurationsService, ValueService } from '@sunbird-cb/utils';
 import { map } from 'rxjs/operators'
+import {
+  WidgetUserService,
+  NsContent,
+  WidgetContentService,
+} from '@sunbird-cb/collection'
 /* tslint:enable */
 // import {  } from '@sunbird-cb/utils'
 
@@ -40,6 +45,8 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   currentUser!: string | null
   connectionRequests!: NSNetworkDataV2.INetworkUser[]
   currentUsername: any
+  enrolledCourse: any = []
+  allCertificate: any = []
 
   sideNavBarOpened = true
   private defaultSideNavBarOpenedSubscription: any
@@ -65,6 +72,8 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     private configSvc: ConfigurationsService,
     public router: Router,
     private valueSvc: ValueService,
+    private userSvc: WidgetUserService,
+    private contentSvc: WidgetContentService,
   ) {
     this.Math = Math
     this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
@@ -104,6 +113,8 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       /** // for loged in user only */
       this.decideAPICall()
     })
+    this.fetchUserBatchList()
+
   }
   decideAPICall() {
     const user = this.portalProfile.userId || this.portalProfile.id || ''
@@ -198,4 +209,30 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  fetchUserBatchList() {
+    const user = this.portalProfile.userId || this.portalProfile.id || ''
+    this.userSvc.fetchUserBatchList(user).subscribe((courses: NsContent.ICourse[]) => {
+
+      courses.forEach(items => {
+        if (items.completionPercentage === 100) {
+          this.enrolledCourse.push(items)
+          // return items;
+        }
+      })
+      this.downloadAllCertificate(this.enrolledCourse)
+    })
+  }
+
+  downloadAllCertificate(data: any) {
+    data.forEach((item: any) => {
+      if (item.issuedCertificates.length !== 0) {
+        const certId = item.issuedCertificates[0].identifier
+        this.contentSvc.downloadCert(certId).subscribe(response => {
+
+          this.allCertificate.push({ identifier: item.issuedCertificates[0].identifier, dataUrl: response.result.printUri })
+
+        })
+      }
+    })
+  }
 }
