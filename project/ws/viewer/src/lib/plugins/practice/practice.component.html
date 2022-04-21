@@ -2,7 +2,7 @@
   [complexityLevel]="complexityLevel" [duration]="duration" [timeLimit]="quizJson?.timeLimit || 300"
   [primaryCategory]="primaryCategory" [noOfQuestions]="noOfQuestions" (userSelection)="getSections($event)">
 </viewer-overview>
-{{viewState}}===========
+
 <div #quizContainer class="quiz-container" *ngIf="viewState !== 'initial'">
   <div class="flex flex-1 flex-column">
     <nav class="quiz-nav-bar mat-toolbar mat-caption flex-column">
@@ -39,12 +39,12 @@
       <div *ngIf="viewState === 'detail'" class="flex flex-column flex-center">
         <ng-container [ngTemplateOutlet]="timer"></ng-container>
       </div>
-      <div class="flex flex-column flex-end">
+      <!-- <div class="flex flex-column flex-end">
         <div *ngIf="viewState === 'detail'" class="flex flex-column">
           {{viewState === 'detail'}}
           <ng-container [ngTemplateOutlet]="indicator"></ng-container>
         </div>
-      </div>
+      </div> -->
     </nav>
     <mat-sidenav-container class="sidenav-container" autosize>
       <mat-sidenav [mode]="sidenavMode" class="sidenav" #sidenav [opened]="sidenavOpenDefault">
@@ -97,11 +97,11 @@
         </div>
         <!-- {{current_Question | json}}
       {{currentQuestionIndex}} -->
-        <mat-card class="flex flex-1 flex-column margin-m pad-0"
+        <mat-card class="flex flex-1 flex-column margin-m pad-0 quest_mat_card"
           *ngIf="fetchingQuestionsStatus === 'done' && viewState !== 'detail' && !(viewState === 'answer') && !isSubmitted">
           <ng-container *ngIf="true">
             <div class="flex flex-1 padding-l card_inner_box flex-row">
-              <span class="mat-title margin-zero flex flex-1">{{selectedSection.name}}</span>
+              <span class="mat-title margin-bottom-remove flex flex-1 practice_card_title">{{selectedSection.name}}</span>
               <!-- <span class="spacer"></span> -->
               <ng-container [ngTemplateOutlet]="timer"></ng-container>
               <div class="flex flex-1 flex-row-reverse butto_box end">
@@ -163,9 +163,9 @@
         </mat-card>
         <ng-container *ngIf="fetchingQuestionsStatus === 'done'  && current_Question && !process">
           <ng-container *ngIf="viewState === 'attempt' && !isSubmitted">
-            <div class="flex flex-1 margin-top-l margin-left-xs">
+            <div class="flex flex-1 margin-top-l margin-left-xs bottom_box">
               <div class="flex flex-1 cen">
-                <mat-icon class="flex margin-left-xs margin-top-xs margin-bottom-xs">info_outline</mat-icon>
+                <mat-icon class="flex margin-top-xs margin-bottom-xs">info_outline</mat-icon>
                 <span class="flex mat-body-2 padding-xs" i18n>Attempt all questions to finish assessment</span>
               </div>
               <div class="flex flex-end margin-right-m">

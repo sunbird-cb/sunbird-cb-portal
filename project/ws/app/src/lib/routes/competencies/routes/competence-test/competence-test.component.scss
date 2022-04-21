@@ -18,3 +18,16 @@ ws-app-competency-test {
 app-competencies-assessment {
      width: 100%!important;
 }
+
+
+.aeessment_top_bar{
+    display: flex;
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    z-index: 99;
+    left: 0;
+}
+.assessment_top_bar_inner {
+    width: 100%;
+}

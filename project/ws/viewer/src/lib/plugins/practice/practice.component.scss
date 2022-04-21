@@ -98,6 +98,24 @@ $nav-height: 40px;
     margin: $size-s;
   }
 }
+.quest_mat_card {
+  @include breakpoint-xs {
+    margin:0!important;
+  }
+}
+
+.bottom_box {
+  @include breakpoint-xs {
+    flex-direction: column!important;
+  }
+}
+
+.practice_card_title {
+  @include breakpoint-xs {
+    margin-bottom:12px!important;
+  }
+}
+
 .no-border {
   box-shadow: none !important;
 }
