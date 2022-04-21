@@ -1,4 +1,4 @@
-@import 'ws-vars';
+@import "ws-vars";
 
 .treemode-slider {
   text-align: right;
@@ -18,7 +18,9 @@
 .toc-tree-invisible {
   display: none;
 }
-
+.margin-0 {
+  margin: 0 !important;
+}
 .toc-tree {
   padding-inline-start: 0px;
 
@@ -52,7 +54,10 @@ app-content-icon {
   height: auto !important;
   margin: auto;
 }
-
+.pad-ztb {
+  padding: #{$size-s / 4} 0 #{$size-s / 4} 0;
+  border-bottom: 0.5px solid;
+}
 .flat-list-content {
   display: flex;
   align-items: center;
