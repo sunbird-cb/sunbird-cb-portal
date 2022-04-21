@@ -4,7 +4,7 @@
 </viewer-overview>
 
 <div #quizContainer class="quiz-container" *ngIf="viewState !== 'initial'">
-  <div class="flex flex-1 flex-column">
+  <div class="flex flex-1 flex-column quiz_inner_container">
     <nav class="quiz-nav-bar mat-toolbar mat-caption flex-column">
       <div class="flex flex-1">
         <!-- <span> -->
@@ -20,7 +20,7 @@
         <!-- <div class="flex"> -->
         <a disableRipple
           *ngIf="primaryCategory === ePrimaryCategory.PRACTICE_RESOURCE && !isSubmitted && viewState === 'detail'"
-          i18n-aria-label aria-label="Back" (click)="back()" class="no-border flex cursor-pointer">
+          i18n-aria-label aria-label="Back" (click)="back()" class="no-border flex cursor-pointer back_button">
           <mat-icon class="ws-mat-default-text">arrow_back</mat-icon>
           <span class="ws-mat-default-text subheading-1">Back to home </span>
         </a>
@@ -39,12 +39,12 @@
       <div *ngIf="viewState === 'detail'" class="flex flex-column flex-center">
         <ng-container [ngTemplateOutlet]="timer"></ng-container>
       </div>
-      <!-- <div class="flex flex-column flex-end">
+      <div class="flex flex-column flex-end">
         <div *ngIf="viewState === 'detail'" class="flex flex-column">
-          {{viewState === 'detail'}}
+          <!-- {{viewState === 'detail'}} -->
           <ng-container [ngTemplateOutlet]="indicator"></ng-container>
         </div>
-      </div> -->
+      </div>
     </nav>
     <mat-sidenav-container class="sidenav-container" autosize>
       <mat-sidenav [mode]="sidenavMode" class="sidenav" #sidenav [opened]="sidenavOpenDefault">
@@ -309,7 +309,7 @@
 
 <ng-template #indicator>
   <div class="margin-m">
-    <div class="flex flex-end">
+    <div class="flex flex-end indicator_box">
       <span class="flex">
         <div class="sbox complete"></div>
         Completed
