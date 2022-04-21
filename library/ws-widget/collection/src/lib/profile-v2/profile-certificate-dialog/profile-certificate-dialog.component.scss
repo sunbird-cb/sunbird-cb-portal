@@ -1,0 +1,98 @@
+@import "ws-mixins";
+.no-shadow {
+    box-shadow: none !important;
+    // width: 500px;
+    // height: 500px;
+}
+.certificate-banner-image {
+    height: 400px;
+    display: flex;
+    width: auto;
+    margin: 0px auto;
+    padding-right: 1rem;
+    @include breakpoint-lt-l {
+        width: 100%;
+        height: auto;
+        flex: 1;
+    }
+}
+
+a.download_btn {
+    background-color: #f0f0f0;
+    border-radius: 4px 4px;
+    float: right;
+    height: 40px;
+    padding: 0px 16px;
+    text-align: center;
+    line-height: 40px;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 16px;
+    margin-right: 0px;
+}
+
+.download_icon {
+    font-size: 16px;
+    vertical-align: text-top;
+}
+.close-button {
+    float: right;
+    top: -24px;
+    right: -24px;
+}
+
+.close-icon {
+    transition: 1s ease-in-out;
+}
+
+.close-icon:hover {
+    transform: rotate(180deg);
+}
+
+::ng-deep .icon-outside .close-button {
+    float: right;
+    top: -52px;
+    right: -52px;
+}
+::ng-deep .icon-outside .mat-dialog-container {
+    overflow: unset;
+}
+
+::ng-deep .mat-card-content {
+    margin-bottom: 0;
+}
+
+.certificate-banner-image {
+    svg {
+        width: 500;
+        height: 500;
+        @include breakpoint-lt-l {
+            width: auto;
+            height: auto;
+            flex: 1;
+        }
+    }
+}
+
+.course-image{
+ height: 110px;
+ width: 250px;
+ padding-bottom: .5rem;
+}
+
+.subheading{
+    font: 600 16px/24px Montserrat;
+  }
+
+  .mtop{
+      margin-top: auto;
+  }
+
+.link-course {
+    font: 600 12px/14px Lato;
+    margin: 0px 0 2px;
+    letter-spacing: 0px;
+    color: #00A9F4;
+}

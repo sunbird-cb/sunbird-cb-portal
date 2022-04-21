@@ -5,11 +5,12 @@ import {
   MatExpansionModule, MatIconModule, MatProgressSpinnerModule,
 } from '@angular/material'
 import { BrowserModule } from '@angular/platform-browser'
+import { ProfileCertificateDialogModule } from '../profile-certificate-dialog/profile-certificate-dialog.module'
 
 @NgModule({
   declarations: [ProfileCretificationsV2Component],
   imports: [BrowserModule, MatButtonModule, MatCardModule, MatChipsModule,
-    MatDividerModule, MatExpansionModule, MatIconModule, MatProgressSpinnerModule],
+    MatDividerModule, MatExpansionModule, MatIconModule, MatProgressSpinnerModule, ProfileCertificateDialogModule],
   entryComponents: [ProfileCretificationsV2Component],
 })
 export class ProfileCretificationsV2Module {

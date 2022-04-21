@@ -5,20 +5,20 @@
 
     <!--====== top left text box ===============-->
     <div class="left_content_box">
-        <h2 class="mat-h2  inline-block "> {{competencyData?.name}}</h2>
+        <h2 class="mat-h2  inline-block "> {{competencyData?.name || currentComp?.name}}</h2>
         <div>
-            <p class="mat-body-1 ws-mat-black60-text">{{competencyData?.description}}</p>
+            <p class="mat-body-1 ws-mat-black60-text">{{competencyData?.description || currentComp?.description}}</p>
 
 
             <p class="mat-body-1 ws-mat-black60-text highlight_point_text">
                 Competency type:
                 <span
-                    class="mat-primary mat-subheading-1">{{competencyData?.additionalProperties?.competencyType || currentComp?.competencyType}}</span>
+                    class="mat-primary mat-subheading-1">{{competencyData?.competencyType || currentComp?.competencyType}}</span>
             </p>
             <p class="mat-body-1 ws-mat-black60-text highlight_point_text">
                 Competency area:
                 <span
-                    class="mat-primary mat-subheading-1">{{competencyData?.additionalProperties?.competencyArea || currentComp?.competencyArea}}</span>
+                    class="mat-primary mat-subheading-1">{{competencyData?.competencyArea || currentComp?.competencyArea}}</span>
             </p>
 
         </div>
@@ -29,7 +29,7 @@
         <div class="left_content_box">
             <h2 class="mat-h2 margin-remove inline-block "> All associated CBPs </h2>
             <div>
-                <p class="mat-body-2 ws-mat-black60-text"> {{courses?.length || 0 }} CBPs for “{{competencyData?.name}}”</p>
+                <p class="mat-body-2 ws-mat-black60-text"> {{courses?.length || 0 }} CBPs for “{{competencyData?.name || currentComp?.description}}”</p>
             </div>
 
 

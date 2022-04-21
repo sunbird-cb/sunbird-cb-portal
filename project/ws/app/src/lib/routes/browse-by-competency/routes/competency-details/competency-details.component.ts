@@ -78,7 +78,10 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
     this.formatFacets()
 
     // Fetch initial data
-    this.searchCompetency()
+    // this.searchCompetency()
+    if(!this.currentComp) {
+      this.searchCompetencyV2()
+    }
     this.getCbps()
 
   }
@@ -158,6 +161,24 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
             this.competencyData = response.responseData[0]
           }
         }
+      })
+  }
+
+  searchCompetencyV2(_filters?: any) {
+    const searchJson = [
+      { type: 'COMPETENCY', field: 'name', keyword: this.competencyName ? this.competencyName : '' },
+      { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
+    ]
+    const req = {
+      searches: searchJson,
+    }
+    this.browseCompServ
+      .searchCompetency(req)
+      .subscribe((response: any) => {
+          console.log('response :: ', response)
+            if (response) {
+              this.competencyData = _.first(_.filter(response, { 'name': this.competencyName }))
+            }
       })
   }
 

@@ -98,7 +98,9 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
       this.changeEventSubscription.unsubscribe()
     }
   }
-
+  getContineuLearningLenth(data: IStripUnitContentData) {
+    return data.widgets ? data.widgets.length : 0
+  }
   getLength(data: IStripUnitContentData) {
     return data.widgets ? data.widgets.length : 0
   }
