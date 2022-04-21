@@ -34,6 +34,8 @@ import { ProfileV2RoutingModule } from './profile-v2.rounting.module'
 import { ProfileComponent } from './routes/profile/profile.component'
 import { ProfileViewComponent } from './routes/profile-view/profile-view.component'
 import { DiscussModule } from '../discuss/discuss.module'
+import { ProfileCertificateDialogModule } from './components/profile-certificate-dialog/profile-certificate-dialog.module'
+// import { ShareModule } from 'ngx-sharebuttons';
 
 @NgModule({
   declarations: [
@@ -76,6 +78,8 @@ import { DiscussModule } from '../discuss/discuss.module'
     PipeOrderByModule,
     BtnPageBackModule,
     WidgetResolverModule,
+    ProfileCertificateDialogModule,
+    // ShareModule
   ],
   entryComponents: [
   ],

@@ -89,13 +89,25 @@
                 </a>
               </div>
             </ws-utils-horizontal-scroller> -->
-
-            <ws-utils-horizontal-scroller class="flex container-balanced new-width" *ngIf="getLength(stripsResultDataMap[key]) && showAccordion(key)"
+            <ng-container *ngIf="key === 'continueLearning'" >
+              <ws-utils-horizontal-scroller class="flex container-balanced new-width" *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
+              [loadStatus]="'done'">
+              <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets; trackBy: tracker" >
+              <ng-container *ngIf = "widget.widgetData.context.pageSection === 'continueLearning' " >
+                <ng-container *ngIf="widget.widgetData.content.completionPercentage !== 100" [wsResolverWidget]="widget"></ng-container>
+              </ng-container>
+              </ng-container>
+            </ws-utils-horizontal-scroller>
+            </ng-container>
+            <ng-container *ngIf="key !== 'continueLearning'" >
+              <ws-utils-horizontal-scroller class="flex container-balanced new-width" *ngIf="getLength(stripsResultDataMap[key]) && showAccordion(key)"
               [loadStatus]="'done'">
               <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets" [wsResolverWidget]="widget">
 
               </ng-container>
             </ws-utils-horizontal-scroller>
+            </ng-container>
+            
 
           </div>
         </div>

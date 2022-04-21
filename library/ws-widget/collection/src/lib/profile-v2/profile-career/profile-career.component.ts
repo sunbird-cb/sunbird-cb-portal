@@ -16,7 +16,6 @@ export class ProfileCareerComponent extends WidgetBaseComponent implements OnIni
   @HostBinding('id')
   public id = 'profile-career'
   ngOnInit(): void {
-    // console.log(this.widgetData)
   }
   paDate(date: any): string {
     const dat = moment(date, 'DD-MM-YYYY').toDate()

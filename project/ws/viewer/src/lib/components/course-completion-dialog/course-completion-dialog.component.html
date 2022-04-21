@@ -1,0 +1,32 @@
+
+<!-- <h1 mat-dialog-title i18n>  Congratulations for completing the Overview of Administrative Law!</h1>
+<div mat-dialog-content class="text-base hide-overflow" i18n>
+    You have completed the course successfully. Please check back in some time to view your
+    certificate of completion.
+</div>
+<div mat-dialog-actions class="flex-row-reverse">
+  <mat-divider ></mat-divider>
+  <button mat-stroked-button color="accent" type="button"
+  class=" actbutton mat-body-2 blue-border" [mat-dialog-close]="true" i18n>
+    Close
+  </button> -->
+  <!-- class ="ws-mat-accent-border-active mat-accent" -->
+<!-- </div> -->
+
+<mat-card class="no-shadow">
+  
+  <mat-card-title class="px-5 pb-5">
+      <span i18n>Congratulations for completing the Overview of Administrative Law!</span>
+  </mat-card-title>
+  <mat-card-content class="px-5">
+    <span>You have completed the course successfully. Please check back in some time to view your
+      certificate of completion.</span>
+  </mat-card-content>
+  <mat-divider inset></mat-divider>
+  <mat-card-actions class="flex flex-row-reverse">
+    <button mat-button  type="button"
+    class="ws-mat-accent-border-active mat-accent .blue-border" [mat-dialog-close]="true" i18n>
+      Close
+    </button> 
+  </mat-card-actions>
+</mat-card>
