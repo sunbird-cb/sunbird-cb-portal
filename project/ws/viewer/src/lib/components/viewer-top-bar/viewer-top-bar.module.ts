@@ -10,6 +10,7 @@ import { ViewerTopBarComponent } from './viewer-top-bar.component'
 import { BtnFullscreenModule, BtnPageBackNavModule } from '@sunbird-cb/collection'
 import { RouterModule } from '@angular/router'
 import { ValueService } from '@sunbird-cb/utils'
+import { CourseCompletionDialogModule } from '../course-completion-dialog/course-completion-dialog.module'
 @NgModule({
   declarations: [ViewerTopBarComponent],
   imports: [
@@ -21,6 +22,7 @@ import { ValueService } from '@sunbird-cb/utils'
     BtnPageBackNavModule,
     MatTooltipModule,
     RouterModule,
+    CourseCompletionDialogModule,
   ],
   exports: [ViewerTopBarComponent],
   providers: [ValueService],

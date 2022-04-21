@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
+import { MatDialog } from '@angular/material'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
-import { ActivatedRoute, NavigationExtras } from '@angular/router'
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router'
 // import { NsContent } from '@sunbird-cb/collection'
 import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ViewerDataService } from '../../viewer-data.service'
+import { CourseCompletionDialogComponent } from '../course-completion-dialog/course-completion-dialog.component'
 
 @Component({
   selector: 'viewer-viewer-top-bar',
@@ -43,6 +45,8 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     private configSvc: ConfigurationsService,
     private viewerDataSvc: ViewerDataService,
     private valueSvc: ValueService,
+    private dialog: MatDialog,
+    private router: Router,
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
@@ -144,5 +148,16 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
       window.history.back()
     }
 
+  }
+  finishDialog() {
+    const dialogRef = this.dialog.open(CourseCompletionDialogComponent, {
+      autoFocus: false,
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+
+        this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+      }
+    })
   }
 }

@@ -1,0 +1,22 @@
+.hide-overflow{
+    overflow: hidden;
+  }
+
+  .blue-border{
+    border: 2px  solid #0074b6 !important;
+    }
+
+    .no-shadow {
+      box-shadow: none !important;
+  }
+
+  ::ng-deep .mat-dialog-container{
+    padding: 24px 0px;
+  }
+  ::ng-deep .mat-card-actions {
+    padding: 18px 7px;
+  }
+
+  ::ng-deep .mat-card>.mat-card-actions:last-child {
+    margin-bottom: -15px;
+}

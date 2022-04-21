@@ -106,6 +106,10 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
   checkVisible(data: IStripUnitContentData) {
     return data.stripInfo && data.stripInfo.visibilityMode === 'visible'
   }
+  getContineuLearningLenth(data: IStripUnitContentData) {
+  return data.widgets ? data.widgets.length : 0
+  }
+
   getLength(data: IStripUnitContentData) {
     return data.widgets ? data.widgets.length : 0
   }

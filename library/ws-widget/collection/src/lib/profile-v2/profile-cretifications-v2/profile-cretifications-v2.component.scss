@@ -62,10 +62,11 @@ mat-card-actions {
 .example-header-image {
   // background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
   background-size: cover;
-  background-color: #C49A4E;
+  // background-color: #C49A4E;
   width: 98px;
   border-radius: calc(#{$size-s} - #{$size-xs}) !important;
   height: 98px;
+  padding-right: 24px;
 }
 
 .pad-0 {
@@ -82,4 +83,14 @@ mat-card-actions {
 
 .no-shadow {
   box-shadow: none !important;
+}
+
+.subheading{
+  font: 600 16px/24px Montserrat;
+}
+
+.img-size{
+  height: 100px;
+  width: 100px;
+  padding-right: 24px;
 }
