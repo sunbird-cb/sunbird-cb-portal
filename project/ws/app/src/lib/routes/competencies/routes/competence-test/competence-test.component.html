@@ -1,3 +1,21 @@
-<div class="flex flex-1">
+
+<div class="flex flex-1 flex-col">
+
+<div class="aeessment_top_bar">
+    <!-- <p>navbar</p> -->
+    <!-- <viewer-viewer-top-bar class="assessment_top_bar_inner">
+  </viewer-viewer-top-bar> -->
+  <!-- <viewer-viewer-top-bar *ngIf="!fullScreenContainer"  [frameReference]="fullScreenContainer"
+    (toggle)="toggleSideBar()">
+  </viewer-viewer-top-bar> -->
+
+  <viewer-viewer-top-bar *ngIf="fullScreenContainer" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
+    (toggle)="toggleSideBar()"  class="assessment_top_bar_inner">
+  </viewer-viewer-top-bar>
+  <viewer-viewer-top-bar *ngIf="!fullScreenContainer" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
+    (toggle)="toggleSideBar()"  class="assessment_top_bar_inner">
+  </viewer-viewer-top-bar>
+
+</div>
     <app-competencies-assessment></app-competencies-assessment>
 </div>
