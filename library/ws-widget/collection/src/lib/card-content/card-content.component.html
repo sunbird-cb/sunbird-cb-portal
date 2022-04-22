@@ -801,7 +801,7 @@
   <mat-card class="card-wide margin-bottom-m padding-remove position-relative flex">
     <div class="imageholder ">
       <img mat-card-image class="margin-remove"
-      [src]="widgetData.content.appIcon" [wsUtilsDefaultThumbnail]="defaultThumbnail"
+      [src]="widgetData.content.posterImage || widgetData.content.appIcon" [wsUtilsDefaultThumbnail]="defaultThumbnail"
       [alt]="widgetData.content.name">
       <div class="source-div" [hidden]="true">
         <!-- [src]="sourseIcon(widgetData.content.sourceName)" -->
