@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, Inject, OnInit } from '@angular/core'
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 
 @Component({
   selector: 'viewer-course-completion-dialog',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core'
 })
 export class CourseCompletionDialogComponent implements OnInit {
 
-  constructor() { }
+  courseName = ''
+  constructor(
+    public dialogRef: MatDialogRef<CourseCompletionDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
+    this.courseName = this.data.courseName
   }
 
 }
