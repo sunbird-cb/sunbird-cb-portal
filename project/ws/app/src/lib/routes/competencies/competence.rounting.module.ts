@@ -85,8 +85,8 @@ const routes: Routes = [
             component: CompetencyTestComponent,
             resolve: {
 
-            }
-          }
+            },
+          },
         ],
       },
       {

@@ -44,7 +44,6 @@ import { PracticePlModule } from '@ws/viewer/src/lib/plugins/practice/practice.m
 import { CompetencyTestComponent } from './routes/competence-test/competence-test.component'
 import { ViewerTopBarModule } from '@ws/viewer/src/lib/components/viewer-top-bar/viewer-top-bar.module'
 
-
 @NgModule({
   declarations: [
     CompetenceCardComponent,
