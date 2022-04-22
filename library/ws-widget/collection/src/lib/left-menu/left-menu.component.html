@@ -3,7 +3,7 @@
     <a href="javascript:void(0)" role="link" i18n class="flex flex-column margin-top-l">
       <img [src]="widgetData.logoPath || defaultImage" [alt]="widgetData.name" class="img"
         (error)="changeToDefaultImg($event)" />
-      <span i18n class="mat-subheading-2 margin-top-m">
+      <span class="mat-subheading-2 margin-top-m">
         <!-- this will be dynamic -->
         {{widgetData.name}}
       </span>
