@@ -14,6 +14,7 @@ import { MatGridListModule } from '@angular/material/grid-list'
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatDividerModule } from '@angular/material/divider'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
+
 import {
   MatIconModule,
   MatListModule,
@@ -41,6 +42,8 @@ import { EditorSharedModule } from '@ws/author/src/lib/routing/modules/editor/sh
 import { CompetenciesAssessmentComponent } from './components/competencies-assessment/competencies-assessment.component'
 import { PracticePlModule } from '@ws/viewer/src/lib/plugins/practice/practice.module'
 import { CompetencyTestComponent } from './routes/competence-test/competence-test.component'
+import { ViewerTopBarModule } from '@ws/viewer/src/lib/components/viewer-top-bar/viewer-top-bar.module'
+
 
 @NgModule({
   declarations: [
@@ -91,6 +94,7 @@ import { CompetencyTestComponent } from './routes/competence-test/competence-tes
     PipeOrderByModule,
     BtnPageBackModule,
     WidgetResolverModule,
+    ViewerTopBarModule,
   ],
   entryComponents: [CompetenceViewComponent, CompetenciesAssessmentComponent],
   providers: [

@@ -10,7 +10,7 @@ import { NSCompetencie } from '../../models/competencies.model'
     templateUrl: './competencies-assessment.component.html',
     styleUrls: ['./competencies-assessment.component.scss'],
     /* tslint:disable */
-    host: { class: 'flex flex-row margin-right-xs margin-top-xs margin-bottom-s competency_main' },
+    host: { class: 'flex flex-row margin-right-xs margin-bottom-s competency_main_box' },
     /* tslint:enable */
 
 })
@@ -20,11 +20,17 @@ export class CompetenciesAssessmentComponent implements OnInit {
     ePrimartCategory = NsContent.EPrimaryCategory
     _ID = 'do_1135047568283648001115' // temp
     quizJson!: { timeLimit: Number, questions: NSPractice.IQuestion[], isAssessment: boolean }
+    // fullScreenContainer: HTMLElement | null = null
+    // forPreview = window.location.href.includes('/author/')
+
     constructor(public dialogRef: MatDialogRef<CompetenciesAssessmentComponent>,
+
         @Inject(MAT_DIALOG_DATA) public dData: NSCompetencie.ICompetencie) {
         this.quizJson = { timeLimit: 2, questions: [], isAssessment: true }
     }
     ngOnInit() {
 
     }
+
+   
 }
