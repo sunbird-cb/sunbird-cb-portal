@@ -21,7 +21,7 @@ export class CompetenciesAssessmentComponent implements OnInit {
     _ID = 'do_1135047568283648001115' // temp
     quizJson!: { timeLimit: Number, questions: NSPractice.IQuestion[], isAssessment: boolean }
     constructor(public dialogRef: MatDialogRef<CompetenciesAssessmentComponent>,
-        @Inject(MAT_DIALOG_DATA) public dData: NSCompetencie.ICompetencie) {
+                @Inject(MAT_DIALOG_DATA) public dData: NSCompetencie.ICompetencie) {
         this.quizJson = { timeLimit: 2, questions: [], isAssessment: true }
     }
     ngOnInit() {

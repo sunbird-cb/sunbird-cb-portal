@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material'
 // import { Router } from '@angular/router';
 // import { CompetenciesAssessmentComponent } from '../../components/competencies-assessment/competencies-assessment.component';
 
