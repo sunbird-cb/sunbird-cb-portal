@@ -94,7 +94,7 @@
 .respo_inner {
   padding: 0px 100px;
   @include breakpoint-lt-m {
-    padding: 0px 0px;
+    padding: 0px 12px;
   }
 }
 .mtf-flag {

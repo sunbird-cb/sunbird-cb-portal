@@ -240,7 +240,7 @@ export class PlayerPdfComponent extends WidgetBaseComponent
         },
         {
           module: WsEvents.EnumTelemetrymodules.LEARN,
-      })
+        })
     }
   }
   saveContinueLearning(id: string) {

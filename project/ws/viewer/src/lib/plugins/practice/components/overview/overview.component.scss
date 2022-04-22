@@ -13,10 +13,10 @@
 }
 
 .exam_image {
-    // @include breakpoint-md {
-    //     width: 100%;
-    // }
-    width: 100%;
+    width: 100%!important;
+    @include breakpoint-xs {
+       display: none;
+    }
 }
 
 .assessment_summary_box {

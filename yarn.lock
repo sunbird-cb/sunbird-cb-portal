@@ -1136,11 +1136,6 @@
     grunt-karma "^0.12.2"
     karma "^3.0.0"
 
-"@scarf/scarf@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@scarf/scarf/-/scarf-1.1.0.tgz#b84b4a91cd938a688d36245b7a7db6fbc476a499"
-  integrity sha512-b2iE8kjjzzUo2WZ0xuE2N77kfnTds7ClrDxcz3Atz7h2XrNVoAPUoT75i7CY0st5x++70V91Y+c6RpBX9MX7Jg==
-
 "@schematics/angular@8.3.29":
   version "8.3.29"
   resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-8.3.29.tgz#da747539230dae16111c56422339c02dbb17681d"
@@ -1173,10 +1168,10 @@
   resolved "https://registry.yarnpkg.com/@sunbird-cb/design-system/-/design-system-0.0.2.tgz#54793a7d5c5b6942319b6c1f3e4f63ef60548545"
   integrity sha512-oTZMfeNu+fi2muVbZUN9vw0mF28e/MvqFgYzgrLJ6vvw3JDxW3814U00x4Fym7Rm0tYc7vpckDFGSKXR3EFMaQ==
 
-"@sunbird-cb/discussions-ui-v8@2.0.69":
-  version "2.0.69"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/discussions-ui-v8/-/discussions-ui-v8-2.0.69.tgz#cdb92188f3e88e536e6390e874356f14633d0397"
-  integrity sha512-NQrkgHShtQEFTNWEVIMELh8832dc6FpcBjphhGKfsT5rOcNW3TQDNZ3pxnwImwQgavmMXJ2arTUz+KhKW8qIPQ==
+"@sunbird-cb/discussions-ui-v8@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/discussions-ui-v8/-/discussions-ui-v8-2.1.0.tgz#fbbe6a03475621d4a837dc97c52138d8770b3c32"
+  integrity sha512-KHBPSSoSH/y/GFhYgvy0fpUIyaH8Gzs4DtWUBQkZL9pZF/PnMEQT24/yWHI01HtDkXFLpzc5cTmcTj7exvqT5A==
   dependencies:
     tslib "^1.9.0"
 
@@ -7384,12 +7379,11 @@ ngx-image-cropper@^3.0.3:
   dependencies:
     tslib "^1.9.0"
 
-ngx-infinite-scroll@10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/ngx-infinite-scroll/-/ngx-infinite-scroll-10.0.0.tgz#b4effa2d1b2cb9b3488b02e25b8b2c913d099993"
-  integrity sha512-s+q8Yuq9Qjsb7hNaxgA3C2gmLz1Eu7834wcEc5jRJzEUsVpqRaJhmVHzUEu64pWbNdADB37A1bHR8bxfKVjtzA==
+ngx-infinite-scroll@8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-infinite-scroll/-/ngx-infinite-scroll-8.0.0.tgz#4fc1e1d1bb50baedc4793c28115faec656a8d027"
+  integrity sha512-9KRCFAszLttd735CY1GbqtiVRdEvAGWUL8FQqD+iBGitbhgws4OZS+qdKIV+lrJzYXh+Y2XnOOSiUFADOo4+fQ==
   dependencies:
-    "@scarf/scarf" "^1.1.0"
     opencollective-postinstall "^2.0.2"
 
 ngx-quill@^7.1.2:

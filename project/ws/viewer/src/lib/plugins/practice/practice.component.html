@@ -2,9 +2,9 @@
   [complexityLevel]="complexityLevel" [duration]="duration" [timeLimit]="quizJson?.timeLimit || 300"
   [primaryCategory]="primaryCategory" [noOfQuestions]="noOfQuestions" (userSelection)="getSections($event)">
 </viewer-overview>
-{{viewState}}===========
+
 <div #quizContainer class="quiz-container" *ngIf="viewState !== 'initial'">
-  <div class="flex flex-1 flex-column">
+  <div class="flex flex-1 flex-column quiz_inner_container">
     <nav class="quiz-nav-bar mat-toolbar mat-caption flex-column">
       <div class="flex flex-1">
         <!-- <span> -->
@@ -20,7 +20,7 @@
         <!-- <div class="flex"> -->
         <a disableRipple
           *ngIf="primaryCategory === ePrimaryCategory.PRACTICE_RESOURCE && !isSubmitted && viewState === 'detail'"
-          i18n-aria-label aria-label="Back" (click)="back()" class="no-border flex cursor-pointer">
+          i18n-aria-label aria-label="Back" (click)="back()" class="no-border flex cursor-pointer back_button">
           <mat-icon class="ws-mat-default-text">arrow_back</mat-icon>
           <span class="ws-mat-default-text subheading-1">Back to home </span>
         </a>
@@ -41,7 +41,7 @@
       </div>
       <div class="flex flex-column flex-end">
         <div *ngIf="viewState === 'detail'" class="flex flex-column">
-          {{viewState === 'detail'}}
+          <!-- {{viewState === 'detail'}} -->
           <ng-container [ngTemplateOutlet]="indicator"></ng-container>
         </div>
       </div>
@@ -97,11 +97,11 @@
         </div>
         <!-- {{current_Question | json}}
       {{currentQuestionIndex}} -->
-        <mat-card class="flex flex-1 flex-column margin-m pad-0"
+        <mat-card class="flex flex-1 flex-column margin-m pad-0 quest_mat_card"
           *ngIf="fetchingQuestionsStatus === 'done' && viewState !== 'detail' && !(viewState === 'answer') && !isSubmitted">
           <ng-container *ngIf="true">
             <div class="flex flex-1 padding-l card_inner_box flex-row">
-              <span class="mat-title margin-zero flex flex-1">{{selectedSection.name}}</span>
+              <span class="mat-title margin-bottom-remove flex flex-1 practice_card_title">{{selectedSection.name}}</span>
               <!-- <span class="spacer"></span> -->
               <ng-container [ngTemplateOutlet]="timer"></ng-container>
               <div class="flex flex-1 flex-row-reverse butto_box end">
@@ -163,9 +163,9 @@
         </mat-card>
         <ng-container *ngIf="fetchingQuestionsStatus === 'done'  && current_Question && !process">
           <ng-container *ngIf="viewState === 'attempt' && !isSubmitted">
-            <div class="flex flex-1 margin-top-l margin-left-xs">
+            <div class="flex flex-1 margin-top-l margin-left-xs bottom_box">
               <div class="flex flex-1 cen">
-                <mat-icon class="flex margin-left-xs margin-top-xs margin-bottom-xs">info_outline</mat-icon>
+                <mat-icon class="flex margin-top-xs margin-bottom-xs">info_outline</mat-icon>
                 <span class="flex mat-body-2 padding-xs" i18n>Attempt all questions to finish assessment</span>
               </div>
               <div class="flex flex-end margin-right-m">
@@ -309,7 +309,7 @@
 
 <ng-template #indicator>
   <div class="margin-m">
-    <div class="flex flex-end">
+    <div class="flex flex-end indicator_box">
       <span class="flex">
         <div class="sbox complete"></div>
         Completed
