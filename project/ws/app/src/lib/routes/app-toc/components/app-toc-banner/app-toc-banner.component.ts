@@ -223,7 +223,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         this.forPreview,
         // this.content.primaryCategory
         'Learning Resource',
-        this.getBatchId()
+        this.getBatchId(),
+        this.content.name,
       )
       this.actionSVC.setUpdateCompGroupO = this.resumeDataLink
     }
