@@ -4,6 +4,7 @@ import { Router } from '@angular/router'
 // import { DomSanitizer } from '@angular/platform-browser'
 // import * as svg from 'save-svg-as-png';
 // import domtoimage from 'dom-to-image';
+// import FileSaver from 'file-saver';
 // import { WidgetContentService } from '@sunbird-cb/collection/src/public-api';
 // var domtoimage = require('dom-to-image');
 // var download = require('downloadjs');
@@ -15,6 +16,10 @@ import { Router } from '@angular/router'
 })
 export class ProfileCertificateDialogComponent implements OnInit {
 
+  // @ViewChild('images',{
+  // static: false
+  // }) images: { nativeElement: Node; } | null | undefined;
+  // certLink: any
   url!: string
   courseImg: any
   courseName: any
@@ -40,6 +45,8 @@ export class ProfileCertificateDialogComponent implements OnInit {
     this.courseID = this.data.value.contentId
     this.userID = this.data.value.userId
     this.createNavigationUrl()
+
+    // this.downloadCertInLocal(this.url)
   }
 
   private createNavigationUrl() {
@@ -114,4 +121,53 @@ export class ProfileCertificateDialogComponent implements OnInit {
 
     return window.open(this.navUrl, '_blank')
   }
+
+//   downloadCertInLocal(cert:any){
+// console.log(this.images);
+
+// const img = new Image()
+// const url = cert
+// let link = ''
+// let cet = ''
+// img.onload = function () {
+//   const canvas: any = document.getElementById('certCanvas') || {}
+//   const ctx = canvas.getContext('2d')
+//   const imgWidth = img.width
+//   const imgHeight = img.height
+//   canvas.width = imgWidth
+//   canvas.height = imgHeight
+//   ctx.drawImage(img, 0, 0, imgWidth, imgHeight)
+//   let imgURI = canvas
+//     .toDataURL('image/jpeg')
+
+//   imgURI = decodeURIComponent(imgURI.replace('data:image/jpeg,', ''))
+//   cet = imgURI
+//   const arr = imgURI.split(',')
+//   const mime = arr[0].match(/:(.*?);/)[1]
+//   const bstr = atob(arr[1])
+//   let n = bstr.length
+//   const u8arr = new Uint8Array(n)
+//   while (n) {
+//     n = n - 1
+//     u8arr[n] = bstr.charCodeAt(n)
+//   }
+//   const blob = new Blob([u8arr], { type: mime })
+//   link = URL.createObjectURL(blob)
+// console.log(link);
+//   localStorage.setItem('certificate.jpeg', link)
+//   // FileSaver.saveAs(blob, 'certificate.jpeg')
+//   // if (localStorage.getItem(`certificate_downloaded_${self.content ? self.content.identifier : ''}`)) {
+//   //   localStorage.removeItem(`certificate_downloaded_${self.content ? self.content.identifier : ''}`)
+//   // }
+// }
+// setTimeout(() => {
+
+//   this.navUrl = "https://www.linkedin.com/shareArticle?title=I%20earned%20a%20certficiation&url=" + link
+//   console.log(this.navUrl)
+// }, 5000);
+
+// img.src = url
+
+// console.log(img)
+//   }
 }
