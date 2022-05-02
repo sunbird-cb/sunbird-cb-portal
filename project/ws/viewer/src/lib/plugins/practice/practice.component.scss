@@ -17,6 +17,7 @@ $nav-height: 40px;
   background: inherit;
 }
 
+
 .quiz-nav-bar {
   display: flex;
   justify-content: space-between;
@@ -27,15 +28,35 @@ $nav-height: 40px;
   // flex-wrap: wrap;
   // padding: 0 $size-s;
   padding: 0;
+  // height: 100px;
+
+  // @include breakpoint-xs {
+  //  height: 120px;
+  // }
 
   .spacer {
     flex: 1 1 auto;
   }
 }
 
+.back_button {
+  @include breakpoint-xs {
+    margin-top:8px!important;
+  }
+}
+
+.indicator_box {
+  @include breakpoint-xs {
+    flex-direction: column;
+  }
+}
+
 .sidenav-container {
   flex: 1 1 auto;
-  height: calc(100% - #{$nav-height});
+  // height: calc(100% - #{$nav-height});
+}
+.quiz_inner_container {
+  height: auto;
 }
 
 .circle {
@@ -96,6 +117,24 @@ $nav-height: 40px;
     margin: $size-s;
   }
 }
+.quest_mat_card {
+  @include breakpoint-xs {
+    margin:0!important;
+  }
+}
+
+.bottom_box {
+  @include breakpoint-xs {
+    flex-direction: column!important;
+  }
+}
+
+.practice_card_title {
+  @include breakpoint-xs {
+    margin-bottom:12px!important;
+  }
+}
+
 .no-border {
   box-shadow: none !important;
 }
@@ -161,6 +200,10 @@ $nav-height: 40px;
   border-radius: 0;
   margin-right: 4px;
   margin-left: 12px;
+
+  @include breakpoint-xs {
+   margin-bottom: 12px;
+  }
 }
 .quest_num_box {
   overflow-y: auto;

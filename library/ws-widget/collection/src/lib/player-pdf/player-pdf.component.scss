@@ -11,10 +11,15 @@
 
 .pdf-page-container {
   // width: calc(100% - 80px);
+  // flex: 1;
+  // text-align: center;
+  // overflow: auto;
+  // margin: auto;
   flex: 1;
-  text-align: center;
+  width: 100%;
   overflow: auto;
   margin: auto;
+  text-align: -webkit-center;
 }
 
 .pdf-page-num {

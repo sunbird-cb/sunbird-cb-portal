@@ -1,12 +1,16 @@
 <mat-card class="no-shadow flex flex-1">
  
   <mat-card-content>
+    <div #images>
       <img
-        [src]="url | pipeSafeSanitizer: 'url'"
-        alt="Certificate"
-        role="image"
-        class="certificate-banner-image"
-      />
+      [src]="url | pipeSafeSanitizer: 'url'"
+      alt="Certificate"
+      role="image"
+      class="certificate-banner-image"
+    />
+    </div>
+    <!-- <canvas id="certCanvas"  class="certificate-banner-image"></canvas> -->
+      
 
   </mat-card-content>
 

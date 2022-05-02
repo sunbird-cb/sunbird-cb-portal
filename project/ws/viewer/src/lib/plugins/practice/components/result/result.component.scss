@@ -2,14 +2,23 @@
 @import "ws-vars";
 
 .percent-div {
-    position: absolute;
-    top: 15%;
-    left: 18%;
-    z-index: 2;
-    width: 312px;
-    height: 369px;
+
+    // position: absolute;
+    // top: 15%;
+    // left: 18%;
+    // z-index: 2;
+    // width: 312px;
+    // height: 369px;
     // background: #fff;
     // box-shadow: 2px 5px 11px rgb(0 0 0 / 21%);
+    position: absolute;
+    left: 50%;
+    margin-left: -156px;
+    z-index: 2;
+    top: 50%;
+    margin-top: -250px;
+    width: 312px;
+    height: 369px;
 }
 .transform15 {
     transform: scale(1.5);
@@ -28,6 +37,9 @@
 }
 .result_image_box {
     overflow: hidden;
+}
+.result_image {
+    width: 100%;
 }
 .flex-2 {
     flex: 2;
@@ -147,7 +159,7 @@
         flex-direction: column;
     }
 }
-.retake{
+.retake {
     max-height: 36px;
     max-width: fit-content;
 }

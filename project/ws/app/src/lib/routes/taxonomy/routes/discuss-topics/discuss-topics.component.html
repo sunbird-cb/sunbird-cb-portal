@@ -1,0 +1,49 @@
+
+<div class="container-balanced min-height">
+  <div *ngIf="currentRoute === 'home'" class="margin-top-s">
+    <ng-container [wsResolverWidget]="banner"></ng-container>
+  </div>
+  <!-- <div class="flex flex-2 search">
+    <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'"  style="width: 27%">
+      <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+      <mat-placeholder>Search user</mat-placeholder> -->
+      <!-- <input [(ngModel)]="nameFilter" (ngModelChange)="searchUser()" matInput type="search"> -->
+      <!-- <mat-label>Search</mat-label>
+      <input type="search" #searchInput class="ml-2" matInput
+        type="search" [placeholder]="'Search'" />
+    </mat-form-field>
+  </div> -->
+
+  <mat-sidenav-container name="discuss-menu" class="min-height">
+    <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 sidenav-align">
+      <app-discuss-left-menu [unseen]="unread" [tabsData] = "firstLevelTopic"  (currentTab)="selectedEvent($event)"></app-discuss-left-menu>
+    </mat-sidenav>
+    <mat-sidenav-content class="sidenav-align-cont">
+      <div *ngIf="screenSizeIsLtMedium">
+        <button type="button" mat-icon-button (click)="sideNavBarOpened = !sideNavBarOpened"
+          id="ws-auth-root-home-btn-menu" name="ws-auth-root-home-btn-menu">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+      <div class="flex flex-4">
+      <ws-widget-breadcrumbs-org [widgetData]="{titles: tempArr}" *ngIf="nextLevelTopic">
+      </ws-widget-breadcrumbs-org>
+      </div>
+      <div class="flex flex-4 bot">
+        <app-dicuss-card *ngIf="nextLevelTopic"[tags]="nextLevelTopic"  (clickedTab)="getClickedTab($event)"></app-dicuss-card>
+      </div>
+
+      <h2 *ngIf="relatedResource.length>0">CBPs</h2>
+      <div class="flex flex-1" *ngIf="nextLevelTopic">
+
+        <div class="margin-left-xll mb-1-imp flex flex-wrap">
+
+      <div *ngFor="let content of relatedResource" class="mb-8">
+        <ws-widget-card-content [widgetData]="content"></ws-widget-card-content>
+      </div>
+        </div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+</div>

@@ -30,14 +30,9 @@
       <!-- <div *ngIf="uploadSaveData" class="pr-4 flex items-center justify-center">
             <mat-spinner [diameter]="30"></mat-spinner>
           </div> -->
-      <button mat-raised-button
-        color="primary"
-        type="submit" 
-        i18n 
-        [disabled]="uploadSaveData || !signupForm?.valid"
+      <button mat-raised-button color="primary" type="submit" i18n [disabled]="uploadSaveData || !signupForm?.valid"
         (click)="onSubmit(signupForm)">
-
-        <ng-container i18n>Save Changes</ng-container>
+        Save Changes
       </button>
 
 
@@ -47,19 +42,6 @@
   </form>
 </div>
 
-<input
-  type="hidden"
-  i18-value
-  i18-aria-value
-  aria-value="Signup successful"
-  value="Thanks for Signing up"
-  #toastSuccess
-/>
-<input
-  type="hidden"
-  i18-value
-  i18-aria-value
-  aria-value="unable to signup"
-  value="Error Signing up!"
-  #toastError
-/>
+<input type="hidden" i18-value i18-aria-value aria-value="Signup successful" value="Thanks for Signing up"
+  #toastSuccess />
+<input type="hidden" i18-value i18-aria-value aria-value="unable to signup" value="Error Signing up!" #toastError />

@@ -1,0 +1,14 @@
+
+
+// .competency_main_box {
+//     width: 100%!important;
+//     border: 2px solid yellow;
+// }
+
+.competency_main {
+    width: 100%!important;
+}
+
+::ng-deep .mat-drawer-content {
+    overflow: hidden;
+}

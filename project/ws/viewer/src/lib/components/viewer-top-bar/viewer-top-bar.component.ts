@@ -152,6 +152,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   finishDialog() {
     const dialogRef = this.dialog.open(CourseCompletionDialogComponent, {
       autoFocus: false,
+      data: { courseName: this.activatedRoute.snapshot.queryParams.courseName },
     })
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {

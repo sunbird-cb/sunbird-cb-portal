@@ -40,7 +40,7 @@ export class ProfileCretificationsV2Component extends WidgetBaseComponent implem
     let dat
     if (date) {
 
-      dat = `Issued on ${moment(date, 'DD-MM-YYYY').format('MMMM YYYY')}`
+      dat = `Issued on ${moment(date).format('MMM YYYY')}`
     } else {
       dat = 'Certificate Not issued '
     }

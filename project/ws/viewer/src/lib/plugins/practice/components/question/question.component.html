@@ -1,6 +1,6 @@
 <mat-card *ngIf="!(question?.questionType === 'mtf' || question?.questionType === 'ftb')"
   class="flex flex-1 respo margin-bottom-m no-shadow">
-  <div class="respo flex flex-1 flex-column padding-top-m padding-left-l ws-mat-accent-border right-border">
+  <div class="respo flex flex-1 flex-column padding-top-m  ws-mat-accent-border right-border">
     <div class="flex flex-1- flex-column respo_inner">
       <div class="flex flex-middle">
         <h3 class="mat-subheading-2 ws-mat-black60-text margin-bottom-m">
@@ -80,7 +80,7 @@
       <mat-icon *ngIf="isQuestionMarked()">flag</mat-icon>
     </button>
   </div>
-  <div class="respo-new flex flex-1 flex-column padding-top-m padding-left-l">
+  <div class="respo-new flex flex-1 flex-column padding-top-m">
     <div class="flex flex-1- flex-column respo_inner">
       <div [ngClass]="{'flex-middle flex-center' : question?.questionType === 'mtf'}" class="flex">
         <h3 class="mat-subheading-2 ws-mat-black60-text margin-bottom-m">

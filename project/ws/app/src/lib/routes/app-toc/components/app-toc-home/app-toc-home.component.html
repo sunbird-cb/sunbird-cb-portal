@@ -27,7 +27,7 @@ TODO: edit option while preview Mode
         <!-- <div class="flex mat-app-background" #stickyMenu >
         <nav mat-tab-nav-bar class="toc-links fixed-width" aria-label="content navigation">
           <a mat-tab-link [routerLink]='"./single-page-view"' fragment="overview" i18n-aria-label aria-label="overview"
-            class="tab" [ngClass]="{'ws-mat-primary-text link-active': currentFragment === 'overview'}" 
+            class="tab" [ngClass]="{'ws-mat-primary-text link-active': currentFragment === 'overview'}"
             [queryParams]="{batchId: getBatchId()}" i18n>
             <span i18n class="margin-top-m mat-title">Overview</span>
           </a>
@@ -43,7 +43,7 @@ TODO: edit option while preview Mode
           </a>
 
           <a *ngIf="content?.children?.length" mat-tab-link [routerLink]='"./single-page-view"' i18n-aria-label
-            class="tab" fragment="content"  [ngClass]="{'ws-mat-primary-text link-active': currentFragment === 'content'}" 
+            class="tab" fragment="content"  [ngClass]="{'ws-mat-primary-text link-active': currentFragment === 'content'}"
             [queryParams]="{batchId: getBatchId()}" i18n>
             <span i18n class="margin-top-m mat-title">Content</span>
           </a>
@@ -159,7 +159,7 @@ TODO: edit option while preview Mode
                 <span class="mat-subheading-1" i18n> No Active Batches!.</span>
               </ng-container>
               <ng-container *ngIf="
-              isBatchInProgress && 
+              isBatchInProgress &&
               (actionBtnStatus === 'grant' &&
               !(isMobile && content?.isInIntranet) &&
              (content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId))
@@ -236,7 +236,12 @@ TODO: edit option while preview Mode
         </ws-widget-content-progress>
       </ng-container> -->
       <ng-container *ngIf="content?.completionStatus < 2 && isBatchInProgress">
+       <div class="flex flex-row justify-between w-full">
         <p class="mat-body-2 font-bold-imp ws-mat-black60-text">Your progress</p>
+
+        <span *ngIf="content?.completionPercentage > 0"> {{ content?.completionPercentage }} %</span>
+       </div>
+
         <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
           [contentId]="content?.identifier" [progress]="content?.completionPercentage" [progressType]="'percentage'">
         </ws-widget-content-progress>

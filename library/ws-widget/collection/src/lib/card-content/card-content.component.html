@@ -736,10 +736,22 @@
               :widgetData.content?.primaryCategory">
             </ws-widget-display-content-type> -->
 
-             <div *ngIf="widgetData.content.duration" class="duration">
+            <div class="flex flex-row justify-between w-full">
+              <div *ngIf="widgetData.content.duration" class="duration flex ">
                 <!-- <mat-icon>access_time</mat-icon> -->
                 <span class="time-text ws-mat-black60-text">{{ widgetData.content.duration | pipeDurationTransform: 'hms' }}</span>
               </div>
+
+              <div *ngIf="widgetData.content?.completionStatus == 2" class="flex">
+                <p class="margin-remove-bottom">100%</p>
+              </div>
+              <div *ngIf="widgetData.content?.completionStatus < 2" class="flex">
+                <p class="margin-remove-bottom"> {{ widgetData.content?.completionPercentage }} %</p>
+                <!-- <p *ngIf="widgetData.content?.completionPercentage > 0" class="margin-remove-bottom"> {{ widgetData.content?.completionPercentage }} %</p> -->
+              </div>
+
+
+            </div>
               <!-- <div *ngIf="!widgetData.content.duration" class="duration">
                 <mat-icon>access_time</mat-icon>
                 <span class="time-text">0.0m</span>
@@ -791,7 +803,7 @@
   <mat-card class="card-wide margin-bottom-m padding-remove position-relative flex">
     <div class="imageholder ">
       <img mat-card-image class="margin-remove"
-      [src]="widgetData.content.appIcon" [wsUtilsDefaultThumbnail]="defaultThumbnail"
+      [src]="widgetData.content.posterImage || widgetData.content.appIcon" [wsUtilsDefaultThumbnail]="defaultThumbnail"
       [alt]="widgetData.content.name">
       <div class="source-div" [hidden]="true">
         <!-- [src]="sourseIcon(widgetData.content.sourceName)" -->

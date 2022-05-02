@@ -1138,6 +1138,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         ...this.resumeDataLink.queryParams,
         batchId: this.getBatchId(),
         viewMode: 'RESUME',
+        // courseName: this.content ? this.content.name : '',
       }
       if (this.contextId && this.contextPath) {
         qParams = {
