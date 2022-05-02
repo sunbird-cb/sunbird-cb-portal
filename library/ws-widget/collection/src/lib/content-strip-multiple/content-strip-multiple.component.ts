@@ -217,6 +217,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     this.fetchFromEnrollmentList(strip, calculateParentStatus)
     this.fetchRelatedCBP(strip, calculateParentStatus)
     this.fetchRecommendedCourses(strip, calculateParentStatus)
+    this.fetchMandatoryCourses(strip, calculateParentStatus)
   }
   fetchFromApi(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.api && Object.keys(strip.request.api).length) {
@@ -438,6 +439,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
             const dateB: any = new Date(b.enrolledDate || 0)
             return dateB - dateA
           })
+
           this.processStrip(
             strip,
             this.transformContentsToWidgets(contentNew, strip),
@@ -531,6 +533,94 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     }
   }
 
+  fetchMandatoryCourses(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
+    if (strip.request && strip.request.mandatoryCourses && Object.keys(strip.request.mandatoryCourses).length) {
+      let userId = ''
+      let content: NsContent.IContent[] = []
+      let contentNew: NsContent.IContent[] = []
+      const queryParams = _.get(strip.request.enrollmentList, 'queryParams')
+      if (this.configSvc.userProfile) {
+        userId = this.configSvc.userProfile.userId
+      }
+      const originalFilters: any = strip.request &&
+      strip.request.mandatoryCourses &&
+      strip.request.mandatoryCourses.request.filters
+      strip.request.mandatoryCourses.request.filters = this.getFiltersFromArray(
+        originalFilters,
+      )
+
+      this.userSvc.fetchUserBatchList(userId, queryParams).subscribe(
+        (courses: any) => {
+          const goals = courses.reduce((acc: any[], cur: any) => {
+            if (cur && cur.content && cur.content.primaryCategory === 'Courses') {
+              acc.push(cur)
+              return acc
+            }
+            return acc
+          }, [])
+          console.log('goals ::', goals)
+          const showViewMore = Boolean(
+            goals.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
+          )
+          const viewMoreUrl = showViewMore
+            ? {
+              path: '/app/globalsearch',
+              queryParams: {
+                tab: 'Learn',
+                q: strip.request && strip.request.mandatoryCourses && strip.request.mandatoryCourses.query,
+                f:
+                  strip.request && strip.request.mandatoryCourses && strip.request.mandatoryCourses.filters
+                    ? JSON.stringify(
+                      // this.searchServSvc.transformmandatoryCoursesFilters(
+                      strip.request.mandatoryCourses.filters
+                      // ),
+                    )
+                    : {},
+              },
+            }
+            : null
+          if (goals && goals.length) {
+            content = goals.map((c: any) => {
+              const contentTemp: NsContent.IContent = c.content
+              contentTemp.batch = c.batch
+              contentTemp.completionPercentage = c.completionPercentage || 0
+              contentTemp.completionStatus = c.completionStatus || 0
+              return contentTemp
+            })
+          }
+          // To filter content with completionPercentage > 0,
+          // so that only those content will show in home page
+          // continue learing strip
+          // if (content && content.length) {
+          //   contentNew = content.filter((c: any) => {
+          //     if (c.completionPercentage && c.completionPercentage > 0) {
+          //       return c
+          //     }
+          //   })
+          // }
+
+          // To sort in descending order of the enrolled date
+          contentNew = content.sort((a: any, b: any) => {
+            const dateA: any = new Date(a.enrolledDate || 0)
+            const dateB: any = new Date(b.enrolledDate || 0)
+            return dateB - dateA
+          })
+
+          this.processStrip(
+            strip,
+            this.transformContentsToWidgets(contentNew, strip),
+            'done',
+            calculateParentStatus,
+            viewMoreUrl,
+          )
+        },
+        () => {
+          this.processStrip(strip, [], 'error', calculateParentStatus, null)
+        }
+      )
+    }
+  }
+
   fetchRelatedCBP(strip: any, calculateParentStatus = true) {
     if (strip.request && strip.request.comprelatedCbp && Object.keys(strip.request.comprelatedCbp).length) {
       // let userId = ''
@@ -593,6 +683,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       widgetHostClass: 'mb-2',
       widgetData: {
         content,
+        ...(content.batch && { batch: content.batch }),
         cardSubType: strip.stripConfig && strip.stripConfig.cardSubType,
         context: { pageSection: strip.key, position: idx },
         intranetMode: strip.stripConfig && strip.stripConfig.intranetMode,
@@ -728,7 +819,8 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         (strip.request.ids && Object.keys(strip.request.ids).length) ||
         (strip.request.enrollmentList && Object.keys(strip.request.enrollmentList).length) ||
         (strip.request.comprelatedCbp && Object.keys(strip.request.comprelatedCbp).length) ||
-        (strip.request.recommendedCourses && Object.keys(strip.request.recommendedCourses).length)
+        (strip.request.recommendedCourses && Object.keys(strip.request.recommendedCourses).length) ||
+        (strip.request.mandatoryCourses && Object.keys(strip.request.mandatoryCourses).length)
       )
     ) {
       return true

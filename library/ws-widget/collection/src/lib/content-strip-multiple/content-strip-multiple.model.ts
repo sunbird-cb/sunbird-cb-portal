@@ -38,6 +38,7 @@ export namespace NsContentStripMultiple {
       comprelatedCbp?: any
       recommendedCourses?: any
       masterCompetency?: any
+      mandatoryCourses?: any
     }
     searchV6Type?: 'KB' | 'Collections' | 'searchQuery' | null
     stripBackground?: string

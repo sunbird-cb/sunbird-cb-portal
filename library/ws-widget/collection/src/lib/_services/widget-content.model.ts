@@ -19,7 +19,8 @@ export namespace NsContent {
     appIcon: string
     artifactUrl: string
     averageRating?: any
-    batches: any
+    // this will be used to content form enrollment user list 
+    batch?: any
     body?: string
     certificationList?: IRelatedContentMeta[]
     certificationStatus?: TCertificationStatus
