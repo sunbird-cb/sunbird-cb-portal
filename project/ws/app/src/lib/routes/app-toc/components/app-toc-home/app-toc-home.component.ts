@@ -301,9 +301,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (this.routerParamSubscription) {
       this.routerParamSubscription.unsubscribe()
     }
-    if (this.routeSubscription) {
-      this.routeSubscription.unsubscribe()
-    }
   }
 
   ngAfterViewChecked(): void {
@@ -499,6 +496,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.ratingSvc.getRating(this.content.identifier, this.content.primaryCategory, this.userId).subscribe(
           (res: any) =>  {
             this.userRating = res.result.response[0]
+            this.tocSvc.changeUpdateReviews(true)
             // this.userRating = {
             //   commentupdatedon: null,
             //   commentby: null,
