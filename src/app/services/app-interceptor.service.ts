@@ -61,7 +61,7 @@ export class AppInterceptorService implements HttpInterceptor {
           catchError(error => {
             if (error instanceof HttpErrorResponse) {
               const localUrl = location.origin
-              const pageName = '/page/home'
+              // const pageName = '/page/home'
               switch (error.status) {
                 case 0:
                   if (localUrl.includes('localhost')) {
