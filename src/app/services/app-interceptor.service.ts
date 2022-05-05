@@ -79,13 +79,14 @@ export class AppInterceptorService implements HttpInterceptor {
                   if (localStorage.getItem('telemetrySessionId')) {
                     localStorage.removeItem('telemetrySessionId')
                   }
-                  if (localUrl.includes('localhost')) {
-                    // tslint:disable-next-line: prefer-template
-                    window.location.href = error.error.redirectUrl + `?q=${localUrl}${pageName}`
-                  } else {
-                    // tslint:disable-next-line: prefer-template
-                    window.location.href = error.error.redirectUrl + `?q=${pageName}`
-                  }
+                  // if (localUrl.includes('localhost')) {
+                  //   // tslint:disable-next-line: prefer-template
+                  //   window.location.href = error.error.redirectUrl + `?q=${localUrl}${pageName}`
+                  // } else {
+                  //   // tslint:disable-next-line: prefer-template
+                  //   window.location.href = error.error.redirectUrl + `?q=${pageName}`
+                  // }
+                  window.location.href = '/apis/reset'
                   break
               }
             }
