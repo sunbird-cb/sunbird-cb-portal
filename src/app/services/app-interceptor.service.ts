@@ -61,7 +61,7 @@ export class AppInterceptorService implements HttpInterceptor {
           catchError(error => {
             if (error instanceof HttpErrorResponse) {
               const localUrl = location.origin
-              // const pageName = '/page/home'
+              const pageName = '/page/home'
               switch (error.status) {
                 case 0:
                   if (localUrl.includes('localhost')) {
@@ -79,14 +79,14 @@ export class AppInterceptorService implements HttpInterceptor {
                   if (localStorage.getItem('telemetrySessionId')) {
                     localStorage.removeItem('telemetrySessionId')
                   }
-                  // if (localUrl.includes('localhost')) {
-                  //   // tslint:disable-next-line: prefer-template
-                  //   window.location.href = error.error.redirectUrl + `?q=${localUrl}${pageName}`
-                  // } else {
-                  //   // tslint:disable-next-line: prefer-template
-                  //   window.location.href = error.error.redirectUrl + `?q=${pageName}`
-                  // }
-                  window.location.href = '/apis/reset'
+                  if (localUrl.includes('localhost')) {
+                    // tslint:disable-next-line: prefer-template
+                    window.location.href = error.error.redirectUrl + `?q=${localUrl}${pageName}`
+                  } else {
+                    // tslint:disable-next-line: prefer-template
+                    window.location.href = error.error.redirectUrl + `?q=${pageName}`
+                  }
+                  // window.location.href = '/apis/reset'
                   break
               }
             }
