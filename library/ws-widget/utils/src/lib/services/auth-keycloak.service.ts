@@ -153,13 +153,13 @@ export class AuthKeycloakService {
     // alert(`${redirectUrl}apis/reset`)
     // window.location.href = `${redirectUrl}apis/reset`
     // window.location.href = 'http://localhost:3003/reset'
-    await this.http.get('/apis/reset').toPromise()
-    setTimeout(window.location.href = redirectUrl, 13000)
+    //  this.http.get('/apis/reset').toPromise()
+    setTimeout(window.location.href = `${redirectUrl}apis/reset`, 13000)
     // logoutRedirectUrl = redirectUrl
     // if (this.msAuthSvc.isLogoutRequired) {
     //   this.keycloakSvc.logout(this.msAuthSvc.logoutUrl(redirectUrl))
     // } else {
-    this.keycloakSvc.logout(redirectUrl)
+    // this.keycloakSvc.logout(redirectUrl)
     // }
   }
 
