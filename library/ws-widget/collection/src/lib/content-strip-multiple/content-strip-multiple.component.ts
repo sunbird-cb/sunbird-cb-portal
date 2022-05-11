@@ -434,11 +434,13 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           // }
 
           // To sort in descending order of the enrolled date
-          contentNew = content.sort((a: any, b: any) => {
-            const dateA: any = new Date(a.enrolledDate || 0)
-            const dateB: any = new Date(b.enrolledDate || 0)
-            return dateB - dateA
-          })
+          if (content && content.length) {
+            contentNew = content.sort((a: any, b: any) => {
+              const dateA: any = new Date(a.enrolledDate || 0)
+              const dateB: any = new Date(b.enrolledDate || 0)
+              return dateB - dateA
+            })
+          }
 
           this.processStrip(
             strip,
@@ -552,19 +554,19 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       this.userSvc.fetchUserBatchList(userId, queryParams).subscribe(
         (courses: any) => {
           const goals = courses.reduce((acc: any[], cur: any) => {
-            if (cur && cur.content && cur.content.primaryCategory === 'Courses') {
+            if (cur && cur.content && cur.content.primaryCategory === NsContent.EPrimaryCategory.MANDATORY_COURSE_GOAL) {
               acc.push(cur)
               return acc
             }
             return acc
+          // tslint:disable-next-line: align
           }, [])
-          console.log('goals ::', goals)
           const showViewMore = Boolean(
-            goals.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
+            goals.length > 0 && strip.stripConfig && strip.stripConfig.postCardForSearch,
           )
           const viewMoreUrl = showViewMore
             ? {
-              path: '/app/globalsearch',
+              path: '/app/learn/mandatory-course',
               queryParams: {
                 tab: 'Learn',
                 q: strip.request && strip.request.mandatoryCourses && strip.request.mandatoryCourses.query,
@@ -600,11 +602,13 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           // }
 
           // To sort in descending order of the enrolled date
-          contentNew = content.sort((a: any, b: any) => {
-            const dateA: any = new Date(a.enrolledDate || 0)
-            const dateB: any = new Date(b.enrolledDate || 0)
-            return dateB - dateA
-          })
+          if (content && content.length) {
+            contentNew = content.sort((a: any, b: any) => {
+              const dateA: any = new Date(a.enrolledDate || 0)
+              const dateB: any = new Date(b.enrolledDate || 0)
+              return dateB - dateA
+            })
+          }
 
           this.processStrip(
             strip,
