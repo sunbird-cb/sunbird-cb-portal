@@ -260,7 +260,7 @@ export class InitService {
         userPidProfile = await this.http
           .get<any>(endpoint.profilePid)
           .pipe(map((res: any) => {
-            let roles = _.map(_.get(res, 'result.response.roles'), 'role')
+            const roles = _.map(_.get(res, 'result.response.roles'), 'role')
             _.set(res, 'result.response.roles', roles)
             return _.get(res, 'result.response')
           })).toPromise()
