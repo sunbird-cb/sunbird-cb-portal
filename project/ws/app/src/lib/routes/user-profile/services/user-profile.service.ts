@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators'
 
 const API_ENDPOINTS = {
   updateProfileDetails: '/apis/protected/v8/user/profileDetails/updateUser',
-  getUserdetailsFromRegistry: '/apis/proxies/v8/api/user/v2/read',
+  getUserdetailsFromRegistry: '/apis/proxies/v8/api/user/v5/read',
   getUserdetails: '/apis/protected/v8/user/details/detailV1',
   getMasterNationlity: '/apis/protected/v8/user/profileRegistry/getMasterNationalities',
   getMasterLanguages: '/apis/protected/v8/user/profileRegistry/getMasterLanguages',
