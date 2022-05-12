@@ -30,7 +30,9 @@
                             *ngFor="let rating of [1, 2, 3, 4, 5]">
                             {{ getRatingIcon(rating, review.rating) }}</mat-icon>
                         <!--  <span i18n>from</span> -->
-                        <span class="margin-left-s  ws-mat-black60-text mat-body-1"> {{review.date | pipeRelativeTime}}
+                        <span *ngIf="review?.date" class="margin-left-s  ws-mat-black60-text mat-body-1"> {{review.date | pipeRelativeTime}}
+                        </span>
+                        <span *ngIf="review?.updatedon" class="margin-left-s  ws-mat-black60-text mat-body-1"> {{review.updatedon | pipeRelativeTime}}
                         </span>
                     </div>
                     <div class="margin-top-m mat-body-1">

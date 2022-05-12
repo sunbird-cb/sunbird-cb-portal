@@ -77,6 +77,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   disableLoadMore = false
   displayLoader = false
   tabSelectedIndex = 0
+  updateReviewsSubscription: Subscription | null = null
   // configSvc: any
 
   constructor(
@@ -156,6 +157,12 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
         takeUntil(this.unsubscribe)
       ).subscribe()
 
+      this.updateReviewsSubscription =  this.tocSharedSvc.updateReviewsObservable.subscribe((value: boolean) => {
+        if (value) {
+          this.sortReviews(this.previousFilter)
+        }
+      })
+
   }
 
   ngOnChanges() {
@@ -189,6 +196,9 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     }
     if (this.routeQuerySubscription) {
       this.routeQuerySubscription.unsubscribe()
+    }
+    if (this.updateReviewsSubscription) {
+      this.updateReviewsSubscription.unsubscribe()
     }
   }
 

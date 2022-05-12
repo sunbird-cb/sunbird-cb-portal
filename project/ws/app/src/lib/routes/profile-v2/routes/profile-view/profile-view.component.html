@@ -148,6 +148,10 @@
           <!-- <ws-widget-profile-v2-academics *ngIf="pdfData" [widgetData]="tab"></ws-widget-profile-v2-academics> -->
 
           <ng-container *ngIf="tab && tab.render && tab.enabled">
+            <ng-container *ngIf="
+            portalProfile.id === currentUser ||
+            portalProfile.userId === currentUser
+          ">
             <ng-container
               *ngIf="tab.key === 'certifications'"
               [wsResolverWidget]="{
@@ -163,6 +167,7 @@
               }"
             >
           </ng-container>
+        </ng-container>
             <ng-container
               *ngIf="tab.key !== 'certifications'"
               [wsResolverWidget]="{

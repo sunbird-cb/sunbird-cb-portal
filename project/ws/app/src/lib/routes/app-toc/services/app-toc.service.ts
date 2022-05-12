@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Data } from '@angular/router'
-import { Subject, Observable, EMPTY, Subscription } from 'rxjs'
+import { Subject, Observable, EMPTY, Subscription, BehaviorSubject } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 import { NsContent, NsContentConstants } from '@sunbird-cb/collection'
 import { NsAppToc, NsCohorts } from '../models/app-toc.model'
@@ -42,6 +42,10 @@ export class AppTocService {
   resumeDataSubscription: Subscription | null = null
   primaryCategory = NsContent.EPrimaryCategory
 
+  private updateReviews = new BehaviorSubject(false)
+  updateReviewsObservable = this.updateReviews.asObservable()
+
+
   constructor(private http: HttpClient, private configSvc: ConfigurationsService) { }
 
   get subtitleOnBanners(): boolean {
@@ -67,6 +71,10 @@ export class AppTocService {
 
   updateResumaData(data: any) {
     this.resumeData.next(data)
+  }
+
+  changeUpdateReviews(state: boolean) {
+    this.updateReviews.next(state)
   }
 
   showStartButton(content: NsContent.IContent | null): { show: boolean; msg: string } {

@@ -61,7 +61,8 @@ export class AppInterceptorService implements HttpInterceptor {
           catchError(error => {
             if (error instanceof HttpErrorResponse) {
               const localUrl = location.origin
-              const pageName = '/page/home'
+              const pagePath = location.href || `${localUrl}/page/home`
+              const pageName = (location.href || '').replace(localUrl, '')
               switch (error.status) {
                 case 0:
                   if (localUrl.includes('localhost')) {
@@ -81,11 +82,12 @@ export class AppInterceptorService implements HttpInterceptor {
                   }
                   if (localUrl.includes('localhost')) {
                     // tslint:disable-next-line: prefer-template
-                    window.location.href = error.error.redirectUrl + `?q=${localUrl}${pageName}`
+                    window.location.href = error.error.redirectUrl + `?q= ${pagePath}`
                   } else {
                     // tslint:disable-next-line: prefer-template
-                    window.location.href = error.error.redirectUrl + `?q=${pageName}`
+                    window.location.href = error.error.redirectUrl + `?q=${pageName} `
                   }
+                  // window.location.href = '/apis/reset'
                   break
               }
             }
