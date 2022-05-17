@@ -11,7 +11,7 @@ const API_ENDPOINTS = {
   connectionEstablished: `/apis/protected/v8/connections/v2/connections/established`,
   getSuggestedUsers: `/apis/protected/v8/connections/v2/connections/suggests`,
   // getUserdetailsV2FromRegistry: '/apis/protected/v8/user/profileRegistry/getUserRegistryByUser',
-  getUserdetailsV2FromRegistry: '/apis/proxies/v8/api/user/v2/read',
+  getUserdetailsV2FromRegistry: '/apis/proxies/v8/api/user/v5/read',
 }
 
 @Injectable({

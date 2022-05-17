@@ -11,10 +11,10 @@ const API_ENDPOINTS = {
   searchCompetency: 'apis/protected/v8/frac/searchNodes',
   filterByMappings: 'apis/protected/v8/frac/filterByMappings',
   // searchCompetency: '/apis/protected/v8/competency/searchCompetency',
-  fetchProfileNyId: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`,
+  fetchProfileNyId: (id: string) => `/apis/proxies/v8/api/user/v5/read/${id}`,
   // fetchProfile: '/apis/protected/v8/user/profileDetails/getUserRegistry',
   fetchCompetencyDetails: (id: string, type: string) => `/apis/protected/v8/frac/getNodeById/${id}/${type}`,
-  fetchProfile: '/apis/proxies/v8/api/user/v2/read',
+  fetchProfile: '/apis/proxies/v8/api/user/v5/read',
   updateProfile: '/apis/protected/v8/user/profileDetails/updateUser',
   fetchWatCompetency: (id: string) => `/apis/protected/v8/workallocation/getUserCompetencies/${id}`,
 }
