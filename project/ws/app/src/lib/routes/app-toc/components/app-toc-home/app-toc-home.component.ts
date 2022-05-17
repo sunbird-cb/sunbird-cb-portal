@@ -495,7 +495,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (this.content && this.content.identifier && this.content.primaryCategory) {
         this.ratingSvc.getRating(this.content.identifier, this.content.primaryCategory, this.userId).subscribe(
           (res: any) =>  {
-            this.userRating = res.result.response[0]
+            this.userRating = res.result.response
             this.tocSvc.changeUpdateReviews(true)
             // this.userRating = {
             //   commentupdatedon: null,
