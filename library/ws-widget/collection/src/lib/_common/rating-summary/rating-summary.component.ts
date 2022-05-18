@@ -18,10 +18,10 @@ export class RatingSummaryComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-     if (this.ratingSummary && this.ratingSummary.breakDown) {
-      this.ratingSummary.breakDown = this.ratingSummary.breakDown.reverse()
-      // console.log('this.ratingSummary.breakDown', this.ratingSummary.breakDown)
-    }
+    //  if (this.ratingSummary && this.ratingSummary.breakDown) {
+    //   this.ratingSummary.breakDownReverse = this.ratingSummary.breakDown.reverse()
+    //   console.log('this.ratingSummary.breakDownReverse', this.ratingSummary.breakDownReverse)
+    // }
   }
 
   getRatingIcon(ratingIndex: number, avg: number): 'star' | 'star_border' | 'star_half' {
