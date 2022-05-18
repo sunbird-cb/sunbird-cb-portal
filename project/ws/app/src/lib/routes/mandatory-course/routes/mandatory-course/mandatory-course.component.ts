@@ -56,7 +56,7 @@ export class MandatoryCourseComponent implements OnInit, OnDestroy, OnChanges {
         const contentTemp: NsContent.IContent = c.content
         contentTemp.batch = c.batch
         contentTemp.completionPercentage = c.completionPercentage || 0
-        contentTemp.completionStatus = c.completionStatus || 0
+        contentTemp.completionStatus = c.status || 0
         return contentTemp
       })
     }
@@ -88,11 +88,11 @@ export class MandatoryCourseComponent implements OnInit, OnDestroy, OnChanges {
         if ((c.completionPercentage > 0 && c.completionPercentage < 100) || c.completionStatus === 1) {
           this.stats.inprogress = this.stats.inprogress + 1
         }
-        if (c.completionStatus === 0) {
+        if (c.completionPercentage === 0 || c.completionStatus === 0) {
           this.stats.notStarted = this.stats.notStarted + 1
         }
         if (c.completionStatus === 2 || c.completionPercentage >= 100) {
-          this.stats.completed = this.stats.notStarted + 1
+          this.stats.completed = this.stats.completed + 1
         }
       })
     }
