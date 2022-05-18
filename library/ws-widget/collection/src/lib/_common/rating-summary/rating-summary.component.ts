@@ -19,7 +19,7 @@ export class RatingSummaryComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
      if (this.ratingSummary && this.ratingSummary.breakDown) {
-      this.ratingSummary.breakDown = this.ratingSummary.breakDown.reverse()
+      this.ratingSummary.breakDownReverse = this.ratingSummary.breakDown.reverse()
       // console.log('this.ratingSummary.breakDown', this.ratingSummary.breakDown)
     }
   }
