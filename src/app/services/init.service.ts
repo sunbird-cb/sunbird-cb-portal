@@ -122,7 +122,10 @@ export class InitService {
     // }
     // Invalid User
     try {
-      await this.fetchStartUpDetails() // detail: depends only on userID
+      const path = window.location.pathname
+      if (!path.startsWith('/public')) {
+        await this.fetchStartUpDetails()
+      }// detail: depends only on userID
     } catch (e) {
       this.settingsSvc.initializePrefChanges(environment.production)
       this.updateNavConfig()

@@ -58,12 +58,13 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.router.events.subscribe((e: Event) => {
       if (e instanceof NavigationEnd) {
-        if ((e.url.includes('/app/setup') && this.configSvc.instanceConfig && !this.configSvc.instanceConfig.showNavBarInSetup)) {
+        if (e.url.includes('/public/logout')) {
+          this.showAppNavBar = false
+        } else if ((e.url.includes('/app/setup') && this.configSvc.instanceConfig && !this.configSvc.instanceConfig.showNavBarInSetup)) {
           this.showAppNavBar = false
         } else {
           this.showAppNavBar = true
         }
-
       }
     })
 
