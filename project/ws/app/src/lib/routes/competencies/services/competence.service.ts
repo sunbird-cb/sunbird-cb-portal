@@ -5,6 +5,7 @@ import { Observable } from 'rxjs'
 import { ConfigurationsService } from 'library/ws-widget/utils/src/public-api'
 import { map } from 'rxjs/operators'
 import { IUserProfileDetailsFromRegistry } from '../../user-profile/models/user-profile.model'
+import _ from 'lodash'
 
 const API_ENDPOINTS = {
   SEARCH_V6: `/apis/proxies/v8/sunbirdigot/search`,
@@ -45,7 +46,11 @@ export class CompetenceService {
 
   fetchProfileById(id: any): Observable<any> {
     return this.http.get<[IUserProfileDetailsFromRegistry]>(API_ENDPOINTS.fetchProfileNyId(id))
-      .pipe(map((res: any) => res.result.response))
+      .pipe(map((res: any) => {
+        const roles = _.map(_.get(res, 'result.response.roles'), 'role')
+        _.set(res, 'result.response.roles', roles)
+        return _.get(res, 'result.response')
+      }))
   }
 
   fetchCompetencyDetails(id: any, type: string): Observable<any> {

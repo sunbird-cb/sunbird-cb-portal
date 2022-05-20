@@ -26,6 +26,8 @@ export class ConnectionHoverService {
         // _.set(profile, '.', _.first(_.get(data, 'result.UserProfile')))
         // profile = _.first(_.get(data, 'result.UserProfile')) || null
         // profile = _.first(_.get(data.result.response, 'result.UserProfile')) || null
+        const roles = _.map(_.get(data, 'result.response.roles'), 'role')
+        _.set(data, 'result.response.roles', roles)
         profile = data.result.response
         return profile
       },
