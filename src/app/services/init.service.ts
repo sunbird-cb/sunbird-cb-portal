@@ -43,7 +43,7 @@ interface IFeaturePermissionConfigs {
 const PROXY_CREATE_V8 = '/apis/proxies/v8'
 
 const endpoint = {
-  profilePid: '/apis/proxies/v8/api/user/v5/read',
+  profilePid: '/apis/proxies/v8/api/user/v2/read',
   // profileV2: '/apis/protected/v8/user/profileRegistry/getUserRegistryById',
   // details: `/apis/protected/v8/user/details?ts=${Date.now()}`,
   CREATE_USER_API: `${PROXY_CREATE_V8}/discussion/user/v1/create`,
@@ -263,8 +263,8 @@ export class InitService {
         userPidProfile = await this.http
           .get<any>(endpoint.profilePid)
           .pipe(map((res: any) => {
-            const roles = _.map(_.get(res, 'result.response.roles'), 'role')
-            _.set(res, 'result.response.roles', roles)
+            // const roles = _.map(_.get(res, 'result.response.roles'), 'role')
+            // _.set(res, 'result.response.roles', roles)
             return _.get(res, 'result.response')
           })).toPromise()
         if (userPidProfile && userPidProfile.roles && userPidProfile.roles.length > 0 &&
