@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { NSNetworkDataV2 } from '../models/network-v2.model'
 import { map } from 'rxjs/operators'
+// tslint:disable
 import _ from 'lodash'
+// tslint:enable
 
 const API_ENDPOINTS = {
   getRecommendedUsers: '/apis/protected/v8/connections/v2/connections/recommended',

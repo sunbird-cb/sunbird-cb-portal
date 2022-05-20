@@ -5,7 +5,9 @@ import { Observable } from 'rxjs'
 import { ConfigurationsService } from 'library/ws-widget/utils/src/public-api'
 import { map } from 'rxjs/operators'
 import { IUserProfileDetailsFromRegistry } from '../../user-profile/models/user-profile.model'
+// tslint:disable
 import _ from 'lodash'
+// tslint:enable
 
 const API_ENDPOINTS = {
   SEARCH_V6: `/apis/proxies/v8/sunbirdigot/search`,
