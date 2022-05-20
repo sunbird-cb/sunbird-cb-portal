@@ -144,8 +144,8 @@ export class AuthKeycloakService {
       storage.removeItem('telemetrySessionId')
     }
     try {
-      sessionStorage.clear();
-      localStorage.clear();
+      sessionStorage.clear()
+      localStorage.clear()
     } catch {
 
     }
