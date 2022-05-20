@@ -9,8 +9,9 @@ import {
   IProfileMetaApiData,
 } from '../models/user-profile.model'
 import { map } from 'rxjs/operators'
-// tslint:disable-next-line
+// tslint:disable
 import _ from 'lodash'
+// tslint:enable
 
 const API_ENDPOINTS = {
   updateProfileDetails: '/apis/protected/v8/user/profileDetails/updateUser',
