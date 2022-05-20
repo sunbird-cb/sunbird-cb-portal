@@ -83,7 +83,7 @@
             </ws-utils-horizontal-scroller>
             </ng-container>
             <ng-container *ngIf="key !== 'continueLearning'" >
-              <ws-utils-horizontal-scroller *ngIf="getLength(stripsResultDataMap[key]) && showAccordion(key)">
+              <ws-utils-horizontal-scroller *ngIf="getLength(stripsResultDataMap[key]) && showAccordion(key)" [loadStatus]="'done'">
                 <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets; trackBy: tracker" [wsResolverWidget]="widget"></ng-container>
               </ws-utils-horizontal-scroller>
             </ng-container>

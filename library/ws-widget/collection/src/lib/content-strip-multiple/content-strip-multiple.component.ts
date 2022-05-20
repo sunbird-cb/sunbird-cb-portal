@@ -399,9 +399,8 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           )
           const viewMoreUrl = showViewMore
             ? {
-              path: '/app/globalsearch',
+              path: '/app/search/learning',
               queryParams: {
-                tab: 'Learn',
                 q: strip.request && strip.request.searchV6 && strip.request.searchV6.query,
                 f:
                   strip.request && strip.request.searchV6 && strip.request.searchV6.filters
@@ -417,8 +416,9 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           if (courses && courses.length) {
             content = courses.map(c => {
               const contentTemp: NsContent.IContent = c.content
-              contentTemp.completionPercentage = c.completionPercentage || 0
-              contentTemp.completionStatus = c.completionStatus || 0
+              contentTemp.completionPercentage = c.completionPercentage || c.progress || 0
+              contentTemp.completionStatus = c.completionStatus || c.status || 0
+              contentTemp.enrolledDate = c.enrolledDate || ''
               return contentTemp
             })
           }
@@ -427,6 +427,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           // continue learing strip
           // if (content && content.length) {
           //   contentNew = content.filter((c: any) => {
+          //     /** commented as both are 0 after enrolll */
           //     if (c.completionPercentage && c.completionPercentage > 0) {
           //       return c
           //     }
@@ -434,14 +435,11 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           // }
 
           // To sort in descending order of the enrolled date
-          if (content && content.length) {
-            contentNew = content.sort((a: any, b: any) => {
-              const dateA: any = new Date(a.enrolledDate || 0)
-              const dateB: any = new Date(b.enrolledDate || 0)
-              return dateB - dateA
-            })
-          }
-
+          contentNew = (content || []).sort((a: any, b: any) => {
+            const dateA: any = new Date(a.enrolledDate || 0)
+            const dateB: any = new Date(b.enrolledDate || 0)
+            return dateB - dateA
+          })
           this.processStrip(
             strip,
             this.transformContentsToWidgets(contentNew, strip),
@@ -562,7 +560,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           // tslint:disable-next-line: align
           }, [])
           const showViewMore = Boolean(
-            goals.length > 0 && strip.stripConfig && strip.stripConfig.postCardForSearch,
+            goals.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
           )
           const viewMoreUrl = showViewMore
             ? {
