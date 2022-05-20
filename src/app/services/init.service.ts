@@ -319,7 +319,7 @@ export class InitService {
             }
           }
         } else {
-          this.authSvc.logout()
+          this.authSvc.force_logout()
         }
         const details = {
           group: [],
