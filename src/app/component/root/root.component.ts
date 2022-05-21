@@ -30,7 +30,6 @@ import {
   UtilityService,
   EventService,
   WsEvents,
-  AuthKeycloakService,
 } from '@sunbird-cb/utils'
 import { delay, first } from 'rxjs/operators'
 import { MobileAppsService } from '../../services/mobile-apps.service'
@@ -81,7 +80,7 @@ export class RootComponent implements OnInit, AfterViewInit {
     private logger: LoggerService,
     private swUpdate: SwUpdate,
     private dialog: MatDialog,
-    public authSvc: AuthKeycloakService,
+    // public authSvc: AuthKeycloakService,
     public configSvc: ConfigurationsService,
     private valueSvc: ValueService,
     private telemetrySvc: TelemetryService,
@@ -153,8 +152,8 @@ export class RootComponent implements OnInit, AfterViewInit {
   }
   @HostListener('window:unload', ['$event'])
   unloadHandler(event: any) {
-    if (event && event.type==='unload') {
-      this.authSvc.logout()
+    if (event && event.type === 'unload') {
+      // this.authSvc.logout()
     }
   }
   openIntro() {

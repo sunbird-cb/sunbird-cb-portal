@@ -45,7 +45,6 @@ export class AppTocService {
   private updateReviews = new BehaviorSubject(false)
   updateReviewsObservable = this.updateReviews.asObservable()
 
-
   constructor(private http: HttpClient, private configSvc: ConfigurationsService) { }
 
   get subtitleOnBanners(): boolean {

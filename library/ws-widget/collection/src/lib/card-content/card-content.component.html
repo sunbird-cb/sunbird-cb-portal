@@ -713,11 +713,192 @@
               class="mat-subheading-1 title-text ws-mat-text-block-fade-gradient">
               {{ widgetData.content.name }}
             </div>
+            <div class="mat-body-2 ws-mat-primary-text description-text ws-mat-text-block-fade-gradient mb-2">
+              {{ widgetData.content.description | pipeHtmlTagRemoval }}
+
+              <!-- {{widgetData.content | json}} -->
+              <!-- {{widgetData.content.sourceName}} -->
+            </div>
+            <div class="mat-body-2  mb-5" *ngIf="widgetData?.content?.batch?.endDate">
+              Deadline : {{ widgetData?.content?.batch?.endDate | date: "d MMM yyyy" }}
+            </div>
+          </a>
+          <div class="mt-4 mb-2 flex justify-between items-center absolute bottom-0 left-0 right-0 px-3 py-2">
+            <!-- <ws-widget-display-content-type
+              i18n-title
+              title="Content Type"
+              *ngIf="widgetData.content?.displayContentType"
+              class="ws-mat-primary-text font-normal"
+              [displayContentType]="widgetData.content?.displayContentType"
+            >
+            </ws-widget-display-content-type> -->
+
+              <!-- <ws-widget-display-content-type i18n-title title="Content Type" *ngIf="widgetData.content?.primaryCategory"
+              class="ws-mat-primary-text font-normal" [displayContentType]="widgetData.content?.primaryCategory==='Course Unit'
+              ?'Module'
+              :widgetData.content?.primaryCategory">
+            </ws-widget-display-content-type> -->
+
+            <div class="flex flex-row justify-between w-full">
+              <div *ngIf="widgetData.content.duration" class="duration flex ">
+                <!-- <mat-icon>access_time</mat-icon> -->
+                <span class="time-text ws-mat-black60-text">{{ widgetData.content.duration | pipeDurationTransform: 'hms' }}</span>
+              </div>
+
+              <div *ngIf="widgetData.content?.completionStatus == 2" class="flex">
+                <p class="margin-remove-bottom">100%</p>
+              </div>
+              <div *ngIf="widgetData.content?.completionStatus < 2" class="flex">
+                <p class="margin-remove-bottom"> {{ widgetData.content?.completionPercentage }} %</p>
+                <!-- <p *ngIf="widgetData.content?.completionPercentage > 0" class="margin-remove-bottom"> {{ widgetData.content?.completionPercentage }} %</p> -->
+              </div>
+
+
+            </div>
+              <!-- <div *ngIf="!widgetData.content.duration" class="duration">
+                <mat-icon>access_time</mat-icon>
+                <span class="time-text">0.0m</span>
+              </div> -->
+
+            <div class="flex items-center">
+              <!-- <ng-container [ngTemplateOutlet]="rating"></ng-container>
+              <button type="button" mat-icon-button i18n-aria-label [matMenuTriggerFor]="cardMenu">
+                <mat-icon>more_vertical</mat-icon>
+
+              </button> -->
+              <!-- <mat-icon class="mat-icon ws-mat-black60-text">share</mat-icon> -->
+            </div>
+          </div>
+          <ng-container *ngIf="widgetData.content?.completionStatus == 2">
+            <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
+              [contentId]="widgetData.content?.identifier" [progress]="100"
+              [progressType]="'percentage'">
+            </ws-widget-content-progress>
+          </ng-container>
+          <ng-container *ngIf="widgetData.content?.completionStatus < 2">
+            <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
+            [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.completionPercentage"
+            [progressType]="'percentage'">
+          </ws-widget-content-progress>
+          </ng-container>
+
+        </mat-card-content>
+      </ng-container>
+      <ng-container *ngIf="isCardFlipped">
+        <div class="flex items-center">
+          <h2 class="mat-subheading-2 flex-1 min-w-0 margin-remove-bottom" i18n>Reason</h2>
+          <button mat-icon-button (click)="isCardFlipped = false">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <p class="text-justify mat-body-1">
+          {{ widgetData.content.reason }}
+        </p>
+      </ng-container>
+
+
+
+    </div>
+  </mat-card>
+</ng-template>
+
+<ng-template #cardStandardGoals>
+  <mat-card class="card-standard-container goals mr-6" [ngClass]="{
+      greyOut:
+        widgetData.deletedMode === 'greyOut' && !isLiveOrMarkForDeletion
+          ? true
+          : widgetData?.intranetMode === 'greyOut' && showIntranetContent
+    }" (click)="(showIntranetContent || !isLiveOrMarkForDeletion) && showSnackbar()">
+    <!-- <ws-widget-content-progress
+      class="progress-bar"
+      *ngIf="widgetData.content?.identifier"
+      [contentId]="widgetData.content?.identifier"
+    ></ws-widget-content-progress> -->
+    <div class="display-contents" [ngClass]="{
+        disableClick:
+          widgetData.deletedMode === 'greyOut' && !isLiveOrMarkForDeletion
+            ? true
+            : widgetData?.intranetMode === 'greyOut' && showIntranetContent
+      }">
+      <ng-container *ngIf="!isCardFlipped">
+        <div class="status-danger" role="note" i18n-aria-label aria-label="Content expired or deleted" i18n-matTooltip
+          matTooltip="Content may be expired or deleted" *ngIf="!isLiveOrMarkForDeletion"></div>
+        <div class="status-danger" role="note" i18n-aria-label aria-label="Intranet content" i18n-matTooltip
+          matTooltip="Available only in Company's network"
+          *ngIf="widgetData?.intranetMode === 'greyOut' && showIntranetContent"></div>
+        <!-- <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
+          [queryParams]="(widgetData.content | pipeContentRoute).queryParams" class="rounded-t" role="link"
+          aria-label="Content" i18n-aria-label="Content | Click to view"> -->
+        <div style="position: relative; z-index: 1;">
+          <img mat-card-image [src]="widgetData.content.posterImage" loading="lazy" style="position: absolute; z-index: 2;"
+            class="card-img ws-mat-primary-lite-background" [wsUtilsDefaultThumbnail]="defaultThumbnail"
+            [alt]="widgetData.content.name" />
+
+            <!-- image overlay box-->
+            <div class="course_logo_box">
+              <img [src]="widgetData.content.creatorLogo" class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
+              [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
+              <!-- <p class="mat-subheading-1 margin-remove">IGOT</p> -->
+            </div>
+          <div class="source-div" style="display: none;">
+            <!-- [src]="sourseIcon(widgetData.content.sourceName)" -->
+            <img [src]="widgetData.content.creatorLogo" class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
+              [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
+            <!-- [title]="widgetData.content.sourceName" -->
+          </div>
+        </div>
+        <!-- </a> -->
+        <button *ngIf="showFlip" class="detail-button ws-mat-primary-lite-background-op30" mat-icon-button
+          (click)="isCardFlipped = true" aria-label="Details" i18n-aria-label="Details | Click to see details">
+          <mat-icon>flip_to_back</mat-icon>
+        </button>
+
+
+        <mat-card-content class="min-top">
+          <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
+            [queryParams]="(widgetData.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData"
+            role="link" i18n-aria-label>
+
+            <div class="text-gray-time complexity flex-between flex-center">
+              <!-- <div *ngIf="widgetData.content.complexityLevel" i18n-title title="Complexity Level">
+                {{ widgetData.content.complexityLevel }}
+              </div> -->
+              <div *ngIf="showIsMode" i18n i18n-title title="Newly Added"
+                class="mode-tag px-2 ws-mat-accent-background">
+                Newly Added
+              </div>
+              <!-- <div *ngIf="widgetData.content.duration" class="duration">
+                <mat-icon>access_time</mat-icon>
+                <span class="time-text">{{ widgetData.content.duration | pipeDurationTransform: 'hms' }}</span>
+              </div> -->
+              <!-- <div *ngIf="!widgetData.content.duration" class="duration">
+                <mat-icon>access_time</mat-icon>
+                <span class="time-text">0.0m</span>
+              </div> -->
+            </div>
+
+            <div class="course_widget">
+              <mat-icon class="mat-icon main_icon  ws-mat-default-text margin-right-xs">video_library</mat-icon>
+              <ws-widget-display-content-type i18n-title title="Content Type" *ngIf="widgetData.content?.primaryCategory"
+                class="ws-mat-black60-text font-normal mat-caption text-uppercase" [displayContentType]="widgetData.content?.primaryCategory==='Course Unit'
+                ?'Module'
+                :widgetData.content?.primaryCategory">
+
+              </ws-widget-display-content-type>
+            </div>
+
+            <div [id]="'m-c-'+ widgetData.content?.identifier"
+              class="mat-subheading-1 title-text ws-mat-text-block-fade-gradient">
+              {{ widgetData.content.name }}
+            </div>
             <div class="mat-body-2 ws-mat-primary-text description-text ws-mat-text-block-fade-gradient mb-10">
               {{ widgetData.content.description | pipeHtmlTagRemoval }}
 
               <!-- {{widgetData.content | json}} -->
               <!-- {{widgetData.content.sourceName}} -->
+            </div>
+            <div class="mat-body-2 ws-mat-primary-text description-text ws-mat-text-block-fade-gradient mb-10">
+              End date : {{ widgetData?.batch?.end | date: "MMM yyyy" }}
             </div>
           </a>
           <div class="mt-4 mb-2 flex justify-between items-center absolute bottom-0 left-0 right-0 px-3 py-2">
@@ -881,6 +1062,9 @@
           </ul>
         </div>
         <!-- <div class="flex"> -->
+          <div>
+            <p>Deadline - {{widgetData.content.batch?.endDate | date: "d MMM yyyy"}}</p>
+          </div>
           <div class="tags" *ngIf="widgetData.content.keywords && widgetData.content.keywords.length > 0">
             <ul class="mat-caption margin-remove-top padding-remove tag_list">
               <li *ngFor="let tag of widgetData.content.keywords">

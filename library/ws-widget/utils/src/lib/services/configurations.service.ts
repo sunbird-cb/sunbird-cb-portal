@@ -63,6 +63,9 @@ export class ConfigurationsService {
   tourGuideNotifier = new ReplaySubject<boolean>()
   authChangeNotifier = new ReplaySubject<boolean>(1)
 
+  private updateProfile = new BehaviorSubject(false)
+  updateProfileObservable = this.updateProfile.asObservable()
+
   // Preference Related Values
   activeThemeObject: NsInstanceConfig.ITheme | null = null
   activeFontObject: NsInstanceConfig.IFontSize | null = null
@@ -89,4 +92,8 @@ export class ConfigurationsService {
   //   '_',
   // )}`
   // setHostPath = (sitePath: string) => (sitePath).replace(':', '_')
+
+  updateGlobalProfile(state: boolean) {
+    this.updateProfile.next(state)
+  }
 }

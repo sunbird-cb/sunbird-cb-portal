@@ -19,6 +19,7 @@ import { TncComponent } from './routes/tnc/tnc.component'
 import { TncAppResolverService } from './services/tnc-app-resolver.service'
 import { TncPublicResolverService } from './services/tnc-public-resolver.service'
 import { AppTocResolverService } from '@ws/app/src/lib/routes/app-toc/resolvers/app-toc-resolver.service'
+import { PublicLogoutComponent } from './routes/public/public-logout/public-logout.component'
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
 // Please declare routes in alphabetical order
@@ -182,6 +183,21 @@ const routes: Routes = [
       // pageKey: 'browse by competency',
       pageId: 'app/learn/browse-by/provider',
       module: 'explore',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
+  {
+    path: 'app/learn/mandatory-course',
+    loadChildren: () =>
+      import('./routes/route-mandatory-course.module').then(u => u.RouteMandatoryCourseModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'mandatory-course',
+      pageId: 'app/learn/mandatory-course',
+      module: 'learn',
     },
     resolve: {
       pageData: PageResolve,
@@ -674,6 +690,10 @@ const routes: Routes = [
     resolve: {
       pageData: PageResolve,
     },
+  },
+  {
+    path: 'public/logout',
+    component: PublicLogoutComponent,
   },
   {
     path: 'public/mobile-app',

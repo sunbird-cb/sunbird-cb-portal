@@ -19,7 +19,8 @@ export namespace NsContent {
     appIcon: string
     artifactUrl: string
     averageRating?: any
-    batches: any
+    // this will be used to content form enrollment user list
+    batch?: any
     body?: string
     certificationList?: IRelatedContentMeta[]
     certificationStatus?: TCertificationStatus
@@ -346,6 +347,7 @@ export namespace NsContent {
     MTF_QUESTION = 'MTF Question',
     MULTIPLE_CHOICE_QUESTION = 'Multiple Choice Question',
     SINGLE_CHOICE_QUESTION = 'Single Choice Question',
+    MANDATORY_COURSE_GOAL = 'Mandatory Course Goal',
     // following will not be available soon
     /**
      * @deprecated The type should not be used

@@ -1,0 +1,41 @@
+<ws-widget-btn-page-back [widgetData]="{ url: 'home', titles: titles  }">
+</ws-widget-btn-page-back>
+<div class="container-balanced main_content_box">
+    <ng-container>
+        <ws-app-mandatory-course-stats [stats]="stats"></ws-app-mandatory-course-stats>
+    </ng-container>
+
+    <div class="courses">
+        <div class="mb-8">
+            <h2 class="mat-h2 margin-remove">Mandatory courses</h2>
+        </div>
+        <!-- <ng-container *ngIf="goals && goals.length; else noData">
+            <div class="cards-container">
+                <ng-container *ngFor="let c of goals">
+                    <ws-widget-card-content [widgetData]="{
+                        content: c,
+                        stateData: stateData,
+                        cardSubType: 'standard'
+                      }">
+                    </ws-widget-card-content>
+                </ng-container>
+            </div>
+        </ng-container> -->
+        <ng-container *ngIf="mandatoryCourses && mandatoryCourses.length; else noData">
+                <ng-container *ngFor="let c of mandatoryCourses">
+                    <ws-widget-card-content [widgetData]="{
+                        content: c,
+                        stateData: stateData,
+                        cardSubType: 'card-wide'
+                      }">
+                    </ws-widget-card-content>
+                </ng-container>
+        </ng-container>
+        <ng-template #noData>
+            <h4 *ngIf="mandatoryCourses?.length <=0"
+                class="w-full text-center ws-mat-black60-text ">
+                No manadatory courses found!
+            </h4>
+        </ng-template>
+    </div>
+</div>

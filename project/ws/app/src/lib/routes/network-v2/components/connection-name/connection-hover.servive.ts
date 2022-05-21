@@ -10,7 +10,7 @@ import _ from 'lodash'
 
 const API_END_POINTS = {
   // getUserdetailsV2FromRegistry: '/apis/protected/v8/user/profileRegistry/getUserRegistryByUser',
-  getUserdetailsV2FromRegistry: '/apis/proxies/v8/api/user/v5/read',
+  getUserdetailsV2FromRegistry: '/apis/proxies/v8/api/user/v2/read',
 }
 
 @Injectable({
@@ -26,6 +26,8 @@ export class ConnectionHoverService {
         // _.set(profile, '.', _.first(_.get(data, 'result.UserProfile')))
         // profile = _.first(_.get(data, 'result.UserProfile')) || null
         // profile = _.first(_.get(data.result.response, 'result.UserProfile')) || null
+        // const roles = _.map(_.get(data, 'result.response.roles'), 'role')
+        // _.set(data, 'result.response.roles', roles)
         profile = data.result.response
         return profile
       },

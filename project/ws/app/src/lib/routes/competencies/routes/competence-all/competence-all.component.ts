@@ -256,6 +256,7 @@ export class CompetenceAllComponent implements OnInit {
           // success
           // this.myCompetencies.push(item)
           this.snackBar.open(this.successMsg.nativeElement.value, 'X')
+          this.configSvc.updateGlobalProfile(true)
         }
       },
         /* tslint:disable */() => {
@@ -283,6 +284,7 @@ export class CompetenceAllComponent implements OnInit {
           if (response) {
             // success => removed
             this.snackBar.open(this.successRemoveMsg.nativeElement.value, 'X');
+            this.configSvc.updateGlobalProfile(true)
           }
         },
         /* tslint:disable */() => {

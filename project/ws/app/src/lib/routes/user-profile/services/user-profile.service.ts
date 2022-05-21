@@ -9,10 +9,13 @@ import {
   IProfileMetaApiData,
 } from '../models/user-profile.model'
 import { map } from 'rxjs/operators'
+// tslint:disable
+import _ from 'lodash'
+// tslint:enable
 
 const API_ENDPOINTS = {
   updateProfileDetails: '/apis/protected/v8/user/profileDetails/updateUser',
-  getUserdetailsFromRegistry: '/apis/proxies/v8/api/user/v5/read',
+  getUserdetailsFromRegistry: '/apis/proxies/v8/api/user/v2/read',
   getUserdetails: '/apis/protected/v8/user/details/detailV1',
   getMasterNationlity: '/apis/protected/v8/user/profileRegistry/getMasterNationalities',
   getMasterLanguages: '/apis/protected/v8/user/profileRegistry/getMasterLanguages',
@@ -50,7 +53,11 @@ export class UserProfileService {
   }
   getUserdetailsFromRegistry(wid: string): Observable<[IUserProfileDetailsFromRegistry]> {
     return this.http.get<[IUserProfileDetailsFromRegistry]>(`${API_ENDPOINTS.getUserdetailsFromRegistry}/${wid}`)
-      .pipe(map((res: any) => res.result.response))
+      .pipe(map((res: any) => {
+        // const roles = _.map(_.get(res, 'result.response.roles'), 'role')
+        // _.set(res, 'result.response.roles', roles)
+        return res.result.response
+      }))
   }
   getAllDepartments() {
     return this.http.get<INationalityApiData>(API_ENDPOINTS.getAllDepartments)

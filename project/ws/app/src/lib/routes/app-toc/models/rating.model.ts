@@ -12,6 +12,6 @@ export namespace NsAppRating {
         activityType: string,
         rating?: number,
         limit: number,
-        updateOn: string,
+        updateOn?: string,
     }
 }

@@ -61,14 +61,14 @@ export class AppInterceptorService implements HttpInterceptor {
           catchError(error => {
             if (error instanceof HttpErrorResponse) {
               const localUrl = location.origin
-              const pagePath = location.href || `${localUrl}/page/home`
-              const pageName = (location.href || '').replace(localUrl, '')
+              // const pagePath = `/public/logout`
               switch (error.status) {
                 case 0:
                   if (localUrl.includes('localhost')) {
                     this.snackBar.open('Please login Again and Apply new TOKEN', undefined, { duration: NOTIFICATION_TIME * 3 })
                   }
-                  this.authSvc.logout()
+                  // this.authSvc.logout()
+                  this.authSvc.force_logout()
                   break
                 case 200:
                   if (!error.ok && error.url) {
@@ -80,14 +80,15 @@ export class AppInterceptorService implements HttpInterceptor {
                   if (localStorage.getItem('telemetrySessionId')) {
                     localStorage.removeItem('telemetrySessionId')
                   }
-                  if (localUrl.includes('localhost')) {
-                    // tslint:disable-next-line: prefer-template
-                    window.location.href = error.error.redirectUrl + `?q= ${pagePath}`
-                  } else {
-                    // tslint:disable-next-line: prefer-template
-                    window.location.href = error.error.redirectUrl + `?q=${pageName} `
-                  }
+                  // if (localUrl.includes('localhost')) {
+                  //   // tslint:disable-next-line: prefer-template
+                  //   window.location.href = error.error.redirectUrl + `?q= ${pagePath}`
+                  // } else {
+                  //   // tslint:disable-next-line: prefer-template
+                  //   window.location.href = error.error.redirectUrl + `?q=${pageName} `
+                  // }
                   // window.location.href = '/apis/reset'
+                  this.authSvc.force_logout()
                   break
               }
             }
