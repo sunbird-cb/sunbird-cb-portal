@@ -720,7 +720,7 @@
               <!-- {{widgetData.content.sourceName}} -->
             </div>
             <div class="mat-body-2  mb-5" *ngIf="widgetData?.content?.batch?.endDate">
-              Deadline : {{ widgetData?.content?.batch?.endDate | date: "MMM yyyy" }}
+              Deadline : {{ widgetData?.content?.batch?.endDate | date: "d MMM yyyy" }}
             </div>
           </a>
           <div class="mt-4 mb-2 flex justify-between items-center absolute bottom-0 left-0 right-0 px-3 py-2">
@@ -1063,7 +1063,7 @@
         </div>
         <!-- <div class="flex"> -->
           <div>
-            <p>Deadline - {{widgetData.content.batch?.endDate | date: "MMM yyyy"}}</p>
+            <p>Deadline - {{widgetData.content.batch?.endDate | date: "d MMM yyyy"}}</p>
           </div>
           <div class="tags" *ngIf="widgetData.content.keywords && widgetData.content.keywords.length > 0">
             <ul class="mat-caption margin-remove-top padding-remove tag_list">
