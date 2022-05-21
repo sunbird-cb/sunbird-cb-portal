@@ -85,7 +85,7 @@ export class GeneralGuard implements CanActivate {
       this.configSvc.instanceConfig &&
       !Boolean(this.configSvc.instanceConfig.disablePidCheck)
     ) {
-      return this.router.parseUrl('/app/invalid-user')
+      return this.router.parseUrl('/public/logout')
     }
     /**
      * Test IF User Tnc Is Accepted
@@ -109,7 +109,7 @@ export class GeneralGuard implements CanActivate {
     }
     if (!this.configSvc.isActive) {
       this.router.navigateByUrl('/error-access-forbidden')
-      this.authSvc.logout()
+      this.authSvc.force_logout()
       return false
     }
 
