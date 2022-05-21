@@ -1,4 +1,4 @@
-<mat-toolbar *ngIf="currentRoute !== 'all/assessment'" [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
+<mat-toolbar *ngIf="showAppNavBar && currentRoute !== 'all/assessment'" [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
   class="mat-elevation-z3 custom mobile">
   <div class="fix-ww" id="root-tool-bar" title="toolbar" i18n-aria-label role="toolbar">
     <ng-container *ngIf="mode === 'top'">
@@ -77,7 +77,15 @@
     </ng-container>
   </div> -->
 </mat-toolbar>
-
+<mat-toolbar *ngIf="!showAppNavBar">
+  <div class="fix-ww" id="root-tool-bar" title="toolbar" i18n-aria-label role="toolbar">
+    <ng-container *ngIf="mode === 'top'">
+      <a class="logo-dim" role="link" title="Home" i18n-aria-title i18n-aria-label>
+        <img [src]="appIcon" alt="Application Logo" class="app-logo" />
+      </a>
+    </ng-container>
+  </div>
+</mat-toolbar>
 <ng-template #navbarSide let-item="item">
   <ng-container *ngIf="item.type === 'widgetButton'" [wsResolverWidget]="item.config"></ng-container>
   <ws-widget-btn-feature *ngIf="item.type === 'featureButton'" [id]="item.config.actionBtnId" [widgetData]="item.config"

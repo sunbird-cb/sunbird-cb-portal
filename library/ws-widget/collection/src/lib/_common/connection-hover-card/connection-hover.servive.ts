@@ -10,7 +10,7 @@ import _ from 'lodash'
 
 const API_END_POINTS = {
   // getUserdetailsV2FromRegistry: '/apis/protected/v8/user/profileRegistry/getUserRegistryByUser',
-  getUserdetailsV2FromRegistry: '/apis/proxies/v8/api/user/v5/read',
+  getUserdetailsV2FromRegistry: '/apis/proxies/v8/api/user/v2/read',
 }
 
 @Injectable({

@@ -214,7 +214,8 @@ export class WidgetContentService {
       content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE ||
       content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT ||
       content.primaryCategory === NsContent.EPrimaryCategory.PROGRAM ||
-      content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+      content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE ||
+      content.primaryCategory === NsContent.EPrimaryCategory.MANDATORY_COURSE_GOAL
     ) {
       return content
     }

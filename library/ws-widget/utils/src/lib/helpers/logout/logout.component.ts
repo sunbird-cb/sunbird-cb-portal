@@ -30,7 +30,9 @@ export class LogoutComponent implements OnInit {
 
   confirmed() {
     this.disabled = true
-    this.authSvc.logout()
+    this.dialogRef.close()
+    // this.authSvc.logout()
+    this.authSvc.force_logout()
   }
 
   get isDownloadable() {

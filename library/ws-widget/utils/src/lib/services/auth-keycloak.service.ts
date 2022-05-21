@@ -138,14 +138,16 @@ export class AuthKeycloakService {
       redirectUri: redirectUrl,
     })
   }
-
+  /**
+   * @deprecated this will be depricated
+   */
   async logout(redirectUrl = this.defaultRedirectUrl) {
     if (storage.getItem('telemetrySessionId')) {
       storage.removeItem('telemetrySessionId')
     }
     try {
-      sessionStorage.clear();
-      localStorage.clear();
+      sessionStorage.clear()
+      localStorage.clear()
     } catch {
 
     }
@@ -153,7 +155,7 @@ export class AuthKeycloakService {
     // alert(`${redirectUrl}apis/reset`)
     window.location.href = `${redirectUrl}apis/reset`
     // window.location.href = 'http://localhost:3003/reset'
-     await this.http.get('/apis/reset').toPromise()
+    //  await this.http.get('/apis/reset').toPromise()
     // setTimeout(window.location.href = `${redirectUrl}apis/reset`, 13000)
     // logoutRedirectUrl = redirectUrl
     // if (this.msAuthSvc.isLogoutRequired) {
@@ -162,7 +164,19 @@ export class AuthKeycloakService {
     // this.keycloakSvc.logout(redirectUrl)
     // }
   }
+  async force_logout() {
+    if (storage.getItem('telemetrySessionId')) {
+      storage.removeItem('telemetrySessionId')
+    }
+    try {
+      sessionStorage.clear()
+      localStorage.clear()
+    } catch {
 
+    }
+    storage.removeItem(storageKey)
+    await this.http.get('/apis/reset').toPromise()
+  }
   private addKeycloakEventListener() {
     this.keycloakSvc.keycloakEvents$.subscribe((event: KeycloakEvent) => {
       switch (event.type) {

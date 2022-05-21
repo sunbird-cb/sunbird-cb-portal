@@ -406,7 +406,7 @@
     white-space: initial;
   }
 
-  $description-line-count: 3;
+  $description-line-count: 2;
   $description-line-height: 21px;
 
   .description-text {
@@ -414,6 +414,8 @@
     position: relative;
     overflow: hidden;
     height: $description-line-count * $description-line-height;
+    white-space: normal;
+    text-overflow: ellipsis;
     // line-height: $description-line-height;
   }
 }
