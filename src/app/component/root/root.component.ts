@@ -152,7 +152,7 @@ export class RootComponent implements OnInit, AfterViewInit {
   }
   @HostListener('window:unload', ['$event'])
   unloadHandler(event: any) {
-    if (event && event.type==='unload') {
+    if (event && event.type === 'unload') {
       // this.authSvc.logout()
     }
   }
