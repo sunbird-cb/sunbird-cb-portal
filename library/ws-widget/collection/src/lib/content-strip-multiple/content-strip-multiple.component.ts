@@ -601,7 +601,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
 
           // To sort in descending order of the enrolled date
           if (content && content.length) {
-            contentNew = content.sort((a: any, b: any) => {
+            contentNew = (content || []).sort((a: any, b: any) => {
               const dateA: any = new Date(a.enrolledDate || 0)
               const dateB: any = new Date(b.enrolledDate || 0)
               return dateB - dateA

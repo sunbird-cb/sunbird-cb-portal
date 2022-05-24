@@ -1062,7 +1062,7 @@
           </ul>
         </div>
         <!-- <div class="flex"> -->
-          <div>
+          <div *ngIf="widgetData?.content?.batch?.endDate">
             <p>Deadline - {{widgetData.content.batch?.endDate | date: "d MMM yyyy"}}</p>
           </div>
           <div class="tags" *ngIf="widgetData.content.keywords && widgetData.content.keywords.length > 0">
