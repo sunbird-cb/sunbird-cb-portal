@@ -1,3 +1,7 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
 .main_container {
       font-family: 'Poppins', sans-serif;
       position: relative;
@@ -12,6 +16,10 @@
       height: 100vh;
       box-sizing: border-box;
       box-shadow: 0px 20px 60px #3e3e3e29;
+
+      @include breakpoint-xs {
+        width: 100%!important;
+      }
     }
 
     .left_container {
@@ -19,11 +27,14 @@
       box-sizing: border-box;
       width: 55%;
       height: 100vh;
+
+      @include breakpoint-xs {
+        display: none!important;
+      }
     }
 
     .logo_box {
       width: 320px;
-
       img.logo_img {
         width: 100%;
       }
@@ -37,11 +48,15 @@
     }
 
     .text_box {
-      margin: 3rem 0;
+      margin: 3rem 0 1rem;
     }
 
     .right_inner_container {
       width: 320px;
+
+      @include breakpoint-xs {
+        width: 300px!important;
+      }
     }
 
     .m_b_2 {
@@ -81,21 +96,25 @@
 
 .slideshow-container {
   padding: 5rem 0 2rem 0;
+
+  @include breakpoint-s {
+     padding: 3rem 0 2rem 0!important;
+  }
 }
 
   .mySlides {
     height: auto;
-    // width: 320px;
-    // position: absolute;
-    // transition: opacity .5s ease-in;
-
-    // img { opacity: 0; }
 
     img {
       height: 430px;
       width: auto;
+
+      @include breakpoint-s {
+        height: 325px!important;
+      }
     }
   }
+
 
 
 
