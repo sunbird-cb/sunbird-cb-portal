@@ -114,8 +114,13 @@ TODO: edit option while preview Mode
                   [routerLink]="resumeData ? resumeDataLink?.url : firstResourceLink?.url"
                   [queryParams]="resumeData ? generateQuery('RESUME') : generateQuery('START')"
                   class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white">
-                  <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
-                    {{resumeData? "Resume" : "Start"}}
+                  <ng-container *ngIf="content.completionPercentage < 100">
+                    <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
+                      {{resumeData? "Resume" : "Start"}}
+                    </ng-container>
+                  </ng-container>
+                  <ng-container *ngIf="content.completionPercentage === 100">
+                    {{resumeData? "Start again" : "Start"}}
                   </ng-container>
                 </a>
                 <a *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" [routerLink]="firstResourceLink?.url"
@@ -172,8 +177,16 @@ TODO: edit option while preview Mode
                   [routerLink]="resumeData ? resumeDataLink?.url : firstResourceLink?.url"
                   [queryParams]="resumeData ? generateQuery('RESUME') : generateQuery('START')"
                   class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white">
-                  <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
+                  <!-- <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
                     {{resumeData? "Resume" : "Start"}}
+                  </ng-container> -->
+                  <ng-container *ngIf="content.completionPercentage < 100">
+                    <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
+                      {{resumeData? "Resume" : "Start"}}
+                    </ng-container>
+                  </ng-container>
+                  <ng-container *ngIf="content.completionPercentage === 100">
+                    {{resumeData? "Start again" : "Start"}}
                   </ng-container>
                 </a>
                 <a *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" [routerLink]="firstResourceLink?.url"
