@@ -1,8 +1,8 @@
-  body {
+.main_container {
       font-family: 'Poppins', sans-serif;
       position: relative;
       letter-spacing: 0.2px;
-      // background: url(images/Login_background.png) no-repeat center center fixed;
+
       background-size: cover;
     }
 
@@ -44,6 +44,8 @@
       margin-bottom: 1rem;
     }
 
+
+
     .button {
       font-family: 'Poppins', sans-serif;
       color: #F9F9F9;
@@ -54,4 +56,35 @@
       border-radius: 8px;
       transition: all .25s ease-in;
       width: 100%;
+      border:0;
+      cursor: pointer;
     }
+
+    // .main_container {
+    //   background-image : url(assets/instances/eagle/banners/home/9/Login_background.png) no-repeat center center fixed;
+    // }
+
+  ::ng-deep .top-nav-bar {
+    display: none;
+  }
+
+  ::ng-deep .height-on-top {
+    padding-top: 0!important;
+  }
+
+
+
+
+
+
+  .mySlides {
+    height: auto;
+    width: 320px;
+    // position: absolute;
+    // transition: opacity .5s ease-in;
+
+    // img { opacity: 0; }
+  }
+
+
+
