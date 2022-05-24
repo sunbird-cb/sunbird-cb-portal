@@ -377,7 +377,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
 
   private getResumeDataFromList(type?: string) {
     if (!type) {
-      console.log('getResumeDataFromList: type', type)
       const lastItem = this.resumeData && this.resumeData.pop()
       return {
         identifier: lastItem.contentId,
