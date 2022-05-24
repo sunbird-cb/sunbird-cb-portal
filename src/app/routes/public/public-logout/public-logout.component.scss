@@ -15,7 +15,7 @@
     }
 
     .left_container {
-      padding: 4.5rem 6rem;
+      padding: 5rem 6rem;
       box-sizing: border-box;
       width: 55%;
       height: 100vh;
@@ -23,6 +23,10 @@
 
     .logo_box {
       width: 320px;
+
+      img.logo_img {
+        width: 100%;
+      }
     }
 
     .slider_box {
@@ -75,15 +79,22 @@
 
 
 
-
+.slideshow-container {
+  padding: 5rem 0 2rem 0;
+}
 
   .mySlides {
     height: auto;
-    width: 320px;
+    // width: 320px;
     // position: absolute;
     // transition: opacity .5s ease-in;
 
     // img { opacity: 0; }
+
+    img {
+      height: 430px;
+      width: auto;
+    }
   }
 
 
