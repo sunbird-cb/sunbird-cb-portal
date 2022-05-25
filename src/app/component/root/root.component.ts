@@ -65,6 +65,7 @@ export class RootComponent implements OnInit, AfterViewInit {
   isXSmall$ = this.valueSvc.isXSmall$
   routeChangeInProgress = false
   showNavbar = false
+  showFooter = false
   currentUrl!: string
   isNavBarRequired = false
   isInIframe = false
@@ -202,7 +203,9 @@ export class RootComponent implements OnInit, AfterViewInit {
       ) {
         this.routeChangeInProgress = false
         this.currentUrl = event.url
-        this.changeDetector.detectChanges()
+        if (!!this.currentUrl.startsWith('/public/logout')) {
+          this.showFooter = false
+        }
       }
 
       if (event instanceof NavigationEnd) {
