@@ -10,7 +10,7 @@
   box-shadow: none !important;
   height: fit-content;
   width:750px;
-  padding: 32px 8px!important;
+  padding: 24px 8px!important;
 
   h3.card_description {
     font-weight: 400!important;
@@ -84,8 +84,8 @@ p.competency_level_text {
 .learn-card-div {
   overflow-y: scroll;
   min-height: 215px;
-  max-height: 400px;
-  margin-bottom: 30px;
+  max-height: 300px;
+  margin-bottom: 24px;
 
   @include breakpoint-xs {
     max-height: 270px;
@@ -223,7 +223,7 @@ p.competency_level_text {
 .card_actions {
   margin-left: -32px;
   margin-right: -32px;
-  padding: 24px 24px 0px 0px;
+  padding: 16px 24px 0px 0px;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
 
   @include breakpoint-xs {
@@ -249,4 +249,8 @@ p.competency_level_text {
   .competency-view-card {
     width:90%;
   }
+}
+
+.mat-card-actions {
+  margin-bottom:0!important
 }
