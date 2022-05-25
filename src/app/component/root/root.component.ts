@@ -205,7 +205,7 @@ export class RootComponent implements OnInit, AfterViewInit {
         this.currentUrl = event.url
         if (!!this.currentUrl.startsWith('/public/logout')) {
           this.showFooter = false
-        } else{
+        } else {
           this.showFooter = true
         }
       }
