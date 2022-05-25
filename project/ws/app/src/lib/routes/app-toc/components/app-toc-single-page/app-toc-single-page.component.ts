@@ -530,7 +530,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
         // this field can be enabled if specific ratings have to be looked up
         // rating: 0,
         limit: this.lookupLimit,
-        ...((this.lastLookUp && this.lastLookUp.updatedon) ? { updateOn: (this.lastLookUp && this.lastLookUp.updatedon) } : null),
+        ...((this.lastLookUp && this.lastLookUp.updatedOnUUID) ? { updateOn: (this.lastLookUp && this.lastLookUp.updatedOnUUID) } : null),
       }
       this.ratingSvc.getRatingLookup(req).subscribe(
         (res: any) =>  {
