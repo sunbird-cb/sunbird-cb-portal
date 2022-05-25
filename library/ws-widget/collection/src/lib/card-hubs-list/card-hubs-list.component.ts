@@ -162,7 +162,8 @@ export class CardHubsListComponent extends WidgetBaseComponent
   hasRole(role: string[]): boolean {
     let returnValue = false
     role.forEach(v => {
-      if ((this.configSvc.userRoles || new Set()).has(v)) {
+      const rolesList = (this.configSvc.userRoles || new Set())
+      if (rolesList.has(v.toLowerCase()) || rolesList.has(v.toUpperCase())) {
         returnValue = true
       }
     })
