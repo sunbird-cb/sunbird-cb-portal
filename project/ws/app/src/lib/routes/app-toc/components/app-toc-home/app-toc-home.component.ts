@@ -495,7 +495,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (this.content && this.content.identifier && this.content.primaryCategory) {
         this.ratingSvc.getRating(this.content.identifier, this.content.primaryCategory, this.userId).subscribe(
           (res: any) =>  {
-            this.userRating = res.result.response[0]
+            this.userRating = res.result.response
             this.tocSvc.changeUpdateReviews(true)
             // this.userRating = {
             //   commentupdatedon: null,
@@ -519,7 +519,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   private getUserEnrollmentList() {
     // tslint:disable-next-line
-    if (this.content && this.content.identifier && this.content.primaryCategory !== this.primaryCategory.COURSE && this.content.primaryCategory !== this.primaryCategory.PROGRAM) {
+    if (this.content && this.content.identifier && this.content.primaryCategory !== this.primaryCategory.COURSE &&
+      this.content.primaryCategory !== this.primaryCategory.PROGRAM &&
+      this.content.primaryCategory !== this.primaryCategory.MANDATORY_COURSE_GOAL) {
       // const collectionId = this.isResource ? '' : this.content.identifier
       return this.getContinueLearningData(this.content.identifier)
     }

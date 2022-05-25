@@ -106,15 +106,22 @@ TODO: edit option while preview Mode
           !(
             content?.primaryCategory === primaryCategory.COURSE && !batchData?.enrolled
           ) &&
-          !(content?.primaryCategory === primaryCategory.RESOURCE && !content?.artifactUrl))
+          !(content?.primaryCategory === primaryCategory.RESOURCE && !content?.artifactUrl) &&
+          !(content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL))
           && !(content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId)
         ">
                 <a *ngIf="showStart.show && !isPostAssessment"
                   [routerLink]="resumeData ? resumeDataLink?.url : firstResourceLink?.url"
                   [queryParams]="resumeData ? generateQuery('RESUME') : generateQuery('START')"
                   class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white">
-                  <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
-                    {{resumeData? "Resume" : "Start"}}
+                  
+                  <ng-container *ngIf="!content.completionPercentage || content.completionPercentage < 100">
+                    <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
+                      {{resumeData? "Resume" : "Start"}}
+                    </ng-container>
+                  </ng-container>
+                  <ng-container *ngIf="content.completionPercentage === 100">
+                    {{resumeData? "Start again" : "Start"}}
                   </ng-container>
                 </a>
                 <a *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" [routerLink]="firstResourceLink?.url"
@@ -135,6 +142,7 @@ TODO: edit option while preview Mode
                 ) &&
                 !(content?.primaryCategory === primaryCategory.RESOURCE && !content?.artifactUrl))
                 && !(content?.primaryCategory === primaryCategory.PROGRAM)
+                && !(content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL)
               ">
                 <ng-container *ngIf="content?.primaryCategory !== primaryCategory.RESOURCE">
                     <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" (click)="autoBatchAssign()">
@@ -145,8 +153,9 @@ TODO: edit option while preview Mode
                 </ng-container>
               </ng-container>
             </ng-container>
-            <ng-container *ngIf="content?.primaryCategory === primaryCategory.PROGRAM">
-              <ng-container *ngIf="!(content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId)">
+            <ng-container *ngIf="content?.primaryCategory === primaryCategory.PROGRAM || content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL">
+              <ng-container *ngIf="!(content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId) &&
+              content?.primaryCategory !== primaryCategory.MANDATORY_COURSE_GOAL">
                 <span class="mat-subheading-1" i18n> You are not invited for this Program.</span>
               </ng-container>
               <ng-container *ngIf="!isBatchInProgress && !!currentCourseBatchId && getStartDate === 'NA'">
@@ -162,14 +171,23 @@ TODO: edit option while preview Mode
               isBatchInProgress &&
               (actionBtnStatus === 'grant' &&
               !(isMobile && content?.isInIntranet) &&
-             (content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId))
+             (content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId) || 
+             (content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL && currentCourseBatchId) )
             ">
                 <a *ngIf="showStart.show && !isPostAssessment"
                   [routerLink]="resumeData ? resumeDataLink?.url : firstResourceLink?.url"
                   [queryParams]="resumeData ? generateQuery('RESUME') : generateQuery('START')"
                   class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white">
-                  <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
+                  <!-- <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
                     {{resumeData? "Resume" : "Start"}}
+                  </ng-container> -->
+                  <ng-container *ngIf="!content.completionPercentage || content.completionPercentage < 100">
+                    <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
+                      {{resumeData? "Resume" : "Start"}}
+                    </ng-container>
+                  </ng-container>
+                  <ng-container *ngIf="content.completionPercentage === 100">
+                    {{resumeData? "Start again" : "Start"}}
                   </ng-container>
                 </a>
                 <a *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" [routerLink]="firstResourceLink?.url"
@@ -252,7 +270,16 @@ TODO: edit option while preview Mode
           <mat-icon class=" icon-margin mat-icon notranslate material-icons mat-icon-no-color">star_purple500</mat-icon>
           <ng-container *ngIf="!userRating">
             <span> Rate this </span>
-            <span class="lowercase"> {{content?.primaryCategory}} </span>
+            <span class="lowercase"> 
+               
+              <ng-container *ngIf="content?.primaryCategory === primaryCategory.PROGRAM">
+                {{content?.primaryCategory}}
+              </ng-container>
+              <ng-container *ngIf="content?.primaryCategory === primaryCategory.COURSE ||
+                content.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL">
+                course
+              </ng-container>
+            </span>
           </ng-container>
           <ng-container *ngIf="userRating">
             <span> Edit rating </span>

@@ -29,7 +29,7 @@ export class NetworkV2Service {
 
   fetchProfile(userId: string) {
     return this.http.get<NSNetworkDataV2.IProfile>(`${API_ENDPOINTS.getUserdetailsV2FromRegistry}/${userId}`)
-      .pipe(map((res) => {
+      .pipe(map(res => {
         // const roles = _.map(_.get(res, 'result.response.roles'), 'role')
         // _.set(res, 'result.response.roles', roles)
         return res

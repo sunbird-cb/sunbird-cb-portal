@@ -189,6 +189,21 @@ const routes: Routes = [
     },
   },
   {
+    path: 'app/learn/mandatory-course',
+    loadChildren: () =>
+      import('./routes/route-mandatory-course.module').then(u => u.RouteMandatoryCourseModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'mandatory-course',
+      pageId: 'app/learn/mandatory-course',
+      module: 'learn',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
+  {
     path: 'app/discussion-forum',
     pathMatch: 'full',
     redirectTo: 'app/discussion',

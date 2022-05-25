@@ -88,7 +88,6 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
       .subscribe((reponse: NSCompetencie.ICompetencieResponse) => {
         if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
           this.competencyData = reponse.responseData
-          console.log(this.competencyData)
         } else {
           this.competencyData = []
         }
@@ -133,7 +132,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
         .first()
         .value()
 
-      console.log(vc)
+      // console.log(vc)
       // this.myCompetencies.push(vc)
       this.addToProfile(vc, levelId, levelName)
       // this.reset()
@@ -151,7 +150,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
         .first()
         .value()
 
-      console.log(vc)
+      // console.log(vc)
       if (vc) {
         this.removeFromProfile(vc)
       }
@@ -178,6 +177,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
             this.isAdded = false;
             // success => removed
             this.snackBar.open('Removed competency sucessfully', 'X');
+            this.configSvc.updateGlobalProfile(true)
           }
         },
         /* tslint:disable */() => {
@@ -201,7 +201,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
         competencySelfAttestedLevelValue: levelName || '',
       }
 
-      console.log(newCompetence)
+      // console.log(newCompetence)
       const updatedProfile = { ...this.currentProfile }
       if (
         _.get(this, 'currentProfile.competencies') &&
@@ -227,6 +227,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
           // this.myCompetencies.push(item)
           this.isAdded = true;
           this.snackBar.open('Compentency added successfully', 'X')
+          this.configSvc.updateGlobalProfile(true)
         }
       },
         /* tslint:disable */() => {
@@ -248,7 +249,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
     const instance = dialogRef.componentInstance;
     instance.isUpdate = (this.isAdded) ? true : false;
     dialogRef.afterClosed().subscribe((response: any) => {
-      console.log(response)
+      // console.log(response)
       if (response && response.action === 'ADD') {
         this.addCompetency(response.id, response.levelId, response.levelName);
         // this.refreshData(this.currentActivePage)

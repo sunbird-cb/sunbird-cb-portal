@@ -424,6 +424,8 @@
     position: relative;
     overflow: hidden;
     height: $description-line-count * $description-line-height;
+    white-space: normal;
+    text-overflow: ellipsis;
     // line-height: $description-line-height;
   }
 }

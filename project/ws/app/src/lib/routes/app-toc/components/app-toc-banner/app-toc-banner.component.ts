@@ -211,7 +211,12 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       this.getLearningUrls()
     }
     if (this.resumeData && this.content) {
-      const resumeDataV2 = this.getResumeDataFromList()
+      let resumeDataV2: any
+      if (this.content.completionPercentage === 100) {
+        resumeDataV2 = this.getResumeDataFromList('start')
+      } else {
+        resumeDataV2 = this.getResumeDataFromList()
+      }
       if (!resumeDataV2.mimeType) {
         resumeDataV2.mimeType = this.getMimeType(this.content, resumeDataV2.identifier)
       }
@@ -370,12 +375,18 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  private getResumeDataFromList() {
-    const lastItem = this.resumeData && this.resumeData.pop()
+  private getResumeDataFromList(type?: string) {
+    if (!type) {
+      const lastItem = this.resumeData && this.resumeData.pop()
+      return {
+        identifier: lastItem.contentId,
+        mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,
+      }
+    }
+    const firstItem = this.resumeData && this.resumeData.length && this.resumeData[0]
     return {
-      identifier: lastItem.contentId,
-      mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,
-
+      identifier: firstItem.contentId,
+      mimeType: firstItem.progressdetails && firstItem.progressdetails.mimeType,
     }
   }
   private modifySensibleContentRating() {
