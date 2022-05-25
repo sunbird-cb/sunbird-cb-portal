@@ -111,6 +111,23 @@ export class InitService {
       'hubs',
       domSanitizer.bypassSecurityTrustResourceUrl('fusion-assets/icons/hubs.svg'),
     )
+    ///
+    // iconRegistry.addSvgIcon(
+    //   'mdo',
+    //   domSanitizer.bypassSecurityTrustResourceUrl('fusion-assets/icons/hubs.svg'),
+    // )
+    // iconRegistry.addSvgIcon(
+    //   'spv',
+    //   domSanitizer.bypassSecurityTrustResourceUrl('fusion-assets/icons/hubs.svg'),
+    // )
+    // iconRegistry.addSvgIcon(
+    //   'cbc',
+    //   domSanitizer.bypassSecurityTrustResourceUrl('fusion-assets/icons/hubs.svg'),
+    // )
+    // iconRegistry.addSvgIcon(
+    //   'cbp',
+    //   domSanitizer.bypassSecurityTrustResourceUrl('fusion-assets/icons/hubs.svg'),
+    // )
   }
 
   async init() {
