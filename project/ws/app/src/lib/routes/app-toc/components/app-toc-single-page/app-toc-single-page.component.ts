@@ -159,7 +159,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
 
       this.updateReviewsSubscription =  this.tocSharedSvc.updateReviewsObservable.subscribe((value: boolean) => {
         if (value) {
-          this.sortReviews(this.previousFilter)
+          this.updateReviews()
         }
       })
 
@@ -644,6 +644,16 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       this.fetchRatingLookup()
     }
+  }
+
+ // To updated both reviews, and rating summary at once in case of edit scenario 
+  updateReviews() {
+    // Reset the counters/ previous values before changing the filter and view
+    this.ratingViewCount  = this.ratingViewCountDefault
+    this.lastLookUp = ''
+    this.ratingReviews = []
+    this.fetchRatingSummary()
+    this.fetchRatingLookup()
   }
 
   get usr() {
