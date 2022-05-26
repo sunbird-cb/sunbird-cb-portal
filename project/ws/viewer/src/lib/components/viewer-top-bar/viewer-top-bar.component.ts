@@ -22,6 +22,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   private viewerDataServiceResourceSubscription: Subscription | null = null
   appIcon: SafeUrl | null = null
   isTypeOfCollection = false
+  courseName = ''
   collectionType: string | null = null
   prevResourceUrl: string | null = null
   nextResourceUrl: string | null = null
@@ -59,6 +60,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     }
     this.isTypeOfCollection = this.activatedRoute.snapshot.queryParams.collectionType ? true : false
     this.collectionType = this.activatedRoute.snapshot.queryParams.collectionType
+    this.courseName = this.activatedRoute.snapshot.queryParams.courseName
 
     if (this.configSvc.instanceConfig) {
       this.appIcon = this.domSanitizer.bypassSecurityTrustResourceUrl(
@@ -97,6 +99,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
             collectionType: data.nextResource.collectionType,
             batchId: data.nextResource.batchId,
             viewMode: data.nextResource.viewMode,
+            courseName: this.courseName,
           },
           fragment: '',
         }

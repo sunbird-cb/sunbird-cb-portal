@@ -14,7 +14,11 @@ export class CourseCompletionDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-    this.courseName = this.data.courseName
+    if (typeof(this.data.courseName) !== 'undefined') {
+      this.courseName = this.data.courseName
+    } else {
+      this.courseName = 'course'
+    }
   }
 
 }
