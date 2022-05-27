@@ -606,6 +606,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     ratingSummaryPr.avgRating = parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1))
     if (this.content) {
       this.content.averageRating = ratingSummaryPr.avgRating
+      this.content.totalRating = ratingSummaryPr.total_number_of_ratings
     }
     // ratingSummaryPr.avgRating = 5
     return ratingSummaryPr
