@@ -33,6 +33,9 @@
               <!-- </span> -->
             </div>
           </div>
+          <button *ngIf="content?.artifactUrl && isAllowed" type="button" mat-icon-button [matMenuTriggerFor]="buttonMenu">
+            <mat-icon>more_vertical</mat-icon>
+          </button>
           <ng-container *ngIf="content?.identifier && content?.completionPercentage">
             <ng-container *ngIf="content?.completionStatus == 2">
               <circle-progress class="flex items-center progress" [percent]="100" [radius]="12" [outerStrokeWidth]="3"
@@ -64,9 +67,7 @@
               </ws-widget-content-progress> -->
             </ng-container>
           </ng-container>
-          <button *ngIf="content?.artifactUrl && isAllowed" type="button" mat-icon-button [matMenuTriggerFor]="buttonMenu">
-            <mat-icon>more_vertical</mat-icon>
-          </button>
+          
           <!-- <div *ngIf="hasContentStructure" class="child-meta-container">
             <div class="child-structure"> -->
           <!-- <mat-icon class="structure-icon">import_contacts</mat-icon> -->
@@ -233,6 +234,10 @@
           <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>
           <span>Course</span>
         </div> -->
+        <button *ngIf="content?.artifactUrl && !isXSmall && isAllowed" type="button" mat-icon-button class=""
+          [matMenuTriggerFor]="buttonMenu">
+          <mat-icon>more_vertical</mat-icon>
+        </button>
         <ng-container *ngIf="content?.identifier && content?.completionPercentage">
           <ng-container *ngIf="content?.completionStatus == 2">
             <circle-progress class="flex items-center progress" [percent]="100" [radius]="12" [outerStrokeWidth]="3"
@@ -263,10 +268,6 @@
             </ws-widget-content-progress> -->
           </ng-container>
         </ng-container>
-        <button *ngIf="content?.artifactUrl && !isXSmall && isAllowed" type="button" mat-icon-button class="text-right"
-          [matMenuTriggerFor]="buttonMenu">
-          <mat-icon>more_vertical</mat-icon>
-        </button>
       </div>
 
       <!-- <button *ngIf="content?.artifactUrl" type="button" mat-icon-button [matMenuTriggerFor]="buttonMenu">
