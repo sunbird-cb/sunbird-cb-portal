@@ -141,21 +141,7 @@ const routes: Routes = [
       pageData: PageResolve,
     },
   },
-  {
-    path: 'app/registration',
-    loadChildren: () =>
-      import('./routes/route-profile-v3.module').then(u => u.RouteProfileV3Module),
-    canActivate: [GeneralGuard],
-    data: {
-      pageType: 'feature',
-      pageKey: 'profile-v3',
-      pageId: 'app/profile-v3',
-      module: 'profile-v3',
-    },
-    resolve: {
-      pageData: PageResolve,
-    },
-  },
+
   {
     path: 'app/taxonomy',
     loadChildren: () =>
@@ -250,6 +236,21 @@ const routes: Routes = [
   //   data: {
   //   },
   // },
+  {
+    path: 'app/setup1',
+    loadChildren: () =>
+      import('./routes/route-profile-v3.module').then(u => u.RouteProfileV3Module),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'profile-v3',
+      pageId: 'app/profile-v3',
+      module: 'profile-v3',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
   {
     path: 'app/feedback',
     loadChildren: () =>

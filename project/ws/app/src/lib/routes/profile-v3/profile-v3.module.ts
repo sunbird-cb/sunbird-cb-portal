@@ -7,6 +7,7 @@ import { MatCardModule, MatIconModule } from '@angular/material'
 import {MatListModule} from '@angular/material/list';
 import { CurrentCompetenciesComponent } from './routes/current-competencies/current-competencies.component'
 import {MatSidenavModule} from '@angular/material/sidenav'
+import { RouterModule } from '@angular/router'
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {MatSidenavModule} from '@angular/material/sidenav'
     MatCardModule,
     MatListModule,
     MatSidenavModule,
-    MatIconModule
+    MatIconModule,
+    RouterModule,
   ]
 })
 export class ProfileV3Module { }
