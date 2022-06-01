@@ -5,44 +5,44 @@ import { ProfileHomeComponent } from './routes/profile-home/profile-home.compone
 
 
 const routes: Routes = [
-    { path: '',
-      component: ProfileHomeComponent,
-      data: {
+  {
+    path: '',
+    component: ProfileHomeComponent,
+    data: {
       pageId: '',
       module: 'profile-v3',
-   },
-
-  children: [
-    // {
-    //   path: '',
-    //   pathMatch: 'full',
-    //   redirectTo: 'all',
-    // },
-    {
-      path: 'current-competencies',
-      component: CurrentCompetenciesComponent,
-      data: {
-        pageId: 'current-competencies',
-        module: 'profile-v3',
+    },
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'current-competencies',
       },
-      // resolve: {
-      //   allResources : AllResourceResolveService,
-      // },
-    }
+      {
+        path: 'current-competencies',
+        component: CurrentCompetenciesComponent,
+        data: {
+          pageId: 'current-competencies',
+          module: 'profile-v3',
+        },
+        // resolve: {
+        //   allResources : AllResourceResolveService,
+        // },
+      }
 
 
 
-  ],
+    ],
   }
-  ]
+]
 
-  @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule],
-    // providers: [,
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+  // providers: [,
 
-    // ],
-    // Don't forget to pass RouteResolver into the providers array
-  })
+  // ],
+  // Don't forget to pass RouteResolver into the providers array
+})
 
-  export class ProfileV3RoutingModule { }
+export class ProfileV3RoutingModule { }
