@@ -1,0 +1,174 @@
+<div class="main_container flex flex-row"
+  style=" background: url(assets/instances/eagle/banners/home/9/Login_background.png) no-repeat center center fixed;">
+  <div class="left_container flex flex-col items-center justify-center">
+    <div class="logo_box flex items-center">
+      <img src="/assets/instances/eagle/app_logos/dopt_logo.png" alt="logo" class="logo_img">
+    </div>
+
+    <div class="slideshow-container">
+
+      <div class="mySlides">
+        <img src="/assets/instances/eagle/app_logos/Hexagon.png" alt="karmayogi">
+        <!-- <img src="/assets/instances/eagle/app_logos/card3.png" alt="slide 1"> -->
+
+      </div>
+
+      <!-- <div class="mySlides">
+
+        <img src="/assets/instances/eagle/app_logos/Hexagon.png" alt="slide 2">
+
+      </div> -->
+
+
+
+
+
+
+
+    </div>
+    <br>
+
+    <!-- <div style="text-align:center">
+        <span class="dot"></span>
+        <span class="dot"></span>
+
+      </div> -->
+  </div>
+  <div class=" right_container flex flex-col items-center justify-center">
+    <div class="right_inner_container">
+      <div class="flex">
+        <div class="flex items-center mr-5">
+          <a class=" ng-star-inserted" [routerLink]="'/public/logout'" tabindex="0"
+            aria-disabled="false">
+            <span class="flex">
+              <mat-icon class="mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">
+                arrow_back
+              </mat-icon>
+            </span>
+          </a>
+        </div>
+        <h1 class="mat-h1 margin-remove inline-block ng-star-inserted">
+          Register
+        </h1>
+      </div>
+      <form [formGroup]="registrationForm">
+        <div class="margin-top-xl new-mobile">
+          <div class="flex flex-wrap mobile-break">
+            <div class="flex content-center flex-wrap">
+              <div class="input-wrapper margin-top-s">
+                <label for="firstName" class=" margin-remove-bottom form-label required"
+                  i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
+                  aria-label="First Name label">
+                  First Name
+                </label>
+                <mat-form-field appearance="outline" class="margin-top-xs">
+                  <input id="firstName" matInput #firstname formControlName="firstname" i18n-placeholder
+                    placeholder="Enter First Name" i18n-aria-label aria-label="First Name input" />
+                  <mat-error [hidden]="false" i18n="First Name Error|Explains name is required" i18n-aria-label
+                    aria-label="First Name Error|Explains name is required "
+                    *ngIf="registrationForm?.controls['firstname'].errors?.required">
+                    First name is mandatory
+                  </mat-error>
+                  <mat-error [hidden]="false" *ngIf="registrationForm?.controls['firstname'].errors?.pattern"
+                    i18n-aria-label
+                    aria-label="First Name Error|Name fields cannot contain numbers and special characters except ">
+                    Name fields cannot contain numbers and special characters except '
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="input-wrapper margin-top-s">
+                <label for="lastName" class=" margin-remove-bottom form-label required"
+                  i18n="Last name label|Label which explains the user to enter Last Name" i18n-aria-label
+                  aria-label="Last Name label">
+                  Last Name
+                </label>
+                <mat-form-field appearance="outline" class="margin-top-xs">
+                  <input id="lastName" matInput #lastname formControlName="lastname" i18n-placeholder
+                    placeholder="Enter Last Name" i18n-aria-label aria-label="Last Name input" />
+                  <mat-error [hidden]="false" i18n="Last Name Error|Explains name is required"
+                    *ngIf="registrationForm?.controls['lastname'].errors?.required" i18n-aria-label
+                    aria-label="Last name is mandatory">
+                    Last name is mandatory
+                  </mat-error>
+                  <mat-error [hidden]="false" *ngIf="registrationForm?.controls['lastname'].errors?.pattern"
+                    i18n-aria-label aria-label="Name fields cannot contain numbers and special characters except '">
+                    Name fields cannot contain numbers and special characters except '
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="input-wrapper margin-top-s">
+                <label for="designation" class=" margin-remove-bottom form-label required"
+                  i18n="designation label|Label which explains the user to enter designation" i18n-aria-label
+                  aria-label="Designation label">
+                  Designation
+                </label>
+                <mat-form-field appearance="outline" class="margin-top-xs">
+                  <input id="designation" matInput #designation formControlName="designation" i18n-placeholder
+                    placeholder="Enter designation" i18n-aria-label aria-label="designation input" />
+                  <mat-error [hidden]="false" i18n="designation Error|Explains name is required"
+                    *ngIf="registrationForm?.controls['designation'].errors?.required" i18n-aria-label
+                    aria-label="designation is mandatory">
+                    Designation is mandatory
+                  </mat-error>
+                  <mat-error [hidden]="false" *ngIf="registrationForm?.controls['designation'].errors?.pattern"
+                    i18n-aria-label aria-label="Name fields cannot contain numbers and special characters except '">
+                    Designation cannot contain numbers and special characters except '
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="input-wrapper margin-top-s">
+                <label for="email" class=" margin-remove-bottom form-label required"
+                  i18n="Email label|Label which explains the user to enter Email" i18n-aria-label
+                  aria-label="Email label">
+                  Email
+                </label>
+                <mat-form-field appearance="outline" class="margin-top-xs no-pb">
+                  <input id="email" name="emailField" type="email" matInput placeholder="Email" #email
+                    formControlName="email" i18n-aria-label aria-label="Email input">
+                  <mat-error [hidden]="false" i18n="Email Error|Explains name is required">
+                    Email is mandatory
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="input-wrapper margin-top-s">
+                <label for="department" class=" margin-remove-bottom form-label required"
+                  i18n="Department|Label which explains the user to enter Department" i18n-aria-label
+                  aria-label="Department Field label">
+                  Department
+                </label>
+                <mat-form-field appearance="outline" class="margin-top-xs w-full">
+                  <input id="department" matInput tab-directive type="text" placeholder="Department"
+                    i18n-placeholder="Department" formControlName="department"
+                    [matAutocomplete]="departmentAutocomplete" i18n-aria-label aria-label="Department" #department
+                    i18n-aria-label aria-label="Department Field input" />
+                  <mat-error [hidden]="false" i18n="Department Error|Explains Department is required"
+                    *ngIf="registrationForm?.controls['department'].errors?.required" i18n-aria-label
+                    aria-label="Department is mandatory">
+                    Department is mandatory
+                  </mat-error>
+                  <mat-error *ngIf="registrationForm?.controls['department'].errors?.forbiddenNames" i18n-aria-label
+                    aria-label="You must enter value from suggested list only.">
+                    You must enter value from suggested list only.
+                  </mat-error>
+                </mat-form-field>
+                <mat-autocomplete #departmentAutocomplete="matAutocomplete" autoActiveFirstOption="true" i18n-aria-label
+                  aria-label="Department list masterDepartments" [displayWith]="displayFn">
+                  <mat-option *ngFor="let option of masterDepartments | async" [value]="option" i18n-aria-label
+                    aria-label="Department list autocomplete option">
+                    {{ option.channel }}
+                  </mat-option>
+                </mat-autocomplete>
+              </div>
+              <div class="w-full margin-top-s">
+                <div class="button_box flex flex-col items-center justify-center">
+                  <button mat-flat-button type="submit" class="submitBtn text-white ws-mat-primary-background ws-mat-white-text" (click)="signup()" [disabled]="!registrationForm?.valid">SIGN UP</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
