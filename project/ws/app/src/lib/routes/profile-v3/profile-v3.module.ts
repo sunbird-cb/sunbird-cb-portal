@@ -8,7 +8,8 @@ import { MatListModule } from '@angular/material/list';
 import { CurrentCompetenciesComponent } from './routes/current-competencies/current-competencies.component'
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { RouterModule } from '@angular/router'
-import { ProfileV3RoutingModule } from './profile-v3-routing.module'
+import { ProfileV3RoutingModule } from './profile-v3-routing.module';
+import { CompetencyCardComponent } from './components/competency-card/competency-card.component'
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { ProfileV3RoutingModule } from './profile-v3-routing.module'
     LeftMenuComponent,
     ProfileHomeComponent,
     CurrentCompetenciesComponent,
+    CompetencyCardComponent,
   ],
   imports: [
     CommonModule,

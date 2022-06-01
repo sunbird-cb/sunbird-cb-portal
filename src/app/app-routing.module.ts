@@ -237,7 +237,7 @@ const routes: Routes = [
   //   },
   // },
   {
-    path: 'app/setup1',
+    path: 'app/setup',
     loadChildren: () =>
       import('./routes/route-profile-v3.module').then(u => u.RouteProfileV3Module),
     canActivate: [GeneralGuard],
