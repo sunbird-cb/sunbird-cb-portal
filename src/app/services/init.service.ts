@@ -49,6 +49,7 @@ const endpoint = {
   // profileV2: '/apis/protected/v8/user/profileRegistry/getUserRegistryById',
   // details: `/apis/protected/v8/user/details?ts=${Date.now()}`,
   CREATE_USER_API: `${PROXY_CREATE_V8}/discussion/user/v1/create`,
+  UPDATE_LOGIN: `${PROXY_CREATE_V8}/user/v1/updateLogin`
 }
 
 @Injectable({
@@ -132,7 +133,7 @@ export class InitService {
 
   async init() {
     // to update the profile from user read api
-    this.updateProfileSubscription =  this.configSvc.updateProfileObservable.subscribe(async (value: boolean) => {
+    this.updateProfileSubscription = this.configSvc.updateProfileObservable.subscribe(async (value: boolean) => {
       if (value) {
         await this.fetchUserDetails()
       }
@@ -344,6 +345,7 @@ export class InitService {
               email: 'null',
             }
           }
+          this.updateLogin()
         } else {
           this.authSvc.force_logout()
         }
@@ -377,6 +379,14 @@ export class InitService {
       // this.configSvc.userRoles = new Set((details.roles || []).map(v => v.toLowerCase()))
       // if (this.configSvc.userProfile && this.configSvc.userProfile.isManager) {
       //   this.configSvc.userRoles.add('is_manager')
+    }
+  }
+  updateLogin() {
+    if (this.configSvc.userProfile) {
+      this.http.post(endpoint.UPDATE_LOGIN, {
+        userId: this.configSvc.userProfile.userId,
+        orgId: this.configSvc.userProfile.rootOrgId
+      }).subscribe()
     }
   }
 
