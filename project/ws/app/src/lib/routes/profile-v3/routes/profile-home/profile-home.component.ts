@@ -1,9 +1,10 @@
-import { Component, OnInit,ElementRef, ViewChild } from '@angular/core'
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core'
 import { map } from 'rxjs/operators'
 import { ValueService } from '@sunbird-cb/utils'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ActivatedRoute, Router, Event, NavigationEnd, NavigationError } from '@angular/router'
+import { ActivatedRoute } from '@angular/router'
 import { NSProfileDataV3 } from '../../models/profile-v3.models'
+
 
 @Component({
   selector: 'ws-app-profile-home',
@@ -21,44 +22,17 @@ export class ProfileHomeComponent implements OnInit {
   banner!: NsWidgetResolver.IWidgetData<any>
   userRouteName = ''
 
-  tabs: any
-  tabsData: NSProfileDataV3.IProfileTab[]
+  tabs!: NSProfileDataV3.IProfileTab[]
+  tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
 
 
   mode$ = this.isLtMedium$.pipe(map((isMedium: any) => (isMedium ? 'over' : 'side')))
   constructor(
     private valueSvc: ValueService,
-    private router: Router,
     private route: ActivatedRoute
   ) {
-    this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
-    this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationEnd) {
-        console.log(event.url + '+++++++++++++++++ event url')
-        this.bindUrl(event.url.replace('/app/registration/', ''))
-      }
-      if (event instanceof NavigationError) {
-      }
-    })
-
-  }
-
-  bindUrl(path: string) {
-    if (path) {
-      this.currentRoute = path
-
-      switch (path) {
-        case 'current-competencies':
-          // this.titles.push({ title: 'Network', icon: '', url: 'none' })
-          break
-        // case 'saved':
-        //   this.titles.push({ title: 'saved', icon: '', url: 'none' })
-        //   break
-
-        default:
-          break
-      }
-    }
+    debugger
+    this.tabs = this.tabsData
   }
 
   ngOnInit() {

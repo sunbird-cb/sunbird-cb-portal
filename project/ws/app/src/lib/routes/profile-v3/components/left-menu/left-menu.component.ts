@@ -1,30 +1,26 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router'
+import { Component, OnInit, OnDestroy, Input } from '@angular/core'
 import { EventService, WsEvents } from '@sunbird-cb/utils/src/public-api'
-import { NSProfileDataV3 } from '../../models/profile-v3.models';
-// tslint:disable
+/* tslint:disable*/
 import _ from 'lodash'
-//
+import { NSProfileDataV3 } from '../../models/profile-v3.models'
 
 @Component({
-  selector: 'ws-app-profile-v3-left-menu',
+  selector: 'ws-app-l-menu',
   templateUrl: './left-menu.component.html',
-  styleUrls: ['./left-menu.component.scss']
+  styleUrls: ['./left-menu.component.scss'],
 })
-export class LeftMenuComponent implements OnInit {
+export class SetupLeftMenuComponent implements OnInit, OnDestroy {
   @Input()
-  tabsData!: NSProfileDataV3.IProfileTab
-
+  tabsData!: NSProfileDataV3.IProfileTab[]
   constructor(
-    private activatedRoute: ActivatedRoute,
     private events: EventService,
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit(): void {
 
-  public isLinkActive(url: string): boolean {
-    return (this.activatedRoute.snapshot.fragment === url)
+  }
+  ngOnDestroy() {
+
   }
 
   public menuClick(tab: any) {
@@ -39,4 +35,3 @@ export class LeftMenuComponent implements OnInit {
   }
 
 }
-
