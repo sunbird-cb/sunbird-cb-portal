@@ -142,6 +142,21 @@ const routes: Routes = [
     },
   },
   {
+    path: 'app/registration',
+    loadChildren: () =>
+      import('./routes/route-profile-v3.module').then(u => u.RouteProfileV3Module),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'profile-v3',
+      pageId: 'app/profile-v3',
+      module: 'profile-v3',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
+  {
     path: 'app/taxonomy',
     loadChildren: () =>
       import('./routes/route-taxonomy.module').then(u => u.RouteTaxonomyModule),
