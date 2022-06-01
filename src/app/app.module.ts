@@ -67,6 +67,7 @@ import { QuickTourModule } from '@ws/app/src/lib/routes/info/quick-tour/quick-to
 import { AppIntroComponent } from './component/app-intro/app-intro.component'
 import { NoConnectionComponent } from './component/no-connection/no-connection.component'
 import { PublicLogoutModule } from './routes/public/public-logout/public-logout.module'
+import { PublicSignupModule } from './routes/public/public-signup/public-signup.module'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -141,6 +142,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PublicAboutModule,
     PublicContactModule,
     PublicLogoutModule,
+    PublicSignupModule,
     MobileAppModule,
     PipeSafeSanitizerModule,
     TourModule,
