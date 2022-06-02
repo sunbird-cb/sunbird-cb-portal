@@ -31,7 +31,7 @@ export class ProfileHomeComponent implements OnInit {
     private valueSvc: ValueService,
     private route: ActivatedRoute
   ) {
-    debugger
+
     this.tabs = this.tabsData
   }
 
