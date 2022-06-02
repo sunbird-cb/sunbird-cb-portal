@@ -45,9 +45,10 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
       this.routerSubscription.unsubscribe()
     }
     this.routerSubscription = this.router.events.subscribe((event: any) => {
+      console.log(event + '- event value ----')
       if (event instanceof NavigationEnd) {
         _.each(this.tabs, t => {
-          if (event.url.indexOf(t.routerLink) !== -1) {
+      if (event.url.indexOf(t.routerLink) !== -1) {
             this.message = t.description
             this.currentStep = t.step
           }

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TopicCardComponent } from './components/topic-card/topic-card.component'
 import { ProfileHomeComponent } from './routes/profile-home/profile-home.component'
-import { MatCardModule, MatIconModule } from '@angular/material'
+import { MatCardModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material'
 import { MatListModule } from '@angular/material/list';
 import { CurrentCompetenciesComponent } from './routes/current-competencies/current-competencies.component'
 import { MatSidenavModule } from '@angular/material/sidenav'
@@ -12,6 +12,9 @@ import { CompetencyCardComponent } from './components/competency-card/competency
 import { SetupLeftMenuComponent } from './components/left-menu/left-menu.component'
 import { DesiredCompetenciesComponent } from './routes/desired-competencies/desired-competencies.component'
 import { TopicComponent } from './routes/topics/topic.component'
+import { CompetencyFiltersComponent } from '../browse-by-competency/components/competency-filters/competency-filters.component'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { PipeFilterV2Module } from '@sunbird-cb/utils/src/public-api'
 
 
 @NgModule({
@@ -23,6 +26,7 @@ import { TopicComponent } from './routes/topics/topic.component'
     CompetencyCardComponent,
     SetupLeftMenuComponent,
     TopicComponent,
+    CompetencyFiltersComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +36,12 @@ import { TopicComponent } from './routes/topics/topic.component'
     MatIconModule,
     RouterModule,
     ProfileV3RoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    PipeFilterV2Module,
+    MatInputModule,
   ]
 })
 export class ProfileV3Module { }
