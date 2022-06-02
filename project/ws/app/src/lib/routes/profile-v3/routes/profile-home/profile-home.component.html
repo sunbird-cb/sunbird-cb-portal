@@ -1,21 +1,21 @@
-
 <div class="container-balanced-banner flex flex-row justify-between margin-bottom-xl">
-  <h1>{{currentStep}}.  {{message}} </h1>
+  <h1>{{currentStep}}. {{message}} </h1>
 
-  <a class="skip_link mat-body-2 margin-remove-bottom">Skip, I will do this later</a>
+  <a routerLink="/" class="skip_link mat-body-2 margin-remove-bottom">Skip, I will do this later</a>
 </div>
 <mat-sidenav-container class="container-balanced" autosize name="discuss-menu">
 
-    <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 sidenav_inner" [ngClass]="{'margin-top-0': currentRoute === 'all'}">
-        <div class="contain">
-          <div class="flex-1" style="position: relative;">
-            <div #stickyMenu [class.sticky]="sticky">
-              <!-- <ws-app-profile-v3-left-menu [tabsData]="tabsData" class="flex flex-1"></ws-app-profile-v3-left-menu> -->
-              <ws-app-l-menu [tabsData]="tabs" class="flex flex-1"></ws-app-l-menu>
-            </div>
-          </div>
+  <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 sidenav_inner"
+    [ngClass]="{'margin-top-0': currentRoute === 'all'}">
+    <div class="contain">
+      <div class="flex-1" style="position: relative;">
+        <div #stickyMenu [class.sticky]="sticky">
+          <!-- <ws-app-profile-v3-left-menu [tabsData]="tabsData" class="flex flex-1"></ws-app-profile-v3-left-menu> -->
+          <ws-app-l-menu [tabsData]="tabs" class="flex flex-1"></ws-app-l-menu>
         </div>
-    </mat-sidenav>
+      </div>
+    </div>
+  </mat-sidenav>
 
 
   <mat-sidenav-content>
@@ -25,7 +25,8 @@
         <mat-icon>menu</mat-icon>
       </button>
     </div>
-    <div class="flex flex-5 marbot knowledge_box_full margin-left-l" [ngClass]="{'margin-top-m': currentRoute === 'current-competencies'}">
+    <div class="flex flex-5 marbot knowledge_box_full margin-left-l"
+      [ngClass]="{'margin-top-m': currentRoute === 'current-competencies'}">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
@@ -35,5 +36,11 @@
 <div class="footer_box flex flex-row justify-between">
   <a class="skip_link mat-body-2 margin-remove-bottom">Cancle</a>
   <p class="mat-body-2 margin-remove-bottom margin-top-xs">Your selections are automatically saved.</p>
-  <a class="next_link mat-body-2 margin-remove-bottom">Next: 2. Current competencies</a>
+  <ng-container *ngIf="next && next !== 'done'">
+    <a [routerLink]="next.routerLink" class="next_link mat-body-2 margin-remove-bottom">Next: {{next.step}}.
+      {{next.name}}</a>
+  </ng-container>
+  <ng-container *ngIf="next && next === 'done'">
+    <a (click)="updateProfile()" class="next_link mat-body-2 margin-remove-bottom">Save</a>
+  </ng-container>
 </div>

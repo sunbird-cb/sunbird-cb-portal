@@ -19,7 +19,7 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'current-competencies',
+        redirectTo: 'topics',
       },
       {
         path: 'current-competencies',
