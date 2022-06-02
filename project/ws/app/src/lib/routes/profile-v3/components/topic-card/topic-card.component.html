@@ -1,33 +1,13 @@
 
-<mat-card  class="padding-m mat-card  margin-bottom-s w-full topic_card" role="contentinfo" tabindex="0">
+<mat-card  class="padding-m mat-card  margin-bottom-s w-full topic_card" role="contentinfo" tabindex="0" *ngFor="let topic of topicData">
 
-     <mat-card-title><a class="mat-h4" i18n role="heading" >E-Governance & Information & Communication Technology</a></mat-card-title>
+     <mat-card-title><a class="mat-h4 margin-bottom-l" i18n role="heading" >{{ topic.name }} </a></mat-card-title>
 
-     <div class="flex flex-row">
-        <!-- <div class="flex flex-1">
-
-        </div> -->
-
-        <a class="topic_tag_link flex items-center margin-right-xs tag_link_active">
-            Network & Communications
+     <div class="flex flex-wrap">
+        <a class="topic_tag_link  mat-body-2 flex items-center margin-right-xs  margin-bottom-xs" *ngFor="let item of topic?.subTopic">
+            {{ item }}
         </a>
-        <a class="topic_tag_link flex items-center margin-right-xs">
-            Database Managemewnt System - MS Access
-        </a>
-        <a class="topic_tag_link flex items-center margin-right-xs">
-            Word Processing (MS-Word)
-        </a>
-        <a class="topic_tag_link flex items-center margin-right-xs">
-            Applications
-        </a>
-
-
    </div>
-
-
-
-
-
  </mat-card>
 
 

@@ -18,6 +18,42 @@
   height: auto;
 }
 
+a.skip_link {
+  border:1px solid rgba($color: #000000, $alpha: 0.16);
+  border-radius: 4px 4px;
+  text-align: center;
+  padding:8px 12px;
+  height: 40px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+a.next_link {
+  border:1px solid #0074b6;
+  background-color: #0074b6;
+  color: #fff;
+  border-radius: 4px 4px;
+  text-align: center;
+  padding:8px 12px;
+  height: 40px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.footer_box {
+  width: 100%;
+  position: fixed;
+  bottom:0;
+  background-color: #fff;
+  padding: 24px 155px;
+  z-index: 99;
+  box-sizing: border-box;
+}
+
+// .container-balanced-updated {
+
+// }
+
 
 .flex-3 {
   flex: 3;

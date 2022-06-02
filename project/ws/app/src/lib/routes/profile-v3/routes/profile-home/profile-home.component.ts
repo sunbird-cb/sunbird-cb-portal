@@ -35,7 +35,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
   ) {
-    debugger
+
     this.tabs = this.tabsData
     this.init()
   }
