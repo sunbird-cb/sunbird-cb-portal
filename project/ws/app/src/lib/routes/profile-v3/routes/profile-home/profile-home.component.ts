@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/co
 import { map } from 'rxjs/operators'
 import { ValueService } from '@sunbird-cb/utils'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
+import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router'
 import { NSProfileDataV3 } from '../../models/profile-v3.models'
 import _ from 'lodash'
 import { Subscription } from 'rxjs'
@@ -45,6 +45,9 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
       this.routerSubscription.unsubscribe()
     }
     this.routerSubscription = this.router.events.subscribe((event: any) => {
+      if (event instanceof NavigationStart) { // do not delete this
+       // console.log(event)
+      }
       if (event instanceof NavigationEnd) {
         _.each(this.tabs, t => {
           if (event.url.indexOf(t.routerLink) !== -1) {

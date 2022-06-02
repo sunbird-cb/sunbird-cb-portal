@@ -10,6 +10,7 @@ import { TopicService } from '../../services/topics.service';
 })
 export class TopicCardComponent implements OnInit {
   @Input() topic!: NSProfileDataV3.ITopic
+  show = 6
   // selectedTopics: Subscription | null = null
   constructor(private topicService: TopicService) { }
 
@@ -32,5 +33,8 @@ export class TopicCardComponent implements OnInit {
       return false
     }
     return true
+  }
+  showMore() {
+    this.show += 10
   }
 }

@@ -5,13 +5,22 @@
     </a>
   </mat-card-title>
   <ng-container *ngIf="topic.children && topic.children.length > 0">
-    <div class="flex flex-wrap">
-      <ng-container *ngFor="let subTopic of topic.children">
-        <a (click)="clicked(subTopic)"
-          [ngClass]="{'ws-mat-accent-background ws-mat-primary-default-text': isSelected(subTopic), 'ws-mat-accent-border' : !isSelected(subTopic)}"
-          class="topic_tag_link mat-body-2 flex items-center margin-right-xs  margin-bottom-xs">
-          {{ subTopic.name }}
-        </a>
+    <div class="flex flex-column">
+      <div class="flex flex-1 flex-wrap">
+        <ng-container *ngFor="let subTopic of topic.children | slice:0:show">
+          <a (click)="clicked(subTopic)"
+            [ngClass]="{'ws-mat-accent-background ws-mat-primary-default-text': isSelected(subTopic), 'ws-mat-accent-border' : !isSelected(subTopic)}"
+            class="topic_tag_link mat-body-2 flex items-center margin-right-xs  margin-bottom-xs">
+            {{ subTopic.name }}
+          </a>
+        </ng-container>
+      </div>
+      <ng-container *ngIf="topic.children.length > show">
+        <div class="flex flex-1">
+          <span (click)="showMore()" class="cursor-pointer ws-mat-accent-text margin-auto">
+            SEE {{ topic.children.length-show }} MORE TOPICS
+          </span>
+        </div>
       </ng-container>
     </div>
   </ng-container>
