@@ -28,6 +28,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
   tabs!: NSProfileDataV3.IProfileTab[]
   tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
   message = ''
+  currentStep = 1
 
   mode$ = this.isLtMedium$.pipe(map((isMedium: any) => (isMedium ? 'over' : 'side')))
   constructor(
@@ -44,18 +45,11 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
       this.routerSubscription.unsubscribe()
     }
     this.routerSubscription = this.router.events.subscribe((event: any) => {
-
       if (event instanceof NavigationEnd) {
-        // if (event.url.indexOf('topic') !== -1) {
-        //   this.message = 'topic'
-        // } else if(event.url.indexOf('current') !== -1){
-        //   this.message = 'current'
-        // } else if(event.url.indexOf('desired') !== -1){
-        //   this.message = 'desired'
-        // }
         _.each(this.tabs, t => {
           if (event.url.indexOf(t.routerLink) !== -1) {
-            this.message = t.name
+            this.message = t.description
+            this.currentStep = t.step
           }
         })
       }
