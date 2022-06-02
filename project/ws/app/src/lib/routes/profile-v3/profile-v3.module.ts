@@ -12,6 +12,8 @@ import { CompetencyCardComponent } from './components/competency-card/competency
 import { SetupLeftMenuComponent } from './components/left-menu/left-menu.component'
 import { DesiredCompetenciesComponent } from './routes/desired-competencies/desired-competencies.component'
 import { TopicComponent } from './routes/topics/topic.component'
+import { TreeCatalogModule } from '@sunbird-cb/collection/src/public-api'
+import { TopicService } from './services/topics.service'
 
 
 @NgModule({
@@ -32,6 +34,10 @@ import { TopicComponent } from './routes/topics/topic.component'
     MatIconModule,
     RouterModule,
     ProfileV3RoutingModule,
+    TreeCatalogModule,
+  ],
+  providers: [
+    TopicService,
   ]
 })
 export class ProfileV3Module { }

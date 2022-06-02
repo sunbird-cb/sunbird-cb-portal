@@ -1,15 +1,19 @@
-
-<mat-card  class="padding-m mat-card  margin-bottom-s w-full topic_card" role="contentinfo" tabindex="0" *ngFor="let topic of topicData">
-
-     <mat-card-title><a class="mat-h4 margin-bottom-l" i18n role="heading" >{{ topic.name }} </a></mat-card-title>
-
-     <div class="flex flex-wrap">
-        <a class="topic_tag_link  mat-body-2 flex items-center margin-right-xs  margin-bottom-xs" *ngFor="let item of topic?.subTopic">
-            {{ item }}
+<mat-card class="padding-m mat-card  margin-bottom-s w-full topic_card" role="contentinfo" tabindex="0">
+  <mat-card-title>
+    <a class="mat-h4 margin-bottom-l" i18n role="heading">
+      {{ topic.name }}
+    </a>
+  </mat-card-title>
+  <ng-container *ngIf="topic.children && topic.children.length > 0">
+    <div class="flex flex-wrap">
+      <ng-container *ngFor="let subTopic of topic.children">
+        <a (click)="clicked(subTopic)"
+          [ngClass]="{'ws-mat-accent-background ws-mat-primary-default-text': isSelected(subTopic), 'ws-mat-accent-border' : !isSelected(subTopic)}"
+          class="topic_tag_link mat-body-2 flex items-center margin-right-xs  margin-bottom-xs">
+          {{ subTopic.name }}
         </a>
-   </div>
- </mat-card>
+      </ng-container>
+    </div>
+  </ng-container>
 
-
-
-
+</mat-card>

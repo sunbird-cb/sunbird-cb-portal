@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
+import { TopicResolverService } from './resolvers/topic.resolver'
 import { CurrentCompetenciesComponent } from './routes/current-competencies/current-competencies.component'
 import { DesiredCompetenciesComponent } from './routes/desired-competencies/desired-competencies.component'
 import { ProfileHomeComponent } from './routes/profile-home/profile-home.component'
@@ -49,9 +50,9 @@ const routes: Routes = [
           pageId: 'topics',
           module: 'profile-v3',
         },
-        // resolve: {
-        //   allResources : AllResourceResolveService,
-        // },
+        resolve: {
+          topics: TopicResolverService,
+        },
       }
 
 
@@ -63,9 +64,9 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  // providers: [,
-
-  // ],
+  providers: [
+    TopicResolverService,
+  ],
   // Don't forget to pass RouteResolver into the providers array
 })
 

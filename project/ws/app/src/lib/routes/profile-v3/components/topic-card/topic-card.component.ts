@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import _ from 'lodash';
+import { NSProfileDataV3 } from '../../models/profile-v3.models';
+import { TopicService } from '../../services/topics.service';
 
 @Component({
   selector: 'ws-app-topic-card',
@@ -6,33 +9,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./topic-card.component.scss']
 })
 export class TopicCardComponent implements OnInit {
-
-  topicData = [
-    {
-      id: 1,
-      name: 'E-Governance & Information & Communication Technology',
-      subTopic: ['Network & Communications', 'Database Managemewnt System - MS Access', 'Word Processing (MS-Word)', 'Presentation (MS-Powerpoint)']
-    },
-    {
-      id: 2,
-      name: 'Economics',
-      subTopic: ['Growth Economics', 'Economics Thought', 'Principles of Macro Economics', 'Introduction to Economics']
-    },
-    {
-      id: 3,
-      name: 'History',
-      subTopic: ['Ancient History', 'Medival History', 'Post-Independence History']
-    },
-    {
-      id: 4,
-      name: 'Information & Communication Technology and Digital Governance',
-      subTopic: ['Computer fundamentals', 'Standalone Office Applications', 'Collaboration Tools and Meeting Solutions']
-    }
-  ]
-
-  constructor() { }
+  @Input() topic!: NSProfileDataV3.ITopic
+  // selectedTopics: Subscription | null = null
+  constructor(private topicService: TopicService) { }
 
   ngOnInit() {
-  }
 
+  }
+  clicked(top: NSProfileDataV3.ITopic) {
+    const index = _.findIndex(this.topicService.getCurrentSelectedTopics, { identifier: top.identifier })
+    if (index !== -1) {
+      /// remove from store
+      this.topicService.removeTopics(top)
+    } else {
+      /// add to store
+      this.topicService.addTopics(top)
+    }
+  }
+  isSelected(top: NSProfileDataV3.ITopic): boolean {
+    const index = _.findIndex(this.topicService.getCurrentSelectedTopics, { identifier: top.identifier })
+    if (index === -1) {
+      return false
+    }
+    return true
+  }
 }
