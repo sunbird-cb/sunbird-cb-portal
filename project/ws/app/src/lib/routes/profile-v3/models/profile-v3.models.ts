@@ -30,14 +30,13 @@ export namespace NSProfileDataV3 {
 
 
     export interface ITopic {
-        id: string
+        children: ITopic[]
+        code: string
+        description: string
+        identifier: string
+        index: number
         name: string
-        subTopic?: ISubtopic[]
+        noOfHoursConsumed: number
+        status: string
     }
-
-    export interface ISubtopic {
-        name: string
-    }
-
-
 }

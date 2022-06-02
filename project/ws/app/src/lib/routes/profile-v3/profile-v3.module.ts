@@ -15,6 +15,8 @@ import { TopicComponent } from './routes/topics/topic.component'
 import { CompetencyFiltersComponent } from '../browse-by-competency/components/competency-filters/competency-filters.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { PipeFilterV2Module } from '@sunbird-cb/utils/src/public-api'
+import { TreeCatalogModule } from '@sunbird-cb/collection/src/public-api'
+import { TopicService } from './services/topics.service'
 
 
 @NgModule({
@@ -42,6 +44,10 @@ import { PipeFilterV2Module } from '@sunbird-cb/utils/src/public-api'
     MatCheckboxModule,
     PipeFilterV2Module,
     MatInputModule,
+    TreeCatalogModule,
+  ],
+  providers: [
+    TopicService,
   ]
 })
 export class ProfileV3Module { }

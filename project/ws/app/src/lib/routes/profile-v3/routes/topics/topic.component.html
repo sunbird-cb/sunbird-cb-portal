@@ -1,3 +1,4 @@
 <h4 class="mat-h4">Popular Topics</h4>
-
-<ws-app-topic-card></ws-app-topic-card>
+<ng-container *ngFor="let t of topics">
+    <ws-app-topic-card [topic]="t"></ws-app-topic-card>
+</ng-container>
