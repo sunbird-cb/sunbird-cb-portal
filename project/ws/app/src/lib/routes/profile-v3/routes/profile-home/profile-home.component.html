@@ -36,5 +36,11 @@
 <div class="footer_box flex flex-row justify-between">
   <a class="skip_link mat-body-2 margin-remove-bottom">Cancle</a>
   <p class="mat-body-2 margin-remove-bottom margin-top-xs">Your selections are automatically saved.</p>
-  <a class="next_link mat-body-2 margin-remove-bottom">Next: 2. Current competencies</a>
+  <ng-container *ngIf="next && next !== 'done'">
+    <a [routerLink]="next.routerLink" class="next_link mat-body-2 margin-remove-bottom">Next: {{next.step}}.
+      {{next.name}}</a>
+  </ng-container>
+  <ng-container *ngIf="next && next === 'done'">
+    <a (click)="updateProfile()" class="next_link mat-body-2 margin-remove-bottom">Save</a>
+  </ng-container>
 </div>

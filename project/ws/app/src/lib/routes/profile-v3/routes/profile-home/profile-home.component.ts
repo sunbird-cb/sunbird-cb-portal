@@ -36,8 +36,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
   ) {
-
-    this.tabs = this.tabsData
+    this.tabs = _.orderBy(this.tabsData, 'step')
     this.init()
   }
   init() {
@@ -46,7 +45,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
     }
     this.routerSubscription = this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationStart) { // do not delete this
-       // console.log(event)
+        // console.log(event)
       }
       if (event instanceof NavigationEnd) {
         _.each(this.tabs, t => {
@@ -58,7 +57,9 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
       }
     })
   }
-
+  updateProfile(){
+    // need to update profile
+  }
   ngOnInit() {
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
       this.sideNavBarOpened = !isLtMedium
@@ -74,5 +75,11 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
       this.routerSubscription.unsubscribe()
     }
   }
-
+  get next() {
+    const nextStep = _.first(_.filter(this.tabs, { step: this.currentStep + 1 }))
+    if (nextStep) {
+      return nextStep
+    }
+    return "done"
+  }
 }
