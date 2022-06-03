@@ -17,22 +17,47 @@ export class TopicCardComponent implements OnInit {
   ngOnInit() {
 
   }
-  clicked(top: NSProfileDataV3.ITopic) {
-    const index = _.findIndex(this.topicService.getCurrentSelectedTopics, { identifier: top.identifier })
-    if (index !== -1) {
-      /// remove from store
-      this.topicService.removeTopics(top)
+  clicked(top: NSProfileDataV3.ITopic | string) {
+    this.topicService.autoSave.next(true)
+    if (typeof (top) === 'object') {
+      const index = _.findIndex(this.topicService.getCurrentSelectedTopics, { identifier: top.identifier })
+      if (index !== -1) {
+        /// remove from store
+        this.topicService.removeTopics(top)
+      } else {
+        /// add to store
+        this.topicService.addTopics(top)
+      }
     } else {
-      /// add to store
-      this.topicService.addTopics(top)
+      const index = _.findIndex(this.topicService.getCurrentSelectedTopics, { name: 'Added by you' })
+      const cIndex = _.indexOf(this.topicService.getCurrentSelectedTopics[index].children, top)
+      if (cIndex !== -1) {
+        /// remove from store
+        this.topicService.removeTopicsAddedByYou(top)
+      } else {
+        /// add to store
+        this.topicService.addTopicsAddedByYou(top)
+      }
     }
+
   }
   isSelected(top: NSProfileDataV3.ITopic): boolean {
-    const index = _.findIndex(this.topicService.getCurrentSelectedTopics, { identifier: top.identifier })
-    if (index === -1) {
-      return false
+    if (top) {
+      if (!top.identifier) {
+        const index = _.indexOf(this.topicService.getCurrentSelectedTopics, top)
+        if (index === -1) {
+          return false
+        }
+        return true
+      } else {
+        const index = _.findIndex(this.topicService.getCurrentSelectedTopics, { identifier: top.identifier })
+        if (index === -1) {
+          return false
+        }
+        return true
+      }
     }
-    return true
+    return false
   }
   showMore() {
     this.show += 10

@@ -28,7 +28,7 @@ export namespace NSProfileDataV3 {
         name: string
     }
     export interface ITopic {
-        children: ITopic[]
+        children:  any[]
         code: string
         description: string
         identifier: string
@@ -42,5 +42,27 @@ export namespace NSProfileDataV3 {
         type: string
         field: string
         keyword: string
+    }
+    export interface IDesiredTopic {
+        request: {
+            userId: string
+            profileDetails: {
+                desiredTopics: string[]
+            }
+
+        }
+    }
+    export interface ISystemTopic {
+        request: {
+            userId: string
+            profileDetails: {
+                systemTopics: ISystemTopicChield[]
+            }
+        }
+    }
+    export interface ISystemTopicChield {
+        identifier: string
+        name: string
+        children: []
     }
 }
