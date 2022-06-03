@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
+import { AddTopicDialogComponent } from '../../components/add-topic/add-topic.component';
 import { NSProfileDataV3 } from '../../models/profile-v3.models';
 
 @Component({
@@ -10,7 +12,11 @@ import { NSProfileDataV3 } from '../../models/profile-v3.models';
 export class TopicComponent implements OnInit {
 
   topics!: NSProfileDataV3.ITopic[]
-  constructor(private aRoute: ActivatedRoute) {
+  constructor(
+    private aRoute: ActivatedRoute,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+  ) {
     this.loadTopics()
   }
 
@@ -25,5 +31,18 @@ export class TopicComponent implements OnInit {
       this.topics = this.aRoute.snapshot.data.topics.data
     }
   }
+  showPoup() {
+    const dialogRef = this.dialog.open(AddTopicDialogComponent, {
+      autoFocus: false,
+      data: {},
+    })
+    dialogRef.afterClosed().subscribe((response: any) => {
+      if (response) {
+        if (response) {
+          this.snackBar.open('Updated')
+        }
+      }
+    })
 
+  }
 }
