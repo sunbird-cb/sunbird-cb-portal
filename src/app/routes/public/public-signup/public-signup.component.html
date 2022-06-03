@@ -52,9 +52,9 @@
         </h1>
       </div>
       <form [formGroup]="registrationForm">
-        <div class="margin-top-xl new-mobile">
+        <div class="margin-top-l new-mobile">
           <div class="flex flex-wrap mobile-break">
-            <div class="flex content-center flex-wrap">
+            <div class="flex flex-col content-center flex-wrap">
               <div class="input-wrapper margin-top-s">
                 <label for="firstName" class=" margin-remove-bottom form-label required"
                   i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
@@ -76,7 +76,7 @@
                   </mat-error>
                 </mat-form-field>
               </div>
-              <div class="input-wrapper margin-top-s">
+              <div class="input-wrapper margin-top-xs">
                 <label for="lastName" class=" margin-remove-bottom form-label required"
                   i18n="Last name label|Label which explains the user to enter Last Name" i18n-aria-label
                   aria-label="Last Name label">
@@ -96,7 +96,7 @@
                   </mat-error>
                 </mat-form-field>
               </div>
-              <div class="input-wrapper margin-top-s">
+              <!-- <div class="input-wrapper margin-top-xs">
                 <label for="designation" class=" margin-remove-bottom form-label required"
                   i18n="designation label|Label which explains the user to enter designation" i18n-aria-label
                   aria-label="Designation label">
@@ -115,8 +115,37 @@
                     Designation cannot contain numbers and special characters except '
                   </mat-error>
                 </mat-form-field>
+              </div> -->
+              <div class="input-wrapper margin-top-xs">
+                <label for="position" class=" margin-remove-bottom form-label required"
+                  i18n="Position|Label which explains the user to enter Position" i18n-aria-label
+                  aria-label="Position Field label">
+                  Position
+                </label>
+                <mat-form-field appearance="outline" class="margin-top-xs w-full">
+                  <input id="position" matInput tab-directive type="text" placeholder="Position"
+                    i18n-placeholder="position" formControlName="position"
+                    [matAutocomplete]="positionAutocomplete" i18n-aria-label aria-label="Position" #position
+                    i18n-aria-label aria-label="Position Field input" />
+                  <mat-error [hidden]="false" i18n="Position Error|Explains Position is required"
+                    *ngIf="registrationForm?.controls['position'].errors?.required" i18n-aria-label
+                    aria-label="Position is mandatory">
+                    Position is mandatory
+                  </mat-error>
+                  <mat-error *ngIf="registrationForm?.controls['position'].errors?.forbiddenNames" i18n-aria-label
+                    aria-label="You must enter value from suggested list only.">
+                    You must enter value from suggested list only.
+                  </mat-error>
+                </mat-form-field>
+                <mat-autocomplete #positionAutocomplete="matAutocomplete" autoActiveFirstOption="true" i18n-aria-label
+                  aria-label="Position list masterPositions" [displayWith]="displayFnPosition">
+                  <mat-option *ngFor="let option of masterPositions | async" [value]="option" i18n-aria-label
+                    aria-label="Position list autocomplete option">
+                    {{ option.name }}
+                  </mat-option>
+                </mat-autocomplete>
               </div>
-              <div class="input-wrapper margin-top-s">
+              <div class="input-wrapper margin-top-xs">
                 <label for="email" class=" margin-remove-bottom form-label required"
                   i18n="Email label|Label which explains the user to enter Email" i18n-aria-label
                   aria-label="Email label">
@@ -130,7 +159,7 @@
                   </mat-error>
                 </mat-form-field>
               </div>
-              <div class="input-wrapper margin-top-s">
+              <div class="input-wrapper margin-top-xs">
                 <label for="department" class=" margin-remove-bottom form-label required"
                   i18n="Department|Label which explains the user to enter Department" i18n-aria-label
                   aria-label="Department Field label">
@@ -159,9 +188,25 @@
                   </mat-option>
                 </mat-autocomplete>
               </div>
-              <div class="w-full margin-top-s">
+              <div class="input-wrapper margin-top-xs">
+                <div class="flex flex-middle">
+                  <mat-checkbox aria-label="I confirm that the above provided information are accurate." id="confirm"
+                    [checked]="confirm" (change)="confirmChange()" i18n-aria-label
+                    aria-label="I confirm that the above provided information are accurate. checkbox" required>
+                    <label class=" margin-remove-bottom" i18n-aria-label
+                      aria-label="I confirm that the above provided information are accurate. checkbox label">
+                    I confirm that the above provided information are accurate.
+                    </label>
+                  </mat-checkbox>
+                </div>
+              </div>
+              <div class="w-full margin-top-l">
                 <div class="button_box flex flex-col items-center justify-center">
-                  <button mat-flat-button type="submit" class="submitBtn text-white ws-mat-primary-background ws-mat-white-text" (click)="signup()" [disabled]="!registrationForm?.valid">SIGN UP</button>
+                  <button mat-flat-button type="submit" 
+                    class="submitBtn text-white ws-mat-primary-background ws-mat-white-text" 
+                    (click)="signup()" [disabled]="!registrationForm?.valid || !confirm">
+                    SIGN UP
+                  </button>
                 </div>
               </div>
             </div>

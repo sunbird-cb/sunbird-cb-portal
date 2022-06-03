@@ -24,6 +24,22 @@ export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
   }
 }
 
+export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    if (!optionsArray) {
+      return null
+      // tslint:disable-next-line: no-else-after-return
+    } else {
+      const index = optionsArray.findIndex((op: any) => {
+        // tslint:disable-next-line: prefer-template
+        // return new RegExp('^' + op.channel + '$').test(control.channel)
+        return op.name === control.value.name
+      })
+      return index < 0 ? { forbiddenNames: { value: control.value.name } } : null
+    }
+  }
+}
+
 @Component({
   selector: 'ws-public-signup',
   templateUrl: './public-signup.component.html',
@@ -36,8 +52,12 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   departments!: any
   masterDepartments!: Observable<any> | undefined
   masterDepartmentsOriginal!: []
+  positionsOriginal!: []
+  postions!: any
+  masterPositions!: Observable<any> | undefined
   telemetryConfig: NsInstanceConfig.ITelemetryConfig | null = null
   portalID = ''
+  confirm = false
 
   private subscriptionContact: Subscription | null = null
 
@@ -51,15 +71,18 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     this.registrationForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       lastname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
-      designation: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
+      position: new FormControl('', [Validators.required, forbiddenNamesValidatorPosition(this.masterPositions)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
+      confirmBox: new FormControl(false, [Validators.required]),
     })
   }
 
   ngOnInit() {
     this.fetchDepartments()
     const instanceConfig = this.configSvc.instanceConfig
+    this.positionsOriginal = this.configSvc.positions || []
+    this.onPositionsChange()
     if (instanceConfig) {
       this.telemetryConfig = instanceConfig.telemetryConfig
       this.portalID = `${this.telemetryConfig.pdata.id}`
@@ -99,12 +122,45 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       })
   }
 
+  onPositionsChange() {
+    // tslint:disable-next-line: no-non-null-assertion
+    this.masterPositions = this.registrationForm.get('position')!.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        startWith(''),
+        map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+        map(name => name ? this.filterPositions(name) : this.positionsOriginal.slice())
+      )
+
+      this.masterPositions.subscribe((event: any) => {
+        // tslint:disable-next-line: no-non-null-assertion
+        this.registrationForm.get('position')!.setValidators([Validators.required, forbiddenNamesValidatorPosition(event)])
+        this.registrationForm.updateValueAndValidity()
+      })
+  }
+
   private filterDepartments(name: string): any {
     if (name) {
       const filterValue = name.toLowerCase()
       return this.masterDepartmentsOriginal.filter((option: any) => option.channel.toLowerCase().includes(filterValue))
     }
     return this.masterDepartmentsOriginal
+  }
+
+  private filterPositions(name: string): any {
+    if (name) {
+      const filterValue = name.toLowerCase()
+      return this.positionsOriginal.filter((option: any) => option.name.toLowerCase().includes(filterValue))
+    }
+    return this.positionsOriginal
+  }
+
+  public confirmChange() {
+    this.confirm = !this.confirm
+    this.registrationForm.patchValue({
+      confirmBox: this.confirm,
+    })
   }
 
   ngOnDestroy() {
@@ -117,6 +173,10 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     return value ? value.channel : undefined
   }
 
+  displayFnPosition = (value: any) =>  {
+    return value ? value.name : undefined
+  }
+
   signup() {
     const req = {
       firstName: this.registrationForm.value.firstname || '',
@@ -124,7 +184,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       email: this.registrationForm.value.email || '',
       deptId: this.registrationForm.value.department.identifier || '',
       deptName: this.registrationForm.value.department.channel || '',
-      position: this.registrationForm.value.designation,
+      position: this.registrationForm.value.position.name || '',
       source: `${environment.name}.${this.portalID}` || '',
     }
 
