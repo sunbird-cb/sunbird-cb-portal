@@ -51,8 +51,8 @@ export class TopicCardComponent implements OnInit {
         }
         return true
       }
-      const index = _.findIndex(this.topicService.getCurrentSelectedTopics, { identifier: top.identifier })
-      if (index === -1) {
+      const index1 = _.findIndex(this.topicService.getCurrentSelectedTopics, { identifier: top.identifier })
+      if (index1 === -1) {
         return false
       }
       return true
