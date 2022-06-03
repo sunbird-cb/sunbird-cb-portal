@@ -1,4 +1,16 @@
-<h4 class="mat-h4">Popular Topics</h4>
-<ng-container *ngFor="let t of topics">
-    <ws-app-topic-card [topic]="t"></ws-app-topic-card>
-</ng-container>
+<!-- <h4 class="mat-h4">Popular Topics</h4> -->
+<div class="flex flex-1 flex-column">
+    <div class="flex flex-1 flex-row-reverse flex-middle">
+        <a mat-button type="button" class="ws-mat-accent-border-active cursor-pointer" (click)="showPoup()">
+            <span class="mat-body-2 ws-mat-default-text padding-xs" i18n>
+                Add topic
+            </span>
+        </a>
+        <span i18n class="margin-right-s">Not finding a topic of your interest?</span>
+    </div>
+    <div class="flex flex-1 flex-wrap margin-top-s">
+        <ng-container *ngFor="let t of topics">
+            <ws-app-topic-card [topic]="t"></ws-app-topic-card>
+        </ng-container>
+    </div>
+</div>

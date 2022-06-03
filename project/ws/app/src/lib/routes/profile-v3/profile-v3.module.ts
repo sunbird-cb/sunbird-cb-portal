@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TopicCardComponent } from './components/topic-card/topic-card.component'
 import { ProfileHomeComponent } from './routes/profile-home/profile-home.component'
-import { MatCardModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material'
+import { MatButtonModule, MatCardModule, MatCheckboxModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSnackBarModule } from '@angular/material'
 import { MatListModule } from '@angular/material/list';
 import { CurrentCompetenciesComponent } from './routes/current-competencies/current-competencies.component'
 import { MatSidenavModule } from '@angular/material/sidenav'
@@ -20,6 +20,8 @@ import { TopicService } from './services/topics.service'
 // import { PlayerVideoComponent } from '@sunbird-cb/collection/src/lib/player-video/player-video.component';
 import { PlatformWalkthroughComponent } from './routes/platform-walkthrough/platform-walkthrough.component'
 
+import { AddTopicDialogComponent } from './components/add-topic/add-topic.component'
+
 
 
 @NgModule({
@@ -34,6 +36,7 @@ import { PlatformWalkthroughComponent } from './routes/platform-walkthrough/plat
     CompetencyFiltersComponent,
     PlatformWalkthroughComponent,
     // VideoWrapperComponent,
+    AddTopicDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -42,6 +45,7 @@ import { PlatformWalkthroughComponent } from './routes/platform-walkthrough/plat
     MatSidenavModule,
     MatIconModule,
     RouterModule,
+    MatButtonModule,
     ProfileV3RoutingModule,
     ReactiveFormsModule,
     FormsModule,
@@ -50,9 +54,17 @@ import { PlatformWalkthroughComponent } from './routes/platform-walkthrough/plat
     PipeFilterV2Module,
     MatInputModule,
     TreeCatalogModule,
+    MatSnackBarModule,
+    MatDialogModule,
+    MatInputModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
   ],
   providers: [
     TopicService,
-  ]
+  ],
+  entryComponents: [
+    AddTopicDialogComponent,
+  ],
 })
 export class ProfileV3Module { }
