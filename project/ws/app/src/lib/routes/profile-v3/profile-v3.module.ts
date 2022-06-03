@@ -12,7 +12,7 @@ import { CompetencyCardComponent } from './components/competency-card/competency
 import { SetupLeftMenuComponent } from './components/left-menu/left-menu.component'
 import { DesiredCompetenciesComponent } from './routes/desired-competencies/desired-competencies.component'
 import { TopicComponent } from './routes/topics/topic.component'
-import { CompetencyFiltersComponent } from '../browse-by-competency/components/competency-filters/competency-filters.component'
+import { BrowseByCompetencyModule } from '../browse-by-competency/browse-by-competency.module'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { PipeFilterV2Module } from '@sunbird-cb/utils/src/public-api'
 import { TreeCatalogModule } from '@sunbird-cb/collection/src/public-api'
@@ -33,7 +33,6 @@ import { AddTopicDialogComponent } from './components/add-topic/add-topic.compon
     CompetencyCardComponent,
     SetupLeftMenuComponent,
     TopicComponent,
-    CompetencyFiltersComponent,
     PlatformWalkthroughComponent,
     // VideoWrapperComponent,
     AddTopicDialogComponent,
@@ -59,6 +58,7 @@ import { AddTopicDialogComponent } from './components/add-topic/add-topic.compon
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,
+    BrowseByCompetencyModule,
   ],
   providers: [
     TopicService,
