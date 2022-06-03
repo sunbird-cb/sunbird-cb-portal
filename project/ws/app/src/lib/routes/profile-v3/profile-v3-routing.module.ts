@@ -5,7 +5,7 @@ import { CurrentCompetenciesComponent } from './routes/current-competencies/curr
 import { DesiredCompetenciesComponent } from './routes/desired-competencies/desired-competencies.component'
 import { ProfileHomeComponent } from './routes/profile-home/profile-home.component'
 import { TopicComponent } from './routes/topics/topic.component'
-
+import { CompetencyResolverService } from '../profile/routes/competency/resolver/assessment.resolver'
 
 const routes: Routes = [
   {
@@ -28,9 +28,9 @@ const routes: Routes = [
           pageId: 'current-competencies',
           module: 'profile-v3',
         },
-        // resolve: {
-        //   allResources : AllResourceResolveService,
-        // },
+        resolve: {
+          topics: CompetencyResolverService,
+        },
       },
       {
         path: 'desired-competencies',
@@ -53,12 +53,9 @@ const routes: Routes = [
         resolve: {
           topics: TopicResolverService,
         },
-      }
-
-
-
+      },
     ],
-  }
+  },
 ]
 
 @NgModule({
@@ -66,6 +63,7 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     TopicResolverService,
+    CompetencyResolverService,
   ],
   // Don't forget to pass RouteResolver into the providers array
 })
