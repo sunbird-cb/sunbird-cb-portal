@@ -65,6 +65,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
       this.sideNavBarOpened = !isLtMedium
       this.screenSizeIsLtMedium = isLtMedium
     })
+
   }
 
   ngOnDestroy() {
@@ -81,5 +82,15 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
       return nextStep
     }
     return "done"
+  }
+
+  get previous() {
+    const previousStep = _.first(_.filter(this.tabs, { step: this.currentStep - 1  }))
+      if (previousStep !== undefined) {
+        return previousStep
+      }
+      return "first"
+
+
   }
 }
