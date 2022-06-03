@@ -1,11 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
-
-interface IDialogData {
-
-}
-
 @Component({
   selector: 'ws-app-add-topic',
   templateUrl: './add-topic.component.html',
@@ -16,7 +11,7 @@ export class AddTopicDialogComponent implements OnInit {
   createTopic!: FormGroup
   constructor(
     public dialogRef: MatDialogRef<AddTopicDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IDialogData,
+    @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
 
   close(): void {

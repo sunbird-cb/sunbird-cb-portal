@@ -63,12 +63,12 @@ export class CurrentCompetenciesComponent implements OnInit {
     }
   }
 
-  getSelectedCompetency(event: any) {
-    console.log('getSelectedCompetency ********', event)
+  getSelectedCompetency(_event: any) {
+    // console.log('getSelectedCompetency ********', event)
   }
 
-  getSelectedCompLevel(event: any) {
-    console.log('getSelectedCompetencyLEvel ==========', event)
+  getSelectedCompLevel(_event: any) {
+    // console.log('getSelectedCompetencyLEvel ==========', event)
   }
 
 }

@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { ActivatedRoute } from '@angular/router'
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
+// tslint:disable-next-line
 import _ from 'lodash'
 import { Subscription } from 'rxjs'
 import { AddTopicDialogComponent } from '../../components/add-topic/add-topic.component'
@@ -11,7 +12,7 @@ import { TopicService } from '../../services/topics.service'
 @Component({
   selector: 'ws-app-topic',
   templateUrl: './topic.component.html',
-  styleUrls: ['./topic.component.scss']
+  styleUrls: ['./topic.component.scss'],
 })
 export class TopicComponent implements OnInit, OnDestroy {
 
@@ -31,7 +32,7 @@ export class TopicComponent implements OnInit, OnDestroy {
       this.topicUpdateSubscription.unsubscribe()
     }
     this.topicUpdateSubscription = this.topicService.selectedTopics
-      .subscribe((data) => {
+      .subscribe(data => {
         if (this.topicService.autoSave.value) {
           let desiredTopic: NSProfileDataV3.ITopic[] = []
           const systemTopic: NSProfileDataV3.ITopic[] = []
@@ -59,8 +60,8 @@ export class TopicComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(this.configSvc.unMappedUser.profileDetails.desiredTopics)
-    console.log(this.configSvc.unMappedUser.profileDetails.systemTopics)
+    // console.log(this.configSvc.unMappedUser.profileDetails.desiredTopics)
+    // console.log(this.configSvc.unMappedUser.profileDetails.systemTopics)
     const desiredTopics = _.get(this.configSvc.unMappedUser, 'profileDetails.desiredTopics')
     const systemTopics = _.get(this.configSvc.unMappedUser, 'profileDetails.systemTopics')
     this.topicService.autoSave.next(false)
@@ -72,7 +73,7 @@ export class TopicComponent implements OnInit, OnDestroy {
       index: 0,
       name: 'Added by you',
       noOfHoursConsumed: 0,
-      status: ''
+      status: '',
     }
     if (systemTopics) {
       this.topicService.addInitTopics([...systemTopics, this.addedByYou])
@@ -109,7 +110,7 @@ export class TopicComponent implements OnInit, OnDestroy {
         request: {
           userId: this.configSvc.userProfile.userId,
           profileDetails: {
-            desiredTopics: desiredTopic
+            desiredTopics: desiredTopic,
           },
         },
       }
@@ -133,7 +134,7 @@ export class TopicComponent implements OnInit, OnDestroy {
                 identifier: st.identifier,
                 name: st.name,
               } as NSProfileDataV3.ISystemTopicChield
-            })
+            }),
           },
         },
       }

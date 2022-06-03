@@ -1,12 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
-import _ from 'lodash';
-import { NSProfileDataV3 } from '../../models/profile-v3.models';
-import { TopicService } from '../../services/topics.service';
+import { Component, Input, OnInit } from '@angular/core'
+// tslint:disable-next-line
+import _ from 'lodash'
+import { NSProfileDataV3 } from '../../models/profile-v3.models'
+import { TopicService } from '../../services/topics.service'
 
 @Component({
   selector: 'ws-app-topic-card',
   templateUrl: './topic-card.component.html',
-  styleUrls: ['./topic-card.component.scss']
+  styleUrls: ['./topic-card.component.scss'],
 })
 export class TopicCardComponent implements OnInit {
   @Input() topic!: NSProfileDataV3.ITopic
@@ -49,13 +50,13 @@ export class TopicCardComponent implements OnInit {
           return false
         }
         return true
-      } else {
-        const index = _.findIndex(this.topicService.getCurrentSelectedTopics, { identifier: top.identifier })
-        if (index === -1) {
-          return false
-        }
-        return true
       }
+      const index = _.findIndex(this.topicService.getCurrentSelectedTopics, { identifier: top.identifier })
+      if (index === -1) {
+        return false
+      }
+      return true
+
     }
     return false
   }
