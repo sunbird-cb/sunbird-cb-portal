@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router'
 import { TopicResolverService } from './resolvers/topic.resolver'
 import { CurrentCompetenciesComponent } from './routes/current-competencies/current-competencies.component'
 import { DesiredCompetenciesComponent } from './routes/desired-competencies/desired-competencies.component'
+import { PlatformWalkthroughComponent } from './routes/platform-walkthrough/platform-walkthrough.component'
 import { ProfileHomeComponent } from './routes/profile-home/profile-home.component'
 import { TopicComponent } from './routes/topics/topic.component'
 
@@ -53,6 +54,17 @@ const routes: Routes = [
         resolve: {
           topics: TopicResolverService,
         },
+      },
+      {
+        path: 'platform-walkthrough',
+        component: PlatformWalkthroughComponent,
+        data: {
+          pageId: 'platform-walkthrough',
+          module: 'profile-v3',
+        },
+        // resolve: {
+        //   topics: TopicResolverService,
+        // },
       }
 
 

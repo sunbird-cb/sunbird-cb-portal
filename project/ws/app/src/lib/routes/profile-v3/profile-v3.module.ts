@@ -17,6 +17,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { PipeFilterV2Module } from '@sunbird-cb/utils/src/public-api'
 import { TreeCatalogModule } from '@sunbird-cb/collection/src/public-api'
 import { TopicService } from './services/topics.service'
+// import { PlayerVideoComponent } from '@sunbird-cb/collection/src/lib/player-video/player-video.component';
+import { PlatformWalkthroughComponent } from './routes/platform-walkthrough/platform-walkthrough.component'
+
 
 
 @NgModule({
@@ -29,6 +32,8 @@ import { TopicService } from './services/topics.service'
     SetupLeftMenuComponent,
     TopicComponent,
     CompetencyFiltersComponent,
+    PlatformWalkthroughComponent,
+    // VideoWrapperComponent,
   ],
   imports: [
     CommonModule,

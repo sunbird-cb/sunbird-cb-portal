@@ -27,8 +27,6 @@ export namespace NSProfileDataV3 {
     export interface ICompetencyLevel {
         name: string
     }
-
-
     export interface ITopic {
         children: ITopic[]
         code: string
@@ -38,5 +36,11 @@ export namespace NSProfileDataV3 {
         name: string
         noOfHoursConsumed: number
         status: string
+    }
+
+    export interface ISearch {
+        type: string
+        field: string
+        keyword: string
     }
 }
