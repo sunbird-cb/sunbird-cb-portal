@@ -62,6 +62,7 @@ export namespace NsInstanceConfig {
     hubs: IHubs[]
     courseContentPath?: string
     portalUrls: IPortalUrls | undefined
+    positions: any
   }
   export interface IPortalUrls {
     igot: string,
