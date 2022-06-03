@@ -26,7 +26,9 @@ export class AddTopicDialogComponent implements OnInit {
   create(): void {
     if (this.createTopic.get('topicName')) {
       const val = this.createTopic.value
-      this.dialogRef.close({ newTopic: val })
+      if (val && val.topicName) {
+        this.dialogRef.close({ newTopic: val.topicName })
+      }
     }
 
   }
