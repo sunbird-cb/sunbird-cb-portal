@@ -8,7 +8,16 @@
       "/apis": "/apis"
     },
     "headers": {
-      "Cookie": "connect.sid=s%3AyiiQMmY_eGm4One0r1DOwKNvXxODqGgQ.i4lgFAjW7EjDPqJ2Ui%2FP60LGGGdA0zr87LISIowF7h4"
+      "Cookie": "connect.sid=s%3A7DxGGDc8CpYEKevwIkSCQWZvy5Oog9G7.v1HNrXnm%2BqyJG4hBuG5lFtJYek2xGIYhHJVLb8umS7c; express.sid=s%3A8KxvqmG_RFRRGQe0cJsLKp40bHvqtWXr.hnFNUCkoQ24zI2jFiwzvn7SA4Qcu9ZSHEtqMrw9TOwY"
+    }
+  },
+  "/api/*": {
+    "target": "https://igot-dev.in",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "/api": "/api"
     }
   },
   "/content-api/*": {
