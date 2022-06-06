@@ -26,7 +26,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
 
   tabs!: NSProfileDataV3.IProfileTab[]
   tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
-  message = ''
+  message = `Enter all your 'Role & Activities' to complete your profile`
   currentStep = 1
 
   mode$ = this.isLtMedium$.pipe(map((isMedium: any) => (isMedium ? 'over' : 'side')))
