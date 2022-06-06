@@ -170,6 +170,7 @@
 
 a.level_item {
     height: 40px;
+    line-height: 26px;
     padding:6px 12px;
     border-radius: 18px 18px;
     text-align: center;
@@ -184,5 +185,12 @@ a.level_item_active {
 }
 a.level_item_active .mat-icon {
     color: #fff!important;
+}
+.material-icons.info_icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  line-height: 27px;
+
 }
 
