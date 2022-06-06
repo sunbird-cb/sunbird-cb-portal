@@ -7,7 +7,8 @@ import { ActivatedRoute } from '@angular/router'
   selector: 'ws-public-home',
   templateUrl: './public-home.component.html',
   styleUrls: ['./public-home.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  // tslint:disable-next-line
+  encapsulation: ViewEncapsulation.None,
 })
 export class PublicHomeComponent implements OnInit, OnDestroy {
   contactUsMail = ''

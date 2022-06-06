@@ -62,9 +62,9 @@ export class AppNavBarComponent implements OnInit, OnChanges {
 
         if (e.url.includes('/public/logout') ||  e.url.includes('/public/home')) {
           this.showAppNavBar = false
-          if(e.url.includes('/public/home')) {
+          if (e.url.includes('/public/home')) {
             this.isPublicHomePage = true
-          }else {
+          } else {
             this.isPublicHomePage = false
           }
         } else if ((e.url.includes('/app/setup') && this.configSvc.instanceConfig && !this.configSvc.instanceConfig.showNavBarInSetup)) {
