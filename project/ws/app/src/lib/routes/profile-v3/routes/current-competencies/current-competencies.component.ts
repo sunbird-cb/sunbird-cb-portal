@@ -84,7 +84,9 @@ export class CurrentCompetenciesComponent implements OnInit {
             com.competencySelfAttestedLevelValue = evt.competencySelfAttestedLevelValue
             com.osid = evt.osid
           } else {
-            this.updatecompList.push(evt)
+            if (!this.updatecompList.some((el: any) => el.id === evt.id)) {
+              this.updatecompList.push(evt)
+            }
           }
         })
       })
@@ -107,6 +109,7 @@ export class CurrentCompetenciesComponent implements OnInit {
     this.competencySvc.updateProfileDetails(reqUpdates).subscribe((res: any) => {
       if (res.responseCode === 'OK') {
         this.allCompetencies = []
+        this.updatecompList = []
         this.ngOnInit()
       }
     })
