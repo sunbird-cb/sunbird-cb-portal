@@ -21,8 +21,16 @@ export class CardNotifyComponent extends WidgetBaseComponent
   }
 
   ngOnInit() {
-    if (this.configSvc.userProfileV2 &&
-      this.configSvc.userProfileV2.competencies && this.configSvc.userProfileV2.competencies.length) {
+    // competency based
+    // if (this.configSvc.userProfileV2 &&
+    //   this.configSvc.userProfileV2.competencies && this.configSvc.userProfileV2.competencies.length) {
+    //   this.showMsg = false
+    // }
+
+    // topics based
+    if (
+      (this.configSvc.userProfileV2 && this.configSvc.userProfileV2.desiredTopics && this.configSvc.userProfileV2.desiredTopics.length) ||
+      (this.configSvc.userProfileV2 && this.configSvc.userProfileV2.systemTopics && this.configSvc.userProfileV2.systemTopics.length)) {
       this.showMsg = false
     }
   }
