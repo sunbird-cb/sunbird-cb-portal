@@ -10,13 +10,13 @@
     <div class="flex flex-1 flex-wrap margin-top-s flex-column">
         <mat-card class="mat-card margin-bottom-s role-card">
         <form [formGroup]="createRole" class="flex flex-1 flex-column margin-top-m">
-            <div class="input-wrapper margin-top-s flex flex-col">
+            <div class="input-wrapper margin-top-s flex flex-col flex-1">
                 <label for="roleName" class=" margin-remove-bottom form-label required flex"
                     i18n="Role Name label|Label which explains the user to enter Role Name" i18n-aria-label
                     aria-label="Role Name label">
                     Role Name
                 </label>
-                <mat-form-field appearance="outline" class="margin-top-xs w-50 flex form_field">
+                <mat-form-field appearance="outline" class="margin-top-xs w-50 flex form_field flex flex-1">
                     <input matInput autocomplete="off" id="roleName" #roleName name="roleName" placeholder="Type here"
                         formControlName="roleName" />
                 </mat-form-field>
