@@ -95,7 +95,6 @@ export class DesiredCompetenciesComponent implements OnInit {
         desiredCompetencies: this.updatecompList,
       },
     }
-
     const reqUpdates = {
       request: {
         userId: this.configService.unMappedUser.id,

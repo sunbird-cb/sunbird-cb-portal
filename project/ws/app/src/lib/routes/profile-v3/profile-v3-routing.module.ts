@@ -65,10 +65,7 @@ const routes: Routes = [
         // resolve: {
         //   topics: TopicResolverService,
         // },
-      }
-
-
-
+      },
     ],
   },
 ]

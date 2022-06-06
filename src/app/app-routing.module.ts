@@ -20,6 +20,7 @@ import { TncAppResolverService } from './services/tnc-app-resolver.service'
 import { TncPublicResolverService } from './services/tnc-public-resolver.service'
 import { AppTocResolverService } from '@ws/app/src/lib/routes/app-toc/resolvers/app-toc-resolver.service'
 import { PublicLogoutComponent } from './routes/public/public-logout/public-logout.component'
+import { PublicSignupComponent } from './routes/public/public-signup/public-signup.component'
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
 // Please declare routes in alphabetical order
@@ -710,6 +711,14 @@ const routes: Routes = [
   {
     path: 'public/logout',
     component: PublicLogoutComponent,
+  },
+  {
+    path: 'public/signup',
+    component: PublicSignupComponent,
+    data: {
+      module: 'Login',
+      pageId: 'public/signup',
+    },
   },
   {
     path: 'public/mobile-app',

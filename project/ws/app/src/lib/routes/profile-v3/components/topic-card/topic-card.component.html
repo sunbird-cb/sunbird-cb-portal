@@ -8,14 +8,14 @@
     <div class="flex flex-column">
       <div class="flex flex-1 flex-wrap">
         <ng-container *ngFor="let subTopic of topic.children | slice:0:show">
-          <a (click)="clicked(subTopic)"
+          <a *ngIf="subTopic" (click)="clicked(subTopic)"
             [ngClass]="{'ws-mat-accent-background ws-mat-primary-default-text': isSelected(subTopic), 'ws-mat-accent-border' : !isSelected(subTopic)}"
             class="topic_tag_link mat-body-2 flex items-center margin-right-xs  margin-bottom-xs">
-            {{ subTopic.name }}
+            {{ subTopic.name || subTopic}}
           </a>
         </ng-container>
       </div>
-      <ng-container *ngIf="topic.children.length > show">
+      <ng-container *ngIf="topic?.children?.length > show">
         <div class="flex flex-1 margin-top-xs">
           <span (click)="showMore()" class="cursor-pointer ws-mat-accent-text margin-auto">
             SEE {{ topic.children.length-show }} MORE TOPICS

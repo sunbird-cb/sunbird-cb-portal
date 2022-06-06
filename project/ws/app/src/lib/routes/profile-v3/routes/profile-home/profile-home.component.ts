@@ -4,14 +4,13 @@ import { ValueService } from '@sunbird-cb/utils'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router'
 import { NSProfileDataV3 } from '../../models/profile-v3.models'
+// tslint:disable-next-line
 import _ from 'lodash'
 import { Subscription } from 'rxjs'
-
-
 @Component({
   selector: 'ws-app-profile-home',
   templateUrl: './profile-home.component.html',
-  styleUrls: ['./profile-home.component.scss']
+  styleUrls: ['./profile-home.component.scss'],
 })
 export class ProfileHomeComponent implements OnInit, OnDestroy {
   @ViewChild('stickyMenu', { static: true }) menuElement!: ElementRef
@@ -49,7 +48,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
       }
       if (event instanceof NavigationEnd) {
         _.each(this.tabs, t => {
-      if (event.url.indexOf(t.routerLink) !== -1) {
+          if (event.url.indexOf(t.routerLink) !== -1) {
             this.message = t.description
             this.currentStep = t.step
           }
@@ -57,7 +56,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
       }
     })
   }
-  updateProfile(){
+  updateProfile() {
     // need to update profile
   }
   ngOnInit() {
@@ -81,16 +80,14 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
     if (nextStep) {
       return nextStep
     }
-    return "done"
+    return 'done'
   }
 
   get previous() {
-    const previousStep = _.first(_.filter(this.tabs, { step: this.currentStep - 1  }))
-      if (previousStep !== undefined) {
-        return previousStep
-      }
-      return "first"
-
-
+    const previousStep = _.first(_.filter(this.tabs, { step: this.currentStep - 1 }))
+    if (previousStep !== undefined) {
+      return previousStep
+    }
+    return 'first'
   }
 }

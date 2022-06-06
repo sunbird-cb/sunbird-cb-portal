@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core'
 import { EventService, WsEvents } from '@sunbird-cb/utils/src/public-api'
-/* tslint:disable*/
+// tslint:disable-next-line
 import _ from 'lodash'
 import { NSProfileDataV3 } from '../../models/profile-v3.models'
 
