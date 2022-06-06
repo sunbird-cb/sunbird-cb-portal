@@ -7,7 +7,6 @@ import _ from 'lodash'
 import { MatChipInputEvent } from '@angular/material'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 
-
 @Component({
     selector: 'ws-app-roles-and-activities',
     templateUrl: './roles-and-activities.component.html',
@@ -22,11 +21,11 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
         this.userRoles = _.get(this.configSvc.unMappedUser, 'profileDetails.userRoles') ||
             [{
                 id: '1', name: 'role1',
-                childNodes: [{ id: '1.1', name: 'Act1', description: 'desc1' }]
+                childNodes: [{ id: '1.1', name: 'Act1', description: 'desc1' }],
             },
             {
                 id: '2', name: 'role2',
-                childNodes: [{ id: '2.1', name: 'Act2', description: 'desc2' }]
+                childNodes: [{ id: '2.1', name: 'Act2', description: 'desc2' }],
             }]
     }
     ngOnInit(): void {
