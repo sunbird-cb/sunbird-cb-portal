@@ -12,11 +12,26 @@ export class CurrentCompetenciesComponent implements OnInit {
   searchJson!: NSProfileDataV3.ISearch[]
   allCompetencies: any = []
   overallCompetencies!: NSProfileDataV3.ICompetencie[]
+  changedProperties: any = {}
+  userDetails: any
+  updatecompList: any = []
+  competenciesList: any = []
 
   constructor(private competencySvc: ProfileV3Service, private configService: ConfigurationsService) {}
 
   ngOnInit() {
-    this.getCompetencies()
+    this.getUserDetails()
+  }
+
+  getUserDetails() {
+    if (this.configService.unMappedUser && this.configService.unMappedUser.id) {
+      this.competencySvc.getUserdetailsFromRegistry(this.configService.unMappedUser.id).subscribe(
+        (data: any) => {
+          this.userDetails = data
+          this.competenciesList = data.profileDetails.competencies
+          this.getCompetencies()
+      })
+    }
   }
 
   getCompetencies() {
@@ -41,34 +56,60 @@ export class CurrentCompetenciesComponent implements OnInit {
 
   getCompLsit() {
     if (this.overallCompetencies) {
-      if (this.configService && this.configService.userProfileV2) {
-        if (this.configService.userProfileV2.competencies && this.configService.userProfileV2.competencies.length > 0) {
-          const complist = this.configService.userProfileV2.competencies
-          complist.forEach((comp: any) => {
-            this.overallCompetencies.forEach((ncomp: any) => {
-              if (comp.id === ncomp.id) {
-                ncomp.competencySelfAttestedLevel = comp.competencySelfAttestedLevel
-                ncomp.competencySelfAttestedLevelValue = comp.competencySelfAttestedLevelValue
-                ncomp.osid = comp.osid
-                this.allCompetencies.push(ncomp)
-              }
-            })
+      if (this.competenciesList && this.competenciesList.length > 0) {
+        const complist = this.competenciesList
+        complist.forEach((comp: any) => {
+          this.overallCompetencies.forEach((ncomp: any) => {
+            if (comp.id === ncomp.id) {
+              ncomp.competencySelfAttestedLevel = comp.competencySelfAttestedLevel
+              ncomp.competencySelfAttestedLevelValue = comp.competencySelfAttestedLevelValue
+              ncomp.osid = comp.osid
+              this.allCompetencies.push(ncomp)
+            }
           })
-        } else {
-          this.allCompetencies = this.overallCompetencies
-        }
+        })
       } else {
         this.allCompetencies = this.overallCompetencies
       }
     }
   }
 
-  getSelectedCompetency(event: any) {
-    console.log('getSelectedCompetency ********', event)
-  }
+  updateSelectedCompetency(event: any) {
+    if (this.competenciesList && this.competenciesList.length > 0) {
+     this.updatecompList = this.competenciesList
+     this.updatecompList.forEach((com: any) => {
+        event.forEach((evt: any) => {
+          if (evt.id === com.id) {
+            com.competencySelfAttestedLevel = evt.competencySelfAttestedLevel
+            com.competencySelfAttestedLevelValue = evt.competencySelfAttestedLevelValue
+            com.osid = evt.osid
+          } else {
+            this.updatecompList.push(evt)
+          }
+        })
+      })
+    } else {
+      this.updatecompList = event
+    }
 
-  getSelectedCompLevel(event: any) {
-    console.log('getSelectedCompetencyLEvel ==========', event)
+    this.changedProperties = {
+      profileDetails: {
+        competencies: this.updatecompList,
+      },
+    }
+
+    const reqUpdates = {
+      request: {
+        userId: this.configService.unMappedUser.id,
+          ...this.changedProperties,
+      },
+    }
+    this.competencySvc.updateProfileDetails(reqUpdates).subscribe((res: any) => {
+      if (res.responseCode === 'OK') {
+        this.allCompetencies = []
+        this.ngOnInit()
+      }
+    })
   }
 
 }
