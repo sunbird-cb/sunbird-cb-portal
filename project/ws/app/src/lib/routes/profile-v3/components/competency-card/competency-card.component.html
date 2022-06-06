@@ -26,7 +26,8 @@
                 <p class="mat-body-2 ws-mat-black60-text">Select level</p>
 
                 <div class="flex flex-row level_list_box">
-                    <a class="margin-right-xs flex level_item level_item_deactive" [class.level_item_active]="complevel.id === selectedId || complevel.id === competency.competencySelfAttestedLevel" *ngFor="let complevel of competency?.children">
+                    <a class="margin-right-xs flex level_item level_item_deactive" *ngFor="let complevel of competency?.children"
+                    [class.level_item_active]="competency.competencySelfAttestedLevel ? (complevel.id === competency.competencySelfAttestedLevel) :(complevel.id === selectedLevelId && competency.id === selectedCompId)">
                         <span class="mat-body-2 margin-remove-bottom" (click)="selectLevel(complevel, competency)">{{complevel.name}}</span>
                         <mat-icon class="mat-icon margin-left-xs ws-mat-black60-text">error_outline</mat-icon>
                     </a>
