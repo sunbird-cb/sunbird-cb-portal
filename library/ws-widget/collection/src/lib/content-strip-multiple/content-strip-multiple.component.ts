@@ -520,7 +520,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
                 this.processStrip(strip, [], 'error', calculateParentStatus, null)
               },
             )
-          }, () => {
+          },         () => {
             this.processStrip(strip, [], 'error', calculateParentStatus, null)
           })
       }
