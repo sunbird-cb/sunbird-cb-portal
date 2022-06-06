@@ -24,7 +24,7 @@ export class TopicComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private topicService: TopicService,
-    private configSvc: ConfigurationsService
+    private configSvc: ConfigurationsService,
 
   ) {
     this.loadTopics()

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TopicCardComponent } from './components/topic-card/topic-card.component'
 import { ProfileHomeComponent } from './routes/profile-home/profile-home.component'
-import { MatButtonModule, MatCardModule, MatCheckboxModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSnackBarModule } from '@angular/material'
+import { MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSnackBarModule } from '@angular/material'
 import { MatListModule } from '@angular/material/list'
 import { CurrentCompetenciesComponent } from './routes/current-competencies/current-competencies.component'
 import { MatSidenavModule } from '@angular/material/sidenav'
@@ -21,8 +21,8 @@ import { TopicService } from './services/topics.service'
 import { PlatformWalkthroughComponent } from './routes/platform-walkthrough/platform-walkthrough.component'
 
 import { AddTopicDialogComponent } from './components/add-topic/add-topic.component'
-
-
+import { RolesAndActivitiesComponent } from './routes/roles-and-activities/roles-and-activities.component'
+import { RolesAndActivityService } from './services/rolesandActivities.service'
 
 @NgModule({
   declarations: [
@@ -36,6 +36,7 @@ import { AddTopicDialogComponent } from './components/add-topic/add-topic.compon
     PlatformWalkthroughComponent,
     // VideoWrapperComponent,
     AddTopicDialogComponent,
+    RolesAndActivitiesComponent,
   ],
   imports: [
     CommonModule,
@@ -59,9 +60,11 @@ import { AddTopicDialogComponent } from './components/add-topic/add-topic.compon
     MatFormFieldModule,
     ReactiveFormsModule,
     BrowseByCompetencyModule,
+    MatChipsModule,
   ],
   providers: [
     TopicService,
+    RolesAndActivityService,
   ],
   entryComponents: [
     AddTopicDialogComponent,
