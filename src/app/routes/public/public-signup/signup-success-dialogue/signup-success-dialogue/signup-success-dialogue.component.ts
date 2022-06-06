@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { MatDialogRef } from '@angular/material'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'ws-signup-success-dialogue',
@@ -10,6 +11,7 @@ export class SignupSuccessDialogueComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<SignupSuccessDialogueComponent>,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -17,6 +19,7 @@ export class SignupSuccessDialogueComponent implements OnInit {
 
   closeDialog() {
     this.dialogRef.close()
+    this.router.navigate(['/public/logout'])
   }
 
 }
