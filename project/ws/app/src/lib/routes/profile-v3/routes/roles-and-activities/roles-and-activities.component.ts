@@ -66,7 +66,6 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                     this.createRole.reset()
                     this.configSvc.updateGlobalProfile(true)
                     setTimeout(this.updateRoles, 3000)
-
                 }
             })
         }
