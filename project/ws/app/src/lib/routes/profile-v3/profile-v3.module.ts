@@ -24,8 +24,6 @@ import { AddTopicDialogComponent } from './components/add-topic/add-topic.compon
 import { RolesAndActivitiesComponent } from './routes/roles-and-activities/roles-and-activities.component'
 import { RolesAndActivityService } from './services/rolesandActivities.service'
 
-
-
 @NgModule({
   declarations: [
     DesiredCompetenciesComponent,

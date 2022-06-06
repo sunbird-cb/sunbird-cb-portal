@@ -37,8 +37,8 @@
                     <input matInput i18n-placeholder="Type your hobbies and press enter"
                         placeholder="Type your hobbies and press enter" formControlName="activity" i18n-aria-label
                         aria-label="Enter Hobbies" [matChipInputFor]="chipListHobies"
-                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addActivity($event)"
-                        class="w-full-imp" />
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        (matChipInputTokenEnd)="addActivity($event)" class="w-full-imp" />
                 </mat-form-field>
             </div>
             <div class="flex flex-1 flex-row-reverse">
@@ -53,10 +53,18 @@
         <ng-container *ngIf="userRoles && userRoles.length>0">
             <div class="flex flex-1 flex-column">
                 <ng-container *ngFor="let role of userRoles">
-                    <div class="flex flex-1 flex-row">
+                    <mat-card class="flex flex-1 flex-column">
+                        <mat-card-title>{{role.name}}</mat-card-title>
+                        <mat-card-content class="flex flex-1 flex-wrap">
+                            <ng-container *ngFor="let r of role.activities">
+                                <span class="mat-chip">{{r.name}}</span>
+                            </ng-container>
+                        </mat-card-content>
+                        <!-- <div class="flex flex-1 flex-row">
                         <span>Role :</span>
                         <span>{{role.name}}</span>
-                    </div>
+                    </div> -->
+                    </mat-card>
                 </ng-container>
             </div>
         </ng-container>
