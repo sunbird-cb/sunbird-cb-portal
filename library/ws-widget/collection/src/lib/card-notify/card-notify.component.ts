@@ -28,7 +28,8 @@ export class CardNotifyComponent extends WidgetBaseComponent
   }
 
   navigate() {
-    this.router.navigate(['/app/competencies/home'])
+    // this.router.navigate(['/app/competencies/home'])
+    this.router.navigate(['/app/setup'])
   }
 
 }
