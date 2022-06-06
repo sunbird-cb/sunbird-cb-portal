@@ -58,7 +58,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                             activities: _.map(this.selectedActivity, a => { return { name: a } as NSProfileDataV3.IRolesActivity }),
                         }, ...this.userRoles] as NSProfileDataV3.IRolesAndActivities[],
                     },
-                }
+                },
             }
             this.rolesAndActivityService.createRoles(reqObj).subscribe(res => {
                 if (res) {
