@@ -4,9 +4,9 @@ import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
 import { NSProfileDataV3 } from '../../models/profile-v3.models'
 // tslint:disable-next-line
 import _ from 'lodash'
-import { MatChipInputEvent } from '@angular/material'
+import { MatChipInputEvent, MatSnackBar } from '@angular/material'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
-
+import { RolesAndActivityService } from '../../services/rolesandActivities.service'
 
 @Component({
     selector: 'ws-app-roles-and-activities',
@@ -15,19 +15,25 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes'
 })
 export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     createRole!: FormGroup
-    public selectedActivity: NSProfileDataV3.IChipItems[] = []
+    public selectedActivity: any[] = []
     separatorKeysCodes: number[] = [ENTER, COMMA]
     userRoles: NSProfileDataV3.IRolesAndActivities[] = []
-    constructor(private configSvc: ConfigurationsService) {
-        this.userRoles = _.get(this.configSvc.unMappedUser, 'profileDetails.userRoles') ||
-            [{
-                id: '1', name: 'role1',
-                childNodes: [{ id: '1.1', name: 'Act1', description: 'desc1' }]
-            },
-            {
-                id: '2', name: 'role2',
-                childNodes: [{ id: '2.1', name: 'Act2', description: 'desc2' }]
-            }]
+    constructor(
+        private configSvc: ConfigurationsService,
+        private rolesAndActivityService: RolesAndActivityService,
+        private snackBar: MatSnackBar) {
+        this.updateRoles()
+        // [{
+        //     id: '1', name: 'role1',
+        //     childNodes: [{ id: '1.1', name: 'Act1', description: 'desc1' }]
+        // },
+        // {
+        //     id: '2', name: 'role2',
+        //     childNodes: [{ id: '2.1', name: 'Act2', description: 'desc2' }]
+        // }]
+    }
+    updateRoles() {
+        this.userRoles = _.get(this.configSvc.unMappedUser, 'profileDetails.userRoles') || []
     }
     ngOnInit(): void {
         this.createRole = new FormGroup(
@@ -39,8 +45,30 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
     }
     create() {
-        if (this.createRole.get('roleName') && this.selectedActivity) {
-            console.log(this.createRole.value, this.selectedActivity)
+        const role = this.createRole.get('roleName')
+        if (role && this.selectedActivity && this.configSvc.userProfile) {
+            // console.log(this.createRole.value, this.selectedActivity)
+            const reqObj = {
+                request: {
+                    userId: this.configSvc.userProfile.userId,
+                    profileDetails: {
+                        userRoles: [{
+                            name: role.value,
+                            // tslint:disable-next-line:arrow-return-shorthand
+                            activities: _.map(this.selectedActivity, a => { return { name: a } as NSProfileDataV3.IRolesActivity }),
+                        }, ...this.userRoles] as NSProfileDataV3.IRolesAndActivities[],
+                    },
+                }
+            }
+            this.rolesAndActivityService.createRoles(reqObj).subscribe(res => {
+                if (res) {
+                    this.snackBar.open('updated Successfully!!')
+                    this.createRole.reset()
+                    this.configSvc.updateGlobalProfile(true)
+                    setTimeout(this.updateRoles, 3000)
+
+                }
+            })
         }
     }
     addActivity(event: MatChipInputEvent) {
