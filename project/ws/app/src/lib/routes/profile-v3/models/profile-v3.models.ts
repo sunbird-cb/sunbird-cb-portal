@@ -28,7 +28,7 @@ export namespace NSProfileDataV3 {
         name: string
     }
     export interface ITopic {
-        children:  any[]
+        children: any[]
         code: string
         description: string
         identifier: string
@@ -65,4 +65,24 @@ export namespace NSProfileDataV3 {
         name: string
         children: []
     }
+    export interface IRolesAndActivities {
+        id: string
+        name: string
+        childNodes: IRolesActivity[]
+        // source: string
+        // status: string
+        // type: string
+    }
+    export interface IRolesActivity {
+        description: string
+        id: string
+        name: string
+        // parentRole: string
+        // source: string
+        // status: string
+        // type: string
+    }
+    export interface IChipItems {
+        name: string
+      }
 }

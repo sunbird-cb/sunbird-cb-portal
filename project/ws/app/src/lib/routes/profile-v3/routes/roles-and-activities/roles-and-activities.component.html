@@ -1,0 +1,64 @@
+<div class="flex flex-1 flex-column">
+    <!-- <div class="flex flex-1 flex-row-reverse flex-middle">
+        <a mat-button type="button" class="ws-mat-accent-border-active cursor-pointer" (click)="showPoup()">
+            <span class="mat-body-2 ws-mat-default-text padding-xs" i18n>
+                Add new role
+            </span>
+        </a>
+        <span i18n class="margin-right-s">If you can't find the the role you're looking for</span>
+    </div> -->
+    <div class="flex flex-1 flex-wrap margin-top-s flex-column">
+        <form [formGroup]="createRole" class="flex flex-1 flex-column margin-top-m">
+            <div class="input-wrapper margin-top-s">
+                <label for="roleName" class=" margin-remove-bottom form-label required"
+                    i18n="Role Name label|Label which explains the user to enter Role Name" i18n-aria-label
+                    aria-label="Role Name label">
+                    Role Name
+                </label>
+                <mat-form-field appearance="outline" class="margin-top-xs">
+                    <input matInput autocomplete="off" id="roleName" #roleName name="roleName" placeholder="Type here"
+                        formControlName="roleName" />
+                </mat-form-field>
+            </div>
+            <div class="input-wrapper margin-top-s">
+                <label for="roleName" class=" margin-remove-bottom form-label required"
+                    i18n="activity label|Label which explains the user to enter activity" i18n-aria-label
+                    aria-label="activity label">
+                    Activity
+                </label>
+                <mat-form-field appearance="outline" class="margin-top-xs full-width">
+                    <mat-chip-list #chipListHobies>
+                        <mat-chip *ngFor="let hob of selectedActivity" [selectable]="true" [removable]="true"
+                            (removed)="removeActivity(hob)">
+                            {{ hob }}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                    </mat-chip-list>
+                    <input matInput i18n-placeholder="Type your hobbies and press enter"
+                        placeholder="Type your hobbies and press enter" formControlName="activity" i18n-aria-label
+                        aria-label="Enter Hobbies" [matChipInputFor]="chipListHobies"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addActivity($event)"
+                        class="w-full-imp" />
+                </mat-form-field>
+            </div>
+            <div class="flex flex-1 flex-row-reverse">
+                <a mat-button type="submit" class="ws-mat-accent-background cursor-pointer margin-xs"
+                    (click)="create()">
+                    <span class="ws-mat-primary-default-text padding-s" i18n>
+                        Add
+                    </span>
+                </a>
+            </div>
+        </form>
+        <ng-container *ngIf="userRoles && userRoles.length>0">
+            <div class="flex flex-1 flex-column">
+                <ng-container *ngFor="let role of userRoles">
+                    <div class="flex flex-1 flex-row">
+                        <span>Role :</span>
+                        <span>{{role.name}}</span>
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+</div>
