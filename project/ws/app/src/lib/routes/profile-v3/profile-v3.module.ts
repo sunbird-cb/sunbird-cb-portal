@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TopicCardComponent } from './components/topic-card/topic-card.component'
 import { ProfileHomeComponent } from './routes/profile-home/profile-home.component'
-import { MatButtonModule, MatCardModule, MatCheckboxModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSnackBarModule } from '@angular/material'
+import { MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSnackBarModule } from '@angular/material'
 import { MatListModule } from '@angular/material/list'
 import { CurrentCompetenciesComponent } from './routes/current-competencies/current-competencies.component'
 import { MatSidenavModule } from '@angular/material/sidenav'
@@ -20,8 +20,9 @@ import { TopicService } from './services/topics.service'
 // import { PlayerVideoComponent } from '@sunbird-cb/collection/src/lib/player-video/player-video.component'
 import { PlatformWalkthroughComponent } from './routes/platform-walkthrough/platform-walkthrough.component'
 
-import { AddTopicDialogComponent } from './components/add-topic/add-topic.component';
-import { RolesActivitiesComponent } from './routes/roles-activities/roles-activities.component'
+import { AddTopicDialogComponent } from './components/add-topic/add-topic.component'
+import { RolesAndActivitiesComponent } from './routes/roles-and-activities/roles-and-activities.component'
+import { RolesAndActivityService } from './services/rolesandActivities.service'
 
 
 
@@ -37,7 +38,7 @@ import { RolesActivitiesComponent } from './routes/roles-activities/roles-activi
     PlatformWalkthroughComponent,
     // VideoWrapperComponent,
     AddTopicDialogComponent,
-    RolesActivitiesComponent,
+    RolesAndActivitiesComponent,
   ],
   imports: [
     CommonModule,
@@ -61,9 +62,11 @@ import { RolesActivitiesComponent } from './routes/roles-activities/roles-activi
     MatFormFieldModule,
     ReactiveFormsModule,
     BrowseByCompetencyModule,
+    MatChipsModule,
   ],
   providers: [
     TopicService,
+    RolesAndActivityService,
   ],
   entryComponents: [
     AddTopicDialogComponent,

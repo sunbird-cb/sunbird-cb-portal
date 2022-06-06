@@ -21,6 +21,7 @@ import {
   MatInputModule,
   MatFormFieldModule,
   MatCheckboxModule,
+  MatTabsModule,
 } from '@angular/material'
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -68,6 +69,7 @@ import { AppIntroComponent } from './component/app-intro/app-intro.component'
 import { NoConnectionComponent } from './component/no-connection/no-connection.component'
 import { PublicLogoutModule } from './routes/public/public-logout/public-logout.module'
 import { PublicSignupModule } from './routes/public/public-signup/public-signup.module'
+import { PublicHomeComponent } from './routes/public/public-home/public-home.component'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -105,6 +107,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     LoginRootComponent,
     LoginRootDirective,
     NoConnectionComponent,
+    PublicHomeComponent,
   ],
   imports: [
     FormsModule,
@@ -146,6 +149,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     MobileAppModule,
     PipeSafeSanitizerModule,
     TourModule,
+    MatTabsModule,
     DiscussionUiModule.forRoot(ConfigService),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],

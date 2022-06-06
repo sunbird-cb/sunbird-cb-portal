@@ -11,6 +11,8 @@
     }
     .submitBtn {
       width: 100%;
+      height: 40px;
+      line-height: 40px;
     }
 
     ::ng-deep .mat-checkbox-layout{
@@ -70,7 +72,7 @@
     }
 
     .right_inner_container {
-      width: 320px;
+      width: 348px;
 
       @include breakpoint-xs {
         width: 300px!important;
@@ -308,7 +310,7 @@
   
     .bg-grey {
       background: #EDEDED 0% 0% no-repeat padding-box;
-      border-radius: 8px;
+      border-radius: 4px;
       height: 100%;
     }
   
@@ -336,7 +338,7 @@
       font-size: 14px;
       background: #FFFFFF 0% 0% no-repeat padding-box;
       border: 1px solid #5F5F5F;
-      border-radius: 8px;
+      border-radius: 4px;
       margin: 0 10px 10px 0;
       color: #5F5F5F;
       cursor: pointer;
@@ -345,14 +347,14 @@
   
     .radio-toolbar input[type="radio"]:checked+label {
       background: #0074b6 0% 0% no-repeat padding-box;
-      border-radius: 6px;
+      border-radius: 4px;
       border-color: #0074b6;
       color: #fff;
     }
   
     .radio-toolbar input[type="radio"]:focus+label {
       background: #0074b6 0% 0% no-repeat padding-box;
-      border-radius: 6px;
+      border-radius: 4px;
       border-color: #0074b6;
       color: #fff;
     }
@@ -376,6 +378,11 @@
         padding-bottom: 0;
       }
     }
+
+    .mat-form-field-wrapper{
+
+    }
+
   
     .combined-field {
       width: 100%;
@@ -393,7 +400,7 @@
       line-height: 19px;
       height: 40px;
       background-color: rgb(0, 116, 182, 1);
-      border-radius: 8px;
+      border-radius: 4px;
       transition: all .25s ease-in;
       width: 100%;
       border:0;
@@ -411,7 +418,7 @@
   
     .btn-success {
       background-color: rgb(48, 105, 51) !important;
-      border-radius: 8px;
+      border-radius: 4px;
       width: 240px;
       box-shadow: none;
       margin-right: 16px;
@@ -440,16 +447,16 @@
     }
   
     ::ng-deep .mat-form-field-outline {
-      min-height: 40px;
+      min-height: 48px;
       background: #fff;
-      border-radius: 8px;
+      border-radius: 4px;
   
       .mat-form-field-outline-start {
         border: 1px solid #70707069;
-        border-radius: 8px 0 0 8px;
+        border-radius: 4px 0 0 4px;
         border-right-style: none;
         /* border: 1px solid currentColor; */
-        min-width: 8px;
+        min-width: 4px;
         border-right-style: none;
       }
   
@@ -463,18 +470,18 @@
       .mat-form-field-outline-end {
         border: 1px solid #70707069;
         border-left-style: none;
-        border-radius: 0 8px 8px 0;
+        border-radius: 0 4px 4px 0;
       }
     }
   
     ::ng-deep .mat-form-field-outline.mat-form-field-outline-thick {
-      min-height: 40px;
+      min-height: 48px;
       background: #fff;
-      border-radius: 8px;
+      border-radius: 4px;
   
       .mat-form-field-outline-start {
-        border-radius: 8px 0 0 8px;
-        min-width: 8px;
+        border-radius: 4px 0 0 4px;
+        min-width: 4px;
         border: 1px solid currentColor;
         border-right-style: none;
       }
@@ -482,14 +489,14 @@
       .mat-form-field-outline-gap {
         border-width: 1px;
         border: 1px solid currentColor;
-        border-radius: 8px;
+        border-radius: 4px;
         border-left-style: none;
         border-right-style: none;
       }
   
       .mat-form-field-outline-end {
         border-width: 1px;
-        border-radius: 0 8px 8px 0;
+        border-radius: 0 4px 4px 0;
         border: 1px solid currentColor;
         border-left-style: none;
       }
@@ -502,21 +509,22 @@
     }
   
     ::ng-deep .mat-form-field-flex {
-      min-height: 40px;
+      min-height: 48px;
       align-items: center;
     }
   
     ::ng-deep .mat-form-field-infix {
       padding: 0;
-      margin: 8px 0 0 0;
+      margin: 16px 0 0 0;
       border: none;
     }
   }
   
   .form-label {
     color: #222222;
-    font-size: 14px;
-    margin-bottom: .5rem;
+    font-size: 16px;
+    margin-bottom: 0.5rem;
+    font-family: 'Lato';
   
     @include breakpoint-xs {
       display: block;
@@ -598,7 +606,7 @@
   .form-control {
     background: #FFFFFF 0% 0% no-repeat padding-box;
     border: 1px solid #70707069;
-    border-radius: 8px;
+    border-radius: 4px;
     display: block;
   
     &::placeholder {
@@ -671,6 +679,17 @@
   ::ng-deep .mat-checkbox-inner-container {
     height: 23px !important;
     width: 23px !important;
+    margin-top: 4px !important; 
+  }
+
+  ::ng-deep .mat-checkbox-ripple {
+    position: absolute;
+      left: calc(50% - 13px);
+      /* top: calc(50% - 20px); */
+      height: 23px;
+      width: 23px;
+      z-index: 1;
+      pointer-events: none;
   }
   
   .w80 {
