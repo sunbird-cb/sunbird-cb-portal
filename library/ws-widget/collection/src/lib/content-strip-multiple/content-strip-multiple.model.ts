@@ -39,7 +39,6 @@ export namespace NsContentStripMultiple {
       recommendedCourses?: any
       masterCompetency?: any
       mandatoryCourses?: any
-      basedOnInterest?: any
     }
     searchV6Type?: 'KB' | 'Collections' | 'searchQuery' | null
     stripBackground?: string

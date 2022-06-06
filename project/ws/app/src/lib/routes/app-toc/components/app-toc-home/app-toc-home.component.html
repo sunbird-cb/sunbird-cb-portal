@@ -224,17 +224,13 @@ TODO: edit option while preview Mode
         <!--======== certificate section ========== -->
 
         <!-- <div (click)="openCertificateDialog()" *ngIf='content?.completionStatus == 2' class="margin-bottom-xs"> -->
-        <div  *ngIf="content?.completionStatus == 2"  class="margin-bottom-xs">
-          <ng-container *ngIf="!certData">
-            The certificate is not issued by the trusted certificate authority. Once issued you will be able to download it
-          </ng-container>
-          <ng-container *ngIf="certData">
-            <a class="certificate_box" (click)="openCertificateDialog()">
+        <div  *ngIf="content?.completionStatus == 2" (click)="openCertificateDialog()" class="margin-bottom-xs">
+
+            <a class="certificate_box">
                 <img [src]="certData| pipeSafeSanitizer: 'url'" class="certificate_banner" />
                 <div class="certificate_overlay"></div>
                 <p class="certificate_text mat-body-2 font-weight-bold text-center margin-bottom-xs">Completion certificate</p>
             </a>
-          </ng-container>
         </div>
 
 

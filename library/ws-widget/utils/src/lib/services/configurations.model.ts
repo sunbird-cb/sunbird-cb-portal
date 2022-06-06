@@ -62,7 +62,6 @@ export namespace NsInstanceConfig {
     hubs: IHubs[]
     courseContentPath?: string
     portalUrls: IPortalUrls | undefined
-    positions: any
   }
   export interface IPortalUrls {
     igot: string,
@@ -266,8 +265,6 @@ export namespace NsUser {
     dealerCode?: null | string
     isManager?: boolean
     competencies?: any
-    systemTopics?: any
-    desiredTopics?: any
   }
 
   export interface INodebbUserProfile {

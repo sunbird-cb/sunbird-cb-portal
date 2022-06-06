@@ -647,7 +647,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
- // To updated both reviews, and rating summary at once in case of edit scenario
+ // To updated both reviews, and rating summary at once in case of edit scenario 
   updateReviews() {
     // Reset the counters/ previous values before changing the filter and view
     this.ratingViewCount  = this.ratingViewCountDefault

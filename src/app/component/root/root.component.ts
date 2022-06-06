@@ -203,7 +203,7 @@ export class RootComponent implements OnInit, AfterViewInit {
       ) {
         this.routeChangeInProgress = false
         this.currentUrl = event.url
-        if (!!this.currentUrl.startsWith('/public/logout') || !!this.currentUrl.startsWith('/public/signup')) {
+        if (!!this.currentUrl.startsWith('/public/logout')) {
           this.showFooter = false
         } else {
           this.showFooter = true

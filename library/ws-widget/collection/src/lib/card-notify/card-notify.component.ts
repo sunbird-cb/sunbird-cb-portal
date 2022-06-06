@@ -21,23 +21,14 @@ export class CardNotifyComponent extends WidgetBaseComponent
   }
 
   ngOnInit() {
-    // competency based
-    // if (this.configSvc.userProfileV2 &&
-    //   this.configSvc.userProfileV2.competencies && this.configSvc.userProfileV2.competencies.length) {
-    //   this.showMsg = false
-    // }
-
-    // topics based
-    if (
-      (this.configSvc.userProfileV2 && this.configSvc.userProfileV2.desiredTopics && this.configSvc.userProfileV2.desiredTopics.length) ||
-      (this.configSvc.userProfileV2 && this.configSvc.userProfileV2.systemTopics && this.configSvc.userProfileV2.systemTopics.length)) {
+    if (this.configSvc.userProfileV2 &&
+      this.configSvc.userProfileV2.competencies && this.configSvc.userProfileV2.competencies.length) {
       this.showMsg = false
     }
   }
 
   navigate() {
-    // this.router.navigate(['/app/competencies/home'])
-    this.router.navigate(['/app/setup'])
+    this.router.navigate(['/app/competencies/home'])
   }
 
 }

@@ -265,7 +265,6 @@ export class InitService {
     // TODO: set one org as default org :: use user preference
     this.configSvc.activeOrg = publicConfig.org[0]
     this.configSvc.appSetup = publicConfig.appSetup
-    this.configSvc.positions = publicConfig.positions
     return publicConfig
   }
 
@@ -337,8 +336,6 @@ export class InitService {
             dealerCode: null,
             isManager: false,
             competencies: _.get(profileV2, 'competencies') || [],
-            systemTopics: _.get(profileV2, 'systemTopics') || [],
-            desiredTopics: _.get(profileV2, 'desiredTopics') || [],
           }
 
           if (!this.configSvc.nodebbUserProfile) {
@@ -495,7 +492,6 @@ export class InitService {
     this.configSvc.org = publicConfig.org
     this.configSvc.portalUrls = publicConfig.portalUrls
     this.configSvc.activeOrg = publicConfig.org[0]
-    this.configSvc.positions = publicConfig.positions
     this.updateAppIndexMeta()
     return publicConfig
   }

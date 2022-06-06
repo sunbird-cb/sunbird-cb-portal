@@ -93,7 +93,6 @@ import { LocalDataService } from './services/localService'
     WidgetResolverModule,
     CardContentModule,
   ],
-  exports: [CompetencyFiltersComponent],
   providers: [
     LoaderService,
     LocalDataService,
