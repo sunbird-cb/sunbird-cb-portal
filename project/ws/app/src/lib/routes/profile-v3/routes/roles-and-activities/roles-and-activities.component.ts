@@ -12,6 +12,9 @@ import { RolesAndActivityService } from '../../services/rolesandActivities.servi
     selector: 'ws-app-roles-and-activities',
     templateUrl: './roles-and-activities.component.html',
     styleUrls: ['./roles-and-activities.component.scss'],
+    /* tslint:disable */
+  host: { class: 'w-100 role-card flex flex-1' },
+  /* tslint:enable */
 })
 export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     createRole!: FormGroup
