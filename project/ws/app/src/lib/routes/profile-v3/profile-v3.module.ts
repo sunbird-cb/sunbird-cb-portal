@@ -20,7 +20,8 @@ import { TopicService } from './services/topics.service'
 // import { PlayerVideoComponent } from '@sunbird-cb/collection/src/lib/player-video/player-video.component'
 import { PlatformWalkthroughComponent } from './routes/platform-walkthrough/platform-walkthrough.component'
 
-import { AddTopicDialogComponent } from './components/add-topic/add-topic.component'
+import { AddTopicDialogComponent } from './components/add-topic/add-topic.component';
+import { RolesActivitiesComponent } from './routes/roles-activities/roles-activities.component'
 
 
 
@@ -36,6 +37,7 @@ import { AddTopicDialogComponent } from './components/add-topic/add-topic.compon
     PlatformWalkthroughComponent,
     // VideoWrapperComponent,
     AddTopicDialogComponent,
+    RolesActivitiesComponent,
   ],
   imports: [
     CommonModule,

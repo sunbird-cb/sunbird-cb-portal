@@ -7,6 +7,7 @@ import { PlatformWalkthroughComponent } from './routes/platform-walkthrough/plat
 import { ProfileHomeComponent } from './routes/profile-home/profile-home.component'
 import { TopicComponent } from './routes/topics/topic.component'
 import { CompetencyResolverService } from '../profile/routes/competency/resolver/assessment.resolver'
+import { RolesActivitiesComponent } from './routes/roles-activities/roles-activities.component'
 
 const routes: Routes = [
   {
@@ -21,6 +22,17 @@ const routes: Routes = [
         path: '',
         pathMatch: 'full',
         redirectTo: 'topics',
+      },
+      {
+        path: 'roles',
+        component: RolesActivitiesComponent,
+        data: {
+          pageId: 'rolesandactivities',
+          module: 'profile-v3',
+        },
+        // resolve: {
+        //   topics: CompetencyResolverService,
+        // },
       },
       {
         path: 'current-competencies',
