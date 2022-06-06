@@ -154,13 +154,14 @@
                 <mat-form-field appearance="outline" class="margin-top-s">
                   <input id="email" name="emailField" type="email" matInput placeholder="Enter your email id" #email
                     formControlName="email" i18n-aria-label aria-label="Email input">
+                  <mat-hint>Only government email ids are allowed</mat-hint>
                   <mat-error [hidden]="false" *ngIf="registrationForm?.controls['email'].errors?.required"
                   i18n="Email Error|Explains name is required">
-                    Email is mandatory
+                    Email id is mandatory
                   </mat-error>
                   <mat-error [hidden]="false" *ngIf="registrationForm?.controls['email'].errors?.pattern"
                     i18n-aria-label aria-label="Name fields cannot contain numbers and special characters except '">
-                    Only @gov.in and @nic.in emails are allowed
+                      Email id is not valid
                   </mat-error>
                 </mat-form-field>
               </div>

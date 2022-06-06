@@ -266,6 +266,8 @@ export namespace NsUser {
     dealerCode?: null | string
     isManager?: boolean
     competencies?: any
+    systemTopics?: any
+    desiredTopics?: any
   }
 
   export interface INodebbUserProfile {
