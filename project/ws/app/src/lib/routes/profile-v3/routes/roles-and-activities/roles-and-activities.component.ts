@@ -13,8 +13,8 @@ import { RolesAndActivityService } from '../../services/rolesandActivities.servi
     templateUrl: './roles-and-activities.component.html',
     styleUrls: ['./roles-and-activities.component.scss'],
     /* tslint:disable */
-  host: { class: 'w-100 role-card flex flex-1' },
-  /* tslint:enable */
+    host: { class: 'w-100 role-card flex flex-1' },
+    /* tslint:enable */
 })
 export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     createRole!: FormGroup
@@ -66,6 +66,14 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
             this.rolesAndActivityService.createRoles(reqObj).subscribe(res => {
                 if (res) {
                     this.snackBar.open('updated Successfully!!')
+                    this.userRoles.push({
+                        id: role.value,
+                        description: role.value,
+                        name: role.value,
+                        activities: _.map(this.selectedActivity, a => {
+                            return { name: a } as NSProfileDataV3.IRolesActivity
+                        })
+                    })
                     this.createRole.reset()
                     this.configSvc.updateGlobalProfile(true)
                     setTimeout(this.updateRoles, 3000)
