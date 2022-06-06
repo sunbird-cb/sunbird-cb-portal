@@ -22,7 +22,7 @@
                 </mat-form-field>
             </div>
             <div class="input-wrapper margin-top-s flex flex-col">
-                <label for="roleName" class=" margin-remove-bottom form-label required flex"
+                <label for="roleName" class="margin-remove-bottom form-label required flex"
                     i18n="activity label|Label which explains the user to enter activity" i18n-aria-label
                     aria-label="activity label">
                     Activity
@@ -35,8 +35,8 @@
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
                     </mat-chip-list>
-                    <input matInput i18n-placeholder="Type your hobbies and press enter"
-                        placeholder="Type your hobbies and press enter" formControlName="activity" i18n-aria-label
+                    <input matInput i18n-placeholder="Type here"
+                        placeholder="Type here" formControlName="activity" i18n-aria-label
                         aria-label="Enter Hobbies" [matChipInputFor]="chipListHobies"
                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                         (matChipInputTokenEnd)="addActivity($event)" class="w-full-imp" />

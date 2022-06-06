@@ -292,10 +292,13 @@
       font-size: .875rem;
       min-width: 5.5rem;
       letter-spacing: .5px;
-      line-height: 1.5;
+    //   line-height: 1.5;
       padding: 0.5rem 1rem;
       font-weight: 500;
       border-radius: 0.25rem;
+      height: 36px;
+    line-height: 19px;
+    box-sizing: border-box;
   }
   .btn-link {
       color: #0074B6;

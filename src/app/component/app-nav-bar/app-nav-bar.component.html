@@ -78,7 +78,7 @@
   </div> -->
 </mat-toolbar>
 <mat-toolbar *ngIf="!showAppNavBar">
-  <div class="fix-ww flex flex-row mt-1" id="root-tool-bar" title="toolbar" i18n-aria-label role="toolbar">
+  <div class="fix-ww flex flex-row mt-3" id="root-tool-bar" title="toolbar" i18n-aria-label role="toolbar">
     <ng-container *ngIf="mode === 'top'">
       <div class="flex flex-1">
         <a class="logo-dim" role="link" title="Home" i18n-aria-title i18n-aria-label routerLink="/public/home" >
@@ -90,7 +90,7 @@
     </ng-container>
     <div class=" text-end flex flex" *ngIf="isPublicHomePage">
       <a href="/protected/v8/resource"  class="btn btn-link">Sign In</a>
-      <a routerLink="/public/signup"  class="btn btn-primary text-center">Register</a>
+      <a routerLink="/public/signup"  class="btn btn-primary text-center margin-left-s">Register</a>
     </div>
   </div>
 </mat-toolbar>
