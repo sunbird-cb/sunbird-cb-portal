@@ -12,6 +12,9 @@ import { RolesAndActivityService } from '../../services/rolesandActivities.servi
     selector: 'ws-app-roles-and-activities',
     templateUrl: './roles-and-activities.component.html',
     styleUrls: ['./roles-and-activities.component.scss'],
+    /* tslint:disable */
+  host: { class: 'w-100 role-card flex flex-1' },
+  /* tslint:enable */
 })
 export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     createRole!: FormGroup
@@ -58,7 +61,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                             activities: _.map(this.selectedActivity, a => { return { name: a } as NSProfileDataV3.IRolesActivity }),
                         }, ...this.userRoles] as NSProfileDataV3.IRolesAndActivities[],
                     },
-                }
+                },
             }
             this.rolesAndActivityService.createRoles(reqObj).subscribe(res => {
                 if (res) {
@@ -66,7 +69,6 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                     this.createRole.reset()
                     this.configSvc.updateGlobalProfile(true)
                     setTimeout(this.updateRoles, 3000)
-
                 }
             })
         }
