@@ -10,6 +10,7 @@ import {
 } from '@angular/material'
 import { BtnPageBackModule } from '@sunbird-cb/collection'
 import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
+import { RouterModule } from '@angular/router'
 
 @NgModule({
   declarations: [PublicLogoutComponent],
@@ -22,6 +23,7 @@ import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
     MatIconModule,
     MatExpansionModule,
     PipeSafeSanitizerModule,
+    RouterModule,
   ],
   exports: [PublicLogoutComponent],
 })

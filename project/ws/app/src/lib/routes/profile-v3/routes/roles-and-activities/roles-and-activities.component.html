@@ -1,0 +1,83 @@
+<div class=" margin-bottom-s role-card">
+    <!-- <div class="flex flex-1 flex-row-reverse flex-middle">
+        <a mat-button type="button" class="ws-mat-accent-border-active cursor-pointer" (click)="showPoup()">
+            <span class="mat-body-2 ws-mat-default-text padding-xs" i18n>
+                Add new role
+            </span>
+        </a>
+        <span i18n class="margin-right-s">If you can't find the the role you're looking for</span>
+    </div> -->
+    <div class="flex flex-1 flex-wrap margin-top-s flex-column">
+        <mat-card class="mat-card margin-bottom-s role-card">
+        <form [formGroup]="createRole" class="flex flex-1 flex-column margin-top-m">
+            <div class="input-wrapper margin-top-s flex flex-col">
+                <label for="roleName" class=" margin-remove-bottom form-label required flex"
+                    i18n="Role Name label|Label which explains the user to enter Role Name" i18n-aria-label
+                    aria-label="Role Name label">
+                    Role Name
+                </label>
+                <mat-form-field appearance="outline" class="margin-top-xs w-50 flex form_field">
+                    <input matInput autocomplete="off" id="roleName" #roleName name="roleName" placeholder="Type here"
+                        formControlName="roleName" />
+                </mat-form-field>
+            </div>
+            <div class="input-wrapper margin-top-s flex flex-col">
+                <label for="roleName" class=" margin-remove-bottom form-label required flex"
+                    i18n="activity label|Label which explains the user to enter activity" i18n-aria-label
+                    aria-label="activity label">
+                    Activity
+                </label>
+                <mat-form-field appearance="outline" class="margin-top-xs full-width w-50 flex">
+                    <mat-chip-list #chipListHobies>
+                        <mat-chip *ngFor="let hob of selectedActivity" [selectable]="true" [removable]="true"
+                            (removed)="removeActivity(hob)">
+                            {{ hob }}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                    </mat-chip-list>
+                    <input matInput i18n-placeholder="Type your hobbies and press enter"
+                        placeholder="Type your hobbies and press enter" formControlName="activity" i18n-aria-label
+                        aria-label="Enter Hobbies" [matChipInputFor]="chipListHobies"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        (matChipInputTokenEnd)="addActivity($event)" class="w-full-imp" />
+                </mat-form-field>
+            </div>
+            <div class="flex flex-1 flex-row-reverse">
+                <a mat-button type="submit" class="ws-mat-accent-background cursor-pointer margin-xs"
+                    (click)="create()">
+                    <span class="ws-mat-primary-default-text padding-s" i18n>
+                        Add
+                    </span>
+                </a>
+            </div>
+        </form>
+    </mat-card>
+        <ng-container *ngIf="userRoles && userRoles.length>0">
+            <div class="flex flex-1 flex-column margin-top-xs">
+                <ng-container *ngFor="let role of userRoles">
+                    <mat-card class="flex flex-1 flex-column margin-bottom-s">
+                        <mat-card-title>{{role.name}}</mat-card-title>
+                        <mat-card-content class="flex flex-1 flex-wrap">
+                            <div class="flex flex-1 flex-col">
+                                <!-- <p class="mat-body-1 margin-bottom-xs margin-top-s flex">Activities</p> -->
+                                <div class="flex flex-row">
+                                <ng-container *ngFor="let r of role.activities" >
+
+                                        <span class="mat-chip activity_span margin-right-xs margin-bottom-xs">{{r.name}}</span>
+                                    </ng-container>
+                                    </div>
+
+
+                            </div>
+
+                        </mat-card-content>
+                        <!-- <div class="flex flex-1 flex-row">
+                        <span>Role :</span>
+                        <span>{{role.name}}</span>
+                    </div> -->
+                    </mat-card>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+</div>
