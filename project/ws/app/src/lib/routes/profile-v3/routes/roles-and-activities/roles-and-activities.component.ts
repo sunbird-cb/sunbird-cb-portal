@@ -19,7 +19,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     separatorKeysCodes: number[] = [ENTER, COMMA]
     userRoles: NSProfileDataV3.IRolesAndActivities[] = []
     constructor(private configSvc: ConfigurationsService) {
-        this.userRoles = _.get(this.configSvc.unMappedUser, 'profileDetails.roles') ||
+        this.userRoles = _.get(this.configSvc.unMappedUser, 'profileDetails.userRoles') ||
             [{
                 id: '1', name: 'role1',
                 childNodes: [{ id: '1.1', name: 'Act1', description: 'desc1' }]

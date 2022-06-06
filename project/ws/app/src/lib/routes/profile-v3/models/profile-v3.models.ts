@@ -68,7 +68,8 @@ export namespace NSProfileDataV3 {
     export interface IRolesAndActivities {
         id: string
         name: string
-        childNodes: IRolesActivity[]
+        description: string
+        activities: IRolesActivity[]
         // source: string
         // status: string
         // type: string
