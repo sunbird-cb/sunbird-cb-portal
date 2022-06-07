@@ -89,9 +89,9 @@
     //   background-image : url(assets/instances/eagle/banners/home/9/Login_background.png) no-repeat center center fixed;
     // }
 
-  ::ng-deep .top-nav-bar {
-    display: none;
-  }
+  // ::ng-deep .top-nav-bar {
+  //   display: none;
+  // }
 
   ::ng-deep .height-on-top {
     padding-top: 0!important;
@@ -515,7 +515,7 @@
   
     ::ng-deep .mat-form-field-infix {
       padding: 0;
-      margin: 16px 0 0 0;
+      margin: 9px 0 0 0;
       border: none;
     }
   }
