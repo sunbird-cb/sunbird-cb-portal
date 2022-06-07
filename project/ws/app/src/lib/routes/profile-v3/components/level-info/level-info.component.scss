@@ -1,0 +1,68 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.card-container {
+    // height: 338px;
+    width: 320px;
+    // border: 1px solid rgba(0, 0, 0, 8%);
+    border-radius: calc(#{$size-s}-#{$size-xs});
+    padding: 0;
+    min-height: 200px;
+    min-width: 320px;
+    text-align: center;
+}
+
+.m-t-fix {
+    margin-top: calc(2* #{$size-m} + #{$size-xs});
+}
+
+.fixd {
+    position: absolute;
+    position: absolute;
+    display: flex;
+    left: 24px;
+    top: 31px;
+}
+
+.photo-container {
+    background: #F8F4F9;
+    padding: $size-m 0;
+    min-height: 60px;
+}
+
+.name-container {
+    padding: $size-m $size-l;
+    box-sizing: border-box;
+}
+
+.name {
+    text-transform: capitalize;
+}
+
+.designation {
+    line-height: 21px;
+}
+
+.action-container {
+    padding: $size-m 0;
+}
+
+.m-margin {
+    margin-top: $size-xs;
+    // margin-bottom: $size-xs;
+}
+
+.p-inherit {
+    position: inherit !important;
+}
+
+.title_text, .desc_text {
+    word-break: break-word;
+    white-space: initial;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+}
+.title_text {
+    color: rgba($color: #000000, $alpha: 0.4);
+}

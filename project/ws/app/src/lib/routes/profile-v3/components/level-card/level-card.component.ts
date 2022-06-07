@@ -1,15 +1,16 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 
 @Component({
-  selector: 'ws-app-competency-card',
-  templateUrl: './competency-card.component.html',
-  styleUrls: ['./competency-card.component.scss'],
+  selector: 'ws-app-level-card',
+  templateUrl: './level-card.component.html',
+  styleUrls: ['./level-card.component.scss'],
 })
-export class CompetencyCardComponent implements OnInit {
+export class LevelCardComponent implements OnInit {
   selectedLevelId: any
   selectedCompId: any
   selectedCompList: any = []
-  @Input() competenciesData!: any
+  @Input() competencyLevelData!: any
+  @Input() competency!: any
   @Output() selectedCompetency = new EventEmitter<any>()
 
   constructor() { }
@@ -39,7 +40,4 @@ export class CompetencyCardComponent implements OnInit {
     }
   }
 
-  newselectedCompetency(event: any) {
-    this.selectedCompetency.emit(event)
-  }
 }
