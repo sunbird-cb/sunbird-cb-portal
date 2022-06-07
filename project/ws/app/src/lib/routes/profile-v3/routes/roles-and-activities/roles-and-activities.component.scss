@@ -3,16 +3,23 @@
 .role-card {
     width: 100%;
 }
-.form_field {
-    width: 400px;
-}
+// .form_field {
+//     // width: 400px;
+// }
 .mat-card {
     box-sizing: border-box;
 }
-.mat-input-wrapper{
-    width:400px !important;
-  }
-
+// .mat-input-wrapper{
+//     // width:400px !important;
+//   }
+::ng-deep.mat-form-field-wrapper{
+    flex: 1;
+}
+::ng-deep.mat-chip-input{
+    width: auto !important;
+    min-width: 100%;
+    flex: 1;
+}
 .activity_span {
     padding:6px 10px;
     border-radius: 18px 18px;

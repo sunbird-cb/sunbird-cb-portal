@@ -49,7 +49,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     }
     create() {
         const role = this.createRole.get('roleName')
-        if (role && this.selectedActivity && this.configSvc.userProfile) {
+        if (role && role.value && this.selectedActivity.length > 0 && this.configSvc.userProfile) {
             // console.log(this.createRole.value, this.selectedActivity)
             const reqObj = {
                 request: {
@@ -75,10 +75,13 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                         })
                     })
                     this.createRole.reset()
+                    this.selectedActivity = []
                     this.configSvc.updateGlobalProfile(true)
                     setTimeout(this.updateRoles, 3000)
                 }
             })
+        } else {
+            this.snackBar.open('Role and Activities both are required.')
         }
     }
     addActivity(event: MatChipInputEvent) {
