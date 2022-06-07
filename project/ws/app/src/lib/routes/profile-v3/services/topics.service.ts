@@ -46,14 +46,16 @@ export class TopicService {
         const topics = this.systemTopics.value || []
         if (topic.identifier) {
             const index = _.findIndex(topics, { identifier: topic.identifier })
-            topics.splice(index, 1)
+            if (index != -1) {
+                topics.splice(index, 1)
+            }
         }
         this.systemTopics.next(topics)
     }
     removeDesiredTopics(topic: string) {
         const topics = this.desiredTopics.value || []
         const index = _.indexOf(topics, topic)
-        if (index != 1) {
+        if (index != -1) {
             topics.splice(index, 1)
             this.desiredTopics.next(topics)
         }

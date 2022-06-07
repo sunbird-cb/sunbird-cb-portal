@@ -97,8 +97,9 @@ export class TopicComponent implements OnInit, OnDestroy {
     if (systemTopics) {
       this.topicService.addInitSystemTopics([...systemTopics])
     }
-    if (this.addedByYou && this.addedByYou.children) {
+    if (desiredTopics) {
       this.topicService.addInitDesiredTopics([...desiredTopics])
+      this.desiredTopics = [...desiredTopics]
     }
   }
   loadTopics() {
