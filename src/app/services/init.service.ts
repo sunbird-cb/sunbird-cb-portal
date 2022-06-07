@@ -440,6 +440,8 @@ export class InitService {
             dealerCode: null,
             isManager: false,
             competencies: _.get(profileV2, 'competencies') || [],
+            systemTopics: _.get(profileV2, 'systemTopics') || [],
+            desiredTopics: _.get(profileV2, 'desiredTopics') || [],
           }
 
           if (!this.configSvc.nodebbUserProfile) {
