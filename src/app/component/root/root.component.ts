@@ -187,6 +187,7 @@ export class RootComponent implements OnInit, AfterViewInit {
         }
       }
       if (event instanceof NavigationStart) {
+        this.showNavbar = true
         if (event.url.includes('preview') || event.url.includes('embed')) {
           this.isNavBarRequired = false
         } else if (event.url.includes('author/') && this.isInIframe) {
@@ -205,8 +206,12 @@ export class RootComponent implements OnInit, AfterViewInit {
         this.currentUrl = event.url
         if (!!this.currentUrl.startsWith('/public/logout') || !!this.currentUrl.startsWith('/public/signup')) {
           this.showFooter = false
+          this.showNavbar = false
+          this.isNavBarRequired = false
         } else {
           this.showFooter = true
+          this.showNavbar = true
+          this.isNavBarRequired = true
         }
       }
 
