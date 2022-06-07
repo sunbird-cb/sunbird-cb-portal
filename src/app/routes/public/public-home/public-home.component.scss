@@ -216,7 +216,7 @@
     background:  url('/assets/instances/eagle/landing-img/bg_Egg.jpg') no-repeat top center;
     min-height: 846px;
     width: 100%;
-
+    background-color: #fff;
     background-size: 100% 85%;
   }
   .main-section  .mainContent {
@@ -357,7 +357,7 @@
 
 
       min-height: 800px;
-      margin-top: 5.625rem;
+      // margin-top: 5.625rem;
       position: relative;
   /*  margin-top: -145px;
       position: relative;
@@ -387,6 +387,9 @@
   border: 1px solid transparent;
   font-family: 'Montserrat', sans-serif;
   letter-spacing: .1px;
+  opacity: 1!important;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 // /* Styles for the active tab label */
@@ -450,12 +453,18 @@
       /* z-index: 0; */
   }
   /* journey css section start here */
+  .journeySection {
+    background-color: #fff;
+  }
   .journeySection .journeyContent {
     background: #AEE6FE url('/assets/instances/eagle/landing-img/learningBg.svg') no-repeat center top;
     height: 258px;
     width: 100%;
     border-radius: 1rem;
+  }
 
+  .solutionService {
+    background-color: #fff;
   }
   .solutionService h4 {
     color: #ffffff;
@@ -588,3 +597,11 @@
       display: none;
   }
   }
+
+
+
+  // .exCivilVideo {
+  //   img {
+  //     width: 90%;
+  //   }
+  // }

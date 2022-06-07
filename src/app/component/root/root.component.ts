@@ -42,7 +42,7 @@ import { environment } from '../../../environments/environment'
 import { MatDialog } from '@angular/material'
 import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component'
 import { concat, interval, timer } from 'rxjs'
-import { AppIntroComponent } from '../app-intro/app-intro.component'
+// import { AppIntroComponent } from '../app-intro/app-intro.component'
 
 @Component({
   selector: 'ws-root',
@@ -158,11 +158,11 @@ export class RootComponent implements OnInit, AfterViewInit {
     }
   }
   openIntro() {
-    if (!(this.rootSvc.getCookie('intro') && !!(this.rootSvc.getCookie('intro')))) {
-      if (this.router.url === '/page/home') {
-        this.dialog.open(AppIntroComponent, { data: {} })
-      }
-    }
+    // if (!(this.rootSvc.getCookie('intro') && !!(this.rootSvc.getCookie('intro')))) {
+    //   if (this.router.url === '/page/home') {
+    //     this.dialog.open(AppIntroComponent, { data: {} })
+    //   }
+    // }
     // this.snackBar.openFromTemplate(this.userIntro, { duration: 20000, verticalPosition: 'bottom', horizontalPosition: 'left' })
   }
   public skipToMainContent(): void {

@@ -64,12 +64,21 @@ export class DesiredCompetenciesComponent implements OnInit {
               ncomp.competencySelfAttestedLevel = comp.competencySelfAttestedLevel
               ncomp.competencySelfAttestedLevelValue = comp.competencySelfAttestedLevelValue
               ncomp.osid = comp.osid
+              if (!this.allCompetencies.some((el: any) => el.id === ncomp.id)) {
+                this.allCompetencies.unshift(ncomp)
+              }
+            } else {
+              if (!this.allCompetencies.some((el: any) => el.id === ncomp.id)) {
+                this.allCompetencies.push(ncomp)
+              }
             }
           })
         })
+      } else {
+        this.allCompetencies = this.overallCompetencies
       }
     }
-    this.allCompetencies = this.overallCompetencies
+    // this.allCompetencies = this.overallCompetencies
   }
 
   updateSelectedCompetency(event: any) {
@@ -105,6 +114,7 @@ export class DesiredCompetenciesComponent implements OnInit {
     }
     this.competencySvc.updateProfileDetails(reqUpdates).subscribe((res: any) => {
       if (res.responseCode === 'OK') {
+        this.configService.updateGlobalProfile(true)
         this.allCompetencies = []
         this.updatecompList = []
         this.ngOnInit()
