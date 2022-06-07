@@ -78,17 +78,17 @@
               </div>
               <div class="input-wrapper margin-top-s">
                 <label for="lastName" class=" margin-remove-bottom form-label required"
-                  i18n="Last name label|Label which explains the user to enter Last name" i18n-aria-label
+                  i18n="Surname label|Label which explains the user to enter Surname" i18n-aria-label
                   aria-label="Last name label">
-                  Last name
+                  Surname
                 </label>
                 <mat-form-field appearance="outline" class="margin-top-s">
                   <input id="lastName" matInput #lastname formControlName="lastname" i18n-placeholder
-                    placeholder="Enter your last name" i18n-aria-label aria-label="Last name input" />
-                  <mat-error [hidden]="false" i18n="Last name Error|Explains name is required"
+                    placeholder="Enter your surname" i18n-aria-label aria-label="Last name input" />
+                  <mat-error [hidden]="false" i18n="Surname Error|Explains name is required"
                     *ngIf="registrationForm?.controls['lastname'].errors?.required" i18n-aria-label
-                    aria-label="Last name is mandatory">
-                    Last name is mandatory
+                    aria-label="Surname is mandatory">
+                    Surname is mandatory
                   </mat-error>
                   <mat-error [hidden]="false" *ngIf="registrationForm?.controls['lastname'].errors?.pattern"
                     i18n-aria-label aria-label="Name fields cannot contain numbers and special characters except '">
@@ -169,17 +169,17 @@
                 <label for="department" class=" margin-remove-bottom form-label required"
                   i18n="Department|Label which explains the user to enter Department" i18n-aria-label
                   aria-label="Department Field label">
-                  Department
+                  Ministry/Department/Organization
                 </label>
                 <mat-form-field appearance="outline" class="margin-top-s w-full">
-                  <input id="department" matInput tab-directive type="text" placeholder="Select your department"
+                  <input id="department" matInput tab-directive type="text" placeholder="Select your Ministry/Department/Organization"
                     i18n-placeholder="Department" formControlName="department"
                     [matAutocomplete]="departmentAutocomplete" i18n-aria-label aria-label="Department" #department
                     i18n-aria-label aria-label="Department Field input" />
                   <mat-error [hidden]="false" i18n="Department Error|Explains Department is required"
                     *ngIf="registrationForm?.controls['department'].errors?.required" i18n-aria-label
                     aria-label="Department is mandatory">
-                    Department is mandatory
+                    Ministry/Department/Organization is mandatory
                   </mat-error>
                   <mat-error *ngIf="registrationForm?.controls['department'].errors?.forbiddenNames" i18n-aria-label
                     aria-label="You must enter value from suggested list only.">
