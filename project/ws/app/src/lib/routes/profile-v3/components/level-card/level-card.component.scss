@@ -177,6 +177,7 @@ a.level_item {
     border:1px solid rgba(0, 0, 0, 0.08);
     background-color: #fff;
     box-sizing: border-box;
+    width: auto;
 }
 a.level_item_active {
     background-color: #0074b6;
@@ -203,4 +204,6 @@ a.level_item_active .mat-icon {
   opacity: 1;
   z-index: 999;
   padding: 5px;
+  top: 35px;
+  left: -10px;
 }

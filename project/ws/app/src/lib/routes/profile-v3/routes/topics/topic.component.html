@@ -9,8 +9,8 @@
         <span i18n class="margin-right-s">Not finding a topic of your interest?</span>
     </div>
     <div class="flex flex-1 flex-wrap margin-top-s">
-        <ng-container *ngIf="addedByYou?.children?.length > 0">
-            <ws-app-topic-card class="flex flex-1" [topic]="addedByYou"></ws-app-topic-card>
+        <ng-container *ngIf="desiredTopicsTemplate?.children?.length > 0">
+            <ws-app-topic-card class="flex flex-1" [topic]="desiredTopicsTemplate"></ws-app-topic-card>
         </ng-container>
         <ng-container *ngFor="let t of topics">
             <ws-app-topic-card [topic]="t"></ws-app-topic-card>

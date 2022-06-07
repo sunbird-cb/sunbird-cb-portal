@@ -13,7 +13,8 @@ const API_END_POINTS = {
     providedIn: 'root',
 })
 export class TopicService {
-    public selectedTopics = new BehaviorSubject<NSProfileDataV3.ITopic[]>([])
+    public systemTopics = new BehaviorSubject<NSProfileDataV3.ITopic[]>([])
+    public desiredTopics = new BehaviorSubject<string[]>([])
     public autoSave = new BehaviorSubject<boolean>(false)
     constructor(
         private http: HttpClient) {
@@ -21,46 +22,70 @@ export class TopicService {
     loadTopics(): Observable<any> {
         return this.http.get<any>(API_END_POINTS.getTopics)
     }
-    addTopics(topic: NSProfileDataV3.ITopic) {
-        const topics = this.selectedTopics.value
+    addSystemTopics(topic: NSProfileDataV3.ITopic) {
+        const topics = this.systemTopics.value
         topics.push(topic)
-        this.selectedTopics.next(topics)
+        this.systemTopics.next(topics)
+    }
+    addDesiredTopics(topic: string) {
+        const topics = this.desiredTopics.value
+        topics.push(topic)
+        this.desiredTopics.next(topics)
     }
     /**
      * this method will fill all already added topics from users Profile.
      * @param topics
      */
-    addInitTopics(topics: NSProfileDataV3.ITopic[]) {
-        this.selectedTopics.next(topics)
+    addInitSystemTopics(topics: NSProfileDataV3.ITopic[]) {
+        this.systemTopics.next(topics)
     }
-    removeTopics(topic: NSProfileDataV3.ITopic) {
-        const topics = this.selectedTopics.value || []
+    addInitDesiredTopics(topics: string[]) {
+        this.desiredTopics.next(topics)
+    }
+    removeSystemTopics(topic: NSProfileDataV3.ITopic) {
+        const topics = this.systemTopics.value || []
         if (topic.identifier) {
             const index = _.findIndex(topics, { identifier: topic.identifier })
+            if (index !== -1) {
+                topics.splice(index, 1)
+            }
+        }
+        this.systemTopics.next(topics)
+    }
+    removeDesiredTopics(topic: string) {
+        const topics = this.desiredTopics.value || []
+        const index = _.indexOf(topics, topic)
+        if (index !== -1) {
             topics.splice(index, 1)
+            this.desiredTopics.next(topics)
         }
-        this.selectedTopics.next(topics)
     }
-    removeTopicsAddedByYou(topic: string) {
-        const topics = this.selectedTopics.value || []
-        if (topic) {
-            const index = _.findIndex(topics, { name: 'Added by you' })
-            const cIdx = _.indexOf(topics[index].children, topic)
-            topics[index].children.splice(cIdx, 1)
+    // removeDesiredTopics(topic: string) {
+    //     const topics = this.desiredTopics.value || []
+    //     if (topic) {
+    //         const index = _.findIndex(topics,'Added by you')
+    //         const cIdx = _.indexOf(topics, topic)
+    //         topics[index].children.splice(cIdx, 1)
+    //     }
+    //     this.selectedTopics.next(topics)
+    // }
+    // addTopicsAddedByYou(topic: string) {
+    //     const topics = this.selectedTopics.value || []
+    //     if (topic) {
+    //         const index = _.findIndex(topics, { name: 'Added by you' })
+    //         topics[index].children.push(topic)
+    //     }
+    //     this.selectedTopics.next(topics)
+    // }
+    get getCurrentSelectedDesTopics(): string[] | [] {
+        if (this.desiredTopics.value) {
+            return this.desiredTopics.value
         }
-        this.selectedTopics.next(topics)
+        return []
     }
-    addTopicsAddedByYou(topic: string) {
-        const topics = this.selectedTopics.value || []
-        if (topic) {
-            const index = _.findIndex(topics, { name: 'Added by you' })
-            topics[index].children.push(topic)
-        }
-        this.selectedTopics.next(topics)
-    }
-    get getCurrentSelectedTopics(): NSProfileDataV3.ITopic[] | [] {
-        if (this.selectedTopics.value) {
-            return this.selectedTopics.value
+    get getCurrentSelectedSysTopics(): NSProfileDataV3.ITopic[] | [] {
+        if (this.systemTopics.value) {
+            return this.systemTopics.value
         }
         return []
     }

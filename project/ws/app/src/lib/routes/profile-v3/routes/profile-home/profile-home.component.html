@@ -41,7 +41,7 @@
       {{previous.name}}</a>
   </ng-container>
   <ng-container *ngIf="previous && previous === 'first'">
-    <a class="skip_link mat-body-2 margin-remove-bottom">Cancel</a>
+    <a (click)="updateProfile()"  class="skip_link mat-body-2 margin-remove-bottom">Cancel</a>
   </ng-container>
 
   <p class="mat-body-2 margin-remove-bottom margin-top-xs">Your selections are automatically saved.</p>

@@ -58,6 +58,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
   }
   updateProfile() {
     // need to update profile
+    this.router.navigate(['/page/home'])
   }
   ngOnInit() {
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
