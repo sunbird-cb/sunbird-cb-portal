@@ -113,7 +113,7 @@
 
 .learn-card {
   // padding: 24px !important;
-  overflow: hidden;
+  // overflow: hidden;
   width: 100%;
   box-sizing: border-box;
 
@@ -203,4 +203,6 @@ a.level_item_active .mat-icon {
   opacity: 1;
   z-index: 999;
   padding: 5px;
+  top: 35px;
+  left: -10px;
 }

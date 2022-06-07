@@ -3,13 +3,14 @@
 @import 'ws-mixins';
 
 .card-container {
-    height: 338px;
+    // height: 338px;
     width: 320px;
     // border: 1px solid rgba(0, 0, 0, 8%);
     border-radius: calc(#{$size-s}-#{$size-xs});
     padding: 0;
-    min-height: 338px;
+    min-height: 200px;
     min-width: 320px;
+    text-align: center;
 }
 
 .m-t-fix {
@@ -32,6 +33,7 @@
 
 .name-container {
     padding: $size-m $size-l;
+    box-sizing: border-box;
 }
 
 .name {
@@ -53,4 +55,11 @@
 
 .p-inherit {
     position: inherit !important;
+}
+
+.title_text, .desc_text {
+    word-break: break-word;
+    white-space: initial;
+    text-overflow: ellipsis;
+    display: -webkit-box;
 }
