@@ -21,37 +21,37 @@ export class TopicCardComponent implements OnInit {
   clicked(top: NSProfileDataV3.ITopic | string) {
     this.topicService.autoSave.next(true)
     if (typeof (top) === 'object') {
-      const index = _.findIndex(this.topicService.getCurrentSelectedTopics, { identifier: top.identifier })
+      const index = _.findIndex(this.topicService.getCurrentSelectedSysTopics, { identifier: top.identifier })
       if (index !== -1) {
         /// remove from store
-        this.topicService.removeTopics(top)
+        this.topicService.removeSystemTopics(top)
       } else {
         /// add to store
-        this.topicService.addTopics(top)
+        this.topicService.addSystemTopics(top)
       }
     } else {
-      const index = _.findIndex(this.topicService.getCurrentSelectedTopics, { name: 'Added by you' })
-      const cIndex = _.indexOf(this.topicService.getCurrentSelectedTopics[index].children, top)
-      if (cIndex !== -1) {
+      const index = _.indexOf(this.topicService.getCurrentSelectedDesTopics, top)
+      // const cIndex = _.indexOf(this.topicService.getCurrentSelectedTopics[index].children, top)
+      if (index !== -1) {
         /// remove from store
-        this.topicService.removeTopicsAddedByYou(top)
+        this.topicService.removeDesiredTopics(top)
       } else {
         /// add to store
-        this.topicService.addTopicsAddedByYou(top)
+        this.topicService.addDesiredTopics(top)
       }
     }
 
   }
-  isSelected(top: NSProfileDataV3.ITopic): boolean {
+  isSelected(top: NSProfileDataV3.ITopic | string): boolean {
     if (top) {
-      if (!top.identifier) {
-        const index = _.indexOf(this.topicService.getCurrentSelectedTopics, top)
+      if (typeof (top) !== 'object') {
+        const index = _.indexOf(this.topicService.getCurrentSelectedDesTopics, top)
         if (index === -1) {
           return false
         }
         return true
       }
-      const index1 = _.findIndex(this.topicService.getCurrentSelectedTopics, { identifier: top.identifier })
+      const index1 = _.findIndex(this.topicService.getCurrentSelectedSysTopics, { identifier: top.identifier })
       if (index1 === -1) {
         return false
       }

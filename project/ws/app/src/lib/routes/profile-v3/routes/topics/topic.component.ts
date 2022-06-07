@@ -17,8 +17,10 @@ import { TopicService } from '../../services/topics.service'
 export class TopicComponent implements OnInit, OnDestroy {
 
   topics!: NSProfileDataV3.ITopic[]
+  desiredTopics!: string[]
   addedByYou!: NSProfileDataV3.ITopic
-  private topicUpdateSubscription: Subscription | null = null
+  private desTopicUpdateSubscription: Subscription | null = null
+  private sysTopicUpdateSubscription: Subscription | null = null
   constructor(
     private aRoute: ActivatedRoute,
     private dialog: MatDialog,
@@ -28,45 +30,54 @@ export class TopicComponent implements OnInit, OnDestroy {
 
   ) {
     this.loadTopics()
-    if (this.topicUpdateSubscription) {
-      this.topicUpdateSubscription.unsubscribe()
+    this.updateInitValues()
+    if (this.desTopicUpdateSubscription) {
+      this.desTopicUpdateSubscription.unsubscribe()
     }
-    this.topicUpdateSubscription = this.topicService.selectedTopics
-      .subscribe(data => {
-        if (this.topicService.autoSave.value) {
-          let desiredTopic: NSProfileDataV3.ITopic[] = []
-          const systemTopic: NSProfileDataV3.ITopic[] = []
-          _.each(data, topic => {
-            if (topic.identifier) {
-              systemTopic.push(topic)
-            } else {
-              desiredTopic = topic.children
-            }
-          })
-
-          if (desiredTopic.length > 0) {
-            this.saveDesiredTopic(_.compact(desiredTopic) || [])
-          }
-          if (systemTopic.length > 0) {
-            this.saveSystemTopic(_.compact(systemTopic) || [])
-          }
-        }
-      })
+    if (this.sysTopicUpdateSubscription) {
+      this.sysTopicUpdateSubscription.unsubscribe()
+    }
   }
   ngOnDestroy(): void {
-    if (this.topicUpdateSubscription) {
-      this.topicUpdateSubscription.unsubscribe()
+    if (this.desTopicUpdateSubscription) {
+      this.desTopicUpdateSubscription.unsubscribe()
+    }
+    if (this.sysTopicUpdateSubscription) {
+      this.sysTopicUpdateSubscription.unsubscribe()
     }
   }
 
   ngOnInit() {
-    // console.log(this.configSvc.unMappedUser.profileDetails.desiredTopics)
-    // console.log(this.configSvc.unMappedUser.profileDetails.systemTopics)
-    const desiredTopics = _.get(this.configSvc.unMappedUser, 'profileDetails.desiredTopics')
-    const systemTopics = _.get(this.configSvc.unMappedUser, 'profileDetails.systemTopics')
-    this.topicService.autoSave.next(false)
+    this.sysTopicUpdateSubscription = this.topicService.systemTopics
+      .subscribe(data => {
+        if (this.topicService.autoSave.value) {
+          const systemTopic: NSProfileDataV3.ITopic[] = []
+          _.each(data, topic => {
+            systemTopic.push(topic)
+          })
+          if (systemTopic.length >= 0) {
+            this.saveSystemTopic(_.compact(systemTopic) || [])
+          }
+        }
+      })
+    this.desTopicUpdateSubscription = this.topicService.desiredTopics
+      .subscribe(data => {
+        if (this.topicService.autoSave.value) {
+          let desiredTopic: string[] = []
+          _.each(data, topic => {
+            desiredTopic.push(topic)
+          })
+          if (desiredTopic.length >= 0) {
+            this.saveDesiredTopic(_.compact(desiredTopic) || [])
+            this.desiredTopics = (_.compact(desiredTopic) || [])
+          }
+        }
+      })
+
+  }
+  get desiredTopicsTemplate() {
     this.addedByYou = {
-      children: desiredTopics || [],
+      children: this.desiredTopics || [],
       code: '',
       description: '',
       identifier: '',
@@ -75,8 +86,20 @@ export class TopicComponent implements OnInit, OnDestroy {
       noOfHoursConsumed: 0,
       status: '',
     }
+    return this.addedByYou
+  }
+  updateInitValues() {
+    // console.log(this.configSvc.unMappedUser.profileDetails.desiredTopics)
+    // console.log(this.configSvc.unMappedUser.profileDetails.systemTopics)
+    const desiredTopics = _.get(this.configSvc.unMappedUser, 'profileDetails.desiredTopics') || []
+    const systemTopics = _.get(this.configSvc.unMappedUser, 'profileDetails.systemTopics') || []
+    this.topicService.autoSave.next(false)
     if (systemTopics) {
-      this.topicService.addInitTopics([...systemTopics, this.addedByYou])
+      this.topicService.addInitSystemTopics([...systemTopics])
+    }
+    if (desiredTopics) {
+      this.topicService.addInitDesiredTopics([...desiredTopics])
+      this.desiredTopics = [...desiredTopics]
     }
   }
   loadTopics() {
@@ -98,7 +121,7 @@ export class TopicComponent implements OnInit, OnDestroy {
         if (response) {
           // this.addedByYou.children.push(response)
           this.topicService.autoSave.next(true)
-          this.topicService.addTopicsAddedByYou(response)
+          this.topicService.addDesiredTopics(response)
         }
       }
     })
