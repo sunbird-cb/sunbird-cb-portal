@@ -63,7 +63,7 @@ export class TopicComponent implements OnInit, OnDestroy {
     this.desTopicUpdateSubscription = this.topicService.desiredTopics
       .subscribe(data => {
         if (this.topicService.autoSave.value) {
-          let desiredTopic: string[] = []
+          const desiredTopic: string[] = []
           _.each(data, topic => {
             desiredTopic.push(topic)
           })

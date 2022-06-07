@@ -7,11 +7,11 @@ import { FormGroup, FormControl } from '@angular/forms'
   styleUrls: ['./roles-activities.component.scss']
 })
 export class RolesActivitiesComponent implements OnInit {
-data = ''
-role = ''
-activity = ''
+  data = ''
+  role = ''
+  activity = ''
 
-roleForm: FormGroup
+  roleForm!: FormGroup
   constructor() { }
 
 
@@ -25,8 +25,8 @@ roleForm: FormGroup
   //       //  console.log("Entered data role is : " + JSON.stringify(data))
   //    }
 
-  this.roleForm = new FormGroup({
-    role: new FormControl(''),
-    activity: new FormControl('')
-  })
+  // this.roleForm = new FormGroup({
+  //   role: new FormControl(''),
+  //   activity: new FormControl('')
+  // })
 }
