@@ -533,7 +533,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     if (strip.request && strip.request.basedOnInterest && Object.keys(strip.request.basedOnInterest).length) {
       if (this.configSvc.userProfileV2) {
 
-        const systemTopics = this.configSvc.userProfileV2.systemTopics.map((st: any) => st.name)
+        const systemTopics = this.configSvc.userProfileV2.systemTopics.map((st: any) => st.identifier)
         const desiredTopics = this.configSvc.userProfileV2.desiredTopics
         if ((systemTopics && systemTopics.length) || (desiredTopics && desiredTopics.length)) {
           const originalFilters: any = strip.request &&

@@ -116,6 +116,7 @@ export class TopicComponent implements OnInit, OnDestroy {
       }
       this.topicService.saveDesiredTopic(reqObj).subscribe(res => {
         if (res) {
+          this.configSvc.updateGlobalProfile(true)
           this.snackBar.open('Updated!')
         }
       })
@@ -140,6 +141,7 @@ export class TopicComponent implements OnInit, OnDestroy {
       }
       this.topicService.saveSystemTopic(reqObj).subscribe(res => {
         if (res) {
+          this.configSvc.updateGlobalProfile(true)
           this.snackBar.open('Updated!')
         }
       })
