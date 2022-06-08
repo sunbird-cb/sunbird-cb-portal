@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core'
 import { ProfileV3Service } from '../../services/profile_v3.service'
 import { NSProfileDataV3 } from '../../models/profile-v3.models'
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
-import * as _ from 'lodash'
+// tslint:disable-next-line
+import _ from 'lodash'
+
 @Component({
   selector: 'ws-app-current-competencies',
   templateUrl: './current-competencies.component.html',
@@ -16,7 +18,7 @@ export class CurrentCompetenciesComponent implements OnInit {
   allCompetencies: any = []
   overallCompetencies!: NSProfileDataV3.ICompetencie[]
   changedProperties: any = {}
-  userDetails: any
+  // userDetails: any
   updatecompList: any = []
   competenciesList: any = []
 
@@ -27,13 +29,23 @@ export class CurrentCompetenciesComponent implements OnInit {
   }
 
   getUserDetails() {
-    if (this.configService.unMappedUser && this.configService.unMappedUser.id) {
-      this.competencySvc.getUserdetailsFromRegistry(this.configService.unMappedUser.id).subscribe(
-        (data: any) => {
-          this.userDetails = data
-          this.competenciesList = data.profileDetails.competencies
-          this.getCompetencies()
-      })
+    // if (this.configService.unMappedUser && this.configService.unMappedUser.id) {
+    //   this.competencySvc.getUserdetailsFromRegistry(this.configService.unMappedUser.id).subscribe(
+    //     (data: any) => {
+    //       this.userDetails = data
+    //       this.competenciesList = data.profileDetails.competencies
+    //       if (this.overallCompetencies && this.overallCompetencies.length > 0) {
+    //         this.getCompLsit()
+    //       } else {
+    //         this.getCompetencies()
+    //       }
+    //   })
+    // }
+    this.competenciesList = _.get(this.configService.unMappedUser, 'profileDetails.desiredCompetencies') || []
+    if (this.overallCompetencies && this.overallCompetencies.length > 0) {
+      this.getCompLsit()
+    } else {
+      this.getCompetencies()
     }
   }
 

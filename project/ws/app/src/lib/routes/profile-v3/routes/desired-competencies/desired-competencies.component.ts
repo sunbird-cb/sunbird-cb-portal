@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core'
 import { ProfileV3Service } from '../../services/profile_v3.service'
 import { NSProfileDataV3 } from '../../models/profile-v3.models'
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
+// tslint:disable-next-line
+import _ from 'lodash'
 
 @Component({
   selector: 'ws-app-desired-competencies',
@@ -15,7 +17,7 @@ export class DesiredCompetenciesComponent implements OnInit {
   searchJson!: NSProfileDataV3.ISearch[]
   allCompetencies: any = []
   changedProperties: any = {}
-  userDetails: any
+  // userDetails: any
   updatecompList: any = []
   overallCompetencies!: NSProfileDataV3.ICompetencie[]
   desiredcompList: any = []
@@ -27,13 +29,19 @@ export class DesiredCompetenciesComponent implements OnInit {
   }
 
   getUserDetails() {
-    if (this.configService.unMappedUser && this.configService.unMappedUser.id) {
-      this.competencySvc.getUserdetailsFromRegistry(this.configService.unMappedUser.id).subscribe(
-        (data: any) => {
-          this.userDetails = data
-          this.desiredcompList = data.profileDetails.desiredCompetencies
-          this.getCompetencies()
-      })
+    // if (this.configService.unMappedUser && this.configService.unMappedUser.id) {
+    //   this.competencySvc.getUserdetailsFromRegistry(this.configService.unMappedUser.id).subscribe(
+    //     (data: any) => {
+    //       this.userDetails = data
+    //       this.desiredcompList = data.profileDetails.desiredCompetencies
+    //       this.getCompetencies()
+    //   })
+    // }
+    this.desiredcompList = _.get(this.configService.unMappedUser, 'profileDetails.desiredCompetencies') || []
+    if (this.overallCompetencies && this.overallCompetencies.length > 0) {
+      this.getCompLsit()
+    } else {
+      this.getCompetencies()
     }
   }
 
