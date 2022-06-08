@@ -1,13 +1,6 @@
-<h4 class="mat-h4">Self-Attested Competencies</h4>
+<div class="flex flex-col comptency_main_div">
 
-<!-- <ws-app-competency-card></ws-app-competency-card>
 
-<div>
-    <div class="left_card_box">
-        <ws-app-competency-card></ws-app-competency-card>
-    </div>
-    <div class="right_sidebar_box custom-sidenav">
-        <ws-app-competency-filters></ws-app-competency-filters>
-    </div>
-</div> -->
+<h4 class="mast-h4 main_title_text">Self-Attested Competencies</h4>
 <ws-app-competency-card [competenciesData]="allCompetencies" (selectedCompetency)="updateSelectedCompetency($event)"></ws-app-competency-card>
+</div>

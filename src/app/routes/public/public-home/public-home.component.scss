@@ -2,119 +2,10 @@
 @import 'ws-vars';
 @import 'ws-mixins';
 
-// .main_container {
-//       font-family: 'Poppins', sans-serif;
-//       position: relative;
-//       letter-spacing: 0.2px;
 
-//       background-size: cover;
-//     }
-
-//     .right_container {
-//       background-color: #fff;
-//       width: 45%;
-//       height: 100vh;
-//       box-sizing: border-box;
-//       box-shadow: 0px 20px 60px #3e3e3e29;
-
-//       @include breakpoint-xs {
-//         width: 100%!important;
-//       }
-//     }
-
-//     .left_container {
-//       padding: 5rem 6rem;
-//       box-sizing: border-box;
-//       width: 55%;
-//       height: 100vh;
-
-//       @include breakpoint-xs {
-//         display: none!important;
-//       }
-//     }
-
-//     .logo_box {
-//       width: 320px;
-//       img.logo_img {
-//         width: 100%;
-//       }
-//     }
-
-    // .slider_box {
-    //   padding: 5rem 0 2rem 0;
-    //   width: 320px;
-    //   box-sizing: border-box;
-    //   box-sizing: border-box;
-    // }
-
-    // .text_box {
-    //   margin: 3rem 0 1rem;
-    // }
-
-    // .right_inner_container {
-    //   width: 320px;
-
-    //   @include breakpoint-xs {
-    //     width: 300px!important;
-    //   }
-    // }
-
-    .m_b_2 {
-      margin-bottom: 1rem;
-    }
-
-
-
-    // .button {
-    //   font-family: 'Poppins', sans-serif;
-    //   color: #F9F9F9;
-    //   font-size: 14px;
-    //   line-height: 19px;
-    //   height: 40px;
-    //   background-color: rgb(0, 116, 182, 1);
-    //   border-radius: 8px;
-    //   transition: all .25s ease-in;
-    //   width: 100%;
-    //   border:0;
-    //   cursor: pointer;
-    // }
-
-    // .main_container {
-    //   background-image : url(assets/instances/eagle/banners/home/9/Login_background.png) no-repeat center center fixed;
-    // }
-
-  ::ng-deep .top-nav-bar {
-    display: none!important;
+  .m_b_2 {
+    margin-bottom: 1rem;
   }
-
-  ::ng-deep .height-on-top {
-    padding-top: 0!important;
-  }
-
-
-
-
-// .slideshow-container {
-//   padding: 5rem 0 2rem 0;
-
-//   @include breakpoint-s {
-//      padding: 3rem 0 2rem 0!important;
-//   }
-// }
-
-  // .mySlides {
-  //   height: auto;
-
-  //   img {
-  //     height: 430px;
-  //     width: auto;
-
-  //     @include breakpoint-s {
-  //       height: 325px!important;
-  //     }
-  //   }
-  // }
-
 
   h1.title-heading {
     font-size: 2.6875rem!important;
@@ -128,30 +19,7 @@
     -moz-transition: all 300ms ease-in-out;
     transition: all 300ms ease-in-out;
   }
-  // @font-face {
-  //     font-family: 'latoregular';
-  //     src:url('../fonts/lato-regular-webfont.woff') format('woff');
-  //     font-weight: normal;
-  //     font-style: normal;
-  // }
-  // @font-face {
-  //     font-family: 'latosemibold';
-  //     src:url('../fonts/lato-semibold-webfont.woff') format('woff');
-  //     font-weight: normal;
-  //     font-style: normal;
-  // }
-  // @font-face {
-  //     font-family: 'latobold';
-  //     src:url('../fonts/lato-bold-webfont.woff') format('woff');
-  //     font-weight: normal;
-  //     font-style: normal;
-  // }
-  // @font-face {
-  //     font-family: 'latoblack';
-  //     src:url('../fonts/lato-black-webfont.woff') format('woff');
-  //     font-weight: normal;
-  //     font-style: normal;
-  // }
+
   html, body {
       max-width: 100%;
       height: 100%;
@@ -218,14 +86,38 @@
     width: 100%;
     background-color: #fff;
     background-size: 100% 85%;
+    box-sizing: border-box;
+    @include breakpoint-xs {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    @include breakpoint-s {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    @include breakpoint-m {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
   }
   .main-section  .mainContent {
       padding-top: 6.9375rem;
       padding-bottom: 5.25rem;
 
+      @include breakpoint-xs {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+      }
+
       .content {
-        padding:0px 15px;
+        padding:0px 1rem;
         box-sizing: border-box;
+
+        @include breakpoint-xs {
+          padding: 0;
+        }
+        @include breakpoint-s {
+          padding: 0;
+        }
       }
   }
   h1, h2, h3, h4, h5, h6,
@@ -263,7 +155,13 @@
       background-color: #ffffff;
       border-radius: 1rem;
       padding: 3rem;
-      box-shadow: 0 1px 5px rgba(0, 0, 0, .1)
+      box-shadow: 0 1px 5px rgba(0, 0, 0, .1);
+
+      .recordBox {
+        @include breakpoint-xs {
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+      }
   }
   .analyticsRecord .listInfo {
       text-align: center;
@@ -283,10 +181,7 @@
     content: '';
     background-color: transparent!important;
   }
-  .servicesSection {
-    background-color: #373434;
-    min-height: 800px;
-  }
+
   /* global button css start here */
   .btn{
       font-size: .875rem;
@@ -342,6 +237,9 @@
 //     //does not require "!important"
 // }
 
+.mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+  display: none!important;
+}
   .btn-outline-secondary {
       color: rgba(0, 0, 0, 0.9);
       border: 1px solid #808188;
@@ -354,8 +252,6 @@
   background: -webkit-linear-gradient(top,  #373434 0%,#373434 55%,#ffffff 55%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(to bottom,  #373434 0%,#373434 55%,#ffffff 55%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#373434', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
-
-
       min-height: 800px;
       // margin-top: 5.625rem;
       position: relative;
@@ -363,6 +259,21 @@
       position: relative;
       z-index: -1;
       padding-top: 145px; */
+
+      @include breakpoint-xs {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        background: linear-gradient(to bottom, #373434 0%, #373434 75%, #ffffff 75%, #ffffff 100%);
+        min-height: 675px;
+      }
+      @include breakpoint-s {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      @include breakpoint-m {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
   }
   .servicesSection .servicesTab {
     text-align: center;
@@ -390,6 +301,12 @@
   opacity: 1!important;
   font-size: 16px;
   font-weight: 400;
+
+  @include breakpoint-xs {
+    padding-left: 1rem!important;
+    padding-right: 1rem!important;
+    width: 93%;
+  }
 }
 
 // /* Styles for the active tab label */
@@ -455,19 +372,54 @@
   /* journey css section start here */
   .journeySection {
     background-color: #fff;
+
+    @include breakpoint-xs {
+      padding-left: 1rem!important;
+      padding-right: 1rem!important;
+    }
+    @include breakpoint-s {
+      padding-left: 1rem!important;
+      padding-right: 1rem!important;
+    }
+    @include breakpoint-m {
+      padding-left: 1rem!important;
+      padding-right: 1rem!important;
+    }
   }
   .journeySection .journeyContent {
     background: #AEE6FE url('/assets/instances/eagle/landing-img/learningBg.svg') no-repeat center top;
     height: 258px;
     width: 100%;
     border-radius: 1rem;
+    text-align: center;
+
+    @include breakpoint-xs {
+      padding: 0 0.5rem!important;
+
+    }
   }
 
   .solutionService {
     background-color: #fff;
+    @include breakpoint-xs {
+      padding-left: 1rem!important;
+      padding-right: 1rem!important;
+    }
+    @include breakpoint-s {
+      padding-left: 1rem!important;
+      padding-right: 1rem!important;
+    }
   }
   .solutionService h4 {
     color: #ffffff;
+  }
+  .solutionService .solutionServiceInner {
+    @include breakpoint-xs {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+    @include breakpoint-s {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
   .solutionService .servicesItem {
     background-color: #373434;
@@ -516,6 +468,21 @@
     min-height: 800px;
     padding-top: 80px;
     padding-bottom: 48px;
+    @include breakpoint-xs {
+      padding-left: 1rem!important;
+      padding-right: 1rem!important;
+      min-height: auto;
+    }
+    @include breakpoint-s {
+      padding-left: 1rem!important;
+      padding-right: 1rem!important;
+      min-height: auto;
+    }
+    @include breakpoint-m {
+      padding-left: 1rem!important;
+      padding-right: 1rem!important;
+      min-height: auto;
+    }
   }
   .growthSection {
     /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#fae2c5+0,fca872+100 */

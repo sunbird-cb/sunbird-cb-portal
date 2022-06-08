@@ -1,0 +1,15 @@
+
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+
+.topicMainTitle {
+    @include breakpoint-xs {
+        margin:1rem auto;
+      }
+}
+
+.mat-button {
+    min-width: auto!important;
+}

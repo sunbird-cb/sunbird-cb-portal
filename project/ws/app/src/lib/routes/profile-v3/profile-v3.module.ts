@@ -23,6 +23,9 @@ import { PlatformWalkthroughComponent } from './routes/platform-walkthrough/plat
 import { AddTopicDialogComponent } from './components/add-topic/add-topic.component'
 import { RolesAndActivitiesComponent } from './routes/roles-and-activities/roles-and-activities.component'
 import { RolesAndActivityService } from './services/rolesandActivities.service'
+import { LevelCardComponent } from './components/level-card/level-card.component'
+import { LevelInfoComponent } from './components/level-info/level-info.component'
+import { CompTooltipDirective } from './directives/tooltip.directive'
 
 @NgModule({
   declarations: [
@@ -37,6 +40,9 @@ import { RolesAndActivityService } from './services/rolesandActivities.service'
     // VideoWrapperComponent,
     AddTopicDialogComponent,
     RolesAndActivitiesComponent,
+    LevelCardComponent,
+    LevelInfoComponent,
+    CompTooltipDirective,
   ],
   imports: [
     CommonModule,
