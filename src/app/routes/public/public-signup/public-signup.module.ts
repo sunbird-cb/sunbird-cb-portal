@@ -29,9 +29,7 @@ import { PublicSignupComponent } from './public-signup.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 import { SignupService } from './signup.service'
-import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha'
 import { SignupSuccessDialogueComponent } from './signup-success-dialogue/signup-success-dialogue/signup-success-dialogue.component'
-import { environment } from 'src/environments/environment'
 
 @NgModule({
   declarations: [PublicSignupComponent, SignupSuccessDialogueComponent],
@@ -63,15 +61,10 @@ import { environment } from 'src/environments/environment'
     MatButtonToggleModule,
     MatTabsModule,
     MatAutocompleteModule,
-    RecaptchaV3Module,
   ],
   exports: [PublicSignupComponent],
   providers: [
     SignupService,
-    {
-      provide: RECAPTCHA_V3_SITE_KEY,
-      useValue: environment.recaptcha.siteKey,
-    },
   ],
   entryComponents: [SignupSuccessDialogueComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

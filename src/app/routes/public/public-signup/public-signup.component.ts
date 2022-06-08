@@ -6,7 +6,6 @@ import { LoggerService, ConfigurationsService, NsInstanceConfig } from '@sunbird
 import { debounceTime, distinctUntilChanged, startWith, map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import { MatSnackBar, MatDialog } from '@angular/material'
-import { ReCaptchaV3Service } from 'ng-recaptcha'
 import { SignupSuccessDialogueComponent } from './signup-success-dialogue/signup-success-dialogue/signup-success-dialogue.component'
 
 export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
@@ -62,7 +61,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   confirm = false
 
   private subscriptionContact: Subscription | null = null
-  private recaptchaSubscription!: Subscription
+  // private recaptchaSubscription!: Subscription
 
   constructor(
     private signupSvc: SignupService,
@@ -70,7 +69,6 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     private configSvc: ConfigurationsService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
-    private recaptchaV3Service: ReCaptchaV3Service
   ) {
     this.registrationForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
@@ -172,9 +170,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     if (this.subscriptionContact) {
       this.subscriptionContact.unsubscribe()
     }
-    if (this.recaptchaSubscription) {
-      this.recaptchaSubscription.unsubscribe()
-    }
+    // if (this.recaptchaSubscription) {
+    //   this.recaptchaSubscription.unsubscribe()
+    // }
   }
 
   displayFn = (value: any) =>  {
@@ -187,17 +185,17 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
 
   signup() {
 
-    this.recaptchaSubscription = this.recaptchaV3Service.execute('importantAction')
-    .subscribe(
-      _token => {
-        // tslint:disable-next-line: no-console
-        console.log('captcha validation success')
-      },
-      error => {
-        // tslint:disable-next-line: no-console
-        console.error('captcha validation error', error)
-      }
-    )
+    // this.recaptchaSubscription = this.recaptchaV3Service.execute('importantAction')
+    // .subscribe(
+    //   _token => {
+    //     // tslint:disable-next-line: no-console
+    //     console.log('captcha validation success')
+    //   },
+    //   error => {
+    //     // tslint:disable-next-line: no-console
+    //     console.error('captcha validation error', error)
+    //   }
+    // )
 
     const req = {
       firstName: this.registrationForm.value.firstname || '',
