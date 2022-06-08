@@ -218,14 +218,34 @@
     width: 100%;
     background-color: #fff;
     background-size: 100% 85%;
+    box-sizing: border-box;
+    @include breakpoint-xs {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    @include breakpoint-s {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
   }
   .main-section  .mainContent {
       padding-top: 6.9375rem;
       padding-bottom: 5.25rem;
 
+      @include breakpoint-xs {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+      }
+
       .content {
-        padding:0px 15px;
+        padding:0px 1rem;
         box-sizing: border-box;
+
+        @include breakpoint-xs {
+          padding: 0;
+        }
+        @include breakpoint-s {
+          padding: 0;
+        }
       }
   }
   h1, h2, h3, h4, h5, h6,
@@ -263,7 +283,13 @@
       background-color: #ffffff;
       border-radius: 1rem;
       padding: 3rem;
-      box-shadow: 0 1px 5px rgba(0, 0, 0, .1)
+      box-shadow: 0 1px 5px rgba(0, 0, 0, .1);
+
+      .recordBox {
+        @include breakpoint-xs {
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+      }
   }
   .analyticsRecord .listInfo {
       text-align: center;
@@ -363,6 +389,15 @@
       position: relative;
       z-index: -1;
       padding-top: 145px; */
+
+      @include breakpoint-xs {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      @include breakpoint-s {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
   }
   .servicesSection .servicesTab {
     text-align: center;
