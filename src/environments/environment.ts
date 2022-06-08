@@ -21,6 +21,9 @@ export const environment: IEnvironment = {
   azureOldHost: (window as { [key: string]: any })['env']['azureOldHost'] || '',
   azureOldBuket: (window as { [key: string]: any })['env']['azureOldBuket'] || '',
   portalRoles: (((window as { [key: string]: any })['env']['portalRoles'] || '').split(',')) || [],
+  recaptcha: {
+    siteKey: '6LcwklIgAAAAALEMuE4evGODh2rT11GcBobiOkV-',
+  },
 }
 interface IEnvironment {
   name: string,
@@ -36,7 +39,8 @@ interface IEnvironment {
   contentHost: string
   portalRoles: string[]
   // otherPortalRoles: { cbp: string[], mdo: string[], cbc: string[], frac: string[] }
-  portals: [{ sr: number, id: string, name: string, desc: string, icon?: string, uriPath: string, roles: [], isPublic: boolean }]
+  portals: [{ sr: number, id: string, name: string, desc: string, icon?: string, uriPath: string, roles: [], isPublic: boolean }],
+  recaptcha?: any
 }
 
 /*
