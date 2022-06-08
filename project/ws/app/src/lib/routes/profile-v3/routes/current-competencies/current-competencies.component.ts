@@ -9,6 +9,9 @@ import _ from 'lodash'
   selector: 'ws-app-current-competencies',
   templateUrl: './current-competencies.component.html',
   styleUrls: ['./current-competencies.component.scss'],
+    /* tslint:disable */
+    host: { class: 'flex flex-1 comptency_main_div' },
+    /* tslint:enable */
 })
 export class CurrentCompetenciesComponent implements OnInit {
   searchJson!: NSProfileDataV3.ISearch[]
