@@ -7328,7 +7328,7 @@ ng-packagr@^5.4.3:
     terser "^4.1.2"
     update-notifier "^3.0.0"
 
-ng-recaptcha@^8.0.1:
+ng-recaptcha@8.0.1:
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/ng-recaptcha/-/ng-recaptcha-8.0.1.tgz#4068eabf34caffbf9e1aa6db1e5310f380705909"
   integrity sha512-Urc/0iGof9gqdXJ3HydpDrDlS3qLnjYLHqabCexpci8H3g6fYPeVWCKa2/haDHPUiyGc/+SXUaf7qTHlzJjObg==
