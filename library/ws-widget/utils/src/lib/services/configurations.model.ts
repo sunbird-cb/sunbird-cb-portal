@@ -268,6 +268,7 @@ export namespace NsUser {
     competencies?: any
     systemTopics?: any
     desiredTopics?: any
+    desiredCompetencies?: any
   }
 
   export interface INodebbUserProfile {
