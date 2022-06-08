@@ -337,6 +337,7 @@ export class InitService {
             dealerCode: null,
             isManager: false,
             competencies: _.get(profileV2, 'competencies') || [],
+            desiredCompetencies: _.get(profileV2, 'desiredCompetencies') || [],
             systemTopics: _.get(profileV2, 'systemTopics') || [],
             desiredTopics: _.get(profileV2, 'desiredTopics') || [],
           }
@@ -440,6 +441,7 @@ export class InitService {
             dealerCode: null,
             isManager: false,
             competencies: _.get(profileV2, 'competencies') || [],
+            desiredCompetencies: _.get(profileV2, 'desiredCompetencies') || [],
             systemTopics: _.get(profileV2, 'systemTopics') || [],
             desiredTopics: _.get(profileV2, 'desiredTopics') || [],
           }
