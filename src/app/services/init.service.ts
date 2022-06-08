@@ -323,6 +323,7 @@ export class InitService {
             dealerCode: null,
             isManager: false,
           }
+
           this.configSvc.userProfileV2 = {
             userId: _.get(profileV2, 'userId') || userPidProfile.userId,
             email: _.get(profileV2, 'personalDetails.officialEmail') || userPidProfile.email,
