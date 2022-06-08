@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms'
 @Component({
   selector: 'ws-app-roles-activities',
   templateUrl: './roles-activities.component.html',
-  styleUrls: ['./roles-activities.component.scss']
+  styleUrls: ['./roles-activities.component.scss'],
 })
 export class RolesActivitiesComponent implements OnInit {
   data = ''
@@ -13,7 +13,6 @@ export class RolesActivitiesComponent implements OnInit {
 
   roleForm!: FormGroup
   constructor() { }
-
 
   ngOnInit() {
   }
