@@ -201,11 +201,14 @@
                     aria-label="I confirm that the above provided information are accurate. checkbox" required>
                     <label class="margin-remove-bottom mat-body-2 ws-mat-black60-text" i18n-aria-label
                       aria-label="I confirm that the above provided information are accurate. checkbox label">
-                    I confirm that the above provided information are accurate.
+                    I confirm that the above provided information is accurate.
                     </label>
                   </mat-checkbox>
                 </div>
               </div>
+              <!-- <div>
+                <re-captcha formControlName="recaptchaReactive"></re-captcha>
+              </div> -->
               <div class="w-full margin-top-l">
                 <div class="button_box flex flex-col items-center justify-center">
                   <button mat-flat-button type="submit"
@@ -213,6 +216,12 @@
                     (click)="signup()" [disabled]="!registrationForm?.valid || !confirm">
                     SIGN UP
                   </button>
+                </div>
+              </div>
+              <div class="w-full margin-top-l">
+                <div class="flex items-center justify-center mat-body-1">
+                    Already have an account? 
+                    <a href="/protected/v8/resource" class="ml-2 btn btn-outline-secondary ws-mat-default-text">Sign in here</a>
                 </div>
               </div>
             </div>
