@@ -37,19 +37,31 @@
   <!-- <a class="skip_link mat-body-2 margin-remove-bottom">Cancel</a> -->
 
   <ng-container *ngIf="previous && previous !== 'first'">
-    <a [routerLink]="previous.routerLink" class="skip_link mat-body-2 margin-remove-bottom">Previous: {{previous.step}}.
-      {{previous.name}}</a>
+    <div class="left_footer_box">
+      <a [routerLink]="previous.routerLink" class="skip_link mat-body-2 margin-remove-bottom">Previous: {{previous.step}}.
+        {{previous.name}}</a>
+    </div>
+
   </ng-container>
   <ng-container *ngIf="previous && previous === 'first'">
+   <div class="left_footer_box">
     <a (click)="updateProfile()"  class="skip_link mat-body-2 margin-remove-bottom">Cancel</a>
+   </div>
   </ng-container>
 
-  <p class="mat-body-2 margin-remove-bottom margin-top-xs">Your selections are automatically saved.</p>
+  <div class="center_footer_box">
+  <p class="mat-body-2 margin-remove-bottom margin-top-xs footer_text">Your selections are automatically saved.</p>
+  </div>
+
   <ng-container *ngIf="next && next !== 'done'">
+    <div class="right_footer_box">
     <a [routerLink]="next.routerLink" class="next_link mat-body-2 margin-remove-bottom">Next: {{next.step}}.
       {{next.name}}</a>
+    </div>
   </ng-container>
   <ng-container *ngIf="next && next === 'done'">
+    <div class="right_footer_box">
     <a (click)="updateProfile()" class="next_link mat-body-2 margin-remove-bottom">Done</a>
+    </div>
   </ng-container>
 </div>

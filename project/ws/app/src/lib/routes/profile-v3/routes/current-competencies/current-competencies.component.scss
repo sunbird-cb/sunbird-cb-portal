@@ -1,10 +1,25 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
 
+::ng-deep  .comptency_main_div {
+    width: 100%;
+}
+
+.main_title_text {
+    @include breakpoint-xs {
+        margin-top: 0.5rem;
+    }
+    @include breakpoint-s {
+        margin-top: 0.5rem;
+    }
+}
 .left_card_box {
     // width: 890px;
     width: 75%;
     float: left;
 
-    @media (max-width:992px) {
+    @include breakpoint-m {
         width:100%;
     }
 
