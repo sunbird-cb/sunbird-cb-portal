@@ -112,8 +112,6 @@
 }
 
 .learn-card {
-  // padding: 24px !important;
-  // overflow: hidden;
   width: 100%;
   box-sizing: border-box;
 
@@ -126,9 +124,7 @@
   }
 
   .card_inner_title_box {
-  //    display: column;
       width: 220px;
-    //   padding: 24px;
       box-sizing: border-box;
 
       @media (max-width: 768px) {

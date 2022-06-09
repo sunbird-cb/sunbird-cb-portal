@@ -9,6 +9,9 @@ import _ from 'lodash'
   selector: 'ws-app-desired-competencies',
   templateUrl: './desired-competencies.component.html',
   styleUrls: ['./desired-competencies.component.scss'],
+    /* tslint:disable */
+    host: { class: 'flex flex-1 comptency_main_div' },
+    /* tslint:enable */
 })
 export class DesiredCompetenciesComponent implements OnInit {
   searchJson!: NSProfileDataV3.ISearch[]

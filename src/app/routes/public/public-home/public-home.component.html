@@ -81,7 +81,13 @@
             <div class="tab-pane fade show active my-12" id="pillsExCivil" role="tabpanel" aria-labelledby="ex-civil">
 
                 <div class="flex flex-1">
-                  <div class="exCivilVideo"><img src="/assets/instances/eagle/landing-img/video1.png" alt="video presentation"></div>
+                  <div class="exCivilVideo">
+                    <!-- <img src="/assets/instances/eagle/landing-img/video1.png" alt="video presentation"> -->
+                    <video width="100%" height="auto" controls poster="/assets/instances/eagle/landing-img/video1.png">
+                      <source src="https://igot.blob.core.windows.net/public/Sanjeev-final.mp4" type="video/mp4">
+                    </video>
+
+                  </div>
                 </div>
 
               <div class="dd-border1"></div>
@@ -92,7 +98,12 @@
             <div class="tab-pane fade my-12" id="pillsNewCivil" role="tabpanel" aria-labelledby="new-civil">
               <div class="flex flex-1">
 
-                 <div class="exCivilVideo"><img src="/assets/instances/eagle/landing-img/video2.png" alt="video presentation"></div>
+                 <div class="exCivilVideo">
+                  <video width="100%" height="auto" controls poster="/assets/instances/eagle/landing-img/video2.png">
+                    <source src="https://igot.blob.core.windows.net/public/Shilpa-final.mp4" type="video/mp4">
+                  </video>
+
+                  </div>
 
              </div>
              <div class="dd-border1"></div>
@@ -158,7 +169,7 @@
     <div class="container container-balanced">
       <div class="row">
         <h1 class=" text-center">Solutioning space for all of Government</h1>
-        <div class="grid-cols-3 grid gap-4 mt-8" >
+        <div class="grid-cols-3 grid gap-4 mt-8 solutionServiceInner" >
         <div class="">
           <div class="servicesItem learning">
             <div class="icon"><img src="/assets/instances/eagle/landing-img/Learn.svg" alt="learning icon"></div>
@@ -211,7 +222,11 @@
         <div class="grid-cols-1 grid">
           <h1 class="mb-3 text-center">Walkthrough of the iGOT Karmayogi Portal</h1>
           <div class="walkthroughVideo text-center mt-4">
-            <img src="/assets/instances/eagle/landing-img/walkthroughImg.svg" alt="video image">
+            <!-- <img src="/assets/instances/eagle/landing-img/walkthroughImg.svg" alt="video image"> -->
+            <video width="100%" height="auto" controls>
+              <source src="https://igot.blob.core.windows.net/public/video-guide.mp4" type="video/mp4">
+            </video>
+
           </div>
         </div>
       </div>
@@ -221,7 +236,7 @@
     <div class="container container-balanced">
       <div class="flex flex-row justify-center  items-center ">
         <div class="grid-cols-1 grid">
-          <div class="growthHub">
+          <div class="growthHub  text-center">
             <h1 class="pb-2">Learn. Network. Take your career growth to the next level.</h1>
            <div class=""><a routerLink="/public/signup" class="btn btn-primary">Register</a> </div>
           </div>

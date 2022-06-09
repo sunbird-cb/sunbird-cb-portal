@@ -13,6 +13,9 @@ export const environment = {
   azureOldBuket: (window as { [key: string]: any })['env']['azureOldBuket'] || '',
   portalRoles: (((window as { [key: string]: any })['env']['portalRoles'] || '').split(',')) || [],
   portals: (window as { [key: string]: any })['env']['portals'] || [],
+  recaptcha: {
+    siteKey: '6LcwklIgAAAAALEMuE4evGODh2rT11GcBobiOkV-',
+  },
   // mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
   // spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',
   // cbcPortal: (window as { [key: string]: any })['env']['cbcPath'] || '',

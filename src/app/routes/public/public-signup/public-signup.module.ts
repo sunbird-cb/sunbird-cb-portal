@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core'
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import {
   MatToolbarModule,
@@ -63,7 +63,10 @@ import { SignupSuccessDialogueComponent } from './signup-success-dialogue/signup
     MatAutocompleteModule,
   ],
   exports: [PublicSignupComponent],
-  providers: [SignupService],
+  providers: [
+    SignupService,
+  ],
   entryComponents: [SignupSuccessDialogueComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class PublicSignupModule { }

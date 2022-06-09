@@ -61,6 +61,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   confirm = false
 
   private subscriptionContact: Subscription | null = null
+  // private recaptchaSubscription!: Subscription
 
   constructor(
     private signupSvc: SignupService,
@@ -76,6 +77,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       email: new FormControl('', [Validators.required, Validators.email]),
       department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
       confirmBox: new FormControl(false, [Validators.required]),
+      // recaptchaReactive: new FormControl(null, [Validators.required]),
     })
   }
 
@@ -168,6 +170,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     if (this.subscriptionContact) {
       this.subscriptionContact.unsubscribe()
     }
+    // if (this.recaptchaSubscription) {
+    //   this.recaptchaSubscription.unsubscribe()
+    // }
   }
 
   displayFn = (value: any) =>  {
@@ -179,6 +184,19 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   }
 
   signup() {
+
+    // this.recaptchaSubscription = this.recaptchaV3Service.execute('importantAction')
+    // .subscribe(
+    //   _token => {
+    //     // tslint:disable-next-line: no-console
+    //     console.log('captcha validation success')
+    //   },
+    //   error => {
+    //     // tslint:disable-next-line: no-console
+    //     console.error('captcha validation error', error)
+    //   }
+    // )
+
     const req = {
       firstName: this.registrationForm.value.firstname || '',
       lastName: this.registrationForm.value.lastname || '',
