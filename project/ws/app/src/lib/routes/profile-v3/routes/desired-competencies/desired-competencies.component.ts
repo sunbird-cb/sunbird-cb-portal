@@ -19,7 +19,7 @@ export class DesiredCompetenciesComponent implements OnInit {
   overallCompetencies!: NSProfileDataV3.ICompetencie[]
   desiredcompList: any = []
 
-  constructor(private competencySvc: ProfileV3Service, private configService: ConfigurationsService) { }
+  constructor(private competencySvc: ProfileV3Service, private configService: ConfigurationsService) {}
 
   ngOnInit() {
     this.getUserDetails()
@@ -71,6 +71,7 @@ export class DesiredCompetenciesComponent implements OnInit {
             if (comp.id === ncomp.id) {
               ncomp.competencySelfAttestedLevel = comp.competencySelfAttestedLevel
               ncomp.competencySelfAttestedLevelValue = comp.competencySelfAttestedLevelValue
+              ncomp.competencyType = comp.competencyType
               ncomp.osid = comp.osid
               if (!this.allCompetencies.some((el: any) => el.id === ncomp.id)) {
                 this.allCompetencies.unshift(ncomp)
@@ -98,6 +99,7 @@ export class DesiredCompetenciesComponent implements OnInit {
             //  this.updatecompList.push(evt)
             com.competencySelfAttestedLevel = evt.competencySelfAttestedLevel
             com.competencySelfAttestedLevelValue = evt.competencySelfAttestedLevelValue
+            com.competencyType = evt.competencyType
             com.osid = evt.osid
            } else {
             if (!this.updatecompList.some((el: any) => el.id === evt.id)) {
@@ -125,6 +127,7 @@ export class DesiredCompetenciesComponent implements OnInit {
         this.configService.updateGlobalProfile(true)
         this.allCompetencies = []
         this.updatecompList = []
+        this.desiredcompList = []
         this.ngOnInit()
       }
     })

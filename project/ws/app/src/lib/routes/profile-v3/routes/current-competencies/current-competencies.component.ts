@@ -38,7 +38,7 @@ export class CurrentCompetenciesComponent implements OnInit {
     //       }
     //   })
     // }
-    this.competenciesList = _.get(this.configService.unMappedUser, 'profileDetails.desiredCompetencies') || []
+    this.competenciesList = _.get(this.configService.unMappedUser, 'profileDetails.competencies') || []
     if (this.overallCompetencies && this.overallCompetencies.length > 0) {
       this.getCompLsit()
     } else {
@@ -75,6 +75,7 @@ export class CurrentCompetenciesComponent implements OnInit {
             if (comp.id === ncomp.id) {
               ncomp.competencySelfAttestedLevel = comp.competencySelfAttestedLevel
               ncomp.competencySelfAttestedLevelValue = comp.competencySelfAttestedLevelValue
+              ncomp.competencyType = comp.competencyType
               ncomp.osid = comp.osid
               if (!this.allCompetencies.some((el: any) => el.id === ncomp.id)) {
                 this.allCompetencies.unshift(ncomp)
@@ -99,11 +100,17 @@ export class CurrentCompetenciesComponent implements OnInit {
      this.updatecompList.forEach((com: any) => {
         event.forEach((evt: any) => {
           if (evt.id === com.id) {
+            // tslint:disable-next-line:prefer-template
+            const compValue = evt.competencySelfAttestedLevelName + ` (` + evt.competencySelfAttestedLevelValue + `)`
             com.competencySelfAttestedLevel = evt.competencySelfAttestedLevel
-            com.competencySelfAttestedLevelValue = evt.competencySelfAttestedLevelValue
+            com.competencySelfAttestedLevelValue = compValue
+            com.competencyType = evt.competencyType
             com.osid = evt.osid
           } else {
             if (!this.updatecompList.some((el: any) => el.id === evt.id)) {
+              // tslint:disable-next-line:prefer-template
+              const compValue = evt.competencySelfAttestedLevelName + ` (` + evt.competencySelfAttestedLevelValue + `)`
+              evt.competencySelfAttestedLevelValue = compValue
               this.updatecompList.push(evt)
             }
           }
@@ -130,6 +137,7 @@ export class CurrentCompetenciesComponent implements OnInit {
         this.configService.updateGlobalProfile(true)
         this.allCompetencies = []
         this.updatecompList = []
+        this.competenciesList = []
         this.ngOnInit()
       }
     })
