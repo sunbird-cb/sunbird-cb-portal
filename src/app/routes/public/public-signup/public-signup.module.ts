@@ -70,7 +70,7 @@ import { environment } from 'src/environments/environment'
     SignupService,
     {
       provide: RECAPTCHA_V3_SITE_KEY,
-      useValue: environment.recaptcha.siteKey,
+      useValue: environment.recaptchaKey,
     },
   ],
   entryComponents: [SignupSuccessDialogueComponent],
