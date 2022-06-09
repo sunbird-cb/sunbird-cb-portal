@@ -72,7 +72,7 @@ export class DesiredCompetenciesComponent implements OnInit {
         complist.forEach((comp: any) => {
           this.overallCompetencies.forEach((ncomp: any) => {
             if (comp.id === ncomp.id) {
-              ncomp.competencySelfAttestedLevel = comp.competencySelfAttestedLevel
+              ncomp.competencySelfAttestedLevel = Number(comp.competencySelfAttestedLevel)
               ncomp.competencySelfAttestedLevelValue = comp.competencySelfAttestedLevelValue
               ncomp.competencyType = comp.competencyType
               ncomp.osid = comp.osid
@@ -100,7 +100,7 @@ export class DesiredCompetenciesComponent implements OnInit {
          event.forEach((evt: any) => {
            if (evt.id === com.id) {
             //  this.updatecompList.push(evt)
-            com.competencySelfAttestedLevel = evt.competencySelfAttestedLevel
+            com.competencySelfAttestedLevel = Number(evt.competencySelfAttestedLevel)
             com.competencySelfAttestedLevelValue = evt.competencySelfAttestedLevelValue
             com.competencyType = evt.competencyType
             com.osid = evt.osid

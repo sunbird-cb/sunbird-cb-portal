@@ -76,7 +76,7 @@ export class CurrentCompetenciesComponent implements OnInit {
         complist.forEach((comp: any) => {
           this.overallCompetencies.forEach((ncomp: any) => {
             if (comp.id === ncomp.id) {
-              ncomp.competencySelfAttestedLevel = comp.competencySelfAttestedLevel
+              ncomp.competencySelfAttestedLevel = Number(comp.competencySelfAttestedLevel)
               ncomp.competencySelfAttestedLevelValue = comp.competencySelfAttestedLevelValue
               ncomp.competencyType = comp.competencyType
               ncomp.osid = comp.osid
@@ -105,7 +105,7 @@ export class CurrentCompetenciesComponent implements OnInit {
           if (evt.id === com.id) {
             // tslint:disable-next-line:prefer-template
             const compValue = evt.competencySelfAttestedLevelName + ` (` + evt.competencySelfAttestedLevelValue + `)`
-            com.competencySelfAttestedLevel = evt.competencySelfAttestedLevel
+            com.competencySelfAttestedLevel = Number(evt.competencySelfAttestedLevel)
             com.competencySelfAttestedLevelValue = compValue
             com.competencyType = evt.competencyType
             com.osid = evt.osid
