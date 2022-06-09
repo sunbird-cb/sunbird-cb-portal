@@ -225,6 +225,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       error => {
         // tslint:disable-next-line: no-console
         console.error('captcha validation error', error)
+        this.openSnackbar(`reCAPTCHA validation failed: ${error}`)
       }
     )
   }
