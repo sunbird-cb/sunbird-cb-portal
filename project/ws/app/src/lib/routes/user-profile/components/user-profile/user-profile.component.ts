@@ -601,7 +601,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         orgNameOther: organisation.nameOther,
         industry: organisation.industry,
         industryOther: organisation.industryOther,
-        designation: organisation.designation,
+        designation: _.findIndex(this.designationsMeta.designations, { name: organisation.designation }) != -1 ? organisation.designation : 'Other',
         designationOther: organisation.designationOther,
         location: organisation.location,
         responsibilities: organisation.responsibilities,
@@ -1131,6 +1131,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             switch (name) {
               case 'orgName': return organisations['name'] = form.value.orgName
               case 'orgNameOther': return organisations['nameOther'] = form.value.orgNameOther
+              case 'designation': return organisations['designation'] = form.value.designation === 'Other' ? form.value.designationOther : form.value.designation
               case 'doj': return organisations['doj'] = form.value.doj
               case 'orgDesc': return organisations['description'] = form.value.orgDesc
               case 'isGovtOrg': {

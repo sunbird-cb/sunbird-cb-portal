@@ -177,11 +177,11 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                         request: {
                             userId: this.configSvc.userProfile.userId,
                             profileDetails: {
-                                userRoles: _.map(this.userRoles, role => {
+                                userRoles: _.map(this.userRoles, rol => {
                                     return {
-                                        name: role.name,
+                                        name: rol.name,
                                         // tslint:disable-next-line:arrow-return-shorthand
-                                        activities: role.activities
+                                        activities: rol.activities
                                     }
                                 }) as NSProfileDataV3.IRolesAndActivities[]
                             },
