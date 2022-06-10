@@ -7,6 +7,7 @@ import { NSProfileDataV3 } from '../../models/profile-v3.models'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { Subscription } from 'rxjs'
+import { StepService } from '../../services/step.service'
 @Component({
   selector: 'ws-app-profile-home',
   templateUrl: './profile-home.component.html',
@@ -26,16 +27,17 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
 
   tabs!: NSProfileDataV3.IProfileTab[]
   tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
-  message = `Enter all your 'Role & Activities' to complete your profile`
+  message = `Welcome to the Portal`
   currentStep = 1
-
   mode$ = this.isLtMedium$.pipe(map((isMedium: any) => (isMedium ? 'over' : 'side')))
   constructor(
     private valueSvc: ValueService,
     private route: ActivatedRoute,
     private router: Router,
+    private stepService: StepService,
   ) {
     this.tabs = _.orderBy(this.tabsData, 'step')
+    this.stepService.allSteps.next(this.tabs.length)
     this.init()
   }
   init() {
@@ -51,6 +53,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
           if (event.url.indexOf(t.routerLink) !== -1) {
             this.message = t.description
             this.currentStep = t.step
+            this.stepService.currentStep.next(t)
           }
         })
       }
@@ -90,5 +93,20 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
       return previousStep
     }
     return 'first'
+  }
+  get skip() {
+    this.stepService.skiped.next(true)
+    const nextStep = _.first(_.filter(this.tabs, { step: this.currentStep + 1 }))
+    if (nextStep && nextStep.step !== this.tabs.length + 1) {
+      return nextStep
+    }
+    return null
+  }
+  get current() {
+    const currentStep = _.first(_.filter(this.tabs, { step: this.currentStep }))
+    if (currentStep !== undefined) {
+      return currentStep
+    }
+    return null
   }
 }

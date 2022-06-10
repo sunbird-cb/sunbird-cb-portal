@@ -14,6 +14,7 @@ export namespace NSProfileDataV3 {
         routerLink: string
         step: number
         description: string
+        largeDesc?: any
     }
 
     export interface ICompetencie {
@@ -85,5 +86,5 @@ export namespace NSProfileDataV3 {
     }
     export interface IChipItems {
         name: string
-      }
+    }
 }
