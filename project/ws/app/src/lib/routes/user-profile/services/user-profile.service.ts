@@ -23,7 +23,7 @@ const API_ENDPOINTS = {
   getAllDepartments: '/apis/protected/v8/portal/listDeptNames',
   approveRequest: '/apis/protected/v8/workflowhandler/transition',
   getPendingFields: '/apis/protected/v8/workflowhandler/userWFApplicationFieldsSearch',
-  getDesignation: '/apis/protected/v8/frac/searchNodes',
+  getDesignation: '/apis/proxies/v8/user/v1/positions',
   editProfileDetails: '/apis/proxies/v8/user/v1/extPatch',
 }
 

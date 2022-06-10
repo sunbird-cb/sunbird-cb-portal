@@ -696,6 +696,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   private constructFormFromRegistry(data: any, academics: NsUserProfileDetails.IAcademics, organisation: any) {
+    const desi = (organisation.designation === 'Other' ? organisation.designationOther : organisation.designation) || organisation.designationOther || _.get(data, 'professionalDetails.designation')
     /* tslint:disable */
     this.createUserForm.patchValue({
       firstname: data.personalDetails.firstname,
@@ -724,7 +725,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       isGovtOrg: organisation.isGovtOrg,
       // orgName: organisation.orgName,
       industry: organisation.industry,
-      designation: organisation.designation || _.get(data, 'professionalDetails.designation'),
+      designation: desi,
       location: organisation.location,
       doj: organisation.doj,
       orgDesc: organisation.orgDesc,
