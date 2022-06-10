@@ -242,7 +242,7 @@ const routes: Routes = [
     path: 'app/setup',
     loadChildren: () =>
       import('./routes/route-profile-v3.module').then(u => u.RouteProfileV3Module),
-    canActivate: [GeneralGuard],
+    // canActivate: [GeneralGuard],
     data: {
       pageType: 'feature',
       pageKey: 'profile-v3',

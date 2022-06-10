@@ -341,6 +341,7 @@ export class InitService {
             desiredCompetencies: _.get(profileV2, 'desiredCompetencies') || [],
             systemTopics: _.get(profileV2, 'systemTopics') || [],
             desiredTopics: _.get(profileV2, 'desiredTopics') || [],
+            userRoles: _.get(profileV2, 'userRoles') || [],
           }
 
           if (!this.configSvc.nodebbUserProfile) {
@@ -445,6 +446,7 @@ export class InitService {
             desiredCompetencies: _.get(profileV2, 'desiredCompetencies') || [],
             systemTopics: _.get(profileV2, 'systemTopics') || [],
             desiredTopics: _.get(profileV2, 'desiredTopics') || [],
+            userRoles: _.get(profileV2, 'userRoles') || [],
           }
 
           if (!this.configSvc.nodebbUserProfile) {
