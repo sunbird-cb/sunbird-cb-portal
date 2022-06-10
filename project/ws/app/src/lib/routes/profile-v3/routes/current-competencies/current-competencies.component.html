@@ -1,6 +1,17 @@
-<div class="flex flex-col comptency_main_div">
+<div class="flex flex-col comptency_main_div margin-top-xl">
 
+    <div class="flex flex-row justify-between margin-bottom-xs">
+        <h4 class="mast-h4 main_title_text margin-bottom-xs">Select competencies you’re skilled with</h4>
+        <a class="mat-subheading-2 hint_span margin-remove-bottom"><mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon> What are competencies?</a>
+    </div>
+<!--
+    <ng-template #tooltipTemplate>
+        <div class="tooltip">
+            <h4>this is tooltip</h4>
+        </div>
+    </ng-template> -->
 
-<h4 class="mast-h4 main_title_text">Self-Attested Competencies</h4>
-<ws-app-competency-card [competenciesData]="allCompetencies" (selectedCompetency)="updateSelectedCompetency($event)"></ws-app-competency-card>
+    <p class="mat-body-2 ws-mat-black60-text margin-bottom-l">Feel free to select the competency and level that you feel match your current skills. This does not need to be exact. This information helps us give you a more
+        personalized experience and provide even more relevant content.</p>
+    <ws-app-competency-card [competenciesData]="allCompetencies" (selectedCompetency)="updateSelectedCompetency($event)"></ws-app-competency-card>
 </div>

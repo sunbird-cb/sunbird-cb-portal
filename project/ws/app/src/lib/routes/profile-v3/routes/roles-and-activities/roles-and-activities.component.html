@@ -10,25 +10,25 @@
         <span i18n class="margin-right-s">If you can't find the the role you're looking for</span>
     </div> -->
 
-    <div class="flex flex-col flex-wrap w-100 flex-1">
+    <div class="flex flex-col flex-wrap w-100 flex-1 margin-top-l">
         <div class="flex margin-bottom-s top_chip_box">
-            <p class="mat-body-2 margin-remove-bottom"><mat-icon class="mat-icon margin-right-xs">info</mat-icon> Please list down your roles & activities as part of your positon ‘Director - Vigilance'</p>
+            <p class="mat-body-2 margin-remove-bottom"><mat-icon class="mat-icon margin-right-xs">info</mat-icon> Please list down your roles & activities as part of your position ‘Director - Vigilance'</p>
         </div>
-        <p class="mat-body-2">Feel free to enter details in your own words, to the best of your understanding. This information will help us tailor a more personalized experience
+        <p class="mat-body-2 ws-mat-black60-text">Feel free to enter details in your own words, to the best of your understanding. This information will help us tailor a more personalized experience
              and add more relevant content on the platform.</p>
     </div>
 
-    <div class="flex flex-wrap margin-top-s flex-column">
+    <div class="flex flex-wrap margin-top-l flex-column">
         <mat-card class="mat-card margin-bottom-s role-card flex flex-col">
             <form [formGroup]="createRole" class="flex flex-1 flex-column margin-top-m">
-                <div class="input-wrapper margin-top-s flex flex-col flex-1">
+                <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-xl">
                     <div class="flex flex-row justify-between">
                         <label for="roleName" class=" margin-remove-bottom form-label required flex mat-subheading-2"
                             i18n="Role Name label|Label which explains the user to enter Role Name" i18n-aria-label
                             aria-label="Role Name label">
                             Add role
                         </label>
-                        <span class="mat-subheading-2 hint_span"><mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon> What is role?</span>
+                        <span class="mat-subheading-2 hint_span margin-remove-bottom"><mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon> What is a role?</span>
 
                     </div>
 
@@ -36,16 +36,16 @@
                         <input matInput autocomplete="off" id="roleName" #roleName name="roleName"
                             placeholder="Enter role and press enter" formControlName="roleName" class="flex flex-1" />
                     </mat-form-field>
-                    <mat-hint class="flex-end">Type the role name and click on ‘Enter’ to add</mat-hint>
+                    <mat-hint class="text-right text_hint mat-body-2">Type the role name and click on ‘Enter’ to add</mat-hint>
                 </div>
-                <div class="input-wrapper margin-top-s flex flex-col">
+                <div class="input-wrapper margin-top-xl flex flex-col">
                     <div class="flex flex-row justify-between">
                         <label for="roleName" class="margin-remove-bottom form-label required flex mat-subheading-2"
                             i18n="activity label|Label which explains the user to enter activity" i18n-aria-label
                             aria-label="activity label">
                             Add activities you perform as part of this role.
                         </label>
-                        <span class="mat-subheading-2 hint_span"><mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon> What is activity?</span>
+                        <span class="mat-subheading-2 hint_span margin-remove-bottom"><mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon> What is an activity?</span>
                     </div>
                     <mat-form-field appearance="outline" class="margin-top-xs full-width flex flex-1">
                         <mat-chip-list #chipListHobies>
@@ -60,9 +60,13 @@
                             [matChipInputFor]="chipListHobies" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                             (matChipInputTokenEnd)="addActivity($event)" class="w-full-imp" />
                     </mat-form-field>
-                    <mat-hint class="flex-end">Type the activites and click on ‘Enter’ to add</mat-hint>
+                    <div class="flex flex-row justify-between">
+                        <mat-hint class="text-left text_hint mat-body-2">Start adding the activities.</mat-hint>
+                        <mat-hint class="text-right text_hint mat-body-2">Type the activites and click on ‘Enter’ to add</mat-hint>
+                    </div>
+
                 </div>
-                <div class="flex flex-1 flex-row-reverse">
+                <div class="flex flex-1 flex-row margin-top-l">
                     <a mat-button type="submit" class="ws-mat-accent-background cursor-pointer margin-xs"
                         (click)="create()">
                         <span class="ws-mat-primary-default-text padding-s" i18n>
@@ -76,10 +80,21 @@
             <div class="flex flex-1 flex-column margin-top-xs">
                 <ng-container *ngFor="let role of userRoles">
                     <mat-card class="flex flex-1 flex-column margin-bottom-s">
-                        <div class="flex flex-row-reverse">
-                            <mat-icon class="flex cursor-pointer" (click)="edit(role)">edit</mat-icon>
+                        <div class="flex flex-row">
+
+                            <div class="flex flex-1">
+                                <p class="mat-subheading-1 margin-bottom-m">{{role.name}} </p>
+                            </div>
+                            <div class="flex flex-row justify-between">
+                                <mat-icon class="flex cursor-pointer ws-mat-black60-text" (click)="edit(role)">edit</mat-icon>
+                                <!-- <mat-card-actions> -->
+                                <!-- <div class="flex margin-left-xs"> -->
+                                    <mat-icon class="flex cursor-pointer ws-mat-black60-text margin-left-xs" (click)="delete(role)">delete</mat-icon>
+                                <!-- </div> -->
+                                <!-- </mat-card-actions> -->
+
+                            </div>
                         </div>
-                        <p class="mat-subheading-1 margin-bottom-m">{{role.name}} </p>
                         <mat-card-content class="flex flex-1">
                             <div class="flex flex-1 flex-col">
                                 <!-- <p class="mat-body-1 margin-bottom-xs margin-top-s flex">Activities</p> -->
@@ -96,11 +111,11 @@
                         <span>Role :</span>
                         <span>{{role.name}}</span>
                     </div> -->
-                        <mat-card-actions>
+                        <!-- <mat-card-actions>
                             <div class="flex flex-row-reverse">
                                 <mat-icon class="flex cursor-pointer" (click)="delete(role)">delete</mat-icon>
                             </div>
-                        </mat-card-actions>
+                        </mat-card-actions> -->
                     </mat-card>
                 </ng-container>
             </div>
