@@ -1133,6 +1133,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               case 'orgName': return organisations['name'] = form.value.orgName
               // tslint:disable-next-line
               case 'orgNameOther': return organisations['nameOther'] = form.value.orgNameOther
+              // tslint:disable-next-line
               case 'designation': return organisations['designation'] = form.value.designation === 'Other' ? form.value.designationOther : form.value.designation
               case 'doj': return organisations['doj'] = form.value.doj
               case 'orgDesc': return organisations['description'] = form.value.orgDesc
