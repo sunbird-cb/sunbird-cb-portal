@@ -14,7 +14,8 @@ export namespace NSProfileDataV3 {
         routerLink: string
         step: number
         description: string
-        largeDesc?: any
+        largeDesc?: any,
+        allowSkip?: any
     }
 
     export interface ICompetencie {
