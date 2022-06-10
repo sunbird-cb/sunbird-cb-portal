@@ -19,7 +19,8 @@ export class LevelCardComponent implements OnInit {
   }
 
   selectLevel(complevel: any, competency: any) {
-    this.selectedLevelId = complevel.id
+    // this.selectedLevelId = complevel.id
+    this.selectedLevelId = !isNaN(Number(complevel.id)) ? Number(complevel.id) : complevel.id
     this.selectedCompId = competency.id
 
     if (this.selectedCompList.indexOf(competency.id) === -1) {
