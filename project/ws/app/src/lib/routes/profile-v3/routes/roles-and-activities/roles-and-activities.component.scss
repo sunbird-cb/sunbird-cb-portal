@@ -28,3 +28,30 @@
     width: auto;
     display: inline-block;
 }
+
+
+.top_chip_box {
+    background-color: rgba($color: #000000, $alpha: .04);
+    border-radius: 4px 4px;
+    padding:12px 12px;
+    box-sizing: border-box;
+
+    .mat-icon {
+        vertical-align: middle;
+    }
+}
+
+span.hint_span {
+    .mat-icon  {
+        vertical-align: middle;
+    }
+}
+
+// .mat-form-field .mat-form-field-wrapper {
+//     padding-bottom: 0!important;
+// }
+
+.text_hint {
+    margin-top: -20px;
+    color: rgba($color: #000000, $alpha: .4);
+}

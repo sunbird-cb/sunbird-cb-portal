@@ -134,3 +134,31 @@
 
 
 }
+
+a.hint_span {
+    cursor: pointer;
+    .mat-icon  {
+        vertical-align: middle;
+    }
+}
+
+
+[wsCompTooltipDirective] {
+    position: relative;
+  }
+
+  .tooltip {
+    position: absolute;
+    opacity: 1;
+    z-index: 99;
+    // top:auto;
+    // left: auto;
+    padding: 5px;
+    // background: #fff;
+    // box-shadow: 0 2px 1px rgba(0,0,0,.6);
+
+    @media (max-width:380px) {
+        left: 0;
+        padding:0;
+    }
+  }
