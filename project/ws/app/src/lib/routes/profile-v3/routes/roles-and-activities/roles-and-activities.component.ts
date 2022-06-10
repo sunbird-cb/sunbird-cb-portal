@@ -8,8 +8,6 @@ import { MatChipInputEvent, MatDialog, MatSnackBar } from '@angular/material'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { RolesAndActivityService } from '../../services/rolesandActivities.service'
 import { DialogConfirmComponent } from 'src/app/component/dialog-confirm/dialog-confirm.component'
-
-
 @Component({
     selector: 'ws-app-roles-and-activities',
     templateUrl: './roles-and-activities.component.html',
@@ -103,9 +101,9 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                             userRoles: _.map(this.userRoles, role => {
                                 return {
                                     name: role.name,
-                                    activities: role.activities
+                                    activities: role.activities,
                                 }
-                            }) as NSProfileDataV3.IRolesAndActivities[]
+                            }) as NSProfileDataV3.IRolesAndActivities[],
                         },
                     },
                 }
@@ -153,7 +151,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
             this.editRole = role
             this.createRole.setValue({
                 roleName: role.name,
-                activity: role.activities
+                activity: role.activities,
             }),
                 _.each(role.activities, a => {
                     this.addActivity({ input: this.act, value: a.name })
@@ -181,9 +179,9 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                                     return {
                                         name: rol.name,
                                         // tslint:disable-next-line:arrow-return-shorthand
-                                        activities: rol.activities
+                                        activities: rol.activities,
                                     }
-                                }) as NSProfileDataV3.IRolesAndActivities[]
+                                }) as NSProfileDataV3.IRolesAndActivities[],
                             },
                         },
                     }
