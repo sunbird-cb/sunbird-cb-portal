@@ -89,6 +89,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
             if (this.configSvc.userProfile && this.configSvc.unMappedUser.profileDetails) {
                 _.each(this.userRoles, r => {
                     if (r.name === this.editRole.name) {
+                        // tslint:disable-next-line
                         r.name = this.createRole.get('roleName')!.value
                         r.activities = _.map(this.selectedActivity, a => {
                             return { name: a } as NSProfileDataV3.IRolesActivity
@@ -102,7 +103,6 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                             userRoles: _.map(this.userRoles, role => {
                                 return {
                                     name: role.name,
-                                    // tslint:disable-next-line:arrow-return-shorthand
                                     activities: role.activities
                                 }
                             }) as NSProfileDataV3.IRolesAndActivities[]
@@ -172,7 +172,6 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
             dialogRef.afterClosed().subscribe(result => {
                 if (result && this.configSvc.userProfile) {
                     const delIdx = _.findIndex(this.userRoles, { name: role.name })
-                    console.log(delIdx)
                     this.userRoles.splice(delIdx, 1)
                     const reqObj = {
                         request: {
