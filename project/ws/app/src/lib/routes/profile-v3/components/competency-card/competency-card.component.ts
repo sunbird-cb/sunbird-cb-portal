@@ -29,17 +29,14 @@ export class CompetencyCardComponent implements OnInit {
         description: competency.description,
         status: competency.status,
         source: competency.source,
-        competencyType: competency.additionalProperties.competencyType,
+        competencyType: competency.additionalProperties.competencyType || 'COMPETENCY',
         competencySelfAttestedLevel: complevel.id,
-        competencySelfAttestedLevelValue: complevel.name,
+        competencySelfAttestedLevelValue: complevel.level,
+        competencySelfAttestedLevelName: complevel.name,
         osid: competency.osid,
       }
       this.selectedCompList.push(compobj)
       this.selectedCompetency.emit(this.selectedCompList)
     }
-  }
-
-  newselectedCompetency(event: any) {
-    this.selectedCompetency.emit(event)
   }
 }

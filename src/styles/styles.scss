@@ -564,6 +564,10 @@ h3.shepherd-title {
   }
 }
 
+::ng-deep.mat-dialog-container {
+  overflow: hidden!important;
+}
+
 @media only screen and(max-width: 585px) {
   #bannerColors {
     flex-direction: column;

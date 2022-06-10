@@ -41,7 +41,7 @@ export class CurrentCompetenciesComponent implements OnInit {
     //       }
     //   })
     // }
-    this.competenciesList = _.get(this.configService.unMappedUser, 'profileDetails.desiredCompetencies') || []
+    this.competenciesList = _.get(this.configService.unMappedUser, 'profileDetails.competencies') || []
     if (this.overallCompetencies && this.overallCompetencies.length > 0) {
       this.getCompLsit()
     } else {
@@ -78,12 +78,23 @@ export class CurrentCompetenciesComponent implements OnInit {
             if (comp.id === ncomp.id) {
               ncomp.competencySelfAttestedLevel = comp.competencySelfAttestedLevel
               ncomp.competencySelfAttestedLevelValue = comp.competencySelfAttestedLevelValue
+              ncomp.competencyType = comp.competencyType
               ncomp.osid = comp.osid
               if (!this.allCompetencies.some((el: any) => el.id === ncomp.id)) {
+                if (ncomp.children && ncomp.children.length > 0) {
+                  ncomp.children.forEach((lvl: any) => {
+                    lvl.id = !isNaN(Number(lvl.id)) ? Number(lvl.id) : lvl.id
+                  })
+                }
                 this.allCompetencies.unshift(ncomp)
               }
             } else {
               if (!this.allCompetencies.some((el: any) => el.id === ncomp.id)) {
+                if (ncomp.children && ncomp.children.length > 0) {
+                  ncomp.children.forEach((lvl: any) => {
+                    lvl.id = !isNaN(Number(lvl.id)) ? Number(lvl.id) : lvl.id
+                  })
+                }
                 this.allCompetencies.push(ncomp)
               }
             }
@@ -102,12 +113,30 @@ export class CurrentCompetenciesComponent implements OnInit {
      this.updatecompList.forEach((com: any) => {
         event.forEach((evt: any) => {
           if (evt.id === com.id) {
-            com.competencySelfAttestedLevel = evt.competencySelfAttestedLevel
-            com.competencySelfAttestedLevelValue = evt.competencySelfAttestedLevelValue
+            // tslint:disable-next-line:prefer-template
+            const compValue = evt.competencySelfAttestedLevelName + ` (` + evt.competencySelfAttestedLevelValue + `)`
+            // tslint:disable-next-line:max-line-length
+            com.competencySelfAttestedLevel = !isNaN(Number(evt.competencySelfAttestedLevel)) ? Number(evt.competencySelfAttestedLevel) : evt.competencySelfAttestedLevel
+            com.competencySelfAttestedLevelValue = compValue
+            com.competencyType = evt.competencyType
             com.osid = evt.osid
           } else {
             if (!this.updatecompList.some((el: any) => el.id === evt.id)) {
-              this.updatecompList.push(evt)
+              // tslint:disable-next-line:prefer-template
+              const compValue = evt.competencySelfAttestedLevelName + ` (` + evt.competencySelfAttestedLevelValue + `)`
+              const obj  = {
+                competencySelfAttestedLevel: evt.competencySelfAttestedLevel,
+                competencySelfAttestedLevelValue: compValue,
+                competencyType: evt.competencyType,
+                description: evt.description,
+                osid: evt.osid,
+                id: evt.id,
+                name: evt.name,
+                source: evt.source,
+                status: evt.status,
+                type: evt.type,
+              }
+              this.updatecompList.push(obj)
             }
           }
         })
@@ -133,6 +162,7 @@ export class CurrentCompetenciesComponent implements OnInit {
         this.configService.updateGlobalProfile(true)
         this.allCompetencies = []
         this.updatecompList = []
+        this.competenciesList = []
         this.ngOnInit()
       }
     })

@@ -26,6 +26,7 @@ import { RolesAndActivityService } from './services/rolesandActivities.service'
 import { LevelCardComponent } from './components/level-card/level-card.component'
 import { LevelInfoComponent } from './components/level-info/level-info.component'
 import { CompTooltipDirective } from './directives/tooltip.directive'
+import { WelcomeOnboardComponent } from './routes/welcome-onboard/welcome-onboard.component'
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { CompTooltipDirective } from './directives/tooltip.directive'
     LevelCardComponent,
     LevelInfoComponent,
     CompTooltipDirective,
+    WelcomeOnboardComponent,
   ],
   imports: [
     CommonModule,

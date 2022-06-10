@@ -50,6 +50,8 @@
   }
 }
 
+
+
 .title {
   font-size: 12px !important;
   line-height: 26px !important;
@@ -169,3 +171,14 @@
 
 // @media
 // 760px
+
+
+
+
+.signup_div {
+  @include breakpoint-xs {
+    text-align: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
