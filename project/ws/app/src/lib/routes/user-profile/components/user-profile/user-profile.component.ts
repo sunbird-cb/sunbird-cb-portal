@@ -600,7 +600,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         orgName: organisation.name,
         orgNameOther: organisation.nameOther,
         industry: organisation.industry,
-        industryOther: organisation.industryOther,
+        industryOther: organisation.industryOther, 
+        // tslint:disable-next-line
         designation: _.findIndex(this.designationsMeta.designations, { name: organisation.designation }) != -1 ? organisation.designation : 'Other',
         designationOther: organisation.designationOther,
         location: organisation.location,
@@ -1130,6 +1131,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             // console.log(name)
             switch (name) {
               case 'orgName': return organisations['name'] = form.value.orgName
+              // tslint:disable-next-line
               case 'orgNameOther': return organisations['nameOther'] = form.value.orgNameOther
               case 'designation': return organisations['designation'] = form.value.designation === 'Other' ? form.value.designationOther : form.value.designation
               case 'doj': return organisations['doj'] = form.value.doj
