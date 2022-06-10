@@ -8,6 +8,7 @@ import { ProfileHomeComponent } from './routes/profile-home/profile-home.compone
 import { TopicComponent } from './routes/topics/topic.component'
 import { RolesAndActivitiesComponent } from './routes/roles-and-activities/roles-and-activities.component'
 import { CompetencyResolverService } from './resolvers/competency.resolver'
+import { WelcomeOnboardComponent } from './routes/welcome-onboard/welcome-onboard.component'
 
 const routes: Routes = [
   {
@@ -21,7 +22,15 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'roles',
+        redirectTo: 'welcome',
+      },
+      {
+        path: 'welcome',
+        component: WelcomeOnboardComponent,
+        data: {
+          pageId: 'welcome',
+          module: 'profile-v3',
+        },
       },
       {
         path: 'roles',
