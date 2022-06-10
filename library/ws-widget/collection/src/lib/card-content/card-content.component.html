@@ -642,6 +642,9 @@
             ? true
             : widgetData?.intranetMode === 'greyOut' && showIntranetContent
       }">
+      <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
+            [queryParams]="(widgetData.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData"
+            role="link" i18n-aria-label>
       <ng-container *ngIf="!isCardFlipped">
         <div class="status-danger" role="note" i18n-aria-label aria-label="Content expired or deleted" i18n-matTooltip
           matTooltip="Content may be expired or deleted" *ngIf="!isLiveOrMarkForDeletion"></div>
@@ -797,7 +800,7 @@
       </ng-container>
 
 
-
+      </a>
     </div>
   </mat-card>
 </ng-template>
