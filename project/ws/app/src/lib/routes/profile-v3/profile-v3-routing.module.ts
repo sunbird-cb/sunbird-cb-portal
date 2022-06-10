@@ -18,6 +18,9 @@ const routes: Routes = [
       pageId: '',
       module: 'profile-v3',
     },
+    resolve: {
+      competencies: CompetencyResolverService,
+    },
     children: [
       {
         path: '',
@@ -49,9 +52,6 @@ const routes: Routes = [
         data: {
           pageId: 'current-competencies',
           module: 'profile-v3',
-        },
-        resolve: {
-          topics: CompetencyResolverService,
         },
       },
       {

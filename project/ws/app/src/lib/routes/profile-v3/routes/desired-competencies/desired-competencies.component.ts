@@ -4,6 +4,7 @@ import { NSProfileDataV3 } from '../../models/profile-v3.models'
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'ws-app-desired-competencies',
@@ -22,7 +23,8 @@ export class DesiredCompetenciesComponent implements OnInit {
   overallCompetencies!: NSProfileDataV3.ICompetencie[]
   desiredcompList: any = []
 
-  constructor(private competencySvc: ProfileV3Service, private configService: ConfigurationsService) {}
+  constructor(private competencySvc: ProfileV3Service, private configService: ConfigurationsService,
+              private activateroute: ActivatedRoute) {}
 
   ngOnInit() {
     this.getUserDetails()
@@ -46,23 +48,30 @@ export class DesiredCompetenciesComponent implements OnInit {
   }
 
   getCompetencies() {
-    this.searchJson = [
-      { type: 'COMPETENCY', field: 'name', keyword: '' },
-      { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
-    ]
+    // this.searchJson = [
+    //   { type: 'COMPETENCY', field: 'name', keyword: '' },
+    //   { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
+    // ]
 
-    const searchObj = {
-      searches: this.searchJson,
-      childNodes: true,
+    // const searchObj = {
+    //   searches: this.searchJson,
+    //   childNodes: true,
+    // }
+    // this.competencySvc
+    //   .getAllCompetencies(searchObj)
+    //   .subscribe((reponse: any) => {
+    //     if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
+    //       this.overallCompetencies = reponse.responseData
+    if (
+      this.activateroute.snapshot.parent
+      && this.activateroute.snapshot.parent.data.competencies
+      && this.activateroute.snapshot.parent.data.competencies.data
+    ) {
+      this.overallCompetencies = this.activateroute.snapshot.parent.data.competencies.data
     }
-    this.competencySvc
-      .getAllCompetencies(searchObj)
-      .subscribe((reponse: any) => {
-        if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
-          this.overallCompetencies = reponse.responseData
-          this.getCompLsit()
-        }
-      })
+    this.getCompLsit()
+      //   }
+      // })
   }
 
   getCompLsit() {
