@@ -600,7 +600,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         orgName: organisation.name,
         orgNameOther: organisation.nameOther,
         industry: organisation.industry,
-        industryOther: organisation.industryOther, 
+        industryOther: organisation.industryOther,
         // tslint:disable-next-line
         designation: _.findIndex(this.designationsMeta.designations, { name: organisation.designation }) != -1 ? organisation.designation : 'Other',
         designationOther: organisation.designationOther,
