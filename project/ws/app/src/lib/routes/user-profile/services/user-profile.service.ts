@@ -72,7 +72,7 @@ export class UserProfileService {
     })
   }
 
-  getDesignations(req: any): Observable<IProfileMetaApiData> {
-    return this.http.post<IProfileMetaApiData>(API_ENDPOINTS.getDesignation, req)
+  getDesignations(_req: any): Observable<IProfileMetaApiData> {
+    return this.http.get<IProfileMetaApiData>(API_ENDPOINTS.getDesignation)
   }
 }

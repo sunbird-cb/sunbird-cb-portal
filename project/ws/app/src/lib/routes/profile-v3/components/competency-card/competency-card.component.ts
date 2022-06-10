@@ -29,7 +29,7 @@ export class CompetencyCardComponent implements OnInit {
         description: competency.description,
         status: competency.status,
         source: competency.source,
-        competencyType: competency.additionalProperties.competencyType || 'COMPETENCY',
+        competencyType: competency.additionalProperties.competencyType,
         competencySelfAttestedLevel: complevel.id,
         competencySelfAttestedLevelValue: complevel.level,
         competencySelfAttestedLevelName: complevel.name,
