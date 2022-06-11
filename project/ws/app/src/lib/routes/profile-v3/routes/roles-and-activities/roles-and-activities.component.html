@@ -28,7 +28,9 @@
                             aria-label="Role Name label">
                             Add role
                         </label>
-                        <span class="mat-subheading-2 hint_span margin-remove-bottom"><mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon> What is a role?</span>
+                        <a class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openInfoDialog(item='role')">
+                            <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon>
+                        What is a role?</a>
 
                     </div>
 
@@ -45,7 +47,9 @@
                             aria-label="activity label">
                             Add activities you perform as part of this role.
                         </label>
-                        <span class="mat-subheading-2 hint_span margin-remove-bottom"><mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon> What is an activity?</span>
+                        <a class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openActivityDialog(item='activity')">
+                            <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon> What is an activity?
+                        </a>
                     </div>
                     <mat-form-field appearance="outline" class="margin-top-xs full-width flex flex-1">
                         <mat-chip-list #chipListHobies>

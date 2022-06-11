@@ -1,0 +1,41 @@
+
+<a class="close_btn flex flex-end" (click)="dialogClose()">
+    <mat-icon>close</mat-icon>
+</a>
+<ng-container  [ngTemplateOutlet]="roles" *ngIf="data.view === 'roles'">
+
+</ng-container>
+
+<ng-container  [ngTemplateOutlet]="activity" *ngIf="data.view === 'activity'">
+
+</ng-container>
+
+<ng-container  [ngTemplateOutlet]="ccomp" *ngIf="data.view === 'ccomp'">
+
+</ng-container>
+
+<ng-container  [ngTemplateOutlet]="dscomp" *ngIf="data.view === 'dscomp'">
+
+</ng-container>
+
+<ng-template #ccomp>
+    <p>dialog-box ccomp works!</p>
+</ng-template>
+
+
+<ng-template #dscomp>
+    <p>dialog-box dscomp works!</p>
+</ng-template>
+
+<ng-template #roles>
+    <p>dialog-box roles works!</p>
+</ng-template>
+
+<ng-template #activity>
+    <h2></h2>
+    <p>dialog-box activity  works!</p>
+</ng-template>
+
+
+
+

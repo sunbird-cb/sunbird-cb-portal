@@ -4,10 +4,11 @@ import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
 import { NSProfileDataV3 } from '../../models/profile-v3.models'
 // tslint:disable-next-line
 import _ from 'lodash'
-import { MatChipInputEvent, MatDialog, MatSnackBar } from '@angular/material'
+import { MatChipInputEvent, MatDialog, MatDialogConfig, MatDialogRef, MatSnackBar } from '@angular/material'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { RolesAndActivityService } from '../../services/rolesandActivities.service'
 import { DialogConfirmComponent } from 'src/app/component/dialog-confirm/dialog-confirm.component'
+import { DialogBoxComponent } from '../../components/dialog-box/dialog-box.component'
 @Component({
     selector: 'ws-app-roles-and-activities',
     templateUrl: './roles-and-activities.component.html',
@@ -27,6 +28,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     @ViewChild('deleteBodyRef', { static: true })
     deleteBodyRef: ElementRef | null = null
     editRole: any
+    simpleDialog: MatDialogRef<DialogBoxComponent> | undefined
     constructor(
         private configSvc: ConfigurationsService,
         private rolesAndActivityService: RolesAndActivityService,
@@ -191,4 +193,26 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
             })
         }
     }
+
+    openInfoDialog() {
+        const dialogRef = this.dialog.open(DialogBoxComponent, {
+            data: {
+                view: 'roles',
+            },
+        })
+        dialogRef.afterClosed().subscribe(_result => {
+
+        })
+        }
+
+        openActivityDialog() {
+            const dialogRef = this.dialog.open(DialogBoxComponent, {
+                data: {
+                    view: 'activity',
+                },
+            })
+            dialogRef.afterClosed().subscribe(_result => {
+
+            })
+            }
 }

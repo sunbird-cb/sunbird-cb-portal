@@ -41,10 +41,11 @@
     }
 }
 
-span.hint_span {
+a.hint_span {
     .mat-icon  {
         vertical-align: middle;
     }
+    cursor: pointer;
 }
 
 // .mat-form-field .mat-form-field-wrapper {
