@@ -152,10 +152,11 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
             this.createRole.setValue({
                 roleName: role.name,
                 activity: role.activities,
-            }),
-                _.each(role.activities, a => {
-                    this.addActivity({ input: this.act, value: a.name })
-                })
+            })
+            this.selectedActivity = []
+            _.each(role.activities, a => {
+                this.addActivity({ input: this.act, value: a.name })
+            })
             // this.selectedActivity=role.activities
         }
     }
