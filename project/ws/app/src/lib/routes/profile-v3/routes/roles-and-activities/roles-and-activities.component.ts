@@ -36,7 +36,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
         private configSvc: ConfigurationsService,
         private rolesAndActivityService: RolesAndActivityService,
         private dialog: MatDialog,
-        private router:Router,
+        private router: Router,
         private snackBar: MatSnackBar) {
         this.updateRoles()
     }
@@ -164,7 +164,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                 this.addActivity({ input: this.act, value: a.name })
             })
             // this.selectedActivity=role.activities
-            this.router.navigate(['app','setup','roles'],{ fragment: 'maindiv' })
+            this.router.navigate(['app', 'setup', 'roles'], { fragment: 'maindiv' })
         }
     }
     delete(role: NSProfileDataV3.IRolesAndActivities) {
@@ -211,8 +211,9 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(_result => {
 
         })
-        }
+    }
 
+<<<<<<< HEAD
         openActivityDialog() {
             const dialogRef = this.dialog.open(DialogBoxComponent, {
                 data: {
@@ -223,7 +224,16 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
 
             })
             dialogRef.afterClosed().subscribe(_result => {
+=======
+    openActivityDialog() {
+        const dialogRef = this.dialog.open(DialogBoxComponent, {
+            data: {
+                view: 'activity',
+            },
+        })
+        dialogRef.afterClosed().subscribe(_result => {
+>>>>>>> e3914bf115b3d4fe95579126f6e8bf25bdb2207c
 
-            })
-            }
+        })
+    }
 }
