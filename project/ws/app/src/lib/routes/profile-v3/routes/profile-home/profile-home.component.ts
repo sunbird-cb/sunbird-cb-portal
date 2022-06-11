@@ -83,25 +83,8 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
   get next() {
     const nextStep = _.first(_.filter(this.tabs, { step: this.currentStep + 1 }))
     if (nextStep) {
-      // console.log(JSON.stringify(nextStep)+ '-- value of nextStep-')
-      // console.log('true nxt stap ====-')
-      // console.log(JSON.stringify(this.configSvc.userProfileV2) + '-------------- user profile')
       return nextStep
     }
-
-    //   if (
-    //     !nextStep &&
-    //     !(this.configSvc.userProfileV2 && this.configSvc.userProfileV2.userRoles && this.configSvc.userProfileV2.userRoles.length) ||
-    //     !((this.configSvc.userProfileV2 && this.configSvc.userProfileV2.desiredTopics && this.configSvc.userProfileV2.desiredTopics.length) ||
-    //     (this.configSvc.userProfileV2 && this.configSvc.userProfileV2.systemTopics && this.configSvc.userProfileV2.systemTopics.length))
-    //   ) {
-    //     console.log('false next step and pending data ==========')
-    //     console.log(JSON.stringify(this.configSvc.userProfileV2)  + '-------------- user profile')
-    //     return alert('data panding')
-    //   }
-    //   console.log('false next step ==========')
-    //   return 'done'
-
     return 'done'
 
   }
