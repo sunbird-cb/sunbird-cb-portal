@@ -19,7 +19,6 @@ import { TreeCatalogModule } from '@sunbird-cb/collection/src/public-api'
 import { TopicService } from './services/topics.service'
 // import { PlayerVideoComponent } from '@sunbird-cb/collection/src/lib/player-video/player-video.component'
 import { PlatformWalkthroughComponent } from './routes/platform-walkthrough/platform-walkthrough.component'
-
 import { AddTopicDialogComponent } from './components/add-topic/add-topic.component'
 import { RolesAndActivitiesComponent } from './routes/roles-and-activities/roles-and-activities.component'
 import { RolesAndActivityService } from './services/rolesandActivities.service'
@@ -27,6 +26,7 @@ import { LevelCardComponent } from './components/level-card/level-card.component
 import { LevelInfoComponent } from './components/level-info/level-info.component'
 import { CompTooltipDirective } from './directives/tooltip.directive'
 import { WelcomeOnboardComponent } from './routes/welcome-onboard/welcome-onboard.component'
+import { DialogBoxComponent } from './components/dialog-box/dialog-box.component'
 
 @NgModule({
   declarations: [
@@ -45,6 +45,7 @@ import { WelcomeOnboardComponent } from './routes/welcome-onboard/welcome-onboar
     LevelInfoComponent,
     CompTooltipDirective,
     WelcomeOnboardComponent,
+    DialogBoxComponent,
   ],
   imports: [
     CommonModule,
@@ -73,6 +74,7 @@ import { WelcomeOnboardComponent } from './routes/welcome-onboard/welcome-onboar
   ],
   entryComponents: [
     AddTopicDialogComponent,
+    DialogBoxComponent
   ],
 })
 export class ProfileV3Module { }

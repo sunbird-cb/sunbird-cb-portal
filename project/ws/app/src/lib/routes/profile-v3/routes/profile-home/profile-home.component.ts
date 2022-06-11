@@ -80,6 +80,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
     }
   }
   get next() {
+    if (!this.isNextStepAllowed) { return }
     const nextStep = _.first(_.filter(this.tabs, { step: this.currentStep + 1 }))
     if (nextStep) {
       return nextStep
@@ -96,6 +97,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
     return 'first'
   }
   get skip() {
+    if (!this.isNextStepAllowed) { return }
     this.stepService.skiped.next(true)
     const nextStep = _.first(_.filter(this.tabs, { step: this.currentStep + 1 }))
     if (nextStep && nextStep.step !== this.tabs.length + 1) {
@@ -106,11 +108,67 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
   get current() {
     const currentStep = _.first(_.filter(this.tabs, { step: this.currentStep }))
     if (currentStep !== undefined) {
-
       // console.log(JSON.stringify(currentStep)+ '-- value of currentStep======-')
       return currentStep
 
     }
     return null
+  }
+  get isNextStepAllowed(): boolean {
+    let isAllowed = false
+    this.tabs.forEach(s => {
+      if (s.step === this.currentStep) {
+        if (s.key.indexOf('welcome') !== -1) {
+          isAllowed = true
+        } else if (s.key.indexOf('roles') !== -1) {
+          if (
+            (this.stepService.currentStep.value.allowSkip
+              || this.configSvc.unMappedUser
+              && this.configSvc.unMappedUser.profileDetails
+              && this.configSvc.unMappedUser.profileDetails.userRoles
+              && this.configSvc.unMappedUser.profileDetails.userRoles.length > 0)
+          ) {
+            isAllowed = true
+          }
+        } else if (s.key.indexOf('topics') !== -1) {
+          if (this.stepService.currentStep.value.allowSkip
+            || (this.configSvc.unMappedUser
+              && this.configSvc.unMappedUser.profileDetails
+              && (
+                (this.configSvc.unMappedUser.profileDetails.systemTopics
+                  && this.configSvc.unMappedUser.profileDetails.systemTopics.length > 0
+                )
+                ||
+                (this.configSvc.unMappedUser.profileDetails.desiredTopics
+                  && this.configSvc.unMappedUser.profileDetails.desiredTopics.length > 0
+                )
+              ))
+          ) {
+            isAllowed = true
+          }
+        } else if (s.key.indexOf('currentcompetencies') !== -1) {
+          if (this.stepService.currentStep.value.allowSkip
+            || (this.configSvc.unMappedUser
+              && this.configSvc.unMappedUser.profileDetails
+              && this.configSvc.unMappedUser.profileDetails.competencies
+              && this.configSvc.unMappedUser.profileDetails.competencies.length > 0)
+          ) {
+            isAllowed = true
+          }
+        } else if (s.key.indexOf('desiredcompetencies') !== -1) {
+          if (this.stepService.currentStep.value.allowSkip
+            || (this.configSvc.unMappedUser
+              && this.configSvc.unMappedUser.profileDetails
+              && this.configSvc.unMappedUser.profileDetails.desiredCompetencies
+              && this.configSvc.unMappedUser.profileDetails.desiredCompetencies.length > 0)
+          ) {
+            isAllowed = true
+          }
+        } else if (s.key.indexOf('platformWalkthrough') !== -1) {
+          isAllowed = true
+        }
+      }
+    })
+    return isAllowed
   }
 }

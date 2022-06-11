@@ -1,5 +1,3 @@
-
-
 <div class="margin-bottom-s role-card flex flex-col">
     <!-- <div class="flex flex-1 flex-row-reverse flex-middle">
         <a mat-button type="button" class="ws-mat-accent-border-active cursor-pointer" (click)="showPoup()">
@@ -12,23 +10,29 @@
 
     <div class="flex flex-col flex-wrap w-100 flex-1 margin-top-l">
         <div class="flex margin-bottom-s top_chip_box">
-            <p class="mat-body-2 margin-remove-bottom"><mat-icon class="mat-icon margin-right-xs">info</mat-icon> Please list down your roles & activities as part of your position</p>
+            <p class="mat-body-2 margin-remove-bottom">
+                <mat-icon class="mat-icon margin-right-xs">info</mat-icon> Please list down your roles & activities as
+                part of your position
+            </p>
         </div>
-        <p class="mat-body-2 ws-mat-black60-text">Feel free to enter details in your own words, to the best of your understanding. This information will help us tailor a more personalized experience
-             and add more relevant content on the platform.</p>
+        <p class="mat-body-2 ws-mat-black60-text">Feel free to enter details in your own words, to the best of your
+            understanding. This information will help us tailor a more personalized experience
+            and add more relevant content on the platform.</p>
     </div>
 
     <div class="flex flex-wrap margin-top-l flex-column">
         <mat-card class="mat-card margin-bottom-s role-card flex flex-col">
             <form [formGroup]="createRole" class="flex flex-1 flex-column margin-top-m">
-                <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-xl">
+                <div id="maindiv" class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-xl">
                     <div class="flex flex-row justify-between">
                         <label for="roleName" class=" margin-remove-bottom form-label required flex mat-subheading-2"
                             i18n="Role Name label|Label which explains the user to enter Role Name" i18n-aria-label
                             aria-label="Role Name label">
                             Add role
                         </label>
-                        <span class="mat-subheading-2 hint_span margin-remove-bottom"><mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon> What is a role?</span>
+                        <a class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openInfoDialog(item='role')">
+                            <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon>
+                        What is a role?</a>
 
                     </div>
 
@@ -45,7 +49,9 @@
                             aria-label="activity label">
                             Add activities you perform as part of this role.
                         </label>
-                        <span class="mat-subheading-2 hint_span margin-remove-bottom"><mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon> What is an activity?</span>
+                        <a class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openActivityDialog(item='activity')">
+                            <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon> What is an activity?
+                        </a>
                     </div>
                     <mat-form-field appearance="outline" class="margin-top-xs full-width flex flex-1">
                         <mat-chip-list #chipListHobies>
@@ -55,14 +61,16 @@
                                 <mat-icon matChipRemove>cancel</mat-icon>
                             </mat-chip>
                         </mat-chip-list>
-                        <input #act matInput i18n-placeholder="Type the activity and press enter" rows="5" placeholder="Type the activity and press enter"
-                            formControlName="activity" i18n-aria-label aria-label="Enter Hobbies"
-                            [matChipInputFor]="chipListHobies" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        <input #act matInput i18n-placeholder="Type the activity and press enter" rows="5"
+                            placeholder="Type the activity and press enter" formControlName="activity" i18n-aria-label
+                            aria-label="Enter Hobbies" [matChipInputFor]="chipListHobies"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                             (matChipInputTokenEnd)="addActivity($event)" class="w-full-imp" />
                     </mat-form-field>
                     <div class="flex flex-row justify-between">
                         <mat-hint class="text-left text_hint mat-body-2">Start adding the activities.</mat-hint>
-                        <mat-hint class="text-right text_hint mat-body-2">Type the activites and click on ‘Enter’ to add</mat-hint>
+                        <mat-hint class="text-right text_hint mat-body-2">Type the activites and click on ‘Enter’ to add
+                        </mat-hint>
                     </div>
 
                 </div>
@@ -86,10 +94,12 @@
                                 <p class="mat-subheading-1 margin-bottom-m">{{role.name}} </p>
                             </div>
                             <div class="flex flex-row justify-between">
-                                <mat-icon class="flex cursor-pointer ws-mat-black60-text" (click)="edit(role)">edit</mat-icon>
+                                <mat-icon class="flex cursor-pointer ws-mat-black60-text" (click)="edit(role)">edit
+                                </mat-icon>
                                 <!-- <mat-card-actions> -->
                                 <!-- <div class="flex margin-left-xs"> -->
-                                    <mat-icon class="flex cursor-pointer ws-mat-black60-text margin-left-xs" (click)="delete(role)">delete</mat-icon>
+                                <mat-icon class="flex cursor-pointer ws-mat-black60-text margin-left-xs"
+                                    (click)="delete(role)">delete</mat-icon>
                                 <!-- </div> -->
                                 <!-- </mat-card-actions> -->
 

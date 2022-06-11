@@ -4,10 +4,12 @@ import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
 import { NSProfileDataV3 } from '../../models/profile-v3.models'
 // tslint:disable-next-line
 import _ from 'lodash'
-import { MatChipInputEvent, MatDialog, MatSnackBar } from '@angular/material'
+import { MatChipInputEvent, MatDialog, MatDialogRef, MatSnackBar } from '@angular/material'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { RolesAndActivityService } from '../../services/rolesandActivities.service'
 import { DialogConfirmComponent } from 'src/app/component/dialog-confirm/dialog-confirm.component'
+import { DialogBoxComponent } from '../../components/dialog-box/dialog-box.component'
+import { Router } from '@angular/router'
 @Component({
     selector: 'ws-app-roles-and-activities',
     templateUrl: './roles-and-activities.component.html',
@@ -26,11 +28,15 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     deleteTitleRef: ElementRef | null = null
     @ViewChild('deleteBodyRef', { static: true })
     deleteBodyRef: ElementRef | null = null
+    @ViewChild('roleName', { static: true })
+    roleName: ElementRef | null = null
     editRole: any
+    simpleDialog: MatDialogRef<DialogBoxComponent> | undefined
     constructor(
         private configSvc: ConfigurationsService,
         private rolesAndActivityService: RolesAndActivityService,
         private dialog: MatDialog,
+        private router: Router,
         private snackBar: MatSnackBar) {
         this.updateRoles()
     }
@@ -158,6 +164,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                 this.addActivity({ input: this.act, value: a.name })
             })
             // this.selectedActivity=role.activities
+            this.router.navigate(['app', 'setup', 'roles'], { fragment: 'maindiv' })
         }
     }
     delete(role: NSProfileDataV3.IRolesAndActivities) {
@@ -190,5 +197,27 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                 }
             })
         }
+    }
+
+    openInfoDialog() {
+        const dialogRef = this.dialog.open(DialogBoxComponent, {
+            data: {
+                view: 'roles',
+            },
+        })
+        dialogRef.afterClosed().subscribe(_result => {
+
+        })
+    }
+
+    openActivityDialog() {
+        const dialogRef = this.dialog.open(DialogBoxComponent, {
+            data: {
+                view: 'activity',
+            },
+        })
+        dialogRef.afterClosed().subscribe(_result => {
+
+        })
     }
 }

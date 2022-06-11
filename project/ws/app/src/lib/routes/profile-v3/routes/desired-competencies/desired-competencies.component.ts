@@ -5,6 +5,8 @@ import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { ActivatedRoute } from '@angular/router'
+import { MatDialog } from '@angular/material'
+import { DialogBoxComponent } from '../../components/dialog-box/dialog-box.component'
 
 @Component({
   selector: 'ws-app-desired-competencies',
@@ -24,7 +26,7 @@ export class DesiredCompetenciesComponent implements OnInit {
   desiredcompList: any = []
 
   constructor(private competencySvc: ProfileV3Service, private configService: ConfigurationsService,
-              private activateroute: ActivatedRoute) {}
+              private activateroute: ActivatedRoute, private dialog: MatDialog,) {}
 
   ngOnInit() {
     this.getUserDetails()
@@ -171,4 +173,16 @@ export class DesiredCompetenciesComponent implements OnInit {
       }
     })
   }
+
+
+  openActivityDialog() {
+    const dialogRef = this.dialog.open(DialogBoxComponent, {
+        data: {
+            view: 'dscomp',
+        },
+    })
+    dialogRef.afterClosed().subscribe(_result => {
+
+    })
+    }
 }
