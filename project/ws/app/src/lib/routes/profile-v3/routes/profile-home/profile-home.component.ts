@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core'
 import { map } from 'rxjs/operators'
-import { ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, ValueService } from '@sunbird-cb/utils'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router'
 import { NSProfileDataV3 } from '../../models/profile-v3.models'
@@ -35,6 +35,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private stepService: StepService,
+    private configSvc: ConfigurationsService,
   ) {
     this.tabs = _.orderBy(this.tabsData, 'step')
     this.stepService.allSteps.next(this.tabs.length)
