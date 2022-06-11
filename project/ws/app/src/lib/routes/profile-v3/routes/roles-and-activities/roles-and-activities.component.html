@@ -36,7 +36,7 @@
 
                     </div>
 
-                    <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1">
+                    <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1" [ngClass]="{ 'mat-focused': textBoxActive}">
                         <input matInput autocomplete="off" id="roleName" #roleName name="roleName"
                             placeholder="Type the role name" formControlName="roleName" class="flex flex-1" />
                     </mat-form-field>
@@ -53,7 +53,7 @@
                             <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon> What is an activity?
                         </a>
                     </div>
-                    <mat-form-field appearance="outline" class="margin-top-xs full-width flex flex-1">
+                    <mat-form-field appearance="outline" class="margin-top-xs full-width flex flex-1" [ngClass]="{ 'mat-focused': textBoxActive}">
                         <mat-chip-list #chipListHobies>
                             <mat-chip *ngFor="let hob of selectedActivity" [selectable]="true" [removable]="true"
                                 (removed)="removeActivity(hob)">
