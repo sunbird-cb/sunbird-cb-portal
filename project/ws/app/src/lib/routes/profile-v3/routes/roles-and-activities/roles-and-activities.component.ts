@@ -32,6 +32,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     roleName: ElementRef | null = null
     editRole: any
     simpleDialog: MatDialogRef<DialogBoxComponent> | undefined
+    textBoxActive = false
     constructor(
         private configSvc: ConfigurationsService,
         private rolesAndActivityService: RolesAndActivityService,
@@ -152,6 +153,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
             this.selectedActivity.splice(index, 1)
         }
     }
+
     edit(role: NSProfileDataV3.IRolesAndActivities) {
         if (role) {
             this.editRole = role
@@ -159,6 +161,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                 roleName: role.name,
                 activity: role.activities,
             })
+            this.textBoxActive = true
             this.selectedActivity = []
             _.each(role.activities, a => {
                 this.addActivity({ input: this.act, value: a.name })
@@ -205,7 +208,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                 view: 'roles',
             },
             hasBackdrop: false,
-            width: '550px',
+            width: '550px'
 
         })
         dialogRef.afterClosed().subscribe(_result => {
@@ -219,7 +222,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                     view: 'activity',
                 },
                 hasBackdrop: false,
-                width: '550px',
+                width: '550px'
 
             })
             dialogRef.afterClosed().subscribe(_result => {
