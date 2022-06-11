@@ -30,7 +30,7 @@
                             aria-label="Role Name label">
                             Add role
                         </label>
-                        <a class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openInfoDialog(item='role')">
+                        <a class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openInfoDialog()">
                             <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon>
                         What is a role?</a>
 
@@ -49,7 +49,7 @@
                             aria-label="activity label">
                             Add activities you perform as part of this role.
                         </label>
-                        <a class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openActivityDialog(item='activity')">
+                        <a class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openActivityDialog()">
                             <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon> What is an activity?
                         </a>
                     </div>
@@ -94,12 +94,19 @@
                                 <p class="mat-subheading-1 margin-bottom-m">{{role.name}} </p>
                             </div>
                             <div class="flex flex-row justify-between">
-                                <mat-icon class="flex cursor-pointer ws-mat-black60-text" (click)="edit(role)">edit
-                                </mat-icon>
+                                <a class="cursor-pointer flex margin-right-xs" (click)="edit(role)">
+                                    <mat-icon class="flex  ws-mat-black60-text margin-right-xs" >edit
+                                    </mat-icon>
+                                    Edit
+                                </a>
+
                                 <!-- <mat-card-actions> -->
                                 <!-- <div class="flex margin-left-xs"> -->
-                                <mat-icon class="flex cursor-pointer ws-mat-black60-text margin-left-xs"
-                                    (click)="delete(role)">delete</mat-icon>
+                                <a  class="cursor-pointer flex" (click)="delete(role)">
+                                    <mat-icon class="flex cursor-pointer ws-mat-black60-text margin-left-xs margin-right-xs"
+                                    >delete</mat-icon> Delete
+                                </a>
+
                                 <!-- </div> -->
                                 <!-- </mat-card-actions> -->
 

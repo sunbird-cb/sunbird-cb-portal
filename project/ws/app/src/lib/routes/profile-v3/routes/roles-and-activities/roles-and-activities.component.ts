@@ -204,19 +204,25 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
             data: {
                 view: 'roles',
             },
+            hasBackdrop: false,
+            width: '550px',
+
         })
         dialogRef.afterClosed().subscribe(_result => {
 
         })
     }
 
-    openActivityDialog() {
-        const dialogRef = this.dialog.open(DialogBoxComponent, {
-            data: {
-                view: 'activity',
-            },
-        })
-        dialogRef.afterClosed().subscribe(_result => {
+        openActivityDialog() {
+            const dialogRef = this.dialog.open(DialogBoxComponent, {
+                data: {
+                    view: 'activity',
+                },
+                hasBackdrop: false,
+                width: '550px',
+
+            })
+            dialogRef.afterClosed().subscribe(_result => {
 
         })
     }

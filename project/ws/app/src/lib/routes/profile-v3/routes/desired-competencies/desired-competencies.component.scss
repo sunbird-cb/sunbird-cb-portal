@@ -7,7 +7,8 @@
     width: 100%;
 }
 
-span.hint_span {
+a.hint_span {
+    cursor: pointer;
     .mat-icon  {
         vertical-align: middle;
     }

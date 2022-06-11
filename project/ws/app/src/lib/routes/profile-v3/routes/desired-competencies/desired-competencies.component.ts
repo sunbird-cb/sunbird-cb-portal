@@ -12,9 +12,9 @@ import { DialogBoxComponent } from '../../components/dialog-box/dialog-box.compo
   selector: 'ws-app-desired-competencies',
   templateUrl: './desired-competencies.component.html',
   styleUrls: ['./desired-competencies.component.scss'],
-    /* tslint:disable */
-    host: { class: 'flex flex-1 comptency_main_div' },
-    /* tslint:enable */
+  /* tslint:disable */
+  host: { class: 'flex flex-1 comptency_main_div' },
+  /* tslint:enable */
 })
 export class DesiredCompetenciesComponent implements OnInit {
   searchJson!: NSProfileDataV3.ISearch[]
@@ -25,8 +25,12 @@ export class DesiredCompetenciesComponent implements OnInit {
   overallCompetencies!: NSProfileDataV3.ICompetencie[]
   desiredcompList: any = []
 
-  constructor(private competencySvc: ProfileV3Service, private configService: ConfigurationsService,
-              private activateroute: ActivatedRoute, private dialog: MatDialog,) {}
+  constructor(
+    private competencySvc: ProfileV3Service,
+    private configService: ConfigurationsService,
+    private activateroute: ActivatedRoute,
+    private dialog: MatDialog,
+  ) { }
 
   ngOnInit() {
     this.getUserDetails()
@@ -72,8 +76,8 @@ export class DesiredCompetenciesComponent implements OnInit {
       this.overallCompetencies = this.activateroute.snapshot.parent.data.competencies.data
     }
     this.getCompLsit()
-      //   }
-      // })
+    //   }
+    // })
   }
 
   getCompLsit() {
@@ -118,8 +122,8 @@ export class DesiredCompetenciesComponent implements OnInit {
     if (this.desiredcompList && this.desiredcompList.length > 0) {
       this.updatecompList = this.desiredcompList
       this.updatecompList.forEach((com: any) => {
-         event.forEach((evt: any) => {
-           if (evt.id === com.id) {
+        event.forEach((evt: any) => {
+          if (evt.id === com.id) {
             //  this.updatecompList.push(evt)
             // tslint:disable-next-line:prefer-template
             const compValue = evt.competencySelfAttestedLevelName + ` (` + evt.competencySelfAttestedLevelValue + `)`
@@ -128,11 +132,11 @@ export class DesiredCompetenciesComponent implements OnInit {
             com.competencySelfAttestedLevelValue = compValue
             com.competencyType = evt.competencyType
             com.osid = evt.osid
-           } else {
+          } else {
             if (!this.updatecompList.some((el: any) => el.id === evt.id)) {
               // tslint:disable-next-line:prefer-template
               const compValue = evt.competencySelfAttestedLevelName + ` (` + evt.competencySelfAttestedLevelValue + `)`
-              const obj  = {
+              const obj = {
                 competencySelfAttestedLevel: evt.competencySelfAttestedLevel,
                 competencySelfAttestedLevelValue: compValue,
                 competencyType: evt.competencyType,
@@ -146,12 +150,12 @@ export class DesiredCompetenciesComponent implements OnInit {
               }
               this.updatecompList.push(obj)
             }
-           }
-         })
-       })
-     } else {
-       this.updatecompList = event
-     }
+          }
+        })
+      })
+    } else {
+      this.updatecompList = event
+    }
     this.changedProperties = {
       profileDetails: {
         desiredCompetencies: this.updatecompList,
@@ -160,7 +164,7 @@ export class DesiredCompetenciesComponent implements OnInit {
     const reqUpdates = {
       request: {
         userId: this.configService.unMappedUser.id,
-          ...this.changedProperties,
+        ...this.changedProperties,
       },
     }
     this.competencySvc.updateProfileDetails(reqUpdates).subscribe((res: any) => {
@@ -173,16 +177,17 @@ export class DesiredCompetenciesComponent implements OnInit {
       }
     })
   }
-
-
   openActivityDialog() {
     const dialogRef = this.dialog.open(DialogBoxComponent, {
-        data: {
-            view: 'dscomp',
-        },
+      data: {
+        view: 'dscomp',
+      },
+      hasBackdrop: false,
+      width: '550px',
+
     })
     dialogRef.afterClosed().subscribe(_result => {
 
     })
-    }
+  }
 }

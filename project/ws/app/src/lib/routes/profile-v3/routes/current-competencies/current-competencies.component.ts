@@ -12,9 +12,9 @@ import { MatDialog } from '@angular/material'
   selector: 'ws-app-current-competencies',
   templateUrl: './current-competencies.component.html',
   styleUrls: ['./current-competencies.component.scss'],
-    /* tslint:disable */
-    host: { class: 'flex flex-1 comptency_main_div' },
-    /* tslint:enable */
+  /* tslint:disable */
+  host: { class: 'flex flex-1 comptency_main_div' },
+  /* tslint:enable */
 })
 export class CurrentCompetenciesComponent implements OnInit {
   searchJson!: NSProfileDataV3.ISearch[]
@@ -25,8 +25,14 @@ export class CurrentCompetenciesComponent implements OnInit {
   updatecompList: any = []
   competenciesList: any = []
 
-  constructor(private competencySvc: ProfileV3Service, private configService: ConfigurationsService,
-              private activateroute: ActivatedRoute, private dialog: MatDialog,) {}
+  constructor(
+    private competencySvc: ProfileV3Service,
+    private configService: ConfigurationsService,
+    private activateroute: ActivatedRoute,
+    private dialog: MatDialog,
+  ) {
+
+  }
 
   ngOnInit() {
     this.getUserDetails()
@@ -76,8 +82,8 @@ export class CurrentCompetenciesComponent implements OnInit {
       this.overallCompetencies = this.activateroute.snapshot.parent.data.competencies.data
     }
     this.getCompLsit()
-      //   }
-      // })
+    //   }
+    // })
   }
 
   getCompLsit() {
@@ -120,8 +126,8 @@ export class CurrentCompetenciesComponent implements OnInit {
 
   updateSelectedCompetency(event: any) {
     if (this.competenciesList && this.competenciesList.length > 0) {
-     this.updatecompList = this.competenciesList
-     this.updatecompList.forEach((com: any) => {
+      this.updatecompList = this.competenciesList
+      this.updatecompList.forEach((com: any) => {
         event.forEach((evt: any) => {
           if (evt.id === com.id) {
             // tslint:disable-next-line:prefer-template
@@ -135,7 +141,7 @@ export class CurrentCompetenciesComponent implements OnInit {
             if (!this.updatecompList.some((el: any) => el.id === evt.id)) {
               // tslint:disable-next-line:prefer-template
               const compValue = evt.competencySelfAttestedLevelName + ` (` + evt.competencySelfAttestedLevelValue + `)`
-              const obj  = {
+              const obj = {
                 competencySelfAttestedLevel: evt.competencySelfAttestedLevel,
                 competencySelfAttestedLevelValue: compValue,
                 competencyType: evt.competencyType,
@@ -165,7 +171,7 @@ export class CurrentCompetenciesComponent implements OnInit {
     const reqUpdates = {
       request: {
         userId: this.configService.unMappedUser.id,
-          ...this.changedProperties,
+        ...this.changedProperties,
       },
     }
     this.competencySvc.updateProfileDetails(reqUpdates).subscribe((res: any) => {
@@ -178,18 +184,18 @@ export class CurrentCompetenciesComponent implements OnInit {
       }
     })
   }
-
-
-
   openActivityDialog() {
     const dialogRef = this.dialog.open(DialogBoxComponent, {
-        data: {
-            view: 'ccomp',
-        },
+      data: {
+        view: 'ccomp',
+      },
+      hasBackdrop: false,
+      width: '550px',
+
     })
     dialogRef.afterClosed().subscribe(_result => {
 
     })
-    }
+  }
 
 }

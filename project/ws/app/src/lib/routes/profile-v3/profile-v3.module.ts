@@ -74,7 +74,7 @@ import { DialogBoxComponent } from './components/dialog-box/dialog-box.component
   ],
   entryComponents: [
     AddTopicDialogComponent,
-    DialogBoxComponent
+    DialogBoxComponent,
   ],
 })
 export class ProfileV3Module { }
