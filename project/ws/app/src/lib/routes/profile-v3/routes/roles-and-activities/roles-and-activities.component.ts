@@ -8,6 +8,7 @@ import { MatChipInputEvent, MatDialog, MatSnackBar } from '@angular/material'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { RolesAndActivityService } from '../../services/rolesandActivities.service'
 import { DialogConfirmComponent } from 'src/app/component/dialog-confirm/dialog-confirm.component'
+import { Router } from '@angular/router'
 @Component({
     selector: 'ws-app-roles-and-activities',
     templateUrl: './roles-and-activities.component.html',
@@ -26,11 +27,14 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     deleteTitleRef: ElementRef | null = null
     @ViewChild('deleteBodyRef', { static: true })
     deleteBodyRef: ElementRef | null = null
+    @ViewChild('roleName', { static: true })
+    roleName: ElementRef | null = null
     editRole: any
     constructor(
         private configSvc: ConfigurationsService,
         private rolesAndActivityService: RolesAndActivityService,
         private dialog: MatDialog,
+        private router:Router,
         private snackBar: MatSnackBar) {
         this.updateRoles()
     }
@@ -158,6 +162,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                 this.addActivity({ input: this.act, value: a.name })
             })
             // this.selectedActivity=role.activities
+            this.router.navigate(['app','setup','roles'],{ fragment: 'maindiv' })
         }
     }
     delete(role: NSProfileDataV3.IRolesAndActivities) {
