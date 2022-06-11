@@ -18,7 +18,6 @@ import {
   IProfileAcademics,
   INation,
   IdegreesMeta,
-  IdesignationsMeta,
 } from '../../models/user-profile.model'
 import { NsUserProfileDetails } from '@ws/app/src/lib/routes/user-profile/models/NsUserProfile'
 import { NotificationComponent } from '@ws/author/src/lib/modules/shared/components/notification/notification.component'
@@ -90,7 +89,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   govtOrgMeta!: IGovtOrgMeta
   industriesMeta!: IIndustriesMeta
   degreesMeta!: IdegreesMeta
-  designationsMeta!: IdesignationsMeta
+  designationsMeta!: any // IdesignationsMeta
   public degrees!: FormArray
   public postDegrees!: FormArray
   public degreeInstitutes = []
@@ -174,8 +173,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       otherDetailsOfficePinCode: new FormControl('', []),
       departmentName: new FormControl('', []),
     })
+  this.init()
   }
-
+async init(){
+  await this.loadDesignations()
+  this.fetchMeta()
+}
   ngOnInit() {
     // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
     //   console.log('ngOnInit - value', value);
@@ -188,7 +191,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       // need to call search API
     }
     this.getUserDetails()
-    this.fetchMeta()
+  
     // this.assignPrimaryEmailType(this.isOfficialEmail)
   }
   fetchMeta() {
@@ -231,22 +234,25 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       (_err: any) => {
       })
 
-    const desreq = {
-      searches: [
-        {
-          type: 'POSITION',
-          field: 'name',
-          keyword: '',
-        },
-        {
-          field: 'status',
-          keyword: 'VERIFIED',
-          type: 'POSITION',
-        },
-      ],
-    }
+    // const desreq = {
+    //   searches: [
+    //     {
+    //       type: 'POSITION',
+    //       field: 'name',
+    //       keyword: '',
+    //     },
+    //     {
+    //       field: 'status',
+    //       keyword: 'VERIFIED',
+    //       type: 'POSITION',
+    //     },
+    //   ],
+    // }
 
-    this.userProfileSvc.getDesignations(desreq).subscribe(
+    
+  }
+  async loadDesignations(){
+    await this.userProfileSvc.getDesignations({}).subscribe(
       (data: any) => {
         this.designationsMeta = data.responseData
       },
@@ -602,7 +608,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         industry: organisation.industry,
         industryOther: organisation.industryOther,
         // tslint:disable-next-line
-        designation: _.findIndex(this.designationsMeta.designations, { name: organisation.designation }) != -1 ? organisation.designation : 'Other',
+        designation: _.findIndex(this.designationsMeta, { name: organisation.designation }) != -1 ? organisation.designation : 'Other',
         designationOther: organisation.designationOther,
         location: organisation.location,
         responsibilities: organisation.responsibilities,
