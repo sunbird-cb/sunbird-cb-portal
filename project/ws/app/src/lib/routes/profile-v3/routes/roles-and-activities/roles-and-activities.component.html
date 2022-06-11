@@ -94,12 +94,19 @@
                                 <p class="mat-subheading-1 margin-bottom-m">{{role.name}} </p>
                             </div>
                             <div class="flex flex-row justify-between">
-                                <mat-icon class="flex cursor-pointer ws-mat-black60-text" (click)="edit(role)">edit
-                                </mat-icon>
+                                <a class="cursor-pointer flex margin-right-xs" (click)="edit(role)">
+                                    <mat-icon class="flex  ws-mat-black60-text margin-right-xs" >edit
+                                    </mat-icon>
+                                    Edit
+                                </a>
+
                                 <!-- <mat-card-actions> -->
                                 <!-- <div class="flex margin-left-xs"> -->
-                                <mat-icon class="flex cursor-pointer ws-mat-black60-text margin-left-xs"
-                                    (click)="delete(role)">delete</mat-icon>
+                                <a  class="cursor-pointer flex" (click)="delete(role)">
+                                    <mat-icon class="flex cursor-pointer ws-mat-black60-text margin-left-xs margin-right-xs"
+                                    >delete</mat-icon> Delete
+                                </a>
+
                                 <!-- </div> -->
                                 <!-- </mat-card-actions> -->
 

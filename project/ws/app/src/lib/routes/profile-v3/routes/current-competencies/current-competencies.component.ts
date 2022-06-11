@@ -186,6 +186,9 @@ export class CurrentCompetenciesComponent implements OnInit {
         data: {
             view: 'ccomp',
         },
+        hasBackdrop: false,
+        width: '550px'
+
     })
     dialogRef.afterClosed().subscribe(_result => {
 

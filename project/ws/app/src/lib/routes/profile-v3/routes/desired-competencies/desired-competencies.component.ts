@@ -180,6 +180,9 @@ export class DesiredCompetenciesComponent implements OnInit {
         data: {
             view: 'dscomp',
         },
+        hasBackdrop: false,
+        width: '550px'
+
     })
     dialogRef.afterClosed().subscribe(_result => {
 
