@@ -173,12 +173,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       otherDetailsOfficePinCode: new FormControl('', []),
       departmentName: new FormControl('', []),
     })
-  this.init()
+    this.init()
   }
-async init(){
-  await this.loadDesignations()
-  this.fetchMeta()
-}
+  async init() {
+    await this.loadDesignations()
+    this.fetchMeta()
+  }
   ngOnInit() {
     // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
     //   console.log('ngOnInit - value', value);
@@ -191,7 +191,7 @@ async init(){
       // need to call search API
     }
     this.getUserDetails()
-  
+
     // this.assignPrimaryEmailType(this.isOfficialEmail)
   }
   fetchMeta() {
@@ -249,9 +249,9 @@ async init(){
     //   ],
     // }
 
-    
+
   }
-  async loadDesignations(){
+  async loadDesignations() {
     await this.userProfileSvc.getDesignations({}).subscribe(
       (data: any) => {
         this.designationsMeta = data.responseData
@@ -601,6 +601,7 @@ async init(){
       // console.log("org", data.professionalDetails[0].industryOther);
 
       const organisation = data.professionalDetails[0]
+      const isDesiAvailable = _.findIndex(this.designationsMeta, { name: organisation.designation }) !== -1
       org = {
         isGovtOrg: organisation.organisationType,
         orgName: organisation.name,
@@ -608,8 +609,8 @@ async init(){
         industry: organisation.industry,
         industryOther: organisation.industryOther,
         // tslint:disable-next-line
-        designation: _.findIndex(this.designationsMeta, { name: organisation.designation }) != -1 ? organisation.designation : 'Other',
-        designationOther: organisation.designationOther,
+        designation: isDesiAvailable ? organisation.designation : 'Other',
+        designationOther: isDesiAvailable ? '' : organisation.designation || organisation.designationOther,
         location: organisation.location,
         responsibilities: organisation.responsibilities,
         doj: this.getDateFromText(organisation.doj),
