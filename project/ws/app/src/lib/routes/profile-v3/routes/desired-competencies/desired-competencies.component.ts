@@ -4,9 +4,9 @@ import { NSProfileDataV3 } from '../../models/profile-v3.models'
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
 // tslint:disable-next-line
 import _ from 'lodash'
-import { ActivatedRoute } from '@angular/router'
 import { MatDialog } from '@angular/material'
 import { DialogBoxComponent } from '../../components/dialog-box/dialog-box.component'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'ws-app-desired-competencies',
@@ -18,7 +18,7 @@ import { DialogBoxComponent } from '../../components/dialog-box/dialog-box.compo
 })
 export class DesiredCompetenciesComponent implements OnInit {
   searchJson!: NSProfileDataV3.ISearch[]
-  allCompetencies: any = []
+  alldesiredCompetencies: any = []
   changedProperties: any = {}
   // userDetails: any
   updatecompList: any = []
@@ -33,19 +33,12 @@ export class DesiredCompetenciesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.alldesiredCompetencies = []
     this.getUserDetails()
   }
 
   getUserDetails() {
-    // if (this.configService.unMappedUser && this.configService.unMappedUser.id) {
-    //   this.competencySvc.getUserdetailsFromRegistry(this.configService.unMappedUser.id).subscribe(
-    //     (data: any) => {
-    //       this.userDetails = data
-    //       this.desiredcompList = data.profileDetails.desiredCompetencies
-    //       this.getCompetencies()
-    //   })
-    // }
-    this.desiredcompList = _.get(this.configService.unMappedUser, 'profileDetails.desiredCompetencies') || []
+    this.desiredcompList = _.get(this.configService.userProfileV2, 'desiredCompetencies') || []
     if (this.overallCompetencies && this.overallCompetencies.length > 0) {
       this.getCompLsit()
     } else {
@@ -54,6 +47,14 @@ export class DesiredCompetenciesComponent implements OnInit {
   }
 
   getCompetencies() {
+    if (
+      this.activateroute.snapshot.parent
+      && this.activateroute.snapshot.parent.data.desiredcompetencies
+      && this.activateroute.snapshot.parent.data.desiredcompetencies.data
+    ) {
+      this.overallCompetencies = this.activateroute.snapshot.parent.data.desiredcompetencies.data
+    }
+    this.getCompLsit()
     // this.searchJson = [
     //   { type: 'COMPETENCY', field: 'name', keyword: '' },
     //   { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
@@ -68,14 +69,7 @@ export class DesiredCompetenciesComponent implements OnInit {
     //   .subscribe((reponse: any) => {
     //     if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
     //       this.overallCompetencies = reponse.responseData
-    if (
-      this.activateroute.snapshot.parent
-      && this.activateroute.snapshot.parent.data.competencies
-      && this.activateroute.snapshot.parent.data.competencies.data
-    ) {
-      this.overallCompetencies = this.activateroute.snapshot.parent.data.competencies.data
-    }
-    this.getCompLsit()
+    //       this.getCompLsit()
     //   }
     // })
   }
@@ -87,35 +81,35 @@ export class DesiredCompetenciesComponent implements OnInit {
         complist.forEach((comp: any) => {
           this.overallCompetencies.forEach((ncomp: any) => {
             if (comp.id === ncomp.id) {
-              ncomp.competencySelfAttestedLevel = comp.competencySelfAttestedLevel
+              // tslint:disable-next-line:max-line-length
+              ncomp.competencySelfAttestedLevel = !isNaN(Number(comp.competencySelfAttestedLevel)) ? Number(comp.competencySelfAttestedLevel) : comp.competencySelfAttestedLevel
               ncomp.competencySelfAttestedLevelValue = comp.competencySelfAttestedLevelValue
               ncomp.competencyType = comp.competencyType
               ncomp.osid = comp.osid
-              if (!this.allCompetencies.some((el: any) => el.id === ncomp.id)) {
+              if (!this.alldesiredCompetencies.some((el: any) => el.id === ncomp.id)) {
                 if (ncomp.children && ncomp.children.length > 0) {
                   ncomp.children.forEach((lvl: any) => {
                     lvl.id = !isNaN(Number(lvl.id)) ? Number(lvl.id) : lvl.id
                   })
                 }
-                this.allCompetencies.unshift(ncomp)
+                this.alldesiredCompetencies.unshift(ncomp)
               }
             } else {
-              if (!this.allCompetencies.some((el: any) => el.id === ncomp.id)) {
+              if (!this.alldesiredCompetencies.some((el: any) => el.id === ncomp.id)) {
                 if (ncomp.children && ncomp.children.length > 0) {
                   ncomp.children.forEach((lvl: any) => {
                     lvl.id = !isNaN(Number(lvl.id)) ? Number(lvl.id) : lvl.id
                   })
                 }
-                this.allCompetencies.push(ncomp)
+                this.alldesiredCompetencies.push(ncomp)
               }
             }
           })
         })
       } else {
-        this.allCompetencies = this.overallCompetencies
+        this.alldesiredCompetencies = this.overallCompetencies
       }
     }
-    // this.allCompetencies = this.overallCompetencies
   }
 
   updateSelectedCompetency(event: any) {
@@ -124,7 +118,6 @@ export class DesiredCompetenciesComponent implements OnInit {
       this.updatecompList.forEach((com: any) => {
         event.forEach((evt: any) => {
           if (evt.id === com.id) {
-            //  this.updatecompList.push(evt)
             // tslint:disable-next-line:prefer-template
             const compValue = evt.competencySelfAttestedLevelName + ` (` + evt.competencySelfAttestedLevelValue + `)`
             // tslint:disable-next-line:max-line-length
@@ -170,7 +163,7 @@ export class DesiredCompetenciesComponent implements OnInit {
     this.competencySvc.updateProfileDetails(reqUpdates).subscribe((res: any) => {
       if (res.responseCode === 'OK') {
         this.configService.updateGlobalProfile(true)
-        this.allCompetencies = []
+        this.alldesiredCompetencies = []
         this.updatecompList = []
         this.desiredcompList = []
         this.ngOnInit()
@@ -187,7 +180,6 @@ export class DesiredCompetenciesComponent implements OnInit {
 
     })
     dialogRef.afterClosed().subscribe(_result => {
-
     })
   }
 }

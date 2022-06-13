@@ -27,6 +27,7 @@ import { LevelInfoComponent } from './components/level-info/level-info.component
 import { CompTooltipDirective } from './directives/tooltip.directive'
 import { WelcomeOnboardComponent } from './routes/welcome-onboard/welcome-onboard.component'
 import { DialogBoxComponent } from './components/dialog-box/dialog-box.component'
+import { DesiredcomptencyCardComponent } from './components/desiredcomptency-card/desiredcomptency-card.component'
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { DialogBoxComponent } from './components/dialog-box/dialog-box.component
     ProfileHomeComponent,
     CurrentCompetenciesComponent,
     CompetencyCardComponent,
+    DesiredcomptencyCardComponent,
     SetupLeftMenuComponent,
     TopicComponent,
     PlatformWalkthroughComponent,

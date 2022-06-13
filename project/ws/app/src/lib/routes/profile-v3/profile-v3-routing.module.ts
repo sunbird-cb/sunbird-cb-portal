@@ -20,6 +20,7 @@ const routes: Routes = [
     },
     resolve: {
       competencies: CompetencyResolverService,
+      desiredcompetencies: CompetencyResolverService,
     },
     children: [
       {

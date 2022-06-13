@@ -35,7 +35,10 @@ export class CurrentCompetenciesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUserDetails()
+    this.allCompetencies = []
+    this.competenciesList = _.get(this.configService.userProfileV2, 'competencies') || []
+    this.getCompetencies()
+    // this.getUserDetails()
   }
 
   getUserDetails() {
@@ -51,7 +54,7 @@ export class CurrentCompetenciesComponent implements OnInit {
     //       }
     //   })
     // }
-    this.competenciesList = _.get(this.configService.unMappedUser, 'profileDetails.competencies') || []
+    this.competenciesList = _.get(this.configService.userProfileV2, 'competencies') || []
     if (this.overallCompetencies && this.overallCompetencies.length > 0) {
       this.getCompLsit()
     } else {
@@ -93,7 +96,8 @@ export class CurrentCompetenciesComponent implements OnInit {
         complist.forEach((comp: any) => {
           this.overallCompetencies.forEach((ncomp: any) => {
             if (comp.id === ncomp.id) {
-              ncomp.competencySelfAttestedLevel = comp.competencySelfAttestedLevel
+              // tslint:disable-next-line:max-line-length
+              ncomp.competencySelfAttestedLevel = !isNaN(Number(comp.competencySelfAttestedLevel)) ? Number(comp.competencySelfAttestedLevel) : comp.competencySelfAttestedLevel
               ncomp.competencySelfAttestedLevelValue = comp.competencySelfAttestedLevelValue
               ncomp.competencyType = comp.competencyType
               ncomp.osid = comp.osid
