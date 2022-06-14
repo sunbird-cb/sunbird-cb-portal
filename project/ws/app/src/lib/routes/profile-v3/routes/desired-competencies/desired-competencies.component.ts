@@ -49,7 +49,7 @@ export class DesiredCompetenciesComponent implements OnInit, OnDestroy {
     })
     const competenciesList = _.get(this.configService.userProfileV2, 'desiredCompetencies') || []
     const currentComps = _.get(this.configService.userProfileV2, 'competencies') || []
-    const result = _.reject(this.overallCompetencies, (item) => _.find(currentComps, { id: item.id }));
+    const result = _.reject(this.overallCompetencies, item => _.find(currentComps, { id: item.id }))
     this.overallCompetencies = result as NSProfileDataV3.ICompetencie[]
     this.compLocalService.addInitDesiredComps(competenciesList)
     this.compLocalService.autoSaveDesired.next(false)
