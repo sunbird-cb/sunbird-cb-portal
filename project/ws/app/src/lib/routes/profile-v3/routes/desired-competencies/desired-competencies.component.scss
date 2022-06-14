@@ -13,3 +13,6 @@ a.hint_span {
         vertical-align: middle;
     }
 }
+::ng-deep.mat-form-field-wrapper {
+    flex: 1;
+}

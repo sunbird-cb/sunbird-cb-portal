@@ -27,23 +27,16 @@
 
             <div class="flex flex-row level_list_box flex-wrap">
                 <!-- <ws-app-level-card [competencyLevelData]="complevel" [competency]="competency" *ngFor="let complevel of competency?.children" (selectedCompetency)="selectLevel(complevel, competency)"></ws-app-level-card> -->
-                <a wsCompTooltipDirective class="margin-right-xs flex level_item level_item_deactive"
-                    *ngFor="let complevel of competency?.children"
+                <a (keyup.enter)="selectLevel(complevel, competency)" (click)="selectLevel(complevel, competency)" type="button" wsCompTooltipDirective class="margin-right-xs flex level_item level_item_deactive"
+                    *ngFor="let complevel of competency?.children" tabindex="0" role="button"
                     [class.level_item_active]="complevel.id === selectedLevelId">
                     <!-- [class.level_item_active]="competency.competencySelfAttestedLevel ? (complevel.id === competency.competencySelfAttestedLevel) :(complevel.id === selectedLevelId && competency.id === selectedCompId)"> -->
-                    <span class="" (click)="selectLevel(complevel, competency)">{{complevel.level}}</span>
-                    <mat-icon class="mat-icon margin-left-xs ws-mat-black60-text info_icon">info_outlined</mat-icon>
+                    <span class="">{{complevel.level}}</span>
+                    <mat-icon class="mat-icon margin-left-m ws-mat-black60-text info_icon">info_outlined</mat-icon>
 
                     <ng-template #tooltipTemplate>
                         <div class="tooltip">
                             <ws-app-level-info [complevel]="complevel"></ws-app-level-info>
-                            <!-- <mat-card class="flex flex-col card-container">
-                                        <mat-card-content class="name-container flex flex-col width-expand">
-                                            <div class="title_text mat-body-2 margin-bottom-xs text-left">{{complevel.level}}</div>
-                                            <div class="mat-subheading-2 margin-bottom-s text-left">{{complevel.name}}</div>
-                                            <div class="desc_text mat-body-2 ws-mat-black60-text text-left">{{complevel.description}}</div>
-                                        </mat-card-content>
-                                    </mat-card> -->
                         </div>
                     </ng-template>
                 </a>

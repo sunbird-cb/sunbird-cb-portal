@@ -8,6 +8,7 @@ import { DialogBoxComponent } from '../../components/dialog-box/dialog-box.compo
 import { ActivatedRoute } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { CompLocalService } from '../../services/comp.service'
+import { FormControl } from '@angular/forms'
 
 @Component({
   selector: 'ws-app-desired-competencies',
@@ -25,6 +26,8 @@ export class DesiredCompetenciesComponent implements OnInit, OnDestroy {
   updatecompList: any = []
   overallCompetencies!: NSProfileDataV3.ICompetencie[]
   desiredcompList: any = []
+  placeHolder = 'Search here'
+  queryControl = new FormControl('')
   desiredComps: NSProfileDataV3.ICompetencie[] = []
   private desiredCompSubscription: Subscription | null = null
 
@@ -45,6 +48,9 @@ export class DesiredCompetenciesComponent implements OnInit, OnDestroy {
       this.desiredComps = dc
     })
     const competenciesList = _.get(this.configService.userProfileV2, 'desiredCompetencies') || []
+    const currentComps = _.get(this.configService.userProfileV2, 'competencies') || []
+    const result = _.reject(this.overallCompetencies, (item) => _.find(currentComps, { id: item.id }));
+    this.overallCompetencies = result as NSProfileDataV3.ICompetencie[]
     this.compLocalService.addInitDesiredComps(competenciesList)
     this.compLocalService.autoSaveDesired.next(false)
   }
@@ -57,7 +63,9 @@ export class DesiredCompetenciesComponent implements OnInit, OnDestroy {
     //   this.getCompetencies()
     // }
   }
-
+  clearSearchText() {
+    this.queryControl.reset()
+  }
   loadCompetencies() {
     if (
       this.activateroute.snapshot.parent
