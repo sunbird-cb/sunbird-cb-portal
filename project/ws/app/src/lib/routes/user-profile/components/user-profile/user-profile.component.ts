@@ -248,8 +248,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     //     },
     //   ],
     // }
-
-
   }
   async loadDesignations() {
     await this.userProfileSvc.getDesignations({}).subscribe(

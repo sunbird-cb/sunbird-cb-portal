@@ -8,7 +8,7 @@ import { CurrentCompetenciesComponent } from './routes/current-competencies/curr
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { RouterModule } from '@angular/router'
 import { ProfileV3RoutingModule } from './profile-v3-routing.module'
-import { CompetencyCardComponent } from './components/competency-card/competency-card.component'
+import { CurrentCompetencyCardComponent } from './components/current-competency-card/current-competency-card.component'
 import { SetupLeftMenuComponent } from './components/left-menu/left-menu.component'
 import { DesiredCompetenciesComponent } from './routes/desired-competencies/desired-competencies.component'
 import { TopicComponent } from './routes/topics/topic.component'
@@ -28,6 +28,7 @@ import { CompTooltipDirective } from './directives/tooltip.directive'
 import { WelcomeOnboardComponent } from './routes/welcome-onboard/welcome-onboard.component'
 import { DialogBoxComponent } from './components/dialog-box/dialog-box.component'
 import { DesiredcomptencyCardComponent } from './components/desiredcomptency-card/desiredcomptency-card.component'
+import { CompLocalService } from './services/comp.service'
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { DesiredcomptencyCardComponent } from './components/desiredcomptency-car
     TopicCardComponent,
     ProfileHomeComponent,
     CurrentCompetenciesComponent,
-    CompetencyCardComponent,
+    CurrentCompetencyCardComponent,
     DesiredcomptencyCardComponent,
     SetupLeftMenuComponent,
     TopicComponent,
@@ -48,6 +49,7 @@ import { DesiredcomptencyCardComponent } from './components/desiredcomptency-car
     CompTooltipDirective,
     WelcomeOnboardComponent,
     DialogBoxComponent,
+    DesiredcomptencyCardComponent,
   ],
   imports: [
     CommonModule,
@@ -73,6 +75,7 @@ import { DesiredcomptencyCardComponent } from './components/desiredcomptency-car
   providers: [
     TopicService,
     RolesAndActivityService,
+    CompLocalService,
   ],
   entryComponents: [
     AddTopicDialogComponent,

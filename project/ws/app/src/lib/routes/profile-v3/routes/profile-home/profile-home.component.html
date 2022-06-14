@@ -57,7 +57,7 @@
 
   <ng-container *ngIf="next && next !== 'done'">
 
-    <a [routerLink]="next.routerLink" class="next_link mat-body-2 margin-remove-bottom">Next: {{next.step}}.
+    <a [routerLink]="next.routerLink" (click)="updateCompentency()" class="next_link mat-body-2 margin-remove-bottom">Next: {{next.step}}.
       {{next.name}}</a>
 
   </ng-container>

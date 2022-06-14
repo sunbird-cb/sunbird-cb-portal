@@ -19,11 +19,19 @@ export namespace NSProfileDataV3 {
     }
 
     export interface ICompetencie {
+        type: string
+        status: string
+        source: string
+        competencySelfAttestedLevel?: string
+        competencySelfAttestedLevelValue?: string
+        competencySelfAttestedLevelName?: string
+        osid?: string
         competencyType?: string
         description: string
         id: string
         name: string
         competencyLevel?: ICompetencyLevel[]
+        children?: any[]
     }
 
     export interface ICompetencyLevel {

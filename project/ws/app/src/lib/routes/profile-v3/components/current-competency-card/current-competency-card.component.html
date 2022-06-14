@@ -1,0 +1,55 @@
+<!-- <div class="flex flex-col">
+    <mat-card class="learn-card margin-bottom-m position-relative mat-card padding-m" *ngFor="let competency of competenciesData"> -->
+<a href="javascript:void(0)" role="button">
+    <mat-card-content>
+        <div class="card_inner_content flex">
+            <div class="card_inner_title_box flex-col">
+                <div class="cursor-pointer flex-col">
+                    <h4 class="mat-h4">{{ competency?.name}}</h4>
+                    <p class="mat-body-2 ws-mat-black60-text">{{ competency?.competencyType}}</p>
+                </div>
+                <!-- <div class="flex-col text_icon_box">
+                            <mat-icon class="mat-icon1 mat-icon notranslate material-icons mat-icon-no-color" role="img"
+                                aria-hidden="true">school</mat-icon>
+                            <span class="icon_text mat-caption ws-mat-black60-text">
+                                4 CBPs
+                            </span>
+                        </div> -->
+            </div>
+            <div class="flex-1 card_right_txtbox flex-col padding-left-m">
+                <p class="cursor-pointer mat-body-1 ws-mat-black60-text">
+                    {{ competency?.description}}
+                </p>
+            </div>
+        </div>
+        <div class="flex flex-col level_box" *ngIf="competency?.children && competency?.children.length > 0">
+            <p class="mat-body-2 ws-mat-black60-text">Select level</p>
+
+            <div class="flex flex-row level_list_box flex-wrap">
+                <!-- <ws-app-level-card [competencyLevelData]="complevel" [competency]="competency" *ngFor="let complevel of competency?.children" (selectedCompetency)="selectLevel(complevel, competency)"></ws-app-level-card> -->
+                <a wsCompTooltipDirective class="margin-right-xs flex level_item level_item_deactive"
+                    *ngFor="let complevel of competency?.children"
+                    [class.level_item_active]="complevel.id === selectedLevelId">
+                    <!-- [class.level_item_active]="competency.competencySelfAttestedLevel ? (complevel.id === competency.competencySelfAttestedLevel) :(complevel.id === selectedLevelId && competency.id === selectedCompId)"> -->
+                    <span class="" (click)="selectLevel(complevel, competency)">{{complevel.level}}</span>
+                    <mat-icon class="mat-icon margin-left-xs ws-mat-black60-text info_icon">info_outlined</mat-icon>
+
+                    <ng-template #tooltipTemplate>
+                        <div class="tooltip">
+                            <ws-app-level-info [complevel]="complevel"></ws-app-level-info>
+                            <!-- <mat-card class="flex flex-col card-container">
+                                        <mat-card-content class="name-container flex flex-col width-expand">
+                                            <div class="title_text mat-body-2 margin-bottom-xs text-left">{{complevel.level}}</div>
+                                            <div class="mat-subheading-2 margin-bottom-s text-left">{{complevel.name}}</div>
+                                            <div class="desc_text mat-body-2 ws-mat-black60-text text-left">{{complevel.description}}</div>
+                                        </mat-card-content>
+                                    </mat-card> -->
+                        </div>
+                    </ng-template>
+                </a>
+            </div>
+        </div>
+    </mat-card-content>
+</a>
+<!-- </mat-card>
+</div> -->

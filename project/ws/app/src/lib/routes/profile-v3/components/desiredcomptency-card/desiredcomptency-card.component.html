@@ -1,5 +1,5 @@
-<div class="flex flex-col">
-    <mat-card class="learn-card margin-bottom-m position-relative mat-card padding-m" *ngFor="let competency of competenciesData">
+<!-- <div class="flex flex-col">
+    <mat-card class="learn-card margin-bottom-m position-relative mat-card padding-m" *ngFor="let competency of competenciesData"> -->
         <a href="javascript:void(0)" role="button">
             <mat-card-content >
                 <div class="card_inner_content flex" >
@@ -15,11 +15,11 @@
                         </p>
                     </div>
                 </div>
-                <div class="flex flex-col level_box" *ngIf="competency?.children && competency?.children.length > 0">
+                <div class="flex flex-col level_box" *ngIf="competency?.children?.length > 0">
                     <p class="mat-body-2 ws-mat-black60-text">Select level</p>
 
                     <div class="flex flex-row level_list_box flex-wrap">
-                        <a wsCompTooltipDirective class="margin-right-xs flex level_item level_item_deactive" *ngFor="let complevel of competency?.children" [class.level_item_active]="competency.competencySelfAttestedLevel ? (complevel.id === competency.competencySelfAttestedLevel) : (complevel.id === selectedLevelId && competency.id === selectedCompId)">
+                        <a wsCompTooltipDirective class="margin-right-xs flex level_item level_item_deactive" *ngFor="let complevel of competency?.children" [class.level_item_active]="complevel.id === selectedLevelId">
                             <span class="" (click)="selectLevel(complevel, competency)">{{complevel.level}}</span>
                             <mat-icon class="mat-icon margin-left-xs ws-mat-black60-text info_icon">info_outlined</mat-icon>
 
@@ -40,6 +40,6 @@
                 </div>
             </mat-card-content>
         </a>
-    </mat-card>
+    <!-- </mat-card>
 </div>
-    
+     -->

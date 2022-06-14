@@ -1,17 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { NSProfileDataV3 } from '../../models/profile-v3.models'
 import { CompLocalService } from '../../services/comp.service'
 // tslint:disable-next-line
 import _ from 'lodash'
 @Component({
-  selector: 'ws-app-desiredcomptency-card',
-  templateUrl: './desiredcomptency-card.component.html',
-  styleUrls: ['./desiredcomptency-card.component.scss'],
+  selector: 'ws-app-current-competency-card',
+  templateUrl: './current-competency-card.component.html',
+  styleUrls: ['./current-competency-card.component.scss'],
 })
-export class DesiredcomptencyCardComponent implements OnInit {
+export class CurrentCompetencyCardComponent implements OnInit {
   @Input() selectedLevelId: any
-  // @Input() selectedCompId: any
-  @Input() competency!: NSProfileDataV3.ICompetencie
+  @Input() competency!: any
   @Input() isSelected = false
   // @Output() selectedCompetency = new EventEmitter<any>()
   constructor(private compLocalService: CompLocalService) { }
@@ -24,7 +22,7 @@ export class DesiredcomptencyCardComponent implements OnInit {
   }
 
   selectLevel(complevel: any, competency: any) {
-    this.compLocalService.autoSaveDesired.next(true)
+    this.compLocalService.autoSaveCurrent.next(true)
     this.selectedLevelId = complevel.id
     // this.selectedCompId = competency.id
     const compobj = {
@@ -40,17 +38,17 @@ export class DesiredcomptencyCardComponent implements OnInit {
       competencySelfAttestedLevelName: complevel.name,
       osid: competency.osid,
     }
-    if (_.findIndex(this.compLocalService.desiredComps.value, { id: competency.id }) === -1) {
-      this.compLocalService.addDesiredComps(compobj)
+    if (_.findIndex(this.compLocalService.currentComps.value, { id: competency.id }) === -1) {
+      this.compLocalService.addcurrentComps(compobj)
       // this.selectedCompList.push(compobj)
       // this.selectedCompetency.emit(this.selectedCompList)
     } else {
-      if (_.findIndex(this.compLocalService.desiredComps.value, { id: competency.id }) !== -1) {
-        if (_.findIndex(this.compLocalService.desiredComps.value, { competencySelfAttestedLevel: complevel.id }) !== -1) {
-          this.compLocalService.removeDesiredComps(compobj)
+      if (_.findIndex(this.compLocalService.currentComps.value, { id: competency.id }) !== -1) {
+        if (_.findIndex(this.compLocalService.currentComps.value, { competencySelfAttestedLevel: complevel.id }) !== -1) {
+          this.compLocalService.removecurrentComps(compobj)
         } else {
-          this.compLocalService.removeDesiredComps(compobj)
-          this.compLocalService.addDesiredComps(compobj)
+          this.compLocalService.removecurrentComps(compobj)
+          this.compLocalService.addcurrentComps(compobj)
         }
       }
     }

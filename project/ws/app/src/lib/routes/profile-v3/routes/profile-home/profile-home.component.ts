@@ -8,6 +8,8 @@ import { NSProfileDataV3 } from '../../models/profile-v3.models'
 import _ from 'lodash'
 import { Subscription } from 'rxjs'
 import { StepService } from '../../services/step.service'
+import { CompLocalService } from '../../services/comp.service'
+import { ProfileV3Service } from '../../services/profile_v3.service'
 @Component({
   selector: 'ws-app-profile-home',
   templateUrl: './profile-home.component.html',
@@ -36,6 +38,8 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
     private router: Router,
     private stepService: StepService,
     private configSvc: ConfigurationsService,
+    private compLocalService: CompLocalService,
+    private profileSvc: ProfileV3Service,
   ) {
     this.tabs = _.orderBy(this.tabsData, 'step')
     this.stepService.allSteps.next(this.tabs.length)
@@ -63,6 +67,48 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
   updateProfile() {
     // need to update profile
     this.router.navigate(['/page/home'])
+  }
+  updateCompentency() {
+    this.tabs.forEach(s => {
+      if (s.step === this.currentStep) {
+        if (s.key.indexOf('currentcompetencies') !== -1 && this.configSvc.userProfileV2) {
+          if (this.compLocalService.autoSaveCurrent.value) {
+            // console.log("currentcompetencies========>", this.compLocalService.currentComps.value)
+            this.profileSvc.updateCCProfileDetails({
+              request: {
+                profileDetails: {
+                  competencies: this.compLocalService.currentComps.value,
+                },
+                userId: this.configSvc.userProfileV2.userId,
+              },
+            }).subscribe(sres => {
+              if (sres && sres.responseCode === 'OK') {
+                this.compLocalService.autoSaveCurrent.next(false)
+                this.configSvc.updateGlobalProfile(true)
+              }
+            })
+
+          }
+        } else if (s.key.indexOf('desiredcompetencies') !== -1 && this.configSvc.userProfileV2) {
+          if (this.compLocalService.autoSaveDesired.value) {
+            // console.log("desiredcompetencies========>", this.compLocalService.desiredComps.value)
+            this.profileSvc.updateDCProfileDetails({
+              request: {
+                profileDetails: {
+                  desiredCompetencies: this.compLocalService.desiredComps.value,
+                },
+                userId: this.configSvc.userProfileV2.userId,
+              },
+            }).subscribe(res => {
+              if (res && res.responseCode === 'OK') {
+                this.compLocalService.autoSaveDesired.next(false)
+                this.configSvc.updateGlobalProfile(true)
+              }
+            })
+          }
+        }
+      }
+    })
   }
   ngOnInit() {
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
