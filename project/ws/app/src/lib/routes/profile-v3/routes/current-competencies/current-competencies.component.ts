@@ -8,6 +8,7 @@ import { DialogBoxComponent } from '../../components/dialog-box/dialog-box.compo
 import { MatDialog } from '@angular/material'
 import { Subscription } from 'rxjs'
 import { CompLocalService } from '../../services/comp.service'
+import { FormControl } from '@angular/forms'
 
 @Component({
   selector: 'ws-app-current-competencies',
@@ -27,7 +28,7 @@ export class CurrentCompetenciesComponent implements OnInit, OnDestroy {
   competenciesList: any = []
   currentComps: NSProfileDataV3.ICompetencie[] = []
   private currentCompSubscription: Subscription | null = null
-
+  queryControl = new FormControl('')
   constructor(
     private configService: ConfigurationsService,
     private activateroute: ActivatedRoute,
@@ -64,7 +65,9 @@ export class CurrentCompetenciesComponent implements OnInit, OnDestroy {
     //   this.loadCompetencies()
     // }
   }
-
+  clearSearchText() {
+    this.queryControl.reset()
+  }
   loadCompetencies() {
     if (
       this.activateroute.snapshot.parent

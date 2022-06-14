@@ -14,7 +14,7 @@ import { DesiredCompetenciesComponent } from './routes/desired-competencies/desi
 import { TopicComponent } from './routes/topics/topic.component'
 import { BrowseByCompetencyModule } from '../browse-by-competency/browse-by-competency.module'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { PipeFilterV2Module } from '@sunbird-cb/utils/src/public-api'
+import { PipeFilterV2Module, PipeListFilterModule } from '@sunbird-cb/utils/src/public-api'
 import { TreeCatalogModule } from '@sunbird-cb/collection/src/public-api'
 import { TopicService } from './services/topics.service'
 // import { PlayerVideoComponent } from '@sunbird-cb/collection/src/lib/player-video/player-video.component'
@@ -71,6 +71,7 @@ import { CompLocalService } from './services/comp.service'
     ReactiveFormsModule,
     BrowseByCompetencyModule,
     MatChipsModule,
+    PipeListFilterModule,
   ],
   providers: [
     TopicService,

@@ -12,10 +12,22 @@
         personalized experience and provide even more relevant content.</p>
     <!-- <ws-app-competency-card [competenciesData]="allCompetencies"
         (selectedCompetency)="updateSelectedCompetency($event)"></ws-app-competency-card> -->
+    <div class="flex flex-1">
+        <mat-form-field appearance="outline" class="flex flex-1" color="primary" [floatLabel]="'never'">
+            <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+            <!-- <mat-label>Search</mat-label> -->
+            <input id="searchInput" type="text" role="combobox" accesskey="C" #searchInput [attr.title]="placeHolder"
+                i18n-placeholder="search content" [placeholder]="placeHolder" i18-aria-label aria-label="search content"
+                matInput [formControl]="queryControl" class="width-1-1" />
+            <mat-icon matSuffix (click)="clearSearchText()" class="cursor-pointer" *ngIf="queryControl.value">close
+            </mat-icon>
+        </mat-form-field>
+    </div>
     <div class="flex flex-col">
         <mat-card class="learn-card margin-bottom-m position-relative mat-card padding-m"
-            *ngFor="let competency of overallCompetencies">
-            <ws-app-current-competency-card [competency]="competency" [selectedLevelId]="getSelectedLevel(competency)"  [isSelected]="isSelected(competency)"></ws-app-current-competency-card>
+            *ngFor="let competency of overallCompetencies| pipeListFilter:'name,description,id,source':queryControl.value">
+            <ws-app-current-competency-card [competency]="competency" [selectedLevelId]="getSelectedLevel(competency)"
+                [isSelected]="isSelected(competency)"></ws-app-current-competency-card>
         </mat-card>
     </div>
 </div>
