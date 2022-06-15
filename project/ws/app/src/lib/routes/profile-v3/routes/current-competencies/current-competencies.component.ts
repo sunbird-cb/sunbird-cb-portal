@@ -1,126 +1,202 @@
-import { Component, OnInit } from '@angular/core'
-import { ProfileV3Service } from '../../services/profile_v3.service'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { NSProfileDataV3 } from '../../models/profile-v3.models'
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
-import * as _ from 'lodash'
+// tslint:disable-next-line
+import _ from 'lodash'
+import { ActivatedRoute } from '@angular/router'
+import { DialogBoxComponent } from '../../components/dialog-box/dialog-box.component'
+import { MatDialog } from '@angular/material'
+import { Subscription } from 'rxjs'
+import { CompLocalService } from '../../services/comp.service'
+import { FormControl } from '@angular/forms'
+
 @Component({
   selector: 'ws-app-current-competencies',
   templateUrl: './current-competencies.component.html',
   styleUrls: ['./current-competencies.component.scss'],
+  /* tslint:disable */
+  host: { class: 'flex flex-1 comptency_main_div' },
+  /* tslint:enable */
 })
-export class CurrentCompetenciesComponent implements OnInit {
+export class CurrentCompetenciesComponent implements OnInit, OnDestroy {
   searchJson!: NSProfileDataV3.ISearch[]
   allCompetencies: any = []
   overallCompetencies!: NSProfileDataV3.ICompetencie[]
   changedProperties: any = {}
-  userDetails: any
+  placeHolder = 'Search here'
+  // userDetails: any
   updatecompList: any = []
   competenciesList: any = []
-
-  constructor(private competencySvc: ProfileV3Service, private configService: ConfigurationsService) {}
+  currentComps: NSProfileDataV3.ICompetencie[] = []
+  private currentCompSubscription: Subscription | null = null
+  queryControl = new FormControl('')
+  constructor(
+    private configService: ConfigurationsService,
+    private activateroute: ActivatedRoute,
+    private dialog: MatDialog,
+    private compLocalService: CompLocalService,
+  ) {
+    if (this.currentCompSubscription) {
+      this.currentCompSubscription.unsubscribe()
+    }
+    this.loadCompetencies()
+  }
 
   ngOnInit() {
-    this.getUserDetails()
-  }
+    this.currentCompSubscription = this.compLocalService.currentComps.subscribe(cc => {
+      this.currentComps = cc
+    })
+    const competenciesList = _.get(this.configService.userProfileV2, 'competencies') || []
+    this.compLocalService.addInitcurrentComps(competenciesList)
+    this.compLocalService.autoSaveCurrent.next(false)
 
+    // this.getUserDetails()
+  }
+  isSelected(competency: NSProfileDataV3.ICompetencie) {
+    return _.findIndex(this.currentComps, { id: competency.id })
+  }
+  getSelectedLevel(competency: NSProfileDataV3.ICompetencie) {
+    return _.get(_.first(_.filter(this.currentComps, { id: competency.id })), 'competencySelfAttestedLevel')
+  }
   getUserDetails() {
-    if (this.configService.unMappedUser && this.configService.unMappedUser.id) {
-      this.competencySvc.getUserdetailsFromRegistry(this.configService.unMappedUser.id).subscribe(
-        (data: any) => {
-          this.userDetails = data
-          this.competenciesList = data.profileDetails.competencies
-          this.getCompetencies()
-      })
+    // this.competenciesList = _.get(this.configService.userProfileV2, 'competencies') || []
+    // if (this.overallCompetencies && this.overallCompetencies.length > 0) {
+    //   this.getCompLsit()
+    // } else {
+    //   this.loadCompetencies()
+    // }
+  }
+  clearSearchText() {
+    this.queryControl.reset()
+  }
+  loadCompetencies() {
+    if (
+      this.activateroute.snapshot.parent
+      && this.activateroute.snapshot.parent.data.competencies
+      && this.activateroute.snapshot.parent.data.competencies.data
+    ) {
+      this.overallCompetencies = this.activateroute.snapshot.parent.data.competencies.data
     }
+    // this.getCompLsit()
   }
 
-  getCompetencies() {
-    this.searchJson = [
-      { type: 'COMPETENCY', field: 'name', keyword: '' },
-      { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
-    ]
+  // getCompLsit() {
+  //   if (this.overallCompetencies) {
+  //     if (this.competenciesList && this.competenciesList.length > 0) {
+  //       const complist = this.competenciesList
+  //       complist.forEach((comp: any) => {
+  //         this.overallCompetencies.forEach((ncomp: any) => {
+  //           if (comp.id === ncomp.id) {
+  //             // tslint:disable-next-line:max-line-length
+  //             ncomp.competencySelfAttestedLevel =
+  // !isNaN(Number(comp.competencySelfAttestedLevel)) ? Number(comp.competencySelfAttestedLevel) : comp.competencySelfAttestedLevel
+  //             ncomp.competencySelfAttestedLevelValue = comp.competencySelfAttestedLevelValue
+  //             ncomp.competencyType = comp.competencyType
+  //             ncomp.osid = comp.osid
+  //             if (!this.allCompetencies.some((el: any) => el.id === ncomp.id)) {
+  //               if (ncomp.children && ncomp.children.length > 0) {
+  //                 ncomp.children.forEach((lvl: any) => {
+  //                   lvl.id = !isNaN(Number(lvl.id)) ? Number(lvl.id) : lvl.id
+  //                 })
+  //               }
+  //               this.allCompetencies.unshift(ncomp)
+  //             }
+  //           } else {
+  //             if (!this.allCompetencies.some((el: any) => el.id === ncomp.id)) {
+  //               if (ncomp.children && ncomp.children.length > 0) {
+  //                 ncomp.children.forEach((lvl: any) => {
+  //                   lvl.id = !isNaN(Number(lvl.id)) ? Number(lvl.id) : lvl.id
+  //                 })
+  //               }
+  //               this.allCompetencies.push(ncomp)
+  //             }
+  //           }
+  //         })
+  //       })
+  //     } else {
+  //       this.allCompetencies = this.overallCompetencies
+  //     }
+  //   }
+  //   // this.allCompetencies = this.overallCompetencies
+  // }
 
-    const searchObj = {
-      searches: this.searchJson,
-      childNodes: true,
-    }
-    this.competencySvc
-      .getAllCompetencies(searchObj)
-      .subscribe((reponse: any) => {
-        if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
-          this.overallCompetencies = reponse.responseData
-          this.getCompLsit()
-        }
-      })
-  }
+  // updateSelectedCompetency(event: any) {
+  //   if (this.competenciesList && this.competenciesList.length > 0) {
+  //     this.updatecompList = this.competenciesList
+  //     this.updatecompList.forEach((com: any) => {
+  //       event.forEach((evt: any) => {
+  //         if (evt.id === com.id) {
+  //           // tslint:disable-next-line:prefer-template
+  //           const compValue = evt.competencySelfAttestedLevelName + ` (` + evt.competencySelfAttestedLevelValue + `)`
+  //           // tslint:disable-next-line:max-line-length
+  //           com.competencySelfAttestedLevel =
+  // !isNaN(Number(evt.competencySelfAttestedLevel)) ? Number(evt.competencySelfAttestedLevel) : evt.competencySelfAttestedLevel
+  //           com.competencySelfAttestedLevelValue = compValue
+  //           com.competencyType = evt.competencyType
+  //           com.osid = evt.osid
+  //         } else {
+  //           if (!this.updatecompList.some((el: any) => el.id === evt.id)) {
+  //             // tslint:disable-next-line:prefer-template
+  //             const compValue = evt.competencySelfAttestedLevelName + ` (` + evt.competencySelfAttestedLevelValue + `)`
+  //             const obj = {
+  //               competencySelfAttestedLevel: evt.competencySelfAttestedLevel,
+  //               competencySelfAttestedLevelValue: compValue,
+  //               competencyType: evt.competencyType,
+  //               description: evt.description,
+  //               osid: evt.osid,
+  //               id: evt.id,
+  //               name: evt.name,
+  //               source: evt.source,
+  //               status: evt.status,
+  //               type: evt.type,
+  //             }
+  //             this.updatecompList.push(obj)
+  //           }
+  //         }
+  //       })
+  //     })
+  //   } else {
+  //     this.updatecompList = event
+  //   }
 
-  getCompLsit() {
-    if (this.overallCompetencies) {
-      if (this.competenciesList && this.competenciesList.length > 0) {
-        const complist = this.competenciesList
-        complist.forEach((comp: any) => {
-          this.overallCompetencies.forEach((ncomp: any) => {
-            if (comp.id === ncomp.id) {
-              ncomp.competencySelfAttestedLevel = comp.competencySelfAttestedLevel
-              ncomp.competencySelfAttestedLevelValue = comp.competencySelfAttestedLevelValue
-              ncomp.osid = comp.osid
-              if (!this.allCompetencies.some((el: any) => el.id === ncomp.id)) {
-                this.allCompetencies.unshift(ncomp)
-              }
-            } else {
-              if (!this.allCompetencies.some((el: any) => el.id === ncomp.id)) {
-                this.allCompetencies.push(ncomp)
-              }
-            }
-          })
-        })
-      } else {
-        this.allCompetencies = this.overallCompetencies
-      }
-    }
-    // this.allCompetencies = this.overallCompetencies
-  }
+  //   this.changedProperties = {
+  //     profileDetails: {
+  //       competencies: this.updatecompList,
+  //     },
+  //   }
 
-  updateSelectedCompetency(event: any) {
-    if (this.competenciesList && this.competenciesList.length > 0) {
-     this.updatecompList = this.competenciesList
-     this.updatecompList.forEach((com: any) => {
-        event.forEach((evt: any) => {
-          if (evt.id === com.id) {
-            com.competencySelfAttestedLevel = evt.competencySelfAttestedLevel
-            com.competencySelfAttestedLevelValue = evt.competencySelfAttestedLevelValue
-            com.osid = evt.osid
-          } else {
-            if (!this.updatecompList.some((el: any) => el.id === evt.id)) {
-              this.updatecompList.push(evt)
-            }
-          }
-        })
-      })
-    } else {
-      this.updatecompList = event
-    }
-
-    this.changedProperties = {
-      profileDetails: {
-        competencies: this.updatecompList,
+  //   const reqUpdates = {
+  //     request: {
+  //       userId: this.configService.unMappedUser.id,
+  //       ...this.changedProperties,
+  //     },
+  //   }
+  //   this.competencySvc.updateProfileDetails(reqUpdates).subscribe((res: any) => {
+  //     if (res.responseCode === 'OK') {
+  //       this.configService.updateGlobalProfile(true)
+  //       this.allCompetencies = []
+  //       this.updatecompList = []
+  //       this.competenciesList = []
+  //       this.ngOnInit()
+  //     }
+  //   })
+  // }
+  openActivityDialog() {
+    const dialogRef = this.dialog.open(DialogBoxComponent, {
+      data: {
+        view: 'ccomp',
       },
-    }
+      hasBackdrop: false,
+      width: '550px',
 
-    const reqUpdates = {
-      request: {
-        userId: this.configService.unMappedUser.id,
-          ...this.changedProperties,
-      },
-    }
-    this.competencySvc.updateProfileDetails(reqUpdates).subscribe((res: any) => {
-      if (res.responseCode === 'OK') {
-        this.configService.updateGlobalProfile(true)
-        this.allCompetencies = []
-        this.updatecompList = []
-        this.ngOnInit()
-      }
+    })
+    dialogRef.afterClosed().subscribe(_result => {
+
     })
   }
-
+  ngOnDestroy(): void {
+    if (this.currentCompSubscription) {
+      this.currentCompSubscription.unsubscribe()
+    }
+  }
 }

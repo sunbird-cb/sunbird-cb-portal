@@ -323,6 +323,7 @@ export class InitService {
             dealerCode: null,
             isManager: false,
           }
+
           this.configSvc.userProfileV2 = {
             userId: _.get(profileV2, 'userId') || userPidProfile.userId,
             email: _.get(profileV2, 'personalDetails.officialEmail') || userPidProfile.email,
@@ -337,8 +338,10 @@ export class InitService {
             dealerCode: null,
             isManager: false,
             competencies: _.get(profileV2, 'competencies') || [],
+            desiredCompetencies: _.get(profileV2, 'desiredCompetencies') || [],
             systemTopics: _.get(profileV2, 'systemTopics') || [],
             desiredTopics: _.get(profileV2, 'desiredTopics') || [],
+            userRoles: _.get(profileV2, 'userRoles') || [],
           }
 
           if (!this.configSvc.nodebbUserProfile) {
@@ -440,8 +443,10 @@ export class InitService {
             dealerCode: null,
             isManager: false,
             competencies: _.get(profileV2, 'competencies') || [],
+            desiredCompetencies: _.get(profileV2, 'desiredCompetencies') || [],
             systemTopics: _.get(profileV2, 'systemTopics') || [],
             desiredTopics: _.get(profileV2, 'desiredTopics') || [],
+            userRoles: _.get(profileV2, 'userRoles') || [],
           }
 
           if (!this.configSvc.nodebbUserProfile) {

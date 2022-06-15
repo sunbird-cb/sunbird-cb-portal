@@ -112,8 +112,6 @@
 }
 
 .learn-card {
-  // padding: 24px !important;
-  // overflow: hidden;
   width: 100%;
   box-sizing: border-box;
 
@@ -126,9 +124,7 @@
   }
 
   .card_inner_title_box {
-  //    display: column;
       width: 220px;
-    //   padding: 24px;
       box-sizing: border-box;
 
       @media (max-width: 768px) {
@@ -203,4 +199,6 @@ a.level_item_active .mat-icon {
   opacity: 1;
   z-index: 999;
   padding: 5px;
+  top: 42px;
+  left: -10px;
 }

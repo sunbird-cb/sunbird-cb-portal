@@ -1,0 +1,14 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+
+
+.video_player_box {
+    @include breakpoint-xs {
+        margin-top: 1rem;
+    }
+    @include breakpoint-s {
+        margin-top: 1rem;
+    }
+}

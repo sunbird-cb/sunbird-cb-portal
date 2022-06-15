@@ -144,9 +144,8 @@
       </div>
 
       <div class="main_network_box">
-        <ng-container *ngFor="let tab of tabsData">
+        <ng-container *ngFor="let tab of tabsData;let i=index">
           <!-- <ws-widget-profile-v2-academics *ngIf="pdfData" [widgetData]="tab"></ws-widget-profile-v2-academics> -->
-
           <ng-container *ngIf="tab && tab.render && tab.enabled">
             <ng-container *ngIf="
             portalProfile.id === currentUser ||
@@ -168,7 +167,7 @@
             >
           </ng-container>
         </ng-container>
-            <!-- <ng-container
+            <ng-container
               *ngIf="tab.key !== 'certifications'"
               [wsResolverWidget]="{
                 widgetType: tab.widget.widgetType,
@@ -180,7 +179,7 @@
                   data: portalProfile[tab.dataKey]
                 }
               }"
-            ></ng-container> -->
+            ></ng-container>
           </ng-container>
         </ng-container>
         <ng-container *ngIf="discussionList">

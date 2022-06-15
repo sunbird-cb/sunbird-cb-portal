@@ -8,24 +8,27 @@ import { CurrentCompetenciesComponent } from './routes/current-competencies/curr
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { RouterModule } from '@angular/router'
 import { ProfileV3RoutingModule } from './profile-v3-routing.module'
-import { CompetencyCardComponent } from './components/competency-card/competency-card.component'
+import { CurrentCompetencyCardComponent } from './components/current-competency-card/current-competency-card.component'
 import { SetupLeftMenuComponent } from './components/left-menu/left-menu.component'
 import { DesiredCompetenciesComponent } from './routes/desired-competencies/desired-competencies.component'
 import { TopicComponent } from './routes/topics/topic.component'
 import { BrowseByCompetencyModule } from '../browse-by-competency/browse-by-competency.module'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { PipeFilterV2Module } from '@sunbird-cb/utils/src/public-api'
+import { PipeFilterV2Module, PipeListFilterModule } from '@sunbird-cb/utils/src/public-api'
 import { TreeCatalogModule } from '@sunbird-cb/collection/src/public-api'
 import { TopicService } from './services/topics.service'
 // import { PlayerVideoComponent } from '@sunbird-cb/collection/src/lib/player-video/player-video.component'
 import { PlatformWalkthroughComponent } from './routes/platform-walkthrough/platform-walkthrough.component'
-
 import { AddTopicDialogComponent } from './components/add-topic/add-topic.component'
 import { RolesAndActivitiesComponent } from './routes/roles-and-activities/roles-and-activities.component'
 import { RolesAndActivityService } from './services/rolesandActivities.service'
 import { LevelCardComponent } from './components/level-card/level-card.component'
 import { LevelInfoComponent } from './components/level-info/level-info.component'
 import { CompTooltipDirective } from './directives/tooltip.directive'
+import { WelcomeOnboardComponent } from './routes/welcome-onboard/welcome-onboard.component'
+import { DialogBoxComponent } from './components/dialog-box/dialog-box.component'
+import { DesiredcomptencyCardComponent } from './components/desiredcomptency-card/desiredcomptency-card.component'
+import { CompLocalService } from './services/comp.service'
 
 @NgModule({
   declarations: [
@@ -33,7 +36,8 @@ import { CompTooltipDirective } from './directives/tooltip.directive'
     TopicCardComponent,
     ProfileHomeComponent,
     CurrentCompetenciesComponent,
-    CompetencyCardComponent,
+    CurrentCompetencyCardComponent,
+    DesiredcomptencyCardComponent,
     SetupLeftMenuComponent,
     TopicComponent,
     PlatformWalkthroughComponent,
@@ -43,6 +47,9 @@ import { CompTooltipDirective } from './directives/tooltip.directive'
     LevelCardComponent,
     LevelInfoComponent,
     CompTooltipDirective,
+    WelcomeOnboardComponent,
+    DialogBoxComponent,
+    DesiredcomptencyCardComponent,
   ],
   imports: [
     CommonModule,
@@ -64,13 +71,16 @@ import { CompTooltipDirective } from './directives/tooltip.directive'
     ReactiveFormsModule,
     BrowseByCompetencyModule,
     MatChipsModule,
+    PipeListFilterModule,
   ],
   providers: [
     TopicService,
     RolesAndActivityService,
+    CompLocalService,
   ],
   entryComponents: [
     AddTopicDialogComponent,
+    DialogBoxComponent,
   ],
 })
 export class ProfileV3Module { }

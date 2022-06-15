@@ -6,8 +6,9 @@ import { DesiredCompetenciesComponent } from './routes/desired-competencies/desi
 import { PlatformWalkthroughComponent } from './routes/platform-walkthrough/platform-walkthrough.component'
 import { ProfileHomeComponent } from './routes/profile-home/profile-home.component'
 import { TopicComponent } from './routes/topics/topic.component'
-import { CompetencyResolverService } from '../profile/routes/competency/resolver/assessment.resolver'
 import { RolesAndActivitiesComponent } from './routes/roles-and-activities/roles-and-activities.component'
+import { CompetencyResolverService } from './resolvers/competency.resolver'
+import { WelcomeOnboardComponent } from './routes/welcome-onboard/welcome-onboard.component'
 
 const routes: Routes = [
   {
@@ -17,11 +18,22 @@ const routes: Routes = [
       pageId: '',
       module: 'profile-v3',
     },
+    resolve: {
+      competencies: CompetencyResolverService,
+    },
     children: [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'roles',
+        redirectTo: 'welcome',
+      },
+      {
+        path: 'welcome',
+        component: WelcomeOnboardComponent,
+        data: {
+          pageId: 'welcome',
+          module: 'profile-v3',
+        },
       },
       {
         path: 'roles',
@@ -40,9 +52,6 @@ const routes: Routes = [
         data: {
           pageId: 'current-competencies',
           module: 'profile-v3',
-        },
-        resolve: {
-          topics: CompetencyResolverService,
         },
       },
       {

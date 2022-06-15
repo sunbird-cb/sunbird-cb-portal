@@ -495,20 +495,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (this.content && this.content.identifier && this.content.primaryCategory) {
         this.ratingSvc.getRating(this.content.identifier, this.content.primaryCategory, this.userId).subscribe(
           (res: any) =>  {
-            this.userRating = res.result.response
-            this.tocSvc.changeUpdateReviews(true)
-            // this.userRating = {
-            //   commentupdatedon: null,
-            //   commentby: null,
-            //   review: 'Very Nice course but missed few content',
-            //   activity_type: 'Course',
-            //   activity_id: 'Course 17',
-            //   rating: 4.4,
-            //   comment: null,
-            //   updatedon: '67655da0-7900-11ec-9e2e-2bb786397b6b',
-            //   userId: 'user 1',
-            //   createdon: '67655da0-7900-11ec-9e2e-2bb786397b6b',
-            // }
+            if (res && res.result && res.result.response) {
+              this.userRating = res.result.response
+              this.tocSvc.changeUpdateReviews(true)
+            }
           },
           (err: any) => {
             this.loggerSvc.error('USER RATING FETCH ERROR >', err)
