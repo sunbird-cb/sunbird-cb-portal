@@ -23,7 +23,7 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
     batchId = this.activatedRoute.snapshot.queryParamMap.get('batchId')
     isFetchingDataComplete = false
     quizJson: NSQuiz.IQuiz = {
-        timeLimit: 0,
+        timeLimit: 300,
         questions: [],
         isAssessment: false,
     }

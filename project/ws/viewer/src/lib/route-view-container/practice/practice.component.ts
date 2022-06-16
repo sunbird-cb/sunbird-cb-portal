@@ -14,7 +14,7 @@ export class PracticeComponent implements OnInit {
     @Input() quizData: NsContent.IContent | null = null
     @Input() forPreview = false
     @Input() quizJson: any = {
-        timeLimit: 2000,
+        timeLimit: 0,
         questions: [],
         isAssessment: false,
     }
