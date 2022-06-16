@@ -35,7 +35,7 @@
       <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
         [queryParams]="(widgetData.content | pipeContentRoute).queryParams" class="card-link" role="link"
         aria-label="Content" i18n-aria-label="Content | Click to view">
-        <img [src]="widgetData.content.appIcon" class="card-thumbnail ws-mat-primary-lite-background"
+        <img [src]="widgetData.content.posterImage | pipePublicURL" class="card-thumbnail ws-mat-primary-lite-background"
           [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
           [title]="widgetData.content.name" />
       </a>
@@ -161,7 +161,7 @@
         <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
           [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" class="rounded-t"
           aria-label="Content" i18n-aria-label="Content | Click to view">
-          <img mat-card-image [src]="widgetData.content.appIcon" class="card-img ws-mat-primary-lite-background"
+          <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" class="card-img ws-mat-primary-lite-background"
             [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
             [title]="widgetData.content.name" />
         </a>
@@ -291,7 +291,7 @@
       <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
         [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" class="rounded-t"
         aria-label="Content" i18n-aria-label="Content | Click to view">
-        <img mat-card-image [src]="widgetData.content.appIcon" class="card-img ws-mat-primary-lite-background"
+        <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" class="card-img ws-mat-primary-lite-background"
           [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
           [title]="widgetData.content.name" />
         <!-- <ng-container *ngIf="widgetData.content?.completionStatus == 2">
@@ -370,7 +370,7 @@
         <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
           [queryParams]="(widgetData.content | pipeContentRoute).queryParams" class="rounded-t" role="link"
           aria-label="Content" i18n-aria-label="Content | Click to view">
-          <img mat-card-image [src]="widgetData.content.appIcon" class="card-img ws-mat-primary-lite-background"
+          <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" class="card-img ws-mat-primary-lite-background"
             [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
             [title]="widgetData.content.name" />
         </a>
@@ -490,7 +490,7 @@
       <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
         [queryParams]="(widgetData.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData" role="link" class="rounded-t"
         aria-label="Content" i18n-aria-label="Content | Click to view">
-        <img mat-card-image [src]="widgetData.content.appIcon" class="card-img ws-mat-primary-lite-background"
+        <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" class="card-img ws-mat-primary-lite-background"
           [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
           [title]="widgetData.content.name" />
       </a>
@@ -655,13 +655,13 @@
           [queryParams]="(widgetData.content | pipeContentRoute).queryParams" class="rounded-t" role="link"
           aria-label="Content" i18n-aria-label="Content | Click to view"> -->
         <div style="position: relative; z-index: 1;">
-          <img mat-card-image [src]="widgetData.content.posterImage" loading="lazy" style="position: absolute; z-index: 2;"
+          <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" loading="lazy" style="position: absolute; z-index: 2;"
             class="card-img ws-mat-primary-lite-background" [wsUtilsDefaultThumbnail]="defaultThumbnail"
             [alt]="widgetData.content.name" />
 
             <!-- image overlay box-->
             <div class="course_logo_box">
-              <img [src]="widgetData.content.creatorLogo" class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
+              <img [src]="widgetData.content.creatorLogo | pipePublicURL " class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
               [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
               <!-- <p class="mat-subheading-1 margin-remove">IGOT</p> -->
             </div>
@@ -833,13 +833,13 @@
           [queryParams]="(widgetData.content | pipeContentRoute).queryParams" class="rounded-t" role="link"
           aria-label="Content" i18n-aria-label="Content | Click to view"> -->
         <div style="position: relative; z-index: 1;">
-          <img mat-card-image [src]="widgetData.content.posterImage" loading="lazy" style="position: absolute; z-index: 2;"
+          <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" loading="lazy" style="position: absolute; z-index: 2;"
             class="card-img ws-mat-primary-lite-background" [wsUtilsDefaultThumbnail]="defaultThumbnail"
             [alt]="widgetData.content.name" />
 
             <!-- image overlay box-->
             <div class="course_logo_box">
-              <img [src]="widgetData.content.creatorLogo" class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
+              <img [src]="widgetData.content.creatorLogo | pipePublicURL" class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
               [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
               <!-- <p class="mat-subheading-1 margin-remove">IGOT</p> -->
             </div>
@@ -987,7 +987,7 @@
   <mat-card class="card-wide margin-bottom-m padding-remove position-relative flex">
     <div class="imageholder ">
       <img mat-card-image class="margin-remove"
-      [src]="widgetData.content.posterImage || widgetData.content.appIcon" [wsUtilsDefaultThumbnail]="defaultThumbnail"
+      [src]="widgetData.content.posterImage || widgetData.content.appIcon  | pipePublicURL" [wsUtilsDefaultThumbnail]="defaultThumbnail"
       [alt]="widgetData.content.name">
       <div class="source-div" [hidden]="true">
         <!-- [src]="sourseIcon(widgetData.content.sourceName)" -->

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { DisplayContentsComponent } from './display-contents.component'
 import { DisplayContentTypeModule } from '../display-content-type/display-content-type.module'
-import { PipeDurationTransformModule, PipeLimitToModule, DefaultThumbnailModule } from '@sunbird-cb/utils'
+import { PipeDurationTransformModule, PipeLimitToModule, DefaultThumbnailModule, PipePublicURLModule } from '@sunbird-cb/utils'
 import { MatIconModule, MatButtonModule, MatProgressBarModule, MatCardModule } from '@angular/material'
 import { RouterModule } from '@angular/router'
 
@@ -19,6 +19,7 @@ import { RouterModule } from '@angular/router'
     MatIconModule,
     MatButtonModule,
     MatProgressBarModule,
+    PipePublicURLModule,
   ],
   exports: [
     DisplayContentsComponent,

@@ -5,7 +5,7 @@
       <div class="width-expand md:mx-4 flex">
         <a [ngClass]="{ 'greyed-out': isGreyedOut(content) }" class="image-section-a"
           [routerLink]="!isGreyedOut(content) ? '/app/toc/' + content?.identifier + '/overview' : null">
-          <img class="image-section" [src]="content?.appIcon" alt="Content Icon" i18n-alt />
+          <img class="image-section" [src]="content?.posterImage | pipePublicURL " alt="Content Icon" i18n-alt />
           <!-- [wsUtilsDefaultThumbnail]="defaultThumbnail" -->
         </a>
         <div class="width-expand mx-2 md:mx-4">

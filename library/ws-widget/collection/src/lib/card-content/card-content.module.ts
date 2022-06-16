@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { MatButtonModule, MatCardModule, MatChipsModule, MatDividerModule, MatIconModule, MatMenuModule, MatTooltipModule, MatExpansionModule } from '@angular/material'
 import { RouterModule } from '@angular/router'
-import { DefaultThumbnailModule, PipeCountTransformModule, PipeDurationTransformModule, PipeHtmlTagRemovalModule, PipePartialContentModule } from '@sunbird-cb/utils'
+import { DefaultThumbnailModule, PipeCountTransformModule, PipeDurationTransformModule, PipeHtmlTagRemovalModule, PipePartialContentModule, PipePublicURLModule } from '@sunbird-cb/utils'
 import { BtnChannelAnalyticsModule } from '../btn-channel-analytics/btn-channel-analytics.module'
 import { BtnContentDownloadModule } from '../btn-content-download/btn-content-download.module'
 import { BtnContentFeedbackV2Module } from '../btn-content-feedback-v2/btn-content-feedback-v2.module'
@@ -41,6 +41,7 @@ import { BtnKbAnalyticsModule } from '../btn-kb-analytics/btn-kb-analytics.modul
     PipeContentRouteModule,
     PipeCountTransformModule,
     PipeHtmlTagRemovalModule,
+    PipePublicURLModule,
     ContentProgressModule,
     BtnKbModule,
     BtnContentDownloadModule,
