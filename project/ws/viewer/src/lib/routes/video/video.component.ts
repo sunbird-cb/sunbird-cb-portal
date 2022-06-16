@@ -124,7 +124,7 @@ export class VideoComponent implements OnInit, OnDestroy {
           this.widgetResolverVideoData.widgetData.url = this.videoData
             ? this.forPreview
               ? this.viewerSvc.getAuthoringUrl(this.videoData.artifactUrl)
-              : this.videoData.artifactUrl
+              : this.viewerSvc.getPublicUrl(this.videoData.artifactUrl) || this.videoData.artifactUrl
             : ''
           this.widgetResolverVideoData.widgetData.resumePoint = this.getResumePoint(this.videoData)
           this.widgetResolverVideoData.widgetData.identifier = this.videoData
