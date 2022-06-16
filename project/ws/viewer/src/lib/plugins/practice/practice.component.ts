@@ -165,7 +165,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       if (showTimer) {
         this.quizJson.timeLimit = (_.get(this.quizSvc.paperSections, 'value.questionSet.expectedDuration') || 0) * 60
       } else {
-        this.quizJson.timeLimit = this.duration * 60
+        // this.quizJson.timeLimit = this.duration * 60
+        this.quizJson.timeLimit = this.quizJson.timeLimit * 60
       }
       this.fetchingSectionsStatus = 'done'
       this.viewState = 'detail'
@@ -181,7 +182,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           if (showTimer) {
             this.quizJson.timeLimit = section.result.questionSet.expectedDuration * 60
           } else {
-            this.quizJson.timeLimit = this.duration * 60
+            // this.quizJson.timeLimit = this.duration * 60
+            this.quizJson.timeLimit = this.quizJson.timeLimit * 60
           }
           this.quizSvc.paperSections.next(section.result)
           const tempObj = _.get(section, 'result.questionSet.children')
