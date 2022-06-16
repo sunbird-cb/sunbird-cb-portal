@@ -350,8 +350,8 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       id: collection.identifier,
       title: collection.name,
       thumbnail: this.forPreview
-        ? this.viewSvc.getAuthoringUrl(collection.appIcon)
-        : collection.appIcon,
+        ? this.viewSvc.getAuthoringUrl(this.viewSvc.getPublicUrl(collection.posterImage))
+        : this.viewSvc.getPublicUrl(collection.posterImage),
       subText1: collection.primaryCategory,
       subText2: collection.difficultyLevel,
       duration: collection.duration,
