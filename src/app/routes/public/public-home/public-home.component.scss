@@ -566,7 +566,7 @@
   }
 
 // hide recaptcha badge
-::ng-deep.grecaptcha-badge {
+.grecaptcha-badge {
   visibility: hidden;
 }
 
