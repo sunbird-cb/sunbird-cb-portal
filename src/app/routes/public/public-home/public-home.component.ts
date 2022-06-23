@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core'
 import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ActivatedRoute } from '@angular/router'
-import { PublicHomeService } from 'src/app/services/public-home.service';
+import { PublicHomeService } from 'src/app/services/public-home.service'
 
 @Component({
   selector: 'ws-public-home',

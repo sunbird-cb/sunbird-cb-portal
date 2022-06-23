@@ -774,6 +774,10 @@
     }
 
   }
-.grecaptcha-badge {
-  visibility: visible;
+
+// only show recaptcha badge on needed pages
+body.recaptcha {
+  .grecaptcha-badge {
+    visibility: visible !important;
+  }
 }
