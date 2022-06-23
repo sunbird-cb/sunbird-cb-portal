@@ -12,7 +12,7 @@
     default>
 </video>
 
-<video crossorigin="Anonymous" [poster]="widgetData?.posterImage" #realvideoTag class="video-js"
+<video crossorigin="Anonymous" [poster]="widgetData?.posterImage | pipePublicURL" #realvideoTag class="video-js"
   *ngIf="!widgetData?.isVideojs" controls>
   <source [src]="widgetData.url" type="video/mp4" />
   <source [src]="widgetData.url" type="application/x-mpegURL" />

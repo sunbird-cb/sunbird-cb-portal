@@ -772,6 +772,11 @@
         }
       }
     }
-
   }
 
+// only show recaptcha badge on needed pages
+::ng-deep.cs-recaptcha {
+  .grecaptcha-badge {
+    visibility: visible !important;
+  }
+}

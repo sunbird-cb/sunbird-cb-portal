@@ -81,7 +81,7 @@ export namespace NsContent {
     playgroundInstructions?: string
     playgroundResources?: IResourcePlayground[]
     postContents?: IPrePostContent[]
-    posterImage?: string
+    posterImage: string
     preContents?: IPrePostContent[]
     preRequisites: string
     price?: {
@@ -224,7 +224,7 @@ export namespace NsContent {
     name: string
     creatorDetails: ICreator[]
     creatorContacts: ICreator[]
-    PosterImage: string
+    posterImage: string
     primaryCategory: EPrimaryCategory
     resourceType?: string
     totalRating?: number

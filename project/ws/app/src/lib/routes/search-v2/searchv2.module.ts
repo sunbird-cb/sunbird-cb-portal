@@ -39,7 +39,7 @@ import {
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import {
   DefaultThumbnailModule,
-  HorizontalScrollerModule, PipeDurationTransformModule, PipeLimitToModule, PipePartialContentModule,
+  HorizontalScrollerModule, PipeDurationTransformModule, PipeLimitToModule, PipePartialContentModule, PipePublicURLModule,
 } from '@sunbird-cb/utils'
 import { Searchv2RoutingModule } from './searchv2-routing.module'
 import { GlobalSearchComponent } from './routes/global-search/global-search.component'
@@ -90,6 +90,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll'
     BtnContentMailMeModule,
     BtnKbAnalyticsModule,
     PipePartialContentModule,
+    PipePublicURLModule,
     HorizontalScrollerModule,
     MatProgressSpinnerModule,
     DisplayContentTypeModule,
