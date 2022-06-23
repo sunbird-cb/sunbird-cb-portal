@@ -70,6 +70,7 @@ import { NoConnectionComponent } from './component/no-connection/no-connection.c
 import { PublicLogoutModule } from './routes/public/public-logout/public-logout.module'
 import { PublicSignupModule } from './routes/public/public-signup/public-signup.module'
 import { PublicHomeComponent } from './routes/public/public-home/public-home.component'
+import { PublicHomeService } from './services/public-home.service'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -184,6 +185,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     { provide: HTTP_INTERCEPTORS, useClass: AppRetryInterceptorService, multi: true },
     TncAppResolverService,
     TncPublicResolverService,
+    PublicHomeService,
     ConfigurationsService,
     PipeContentRoutePipe,
     AppTocResolverService,

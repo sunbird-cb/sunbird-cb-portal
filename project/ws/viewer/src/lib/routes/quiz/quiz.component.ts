@@ -39,7 +39,8 @@ export class QuizComponent implements OnInit, OnDestroy {
       async data => {
         this.quizData = data.content.data
         if (this.quizData) {
-          this.quizData.artifactUrl = this.generateUrl(this.quizData.artifactUrl)
+          const url = this.viewSvc.getPublicUrl(this.quizData.artifactUrl)
+          this.quizData.artifactUrl = this.generateUrl(url)
         }
         if (this.alreadyRaised && this.oldData) {
           this.raiseEvent(WsEvents.EnumTelemetrySubType.Unloaded, this.oldData)
@@ -125,7 +126,8 @@ export class QuizComponent implements OnInit, OnDestroy {
     // const artifactUrl = this.forPreview
     //   ? this.viewSvc.getAuthoringUrl(content.artifactUrl)
     //   : content.artifactUrl
-    const artifactUrl = this.generateUrl(content.artifactUrl)
+    const url = this.viewSvc.getPublicUrl(content.artifactUrl)
+    const artifactUrl = this.generateUrl(url)
     const newHttpClient = new HttpClient(this.httpBackend)
     let quizJSON: NSQuiz.IQuiz = await newHttpClient
       .get<any>(artifactUrl || '')

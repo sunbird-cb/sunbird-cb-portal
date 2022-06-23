@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http'
 import { noop, Observable } from 'rxjs'
 import dayjs from 'dayjs'
 import { NsContent } from '@sunbird-cb/collection/src/lib/_services/widget-content.model'
+import { environment } from 'src/environments/environment'
 
 @Injectable({
   providedIn: 'root',
@@ -184,5 +185,10 @@ export class ViewerUtilService {
   }
   readSections(assessmentId: string) {
     return `${this.API_ENDPOINTS}/${assessmentId}`
+  }
+
+  getPublicUrl(url: string): string {
+    const mainUrl = url.split('/content').pop() || ''
+    return `${environment.contentHost}/${environment.contentBucket}/content${mainUrl}`
   }
 }

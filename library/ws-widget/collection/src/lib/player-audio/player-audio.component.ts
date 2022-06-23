@@ -143,7 +143,7 @@ export class PlayerAudioComponent extends WidgetBaseComponent
     }
     const initObj = videoJsInitializer(
       this.audioTag.nativeElement,
-      { ...videoJsOptions, poster: this.widgetData.posterImage },
+      { ...videoJsOptions, poster: this.viewerSvc.getPublicUrl(this.widgetData.posterImage || '') },
       dispatcher,
       saveCLearning,
       fireRProgress,
@@ -180,7 +180,8 @@ export class PlayerAudioComponent extends WidgetBaseComponent
     const content = await this.contentSvc.fetchContent(this.widgetData.identifier || '', 'minimal').toPromise()
     if (content.artifactUrl && content.artifactUrl.indexOf('/content-store/') > -1) {
       this.widgetData.url = content.artifactUrl
-      this.widgetData.posterImage = content.appIcon
+      const url = this.viewerSvc.getPublicUrl(content.posterImage || content.appIcon)
+      this.widgetData.posterImage = url
       await this.contentSvc.setS3Cookie(this.widgetData.identifier || '').toPromise()
     }
   }

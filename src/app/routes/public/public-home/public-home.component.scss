@@ -565,7 +565,10 @@
   }
   }
 
-
+// hide recaptcha badge
+.grecaptcha-badge {
+  visibility: hidden;
+}
 
   // .exCivilVideo {
   //   img {

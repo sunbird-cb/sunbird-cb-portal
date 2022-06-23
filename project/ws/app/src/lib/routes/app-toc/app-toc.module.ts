@@ -61,6 +61,7 @@ import {
   PipeCountTransformModule,
   PipeFilterV3Module,
   PipeRelativeTimeModule,
+  PipePublicURLModule,
 } from '@sunbird-cb/utils'
 import {
   BtnCallModule,
@@ -182,6 +183,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll'
     PipeFilterV3Module,
     PipeRelativeTimeModule,
     PipeContentRouteModule,
+    PipePublicURLModule,
     BtnCallModule,
     BtnContentDownloadModule,
     BtnContentLikeModule,

@@ -22,7 +22,10 @@ export class ProfileV3Service {
     return this.http.post<any>(API_END_POINTS.GET_ALL_COMPETENCY, req)
   }
 
-  updateProfileDetails(data: any) {
+  updateCCProfileDetails(data: { request: { userId: string, profileDetails: { competencies: any[] } } }) {
+    return this.http.post<any>(API_END_POINTS.UPDATE_PROFILE, data)
+  }
+  updateDCProfileDetails(data: { request: { userId: string, profileDetails: { desiredCompetencies: any[] } } }) {
     return this.http.post<any>(API_END_POINTS.UPDATE_PROFILE, data)
   }
 

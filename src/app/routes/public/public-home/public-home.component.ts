@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core'
 import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ActivatedRoute } from '@angular/router'
+import { PublicHomeService } from 'src/app/services/public-home.service'
 
 @Component({
   selector: 'ws-public-home',
@@ -17,8 +18,10 @@ export class PublicHomeComponent implements OnInit, OnDestroy {
   panelOpenState = false
   pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
   private subscriptionContact: Subscription | null = null
+  learnNetworkSection: any = []
 
   constructor(
+    private phomesrvc: PublicHomeService,
     private configSvc: ConfigurationsService,
     private activateRoute: ActivatedRoute,
     // private authSvc: AuthKeycloakService,
@@ -31,6 +34,13 @@ export class PublicHomeComponent implements OnInit, OnDestroy {
     if (this.configSvc.instanceConfig) {
       this.contactUsMail = this.configSvc.instanceConfig.mailIds.contactUs
     }
+
+    const url = `${this.configSvc.sitePath}/feature/public-home.json`
+    this.phomesrvc.fetchConfig(url).subscribe(
+      (config: any) => {
+        this.learnNetworkSection = config.learnNetwork
+      },
+      _err => { })
     // this.authSvc.force_logout().then(() => { })
   }
 

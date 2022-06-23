@@ -26,7 +26,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { BtnPageBackModule } from '@sunbird-cb/collection/src/public-api'
 import { PipeOrderByModule } from '@sunbird-cb/utils/src/lib/pipes/pipe-order-by/pipe-order-by.module'
 import { AvatarPhotoModule } from '@sunbird-cb/collection/src/lib/_common/avatar-photo/avatar-photo.module'
-import { PipeHtmlTagRemovalModule, PipeFilterV2Module } from '@sunbird-cb/utils'
+import { PipeHtmlTagRemovalModule, PipeFilterV2Module, PipePublicURLModule } from '@sunbird-cb/utils'
 import { PipeRelativeTimeModule } from '@sunbird-cb/utils/src/lib/pipes/pipe-relative-time/pipe-relative-time.module'
 import { PipeFilterSearchModule } from '@sunbird-cb/utils/src/lib/pipes/pipe-filter-search/pipe-filter-search.module'
 import { PipeFilterModule } from '@sunbird-cb/utils/src/lib/pipes/pipe-filter/pipe-filter.module'
@@ -76,6 +76,7 @@ import { EventService } from './services/events.service'
     PipeOrderByModule,
     PipeFilterV2Module,
     PipeFilterSearchModule,
+    PipePublicURLModule,
     BtnPageBackModule,
     WidgetResolverModule,
     MatTabsModule,

@@ -36,36 +36,42 @@
         <div class="flex flex-col">
           <h1 class="mb-12 text-center">Learn and network with civil servants and subject matter experts across India</h1>
           <div class="grid-cols-4 grid recordBox">
-          <div class="">
-            <div class="listInfo civilRecord">
-              <div class="icon"><img src="/assets/instances/eagle/landing-img/user.svg" alt="icon"></div>
-              <h1 class="my-6">20</h1>
-              <p class="m-0">Million Indian civil servants</p>
-            </div>
+              <div class="listInfo" *ngFor="let content of learnNetworkSection">
+                <div class="icon"><img src="{{content?.image}}" alt="icon"></div>
+                <h1 class="my-6">{{content?.count}}</h1>
+                <p class="m-0">{{content?.title}}</p>
+              </div>
           </div>
-          <div class="">
-            <div class="listInfo ministerRecord">
-              <div class="icon"><img src="/assets/instances/eagle/landing-img/building.svg" alt="icon"></div>
-              <h1 class="my-6">184</h1>
-              <p class="m-0">Ministries,
-  Departments & Organizations</p>
+          <!-- <div class="grid-cols-4 grid recordBox">
+            <div class="">
+              <div class="listInfo civilRecord">
+                <div class="icon"><img src="/assets/instances/eagle/landing-img/user.svg" alt="icon"></div>
+                <h1 class="my-6">20</h1>
+                <p class="m-0">Million Indian civil servants</p>
+              </div>
             </div>
-          </div>
-          <div class="">
-            <div class="listInfo competencRecord">
-              <div class="icon"><img src="/assets/instances/eagle/landing-img/wellness.svg" alt="icon"></div>
-              <h1 class="my-6">600+</h1>
-              <p class="m-0">Competencies</p>
+            <div class="">
+              <div class="listInfo ministerRecord">
+                <div class="icon"><img src="/assets/instances/eagle/landing-img/building.svg" alt="icon"></div>
+                <h1 class="my-6">100+</h1>
+                <p class="m-0">Ministries, Departments & Organizations</p>
+              </div>
             </div>
-          </div>
-          <div class="">
-            <div class="listInfo courseRecord bg-none">
-              <div class="icon"><img src="/assets/instances/eagle/landing-img/course.svg" alt="icon"></div>
-              <h1 class="my-6">1000+</h1>
-              <p class="m-0">Courses</p>
+            <div class="">
+              <div class="listInfo competencRecord">
+                <div class="icon"><img src="/assets/instances/eagle/landing-img/wellness.svg" alt="icon"></div>
+                <h1 class="my-6">600+</h1>
+                <p class="m-0">Competencies</p>
+              </div>
             </div>
-          </div>
-        </div>
+            <div class="">
+              <div class="listInfo courseRecord bg-none">
+                <div class="icon"><img src="/assets/instances/eagle/landing-img/course.svg" alt="icon"></div>
+                <h1 class="my-6">100+</h1>
+                <p class="m-0">Courses</p>
+              </div>
+            </div>
+          </div> -->
         </div>
       </div>
     </div>

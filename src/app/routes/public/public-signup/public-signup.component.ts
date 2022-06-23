@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core'
 import { Subscription, Observable } from 'rxjs'
 import { FormGroup, FormControl, Validators, AbstractControl, ValidatorFn } from '@angular/forms'
 import { SignupService } from './signup.service'
@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment'
 import { MatSnackBar, MatDialog } from '@angular/material'
 import { ReCaptchaV3Service } from 'ng-recaptcha'
 import { SignupSuccessDialogueComponent } from './signup-success-dialogue/signup-success-dialogue/signup-success-dialogue.component'
+import { DOCUMENT, isPlatformBrowser } from '@angular/common'
 
 export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -70,7 +71,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     private configSvc: ConfigurationsService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
-    private recaptchaV3Service: ReCaptchaV3Service
+    private recaptchaV3Service: ReCaptchaV3Service,
+    @Inject(DOCUMENT) private _document: any,
+    @Inject(PLATFORM_ID) private _platformId: any,
   ) {
     this.registrationForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
@@ -91,6 +94,10 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     if (instanceConfig) {
       this.telemetryConfig = instanceConfig.telemetryConfig
       this.portalID = `${this.telemetryConfig.pdata.id}`
+    }
+
+    if (isPlatformBrowser(this._platformId)) {
+      this._document.body.classList.add('recaptcha')
     }
   }
 
@@ -174,6 +181,10 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     }
     if (this.recaptchaSubscription) {
       this.recaptchaSubscription.unsubscribe()
+    }
+
+    if (isPlatformBrowser(this._platformId)) {
+      this._document.body.classList.remove('recaptcha')
     }
   }
 

@@ -153,7 +153,8 @@ export class EventsComponent implements OnInit {
                 eventCreatedOn: this.allEventDateFormat(obj.createdOn),
                 eventDuration: duration,
                 eventjoined: creatorDetails.length,
-                eventThumbnail: obj.appIcon && (obj.appIcon !== null || obj.appIcon !== undefined) ? obj.appIcon :
+                eventThumbnail: obj.appIcon && (obj.appIcon !== null || obj.appIcon !== undefined) ?
+                this.eventSvc.getPublicUrl(obj.appIcon) :
                 '/assets/icons/Events_default.png',
                 pastevent: false,
             }
