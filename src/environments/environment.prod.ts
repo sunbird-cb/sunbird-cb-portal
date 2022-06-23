@@ -13,6 +13,8 @@ export const environment = {
   azureOldBuket: (window as { [key: string]: any })['env']['azureOldBuket'] || '',
   portalRoles: (((window as { [key: string]: any })['env']['portalRoles'] || '').split(',')) || [],
   portals: (window as { [key: string]: any })['env']['portals'] || [],
+  recaptchaKey: (window as { [key: string]: any })['env']['recaptchaKey'] || [],
+  contentBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
   // mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
   // spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',
   // cbcPortal: (window as { [key: string]: any })['env']['cbcPath'] || '',

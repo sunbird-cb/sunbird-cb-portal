@@ -794,7 +794,8 @@
                   </div>
                 </div>
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                  <div class="item" [ngClass]="{ disable: !isAllowed('designation') }">
+                  <div class="item">
+                    <!-- [ngClass]="{ disable: !isAllowed('designation') }" -->
                     <p class=" margin-remove-bottom form-label"
                       i18n="Designation label|Label which explains the user to enter Designation">
                       Designation
@@ -1053,11 +1054,11 @@
             </div>
           </div>
         </mat-tab>
-        <mat-tab label="Certification & Skills" *ngIf="!isForcedUpdate">
-          <ng-template mat-tab-label i18n>
+        <!-- <mat-tab label="Certification & Skills" *ngIf="!isForcedUpdate"> -->
+          <!-- <ng-template mat-tab-label i18n>
             Certification & Skills
-          </ng-template>
-          <div class="margin-top-xl new-mobile">
+          </ng-template> -->
+          <!-- <div class="margin-top-xl new-mobile">
             <div class="flex flex-wrap mobile-break">
               <div class="w-full profile-cols-full bg-grey">
                 <div class="flex flex-column flex-wrap section-input-single">
@@ -1071,12 +1072,12 @@
                       <textarea id="skillDesc" matInput [matTextareaAutosize] [matAutosizeMaxRows]="10"
                         [matAutosizeMinRows]="4" formControlName="skillAquiredDesc"
                         placeholder="Skills acquired or courses completed" i18n-placeholder
-                        #skillAquiredDesc></textarea>
+                        #skillAquiredDesc></textarea> -->
                       <!-- <mat-hint align="end">{{ skillAquiredDesc.value.length }} /200 characters</mat-hint>
                       <mat-error i18n>
                         You have exceeded 200 characters.
                       </mat-error> -->
-                    </mat-form-field>
+                    <!-- </mat-form-field>
                   </div>
                   <p class="heading">Provide Certification Details</p>
                   <div class="item">
@@ -1087,15 +1088,15 @@
                     <mat-form-field appearance="outline" class="margin-top-xs full-width">
                       <textarea id="certDetail" matInput [matTextareaAutosize] [matAutosizeMaxRows]="10"
                         [matAutosizeMinRows]="4" formControlName="certificationDesc"
-                        placeholder="Provide certification details" i18n-placeholder #certificationDesc></textarea>
+                        placeholder="Provide certification details" i18n-placeholder #certificationDesc></textarea> -->
                       <!-- <mat-hint align="end">{{ certificationDesc.value.length }} /200 characters</mat-hint>
                       <mat-error i18n>
                         You have exceeded 200 characters.
                       </mat-error> -->
-                    </mat-form-field>
+                    <!-- </mat-form-field>
                   </div>
-                </div>
-              </div>
+                </div> -->
+              <!-- </div>
               <div class="w-full profile-cols-full bg-grey">
                 <div class="flex flex-column flex-wrap section-input-single">
                   <p class="heading">Professional Interests</p>
@@ -1135,8 +1136,8 @@
                 </div>
               </div>
             </div>
-          </div>
-        </mat-tab>
+          </div> -->
+        <!-- </mat-tab> -->
       </mat-tab-group>
       <div class="flex justify-center  md:justify-end mt-5 mb-5">
         <div *ngIf="uploadSaveData" class="pr-4 flex items-center justify-center">

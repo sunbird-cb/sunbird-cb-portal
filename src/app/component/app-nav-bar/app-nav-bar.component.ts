@@ -35,6 +35,8 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   showAppNavBar = false
   popupTour: any
   currentRoute = 'page/home'
+  isPublicHomePage = false
+  isSetUpPage = false
   constructor(
     private domSanitizer: DomSanitizer,
     private configSvc: ConfigurationsService,
@@ -58,8 +60,19 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.router.events.subscribe((e: Event) => {
       if (e instanceof NavigationEnd) {
-        if (e.url.includes('/public/logout')) {
+        if (e.url.includes('/app/setup')) {
+          this.isSetUpPage = true
+        } else {
+          this.isSetUpPage = false
+        }
+
+        if (e.url.includes('/public/logout') || e.url.includes('/public/home')) {
           this.showAppNavBar = false
+          if (e.url.includes('/public/home')) {
+            this.isPublicHomePage = true
+          } else {
+            this.isPublicHomePage = false
+          }
         } else if ((e.url.includes('/app/setup') && this.configSvc.instanceConfig && !this.configSvc.instanceConfig.showNavBarInSetup)) {
           this.showAppNavBar = false
         } else {

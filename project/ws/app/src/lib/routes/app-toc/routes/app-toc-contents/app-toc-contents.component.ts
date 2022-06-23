@@ -7,6 +7,7 @@ import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 
 @Component({
   selector: 'ws-app-app-toc-contents',
@@ -33,6 +34,7 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer,
     private tocSvc: AppTocService,
     private configSvc: ConfigurationsService,
+    private viewerSVC: ViewerUtilService
   ) { }
 
   ngOnInit() {
@@ -98,7 +100,7 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
           this.assignWidgetData(ROOT_WIDGET_CONFIG.player.video, {
             url: content.artifactUrl,
             autoplay: true,
-            posterImage: content.appIcon,
+            posterImage: this.viewerSVC.getPublicUrl(content.appIcon || ''),
           })
           break
         case NsContent.EMimeTypes.MP3:
@@ -106,7 +108,7 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
           this.assignWidgetData(ROOT_WIDGET_CONFIG.player.audio, {
             url: content.artifactUrl,
             autoplay: true,
-            posterImage: content.appIcon,
+            posterImage: this.viewerSVC.getPublicUrl(content.appIcon || ''),
           })
           break
         case NsContent.EMimeTypes.PDF:
@@ -118,7 +120,7 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
           this.assignWidgetData(ROOT_WIDGET_CONFIG.player.youtube, {
             url: content.artifactUrl,
             autoplay: true,
-            posterImage: content.appIcon,
+            posterImage: this.viewerSVC.getPublicUrl(content.appIcon || ''),
           })
           break
       }

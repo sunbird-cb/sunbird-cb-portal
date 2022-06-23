@@ -85,7 +85,7 @@ export class GeneralGuard implements CanActivate {
       this.configSvc.instanceConfig &&
       !Boolean(this.configSvc.instanceConfig.disablePidCheck)
     ) {
-      return this.router.parseUrl('/public/logout')
+      return this.router.parseUrl('/public/home')
     }
     /**
      * Test IF User Tnc Is Accepted
@@ -107,6 +107,16 @@ export class GeneralGuard implements CanActivate {
       // }
       // return this.router.parseUrl(`/app/tnc`)
     }
+
+    // Check if the user has roles & activities and topic in the profile
+    if (
+      !(this.configSvc.userProfileV2 && this.configSvc.userProfileV2.userRoles && this.configSvc.userProfileV2.userRoles.length) ||
+      !((this.configSvc.userProfileV2 && this.configSvc.userProfileV2.desiredTopics && this.configSvc.userProfileV2.desiredTopics.length) ||
+      (this.configSvc.userProfileV2 && this.configSvc.userProfileV2.systemTopics && this.configSvc.userProfileV2.systemTopics.length))
+    ) {
+      return this.router.parseUrl(`/app/setup`)
+    }
+
     if (!this.configSvc.isActive) {
       this.router.navigateByUrl('/error-access-forbidden')
       this.authSvc.force_logout()

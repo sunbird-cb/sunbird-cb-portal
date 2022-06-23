@@ -1,0 +1,11 @@
+<a wsCompTooltipDirective class="margin-right-xs flex level_item level_item_deactive margin-bottom-xs"
+ [class.level_item_active]="competency.competencySelfAttestedLevel ? (competencyLevelData.id === competency.competencySelfAttestedLevel) : (competencyLevelData.id === selectedLevelId && competency.id === selectedCompId)">
+    <span class="" (click)="selectLevel(competencyLevelData, competency)">{{competencyLevelData.level}}</span>
+    <mat-icon class="mat-icon margin-left-xs ws-mat-black60-text info_icon">info_outlined</mat-icon>
+
+    <ng-template #tooltipTemplate>
+        <div class="tooltip">
+            <ws-app-level-info [complevel]="competencyLevelData"></ws-app-level-info>
+        </div>
+    </ng-template>
+</a>

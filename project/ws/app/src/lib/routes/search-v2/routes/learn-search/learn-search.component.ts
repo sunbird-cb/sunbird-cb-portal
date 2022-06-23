@@ -23,11 +23,12 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         mediaType: [],
         status: ['Live'],
         'competencies_v3.name': [],
+        topics: [],
       },
       query: '',
       sort_by: { lastUpdatedOn: 'desc' },
       fields: [],
-      facets: ['primaryCategory', 'mimeType', 'source', 'competencies_v3.name'],
+      facets: ['primaryCategory', 'mimeType', 'source', 'competencies_v3.name', 'topics'],
       limit: 100,
       offset: 0,
     },
@@ -266,6 +267,9 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         } else if (mf.mainType === 'competencies_v3.name') {
           this.competencNames = (mf.values)
           queryparam.request.filters['competencies_v3.name'] = mf.values
+        } else if (mf.mainType === 'topics') {
+          this.competencNames = (mf.values)
+          queryparam.request.filters['topics'] = mf.values
         }
       })
 

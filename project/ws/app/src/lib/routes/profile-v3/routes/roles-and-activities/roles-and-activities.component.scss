@@ -1,0 +1,61 @@
+
+
+.role-card {
+    width: 100%;
+}
+// .form_field {
+//     // width: 400px;
+// }
+.mat-card {
+    box-sizing: border-box;
+}
+// .mat-input-wrapper{
+//     // width:400px !important;
+//   }
+::ng-deep.mat-form-field-wrapper{
+    flex: 1;
+}
+::ng-deep.mat-chip-input{
+    width: auto !important;
+    min-width: 100%;
+    flex: 1;
+}
+.activity_span {
+    padding:6px 10px;
+    border-radius: 18px 18px;
+    border:1px solid rgba($color: #000000, $alpha: .08);
+    background-color: rgba(0,0,0,.02);
+    width: auto;
+    display: inline-block;
+}
+
+
+.top_chip_box {
+    background-color: rgba($color: #000000, $alpha: .04);
+    border-radius: 4px 4px;
+    padding:12px 12px;
+    box-sizing: border-box;
+
+    .mat-icon {
+        vertical-align: middle;
+    }
+}
+
+a.hint_span {
+    .mat-icon  {
+        vertical-align: middle;
+    }
+    cursor: pointer;
+}
+
+// .mat-form-field .mat-form-field-wrapper {
+//     padding-bottom: 0!important;
+// }
+
+.text_hint {
+    margin-top: -20px;
+    color: rgba($color: #000000, $alpha: .4);
+}
+
+
+

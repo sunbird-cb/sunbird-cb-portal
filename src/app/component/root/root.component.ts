@@ -42,7 +42,7 @@ import { environment } from '../../../environments/environment'
 import { MatDialog } from '@angular/material'
 import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component'
 import { concat, interval, timer } from 'rxjs'
-import { AppIntroComponent } from '../app-intro/app-intro.component'
+// import { AppIntroComponent } from '../app-intro/app-intro.component'
 
 @Component({
   selector: 'ws-root',
@@ -158,11 +158,11 @@ export class RootComponent implements OnInit, AfterViewInit {
     }
   }
   openIntro() {
-    if (!(this.rootSvc.getCookie('intro') && !!(this.rootSvc.getCookie('intro')))) {
-      if (this.router.url === '/page/home') {
-        this.dialog.open(AppIntroComponent, { data: {} })
-      }
-    }
+    // if (!(this.rootSvc.getCookie('intro') && !!(this.rootSvc.getCookie('intro')))) {
+    //   if (this.router.url === '/page/home') {
+    //     this.dialog.open(AppIntroComponent, { data: {} })
+    //   }
+    // }
     // this.snackBar.openFromTemplate(this.userIntro, { duration: 20000, verticalPosition: 'bottom', horizontalPosition: 'left' })
   }
   public skipToMainContent(): void {
@@ -187,6 +187,7 @@ export class RootComponent implements OnInit, AfterViewInit {
         }
       }
       if (event instanceof NavigationStart) {
+        this.showNavbar = true
         if (event.url.includes('preview') || event.url.includes('embed')) {
           this.isNavBarRequired = false
         } else if (event.url.includes('author/') && this.isInIframe) {
@@ -203,10 +204,14 @@ export class RootComponent implements OnInit, AfterViewInit {
       ) {
         this.routeChangeInProgress = false
         this.currentUrl = event.url
-        if (!!this.currentUrl.startsWith('/public/logout')) {
+        if (!!this.currentUrl.startsWith('/public/logout') || !!this.currentUrl.startsWith('/public/signup')) {
           this.showFooter = false
+          this.showNavbar = false
+          this.isNavBarRequired = false
         } else {
           this.showFooter = true
+          this.showNavbar = true
+          this.isNavBarRequired = true
         }
       }
 

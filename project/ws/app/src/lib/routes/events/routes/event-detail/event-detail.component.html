@@ -4,7 +4,7 @@
     <div class="flex flex-row margin-top-xl margin-bottom-xl ">
       <div class="flex flex-row top_banner_box">
         <div class="">
-          <img src="{{eventData?.appIcon}}" class="event-card-image" *ngIf="eventData?.appIcon">
+          <img src="{{eventData?.appIcon | pipePublicURL}}" class="event-card-image" *ngIf="eventData?.appIcon">
           <img src="/assets/icons/Events_default.png" class="event-card-image" *ngIf="!eventData?.appIcon">
         </div>
         <div class="flex flex-auto">

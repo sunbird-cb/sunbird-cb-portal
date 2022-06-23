@@ -1,0 +1,33 @@
+<div class="flex flex-col comptency_main_div margin-top-xl">
+
+    <div class="flex flex-row justify-between margin-bottom-xs">
+        <h4 class="mast-h4 main_title_text margin-bottom-xs">Select competencies you’re skilled with</h4>
+        <a class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openActivityDialog()">
+            <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon> What are competencies?
+        </a>
+    </div>
+
+    <p class="mat-body-2 ws-mat-black60-text margin-bottom-l">Feel free to select the competency and level that you feel
+        match your current skills. This does not need to be exact. This information helps us give you a more
+        personalized experience and provide even more relevant content.</p>
+    <!-- <ws-app-competency-card [competenciesData]="allCompetencies"
+        (selectedCompetency)="updateSelectedCompetency($event)"></ws-app-competency-card> -->
+    <div class="flex flex-1">
+        <mat-form-field appearance="outline" class="flex flex-1" color="primary" [floatLabel]="'never'">
+            <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+            <!-- <mat-label>Search</mat-label> -->
+            <input id="searchInput" type="text" role="combobox" accesskey="C" #searchInput [attr.title]="placeHolder"
+                i18n-placeholder="search content" [placeholder]="placeHolder" i18-aria-label aria-label="search content"
+                matInput [formControl]="queryControl" class="width-1-1" />
+            <mat-icon matSuffix (click)="clearSearchText()" class="cursor-pointer" *ngIf="queryControl.value">close
+            </mat-icon>
+        </mat-form-field>
+    </div>
+    <div class="flex flex-col">
+        <mat-card class="learn-card margin-bottom-m position-relative mat-card padding-m"
+            *ngFor="let competency of overallCompetencies| pipeListFilter:'name,description,id,source':queryControl.value">
+            <ws-app-current-competency-card [competency]="competency" [selectedLevelId]="getSelectedLevel(competency)"
+                [isSelected]="isSelected(competency)"></ws-app-current-competency-card>
+        </mat-card>
+    </div>
+</div>

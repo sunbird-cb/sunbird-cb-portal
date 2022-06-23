@@ -1,0 +1,100 @@
+
+<a class="close_btn flex flex-end" (click)="dialogClose()">
+    <mat-icon>close</mat-icon>
+</a>
+<ng-container  [ngTemplateOutlet]="roles" *ngIf="data.view === 'roles'">
+
+</ng-container>
+
+<ng-container  [ngTemplateOutlet]="activity" *ngIf="data.view === 'activity'">
+
+</ng-container>
+
+<ng-container  [ngTemplateOutlet]="ccomp" *ngIf="data.view === 'ccomp'">
+
+</ng-container>
+
+<ng-container  [ngTemplateOutlet]="dscomp" *ngIf="data.view === 'dscomp'">
+
+</ng-container>
+
+<ng-template #ccomp>
+    <p class="mat-subheading-2 margin-bottom-xs">What are competencies?</p>
+    <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">Competencies are a combination of attitudes, skills, and knowledge that enable an
+        individual to perform a task or activity successfully in a given job and roles are the starting
+        point for arriving at them.</p>
+        <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">There are three types of competencies: Behavioural, Functional and Domain
+        </p>
+
+    <p class="mat-subheading-2 margin-bottom-xs margin-top-l">Why is it important?</p>
+    <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">Competencies help with:  </p>
+    <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">1. &nbsp; Providing information on individual requirements from a role</p>
+    <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">2. &nbsp; Identifying learning and development needs for government officials</p>
+    <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">3. &nbsp; Streamlining the recruitment process</p>
+
+     <p  class="mat-subheading-2 margin-bottom-xs margin-top-l">Example:</p>
+     <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">• &nbsp;  Ensures inclusion and accuracy of facts in vigilance proposals.</p>
+      <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">  • &nbsp;  Coordinates and manages relationships with various stakeholders</p>
+      <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom"> • &nbsp;  Manages grievance redressal mechanisms</p>
+</ng-template>
+
+
+<ng-template #dscomp>
+    <p class="mat-subheading-2 margin-bottom-xs">What are competencies?</p>
+    <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">Competencies are a combination of attitudes, skills, and knowledge that enable an
+        individual to perform a task or activity successfully in a given job and roles are the starting
+        point for arriving at them.</p>
+        <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">There are three types of competencies: Behavioural, Functional and Domain
+        </p>
+
+    <p class="mat-subheading-2 margin-bottom-xs margin-top-l">Why is it important?</p>
+    <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">Competencies help with:  </p>
+    <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">1. &nbsp; Providing information on individual requirements from a role</p>
+    <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">2.&nbsp; Identifying learning and development needs for government officials</p>
+    <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">3. &nbsp; Streamlining the recruitment process</p>
+
+     <p  class="mat-subheading-2 margin-bottom-xs margin-top-l">Example:</p>
+     <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">• &nbsp;  Ensures inclusion and accuracy of facts in vigilance proposals.</p>
+      <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">  • &nbsp;  Coordinates and manages relationships with various stakeholders</p>
+      <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom"> • &nbsp;  Manages grievance redressal mechanisms</p>
+</ng-template>
+
+<ng-template #roles>
+    <p class="mat-subheading-2 margin-bottom-xs">What is a role?</p>
+    <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">Roles describe the overall objective of a group of activities and how they contribute to the position.</p>
+
+    <p class="mat-subheading-2 margin-bottom-xs margin-top-l">Why is it important?</p>
+    <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">Roles help understand the mandate of a position. There could be similar positions across the government, but differentiated by the roles they form.
+     Roles help articulate these distinctions by highlighting why the position exists and how it works towards larger organisational goals and priorities.</p>
+
+     <p  class="mat-subheading-2 margin-bottom-xs margin-top-l">Example:</p>
+     <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">• &nbsp;  Ensures inclusion and accuracy of facts in vigilance proposals.</p>
+      <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">  • &nbsp;  Coordinates and manages relationships with various stakeholders</p>
+      <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom"> • &nbsp;  Manages grievance redressal mechanisms</p>
+</ng-template>
+
+
+ <!-- activity =====-->
+<ng-template #activity>
+    <p class="mat-subheading-2 margin-bottom-xs">What is an activity?</p>
+    <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">Activities are a set of actions taken to contribute towards the various roles one performs within a position.</p>
+
+    <p class="mat-subheading-2 margin-bottom-xs margin-top-l"> Why is it important?</p>
+    <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">Activities speak directly to the execution capacity of an individual public
+        official by providing details on the mandate of their position, and how it is distinguished from other positions in the government.</p>
+
+     <p  class="mat-subheading-2 margin-bottom-xs margin-top-l">Example:</p>
+     <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">• &nbsp;  Role: Ensures inclusion and accuracy of facts in vigilance related proposals
+        <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">   • &nbsp;  Activities: </p>
+        <div class="margin-left-l">
+            <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">          - &nbsp;  Checks the facts with regards to proposal keeping in mind existing rules,
+                        provisions, and legal precedents </p>
+            <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">         -  &nbsp; Supplies missing facts to a proposal if any information is missing</p>
+            <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">           - &nbsp;  Supports drafting of proposals</p>
+            <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">          -  &nbsp; Quotes previous precedents by referring to existing rules</p>
+        </div>
+</ng-template>
+
+
+
+

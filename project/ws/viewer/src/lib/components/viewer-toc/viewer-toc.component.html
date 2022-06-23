@@ -7,7 +7,7 @@
           <!-- queryParamsHandling="preserve" -->
           <img i18n-alt alt="thumbnail"
             class="viewer-toc-header-thumbnail align-self-start margin-auto mat-app-background"
-            [src]="collectionCard?.thumbnail" [wsUtilsDefaultThumbnail]="defaultThumbnail" />
+            [src]="collectionCard?.thumbnail | pipePublicURL" [wsUtilsDefaultThumbnail]="defaultThumbnail" />
         </a>
         <span class="width-1-1 margin-left-m flex flex-wrapped align-self-start">
           <div class="width-1-1 flex flex-between">

@@ -1,0 +1,69 @@
+<div class="container-balanced-banner flex flex-row justify-between margin-bottom-xl margin-top-xl">
+  <h1>{{currentStep}}. {{message}} </h1>
+  <ng-container *ngIf="current?.allowSkip">
+    <a *ngIf="skip" [routerLink]="skip.routerLink" class="skip_link mat-body-2 margin-remove-bottom">Skip, I will do this later</a>
+  </ng-container>
+</div>
+<mat-sidenav-container class="container-balanced" autosize name="discuss-menu">
+
+  <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 sidenav_inner"
+    [ngClass]="{'margin-top-0': currentRoute === 'all'}">
+    <div class="contain">
+      <div class="flex-1" style="position: relative;">
+        <div #stickyMenu [class.sticky]="sticky">
+          <!-- <ws-app-profile-v3-left-menu [tabsData]="tabsData" class="flex flex-1"></ws-app-profile-v3-left-menu> -->
+          <ws-app-l-menu [tabsData]="tabs" class="flex flex-1"></ws-app-l-menu>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav>
+
+
+  <mat-sidenav-content>
+    <div *ngIf="screenSizeIsLtMedium" class="margin-top-m">
+      <button type="button" mat-icon-button (click)="sideNavBarOpened = !sideNavBarOpened"
+        id="ws-auth-root-home-btn-menu" name="ws-auth-root-home-btn-menu" class="mat-icon-button mat-button-base">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+    <div class="flex flex-5 marbot knowledge_box_full margin-left-l"
+      [ngClass]="{'margin-top-m': currentRoute === 'current-competencies'}">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+<div class="footer_box flex flex-row justify-between">
+  <!-- <a class="skip_link mat-body-2 margin-remove-bottom">Cancel</a> -->
+
+  <ng-container *ngIf="previous && previous !== 'first'">
+
+    <a [routerLink]="previous.routerLink" class="skip_link mat-body-2 margin-remove-bottom">Previous: {{previous.step}}.
+      {{previous.name}}</a>
+
+  </ng-container>
+  <ng-container *ngIf="previous && previous === 'first'">
+    <div class="skip_link margin-remove-bottom">
+
+    </div>
+    <!-- <a (click)="updateProfile()" class="skip_link mat-body-2 margin-remove-bottom">Cancel</a> -->
+
+  </ng-container>
+
+
+  <p class="mat-body-2 margin-remove-bottom margin-top-xs footer_text">Your selections are automatically saved.</p>
+
+
+  <ng-container *ngIf="next && next !== 'done'">
+
+    <a [routerLink]="next.routerLink" (click)="updateCompentency()" class="next_link mat-body-2 margin-remove-bottom">Next: {{next.step}}.
+      {{next.name}}</a>
+
+  </ng-container>
+  <ng-container *ngIf="next && next === 'done'">
+
+    <a (click)="updateProfile()" class="next_link mat-body-2 margin-remove-bottom">Done</a>
+
+  </ng-container>
+</div>

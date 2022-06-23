@@ -1,0 +1,18 @@
+
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+::ng-deep  .comptency_main_div {
+    width: 100%;
+}
+
+a.hint_span {
+    cursor: pointer;
+    .mat-icon  {
+        vertical-align: middle;
+    }
+}
+::ng-deep.mat-form-field-wrapper {
+    flex: 1;
+}

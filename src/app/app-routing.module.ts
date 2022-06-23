@@ -20,6 +20,8 @@ import { TncAppResolverService } from './services/tnc-app-resolver.service'
 import { TncPublicResolverService } from './services/tnc-public-resolver.service'
 import { AppTocResolverService } from '@ws/app/src/lib/routes/app-toc/resolvers/app-toc-resolver.service'
 import { PublicLogoutComponent } from './routes/public/public-logout/public-logout.component'
+import { PublicSignupComponent } from './routes/public/public-signup/public-signup.component'
+import { PublicHomeComponent } from './routes/public/public-home/public-home.component'
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
 // Please declare routes in alphabetical order
@@ -141,6 +143,7 @@ const routes: Routes = [
       pageData: PageResolve,
     },
   },
+
   {
     path: 'app/taxonomy',
     loadChildren: () =>
@@ -235,6 +238,21 @@ const routes: Routes = [
   //   data: {
   //   },
   // },
+  {
+    path: 'app/setup',
+    loadChildren: () =>
+      import('./routes/route-profile-v3.module').then(u => u.RouteProfileV3Module),
+    // canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'profile-v3',
+      pageId: 'app/profile-v3',
+      module: 'profile-v3',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
   {
     path: 'app/feedback',
     loadChildren: () =>
@@ -694,6 +712,18 @@ const routes: Routes = [
   {
     path: 'public/logout',
     component: PublicLogoutComponent,
+  },
+  {
+    path: 'public/home',
+    component: PublicHomeComponent,
+  },
+  {
+    path: 'public/signup',
+    component: PublicSignupComponent,
+    data: {
+      module: 'Login',
+      pageId: 'public/signup',
+    },
   },
   {
     path: 'public/mobile-app',
