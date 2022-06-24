@@ -12,5 +12,4 @@ export class PipePublicURL implements PipeTransform {
     return value ? finalURL : ''
   }
 
-  
 }
