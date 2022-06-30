@@ -1,5 +1,6 @@
 @import "ws-vars";
 @import "ws-common";
+@import 'ws-mixins';
 
 .container-balanced {
   max-width: 1202px;
@@ -34,4 +35,12 @@ h2.main_title_text {
 }
 .flex-3 {
   flex: 3;
+}
+
+.custom-phone {
+  height: 16px;
+  width: 22px;
+  font-size: 20px;
+  line-height: 0.6 !important;
+  vertical-align: middle;
 }
