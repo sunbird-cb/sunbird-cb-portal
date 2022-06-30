@@ -51,7 +51,7 @@ export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn 
 export class PublicSignupComponent implements OnInit, OnDestroy {
   registrationForm!: FormGroup
   namePatern = `^[a-zA-Z\\s\\']{1,32}$`
-  // emailWhitelistPattern = `^[a-zA-Z0-9._-]{3,}\\b(@gov|@nic)\\b\.\\b(in)\\b$`
+  emailWhitelistPattern = `^[a-zA-Z0-9._-]{3,}\\b@\\b[a-zA-Z0-9]*|\\b(.gov|.nic)\b\\.\\b(in)\\b$`
   departments!: any
   masterDepartments!: Observable<any> | undefined
   masterDepartmentsOriginal!: []
@@ -79,7 +79,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       lastname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       position: new FormControl('', [Validators.required, forbiddenNamesValidatorPosition(this.masterPositions)]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', [Validators.required, Validators.pattern(this.emailWhitelistPattern)]),
       department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
       confirmBox: new FormControl(false, [Validators.required]),
       // recaptchaReactive: new FormControl(null, [Validators.required]),
