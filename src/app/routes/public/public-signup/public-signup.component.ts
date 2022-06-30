@@ -97,7 +97,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     }
 
     if (isPlatformBrowser(this._platformId)) {
-      this._document.body.classList.add('recaptcha')
+      this._document.body.classList.add('cs-recaptcha')
     }
   }
 
@@ -184,7 +184,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     }
 
     if (isPlatformBrowser(this._platformId)) {
-      this._document.body.classList.remove('recaptcha')
+      this._document.body.classList.remove('cs-recaptcha')
     }
   }
 
