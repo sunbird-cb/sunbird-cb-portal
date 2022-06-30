@@ -210,8 +210,7 @@ export class RootComponent implements OnInit, AfterViewInit {
           this.isNavBarRequired = false
         } else if (this.currentUrl.startsWith('/public/home')) {
           this.showNavbar = true
-        }
-        else {
+        } else {
           this.showFooter = true
           this.showNavbar = true
           this.isNavBarRequired = true
