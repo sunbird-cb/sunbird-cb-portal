@@ -43,9 +43,9 @@
       padding: 0;
       margin: 0;
   }
-  a {
-      color: #A221D8;
-  }
+  // a {
+  //     color: #A221D8;
+  // }
   a:hover {
 
      text-decoration: none;
@@ -575,3 +575,14 @@
   //     width: 90%;
   //   }
   // }
+
+
+  ::ng-deep .app-footer {
+    display: none!important;
+    visibility: hidden!important;
+  }
+
+  ::ng-deep .top_footer_box {
+    display: none!important;
+    visibility: hidden!important;
+  }
