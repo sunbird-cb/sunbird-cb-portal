@@ -565,7 +565,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
       breakDown: breakDownArray,
       latest50Reviews: breakDownArray,
       ratingsNumber: breakDownArray,
-      total_number_of_ratings: this.ratingSummary.total_number_of_ratings || 0,
+      total_number_of_ratings:  _.get(this.ratingSummary, 'total_number_of_ratings') || 0,
       avgRating: 0,
     }
     const totRatings = this.ratingSummary.sum_of_total_ratings
