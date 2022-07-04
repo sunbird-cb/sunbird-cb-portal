@@ -43,7 +43,7 @@ export class BtnPageBackComponent extends WidgetBaseComponent
   hubsList!: NsInstanceConfig.IHubs[]
   constructor(
     private btnBackSvc: BtnPageBackService,
-    private router: Router,
+    public router: Router,
     private configSvc: ConfigurationsService,
     private discussUtilitySvc: DiscussUtilsService,
   ) {
