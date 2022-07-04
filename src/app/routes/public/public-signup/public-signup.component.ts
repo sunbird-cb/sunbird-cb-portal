@@ -89,7 +89,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       email: new FormControl('', [Validators.required, Validators.pattern(this.emailWhitelistPattern)]),
       // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
       confirmBox: new FormControl(false, [Validators.required]),
-      type: new FormControl('state', [Validators.required]),
+      type: new FormControl('ministry', [Validators.required]),
       ministry: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterMinisteries)]),
       department: new FormControl('', [forbiddenNamesValidator(this.masterDepartments)]),
       organisation: new FormControl('', [forbiddenNamesValidator(this.masterOrgs)]),
@@ -98,7 +98,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.fetchDropDownValues('state')
+    this.fetchDropDownValues('ministry')
     const instanceConfig = this.configSvc.instanceConfig
     this.positionsOriginal = this.configSvc.positions || []
     this.onPositionsChange()
