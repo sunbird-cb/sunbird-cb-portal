@@ -22,6 +22,7 @@ import { AppTocResolverService } from '@ws/app/src/lib/routes/app-toc/resolvers/
 import { PublicLogoutComponent } from './routes/public/public-logout/public-logout.component'
 import { PublicSignupComponent } from './routes/public/public-signup/public-signup.component'
 import { PublicHomeComponent } from './routes/public/public-home/public-home.component'
+import { PublicContacthomeComponent } from './routes/public/public-contacthome/public-contacthome.component'
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
 // Please declare routes in alphabetical order
@@ -685,15 +686,12 @@ const routes: Routes = [
   },
   {
     path: 'public/contact',
-    component: PublicContactComponent,
+    component: PublicContacthomeComponent,
     data: {
       pageType: 'feature',
-      pageKey: 'public-faq',
+      pageKey: 'public-contact',
       module: 'support',
       pageId: 'public/contact',
-    },
-    resolve: {
-      pageData: PageResolve,
     },
   },
   {

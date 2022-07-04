@@ -92,7 +92,11 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
 
     const currentTime = new Date().getHours() * 60 + new Date().getMinutes()
     const minustime = starttime - currentTime
-    if (eventData.startDate === todaysdate && minustime < 16 && (selectedStartDate > today || selectedEndDate < today))  {
+    // tslint:disable-next-line:max-line-length
+    if (eventData.startDate === todaysdate && (minustime > 0 && minustime < 16) && (selectedStartDate > today || selectedEndDate < today))  {
+      return true
+    }
+    if (eventData.startDate === todaysdate && (today >= selectedStartDate && today <= selectedEndDate))  {
       return true
     }
     return false
