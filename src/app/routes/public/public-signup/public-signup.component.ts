@@ -9,6 +9,8 @@ import { MatSnackBar, MatDialog } from '@angular/material'
 import { ReCaptchaV3Service } from 'ng-recaptcha'
 import { SignupSuccessDialogueComponent } from './signup-success-dialogue/signup-success-dialogue/signup-success-dialogue.component'
 import { DOCUMENT, isPlatformBrowser } from '@angular/common'
+// tslint:disable-next-line: import-name
+import _ from 'lodash'
 
 export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -61,6 +63,11 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   telemetryConfig: NsInstanceConfig.ITelemetryConfig | null = null
   portalID = ''
   confirm = false
+  disableBtn = false
+  ministeries: any[] = []
+  masterMinisteries!: Observable<any> | undefined
+  orgs: any[] = []
+  masterOrgs!: Observable<any> | undefined
 
   private subscriptionContact: Subscription | null = null
   private recaptchaSubscription!: Subscription
@@ -80,14 +87,18 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       lastname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       position: new FormControl('', [Validators.required, forbiddenNamesValidatorPosition(this.masterPositions)]),
       email: new FormControl('', [Validators.required, Validators.pattern(this.emailWhitelistPattern)]),
-      department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
+      // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
       confirmBox: new FormControl(false, [Validators.required]),
+      type: new FormControl('ministry', [Validators.required]),
+      ministry: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterMinisteries)]),
+      department: new FormControl('', [forbiddenNamesValidator(this.masterDepartments)]),
+      organisation: new FormControl('', [forbiddenNamesValidator(this.masterOrgs)]),
       // recaptchaReactive: new FormControl(null, [Validators.required]),
     })
   }
 
   ngOnInit() {
-    this.fetchDepartments()
+    this.fetchDropDownValues('ministry')
     const instanceConfig = this.configSvc.instanceConfig
     this.positionsOriginal = this.configSvc.positions || []
     this.onPositionsChange()
@@ -99,39 +110,109 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this._platformId)) {
       this._document.body.classList.add('cs-recaptcha')
     }
-  }
 
-  fetchDepartments() {
-    this.signupSvc.getDepartments().subscribe(
-      (res: any) =>  {
-        if (res && res.result) {
-          this.masterDepartmentsOriginal = res.result.content
-          this.onDepartmentsChange()
-        }
-      },
-      (err: any) => {
-        this.loggerSvc.error('USER RATING FETCH ERROR >', err)
+    // tslint:disable-next-line: no-non-null-assertion
+    this.registrationForm.get('type')!.valueChanges.subscribe((value: any) => {
+      if (value) {
+        this.fetchDropDownValues(value)
       }
-    )
+  })
   }
 
-  onDepartmentsChange(): void {
+  get typeValueStartCase() {
+    // tslint:disable-next-line: no-non-null-assertion
+    return _.startCase(this.registrationForm.get('type')!.value)
+  }
 
+  get typeValue() {
+    // tslint:disable-next-line: no-non-null-assertion
+    return this.registrationForm.get('type')!.value
+  }
+
+  fetchDropDownValues(type: string) {
+    this.clearValues()
+    if (type === 'state') {
+      this.signupSvc.getStatesOrMinisteries('state').subscribe(res => {
+        if (res && res.result && res.result && res.result.response && res.result.response.content) {
+          this.ministeries = res.result.response.content
+          this.onMinisteriesChange()
+        }
+      })
+    }
+    if (type === 'ministry') {
+        this.signupSvc.getStatesOrMinisteries('ministry').subscribe(res => {
+          if (res && res.result && res.result && res.result.response && res.result.response.content) {
+            this.ministeries = res.result.response.content
+            this.onMinisteriesChange()
+          }
+        })
+    }
+  }
+
+  clearValues() {
+    // tslint:disable-next-line: no-non-null-assertion
+    this.registrationForm.get('ministry')!.setValue('')
+    // tslint:disable-next-line: no-non-null-assertion
+    this.registrationForm.get('department')!.setValue('')
+    // tslint:disable-next-line: no-non-null-assertion
+    this.registrationForm.get('organisation')!.setValue('')
+  }
+
+  onMinisteriesChange() {
+    // tslint:disable-next-line: no-non-null-assertion
+    this.masterMinisteries = this.registrationForm.get('ministry')!.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        startWith(''),
+        map(value => typeof (value) === 'string' ? value : (value && value.orgname ? value.orgname : '')),
+        map(orgname => orgname ? this.filterMinisteries(orgname) : this.ministeries.slice())
+      )
+
+    this.masterMinisteries.subscribe((event: any) => {
+      // tslint:disable-next-line: no-non-null-assertion
+      this.registrationForm.get('ministry')!.setValidators([Validators.required, forbiddenNamesValidator(event)])
+      this.registrationForm.updateValueAndValidity()
+    })
+  }
+
+  onDepartmentChange() {
     // tslint:disable-next-line: no-non-null-assertion
     this.masterDepartments = this.registrationForm.get('department')!.valueChanges
       .pipe(
         debounceTime(500),
         distinctUntilChanged(),
         startWith(''),
-        map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
-        map(name => name ? this.filterDepartments(name) : this.masterDepartmentsOriginal.slice())
+        map(value => typeof (value) === 'string' ? value : (value && value.orgname ? value.orgname : '')),
+        map(orgname => orgname ? this.filterDepartments(orgname) : this.departments.slice())
       )
 
-      this.masterDepartments.subscribe((event: any) => {
-        // tslint:disable-next-line: no-non-null-assertion
-        this.registrationForm.get('department')!.setValidators([Validators.required, forbiddenNamesValidator(event)])
-        this.registrationForm.updateValueAndValidity()
-      })
+    this.masterDepartments.subscribe((event: any) => {
+      // tslint:disable-next-line: no-non-null-assertion
+      this.registrationForm.get('department')!.setValidators([forbiddenNamesValidator(event)])
+      // tslint:disable-next-line: no-non-null-assertion
+      // this.registrationForm.get('department')!.setValidators(null)
+      this.registrationForm.updateValueAndValidity()
+    })
+  }
+  onOrgsChange() {
+    // tslint:disable-next-line: no-non-null-assertion
+    this.masterOrgs = this.registrationForm.get('organisation')!.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        startWith(''),
+        map(value => typeof (value) === 'string' ? value : (value && value.orgname ? value.orgname : '')),
+        map(orgname => orgname ? this.filterOrgs(orgname) : this.orgs.slice())
+      )
+
+    this.masterOrgs.subscribe((event: any) => {
+      // tslint:disable-next-line: no-non-null-assertion
+      this.registrationForm.get('organisation')!.setValidators([forbiddenNamesValidator(event)])
+      // tslint:disable-next-line: no-non-null-assertion
+      // this.registrationForm.get('organisation')!.setValidators(null)
+      this.registrationForm.updateValueAndValidity()
+    })
   }
 
   onPositionsChange() {
@@ -152,12 +233,28 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       })
   }
 
-  private filterDepartments(name: string): any {
-    if (name) {
-      const filterValue = name.toLowerCase()
-      return this.masterDepartmentsOriginal.filter((option: any) => option.channel.toLowerCase().includes(filterValue))
+  filterMinisteries(orgname: string) {
+    if (orgname) {
+      const filterValue = orgname.toLowerCase()
+      return this.ministeries.filter((option: any) => option.orgname.toLowerCase().includes(filterValue))
     }
-    return this.masterDepartmentsOriginal
+    return this.ministeries
+  }
+
+  filterDepartments(orgname: string) {
+    if (orgname) {
+      const filterValue = orgname.toLowerCase()
+      return this.departments.filter((option: any) => option.orgname.toLowerCase().includes(filterValue))
+    }
+    return this.departments
+  }
+
+  filterOrgs(orgname: string) {
+    if (orgname) {
+      const filterValue = orgname.toLowerCase()
+      return this.orgs.filter((option: any) => option.orgname.toLowerCase().includes(filterValue))
+    }
+    return this.orgs
   }
 
   private filterPositions(name: string): any {
@@ -175,19 +272,6 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     })
   }
 
-  ngOnDestroy() {
-    if (this.subscriptionContact) {
-      this.subscriptionContact.unsubscribe()
-    }
-    if (this.recaptchaSubscription) {
-      this.recaptchaSubscription.unsubscribe()
-    }
-
-    if (isPlatformBrowser(this._platformId)) {
-      this._document.body.classList.remove('cs-recaptcha')
-    }
-  }
-
   displayFn = (value: any) =>  {
     return value ? value.channel : undefined
   }
@@ -197,22 +281,43 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   }
 
   signup() {
-
+    this.disableBtn = true
     this.recaptchaSubscription = this.recaptchaV3Service.execute('importantAction')
     .subscribe(
       _token => {
         // tslint:disable-next-line: no-console
         console.log('captcha validation success')
 
-        // perform signup operations
-        const req = {
-          firstName: this.registrationForm.value.firstname || '',
-          lastName: this.registrationForm.value.lastname || '',
-          email: this.registrationForm.value.email || '',
-          deptId: this.registrationForm.value.department.identifier || '',
-          deptName: this.registrationForm.value.department.channel || '',
-          position: this.registrationForm.value.position.name || '',
-          source: `${environment.name}.${this.portalID}` || '',
+        // to get the org details from either ministry/state, or department or organisation which ever user has filled
+        let hierarchyObj
+        let req: any
+        if (this.registrationForm.value.ministry) {
+          hierarchyObj = this.registrationForm.value.ministry
+          if (this.registrationForm.value.department) {
+            hierarchyObj = this.registrationForm.value.department
+            if (this.registrationForm.value.organisation) {
+              hierarchyObj = this.registrationForm.value.organisation
+            }
+          }
+        }
+        // console.log('hierarchyObj: ', hierarchyObj)
+        if (hierarchyObj) {
+          req = {
+            firstName: this.registrationForm.value.firstname || '',
+            lastName: this.registrationForm.value.lastname || '',
+            email: this.registrationForm.value.email || '',
+            // deptId: this.registrationForm.value.department.identifier || '',
+            // deptName: this.registrationForm.value.department.channel || '',
+            position: this.registrationForm.value.position.name || '',
+            source: `${environment.name}.${this.portalID}` || '',
+            orgName: hierarchyObj.orgname || '',
+            channel: hierarchyObj.orgname || '',
+            organisationType: hierarchyObj.sborgtype || '',
+            organisationSubType: hierarchyObj.sbsuborgtype || '',
+            mapId: hierarchyObj.mapid || '',
+            sbRootOrgId: hierarchyObj.sbrootorgid,
+            sbOrgId: hierarchyObj.sborgid,
+          }
         }
 
         // console.log('req: ', req)
@@ -221,8 +326,10 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
           (_res: any) =>  {
             // console.log('success', res)
             this.openDialog()
+            this.disableBtn = false
           },
           (err: any) => {
+            this.disableBtn = false
             this.loggerSvc.error('Error in registering new user >', err)
             if (err.error && err.error.params && err.error.params.errmsg) {
               this.openSnackbar(err.error.params.errmsg)
@@ -234,6 +341,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         )
       },
       error => {
+        this.disableBtn = false
         // tslint:disable-next-line: no-console
         console.error('captcha validation error', error)
         this.openSnackbar(`reCAPTCHA validation failed: ${error}`)
@@ -255,5 +363,44 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     })
     dialogRef.afterClosed().subscribe((_result: any) => {
     })
+  }
+
+  ministrySelected(value: any) {
+    if (value && value.mapid) {
+      this.signupSvc.getDeparmentsOfState(value.mapid).subscribe(res => {
+        if (res && res.result && res.result && res.result.response && res.result.response.content) {
+          this.departments = res.result.response.content
+          this.onDepartmentChange()
+        }
+      })
+    }
+  }
+
+  departmentSelected(value: any) {
+    if (value && value.mapid) {
+      this.signupSvc.getOrgsOfDepartment(value.mapid).subscribe(res => {
+        if (res && res.result && res.result && res.result.response && res.result.response.content) {
+          this.orgs = res.result.response.content
+          this.onOrgsChange()
+        }
+      })
+    }
+  }
+
+  displayFnState = (value: any) => {
+    return value ? value.orgname : undefined
+  }
+
+  ngOnDestroy() {
+    if (this.subscriptionContact) {
+      this.subscriptionContact.unsubscribe()
+    }
+    if (this.recaptchaSubscription) {
+      this.recaptchaSubscription.unsubscribe()
+    }
+
+    if (isPlatformBrowser(this._platformId)) {
+      this._document.body.classList.remove('cs-recaptcha')
+    }
   }
 }
