@@ -61,6 +61,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   telemetryConfig: NsInstanceConfig.ITelemetryConfig | null = null
   portalID = ''
   confirm = false
+  disableBtn = false
 
   private subscriptionContact: Subscription | null = null
   private recaptchaSubscription!: Subscription
@@ -197,7 +198,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   }
 
   signup() {
-
+    this.disableBtn = true
     this.recaptchaSubscription = this.recaptchaV3Service.execute('importantAction')
     .subscribe(
       _token => {
@@ -221,8 +222,10 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
           (_res: any) =>  {
             // console.log('success', res)
             this.openDialog()
+            this.disableBtn = false
           },
           (err: any) => {
+            this.disableBtn = false
             this.loggerSvc.error('Error in registering new user >', err)
             if (err.error && err.error.params && err.error.params.errmsg) {
               this.openSnackbar(err.error.params.errmsg)
@@ -234,6 +237,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         )
       },
       error => {
+        this.disableBtn = false
         // tslint:disable-next-line: no-console
         console.error('captcha validation error', error)
         this.openSnackbar(`reCAPTCHA validation failed: ${error}`)
