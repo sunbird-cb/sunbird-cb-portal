@@ -208,9 +208,7 @@ export class RootComponent implements OnInit, AfterViewInit {
           this.showFooter = false
           this.showNavbar = false
           this.isNavBarRequired = false
-        }
-
-        else {
+        } else {
           this.showFooter = true
           this.showNavbar = true
           this.isNavBarRequired = true
