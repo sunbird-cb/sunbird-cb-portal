@@ -537,19 +537,22 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
           this.displayLoader = false
           // // console.log('Rating summary res ', res)
           if (res && res.result && res.result.response) {
-            this.ratingLookup = res.result.response
+            if (this.reviewPage > 1) {
+              res.result.response.map((item: any) => {
+                if (!this.ratingLookup.find((o: any) => o.updatedOnUUID === item.updatedOnUUID)) {
+                  this.ratingLookup.push(item)
+                }
+              })
+            } else {
+              this.ratingLookup = res.result.response
+            }
           }
 
-          // TODO: To be removed
-          // this.hardcodeData1()
-          this.processRatingLookup()
+          this.processRatingLookup(res.result.response)
         },
         (err: any) => {
           this.displayLoader = false
           this.logger.error('USER RATING FETCH ERROR >', err)
-          // TODO: To be removed
-          // this.hardcodeData1()
-          // this.processRatingLookup()
         }
       )
     }
@@ -612,14 +615,15 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     return ratingSummaryPr
   }
 
-  processRatingLookup() {
-    if (this.ratingLookup.length < this.lookupLimit) {
+  processRatingLookup(response: any) {
+    if (response.length < this.lookupLimit) {
       this.disableLoadMore = true
     } else {
       this.disableLoadMore = false
     }
-    this.lastLookUp = this.ratingLookup[this.ratingLookup.length - 1]
+    this.lastLookUp = response[response.length - 1]
     this.ratingReviews = this.ratingLookup
+    this.ratingReviews = this.ratingReviews.slice()
   }
 
   countStarsPercentage(value: any, total: any) {
@@ -639,6 +643,9 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     this.ratingViewCount = this.ratingViewCountDefault
     this.lastLookUp = ''
     this.ratingReviews = []
+    this.reviewPage = 1
+    this.disableLoadMore = false
+    this.ratingLookup = []
 
     if (sort === this.sortReviewValues[0]) {
       this.fetchRatingSummary()
