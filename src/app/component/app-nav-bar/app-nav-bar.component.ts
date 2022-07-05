@@ -35,7 +35,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   showAppNavBar = false
   popupTour: any
   currentRoute = 'page/home'
-  isPublicHomePage = false
+  isPublicHomePage = true
   isSetUpPage = false
   constructor(
     private domSanitizer: DomSanitizer,
