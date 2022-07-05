@@ -43,7 +43,7 @@ export class BtnPageBackComponent extends WidgetBaseComponent
   hubsList!: NsInstanceConfig.IHubs[]
   constructor(
     private btnBackSvc: BtnPageBackService,
-    private router: Router,
+    public router: Router,
     private configSvc: ConfigurationsService,
     private discussUtilitySvc: DiscussUtilsService,
   ) {
@@ -151,7 +151,8 @@ export class BtnPageBackComponent extends WidgetBaseComponent
   hasRole(role: string[]): boolean {
     let returnValue = false
     role.forEach(v => {
-      if ((this.configSvc.userRoles || new Set()).has(v)) {
+      const rolesList = (this.configSvc.userRoles || new Set())
+      if (rolesList.has(v.toLowerCase()) || rolesList.has(v.toUpperCase())) {
         returnValue = true
       }
     })
