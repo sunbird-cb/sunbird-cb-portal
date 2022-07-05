@@ -87,7 +87,9 @@ export class AppInterceptorService implements HttpInterceptor {
                   //   // tslint:disable-next-line: prefer-template
                   //   window.location.href = error.error.redirectUrl + `?q=${pageName} `
                   // }
-                  window.location.href = '/public/home'
+                  if (!window.location.href.includes('/public/home')) {
+                    window.location.href = '/public/home'
+                  }
                   // this.authSvc.force_logout()
                   break
               }
