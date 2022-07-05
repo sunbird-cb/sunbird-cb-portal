@@ -660,8 +660,13 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     this.ratingViewCount = this.ratingViewCountDefault
     this.lastLookUp = ''
     this.ratingReviews = []
+    this.reviewPage = 1
+    this.disableLoadMore = false
+    this.ratingLookup = []
     this.fetchRatingSummary()
-    this.fetchRatingLookup()
+    if (this.previousFilter !== this.sortReviewValues[0]) {
+      this.fetchRatingLookup()
+    }
   }
 
   get usr() {
