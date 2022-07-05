@@ -40,6 +40,7 @@ export class BtnPageBackComponent extends WidgetBaseComponent
   visible = false
   enablePeopleSearch = true
   environment!: any
+  loggedinUser = false
   hubsList!: NsInstanceConfig.IHubs[]
   constructor(
     private btnBackSvc: BtnPageBackService,
@@ -57,7 +58,9 @@ export class BtnPageBackComponent extends WidgetBaseComponent
       this.hubsList = (instanceConfig.hubs || []).filter(i => i.active)
     }
     this.presentUrl = this.router.url
-
+    if (this.configSvc.userProfile) {
+      this.loggedinUser = true
+    }
   }
 
   get backUrl(): { fragment?: string; routeUrl: string; queryParams: any } {
