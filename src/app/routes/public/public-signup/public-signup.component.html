@@ -213,7 +213,7 @@
                 <div class="button_box flex flex-col items-center justify-center">
                   <button mat-flat-button type="submit"
                     class="submitBtn text-white ws-mat-primary-background ws-mat-white-text"
-                    (click)="signup()" [disabled]="!registrationForm?.valid || !confirm">
+                    (click)="signup()" [disabled]="!registrationForm?.valid || !confirm || disableBtn">
                     SIGN UP
                   </button>
                 </div>
