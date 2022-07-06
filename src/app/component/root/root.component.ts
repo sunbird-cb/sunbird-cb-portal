@@ -93,8 +93,11 @@ export class RootComponent implements OnInit, AfterViewInit {
     private changeDetector: ChangeDetectorRef,
     private utilitySvc: UtilityService,
     // private dialogRef: MatDialogRef<any>,
-
   ) {
+    if (window.location.pathname.includes('/public/home')) {
+      this.customHeight = true
+    }
+
     this.mobileAppsSvc.init()
     this.openIntro()
     // if (this.authSvc.token) {
@@ -170,6 +173,9 @@ export class RootComponent implements OnInit, AfterViewInit {
     this.skipper.nativeElement.focus()
   }
   ngOnInit() {
+    if (window.location.pathname.includes('/public/home')) {
+      this.customHeight = true
+    }
     try {
       this.isInIframe = window.self !== window.top
     } catch (_ex) {
