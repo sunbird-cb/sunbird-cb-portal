@@ -166,6 +166,116 @@
                 </mat-form-field>
               </div>
               <div class="input-wrapper margin-top-s">
+                <label for="type" class=" margin-remove-bottom form-label required"
+                  i18n="Department|Label which explains the user to enter Department" i18n-aria-label
+                  aria-label="Department Field label">
+                  Center/State
+                </label>
+                <mat-radio-group #type class="margin-top-s"
+                    formControlName="type" i18n-aria-label
+                    aria-label="Signup as">
+                    <mat-radio-button class="mat-radio-button radio-select"
+                        [value]="'ministry'">
+                        Center
+                    </mat-radio-button>
+                    <mat-radio-button class="mat-radio-button radio-unselect  margin-left-s"
+                          [value]="'state'">
+                        State
+                    </mat-radio-button>
+                </mat-radio-group>
+              </div>
+              <div class="input-wrapper margin-top-s">
+                <label for="Ministry" class=" margin-remove-bottom form-label required"
+                  i18n="Ministry|Label which explains the user to enter Ministry" i18n-aria-label
+                  aria-label="Ministry Field label">
+                  {{typeValueStartCase}}
+                </label>
+                <mat-form-field appearance="outline" class="margin-top-s w-full">
+                  <input id="ministry" matInput tab-directive type="text" placeholder="Select your {{typeValue}}"
+                    i18n-placeholder="Ministry" formControlName="ministry" [matAutocomplete]="ministryAutocomplete"
+                    i18n-aria-label aria-label="Ministry" #ministry i18n-aria-label
+                    aria-label="Ministry Field input" />
+                  <mat-error [hidden]="false" i18n="Ministry Error|Explains Ministry is required"
+                    *ngIf="registrationForm?.controls['ministry'].errors?.required" i18n-aria-label
+                    aria-label="Ministry is mandatory">
+                    {{typeValueStartCase}} is mandatory
+                  </mat-error>
+                  <mat-error *ngIf="registrationForm?.controls['ministry'].errors?.forbiddenNames" i18n-aria-label
+                    aria-label="You must enter value from suggested list only.">
+                    You must enter value from suggested list only.
+                  </mat-error>
+                </mat-form-field>
+                <mat-autocomplete #ministryAutocomplete="matAutocomplete" autoActiveFirstOption="true"
+                  i18n-aria-label aria-label="Ministry list masterMinistry" [displayWith]="displayFnState"
+                  (optionSelected)="ministrySelected($event.option.value)">
+                  <mat-option *ngFor="let option of masterMinisteries| async" [value]="option" i18n-aria-label
+                    aria-label="Ministry list autocomplete option">
+                    {{ option.orgname }}
+                  </mat-option>
+                </mat-autocomplete>
+              </div>
+
+              <div class="input-wrapper margin-top-s">
+                <label for="Department" class=" margin-remove-bottom form-label"
+                  i18n="Department|Label which explains the user to enter Department" i18n-aria-label
+                  aria-label="Department Field label">
+                  Department
+                </label>
+                <mat-form-field appearance="outline" class="margin-top-s w-full">
+                  <input id="department" matInput tab-directive type="text" placeholder="Select your department"
+                    i18n-placeholder="department" formControlName="department"
+                    [matAutocomplete]="departmentAutocomplete" i18n-aria-label aria-label="Department" #department
+                    i18n-aria-label aria-label="Department Field input" />
+                  <mat-error [hidden]="false" i18n="Department Error|Explains Department is required"
+                    *ngIf="registrationForm?.controls['department'].errors?.required" i18n-aria-label
+                    aria-label="Department is mandatory">
+                    Department is mandatory
+                  </mat-error>
+                  <mat-error *ngIf="registrationForm?.controls['department'].errors?.forbiddenNames" i18n-aria-label
+                    aria-label="You must enter value from suggested list only.">
+                    You must enter value from suggested list only.
+                  </mat-error>
+                </mat-form-field>
+                <mat-autocomplete #departmentAutocomplete="matAutocomplete" autoActiveFirstOption="true"
+                  i18n-aria-label aria-label="Department list masterDepartments" [displayWith]="displayFnState"
+                  (optionSelected)="departmentSelected($event.option.value)">
+                  <mat-option *ngFor="let option of masterDepartments | async" [value]="option" i18n-aria-label
+                    aria-label="Department list autocomplete option">
+                    {{ option.orgname }}
+                  </mat-option>
+                </mat-autocomplete>
+              </div>
+
+              <div class="input-wrapper margin-top-s">
+                <label for="Organisation" class=" margin-remove-bottom form-label"
+                  i18n="Organisation|Label which explains the user to enter Organisation" i18n-aria-label
+                  aria-label="Organisation Field label">
+                  Organisation
+                </label>
+                <mat-form-field appearance="outline" class="margin-top-s w-full">
+                  <input id="Organisation" matInput tab-directive type="text" placeholder="Select your organisation"
+                    i18n-placeholder="Organisation" formControlName="organisation"
+                    [matAutocomplete]="organisationAutocomplete" i18n-aria-label aria-label="Organisation"
+                    #organisation i18n-aria-label aria-label="Organisation Field input" />
+                  <mat-error [hidden]="false" i18n="Organisation Error|Explains Organisation is required"
+                    *ngIf="registrationForm?.controls['organisation'].errors?.required" i18n-aria-label
+                    aria-label="Organisation is mandatory">
+                    Organisation is mandatory
+                  </mat-error>
+                  <mat-error *ngIf="registrationForm?.controls['organisation'].errors?.forbiddenNames" i18n-aria-label
+                    aria-label="You must enter value from suggested list only.">
+                    You must enter value from suggested list only.
+                  </mat-error>
+                </mat-form-field>
+                <mat-autocomplete #organisationAutocomplete="matAutocomplete" autoActiveFirstOption="true"
+                  i18n-aria-label aria-label="Organisation list masterStates" [displayWith]="displayFnState">
+                  <mat-option *ngFor="let option of masterOrgs | async" [value]="option" i18n-aria-label
+                    aria-label="Organisation list autocomplete option">
+                    {{ option.orgname }}
+                  </mat-option>
+                </mat-autocomplete>
+              </div>
+              <!-- <div class="input-wrapper margin-top-s">
                 <label for="department" class=" margin-remove-bottom form-label required"
                   i18n="Department|Label which explains the user to enter Department" i18n-aria-label
                   aria-label="Department Field label">
@@ -193,7 +303,7 @@
                     {{ option.channel }}
                   </mat-option>
                 </mat-autocomplete>
-              </div>
+              </div> -->
               <div class="input-wrapper margin-top-s">
                 <div class="flex flex-middle">
                   <mat-checkbox aria-label="I confirm that the above provided information are accurate." id="confirm"
