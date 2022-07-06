@@ -85,19 +85,18 @@
           *ngIf="isSetUpPage">
           <img [src]="appIcon" alt="Application Logo" class="app-logo" />
         </a>
-        <a class="logo-dim" role="link" title="Home" i18n-aria-title i18n-aria-label routerLink="/public/home"
+        <!-- <a class="logo-dim" role="link" title="Home" i18n-aria-title i18n-aria-label routerLink="/public/home"
           *ngIf="!isSetUpPage">
           <img [src]="appIcon" alt="Application Logo" class="app-logo" />
-        </a>
+        </a> -->
       </div>
 
 
     </ng-container>
-    <div class=" text-end flex flex-row signup_div" *ngIf="isPublicHomePage">
+    <!-- <div class=" text-end flex flex-row signup_div" *ngIf="isPublicHomePage">
       <a href="/protected/v8/resource" class="btn btn-link">Sign In</a>
-      <!-- <a href="/apis/public/v8/google/auth" class="btn btn-link">Sign In with P</a> -->
       <a routerLink="/public/signup" class="btn btn-primary text-center margin-left-s">Register</a>
-    </div>
+    </div> -->
   </div>
 </mat-toolbar>
 <ng-template #navbarSide let-item="item">

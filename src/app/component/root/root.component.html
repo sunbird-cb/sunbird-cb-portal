@@ -19,7 +19,8 @@
     'height-on-top':
       (isXSmall$ | async) === false &&
       showNavbar &&
-      isNavBarRequired
+      isNavBarRequired && 
+      !customHeight
   }">
   <router-outlet></router-outlet>
 </div>
