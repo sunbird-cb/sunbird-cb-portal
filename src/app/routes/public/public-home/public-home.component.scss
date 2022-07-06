@@ -7,11 +7,26 @@
     margin-bottom: 1rem;
   }
 
-  h1.title-heading {
-    font-size: 2.6875rem!important;
-    font-weight: 600;
-    line-height: 1.3;
+  p.title-heading {
+    // font-size: 2.6875rem!important;
+    // font-weight: 600;
+    // line-height: 1.3;
+    font: 600 2.6875rem/4rem Montserrat!important;
   }
+
+  p.sub-heading {
+    font:600 1.5rem/2.25rem Montserrat;
+  }
+
+  p.min-heading {
+    font: 600 1.25rem/3rem Montserrat;
+  }
+
+  p.main-text {
+    font: 400 1rem/1.5rem Lato!important;
+  }
+
+
 
 
   * img {
@@ -23,10 +38,10 @@
   html, body {
       max-width: 100%;
       height: 100%;
-      font-size: 16px;
+      // font-size: 16px;
   }
   body {
-      font-family: 'latoregular';
+      // font-family: 'latoregular';
       color: rgba(0, 0, 0, .9);
       background-color: #ffffff;
       margin: 0;

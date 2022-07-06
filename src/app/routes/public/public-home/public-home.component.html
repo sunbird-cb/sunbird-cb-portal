@@ -14,8 +14,8 @@
     <div class="container container-balanced">
       <div class="items-center justify-between mainContent grid-cols-2 grid">
         <div class="content">
-          <h1 class="mb-4 title-heading">Learn. Network. Grow your career.</h1>
-          <p class="mb-12">Gain skills to rocket your career growth. Connect with civil servants and experts to learn and discover new opportunities in the Indian civil services.</p>
+          <p class="mb-4 title-heading">Learn. Network. Grow your career.</p>
+          <p class="mb-12 main-text">Gain skills to rocket your career growth. Connect with civil servants and experts to learn and discover new opportunities in the Indian civil services.</p>
           <div class="d-block float-left mb-12 mt-10 ">
             <a routerLink="/public/signup"  class="btn btn-secondary mr-4">Register</a>
             <!-- <button mat-raised-button color="primary" class="me-2">Register</button>
@@ -34,12 +34,12 @@
 
       <div class="analyticsRecord">
         <div class="flex flex-col">
-          <h1 class="mb-12 text-center">Learn and network with civil servants and subject matter experts across India</h1>
+          <p class="mb-12 text-center sub-heading">Learn and network with civil servants and subject matter experts across India</p>
           <div class="grid-cols-4 grid recordBox">
               <div class="listInfo" *ngFor="let content of learnNetworkSection">
                 <div class="icon"><img src="{{content?.image}}" alt="icon"></div>
-                <h1 class="my-6">{{content?.count}}</h1>
-                <p class="m-0">{{content?.title}}</p>
+                <p class="my-6 sub-heading">{{content?.count}}</p>
+                <p class="m-0 main-text">{{content?.title}}</p>
               </div>
           </div>
           <!-- <div class="grid-cols-4 grid recordBox">
@@ -80,7 +80,7 @@
     <div class="container container-balanced">
       <div class="row">
         <div class="servicesTab">
-        <h1 class="text-white text-center mt-12 pt-12">How does the platform enable you to become the best version of yourself?</h1>
+        <p class="text-white text-center mt-12 pt-12 sub-heading">How does the platform enable you to become the best version of yourself?</p>
 
         <mat-tab-group mat-align-tabs="center" [disableRipple]=true color="transparent">
           <mat-tab label="An experienced civil servant" class="nav-link">
@@ -163,8 +163,8 @@
       <div class="flex flex-row w-100">
       <!-- <div class="grid-cols-1 grid"> -->
         <div class="flex flex-column justify-center items-center journeyContent">
-          <h1 class="mb-3">Start your learning journey </h1>
-          <p>Are you a government official without an iGOT Karmayogi account yet? Start here.</p>
+          <p class="mb-3 sub-heading">Start your learning journey </p>
+          <p class="main-text">Are you a government official without an iGOT Karmayogi account yet? Start here.</p>
           <div class="mt-2"><a routerLink="/public/signup" class="btn btn-primary">Register</a> </div>
         </div>
       <!-- </div> -->
@@ -174,48 +174,48 @@
   <section class="solutionService pt-24 pb-24">
     <div class="container container-balanced">
       <div class="row">
-        <h1 class=" text-center">Solutioning space for all of Government</h1>
+        <p class=" text-center sub-heading mb-3">Solutioning space for all of Government</p>
         <div class="grid-cols-3 grid gap-4 mt-8 solutionServiceInner" >
         <div class="">
           <div class="servicesItem learning">
             <div class="icon"><img src="/assets/instances/eagle/landing-img/Learn.svg" alt="learning icon"></div>
-            <h2 class="ws-mat-primary-default-text">Learning hub</h2>
-            <p>Learn anywhere, anytime and bridge your competency gaps using impactful and engaging learning content.</p>
+            <p class="ws-mat-primary-default-text min-heading ">Learning hub</p>
+            <p class="main-text">Learn anywhere, anytime and bridge your competency gaps using impactful and engaging learning content.</p>
           </div>
         </div>
         <div class="">
           <div class="servicesItem discussion">
             <div class="icon"><img src="/assets/instances/eagle/landing-img/discussionIcon.svg" alt="Discussion icon"></div>
-            <h2 class="ws-mat-primary-default-text">Discussion hub</h2>
-            <p>Discuss and learn with peers, colleagues, civil servants and experts across the country.</p>
+            <p class="ws-mat-primary-default-text min-heading">Discussion hub</p>
+            <p class="main-text">Discuss and learn with peers, colleagues, civil servants and experts across the country.</p>
           </div>
         </div>
         <div class="">
           <div class="servicesItem user">
             <div class="icon"><img src="/assets/instances/eagle/landing-img/userIcon.svg" alt="User icon"></div>
-            <h2 class="ws-mat-primary-default-text">Network hub</h2>
-            <p>Connect with civil servants across the country. Grow your network within government circles.</p>
+            <p class="ws-mat-primary-default-text min-heading">Network hub</p>
+            <p class="main-text">Connect with civil servants across the country. Grow your network within government circles.</p>
           </div>
         </div>
         <div class="">
           <div class="servicesItem competency">
             <div class="icon"><img src="/assets/instances/eagle/landing-img/competencyIcon.svg" alt="competency icon"></div>
-            <h2 class="ws-mat-primary-default-text">Competency hub</h2>
-            <p>Identify your competency requirements, competency gaps, so you can grow faster in the right direction.</p>
+            <p class="ws-mat-primary-default-text min-heading">Competency hub</p>
+           <p class="main-text">Identify your competency requirements, competency gaps, so you can grow faster in the right direction.</p>
           </div>
         </div>
         <div class="">
           <div class="servicesItem career">
             <div class="icon"><img src="/assets/instances/eagle/landing-img/careerIcon.svg" alt="career icon"></div>
-            <h2 class="ws-mat-primary-default-text">Career hub</h2>
-            <p> Explore career opportunities across the country and signal your expertise.</p>
+            <p class="ws-mat-primary-default-text min-heading">Career hub</p>
+           <p class="main-text"> Explore career opportunities across the country and signal your expertise.</p>
           </div>
         </div>
         <div class="">
           <div class="servicesItem event">
             <div class="icon"><img src="/assets/instances/eagle/landing-img/eventIcon.svg" alt="event icon"></div>
-            <h2 class="ws-mat-primary-default-text"> Events hub</h2>
-            <p>Join online and in-person events to break silos and share ideas.</p>
+            <p class="ws-mat-primary-default-text min-heading"> Events hub</p>
+           <p class="main-text">Join online and in-person events to break silos and share ideas.</p>
           </div>
         </div>
       </div>
@@ -226,7 +226,7 @@
     <div class="container container-balanced">
       <div class="flex flex-row items-center justify-center">
         <div class="grid-cols-1 grid">
-          <h1 class="mb-3 text-center">Walkthrough of the iGOT Karmayogi Portal</h1>
+          <p class="mb-3 text-center sub-heading ">Walkthrough of the iGOT Karmayogi Portal</p>
           <div class="walkthroughVideo text-center mt-4">
             <!-- <img src="/assets/instances/eagle/landing-img/walkthroughImg.svg" alt="video image"> -->
             <video width="100%" height="auto" controls>
@@ -243,7 +243,7 @@
       <div class="flex flex-row justify-center  items-center ">
         <div class="grid-cols-1 grid">
           <div class="growthHub  text-center">
-            <h1 class="pb-2">Learn. Network. Take your career growth to the next level.</h1>
+            <p class="pb-2 sub-heading ">Learn. Network. Take your career growth to the next level.</p>
            <div class=""><a routerLink="/public/signup" class="btn btn-primary">Register</a> </div>
           </div>
         </div>
