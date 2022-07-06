@@ -67,7 +67,7 @@ export class RootComponent implements OnInit, AfterViewInit {
   showNavbar = true
   showFooter = true
   currentUrl!: string
-  customHeight = true
+  customHeight = false
   isNavBarRequired = true
   isInIframe = false
   appStartRaised = false
@@ -206,7 +206,7 @@ export class RootComponent implements OnInit, AfterViewInit {
         this.routeChangeInProgress = false
         this.currentUrl = event.url
         if (this.currentUrl.includes('/public/home')) {
-          this.customHeight = false
+          this.customHeight = true
         }
         if (!!this.currentUrl.startsWith('/public/logout') || !!this.currentUrl.startsWith('/public/signup')) {
           this.showFooter = false
