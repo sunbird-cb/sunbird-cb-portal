@@ -23,6 +23,7 @@ import { PublicLogoutComponent } from './routes/public/public-logout/public-logo
 import { PublicSignupComponent } from './routes/public/public-signup/public-signup.component'
 import { PublicHomeComponent } from './routes/public/public-home/public-home.component'
 import { PublicContacthomeComponent } from './routes/public/public-contacthome/public-contacthome.component'
+import { PublicLoginWComponent } from './routes/public/public-login-w/public-login-w.component'
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
 // Please declare routes in alphabetical order
@@ -714,6 +715,10 @@ const routes: Routes = [
   {
     path: 'public/home',
     component: PublicHomeComponent,
+  },
+  {
+    path: 'public/sso',
+    component: PublicLoginWComponent
   },
   {
     path: 'public/signup',
