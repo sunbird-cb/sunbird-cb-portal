@@ -32,10 +32,10 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   isHelpMenuRestricted = false
   isTourGuideAvailable = false
   isTourGuideClosed = false
-  showAppNavBar = true
+  showAppNavBar = false
   popupTour: any
   currentRoute = 'page/home'
-  isPublicHomePage = true
+  isPublicHomePage = false
   isSetUpPage = false
   constructor(
     private domSanitizer: DomSanitizer,
