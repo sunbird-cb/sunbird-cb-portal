@@ -5,6 +5,7 @@ import { ConfigurationsService, AuthKeycloakService } from '@sunbird-cb/utils'
 import { catchError } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { NOTIFICATION_TIME } from '@sunbird-cb/collection/src/lib/_common/ck-editor/constants/constant'
+import { Router } from '@angular/router'
 // import 'rxjs/add/operator/do'
 
 @Injectable({
@@ -15,6 +16,7 @@ export class AppInterceptorService implements HttpInterceptor {
     private configSvc: ConfigurationsService,
     private snackBar: MatSnackBar,
     private authSvc: AuthKeycloakService,
+    private router: Router,
     @Inject(LOCALE_ID) private locale: string,
   ) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -89,7 +91,8 @@ export class AppInterceptorService implements HttpInterceptor {
                   //   window.location.href = error.error.redirectUrl + `?q=${pageName} `
                   // }
                   if (!window.location.href.includes('/public/home')) {
-                    window.location.href = '/public/home'
+                    this.router.navigate(['public', 'home'])
+                    // window.location.href = '/public/home'
                   }
                   // this.authSvc.force_logout()
                   break

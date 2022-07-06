@@ -398,24 +398,23 @@
                             </div>
                         </ng-container>
                     </div> -->
-                    <div class="rating-comments" *ngIf="ratingReviews; else ">
+                    <div class="rating-comments" *ngIf="ratingReviews">
                         <div infiniteScroll
-                        [infiniteScrollDistance]="2"
-                        [infiniteScrollThrottle]="50"
+                        [infiniteScrollDistance]="1"
+                        [infiniteScrollThrottle]="150"
                         [infiniteScrollContainer]="'.rating-comments'"
                         [fromRoot]="true"
                         [scrollWindow]="false"
                         (scrolled)="loadMore()">
                             <ng-container *ngFor="let c of ratingReviews| 
-                            pipeFilterV3:{ 'user_id': searchKey.value, 'review': searchKey.value } : false |
-                            slice:0:ratingViewCount; let i= index; let last = last">
+                            pipeFilterV3:{ 'firstName': searchKey.value, 'lastName': searchKey.value, 'review': searchKey.value } : false; let i= index; let last = last">
                                 <ws-widget-card-rating-comment [review]="c"></ws-widget-card-rating-comment>
                             </ng-container>
                         </div>
                         <div *ngIf="displayLoader" class="mt-5 pr-4 flex items-center justify-center">
                             <mat-spinner [diameter]="30"></mat-spinner>
                         </div>
-                        <h4 *ngIf="(ratingReviews | pipeFilterV3:{ 'user_id': searchKey.value, 'review': searchKey.value } : false)?.length <=0 
+                        <h4 *ngIf="(ratingReviews | pipeFilterV3:{ 'firstName': searchKey.value, 'lastName': searchKey.value, 'review': searchKey.value } : false)?.length <=0 
                         && (displayLoader  === false)" class="w-full text-left ws-mat-black60-text ">
                             No reviews found! 
                          </h4>

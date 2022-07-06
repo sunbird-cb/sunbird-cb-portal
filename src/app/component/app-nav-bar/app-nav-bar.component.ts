@@ -3,7 +3,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { IBtnAppsConfig, CustomTourService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, NsInstanceConfig, NsPage } from '@sunbird-cb/utils'
-import { Router, NavigationStart, NavigationEnd, Event } from '@angular/router'
+import { Router, NavigationStart, NavigationEnd } from '@angular/router'
 
 @Component({
   selector: 'ws-app-nav-bar',
@@ -32,10 +32,10 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   isHelpMenuRestricted = false
   isTourGuideAvailable = false
   isTourGuideClosed = false
-  showAppNavBar = false
+  showAppNavBar = true
   popupTour: any
   currentRoute = 'page/home'
-  isPublicHomePage = false
+  isPublicHomePage = true
   isSetUpPage = false
   constructor(
     private domSanitizer: DomSanitizer,
@@ -51,36 +51,15 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       if (event instanceof NavigationStart) {
         this.cancelTour()
       } else if (event instanceof NavigationEnd) {
+        this.routeSubs(event)
         this.cancelTour()
         this.bindUrl(event.url.replace('/app/competencies/', ''))
       }
     })
+
   }
 
   ngOnInit() {
-    this.router.events.subscribe((e: Event) => {
-      if (e instanceof NavigationEnd) {
-        if (e.url.includes('/app/setup')) {
-          this.isSetUpPage = true
-        } else {
-          this.isSetUpPage = false
-        }
-
-        if (e.url.includes('/public/logout') || e.url.includes('/public/home')) {
-          this.showAppNavBar = false
-          if (e.url.includes('/public/home')) {
-            this.isPublicHomePage = true
-          } else {
-            this.isPublicHomePage = false
-          }
-        } else if ((e.url.includes('/app/setup') && this.configSvc.instanceConfig && !this.configSvc.instanceConfig.showNavBarInSetup)) {
-          this.showAppNavBar = false
-        } else {
-          this.showAppNavBar = true
-        }
-      }
-    })
-
     if (this.configSvc.instanceConfig) {
       this.appIcon = this.domSanitizer.bypassSecurityTrustResourceUrl(
         this.configSvc.instanceConfig.logos.app,
@@ -111,7 +90,30 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       }
     })
   }
+  routeSubs(e: NavigationEnd) {
+    // this.router.events.subscribe((e: Event) => {
+    //   if (e instanceof NavigationEnd) {
+    if (e.url.includes('/app/setup')) {
+      this.isSetUpPage = true
+    } else {
+      this.isSetUpPage = false
+    }
 
+    if (e.url.includes('/public/logout') || e.url.includes('/public/home') || e.url.includes('/public/sso')) {
+      this.showAppNavBar = false
+      if (e.url.includes('/public/home')) {
+        this.isPublicHomePage = true
+      } else {
+        this.isPublicHomePage = false
+      }
+    } else if ((e.url.includes('/app/setup') && this.configSvc.instanceConfig && !this.configSvc.instanceConfig.showNavBarInSetup)) {
+      this.showAppNavBar = false
+    } else {
+      this.showAppNavBar = true
+    }
+    //   }
+    // })
+  }
   ngOnChanges(changes: SimpleChanges) {
     for (const property in changes) {
       if (property === 'mode') {
