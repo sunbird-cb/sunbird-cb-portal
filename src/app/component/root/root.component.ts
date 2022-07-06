@@ -64,10 +64,10 @@ export class RootComponent implements OnInit, AfterViewInit {
 
   isXSmall$ = this.valueSvc.isXSmall$
   routeChangeInProgress = false
-  showNavbar = false
-  showFooter = false
+  showNavbar = true
+  showFooter = true
   currentUrl!: string
-  isNavBarRequired = false
+  isNavBarRequired = true
   isInIframe = false
   appStartRaised = false
   isSetupPage = false
