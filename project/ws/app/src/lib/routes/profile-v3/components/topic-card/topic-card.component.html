@@ -22,6 +22,13 @@
           </span>
         </div>
       </ng-container>
+      <ng-container *ngIf="topic?.children?.length > 6 && show >= topic?.children?.length">
+        <div class="flex flex-1 margin-top-xs">
+          <span (click)="showLess()" class="cursor-pointer ws-mat-accent-text margin-auto">
+            SEE LESS
+          </span>
+        </div>
+      </ng-container>
     </div>
   </ng-container>
 
