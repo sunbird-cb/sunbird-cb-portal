@@ -66,8 +66,4 @@ export class TopicCardComponent implements OnInit {
   showMore() {
     this.show += 10
   }
-
-  showLess(){
-    this.show = 6
-  }
 }
