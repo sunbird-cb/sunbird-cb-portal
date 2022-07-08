@@ -12,18 +12,54 @@ import { DOCUMENT, isPlatformBrowser } from '@angular/common'
 // tslint:disable-next-line: import-name
 import _ from 'lodash'
 
+// export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
+//   return (control: AbstractControl): { [key: string]: any } | null => {
+//     if (!optionsArray) {
+//       return null
+//       // tslint:disable-next-line: no-else-after-return
+//     } else {
+//       const index = optionsArray.findIndex((op: any) => {
+//         // tslint:disable-next-line: prefer-template
+//         // return new RegExp('^' + op.channel + '$').test(control.channel)
+//         // return op.channel === control.value.channel
+//         return op.channel === control.value.channel
+//       })
+//       return index < 0 ? { forbiddenNames: { value: control.value.channel } } : null
+//     }
+//   }
+// }
+
 export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     if (!optionsArray) {
       return null
       // tslint:disable-next-line: no-else-after-return
     } else {
-      const index = optionsArray.findIndex((op: any) => {
-        // tslint:disable-next-line: prefer-template
-        // return new RegExp('^' + op.channel + '$').test(control.channel)
-        return op.channel === control.value.channel
-      })
-      return index < 0 ? { forbiddenNames: { value: control.value.channel } } : null
+      if (control.value) {
+        const index = optionsArray.findIndex((op: any) => {
+          // tslint:disable-next-line: prefer-template
+          // return new RegExp('^' + op.orgname + '$').test(control.orgname)
+          return op.orgname === control.value.orgname
+        })
+        return index < 0 ? { forbiddenNames: { value: control.value.orgname } } : null
+      }
+      return null
+    }
+  }
+}
+
+export function forbiddenNamesValidatorNonEmpty(optionsArray: any): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    if (!optionsArray) {
+      return null
+      // tslint:disable-next-line: no-else-after-return
+    } else {
+        const index = optionsArray.findIndex((op: any) => {
+          // tslint:disable-next-line: prefer-template
+          // return new RegExp('^' + op.orgname + '$').test(control.orgname)
+          return op.orgname === control.value.orgname
+        })
+        return index < 0 ? { forbiddenNames: { value: control.value.orgname } } : null
     }
   }
 }
@@ -64,6 +100,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   portalID = ''
   confirm = false
   disableBtn = false
+  orgRequired = false
   ministeries: any[] = []
   masterMinisteries!: Observable<any> | undefined
   orgs: any[] = []
@@ -116,7 +153,19 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       if (value) {
         this.fetchDropDownValues(value)
       }
-  })
+    })
+
+    // tslint:disable-next-line: no-non-null-assertion
+    this.registrationForm.get('department')!.valueChanges.subscribe((value: any) => {
+      if (!value) {
+        this.orgRequired = false
+        // tslint:disable-next-line: no-non-null-assertion
+        this.registrationForm.get('organisation')!.setValidators([forbiddenNamesValidator(this.orgs)])
+        // tslint:disable-next-line: no-non-null-assertion
+        this.registrationForm.get('organisation')!.setValue('')
+        this.registrationForm.updateValueAndValidity()
+      }
+    })
   }
 
   get typeValueStartCase() {
@@ -206,12 +255,11 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         map(orgname => orgname ? this.filterOrgs(orgname) : this.orgs.slice())
       )
 
-    this.masterOrgs.subscribe((event: any) => {
+    this.masterOrgs.subscribe((_event: any) => {
       // tslint:disable-next-line: no-non-null-assertion
-      this.registrationForm.get('organisation')!.setValidators([forbiddenNamesValidator(event)])
+      // this.registrationForm.get('organisation')!.setValidators([forbiddenNamesValidator(event)])
       // tslint:disable-next-line: no-non-null-assertion
       // this.registrationForm.get('organisation')!.setValidators(null)
-      this.registrationForm.updateValueAndValidity()
     })
   }
 
@@ -388,9 +436,22 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         if (res && res.result && res.result && res.result.response && res.result.response.content) {
           this.orgs = res.result.response.content
 
+           // If value in department is NA then make the organisation field as required
+            // tslint:disable-next-line: no-non-null-assertion
+            // const value = this.registrationForm.get('department')!.value
+            if (value && (value.orgname === 'NA' || value.orgname === 'na')) {
+              this.orgRequired = true
+              // tslint:disable-next-line: no-non-null-assertion
+              this.registrationForm.get('organisation')!.setValidators([Validators.required, forbiddenNamesValidatorNonEmpty(this.orgs)])
+            } else {
+              this.orgRequired = false
+              // tslint:disable-next-line: no-non-null-assertion
+              this.registrationForm.get('organisation')!.setValidators([forbiddenNamesValidator(this.orgs)])
+            }
           // to reset organisation values when department is changed
           // tslint:disable-next-line: no-non-null-assertion
           this.registrationForm.get('organisation')!.setValue('')
+          this.registrationForm.updateValueAndValidity()
           this.onOrgsChange()
         }
       })
