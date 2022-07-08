@@ -57,7 +57,7 @@
                 <mat-card class="learn-card margin-bottom-m padding-remove position-relative"
                     *ngFor="let content of searchResults" (click)="raiseTelemetry(content)">
                     <div class="imageholder float-left">
-                        <img mat-card-image class="margin-remove" [src]="content.posterImage"
+                        <img mat-card-image class="margin-remove" [src]="content.posterImage | pipePublicURL"
                             [wsUtilsDefaultThumbnail]="defaultThumbnail" alt="">
                     </div>
                     <mat-card-content>

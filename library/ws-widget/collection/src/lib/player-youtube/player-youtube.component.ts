@@ -232,7 +232,7 @@ export class PlayerYoutubeComponent extends WidgetBaseComponent
         this.videoTag.nativeElement,
         {
           ...videoJsOptions,
-          poster: this.widgetData.posterImage,
+          poster: this.viewerSvc.getPublicUrl(this.widgetData.posterImage || ''),
           sources: [
             {
               type: 'video/youtube',

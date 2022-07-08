@@ -345,13 +345,14 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
     //   duration: collection.duration,
     //   redirectUrl: this.getCollectionTypeRedirectUrl(collection.displayContentType, collection.identifier),
     // }
+    const img = collection.posterImage ? collection.posterImage : collection.appIcon
     return {
       type: this.getCollectionTypeCard(collection.primaryCategory),
       id: collection.identifier,
       title: collection.name,
       thumbnail: this.forPreview
-        ? this.viewSvc.getAuthoringUrl(collection.appIcon)
-        : collection.appIcon,
+        ? this.viewSvc.getAuthoringUrl(this.viewSvc.getPublicUrl(img))
+        : this.viewSvc.getPublicUrl(img),
       subText1: collection.primaryCategory,
       subText2: collection.difficultyLevel,
       duration: collection.duration,

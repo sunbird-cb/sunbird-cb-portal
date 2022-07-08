@@ -23,6 +23,7 @@ import {
   PipeLimitToModule,
   DefaultThumbnailModule,
   PipePartialContentModule,
+  PipePublicURLModule,
 } from '@sunbird-cb/utils'
 
 import {
@@ -65,6 +66,7 @@ import { ViewerTopBarModule } from './components/viewer-top-bar/viewer-top-bar.m
     ErrorResolverModule,
     PipeDurationTransformModule,
     PipeLimitToModule,
+    PipePublicURLModule,
     DefaultThumbnailModule,
     BtnPageBackModule,
     BtnFullscreenModule,

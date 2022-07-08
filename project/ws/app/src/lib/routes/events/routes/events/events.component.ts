@@ -123,7 +123,8 @@ export class EventsComponent implements OnInit {
         this.allEvents['featuredEvents'] = []
         Object.keys(data).forEach((index: any) => {
             const obj = data[index]
-            const expiryDateFormat = this.customDateFormat(obj.startDate, obj.startTime)
+            const expiryStartTimeFormat = this.customDateFormat(obj.startDate, obj.startTime)
+            const expiryEndTimeFormat = this.customDateFormat(obj.startDate, obj.endTime)
             const floor = Math.floor
             const hours = floor(obj.duration / 60)
             const minutes = obj.duration % 60
@@ -153,12 +154,13 @@ export class EventsComponent implements OnInit {
                 eventCreatedOn: this.allEventDateFormat(obj.createdOn),
                 eventDuration: duration,
                 eventjoined: creatorDetails.length,
-                eventThumbnail: obj.appIcon && (obj.appIcon !== null || obj.appIcon !== undefined) ? obj.appIcon :
+                eventThumbnail: obj.appIcon && (obj.appIcon !== null || obj.appIcon !== undefined) ?
+                this.eventSvc.getPublicUrl(obj.appIcon) :
                 '/assets/icons/Events_default.png',
                 pastevent: false,
             }
             this.allEvents['all'].push(eventDataObj)
-            const isToday = this.compareDate(expiryDateFormat, obj.startDate)
+            const isToday = this.compareDate(expiryStartTimeFormat, obj.startDate, expiryEndTimeFormat)
             if (isToday) {
               this.allEvents['todayEvents'].push(eventDataObj)
             }
@@ -168,10 +170,10 @@ export class EventsComponent implements OnInit {
 
             const now = new Date()
             const today = moment(now).format('YYYY-MM-DD HH:mm')
-            if (expiryDateFormat < today) {
+            if (expiryStartTimeFormat < today) {
               eventDataObj.pastevent = true
             }
-            // const isPast = this.compareDate(expiryDateFormat);
+            // const isPast = this.compareDate(expiryStartTimeFormat);
             // (!isPast) ? this.allEvents['all'].push(eventDataObj) : this.allEvents['todayEvents'].push(eventDataObj)
         })
         this.filter('all')
@@ -225,7 +227,7 @@ export class EventsComponent implements OnInit {
       }
   }
 
-  compareDate(selectedDate: any, startDate: any) {
+  compareDate(startime: any, startDate: any, endtime: any) {
     const now = new Date()
     const today = moment(now).format('YYYY-MM-DD HH:mm')
 
@@ -235,7 +237,14 @@ export class EventsComponent implements OnInit {
     // tslint:disable-next-line:prefer-template
     const month = ('0' + (now.getMonth() + 1)).slice(-2)
     const todaysdate = `${year}-${month}-${day}`
-    return (startDate === todaysdate && selectedDate > today) ? true : false
+    // return (startDate === todaysdate && (startime >= today || endtime <= today)) ? true : false
+    if (startDate === todaysdate && startime > today)  {
+      return true
+    }
+    if (startDate === todaysdate && (today >= startime && today <= endtime))  {
+      return true
+    }
+    return false
   }
 
   allEventDateFormat(datetime: any) {

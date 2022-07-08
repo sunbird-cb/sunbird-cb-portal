@@ -23,6 +23,16 @@
       white-space: break-spaces !important;
     }
 
+    .mat-radio-button {
+        padding: 10px 10px;
+        border-radius: 5px;
+        border: 2px solid rgba(0, 0, 0, 0.16);
+        background: #fff;
+    }
+    .mat-radio-button.mat-radio-checked {
+        border: 2px solid #0174b6;
+        background: #f2f8fb!important;
+    }
 
 
     .submitBtn:disabled,
@@ -392,9 +402,9 @@
       }
     }
 
-    .mat-form-field-wrapper{
+    // .mat-form-field-wrapper{
 
-    }
+    // }
 
 
     .combined-field {
@@ -772,6 +782,11 @@
         }
       }
     }
-
   }
 
+// only show recaptcha badge on needed pages
+::ng-deep.cs-recaptcha {
+  .grecaptcha-badge {
+    visibility: visible !important;
+  }
+}

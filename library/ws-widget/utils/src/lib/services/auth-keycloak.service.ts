@@ -167,6 +167,8 @@ export class AuthKeycloakService {
   async force_logout() {
     if (storage.getItem('telemetrySessionId')) {
       storage.removeItem('telemetrySessionId')
+    } else {
+      window.location.href = '/public/home'
     }
     try {
       sessionStorage.clear()

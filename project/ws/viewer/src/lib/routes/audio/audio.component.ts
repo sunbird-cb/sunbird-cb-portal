@@ -73,7 +73,8 @@ export class AudioComponent implements OnInit, OnDestroy {
           // if (this.audioData) {
           //   this.widgetResolverAudioData.widgetData.url = this.audioData.artifactUrl
           // }
-          this.widgetResolverAudioData.widgetData.url = this.generateUrl(this.audioData.artifactUrl)
+          const url = this.generateUrl(this.audioData.artifactUrl)
+          this.widgetResolverAudioData.widgetData.url = this.viewerSvc.getPublicUrl(url)
           this.widgetResolverAudioData.widgetData.disableTelemetry = true
           this.isFetchingDataComplete = true
 
@@ -155,7 +156,8 @@ export class AudioComponent implements OnInit, OnDestroy {
           //     : this.audioData.artifactUrl
           //   : ''
           if (this.audioData) {
-            this.widgetResolverAudioData.widgetData.url = this.audioData.artifactUrl
+            // tslint:disable-next-line: max-line-length
+            this.widgetResolverAudioData.widgetData.url = this.viewerSvc.getPublicUrl(this.audioData.artifactUrl) || this.audioData.artifactUrl
           }
           this.widgetResolverAudioData.widgetData.identifier = this.audioData
             ? this.audioData.identifier

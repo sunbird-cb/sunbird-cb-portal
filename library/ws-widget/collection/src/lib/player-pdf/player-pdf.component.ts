@@ -20,7 +20,6 @@ import { NsContent } from '../_services/widget-content.model'
 import { WidgetContentService } from '../_services/widget-content.service'
 import { IWidgetsPlayerPdfData } from './player-pdf.model'
 import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
-
 const pdfjsViewer = require('pdfjs-dist/web/pdf_viewer')
 @Component({
   selector: 'ws-widget-player-pdf',
@@ -172,7 +171,9 @@ export class PlayerPdfComponent extends WidgetBaseComponent
       e.preventDefault(),
     )
     if (this.widgetData && this.widgetData.pdfUrl) {
-      this.loadDocument(this.widgetData.pdfUrl)
+      // this.loadDocument(this.widgetData.pdfUrl)
+      const publicUrl = this.viewerSvc.getPublicUrl(this.widgetData.pdfUrl)
+      this.loadDocument(publicUrl)
       if (this.widgetData.identifier) {
         this.identifier = this.widgetData.identifier
       }
