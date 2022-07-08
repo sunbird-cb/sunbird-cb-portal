@@ -123,8 +123,7 @@ export class EventsComponent implements OnInit {
         this.allEvents['featuredEvents'] = []
         Object.keys(data).forEach((index: any) => {
             const obj = data[index]
-            const expiryStartTimeFormat = this.customDateFormat(obj.startDate, obj.startTime)
-            const expiryEndTimeFormat = this.customDateFormat(obj.startDate, obj.endTime)
+            const expiryDateFormat = this.customDateFormat(obj.startDate, obj.startTime)
             const floor = Math.floor
             const hours = floor(obj.duration / 60)
             const minutes = obj.duration % 60
@@ -160,7 +159,7 @@ export class EventsComponent implements OnInit {
                 pastevent: false,
             }
             this.allEvents['all'].push(eventDataObj)
-            const isToday = this.compareDate(expiryStartTimeFormat, obj.startDate, expiryEndTimeFormat)
+            const isToday = this.compareDate(expiryDateFormat, obj.startDate)
             if (isToday) {
               this.allEvents['todayEvents'].push(eventDataObj)
             }
@@ -170,10 +169,10 @@ export class EventsComponent implements OnInit {
 
             const now = new Date()
             const today = moment(now).format('YYYY-MM-DD HH:mm')
-            if (expiryStartTimeFormat < today) {
+            if (expiryDateFormat < today) {
               eventDataObj.pastevent = true
             }
-            // const isPast = this.compareDate(expiryStartTimeFormat);
+            // const isPast = this.compareDate(expiryDateFormat);
             // (!isPast) ? this.allEvents['all'].push(eventDataObj) : this.allEvents['todayEvents'].push(eventDataObj)
         })
         this.filter('all')
@@ -227,7 +226,7 @@ export class EventsComponent implements OnInit {
       }
   }
 
-  compareDate(startime: any, startDate: any, endtime: any) {
+  compareDate(selectedDate: any, startDate: any) {
     const now = new Date()
     const today = moment(now).format('YYYY-MM-DD HH:mm')
 
@@ -237,14 +236,7 @@ export class EventsComponent implements OnInit {
     // tslint:disable-next-line:prefer-template
     const month = ('0' + (now.getMonth() + 1)).slice(-2)
     const todaysdate = `${year}-${month}-${day}`
-    // return (startDate === todaysdate && (startime >= today || endtime <= today)) ? true : false
-    if (startDate === todaysdate && startime > today)  {
-      return true
-    }
-    if (startDate === todaysdate && (today >= startime && today <= endtime))  {
-      return true
-    }
-    return false
+    return (startDate === todaysdate && selectedDate > today) ? true : false
   }
 
   allEventDateFormat(datetime: any) {

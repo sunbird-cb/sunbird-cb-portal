@@ -64,11 +64,10 @@ export class RootComponent implements OnInit, AfterViewInit {
 
   isXSmall$ = this.valueSvc.isXSmall$
   routeChangeInProgress = false
-  showNavbar = true
-  showFooter = true
+  showNavbar = false
+  showFooter = false
   currentUrl!: string
-  customHeight = false
-  isNavBarRequired = true
+  isNavBarRequired = false
   isInIframe = false
   appStartRaised = false
   isSetupPage = false
@@ -93,11 +92,8 @@ export class RootComponent implements OnInit, AfterViewInit {
     private changeDetector: ChangeDetectorRef,
     private utilitySvc: UtilityService,
     // private dialogRef: MatDialogRef<any>,
-  ) {
-    if (window.location.pathname.includes('/public/home')) {
-      this.customHeight = true
-    }
 
+  ) {
     this.mobileAppsSvc.init()
     this.openIntro()
     // if (this.authSvc.token) {
@@ -173,9 +169,6 @@ export class RootComponent implements OnInit, AfterViewInit {
     this.skipper.nativeElement.focus()
   }
   ngOnInit() {
-    if (window.location.pathname.includes('/public/home')) {
-      this.customHeight = true
-    }
     try {
       this.isInIframe = window.self !== window.top
     } catch (_ex) {
@@ -211,9 +204,6 @@ export class RootComponent implements OnInit, AfterViewInit {
       ) {
         this.routeChangeInProgress = false
         this.currentUrl = event.url
-        if (this.currentUrl.includes('/public/home')) {
-          this.customHeight = true
-        }
         if (!!this.currentUrl.startsWith('/public/logout') || !!this.currentUrl.startsWith('/public/signup')) {
           this.showFooter = false
           this.showNavbar = false
