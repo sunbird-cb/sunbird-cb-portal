@@ -51,8 +51,7 @@ export class CardWelcomeComponent extends WidgetBaseComponent
   hasRole(role: string[]): boolean {
     let returnValue = false
     role.forEach(v => {
-      const rolesList = (this.configSvc.userRoles || new Set())
-      if (rolesList.has(v.toLowerCase()) || rolesList.has(v.toUpperCase())) {
+      if ((this.configSvc.userRoles || new Set()).has(v)) {
         returnValue = true
       }
     })
