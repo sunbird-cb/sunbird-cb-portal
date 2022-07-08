@@ -153,7 +153,19 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       if (value) {
         this.fetchDropDownValues(value)
       }
-  })
+    })
+
+    // tslint:disable-next-line: no-non-null-assertion
+    this.registrationForm.get('department')!.valueChanges.subscribe((value: any) => {
+      if (!value) {
+        this.orgRequired = false
+        // tslint:disable-next-line: no-non-null-assertion
+        this.registrationForm.get('organisation')!.setValidators([forbiddenNamesValidator(this.orgs)])
+        // tslint:disable-next-line: no-non-null-assertion
+        this.registrationForm.get('organisation')!.setValue('')
+        this.registrationForm.updateValueAndValidity()
+      }
+    })
   }
 
   get typeValueStartCase() {
