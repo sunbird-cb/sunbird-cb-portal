@@ -1,8 +1,8 @@
-<div class="top_footer_box"  *ngIf="currentRoute !== 'all/assessment'" >
+<div class="top_footer_box" *ngIf="currentRoute !== 'all/assessment'">
   <div class="top_footer_inner flex flex-row justify-between">
     <div class="flex flex-col justify-start">
       <p class="footer_heading mat-subheading-1 margin-bottom-m">Hubs</p>
-      <ng-container *ngFor="let hub of hubsList">
+      <ng-container *ngFor="let hub of (hubsList || [])">
         <ng-container *ngIf="hub.hubname == 'Discuss'">
           <a class="footer_sub_text mat-body cursor-pointer" (click)="navigate()">{{hub.hubname}}</a>
         </ng-container>
@@ -34,6 +34,7 @@
     <div class="flex flex-col justify-start">
       <p class="footer_heading mat-subheading-1 margin-bottom-m">Support</p>
       <a class="footer_sub_text mat-body" routerLink="/public/faq"> Frequently asked questions</a>
+      <a class="footer_sub_text mat-body" routerLink="/public/contact"> Contact Us</a>
       <!-- <a class="footer_sub_text mat-body" routerLink="/app/info/feedback">Feedback and suggestions</a>
       <a class="footer_sub_text mat-body" routerLink="/app/info/report-problem">Report a problem</a> -->
 

@@ -1,0 +1,46 @@
+@import "ws-vars";
+@import "ws-common";
+@import 'ws-mixins';
+
+.container-balanced {
+  max-width: 1202px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+.faq_main_box{
+  padding: 45px 8px 0 8px;
+
+  @include breakpoint-xs {
+    padding: 45px 0;
+  }
+}
+h2.main_title_text {
+  font-weight: 600!important;
+}
+.full_width_box {
+  width: 100%;
+}
+.flex-4 {
+  flex: 4;
+}
+
+.custom {
+  @include breakpoint-xs {
+    flex-direction: column;
+  }
+
+  @include breakpoint-s {
+    flex-direction: column;
+  }
+}
+.flex-3 {
+  flex: 3;
+}
+
+.custom-phone {
+  height: 16px;
+  width: 22px;
+  font-size: 20px;
+  line-height: 0.6 !important;
+  vertical-align: middle;
+}
