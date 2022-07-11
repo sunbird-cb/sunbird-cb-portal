@@ -7,7 +7,10 @@
                 <div *ngIf="content?.posterImage" class="float-left">
                     <img [src]="content?.posterImage | pipePublicURL" [id]="'source_' + content.identifier" class="app-icon" [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
                 </div>
-                <div *ngIf="!content?.posterImage" class="float-left">
+                <div *ngIf="content?.appIcon" class="float-left">
+                  <img [src]="content?.appIcon | pipePublicURL" [id]="'source_' + content.identifier" class="app-icon" [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
+              </div>
+                <div *ngIf="!content?.posterImage && !content?.appIcon" class="float-left">
                     <img src="/assets/instances/eagle/app_logos/default.png" [id]="'source_' + content.identifier" class="app-icon" [alt]="content.sourceName || iGOT" />
                 </div>
                 <!-- data -->
