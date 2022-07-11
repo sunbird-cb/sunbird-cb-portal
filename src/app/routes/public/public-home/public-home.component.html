@@ -1,5 +1,3 @@
-
-
 <!-- <div class="header">
     <div class="container container-balanced">
       <div class="header flex flex-wrap items-center justify-between py-2 grid grid-col-2 flex-row">
@@ -10,72 +8,58 @@
       </div>
     </div>
   </div> -->
-  <section class="main-section pb-20">
-    <div class="container container-balanced">
-      <div class="items-center justify-between mainContent grid-cols-2 grid">
-        <div class="content">
-          <p class="mb-4 title-heading">Learn. Network. Grow your career.</p>
-          <p class="mb-12 main-text">Gain skills to rocket your career growth. Connect with civil servants and experts to learn and discover new opportunities in the Indian civil services.</p>
-          <div class="d-block float-left mb-12 mt-10 ">
-            <a routerLink="/public/signup"  class="btn btn-secondary mr-4">Register</a>
-            <!-- <button mat-raised-button color="primary" class="me-2">Register</button>
+<mat-toolbar class="mt-53">
+  <div class="fix-ww flex flex-row mt-3" id="root-tool-bar" title="toolbar" i18n-aria-label role="toolbar">
+    <a class="logo-dim" role="link" title="Home" i18n-aria-title i18n-aria-label routerLink="/public/home">
+    <img [src]="appIcon" alt="Application Logo" class="app-logo" />
+  </a>
+    <div class="text-end flex flex-1 flex-row-reverse signup_div">
+      <a routerLink="/public/signup" class="btn btn-primary text-center margin-left-s">Register</a>
+      <a href="/protected/v8/resource" class="btn btn-link">Sign In</a>
+      <!-- <a href="/apis/public/v8/google/auth" class="btn btn-link">Sign In with P</a> -->
+    </div>
+  </div>
+</mat-toolbar>
+
+<section class="main-section pb-20">
+  <div class="container container-balanced">
+    <div class="items-center justify-between mainContent grid-cols-2 grid">
+      <div class="content">
+        <p class="mb-4 title-heading">Learn. Network. Grow your career.</p>
+        <p class="mb-12 main-text">Gain skills to rocket your career growth. Connect with civil servants and experts to learn and
+          discover new opportunities in the Indian civil services.</p>
+        <div class="d-block float-left mb-12 mt-10 ">
+          <a routerLink="/public/signup" class="btn btn-secondary mr-4">Register</a>
+          <!-- <button mat-raised-button color="primary" class="me-2">Register</button>
                   <a href="/protected/v8/resource"  class="btn btn-link me-0 me-md-3">Sign In</a>
       <a routerLink="/public/signup"  class="btn btn-primary">Register</a>
             <button mat-stroked-button color="secondary">Basic</button> -->
-            <!-- <a href="/protected/v8/resource" class="btn btn-outline-secondary">Sign In</a> -->
-           </div>
-        </div>
-        <div class="displayImg text-center">
-
-          <img src="/assets/instances/eagle/landing-img/image2.png" alt="igot screen display">
-
+          <!-- <a href="/protected/v8/resource" class="btn btn-outline-secondary">Sign In</a> -->
         </div>
       </div>
+      <div class="displayImg text-center">
 
-      <div class="analyticsRecord">
-        <div class="flex flex-col">
-          <p class="mb-12 text-center sub-heading">Learn and network with civil servants and subject matter experts across India</p>
-          <div class="grid-cols-4 grid recordBox">
-              <div class="listInfo" *ngFor="let content of learnNetworkSection">
-                <div class="icon"><img src="{{content?.image}}" alt="icon"></div>
-                <p class="my-6 sub-heading">{{content?.count}}</p>
-                <p class="m-0 main-text">{{content?.title}}</p>
-              </div>
-          </div>
-          <!-- <div class="grid-cols-4 grid recordBox">
-            <div class="">
-              <div class="listInfo civilRecord">
-                <div class="icon"><img src="/assets/instances/eagle/landing-img/user.svg" alt="icon"></div>
-                <h1 class="my-6">20</h1>
-                <p class="m-0">Million Indian civil servants</p>
-              </div>
-            </div>
-            <div class="">
-              <div class="listInfo ministerRecord">
-                <div class="icon"><img src="/assets/instances/eagle/landing-img/building.svg" alt="icon"></div>
-                <h1 class="my-6">100+</h1>
-                <p class="m-0">Ministries, Departments & Organizations</p>
-              </div>
-            </div>
-            <div class="">
-              <div class="listInfo competencRecord">
-                <div class="icon"><img src="/assets/instances/eagle/landing-img/wellness.svg" alt="icon"></div>
-                <h1 class="my-6">600+</h1>
-                <p class="m-0">Competencies</p>
-              </div>
-            </div>
-            <div class="">
-              <div class="listInfo courseRecord bg-none">
-                <div class="icon"><img src="/assets/instances/eagle/landing-img/course.svg" alt="icon"></div>
-                <h1 class="my-6">100+</h1>
-                <p class="m-0">Courses</p>
-              </div>
-            </div>
-          </div> -->
-        </div>
+        <img src="/assets/instances/eagle/landing-img/image2.png" alt="igot screen display">
+
       </div>
     </div>
-  </section>
+
+    <div class="analyticsRecord">
+      <div class="flex flex-col">
+        <p class="mb-12 text-center sub-heading">Learn and network with civil servants and subject matter experts across India</p>
+        <div class="grid-cols-4 grid recordBox">
+          <div class="listInfo" *ngFor="let content of learnNetworkSection">
+            <div class="icon"><img src="{{content?.image}}" alt="icon"></div>
+            <h1 class="my-6">{{content?.count}}</h1>
+            <p class="m-0">{{content?.title}}</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
   <section class="servicesSection">
     <div class="container container-balanced">
       <div class="row">
@@ -86,15 +70,15 @@
           <mat-tab label="An experienced civil servant" class="nav-link">
             <div class="tab-pane fade show active my-12" id="pillsExCivil" role="tabpanel" aria-labelledby="ex-civil">
 
-                <div class="flex flex-1">
-                  <div class="exCivilVideo">
-                    <!-- <img src="/assets/instances/eagle/landing-img/video1.png" alt="video presentation"> -->
-                    <video width="100%" height="auto" controls poster="/assets/instances/eagle/landing-img/video1.png">
-                      <source src="https://igot.blob.core.windows.net/public/Sanjeev-final.mp4" type="video/mp4">
-                    </video>
+              <div class="flex flex-1">
+                <div class="exCivilVideo">
+                  <!-- <img src="/assets/instances/eagle/landing-img/video1.png" alt="video presentation"> -->
+                  <video width="100%" height="auto" controls poster="/assets/instances/eagle/landing-img/video1.png">
+                    <source src="https://igot.blob.core.windows.net/public/Sanjeev-final.mp4" type="video/mp4">
+                  </video>
 
-                  </div>
                 </div>
+              </div>
 
               <div class="dd-border1"></div>
               <div class="dd-border1 dd-border2"></div>
@@ -104,63 +88,29 @@
             <div class="tab-pane fade my-12" id="pillsNewCivil" role="tabpanel" aria-labelledby="new-civil">
               <div class="flex flex-1">
 
-                 <div class="exCivilVideo">
+                <div class="exCivilVideo">
                   <video width="100%" height="auto" controls poster="/assets/instances/eagle/landing-img/video2.png">
                     <source src="https://igot.blob.core.windows.net/public/Shilpa-final.mp4" type="video/mp4">
                   </video>
 
-                  </div>
+                </div>
 
-             </div>
-             <div class="dd-border1"></div>
-             <div class="dd-border1 dd-border2"></div>
-           </div>
+              </div>
+              <div class="dd-border1"></div>
+              <div class="dd-border1 dd-border2"></div>
+            </div>
           </mat-tab>
 
         </mat-tab-group>
-
-
-
-            <!-- <div class="servicesTabPills">
-              <ul class="nav nav-pills" id="pills-tab" role="tablist">
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link active" id="ex-civil" data-bs-toggle="pill" data-bs-target="#pillsExCivil" type="button" role="tab" aria-controls="pillsExCivil" aria-selected="true">An experienced civil servant</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="new-civil" data-bs-toggle="pill" data-bs-target="#pillsNewCivil" type="button" role="tab" aria-controls="pillsNewcivil" aria-selected="false">A newly recruited civil servant</button>
-                </li>
-              </ul>
-            </div> -->
-            <!-- <div class="tab-content my-5" id="pills-tabContent">
-              <div class="tab-pane fade show active" id="pillsExCivil" role="tabpanel" aria-labelledby="ex-civil">
-                <div class="row">
-                  <div class="grid-cols-12">
-                    <div class="exCivilVideo"><img src="/assets/instances/eagle/landing-img/video1.png" alt="video presentation"></div>
-                  </div>
-                </div>
-                <div class="dd-border1"></div>
-                <div class="dd-border1 dd-border2"></div>
-              </div>
-              <div class="tab-pane fade" id="pillsNewCivil" role="tabpanel" aria-labelledby="new-civil">
-                 <div class="row">
-                  <div class="grid-cols-12">
-                    <div class="exCivilVideo"><img src="/assets/instances/eagle/landing-img/video2.png" alt="video presentation"></div>
-                  </div>
-                </div>
-                <div class="dd-border1"></div>
-                <div class="dd-border1 dd-border2"></div>
-              </div>
-
-            </div> -->
 
       </div>
 
     </div>
   </div>
-  </section>
-  <section class="journeySection">
-    <div class="container container-balanced">
-      <div class="flex flex-row w-100">
+</section>
+<section class="journeySection">
+  <div class="container container-balanced">
+    <div class="flex flex-row w-100">
       <!-- <div class="grid-cols-1 grid"> -->
         <div class="flex flex-column justify-center items-center journeyContent">
           <p class="mb-3 sub-heading">Start your learning journey </p>
@@ -169,7 +119,9 @@
         </div>
       <!-- </div> -->
       </div>
+      <!-- </div> -->
     </div>
+
   </section>
   <section class="solutionService pt-24 pb-24">
     <div class="container container-balanced">
@@ -219,9 +171,10 @@
           </div>
         </div>
       </div>
-      </div>
+    </div>
     </div>
   </section>
+
   <section class="iGotWalkthrough">
     <div class="container container-balanced">
       <div class="flex flex-row items-center justify-center">
@@ -233,11 +186,12 @@
               <source src="https://igot.blob.core.windows.net/public/video-guide.mp4" type="video/mp4">
             </video>
 
-          </div>
         </div>
       </div>
     </div>
+    </div>
   </section>
+
   <section class="growthSection">
     <div class="container container-balanced">
       <div class="flex flex-row justify-center  items-center ">
@@ -249,4 +203,4 @@
         </div>
       </div>
     </div>
-  </section>
+</section>
