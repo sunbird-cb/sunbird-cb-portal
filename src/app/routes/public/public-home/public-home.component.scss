@@ -2,6 +2,21 @@
 @import 'ws-vars';
 @import 'ws-mixins';
 
+p.title-heading {
+  // font-size: 2.6875rem !important;
+  // font-weight: 600;
+  // line-height: 1.3;
+  font: 600 2.6875rem/4rem Montserrat!important;
+}
+p.sub-heading {
+  font: 600 1.5rem/2.25rem Montserrat;
+}
+p.min-heading {
+  font: 600 1.25rem/1.8rem Montserrat;
+}
+p.main-text {
+  font: 400 1rem/1.5rem Lato;
+}
 
   .m_b_2 {
     margin-bottom: 1rem;
@@ -100,9 +115,48 @@
       padding-right: 1rem;
     }
   }
-  .main-section  .mainContent {
-      padding-top: 6.9375rem;
-      padding-bottom: 5.25rem;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  color: rgba(0, 0, 0, 0.9);
+  line-height: 1.2;
+  /*  letter-spacing: -1px; */
+  font-family: "Montserrat", sans-serif;
+}
+h1,
+.h1 {
+  font-size: 2.6875rem;
+  font-weight: 600;
+}
+h3,
+.h3 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+h4,
+.h4 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+h6,
+.h6 {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
 
       @include breakpoint-xs {
         grid-template-columns: repeat(1, minmax(0, 1fr));

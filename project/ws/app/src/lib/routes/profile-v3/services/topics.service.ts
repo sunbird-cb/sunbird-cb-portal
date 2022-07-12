@@ -29,8 +29,10 @@ export class TopicService {
     }
     addDesiredTopics(topic: string) {
         const topics = this.desiredTopics.value
-        topics.push(topic)
-        this.desiredTopics.next(topics)
+        if(!topics.includes(topic)){
+            topics.push(topic)
+            this.desiredTopics.next(topics)
+        }
     }
     /**
      * this method will fill all already added topics from users Profile.
