@@ -29,7 +29,7 @@ export class TopicService {
     }
     addDesiredTopics(topic: string) {
         const topics = this.desiredTopics.value
-        if(!topics.includes(topic)){
+        if (!topics.includes(topic)) {
             topics.push(topic)
             this.desiredTopics.next(topics)
         }
