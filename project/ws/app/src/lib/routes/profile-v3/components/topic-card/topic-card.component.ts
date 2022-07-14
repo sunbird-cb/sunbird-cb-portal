@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core'
+import { MatDialog } from '@angular/material'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { DialogConfirmComponent } from 'src/app/component/dialog-confirm/dialog-confirm.component'
 import { NSProfileDataV3 } from '../../models/profile-v3.models'
 import { TopicService } from '../../services/topics.service'
 
@@ -16,7 +18,7 @@ export class TopicCardComponent implements OnInit {
   @Input() topic!: NSProfileDataV3.ITopic
   show = 6
   // selectedTopics: Subscription | null = null
-  constructor(private topicService: TopicService) { }
+  constructor(private topicService: TopicService, private dialog: MatDialog) { }
 
   ngOnInit() {
 
@@ -28,6 +30,7 @@ export class TopicCardComponent implements OnInit {
       if (index !== -1) {
         /// remove from store
         this.topicService.removeSystemTopics(top)
+        
       } else {
         /// add to store
         this.topicService.addSystemTopics(top)
@@ -37,7 +40,14 @@ export class TopicCardComponent implements OnInit {
       // const cIndex = _.indexOf(this.topicService.getCurrentSelectedTopics[index].children, top)
       if (index !== -1) {
         /// remove from store
-        this.topicService.removeDesiredTopics(top)
+        let data = {title: "Confirmation Needed", body: "Do you want to delete the Topic?"}
+        const confirmationDialog = this.dialog.open(DialogConfirmComponent, {
+          autoFocus: false,
+          data: data
+        })
+        confirmationDialog.afterClosed().subscribe(result => {
+          if(result)this.topicService.removeDesiredTopics(top)
+        })
       } else {
         /// add to store
         this.topicService.addDesiredTopics(top)
