@@ -57,7 +57,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
     }
     create() {
-        if (!this.editRole) {
+        if (!this.editRole || this.editRole.length === 0) {
             const role = this.createRole.get('roleName')
             if (role && role.value && this.selectedActivity.length > 0 && this.configSvc.userProfile) {
                 // console.log(this.createRole.value, this.selectedActivity)
@@ -124,11 +124,11 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     updateDeleteRoles(reqObj: any) {
         this.rolesAndActivityService.createRoles(reqObj).subscribe(res => {
             if (res) {
-                this.editRole = []
-                this.orgroleselected = []
                 this.editData = false
                 this.snackBar.open('Updated successfully')
                 this.createRole.reset()
+                this.editRole = []
+                this.orgroleselected = []
                 this.selectedActivity = []
                 this.configSvc.updateGlobalProfile(true)
                 setTimeout(this.updateRoles, 3000)
@@ -181,7 +181,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     }
 
     change(event: any) {
-        if (this.orgroleselected && this.orgroleselected.name !== event.target.value) {
+        if (this.orgroleselected && this.orgroleselected.name && this.orgroleselected.name !== event.target.value) {
             this.editRole.name = event.target.value
         }
     }
