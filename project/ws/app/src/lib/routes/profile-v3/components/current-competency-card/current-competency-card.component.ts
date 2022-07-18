@@ -24,7 +24,7 @@ export class CurrentCompetencyCardComponent implements OnInit {
   selectLevel(complevel: any, competency: any) {
     this.compLocalService.autoSaveCurrent.next(true)
     this.selectedLevelId = complevel.id
-    console.log(this.selectedLevelId);
+    // console.log(this.selectedLevelId)
     // this.selectedCompId = competency.id
     const compobj = {
       type: competency.type,
