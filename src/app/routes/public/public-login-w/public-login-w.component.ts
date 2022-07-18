@@ -24,9 +24,7 @@ export class PublicLoginWComponent implements OnInit, OnDestroy {
             // tslint:disable-next-line
             console.log(data)
         })
-
     }
-
     ngOnDestroy() {
         if (this.subscriptionContact) {
             this.subscriptionContact.unsubscribe()

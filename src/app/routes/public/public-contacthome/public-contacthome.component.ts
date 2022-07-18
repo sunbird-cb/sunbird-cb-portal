@@ -9,7 +9,6 @@ import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 export class PublicContacthomeComponent implements OnInit {
   contactUsMail = ''
   pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
-
   constructor(private configSvc: ConfigurationsService) {}
 
   ngOnInit() {
