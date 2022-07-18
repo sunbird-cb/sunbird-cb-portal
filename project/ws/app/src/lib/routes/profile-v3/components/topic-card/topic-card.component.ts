@@ -30,7 +30,7 @@ export class TopicCardComponent implements OnInit {
       if (index !== -1) {
         /// remove from store
         this.topicService.removeSystemTopics(top)
-        
+
       } else {
         /// add to store
         this.topicService.addSystemTopics(top)
@@ -40,13 +40,15 @@ export class TopicCardComponent implements OnInit {
       // const cIndex = _.indexOf(this.topicService.getCurrentSelectedTopics[index].children, top)
       if (index !== -1) {
         /// remove from store
-        let data = {title: "Confirmation Needed", body: "Do you want to delete the Topic?"}
+        const data = { title: 'Confirmation Needed', body: 'Do you want to delete the Topic?' }
         const confirmationDialog = this.dialog.open(DialogConfirmComponent, {
           autoFocus: false,
-          data: data
+          // tslint:disable-next-line:object-shorthand-properties-first
+          data,
         })
         confirmationDialog.afterClosed().subscribe(result => {
-          if(result)this.topicService.removeDesiredTopics(top)
+          // tslint:disable-next-line:block-spacing
+          if (result) {this.topicService.removeDesiredTopics(top) }
         })
       } else {
         /// add to store
@@ -77,7 +79,7 @@ export class TopicCardComponent implements OnInit {
     this.show += 10
   }
 
-  showLess(){
+  showLess() {
     this.show = 6
   }
 }
