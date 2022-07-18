@@ -17,6 +17,9 @@ export class QuestionComponent implements OnInit, AfterViewInit {
   @Input() question: NSQuiz.IQuestion = {
     multiSelection: false,
     question: '',
+    instructions: '',
+    section: '',
+    questionType: undefined,
     questionId: '',
     options: [
       {

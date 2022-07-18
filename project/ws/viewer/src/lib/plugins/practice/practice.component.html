@@ -269,10 +269,10 @@
                   <span class="flex mat-body-2">Percentage to pass - <ng-container>
                       {{section.minimumPassPercentage}}
                     </ng-container></span>
-                  <span class="flex mat-body-2">Total questions - <ng-container>{{section?.children?.length ||
+                  <span class="flex mat-body-2">Total questions - <ng-container>{{section?.maxQuestions ||
                       '0'}}
                     </ng-container></span>
-                  <span class="flex mat-body-2 text-justify">{{section.description || 'Description'}}</span>
+                  <span class="flex mat-body-2 text-justify">{{section.additionalInstructions || 'Description'}}</span>
                 </div>
               </mat-card-content>
             </mat-card>

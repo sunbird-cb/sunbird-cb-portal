@@ -26,6 +26,10 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
         timeLimit: 300,
         questions: [],
         isAssessment: false,
+        allowSkip: 'No',
+        maxQuestions: 0,
+        requiresSubmit: 'Yes',
+        showTimer: 'Yes'
     }
     private dataSubscription: Subscription | null = null
     private viewerDataSubscription: Subscription | null = null
@@ -72,6 +76,12 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
     init() {
         if (this.testData) {
             this.oldData = this.testData
+            // result.content.children[0].children[1].expectedDuration
+            this.quizJson.maxQuestions = this.testData.maxQuestions
+            this.quizJson.allowSkip = this.testData.allowSkip
+            this.quizJson.requiresSubmit = this.testData.requiresSubmit
+            this.quizJson.showTimer = this.testData.requiresSubmit
+            this.quizJson.timeLimit = this.testData.expectedDuration
             this.alreadyRaised = true
             this.raiseEvent(WsEvents.EnumTelemetrySubType.Loaded, this.testData)
         }
