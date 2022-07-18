@@ -29,7 +29,7 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
         allowSkip: 'No',
         maxQuestions: 0,
         requiresSubmit: 'Yes',
-        showTimer: 'Yes'
+        showTimer: 'Yes',
     }
     private dataSubscription: Subscription | null = null
     private viewerDataSubscription: Subscription | null = null

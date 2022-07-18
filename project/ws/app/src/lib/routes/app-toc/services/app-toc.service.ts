@@ -239,7 +239,8 @@ export class AppTocService {
   ): NsContent.IContent | null {
     if (content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE
       //  || content.contentType === 'Knowledge Artifact'
-      || content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
+      || content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+      || content.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT) {
       return this.filterUnitContent(content, filterCategory) ? content : null
     }
     const filteredChildren: NsContent.IContent[] =

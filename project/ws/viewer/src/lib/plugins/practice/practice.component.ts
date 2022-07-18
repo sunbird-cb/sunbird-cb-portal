@@ -62,7 +62,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     allowSkip: 'No',
     maxQuestions: 0,
     requiresSubmit: 'Yes',
-    showTimer: 'Yes'
+    showTimer: 'Yes',
   }
   // @Input() quizJson: { timeLimit: number, questions: NSPractice.IQuestion[], isAssessment: boolean } = {
   //   timeLimit: this.duration,
@@ -332,15 +332,15 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           break
         case 'ftb':
         case 'FTB':
-          const NoOptions = _.split(question.body, '_______________')
-          NoOptions.pop()
+          const noOptions = _.split(question.body, '_______________')
+          noOptions.pop()
           // _.each(question.choices.options, op => {
           // const ansHtml = document.createElement('div')
           // ansHtml.innerHTML = op.value.body || '<p></p>'
 
           // const opIdHtml = document.createElement('div')
           // opIdHtml.innerHTML = op.value.value || '<p></p>'
-          _.each(NoOptions, (_op, idx) => {
+          _.each(noOptions, (_op, idx) => {
             options.push({
               optionId: (idx).toString(),
               text: '',
@@ -362,7 +362,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               response: '',
               userSelected: false,
               matchForView: o.value.value,
-              match: _.nth(question.rhsChoices, idx)
+              match: _.nth(question.rhsChoices, idx),
             })
           })
           break
@@ -1036,7 +1036,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       allowSkip: 'No',
       maxQuestions: 0,
       requiresSubmit: 'Yes',
-      showTimer: 'Yes'
+      showTimer: 'Yes',
     }
   }
   ngOnDestroy() {
