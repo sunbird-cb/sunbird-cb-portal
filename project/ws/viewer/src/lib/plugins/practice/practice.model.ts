@@ -20,7 +20,7 @@ export namespace NSPractice {
   export interface IOption {
     optionId: string
     text: string
-    isCorrect: boolean
+    isCorrect?: boolean
     hint?: string
     match?: string
     matchForView?: string
@@ -138,7 +138,10 @@ export namespace NSPractice {
   export interface IPaperSection {
     lastStatusChangedOn: string
     parent: string
-    children: IQuestionV2[]
+    children?: IQuestionV2[]
+    maxQuestions?: number
+    childNodes?: string[]
+    additionalInstructions?: string
     name: string
     navigationMode: string
     createdOn: string
@@ -185,6 +188,7 @@ export namespace NSPractice {
     answer: any
     parent: string
     name: string
+    body: string
     bloomsLevel: string
     createdOn: string
     lastUpdatedOn: string
@@ -215,19 +219,20 @@ export namespace NSPractice {
     artifactUrl: string
     visibility: string
     qType: TQuizQuestionType
-    editorState: IEditor
+    choices: IEditor
+    rhsChoices?: string[]
     showSolutions: string
     variants: object
     index: number
     pkgVersion: number
   }
   export interface IEditor {
-    answer?: string
+    // answer?: string
     options?: IOptionsV2[]
-    question: string
+    // question: string
   }
   export interface IOptionsV2 {
-    answer: boolean | any
+    // answer: boolean | any
     value: {
       body: string | any
       value: number | any

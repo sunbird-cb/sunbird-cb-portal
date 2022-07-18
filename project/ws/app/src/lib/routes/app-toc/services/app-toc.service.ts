@@ -162,6 +162,7 @@ export class AppTocService {
       !(content.primaryCategory === this.primaryCategory.RESOURCE
         // || content.primaryCategory === this.primaryCategory.KNOWLEDGE_ARTIFACT)
         || content.primaryCategory === this.primaryCategory.PRACTICE_RESOURCE
+        || content.primaryCategory === this.primaryCategory.FINAL_ASSESSMENT
       )) {
       if (content.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
         tocStructure.course += 1
@@ -177,7 +178,8 @@ export class AppTocService {
       (
         content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE
         // || content.contentType === 'Knowledge Artifact'
-        || content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE)
+        || content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+        || content.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT)
     ) {
       switch (content.mimeType) {
         // case NsContent.EMimeTypes.HANDS_ON:

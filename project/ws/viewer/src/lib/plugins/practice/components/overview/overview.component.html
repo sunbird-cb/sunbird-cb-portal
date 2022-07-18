@@ -63,6 +63,12 @@
                   isSVG: false,
                   text: 'Unlimited retakes allowed'
                 }"></ng-container>
+        <ng-container *ngIf="questionTYP.FINAL_ASSESSMENT === primaryCategory" [ngTemplateOutlet]="testdetail"
+          [ngTemplateOutletContext]="{
+                        icon: 'stop',
+                        isSVG: false,
+                        text: 'Retakes are not allowed'
+                      }"></ng-container>
         <ng-container *ngIf="complexityLevel" [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{
                         icon: 'replay',
                         isSVG: false,

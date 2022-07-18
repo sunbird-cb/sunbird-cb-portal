@@ -34,12 +34,15 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
   @Input() complexityLevel = ''
   @Input() duration = 0
   @Input() collectionId = ''
-  @Input() quizJson = {
+  @Input() quizJson: Partial<NSQuiz.IQuiz> = {
     timeLimit: 0,
     questions: [
       {
         multiSelection: false,
         question: '',
+        instructions: '',
+        section: '',
+        questionType: undefined,
         questionId: '',
         options: [
           {
@@ -135,10 +138,10 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
     // status = 1 indicates started
     // status = 2 indicates completed
     const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-              this.activatedRoute.snapshot.queryParams.collectionId : ''
-      const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-              this.activatedRoute.snapshot.queryParams.batchId : ''
-      this.viewerSvc.realTimeProgressUpdateQuiz(this.identifier, collectionId, batchId, status)
+      this.activatedRoute.snapshot.queryParams.collectionId : ''
+    const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+      this.activatedRoute.snapshot.queryParams.batchId : ''
+    this.viewerSvc.realTimeProgressUpdateQuiz(this.identifier, collectionId, batchId, status)
   }
 
   startQuiz() {
@@ -149,13 +152,13 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
     this.markedQuestions = new Set([])
     this.questionAnswerHash = {}
     this.currentQuestionIndex = 0
-    this.timeLeft = this.quizJson.timeLimit
-    if (this.quizJson.timeLimit > -1) {
+    this.timeLeft = this.quizJson.timeLimit || 0
+    if (this.quizJson.timeLimit && this.quizJson.timeLimit > -1) {
       this.timerSubscription = interval(100)
         .pipe(
           map(
             () =>
-              this.startTime + this.quizJson.timeLimit - Date.now(),
+              this.startTime + (this.quizJson.timeLimit || 0) - Date.now(),
           ),
         )
         .subscribe(_timeRemaining => {
@@ -204,7 +207,7 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
     if (this.timeLeft) {
       if (
         Object.keys(this.questionAnswerHash).length !==
-        this.quizJson.questions.length
+        (this.quizJson.questions || []).length
       ) {
         this.submissionState = 'unanswered'
       } else if (this.markedQuestions.size) {
@@ -242,7 +245,7 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
       this.name,
       {
         ...submitQuizJson,
-        timeLimit: this.quizJson.timeLimit * 1000,
+        timeLimit: (this.quizJson.timeLimit || 0) * 1000,
       },
       this.questionAnswerHash,
     )
@@ -319,7 +322,7 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   calculateResults() {
-    const correctAnswers = this.quizJson.questions.map(
+    const correctAnswers = (this.quizJson.questions || []).map(
       (question: NSQuiz.IQuestion) => {
         return {
           questionType: question.questionType,
@@ -424,7 +427,7 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
       }
     })
     this.numUnanswered =
-      this.quizJson.questions.length -
+      (this.quizJson.questions || []).length -
       this.numCorrectAnswers -
       this.numIncorrectAnswers
   }
@@ -481,7 +484,7 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
         {
           pageIdExt: `quiz`,
           module: WsEvents.EnumTelemetrymodules.LEARN,
-      })
+        })
     }
   }
 }

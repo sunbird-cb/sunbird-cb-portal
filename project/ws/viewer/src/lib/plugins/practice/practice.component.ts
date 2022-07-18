@@ -21,6 +21,7 @@ import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
 import { ViewerUtilService } from '../../viewer-util.service'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { NSQuiz } from '../quiz/quiz.model'
 // import { ViewerDataService } from '../../viewer-data.service'
 export type FetchStatus = 'hasMore' | 'fetching' | 'done' | 'error' | 'none'
 @Component({
@@ -38,8 +39,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   @Input() duration = 0
   @Input() collectionId = ''
   @Input() primaryCategory = NsContent.EPrimaryCategory.PRACTICE_RESOURCE
-  @Input() quizJson: { timeLimit: number, questions: NSPractice.IQuestion[], isAssessment: boolean } = {
-    timeLimit: this.duration,
+  @Input() quizJson: NSQuiz.IQuiz = {
+    timeLimit: 300,
     questions: [
       {
         multiSelection: false,
@@ -47,7 +48,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         question: '',
         questionId: '',
         instructions: '',
-        questionType: '',
+        questionType: undefined,
         options: [
           {
             optionId: '',
@@ -58,7 +59,32 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       },
     ],
     isAssessment: false,
+    allowSkip: 'No',
+    maxQuestions: 0,
+    requiresSubmit: 'Yes',
+    showTimer: 'Yes'
   }
+  // @Input() quizJson: { timeLimit: number, questions: NSPractice.IQuestion[], isAssessment: boolean } = {
+  //   timeLimit: this.duration,
+  //   questions: [
+  //     {
+  //       multiSelection: false,
+  //       section: '',
+  //       question: '',
+  //       questionId: '',
+  //       instructions: '',
+  //       questionType: '',
+  //       options: [
+  //         {
+  //           optionId: '',
+  //           text: '',
+  //           isCorrect: false,
+  //         },
+  //       ],
+  //     },
+  //   ],
+  //   isAssessment: false,
+  // }
   @ViewChildren('questionsReference') questionsReference: QueryList<QuestionComponent> | null = null
   @ViewChild('sidenav', { static: false }) sideNav: MatSidenav | null = null
   @ViewChild('submitModal', { static: false }) submitModal: ElementRef | null = null
@@ -248,7 +274,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         this.fetchingQuestionsStatus = 'done'
         this.overViewed('start')
       } else {
-        this.quizSvc.getQuestions(_.map(section.children, 'identifier')).subscribe(qqr => {
+        this.quizSvc.getQuestions(section.childNodes || []).subscribe(qqr => {
           this.fetchingQuestionsStatus = 'done'
           const question = _.get(qqr, 'result')
           const codes = _.compact(_.map(this.quizJson.questions, 'section') || [])
@@ -260,11 +286,11 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
             if (codes.indexOf(section.identifier) === -1) {
               this.quizJson.questions.push({
                 section: section.identifier,
-                question: q.editorState.question, // qHtml.textContent || qHtml.innerText || '',
+                question: q.body, // qHtml.textContent || qHtml.innerText || '',
                 multiSelection: ((q.qType || '').toLowerCase() === 'mcq-mca' ? true : false),
                 questionType: (q.qType || '').toLowerCase(),
                 questionId: q.identifier,
-                instructions: q.name,
+                instructions: q.body,
                 options: this.getOptions(q),
               })
             }
@@ -286,16 +312,16 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         case 'mcq-mca':
         case 'MCQ-MCA':
         case 'MCQ':
-          _.each(question.editorState.options, o => {
-            const aHtml = document.createElement('div')
-            aHtml.innerHTML = o.value.body
+          _.each(question.choices.options, o => {
+            // const aHtml = document.createElement('div')
+            // aHtml.innerHTML = o.value.body
 
-            const vHtml = document.createElement('div')
-            vHtml.innerHTML = o.value.value
+            // const vHtml = document.createElement('div')
+            // vHtml.innerHTML = o.value.value
             options.push({
               optionId: o.value.value,
-              text: aHtml.textContent || aHtml.innerText || '',
-              isCorrect: o.answer,
+              text: o.value.body || '',
+              // isCorrect: o.answer,
               // hint: '',
               // match: '',
               // matchForView: '',
@@ -306,33 +332,37 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           break
         case 'ftb':
         case 'FTB':
-          _.each(question.editorState.options, op => {
-            const ansHtml = document.createElement('div')
-            ansHtml.innerHTML = op.value.body || '<p></p>'
+          const NoOptions = _.split(question.body, '_______________')
+          NoOptions.pop()
+          // _.each(question.choices.options, op => {
+          // const ansHtml = document.createElement('div')
+          // ansHtml.innerHTML = op.value.body || '<p></p>'
 
-            const opIdHtml = document.createElement('div')
-            opIdHtml.innerHTML = op.value.value || '<p></p>'
-
+          // const opIdHtml = document.createElement('div')
+          // opIdHtml.innerHTML = op.value.value || '<p></p>'
+          _.each(NoOptions, (_op, idx) => {
             options.push({
-              optionId: op.value.value,
-              text: ansHtml.textContent || ansHtml.innerText || opIdHtml.textContent || opIdHtml.innerText || '',
-              isCorrect: op.answer,
+              optionId: (idx).toString(),
+              text: '',
+              // isCorrect: op.answer,
             })
           })
+
+          // })
 
           break
         case 'mtf':
         case 'MTF':
-          _.each(question.editorState.options, o => {
+          _.each(question.choices.options, (o, idx) => {
             options.push({
-              isCorrect: true,
+              // isCorrect: true,
               optionId: o.value.value,
-              text: (o.answer || '').toString(),
+              text: (o.value.body || '').toString(), // modified
               hint: o.value.body || '',
               response: '',
               userSelected: false,
               matchForView: o.value.value,
-              match: o.value.body,
+              match: _.nth(question.rhsChoices, idx)
             })
           })
           break
@@ -410,7 +440,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     return questions.length
   }
   get noOfQuestions(): number {
-    return 0
+    return this.quizJson.maxQuestions
   }
   backToSections() {
     this.viewState = 'detail'
@@ -646,9 +676,9 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               primaryCategory: NsContent.EPrimaryCategory.FTB_QUESTION,
               qType: 'FTB',
               editorState: {
-                options: _.map(sq.options, (_o: NSPractice.IOption) => {
+                options: _.map(sq.options, (_o: NSPractice.IOption, idx: number) => {
                   return {
-                    index: (_o.optionId).toString(),
+                    index: (_o.optionId || idx).toString(),
                     selectedAnswer: _o.response,
                   } as NSPractice.IResponseOptions
                 }),
@@ -805,7 +835,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           correctOptions: question.options
             .filter(option => option.isCorrect)
             .map(option =>
-              question.questionType === 'ftb' ? option.text : option.optionId,
+              question.questionType === 'fitb' ? option.text : option.optionId,
             ),
           correctMtfOptions: question.options
             .filter(option => option.isCorrect)
@@ -824,7 +854,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       let selectedOptions: any =
         this.questionAnswerHash[answer.questionId] || []
       if (
-        answer.questionType === 'ftb' &&
+        answer.questionType &&
+        answer.questionType === 'fitb' &&
         this.questionAnswerHash[answer.questionId] &&
         this.questionAnswerHash[answer.questionId][0]
       ) {
@@ -998,7 +1029,15 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     // this.isSubmitted = true
   }
   clearQuizJson() {
-    this.quizJson = { isAssessment: false, questions: [], timeLimit: 0 }
+    this.quizJson = {
+      isAssessment: false,
+      questions: [],
+      timeLimit: 0,
+      allowSkip: 'No',
+      maxQuestions: 0,
+      requiresSubmit: 'Yes',
+      showTimer: 'Yes'
+    }
   }
   ngOnDestroy() {
     this.clearStorage()
