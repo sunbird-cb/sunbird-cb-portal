@@ -31,8 +31,11 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     @ViewChild('roleName', { static: true })
     roleName: ElementRef | null = null
     editRole: any
+    orgroleselected: any
     simpleDialog: MatDialogRef<DialogBoxComponent> | undefined
     textBoxActive = false
+    disableUpdate = false
+    editData = false
     constructor(
         private configSvc: ConfigurationsService,
         private rolesAndActivityService: RolesAndActivityService,
@@ -42,19 +45,19 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
         this.updateRoles()
     }
     updateRoles() {
-        this.userRoles = _.get(this.configSvc.unMappedUser, 'profileDetails.userRoles') || []
+        // tslint:disable-next-line:max-line-length
+        this.userRoles = this.configSvc && this.configSvc.unMappedUser ? _.get(this.configSvc.unMappedUser, 'profileDetails.userRoles') :  []
     }
     ngOnInit(): void {
-        this.createRole = new FormGroup(
-            {
-                roleName: new FormControl(null, [Validators.required]),
-                activity: new FormControl(null, [Validators.required]),
+        this.createRole = new FormGroup({
+                roleName: new FormControl('', [Validators.required]),
+                activity: new FormControl('', [Validators.required]),
             })
     }
     ngOnDestroy(): void {
     }
     create() {
-        if (!this.editRole) {
+        if (!this.editRole || this.editRole.length === 0) {
             const role = this.createRole.get('roleName')
             if (role && role.value && this.selectedActivity.length > 0 && this.configSvc.userProfile) {
                 // console.log(this.createRole.value, this.selectedActivity)
@@ -121,8 +124,11 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     updateDeleteRoles(reqObj: any) {
         this.rolesAndActivityService.createRoles(reqObj).subscribe(res => {
             if (res) {
-                this.snackBar.open('updated Successfully!!')
+                this.editData = false
+                this.snackBar.open('Updated successfully')
                 this.createRole.reset()
+                this.editRole = []
+                this.orgroleselected = []
                 this.selectedActivity = []
                 this.configSvc.updateGlobalProfile(true)
                 setTimeout(this.updateRoles, 3000)
@@ -132,9 +138,11 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     addActivity(event: MatChipInputEvent) {
         const input = event.input
         const value = event.value as unknown as NSProfileDataV3.IChipItems
-
         if ((value || '')) {
             this.selectedActivity.push(value)
+            if (this.editData) {
+                this.checkForChange(this.selectedActivity)
+            }
         }
 
         if (input) {
@@ -151,12 +159,37 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
         const index = this.selectedActivity.indexOf(interest)
         if (index >= 0) {
             this.selectedActivity.splice(index, 1)
+            if (this.editData) {
+                this.checkForChange(this.selectedActivity)
+            }
         }
     }
 
+    checkForChange(activityList: any) {
+        const newobj: any = []
+        activityList.forEach((val: any) => {
+            const reqObj = {
+                name: val,
+            }
+            newobj.push(reqObj)
+        })
+        if (JSON.stringify(this.orgroleselected.activities) === JSON.stringify(newobj)) {
+            this.disableUpdate = true
+        } else {
+            this.disableUpdate = false
+        }
+    }
+
+    change(event: any) {
+        if (this.orgroleselected && this.orgroleselected.name && this.orgroleselected.name !== event.target.value) {
+            this.editRole.name = event.target.value
+        }
+    }
     edit(role: NSProfileDataV3.IRolesAndActivities) {
         if (role) {
+            this.editData = true
             this.editRole = role
+            this.orgroleselected = JSON.parse(JSON.stringify(this.editRole))
             this.createRole.setValue({
                 roleName: role.name,
                 activity: role.activities,

@@ -343,6 +343,7 @@ export namespace NsContent {
     GOALS = 'GOALS',
     PLAYLIST = 'PLAYLIST',
     PRACTICE_RESOURCE = 'Practice Question Set',
+    FINAL_ASSESSMENT = 'Course Assessment',
     FTB_QUESTION = 'FTB Question',
     MTF_QUESTION = 'MTF Question',
     MULTIPLE_CHOICE_QUESTION = 'Multiple Choice Question',
@@ -370,6 +371,7 @@ export namespace NsContent {
   export enum EResourcePrimaryCategories {
     LEARNING_RESOURCE = 'Learning Resource',
     PRACTICE_RESOURCE = 'Practice Question Set',
+    FINAL_ASSESSMENT = 'Course Assessment',
   }
 
   export enum EMiscPlayerSupportedCollectionTypes {
@@ -420,6 +422,7 @@ export namespace NsContent {
     COLLECTION_RESOURCE = 'resource/collection',
     APPLICATION_JSON = 'application/json',
     PRACTICE_RESOURCE = 'application/vnd.sunbird.questionset',
+    FINAL_ASSESSMENT = 'application/vnd.sunbird.questionset',
     // Added on UI Only
     CERTIFICATION = 'application/certification',
     PLAYLIST = 'application/playlist',

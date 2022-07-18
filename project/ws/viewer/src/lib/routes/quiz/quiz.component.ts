@@ -21,7 +21,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   quizData: NsContent.IContent | null = null
   oldData: NsContent.IContent | null = null
   alreadyRaised = false
-  quizJson: NSQuiz.IQuiz = {
+  quizJson: Partial<NSQuiz.IQuiz> = {
     timeLimit: 0,
     questions: [],
     isAssessment: false,
