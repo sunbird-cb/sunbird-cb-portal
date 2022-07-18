@@ -24,7 +24,6 @@ export class CurrentCompetenciesComponent implements OnInit, OnDestroy {
   overallCompetencies!: NSProfileDataV3.ICompetencie[]
   changedProperties: any = {}
   placeHolder = 'Search here'
-  infoIcon = false
   // userDetails: any
   updatecompList: any = []
   competenciesList: any = []
@@ -183,7 +182,6 @@ export class CurrentCompetenciesComponent implements OnInit, OnDestroy {
   //   })
   // }
   openActivityDialog() {
-    this.infoIcon = true
     const dialogRef = this.dialog.open(DialogBoxComponent, {
       data: {
         view: 'ccomp',
@@ -192,8 +190,8 @@ export class CurrentCompetenciesComponent implements OnInit, OnDestroy {
       width: '550px',
 
     })
-    dialogRef.afterClosed().subscribe(() => {
-      this.infoIcon = false
+    dialogRef.afterClosed().subscribe(_result => {
+
     })
   }
   ngOnDestroy(): void {

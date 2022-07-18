@@ -42,6 +42,7 @@ export class ContentRatingV2DialogComponent implements OnInit {
         review: this.data.userRating.review,
         rating: this.data.userRating.rating,
       })
+      this.feedbackForm.updateValueAndValidity()
       this.userRating = this.data.userRating.rating
       if (this.userRating) {
         this.formDisabled = false
@@ -76,7 +77,7 @@ export class ContentRatingV2DialogComponent implements OnInit {
         userId: this.data.userId || '',
         activityType: this.data.content.primaryCategory || '',
         rating: this.userRating || 0,
-        review: feedbackForm.value.review || '',
+        ...(feedbackForm.value.review && { review: feedbackForm.value.review }),
       }
       this.ratingSvc.addOrUpdateRating(req).subscribe(
         (_res: any) =>  {

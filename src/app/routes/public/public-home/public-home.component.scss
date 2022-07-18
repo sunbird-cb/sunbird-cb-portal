@@ -17,20 +17,10 @@
   margin-bottom: 1rem;
 }
 
-p.title-heading {
-  // font-size: 2.6875rem !important;
-  // font-weight: 600;
-  // line-height: 1.3;
-  font: 600 2.6875rem/4rem Montserrat!important;
-}
-p.sub-heading {
-  font: 600 1.5rem/2.25rem Montserrat;
-}
-p.min-heading {
-  font: 600 1.25rem/1.8rem Montserrat;
-}
-p.main-text {
-  font: 400 1rem/1.5rem Lato;
+h1.title-heading {
+  font-size: 2.6875rem !important;
+  font-weight: 600;
+  line-height: 1.3;
 }
 
 * img {
@@ -185,7 +175,8 @@ h6,
   font-weight: 500;
   line-height: 1.5;
 }
-
+p {
+}
 
 .analyticsRecord {
   background-color: #ffffff;

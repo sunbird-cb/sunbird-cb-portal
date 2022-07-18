@@ -35,11 +35,7 @@
       <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
         [queryParams]="(widgetData.content | pipeContentRoute).queryParams" class="card-link" role="link"
         aria-label="Content" i18n-aria-label="Content | Click to view">
-        <img *ngIf="widgetData?.content?.posterImage" [src]="widgetData.content.posterImage | pipePublicURL" class="card-thumbnail ws-mat-primary-lite-background"
-          [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
-          [title]="widgetData.content.name" />
-
-        <img *ngIf="widgetData?.content?.appIcon && !widgetData?.content?.posterImage" [src]="widgetData.content.appIcon  | pipePublicURL" class="card-thumbnail ws-mat-primary-lite-background"
+        <img [src]="widgetData.content.posterImage | pipePublicURL" class="card-thumbnail ws-mat-primary-lite-background"
           [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
           [title]="widgetData.content.name" />
       </a>
@@ -165,14 +161,9 @@
         <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
           [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" class="rounded-t"
           aria-label="Content" i18n-aria-label="Content | Click to view">
-          <img mat-card-image *ngIf="widgetData?.content?.posterImage" [src]="widgetData.content.posterImage | pipePublicURL" class="card-img ws-mat-primary-lite-background"
+          <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" class="card-img ws-mat-primary-lite-background"
             [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
             [title]="widgetData.content.name" />
-
-           <img mat-card-image *ngIf="widgetData?.content?.appIcon && !widgetData?.content?.posterImage" [src]="widgetData.content.appIcon | pipePublicURL" class="card-img ws-mat-primary-lite-background"
-            [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
-            [title]="widgetData.content.name" />
-
         </a>
         <!-- <ng-container *ngIf="widgetData.content?.completionStatus == 2">
           <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
@@ -300,11 +291,7 @@
       <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
         [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" class="rounded-t"
         aria-label="Content" i18n-aria-label="Content | Click to view">
-        <img *ngIf="widgetData?.content?.posterImage"  mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" class="card-img ws-mat-primary-lite-background"
-          [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
-          [title]="widgetData.content.name" />
-
-          <img *ngIf="widgetData?.content?.appIcon && !widgetData?.content?.posterImage" mat-card-image [src]="widgetData.content.appIcon | pipePublicURL" class="card-img ws-mat-primary-lite-background"
+        <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" class="card-img ws-mat-primary-lite-background"
           [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
           [title]="widgetData.content.name" />
         <!-- <ng-container *ngIf="widgetData.content?.completionStatus == 2">
@@ -383,11 +370,7 @@
         <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
           [queryParams]="(widgetData.content | pipeContentRoute).queryParams" class="rounded-t" role="link"
           aria-label="Content" i18n-aria-label="Content | Click to view">
-          <img *ngIf="widgetData?.content?.posterImage" mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" class="card-img ws-mat-primary-lite-background"
-            [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
-            [title]="widgetData.content.name" />
-
-            <img *ngIf="widgetData?.content?.appIcon && !widgetData?.content?.posterImage" mat-card-image [src]="widgetData.content.appIcon | pipePublicURL" class="card-img ws-mat-primary-lite-background"
+          <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" class="card-img ws-mat-primary-lite-background"
             [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
             [title]="widgetData.content.name" />
         </a>
@@ -507,13 +490,9 @@
       <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
         [queryParams]="(widgetData.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData" role="link" class="rounded-t"
         aria-label="Content" i18n-aria-label="Content | Click to view">
-        <img *ngIf="widgetData?.content?.posterImage" mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" class="card-img ws-mat-primary-lite-background"
+        <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" class="card-img ws-mat-primary-lite-background"
           [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
           [title]="widgetData.content.name" />
-        <img *ngIf="widgetData?.content?.appIcon && !widgetData?.content?.posterImage" mat-card-image [src]="widgetData.content.appIcon | pipePublicURL" class="card-img ws-mat-primary-lite-background"
-          [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
-          [title]="widgetData.content.name" />
-
       </a>
       <mat-card-content>
         <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
@@ -676,12 +655,7 @@
           [queryParams]="(widgetData.content | pipeContentRoute).queryParams" class="rounded-t" role="link"
           aria-label="Content" i18n-aria-label="Content | Click to view"> -->
         <div style="position: relative; z-index: 1;">
-
-          <img *ngIf="widgetData?.content?.posterImage" mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" loading="lazy" style="position: absolute; z-index: 2;"
-            class="card-img ws-mat-primary-lite-background" [wsUtilsDefaultThumbnail]="defaultThumbnail"
-            [alt]="widgetData.content.name" />
-
-            <img *ngIf="widgetData?.content?.appIcon && !widgetData?.content?.posterImage" mat-card-image [src]="widgetData.content.appIcon | pipePublicURL" loading="lazy" style="position: absolute; z-index: 2;"
+          <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" loading="lazy" style="position: absolute; z-index: 2;"
             class="card-img ws-mat-primary-lite-background" [wsUtilsDefaultThumbnail]="defaultThumbnail"
             [alt]="widgetData.content.name" />
 
@@ -859,11 +833,7 @@
           [queryParams]="(widgetData.content | pipeContentRoute).queryParams" class="rounded-t" role="link"
           aria-label="Content" i18n-aria-label="Content | Click to view"> -->
         <div style="position: relative; z-index: 1;">
-          <img *ngIf="widgetData?.content?.posterImage" mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" loading="lazy" style="position: absolute; z-index: 2;"
-            class="card-img ws-mat-primary-lite-background" [wsUtilsDefaultThumbnail]="defaultThumbnail"
-            [alt]="widgetData.content.name" />
-
-            <img  *ngIf="widgetData?.content?.appIcon && !widgetData?.content?.posterImage"  mat-card-image [src]="widgetData.content.appIcon | pipePublicURL" loading="lazy" style="position: absolute; z-index: 2;"
+          <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" loading="lazy" style="position: absolute; z-index: 2;"
             class="card-img ws-mat-primary-lite-background" [wsUtilsDefaultThumbnail]="defaultThumbnail"
             [alt]="widgetData.content.name" />
 

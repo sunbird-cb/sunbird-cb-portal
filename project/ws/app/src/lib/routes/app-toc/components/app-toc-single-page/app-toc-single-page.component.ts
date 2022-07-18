@@ -157,11 +157,11 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
         takeUntil(this.unsubscribe)
       ).subscribe()
 
-      this.updateReviewsSubscription =  this.tocSharedSvc.updateReviewsObservable.subscribe((value: boolean) => {
-        if (value) {
-          this.updateReviews()
-        }
-      })
+    this.updateReviewsSubscription = this.tocSharedSvc.updateReviewsObservable.subscribe((value: boolean) => {
+      if (value) {
+        this.updateReviews()
+      }
+    })
 
   }
 
@@ -239,17 +239,17 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     if (this.content && this.content.identifier) {
       this.fetchRatingSummary()
     }
-    const competencies = this.content && this.content.competencies_v3 || this.content &&  this.content.competencies
-    const competenciesData = this.content && competencies ? competencies : []
-    if (competenciesData && competenciesData.length) {
-      const str = competenciesData.replace(/\\/g, '')
+    let competencies = this.content && this.content.competencies_v3 || this.content && this.content.competencies
+    const isString = typeof (competencies) === 'string'
+    if (competencies && isString) {
       try {
-        this.competencies = JSON.parse(str)
+        competencies = JSON.parse(competencies)
       } catch (ex) {
-        this.competencies = []
+        competencies = []
         this.logger.error('Competency Parse Error', ex)
       }
     }
+    this.competencies = competencies || []
     this.discussionConfig.contextIdArr = (this.content) ? [this.content.identifier] : []
     if (this.content) {
       this.discussionConfig.categoryObj = {
@@ -498,26 +498,26 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   fetchRatingSummary() {
     this.displayLoader = true
     if (this.content && this.content.identifier && this.content.primaryCategory) {
-        this.ratingSvc.getRatingSummary(this.content.identifier, this.content.primaryCategory).subscribe(
-          (res: any) =>  {
-            this.displayLoader = false
-            // console.log('Rating summary res ', res)
-            if (res && res.result && res.result.response) {
-              this.ratingSummary = res.result.response
-            }
-
-            // TODO: To be removed
-            // this.hardcodeData()
-            this.ratingSummaryProcessed = this.processRatingSummary()
-          },
-          (err: any) => {
-            this.displayLoader = false
-            this.logger.error('USER RATING FETCH ERROR >', err)
-            // TODO: To be removed
-            // this.hardcodeData()
-            // this.ratingSummaryProcessed = this.processRatingSummary()
+      this.ratingSvc.getRatingSummary(this.content.identifier, this.content.primaryCategory).subscribe(
+        (res: any) => {
+          this.displayLoader = false
+          // console.log('Rating summary res ', res)
+          if (res && res.result && res.result.response) {
+            this.ratingSummary = res.result.response
           }
-        )
+
+          // TODO: To be removed
+          // this.hardcodeData()
+          this.ratingSummaryProcessed = this.processRatingSummary()
+        },
+        (err: any) => {
+          this.displayLoader = false
+          this.logger.error('USER RATING FETCH ERROR >', err)
+          // TODO: To be removed
+          // this.hardcodeData()
+          // this.ratingSummaryProcessed = this.processRatingSummary()
+        }
+      )
     }
   }
 
@@ -533,26 +533,29 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
         ...((this.lastLookUp && this.lastLookUp.updatedOnUUID) ? { updateOn: (this.lastLookUp && this.lastLookUp.updatedOnUUID) } : null),
       }
       this.ratingSvc.getRatingLookup(req).subscribe(
-        (res: any) =>  {
+        (res: any) => {
           this.displayLoader = false
           // // console.log('Rating summary res ', res)
           if (res && res.result && res.result.response) {
-            this.ratingLookup = res.result.response
+            if (this.reviewPage > 1) {
+              res.result.response.map((item: any) => {
+                if (!this.ratingLookup.find((o: any) => o.updatedOnUUID === item.updatedOnUUID)) {
+                  this.ratingLookup.push(item)
+                }
+              })
+            } else {
+              this.ratingLookup = res.result.response
+            }
           }
 
-          // TODO: To be removed
-          // this.hardcodeData1()
-          this.processRatingLookup()
+          this.processRatingLookup(res.result.response)
         },
         (err: any) => {
           this.displayLoader = false
           this.logger.error('USER RATING FETCH ERROR >', err)
-          // TODO: To be removed
-          // this.hardcodeData1()
-          // this.processRatingLookup()
         }
       )
-  }
+    }
   }
 
   showALLReviews(length: number) {
@@ -565,10 +568,10 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
       breakDown: breakDownArray,
       latest50Reviews: breakDownArray,
       ratingsNumber: breakDownArray,
-      total_number_of_ratings: this.ratingSummary.total_number_of_ratings || 0,
+      total_number_of_ratings:  _.get(this.ratingSummary, 'total_number_of_ratings') || 0,
       avgRating: 0,
     }
-    const totRatings = this.ratingSummary.sum_of_total_ratings
+    const totRatings = _.get(this.ratingSummary, 'sum_of_total_ratings') || 0
     ratingSummaryPr.breakDown.push({
       percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount1stars'), totRatings),
       key: 1,
@@ -601,7 +604,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     const meanRating = ratingSummaryPr.breakDown.reduce((val, item) => {
       // console.log('item', item)
       return val + (item.key * item.value)
-    // tslint:disable-next-line: align
+      // tslint:disable-next-line: align
     }, 0)
     ratingSummaryPr.avgRating = parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1))
     if (this.content) {
@@ -612,14 +615,15 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     return ratingSummaryPr
   }
 
-  processRatingLookup() {
-    if (this.ratingLookup.length < this.lookupLimit) {
+  processRatingLookup(response: any) {
+    if (response.length < this.lookupLimit) {
       this.disableLoadMore = true
     } else {
       this.disableLoadMore = false
     }
-    this.lastLookUp = this.ratingLookup[this.ratingLookup.length - 1]
+    this.lastLookUp = response[response.length - 1]
     this.ratingReviews = this.ratingLookup
+    this.ratingReviews = this.ratingReviews.slice()
   }
 
   countStarsPercentage(value: any, total: any) {
@@ -636,9 +640,12 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
 
   sortReviews(sort: string) {
     // Reset the counters/ previous values before changing the filter and view
-    this.ratingViewCount  = this.ratingViewCountDefault
+    this.ratingViewCount = this.ratingViewCountDefault
     this.lastLookUp = ''
     this.ratingReviews = []
+    this.reviewPage = 1
+    this.disableLoadMore = false
+    this.ratingLookup = []
 
     if (sort === this.sortReviewValues[0]) {
       this.fetchRatingSummary()
@@ -647,14 +654,19 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
- // To updated both reviews, and rating summary at once in case of edit scenario
+  // To updated both reviews, and rating summary at once in case of edit scenario
   updateReviews() {
     // Reset the counters/ previous values before changing the filter and view
-    this.ratingViewCount  = this.ratingViewCountDefault
+    this.ratingViewCount = this.ratingViewCountDefault
     this.lastLookUp = ''
     this.ratingReviews = []
+    this.reviewPage = 1
+    this.disableLoadMore = false
+    this.ratingLookup = []
     this.fetchRatingSummary()
-    this.fetchRatingLookup()
+    if (this.previousFilter !== this.sortReviewValues[0]) {
+      this.fetchRatingLookup()
+    }
   }
 
   get usr() {
