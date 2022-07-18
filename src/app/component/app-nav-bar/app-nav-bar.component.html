@@ -1,5 +1,5 @@
-<mat-toolbar *ngIf="showAppNavBar && currentRoute !== 'all/assessment'" [color]="primaryNavbarBackground?.color"
-  [ngStyle]="primaryNavbarBackground?.styles" class="mat-elevation-z3 custom mobile">
+<mat-toolbar *ngIf="showAppNavBar && currentRoute !== 'all/assessment'" [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
+  class="mat-elevation-z3 custom mobile">
   <div class="fix-ww" id="root-tool-bar" title="toolbar" i18n-aria-label role="toolbar">
     <ng-container *ngIf="mode === 'top'">
       <a routerLink="/page/home" class="logo-dim" role="link" title="Home" i18n-aria-title i18n-aria-label>
@@ -81,22 +81,20 @@
   <div class="fix-ww flex flex-row mt-3" id="root-tool-bar" title="toolbar" i18n-aria-label role="toolbar">
     <ng-container *ngIf="mode === 'top'">
       <div class="flex flex-1">
-        <a class="logo-dim" role="link" title="Home" i18n-aria-title i18n-aria-label routerLink="/page/home"
-          *ngIf="isSetUpPage">
+        <a class="logo-dim" role="link" title="Home" i18n-aria-title i18n-aria-label routerLink="/page/home" *ngIf="isSetUpPage" >
           <img [src]="appIcon" alt="Application Logo" class="app-logo" />
         </a>
-        <!-- <a class="logo-dim" role="link" title="Home" i18n-aria-title i18n-aria-label routerLink="/public/home"
-          *ngIf="!isSetUpPage">
+        <a class="logo-dim" role="link" title="Home" i18n-aria-title i18n-aria-label routerLink="/public/home" *ngIf="!isSetUpPage" >
           <img [src]="appIcon" alt="Application Logo" class="app-logo" />
-        </a> -->
+        </a>
       </div>
 
 
     </ng-container>
-    <!-- <div class=" text-end flex flex-row signup_div" *ngIf="isPublicHomePage">
-      <a href="/protected/v8/resource" class="btn btn-link">Sign In</a>
-      <a routerLink="/public/signup" class="btn btn-primary text-center margin-left-s">Register</a>
-    </div> -->
+    <div class=" text-end flex flex-row signup_div" *ngIf="isPublicHomePage">
+      <a href="/protected/v8/resource"  class="btn btn-link">Sign In</a>
+      <a routerLink="/public/signup"  class="btn btn-primary text-center margin-left-s">Register</a>
+    </div>
   </div>
 </mat-toolbar>
 <ng-template #navbarSide let-item="item">

@@ -40,11 +40,10 @@ export class BtnPageBackComponent extends WidgetBaseComponent
   visible = false
   enablePeopleSearch = true
   environment!: any
-  loggedinUser = false
   hubsList!: NsInstanceConfig.IHubs[]
   constructor(
     private btnBackSvc: BtnPageBackService,
-    public router: Router,
+    private router: Router,
     private configSvc: ConfigurationsService,
     private discussUtilitySvc: DiscussUtilsService,
   ) {
@@ -58,9 +57,7 @@ export class BtnPageBackComponent extends WidgetBaseComponent
       this.hubsList = (instanceConfig.hubs || []).filter(i => i.active)
     }
     this.presentUrl = this.router.url
-    if (this.configSvc.userProfile) {
-      this.loggedinUser = true
-    }
+
   }
 
   get backUrl(): { fragment?: string; routeUrl: string; queryParams: any } {
@@ -154,8 +151,7 @@ export class BtnPageBackComponent extends WidgetBaseComponent
   hasRole(role: string[]): boolean {
     let returnValue = false
     role.forEach(v => {
-      const rolesList = (this.configSvc.userRoles || new Set())
-      if (rolesList.has(v.toLowerCase()) || rolesList.has(v.toUpperCase())) {
+      if ((this.configSvc.userRoles || new Set()).has(v)) {
         returnValue = true
       }
     })

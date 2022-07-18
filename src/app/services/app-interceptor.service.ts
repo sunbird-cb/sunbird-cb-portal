@@ -5,7 +5,6 @@ import { ConfigurationsService, AuthKeycloakService } from '@sunbird-cb/utils'
 import { catchError } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { NOTIFICATION_TIME } from '@sunbird-cb/collection/src/lib/_common/ck-editor/constants/constant'
-import { Router } from '@angular/router'
 // import 'rxjs/add/operator/do'
 
 @Injectable({
@@ -16,7 +15,6 @@ export class AppInterceptorService implements HttpInterceptor {
     private configSvc: ConfigurationsService,
     private snackBar: MatSnackBar,
     private authSvc: AuthKeycloakService,
-    private router: Router,
     @Inject(LOCALE_ID) private locale: string,
   ) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -68,10 +66,9 @@ export class AppInterceptorService implements HttpInterceptor {
                 case 0:
                   if (localUrl.includes('localhost')) {
                     this.snackBar.open('Please login Again and Apply new TOKEN', undefined, { duration: NOTIFICATION_TIME * 3 })
-
-                    // this.authSvc.logout()
-                    this.authSvc.force_logout()
                   }
+                  // this.authSvc.logout()
+                  this.authSvc.force_logout()
                   break
                 case 200:
                   if (!error.ok && error.url) {
@@ -90,10 +87,7 @@ export class AppInterceptorService implements HttpInterceptor {
                   //   // tslint:disable-next-line: prefer-template
                   //   window.location.href = error.error.redirectUrl + `?q=${pageName} `
                   // }
-                  if (!window.location.href.includes('/public/home')) {
-                    this.router.navigate(['public', 'home'])
-                    // window.location.href = '/public/home'
-                  }
+                  window.location.href = '/public/home'
                   // this.authSvc.force_logout()
                   break
               }

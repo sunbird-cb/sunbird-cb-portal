@@ -75,7 +75,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                 }
                 this.rolesAndActivityService.createRoles(reqObj).subscribe(res => {
                     if (res) {
-                        this.snackBar.open('Updated successfully')
+                        this.snackBar.open('updated Successfully!!')
                         this.userRoles.push({
                             id: role.value,
                             description: role.value,
