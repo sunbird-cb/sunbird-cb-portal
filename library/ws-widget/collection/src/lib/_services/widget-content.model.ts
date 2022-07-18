@@ -422,6 +422,7 @@ export namespace NsContent {
     COLLECTION_RESOURCE = 'resource/collection',
     APPLICATION_JSON = 'application/json',
     PRACTICE_RESOURCE = 'application/vnd.sunbird.questionset',
+    FINAL_ASSESSMENT = 'application/vnd.sunbird.questionset',
     // Added on UI Only
     CERTIFICATION = 'application/certification',
     PLAYLIST = 'application/playlist',

@@ -21,7 +21,7 @@ export class PracticeComponent implements OnInit {
         allowSkip: 'No',
         maxQuestions: 0,
         requiresSubmit: 'Yes',
-        showTimer: 'Yes'
+        showTimer: 'Yes',
     }
     @Input() isPreviewMode = false
     isTypeOfCollection = false
