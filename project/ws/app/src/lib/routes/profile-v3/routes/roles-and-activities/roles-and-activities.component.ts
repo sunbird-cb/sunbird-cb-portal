@@ -31,6 +31,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     @ViewChild('roleName', { static: true })
     roleName: ElementRef | null = null
     editRole: any
+    infoIcon: boolean = false;
     simpleDialog: MatDialogRef<DialogBoxComponent> | undefined
     textBoxActive = false
     constructor(
@@ -87,6 +88,8 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                         setTimeout(this.updateRoles, 3000)
                     }
                 })
+                let el = document.getElementById(this.userRoles.length-1+'');
+                el ? el.scrollIntoView({behavior: 'smooth', block: 'start'}): false;
             } else {
                 this.snackBar.open('Role and Activities both are required.')
             }
@@ -161,7 +164,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                 roleName: role.name,
                 activity: role.activities,
             })
-            this.textBoxActive = true
+            //this.textBoxActive = true
             this.selectedActivity = []
             _.each(role.activities, a => {
                 this.addActivity({ input: this.act, value: a.name })
@@ -203,6 +206,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     }
 
     openInfoDialog() {
+        this.infoIcon = true;
         const dialogRef = this.dialog.open(DialogBoxComponent, {
             data: {
                 view: 'roles',
@@ -212,11 +216,12 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
 
         })
         dialogRef.afterClosed().subscribe(_result => {
-
+            this.infoIcon = false;
         })
     }
 
         openActivityDialog() {
+            this.infoIcon = true;
             const dialogRef = this.dialog.open(DialogBoxComponent, {
                 data: {
                     view: 'activity',
@@ -226,7 +231,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
 
             })
             dialogRef.afterClosed().subscribe(_result => {
-
+                this.infoIcon = false;
         })
     }
 }

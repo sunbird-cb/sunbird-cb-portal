@@ -30,9 +30,12 @@
                             aria-label="Role Name label">
                             Add role
                         </label>
-                        <a class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openInfoDialog()">
+                        <div>
+                        <button [disabled]="infoIcon" mat-icon-button class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openInfoDialog()">
                             <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon>
-                        What is a role?</a>
+                        </button>
+                        What is a role?
+                    </div>
 
                     </div>
 
@@ -49,9 +52,12 @@
                             aria-label="activity label">
                             Add activities you perform as part of this role
                         </label>
-                        <a class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openActivityDialog()">
-                            <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon> What is an activity?
-                        </a>
+                        <div>
+                        <button [disabled]="infoIcon" mat-icon-button class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openActivityDialog()">
+                            <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon>
+                        </button>
+                        What is an activity?
+                    </div>
                     </div>
                     <mat-form-field appearance="outline" class="margin-top-xs full-width flex flex-1" [ngClass]="{ 'mat-focused': textBoxActive}">
                         <mat-chip-list #chipListHobies>
@@ -75,19 +81,19 @@
 
                 </div>
                 <div class="flex flex-1 flex-row margin-top-l">
-                    <a mat-button type="submit" class="ws-mat-accent-background cursor-pointer margin-xs"
+                    <button mat-button type="submit" class="ws-mat-accent-background cursor-pointer margin-xs"
                         (click)="create()">
                         <span class="ws-mat-primary-default-text padding-s" i18n>
                             Add
                         </span>
-                    </a>
+                    </button>
                 </div>
             </form>
         </mat-card>
         <ng-container *ngIf="userRoles && userRoles.length>0">
             <div class="flex flex-1 flex-column margin-top-xs">
-                <ng-container *ngFor="let role of userRoles">
-                    <mat-card class="flex flex-1 flex-column margin-bottom-s">
+                <ng-container *ngFor="let role of userRoles; let i = index">
+                    <mat-card class="flex flex-1 flex-column margin-bottom-s" id="{{i}}">
                         <div class="flex flex-row">
 
                             <div class="flex flex-1">
