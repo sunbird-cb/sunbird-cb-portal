@@ -20,7 +20,6 @@ import { NsContent } from '../_services/widget-content.model'
 import { WidgetContentService } from '../_services/widget-content.service'
 import { IWidgetsPlayerPdfData } from './player-pdf.model'
 import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
-import { PDFDataRangeTransport } from 'pdfjs-dist/webpack'
 const pdfjsViewer = require('pdfjs-dist/web/pdf_viewer')
 @Component({
   selector: 'ws-widget-player-pdf',
@@ -337,13 +336,9 @@ export class PlayerPdfComponent extends WidgetBaseComponent
   refresh() {
     this.renderSubject.next()
   }
-  onDataProgress(a,b){
-    console.log(a,b)
-  }
+
   private async loadDocument(url: string) {
-    const pdf = await PDFJS.getDocument(url,undefined,undefined,(p)=>{
-      console.log(p,'==================================')
-    }).promise
+    const pdf = await PDFJS.getDocument(url).promise
     this.pdfInstance = pdf
     this.totalPages = this.pdfInstance.numPages
     this.zoom.enable()

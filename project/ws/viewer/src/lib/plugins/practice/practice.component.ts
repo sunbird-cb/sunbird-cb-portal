@@ -677,7 +677,6 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               qType: 'FTB',
               editorState: {
                 options: _.map(sq.options, (_o: NSPractice.IOption, idx: number) => {
-                  debugger
                   return {
                     index: (_o.optionId || idx).toString(),
                     selectedAnswer: _o.response || '',
