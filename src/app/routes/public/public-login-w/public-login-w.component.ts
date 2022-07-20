@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 // import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Params } from '@angular/router'
 import { HttpClient } from '@angular/common/http'
+// tslint:disable-next-line
+import _ from 'lodash'
 
 @Component({
     selector: 'public-login-w',
@@ -21,11 +23,11 @@ export class PublicLoginWComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
-        this.subscriptionContact = this.activateRoute.queryParamMap.subscribe(data => {
-            this.data = data
+        this.subscriptionContact = this.activateRoute.queryParamMap.subscribe((response: Params) => {
+            this.data = response.get('params')
             // tslint:disable-next-line
-            console.log(data)
-            this.httpClient.get(`/apis/public/v8/google/callback?${data}`).subscribe(rData => {
+            console.log(response.params)
+            this.httpClient.get(`/apis/public/v8/google/callback?code=${_.get(response, 'params.code')}`).subscribe(rData => {
                 // tslint:disable-next-line
                 console.log(rData)
             })
