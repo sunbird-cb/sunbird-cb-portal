@@ -1,4 +1,6 @@
-
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
 
 .role-card {
     width: 100%;
@@ -60,3 +62,12 @@ a.hint_span {
 .mat-subheading-1{
     margin-left: 10px;
 }
+
+::ng-deep.mat-raised-button {
+    border: 1px solid #0074b6 !important;
+    background-color: #0074b6 !important;
+}
+
+::ng-deep.mat-raised-button[disabled] {
+    opacity: 0.4 !important;
+  }

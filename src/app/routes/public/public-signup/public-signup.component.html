@@ -249,7 +249,8 @@
               <div class="input-wrapper margin-top-s">
                 <label for="Organisation" class=" margin-remove-bottom form-label"
                   i18n="Organisation|Label which explains the user to enter Organisation" i18n-aria-label
-                  aria-label="Organisation Field label">
+                  aria-label="Organisation Field label"
+                  [ngClass]="{'required': orgRequired}">
                   Organisation
                 </label>
                 <mat-form-field appearance="outline" class="margin-top-s w-full">

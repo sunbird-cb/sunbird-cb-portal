@@ -1,7 +1,8 @@
 <viewer-overview *ngIf="viewState === 'initial'" [learningObjective]="learningObjective"
-  [complexityLevel]="complexityLevel" [duration]="duration" [timeLimit]="quizJson?.timeLimit || 300"
+  [complexityLevel]="complexityLevel" [duration]="duration" [timeLimit]="quizJson?.timeLimit"
   [primaryCategory]="primaryCategory" [noOfQuestions]="noOfQuestions" (userSelection)="getSections($event)">
 </viewer-overview>
+
 
 <div #quizContainer class="quiz-container" *ngIf="viewState !== 'initial'">
   <div class="flex flex-1 flex-column quiz_inner_container">
@@ -268,10 +269,10 @@
                   <span class="flex mat-body-2">Percentage to pass - <ng-container>
                       {{section.minimumPassPercentage}}
                     </ng-container></span>
-                  <span class="flex mat-body-2">Total questions - <ng-container>{{section?.children?.length ||
+                  <span class="flex mat-body-2">Total questions - <ng-container>{{section?.maxQuestions ||
                       '0'}}
                     </ng-container></span>
-                  <span class="flex mat-body-2 text-justify">{{section.description || 'Description'}}</span>
+                  <span class="flex mat-body-2 text-justify">{{section.additionalInstructions || 'Description'}}</span>
                 </div>
               </mat-card-content>
             </mat-card>

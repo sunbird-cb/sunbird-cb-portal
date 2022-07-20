@@ -28,7 +28,7 @@ import { CompTooltipDirective } from './directives/tooltip.directive'
 import { WelcomeOnboardComponent } from './routes/welcome-onboard/welcome-onboard.component'
 import { DialogBoxComponent } from './components/dialog-box/dialog-box.component'
 import { DesiredcomptencyCardComponent } from './components/desiredcomptency-card/desiredcomptency-card.component'
-import { CompLocalService } from './services/comp.service';
+import { CompLocalService } from './services/comp.service'
 
 @NgModule({
   declarations: [
