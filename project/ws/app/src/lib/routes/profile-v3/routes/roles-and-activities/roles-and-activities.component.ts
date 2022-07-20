@@ -42,7 +42,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
         this.updateRoles()
     }
     updateRoles() {
-        this.userRoles = _.get(this.configSvc.unMappedUser, 'profileDetails.userRoles') || []
+        this.userRoles = _.get(this.configSvc.unMappedUser, 'profileDetails.userRoles') || _.get(this.configSvc.unMappedUser, 'roles') || []
     }
     ngOnInit(): void {
         this.createRole = new FormGroup(
@@ -216,16 +216,16 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
         })
     }
 
-        openActivityDialog() {
-            const dialogRef = this.dialog.open(DialogBoxComponent, {
-                data: {
-                    view: 'activity',
-                },
-                hasBackdrop: false,
-                width: '550px',
+    openActivityDialog() {
+        const dialogRef = this.dialog.open(DialogBoxComponent, {
+            data: {
+                view: 'activity',
+            },
+            hasBackdrop: false,
+            width: '550px',
 
-            })
-            dialogRef.afterClosed().subscribe(_result => {
+        })
+        dialogRef.afterClosed().subscribe(_result => {
 
         })
     }
