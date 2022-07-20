@@ -25,7 +25,8 @@ export class PublicLoginWComponent implements OnInit, OnDestroy {
             this.data = data
             // tslint:disable-next-line
             console.log(data)
-            this.httpClient.get(`/apis/public/v8/google/callback?${data}`).subscribe(rData=>{
+            this.httpClient.get(`/apis/public/v8/google/callback?${data}`).subscribe(rData => {
+                // tslint:disable-next-line
                 console.log(rData)
             })
         })
