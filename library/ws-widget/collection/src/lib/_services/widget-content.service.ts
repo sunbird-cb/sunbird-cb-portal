@@ -51,7 +51,7 @@ export class WidgetContentService {
   isResource(primaryCategory: string) {
     if (primaryCategory) {
       const isResource = (primaryCategory === NsContent.EResourcePrimaryCategories.LEARNING_RESOURCE) ||
-       (primaryCategory === NsContent.EResourcePrimaryCategories.PRACTICE_RESOURCE)
+        (primaryCategory === NsContent.EResourcePrimaryCategories.PRACTICE_RESOURCE)
       return isResource
     }
     return false
@@ -268,7 +268,7 @@ export class WidgetContentService {
     }
     if (
       (content.primaryCategory === NsContent.EPrimaryCategory.PROGRAM &&
-      !(content.artifactUrl && content.artifactUrl.length)) ||
+        !(content.artifactUrl && content.artifactUrl.length)) ||
       content.primaryCategory === NsContent.EPrimaryCategory.MANDATORY_COURSE_GOAL
     ) {
       const child = content.children[0]
@@ -278,7 +278,8 @@ export class WidgetContentService {
       content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE ||
       content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT ||
       content.primaryCategory === NsContent.EPrimaryCategory.PROGRAM ||
-      content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+      content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE ||
+      content.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT
     ) {
       return content
     }
