@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core'
 // import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ActivatedRoute } from '@angular/router'
+import { HttpClient } from '@angular/common/http'
 
 @Component({
     selector: 'public-login-w',
@@ -15,6 +16,7 @@ export class PublicLoginWComponent implements OnInit, OnDestroy {
     private subscriptionContact: Subscription | null = null
     constructor(
         private activateRoute: ActivatedRoute,
+        private httpClient: HttpClient,
         // private authSvc: AuthKeycloakService,
     ) { }
 
@@ -23,6 +25,10 @@ export class PublicLoginWComponent implements OnInit, OnDestroy {
             this.data = data
             // tslint:disable-next-line
             console.log(data)
+            this.httpClient.get(`/apis/public/v8/google/callback?${data}`).subscribe(rData => {
+                // tslint:disable-next-line
+                console.log(rData)
+            })
         })
     }
     ngOnDestroy() {
