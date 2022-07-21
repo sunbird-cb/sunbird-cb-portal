@@ -1,6 +1,8 @@
+
 @import 'ws-common';
 @import 'ws-vars';
 @import 'ws-mixins';
+@import 'profile-form';
 
 .role-card {
     width: 100%;
@@ -21,6 +23,10 @@
     width: auto !important;
     min-width: 100%;
     flex: 1;
+
+}
+input.mat-input-element.mat-chip-input {
+    margin-top: 10px!important;
 }
 .activity_span {
     padding:6px 10px;
@@ -30,7 +36,9 @@
     width: auto;
     display: inline-block;
 }
-
+textarea.mat-input-element {
+    height: 150px;
+}
 
 .top_chip_box {
     background-color: rgba($color: #000000, $alpha: .04);
@@ -62,12 +70,3 @@ a.hint_span {
 .mat-subheading-1{
     margin-left: 10px;
 }
-
-::ng-deep.mat-raised-button {
-    border: 1px solid #0074b6 !important;
-    background-color: #0074b6 !important;
-}
-
-::ng-deep.mat-raised-button[disabled] {
-    opacity: 0.4 !important;
-  }

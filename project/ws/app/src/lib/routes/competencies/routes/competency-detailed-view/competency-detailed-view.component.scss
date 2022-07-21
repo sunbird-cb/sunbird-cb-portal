@@ -13,7 +13,7 @@
 
 .custom-container-width {
     width: 1000px;
-    overflow-y: hidden;
+    overflow-x: hidden;
     box-sizing: border-box;
 
     @include breakpoint-xs {
