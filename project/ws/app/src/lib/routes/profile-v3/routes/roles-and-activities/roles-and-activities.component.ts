@@ -47,7 +47,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     }
     updateRoles() {
         // tslint:disable-next-line:max-line-length
-        this.userRoles = this.configSvc && this.configSvc.unMappedUser ? _.get(this.configSvc.unMappedUser, 'profileDetails.userRoles') :  []
+        this.userRoles = _.get(this.configSvc.unMappedUser, 'profileDetails.userRoles') || _.get(this.configSvc.unMappedUser, 'roles') || []
     }
     ngOnInit(): void {
         this.createRole = new FormGroup({
@@ -255,7 +255,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
         })
     }
 
-        openActivityDialog() {
+    openActivityDialog() {
             this.infoIcon = true
             const dialogRef = this.dialog.open(DialogBoxComponent, {
                 data: {
