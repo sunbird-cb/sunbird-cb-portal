@@ -25,20 +25,28 @@
             <form [formGroup]="createRole" class="flex flex-1 flex-column margin-top-m">
                 <div id="maindiv" class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-xl">
                     <div class="flex flex-row justify-between">
-                        <label for="roleName" class=" margin-remove-bottom form-label required flex mat-subheading-2"
-                            i18n="Role Name label|Label which explains the user to enter Role Name" i18n-aria-label
+                        <label for="roleName" class="margin-remove-bottom form-label required flex mat-subheading-2"
+                            i18n="Role Name label|Label which explains the user to enter Role Name" i18n-aria-label *ngIf="!editData"
                             aria-label="Role Name label">
                             Add role
                         </label>
-                        <a class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openInfoDialog()">
+                        <label for="roleName" class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                            i18n="Role Name label|Label which explains the user to enter Role Name" i18n-aria-label *ngIf="editData"
+                            aria-label="Role Name label">
+                            Edit role
+                        </label>
+                        <div>
+                        <button [disabled]="infoIcon" mat-icon-button class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openInfoDialog()">
                             <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon>
-                        What is a role?</a>
+                        </button>
+                        What is a role?
+                    </div>
 
                     </div>
 
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1" [ngClass]="{ 'mat-focused': textBoxActive}">
                         <input matInput autocomplete="off" id="roleName" #roleName name="roleName"
-                            placeholder="Type the role name" formControlName="roleName" class="flex flex-1" />
+                            placeholder="Type the role name" formControlName="roleName" class="flex flex-1"  (input)="change($event)"/>
                     </mat-form-field>
                     <mat-hint class="text-right text_hint mat-body-2">Type the role name</mat-hint>
                 </div>
@@ -49,9 +57,12 @@
                             aria-label="activity label">
                             Add activities you perform as part of this role
                         </label>
-                        <a class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openActivityDialog()">
-                            <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon> What is an activity?
-                        </a>
+                        <div>
+                        <button [disabled]="infoIcon" mat-icon-button class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openActivityDialog()">
+                            <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon>
+                        </button>
+                        What is an activity?
+                    </div>
                     </div>
                     <mat-form-field appearance="outline" class="margin-top-xs full-width flex flex-1" [ngClass]="{ 'mat-focused': textBoxActive}">
                         <mat-chip-list #chipListHobies>
@@ -61,7 +72,7 @@
                                 <mat-icon matChipRemove>cancel</mat-icon>
                             </mat-chip>
                         </mat-chip-list>
-                        <input #act matInput i18n-placeholder="Type the activity and press enter" rows="5"
+                        <input #activity matInput i18n-placeholder="Type the activity and press enter" rows="5"
                             placeholder="Type the activity and press enter" formControlName="activity" i18n-aria-label
                             aria-label="Enter Hobbies" [matChipInputFor]="chipListHobies"
                             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
@@ -75,19 +86,27 @@
 
                 </div>
                 <div class="flex flex-1 flex-row margin-top-l">
-                    <a mat-button type="submit" class="ws-mat-accent-background cursor-pointer margin-xs"
+                    <!-- <a mat-button type="submit" class="ws-mat-accent-background cursor-pointer margin-xs"
                         (click)="create()">
                         <span class="ws-mat-primary-default-text padding-s" i18n>
                             Add
                         </span>
-                    </a>
+                    </a> -->
+                    <button mat-raised-button type="submit" (click)="create()" class="text-white btn-success btn-responsive" 
+                    [disabled]="!createRole.value.roleName || selectedActivity.length === 0" *ngIf="!editData">
+                        <span class="text-white" i18n>Add</span>
+                    </button>
+                    <button mat-raised-button type="submit" (click)="create()" class="text-white btn-success btn-responsive" 
+                    [disabled]="!createRole.value.roleName || selectedActivity.length === 0 || (editRole.name === orgroleselected.name && disableUpdate)"  *ngIf="editData">
+                        <span class="text-white" i18n>Update</span>
+                    </button>
                 </div>
             </form>
         </mat-card>
         <ng-container *ngIf="userRoles && userRoles.length>0">
             <div class="flex flex-1 flex-column margin-top-xs">
-                <ng-container *ngFor="let role of userRoles">
-                    <mat-card class="flex flex-1 flex-column margin-bottom-s">
+                <ng-container *ngFor="let role of userRoles; let i = index">
+                    <mat-card class="flex flex-1 flex-column margin-bottom-s" id="{{i}}">
                         <div class="flex flex-row">
 
                             <div class="flex flex-1">
