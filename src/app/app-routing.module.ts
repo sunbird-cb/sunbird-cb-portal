@@ -721,6 +721,10 @@ const routes: Routes = [
     component: PublicLoginWComponent,
   },
   {
+    path: 'public/google/sso',
+    component: PublicLoginWComponent,
+  },
+  {
     path: 'public/signup',
     component: PublicSignupComponent,
     data: {
