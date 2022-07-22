@@ -123,16 +123,17 @@
     }
 
     .btn-success {
-      background-color: rgb(48, 105, 51) !important;
+      // background-color: rgb(48, 105, 51) !important;
+      background-color: #0074b6!important;
       border-radius: 4px;
       width: 240px;
       box-shadow: none;
       margin-right: 16px;
 
-      &.btn-responsive {
-        width: 100%;
-        max-width: 340px;
-      }
+      // &.btn-responsive {
+      //   width: 100%;
+      //   max-width: 340px;
+      // }
     }
 
     .btn-success:disabled,
