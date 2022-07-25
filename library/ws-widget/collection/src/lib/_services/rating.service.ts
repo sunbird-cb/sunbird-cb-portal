@@ -11,6 +11,8 @@ const API_END_POINTS = {
   GET_RATING_SUMMARY: (contentId: string, contentType: string) =>
   `${PROXY_SLAG_V8}/ratings/v1/summary/${contentId}/${contentType}`,
   GET_RATING_LOOKUP: `${PROXY_SLAG_V8}/ratings/v1/ratingLookUp`,
+  GET_AUTHOR_REPLY: (contentId: string, userID: string) =>
+  `${PROXY_SLAG_V8}/ratings/v1/read/${contentId}/Course/${userID}`,
 }
 
 @Injectable({
@@ -78,5 +80,11 @@ export class RatingService {
       }
     }
     return false
+  }
+
+  getAuthorReply(contentId: string, userID: string): Observable<any> {
+    return this.http.get<any>(
+      API_END_POINTS.GET_AUTHOR_REPLY(contentId, userID)
+    )
   }
 }
