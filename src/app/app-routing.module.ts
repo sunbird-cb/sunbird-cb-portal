@@ -734,7 +734,7 @@ const routes: Routes = [
       module: 'Google SSO',
       pageId: 'public/google/sso',
     },
-  }, 
+  },
   {
     path: 'public/welcome',
     component: PublicWelcomeComponent,

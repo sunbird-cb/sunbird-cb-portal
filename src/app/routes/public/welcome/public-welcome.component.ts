@@ -119,15 +119,17 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
         // @Inject(DOCUMENT) private _document: any,
         // @Inject(PLATFORM_ID) private _platformId: any,
     ) {
+        // tslint:disable-next-line
         console.log(this.activatedRoute.snapshot.data.userData)
         this.usr = this.activatedRoute.snapshot.data.userData
         if (this.usr.isUpdateRequired) {
-            this.router.navigate(['/page/home']);
+            this.router.navigate(['/page/home'])
             return
         }
         this.init()
     }
     init() {
+        // tslint:disable
         this.registrationForm = new FormGroup({
             firstname: new FormControl(_.get(this.usr, 'firstName') || '', [Validators.required, Validators.pattern(this.namePatern)]),
             lastname: new FormControl(_.get(this.usr, 'lastName') || '', [Validators.required, Validators.pattern(this.namePatern)]),
@@ -141,6 +143,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
             organisation: new FormControl(_.get(this.usr, 'channel') || '', [forbiddenNamesValidator(this.masterOrgs)]),
             // recaptchaReactive: new FormControl(null, [Validators.required]),
         })
+        // tslint:enable
     }
     ngOnInit() {
         this.fetchDropDownValues('ministry')
@@ -447,11 +450,11 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
                     // const value = this.registrationForm.get('department')!.value
                     if (value && (value.orgname === 'NA' || value.orgname === 'na')) {
                         this.orgRequired = true
-                        // tslint:disable-next-line: no-non-null-assertion
+                        // tslint:disable-next-line
                         this.registrationForm.get('organisation')!.setValidators([Validators.required, forbiddenNamesValidatorNonEmpty(this.orgs)])
                     } else {
                         this.orgRequired = false
-                        // tslint:disable-next-line: no-non-null-assertion
+                        // tslint:disable-next-line
                         this.registrationForm.get('organisation')!.setValidators([forbiddenNamesValidator(this.orgs)])
                     }
                     // to reset organisation values when department is changed

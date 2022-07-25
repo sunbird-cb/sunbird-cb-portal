@@ -4,6 +4,8 @@ import { Observable, of } from 'rxjs'
 import { map, catchError, retry } from 'rxjs/operators'
 import { HttpClient } from '@angular/common/http'
 import { IResolveResponse } from '@sunbird-cb/utils'
+// tslint:disable-next-line
+import _ from 'lodash'
 
 @Injectable()
 export class WelcomeUserResolverService implements Resolve<Observable<IResolveResponse<any>>> {
@@ -19,7 +21,10 @@ export class WelcomeUserResolverService implements Resolve<Observable<IResolveRe
         )
     }
     getPublicDetails(): Observable<any> {
-        let url = '/apis/proxies/v8/user/basicInfo'
-        return this.http.get<any>(url).pipe(map(r => { return r.result.response })).pipe(retry(3))
+        const url = '/apis/proxies/v8/user/basicInfo'
+        return this.http.get<any>(url)
+            .pipe(map(r => _.get(r, 'result.response')))
+            .pipe(retry(3))
     }
+
 }
