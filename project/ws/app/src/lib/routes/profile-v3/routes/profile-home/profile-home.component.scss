@@ -1,6 +1,7 @@
 @import 'ws-common';
 @import 'ws-vars';
 @import 'ws-mixins';
+@import 'profile-form';
 
 .container-balanced {
   @extend %page-center;
