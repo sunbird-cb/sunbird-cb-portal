@@ -2,17 +2,17 @@ import { Injectable } from '@angular/core'
 import { Resolve } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { map, catchError, retry } from 'rxjs/operators'
-import { HttpClient } from '@angular/common/http'
+import { HttpBackend, HttpClient } from '@angular/common/http'
 import { IResolveResponse } from '@sunbird-cb/utils'
 // tslint:disable-next-line
 import _ from 'lodash'
 
 @Injectable()
 export class WelcomeUserResolverService implements Resolve<Observable<IResolveResponse<any>>> {
-
-    constructor(
-        private http: HttpClient,
-    ) { }
+    private httpClient: HttpClient
+    constructor(handler: HttpBackend) {
+        this.httpClient = new HttpClient(handler)
+    }
 
     resolve(): Observable<IResolveResponse<any>> {
         return this.getPublicDetails().pipe(
@@ -22,9 +22,8 @@ export class WelcomeUserResolverService implements Resolve<Observable<IResolveRe
     }
     getPublicDetails(): Observable<any> {
         const url = '/apis/proxies/v8/user/basicInfo'
-        return this.http.get<any>(url)
-            .pipe(map(r => _.get(r, 'result.response')))
-            .pipe(retry(3))
+        return this.httpClient.get<any>(url)
+            .pipe(retry(3), map(r => _.get(r, 'result.response')))
     }
 
 }
