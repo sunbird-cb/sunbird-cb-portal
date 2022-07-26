@@ -21,10 +21,11 @@
                     Please fill the following information.
                 </h3>
             </div>
-            <form class="flex flex-1" [formGroup]="registrationForm">
-                <div class="flex flex-1 margin-top-l new-mobile flex-column">
-                    <div class="flex flex-1 flex-wrap mobile-break flex-row">
-                        <div class="flex flex-1 flex-col content-center flex-wrap">
+            <ng-container *ngIf="registrationForm">
+                <form class="flex flex-1" [formGroup]="registrationForm">
+                    <div class="flex flex-1 margin-top-l new-mobile flex-column">
+                        <!-- <div class="flex flex-1 flex-wrap mobile-break flex-column"> -->
+                        <div class="flex flex-1 flex-row content-center flex-wrap">
                             <div class="flex flex-1 input-wrapper margin-top-s">
                                 <label for="firstName" class=" margin-remove-bottom form-label required"
                                     i18n="First name label|Label which explains the user to enter first name"
@@ -68,6 +69,8 @@
                                     </mat-error>
                                 </mat-form-field>
                             </div>
+                        </div>
+                        <div class="flex flex-1 fflex-row content-center flex-wrap">
                             <div class="flex flex-1 input-wrapper margin-top-s">
                                 <label for="email" class=" margin-remove-bottom form-label required"
                                     i18n="Email label|Label which explains the user to enter Email" i18n-aria-label
@@ -91,6 +94,8 @@
                                     </mat-error>
                                 </mat-form-field>
                             </div>
+                        </div>
+                        <div class="flex flex-1 flex-row content-center flex-wrap">
                             <div class="flex flex-1 input-wrapper margin-top-s">
                                 <label for="position" class=" margin-remove-bottom form-label required"
                                     i18n="Position|Label which explains the user to enter Position" i18n-aria-label
@@ -123,7 +128,7 @@
                                 </mat-autocomplete>
                             </div>
                         </div>
-                        <div class="flex flex-1  flex-col content-center flex-wrap">
+                        <div class="flex flex-1 flex-row content-center flex-wrap">
                             <div class="flex flex-1 input-wrapper margin-top-s">
                                 <label for="type" class=" margin-remove-bottom form-label required"
                                     i18n="Department|Label which explains the user to enter Department" i18n-aria-label
@@ -141,6 +146,8 @@
                                     </mat-radio-button>
                                 </mat-radio-group>
                             </div>
+                        </div>
+                        <div class="flex flex-1 flex-row content-center flex-wrap">
                             <div class="flex flex-1 input-wrapper margin-top-s">
                                 <label for="Ministry" class=" margin-remove-bottom form-label required"
                                     i18n="Ministry|Label which explains the user to enter Ministry" i18n-aria-label
@@ -173,7 +180,9 @@
                                     </mat-option>
                                 </mat-autocomplete>
                             </div>
-
+                        </div>
+                        <!-- </div> -->
+                        <div class="flex flex-1 flex-row content-center flex-wrap">
                             <div class="flex flex-1 input-wrapper margin-top-s">
                                 <label for="Department" class=" margin-remove-bottom form-label"
                                     i18n="Department|Label which explains the user to enter Department" i18n-aria-label
@@ -206,7 +215,6 @@
                                     </mat-option>
                                 </mat-autocomplete>
                             </div>
-
                             <div class="flex flex-1 input-wrapper margin-top-s">
                                 <label for="Organisation" class=" margin-remove-bottom form-label"
                                     i18n="Organisation|Label which explains the user to enter Organisation"
@@ -241,31 +249,33 @@
                                 </mat-autocomplete>
                             </div>
                         </div>
-                    </div>
-                    <div class="flex flex-1 input-wrapper margin-top-s">
-                        <div class="flex flex-middle">
-                            <mat-checkbox aria-label="I confirm that the above provided information are accurate."
-                                id="confirm" name="confirm" [checked]="confirm" (change)="confirmChange()" i18n-aria-label
-                                aria-label="I confirm that the above provided information are accurate. checkbox"
-                                required>
-                                <label for="confirm" class="margin-remove-bottom mat-body-2 ws-mat-black60-text" i18n-aria-label
-                                    aria-label="I confirm that the above provided information are accurate. checkbox label">
-                                    I confirm that the above provided information is accurate.
-                                </label>
-                            </mat-checkbox>
+                        <div class="flex flex-1 input-wrapper margin-top-s">
+                            <div class="flex flex-middle">
+                                <mat-checkbox aria-label="I confirm that the above provided information are accurate."
+                                    id="confirm" name="confirm" [checked]="confirm" (change)="confirmChange()"
+                                    i18n-aria-label
+                                    aria-label="I confirm that the above provided information are accurate. checkbox"
+                                    required>
+                                    <label for="confirm" class="margin-remove-bottom mat-body-2 ws-mat-black60-text"
+                                        i18n-aria-label
+                                        aria-label="I confirm that the above provided information are accurate. checkbox label">
+                                        I confirm that the above provided information is accurate.
+                                    </label>
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                        <div class="w-full margin-top-l">
+                            <div class="button_box flex flex-col items-center justify-center">
+                                <button mat-flat-button type="submit"
+                                    class="submitBtn text-white ws-mat-primary-background ws-mat-white-text"
+                                    (click)="signup()" [disabled]="!registrationForm?.valid || !confirm || disableBtn">
+                                    Save and Next
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="w-full margin-top-l">
-                        <div class="button_box flex flex-col items-center justify-center">
-                            <button mat-flat-button type="submit"
-                                class="submitBtn text-white ws-mat-primary-background ws-mat-white-text"
-                                (click)="signup()" [disabled]="!registrationForm?.valid || !confirm || disableBtn">
-                                Save and Next
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </ng-container>
         </div>
 
     </div>
