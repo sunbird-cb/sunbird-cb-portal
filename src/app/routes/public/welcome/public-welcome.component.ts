@@ -122,7 +122,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
         // @Inject(PLATFORM_ID) private _platformId: any,
     ) {
         this.usr = _.get(this.activatedRoute, 'snapshot.data.userData.data')
-        if (this.usr.isUpdateRequired) {
+        if (!this.usr.isUpdateRequired) {
             if (!this.configSvc || !this.configSvc.userProfileV2) {
                 this.fetch().then(() => {
                     this.router.navigate(['/page/home'])
