@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 // import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
-import { ActivatedRoute, Params } from '@angular/router'
+import { ActivatedRoute, Params, Router } from '@angular/router'
 import { HttpClient } from '@angular/common/http'
 // tslint:disable-next-line
 import _ from 'lodash'
@@ -18,6 +18,7 @@ export class PublicLoginWComponent implements OnInit, OnDestroy {
     private subscriptionContact: Subscription | null = null
     constructor(
         private activateRoute: ActivatedRoute,
+        private router: Router,
         private httpClient: HttpClient,
         // private authSvc: AuthKeycloakService,
     ) { }
@@ -39,6 +40,7 @@ export class PublicLoginWComponent implements OnInit, OnDestroy {
                     console.log(rData)
                 })
             }
+            // this.router.navigate(['public', 'welcome'])
         })
     }
     ngOnDestroy() {

@@ -131,8 +131,11 @@ export class InitService {
   }
 
   async init() {
+    if (this.updateProfileSubscription) {
+      this.updateProfileSubscription.unsubscribe()
+    }
     // to update the profile from user read api
-    this.updateProfileSubscription =  this.configSvc.updateProfileObservable.subscribe(async (value: boolean) => {
+    this.updateProfileSubscription = this.configSvc.updateProfileObservable.subscribe(async (value: boolean) => {
       if (value) {
         await this.fetchUserDetails()
       }
@@ -150,6 +153,8 @@ export class InitService {
     try {
       const path = window.location.pathname
       if (!path.startsWith('/public')) {
+        await this.fetchStartUpDetails()
+      } else if (path.includes('/public/welcome')) {
         await this.fetchStartUpDetails()
       }// detail: depends only on userID
     } catch (e) {

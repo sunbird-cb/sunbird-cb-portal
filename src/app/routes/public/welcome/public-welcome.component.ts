@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material'
 // tslint:disable-next-line: import-name
 import _ from 'lodash'
 import { ActivatedRoute, Router } from '@angular/router'
+import { InitService } from 'src/app/services/init.service'
 
 // export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
 //   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -115,18 +116,33 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
         private snackBar: MatSnackBar,
         private activatedRoute: ActivatedRoute,
         private router: Router,
+        private initSvc: InitService,
         // private recaptchaV3Service: ReCaptchaV3Service,
         // @Inject(DOCUMENT) private _document: any,
         // @Inject(PLATFORM_ID) private _platformId: any,
     ) {
-        // tslint:disable-next-line
-        console.log(this.activatedRoute.snapshot.data.userData)
-        this.usr = this.activatedRoute.snapshot.data.userData
+        this.usr = _.get(this.activatedRoute, 'snapshot.data.userData.data')
         if (this.usr.isUpdateRequired) {
-            this.router.navigate(['/page/home'])
-            return
+            if (!this.configSvc || !this.configSvc.userProfileV2) {
+                this.fetch().then(() => {
+                    this.router.navigate(['/page/home'])
+                })
+            } else {
+                this.router.navigate(['/page/home'])
+            }
+
+        } else {
+            if (!this.configSvc || !this.configSvc.userProfileV2) {
+                this.fetch().then(() => {
+                    this.init()
+                })
+            } else {
+                this.init()
+            }
         }
-        this.init()
+    }
+    async fetch() {
+        await this.initSvc.init()
     }
     init() {
         // tslint:disable
@@ -140,31 +156,33 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
             type: new FormControl('ministry', [Validators.required]),
             ministry: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterMinisteries)]),
             department: new FormControl('', [forbiddenNamesValidator(this.masterDepartments)]),
-            organisation: new FormControl(_.get(this.usr, 'channel') || '', [forbiddenNamesValidator(this.masterOrgs)]),
+            organisation: new FormControl('', [forbiddenNamesValidator(this.masterOrgs)]),
             // recaptchaReactive: new FormControl(null, [Validators.required]),
         })
         // tslint:enable
     }
     ngOnInit() {
-        this.fetchDropDownValues('ministry')
-        const instanceConfig = this.configSvc.instanceConfig
-        this.positionsOriginal = this.configSvc.positions || []
-        this.onPositionsChange()
-        if (instanceConfig) {
-            this.telemetryConfig = instanceConfig.telemetryConfig
-            this.portalID = `${this.telemetryConfig.pdata.id}`
-        }
-
-        // if (isPlatformBrowser(this._platformId)) {
-        //   this._document.body.classList.add('cs-recaptcha')
-        // }
-
-        // tslint:disable-next-line: no-non-null-assertion
-        this.registrationForm.get('type')!.valueChanges.subscribe((value: any) => {
-            if (value) {
-                this.fetchDropDownValues(value)
+        if (this.registrationForm) {
+            this.fetchDropDownValues('ministry')
+            const instanceConfig = this.configSvc.instanceConfig
+            this.positionsOriginal = this.configSvc.positions || []
+            this.onPositionsChange()
+            if (instanceConfig) {
+                this.telemetryConfig = instanceConfig.telemetryConfig
+                this.portalID = `${this.telemetryConfig.pdata.id}`
             }
-        })
+
+            // if (isPlatformBrowser(this._platformId)) {
+            //   this._document.body.classList.add('cs-recaptcha')
+            // }
+
+            // tslint:disable-next-line: no-non-null-assertion
+            this.registrationForm.get('type')!.valueChanges.subscribe((value: any) => {
+                if (value) {
+                    this.fetchDropDownValues(value)
+                }
+            })
+        }
     }
 
     get typeValueStartCase() {
@@ -198,6 +216,9 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     }
 
     clearValues() {
+        if (!this.registrationForm) {
+            return
+        }
         // tslint:disable-next-line: no-non-null-assertion
         this.registrationForm.get('ministry')!.setValue('')
         // tslint:disable-next-line: no-non-null-assertion
@@ -263,6 +284,9 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     }
 
     onPositionsChange() {
+        if (!this.registrationForm) {
+            return
+        }
         // tslint:disable-next-line: no-non-null-assertion
         this.masterPositions = this.registrationForm.get('position')!.valueChanges
             .pipe(
@@ -364,14 +388,16 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
                 // mapId: hierarchyObj.mapid || '',
                 // sbRootOrgId: hierarchyObj.sbrootorgid,
                 // sbOrgId: hierarchyObj.sborgid,
-                userId: this.usr.userId,
-                position: this.registrationForm.value.position.name || '',
-                channel: hierarchyObj.orgname || '',
-                sbOrgId: hierarchyObj.sborgid,
-                mapId: hierarchyObj.mapid || '',
-                sbRootOrgId: hierarchyObj.sbrootorgid,
-                organisationType: hierarchyObj.sborgtype || '',
-                organisationSubType: hierarchyObj.sbsuborgtype || '',
+                request: {
+                    userId: this.usr.userId,
+                    position: this.registrationForm.value.position.name || '',
+                    channel: hierarchyObj.orgname || '',
+                    sbOrgId: hierarchyObj.sborgid,
+                    mapId: hierarchyObj.mapid || '',
+                    sbRootOrgId: hierarchyObj.sbrootorgid,
+                    organisationType: hierarchyObj.sborgtype || '',
+                    organisationSubType: hierarchyObj.sbsuborgtype || '',
+                }
             }
         }
 
@@ -380,9 +406,10 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
         this.signupSvc.register(req).subscribe(
             (_res: any) => {
                 // console.log('success', res)
-                this.openDialog()
+                // this.openDialog()
                 this.disableBtn = false
                 this.configSvc.updateGlobalProfile(true)
+                this.router.navigate(['/page/home'])
             },
             (err: any) => {
                 this.disableBtn = false
