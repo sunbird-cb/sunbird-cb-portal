@@ -40,7 +40,7 @@ export class PublicLoginWComponent implements OnInit, OnDestroy {
                     console.log(rData)
                 })
             }
-            this.router.navigate(['public', 'welcome'])
+            // this.router.navigate(['public', 'welcome'])
         })
     }
     ngOnDestroy() {
