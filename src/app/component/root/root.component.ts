@@ -214,7 +214,11 @@ export class RootComponent implements OnInit, AfterViewInit {
         if (this.currentUrl.includes('/public/home')) {
           this.customHeight = true
         }
-        if (!!this.currentUrl.startsWith('/public/logout') || !!this.currentUrl.startsWith('/public/signup')) {
+        if (
+          !!this.currentUrl.startsWith('/public/logout')
+          || !!this.currentUrl.startsWith('/public/signup')
+          || !!this.currentUrl.startsWith('/public/welcome')
+        ) {
           this.showFooter = false
           this.showNavbar = false
           this.isNavBarRequired = false
