@@ -38,6 +38,12 @@
                     <div class="margin-top-m mat-body-1 break-all">
                         {{review.review}}
                     </div>
+                    <div *ngIf="authorReply" class="margin-top-m">
+                        <button mat-button class="mat-body-2 blue-border mat-stroked-button mat-button-base mat-accent" (click)="showAuthReply()">Author's reply...</button>
+                        <div class="margin-top-m mat-body-1 break-all" *ngIf="showauthreply">
+                            {{authorReply}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </mat-card-content>

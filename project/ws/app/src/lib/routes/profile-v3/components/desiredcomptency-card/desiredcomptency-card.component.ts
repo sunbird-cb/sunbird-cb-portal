@@ -24,6 +24,7 @@ export class DesiredcomptencyCardComponent implements OnInit {
   }
 
   selectLevel(complevel: any, competency: any) {
+    this.selectedLevelId = undefined;
     this.compLocalService.autoSaveDesired.next(true)
     this.selectedLevelId = complevel.id
     // this.selectedCompId = competency.id
@@ -46,12 +47,12 @@ export class DesiredcomptencyCardComponent implements OnInit {
       // this.selectedCompetency.emit(this.selectedCompList)
     } else {
       if (_.findIndex(this.compLocalService.desiredComps.value, { id: competency.id }) !== -1) {
-        if (_.findIndex(this.compLocalService.desiredComps.value, { competencySelfAttestedLevel: complevel.id }) !== -1) {
-          this.compLocalService.removeDesiredComps(compobj)
-        } else {
+        // if (_.findIndex(this.compLocalService.desiredComps.value, { competencySelfAttestedLevel: complevel.id }) !== -1) {
+        //   this.compLocalService.removeDesiredComps(compobj)
+        // } else {
           this.compLocalService.removeDesiredComps(compobj)
           this.compLocalService.addDesiredComps(compobj)
-        }
+        // }
       }
     }
   }
