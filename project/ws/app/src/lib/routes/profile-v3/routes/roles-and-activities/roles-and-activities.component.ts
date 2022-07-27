@@ -46,8 +46,10 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
         this.updateRoles()
     }
     updateRoles() {
-        // tslint:disable-next-line:max-line-length
-        this.userRoles = _.get(this.configSvc.unMappedUser, 'profileDetails.userRoles') || _.get(this.configSvc.unMappedUser, 'roles') || []
+        if (this.configSvc && this.configSvc.unMappedUser) {
+            // tslint:disable-next-line:max-line-length
+           this.userRoles = _.get(this.configSvc.unMappedUser, 'profileDetails.userRoles') || []
+        }
     }
     ngOnInit(): void {
         this.createRole = new FormGroup({

@@ -47,12 +47,12 @@ export class DesiredcomptencyCardComponent implements OnInit {
       // this.selectedCompetency.emit(this.selectedCompList)
     } else {
       if (_.findIndex(this.compLocalService.desiredComps.value, { id: competency.id }) !== -1) {
-        if (_.findIndex(this.compLocalService.desiredComps.value, { competencySelfAttestedLevel: complevel.id }) !== -1) {
-          this.compLocalService.removeDesiredComps(compobj)
-        } else {
+        // if (_.findIndex(this.compLocalService.desiredComps.value, { competencySelfAttestedLevel: complevel.id }) !== -1) {
+        //   this.compLocalService.removeDesiredComps(compobj)
+        // } else {
           this.compLocalService.removeDesiredComps(compobj)
           this.compLocalService.addDesiredComps(compobj)
-        }
+        // }
       }
     }
   }
