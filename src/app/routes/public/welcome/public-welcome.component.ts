@@ -397,7 +397,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
                     sbRootOrgId: hierarchyObj.sbrootorgid,
                     organisationType: hierarchyObj.sborgtype || '',
                     organisationSubType: hierarchyObj.sbsuborgtype || '',
-                }
+                },
             }
         }
 

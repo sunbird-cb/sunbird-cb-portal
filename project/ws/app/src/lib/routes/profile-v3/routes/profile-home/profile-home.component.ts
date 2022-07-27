@@ -28,7 +28,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
   userRouteName = ''
   private routerSubscription: Subscription | null = null
 
-  tabs: NSProfileDataV3.IProfileTab[]=[]
+  tabs: NSProfileDataV3.IProfileTab[] = []
   tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
   message = `Welcome to the Portal`
   currentStep = 1

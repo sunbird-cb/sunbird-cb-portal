@@ -46,10 +46,8 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
         this.updateRoles()
     }
     updateRoles() {
-        if (this.configSvc && this.configSvc.unMappedUser) {
-            // tslint:disable-next-line:max-line-length
-           this.userRoles = _.get(this.configSvc.unMappedUser, 'profileDetails.userRoles') || []
-        }
+        // tslint:disable-next-line:max-line-length
+        this.userRoles = _.get(this.configSvc.unMappedUser, 'profileDetails.userRoles') || []
     }
     ngOnInit(): void {
         this.createRole = new FormGroup({
@@ -90,7 +88,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                         this.createRole.reset()
                         this.selectedActivity = []
                         this.configSvc.updateGlobalProfile(true)
-                        setTimeout(this.updateRoles, 3000)
+                        // setTimeout(this.updateRoles, 3000)
                     }
                 })
                 // tslint:disable-next-line:prefer-template
@@ -138,7 +136,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                 this.orgroleselected = []
                 this.selectedActivity = []
                 this.configSvc.updateGlobalProfile(true)
-                setTimeout(this.updateRoles, 3000)
+                // setTimeout(this.updateRoles, 3000)
             }
         })
     }
