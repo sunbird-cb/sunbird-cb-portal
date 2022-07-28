@@ -22,6 +22,9 @@ import {
   MatFormFieldModule,
   MatCheckboxModule,
   MatTabsModule,
+  MatSelectModule,
+  MatTableModule,
+  MatProgressSpinnerModule,
 } from '@angular/material'
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -73,6 +76,9 @@ import { PublicHomeComponent } from './routes/public/public-home/public-home.com
 import { PublicHomeService } from './services/public-home.service'
 import { PublicContacthomeComponent } from './routes/public/public-contacthome/public-contacthome.component'
 import { PublicLoginWComponent } from './routes/public/public-login-w/public-login-w.component'
+import { PublicLoginWGComponent } from './routes/public/public-login-wg/public-login-wg.component'
+import { PublicWelcomeModule } from './routes/public/welcome/public-welcome.module'
+import { WelcomeUserResolverService } from './services/welcome-user-resolver.service'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -113,6 +119,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PublicHomeComponent,
     PublicContacthomeComponent,
     PublicLoginWComponent,
+    PublicLoginWGComponent,
   ],
   imports: [
     FormsModule,
@@ -131,6 +138,8 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     ErrorResolverModule,
     // Material Imports
     MatSliderModule,
+    MatFormFieldModule,
+    MatSelectModule,
     MatButtonModule,
     MatCardModule,
     MatToolbarModule,
@@ -142,8 +151,9 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     MatRippleModule,
     MatDialogModule,
     MatInputModule,
-    MatFormFieldModule,
     MatTooltipModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
     SearchModule,
     BtnFeatureModule,
     PipeOrderByModule,
@@ -151,6 +161,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PublicContactModule,
     PublicLogoutModule,
     PublicSignupModule,
+    PublicWelcomeModule,
     MobileAppModule,
     PipeSafeSanitizerModule,
     TourModule,
@@ -189,6 +200,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     { provide: HTTP_INTERCEPTORS, useClass: AppRetryInterceptorService, multi: true },
     TncAppResolverService,
     TncPublicResolverService,
+    WelcomeUserResolverService,
     PublicHomeService,
     ConfigurationsService,
     PipeContentRoutePipe,

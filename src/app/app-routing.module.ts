@@ -24,6 +24,9 @@ import { PublicSignupComponent } from './routes/public/public-signup/public-sign
 import { PublicHomeComponent } from './routes/public/public-home/public-home.component'
 import { PublicContacthomeComponent } from './routes/public/public-contacthome/public-contacthome.component'
 import { PublicLoginWComponent } from './routes/public/public-login-w/public-login-w.component'
+import { PublicWelcomeComponent } from './routes/public/welcome/public-welcome.component'
+import { PublicLoginWGComponent } from './routes/public/public-login-wg/public-login-wg.component'
+import { WelcomeUserResolverService } from './services/welcome-user-resolver.service'
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
 // Please declare routes in alphabetical order
@@ -718,6 +721,33 @@ const routes: Routes = [
   },
   {
     path: 'public/sso',
+    component: PublicLoginWComponent,
+    data: {
+      module: 'sso',
+      pageId: 'public/sso',
+    },
+  },
+  {
+    path: 'public/google/sso',
+    component: PublicLoginWGComponent,
+    data: {
+      module: 'Google SSO',
+      pageId: 'public/google/sso',
+    },
+  },
+  {
+    path: 'public/welcome',
+    component: PublicWelcomeComponent,
+    data: {
+      module: 'Welcome',
+      pageId: 'public/welcome',
+    },
+    resolve: {
+      userData: WelcomeUserResolverService,
+    },
+  },
+  {
+    path: 'public/google/sso',
     component: PublicLoginWComponent,
   },
   {

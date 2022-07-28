@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs'
 import { StepService } from '../../services/step.service'
 import { CompLocalService } from '../../services/comp.service'
 import { ProfileV3Service } from '../../services/profile_v3.service'
+import { InitService } from 'src/app/services/init.service'
 @Component({
   selector: 'ws-app-profile-home',
   templateUrl: './profile-home.component.html',
@@ -27,7 +28,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
   userRouteName = ''
   private routerSubscription: Subscription | null = null
 
-  tabs!: NSProfileDataV3.IProfileTab[]
+  tabs: NSProfileDataV3.IProfileTab[] = []
   tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
   message = `Welcome to the Portal`
   currentStep = 1
@@ -40,10 +41,22 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
     private configSvc: ConfigurationsService,
     private compLocalService: CompLocalService,
     private profileSvc: ProfileV3Service,
+    private initSvc: InitService,
   ) {
+    if (!this.configSvc || !this.configSvc.userProfileV2) {
+      this.initSvc.init().then(() => {
+        this.defineTabs()
+        this.init()
+      })
+    } else {
+      this.defineTabs()
+      this.init()
+    }
+
+  }
+  defineTabs() {
     this.tabs = _.orderBy(this.tabsData, 'step')
     this.stepService.allSteps.next(this.tabs.length)
-    this.init()
   }
   init() {
     if (this.routerSubscription) {

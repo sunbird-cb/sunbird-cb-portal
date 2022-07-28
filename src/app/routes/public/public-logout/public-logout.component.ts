@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ActivatedRoute } from '@angular/router'
-
+// tslint:disable-next-line
+import _ from 'lodash'
 @Component({
   selector: 'ws-public-logout',
   templateUrl: './public-logout.component.html',
@@ -14,7 +15,9 @@ export class PublicLogoutComponent implements OnInit, OnDestroy {
   platform = 'Learner'
   panelOpenState = false
   pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
+  message: null | string | undefined
   private subscriptionContact: Subscription | null = null
+  private routerSubsc: Subscription | null = null
 
   constructor(
     private configSvc: ConfigurationsService,
@@ -23,8 +26,18 @@ export class PublicLogoutComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    if (this.subscriptionContact) {
+      this.subscriptionContact.unsubscribe()
+    }
     this.subscriptionContact = this.activateRoute.data.subscribe(data => {
       this.contactPage = data.pageData && data.pageData.data
+    })
+
+    if (this.routerSubsc) {
+      this.routerSubsc.unsubscribe()
+    }
+    this.routerSubsc = this.activateRoute.queryParamMap.subscribe(params => {
+      this.message = _.get(params, 'params.error')
     })
     if (this.configSvc.instanceConfig) {
       this.contactUsMail = this.configSvc.instanceConfig.mailIds.contactUs
@@ -35,6 +48,9 @@ export class PublicLogoutComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.subscriptionContact) {
       this.subscriptionContact.unsubscribe()
+    }
+    if (this.routerSubsc) {
+      this.routerSubsc.unsubscribe()
     }
   }
   login() {

@@ -89,6 +89,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
         this.popupTour = this.tourService.createPopupTour()
       }
     })
+    this.startTour()
   }
   routeSubs(e: NavigationEnd) {
     // this.router.events.subscribe((e: Event) => {
@@ -98,8 +99,12 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     } else {
       this.isSetUpPage = false
     }
-
-    if (e.url.includes('/public/logout') || e.url.includes('/public/home') || e.url.includes('/public/sso')) {
+    if (
+      e.url.includes('/public/logout')
+      || e.url.includes('/public/home')
+      || e.url.includes('/public/sso')
+      || e.url.includes('/public/google/sso')
+    ) {
       this.showAppNavBar = false
       if (e.url.includes('/public/home')) {
         this.isPublicHomePage = true
@@ -135,21 +140,21 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
 
   startTour() {
-    this.tourService.startTour()
-    this.tourService.isTourComplete.subscribe((result: boolean) => {
-      if ((result)) {
-        this.tourService.startPopupTour()
-        this.configSvc.completedTour = true
-        this.configSvc.prefChangeNotifier.next({ completedTour: this.configSvc.completedTour })
-        // this.tour = tour
-        setTimeout(
-          () => {
-            this.tourService.cancelPopupTour()
-          },
-          3000,
-        )
-      }
-    })
+    // this.tourService.createPopupTour()
+    // this.tourService.isTourComplete.subscribe((result: boolean) => {
+    //   if ((result)) {
+    //     this.tourService.createPopupTour()
+    //     this.configSvc.completedTour = true
+    //     this.configSvc.prefChangeNotifier.next({ completedTour: this.configSvc.completedTour })
+    //     // this.tour = tour
+    //     setTimeout(
+    //       () => {
+    //         this.tourService.startPopupTour()
+    //       },
+    //       3000,
+    //     )
+    //   }
+    // })
   }
   cancelTour() {
     if (this.popupTour) {

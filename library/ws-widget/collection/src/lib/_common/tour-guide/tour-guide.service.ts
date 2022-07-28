@@ -37,6 +37,8 @@ export class CustomTourService {
       } else {
         classe = 'class-1 class-2'
       }
+    } else {
+      classe = 'tour-darkmode'
     }
     const tour = new Shepherd.Tour({
       defaultStepOptions: {
@@ -46,7 +48,7 @@ export class CustomTourService {
         classes: classe,
       },
       exitOnEsc: true,
-      // keyboardNavigation: true,
+      keyboardNavigation: true,
       useModalOverlay: {
         enabled: true,
       },
@@ -125,11 +127,13 @@ export class CustomTourService {
       } else {
         classe = 'class-1 class-2'
       }
+    } else {
+      classe = 'tour-darkmode'
     }
     const tour = new Shepherd.Tour({
       defaultStepOptions: {
         cancelIcon: {
-          enabled: false,
+          enabled: true,
         },
         classes: classe,
         scrollTo: true,
@@ -146,11 +150,19 @@ export class CustomTourService {
       text: 'Our Tour Guide is always available here',
       classes: classe,
       attachTo: {
-        element: '#helper',
+        element: '#Profile_link',
         on: 'bottom',
       },
-    }
-    )
+    })
+    // tour.start()
+    this.tour = tour
+    this.tour.on('cancel', () => {
+      if (this.tour) {
+        this.isTourComplete.emit(true)
+        return true
+      }
+      return false
+    })
     this.popupTour = tour
     return tour
 

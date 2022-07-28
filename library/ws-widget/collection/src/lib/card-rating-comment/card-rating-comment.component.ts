@@ -8,11 +8,32 @@ import { RatingService } from '../_services/rating.service'
 })
 export class CardRatingCommentComponent implements OnInit {
   @Input() review: any | null = null
+  @Input() contentid: any
+  authorReply: any
+  showauthreply = false
   constructor(
     private ratingService: RatingService,
   ) { }
 
   ngOnInit() {
+    if (this.review && this.review.review !== null) {
+      this.getAuthorReply(this.review)
+    }
+  }
+
+  getAuthorReply(review: any) {
+    const uID =  review.userId  ?  review.userId :  review.user_id
+    const contentid = review.activityId ? review.activityId : this.contentid
+    this.ratingService.getAuthorReply(contentid, uID).subscribe(
+        (res: any) => {
+          if (res.result.response && res.result.response.comment && res.result.response.comment !== null) {
+            this.authorReply = res.result.response.comment
+          }
+    })
+  }
+
+  showAuthReply() {
+    this.showauthreply = !this.showauthreply
   }
 
   getRatingIcon(ratingIndex: number, avg: number): 'star' | 'star_border' | 'star_half' {

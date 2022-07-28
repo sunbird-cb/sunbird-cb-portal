@@ -47,13 +47,13 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     }
     updateRoles() {
         // tslint:disable-next-line:max-line-length
-        this.userRoles = _.get(this.configSvc.unMappedUser, 'profileDetails.userRoles') || _.get(this.configSvc.unMappedUser, 'roles') || []
+        this.userRoles = _.get(this.configSvc.unMappedUser, 'profileDetails.userRoles') || []
     }
     ngOnInit(): void {
         this.createRole = new FormGroup({
-                roleName: new FormControl('', [Validators.required]),
-                activity: new FormControl('', [Validators.required]),
-            })
+            roleName: new FormControl('', [Validators.required]),
+            activity: new FormControl('', [Validators.required]),
+        })
     }
     ngOnDestroy(): void {
     }
@@ -91,7 +91,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                         this.createRole.markAsUntouched();
                         this.selectedActivity = []
                         this.configSvc.updateGlobalProfile(true)
-                        setTimeout(this.updateRoles, 3000)
+                        // setTimeout(this.updateRoles, 3000)
                     }
                 })
                 // tslint:disable-next-line:prefer-template
@@ -102,7 +102,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                 this.snackBar.open('Role and Activities both are required.')
             }
         } else {
-            if (this.configSvc.userProfile && this.configSvc.unMappedUser.profileDetails) {
+            if (this.userRoles && this.userRoles.length > 0 && this.configSvc.userProfile && this.configSvc.unMappedUser.profileDetails) {
                 _.each(this.userRoles, r => {
                     if (r.name === this.editRole.name) {
                         // tslint:disable-next-line
@@ -139,7 +139,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                 this.orgroleselected = []
                 this.selectedActivity = []
                 this.configSvc.updateGlobalProfile(true)
-                setTimeout(this.updateRoles, 3000)
+                // setTimeout(this.updateRoles, 3000)
             }
         })
     }
@@ -259,17 +259,17 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     }
 
     openActivityDialog() {
-            this.infoIcon = true
-            const dialogRef = this.dialog.open(DialogBoxComponent, {
-                data: {
-                    view: 'activity',
-                },
-                hasBackdrop: false,
-                width: '550px',
+        this.infoIcon = true
+        const dialogRef = this.dialog.open(DialogBoxComponent, {
+            data: {
+                view: 'activity',
+            },
+            hasBackdrop: false,
+            width: '550px',
 
-            })
-            dialogRef.afterClosed().subscribe(_result => {
-                this.infoIcon = false
+        })
+        dialogRef.afterClosed().subscribe(_result => {
+            this.infoIcon = false
         })
     }
 }

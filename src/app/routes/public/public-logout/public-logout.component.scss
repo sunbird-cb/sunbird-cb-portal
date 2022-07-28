@@ -1,120 +1,115 @@
-@import 'ws-common';
-@import 'ws-vars';
-@import 'ws-mixins';
+@import "ws-common";
+@import "ws-vars";
+@import "ws-mixins";
 
 .main_container {
-      font-family: 'Poppins', sans-serif;
-      position: relative;
-      letter-spacing: 0.2px;
+  font-family: "Poppins", sans-serif;
+  position: relative;
+  letter-spacing: 0.2px;
 
-      background-size: cover;
-    }
+  background-size: cover;
+}
 
-    .right_container {
-      background-color: #fff;
-      width: 45%;
-      height: 100vh;
-      box-sizing: border-box;
-      box-shadow: 0px 20px 60px #3e3e3e29;
+.right_container {
+  background-color: #fff;
+  width: 45%;
+  height: 100vh;
+  box-sizing: border-box;
+  box-shadow: 0px 20px 60px #3e3e3e29;
 
-      @include breakpoint-xs {
-        width: 100%!important;
-      }
-    }
-
-    .left_container {
-      padding: 5rem 6rem;
-      box-sizing: border-box;
-      width: 55%;
-      height: 100vh;
-
-      @include breakpoint-xs {
-        display: none!important;
-      }
-    }
-
-    .logo_box {
-      width: 320px;
-      img.logo_img {
-        width: 100%;
-      }
-    }
-
-    .slider_box {
-      padding: 5rem 0 2rem 0;
-      width: 320px;
-      box-sizing: border-box;
-      box-sizing: border-box;
-    }
-
-    .text_box {
-      margin: 3rem 0 1rem;
-    }
-
-    .right_inner_container {
-      width: 320px;
-
-      @include breakpoint-xs {
-        width: 300px!important;
-      }
-    }
-
-    .m_b_2 {
-      margin-bottom: 1rem;
-    }
-
-
-
-    .button {
-      font-family: 'Poppins', sans-serif;
-      color: #F9F9F9;
-      font-size: 14px;
-      line-height: 19px;
-      height: 40px;
-      background-color: rgb(0, 116, 182, 1);
-      border-radius: 8px;
-      transition: all .25s ease-in;
-      width: 100%;
-      border:0;
-      cursor: pointer;
-    }
-
-    // .main_container {
-    //   background-image : url(assets/instances/eagle/banners/home/9/Login_background.png) no-repeat center center fixed;
-    // }
-
-  ::ng-deep .top-nav-bar {
-    display: none;
+  @include breakpoint-xs {
+    width: 100% !important;
   }
+}
 
-  ::ng-deep .height-on-top {
-    padding-top: 0!important;
+.left_container {
+  padding: 5rem 6rem;
+  box-sizing: border-box;
+  width: 55%;
+  height: 100vh;
+
+  @include breakpoint-xs {
+    display: none !important;
   }
+}
 
+.logo_box {
+  width: 320px;
+  img.logo_img {
+    width: 100%;
+  }
+}
 
+.slider_box {
+  padding: 5rem 0 2rem 0;
+  width: 320px;
+  box-sizing: border-box;
+  box-sizing: border-box;
+}
 
+.text_box {
+  margin: 3rem 0 1rem;
+}
+
+.right_inner_container {
+  width: 320px;
+
+  @include breakpoint-xs {
+    width: 300px !important;
+  }
+}
+
+.m_b_2 {
+  margin-bottom: 1rem;
+}
+
+.button {
+  font-family: "Poppins", sans-serif;
+  color: #f9f9f9;
+  font-size: 14px;
+  line-height: 19px;
+  height: 40px;
+  background-color: rgb(0, 116, 182, 1);
+  border-radius: 8px;
+  transition: all 0.25s ease-in;
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+}
+
+// .main_container {
+//   background-image : url(assets/instances/eagle/banners/home/9/Login_background.png) no-repeat center center fixed;
+// }
+
+::ng-deep .top-nav-bar {
+  display: none;
+}
+
+::ng-deep .height-on-top {
+  padding-top: 0 !important;
+}
 
 .slideshow-container {
   padding: 5rem 0 2rem 0;
 
   @include breakpoint-s {
-     padding: 3rem 0 2rem 0!important;
+    padding: 3rem 0 2rem 0 !important;
   }
 }
 
-  .mySlides {
-    height: auto;
+.mySlides {
+  height: auto;
 
-    img {
-      height: 430px;
-      width: auto;
+  img {
+    height: 430px;
+    width: auto;
 
-      @include breakpoint-s {
-        height: 325px!important;
-      }
+    @include breakpoint-s {
+      height: 325px !important;
     }
   }
+}
 
-
-
-
+.w-inherit {
+  width: inherit !important;
+}
