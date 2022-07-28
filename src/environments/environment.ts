@@ -23,6 +23,7 @@ export const environment: IEnvironment = {
   portalRoles: (((window as { [key: string]: any })['env']['portalRoles'] || '').split(',')) || [],
   recaptchaKey: (window as { [key: string]: any })['env']['recaptchaKey'] || [],
   contentBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
+  certificateassets: (window as { [key: string]: any })['env']['certificateassets'] || '',
 }
 interface IEnvironment {
   name: string,
@@ -41,6 +42,7 @@ interface IEnvironment {
   portals: [{ sr: number, id: string, name: string, desc: string, icon?: string, uriPath: string, roles: [], isPublic: boolean }],
   recaptchaKey?: string,
   contentBucket?: string,
+  certificateassets?: string,
 }
 
 /*
