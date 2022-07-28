@@ -27,6 +27,7 @@ export class CurrentCompetenciesComponent implements OnInit, OnDestroy {
   // userDetails: any
   updatecompList: any = []
   competenciesList: any = []
+  infoIcon: boolean = false;
   currentComps: NSProfileDataV3.ICompetencie[] = []
   private currentCompSubscription: Subscription | null = null
   queryControl = new FormControl('')
@@ -56,7 +57,13 @@ export class CurrentCompetenciesComponent implements OnInit, OnDestroy {
     return _.findIndex(this.currentComps, { id: competency.id })
   }
   getSelectedLevel(competency: NSProfileDataV3.ICompetencie) {
+    console.log(competency)
+    console.log(this.currentComps)
     return _.get(_.first(_.filter(this.currentComps, { id: competency.id })), 'competencySelfAttestedLevel')
+  }
+
+  trackByFn(index: number, _item: any){
+    return index
   }
   getUserDetails() {
     // this.competenciesList = _.get(this.configService.userProfileV2, 'competencies') || []
@@ -76,6 +83,7 @@ export class CurrentCompetenciesComponent implements OnInit, OnDestroy {
       && this.activateroute.snapshot.parent.data.competencies.data
     ) {
       this.overallCompetencies = this.activateroute.snapshot.parent.data.competencies.data
+      console.log(this.overallCompetencies);
     }
     // this.getCompLsit()
   }
@@ -182,6 +190,7 @@ export class CurrentCompetenciesComponent implements OnInit, OnDestroy {
   //   })
   // }
   openActivityDialog() {
+    this.infoIcon = true
     const dialogRef = this.dialog.open(DialogBoxComponent, {
       data: {
         view: 'ccomp',
@@ -191,7 +200,7 @@ export class CurrentCompetenciesComponent implements OnInit, OnDestroy {
 
     })
     dialogRef.afterClosed().subscribe(_result => {
-
+      this.infoIcon = false
     })
   }
   ngOnDestroy(): void {
