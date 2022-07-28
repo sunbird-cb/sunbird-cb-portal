@@ -57,14 +57,9 @@ export class CurrentCompetenciesComponent implements OnInit, OnDestroy {
     return _.findIndex(this.currentComps, { id: competency.id })
   }
   getSelectedLevel(competency: NSProfileDataV3.ICompetencie) {
-    console.log(competency)
-    console.log(this.currentComps)
     return _.get(_.first(_.filter(this.currentComps, { id: competency.id })), 'competencySelfAttestedLevel')
   }
-
-  trackByFn(index: number, _item: any){
-    return index
-  }
+  
   getUserDetails() {
     // this.competenciesList = _.get(this.configService.userProfileV2, 'competencies') || []
     // if (this.overallCompetencies && this.overallCompetencies.length > 0) {
@@ -83,7 +78,6 @@ export class CurrentCompetenciesComponent implements OnInit, OnDestroy {
       && this.activateroute.snapshot.parent.data.competencies.data
     ) {
       this.overallCompetencies = this.activateroute.snapshot.parent.data.competencies.data
-      console.log(this.overallCompetencies);
     }
     // this.getCompLsit()
   }
