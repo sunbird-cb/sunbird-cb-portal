@@ -2,9 +2,12 @@
 
     <div class="flex flex-row justify-between margin-bottom-xs">
         <h4 class="mast-h4 main_title_text margin-bottom-xs">Select competencies you’re skilled with</h4>
-        <a class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openActivityDialog()">
-            <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon> What are competencies?
-        </a>
+        <div>
+        <button [disabled]="infoIcon"  mat-icon-button class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openActivityDialog()">
+            <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon>
+        </button>
+        What are competencies?
+    </div>
     </div>
 
     <p class="mat-body-2 ws-mat-black60-text margin-bottom-l">Feel free to select the competency and level that you feel
