@@ -390,6 +390,8 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
                 // sbOrgId: hierarchyObj.sborgid,
                 request: {
                     userId: this.usr.userId,
+                    firstName: this.registrationForm.value.firstname || '',
+                    lastName: this.registrationForm.value.lastname || '',
                     position: this.registrationForm.value.position.name || '',
                     channel: hierarchyObj.orgname || '',
                     sbOrgId: hierarchyObj.sborgid,
