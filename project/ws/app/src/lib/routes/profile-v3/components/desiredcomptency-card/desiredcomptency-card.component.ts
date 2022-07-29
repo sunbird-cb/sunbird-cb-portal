@@ -24,7 +24,7 @@ export class DesiredcomptencyCardComponent implements OnInit {
   }
 
   selectLevel(complevel: any, competency: any) {
-    this.selectedLevelId = undefined;
+    this.selectedLevelId = undefined
     this.compLocalService.autoSaveDesired.next(true)
     this.selectedLevelId = complevel.id
     // this.selectedCompId = competency.id
