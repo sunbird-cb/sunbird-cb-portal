@@ -57,6 +57,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     }
     ngOnDestroy(): void {
     }
+
     create() {
         if (!this.editRole || this.editRole.length === 0) {
             const role = this.createRole.get('roleName')
@@ -86,6 +87,8 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                             }),
                         })
                         this.createRole.reset()
+                        this.createRole.markAsPristine()
+                        this.createRole.markAsUntouched()
                         this.selectedActivity = []
                         this.configSvc.updateGlobalProfile(true)
                         // setTimeout(this.updateRoles, 3000)
