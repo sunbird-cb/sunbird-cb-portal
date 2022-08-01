@@ -88,7 +88,7 @@ export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn 
 
 export class PublicSignupComponent implements OnInit, OnDestroy {
   registrationForm!: FormGroup
-  namePatern = `^[a-zA-Z\\s\\']{1,32}$`
+  namePatern = `^[a-zA-Z']{1,32}$`
   emailWhitelistPattern = `^[a-zA-Z0-9._-]{3,}\\b@\\b[a-zA-Z0-9]*|\\b(.gov|.nic)\b\\.\\b(in)\\b$`
   departments!: any
   masterDepartments!: Observable<any> | undefined
