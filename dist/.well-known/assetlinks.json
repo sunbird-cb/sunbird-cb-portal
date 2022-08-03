@@ -1,0 +1,14 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.karmayogibharat.beta",
+            "sha256_cert_fingerprints": [
+                "B0:A8:61:27:26:17:DD:68:30:07:C7:14:F7:C0:00:80:67:63:B8:50:88:E4:34:4A:46:36:C6:54:2E:31:CC:D4"
+            ]
+        }
+    }
+]
