@@ -102,14 +102,17 @@ function uiHostCreator(hostPath, hostFolderName) {
       orderPreference: ['br', 'gz'],
     }),
   )
-  app.get(`${hostPath}/*`, (req, res) => {
-    if (req.url.startsWith('/assets/')) {
-      res.sendFile(path.join(__dirname, `www/${hostFolderName}/${req.url}`))
-      // res.status(404).send('requested asset is not available')
-    } else {
-      res.sendFile(path.join(__dirname, `www/${hostFolderName}/index.html`))
-    }
-  })
+app.get(`${hostPath}/*`, (req, res) => {
+if (req.url.startsWith('/assets/')) {
+res.sendFile(path.join(__dirname, `www/${hostFolderName}/${req.url}`))
+
+} else if (req.url.startsWith('/.well-known/')) {
+res.sendFile(path.join(__dirname, `${req.url}`))
+
+} else {
+res.sendFile(path.join(__dirname, `www/${hostFolderName}/index.html`))
+}
+})
 }
 
 function haltOnTimedOut(req, _res, next) {
