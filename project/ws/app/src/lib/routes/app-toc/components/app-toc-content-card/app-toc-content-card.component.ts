@@ -27,6 +27,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
     learningModule: 0,
     other: 0,
     pdf: 0,
+    survey: 0,
     podcast: 0,
     practiceTest: 0,
     quiz: 0,
@@ -125,6 +126,9 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
               break
             case NsContent.EMimeTypes.PDF:
               this.contentStructure.pdf += 1
+              break
+            case NsContent.EMimeTypes.SURVEY:
+              this.contentStructure.survey += 1
               break
             case NsContent.EMimeTypes.HTML:
               this.contentStructure.webPage += 1
