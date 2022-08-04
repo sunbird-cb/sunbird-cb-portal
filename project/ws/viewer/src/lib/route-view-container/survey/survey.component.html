@@ -1,0 +1,32 @@
+<p>surveycontainer  works!</p>
+<div class="padding-dynamic" *ngIf="surveyData">
+    <div class="flex flex-around flex-wrapped">
+      <div class="w-full">
+        <div>
+          <mat-card>
+            <mat-card-content>
+              <div id="fullScreenContainer" class="video-player">
+                <ng-container *ngIf="isFetchingDataComplete" [wsResolverWidget]="widgetResolverSurveyData"></ng-container>
+              </div>
+              <div class="flex justify-end mt-3">
+                <ws-widget-btn-content-download [forPreview]="forPreview" [widgetData]="
+                surveyData
+                      | pipePartialContent
+                        : [
+                            'identifier',
+                            'primaryCategory',
+                            'resourceType',
+                            'mimeType',
+                            'downloadUrl',
+                            'isExternal',
+                    'artifactUrl'
+                          ]
+                  "></ws-widget-btn-content-download>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+</div>
+  
