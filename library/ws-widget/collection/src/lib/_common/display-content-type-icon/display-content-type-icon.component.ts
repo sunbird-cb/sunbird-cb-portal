@@ -33,6 +33,7 @@ export class DisplayContentTypeIconComponent implements OnInit {
           this.displayContentType = NsContent.EDisplayContentTypes.YOUTUBE
           break
         case NsContent.EMimeTypes.TEXT_WEB:
+        case NsContent.EMimeTypes.SURVEY:
           this.displayContentType = NsContent.EDisplayContentTypes.LINK
           break
         case NsContent.EMimeTypes.PRACTICE_RESOURCE:

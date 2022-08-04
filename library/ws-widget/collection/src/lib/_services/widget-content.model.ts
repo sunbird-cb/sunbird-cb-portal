@@ -427,6 +427,7 @@ export namespace NsContent {
     CERTIFICATION = 'application/certification',
     PLAYLIST = 'application/playlist',
     TEXT_WEB = 'text/x-url',
+    SURVEY = 'text/x-url',
     QUESTION_SET = 'application/vnd.sunbird.questionset',
     QUESTION = 'application/vnd.sunbird.question',
     UNKNOWN = 'application/unknown',
