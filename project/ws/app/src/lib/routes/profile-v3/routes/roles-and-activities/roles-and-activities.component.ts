@@ -37,6 +37,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     textBoxActive = false
     disableUpdate = false
     editData = false
+    displayLoader = false
     constructor(
         private configSvc: ConfigurationsService,
         private rolesAndActivityService: RolesAndActivityService,
@@ -59,6 +60,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
     }
 
     create() {
+        this.displayLoader = true
         if (!this.editRole || this.editRole.length === 0) {
             const role = this.createRole.get('roleName')
             if (role && role.value && this.selectedActivity.length > 0 && this.configSvc.userProfile) {
@@ -77,6 +79,7 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                 }
                 this.rolesAndActivityService.createRoles(reqObj).subscribe(res => {
                     if (res) {
+                        this.displayLoader = false
                         this.snackBar.open('Updated successfully')
                         this.userRoles.push({
                             id: role.value,
@@ -92,13 +95,16 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                         this.selectedActivity = []
                         this.configSvc.updateGlobalProfile(true)
                         // setTimeout(this.updateRoles, 3000)
+
+                          // tslint:disable-next-line:prefer-template
+                        const el = document.getElementById(this.userRoles.length - 1 + '')
+                        // tslint:disable-next-line:no-unused-expression
+                        el ? el.scrollIntoView({ behavior: 'smooth', block: 'start' }) : false
                     }
                 })
-                // tslint:disable-next-line:prefer-template
-                const el = document.getElementById(this.userRoles.length - 1 + '')
-                // tslint:disable-next-line:no-unused-expression
-                el ? el.scrollIntoView({ behavior: 'smooth', block: 'start' }) : false
+
             } else {
+                this.displayLoader = false
                 this.snackBar.open('Role and Activities both are required.')
             }
         } else {
@@ -130,8 +136,10 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
         }
     }
     updateDeleteRoles(reqObj: any) {
+        this.displayLoader = true
         this.rolesAndActivityService.createRoles(reqObj).subscribe(res => {
             if (res) {
+                this.displayLoader = false
                 this.editData = false
                 this.snackBar.open('Updated successfully')
                 this.createRole.reset()
@@ -161,6 +169,11 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
             // tslint:disable-next-line: no-non-null-assertion
             this.createRole.get('activity')!.setValue(null)
         }
+
+        this.createRole.controls['activity'].reset()
+        this.createRole.controls['activity'].markAsPristine()
+        this.createRole.controls['activity'].markAsUntouched()
+
     }
 
     removeActivity(interest: any) {
