@@ -1,30 +1,16 @@
-export interface IWidgetsPlayerPdfData {
-  pdfUrl: string
-  resumePage?: number
+export interface IWidgetsPlayerSurveyData {
+  surveyUrl: string
   identifier: string
-  passThroughData?: any
   disableTelemetry?: boolean
-  hideControls?: boolean
-  readValuesQueryParamsKey?: {
-    zoom: string;
-    pageNumber: string;
-  }
   collectionId?: string
-  contentType?: string
-  primaryCategory?: string
-  version?: string
   mimeType?: any
+  contentType?: any
 }
 
-export interface IPlayerPdf {
-  pdfUrl: string
-  resumePage?: number
+export interface IPlayerSurvey {
+  surveyUrl: string
   identifier?: string
-  passThroughData?: any
   disableTelemetry?: boolean
   hideControls?: boolean
-  readValuesQueryParamsKey?: {
-    zoom: string;
-    pageNumber: string;
-  }
+  contentType?: any
 }
