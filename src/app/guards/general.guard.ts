@@ -8,6 +8,8 @@ import {
   UrlTree,
 } from '@angular/router'
 import { ConfigurationsService, AuthKeycloakService } from '@sunbird-cb/utils'
+import { NSProfileDataV3 } from '@ws/app/src/lib/routes/profile-v3/models/profile-v3.models'
+import _ from 'lodash'
 
 @Injectable({
   providedIn: 'root',
@@ -67,7 +69,7 @@ export class GeneralGuard implements CanActivate {
     //   }
     // }
 
-     // if Invalid Role: now checking in init.service
+    // if Invalid Role: now checking in init.service
     //  if (
     //   state.url &&
     //   // !state.url.includes('/app/setup/') &&
@@ -107,13 +109,8 @@ export class GeneralGuard implements CanActivate {
       // }
       // return this.router.parseUrl(`/app/tnc`)
     }
-
     // Check if the user has roles & activities and topic in the profile
-    if (
-      !(this.configSvc.userProfileV2 && this.configSvc.userProfileV2.userRoles && this.configSvc.userProfileV2.userRoles.length) ||
-      !((this.configSvc.userProfileV2 && this.configSvc.userProfileV2.desiredTopics && this.configSvc.userProfileV2.desiredTopics.length) ||
-      (this.configSvc.userProfileV2 && this.configSvc.userProfileV2.systemTopics && this.configSvc.userProfileV2.systemTopics.length))
-    ) {
+    if (!this.checkWelcome()) {
       return this.router.parseUrl(`/app/setup`)
     }
 
@@ -155,6 +152,28 @@ export class GeneralGuard implements CanActivate {
       }
     }
 
+    return true
+  }
+  checkWelcome() {
+    const tabs = _.orderBy(_.filter(_.get(this.configSvc, 'welcomeTabs.tabs'), { enabled: true }), 'step') as NSProfileDataV3.IProfileTab[]
+    _.each(tabs, (t, idx) => {
+      t.step = idx + 1
+    })
+    if ((tabs || []).length === 0) {
+      return true
+    } else {
+      // !(this.configSvc.userProfileV2 && this.configSvc.userProfileV2.userRoles && this.configSvc.userProfileV2.userRoles.length) ||
+      // !((this.configSvc.userProfileV2 && this.configSvc.userProfileV2.desiredTopics && this.configSvc.userProfileV2.desiredTopics.length) ||
+      // (this.configSvc.userProfileV2 && this.configSvc.userProfileV2.systemTopics && this.configSvc.userProfileV2.systemTopics.length))
+      let allSet = true
+      _.each(tabs, t => {
+        if (allSet && (t.check && this.configSvc.userProfileV2)) {
+          if (!_.get(this.configSvc.userProfileV2, t.key) || !_.get(this.configSvc.userProfileV2, t.key).length) {
+            allSet = false
+          }
+        }
+      })
+    }
     return true
   }
 }
