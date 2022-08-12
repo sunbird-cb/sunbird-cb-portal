@@ -411,7 +411,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
                 // this.openDialog()
                 this.disableBtn = false
                 this.configSvc.updateGlobalProfile(true)
-                this.router.navigate(['/page/home'])
+                this.router.navigate(['/app/setup'])
             },
             (err: any) => {
                 this.disableBtn = false

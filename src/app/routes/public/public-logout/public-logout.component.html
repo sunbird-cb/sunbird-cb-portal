@@ -42,8 +42,9 @@
       <div class="text_box flex items-center justify-center">
         <h2 class="mat-h2"> Welcome to iGOT Karmayogi!</h2>
       </div>
-      <div *ngIf="message" class="flex flex-1 margin-s w-inherit justify-center">
+      <div *ngIf="message" class="flex flex-1 margin-s w-inherit justify-center flex-column">
         <span class="mat-subheading-1 mat-error margin-auto flex-wrap">{{message}}</span>
+        <a mat-button class="mat-button ws-mat-accent-text" routerLink="/public/contact"><span>Contact Us</span></a>
       </div>
       <div class="button_box flex flex-col items-center justify-center">
         <a mat-button class="flex button m_b_2" href="/protected/v8/resource">

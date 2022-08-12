@@ -27,6 +27,7 @@ import _ from 'lodash'
 import { map } from 'rxjs/operators'
 import { v4 as uuid } from 'uuid'
 import { Subscription } from 'rxjs'
+import { NSProfileDataV3 } from '@ws/app/src/lib/routes/profile-v3/models/profile-v3.models'
 // import { of } from 'rxjs'
 /* tslint:enable */
 // interface IDetailsResponse {
@@ -286,7 +287,12 @@ export class InitService {
       .toPromise()
     return appsConfig
   }
-
+  private async fetchWelcomeConfig(): Promise<NSProfileDataV3.IProfileTab> {
+    const welcomeConfig = await this.http
+      .get<NSProfileDataV3.IProfileTab>(`${this.baseUrl}/feature/profile-v3.json`)
+      .toPromise()
+    return welcomeConfig
+  }
   private async fetchStartUpDetails(): Promise<any> {
     // const userRoles: string[] = []
     if (this.configSvc.instanceConfig && !Boolean(this.configSvc.instanceConfig.disablePidCheck)) {
@@ -374,6 +380,7 @@ export class InitService {
         this.configSvc.userGroups = new Set(details.group)
         this.configSvc.userRoles = new Set((details.roles || []).map((v: string) => v.toLowerCase()))
         this.configSvc.isActive = details.isActive
+        this.configSvc.welcomeTabs = await this.fetchWelcomeConfig()
         return details
       } catch (e) {
         this.configSvc.userProfile = null
