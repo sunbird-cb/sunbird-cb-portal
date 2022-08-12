@@ -4,6 +4,9 @@ import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { interval, Subscription } from 'rxjs'
 import { EventService, WsEvents } from '@sunbird-cb/utils'
 import { ROOT_WIDGET_CONFIG } from '../collection.config'
+import { NsContent } from '../_services/widget-content.model'
+import { ActivatedRoute } from '@angular/router'
+import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 
 @Component({
   selector: 'ws-widget-player-survey',
@@ -15,31 +18,39 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>  {
   @Input() widgetData!: IWidgetsPlayerSurveyData
   runnerSubs: Subscription | null = null
   enableTelemetry = false
-
-  domain = 'https://igot-dev.in/'
-  surveyTitle = 'Feedback and suggestions'
-  surveyId = 1658991702886
-  thankYouMessage = 'Thank you for your feedback!!!'
-  thankYouDescription = 'We are always looking forward to improvement.'
-  tyPrimaryBtnLink = '/page/home'
-  tySecondaryBtnLink = '/app/info/feedback'
-  tyPrimaryBtnText = 'Go to'
-  tySecondaryBtnText = 'More feedback'
-  apiData: object = {
-    getAPI: `${this.domain}api/forms/getFormById?id=${this.surveyId}`,
-    postAPI: `${this.domain}api/forms/saveFormSubmit`,
-    customizedHeader: {
-    },
+  surveyId: any
+  afterSubmitLink = '/page/home'
+  apiData: {
+    // tslint:disable-next-line:prefer-template
+    getAPI: string;
+    postAPI: string;
+    customizedHeader: {};
+  } | undefined
+  realTimeProgressRequest = {
+    content_type: 'Resource',
+    current: ['0'],
+    max_size: 0,
+    mime_type: NsContent.EMimeTypes.SURVEY,
+    user_id_type: 'uuid',
   }
-  constructor(
-    private eventSvc: EventService) {
+
+  constructor(private activatedRoute: ActivatedRoute, private eventSvc: EventService, private viewerSvc: ViewerUtilService) {
     super()
   }
 
   ngOnInit() {
     console.log('widgetData', this.widgetData)
-    // const sID = this.widgetData.surveyUrl.split('surveys/')
-    // this.surveyId = sID[1]
+    // if (this.widgetData && this.widgetData.surveyUrl) {
+      const sID = this.widgetData.surveyUrl.split('surveys/')
+      this.surveyId = sID[1]
+      this.apiData = {
+        // tslint:disable-next-line:prefer-template
+        getAPI: '/apis/proxies/v8/forms/getFormById?id=' + this.surveyId,
+        postAPI: '/apis/proxies/v8/forms/v1/saveFormSubmit',
+        customizedHeader: {
+        },
+      }
+    // }
     this.widgetData.disableTelemetry = false
 
     if (!this.widgetData.disableTelemetry) {
@@ -48,6 +59,20 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>  {
       })
       this.eventDispatcher(WsEvents.EnumTelemetrySubType.Init)
     }
+  }
+
+  fireRealTimeProgress(id: string) {
+    const realTimeProgressRequest = {
+      ...this.realTimeProgressRequest,
+      // max_size: this.totalPages,
+      // current: this.current,
+    }
+    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+      this.activatedRoute.snapshot.queryParams.collectionId : this.widgetData.identifier
+    const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+      this.activatedRoute.snapshot.queryParams.batchId : this.widgetData.identifier
+    this.viewerSvc.realTimeProgressUpdate(id, realTimeProgressRequest, collectionId, batchId)
+    return
   }
 
   private eventDispatcher(eventType: WsEvents.EnumTelemetrySubType) {

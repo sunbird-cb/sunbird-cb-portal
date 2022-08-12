@@ -30,7 +30,7 @@
   height: 100%;
   width: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
 }
 
 .container {
@@ -43,4 +43,13 @@
 
 .mat-toolbar-single-row {
   padding: 0;
+}
+
+::ng-deep.course-survey {
+  .main-container {
+    border: 1px solid rgba(0, 0, 0, 0.12)
+  }
+  .mat-divider-horizontal {
+    position: relative !important;
+  }
 }
