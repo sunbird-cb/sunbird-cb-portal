@@ -275,19 +275,21 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     if (content.identifier === identifier) {
       return content.mimeType
     }
-    if (content.children.length === 0) {
-      if (content.children[0].identifier === identifier) {
+    if (content && content.children) {
+      if (content.children.length === 0) {
+        // if (content.children[0].identifier === identifier) {
+        //   return content.mimeType
+        // }
+        // big blunder in data
+        this.logger.log(content.identifier, 'Wrong mimetypes for resume')
         return content.mimeType
       }
-      // big blunder in data
-      this.logger.log(content.identifier, 'Wrong mimetypes for resume')
-      return content.mimeType
-    }
-    for (let i = 0; i < content.children.length; i += 1) {
-      if (content.children[i].identifier === identifier) {
-        return content.children[i].mimeType
+      for (let i = 0; i < content.children.length; i += 1) {
+        if (content.children[i].identifier === identifier) {
+          return content.children[i].mimeType
+        }
+        return this.getMimeType(content.children[i], identifier)
       }
-      return this.getMimeType(content.children[i], identifier)
     }
     return content.mimeType
   }
