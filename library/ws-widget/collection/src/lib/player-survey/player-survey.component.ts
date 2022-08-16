@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core'
+import { Component, OnInit, Input, OnDestroy, AfterViewInit } from '@angular/core'
 import { IWidgetsPlayerSurveyData } from './player-survey.model'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { interval, Subscription } from 'rxjs'
@@ -14,7 +14,7 @@ import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
   styleUrls: ['./player-survey.component.scss'],
 })
 export class PlayerSurveyComponent extends WidgetBaseComponent
-implements OnInit, NsWidgetResolver.IWidgetData<any>  {
+implements OnInit, AfterViewInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
   @Input() widgetData!: IWidgetsPlayerSurveyData
   runnerSubs: Subscription | null = null
   enableTelemetry = false
@@ -33,6 +33,7 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>  {
     mime_type: NsContent.EMimeTypes.SURVEY,
     user_id_type: 'uuid',
   }
+  identifier: string | null = null
 
   constructor(private activatedRoute: ActivatedRoute, private eventSvc: EventService, private viewerSvc: ViewerUtilService) {
     super()
@@ -58,6 +59,14 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>  {
         this.eventDispatcher(WsEvents.EnumTelemetrySubType.HeartBeat)
       })
       this.eventDispatcher(WsEvents.EnumTelemetrySubType.Init)
+    }
+  }
+
+  ngAfterViewInit() {
+    if (this.widgetData && this.widgetData.surveyUrl) {
+      if (this.widgetData.identifier) {
+        this.identifier = this.widgetData.identifier
+      }
     }
   }
 
@@ -112,6 +121,12 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>  {
     }
     if (this.enableTelemetry) {
       this.eventSvc.dispatchEvent(commonStructure)
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.identifier) {
+      this.fireRealTimeProgress(this.identifier)
     }
   }
 }
