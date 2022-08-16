@@ -277,9 +277,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     }
     if (content && content.children) {
       if (content.children.length === 0) {
-        if (content.children[0].identifier === identifier) {
-          return content.mimeType
-        }
+        // if (content.children[0].identifier === identifier) {
+        //   return content.mimeType
+        // }
         // big blunder in data
         this.logger.log(content.identifier, 'Wrong mimetypes for resume')
         return content.mimeType
