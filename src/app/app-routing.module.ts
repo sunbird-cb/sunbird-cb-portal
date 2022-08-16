@@ -38,6 +38,15 @@ const routes: Routes = [
     redirectTo: 'page/home',
     pathMatch: 'full',
     canActivate: [EmptyRouteGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'home',
+      pageId: 'page/home',
+      module: 'home',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
   },
   // {
   //   path: 'practice/behavioral',

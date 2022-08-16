@@ -55,7 +55,10 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
 
   }
   defineTabs() {
-    this.tabs = _.orderBy(this.tabsData, 'step')
+    this.tabs = _.orderBy(_.filter(this.tabsData, { enabled: true }), 'step')
+    _.each(this.tabs, (t, idx) => {
+      t.step = idx + 1
+    })
     this.stepService.allSteps.next(this.tabs.length)
   }
   init() {
@@ -180,7 +183,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
       if (s.step === this.currentStep) {
         if (s.key.indexOf('welcome') !== -1) {
           isAllowed = true
-        } else if (s.key.indexOf('roles') !== -1) {
+        } else if (s.key.indexOf('userRoles') !== -1) {
           if (
             (this.stepService.currentStep.value.allowSkip
               || this.configSvc.unMappedUser
@@ -190,7 +193,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
           ) {
             isAllowed = true
           }
-        } else if (s.key.indexOf('topics') !== -1) {
+        } else if (s.key.indexOf('desiredTopics') !== -1) {
           if (this.stepService.currentStep.value.allowSkip
             || (this.configSvc.unMappedUser
               && this.configSvc.unMappedUser.profileDetails
