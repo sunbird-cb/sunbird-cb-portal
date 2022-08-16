@@ -120,7 +120,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
       searchKey: new FormControl(''),
     })
     if (!this.forPreview) {
-      this.forPreview = window.location.href.includes('/author/')
+      this.forPreview = window.location.href.includes('/public/')
     }
     // if (this.route && this.route.parent) {
     //   this.routeSubscription = this.route.parent.data.subscribe((data: Data) => {
@@ -497,7 +497,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
 
   fetchRatingSummary() {
     this.displayLoader = true
-    if (this.content && this.content.identifier && this.content.primaryCategory) {
+    if (!this.forPreview &&  this.content && this.content.identifier && this.content.primaryCategory) {
       this.ratingSvc.getRatingSummary(this.content.identifier, this.content.primaryCategory).subscribe(
         (res: any) => {
           this.displayLoader = false
@@ -568,7 +568,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
       breakDown: breakDownArray,
       latest50Reviews: breakDownArray,
       ratingsNumber: breakDownArray,
-      total_number_of_ratings:  _.get(this.ratingSummary, 'total_number_of_ratings') || 0,
+      total_number_of_ratings: _.get(this.ratingSummary, 'total_number_of_ratings') || 0,
       avgRating: 0,
     }
     const totRatings = _.get(this.ratingSummary, 'sum_of_total_ratings') || 0
@@ -646,11 +646,12 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     this.reviewPage = 1
     this.disableLoadMore = false
     this.ratingLookup = []
-
-    if (sort === this.sortReviewValues[0]) {
-      this.fetchRatingSummary()
-    } else {
-      this.fetchRatingLookup()
+    if (!this.forPreview) {
+      if (sort === this.sortReviewValues[0]) {
+        this.fetchRatingSummary()
+      } else {
+        this.fetchRatingLookup()
+      }
     }
   }
 

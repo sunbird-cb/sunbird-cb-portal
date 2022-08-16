@@ -83,6 +83,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
             collectionType: data.prevResource.collectionType,
             batchId: data.prevResource.batchId,
             viewMode: data.prevResource.viewMode,
+            preview: this.forPreview,
           },
           fragment: '',
         }
@@ -100,6 +101,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
             batchId: data.nextResource.batchId,
             viewMode: data.nextResource.viewMode,
             courseName: this.courseName,
+            preview: this.forPreview,
           },
           fragment: '',
         }
@@ -153,15 +155,19 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
 
   }
   finishDialog() {
-    const dialogRef = this.dialog.open(CourseCompletionDialogComponent, {
-      autoFocus: false,
-      data: { courseName: this.activatedRoute.snapshot.queryParams.courseName },
-    })
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
+    if (!this.forPreview) {
+      const dialogRef = this.dialog.open(CourseCompletionDialogComponent, {
+        autoFocus: false,
+        data: { courseName: this.activatedRoute.snapshot.queryParams.courseName },
+      })
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
 
-        this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
-      }
-    })
+          this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+        }
+      })
+    } else {
+      this.router.navigateByUrl(`public/toc/${this.collectionId}/overview`)
+    }
   }
 }

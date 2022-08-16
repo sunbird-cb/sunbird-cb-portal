@@ -153,7 +153,8 @@ export class InitService {
     // Invalid User
     try {
       const path = window.location.pathname
-      if (!path.startsWith('/public')) {
+      const isPublic = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+      if (!path.startsWith('/public') && !isPublic) {
         await this.fetchStartUpDetails()
       } else if (path.includes('/public/welcome')) {
         await this.fetchStartUpDetails()

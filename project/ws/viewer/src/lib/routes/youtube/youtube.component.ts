@@ -20,7 +20,7 @@ export class YoutubeComponent implements OnInit, OnDestroy {
   private routeDataSubscription: Subscription | null = null
   private screenSizeSubscription: Subscription | null = null
   private viewerDataSubscription: Subscription | null = null
-  forPreview = window.location.href.includes('/author/')
+  forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   isScreenSizeSmall = false
   isFetchingDataComplete = false
   youtubeData: NsContent.IContent | null = null
@@ -50,19 +50,21 @@ export class YoutubeComponent implements OnInit, OnDestroy {
       async data => {
         this.widgetResolverYoutubeData = null
         this.youtubeData = data.content.data
-        if (this.youtubeData) {
+        if (this.youtubeData && !this.forPreview) {
           this.formDiscussionForumWidget(this.youtubeData)
         }
 
         this.widgetResolverYoutubeData = this.initWidgetResolverYoutubeData()
         if (this.youtubeData && this.youtubeData.identifier) {
-          if (this.activatedRoute.snapshot.queryParams.collectionId) {
+          if (!this.forPreview && this.activatedRoute.snapshot.queryParams.collectionId) {
             await this.fetchContinueLearning(
               this.activatedRoute.snapshot.queryParams.collectionId,
               this.youtubeData.identifier,
             )
           } else {
-            await this.fetchContinueLearning(this.youtubeData.identifier, this.youtubeData.identifier)
+            if (!this.forPreview) {
+              await this.fetchContinueLearning(this.youtubeData.identifier, this.youtubeData.identifier)
+            }
           }
         }
         if (this.forPreview) {

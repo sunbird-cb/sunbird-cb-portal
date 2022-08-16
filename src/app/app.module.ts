@@ -79,6 +79,7 @@ import { PublicLoginWComponent } from './routes/public/public-login-w/public-log
 import { PublicLoginWGComponent } from './routes/public/public-login-wg/public-login-wg.component'
 import { PublicWelcomeModule } from './routes/public/welcome/public-welcome.module'
 import { WelcomeUserResolverService } from './services/welcome-user-resolver.service'
+import { PublicTocModule } from './routes/public/public-toc/public-toc.module'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -162,6 +163,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PublicLogoutModule,
     PublicSignupModule,
     PublicWelcomeModule,
+    PublicTocModule,
     MobileAppModule,
     PipeSafeSanitizerModule,
     TourModule,

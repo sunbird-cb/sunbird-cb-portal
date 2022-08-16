@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router'
 import { catchError, map, tap } from 'rxjs/operators'
 import { Observable, of } from 'rxjs'
-import { AccessControlService } from '@ws/author'
+// import { AccessControlService } from '@ws/author'
 import { WidgetContentService, NsContent, VIEWER_ROUTE_FROM_MIME } from '@sunbird-cb/collection'
 import { IResolveResponse, AuthMicrosoftService, ConfigurationsService } from '@sunbird-cb/utils'
 import { ViewerDataService } from './viewer-data.service'
@@ -20,13 +20,14 @@ export class ViewerResolve
     private viewerDataSvc: ViewerDataService,
     private mobileAppsSvc: MobileAppsService,
     private router: Router,
-    private accessControlSvc: AccessControlService,
+    // private accessControlSvc: AccessControlService,
     private msAuthSvc: AuthMicrosoftService,
     private configSvc: ConfigurationsService,
     private platform: Platform,
   ) { }
 
   resolve(route: ActivatedRouteSnapshot): Observable<IResolveResponse<NsContent.IContent>> | null {
+    debugger
     const resourceType = route.data.resourceType
     this.viewerDataSvc.reset(
       route.paramMap.get('resourceId') || route.queryParamMap.get('resourceId'),
@@ -37,17 +38,23 @@ export class ViewerResolve
     if (!this.viewerDataSvc.resourceId) {
       return null
     }
-    if (
-      route.queryParamMap.get('preview') === 'true' &&
-      !this.accessControlSvc.authoringConfig.newDesign &&
-      resourceType !== 'quiz'
-    ) {
-      return null
-    }
+    // if (
+    //   route.queryParamMap.get('preview') === 'true' &&
+    //   !this.accessControlSvc.authoringConfig.newDesign &&
+    //   resourceType !== 'quiz'
+    // ) {
+    //   return null
+    // }
 
-    const forPreview = window.location.href.includes('/author/') || route.queryParamMap.get('preview') === 'true'
+    const forPreview = window.location.href.includes('/preview/') || route.queryParamMap.get('preview') === 'true'
     return (forPreview
-      ? this.contentSvc.fetchAuthoringContent(this.viewerDataSvc.resourceId)
+      // ? this.contentSvc.fetchAuthoringContent(this.viewerDataSvc.resourceId)
+      ? this.contentSvc.fetchContent(
+        this.viewerDataSvc.resourceId,
+        'detail',
+        ADDITIONAL_FIELDS_IN_CONTENT,
+        this.viewerDataSvc.primaryCategory,
+      )
       : this.contentSvc.fetchContent(
         this.viewerDataSvc.resourceId,
         'detail',

@@ -12,7 +12,7 @@ const PROTECTED_SLAG_V8 = '/apis/protected/v8'
 
 const API_END_POINTS = {
   CONTENT: `${PROTECTED_SLAG_V8}/content`,
-  AUTHORING_CONTENT: `/apis/authApi/hierarchy`,
+  AUTHORING_CONTENT: `/api/course/v1/hierarchy`,
   CONTENT_LIKES: `${PROTECTED_SLAG_V8}/content/likeCount`,
   SET_S3_COOKIE: `${PROTECTED_SLAG_V8}/content/setCookie`,
   SET_S3_IMAGE_COOKIE: `${PROTECTED_SLAG_V8}/content/setImageCookie`,
@@ -45,8 +45,9 @@ const API_END_POINTS = {
 export class WidgetContentService {
   constructor(
     private http: HttpClient,
-    private configSvc: ConfigurationsService
-  ) { }
+    private configSvc: ConfigurationsService,
+  ) {
+  }
 
   isResource(primaryCategory: string) {
     if (primaryCategory) {
@@ -73,10 +74,20 @@ export class WidgetContentService {
   ): Observable<NsContent.IContent> {
     // const url = `${API_END_POINTS.CONTENT}/${contentId}?hierarchyType=${hierarchyType}`
     let url = ''
+    const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+    debugger
     if (primaryCategory && this.isResource(primaryCategory)) {
-      url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
+      if (!forPreview) {
+        url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
+      } else {
+        url = `/api/content/v1/read/${contentId}`
+      }
     } else {
-      url = `/apis/proxies/v8/action/content/v3/hierarchy/${contentId}?hierarchyType=${hierarchyType}`
+      if (!forPreview) {
+        url = `/apis/proxies/v8/action/content/v3/hierarchy/${contentId}?hierarchyType=${hierarchyType}`
+      } else {
+        url = `/api/course/v1/hierarchy/${contentId}?hierarchyType=${hierarchyType}`
+      }
     }
     // return this.http
     //   .post<NsContent.IContent>(url, { additionalFields })
@@ -90,7 +101,7 @@ export class WidgetContentService {
     return apiData
   }
   fetchAuthoringContent(contentId: string): Observable<NsContent.IContent> {
-    const url = `${API_END_POINTS.AUTHORING_CONTENT}/${contentId}`
+    const url = `${API_END_POINTS.AUTHORING_CONTENT}/${contentId}/?hierarchyType=detail`
     return this.http.get<NsContent.IContent>(url).pipe(retry(1))
   }
   fetchMultipleContent(ids: string[]): Observable<NsContent.IContent[]> {

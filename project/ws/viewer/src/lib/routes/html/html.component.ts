@@ -22,7 +22,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
   private routeDataSubscription: Subscription | null = null
   private responseSubscription: Subscription | null = null
   private viewerDataSubscription: Subscription | null = null
-  forPreview = window.location.href.includes('/author/')
+  forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   isNotEmbed = true
   isFetchingDataComplete = false
   htmlData: NsContent.IContent | null = null
@@ -69,33 +69,39 @@ export class HtmlComponent implements OnInit, OnDestroy {
     ) {
       this.isPreviewMode = true
       // to do make sure the data updates for two consecutive resource of same mimeType
-      this.viewerDataSubscription = this.viewerSvc
-        .getContent(this.activatedRoute.snapshot.paramMap.get('resourceId') || '')
-        .subscribe(
-          async data => {
-            if (data && data.artifactUrl) {
-              data.artifactUrl = (data.artifactUrl.startsWith('https://')
-                ? data.artifactUrl
-                : data.artifactUrl.startsWith('http://')
-                  ? data.artifactUrl
-                  : `https://${data.artifactUrl}`).replace(/ /ig, '').replace(/%20/ig, '').replace(/\n/ig, '')
-              if (this.accessControlSvc.hasAccess(data as any, true)) {
-                if (data && data.artifactUrl.indexOf('content-store') >= 0) {
-                  await this.setS3Cookie(data.identifier)
-                  this.htmlData = data
-                } else {
-                  this.htmlData = data
-                }
+      // this.viewerDataSubscription = this.viewerSvc
+      //   .getContent(this.activatedRoute.snapshot.paramMap.get('resourceId') || '')
+      this.viewerDataSubscription = this.activatedRoute.data.subscribe(
+        async data => {
+          data.content.data.artifactUrl =
+            data.content.data.artifactUrl.indexOf('ScormCoursePlayer') > -1
+              ? `${data.content.data.artifactUrl.replace(/%20/g, '')}&Param1=${this.uuid}`
+              : data.content.data.artifactUrl.replace(/%20/g, '')
+          const tempHtmlData = data.content.data
+          if (tempHtmlData) {
+            data.artifactUrl = (data.content.data.artifactUrl.startsWith('https://')
+              ? data.content.data.artifactUrl
+              : data.content.data.artifactUrl.startsWith('http://')
+                ? data.content.data.artifactUrl
+                : `https://${data.content.data.artifactUrl}`).replace(/ /ig, '').replace(/%20/ig, '').replace(/\n/ig, '')
+                this.htmlData = tempHtmlData
+            // if (this.accessControlSvc.hasAccess(data as any, true)) {
+            //   if (data && data.artifactUrl.indexOf('content-store') >= 0) {
+            //     // await this.setS3Cookie(data.identifier)
+            //     this.htmlData = data
+            //   } else {
+            //     this.htmlData = data
+            //   }
 
-              }
-              if (this.htmlData) {
-                this.formDiscussionForumWidget(this.htmlData)
-                if (this.discussionForumWidget) {
-                  this.discussionForumWidget.widgetData.isDisabled = true
-                }
+            // }
+            if (this.htmlData) {
+              this.formDiscussionForumWidget(this.htmlData)
+              if (this.discussionForumWidget) {
+                this.discussionForumWidget.widgetData.isDisabled = true
               }
             }
-          })
+          }
+        })
     } else {
       this.routeDataSubscription = this.activatedRoute.data.subscribe(
         async data => {
@@ -288,6 +294,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
   }
 
   raiseEvent(state: WsEvents.EnumTelemetrySubType, data: NsContent.IContent) {
+    debugger
     if (this.forPreview) {
       return
     }
@@ -330,7 +337,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
       this.hasFiredRealTimeProgress = true
       this.fireRealTimeProgress()
       // tslint:disable-next-line: align
-    },  6 * 1000)
+    }, 6 * 1000)
   }
 
   private fireRealTimeProgress() {

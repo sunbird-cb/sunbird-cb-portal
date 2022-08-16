@@ -157,10 +157,17 @@ export class ViewerUtilService {
   }
 
   getContent(contentId: string): Observable<NsContent.IContent> {
+    const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+    let url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
+    if (!forPreview) {
+      url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
+    } else {
+      url = `/api/content/v1/read/${contentId}`
+    }
     return this.http.get<NsContent.IContent>(
       // tslint:disable-next-line:max-line-length
       // `/apis/authApi/action/content/hierarchy/${contentId}?rootOrg=${this.configservice.rootOrg || 'igot'}&org=${this.configservice.activeOrg || 'dopt'}`,
-      `apis/proxies/v8/action/content/v3/read/${contentId}`
+      url
     )
   }
 

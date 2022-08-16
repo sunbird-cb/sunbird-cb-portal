@@ -29,7 +29,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   private isLtMedium$ = this.valueSvc.isLtMedium$
   sideNavBarOpened = false
   mode: 'over' | 'side' = 'side'
-  forPreview = window.location.href.includes('/author/')
+  forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   isTypeOfCollection = true
   collectionId = this.activatedRoute.snapshot.queryParamMap.get('collectionId')
   batchId = this.activatedRoute.snapshot.queryParamMap.get('batchId')
