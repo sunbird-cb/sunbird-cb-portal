@@ -735,9 +735,9 @@ const routes: Routes = [
       pageId: 'public/home',
       module: 'home',
     },
-    resolve:{
+    resolve: {
       pageData: PageResolve,
-    }
+    },
   },
   {
     path: 'public/toc/:id/overview',
@@ -751,7 +751,7 @@ const routes: Routes = [
     resolve: {
       pageData: PageResolve,
       content: AppPublicTocResolverService,
-    }
+    },
   },
   {
     path: 'public/sso',

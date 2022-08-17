@@ -674,7 +674,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   public tabClicked(tabEvent: MatTabChangeEvent) {
-    if(this.forPreview){
+    if (this.forPreview) {
       return
     }
     const data: WsEvents.ITelemetryTabData = {

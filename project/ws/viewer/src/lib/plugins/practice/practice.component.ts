@@ -274,7 +274,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         this.fetchingQuestionsStatus = 'done'
         this.overViewed('start')
       } else {
-        this.quizSvc.getQuestions(section.childNodes || [],section.identifier).subscribe(qqr => {
+        this.quizSvc.getQuestions(section.childNodes || [], section.identifier).subscribe(qqr => {
           this.fetchingQuestionsStatus = 'done'
           const question = _.get(qqr, 'result')
           const codes = _.compact(_.map(this.quizJson.questions, 'section') || [])

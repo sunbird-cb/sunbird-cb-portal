@@ -71,7 +71,7 @@ export class AudioComponent implements OnInit, OnDestroy {
           // if (this.audioData) {
           //   this.widgetResolverAudioData.widgetData.url = this.audioData.artifactUrl
           // }
-          // tslint:disale-next-line
+          // tslint:disable-next-line
           const url = this.generateUrl(this.audioData!.artifactUrl)
           this.widgetResolverAudioData.widgetData.url = this.viewerSvc.getPublicUrl(url)
           this.widgetResolverAudioData.widgetData.disableTelemetry = true

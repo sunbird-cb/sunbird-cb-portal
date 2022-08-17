@@ -80,11 +80,9 @@ export class VideoComponent implements OnInit, OnDestroy {
         this.isFetchingDataComplete = true
         // tslint:disable-next-line
         if (this.videoData!.subTitles) {
-
           let subTitleUrl = ''
           // tslint:disable-next-line
           if (this.videoData!.subTitles.length > 0 && this.videoData!.subTitles[0]) {
-            4
             // tslint:disable-next-line
             if (this.videoData!.subTitles[0].url.indexOf('/content-store/') > -1) {
               // tslint:disable-next-line

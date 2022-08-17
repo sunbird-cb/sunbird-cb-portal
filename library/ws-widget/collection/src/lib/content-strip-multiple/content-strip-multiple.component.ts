@@ -223,13 +223,14 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
   fetchFromApi(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.api && Object.keys(strip.request.api).length) {
       this.contentStripSvc.getContentStripResponseApi(strip.request.api).subscribe(
-        results => {
+        result => {
+          let results: any
           const isPublic = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
           if (strip.request && strip.request.api
             && strip.request.api.path.indexOf('/api/course/v1/explore') !== -1
             && isPublic) {
             results = {
-              contents: _.get(results, 'result.content'),
+              contents: _.get(result, 'result.content'),
               hasMore: false,
             }
           }
@@ -529,7 +530,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
                 this.processStrip(strip, [], 'error', calculateParentStatus, null)
               },
             )
-          }, () => {
+          },         () => {
             this.processStrip(strip, [], 'error', calculateParentStatus, null)
           })
       }

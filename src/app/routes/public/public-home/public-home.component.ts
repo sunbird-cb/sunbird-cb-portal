@@ -3,7 +3,7 @@ import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ActivatedRoute } from '@angular/router'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
-// tslint-disable-next-line
+// tslint:disable-next-line
 import _ from 'lodash'
 
 @Component({
