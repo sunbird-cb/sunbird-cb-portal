@@ -4,7 +4,7 @@ import { ENotificationEvent, INotification } from '../models/notifications.model
 
 @Injectable()
 export class NotificationService {
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   mapRoute(notification: INotification) {
     const event = notification.eventId
