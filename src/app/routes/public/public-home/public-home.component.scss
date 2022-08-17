@@ -77,6 +77,8 @@ hr {
   margin-right: auto !important;
 }
 
+
+
 /* Landing page css start here */
 .container,
 .container-lg,
@@ -456,7 +458,8 @@ p {
 }
 .solutionService .servicesItem {
   background-color: #373434;
-  min-height: 352px;
+  max-height: 352px;
+  height: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -466,6 +469,7 @@ p {
   box-sizing: border-box;
   // margin-top:1rem ;
   color: #ffffff;
+  background-size: cover!important;
 }
 .solutionService .servicesItem .icon {
   width: 110px;
@@ -604,11 +608,25 @@ footer .list-unstyled .link-secondary:hover {
   visibility: hidden;
 }
 
-// .exCivilVideo {
-//   img {
-//     width: 90%;
-//   }
-// }
+.exCivilVideo {
+  width: 100%;
+  padding-top: 43.75%;
+  height: 0px;
+  position: relative;
+}
+.video_tag {
+  // height: auto;
+  // max-width: 100%;
+  // -webkit-background-size:cover;
+  //  -moz-background-size:cover;
+  //  -o-background-size:cover;
+  //   background-size: cover;
+  width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 
 ::ng-deep .app-footer {
   display: none !important;

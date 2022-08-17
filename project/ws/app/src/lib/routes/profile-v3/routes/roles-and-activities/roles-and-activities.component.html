@@ -96,17 +96,17 @@
                         <div class="right-input-div">
                             <button mat-raised-button type="button" (click)="addActivity({
                                 input: activity, value: activity.value})" class="text-white btn-add-activity btn-responsive">
-                                <span class="text-white" i18n>Add activity</span>
+                                <span class="text-white" i18n>Add activities</span>
                             </button>
                         </div>
 
                     </div>
 
 
-                    <div class="flex flex-row justify-between">
+                    <div class="flex flex-row justify-between margin-top-s">
                         <mat-hint class="text-left text_hint mat-body-2">Start adding the activities.</mat-hint>
-                        <mat-hint class="text-right text_hint mat-body-2">Type the activites and click on ‘Enter’ to add
-                        </mat-hint>
+                        <!-- <mat-hint class="text-right text_hint mat-body-2">Type the activites and click on ‘Enter’ to add
+                        </mat-hint> -->
                     </div>
 
                     <mat-chip-list #chipListHobies>
@@ -127,11 +127,11 @@
                     </a> -->
                     <button mat-raised-button type="button" (click)="create()" class="text-white btn-success btn-responsive"
                     [disabled]="!createRole.value.roleName || selectedActivity.length === 0" *ngIf="!editData">
-                        <span class="text-white" i18n>Add role and activity</span>
+                        <span class="text-white" i18n>Add role and activities</span>
                     </button>
                     <button mat-raised-button type="button" (click)="create()" class="text-white btn-success btn-responsive"
                     [disabled]="!createRole.value.roleName || selectedActivity.length === 0 || (editRole.name === orgroleselected.name && disableUpdate)"  *ngIf="editData">
-                        <span class="text-white" i18n>Update  role and activity</span>
+                        <span class="text-white" i18n>Update  role and activities</span>
                     </button>
                     <div *ngIf="displayLoader" class="mt-5 pr-4 flex items-center justify-center">
                         <mat-spinner [diameter]="30"></mat-spinner>
