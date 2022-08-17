@@ -603,7 +603,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     // // ratingSummaryPr.latest50Reviews = this.ratingSummary.latest50Reviews
     // this.ratingReviews = this.ratingSummary && this.ratingSummary.latest50Reviews ? JSON.parse(this.ratingSummary.latest50Reviews) : []
     // ratingSummaryPr.avgRating = parseFloat(((((totRatings / this.ratingSummary.total_number_of_ratings) * 100) * 5) / 100).toFixed(1))
-    if(this.ratingSummary && this.ratingSummary.latest50Reviews) {
+    if (this.ratingSummary && this.ratingSummary.latest50Reviews) {
       ratingSummaryPr.latest50Reviews = JSON.parse(this.ratingSummary.latest50Reviews)
       this.ratingReviews = JSON.parse(this.ratingSummary.latest50Reviews)
     }
@@ -615,7 +615,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     // tslint:disable-next-line:max-line-length
     // ratingSummaryPr.avgRating = this.ratingSummary && this.ratingSummary.total_number_of_ratings ? parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1)) : 0
 
-    if(this.ratingSummary && this.ratingSummary.total_number_of_ratings) {
+    if (this.ratingSummary && this.ratingSummary.total_number_of_ratings) {
       ratingSummaryPr.avgRating = parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1))
     }
     if (this.content) {
