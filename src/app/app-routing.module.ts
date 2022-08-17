@@ -729,6 +729,15 @@ const routes: Routes = [
   {
     path: 'public/home',
     component: PublicHomeComponent,
+    data: {
+      pageType: 'feature',
+      pageKey: 'public-home',
+      pageId: 'public/home',
+      module: 'home',
+    },
+    resolve:{
+      pageData: PageResolve,
+    }
   },
   {
     path: 'public/toc/:id/overview',
@@ -739,7 +748,7 @@ const routes: Routes = [
       pageId: 'public/toc/:id',
       module: 'Learn',
     },
-    resolve:{
+    resolve: {
       pageData: PageResolve,
       content: AppPublicTocResolverService,
     }
@@ -847,6 +856,7 @@ const routes: Routes = [
       urlUpdateStrategy: 'eager',
       onSameUrlNavigation: 'reload',
       scrollOffset: [0, 80],
+      enableTracing: true,
     }),
   ],
   exports: [RouterModule],

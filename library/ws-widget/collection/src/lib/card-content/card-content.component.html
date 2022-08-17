@@ -642,7 +642,7 @@
             ? true
             : widgetData?.intranetMode === 'greyOut' && showIntranetContent
       }">
-      <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
+      <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute: forPreview ).url"
             [queryParams]="(widgetData.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData"
             role="link" i18n-aria-label>
       <ng-container *ngIf="!isCardFlipped">
@@ -680,7 +680,7 @@
 
 
         <mat-card-content class="min-top">
-          <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
+          <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute : forPreview).url"
             [queryParams]="(widgetData.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData"
             role="link" i18n-aria-label>
 

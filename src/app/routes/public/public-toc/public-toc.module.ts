@@ -29,6 +29,7 @@ import { RouterModule } from '@angular/router'
 import { PipeDurationTransformModule, PipePartialContentModule, PipeSafeSanitizerModule } from '@sunbird-cb/utils/src/public-api'
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 import { AppTocModule } from '@ws/app/src/public-api'
+import { BtnPageBackNavModule } from '@sunbird-cb/collection/src/public-api'
 
 @NgModule({
     declarations: [PublicTocComponent],
@@ -61,6 +62,7 @@ import { AppTocModule } from '@ws/app/src/public-api'
         PipeDurationTransformModule,
         PipePartialContentModule,
         AppTocModule,
+        BtnPageBackNavModule,
     ],
     exports: [PublicTocComponent],
     providers: [AppTocService],

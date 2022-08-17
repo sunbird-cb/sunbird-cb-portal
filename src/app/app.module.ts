@@ -73,7 +73,6 @@ import { NoConnectionComponent } from './component/no-connection/no-connection.c
 import { PublicLogoutModule } from './routes/public/public-logout/public-logout.module'
 import { PublicSignupModule } from './routes/public/public-signup/public-signup.module'
 import { PublicHomeComponent } from './routes/public/public-home/public-home.component'
-import { PublicHomeService } from './services/public-home.service'
 import { PublicContacthomeComponent } from './routes/public/public-contacthome/public-contacthome.component'
 import { PublicLoginWComponent } from './routes/public/public-login-w/public-login-w.component'
 import { PublicLoginWGComponent } from './routes/public/public-login-wg/public-login-wg.component'
@@ -203,7 +202,6 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     TncAppResolverService,
     TncPublicResolverService,
     WelcomeUserResolverService,
-    PublicHomeService,
     ConfigurationsService,
     PipeContentRoutePipe,
     AppTocResolverService,

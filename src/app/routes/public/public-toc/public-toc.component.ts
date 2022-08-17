@@ -64,7 +64,7 @@ export class PublicTocComponent implements OnInit, OnDestroy, AfterViewChecked, 
   isCohortsRestricted = false
   sticky = false
   isInIframe = false
-  forPreview = window.location.href.includes('/public/')
+  forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
 //   analytics = this.route.snapshot.data.pageData.data.analytics
   errorWidgetData: NsWidgetResolver.IRenderConfigWithTypedData<any> = {
     widgetType: 'errorResolver',

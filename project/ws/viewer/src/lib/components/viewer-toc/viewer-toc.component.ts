@@ -118,7 +118,6 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       this.collectionType = params.get('collectionType') || 'course'
       const primaryCategory = params.get('primaryCategory')
       this.viewMode = params.get('viewMode') || 'START'
-      debugger
       this.forPreview = !!params.get('preview')
       try {
         this.batchId = params.get('batchId')

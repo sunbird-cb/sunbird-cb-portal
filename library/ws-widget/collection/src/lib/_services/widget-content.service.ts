@@ -75,7 +75,6 @@ export class WidgetContentService {
     // const url = `${API_END_POINTS.CONTENT}/${contentId}?hierarchyType=${hierarchyType}`
     let url = ''
     const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
-    debugger
     if (primaryCategory && this.isResource(primaryCategory)) {
       if (!forPreview) {
         url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
@@ -92,17 +91,16 @@ export class WidgetContentService {
     // return this.http
     //   .post<NsContent.IContent>(url, { additionalFields })
     //   .pipe(retry(1))
-    const apiData = this.http
+    return this.http
       .get<NsContent.IContent>(url)
       .pipe(retry(1))
     // if (apiData && apiData.result) {
     //   return apiData.result.content
     // }
-    return apiData
   }
   fetchAuthoringContent(contentId: string): Observable<NsContent.IContent> {
-    const url = `${API_END_POINTS.AUTHORING_CONTENT}/${contentId}/?hierarchyType=detail`
-    return this.http.get<NsContent.IContent>(url).pipe(retry(1))
+    const url = `${API_END_POINTS.AUTHORING_CONTENT}/${contentId}?hierarchyType=detail`
+    return this.http.get<NsContent.IContent>(url).pipe(retry(1), r => r)
   }
   fetchMultipleContent(ids: string[]): Observable<NsContent.IContent[]> {
     return this.http.get<NsContent.IContent[]>(

@@ -3,8 +3,8 @@
       url: isTypeOfCollection
         ? collectionType === 'Playlist'
           ? '/app/playlist/me/' + collectionId
-          : (forPreview ? '/author' : '/app') + '/toc/' + collectionId + '/overview'
-        : (forPreview ? '/author' : '/app') + '/toc/' + resourceId + '/overview',
+          : (forPreview ? '/pulic' : '/app') + '/toc/' + collectionId + '/overview'
+        : (forPreview ? '/public' : '/app') + '/toc/' + resourceId + '/overview',
       titles: [],
       queryParams : isTypeOfCollection
       ? collectionType === 'Playlist'

@@ -294,7 +294,6 @@ export class HtmlComponent implements OnInit, OnDestroy {
   }
 
   raiseEvent(state: WsEvents.EnumTelemetrySubType, data: NsContent.IContent) {
-    debugger
     if (this.forPreview) {
       return
     }

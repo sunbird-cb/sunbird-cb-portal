@@ -41,7 +41,8 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   @Input() content: NsContent.IContent | null = null
   @Input() initialrouteData: any
   routeSubscription: Subscription | null = null
-  @Input() forPreview = false
+  @Input() forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+
   @Input() resumeData: NsContent.IContinueLearningData | null = null
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   tocConfig: any = null
@@ -119,9 +120,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
       sortByControl: new FormControl(this.sortReviewValues[0]),
       searchKey: new FormControl(''),
     })
-    if (!this.forPreview) {
-      this.forPreview = window.location.href.includes('/public/')
-    }
+
     // if (this.route && this.route.parent) {
     //   this.routeSubscription = this.route.parent.data.subscribe((data: Data) => {
     //     this.initData(data)
@@ -497,7 +496,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
 
   fetchRatingSummary() {
     this.displayLoader = true
-    if (!this.forPreview &&  this.content && this.content.identifier && this.content.primaryCategory) {
+    if (!this.forPreview && this.content && this.content.identifier && this.content.primaryCategory) {
       this.ratingSvc.getRatingSummary(this.content.identifier, this.content.primaryCategory).subscribe(
         (res: any) => {
           this.displayLoader = false
@@ -675,6 +674,9 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   public tabClicked(tabEvent: MatTabChangeEvent) {
+    if(this.forPreview){
+      return
+    }
     const data: WsEvents.ITelemetryTabData = {
       label: `${tabEvent.tab.textLabel}`,
       index: tabEvent.index,

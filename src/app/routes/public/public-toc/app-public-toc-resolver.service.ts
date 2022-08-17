@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router'
-import { NsContent, PipeContentRoutePipe, WidgetContentService } from '@sunbird-cb/collection'
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router'
+import { NsContent, WidgetContentService } from '@sunbird-cb/collection'
 import { IResolveResponse } from '@sunbird-cb/utils'
 import { Observable, of } from 'rxjs'
 import { catchError, map, tap } from 'rxjs/operators'
@@ -58,8 +58,6 @@ export class AppPublicTocResolverService
   > {
   constructor(
     private contentSvc: WidgetContentService,
-    private routePipe: PipeContentRoutePipe,
-    private router: Router,
   ) { }
 
   resolve(
@@ -67,48 +65,27 @@ export class AppPublicTocResolverService
     _state: RouterStateSnapshot,
   ): Observable<IResolveResponse<NsContent.IContent>> {
     const contentId = route.paramMap.get('id')
-    const primaryCategory = route.queryParamMap.get('primaryCategory') || ''
-    if (contentId) {
-      const forPreview = window.location.href.includes('/public/')
-      return (forPreview
-        ? this.contentSvc.fetchAuthoringContent(contentId)
-        : this.contentSvc.fetchContent(contentId, 'detail', ADDITIONAL_FIELDS_IN_CONTENT, primaryCategory)
-      ).pipe(
+     if (contentId) {
+       return this.contentSvc.fetchContent(contentId, 'detail', ADDITIONAL_FIELDS_IN_CONTENT, '').pipe(
         map(data => ({ data, error: null })),
         tap(resolveData => {
           resolveData.data = resolveData.data.result.content
-          let currentRoute: string[] | string = window.location.href.split('/')
-          currentRoute = currentRoute[currentRoute.length - 1]
-          if (!forPreview) {
-            this.router.navigate([
-              'public', 'toc', resolveData.data.identifier, 'preview'
-              // primaryCategory=${resolveData.data.primaryCategory}
-            ])
-          }
-          // if (forPreview && currentRoute !== 'contents' && currentRoute !== 'overview') {
+          // let currentRoute: string[] | string = window.location.href.split('/')
+          // currentRoute = currentRoute[currentRoute.length - 1]
+          // if (!forPreview) {
           //   this.router.navigate([
-          //     // tslint:disable-next-line
-          //     `${forPreview ? '/author' : '/app'}/toc/${resolveData.data.identifier}/${resolveData.data.children.length ? 'contents' : 'overview'}?primaryCategory=${resolveData.data.primaryCategory}`,
-          //   ])
-          // } else if (
-          //   currentRoute === 'contents' &&
-          //   resolveData.data &&
-          //   !resolveData.data.children.length
-          // ) {
-          //   this.router.navigate([
-          //     `${forPreview ? '/author' : '/app'}/toc/${resolveData.data.identifier}/overview
-          //     ?primaryCategory=${resolveData.data.primaryCategory}`,
-          //   ])
+          //     'public', 'toc', resolveData.data.identifier, 'preview'
+          //    ])
           // }
-          if (
-            resolveData.data &&
-            !forPreview &&
-            (resolveData.data.primaryCategory === NsContent.EPrimaryCategory.CHANNEL ||
-              resolveData.data.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_BOARD)
-          ) {
-            const urlObj = this.routePipe.transform(resolveData.data, forPreview)
-            this.router.navigate([urlObj.url], { queryParams: urlObj.queryParams })
-          }
+          // if (
+          //   resolveData.data &&
+          //   !forPreview &&
+          //   (resolveData.data.primaryCategory === NsContent.EPrimaryCategory.CHANNEL ||
+          //     resolveData.data.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_BOARD)
+          // ) {
+          //   const urlObj = this.routePipe.transform(resolveData.data, forPreview)
+          //   this.router.navigate([urlObj.url], { queryParams: urlObj.queryParams })
+          // }
           return of({ error: null, data: resolveData.data })
         }),
         catchError((error: any) => of({ error, data: null })),

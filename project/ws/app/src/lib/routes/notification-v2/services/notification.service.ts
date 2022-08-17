@@ -27,7 +27,6 @@ export class NotificationService {
           route = ''
           break
         }
-
         route = `/app/toc/${identifier}/overview`
         break
 

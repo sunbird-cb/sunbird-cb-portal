@@ -224,6 +224,15 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     if (strip.request && strip.request.api && Object.keys(strip.request.api).length) {
       this.contentStripSvc.getContentStripResponseApi(strip.request.api).subscribe(
         results => {
+          const isPublic = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+          if (strip.request && strip.request.api
+            && strip.request.api.path.indexOf('/api/course/v1/explore') !== -1
+            && isPublic) {
+            results = {
+              contents: _.get(results, 'result.content'),
+              hasMore: false,
+            }
+          }
           this.processStrip(
             strip,
             this.transformContentsToWidgets(results.contents, strip),
@@ -520,7 +529,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
                 this.processStrip(strip, [], 'error', calculateParentStatus, null)
               },
             )
-          },         () => {
+          }, () => {
             this.processStrip(strip, [], 'error', calculateParentStatus, null)
           })
       }
@@ -534,7 +543,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       if (this.configSvc.userProfileV2) {
 
         const systemTopics = this.configSvc.userProfileV2.systemTopics &&
-        this.configSvc.userProfileV2.systemTopics.map((st: any) => st.identifier)
+          this.configSvc.userProfileV2.systemTopics.map((st: any) => st.identifier)
 
         const desiredTopics = this.configSvc.userProfileV2.desiredTopics && this.configSvc.userProfileV2.desiredTopics
         if ((systemTopics && systemTopics.length) || (desiredTopics && desiredTopics.length)) {

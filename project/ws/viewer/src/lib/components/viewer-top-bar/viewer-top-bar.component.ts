@@ -162,7 +162,6 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
       })
       dialogRef.afterClosed().subscribe(result => {
         if (result === true) {
-
           this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
         }
       })

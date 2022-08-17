@@ -94,7 +94,9 @@ export class RootComponent implements OnInit, AfterViewInit {
     private utilitySvc: UtilityService,
     // private dialogRef: MatDialogRef<any>,
   ) {
-    if (window.location.pathname.includes('/public/home')) {
+    if (window.location.pathname.includes('/public/home') 
+    || window.location.pathname.includes('/public/toc/')
+    || window.location.pathname.includes('/viewer/')) {
       this.customHeight = true
     }
 

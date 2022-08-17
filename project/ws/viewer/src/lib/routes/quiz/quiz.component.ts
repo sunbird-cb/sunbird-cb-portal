@@ -35,7 +35,6 @@ export class QuizComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    debugger
     this.dataSubscription = this.activatedRoute.data.subscribe(
       async data => {
         this.quizData = data.content.data
