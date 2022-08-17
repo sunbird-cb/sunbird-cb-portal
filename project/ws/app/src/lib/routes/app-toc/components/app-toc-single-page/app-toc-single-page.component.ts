@@ -598,25 +598,26 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
       key: 5,
       value: _.get(this.ratingSummary, 'totalcount5stars'),
     })
-
+    // tslint:disable-next-line:max-line-length
+    // ratingSummaryPr.latest50Reviews = this.ratingSummary && this.ratingSummary.latest50Reviews ? JSON.parse(this.ratingSummary.latest50Reviews) : []
+    // // ratingSummaryPr.latest50Reviews = this.ratingSummary.latest50Reviews
+    // this.ratingReviews = this.ratingSummary && this.ratingSummary.latest50Reviews ? JSON.parse(this.ratingSummary.latest50Reviews) : []
+    // ratingSummaryPr.avgRating = parseFloat(((((totRatings / this.ratingSummary.total_number_of_ratings) * 100) * 5) / 100).toFixed(1))
     if(this.ratingSummary && this.ratingSummary.latest50Reviews) {
       ratingSummaryPr.latest50Reviews = JSON.parse(this.ratingSummary.latest50Reviews)
       this.ratingReviews = JSON.parse(this.ratingSummary.latest50Reviews)
     }
-
-    // ratingSummaryPr.latest50Reviews = this.ratingSummary.latest50Reviews
-
-    // ratingSummaryPr.avgRating = parseFloat(((((totRatings / this.ratingSummary.total_number_of_ratings) * 100) * 5) / 100).toFixed(1))
     const meanRating = ratingSummaryPr.breakDown.reduce((val, item) => {
       // console.log('item', item)
       return val + (item.key * item.value)
       // tslint:disable-next-line: align
     }, 0)
+    // tslint:disable-next-line:max-line-length
+    // ratingSummaryPr.avgRating = this.ratingSummary && this.ratingSummary.total_number_of_ratings ? parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1)) : 0
 
     if(this.ratingSummary && this.ratingSummary.total_number_of_ratings) {
       ratingSummaryPr.avgRating = parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1))
     }
-
     if (this.content) {
       this.content.averageRating = ratingSummaryPr.avgRating
       this.content.totalRating = ratingSummaryPr.total_number_of_ratings
