@@ -91,6 +91,13 @@
       </div>
     </div>
   </section>
+
+  <section *ngIf="data[0].widget" class="journeySection1">
+    <div class="new-box">
+      <ng-container [wsResolverWidget]="data[0].widget"></ng-container>
+    </div>
+  </section>
+
   <section class="servicesSection">
     <div class="container container-balanced">
       <div class="row">
@@ -98,82 +105,32 @@
           <div class="mat-headline text-white text-center mt-12 pt-12">How does the platform enable you to become the best version of
             yourself?</div>
 
-          <mat-tab-group mat-align-tabs="center" [disableRipple]=true color="transparent">
-            <mat-tab label="An experienced civil servant" class="nav-link">
-              <div class="tab-pane fade show active my-12" id="pillsExCivil" role="tabpanel" aria-labelledby="ex-civil">
-
-                <div class="flex flex-1">
-                  <div class="exCivilVideo">
-                    <!-- <img src="/assets/instances/eagle/landing-img/video1.png" alt="video presentation"> -->
-                    <video width="100%" height="auto" controls poster="/assets/instances/eagle/landing-img/video1.png">
-                      <source src="https://igot.blob.core.windows.net/public/Sanjeev-final.mp4" type="video/mp4">
-                    </video>
-
-                  </div>
+            <div class="flex flex-1 flex-row player_box">
+              <div class="flex flex-1 flex-col">
+                <div class="exCivilVideo">
+                  <h4 class="margin-bottom-l">An experienced civil servant</h4>
+                  <video width="100%" height="100%" controls poster="/assets/instances/eagle/landing-img/video1.png">
+                    <source src="https://igot.blob.core.windows.net/public/Sanjeev-final.mp4" type="video/mp4">
+                  </video>
                 </div>
-
-                <div class="dd-border1"></div>
-                <div class="dd-border1 dd-border2"></div>
-              </div>
-            </mat-tab>
-            <mat-tab label="A newly recruited civil servant" class="nav-link">
-              <div class="tab-pane fade my-12" id="pillsNewCivil" role="tabpanel" aria-labelledby="new-civil">
-                <div class="flex flex-1">
-
-                  <div class="exCivilVideo">
-                    <video width="100%" height="auto" controls poster="/assets/instances/eagle/landing-img/video2.png">
-                      <source src="https://igot.blob.core.windows.net/public/Shilpa-final.mp4" type="video/mp4">
-                    </video>
-
-                  </div>
-
-                </div>
-                <div class="dd-border1"></div>
-                <div class="dd-border1 dd-border2"></div>
-              </div>
-            </mat-tab>
-
-          </mat-tab-group>
-
-
-
-          <!-- <div class="servicesTabPills">
-              <ul class="nav nav-pills" id="pills-tab" role="tablist">
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link active" id="ex-civil" data-bs-toggle="pill" data-bs-target="#pillsExCivil" type="button" role="tab" aria-controls="pillsExCivil" aria-selected="true">An experienced civil servant</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="new-civil" data-bs-toggle="pill" data-bs-target="#pillsNewCivil" type="button" role="tab" aria-controls="pillsNewcivil" aria-selected="false">A newly recruited civil servant</button>
-                </li>
-              </ul>
-            </div> -->
-          <!-- <div class="tab-content my-5" id="pills-tabContent">
-              <div class="tab-pane fade show active" id="pillsExCivil" role="tabpanel" aria-labelledby="ex-civil">
-                <div class="row">
-                  <div class="grid-cols-12">
-                    <div class="exCivilVideo"><img src="/assets/instances/eagle/landing-img/video1.png" alt="video presentation"></div>
-                  </div>
-                </div>
-                <div class="dd-border1"></div>
-                <div class="dd-border1 dd-border2"></div>
-              </div>
-              <div class="tab-pane fade" id="pillsNewCivil" role="tabpanel" aria-labelledby="new-civil">
-                 <div class="row">
-                  <div class="grid-cols-12">
-                    <div class="exCivilVideo"><img src="/assets/instances/eagle/landing-img/video2.png" alt="video presentation"></div>
-                  </div>
-                </div>
-                <div class="dd-border1"></div>
-                <div class="dd-border1 dd-border2"></div>
               </div>
 
-            </div> -->
+              <div class="flex flex-1 flex-col margin-left-m">
+                <div class="exCivilVideo">
+                  <h4 class="margin-bottom-l">A newly recruited civil servant</h4>
+                  <video width="100%" height="auto" controls poster="/assets/instances/eagle/landing-img/video2.png">
+                    <source src="https://igot.blob.core.windows.net/public/Shilpa-final.mp4" type="video/mp4">
+                  </video>
 
+                </div>
+              </div>
+
+            </div>
         </div>
-
       </div>
     </div>
   </section>
+
   <section class="journeySection">
     <div class="container container-balanced">
       <div class="flex flex-row w-100">
@@ -187,11 +144,7 @@
       </div>
     </div>
   </section>
-  <section class="journeySection">
-    <div class="new-box">
-      <ng-container [wsResolverWidget]="data[0].widget"></ng-container>
-    </div>
-  </section>
+
   <section class="solutionService pt-24 pb-24">
     <div class="container container-balanced">
       <div class="row">
@@ -252,9 +205,9 @@
       <div class="flex flex-row items-center justify-center">
         <div class="grid-cols-1 grid">
           <h1 class="mb-3 text-center">Walkthrough of the iGOT Karmayogi Portal</h1>
-          <div class="walkthroughVideo text-center mt-4">
+          <div class="exCivilVideo text-center mt-4">
             <!-- <img src="/assets/instances/eagle/landing-img/walkthroughImg.svg" alt="video image"> -->
-            <video width="100%" height="auto" controls>
+            <video width="100%" height="100%" controls>
               <source src="https://igot.blob.core.windows.net/public/video-guide.mp4" type="video/mp4">
             </video>
 

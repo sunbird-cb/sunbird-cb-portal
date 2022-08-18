@@ -2,7 +2,7 @@
 @import "ws-vars";
 @import "ws-mixins";
 
-.home {
+
   .fix-ww {
     margin-left: auto;
     margin-right: auto;
@@ -58,20 +58,20 @@
     transition: all 300ms ease-in-out;
   }
 
-  html,
-  body {
-    max-width: 100%;
-    height: 100%;
-    font-size: 16px;
-  }
+  // html,
+  // body {
+  //   max-width: 100%;
+  //   height: 100%;
+  //   font-size: 16px;
+  // }
 
-  body {
-    font-family: "latoregular";
-    color: rgba(0, 0, 0, 0.9);
-    background-color: #ffffff;
-    margin: 0;
-    padding: 0;
-  }
+  // body {
+  //   font-family: "latoregular";
+  //   color: rgba(0, 0, 0, 0.9);
+  //   background-color: #ffffff;
+  //   margin: 0;
+  //   padding: 0;
+  // }
 
   :focus,
   button:focus {
@@ -178,52 +178,52 @@
     }
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  .h1,
-  .h2,
-  .h3,
-  .h4,
-  .h5,
-  .h6 {
-    color: rgba(0, 0, 0, 0.9);
-    line-height: 1.2;
-    /*  letter-spacing: -1px; */
-    font-family: "Montserrat", sans-serif;
-  }
+  // h1,
+  // h2,
+  // h3,
+  // h4,
+  // h5,
+  // h6,
+  // .h1,
+  // .h2,
+  // .h3,
+  // .h4,
+  // .h5,
+  // .h6 {
+  //   color: rgba(0, 0, 0, 0.9);
+  //   line-height: 1.2;
+  //   /*  letter-spacing: -1px; */
+  //   font-family: "Montserrat", sans-serif;
+  // }
 
-  h1,
-  .h1 {
-    font-size: 2.6875rem;
-    font-weight: 600;
-  }
+  // h1,
+  // .h1 {
+  //   font-size: 2.6875rem;
+  //   font-weight: 600;
+  // }
 
-  h3,
-  .h3 {
-    font-size: 1.5rem;
-    font-weight: 500;
-    line-height: 1.5;
-  }
+  // h3,
+  // .h3 {
+  //   font-size: 1.5rem;
+  //   font-weight: 500;
+  //   line-height: 1.5;
+  // }
 
-  h4,
-  .h4 {
-    font-size: 1.25rem;
-    font-weight: 500;
-    line-height: 1.5;
-  }
+  // h4,
+  // .h4 {
+  //   font-size: 1.25rem;
+  //   font-weight: 500;
+  //   line-height: 1.5;
+  // }
 
-  h6,
-  .h6 {
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 1.5;
-  }
+  // h6,
+  // .h6 {
+  //   font-size: 1rem;
+  //   font-weight: 500;
+  //   line-height: 1.5;
+  // }
 
-  p {}
+  // p {}
 
   .analyticsRecord {
     background-color: #ffffff;
@@ -328,6 +328,7 @@
   .servicesSection {
     /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#373434+0,373434+55,ffffff+55,ffffff+100 */
     background: #373434;
+    border:1px solid #fff;
     /* Old browsers */
     background: -moz-linear-gradient(top, #373434 0%, #373434 55%, #ffffff 55%, #ffffff 100%);
     /* FF3.6-15 */
@@ -475,6 +476,12 @@
     /* z-index: 0; */
   }
 
+  .journeySection1 {
+    background-color: #fef6f0;
+    padding-top: 80px;
+    padding-bottom: 48px
+  }
+
   /* journey css section start here */
   .journeySection {
     background-color: #fff;
@@ -587,7 +594,7 @@
 
   .iGotWalkthrough {
     background-color: #fef6f0;
-    min-height: 800px;
+    // min-height: 800px;
     padding-top: 80px;
     padding-bottom: 48px;
 
@@ -713,11 +720,19 @@
     visibility: hidden;
   }
 
-  // .exCivilVideo {
-  //   img {
-  //     width: 90%;
-  //   }
-  // }
+  .exCivilVideo {
+    // height: 500px;
+    display: flex;
+    margin:auto;
+    width: 100%;
+    video {
+      object-fit: cover;
+    }
+  }
+
+  .player_box {
+    padding-bottom:32px
+  }
 
   ::ng-deep .app-footer {
     display: none !important;
@@ -736,4 +751,4 @@
       width: 100%;
     }
   }
-}
+
