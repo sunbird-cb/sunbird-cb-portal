@@ -856,7 +856,7 @@ const routes: Routes = [
       urlUpdateStrategy: 'eager',
       onSameUrlNavigation: 'reload',
       scrollOffset: [0, 80],
-      enableTracing: true,
+      // enableTracing: true,
     }),
   ],
   exports: [RouterModule],
