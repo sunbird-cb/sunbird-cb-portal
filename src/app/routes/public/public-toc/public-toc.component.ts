@@ -6,7 +6,7 @@ import {
     viewerRouteGenerator,
     NsPlaylist,
     NsGoal,
-    RatingService,  
+    RatingService,
 } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, LoggerService, NsPage, TFetchStatus, UtilityService } from '@sunbird-cb/utils'

@@ -22,7 +22,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
   forPreview = window.location.href.includes('/public/')
     || window.location.href.includes('&preview=true')
-  isPlayerPage = window.location.href.includes('/viewer/') 
+  isPlayerPage = window.location.href.includes('/viewer/')
   instanceVal = ''
   btnAppsConfig!: NsWidgetResolver.IRenderConfigWithTypedData<IBtnAppsConfig>
   appIcon: SafeUrl | null = null

@@ -94,14 +94,14 @@ export class GeneralGuard implements CanActivate {
      * Test IF User Tnc Is Accepted
      */
     if (!this.configSvc.hasAcceptedTnc) {
-      if (
-        state.url &&
-        !state.url.includes('/app/setup/') &&
-        !state.url.includes('/app/tnc') &&
-        !state.url.includes('/page/home')
-      ) {
-        this.configSvc.userUrl = state.url
-      }
+      // if (
+      //   state.url &&
+      //   !state.url.includes('/app/setup/') &&
+      //   !state.url.includes('/app/tnc') &&
+      //   !state.url.includes('/page/home')
+      // ) {
+      //   this.configSvc.userUrl = state.url
+      // }
       // if (
       //   this.configSvc.restrictedFeatures &&
       //   !this.configSvc.restrictedFeatures.has('firstTimeSetupV2')
