@@ -16,14 +16,11 @@
         <div class="info-section right margin-top-xl padding-m white-bg margin-left-xl margin-bottom-xl">
             <div class="header-actions margin-top-s margin-bottom-m">
                 <ng-container *ngIf="
-          actionBtnStatus !== 'wait' &&
           content?.status !== 'Deleted' &&
           content?.status !== 'Expired'
         ">
                     <div [hidden]="isResource && !content?.artifactUrl?.length" class="text-center">
-
-                        <a *ngIf="showStart.show && !isPostAssessment" [routerLink]="firstResourceLink?.url"
-                            [queryParams]="generateQuery('START')"
+                        <a [routerLink]="firstResourceLink?.url" [queryParams]="generateQuery('START')"
                             class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white">
 
                             <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
@@ -285,20 +282,8 @@
 </ng-container>
 
 <ng-template #tocError>
+    Error
     <!-- <div [wsResolverWidget]="errorWidgetData"></div> -->
-</ng-template>
-
-<mat-menu #actionMenu="matMenu">
-    <div mat-menu-item>
-        <ng-container *ngIf="content" [ngTemplateOutlet]="actions"></ng-container>
-    </div>
-</mat-menu>
-
-<ng-template #actions>
-    <a i18n-aria-label aria-label="Take Action" mat-icon-button *ngIf="reviewButton"
-        [routerLink]="['/author/editor/' + content?.identifier]">
-        <mat-icon>publish</mat-icon>
-    </a>
 </ng-template>
 <ng-template #authView i18n>View</ng-template>
 

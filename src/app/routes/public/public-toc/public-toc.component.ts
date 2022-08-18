@@ -6,7 +6,7 @@ import {
     viewerRouteGenerator,
     NsPlaylist,
     NsGoal,
-    RatingService,
+    RatingService,  
 } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, LoggerService, NsPage, TFetchStatus, UtilityService } from '@sunbird-cb/utils'
@@ -21,7 +21,6 @@ import * as dayjs from 'dayjs'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
-import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
 import moment from 'moment'
 import { NsAppToc } from '@ws/app/src/lib/routes/app-toc/models/app-toc.model'
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
@@ -233,7 +232,7 @@ export class PublicTocComponent implements OnInit, OnDestroy, AfterViewChecked, 
                 'showIntranetMessageDesktop',
             )
         }
-        this.checkRegistrationStatus()
+        // this.checkRegistrationStatus()
         this.routerParamSubscription = this.router.events.subscribe((routerEvent: Event) => {
             if (routerEvent instanceof NavigationEnd) {
                 this.assignPathAndUpdateBanner(routerEvent.url)
@@ -326,24 +325,7 @@ export class PublicTocComponent implements OnInit, OnDestroy, AfterViewChecked, 
             return 'NA'
         } return 'NA'
     }
-    get isBatchInProgress() {
-        if (this.content && this.content['batches']) {
-            // const batches = this.content['batches'] as NsContent.IBatch
-            if (this.currentCourseBatchId) {
-                const now = moment()
-                const batch = _.first(_.filter(this.content['batches'], { batchId: this.currentCourseBatchId }) || [])
-                if (batch) {
-                    return (
-                        // batch.status &&
-                        moment(batch.startDate).isSameOrBefore(now)
-                        && moment(batch.endDate || new Date()).isSameOrAfter(now)
-                    )
-                }
-                return false
-            }
-            return false
-        } return false
-    }
+
     private initData(data: Data) {
         const initData = this.tocSvc.initData(data, true)
         this.content = initData.content
@@ -457,192 +439,6 @@ export class PublicTocComponent implements OnInit, OnDestroy, AfterViewChecked, 
         }
         return batchId
     }
-
-    // certificateDownloadTrigger(courseState: number, batchId: string) {
-    //   // if (courseState === this.courseCompleteState && this.content && this.configSvc.userProfile) {
-    //   let body = {
-    //     request: {
-    //       courseId: this.content.identifier,
-    //       batchId: batchId,
-    //       userIds: [
-    //         this.configSvc.userProfile.userId
-    //       ]
-    //     }
-    //   }
-    //   // this.contentSvc.issueCert(body).subscribe(resp => {
-    //   //   if (resp.responseCode === 'OK') {
-    //   this.checkIfCertIsReady(this.configSvc.userProfile.userId)
-
-    //   //   }
-    //   // })
-    //   // }
-    // }
-
-    downloadCert(certidArr: any) {
-        if (certidArr.length > 0) {
-            const certId = certidArr[0].identifier
-
-            this.contentSvc.downloadCert(certId).subscribe(response => {
-                this.certData = response.result.printUri
-                // var win = window.open();
-                // win.document.write('<iframe src="' + url  +
-                // '" frameborder="0" style="border:0; top:0px;
-                // left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
-                // // const doc = new jsPDF();
-
-                // var str = doc.output(response.result.printUri);
-
-                // var iframe = "<iframe width='100%' height='100%' src='" + str + "'></iframe>"
-                // var x = window.open();
-                // x.document.open();
-                // x.document.write(iframe);
-                // x.document.close();
-            })
-        }
-    }
-
-    openCertificateDialog() {
-        const cet = this.certData
-        this.dialog.open(CertificateDialogComponent, {
-            // height: '400px',
-            width: '1300px',
-            data: { cet },
-            // panelClass: 'custom-dialog-container',
-        })
-    }
-
-    public autoBatchAssign() {
-        if (this.content && this.content.identifier) {
-            this.contentSvc.autoAssignBatchApi(this.content.identifier).subscribe(
-                (data: NsContent.IBatchListResponse) => {
-                    this.batchData = {
-                        content: data.content,
-                        enrolled: true,
-                    }
-                    if (this.getBatchId()) {
-                        // this.createCertTemplate(this.getBatchId(), this.content.identifier)
-
-                        this.router.navigate(
-                            [],
-                            {
-                                relativeTo: this.route,
-                                queryParams: { batchId: this.getBatchId() },
-                                queryParamsHandling: 'merge',
-                            })
-                    }
-                }
-            )
-        }
-    }
-
-    // createCertTemplate(batchId: string, courseId: string) {
-    //   let body = {
-    //     "request": {
-    //       "batch": {
-    //         "batchId": batchId,
-    //         "courseId": courseId,
-    //         "template": {
-    //           "template": "https://igot.blob.core.windows.net/content/content/
-    // do_113415159382810624195/artifact/do_113415159382810624195_1637592756199_certificate-shilpa-jain-with-text-2.svg",
-    //           "identifier": "do_113415159382810624195",
-    //           "previewUrl": "https://igot.blob.core.windows.net/content/
-    // content/do_113415159382810624195/artifact/do_113415159382810624195
-    // _1637592756199_certificate-shilpa-jain-with-text-2.svg",            "criteria": {
-    //             "enrollment": {
-    //               "status": 2
-    //             }
-    //           },
-    //           "name": "Completion Certificate",
-    //           "issuer": {
-    //             "name": "in",
-    //             "url": "https://diksha.gov.in/gj/"
-    //           },
-    //           "signatoryList": [
-    //             {
-    //               "image": "https://diksha.gov.in/gj/header-logo.png",
-    //               "name": "Govt Of India",
-    //               "id": "in",
-    //               "designation": "Home Minister"
-    //             }
-    //           ]
-    //         }
-    //       }
-    //     }
-
-    //   }
-    //   this.contentSvc.addCertTemplate(body).subscribe(resp => {
-    //     console.log(resp)
-    //   })
-    // }
-
-    // checkIfCertIsReady(userId: string | undefined) {
-    //   this.userSvc.fetchUserBatchList(userId).subscribe(
-    //     (courses: NsContent.ICourse[]) => {
-    //       let enrolledCourse: NsContent.ICourse | undefined
-    //       if (this.content && this.content.identifier && !this.forPreview) {
-    //         if (courses && courses.length) {
-    //           enrolledCourse = courses.find(course => {
-    //             const identifier = this.content && this.content.identifier || ''
-    //             if (course.courseId !== identifier) {
-    //               return undefined
-    //             }
-    //             return course
-    //           })
-    //         }
-    //         // If current course is present in the list of user enrolled course
-    //         if (enrolledCourse && enrolledCourse.batchId) {
-    //           this.downloadCert(enrolledCourse.issuedCertificates)
-    //         }
-    //       }
-    //     },
-    //     (error: any) => {
-    //       this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
-    //     },
-    //   )
-    // }
-
-    public fetchBatchDetails() {
-        if (this.content && this.content.identifier) {
-            const req = {
-                request: {
-                    filters: {
-                        courseId: this.content.identifier,
-                        status: ['0', '1', '2'],
-                        // createdBy: 'fca2925f-1eee-4654-9177-fece3fd6afc9',
-                    },
-                    sort_by: { createdDate: 'desc' },
-                },
-            }
-            this.contentSvc.fetchCourseBatches(req).subscribe(
-                (data: NsContent.IBatchListResponse) => {
-                    this.batchData = data
-                    this.batchData.enrolled = false
-                    this.tocSvc.setBatchData(this.batchData)
-                    if (this.getBatchId()) {
-                        this.router.navigate(
-                            [],
-                            {
-                                relativeTo: this.route,
-                                // queryParams: { batchId: this.getBatchId() },
-                                queryParamsHandling: 'merge',
-                            })
-                    }
-                },
-                (error: any) => {
-                    this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
-                },
-            )
-        }
-    }
-    // @HostListener('window:scroll', [])
-    // onWindowScroll() {
-    //   if ((window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop) > this.showScrollHeight) {
-    //     this.showScroll = true
-    //   } else if (this.showScroll && (window.pageYOffset || document.documentElement.scrollTop
-    //     || document.body.scrollTop) < this.hideScrollHeight) {
-    //     this.showScroll = false
-    //   }
-    // }
 
     scrollToTop() {
         (function smoothscroll() {
@@ -871,31 +667,6 @@ export class PublicTocComponent implements OnInit, OnDestroy, AfterViewChecked, 
             }
         }
         return 'star_border'
-    }
-
-    private checkRegistrationStatus() {
-        const source = (this.content && this.content.sourceShortName) || ''
-        if (
-            !this.forPreview &&
-            !this.isRegistrationSupported &&
-            this.checkRegistrationSources.has(source)
-        ) {
-            this.contentSvc
-                .getRegistrationStatus(source)
-                .then(res => {
-                    if (res.hasAccess) {
-                        this.actionBtnStatus = 'grant'
-                    } else {
-                        this.actionBtnStatus = 'reject'
-                        if (res.registrationUrl && this.content) {
-                            this.content.registrationUrl = res.registrationUrl
-                        }
-                    }
-                })
-                .catch(_err => { })
-        } else {
-            this.actionBtnStatus = 'grant'
-        }
     }
 
     generateQuery(type: 'RESUME' | 'START_OVER' | 'START'): { [key: string]: string } {

@@ -118,7 +118,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       this.collectionType = params.get('collectionType') || 'course'
       const primaryCategory = params.get('primaryCategory')
       this.viewMode = params.get('viewMode') || 'START'
-      this.forPreview = !!params.get('preview')
+      this.forPreview = params.get('preview') === 'true' ? true : false
       try {
         this.batchId = params.get('batchId')
       } catch {
@@ -141,7 +141,17 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
           this.isErrorOccurred = true
         }
         if (this.collection) {
-          this.queue = this.utilitySvc.getLeafNodes(this.collection, [])
+debugger
+          if (this.forPreview) {
+            const localQueue = this.utilitySvc.getLeafNodes(this.collection, [])
+            this.queue = _.compact(_.map(localQueue, q => {
+              if (NsContent.PUBLIC_SUPPORTED_CONTENT_TYPES.includes(q.mimeType)) {
+                return q
+              } return null
+            }))
+          } else {
+            this.queue = this.utilitySvc.getLeafNodes(this.collection, [])
+          }
         }
       }
       if (this.resourceId) {

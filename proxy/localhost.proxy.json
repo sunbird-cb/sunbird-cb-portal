@@ -8,7 +8,7 @@
       "/apis": "/apis"
     },
     "headers": {
-      "Cookie": "connect.sid=s:YdScl8dwr4zHql3Y-A5cEM-thJ6J0DWr.oeXfRX4ILouCK5dNmT6r6WLj97CdYunQBSgZtVY07Po"
+      "Cookie": "connect.sid=s:K0rwUuBEfNqLznePGRrOBN0m6OkZCOO2.bbwtlwf7hKSLWYL+5Yh+VkDT920BhAKQUWXMVNap6M0"
     }
   },
   "/api/*": {
