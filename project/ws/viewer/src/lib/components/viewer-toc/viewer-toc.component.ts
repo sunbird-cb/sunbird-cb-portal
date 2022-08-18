@@ -141,7 +141,6 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
           this.isErrorOccurred = true
         }
         if (this.collection) {
-debugger
           if (this.forPreview) {
             const localQueue = this.utilitySvc.getLeafNodes(this.collection, [])
             this.queue = _.compact(_.map(localQueue, q => {

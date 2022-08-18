@@ -94,7 +94,6 @@ export class RootComponent implements OnInit, AfterViewInit {
     private utilitySvc: UtilityService,
     // private dialogRef: MatDialogRef<any>,
   ) {
-    debugger
     if (window.location.pathname.includes('/public/home')
       || window.location.pathname.includes('/public/toc/')
       || window.location.pathname.includes('/viewer/')) {
@@ -176,7 +175,6 @@ export class RootComponent implements OnInit, AfterViewInit {
     this.skipper.nativeElement.focus()
   }
   ngOnInit() {
-    debugger
     if (window.location.pathname.includes('/public/home')) {
       this.customHeight = true
     }
@@ -298,9 +296,9 @@ export class RootComponent implements OnInit, AfterViewInit {
   }
   get navBarRequired(): boolean {
     return this.isNavBarRequired
-  } 
+  }
   get isShowNavbar(): boolean {
-    return this.showNavbar 
+    return this.showNavbar
   }
   get isCustomHeight(): boolean {
     if (window.location.pathname.includes('/public/home')) {

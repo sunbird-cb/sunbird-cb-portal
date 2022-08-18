@@ -66,7 +66,6 @@ export class ViewerDataService {
     this.changedSubject.next()
   }
   updateNextPrevResource(isValid = true, prev: IViewerTocCard | null = null, next: IViewerTocCard | null = null) {
-    debugger
     this.tocChangeSubject.next(
       {
         tocAvailable: isValid,
