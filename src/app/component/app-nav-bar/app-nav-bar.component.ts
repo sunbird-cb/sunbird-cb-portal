@@ -180,6 +180,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     return this.isPublicHomePage
   }
   get fullMenuDispaly(): boolean {
+    this.isPlayerPage = window.location.href.includes('/viewer/')
     return !(this.isPlayerPage || this.stillOnHomePage)
   }
   get sShowAppNavBar(): boolean {

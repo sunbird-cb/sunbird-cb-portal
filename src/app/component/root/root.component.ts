@@ -215,11 +215,14 @@ export class RootComponent implements OnInit, AfterViewInit {
         this.currentUrl = event.url
         if (this.currentUrl.includes('/public/home')) {
           this.customHeight = true
+        } else {
+          this.customHeight = false
         }
         if (
           !!this.currentUrl.startsWith('/public/logout')
           || !!this.currentUrl.startsWith('/public/signup')
           || !!this.currentUrl.startsWith('/public/welcome')
+          || !!this.currentUrl.startsWith('/viewer/')
         ) {
           this.showFooter = false
           this.showNavbar = false
@@ -290,6 +293,18 @@ export class RootComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.initAppUpdateCheck()
+  }
+  get navBarRequired(): boolean {
+    return this.isNavBarRequired
+  }
+  get isShowNavbar(): boolean {
+    return this.showNavbar
+  }
+  get isCustomHeight(): boolean {
+    if (window.location.pathname.includes('/public/home')) {
+      this.customHeight = true
+    }
+    return this.customHeight
   }
 
   getChildRouteData(snapshot: ActivatedRouteSnapshot, firstChild: ActivatedRouteSnapshot | null) {
