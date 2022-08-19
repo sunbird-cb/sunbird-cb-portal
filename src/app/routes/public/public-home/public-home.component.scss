@@ -346,7 +346,7 @@
     /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#373434', endColorstr='#ffffff', GradientType=0);
     /* IE6-9 */
-    min-height: 800px;
+    // min-height: 800px;
     // margin-top: 5.625rem;
     position: relative;
     /*  margin-top: -145px;
@@ -730,9 +730,9 @@
     }
   }
 
-  .player_box {
-    padding-bottom:32px
-  }
+  // .player_box {
+  //   padding-bottom:32px
+  // }
 
   ::ng-deep .app-footer {
     display: none !important;

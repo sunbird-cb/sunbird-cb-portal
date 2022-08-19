@@ -41,7 +41,7 @@ export class GeneralGuard implements CanActivate {
     return returnValue
   }
   private async shouldAllow<T>(
-    state: RouterStateSnapshot,
+    // state: RouterStateSnapshot,
     requiredFeatures: string[],
     requiredRoles: string[],
   ): Promise<T | UrlTree | boolean> {
