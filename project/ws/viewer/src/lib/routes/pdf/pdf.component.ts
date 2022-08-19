@@ -71,9 +71,18 @@ export class PdfComponent implements OnInit, OnDestroy {
           } else {
             this.widgetResolverPdfData.widgetData.collectionId = ''
           }
+          // this.widgetResolverPdfData.widgetData.identifier=''
           // tslint:disable-next-line
           this.widgetResolverPdfData.widgetData.pdfUrl = this.generateUrl(this.pdfData!.artifactUrl)
           this.widgetResolverPdfData.widgetData.disableTelemetry = true
+          if (this.pdfData) {
+            this.widgetResolverPdfData.widgetData.identifier = this.pdfData.identifier
+            this.widgetResolverPdfData.widgetData.mimeType = this.pdfData.mimeType
+            this.widgetResolverPdfData.widgetData.contentType = this.pdfData.contentType
+            this.widgetResolverPdfData.widgetData.primaryCategory = this.pdfData.primaryCategory
+
+            this.widgetResolverPdfData.widgetData.version = `${this.pdfData.version}${''}`
+          }
           this.isFetchingDataComplete = true
         })
     } else {
