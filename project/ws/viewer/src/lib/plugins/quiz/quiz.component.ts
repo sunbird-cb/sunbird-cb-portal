@@ -138,9 +138,9 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
   updateProgress(status: number) {
     // status = 1 indicates started
     // status = 2 indicates completed
-    if (this.forPreview) {
-      return
-    }
+    // if (this.forPreview) {
+    //   return
+    // }
     const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
       this.activatedRoute.snapshot.queryParams.collectionId : ''
     const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
@@ -464,9 +464,9 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   raiseTelemetry(action: string, optionId: string | null, event: string) {
-    if (this.forPreview) {
-      return
-    }
+    // if (this.forPreview) {
+    //   return
+    // }
     if (optionId) {
       this.events.raiseInteractTelemetry(
         {

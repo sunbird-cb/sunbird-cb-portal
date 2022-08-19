@@ -298,7 +298,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   raiseTelemetry(data1: any) {
-    if (this.forPreview) { return }
+    // if (this.forPreview) { return }
     let data: any
     if (this.htmlContent) {
       if (typeof data1 === 'string' || data1 instanceof String) {
