@@ -123,12 +123,13 @@ export class ViewerUtilService {
           ],
         },
       }
-    } else {
-      req = {}
-    }
-    this.http
+      this.http
       .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
       .subscribe(noop, noop)
+    } else {
+      req = {}
+      // do nothing
+    }
   }
 
   realTimeProgressUpdateQuiz(contentId: string, collectionId?: string, batchId?: string, status?: number) {
@@ -148,12 +149,14 @@ export class ViewerUtilService {
           ],
         },
       }
-    } else {
-      req = {}
-    }
-    this.http
+      this.http
       .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
       .subscribe(noop, noop)
+    } else {
+      req = {}
+      // do nothing
+    }
+    
   }
 
   getContent(contentId: string): Observable<NsContent.IContent> {
