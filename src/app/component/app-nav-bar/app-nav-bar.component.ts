@@ -59,7 +59,6 @@ export class AppNavBarComponent implements OnInit, OnChanges {
         this.bindUrl(event.url.replace('/app/competencies/', ''))
       }
     })
-
   }
 
   ngOnInit() {
