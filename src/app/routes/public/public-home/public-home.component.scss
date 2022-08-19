@@ -377,41 +377,41 @@
     position: relative;
   }
 
-  .servicesSection .mat-tab-group .mat-tab-labels {
-    display: inline-block;
-    justify-content: center;
-    border: 2px solid #f5f5f5 !important;
-    border-radius: 48px !important;
-    margin: 30px 0 0 0;
-    color: rgba(255, 255, 255, 0.7) !important;
-  }
+  // .servicesSection .mat-tab-group .mat-tab-labels {
+  //   display: inline-block;
+  //   justify-content: center;
+  //   border: 2px solid #f5f5f5 !important;
+  //   border-radius: 48px !important;
+  //   margin: 30px 0 0 0;
+  //   color: rgba(255, 255, 255, 0.7) !important;
+  // }
 
   //  /* Styles for tab labels */
-  .mat-tab-label {
-    background-color: transparent;
-    color: rgba(255, 255, 255, 0.7) !important;
-    border-radius: 48px;
-    padding: 12px 40px;
-    border: 1px solid transparent;
-    font-family: "Montserrat", sans-serif;
-    letter-spacing: 0.1px;
-    opacity: 1 !important;
-    font-size: 16px;
-    font-weight: 400;
+  // .mat-tab-label {
+  //   background-color: transparent;
+  //   color: rgba(255, 255, 255, 0.7) !important;
+  //   border-radius: 48px;
+  //   padding: 12px 40px;
+  //   border: 1px solid transparent;
+  //   font-family: "Montserrat", sans-serif;
+  //   letter-spacing: 0.1px;
+  //   opacity: 1 !important;
+  //   font-size: 16px;
+  //   font-weight: 400;
 
-    @include breakpoint-xs {
-      padding-left: 1rem !important;
-      padding-right: 1rem !important;
-      width: 93%;
-    }
-  }
+  //   @include breakpoint-xs {
+  //     padding-left: 1rem !important;
+  //     padding-right: 1rem !important;
+  //     width: 93%;
+  //   }
+  // }
 
   // /* Styles for the active tab label */
-  .mat-tab-label.mat-tab-label-active {
-    background-color: #f5f5f5 !important;
-    color: rgba(0, 0, 0, 0.9) !important;
-    border-bottom: 0;
-  }
+  // .mat-tab-label.mat-tab-label-active {
+  //   background-color: #f5f5f5 !important;
+  //   color: rgba(0, 0, 0, 0.9) !important;
+  //   border-bottom: 0;
+  // }
 
   .mat-tab-header {
     border-bottom: none !important;
@@ -421,41 +421,41 @@
     display: none;
   }
 
-  ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar,
-  .mat-tab-nav-bar.mat-primary .mat-ink-bar {
-    background-color: transparent !important; // add styles properties here
-    visibility: hidden !important;
-  }
+  // ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar,
+  // .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  //   background-color: transparent !important; // add styles properties here
+  //   visibility: hidden !important;
+  // }
 
-  .mat-ink-bar {
-    background-color: transparent !important;
-    visibility: hidden !important;
-  }
+  // .mat-ink-bar {
+  //   background-color: transparent !important;
+  //   visibility: hidden !important;
+  // }
 
-  .servicesSection .nav-pills .nav-link,
-  .mat-tab-label {
-    color: #ffffff;
-    background-color: transparent;
-    color: rgba(255, 255, 255, 0.7);
-    border-radius: 48px;
-    padding: 12px 40px;
-    border: 1px solid transparent;
-    font-family: "Montserrat", sans-serif;
-    letter-spacing: 0.1px;
-  }
+  // .servicesSection .nav-pills .nav-link,
+  // .mat-tab-label {
+  //   color: #ffffff;
+  //   background-color: transparent;
+  //   color: rgba(255, 255, 255, 0.7);
+  //   border-radius: 48px;
+  //   padding: 12px 40px;
+  //   border: 1px solid transparent;
+  //   font-family: "Montserrat", sans-serif;
+  //   letter-spacing: 0.1px;
+  // }
 
-  .servicesSection .nav-pills .nav-link.active,
-  .servicesSection .nav-pills .show>.nav-link {
-    color: #fff;
-    background-color: #f5f5f5;
-    color: rgba(0, 0, 0, 0.9);
-  }
+  // .servicesSection .nav-pills .nav-link.active,
+  // .servicesSection .nav-pills .show>.nav-link {
+  //   color: #fff;
+  //   background-color: #f5f5f5;
+  //   color: rgba(0, 0, 0, 0.9);
+  // }
 
-  .servicesSection .tab-content {
-    text-align: left;
-    position: relative;
-    z-index: 1;
-  }
+  // .servicesSection .tab-content {
+  //   text-align: left;
+  //   position: relative;
+  //   z-index: 1;
+  // }
 
   .servicesSection .dd-border1 {
     position: absolute;
