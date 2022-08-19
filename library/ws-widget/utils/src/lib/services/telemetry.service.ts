@@ -39,7 +39,8 @@ export class TelemetryService {
           // pid: navigator.userAgent,
           id: `${environment.name}.${this.telemetryConfig.pdata.id}`,
         },
-        uid: this.configSvc.userProfile && this.configSvc.userProfile.userId,
+        uid: (this.configSvc.userProfile && this.configSvc.userProfile.userId) ?
+              this.configSvc.userProfile.userId : '',
         // authtoken: this.authSvc.token,
         // tslint:disable-next-line: no-non-null-assertion
         channel: this.rootOrgId || this.telemetryConfig.channel,
