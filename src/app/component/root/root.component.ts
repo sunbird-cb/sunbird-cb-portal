@@ -301,7 +301,10 @@ export class RootComponent implements OnInit, AfterViewInit {
     return this.showNavbar
   }
   get isCustomHeight(): boolean {
-    if (window.location.pathname.includes('/public/home')) {
+    if (window.location.pathname.includes('/public/home') 
+    || window.location.pathname.includes('/public/faq')
+    || window.location.pathname.includes('/public/contact')
+    || window.location.pathname.includes('/public/signup')) {
       this.customHeight = true
     }
     return this.customHeight

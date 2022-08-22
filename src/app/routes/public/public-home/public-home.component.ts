@@ -30,7 +30,9 @@ export class PublicHomeComponent implements OnInit, OnDestroy {
     private activateRoute: ActivatedRoute,
     private domSanitizer: DomSanitizer,
   ) {
-    this.loadData()
+    setTimeout(() => {
+      this.loadData()
+    }, 2000);
   }
 
   loadData() {

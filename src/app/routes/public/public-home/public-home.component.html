@@ -92,7 +92,7 @@
     </div>
   </section>
 
-  <section *ngIf="data[0].widget" class="journeySection1">
+  <section *ngIf="data && data.length && data[0]?.widget" class="journeySection1">
     <div class="new-box">
       <ng-container [wsResolverWidget]="data[0].widget"></ng-container>
     </div>
