@@ -22,7 +22,7 @@
       </div>
     </div>
   </mat-toolbar>
-  <section class="main-section pb-20">
+  <section class="main-section">
     <div class="container container-balanced">
       <div class="items-center justify-between mainContent grid-cols-2 grid">
         <div class="content">
@@ -54,7 +54,7 @@
             <div class="listInfo" *ngFor="let content of learnNetworkSection">
               <div class="icon"><img src="{{content?.image}}" alt="icon"></div>
               <h1 class="my-6">{{content?.count}}</h1>
-              <p class="m-0">{{content?.title}}</p>
+              <p class="m-0 margin-remove-bottom">{{content?.title}}</p>
             </div>
           </div>
           <!-- <div class="grid-cols-4 grid recordBox">
@@ -102,12 +102,12 @@
     <div class="container container-balanced">
       <div class="row">
         <div class="servicesTab pb-12">
-          <div class="mat-headline text-white text-center mt-12 pt-12">How does the platform enable you to become the best version of
+          <div class="mat-headline text-white text-left mt-12 service_heading">How does the platform enable you to become the best version of
             yourself?</div>
 
             <div class="flex flex-1 flex-row player_box">
               <div class="flex flex-1 flex-col">
-                <h4 class="margin-bottom-l text-white">An experienced civil servant</h4>
+                <h4 class="margin-bottom-l text-white text-left">An experienced civil servant</h4>
                 <div class="exCivilVideo">
 
                   <video width="100%" height="100%" controls poster="/assets/instances/eagle/landing-img/video1.png">
@@ -117,7 +117,7 @@
               </div>
 
               <div class="flex flex-1 flex-col margin-left-m">
-                <h4 class="margin-bottom-l text-white">A newly recruited civil servant</h4>
+                <h4 class="margin-bottom-l text-white text-left">A newly recruited civil servant</h4>
                 <div class="exCivilVideo">
 
                   <video width="100%" height="auto" controls poster="/assets/instances/eagle/landing-img/video2.png">
@@ -147,7 +147,7 @@
     </div>
   </section>
 
-  <section class="solutionService pt-24 pb-24">
+  <section class="solutionService pt-12 pb-12">
     <div class="container container-balanced">
       <div class="row">
         <h1 class=" text-center">Solutioning space for all of Government</h1>
