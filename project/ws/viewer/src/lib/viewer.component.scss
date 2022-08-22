@@ -1,5 +1,5 @@
-@import 'ws-common';
-@import 'ws-mixins';
+@import "ws-common";
+@import "ws-mixins";
 
 .width-expand {
   flex: 1;
@@ -16,9 +16,14 @@
 }
 
 .margin-top-xs-2 {
-  margin-top: #{$size-xs / 2 };
+  margin-top: #{$size-xs / 2};
 }
-
+.cheight {
+  height: $size-xs;
+}
+.margin-0 {
+  margin-bottom: 0 !important;
+}
 .viewer-sidenav {
   width: 100%;
 
@@ -40,7 +45,7 @@
 }
 
 .test-white {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .full-height-width-iframe {
@@ -49,7 +54,7 @@
 }
 
 .sidenavContent::-webkit-scrollbar {
-  width: 5px !important
+  width: 5px !important;
 }
 
 .flex-row-c {
