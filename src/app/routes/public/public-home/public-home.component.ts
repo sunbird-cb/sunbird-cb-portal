@@ -32,7 +32,7 @@ export class PublicHomeComponent implements OnInit, OnDestroy {
   ) {
     setTimeout(() => {
       this.loadData()
-    }, 2000);
+    },         2000)
   }
 
   loadData() {

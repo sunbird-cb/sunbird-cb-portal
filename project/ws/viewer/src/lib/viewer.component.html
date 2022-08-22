@@ -65,6 +65,38 @@
       <section *ngIf="status === 'pending'">
         <mat-spinner></mat-spinner>
       </section>
+      <div class="flex flex-1 flex-column">
+        <div class="flex flex-1 flex-row-reverse">
+          <!-- <a *ngIf="show" role="button" (click)="show=false">
+            <mat-icon class="cursor-pointer ws-mat-default-text">visibility_off</mat-icon>
+          </a> -->
+          <a class="padding-right-s padding-top-xs" *ngIf="!show" role="button" (click)="show=true">
+            <mat-icon class="cursor-pointer ws-mat-primary-text">visibility</mat-icon>
+          </a>
+        </div>
+        <div class="flex flex-1 flex-column" *ngIf="show">
+          <span i18n class="flex flex-1 flex-center padding-m ws-mat-warn-text">
+            If you are a government official, Register or sign in so you can track your learningprogress and get
+            certified. </span>
+          <div class="flex flex-1 flex-row-c">
+            <div class="flex flex-1">
+              <a i18n (click)="show=false" mat-button
+                class="flex text-center margin-left-s flex-end ws-mat-accent-border ws-mat-primary-text">No,
+                continue viewing
+                <mat-icon>arrow_right_alt</mat-icon>
+              </a>
+            </div>
+            <div class="flex flex-1 flex-row-reverse">
+              <a i18n mat-button href="/protected/v8/resource"
+                class="flex text-center margin-right-s flex-end  ws-mat-default-text ws-mat-accent-border-active">
+                Sign in</a>
+              <span i18n class="flex ws-mat-default-text margin-left-s margin-right-s margin-top-xs-2">or</span>
+              <a mat-button i18n routerLink="/public/signup"
+                class="btn btn-primary flex text-center text-white-b margin-left-s flex-end">Register</a>
+            </div>
+          </div>
+        </div>
+      </div>
       <router-outlet (activate)="getContentData($event)"></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>

@@ -38,7 +38,7 @@
     max-width: $max-screen;
     flex: 1;
     display: block;
-    padding: 20px;
+    // padding: 20px;
     margin: 0 auto;
   }
 
@@ -136,7 +136,7 @@
     background: url("/assets/instances/eagle/landing-img/bg_Egg.jpg") no-repeat top center;
     min-height: 846px;
     width: 100%;
-    background-color: #fff;
+    background-color: #fef6f0;
     background-size: 100% 85%;
     box-sizing: border-box;
 
@@ -157,8 +157,10 @@
   }
 
   .main-section .mainContent {
-    padding-top: 6.9375rem;
-    padding-bottom: 5.25rem;
+    // padding-top: 6.9375rem;
+    // padding-bottom: 5.25rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
 
     @include breakpoint-xs {
       grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -176,6 +178,10 @@
         padding: 0;
       }
     }
+  }
+
+  .service_heading {
+    margin-bottom: 3rem!important;
   }
 
   // h1,
@@ -252,6 +258,9 @@
     right: 0;
     top: 50%;
     transform: translateY(-50%);
+  }
+  .analyticsRecord .listInfo:last-child:after {
+    display: none;
   }
 
   .analyticsRecord .listInfo.bg-none::after {
@@ -330,18 +339,18 @@
     background: #373434;
     border:1px solid #fff;
     /* Old browsers */
-    background: -moz-linear-gradient(top, #373434 0%, #373434 55%, #ffffff 55%, #ffffff 100%);
+    background: -moz-linear-gradient(top, #373434 0%, #373434 62%, #ffffff 38%, #ffffff 100%);
     /* FF3.6-15 */
     background: -webkit-linear-gradient(top,
         #373434 0%,
-        #373434 55%,
-        #ffffff 55%,
+        #373434 62%,
+        #ffffff 38%,
         #ffffff 100%);
     /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(to bottom,
         #373434 0%,
-        #373434 55%,
-        #ffffff 55%,
+        #373434 62%,
+        #ffffff 38%,
         #ffffff 100%);
     /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#373434', endColorstr='#ffffff', GradientType=0);
@@ -349,10 +358,6 @@
     // min-height: 800px;
     // margin-top: 5.625rem;
     position: relative;
-    /*  margin-top: -145px;
-      position: relative;
-      z-index: -1;
-      padding-top: 145px; */
 
     @include breakpoint-xs {
       padding-left: 1rem;
@@ -478,8 +483,8 @@
 
   .journeySection1 {
     background-color: #fef6f0;
-    padding-top: 80px;
-    padding-bottom: 48px
+    padding-top: 3rem;
+    padding-bottom: 2rem;
   }
 
   /* journey css section start here */
@@ -504,10 +509,12 @@
 
   .journeySection .journeyContent {
     background: #aee6fe url("/assets/instances/eagle/landing-img/learningBg.svg") no-repeat center top;
-    height: 258px;
+    // height: 258px;
     width: 100%;
     border-radius: 1rem;
     text-align: center;
+    padding: 3rem 0;
+    box-sizing: border-box;
 
     @include breakpoint-xs {
       padding: 0 0.5rem !important;
@@ -544,16 +551,17 @@
 
   .solutionService .servicesItem {
     background-color: #373434;
-    min-height: 352px;
+    height: 275px;
     display: flex;
     align-items: center;
     flex-direction: column;
-    /* 	justify-content: center; */
     text-align: center;
     padding: 30px;
     box-sizing: border-box;
-    // margin-top:1rem ;
     color: #ffffff;
+    border-radius: 8px 8px;
+    overflow: hidden;
+    background-size: cover!important;
   }
 
   .solutionService .servicesItem .icon {
@@ -565,7 +573,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 30px;
+    margin-top: 20px;
   }
 
   .solutionService .learning {
@@ -595,8 +603,8 @@
   .iGotWalkthrough {
     background-color: #fef6f0;
     // min-height: 800px;
-    padding-top: 80px;
-    padding-bottom: 48px;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
 
     @include breakpoint-xs {
       padding-left: 1rem !important;
@@ -637,9 +645,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 258px;
-    padding: 30px;
+    // min-height: 258px;
+    // padding: 30px;
     flex-direction: column;
+    padding: 3rem 0;
+    box-sizing: border-box;
   }
 
   /* footer section css start here */
@@ -685,8 +695,8 @@
 
   @media (max-width: 767.98px) {
     .main-section .mainContent {
-      padding-top: 5rem;
-      padding-bottom: 3rem;
+      // padding-top: 5rem;
+      // padding-bottom: 3rem;
     }
 
     h1,
@@ -725,6 +735,9 @@
     display: flex;
     margin:auto;
     width: 100%;
+    height: 350px;
+    border-radius: 8px 8px;
+    overflow: hidden;
     video {
       object-fit: cover;
     }
