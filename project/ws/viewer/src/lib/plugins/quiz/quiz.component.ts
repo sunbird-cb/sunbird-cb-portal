@@ -464,9 +464,9 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   raiseTelemetry(action: string, optionId: string | null, event: string) {
-    if (this.forPreview) {
-      return
-    }
+    // if (this.forPreview) {
+    //   return
+    // }
     if (optionId) {
       this.events.raiseInteractTelemetry(
         {

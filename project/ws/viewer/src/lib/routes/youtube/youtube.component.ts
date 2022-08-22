@@ -68,7 +68,9 @@ export class YoutubeComponent implements OnInit, OnDestroy {
           }
         }
         if (this.forPreview) {
-          this.widgetResolverYoutubeData.widgetData.disableTelemetry = true
+          // this.widgetResolverYoutubeData.widgetData.disableTelemetry = true
+          // TODO: for public couese access forPreview is set to true, but we need telemetry too
+          this.widgetResolverYoutubeData.widgetData.disableTelemetry = false
         }
         this.widgetResolverYoutubeData.widgetData.url = this.youtubeData
           ? this.youtubeData.artifactUrl

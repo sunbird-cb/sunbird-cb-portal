@@ -199,6 +199,8 @@ export namespace NsInstanceConfig {
     endpoint: string
     apislug: string
     sid: string
+    publicEndpoint: string
+    protectedEndpoint: string
   }
 }
 

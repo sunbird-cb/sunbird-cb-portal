@@ -118,9 +118,9 @@ export class ResourceCollectionComponent implements OnInit, OnDestroy {
   }
 
   raiseEvent(state: WsEvents.EnumTelemetrySubType, data: NsContent.IContent) {
-    if (this.forPreview) {
-      return
-    }
+    // if (this.forPreview) {
+    //   return
+    // }
     const event = {
       eventType: WsEvents.WsEventType.Telemetry,
       eventLogLevel: WsEvents.WsEventLogLevel.Info,
