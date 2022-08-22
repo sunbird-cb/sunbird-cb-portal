@@ -326,10 +326,14 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
 
         // to get the org details from either ministry/state, or department or organisation which ever user has filled
         let hierarchyObj
+        let ministryObj
+        let isSecondLevel = false
         let req: any
         if (this.registrationForm.value.ministry) {
+          ministryObj = this.registrationForm.value.ministry
           hierarchyObj = this.registrationForm.value.ministry
           if (this.registrationForm.value.department) {
+            isSecondLevel = true
             hierarchyObj = this.registrationForm.value.department
             if (this.registrationForm.value.organisation) {
               hierarchyObj = this.registrationForm.value.organisation
@@ -351,7 +355,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
             organisationType: hierarchyObj.sborgtype || '',
             organisationSubType: hierarchyObj.sbsuborgtype || '',
             mapId: hierarchyObj.mapid || '',
-            sbRootOrgId: hierarchyObj.sbrootorgid,
+            // If 1st level i.e, state/ministry then the ministry/state objects sbrootorgid will be set
+            // IF 2nd or 3rd level i.e, org or department is selected then parent ministry/state sborgid will be set
+            sbRootOrgId: (isSecondLevel ? ministryObj.sborgid : ministryObj.sbrootorgid),
             sbOrgId: hierarchyObj.sborgid,
           }
         }
