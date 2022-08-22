@@ -8,6 +8,7 @@ import { EventService } from './event.service'
 import { LoggerService } from './logger.service'
 import { NsContent } from './widget-content.model'
 import { environment } from 'src/environments/environment'
+import { Router, NavigationStart } from '@angular/router'
 
 declare var $t: any
 
@@ -19,6 +20,7 @@ export class TelemetryService {
   telemetryConfig: NsInstanceConfig.ITelemetryConfig | null = null
   pData: any = null
   contextCdata = []
+  isAnonymousTelemetry = true
 
   externalApps: any = {
     RBCP: 'rbcp-web-ui',
@@ -28,8 +30,49 @@ export class TelemetryService {
     private eventsSvc: EventService,
     // private authSvc: AuthKeycloakService,
     private logger: LoggerService,
+    private router: Router,
   ) {
     const instanceConfig = this.configSvc.instanceConfig
+    this.navigationStart()
+    this.initializeConfig(instanceConfig)
+    this.addPlayerListener()
+    this.addCustomEventListener()
+    this.addInteractListener()
+    this.addFeedbackListener()
+    this.addTimeSpentListener()
+    this.addSearchListener()
+    this.addHearbeatListener()
+    this.addCustomImpressionListener()
+  }
+
+  private navigationStart() {
+    this.router.events.subscribe((event: any) => {
+      if (event instanceof NavigationStart) {
+        if (event.url.includes('/public/') || event.url.includes('&preview=true')) {
+          this.isAnonymousTelemetry = true
+          this.updateTelemetryConfig()
+          const instanceConfig = this.configSvc.instanceConfig
+          this.initializeConfig(instanceConfig)
+        }
+      }
+    })
+  }
+
+  get isAnonymousTelemetryRequired(): boolean {
+    return this.isAnonymousTelemetry
+  }
+
+  private updateTelemetryConfig() {
+    if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.telemetryConfig) {
+      if (this.isAnonymousTelemetryRequired) {
+        this.configSvc.instanceConfig.telemetryConfig.endpoint = this.configSvc.instanceConfig.telemetryConfig.publicEndpoint
+      } else {
+        this.configSvc.instanceConfig.telemetryConfig.endpoint = this.configSvc.instanceConfig.telemetryConfig.protectedEndpoint
+      }
+    }
+  }
+
+  private initializeConfig(instanceConfig: NsInstanceConfig.IConfig | null) {
     if (instanceConfig) {
       this.telemetryConfig = instanceConfig.telemetryConfig
       this.telemetryConfig = {
@@ -47,14 +90,6 @@ export class TelemetryService {
         sid: this.getTelemetrySessionId,
       }
       this.pData = this.telemetryConfig.pdata
-      this.addPlayerListener()
-      this.addCustomEventListener()
-      this.addInteractListener()
-      this.addFeedbackListener()
-      this.addTimeSpentListener()
-      this.addSearchListener()
-      this.addHearbeatListener()
-      this.addCustomImpressionListener()
     }
   }
 
