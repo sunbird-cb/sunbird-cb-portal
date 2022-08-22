@@ -26,6 +26,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   fullScreenContainer: HTMLElement | null = null
   content: NsContent.IContent | null = null
   errorType = ErrorType
+  show = true
   private isLtMedium$ = this.valueSvc.isLtMedium$
   sideNavBarOpened = false
   mode: 'over' | 'side' = 'side'
