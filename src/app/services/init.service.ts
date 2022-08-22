@@ -169,6 +169,8 @@ export class InitService {
     } catch (e) {
       this.settingsSvc.initializePrefChanges(environment.production)
       this.updateNavConfig()
+      this.isAnonymousTelemetry = true
+      this.updateTelemetryConfig()
       this.logger.info('Not Authenticated')
       // window.location.reload() // can do this
       return false
