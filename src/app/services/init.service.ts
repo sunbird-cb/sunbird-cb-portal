@@ -134,7 +134,7 @@ export class InitService {
   }
 
   get isAnonymousTelemetryRequired(): boolean {
-    this.isAnonymousTelemetry = window.location.pathname === '/' || window.location.href.includes('/public/')
+    this.isAnonymousTelemetry = window.location.href.includes('/public/')
       || window.location.href.includes('&preview=true')
     return this.isAnonymousTelemetry
   }
@@ -161,7 +161,7 @@ export class InitService {
     // Invalid User
     try {
       const path = window.location.pathname
-      const isPublic = window.location.pathname === '/' || window.location.href.includes('/public/')
+      const isPublic = window.location.href.includes('/public/')
         || window.location.href.includes('&preview=true')
       this.setTelemetrySessionId()
       if (!path.startsWith('/public') && !isPublic) {
