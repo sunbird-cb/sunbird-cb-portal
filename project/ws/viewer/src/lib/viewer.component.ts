@@ -146,4 +146,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.sideNavBarOpened = false
     }
   }
+  get isPreview(): boolean {
+    return this.forPreview
+  }
 }

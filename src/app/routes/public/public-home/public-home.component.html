@@ -47,9 +47,14 @@
     </div>
   </section>
 
-  <section *ngIf="data && data.length && data[0]?.widget" class="journeySection1">
+  <section *ngIf="loading && data && data.length && data[0]?.widget" class="journeySection1">
     <div class="new-box">
       <ng-container [wsResolverWidget]="data[0].widget"></ng-container>
+    </div>
+  </section>
+  <section>
+    <div *ngIf="!loading" class="text-center my-2">
+      <mat-spinner class="inline-block"></mat-spinner>
     </div>
   </section>
 

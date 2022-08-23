@@ -85,8 +85,8 @@ export class GeneralGuard implements CanActivate {
     // If invalid user
     if (
       this.configSvc.userProfile === null &&
-      this.configSvc.instanceConfig &&
-      !Boolean(this.configSvc.instanceConfig.disablePidCheck)
+      this.configSvc.instanceConfig
+      // !Boolean(this.configSvc.instanceConfig.disablePidCheck)
     ) {
       return this.router.parseUrl('/public/home')
     }

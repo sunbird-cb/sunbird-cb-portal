@@ -24,6 +24,7 @@ export class PublicHomeComponent implements OnInit, OnDestroy {
   private subscriptionContact: Subscription | null = null
   learnNetworkSection: any = []
   data!: any
+  loading = false
 
   constructor(
     private configSvc: ConfigurationsService,
@@ -32,13 +33,13 @@ export class PublicHomeComponent implements OnInit, OnDestroy {
   ) {
     setTimeout(() => {
       this.loadData()
-    },         2000)
+    }, 5000)
   }
 
   loadData() {
     this.data = _.get(this.activateRoute.snapshot, 'data.pageData.data.featuredCourses')
     this.learnNetworkSection = _.get(this.activateRoute.snapshot, 'data.pageData.data.learnNetwork')
-
+    this.loading = true
   }
   ngOnInit() {
     if (this.configSvc.instanceConfig) {
