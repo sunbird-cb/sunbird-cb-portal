@@ -147,6 +147,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
   }
   get isPreview(): boolean {
+    this.forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
     return this.forPreview
   }
 }
