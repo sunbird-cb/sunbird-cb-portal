@@ -86,7 +86,7 @@ export class GeneralGuard implements CanActivate {
     if (
       this.configSvc.userProfile === null &&
       this.configSvc.instanceConfig &&
-      window.location.pathname === '/'
+      window.location.pathname.includes('/page/home')
       // !Boolean(this.configSvc.instanceConfig.disablePidCheck)
     ) {
       return this.router.parseUrl('/public/home')
