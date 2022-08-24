@@ -89,12 +89,7 @@ export class VideoComponent implements OnInit, OnDestroy {
         //   url = `/apis/authContent/${new URL(this.videoData.artifactUrl).pathname}`
         // } else {
         //   url = `/apis/authContent/${encodeURIComponent(this.videoData.artifactUrl)}`
-        // }
-        // tslint:disable-next-line
-        url = this.generateUrl(this.videoData!.artifactUrl)
-        this.widgetResolverVideoData.widgetData.url = this.videoData ? url : ''
-        this.widgetResolverVideoData.widgetData.disableTelemetry = true
-        this.isFetchingDataComplete = true
+        // }        
         // tslint:disable-next-line
         if (this.videoData && this.videoData!.subTitles) {
 
