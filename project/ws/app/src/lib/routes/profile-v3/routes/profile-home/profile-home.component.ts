@@ -193,7 +193,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
           ) {
             isAllowed = true
           }
-        } else if (s.key.indexOf('desiredTopics') !== -1) {
+        } else if (s.key.indexOf('systemTopics') !== -1) {
           if (this.stepService.currentStep.value.allowSkip
             || (this.configSvc.unMappedUser
               && this.configSvc.unMappedUser.profileDetails
