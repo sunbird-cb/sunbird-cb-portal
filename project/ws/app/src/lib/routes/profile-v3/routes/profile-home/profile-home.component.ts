@@ -209,7 +209,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
           ) {
             isAllowed = true
           }
-        } else if (s.key.indexOf('currentcompetencies') !== -1) {
+        } else if (s.key.indexOf('competencies') !== -1) {
           if (this.stepService.currentStep.value.allowSkip
             || (this.configSvc.unMappedUser
               && this.configSvc.unMappedUser.profileDetails
@@ -218,7 +218,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
           ) {
             isAllowed = true
           }
-        } else if (s.key.indexOf('desiredcompetencies') !== -1) {
+        } else if (s.key.indexOf('desiredCompetencies') !== -1) {
           if (this.stepService.currentStep.value.allowSkip
             || (this.configSvc.unMappedUser
               && this.configSvc.unMappedUser.profileDetails
