@@ -41,7 +41,8 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   @Input() content: NsContent.IContent | null = null
   @Input() initialrouteData: any
   routeSubscription: Subscription | null = null
-  @Input() forPreview = false
+  @Input() forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+
   @Input() resumeData: NsContent.IContinueLearningData | null = null
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   tocConfig: any = null
@@ -120,9 +121,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
       sortByControl: new FormControl(this.sortReviewValues[0]),
       searchKey: new FormControl(''),
     })
-    if (!this.forPreview) {
-      this.forPreview = window.location.href.includes('/author/')
-    }
+
     // if (this.route && this.route.parent) {
     //   this.routeSubscription = this.route.parent.data.subscribe((data: Data) => {
     //     this.initData(data)
@@ -498,7 +497,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
 
   fetchRatingSummary() {
     this.displayLoader = true
-    if (this.content && this.content.identifier && this.content.primaryCategory) {
+    if (!this.forPreview && this.content && this.content.identifier && this.content.primaryCategory) {
       this.ratingSvc.getRatingSummary(this.content.identifier, this.content.primaryCategory).subscribe(
         (res: any) => {
           this.displayLoader = false
@@ -568,7 +567,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
       breakDown: breakDownArray,
       latest50Reviews: breakDownArray,
       ratingsNumber: breakDownArray,
-      total_number_of_ratings:  _.get(this.ratingSummary, 'total_number_of_ratings') || 0,
+      total_number_of_ratings: _.get(this.ratingSummary, 'total_number_of_ratings') || 0,
       avgRating: 0,
     }
 
@@ -657,11 +656,12 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     this.reviewPage = 1
     this.disableLoadMore = false
     this.ratingLookup = []
-
-    if (sort === this.sortReviewValues[0]) {
-      this.fetchRatingSummary()
-    } else {
-      this.fetchRatingLookup()
+    if (!this.forPreview) {
+      if (sort === this.sortReviewValues[0]) {
+        this.fetchRatingSummary()
+      } else {
+        this.fetchRatingLookup()
+      }
     }
   }
 
@@ -685,6 +685,9 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   public tabClicked(tabEvent: MatTabChangeEvent) {
+    // if (this.forPreview) {
+    //   return
+    // }
     const data: WsEvents.ITelemetryTabData = {
       label: `${tabEvent.tab.textLabel}`,
       index: tabEvent.index,

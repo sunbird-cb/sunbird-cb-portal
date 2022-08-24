@@ -41,7 +41,7 @@ export class GeneralGuard implements CanActivate {
     return returnValue
   }
   private async shouldAllow<T>(
-    state: RouterStateSnapshot,
+    _state: RouterStateSnapshot,
     requiredFeatures: string[],
     requiredRoles: string[],
   ): Promise<T | UrlTree | boolean> {
@@ -86,7 +86,8 @@ export class GeneralGuard implements CanActivate {
     if (
       this.configSvc.userProfile === null &&
       this.configSvc.instanceConfig &&
-      !Boolean(this.configSvc.instanceConfig.disablePidCheck)
+      window.location.pathname.includes('/page/home')
+      // !Boolean(this.configSvc.instanceConfig.disablePidCheck)
     ) {
       return this.router.parseUrl('/public/home')
     }
@@ -94,14 +95,14 @@ export class GeneralGuard implements CanActivate {
      * Test IF User Tnc Is Accepted
      */
     if (!this.configSvc.hasAcceptedTnc) {
-      if (
-        state.url &&
-        !state.url.includes('/app/setup/') &&
-        !state.url.includes('/app/tnc') &&
-        !state.url.includes('/page/home')
-      ) {
-        this.configSvc.userUrl = state.url
-      }
+      // if (
+      //   state.url &&
+      //   !state.url.includes('/app/setup/') &&
+      //   !state.url.includes('/app/tnc') &&
+      //   !state.url.includes('/page/home')
+      // ) {
+      //   this.configSvc.userUrl = state.url
+      // }
       // if (
       //   this.configSvc.restrictedFeatures &&
       //   !this.configSvc.restrictedFeatures.has('firstTimeSetupV2')

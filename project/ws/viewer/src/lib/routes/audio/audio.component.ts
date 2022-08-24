@@ -25,7 +25,7 @@ export class AudioComponent implements OnInit, OnDestroy {
   isScreenSizeSmall = false
   isNotEmbed = true
   isFetchingDataComplete = false
-  forPreview = window.location.href.includes('/author/')
+  forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   audioData: NsContent.IContent | null = null
   widgetResolverAudioData: NsWidgetResolver.IRenderConfigWithTypedData<
     IWidgetsPlayerMediaData
@@ -54,10 +54,8 @@ export class AudioComponent implements OnInit, OnDestroy {
       !this.accessControlSvc.authoringConfig.newDesign
     ) {
       // to do make sure the data updates for two consecutive resource of same mimeType
-      this.viewerDataSubscription = this.viewerSvc
-        .getContent(this.activatedRoute.snapshot.paramMap.get('resourceId') || '')
-        .subscribe(data => {
-          this.audioData = data
+      this.viewerDataSubscription = this.activatedRoute.data.subscribe(data => {
+          this.audioData = data.content.data
           if (this.audioData) {
             this.formDiscussionForumWidget(this.audioData)
           }
@@ -73,7 +71,8 @@ export class AudioComponent implements OnInit, OnDestroy {
           // if (this.audioData) {
           //   this.widgetResolverAudioData.widgetData.url = this.audioData.artifactUrl
           // }
-          const url = this.generateUrl(this.audioData.artifactUrl)
+          // tslint:disable-next-line
+          const url = this.generateUrl(this.audioData!.artifactUrl)
           this.widgetResolverAudioData.widgetData.url = this.viewerSvc.getPublicUrl(url)
           this.widgetResolverAudioData.widgetData.disableTelemetry = true
           this.isFetchingDataComplete = true
@@ -125,7 +124,9 @@ export class AudioComponent implements OnInit, OnDestroy {
             }
           }
           if (this.forPreview) {
-            this.widgetResolverAudioData.widgetData.disableTelemetry = true
+            // this.widgetResolverAudioData.widgetData.disableTelemetry = true
+            // TODO: for public couese access forPreview is set to true, but we need telemetry too
+            this.widgetResolverAudioData.widgetData.disableTelemetry = false
           }
 
           this.widgetResolverAudioData.widgetData.mimeType = data.content.data.mimeType

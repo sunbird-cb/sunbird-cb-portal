@@ -134,9 +134,9 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
         this.log.error(event)
     }
     raiseEvent(state: WsEvents.EnumTelemetrySubType, data: NsContent.IContent) {
-        if (this.forPreview) {
-            return
-        }
+        // if (this.forPreview) {
+        //     return
+        // }
         const event = {
             eventType: WsEvents.WsEventType.Telemetry,
             eventLogLevel: WsEvents.WsEventLogLevel.Info,

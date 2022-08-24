@@ -123,12 +123,13 @@ export class ViewerUtilService {
           ],
         },
       }
-    } else {
-      req = {}
-    }
-    this.http
+      this.http
       .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
       .subscribe(noop, noop)
+    } else {
+      req = {}
+      // do nothing
+    }
   }
 
   realTimeProgressUpdateQuiz(contentId: string, collectionId?: string, batchId?: string, status?: number) {
@@ -148,19 +149,28 @@ export class ViewerUtilService {
           ],
         },
       }
-    } else {
-      req = {}
-    }
-    this.http
+      this.http
       .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
       .subscribe(noop, noop)
+    } else {
+      req = {}
+      // do nothing
+    }
+    
   }
 
   getContent(contentId: string): Observable<NsContent.IContent> {
+    const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+    let url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
+    if (!forPreview) {
+      url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
+    } else {
+      url = `/api/content/v1/read/${contentId}`
+    }
     return this.http.get<NsContent.IContent>(
       // tslint:disable-next-line:max-line-length
       // `/apis/authApi/action/content/hierarchy/${contentId}?rootOrg=${this.configservice.rootOrg || 'igot'}&org=${this.configservice.activeOrg || 'dopt'}`,
-      `apis/proxies/v8/action/content/v3/read/${contentId}`
+      url
     )
   }
 

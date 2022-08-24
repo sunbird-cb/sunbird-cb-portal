@@ -69,7 +69,7 @@ export class AppTocResolverService
     const contentId = route.paramMap.get('id')
     const primaryCategory = route.queryParamMap.get('primaryCategory') || ''
     if (contentId) {
-      const forPreview = window.location.href.includes('/author/')
+      const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
       return (forPreview
         ? this.contentSvc.fetchAuthoringContent(contentId)
         : this.contentSvc.fetchContent(contentId, 'detail', ADDITIONAL_FIELDS_IN_CONTENT, primaryCategory)

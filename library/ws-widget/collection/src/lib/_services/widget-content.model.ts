@@ -426,7 +426,7 @@ export namespace NsContent {
     // Added on UI Only
     CERTIFICATION = 'application/certification',
     PLAYLIST = 'application/playlist',
-    TEXT_WEB = 'text/x-url',
+    TEXT_WEB = 'text/x-url', // URL or Youtube
     QUESTION_SET = 'application/vnd.sunbird.questionset',
     QUESTION = 'application/vnd.sunbird.question',
     UNKNOWN = 'application/unknown',
@@ -482,5 +482,19 @@ export namespace NsContent {
     EMimeTypes.APPLICATION_JSON,
     EMimeTypes.WEB_MODULE_EXERCISE,
 
+  ]
+  export const PUBLIC_SUPPORTED_CONTENT_TYPES: EMimeTypes[] = [
+    // EMimeTypes.APPLICATION_JSON,
+    // EMimeTypes.FINAL_ASSESSMENT,
+    EMimeTypes.HTML,
+    EMimeTypes.HTML_TEXT,
+    EMimeTypes.ZIP,
+    EMimeTypes.ZIP2,
+    EMimeTypes.M4A,
+    EMimeTypes.MP3,
+    EMimeTypes.MP4,
+    EMimeTypes.PDF,
+    EMimeTypes.YOUTUBE,
+    EMimeTypes.TEXT_WEB,
   ]
 }
