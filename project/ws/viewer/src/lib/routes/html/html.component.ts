@@ -69,33 +69,91 @@ export class HtmlComponent implements OnInit, OnDestroy {
     ) {
       this.isPreviewMode = true
       // to do make sure the data updates for two consecutive resource of same mimeType
-      this.viewerDataSubscription = this.viewerSvc
-        .getContent(this.activatedRoute.snapshot.paramMap.get('resourceId') || '')
-        .subscribe(
-          async data => {
-            if (data && data.artifactUrl) {
-              data.artifactUrl = (data.artifactUrl.startsWith('https://')
-                ? data.artifactUrl
-                : data.artifactUrl.startsWith('http://')
-                  ? data.artifactUrl
-                  : `https://${data.artifactUrl}`).replace(/ /ig, '').replace(/%20/ig, '').replace(/\n/ig, '')
-              if (this.accessControlSvc.hasAccess(data as any, true)) {
-                if (data && data.artifactUrl.indexOf('content-store') >= 0) {
-                  await this.setS3Cookie(data.identifier)
-                  this.htmlData = data
-                } else {
-                  this.htmlData = data
+      // this.viewerDataSubscription = this.viewerSvc
+      //   .getContent(this.activatedRoute.snapshot.paramMap.get('resourceId') || '')
+      this.viewerDataSubscription = this.activatedRoute.data.subscribe(
+        async data => {
+          data.content.data.artifactUrl =
+            data.content.data.artifactUrl.indexOf('ScormCoursePlayer') > -1
+              ? `${data.content.data.artifactUrl.replace(/%20/g, '')}&Param1=${this.uuid}`
+              : data.content.data.artifactUrl.replace(/%20/g, '')
+          const tempHtmlData = data.content.data
+          if (tempHtmlData) {
+            data.artifactUrl = (data.content.data.artifactUrl.startsWith('https://')
+              ? data.content.data.artifactUrl
+              : data.content.data.artifactUrl.startsWith('http://')
+                ? data.content.data.artifactUrl
+                : `https://${data.content.data.artifactUrl}`).replace(/ /ig, '').replace(/%20/ig, '').replace(/\n/ig, '')
+            this.htmlData = tempHtmlData
+            if (!this.alreadyRaised && this.oldData) {
+              this.raiseEvent(WsEvents.EnumTelemetrySubType.Unloaded, this.oldData)
+              if (!this.hasFiredRealTimeProgress) {
+                // this.fireRealTimeProgress()
+                if (this.realTimeProgressTimer) {
+                  clearTimeout(this.realTimeProgressTimer)
                 }
-
               }
-              if (this.htmlData) {
-                this.formDiscussionForumWidget(this.htmlData)
-                if (this.discussionForumWidget) {
-                  this.discussionForumWidget.widgetData.isDisabled = true
-                }
-              }
+              this.subApp = false
             }
-          })
+            this.raiseRealTimeProgress()
+            if (this.htmlData) {
+              this.oldData = this.htmlData
+              this.alreadyRaised = true
+              this.raiseEvent(WsEvents.EnumTelemetrySubType.Loaded, this.htmlData)
+              this.responseSubscription = await fromEvent<MessageEvent>(window, 'message')
+                .pipe(
+                  filter(
+                    (event: MessageEvent) =>
+                      Boolean(event) &&
+                      Boolean(event.data) &&
+                      Boolean(event.source && typeof event.source.postMessage === 'function'),
+                  ),
+                )
+                .subscribe(async (event: MessageEvent) => {
+                  const contentWindow = event.source as Window
+                  if (event.data.requestId && this.htmlData) {
+                    switch (event.data.requestId) {
+                      case 'LOADED':
+                        await this.respondSvc.loadedRespond(
+                          contentWindow,
+                          event.data.subApplicationName,
+                          this.htmlData.identifier,
+                        )
+                        if (event.data.subApplicationName === 'RBCP') {
+                          this.subApp = true
+                        }
+                        break
+                      case 'CONTINUE_LEARNING':
+                        await this.respondSvc.continueLearningRespond(
+                          this.htmlData.identifier,
+                          event.data.data.continueLearning,
+                        )
+                        break
+                      case 'TELEMETRY':
+                        await this.respondSvc.telemetryEvents(event.data)
+                        break
+                      default:
+                        break
+                    }
+                  }
+                })
+            }
+            // if (this.accessControlSvc.hasAccess(data as any, true)) {
+            //   if (data && data.artifactUrl.indexOf('content-store') >= 0) {
+            //     // await this.setS3Cookie(data.identifier)
+            //     this.htmlData = data
+            //   } else {
+            //     this.htmlData = data
+            //   }
+
+          }
+          if (this.htmlData) {
+            this.formDiscussionForumWidget(this.htmlData)
+            if (this.discussionForumWidget) {
+              this.discussionForumWidget.widgetData.isDisabled = true
+            }
+          }
+        })
     } else {
       this.routeDataSubscription = this.activatedRoute.data.subscribe(
         async data => {
@@ -107,8 +165,8 @@ export class HtmlComponent implements OnInit, OnDestroy {
               ? `${data.content.data.artifactUrl.replace(/%20/g, '')}&Param1=${this.uuid}`
               : data.content.data.artifactUrl.replace(/%20/g, '')
           const tempHtmlData = data.content.data
-          if (this.alreadyRaised && this.oldData) {
-            this.raiseEvent(WsEvents.EnumTelemetrySubType.Unloaded, this.oldData)
+          if (this.alreadyRaised && tempHtmlData) {
+            this.raiseEvent(WsEvents.EnumTelemetrySubType.Unloaded, tempHtmlData)
             if (!this.hasFiredRealTimeProgress) {
               // this.fireRealTimeProgress()
               if (this.realTimeProgressTimer) {
@@ -313,10 +371,6 @@ export class HtmlComponent implements OnInit, OnDestroy {
   }
 
   private raiseRealTimeProgress() {
-    if (this.forPreview) {
-      return
-    }
-
     this.realTimeProgressRequest = {
       ...this.realTimeProgressRequest,
       current: ['1'],
@@ -330,13 +384,10 @@ export class HtmlComponent implements OnInit, OnDestroy {
       this.hasFiredRealTimeProgress = true
       this.fireRealTimeProgress()
       // tslint:disable-next-line: align
-    },  6 * 1000)
+    }, 6 * 1000)
   }
 
   private fireRealTimeProgress() {
-    if (this.forPreview) {
-      return
-    }
     if (this.htmlData) {
       if (
         this.htmlData.primaryCategory === NsContent.EPrimaryCategory.COURSE &&

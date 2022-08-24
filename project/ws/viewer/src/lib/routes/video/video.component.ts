@@ -55,48 +55,65 @@ export class VideoComponent implements OnInit, OnDestroy {
       this.activatedRoute.snapshot.queryParamMap.get('preview') &&
       !this.accessControlSvc.authoringConfig.newDesign
     ) {
-      this.viewerDataSubscription = this.viewerSvc
-        .getContent(this.activatedRoute.snapshot.paramMap.get('resourceId') || '')
-        .subscribe(data => {
-          this.videoData = data
-          if (this.videoData) {
-            this.formDiscussionForumWidget(this.videoData)
-          }
-          this.widgetResolverVideoData = this.initWidgetResolverVideoData(this.videoData)
-          if (this.activatedRoute.snapshot.queryParams.collectionId) {
-            this.widgetResolverVideoData.widgetData.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
-          } else {
-            this.widgetResolverVideoData.widgetData.collectionId = ''
-          }
-          let url = ''
-          // if (this.videoData.artifactUrl.indexOf('/content-store/') > -1) {
-          //   url = `/apis/authContent/${new URL(this.videoData.artifactUrl).pathname}`
-          // } else {
-          //   url = `/apis/authContent/${encodeURIComponent(this.videoData.artifactUrl)}`
-          // }
-          url = this.generateUrl(this.videoData.artifactUrl)
-          this.widgetResolverVideoData.widgetData.url = this.videoData ? url : ''
-          this.widgetResolverVideoData.widgetData.disableTelemetry = true
-          this.isFetchingDataComplete = true
+      this.viewerDataSubscription = this.activatedRoute.data.subscribe(data => {
+        this.videoData = data.content.data
+        if (this.videoData) {
+          this.formDiscussionForumWidget(this.videoData)
+        }
+        // tslint:disable-next-line
+        this.widgetResolverVideoData = this.initWidgetResolverVideoData(this.videoData!)
+        if (this.activatedRoute.snapshot.queryParams.collectionId) {
+          this.widgetResolverVideoData.widgetData.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
+        } else {
+          this.widgetResolverVideoData.widgetData.collectionId = ''
+        }
+        let url = ''
+        // if (this.videoData.artifactUrl.indexOf('/content-store/') > -1) {
+        //   url = `/apis/authContent/${new URL(this.videoData.artifactUrl).pathname}`
+        // } else {
+        //   url = `/apis/authContent/${encodeURIComponent(this.videoData.artifactUrl)}`
+        // }
+        // tslint:disable-next-line
+        url = this.generateUrl(this.videoData!.artifactUrl)
+        this.widgetResolverVideoData.widgetData.url = this.videoData ? url : ''
+        this.widgetResolverVideoData.widgetData.disableTelemetry = false
+        if (this.videoData) {
+          this.widgetResolverVideoData.widgetData.identifier = this.videoData.identifier
+          this.widgetResolverVideoData.widgetData.mimeType = this.videoData.mimeType
+          this.widgetResolverVideoData.widgetData.contentType = this.videoData.contentType
+          this.widgetResolverVideoData.widgetData.primaryCategory = this.videoData.primaryCategory
+          this.widgetResolverVideoData.widgetData.version = `${this.videoData.version}${''}`
+        }
+        this.isFetchingDataComplete = true
+        // if (this.videoData.artifactUrl.indexOf('/content-store/') > -1) {
+        //   url = `/apis/authContent/${new URL(this.videoData.artifactUrl).pathname}`
+        // } else {
+        //   url = `/apis/authContent/${encodeURIComponent(this.videoData.artifactUrl)}`
+        // }
+        // tslint:disable-next-line
+        url = this.generateUrl(this.videoData!.artifactUrl)
+        this.widgetResolverVideoData.widgetData.url = this.videoData ? url : ''
+        this.widgetResolverVideoData.widgetData.disableTelemetry = true
+        this.isFetchingDataComplete = true
+        // tslint:disable-next-line
+        if (this.videoData && this.videoData!.subTitles) {
 
-          if (this.videoData.subTitles) {
-
-            let subTitleUrl = ''
-            if (this.videoData.subTitles.length > 0 && this.videoData.subTitles[0]) {
-              if (this.videoData.subTitles[0].url.indexOf('/content-store/') > -1) {
-                subTitleUrl = `/apis/authContent/${new URL(this.videoData.subTitles[0].url).pathname}`
-              } else {
-                subTitleUrl = `/apis/authContent/${encodeURIComponent(this.videoData.subTitles[0].url)}`
-              }
+          let subTitleUrl = ''
+          if (this.videoData.subTitles.length > 0 && this.videoData.subTitles[0]) {
+            if (this.videoData.subTitles[0].url.indexOf('/content-store/') > -1) {
+              subTitleUrl = `/apis/authContent/${new URL(this.videoData.subTitles[0].url).pathname}`
+            } else {
+              subTitleUrl = `/apis/authContent/${encodeURIComponent(this.videoData.subTitles[0].url)}`
             }
-
-            this.widgetResolverVideoData.widgetData.subtitles = [{
-              srclang: '',
-              label: '',
-              url: subTitleUrl,
-            }]
           }
-        })
+
+          this.widgetResolverVideoData.widgetData.subtitles = [{
+            srclang: '',
+            label: '',
+            url: subTitleUrl,
+          }]
+        }
+      })
     } else {
       this.routeDataSubscription = this.activatedRoute.data.subscribe(
         async data => {
