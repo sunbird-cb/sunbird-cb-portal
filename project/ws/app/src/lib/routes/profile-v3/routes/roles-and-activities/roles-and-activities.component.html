@@ -22,25 +22,39 @@
 
     <div class="flex flex-wrap margin-top-l flex-column">
         <mat-card class="mat-card margin-bottom-s role-card flex flex-col">
-            <form [formGroup]="createRole" class="flex flex-1 flex-column margin-top-m">
+            <form #roleForm [formGroup]="createRole" class="flex flex-1 flex-column margin-top-m">
                 <div id="maindiv" class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-xl">
                     <div class="flex flex-row justify-between">
-                        <label for="roleName" class=" margin-remove-bottom form-label required flex mat-subheading-2"
-                            i18n="Role Name label|Label which explains the user to enter Role Name" i18n-aria-label
+                        <label for="roleName" class="margin-remove-bottom form-label required flex mat-subheading-2"
+                            i18n="Role Name label|Label which explains the user to enter Role Name" i18n-aria-label *ngIf="!editData"
                             aria-label="Role Name label">
                             Add role
                         </label>
-                        <a class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openInfoDialog()">
+                        <label for="roleName" class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                            i18n="Role Name label|Label which explains the user to enter Role Name" i18n-aria-label *ngIf="editData"
+                            aria-label="Role Name label">
+                            Edit role
+                        </label>
+                        <div>
+                        <button [disabled]="infoIcon" mat-icon-button class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openInfoDialog()">
                             <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon>
-                        What is a role?</a>
+                        </button>
+                        What is a role?
+                    </div>
 
                     </div>
 
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1" [ngClass]="{ 'mat-focused': textBoxActive}">
                         <input matInput autocomplete="off" id="roleName" #roleName name="roleName"
-                            placeholder="Type the role name" formControlName="roleName" class="flex flex-1" />
+                            placeholder="Type the role name" formControlName="roleName" class="flex flex-1"  (input)="change($event)"/>
+                            <mat-error [hidden]="false" i18n="Role Error|Explains Role is required"
+                            *ngIf="createRole?.controls['roleName'].errors?.required" i18n-aria-label
+                            aria-label="Role is mandatory">
+                           Role is mandatory
+                        </mat-error>
                     </mat-form-field>
                     <mat-hint class="text-right text_hint mat-body-2">Type the role name</mat-hint>
+
                 </div>
                 <div class="input-wrapper margin-top-xl flex flex-col">
                     <div class="flex flex-row justify-between">
@@ -49,47 +63,87 @@
                             aria-label="activity label">
                             Add activities you perform as part of this role
                         </label>
-                        <a class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openActivityDialog()">
-                            <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon> What is an activity?
-                        </a>
+                        <div>
+                        <button [disabled]="infoIcon" mat-icon-button class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openActivityDialog()">
+                            <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon>
+                        </button>
+                        What is an activity?
                     </div>
-                    <mat-form-field appearance="outline" class="margin-top-xs full-width flex flex-1" [ngClass]="{ 'mat-focused': textBoxActive}">
-                        <mat-chip-list #chipListHobies>
-                            <mat-chip *ngFor="let hob of selectedActivity" [selectable]="true" [removable]="true"
-                                (removed)="removeActivity(hob)">
-                                {{ hob }}
-                                <mat-icon matChipRemove>cancel</mat-icon>
-                            </mat-chip>
-                        </mat-chip-list>
-                        <input #act matInput i18n-placeholder="Type the activity and press enter" rows="5"
-                            placeholder="Type the activity and press enter" formControlName="activity" i18n-aria-label
-                            aria-label="Enter Hobbies" [matChipInputFor]="chipListHobies"
-                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                            (matChipInputTokenEnd)="addActivity($event)" class="w-full-imp" />
-                    </mat-form-field>
-                    <div class="flex flex-row justify-between">
+                    </div>
+
+
+                    <div class="main-input-div">
+                        <div class="left-input-div">
+                            <mat-form-field appearance="outline" class="margin-top-xs full-width flex flex-1">
+
+                                <input #activity matInput i18n-placeholder="Type the activity and press enter" rows="5"
+                                    placeholder="Type the activity and press enter" formControlName="activity" i18n-aria-label
+                                    aria-label="Enter activity" [matChipInputFor]="chipListHobies"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="addActivity($event)" class="w-full-imp" />
+
+
+
+                                    <mat-error [hidden]="false" i18n="activity Error|Explains activity is required"
+                                    *ngIf="createRole?.controls['activity'].errors?.required" i18n-aria-label
+                                    aria-label="activity is mandatory">
+                                   Activity is mandatory
+                                </mat-error>
+
+                            </mat-form-field>
+
+                        </div>
+                        <div class="right-input-div">
+                            <button mat-raised-button type="button" (click)="addActivity({
+                                input: activity, value: activity.value})" class="text-white btn-add-activity btn-responsive">
+                                <span class="text-white" i18n>Add activities</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                    <div class="flex flex-row justify-between margin-top-s">
                         <mat-hint class="text-left text_hint mat-body-2">Start adding the activities.</mat-hint>
-                        <mat-hint class="text-right text_hint mat-body-2">Type the activites and click on ‘Enter’ to add
-                        </mat-hint>
+                        <!-- <mat-hint class="text-right text_hint mat-body-2">Type the activites and click on ‘Enter’ to add
+                        </mat-hint> -->
                     </div>
+
+                    <mat-chip-list #chipListHobies>
+                        <mat-chip *ngFor="let hob of selectedActivity" [selectable]="true" [removable]="true"
+                            (removed)="removeActivity(hob)">
+                            {{ hob }}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                    </mat-chip-list>
 
                 </div>
                 <div class="flex flex-1 flex-row margin-top-l">
-                    <a mat-button type="submit" class="ws-mat-accent-background cursor-pointer margin-xs"
+                    <!-- <a mat-button type="submit" class="ws-mat-accent-background cursor-pointer margin-xs"
                         (click)="create()">
                         <span class="ws-mat-primary-default-text padding-s" i18n>
                             Add
                         </span>
-                    </a>
+                    </a> -->
+                    <button mat-raised-button type="button" (click)="create()" class="text-white btn-success btn-responsive"
+                    [disabled]="!createRole.value.roleName || selectedActivity.length === 0" *ngIf="!editData">
+                        <span class="text-white" i18n>Add role and activities</span>
+                    </button>
+                    <button mat-raised-button type="button" (click)="create()" class="text-white btn-success btn-responsive"
+                    [disabled]="!createRole.value.roleName || selectedActivity.length === 0 || (editRole.name === orgroleselected.name && disableUpdate)"  *ngIf="editData">
+                        <span class="text-white" i18n>Update  role and activities</span>
+                    </button>
+                    <div *ngIf="displayLoader" class="mt-5 pr-4 flex items-center justify-center">
+                        <mat-spinner [diameter]="30"></mat-spinner>
+                      </div>
                 </div>
             </form>
         </mat-card>
         <ng-container *ngIf="userRoles && userRoles.length>0">
             <div class="flex flex-1 flex-column margin-top-xs">
-                <ng-container *ngFor="let role of userRoles">
-                    <mat-card class="flex flex-1 flex-column margin-bottom-s">
+                <ng-container *ngFor="let role of userRoles; let i = index">
+                    <mat-card class="flex flex-1 flex-column margin-bottom-s" id="{{i}}">
                         <div class="flex flex-row">
-
                             <div class="flex flex-1">
                                 <p class="mat-subheading-1 margin-bottom-m">{{role.name}} </p>
                             </div>

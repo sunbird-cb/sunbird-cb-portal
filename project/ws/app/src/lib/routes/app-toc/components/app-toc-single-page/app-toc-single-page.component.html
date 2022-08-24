@@ -332,7 +332,7 @@
                     </div>
                 </div>
             </section>
-            <section id="rating" *ngIf="true">
+            <section id="rating" *ngIf="!forPreview">
                 <div class="fluid-width contacts-container mb-10">
                     <div class="fixed-width flex flex-col flex-wrap">
                         <h2 class="mat-toolbar contacts-head">Ratings and reviews</h2>
@@ -408,7 +408,7 @@
                         (scrolled)="loadMore()">
                             <ng-container *ngFor="let c of ratingReviews| 
                             pipeFilterV3:{ 'firstName': searchKey.value, 'lastName': searchKey.value, 'review': searchKey.value } : false; let i= index; let last = last">
-                                <ws-widget-card-rating-comment [review]="c"></ws-widget-card-rating-comment>
+                                <ws-widget-card-rating-comment [review]="c" [contentid]="content?.identifier"></ws-widget-card-rating-comment>
                             </ng-container>
                         </div>
                         <div *ngIf="displayLoader" class="mt-5 pr-4 flex items-center justify-center">
@@ -433,7 +433,7 @@
             </section>
         </ng-template>
     </mat-tab>
-    <mat-tab label="Discussion">
+    <mat-tab label="Discussion" *ngIf="!forPreview">
         <ng-template matTabContent>
             <section id="discussion-forum">
                 <div class="fixed-width toc-discussion-container">
@@ -443,7 +443,7 @@
             </section>
         </ng-template>
     </mat-tab>
-    <mat-tab label="Learners">
+    <mat-tab label="Learners" *ngIf="!forPreview">
         <ng-template matTabContent>
             <div *ngIf="cohortResults[cohortTypesEnum.ACTIVE_USERS]">
                 <h3 *ngIf="cohortResults[cohortTypesEnum.ACTIVE_USERS].hasError" class="mat-error text-center" i18n>

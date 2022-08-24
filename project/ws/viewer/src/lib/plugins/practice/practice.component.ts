@@ -274,7 +274,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         this.fetchingQuestionsStatus = 'done'
         this.overViewed('start')
       } else {
-        this.quizSvc.getQuestions(section.childNodes || []).subscribe(qqr => {
+        this.quizSvc.getQuestions(section.childNodes || [], section.identifier).subscribe(qqr => {
           this.fetchingQuestionsStatus = 'done'
           const question = _.get(qqr, 'result')
           const codes = _.compact(_.map(this.quizJson.questions, 'section') || [])
@@ -679,7 +679,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
                 options: _.map(sq.options, (_o: NSPractice.IOption, idx: number) => {
                   return {
                     index: (_o.optionId || idx).toString(),
-                    selectedAnswer: _o.response,
+                    selectedAnswer: _o.response || '',
                   } as NSPractice.IResponseOptions
                 }),
                 // selectedAnswer: _.join(_.map(sq.options, (_o: NSPractice.IOption) => {

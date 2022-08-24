@@ -25,7 +25,7 @@ export class AudioComponent implements OnInit, OnDestroy {
   isScreenSizeSmall = false
   isNotEmbed = true
   isFetchingDataComplete = false
-  forPreview = window.location.href.includes('/author/')
+  forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   audioData: NsContent.IContent | null = null
   widgetResolverAudioData: NsWidgetResolver.IRenderConfigWithTypedData<
     IWidgetsPlayerMediaData
@@ -131,7 +131,9 @@ export class AudioComponent implements OnInit, OnDestroy {
             }
           }
           if (this.forPreview) {
-            this.widgetResolverAudioData.widgetData.disableTelemetry = true
+            // this.widgetResolverAudioData.widgetData.disableTelemetry = true
+            // TODO: for public couese access forPreview is set to true, but we need telemetry too
+            this.widgetResolverAudioData.widgetData.disableTelemetry = false
           }
 
           this.widgetResolverAudioData.widgetData.mimeType = data.content.data.mimeType

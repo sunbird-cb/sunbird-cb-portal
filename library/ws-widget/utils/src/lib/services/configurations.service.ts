@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core'
+import { NSProfileDataV3 } from '@ws/app/src/lib/routes/profile-v3/models/profile-v3.models'
 import { BehaviorSubject, ReplaySubject } from 'rxjs'
 // import { environment } from '../../../../../../src/environments/environment'
 import { NsPage } from '../resolvers/page.model'
@@ -93,7 +94,7 @@ export class ConfigurationsService {
   //   '_',
   // )}`
   // setHostPath = (sitePath: string) => (sitePath).replace(':', '_')
-
+  welcomeTabs: NSProfileDataV3.IProfileTab | null = null
   updateGlobalProfile(state: boolean) {
     this.updateProfile.next(state)
   }

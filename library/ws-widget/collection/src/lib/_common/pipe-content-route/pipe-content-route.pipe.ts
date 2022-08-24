@@ -11,7 +11,7 @@ export class PipeContentRoutePipe implements PipeTransform {
     forPreview = false,
   ): { url: string; queryParams: { [key: string]: any } } {
     // commercial_begin
-    const location = forPreview ? '/author' : '/app'
+    const location = forPreview ? '/public' : '/app'
     // commercial_end
     if (content.contentType === 'Knowledge Board') {
       return {

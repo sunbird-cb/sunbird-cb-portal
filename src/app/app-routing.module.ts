@@ -24,6 +24,11 @@ import { PublicSignupComponent } from './routes/public/public-signup/public-sign
 import { PublicHomeComponent } from './routes/public/public-home/public-home.component'
 import { PublicContacthomeComponent } from './routes/public/public-contacthome/public-contacthome.component'
 import { PublicLoginWComponent } from './routes/public/public-login-w/public-login-w.component'
+import { PublicWelcomeComponent } from './routes/public/welcome/public-welcome.component'
+import { PublicLoginWGComponent } from './routes/public/public-login-wg/public-login-wg.component'
+import { WelcomeUserResolverService } from './services/welcome-user-resolver.service'
+import { PublicTocComponent } from './routes/public/public-toc/public-toc.component'
+import { AppPublicTocResolverService } from './routes/public/public-toc/app-public-toc-resolver.service'
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
 // Please declare routes in alphabetical order
@@ -35,6 +40,15 @@ const routes: Routes = [
     redirectTo: 'page/home',
     pathMatch: 'full',
     canActivate: [EmptyRouteGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'home',
+      pageId: 'page/home',
+      module: 'home',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
   },
   // {
   //   path: 'practice/behavioral',
@@ -715,9 +729,59 @@ const routes: Routes = [
   {
     path: 'public/home',
     component: PublicHomeComponent,
+    data: {
+      pageType: 'feature',
+      pageKey: 'public-home',
+      pageId: 'public/home',
+      module: 'home',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
+  {
+    path: 'public/toc/:id/overview',
+    component: PublicTocComponent,
+    data: {
+      pageType: 'feature',
+      pageKey: 'toc',
+      pageId: 'public/toc/:id',
+      module: 'Learn',
+    },
+    resolve: {
+      pageData: PageResolve,
+      content: AppPublicTocResolverService,
+    },
   },
   {
     path: 'public/sso',
+    component: PublicLoginWComponent,
+    data: {
+      module: 'sso',
+      pageId: 'public/sso',
+    },
+  },
+  {
+    path: 'public/google/sso',
+    component: PublicLoginWGComponent,
+    data: {
+      module: 'Google SSO',
+      pageId: 'public/google/sso',
+    },
+  },
+  {
+    path: 'public/welcome',
+    component: PublicWelcomeComponent,
+    data: {
+      module: 'Welcome',
+      pageId: 'public/welcome',
+    },
+    resolve: {
+      userData: WelcomeUserResolverService,
+    },
+  },
+  {
+    path: 'public/google/sso',
     component: PublicLoginWComponent,
   },
   {
@@ -792,6 +856,7 @@ const routes: Routes = [
       urlUpdateStrategy: 'eager',
       onSameUrlNavigation: 'reload',
       scrollOffset: [0, 80],
+      // enableTracing: true,
     }),
   ],
   exports: [RouterModule],

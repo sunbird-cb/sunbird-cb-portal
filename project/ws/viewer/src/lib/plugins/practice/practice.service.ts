@@ -211,9 +211,10 @@ export class PracticeService {
   getSection(sectionId: string): Observable<NSPractice.ISectionResponse> {
     return this.http.get<NSPractice.ISectionResponse>(`${API_END_POINTS.QUESTION_PAPER_SECTIONS}/${sectionId}`).pipe(retry(2))
   }
-  getQuestions(identifiers: string[]): Observable<{ count: Number, questions: any[] }> {
+  getQuestions(identifiers: string[], assessmentId: string): Observable<{ count: Number, questions: any[] }> {
     const data = {
       request: {
+        assessmentId,
         search: {
           identifier: identifiers,
         },

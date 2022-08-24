@@ -103,9 +103,9 @@
   //   display: none;
   // }
 
-  ::ng-deep .height-on-top {
-    padding-top: 0!important;
-  }
+  // ::ng-deep .height-on-top {
+  //   padding-top: 0!important;
+  // }
 
 
 
@@ -789,4 +789,39 @@
   .grecaptcha-badge {
     visibility: visible !important;
   }
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  padding-top: 18%;
+  margin-left: 10px;
+ 
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 300px;
+  background-color: #fff;
+  color: black;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  right: 0%;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  // left: 50%;
+  // margin-left: -60px;
+  border: 1px solid;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+.displayflex
+{
+  display:flex;
+  flex-direction: row;
 }

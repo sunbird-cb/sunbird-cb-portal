@@ -8,19 +8,26 @@
   margin-right: auto !important;
 }
 
-.faq_main_box{
+.height-on-top {
+  padding-top: 56px;
+}
+
+.faq_main_box {
   padding: 45px 8px 0 8px;
 
   @include breakpoint-xs {
     padding: 45px 0;
   }
 }
+
 h2.main_title_text {
-  font-weight: 600!important;
+  font-weight: 600 !important;
 }
+
 .full_width_box {
   width: 100%;
 }
+
 .flex-4 {
   flex: 4;
 }
@@ -34,6 +41,7 @@ h2.main_title_text {
     flex-direction: column;
   }
 }
+
 .flex-3 {
   flex: 3;
 }

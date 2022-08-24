@@ -22,7 +22,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
   private routeDataSubscription: Subscription | null = null
   private responseSubscription: Subscription | null = null
   private viewerDataSubscription: Subscription | null = null
-  forPreview = window.location.href.includes('/author/')
+  forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   isNotEmbed = true
   isFetchingDataComplete = false
   htmlData: NsContent.IContent | null = null
@@ -346,9 +346,9 @@ export class HtmlComponent implements OnInit, OnDestroy {
   }
 
   raiseEvent(state: WsEvents.EnumTelemetrySubType, data: NsContent.IContent) {
-    if (this.forPreview) {
-      return
-    }
+    // if (this.forPreview) {
+    //   return
+    // }
     const event = {
       eventType: WsEvents.WsEventType.Telemetry,
       eventLogLevel: WsEvents.WsEventLogLevel.Info,

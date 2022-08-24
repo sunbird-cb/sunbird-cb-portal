@@ -107,7 +107,7 @@
         </mat-card>
         <div class="text-center">
           <button class="margin-right-m" mat-raised-button color="primary"
-            *ngIf="!(viewState === 'answer' && quizJson?.isAssessment)" (click)="proceedToSubmit()"
+            *ngIf="!(viewState === 'answer' && quizJson?.isAssessment) && !forPreview" (click)="proceedToSubmit()"
             i18n="button quiz submit">
             Submit
           </button>

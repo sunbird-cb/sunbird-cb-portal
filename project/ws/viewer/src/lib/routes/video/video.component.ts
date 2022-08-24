@@ -23,7 +23,7 @@ export class VideoComponent implements OnInit, OnDestroy {
   private routeDataSubscription: Subscription | null = null
   private screenSizeSubscription: Subscription | null = null
   private viewerDataSubscription: Subscription | null = null
-  forPreview = window.location.href.includes('/author/')
+  forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   isScreenSizeSmall = false
   videoData: NsContent.IContent | null = null
   isFetchingDataComplete = false

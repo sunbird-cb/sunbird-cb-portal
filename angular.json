@@ -11,6 +11,12 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
+          "i18n": {
+            "sourceLocale": "en-US",
+            "locales": {
+              "nb": "messages.nb.xlf"
+            }
+          },
           "options": {
             "outputPath": "dist/www/fusion",
             "index": "src/index.html",
@@ -62,6 +68,9 @@
             ]
           },
           "configurations": {
+            "nb": {
+              "i18nLocale": "nb"
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -203,6 +212,9 @@
           "configurations": {
             "production": {
               "browserTarget": "fusion:build:production"
+            },
+            "nb": {
+              "browserTarget": "fusion:build:nb"
             },
             "de": {
               "browserTarget": "fusion:build:de"

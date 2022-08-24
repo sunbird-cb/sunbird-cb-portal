@@ -6,21 +6,21 @@
     Skip to main content
   </a>
 </p> -->
-<ws-app-public-nav-bar *ngIf=""></ws-app-public-nav-bar>
+<!-- <ws-app-public-nav-bar *ngIf=""></ws-app-public-nav-bar> -->
 <!-- <ws-widget-sticky-header> -->
 <ws-app-nav-bar class="top-nav-bar" *ngIf="
-    isNavBarRequired && (isXSmall$ | async) === false
-  " [hidden]="!showNavbar" [mode]="'top'"></ws-app-nav-bar>
+navBarRequired && (isXSmall$ | async) === false
+  " [hidden]="!isShowNavbar" [mode]="'top'"></ws-app-nav-bar>
 <!-- </ws-widget-sticky-header> -->
 <div class="height-adjust" [ngClass]="{
     'height-on-bottom custom-scroll':
-      (isXSmall$ | async) === true &&  true && showNavbar,
+      (isXSmall$ | async) === true &&  true && isShowNavbar,
       'height-adjust-setup' : isSetupPage,
     'height-on-top':
       (isXSmall$ | async) === false &&
-      showNavbar &&
-      isNavBarRequired && 
-      !customHeight
+      isShowNavbar &&
+      navBarRequired && 
+      !isCustomHeight
   }">
   <router-outlet></router-outlet>
 </div>
@@ -28,7 +28,7 @@
 </ws-app-footer> -->
 <ws-app-footer class="app-footer" [ngClass]="{ 'padding-bottom: 56px': !isSetupPage}" *ngIf="showNavbar && showFooter">
 </ws-app-footer>
-<ws-app-nav-bar class="bottom-nav-bar" [hidden]="!showNavbar" *ngIf="isNavBarRequired && (isXSmall$ | async) === true"
+<ws-app-nav-bar class="bottom-nav-bar" [hidden]="!isShowNavbar" *ngIf="navBarRequired && (isXSmall$ | async) === true"
   [mode]="'bottom'">
 </ws-app-nav-bar>
 
