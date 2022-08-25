@@ -54,12 +54,12 @@ export function forbiddenNamesValidatorNonEmpty(optionsArray: any): ValidatorFn 
       return null
       // tslint:disable-next-line: no-else-after-return
     } else {
-      const index = optionsArray.findIndex((op: any) => {
-        // tslint:disable-next-line: prefer-template
-        // return new RegExp('^' + op.orgname + '$').test(control.orgname)
-        return op.orgname === control.value.orgname
-      })
-      return index < 0 ? { forbiddenNames: { value: control.value.orgname } } : null
+        const index = optionsArray.findIndex((op: any) => {
+          // tslint:disable-next-line: prefer-template
+          // return new RegExp('^' + op.orgname + '$').test(control.orgname)
+          return op.orgname === control.value.orgname
+        })
+        return index < 0 ? { forbiddenNames: { value: control.value.orgname } } : null
     }
   }
 }
@@ -88,7 +88,7 @@ export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn 
 
 export class PublicSignupComponent implements OnInit, OnDestroy {
   registrationForm!: FormGroup
-  namePatern = `^[a-zA-Z\\s\\']{1,32}$`
+  namePatern = `^[a-zA-Z']{1,32}$`
   emailWhitelistPattern = `^[a-zA-Z0-9._-]{3,}\\b@\\b[a-zA-Z0-9]*|\\b(.gov|.nic)\b\\.\\b(in)\\b$`
   departments!: any
   masterDepartments!: Observable<any> | undefined
@@ -153,7 +153,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       if (value) {
         this.fetchDropDownValues(value)
       }
-    })
+  })
   }
 
   get typeValueStartCase() {
@@ -177,12 +177,12 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       })
     }
     if (type === 'ministry') {
-      this.signupSvc.getStatesOrMinisteries('ministry').subscribe(res => {
-        if (res && res.result && res.result && res.result.response && res.result.response.content) {
-          this.ministeries = res.result.response.content
-          this.onMinisteriesChange()
-        }
-      })
+        this.signupSvc.getStatesOrMinisteries('ministry').subscribe(res => {
+          if (res && res.result && res.result && res.result.response && res.result.response.content) {
+            this.ministeries = res.result.response.content
+            this.onMinisteriesChange()
+          }
+        })
     }
   }
 
@@ -212,7 +212,6 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       this.registrationForm.updateValueAndValidity()
       this.department.setValue('')
       this.organisation.setValue('')
-
     })
   }
 
@@ -229,9 +228,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
           return []
           }
           if (orgname) { return this.filterDepartments(orgname) }
-
             return this.departments.slice()
-
          })
       )
 
@@ -281,11 +278,11 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         map(name => name ? this.filterPositions(name) : this.positionsOriginal.slice())
       )
 
-    this.masterPositions.subscribe((event: any) => {
-      // tslint:disable-next-line: no-non-null-assertion
-      this.registrationForm.get('position')!.setValidators([Validators.required, forbiddenNamesValidatorPosition(event)])
-      this.registrationForm.updateValueAndValidity()
-    })
+      this.masterPositions.subscribe((event: any) => {
+        // tslint:disable-next-line: no-non-null-assertion
+        this.registrationForm.get('position')!.setValidators([Validators.required, forbiddenNamesValidatorPosition(event)])
+        this.registrationForm.updateValueAndValidity()
+      })
   }
 
   filterMinisteries(orgname: string) {
@@ -327,81 +324,87 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     })
   }
 
-  displayFn = (value: any) => {
+  displayFn = (value: any) =>  {
     return value ? value.channel : undefined
   }
 
-  displayFnPosition = (value: any) => {
+  displayFnPosition = (value: any) =>  {
     return value ? value.name : undefined
   }
 
   signup() {
     this.disableBtn = true
     this.recaptchaSubscription = this.recaptchaV3Service.execute('importantAction')
-      .subscribe(
-        _token => {
-          // tslint:disable-next-line: no-console
-          console.log('captcha validation success')
+    .subscribe(
+      _token => {
+        // tslint:disable-next-line: no-console
+        console.log('captcha validation success')
 
-          // to get the org details from either ministry/state, or department or organisation which ever user has filled
-          let hierarchyObj
-          let req: any
-          if (this.registrationForm.value.ministry) {
-            hierarchyObj = this.registrationForm.value.ministry
-            if (this.registrationForm.value.department) {
-              hierarchyObj = this.registrationForm.value.department
-              if (this.registrationForm.value.organisation) {
-                hierarchyObj = this.registrationForm.value.organisation
-              }
+        // to get the org details from either ministry/state, or department or organisation which ever user has filled
+        let hierarchyObj
+        let ministryObj
+        let isSecondLevel = false
+        let req: any
+        if (this.registrationForm.value.ministry) {
+          ministryObj = this.registrationForm.value.ministry
+          hierarchyObj = this.registrationForm.value.ministry
+          if (this.registrationForm.value.department) {
+            isSecondLevel = true
+            hierarchyObj = this.registrationForm.value.department
+            if (this.registrationForm.value.organisation) {
+              hierarchyObj = this.registrationForm.value.organisation
             }
           }
-          // console.log('hierarchyObj: ', hierarchyObj)
-          if (hierarchyObj) {
-            req = {
-              firstName: this.registrationForm.value.firstname || '',
-              lastName: this.registrationForm.value.lastname || '',
-              email: this.registrationForm.value.email || '',
-              // deptId: this.registrationForm.value.department.identifier || '',
-              // deptName: this.registrationForm.value.department.channel || '',
-              position: this.registrationForm.value.position.name || '',
-              source: `${environment.name}.${this.portalID}` || '',
-              orgName: hierarchyObj.orgname || '',
-              channel: hierarchyObj.orgname || '',
-              organisationType: hierarchyObj.sborgtype || '',
-              organisationSubType: hierarchyObj.sbsuborgtype || '',
-              mapId: hierarchyObj.mapid || '',
-              sbRootOrgId: hierarchyObj.sbrootorgid,
-              sbOrgId: hierarchyObj.sborgid,
-            }
-          }
-
-          // console.log('req: ', req)
-
-          this.signupSvc.register(req).subscribe(
-            (_res: any) => {
-              // console.log('success', res)
-              this.openDialog()
-              this.disableBtn = false
-            },
-            (err: any) => {
-              this.disableBtn = false
-              this.loggerSvc.error('Error in registering new user >', err)
-              if (err.error && err.error.params && err.error.params.errmsg) {
-                this.openSnackbar(err.error.params.errmsg)
-              } else {
-                this.openSnackbar('Something went wrong, please try again later!')
-              }
-              // this.dialogRef.close(false)
-            }
-          )
-        },
-        error => {
-          this.disableBtn = false
-          // tslint:disable-next-line: no-console
-          console.error('captcha validation error', error)
-          this.openSnackbar(`reCAPTCHA validation failed: ${error}`)
         }
-      )
+        // console.log('hierarchyObj: ', hierarchyObj)
+        if (hierarchyObj) {
+          req = {
+            firstName: this.registrationForm.value.firstname || '',
+            lastName: this.registrationForm.value.lastname || '',
+            email: this.registrationForm.value.email || '',
+            // deptId: this.registrationForm.value.department.identifier || '',
+            // deptName: this.registrationForm.value.department.channel || '',
+            position: this.registrationForm.value.position.name || '',
+            source: `${environment.name}.${this.portalID}` || '',
+            orgName: hierarchyObj.orgname || '',
+            channel: hierarchyObj.orgname || '',
+            organisationType: hierarchyObj.sborgtype || '',
+            organisationSubType: hierarchyObj.sbsuborgtype || '',
+            mapId: hierarchyObj.mapid || '',
+            // If 1st level i.e, state/ministry then the ministry/state objects sbrootorgid will be set
+            // IF 2nd or 3rd level i.e, org or department is selected then parent ministry/state sborgid will be set
+            sbRootOrgId: (isSecondLevel ? ministryObj.sborgid : ministryObj.sbrootorgid),
+            sbOrgId: hierarchyObj.sborgid,
+          }
+        }
+
+        // console.log('req: ', req)
+
+        this.signupSvc.register(req).subscribe(
+          (_res: any) =>  {
+            // console.log('success', res)
+            this.openDialog()
+            this.disableBtn = false
+          },
+          (err: any) => {
+            this.disableBtn = false
+            this.loggerSvc.error('Error in registering new user >', err)
+            if (err.error && err.error.params && err.error.params.errmsg) {
+              this.openSnackbar(err.error.params.errmsg)
+            } else {
+              this.openSnackbar('Something went wrong, please try again later!')
+            }
+            // this.dialogRef.close(false)
+          }
+        )
+      },
+      error => {
+        this.disableBtn = false
+        // tslint:disable-next-line: no-console
+        console.error('captcha validation error', error)
+        this.openSnackbar(`reCAPTCHA validation failed: ${error}`)
+      }
+    )
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
@@ -428,13 +431,13 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
 
           // to reset department and organisation values when minstry/state is changed
           // tslint:disable-next-line: no-non-null-assertion
+          // this.registrationForm.get('department')!.setValue('')
           // tslint:disable-next-line: no-non-null-assertion
+          // this.registrationForm.get('organisation')!.setValue('')
           this.onDepartmentChange()
         }
       })
     }
-    // this.registrationForm.get('department')!.setValue('')
-    // this.registrationForm.get('organisation')!.setValue('')
   }
 
   departmentSelected(value: any) {
@@ -443,18 +446,18 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         if (res && res.result && res.result && res.result.response && res.result.response.content) {
           this.orgs = res.result.response.content
 
-          // If value in department is NA then make the organisation field as required
-          // tslint:disable-next-line: no-non-null-assertion
-          // const value = this.registrationForm.get('department')!.value
-          // if (value && (value.orgname !== 'NA' || value.orgname !== 'na')) {
-          //   this.orgRequired = true
-          //   // tslint:disable-next-line: no-non-null-assertion
-          //   this.registrationForm.get('organisation')!.setValidators([Validators.required, forbiddenNamesValidatorNonEmpty(this.orgs)])
-          // } else {
-          //   this.orgRequired = false
-          //   // tslint:disable-next-line: no-non-null-assertion
-          this.organisation.setValidators([forbiddenNamesValidator(this.orgs)])
-          // }
+           // If value in department is NA then make the organisation field as required
+            // tslint:disable-next-line: no-non-null-assertion
+            // const value = this.registrationForm.get('department')!.value
+           // if (value && (value.orgname === 'NA' || value.orgname === 'na')) {
+             // this.orgRequired = true
+              // tslint:disable-next-line: no-non-null-assertion
+             // this.registrationForm.get('organisation')!.setValidators([Validators.required, forbiddenNamesValidatorNonEmpty(this.orgs)])
+           // } else {
+            //  this.orgRequired = false
+              // tslint:disable-next-line: no-non-null-assertion
+              this.organisation.setValidators([forbiddenNamesValidator(this.orgs)])
+           // }
           // to reset organisation values when department is changed
           // tslint:disable-next-line: no-non-null-assertion
           this.organisation.setValue('')
@@ -482,17 +485,14 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Getters
-
-  get ministry(): FormControl {
-    return this.registrationForm.get('ministry') as FormControl
+	  // Getters
+    get ministry(): FormControl {
+      return this.registrationForm.get('ministry') as FormControl
+    }
+    get department(): FormControl {
+      return this.registrationForm.get('department') as FormControl
+    }
+    get organisation(): FormControl {
+      return this.registrationForm.get('organisation') as FormControl
+    }
   }
-
-  get department(): FormControl {
-    return this.registrationForm.get('department') as FormControl
-  }
-
-  get organisation(): FormControl {
-    return this.registrationForm.get('organisation') as FormControl
-  }
-}
