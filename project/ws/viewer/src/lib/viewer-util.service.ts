@@ -156,7 +156,7 @@ export class ViewerUtilService {
       req = {}
       // do nothing
     }
-    
+
   }
 
   getContent(contentId: string): Observable<NsContent.IContent> {
