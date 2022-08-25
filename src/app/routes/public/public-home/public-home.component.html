@@ -1,4 +1,3 @@
-
 <div class="home">
   <mat-toolbar class="mt-53">
     <div class="fix-ww flex flex-row mt-3" id="root-tool-bar" title="toolbar" i18n-aria-label role="toolbar">
@@ -33,7 +32,8 @@
 
       <div *ngIf="learnNetworkSection?.length > 0" class="analyticsRecord">
         <div class="flex flex-col">
-          <h1 class="mb-12 text-center">Learn and network with civil servants and subject matter experts across India</h1>
+          <h1 class="mb-12 text-center">Learn and network with civil servants and subject matter experts across India
+          </h1>
           <div class="grid-cols-4 grid recordBox">
             <div class="listInfo" *ngFor="let content of learnNetworkSection">
               <div class="icon"><img src="{{content?.image}}" alt="icon"></div>
@@ -46,14 +46,13 @@
       </div>
     </div>
   </section>
-
-  <section *ngIf="loading && data && data.length && data[0]?.widget" class="journeySection1">
+  <section *ngIf="isWsInit && !loading && data && data.length && data[0]?.widget" class="journeySection1">
     <div class="new-box">
       <ng-container [wsResolverWidget]="data[0].widget"></ng-container>
     </div>
   </section>
   <section>
-    <div *ngIf="!loading" class="text-center my-2">
+    <div *ngIf="loading || !isWsInit" class="text-center my-2">
       <mat-spinner class="inline-block"></mat-spinner>
     </div>
   </section>
@@ -62,7 +61,8 @@
     <div class="container container-balanced">
       <div class="row">
         <div class="servicesTab pb-12">
-          <div class="mat-headline text-white text-left mt-12 service_heading">How does the platform enable you to become the best version of
+          <div class="mat-headline text-white text-left mt-12 service_heading">How does the platform enable you to
+            become the best version of
             yourself?</div>
 
           <div class="flex flex-1 flex-row player_box">
@@ -93,111 +93,112 @@
     </div>
   </section>
 
-<section class="journeySection">
-  <div class="container container-balanced">
-    <div class="flex flex-row w-100">
-      <!-- <div class="grid-cols-1 grid"> -->
-      <div class="flex flex-column justify-center items-center journeyContent">
-        <h1 class="mb-3">Start your learning journey </h1>
-        <p>Are you a government official without an iGOT Karmayogi account yet? Start here.</p>
-        <div class="mt-2"><a routerLink="/public/signup" class="btn btn-primary">Register</a> </div>
-      </div>
-      <!-- </div> -->
-    </div>
-  </div>
-</section>
-
-<section class="solutionService pt-12 pb-8">
-  <div class="container container-balanced">
-    <div class="row">
-      <h1 class=" text-center">Solutioning space for all of Government</h1>
-      <div class="grid-cols-3 grid gap-4 mt-8 solutionServiceInner">
-        <div class="">
-          <div class="servicesItem learning">
-            <div class="icon"><img src="/assets/instances/eagle/landing-img/Learn.svg" alt="learning icon"></div>
-            <h2 class="ws-mat-primary-default-text">Learning hub</h2>
-            <p>Learn anywhere, anytime and bridge your competency gaps using impactful and engaging learning content.
-            </p>
-          </div>
+  <section class="journeySection">
+    <div class="container container-balanced">
+      <div class="flex flex-row w-100">
+        <!-- <div class="grid-cols-1 grid"> -->
+        <div class="flex flex-column justify-center items-center journeyContent">
+          <h1 class="mb-3">Start your learning journey </h1>
+          <p>Are you a government official without an iGOT Karmayogi account yet? Start here.</p>
+          <div class="mt-2"><a routerLink="/public/signup" class="btn btn-primary">Register</a> </div>
         </div>
-        <div class="">
-          <div class="servicesItem discussion">
-            <div class="icon"><img src="/assets/instances/eagle/landing-img/discussionIcon.svg" alt="Discussion icon">
-            </div>
-            <h2 class="ws-mat-primary-default-text">Discussion hub</h2>
-            <p>Discuss and learn with peers, colleagues, civil servants and experts across the country.</p>
-          </div>
-        </div>
-        <div class="">
-          <div class="servicesItem user">
-            <div class="icon"><img src="/assets/instances/eagle/landing-img/userIcon.svg" alt="User icon"></div>
-            <h2 class="ws-mat-primary-default-text">Network hub</h2>
-            <p>Connect with civil servants across the country. Grow your network within government circles.</p>
-          </div>
-        </div>
-        <div class="">
-          <div class="servicesItem competency">
-            <div class="icon"><img src="/assets/instances/eagle/landing-img/competencyIcon.svg" alt="competency icon">
-            </div>
-            <h2 class="ws-mat-primary-default-text">Competency hub</h2>
-            <p>Identify your competency requirements, competency gaps, so you can grow faster in the right direction.
-            </p>
-          </div>
-        </div>
-        <div class="">
-          <div class="servicesItem career">
-            <div class="icon"><img src="/assets/instances/eagle/landing-img/careerIcon.svg" alt="career icon"></div>
-            <h2 class="ws-mat-primary-default-text">Career hub</h2>
-            <p> Explore career opportunities across the country and signal your expertise.</p>
-          </div>
-        </div>
-        <div class="">
-          <div class="servicesItem event">
-            <div class="icon"><img src="/assets/instances/eagle/landing-img/eventIcon.svg" alt="event icon"></div>
-            <h2 class="ws-mat-primary-default-text"> Events hub</h2>
-            <p>Join online and in-person events to break silos and share ideas.</p>
-          </div>
-        </div>
+        <!-- </div> -->
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="iGotWalkthrough">
-  <div class="container container-balanced">
-    <div class="flex flex-row items-center justify-center">
-      <div class="grid-cols-1 grid">
-        <div class="flex flex-1 flex-row">
-          <div class="flex flex-1 flex-col">
-            <h1 class="mb-3">Walkthrough of the iGOT Karmayogi Portal</h1>
-            <p class="mb-12">Gain skills to rocket your career growth. Connect with civil servants and experts to learn and discover new
-               opportunities in the Indian civil services.</p>
+  <section class="solutionService pt-12 pb-8">
+    <div class="container container-balanced">
+      <div class="row">
+        <h1 class=" text-center">Solutioning space for all of Government</h1>
+        <div class="grid-cols-3 grid gap-4 mt-8 solutionServiceInner">
+          <div class="">
+            <div class="servicesItem learning">
+              <div class="icon"><img src="/assets/instances/eagle/landing-img/Learn.svg" alt="learning icon"></div>
+              <h2 class="ws-mat-primary-default-text">Learning hub</h2>
+              <p>Learn anywhere, anytime and bridge your competency gaps using impactful and engaging learning content.
+              </p>
+            </div>
           </div>
-
-          <div class="flex flex-1 flex-col">
-            <div class="exCivilVideo text-center mt-4 margin-left-m">
-              <video controls="" height="100%" width="100%">
-                <source src="https://igot.blob.core.windows.net/public/video-guide.mp4" type="video/mp4">
-              </video>
+          <div class="">
+            <div class="servicesItem discussion">
+              <div class="icon"><img src="/assets/instances/eagle/landing-img/discussionIcon.svg" alt="Discussion icon">
+              </div>
+              <h2 class="ws-mat-primary-default-text">Discussion hub</h2>
+              <p>Discuss and learn with peers, colleagues, civil servants and experts across the country.</p>
+            </div>
+          </div>
+          <div class="">
+            <div class="servicesItem user">
+              <div class="icon"><img src="/assets/instances/eagle/landing-img/userIcon.svg" alt="User icon"></div>
+              <h2 class="ws-mat-primary-default-text">Network hub</h2>
+              <p>Connect with civil servants across the country. Grow your network within government circles.</p>
+            </div>
+          </div>
+          <div class="">
+            <div class="servicesItem competency">
+              <div class="icon"><img src="/assets/instances/eagle/landing-img/competencyIcon.svg" alt="competency icon">
+              </div>
+              <h2 class="ws-mat-primary-default-text">Competency hub</h2>
+              <p>Identify your competency requirements, competency gaps, so you can grow faster in the right direction.
+              </p>
+            </div>
+          </div>
+          <div class="">
+            <div class="servicesItem career">
+              <div class="icon"><img src="/assets/instances/eagle/landing-img/careerIcon.svg" alt="career icon"></div>
+              <h2 class="ws-mat-primary-default-text">Career hub</h2>
+              <p> Explore career opportunities across the country and signal your expertise.</p>
+            </div>
+          </div>
+          <div class="">
+            <div class="servicesItem event">
+              <div class="icon"><img src="/assets/instances/eagle/landing-img/eventIcon.svg" alt="event icon"></div>
+              <h2 class="ws-mat-primary-default-text"> Events hub</h2>
+              <p>Join online and in-person events to break silos and share ideas.</p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="growthSection">
-  <div class="container container-balanced">
-    <div class="flex flex-row justify-center  items-center ">
-      <div class="grid-cols-1 grid">
-        <div class="growthHub  text-center">
-          <h1 class="pb-2">Learn. Network. Take your career growth to the next level.</h1>
-          <div class=""><a routerLink="/public/signup" class="btn btn-primary">Register</a> </div>
+  <section class="iGotWalkthrough">
+    <div class="container container-balanced">
+      <div class="flex flex-row items-center justify-center">
+        <div class="grid-cols-1 grid">
+          <div class="flex flex-1 flex-row">
+            <div class="flex flex-1 flex-col">
+              <h1 class="mb-3">Walkthrough of the iGOT Karmayogi Portal</h1>
+              <p class="mb-12">Gain skills to rocket your career growth. Connect with civil servants and experts to
+                learn and discover new
+                opportunities in the Indian civil services.</p>
+            </div>
+
+            <div class="flex flex-1 flex-col">
+              <div class="exCivilVideo text-center mt-4 margin-left-m">
+                <video controls="" height="100%" width="100%">
+                  <source src="https://igot.blob.core.windows.net/public/video-guide.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <section class="growthSection">
+    <div class="container container-balanced">
+      <div class="flex flex-row justify-center  items-center ">
+        <div class="grid-cols-1 grid">
+          <div class="growthHub  text-center">
+            <h1 class="pb-2">Learn. Network. Take your career growth to the next level.</h1>
+            <div class=""><a routerLink="/public/signup" class="btn btn-primary">Register</a> </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
 </div>

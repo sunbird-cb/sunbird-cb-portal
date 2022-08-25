@@ -402,17 +402,14 @@
     // height: $title-line-count * $title-line-height;
     // line-height: $title-line-height;
 
-    word-break: break-word;
+    word-break: break-all;
     white-space: initial;
     margin: 12px 0;
     position: relative;
     overflow: hidden;
-    word-break: break-word;
-    white-space: initial;
-    white-space: initial;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
   }
 
