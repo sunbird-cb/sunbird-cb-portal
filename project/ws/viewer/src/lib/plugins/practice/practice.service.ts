@@ -213,8 +213,8 @@ export class PracticeService {
   }
   getQuestions(identifiers: string[], assessmentId: string): Observable<{ count: Number, questions: any[] }> {
     const data = {
+      assessmentId,
       request: {
-        assessmentId,
         search: {
           identifier: identifiers,
         },
