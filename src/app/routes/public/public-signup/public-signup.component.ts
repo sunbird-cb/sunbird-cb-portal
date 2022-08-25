@@ -210,6 +210,8 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       // tslint:disable-next-line: no-non-null-assertion
       this.registrationForm.get('ministry')!.setValidators([Validators.required, forbiddenNamesValidator(event)])
       this.registrationForm.updateValueAndValidity()
+      this.department.setValue('')
+      this.organisation.setValue('')
     })
   }
 
@@ -221,15 +223,22 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         startWith(''),
         map(value => typeof (value) === 'string' ? value : (value && value.orgname ? value.orgname : '')),
-        map(orgname => orgname ? this.filterDepartments(orgname) : this.departments.slice())
+        map(orgname => {
+          if (typeof this.ministry.value === 'string') {
+          return []
+          }
+          if (orgname) { return this.filterDepartments(orgname) }
+            return this.departments.slice()
+         })
       )
 
     this.masterDepartments.subscribe((event: any) => {
       // tslint:disable-next-line: no-non-null-assertion
-      this.registrationForm.get('department')!.setValidators([forbiddenNamesValidator(event)])
+      this.department.setValidators([forbiddenNamesValidator(event)])
       // tslint:disable-next-line: no-non-null-assertion
       // this.registrationForm.get('department')!.setValidators(null)
       this.registrationForm.updateValueAndValidity()
+      this.organisation.setValue('')
     })
   }
   onOrgsChange() {
@@ -240,7 +249,14 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         startWith(''),
         map(value => typeof (value) === 'string' ? value : (value && value.orgname ? value.orgname : '')),
-        map(orgname => orgname ? this.filterOrgs(orgname) : this.orgs.slice())
+        map(orgname => {
+          if (typeof this.department.value === 'string'
+           ||  typeof this.ministry.value === 'string') {
+          return []
+          }
+          if (orgname) { return this.filterOrgs(orgname) }
+           return this.orgs.slice()
+        })
       )
 
     this.masterOrgs.subscribe((_event: any) => {
@@ -415,9 +431,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
 
           // to reset department and organisation values when minstry/state is changed
           // tslint:disable-next-line: no-non-null-assertion
-          this.registrationForm.get('department')!.setValue('')
+          // this.registrationForm.get('department')!.setValue('')
           // tslint:disable-next-line: no-non-null-assertion
-          this.registrationForm.get('organisation')!.setValue('')
+          // this.registrationForm.get('organisation')!.setValue('')
           this.onDepartmentChange()
         }
       })
@@ -433,18 +449,18 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
            // If value in department is NA then make the organisation field as required
             // tslint:disable-next-line: no-non-null-assertion
             // const value = this.registrationForm.get('department')!.value
-            if (value && (value.orgname === 'NA' || value.orgname === 'na')) {
-              this.orgRequired = true
+           // if (value && (value.orgname === 'NA' || value.orgname === 'na')) {
+             // this.orgRequired = true
               // tslint:disable-next-line: no-non-null-assertion
-              this.registrationForm.get('organisation')!.setValidators([Validators.required, forbiddenNamesValidatorNonEmpty(this.orgs)])
-            } else {
-              this.orgRequired = false
+             // this.registrationForm.get('organisation')!.setValidators([Validators.required, forbiddenNamesValidatorNonEmpty(this.orgs)])
+           // } else {
+            //  this.orgRequired = false
               // tslint:disable-next-line: no-non-null-assertion
-              this.registrationForm.get('organisation')!.setValidators([forbiddenNamesValidator(this.orgs)])
-            }
+              this.organisation.setValidators([forbiddenNamesValidator(this.orgs)])
+           // }
           // to reset organisation values when department is changed
           // tslint:disable-next-line: no-non-null-assertion
-          this.registrationForm.get('organisation')!.setValue('')
+          this.organisation.setValue('')
           this.registrationForm.updateValueAndValidity()
           this.onOrgsChange()
         }
@@ -468,4 +484,15 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       this._document.body.classList.remove('cs-recaptcha')
     }
   }
-}
+
+	  // Getters
+    get ministry(): FormControl {
+      return this.registrationForm.get('ministry') as FormControl
+    }
+    get department(): FormControl {
+      return this.registrationForm.get('department') as FormControl
+    }
+    get organisation(): FormControl {
+      return this.registrationForm.get('organisation') as FormControl
+    }
+  }
