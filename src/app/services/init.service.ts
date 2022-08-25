@@ -194,7 +194,6 @@ export class InitService {
       // }
       // await this.fetchUserProfileV2()
       // await this.createUserInNodebb()
-      debugger
       await this.initFeatured()
     } catch (e) {
       this.logger.warn(
