@@ -23,7 +23,8 @@
         "i18n": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng xi18n --output-path locale",
         "tailwind": "./node_modules/.bin/tailwind build ./src/tailwind-build.scss  -o ./src/styles.scss",
         "prestart": "npm run tailwind",
-        "bundle-report": "webpack-bundle-analyzer dist/stats.json"
+        "bundle-report": "webpack-bundle-analyzer dist/stats.json",
+        "tt":"node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng serve --configuration=nb"
     },
     "private": true,
     "dependencies": {

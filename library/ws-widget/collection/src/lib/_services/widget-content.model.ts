@@ -485,4 +485,19 @@ export namespace NsContent {
     EMimeTypes.WEB_MODULE_EXERCISE,
 
   ]
+  export const PUBLIC_SUPPORTED_CONTENT_TYPES: EMimeTypes[] = [
+    // EMimeTypes.APPLICATION_JSON,
+    // EMimeTypes.FINAL_ASSESSMENT,
+    EMimeTypes.HTML,
+    EMimeTypes.HTML_TEXT,
+    EMimeTypes.ZIP,
+    EMimeTypes.ZIP2,
+    EMimeTypes.M4A,
+    EMimeTypes.MP3,
+    EMimeTypes.MP4,
+    EMimeTypes.PDF,
+    EMimeTypes.YOUTUBE,
+    EMimeTypes.TEXT_WEB,
+    EMimeTypes.SURVEY,
+  ]
 }

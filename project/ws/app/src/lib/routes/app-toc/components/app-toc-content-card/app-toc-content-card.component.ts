@@ -179,6 +179,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
   }
 
   public raiseTelemetry() {
+    // if (this.forPreview) { return }
     if (this.content) {
       this.events.raiseInteractTelemetry(
         {

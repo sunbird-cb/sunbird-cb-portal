@@ -1,4 +1,4 @@
-@import 'ws-mixins';
+@import "ws-mixins";
 
 .app-logo {
   max-width: 100px;
@@ -23,4 +23,7 @@
 .finish {
   font-weight: bold;
   opacity: 0.7;
+}
+.cheight {
+  height: 56px;
 }

@@ -34,7 +34,7 @@ export class PdfComponent implements OnInit, OnDestroy {
     },
   }
   isPreviewMode = false
-  forPreview = window.location.href.includes('/author/')
+  forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   discussionForumWidget: NsWidgetResolver.IRenderConfigWithTypedData<
     NsDiscussionForum.IDiscussionForumInput
   > | null = null
@@ -54,10 +54,9 @@ export class PdfComponent implements OnInit, OnDestroy {
       !this.accessControlSvc.authoringConfig.newDesign
     ) {
       this.isPreviewMode = true
-      this.viewerDataSubscription = this.viewerSvc
-        .getContent(this.activatedRoute.snapshot.paramMap.get('resourceId') || '')
+      this.viewerDataSubscription = this.activatedRoute.data
         .subscribe(data => {
-          this.pdfData = data
+          this.pdfData = data.content.data
           if (this.pdfData) {
             this.formDiscussionForumWidget(this.pdfData)
             if (this.discussionForumWidget) {
@@ -72,8 +71,18 @@ export class PdfComponent implements OnInit, OnDestroy {
           } else {
             this.widgetResolverPdfData.widgetData.collectionId = ''
           }
-          this.widgetResolverPdfData.widgetData.pdfUrl = this.generateUrl(this.pdfData.artifactUrl)
+          // this.widgetResolverPdfData.widgetData.identifier=''
+          // tslint:disable-next-line
+          this.widgetResolverPdfData.widgetData.pdfUrl = this.generateUrl(this.pdfData!.artifactUrl)
           this.widgetResolverPdfData.widgetData.disableTelemetry = true
+          if (this.pdfData) {
+            this.widgetResolverPdfData.widgetData.identifier = this.pdfData.identifier
+            this.widgetResolverPdfData.widgetData.mimeType = this.pdfData.mimeType
+            this.widgetResolverPdfData.widgetData.contentType = this.pdfData.contentType
+            this.widgetResolverPdfData.widgetData.primaryCategory = this.pdfData.primaryCategory
+
+            this.widgetResolverPdfData.widgetData.version = `${this.pdfData.version}${''}`
+          }
           this.isFetchingDataComplete = true
         })
     } else {
@@ -165,9 +174,9 @@ export class PdfComponent implements OnInit, OnDestroy {
   }
 
   raiseEvent(state: WsEvents.EnumTelemetrySubType, data: NsContent.IContent) {
-    if (this.forPreview) {
-      return
-    }
+    // if (this.forPreview) {
+    //   return
+    // }
 
     const event = {
       eventType: WsEvents.WsEventType.Telemetry,

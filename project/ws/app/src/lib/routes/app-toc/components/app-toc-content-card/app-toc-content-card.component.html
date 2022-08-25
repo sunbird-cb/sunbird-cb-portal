@@ -33,10 +33,11 @@
               <!-- </span> -->
             </div>
           </div>
-          <button *ngIf="content?.artifactUrl && isAllowed" type="button" mat-icon-button [matMenuTriggerFor]="buttonMenu">
+          <button *ngIf="content?.artifactUrl && isAllowed" type="button" mat-icon-button
+            [matMenuTriggerFor]="buttonMenu">
             <mat-icon>more_vertical</mat-icon>
           </button>
-          <ng-container *ngIf="content?.identifier && content?.completionPercentage">
+          <ng-container *ngIf="!forPreview && content?.identifier && content?.completionPercentage">
             <ng-container *ngIf="content?.completionStatus == 2">
               <circle-progress class="flex items-center progress" [percent]="100" [radius]="12" [outerStrokeWidth]="3"
                 [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()"
@@ -67,7 +68,7 @@
               </ws-widget-content-progress> -->
             </ng-container>
           </ng-container>
-          
+
           <!-- <div *ngIf="hasContentStructure" class="child-meta-container">
             <div class="child-structure"> -->
           <!-- <mat-icon class="structure-icon">import_contacts</mat-icon> -->
@@ -164,8 +165,9 @@
     </div>
 
     <div class="children-container margin-left-l margin-top-s margin-bottom-s" [hidden]="!viewChildren">
-      <ws-app-toc-content-card [content]="child" [expandAll]="expandAll" [rootId]="rootId" [batchId]="batchId"
-        [rootContentType]="rootContentType" *ngFor="let child of content?.children; trackBy: contentTrackBy">
+      <ws-app-toc-content-card [forPreview]="forPreview" [content]="child" [expandAll]="expandAll" [rootId]="rootId"
+        [batchId]="batchId" [rootContentType]="rootContentType"
+        *ngFor="let child of content?.children; trackBy: contentTrackBy">
       </ws-app-toc-content-card>
     </div>
   </ng-container>
@@ -189,7 +191,8 @@
     <!-- </div> -->
 
     <div class="flex flex-col sm:flex-row flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto">
-      <a [routerLink]="isAllowed ? resourceLink.url : null" [queryParams]="isAllowed ? resourceLink.queryParams : null">
+      <a [class.disabled]="forPreview ? true : null" [routerLink]="isAllowed && !forPreview ? resourceLink.url : null"
+        [queryParams]="isAllowed  ? resourceLink.queryParams : null">
         <div class="text-truncate cursor-pointer" (click)="viewChildren = !viewChildren; raiseTelemetry()">
           <div class="flex flex-col sm:flex-row flex-wrap">
             <p class="margin-remove text-truncate mat-subheading-1 flex-auto">
@@ -236,11 +239,11 @@
           <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>
           <span>Course</span>
         </div> -->
-        <button *ngIf="content?.artifactUrl && !isXSmall && isAllowed" type="button" mat-icon-button class=""
-          [matMenuTriggerFor]="buttonMenu">
+        <button *ngIf="!forPreview && content?.artifactUrl && !isXSmall && isAllowed" type="button" mat-icon-button
+          class="" [matMenuTriggerFor]="buttonMenu">
           <mat-icon>more_vertical</mat-icon>
         </button>
-        <ng-container *ngIf="content?.identifier && content?.completionPercentage">
+        <ng-container *ngIf="!forPreview && content?.identifier && content?.completionPercentage">
           <ng-container *ngIf="content?.completionStatus == 2">
             <circle-progress class="flex items-center progress" [percent]="100" [radius]="12" [outerStrokeWidth]="3"
               [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()"
