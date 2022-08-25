@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy, AfterViewInit } from '@angular/core'
 import { IWidgetsPlayerSurveyData } from './player-survey.model'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { interval, Subscription } from 'rxjs'
+import { interval, Subscription, Subject } from 'rxjs'
 import { EventService, WsEvents } from '@sunbird-cb/utils'
 import { ROOT_WIDGET_CONFIG } from '../collection.config'
 import { NsContent } from '../_services/widget-content.model'
@@ -15,15 +15,21 @@ import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 })
 export class PlayerSurveyComponent extends WidgetBaseComponent
 implements OnInit, AfterViewInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
+
+  constructor(private activatedRoute: ActivatedRoute, private eventSvc: EventService, private viewerSvc: ViewerUtilService) {
+    super()
+  }
   @Input() widgetData!: IWidgetsPlayerSurveyData
   runnerSubs: Subscription | null = null
+  private renderSubject = new Subject()
   enableTelemetry = false
   surveyId: any
-  afterSubmitLink = '/page/home'
+  // afterSubmitLink = '/page/home'
   apiData: {
     // tslint:disable-next-line:prefer-template
     getAPI: string;
     postAPI: string;
+    getAllApplications: string;
     customizedHeader: {};
   } | undefined
   realTimeProgressRequest = {
@@ -34,9 +40,12 @@ implements OnInit, AfterViewInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  
     user_id_type: 'uuid',
   }
   identifier: string | null = null
+  public afterSubmitAction = this.checkAfterSubmit.bind(this)
+  isReadOnly = false
 
-  constructor(private activatedRoute: ActivatedRoute, private eventSvc: EventService, private viewerSvc: ViewerUtilService) {
-    super()
+  public checkAfterSubmit(e: any) {
+    this.renderSubject.next()
+    console.log(e)
   }
 
   ngOnInit() {
@@ -48,8 +57,8 @@ implements OnInit, AfterViewInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  
         // tslint:disable-next-line:prefer-template
         getAPI: '/apis/proxies/v8/forms/getFormById?id=' + this.surveyId,
         postAPI: '/apis/proxies/v8/forms/v1/saveFormSubmit',
-        customizedHeader: {
-        },
+        getAllApplications: '/apis/proxies/v8/forms/getAllApplications',
+        customizedHeader: {},
       }
     // }
     this.widgetData.disableTelemetry = false
