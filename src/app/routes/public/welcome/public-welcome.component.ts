@@ -361,10 +361,14 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
 
         // to get the org details from either ministry/state, or department or organisation which ever user has filled
         let hierarchyObj
+        let ministryObj
+        let isSecondLevel = false
         let req: any
         if (this.registrationForm.value.ministry) {
+            ministryObj = this.registrationForm.value.ministry
             hierarchyObj = this.registrationForm.value.ministry
             if (this.registrationForm.value.department) {
+                isSecondLevel = true
                 hierarchyObj = this.registrationForm.value.department
                 if (this.registrationForm.value.organisation) {
                     hierarchyObj = this.registrationForm.value.organisation
@@ -396,7 +400,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
                     channel: hierarchyObj.orgname || '',
                     sbOrgId: hierarchyObj.sborgid,
                     mapId: hierarchyObj.mapid || '',
-                    sbRootOrgId: hierarchyObj.sbrootorgid,
+                    sbRootOrgId: (isSecondLevel ? ministryObj.sborgid : ministryObj.sbrootorgid),
                     organisationType: hierarchyObj.sborgtype || '',
                     organisationSubType: hierarchyObj.sbsuborgtype || '',
                 },
@@ -411,7 +415,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
                 // this.openDialog()
                 this.disableBtn = false
                 this.configSvc.updateGlobalProfile(true)
-                this.router.navigate(['/page/home'])
+                this.router.navigate(['/app/setup'])
             },
             (err: any) => {
                 this.disableBtn = false

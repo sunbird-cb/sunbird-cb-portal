@@ -90,8 +90,8 @@
                     Surname is mandatory
                   </mat-error>
                   <mat-error [hidden]="false" *ngIf="registrationForm?.controls['lastname'].errors?.pattern"
-                    i18n-aria-label aria-label="Name fields cannot contain numbers and special characters except '">
-                    Name fields cannot contain numbers and special characters except '
+                    i18n-aria-label aria-label="Surname fields cannot contain numbers and special characters except '">
+                    Surname fields cannot contain numbers and special characters except '
                   </mat-error>
                 </mat-form-field>
               </div>
@@ -208,7 +208,7 @@
                   </mat-option>
                 </mat-autocomplete>
               </div>
-              <div class="displayflex"> 
+              <div class="displayflex">
                 <div class="input-wrapper margin-top-s">
                   <label for="Department" class=" margin-remove-bottom form-label"
                     i18n="Department|Label which explains the user to enter Department" i18n-aria-label
@@ -242,16 +242,21 @@
                 <div class="tooltip">
                   <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon>
                   <span class="tooltiptext"><p>
-                    If department is not present then please contact,<br>
+                    If you do not find your department or organization in the list here,
+                    please <a routerLink="/public/contact" class="ws-mat-accent-text">contact us</a> to get it added.<br>
 
-                    Email: mission.karmayogi@gov.in<br>
-                    
-                    Helpdesk: servicedesk.nic.in<br>
-                    
-                    Call: phone 1800 111 555</p></span>
+                    <!-- Email: mission.karmayogi@gov.in<br>
+
+                    Helpdesk: servicedesk.nic.in<br> -->
+                    <!-- "contact us": https://igot-stage.in/public/contact</a> -->
+
+                   </p></span>
+
+
+
                 </div>
               </div>
-              <div class="displayflex"> 
+              <div class="displayflex">
               <div class="input-wrapper margin-top-s">
                 <label for="Organisation" class=" margin-remove-bottom form-label"
                   i18n="Organisation|Label which explains the user to enter Organisation" i18n-aria-label
@@ -284,13 +289,10 @@
               <div class="tooltip">
                 <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon>
                 <span class="tooltiptext"><p>
-                  If organisation is not present then please contact,<br>
+                  If you do not find your department or organization in the list here,
+                  please <a routerLink="/public/contact" class="ws-mat-accent-text">contact us</a> to get it added.<br>
 
-                  Email: mission.karmayogi@gov.in<br>
-                  
-                  Helpdesk: servicedesk.nic.in<br>
-                  
-                  Call: phone 1800 111 555</p></span>
+                 </p></span>
               </div>
             </div>
               <!-- <div class="input-wrapper margin-top-s">

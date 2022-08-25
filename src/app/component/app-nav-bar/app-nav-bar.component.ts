@@ -20,6 +20,9 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     widgetSubType: 'actionButtonApps',
     widgetData: { allListingUrl: '' }, // /app/features
   }
+  forPreview = window.location.href.includes('/public/')
+    || window.location.href.includes('&preview=true')
+  isPlayerPage = window.location.href.includes('/viewer/')
   instanceVal = ''
   btnAppsConfig!: NsWidgetResolver.IRenderConfigWithTypedData<IBtnAppsConfig>
   appIcon: SafeUrl | null = null
@@ -35,7 +38,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   showAppNavBar = false
   popupTour: any
   currentRoute = 'page/home'
-  isPublicHomePage = false
+  isPublicHomePage = window.location.href.includes('/public/home')
   isSetUpPage = false
   constructor(
     private domSanitizer: DomSanitizer,
@@ -56,7 +59,6 @@ export class AppNavBarComponent implements OnInit, OnChanges {
         this.bindUrl(event.url.replace('/app/competencies/', ''))
       }
     })
-
   }
 
   ngOnInit() {
@@ -104,6 +106,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       || e.url.includes('/public/home')
       || e.url.includes('/public/sso')
       || e.url.includes('/public/google/sso')
+      || e.url.startsWith('/viewer')
     ) {
       this.showAppNavBar = false
       if (e.url.includes('/public/home')) {
@@ -170,5 +173,16 @@ export class AppNavBarComponent implements OnInit, OnChanges {
         this.currentRoute = path
       }
     }
+  }
+  get stillOnHomePage(): boolean {
+    this.isPublicHomePage = window.location.href.includes('/public/home')
+    return this.isPublicHomePage
+  }
+  get fullMenuDispaly(): boolean {
+    this.isPlayerPage = window.location.href.includes('/viewer/')
+    return !(this.isPlayerPage || this.stillOnHomePage)
+  }
+  get sShowAppNavBar(): boolean {
+    return this.showAppNavBar
   }
 }
