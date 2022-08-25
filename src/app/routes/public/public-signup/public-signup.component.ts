@@ -485,7 +485,6 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Getters
   get ministry(): FormControl {
     return this.registrationForm.get('ministry') as FormControl
   }
