@@ -10,8 +10,10 @@
         </a>
       </div> -->
       <div class="content-card padding-right-m padding-left-m padding-top-s padding-bottom-s margin-bottom-m" *ngFor="let card of content?.children; trackBy: contentTrackBy">
-        <ws-app-toc-content-card [forPreview]="forPreview" [expandAll]="expandAll" [rootId]="contextId" [batchId]="batchId"
+        <ng-container *ngIf="card.contentType === 'Course'">     
+           <ws-app-toc-content-card [forPreview]="forPreview" [expandAll]="expandAll" [rootId]="contextId" [batchId]="batchId"
           [rootContentType]="contextPath" [content]="card"></ws-app-toc-content-card>
+        </ng-container>
       </div>
     </ng-container>
     <ng-template #noChildren>
