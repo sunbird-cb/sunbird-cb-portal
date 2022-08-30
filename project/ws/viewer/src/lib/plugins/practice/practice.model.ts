@@ -78,7 +78,7 @@ export namespace NSPractice {
     isAssessment: boolean
     objectType: string
     primaryCategory: NsContent.EPrimaryCategory
-    children: IQuizSubmitResSec[] | IQuizSubmitResSec
+    children: IQuizSubmitResSec[]
     overallResult: number
     total: number
     blank: number
