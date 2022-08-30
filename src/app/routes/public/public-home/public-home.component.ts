@@ -35,7 +35,7 @@ export class PublicHomeComponent implements OnInit, OnDestroy {
   ) {
     setTimeout(() => {
       this.loadData()
-    }, 5000)
+    },         5000)
   }
 
   get isWsInit(): boolean {
