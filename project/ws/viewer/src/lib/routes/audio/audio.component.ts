@@ -55,46 +55,53 @@ export class AudioComponent implements OnInit, OnDestroy {
     ) {
       // to do make sure the data updates for two consecutive resource of same mimeType
       this.viewerDataSubscription = this.activatedRoute.data.subscribe(data => {
-          this.audioData = data.content.data
-          if (this.audioData) {
-            this.formDiscussionForumWidget(this.audioData)
-          }
-          this.widgetResolverAudioData = this.initWidgetResolverAudioData()
-          if (this.activatedRoute.snapshot.queryParams.collectionId) {
-            this.widgetResolverAudioData.widgetData.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
-          } else {
-            this.widgetResolverAudioData.widgetData.collectionId = ''
-          }
-          // this.widgetResolverAudioData.widgetData.url = this.audioData
-          //   ? `/apis/authContent/${encodeURIComponent(this.audioData.artifactUrl)}`
-          //   : ''
-          // if (this.audioData) {
-          //   this.widgetResolverAudioData.widgetData.url = this.audioData.artifactUrl
-          // }
-          // tslint:disable-next-line
-          const url = this.generateUrl(this.audioData!.artifactUrl)
-          this.widgetResolverAudioData.widgetData.url = this.viewerSvc.getPublicUrl(url)
-          this.widgetResolverAudioData.widgetData.disableTelemetry = true
-          this.isFetchingDataComplete = true
+        this.audioData = data.content.data
+        if (this.audioData) {
+          this.formDiscussionForumWidget(this.audioData)
+        }
+        this.widgetResolverAudioData = this.initWidgetResolverAudioData()
+        if (this.activatedRoute.snapshot.queryParams.collectionId) {
+          this.widgetResolverAudioData.widgetData.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
+        } else {
+          this.widgetResolverAudioData.widgetData.collectionId = ''
+        }
+        // this.widgetResolverAudioData.widgetData.url = this.audioData
+        //   ? `/apis/authContent/${encodeURIComponent(this.audioData.artifactUrl)}`
+        //   : ''
+        // if (this.audioData) {
+        //   this.widgetResolverAudioData.widgetData.url = this.audioData.artifactUrl
+        // }
+        // tslint:disable-next-line
+        const url = this.generateUrl(this.audioData!.artifactUrl)
+        this.widgetResolverAudioData.widgetData.url = this.viewerSvc.getPublicUrl(url)
+        if (this.audioData) {
+          this.widgetResolverAudioData.widgetData.mimeType = this.audioData.mimeType
+          this.widgetResolverAudioData.widgetData.contentType = this.audioData.contentType
+          this.widgetResolverAudioData.widgetData.primaryCategory = this.audioData.primaryCategory
+          this.widgetResolverAudioData.widgetData.identifier = this.audioData.identifier
+          this.widgetResolverAudioData.widgetData.version = `${this.audioData.version}${''}`
+        }
+        this.widgetResolverAudioData.widgetData.disableTelemetry = false
+        this.isFetchingDataComplete = true
 
-          if (this.audioData && this.audioData.subTitles) {
+        if (this.audioData && this.audioData.subTitles) {
 
-            let subTitleUrl = ''
-            if (this.audioData.subTitles.length > 0 && this.audioData.subTitles[0]) {
-              if (this.audioData.subTitles[0].url.indexOf('/content-store/') > -1) {
-                subTitleUrl = `/apis/authContent/${new URL(this.audioData.subTitles[0].url).pathname}`
-              } else {
-                subTitleUrl = `/apis/authContent/${encodeURIComponent(this.audioData.subTitles[0].url)}`
-              }
+          let subTitleUrl = ''
+          if (this.audioData.subTitles.length > 0 && this.audioData.subTitles[0]) {
+            if (this.audioData.subTitles[0].url.indexOf('/content-store/') > -1) {
+              subTitleUrl = `/apis/authContent/${new URL(this.audioData.subTitles[0].url).pathname}`
+            } else {
+              subTitleUrl = `/apis/authContent/${encodeURIComponent(this.audioData.subTitles[0].url)}`
             }
-            this.widgetResolverAudioData.widgetData.subtitles = [{
-              srclang: '',
-              label: '',
-              url: subTitleUrl,
-            }]
           }
+          this.widgetResolverAudioData.widgetData.subtitles = [{
+            srclang: '',
+            label: '',
+            url: subTitleUrl,
+          }]
+        }
 
-        })
+      })
       // this.htmlData = this.viewerDataSvc.resource
     } else {
       this.routeDataSubscription = this.activatedRoute.data.subscribe(

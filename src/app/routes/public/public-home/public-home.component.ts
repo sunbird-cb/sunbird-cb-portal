@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { WidgetResolverService } from '@sunbird-cb/resolver/src/public-api'
 
 @Component({
   selector: 'ws-public-home',
@@ -24,22 +25,26 @@ export class PublicHomeComponent implements OnInit, OnDestroy {
   private subscriptionContact: Subscription | null = null
   learnNetworkSection: any = []
   data!: any
-  loading = false
+  loading = true
 
   constructor(
     private configSvc: ConfigurationsService,
     private activateRoute: ActivatedRoute,
     private domSanitizer: DomSanitizer,
+    private ws: WidgetResolverService,
   ) {
     setTimeout(() => {
       this.loadData()
-    },         5000)
+    }, 5000)
   }
 
+  get isWsInit(): boolean {
+    return this.ws.isInitialized
+  }
   loadData() {
     this.data = _.get(this.activateRoute.snapshot, 'data.pageData.data.featuredCourses')
     this.learnNetworkSection = _.get(this.activateRoute.snapshot, 'data.pageData.data.learnNetwork')
-    this.loading = true
+    this.loading = false
   }
   ngOnInit() {
     if (this.configSvc.instanceConfig) {

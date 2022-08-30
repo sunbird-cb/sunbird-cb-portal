@@ -84,7 +84,60 @@ export class HtmlComponent implements OnInit, OnDestroy {
               : data.content.data.artifactUrl.startsWith('http://')
                 ? data.content.data.artifactUrl
                 : `https://${data.content.data.artifactUrl}`).replace(/ /ig, '').replace(/%20/ig, '').replace(/\n/ig, '')
-                this.htmlData = tempHtmlData
+            this.htmlData = tempHtmlData
+            if (!this.alreadyRaised && this.oldData) {
+              this.raiseEvent(WsEvents.EnumTelemetrySubType.Unloaded, this.oldData)
+              if (!this.hasFiredRealTimeProgress) {
+                // this.fireRealTimeProgress()
+                if (this.realTimeProgressTimer) {
+                  clearTimeout(this.realTimeProgressTimer)
+                }
+              }
+              this.subApp = false
+            }
+            this.raiseRealTimeProgress()
+            if (this.htmlData) {
+              this.oldData = this.htmlData
+              this.alreadyRaised = true
+              this.raiseEvent(WsEvents.EnumTelemetrySubType.Loaded, this.htmlData)
+              this.responseSubscription = await fromEvent<MessageEvent>(window, 'message')
+                .pipe(
+                  filter(
+                    (event: MessageEvent) =>
+                      Boolean(event) &&
+                      Boolean(event.data) &&
+                      Boolean(event.source && typeof event.source.postMessage === 'function'),
+                  ),
+                )
+                .subscribe(async (event: MessageEvent) => {
+                  const contentWindow = event.source as Window
+                  if (event.data.requestId && this.htmlData) {
+                    switch (event.data.requestId) {
+                      case 'LOADED':
+                        await this.respondSvc.loadedRespond(
+                          contentWindow,
+                          event.data.subApplicationName,
+                          this.htmlData.identifier,
+                        )
+                        if (event.data.subApplicationName === 'RBCP') {
+                          this.subApp = true
+                        }
+                        break
+                      case 'CONTINUE_LEARNING':
+                        await this.respondSvc.continueLearningRespond(
+                          this.htmlData.identifier,
+                          event.data.data.continueLearning,
+                        )
+                        break
+                      case 'TELEMETRY':
+                        await this.respondSvc.telemetryEvents(event.data)
+                        break
+                      default:
+                        break
+                    }
+                  }
+                })
+            }
             // if (this.accessControlSvc.hasAccess(data as any, true)) {
             //   if (data && data.artifactUrl.indexOf('content-store') >= 0) {
             //     // await this.setS3Cookie(data.identifier)
@@ -93,12 +146,11 @@ export class HtmlComponent implements OnInit, OnDestroy {
             //     this.htmlData = data
             //   }
 
-            // }
-            if (this.htmlData) {
-              this.formDiscussionForumWidget(this.htmlData)
-              if (this.discussionForumWidget) {
-                this.discussionForumWidget.widgetData.isDisabled = true
-              }
+          }
+          if (this.htmlData) {
+            this.formDiscussionForumWidget(this.htmlData)
+            if (this.discussionForumWidget) {
+              this.discussionForumWidget.widgetData.isDisabled = true
             }
           }
         })
@@ -113,8 +165,8 @@ export class HtmlComponent implements OnInit, OnDestroy {
               ? `${data.content.data.artifactUrl.replace(/%20/g, '')}&Param1=${this.uuid}`
               : data.content.data.artifactUrl.replace(/%20/g, '')
           const tempHtmlData = data.content.data
-          if (this.alreadyRaised && this.oldData) {
-            this.raiseEvent(WsEvents.EnumTelemetrySubType.Unloaded, this.oldData)
+          if (this.alreadyRaised && tempHtmlData) {
+            this.raiseEvent(WsEvents.EnumTelemetrySubType.Unloaded, tempHtmlData)
             if (!this.hasFiredRealTimeProgress) {
               // this.fireRealTimeProgress()
               if (this.realTimeProgressTimer) {
@@ -319,10 +371,6 @@ export class HtmlComponent implements OnInit, OnDestroy {
   }
 
   private raiseRealTimeProgress() {
-    if (this.forPreview) {
-      return
-    }
-
     this.realTimeProgressRequest = {
       ...this.realTimeProgressRequest,
       current: ['1'],
@@ -340,9 +388,6 @@ export class HtmlComponent implements OnInit, OnDestroy {
   }
 
   private fireRealTimeProgress() {
-    if (this.forPreview) {
-      return
-    }
     if (this.htmlData) {
       if (
         this.htmlData.primaryCategory === NsContent.EPrimaryCategory.COURSE &&

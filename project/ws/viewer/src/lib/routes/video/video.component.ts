@@ -76,20 +76,29 @@ export class VideoComponent implements OnInit, OnDestroy {
         // tslint:disable-next-line
         url = this.generateUrl(this.videoData!.artifactUrl)
         this.widgetResolverVideoData.widgetData.url = this.videoData ? url : ''
-        this.widgetResolverVideoData.widgetData.disableTelemetry = true
+        this.widgetResolverVideoData.widgetData.disableTelemetry = false
+        if (this.videoData) {
+          this.widgetResolverVideoData.widgetData.identifier = this.videoData.identifier
+          this.widgetResolverVideoData.widgetData.mimeType = this.videoData.mimeType
+          this.widgetResolverVideoData.widgetData.contentType = this.videoData.contentType
+          this.widgetResolverVideoData.widgetData.primaryCategory = this.videoData.primaryCategory
+          this.widgetResolverVideoData.widgetData.version = `${this.videoData.version}${''}`
+        }
         this.isFetchingDataComplete = true
+        // if (this.videoData.artifactUrl.indexOf('/content-store/') > -1) {
+        //   url = `/apis/authContent/${new URL(this.videoData.artifactUrl).pathname}`
+        // } else {
+        //   url = `/apis/authContent/${encodeURIComponent(this.videoData.artifactUrl)}`
+        // }
         // tslint:disable-next-line
-        if (this.videoData!.subTitles) {
+        if (this.videoData && this.videoData!.subTitles) {
+
           let subTitleUrl = ''
-          // tslint:disable-next-line
-          if (this.videoData!.subTitles.length > 0 && this.videoData!.subTitles[0]) {
-            // tslint:disable-next-line
-            if (this.videoData!.subTitles[0].url.indexOf('/content-store/') > -1) {
-              // tslint:disable-next-line
-              subTitleUrl = `/apis/authContent/${new URL(this.videoData!.subTitles[0].url).pathname}`
+          if (this.videoData.subTitles.length > 0 && this.videoData.subTitles[0]) {
+            if (this.videoData.subTitles[0].url.indexOf('/content-store/') > -1) {
+              subTitleUrl = `/apis/authContent/${new URL(this.videoData.subTitles[0].url).pathname}`
             } else {
-              // tslint:disable-next-line
-              subTitleUrl = `/apis/authContent/${encodeURIComponent(this.videoData!.subTitles[0].url)}`
+              subTitleUrl = `/apis/authContent/${encodeURIComponent(this.videoData.subTitles[0].url)}`
             }
           }
 
