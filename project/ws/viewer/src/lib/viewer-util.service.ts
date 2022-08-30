@@ -49,7 +49,8 @@ export class ViewerUtilService {
           mimeType === NsContent.EMimeTypes.M3U8 ||
           mimeType === NsContent.EMimeTypes.MP3 ||
           mimeType === NsContent.EMimeTypes.M4A ||
-          mimeType === NsContent.EMimeTypes.YOUTUBE
+          mimeType === NsContent.EMimeTypes.YOUTUBE ||
+          mimeType === NsContent.EMimeTypes.SURVEY
         ) {
           if (percent <= 5) {
             // if percentage is less than 5% make it 0
@@ -77,7 +78,8 @@ export class ViewerUtilService {
         mimeType === NsContent.EMimeTypes.MP4 ||
         mimeType === NsContent.EMimeTypes.M3U8 ||
         mimeType === NsContent.EMimeTypes.MP3 ||
-        mimeType === NsContent.EMimeTypes.M4A
+        mimeType === NsContent.EMimeTypes.M4A ||
+        mimeType === NsContent.EMimeTypes.SURVEY
       ) {
         // if percentage is less than 5% then make status started
         if (Math.ceil(percentage) <= 5) {
@@ -156,7 +158,6 @@ export class ViewerUtilService {
       req = {}
       // do nothing
     }
-    
   }
 
   getContent(contentId: string): Observable<NsContent.IContent> {

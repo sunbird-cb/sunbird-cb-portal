@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy, AfterViewInit } from '@angular/core'
 import { IWidgetsPlayerSurveyData } from './player-survey.model'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { interval, Subscription, Subject } from 'rxjs'
+import { interval, Subscription } from 'rxjs'
 import { EventService, WsEvents } from '@sunbird-cb/utils'
 import { ROOT_WIDGET_CONFIG } from '../collection.config'
 import { NsContent } from '../_services/widget-content.model'
@@ -21,7 +21,7 @@ implements OnInit, AfterViewInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  
   }
   @Input() widgetData!: IWidgetsPlayerSurveyData
   runnerSubs: Subscription | null = null
-  private renderSubject = new Subject()
+  // private renderSubject = new Subject()
   enableTelemetry = false
   surveyId: any
   // afterSubmitLink = '/page/home'
@@ -43,13 +43,7 @@ implements OnInit, AfterViewInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  
   public afterSubmitAction = this.checkAfterSubmit.bind(this)
   isReadOnly = false
 
-  public checkAfterSubmit(e: any) {
-    this.renderSubject.next()
-    console.log(e)
-  }
-
   ngOnInit() {
-    console.log('widgetData', this.widgetData)
     // if (this.widgetData && this.widgetData.surveyUrl) {
       const sID = this.widgetData.surveyUrl.split('surveys/')
       this.surveyId = sID[1]
@@ -62,6 +56,7 @@ implements OnInit, AfterViewInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  
       }
     // }
     this.widgetData.disableTelemetry = false
+    this.updateProgress(1)
 
     if (!this.widgetData.disableTelemetry) {
       this.runnerSubs = interval(30000).subscribe(_ => {
@@ -79,19 +74,32 @@ implements OnInit, AfterViewInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  
     }
   }
 
-  fireRealTimeProgress(id: string) {
-    const realTimeProgressRequest = {
-      ...this.realTimeProgressRequest,
-      // max_size: this.totalPages,
-      // current: this.current,
-    }
-    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-      this.activatedRoute.snapshot.queryParams.collectionId : this.widgetData.identifier
-    const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-      this.activatedRoute.snapshot.queryParams.batchId : this.widgetData.identifier
-    this.viewerSvc.realTimeProgressUpdate(id, realTimeProgressRequest, collectionId, batchId)
-    return
+  checkAfterSubmit(e: any) {
+    // this.renderSubject.next()
+    this.updateProgress(2)
   }
+
+  updateProgress(status: number) {
+    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+      this.activatedRoute.snapshot.queryParams.collectionId : ''
+    const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+      this.activatedRoute.snapshot.queryParams.batchId : ''
+    this.viewerSvc.realTimeProgressUpdateQuiz(this.widgetData.identifier, collectionId, batchId, status)
+  }
+
+  // fireRealTimeProgress(id: string) {
+  //   const realTimeProgressRequest = {
+  //     ...this.realTimeProgressRequest,
+  //     // max_size: this.totalPages,
+  //     // current: this.current,
+  //   }
+  //   const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+  //     this.activatedRoute.snapshot.queryParams.collectionId : this.widgetData.identifier
+  //   const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+  //     this.activatedRoute.snapshot.queryParams.batchId : this.widgetData.identifier
+  //   this.viewerSvc.realTimeProgressUpdate(id, realTimeProgressRequest, collectionId, batchId)
+  //   return
+  // }
 
   private eventDispatcher(eventType: WsEvents.EnumTelemetrySubType) {
     if (this.widgetData.disableTelemetry) {
@@ -134,8 +142,8 @@ implements OnInit, AfterViewInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  
   }
 
   ngOnDestroy() {
-    if (this.identifier) {
-      this.fireRealTimeProgress(this.identifier)
-    }
+    // if (this.identifier) {
+    //   this.fireRealTimeProgress(this.identifier)
+    // }
   }
 }
