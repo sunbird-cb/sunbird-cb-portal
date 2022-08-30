@@ -180,6 +180,7 @@
         </ng-container>
 
         <div id="quiz-end"></div>
+        {{finalResponse | json}}
         <ng-container *ngIf="isSubmitted && (viewState === 'answer' || viewState === 'review')">
           <viewer-result [quizCategory]="primaryCategory" [quizResponse]="finalResponse" [percentage]="result"
             [isPassed]="finalResponse?.pass" (userSelection)="action($event)">
