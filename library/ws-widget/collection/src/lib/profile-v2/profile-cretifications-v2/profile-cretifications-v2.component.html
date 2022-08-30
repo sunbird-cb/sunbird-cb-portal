@@ -64,7 +64,7 @@
                 <div *ngIf="certificate.content?.appIcon" class="float-left">
                   <img [src]="certificate.content?.appIcon | pipeCertImageURL" class="app-icon example-header-image" [alt]="certificate.content.name || iGOT" />
                 </div>
-                <div *ngIf="!certificate.content?.posterImage" class="float-left">
+                <div *ngIf="!certificate.content?.appIcon" class="float-left">
                   <img src="/assets/instances/eagle/app_logos/default.png"  class="app-icon example-header-image" [alt]="certificate.content.name || iGOT" />
               </div>
                 <div class="flex flex-col gap-1">
