@@ -175,6 +175,7 @@ export class InitService {
       this.isAnonymousTelemetry = true
       this.updateTelemetryConfig()
       this.logger.info('Not Authenticated')
+      await this.initFeatured()
       // window.location.reload() // can do this
       return false
 
@@ -193,40 +194,7 @@ export class InitService {
       // }
       // await this.fetchUserProfileV2()
       // await this.createUserInNodebb()
-      const appsConfigPromise = this.fetchAppsConfig()
-      const instanceConfigPromise = this.fetchInstanceConfig() // config: depends only on details
-      const widgetStatusPromise = this.fetchWidgetStatus() // widget: depends only on details & feature
-      await this.fetchFeaturesStatus() // feature: depends only on details
-      /**
-       * Wait for the widgets and get the list of restricted widgets
-       */
-      const widgetConfig = await widgetStatusPromise
-      this.processWidgetStatus(widgetConfig)
-      this.widgetResolverService.initialize(
-        this.configSvc.restrictedWidgets,
-        this.configSvc.userRoles,
-        this.configSvc.userGroups,
-        this.configSvc.restrictedFeatures,
-      )
-      /**
-       * Wait for the instance config and after that
-       */
-      await instanceConfigPromise
-      this.updateTelemetryConfig()
-      /*
-       * Wait for the apps config and after that
-       */
-      const appsConfig = await appsConfigPromise
-      this.configSvc.appsConfig = this.processAppsConfig(appsConfig)
-      if (this.configSvc.instanceConfig) {
-        this.configSvc.instanceConfig.featuredApps = this.configSvc.instanceConfig.featuredApps.filter(
-          id => appsConfig.features[id],
-        )
-      }
-
-      // Apply the settings using settingsService
-      this.settingsSvc.initializePrefChanges(environment.production)
-      this.userPreference.initialize()
+      await this.initFeatured()
     } catch (e) {
       this.logger.warn(
         'Initialization process encountered some error. Application may not work as expected',
@@ -243,7 +211,42 @@ export class InitService {
     //   })
     return true
   }
+  async initFeatured() {
+    const appsConfigPromise = this.fetchAppsConfig()
+    const instanceConfigPromise = this.fetchInstanceConfig() // config: depends only on details
+    const widgetStatusPromise = this.fetchWidgetStatus() // widget: depends only on details & feature
+    await this.fetchFeaturesStatus() // feature: depends only on details
+    /**
+     * Wait for the widgets and get the list of restricted widgets
+     */
+    const widgetConfig = await widgetStatusPromise
+    this.processWidgetStatus(widgetConfig)
+    this.widgetResolverService.initialize(
+      this.configSvc.restrictedWidgets,
+      this.configSvc.userRoles,
+      this.configSvc.userGroups,
+      this.configSvc.restrictedFeatures,
+    )
+    /**
+     * Wait for the instance config and after that
+     */
+    await instanceConfigPromise
+    this.updateTelemetryConfig()
+    /*
+     * Wait for the apps config and after that
+     */
+    const appsConfig = await appsConfigPromise
+    this.configSvc.appsConfig = this.processAppsConfig(appsConfig)
+    if (this.configSvc.instanceConfig) {
+      this.configSvc.instanceConfig.featuredApps = this.configSvc.instanceConfig.featuredApps.filter(
+        id => appsConfig.features[id],
+      )
+    }
 
+    // Apply the settings using settingsService
+    this.settingsSvc.initializePrefChanges(environment.production)
+    this.userPreference.initialize()
+  }
   // private reloadAccordingToLocale() {
   //   if (window.location.origin.indexOf('http://localhost:') > -1) {
   //     return

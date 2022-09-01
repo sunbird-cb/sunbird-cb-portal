@@ -1175,10 +1175,10 @@
   dependencies:
     tslib "^1.9.0"
 
-"@sunbird-cb/micro-surveys@^1.2.3":
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/micro-surveys/-/micro-surveys-1.2.3.tgz#32413eee0ce7addcb54b7c00186364b38f1e53ea"
-  integrity sha512-aJ99ZydR8d5Qa0LoslMSBQ6Vb1/vUglHXGRXGwlWvXbdhFZptw/REBTYGP0pjEsraI1t6bf1I965I2LyGgDaxQ==
+"@sunbird-cb/micro-surveys@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/micro-surveys/-/micro-surveys-2.0.0.tgz#5a43fcf457419d03b5861537deda987a0d89262b"
+  integrity sha512-dg91gcqb+sN1ejGANTq15djpG2NDjVREm+8HRBFMVh6O42BjD/4NuYzXoxmGCziM1qeK5kBTBs6X6iuvooM6gg==
   dependencies:
     tslib "^1.9.0"
 
