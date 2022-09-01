@@ -12,8 +12,8 @@ export class PipeCertificateImageURL implements PipeTransform {
         const mainUrl = value && value.split('/content').pop() || ''
         const finalURL = `${environment.contentHost}/${environment.certificateassets}/content${mainUrl}`
         return value ? finalURL : ''
-      }
-      else {
+      } else
+       {
         const mainUrl = value && value.split('/content').pop() || ''
         // const finalURL = `${environment.contentHost}/${environment.contentBucket}/content${mainUrl}`
         const finalURL = `${environment.contentHost}/${environment.certificateassets}/content${mainUrl}`
@@ -22,12 +22,12 @@ export class PipeCertificateImageURL implements PipeTransform {
     }
 
     if (value.indexOf('/public/content') === -1) {
-      if (value.indexOf('/content/content') > -1 || value.indexOf('/igot/content') > -1 || value.indexOf('/content-store/content') > -1 ) {
+      if (value.indexOf('/content/content') > -1 || value.indexOf('/igot/content') > -1 || value.indexOf('/content-store/content') > -1) {
         const mainUrl = value && value.split('/content').pop() || ''
         const finalURL = `${environment.contentHost}/${environment.contentBucket}/content${mainUrl}`
         return value ? finalURL : ''
       }
-      if(value.indexOf('/content/collection') > -1) {
+      if (value.indexOf('/content/collection') > -1) {
         const mainUrl = value && value.split('/content').pop() || ''
         const finalURL = `${environment.contentHost}/${environment.contentBucket}${mainUrl}`
         return value ? finalURL : ''
