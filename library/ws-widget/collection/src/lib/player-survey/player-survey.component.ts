@@ -76,6 +76,8 @@ implements OnInit, AfterViewInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  
 
   checkAfterSubmit(e: any) {
     // this.renderSubject.next()
+    // tslint:disable-next-line:no-console
+    console.log(e)
     this.updateProgress(2)
   }
 
