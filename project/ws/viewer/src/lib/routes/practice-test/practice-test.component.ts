@@ -6,8 +6,8 @@ import { NsContent } from '@sunbird-cb/collection/src/lib/_services/widget-conte
 import { WidgetContentService } from '@sunbird-cb/collection/src/public-api'
 import { NSQuiz } from '../../plugins/quiz/quiz.model'
 // import { ViewerDataService } from '../../viewer-data.service'
-///**
-// * this will not be available for any Preview. 
+/// **
+// * this will not be available for any Preview.
 // **/
 @Component({
     selector: 'viewer-practice',

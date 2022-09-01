@@ -57,11 +57,19 @@ export class CompetenceComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
-      this.sideNavBarOpened = !isLtMedium && this.currentRoute !== 'all/assessment'
+      this.sideNavBarOpened = !(isLtMedium || this.needToHide)
       this.screenSizeIsLtMedium = isLtMedium
     })
   }
-
+  get isSideNavBarOpened(): boolean {
+    return this.sideNavBarOpened && true
+  }
+  set isSideNavBarOpened(value: boolean) {
+    this.sideNavBarOpened = value
+  }
+  get needToHide(): boolean {
+    return this.currentRoute.includes('all/assessment/')
+  }
   bindUrl(path: string) {
     if (path) {
       // console.log(path)

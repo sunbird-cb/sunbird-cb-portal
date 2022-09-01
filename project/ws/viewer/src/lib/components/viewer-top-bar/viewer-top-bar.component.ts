@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { MatDialog } from '@angular/material'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router'
+import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router'
 // import { NsContent } from '@sunbird-cb/collection'
 import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
@@ -38,6 +38,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   logo = true
   isPreview = false
   forChannel = false
+  currentRoute = window.location.pathname
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -51,6 +52,11 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
+    })
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.currentRoute = event.url
+      }
     })
   }
 
@@ -141,6 +147,9 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
 
   toggleSideBar() {
     this.toggle.emit()
+  }
+  get needToHide(): boolean {
+    return this.router.url.includes('all/assessment/')
   }
 
   back() {

@@ -185,4 +185,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   get sShowAppNavBar(): boolean {
     return this.showAppNavBar
   }
+  get needToHide(): boolean {
+    return this.currentRoute.includes('all/assessment/')
+  }
 }

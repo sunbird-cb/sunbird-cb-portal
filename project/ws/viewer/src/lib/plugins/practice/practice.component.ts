@@ -175,7 +175,6 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       }
       this.fetchingSectionsStatus = 'done'
       this.viewState = 'detail'
-      this.updateTimer()
       this.startIfonlySection()
     } else {
       this.quizSvc.getSection(this.identifier).subscribe((section: NSPractice.ISectionResponse) => {
@@ -216,6 +215,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         this.overViewed('start')
       }
     }
+    this.updateTimer()
+
   }
   updataDB(sections: NSPractice.IPaperSection[]) {
     const data: NSPractice.ISecAttempted[] = []
@@ -467,7 +468,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           ),
         )
         .subscribe(_timeRemaining => {
-          this.timeLeft -= 1
+          this.timeLeft = _timeRemaining
           // console.log(this.timeLeft)
           if (this.timeLeft < 0) {
             this.isIdeal = true

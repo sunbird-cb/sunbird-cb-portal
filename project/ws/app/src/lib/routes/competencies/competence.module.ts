@@ -43,6 +43,7 @@ import { CompetenciesAssessmentComponent } from './components/competencies-asses
 import { PracticePlModule } from '@ws/viewer/src/lib/plugins/practice/practice.module'
 import { CompetencyTestComponent } from './routes/competence-test/competence-test.component'
 import { ViewerTopBarModule } from '@ws/viewer/src/lib/components/viewer-top-bar/viewer-top-bar.module'
+import { CompetenceAssessmentService } from './services/comp-assessment.service'
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { ViewerTopBarModule } from '@ws/viewer/src/lib/components/viewer-top-bar
     // CKEditorService,
     LoaderService,
     InitResolver,
+    CompetenceAssessmentService,
   ],
   exports: [],
 })
