@@ -1,5 +1,5 @@
 <mat-toolbar [color]="pageNavbar.color" [ngStyle]="pageNavbar?.styles" class="mat-primary mat-elevation-z3 cheight">
-  <ws-widget-btn-page-back-nav *ngIf="!isPreview" [widgetData]="{
+  <ws-widget-btn-page-back-nav *ngIf="!isPreview && !needToHide" [widgetData]="{
       url: isTypeOfCollection
         ? collectionType === 'Playlist'
           ? '/app/playlist/me/' + collectionId
@@ -12,7 +12,10 @@
         : {}
       : {primaryCategory: resourcePrimaryCategory}
     }"></ws-widget-btn-page-back-nav>
-
+  <ws-widget-btn-page-back-nav *ngIf="needToHide" [widgetData]="{
+      url: '/app/competencies/home',
+      titles: []
+    }"></ws-widget-btn-page-back-nav>
   <!-- <mat-toolbar [color]="pageNavbar.color" [ngStyle]="pageNavbar?.styles" class="mat-primary mat-elevation-z3">
   <ws-widget-btn-page-back *ngIf="!forChannel" [widgetData]="{
       url: isTypeOfCollection
@@ -29,7 +32,8 @@
     <img [src]="appIcon" alt="Application Logo" class="app-logo" />
   </a>
   <a mat-icon-button class="width-auto" [routerLink]="prevResourceUrl" *ngIf="isTypeOfCollection && prevResourceUrl"
-    [disabled]="!prevResourceUrl" queryParamsHandling="" [queryParams]="prevResourceUrlParams?.queryParams" accesskey="<">
+    [disabled]="!prevResourceUrl" queryParamsHandling="" [queryParams]="prevResourceUrlParams?.queryParams"
+    accesskey="<">
     <mat-icon>skip_previous</mat-icon><span *ngIf="logo">PREV</span>
   </a>
   <h1 *ngIf="logo" class="width-expand text-center text-truncate">
@@ -37,14 +41,15 @@
   </h1>
   <!-- [disabled]="!nextResourceUrl" -->
   <!-- {{nextResourceUrl}} -->
-  <a mat-icon-button class="width-auto mr-10" [routerLink]="nextResourceUrl" [queryParams]="nextResourceUrlParams?.queryParams"
-    *ngIf="isTypeOfCollection && nextResourceUrl" queryParamsHandling="" accesskey=">">
+  <a mat-icon-button class="width-auto mr-10" [routerLink]="nextResourceUrl"
+    [queryParams]="nextResourceUrlParams?.queryParams" *ngIf="isTypeOfCollection && nextResourceUrl"
+    queryParamsHandling="" accesskey=">">
     <span *ngIf="logo">NEXT</span>
     <mat-icon>skip_next</mat-icon>
   </a>
   <!-- <button mat-icon-button class="width-auto mr-10" routerLink="/page/home" *ngIf="isTypeOfCollection && !nextResourceUrl" -->
-  <button mat-icon-button class="width-auto mr-10" (click)="finishDialog()" *ngIf="isTypeOfCollection && !nextResourceUrl"
-    accesskey=">">
+  <button mat-icon-button class="width-auto mr-10" (click)="finishDialog()"
+    *ngIf="isTypeOfCollection && !nextResourceUrl" accesskey=">">
     <span *ngIf="logo" class="finish">FINISH</span>
   </button>
   <!-- <a mat-icon-button> -->

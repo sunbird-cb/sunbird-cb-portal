@@ -64,27 +64,6 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     requiresSubmit: 'Yes',
     showTimer: 'Yes',
   }
-  // @Input() quizJson: { timeLimit: number, questions: NSPractice.IQuestion[], isAssessment: boolean } = {
-  //   timeLimit: this.duration,
-  //   questions: [
-  //     {
-  //       multiSelection: false,
-  //       section: '',
-  //       question: '',
-  //       questionId: '',
-  //       instructions: '',
-  //       questionType: '',
-  //       options: [
-  //         {
-  //           optionId: '',
-  //           text: '',
-  //           isCorrect: false,
-  //         },
-  //       ],
-  //     },
-  //   ],
-  //   isAssessment: false,
-  // }
   @ViewChildren('questionsReference') questionsReference: QueryList<QuestionComponent> | null = null
   @ViewChild('sidenav', { static: false }) sideNav: MatSidenav | null = null
   @ViewChild('submitModal', { static: false }) submitModal: ElementRef | null = null
@@ -131,7 +110,20 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     private valueSvc: ValueService,
     // private vws: ViewerDataService,
   ) {
-    this.init()
+    let canAttempt = true
+    if (this.primaryCategory != NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
+      this.canAttend().then(r => {
+        canAttempt = !!r
+      })
+    }
+    if (canAttempt) {
+      this.init()
+    }
+  }
+  async canAttend() {
+    const data = this.quizSvc.canAttend(this.identifier)
+    await data.toPromise()
+    return data
   }
   init() {
     // this.getSections()
@@ -196,7 +188,6 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       }
       this.fetchingSectionsStatus = 'done'
       this.viewState = 'detail'
-      this.updateTimer()
       this.startIfonlySection()
     } else {
       this.quizSvc.getSection(this.identifier).subscribe((section: NSPractice.ISectionResponse) => {
@@ -237,6 +228,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         this.overViewed('start')
       }
     }
+    this.updateTimer()
+
   }
   updataDB(sections: NSPractice.IPaperSection[]) {
     const data: NSPractice.ISecAttempted[] = []
@@ -274,7 +267,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         this.fetchingQuestionsStatus = 'done'
         this.overViewed('start')
       } else {
-        this.quizSvc.getQuestions(section.childNodes || [], section.identifier).subscribe(qqr => {
+        this.quizSvc.getQuestions(section.childNodes || [], this.identifier).subscribe(qqr => {
           this.fetchingQuestionsStatus = 'done'
           const question = _.get(qqr, 'result')
           const codes = _.compact(_.map(this.quizJson.questions, 'section') || [])
@@ -488,7 +481,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           ),
         )
         .subscribe(_timeRemaining => {
-          this.timeLeft -= 1
+          this.timeLeft = _timeRemaining
           // console.log(this.timeLeft)
           if (this.timeLeft < 0) {
             this.isIdeal = true
@@ -766,9 +759,9 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         this.clearQuizJson()
         this.fetchingResultsStatus = 'done'
         this.numCorrectAnswers = res.correct
-        this.numIncorrectAnswers = res.inCorrect
+        this.numIncorrectAnswers = res.incorrect
         this.numUnanswered = res.blank
-        this.passPercentage = res.passPercent
+        this.passPercentage = res.passPercentage
         this.result = res.overallResult
         if (this.result >= this.passPercentage) {
           this.isCompleted = true

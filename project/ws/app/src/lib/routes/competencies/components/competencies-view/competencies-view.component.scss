@@ -129,9 +129,10 @@ p.competency_level_text {
     margin-right: auto !important;
   }
 }
-
+ 
 .others {
-  background: #0074B6 0% 0% no-repeat padding-box;
+  background: #0074B6 0% 0% no-repeat padding-box !important;
+  color: #ffffff !important;
   border-radius: 4px;
 
   @include breakpoint-xs {

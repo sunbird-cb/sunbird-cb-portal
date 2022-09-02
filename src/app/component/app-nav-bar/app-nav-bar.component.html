@@ -1,5 +1,5 @@
 <ng-container *ngIf="fullMenuDispaly">
-  <mat-toolbar *ngIf="sShowAppNavBar && currentRoute !== 'all/assessment'"
+  <mat-toolbar *ngIf="sShowAppNavBar && !needToHide"
     [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
     class="mat-elevation-z3 custom mobile">
     <div class="fix-ww" id="root-tool-bar" title="toolbar" i18n-aria-label role="toolbar">
