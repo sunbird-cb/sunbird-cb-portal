@@ -13,15 +13,6 @@ export class PipeCertificateImageURL implements PipeTransform {
         const finalURL = `${environment.contentHost}/${environment.certificateassets}/content${mainUrl}`
         return value ? finalURL : ''
       }
-      else {
-        const mainUrl = value && value.split('/content').pop() || ''
-        // const finalURL = `${environment.contentHost}/${environment.contentBucket}/content${mainUrl}`
-        const finalURL = `${environment.contentHost}/${environment.certificateassets}/content${mainUrl}`
-        return value ? finalURL : ''
-      }
-
-
-
     }
 
     if (value.indexOf('/public/content') === -1) {
@@ -41,6 +32,5 @@ export class PipeCertificateImageURL implements PipeTransform {
         return value ? finalURL : ''
       }
     }
-
   }
 }
