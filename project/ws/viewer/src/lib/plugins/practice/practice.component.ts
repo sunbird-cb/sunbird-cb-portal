@@ -110,7 +110,20 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     private valueSvc: ValueService,
     // private vws: ViewerDataService,
   ) {
-    this.init()
+    let canAttempt = true
+    if (this.primaryCategory != NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
+      this.canAttend().then(r => {
+        canAttempt = !!r
+      })
+    }
+    if (canAttempt) {
+      this.init()
+    }
+  }
+  async canAttend() {
+    const data = this.quizSvc.canAttend(this.identifier)
+    await data.toPromise()
+    return data
   }
   init() {
     // this.getSections()

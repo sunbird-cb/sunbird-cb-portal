@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { NSPractice } from './practice.model'
-import { BehaviorSubject, Observable } from 'rxjs'
+import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs'
 import { map, retry } from 'rxjs/operators'
 
 const API_END_POINTS = {
@@ -240,5 +240,11 @@ export class PracticeService {
     }
 
     return array
+  }
+  canAttend(identifier: string): Observable<any> {
+    if (identifier) {
+      return of(EMPTY)
+    }
+    return of(EMPTY)
   }
 }
