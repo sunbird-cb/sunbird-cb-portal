@@ -66,7 +66,6 @@ export class CompetenceViewComponent implements OnInit {
     this.selectedId = comp.id
     // tslint:disable-next-line: prefer-template
     this.selectedLevel = comp.name + '(' + comp.level + ')'
-    this.dData.name
     const requestData = {
       request: {
         filters: {
