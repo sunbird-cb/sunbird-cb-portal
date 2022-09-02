@@ -19,7 +19,6 @@ export class AssessmentResolverService
         _state: RouterStateSnapshot,
     ): Observable<IResolveResponse<any>> {
         const id = route.params['assessmentId']
-        debugger
         return this.competenceSvc.fetchAssessment(id).pipe(
             map((data: any) => ({ data: _.get(data, 'result.questionSet') || {}, error: null })),
             catchError(error => of({ error, data: null })),

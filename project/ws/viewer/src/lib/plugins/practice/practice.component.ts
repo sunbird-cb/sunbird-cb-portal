@@ -111,7 +111,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     // private vws: ViewerDataService,
   ) {
     let canAttempt = true
-    if (this.primaryCategory != NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
+    if (this.primaryCategory !== NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
       this.canAttend().then(r => {
         canAttempt = !!r
       })
