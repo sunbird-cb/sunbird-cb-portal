@@ -33,7 +33,9 @@ export class PublicHomeComponent implements OnInit, OnDestroy {
     private domSanitizer: DomSanitizer,
     private ws: WidgetResolverService,
   ) {
-    this.loadData()
+    setTimeout(() => {
+      this.loadData()
+    },         5000)
   }
 
   get isWsInit(): boolean {
