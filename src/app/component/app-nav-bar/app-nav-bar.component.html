@@ -4,7 +4,7 @@
     class="mat-elevation-z3 custom mobile">
     <div class="fix-ww" id="root-tool-bar" title="toolbar" i18n-aria-label role="toolbar">
       <ng-container *ngIf="mode === 'top'">
-        <a [routerLink]="!forPreview ? '/page/home' : '/public/home'" class="logo-dim" role="link" title="Home"
+        <a [routerLink]="!isforPreview ? '/page/home' : '/public/home'" class="logo-dim" role="link" title="Home"
           i18n-aria-title i18n-aria-label>
           <img [src]="appIcon" alt="Application Logo" class="app-logo" />
         </a>
@@ -13,13 +13,13 @@
           <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: item }"
             *ngFor="let item of primaryNavbarConfig?.mediumScreen?.left">
           </ng-container>
-          <ng-container *ngIf="!forPreview">
+          <ng-container *ngIf="!isforPreview">
             <ws-app-search-input-home placeHolder="Search for learning contents" class="my-search flex-1"
               [ref]="'home'">
             </ws-app-search-input-home>
           </ng-container>
           <span class="spacer"></span>
-          <div *ngIf="!forPreview" ngClass="search-small-logo">
+          <div *ngIf="!isforPreview" ngClass="search-small-logo">
             <ng-container [wsResolverWidget]="{
         'widgetType': 'actionButton',
         'widgetSubType': 'buttonFeature',
@@ -35,12 +35,12 @@
           <div class="flex items-center">
             <img [src]="appIconSecondary" alt="Application Logo" class="app-logo" />
           </div>
-          <span *ngIf="!forPreview"  class="spacer"></span>
+          <span *ngIf="!isforPreview"  class="spacer"></span>
           <!-- <button class="home-help" mat-icon-button id='helper' [matMenuTriggerFor]="helpMenu" *ngIf="!isHelpMenuRestricted"
         >
         <mat-icon>help_outline</mat-icon>
       </button> -->
-          <ng-container *ngIf="!forPreview">
+          <ng-container *ngIf="!isforPreview">
             <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: item }"
               *ngFor="let item of primaryNavbarConfig?.mediumScreen?.right">
             </ng-container>
@@ -89,11 +89,11 @@
       <ng-container *ngIf="mode === 'top'">
         <div class="flex flex-1">
           <a class="logo-dim" role="link" title="Home" i18n-aria-title i18n-aria-label routerLink="/page/home"
-            *ngIf="isSetUpPage">
+            *ngIf="isThisSetUpPage">
             <img [src]="appIcon" alt="Application Logo" class="app-logo" />
           </a>
           <a class="logo-dim" role="link" title="Home" i18n-aria-title i18n-aria-label routerLink="/public/home"
-            *ngIf="!isSetUpPage && forPreview">
+            *ngIf="!isThisSetUpPage && isforPreview">
             <img [src]="appIcon" alt="Application Logo" class="app-logo" />
           </a>
         </div>
