@@ -188,9 +188,9 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   get needToHide(): boolean {
     return this.currentRoute.includes('all/assessment/')
   }
-  //parichay changes
+  // parichay changes
   get isforPreview(): boolean {
-    this.forPreview = window.location.href.includes('/public/') 
+    this.forPreview = window.location.href.includes('/public/')
     || window.location.href.includes('&preview=true')
     return this.forPreview
   }
