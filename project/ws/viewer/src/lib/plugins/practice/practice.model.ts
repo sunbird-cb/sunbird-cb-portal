@@ -83,8 +83,8 @@ export namespace NSPractice {
     total: number
     blank: number
     correct: number
-    passPercent: number
-    inCorrect: number
+    passPercentage: number
+    incorrect: number
     pass: boolean
   }
 

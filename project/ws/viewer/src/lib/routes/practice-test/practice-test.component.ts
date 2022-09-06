@@ -1,14 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { ConfigurationsService, EventService, LoggerService, WsEvents } from '@sunbird-cb/utils/src/public-api'
-import { AccessControlService } from '@ws/author/src/public-api'
 import { Subscription } from 'rxjs'
-import { ViewerUtilService } from '../../viewer-util.service'
 import { NsContent } from '@sunbird-cb/collection/src/lib/_services/widget-content.model'
 import { WidgetContentService } from '@sunbird-cb/collection/src/public-api'
 import { NSQuiz } from '../../plugins/quiz/quiz.model'
 // import { ViewerDataService } from '../../viewer-data.service'
-
+/// **
+// * this will not be available for any Preview.
+// **/
 @Component({
     selector: 'viewer-practice',
     templateUrl: './practice-test.component.html',
@@ -36,8 +36,6 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
     private telemetryIntervalSubscription: Subscription | null = null
     constructor(
         private activatedRoute: ActivatedRoute,
-        private accessControlSvc: AccessControlService,
-        private viewerSvc: ViewerUtilService,
         private configSvc: ConfigurationsService,
         private eventSvc: EventService,
         private contentSvc: WidgetContentService,
@@ -50,28 +48,14 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
     }
     ngOnInit(): void {
         this.isFetchingDataComplete = false
-        if (
-            this.activatedRoute.snapshot.queryParamMap.get('preview') &&
-            !this.accessControlSvc.authoringConfig.newDesign
-        ) {
-            this.isPreviewMode = true
-            this.viewerDataSubscription = this.viewerSvc
-                .getContent(this.activatedRoute.snapshot.paramMap.get('resourceId') || '')
-                .subscribe(data => {
-                    this.isFetchingDataComplete = false
-                    this.testData = data
-                    //   console.log(data)
-                    this.init()
-                })
-        } else {
-            this.dataSubscription = this.activatedRoute.data.subscribe(
-                async data => {
-                    this.isFetchingDataComplete = false
-                    this.testData = data.content.data
-                    //   console.log(this.testData)
-                    this.init()
-                })
-        }
+
+        this.dataSubscription = this.activatedRoute.data.subscribe(
+            async data => {
+                this.isFetchingDataComplete = false
+                this.testData = data.content.data
+                //   console.log(this.testData)
+                this.init()
+            })
     }
     init() {
         if (this.testData) {

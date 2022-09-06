@@ -344,6 +344,7 @@ export namespace NsContent {
     PLAYLIST = 'PLAYLIST',
     PRACTICE_RESOURCE = 'Practice Question Set',
     FINAL_ASSESSMENT = 'Course Assessment',
+    COMP_ASSESSMENT = 'Competency Assessment',
     FTB_QUESTION = 'FTB Question',
     MTF_QUESTION = 'MTF Question',
     MULTIPLE_CHOICE_QUESTION = 'Multiple Choice Question',
@@ -435,6 +436,7 @@ export namespace NsContent {
   export enum EDisplayContentTypes {
     ASSESSMENT = 'ASSESSMENT',
     PRACTICE_RESOURCE = 'Practice Question Set',
+    FINAL_ASSESSMENT = 'Course Assessment',
     AUDIO = 'AUDIO',
     CERTIFICATION = 'CERTIFICATION',
     CHANNEL = 'Channel',

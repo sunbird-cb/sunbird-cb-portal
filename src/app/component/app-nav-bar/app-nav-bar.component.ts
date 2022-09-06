@@ -185,4 +185,21 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   get sShowAppNavBar(): boolean {
     return this.showAppNavBar
   }
+  get needToHide(): boolean {
+    return this.currentRoute.includes('all/assessment/')
+  }
+  // parichay changes
+  get isforPreview(): boolean {
+    this.forPreview = window.location.href.includes('/public/')
+    || window.location.href.includes('&preview=true')
+    return this.forPreview
+  }
+  get isThisSetUpPage(): boolean {
+    if (window.location.pathname.includes('/app/setup')) {
+      this.isSetUpPage = true
+    } else {
+      this.isSetUpPage = false
+    }
+    return this.isSetUpPage
+  }
 }

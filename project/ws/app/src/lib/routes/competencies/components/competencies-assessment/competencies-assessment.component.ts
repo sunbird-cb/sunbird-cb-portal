@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, Inject } from '@angular/core'
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
-import { NsContent } from '@sunbird-cb/utils/src/public-api'
-import { NSPractice } from '@ws/viewer/src/lib/plugins/practice/practice.model'
+import { Component, OnInit, Input } from '@angular/core'
+ import { NsContent } from '@sunbird-cb/utils/src/public-api'
+import { NSQuiz } from '@ws/viewer/src/lib/plugins/quiz/quiz.model'
+// import { NSQuiz } from '@ws/viewer/src/lib/plugins/quiz/quiz.model'
 import { NSCompetencie } from '../../models/competencies.model'
 
 // import { Router } from '@angular/router'
@@ -17,18 +17,49 @@ import { NSCompetencie } from '../../models/competencies.model'
 export class CompetenciesAssessmentComponent implements OnInit {
     @Input()
     data!: NSCompetencie.ICompetencie
+    @Input() assessmentData!: any
     ePrimartCategory = NsContent.EPrimaryCategory
-    _ID = 'do_1135047568283648001115' // temp
-    quizJson!: { timeLimit: Number, questions: NSPractice.IQuestion[], isAssessment: boolean }
+    @Input() assessmentId!: string
+    quizJson!: NSQuiz.IQuiz
     // fullScreenContainer: HTMLElement | null = null
     // forPreview = window.location.href.includes('/author/')
+    learningObjective = 'Competency test'
+    duration = 0
+    primaryCategory = NsContent.EPrimaryCategory.COMP_ASSESSMENT
+    constructor() {
 
-    constructor(public dialogRef: MatDialogRef<CompetenciesAssessmentComponent>,
-
-                @Inject(MAT_DIALOG_DATA) public dData: NSCompetencie.ICompetencie) {
-        this.quizJson = { timeLimit: 2, questions: [], isAssessment: true }
     }
     ngOnInit() {
+        this.quizJson = {
+            timeLimit: 300,
+            questions: [
+                {
+                    multiSelection: false,
+                    section: '',
+                    question: '',
+                    questionId: '',
+                    instructions: '',
+                    questionType: undefined,
+                    options: [
+                        {
+                            optionId: '',
+                            text: '',
+                            isCorrect: false,
+                        },
+                    ],
+                },
+            ],
+            isAssessment: false,
+            allowSkip: 'No',
+            maxQuestions: this.assessmentData.maxQuestions,
+            requiresSubmit: 'Yes',
+            showTimer: 'Yes',
+        }
+        this.learningObjective = this.assessmentData.name
+        // let complexityLevel =  this.assessmentData.name
+        this.duration = this.assessmentData.expectedDuration
+        // let collectionId =  this.assessmentData.name
+        this.primaryCategory = this.assessmentData.primaryCategory || NsContent.EPrimaryCategory.COMP_ASSESSMENT
 
     }
 

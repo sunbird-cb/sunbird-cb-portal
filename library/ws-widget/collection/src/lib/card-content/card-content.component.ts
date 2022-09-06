@@ -246,7 +246,6 @@ export class CardContentComponent extends WidgetBaseComponent
     // if(this.forPreview){
     //   return
     // }
-    console.log('inside raiseTelemetry')
     this.events.raiseInteractTelemetry(
       {
         type: 'click',

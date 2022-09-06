@@ -87,7 +87,7 @@
               </a>
             </div> -->
             <div class="flex flex-1 flex-center">
-              <a i18n mat-button href="/protected/v8/resource"
+              <a i18n mat-button [href]="'/protected/v8/resource?redirect_uri=/app/toc/'+ collectionId +'/overview'"
                 class="flex text-center margin-right-s flex-end  ws-mat-default-text ws-mat-accent-border-active">
                 Sign in</a>
               <span i18n class="flex ws-mat-default-text margin-left-s margin-right-s margin-top-xs-2">or</span>
