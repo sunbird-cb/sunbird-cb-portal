@@ -21,10 +21,10 @@ implements OnInit, AfterViewInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  
   }
   @Input() widgetData!: IWidgetsPlayerSurveyData
   runnerSubs: Subscription | null = null
-  // private renderSubject = new Subject()
   enableTelemetry = false
   surveyId: any
-  // afterSubmitLink = '/page/home'
+  courseId: any
+  // courseName: any
   apiData: {
     // tslint:disable-next-line:prefer-template
     getAPI: string;
@@ -44,17 +44,24 @@ implements OnInit, AfterViewInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  
   isReadOnly = false
 
   ngOnInit() {
-    // if (this.widgetData && this.widgetData.surveyUrl) {
-      const sID = this.widgetData.surveyUrl.split('surveys/')
-      this.surveyId = sID[1]
-      this.apiData = {
-        // tslint:disable-next-line:prefer-template
-        getAPI: '/apis/proxies/v8/forms/getFormById?id=' + this.surveyId,
-        postAPI: '/apis/proxies/v8/forms/v1/saveFormSubmit',
-        getAllApplications: '/apis/proxies/v8/forms/getAllApplications',
-        customizedHeader: {},
-      }
-    // }
+    // console.log('widgetData', this.widgetData)
+    this.courseId = this.widgetData.collectionId
+    // this.viewerSvc.fetchContent(this.courseId, 'detail').subscribe(
+    //   (data: any) => {
+    //     this.courseName = data.result.content.name
+    //     console.log('courseName', this.courseName)
+    //   },
+    //   () => resolve(true),
+    // )
+    const sID = this.widgetData.surveyUrl.split('surveys/')
+    this.surveyId = sID[1]
+    this.apiData = {
+      // tslint:disable-next-line:prefer-template
+      getAPI: '/apis/proxies/v8/forms/getFormById?id=' + this.surveyId,
+      postAPI: '/apis/proxies/v8/forms/v1/saveFormSubmit',
+      getAllApplications: '/apis/proxies/v8/forms/getAllApplications',
+      customizedHeader: {},
+    }
     this.widgetData.disableTelemetry = false
     this.updateProgress(1)
 
