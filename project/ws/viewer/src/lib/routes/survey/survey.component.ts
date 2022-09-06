@@ -31,6 +31,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
       hideControls: true,
       mimeType: '',
       collectionId: '',
+      courseName: '',
     },
   }
   isPreviewMode = false
@@ -69,6 +70,11 @@ export class SurveyComponent implements OnInit, OnDestroy {
           //   : ''
           if (this.activatedRoute.snapshot.queryParams.collectionId) {
             this.widgetResolverSurveyData.widgetData.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
+            this.viewerSvc.fetchContent(this.widgetResolverSurveyData.widgetData.collectionId, 'detail').subscribe(
+              (dt: any) => {
+                this.widgetResolverSurveyData.widgetData.courseName = dt.result.content.name
+              }
+            )
           } else {
             this.widgetResolverSurveyData.widgetData.collectionId = ''
           }
@@ -92,6 +98,11 @@ export class SurveyComponent implements OnInit, OnDestroy {
           }
           if (this.activatedRoute.snapshot.queryParams.collectionId) {
             this.widgetResolverSurveyData.widgetData.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
+            this.viewerSvc.fetchContent(this.widgetResolverSurveyData.widgetData.collectionId, 'detail').subscribe(
+              (dt: any) => {
+                this.widgetResolverSurveyData.widgetData.courseName = dt.result.content.name
+              }
+            )
           } else {
             this.widgetResolverSurveyData.widgetData.collectionId = ''
           }

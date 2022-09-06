@@ -5,6 +5,7 @@ export interface IWidgetsPlayerSurveyData {
   collectionId?: string
   mimeType?: any
   contentType?: any
+  courseName?: any
 }
 
 export interface IPlayerSurvey {

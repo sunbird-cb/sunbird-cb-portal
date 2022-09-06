@@ -16,15 +16,12 @@ import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 export class PlayerSurveyComponent extends WidgetBaseComponent
 implements OnInit, AfterViewInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
 
-  constructor(private activatedRoute: ActivatedRoute, private eventSvc: EventService, private viewerSvc: ViewerUtilService) {
-    super()
-  }
   @Input() widgetData!: IWidgetsPlayerSurveyData
   runnerSubs: Subscription | null = null
   enableTelemetry = false
   surveyId: any
   courseId: any
-  // courseName: any
+  courseName: any
   apiData: {
     // tslint:disable-next-line:prefer-template
     getAPI: string;
@@ -43,16 +40,13 @@ implements OnInit, AfterViewInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  
   public afterSubmitAction = this.checkAfterSubmit.bind(this)
   isReadOnly = false
 
+  constructor(private activatedRoute: ActivatedRoute, private eventSvc: EventService, private viewerSvc: ViewerUtilService) {
+    super()
+  }
+
   ngOnInit() {
-    // console.log('widgetData', this.widgetData)
     this.courseId = this.widgetData.collectionId
-    // this.viewerSvc.fetchContent(this.courseId, 'detail').subscribe(
-    //   (data: any) => {
-    //     this.courseName = data.result.content.name
-    //     console.log('courseName', this.courseName)
-    //   },
-    //   () => resolve(true),
-    // )
+    this.courseName = this.widgetData.courseName
     const sID = this.widgetData.surveyUrl.split('surveys/')
     this.surveyId = sID[1]
     this.apiData = {
