@@ -1187,7 +1187,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   async onSubmit(form: any) {
-
+    this.uploadSaveData = true
     // DO some customization on the input data
     form.value.knownLanguages = this.selectedKnowLangs
     form.value.interests = this.personalInterests
@@ -1204,7 +1204,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       form.value.doj = changeformat(new Date(`${form.value.doj}`))
     }
 
-    this.uploadSaveData = true
+    // this.uploadSaveData = true
     this.getEditedValues(form)
     // Construct the request structure for open saber
     // const profileRequest = this.constructReq(form)
@@ -1226,8 +1226,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     // console.log( reqUpdate)
     this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(res => {
+      this.uploadSaveData = false
       if (res.params.status === 'success') {
-        this.uploadSaveData = false
         this.openSnackbar(this.toastSuccess.nativeElement.value)
         if ('professionalDetails' in reqUpdates.request.profileDetails) {
           if ('personalDetails' in reqUpdates.request.profileDetails ||
