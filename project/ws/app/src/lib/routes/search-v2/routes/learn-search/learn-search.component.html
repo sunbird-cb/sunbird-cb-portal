@@ -56,9 +56,20 @@
 
                 <mat-card class="learn-card margin-bottom-m padding-remove position-relative"
                     *ngFor="let content of searchResults" (click)="raiseTelemetry(content)">
-                    <div class="imageholder float-left">
+                    <!-- <div class="imageholder float-left">
                         <img mat-card-image class="margin-remove" [src]="content.posterImage | pipePublicURL"
                             [wsUtilsDefaultThumbnail]="defaultThumbnail" alt="">
+                    </div> -->
+                    <div *ngIf="content?.posterImage" class="imageholder float-left">
+                      <img mat-card-image class="margin-remove" [src]="content?.posterImage | pipePublicURL" alt="" />
+                    </div>
+                    <div *ngIf="!content?.posterImage" class="imageholder float-left">
+                      <ng-container  *ngIf="content?.appIcon; else defaultImg" class="imageholder float-left">
+                        <img mat-card-image class="margin-remove" [src]="content?.appIcon | pipePublicURL" alt="" />
+                    </ng-container>
+                      <ng-template #defaultImg>
+                        <img mat-card-image class="margin-remove" src="/assets/instances/eagle/app_logos/default.png" alt="" />
+                      </ng-template>
                     </div>
                     <mat-card-content>
                         <!-- <p class="mat-caption margin-bottom-xxs ws-mat-black60-text" *ngIf="content.contentType === 'Course'">
@@ -141,7 +152,7 @@
                                     <li *ngFor="let tag of content.keywords">{{tag}}</li>
                                 </ul>
                                 <!-- <p class="display-inline-block ws-mat-black60-text actionbtns">
-                                    <mat-icon class="margin-right-s">more_vert_outlined</mat-icon> 
+                                    <mat-icon class="margin-right-s">more_vert_outlined</mat-icon>
                                     <mat-icon>playlist_add</mat-icon>
                                 </p> -->
                             </div>

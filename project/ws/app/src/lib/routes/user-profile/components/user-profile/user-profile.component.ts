@@ -1257,7 +1257,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
             }
           } else {
-            this.uploadSaveData = false
+            // this.uploadSaveData = false
             this.openSnackbar(this.toastError.nativeElement.value, this.userProfileData.id)
           }
         }
