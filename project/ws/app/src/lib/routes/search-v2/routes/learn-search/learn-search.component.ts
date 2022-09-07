@@ -180,7 +180,6 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         this.getFacets(response.result.facets)
       })
 
-
     }
     // if ((this.paramFilters && this.paramFilters.length > 0) || (this.myFilters && this.myFilters.length > 0)) {
     // queryparam.request.filters = this.paramFilters
