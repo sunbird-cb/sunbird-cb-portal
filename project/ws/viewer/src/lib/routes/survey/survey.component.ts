@@ -57,7 +57,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
       this.isPreviewMode = true
       this.viewerDataSubscription = this.viewerSvc
         .getContent(this.activatedRoute.snapshot.paramMap.get('resourceId') || '')
-        .subscribe(data => {
+        .subscribe(async data => {
           this.surveyData = data
           if (this.surveyData) {
             this.formDiscussionForumWidget(this.surveyData)
@@ -70,11 +70,9 @@ export class SurveyComponent implements OnInit, OnDestroy {
           //   : ''
           if (this.activatedRoute.snapshot.queryParams.collectionId) {
             this.widgetResolverSurveyData.widgetData.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
-            this.viewerSvc.fetchContent(this.widgetResolverSurveyData.widgetData.collectionId, 'detail').subscribe(
-              (dt: any) => {
-                this.widgetResolverSurveyData.widgetData.courseName = dt.result.content.name
-              }
-            )
+            if (this.widgetResolverSurveyData.widgetData && this.widgetResolverSurveyData.widgetData.collectionId) {
+              await this.fetchContent()
+            }
           } else {
             this.widgetResolverSurveyData.widgetData.collectionId = ''
           }
@@ -98,11 +96,9 @@ export class SurveyComponent implements OnInit, OnDestroy {
           }
           if (this.activatedRoute.snapshot.queryParams.collectionId) {
             this.widgetResolverSurveyData.widgetData.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
-            this.viewerSvc.fetchContent(this.widgetResolverSurveyData.widgetData.collectionId, 'detail').subscribe(
-              (dt: any) => {
-                this.widgetResolverSurveyData.widgetData.courseName = dt.result.content.name
-              }
-            )
+            if (this.widgetResolverSurveyData.widgetData && this.widgetResolverSurveyData.widgetData.collectionId) {
+              await this.fetchContent()
+            }
           } else {
             this.widgetResolverSurveyData.widgetData.collectionId = ''
           }
@@ -141,6 +137,13 @@ export class SurveyComponent implements OnInit, OnDestroy {
         () => { },
       )
     }
+  }
+
+  async fetchContent() {
+    const content = await this.contentSvc
+      .fetchContent(this.widgetResolverSurveyData.widgetData.collectionId || '', 'minimal')
+      .toPromise()
+    this.widgetResolverSurveyData.widgetData.courseName = content.result.content.name
   }
 
   generateUrl(oldUrl: string) {

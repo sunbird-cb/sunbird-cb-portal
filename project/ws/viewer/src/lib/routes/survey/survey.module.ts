@@ -32,11 +32,13 @@ import { RouterModule } from '@angular/router'
 import { SurveyComponent } from './survey.component'
 
 import { SurveyModule as SurveyViewContainerModule } from '../../route-view-container/survey/survey.module'
+import { SurveyRoutingModule } from './survey-routing.module'
 
 @NgModule({
   declarations: [SurveyComponent],
   imports: [
     RouterModule,
+    SurveyRoutingModule,
     CommonModule,
     MatCardModule,
     MatDividerModule,

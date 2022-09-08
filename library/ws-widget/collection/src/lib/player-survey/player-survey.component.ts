@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, AfterViewInit } from '@angular/core'
+import { Component, OnInit, Input, OnDestroy } from '@angular/core'
 import { IWidgetsPlayerSurveyData } from './player-survey.model'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { interval, Subscription } from 'rxjs'
@@ -7,6 +7,7 @@ import { ROOT_WIDGET_CONFIG } from '../collection.config'
 import { NsContent } from '../_services/widget-content.model'
 import { ActivatedRoute } from '@angular/router'
 import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
+import { MatSnackBar } from '@angular/material'
 
 @Component({
   selector: 'ws-widget-player-survey',
@@ -14,7 +15,7 @@ import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
   styleUrls: ['./player-survey.component.scss'],
 })
 export class PlayerSurveyComponent extends WidgetBaseComponent
-implements OnInit, AfterViewInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
+implements OnInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
 
   @Input() widgetData!: IWidgetsPlayerSurveyData
   runnerSubs: Subscription | null = null
@@ -40,7 +41,8 @@ implements OnInit, AfterViewInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  
   public afterSubmitAction = this.checkAfterSubmit.bind(this)
   isReadOnly = false
 
-  constructor(private activatedRoute: ActivatedRoute, private eventSvc: EventService, private viewerSvc: ViewerUtilService) {
+  constructor(private activatedRoute: ActivatedRoute, private eventSvc: EventService, private viewerSvc: ViewerUtilService,
+              private snackBar: MatSnackBar) {
     super()
   }
 
@@ -67,18 +69,27 @@ implements OnInit, AfterViewInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  
     }
   }
 
-  ngAfterViewInit() {
-    if (this.widgetData && this.widgetData.surveyUrl) {
-      if (this.widgetData.identifier) {
-        this.identifier = this.widgetData.identifier
-      }
-    }
-  }
+  // async ngAfterViewInit() {
+  //   if (this.widgetData && this.widgetData.collectionId) {
+  //       await this.fetchContent()
+  //   }
+  // }
+
+  // async fetchContent() {
+  //   const content = await this.contentSvc
+  //     .fetchContent(this.widgetData.collectionId || '', 'minimal')
+  //     .toPromise()
+  //   this.widgetData.courseName = content.result.content.name
+  //   this.courseName = this.widgetData.courseName
+  //   // tslint:disable-next-line:no-console
+  //   console.log('****courseName****', this.courseName)
+  // }
 
   checkAfterSubmit(e: any) {
     // this.renderSubject.next()
     // tslint:disable-next-line:no-console
     console.log(e)
+    this.openSnackbar('Survey is submitted')
     this.updateProgress(2)
   }
 
@@ -148,5 +159,11 @@ implements OnInit, AfterViewInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  
     // if (this.identifier) {
     //   this.fireRealTimeProgress(this.identifier)
     // }
+  }
+
+  private openSnackbar(primaryMsg: string, duration: number = 5000) {
+    this.snackBar.open(primaryMsg, 'X', {
+      duration,
+    })
   }
 }

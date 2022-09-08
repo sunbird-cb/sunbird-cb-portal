@@ -5,7 +5,6 @@ import { noop, Observable } from 'rxjs'
 import dayjs from 'dayjs'
 import { NsContent } from '@sunbird-cb/collection/src/lib/_services/widget-content.model'
 import { environment } from 'src/environments/environment'
-import { retry } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root',
@@ -204,19 +203,21 @@ export class ViewerUtilService {
     return `${environment.contentHost}/${environment.contentBucket}/content${mainUrl}`
   }
 
-   fetchContent(
-    contentId: string,
-    hierarchyType: 'all' | 'minimal' | 'detail' = 'detail'
-    ): Observable<NsContent.IContent> {
-      let url = ''
-      const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
-        if (!forPreview) {
-          url = `/apis/proxies/v8/action/content/v3/hierarchy/${contentId}?hierarchyType=${hierarchyType}`
-        } else {
-          url = `/api/course/v1/hierarchy/${contentId}?hierarchyType=${hierarchyType}`
-        }
-        return this.http
-        .get<NsContent.IContent>(url)
-        .pipe(retry(1))
+  //  fetchContent(
+  //   contentId: string,
+  //   hierarchyType: 'all' | 'minimal' | 'detail' = 'detail'
+  //   ): Observable<NsContent.IContent> {
+  //     let url = ''
+  //     const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+  //       if (!forPreview) {
+  //         url = `/apis/proxies/v8/action/content/v3/hierarchy/${contentId}?hierarchyType=${hierarchyType}`
+  //       } else {
+  //         url = `/api/course/v1/hierarchy/${contentId}?hierarchyType=${hierarchyType}`
+  //       }
+  //       return this.http.get<NsContent.IContent>(url)
+  //   }
+
+    fetchContent(id: string, type: string) {
+      return this.http.get<NsContent.IContent>(`/apis/proxies/v8/action/content/v3/hierarchy/${id}?mode=${type}`)
     }
 }
