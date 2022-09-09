@@ -12,7 +12,7 @@
     </div>
     <img class="flex-1 result_image" [src]="staticImage" alt="exam image" />
   </div>
-  <div class="flex flex-1 flex-row result_text_box ws-mat-accent-border border-custom">
+  <div class="flex flex-1 flex-column result_text_box ws-mat-accent-border border-custom">
     <div class="flex flex-1 flex-row flex-wrap margin-top-m">
       <ng-container *ngFor="let _parts of quizResponse?.children; let i = index">
         <mat-card *ngIf="_parts" class="ws-mat-accent-border box-c result_box">
@@ -53,15 +53,15 @@
           <mat-spinner></mat-spinner>
         </div>
       </ng-container>
-      <ng-container
-        *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory && (quizResponse?.children && quizResponse?.children?.length > 0)">
-        <div class="flex flex-1 flex-row-reverse">
-          <a mat-button (click)="action('retake')" class="width-1-1 text-white ws-mat-primary-background retake">
-            Retake assessment
-          </a>
-        </div>
-      </ng-container>
     </div>
+    <ng-container
+      *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory && (quizResponse?.children && quizResponse?.children?.length > 0)">
+      <div class="flex flex-1 flex-center">
+        <a mat-button (click)="action('retake')" class="width-1-1 text-white ws-mat-primary-background retake">
+          Retake assessment
+        </a>
+      </div>
+    </ng-container>
   </div>
   <div class="flex flex-1 blank_box"></div>
 </div>
