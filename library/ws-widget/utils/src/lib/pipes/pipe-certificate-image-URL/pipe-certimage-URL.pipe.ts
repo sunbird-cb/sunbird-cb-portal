@@ -16,7 +16,7 @@ export class PipeCertificateImageURL implements PipeTransform {
     }
 
     if (value.indexOf('/public/content') === -1) {
-      if (value.indexOf('/content/content') > -1 || value.indexOf('/igot/content') > -1 || value.indexOf('/content-store/content') > -1) {
+      if (value.indexOf('/content/content') > -1 || value.indexOf('/igot/content') > -1 || value.indexOf('/content-store/content') > -1 || value.indexOf('/igotprod/content') > -1 ) {
         const mainUrl = value && value.split('/content').pop() || ''
         const finalURL = `${environment.contentHost}/${environment.contentBucket}/content${mainUrl}`
         return value ? finalURL : ''
