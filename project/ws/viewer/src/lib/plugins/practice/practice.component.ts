@@ -436,7 +436,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   get noOfQuestions(): number {
     if (this.quizJson.maxQuestions) {
       return this.quizJson.maxQuestions
-    } else if (this.retake) {
+    }  if (this.retake) {
       return _.get(this.activatedRoute, 'snapshot.data.content.data.maxQuestions') || 0
     }
     return 0
