@@ -80,7 +80,7 @@ export class CompetenceViewComponent implements OnInit {
           ],
           'competencies_v3.name': [
             this.dData.name,
-          ]
+          ],
         },
         query: '',
         sort_by: {

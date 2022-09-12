@@ -1,9 +1,7 @@
 <viewer-overview *ngIf="viewState === 'initial'" [learningObjective]="learningObjective"
-  [complexityLevel]="complexityLevel" [duration]="duration" [timeLimit]="quizJson?.timeLimit"
+  [complexityLevel]="complexityLevel" [duration]="duration" [timeLimit]="(quizJson?.timeLimit || 0) + assessmentBuffer"
   [primaryCategory]="primaryCategory" [noOfQuestions]="noOfQuestions" (userSelection)="getSections($event)">
 </viewer-overview>
-
-
 <div #quizContainer class="quiz-container" *ngIf="viewState !== 'initial'">
   <div class="flex flex-1 flex-column quiz_inner_container">
     <nav class="quiz-nav-bar mat-toolbar mat-caption flex-column">
@@ -102,7 +100,8 @@
           *ngIf="fetchingQuestionsStatus === 'done' && viewState !== 'detail' && !(viewState === 'answer') && !isSubmitted">
           <ng-container *ngIf="true">
             <div class="flex flex-1 padding-l card_inner_box flex-row">
-              <span class="mat-title margin-bottom-remove flex flex-1 practice_card_title">{{selectedSection.name}}</span>
+              <span
+                class="mat-title margin-bottom-remove flex flex-1 practice_card_title">{{selectedSection.name}}</span>
               <!-- <span class="spacer"></span> -->
               <ng-container [ngTemplateOutlet]="timer"></ng-container>
               <div class="flex flex-1 flex-row-reverse butto_box end">
