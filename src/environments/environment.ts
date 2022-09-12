@@ -24,6 +24,7 @@ export const environment: IEnvironment = {
   recaptchaKey: (window as { [key: string]: any })['env']['recaptchaKey'] || [],
   contentBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
   certificateassets: (window as { [key: string]: any })['env']['certificateassets'] || '',
+  assessmentBuffer: (window as { [key: string]: any })['env']['assessmentBuffer'] || 0,
 }
 interface IEnvironment {
   name: string,
@@ -43,6 +44,7 @@ interface IEnvironment {
   recaptchaKey?: string,
   contentBucket?: string,
   certificateassets?: string,
+  assessmentBuffer: number,
 }
 
 /*
