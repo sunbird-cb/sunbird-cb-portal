@@ -4,7 +4,7 @@ import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { interval, Subscription } from 'rxjs'
 import { EventService, WsEvents } from '@sunbird-cb/utils'
 import { ROOT_WIDGET_CONFIG } from '../collection.config'
-import { NsContent } from '../_services/widget-content.model'
+// import { NsContent } from '../_services/widget-content.model'
 import { ActivatedRoute } from '@angular/router'
 import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 import { MatSnackBar } from '@angular/material'
@@ -30,16 +30,10 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
     getAllApplications: string;
     customizedHeader: {};
   } | undefined
-  realTimeProgressRequest = {
-    content_type: 'Resource',
-    current: ['0'],
-    max_size: 0,
-    mime_type: NsContent.EMimeTypes.SURVEY,
-    user_id_type: 'uuid',
-  }
   identifier: string | null = null
   public afterSubmitAction = this.checkAfterSubmit.bind(this)
   isReadOnly = false
+  progressStatus: any
 
   constructor(private activatedRoute: ActivatedRoute, private eventSvc: EventService, private viewerSvc: ViewerUtilService,
               private snackBar: MatSnackBar) {
@@ -49,6 +43,7 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
   ngOnInit() {
     this.courseId = this.widgetData.collectionId
     this.courseName = this.widgetData.courseName
+    this.progressStatus = this.widgetData.progressStatus
     const sID = this.widgetData.surveyUrl.split('surveys/')
     this.surveyId = sID[1]
     this.apiData = {

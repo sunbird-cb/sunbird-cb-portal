@@ -6,7 +6,7 @@ import { WsEvents, EventService, ConfigurationsService } from '@sunbird-cb/utils
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ActivatedRoute } from '@angular/router'
 import { ViewerUtilService } from '../../viewer-util.service'
-import { environment } from 'src/environments/environment'
+// import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'viewer-survey',
@@ -32,6 +32,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
       mimeType: '',
       collectionId: '',
       courseName: '',
+      progressStatus: '',
     },
   }
   isPreviewMode = false
@@ -58,16 +59,16 @@ export class SurveyComponent implements OnInit, OnDestroy {
       this.viewerDataSubscription = this.viewerSvc
         .getContent(this.activatedRoute.snapshot.paramMap.get('resourceId') || '')
         .subscribe(async data => {
-          this.surveyData = data
+          this.surveyData = data.result.content
           if (this.surveyData) {
             this.formDiscussionForumWidget(this.surveyData)
             if (this.discussionForumWidget) {
               this.discussionForumWidget.widgetData.isDisabled = true
             }
           }
-          // this.widgetResolverSurveyData.widgetData.surveyUrl = this.surveyData
-          //   ? `/apis/authContent/${encodeURIComponent(this.surveyData.artifactUrl)}`
-          //   : ''
+          if (this.surveyData && this.surveyData.artifactUrl.indexOf('content-store') >= 0) {
+            await this.setS3Cookie(this.surveyData.identifier)
+          }
           if (this.activatedRoute.snapshot.queryParams.collectionId) {
             this.widgetResolverSurveyData.widgetData.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
             if (this.widgetResolverSurveyData.widgetData && this.widgetResolverSurveyData.widgetData.collectionId) {
@@ -76,7 +77,21 @@ export class SurveyComponent implements OnInit, OnDestroy {
           } else {
             this.widgetResolverSurveyData.widgetData.collectionId = ''
           }
-          this.widgetResolverSurveyData.widgetData.surveyUrl = this.generateUrl(this.surveyData.artifactUrl)
+          if (this.surveyData && this.surveyData.identifier) {
+            if (this.activatedRoute.snapshot.queryParams.collectionId) {
+              await this.fetchContinueLearning(
+                this.activatedRoute.snapshot.queryParams.collectionId,
+                this.surveyData.identifier,
+              )
+            } else {
+              await this.fetchContinueLearning(this.surveyData.identifier, this.surveyData.identifier)
+            }
+          }
+          this.widgetResolverSurveyData.widgetData.surveyUrl = this.surveyData
+          ? this.forPreview
+            ? this.viewerSvc.getAuthoringUrl(this.surveyData.artifactUrl)
+            : this.surveyData.artifactUrl
+          : ''
           this.widgetResolverSurveyData.widgetData.disableTelemetry = true
           this.isFetchingDataComplete = true
         })
@@ -89,6 +104,9 @@ export class SurveyComponent implements OnInit, OnDestroy {
           }
           if (this.surveyData) {
             this.formDiscussionForumWidget(this.surveyData)
+            if (this.discussionForumWidget) {
+              this.discussionForumWidget.widgetData.isDisabled = true
+            }
           }
 
           if (this.surveyData && this.surveyData.artifactUrl.indexOf('content-store') >= 0) {
@@ -102,7 +120,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
           } else {
             this.widgetResolverSurveyData.widgetData.collectionId = ''
           }
-          this.widgetResolverSurveyData.widgetData.resumePage = 1
+          // this.widgetResolverSurveyData.widgetData.resumePage = 1
           if (this.surveyData && this.surveyData.identifier) {
             if (this.activatedRoute.snapshot.queryParams.collectionId) {
               await this.fetchContinueLearning(
@@ -123,7 +141,6 @@ export class SurveyComponent implements OnInit, OnDestroy {
             this.widgetResolverSurveyData.widgetData.mimeType = this.surveyData.mimeType
             this.widgetResolverSurveyData.widgetData.contentType = this.surveyData.contentType
             this.widgetResolverSurveyData.widgetData.primaryCategory = this.surveyData.primaryCategory
-
             this.widgetResolverSurveyData.widgetData.version = `${this.surveyData.version}${''}`
           }
           this.widgetResolverSurveyData = JSON.parse(JSON.stringify(this.widgetResolverSurveyData))
@@ -146,22 +163,22 @@ export class SurveyComponent implements OnInit, OnDestroy {
     this.widgetResolverSurveyData.widgetData.courseName = content.result.content.name
   }
 
-  generateUrl(oldUrl: string) {
-    const chunk = oldUrl.split('/')
-    const newChunk = environment.azureHost.split('/')
-    const newLink = []
-    for (let i = 0; i < chunk.length; i += 1) {
-      if (i === 2) {
-        newLink.push(newChunk[i])
-      } else if (i === 3) {
-        newLink.push(environment.azureBucket)
-      } else {
-        newLink.push(chunk[i])
-      }
-    }
-    const newUrl = newLink.join('/')
-    return newUrl
-  }
+  // generateUrl(oldUrl: string) {
+  //   const chunk = oldUrl.split('/')
+  //   const newChunk = environment.azureHost.split('/')
+  //   const newLink = []
+  //   for (let i = 0; i < chunk.length; i += 1) {
+  //     if (i === 2) {
+  //       newLink.push(newChunk[i])
+  //     } else if (i === 3) {
+  //       newLink.push(environment.azureBucket)
+  //     } else {
+  //       newLink.push(chunk[i])
+  //     }
+  //   }
+  //   const newUrl = newLink.join('/')
+  //   return newUrl
+  // }
 
   formDiscussionForumWidget(content: NsContent.IContent) {
     this.discussionForumWidget = {
@@ -224,8 +241,8 @@ export class SurveyComponent implements OnInit, OnDestroy {
         data => {
           if (data && data.result && data.result.contentList.length) {
             for (const content of data.result.contentList) {
-              if (content.contentId === surveyId && content.progressdetails && content.progressdetails.current) {
-                this.widgetResolverSurveyData.widgetData.resumePage = Number(content.progressdetails.current.pop())
+              if (content.contentId === surveyId) {
+                this.widgetResolverSurveyData.widgetData.progressStatus = content.status
               }
             }
           }

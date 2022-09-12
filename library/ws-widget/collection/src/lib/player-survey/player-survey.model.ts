@@ -6,6 +6,7 @@ export interface IWidgetsPlayerSurveyData {
   mimeType?: any
   contentType?: any
   courseName?: any
+  progressStatus?: any
 }
 
 export interface IPlayerSurvey {
