@@ -8,7 +8,7 @@ import {
   SimpleChanges,
   ViewChild, ViewChildren,
 } from '@angular/core'
-import { MatDialog, MatSidenav } from '@angular/material'
+import { MatDialog, MatSidenav, MatSnackBar } from '@angular/material'
 import { interval, Subscription } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
 import { NSPractice } from './practice.model'
@@ -22,7 +22,8 @@ import { ViewerUtilService } from '../../viewer-util.service'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { NSQuiz } from '../quiz/quiz.model'
-// import { ViewerDataService } from '../../viewer-data.service'
+import { environment } from 'src/environments/environment'
+ // import { ViewerDataService } from '../../viewer-data.service'
 export type FetchStatus = 'hasMore' | 'fetching' | 'done' | 'error' | 'none'
 @Component({
   selector: 'viewer-plugin-practice',
@@ -101,6 +102,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   currentQuestion!: NSPractice.IQuestionV2 | any
   process = false
   isXsmall = false
+  assessmentBuffer = 0
   constructor(
     private events: EventService,
     public dialog: MatDialog,
@@ -110,7 +112,11 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     private router: Router,
     private valueSvc: ValueService,
     // private vws: ViewerDataService,
+    public snackbar: MatSnackBar
   ) {
+    if (environment.assessmentBuffer) {
+      this.assessmentBuffer = environment.assessmentBuffer
+    }
     let canAttempt = true
     if (this.primaryCategory !== NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
       this.canAttend().then(r => {
@@ -181,11 +187,11 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       && _.get(this.quizSvc.paperSections, 'value.questionSet.children')) {
       this.paperSections = _.get(this.quizSvc.paperSections, 'value.questionSet.children')
       const showTimer = _.toLower(_.get(this.quizSvc.paperSections, 'value.questionSet.showTimer')) === 'yes'
-      if (showTimer) {
-        this.quizJson.timeLimit = (_.get(this.quizSvc.paperSections, 'value.questionSet.expectedDuration') || 0)
+      if (showTimer || this.primaryCategory !== NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
+        this.quizJson.timeLimit = (_.get(this.quizSvc.paperSections, 'value.questionSet.expectedDuration') || 0) + this.assessmentBuffer
       } else {
         // this.quizJson.timeLimit = this.duration * 60
-        this.quizJson.timeLimit = this.quizJson.timeLimit
+        this.quizJson.timeLimit = this.quizJson.timeLimit + this.assessmentBuffer
       }
       this.fetchingSectionsStatus = 'done'
       this.viewState = 'detail'
@@ -198,10 +204,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           /** this is to enable or disable Timer */
           const showTimer = _.toLower(_.get(section, 'result.questionSet.showTimer')) === 'yes'
           if (showTimer) {
-            this.quizJson.timeLimit = section.result.questionSet.expectedDuration
+            this.quizJson.timeLimit = section.result.questionSet.expectedDuration + this.assessmentBuffer
           } else {
             // this.quizJson.timeLimit = this.duration * 60
-            this.quizJson.timeLimit = this.quizJson.timeLimit
+            this.quizJson.timeLimit = this.quizJson.timeLimit + this.assessmentBuffer
           }
           this.quizSvc.paperSections.next(section.result)
           const tempObj = _.get(section, 'result.questionSet.children')
@@ -478,7 +484,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   updateTimer() {
     this.startTime = Date.now()
     this.timeLeft = this.quizJson.timeLimit
-    // this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
+    this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
     if (this.quizJson.timeLimit > 0) {
       this.timerSubscription = interval(1000)
         .pipe(
@@ -798,6 +804,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       },
       (_error: any) => {
         this.fetchingResultsStatus = 'error'
+        this.snackbar.open(_error.error.params.errmsg)
       },
     )
     // this.fetchingResultsStatus = 'done'
