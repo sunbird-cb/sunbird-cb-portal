@@ -201,8 +201,10 @@ export class AppTocService {
           break
         // case NsContent.EMimeTypes.HTML:
         case NsContent.EMimeTypes.TEXT_WEB:
-        case NsContent.EMimeTypes.SURVEY:
           tocStructure.webPage += 1
+          break
+        case NsContent.EMimeTypes.SURVEY:
+          tocStructure.survey += 1
           break
         case NsContent.EMimeTypes.QUIZ:
         case NsContent.EMimeTypes.APPLICATION_JSON:

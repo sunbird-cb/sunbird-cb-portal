@@ -211,8 +211,8 @@
               *ngIf="content?.mimeType === 'audio/mpeg'">
             <img src="/assets/icons/content/grey/pdf.svg" alt="PDF" class="float-left margin-right-xs"
               *ngIf="content?.mimeType === 'application/pdf'">
-            <img src="/assets/icons/content/grey/resource.svg" alt="Survey" class="float-left margin-right-xs"
-              *ngIf="content?.mimeType === 'application/survey'">
+            <!-- <img src="/assets/icons/content/grey/resource.svg" alt="Survey" class="float-left margin-right-xs"
+              *ngIf="content?.mimeType === 'application/survey'"> -->
             <img src="/assets/icons/content/grey/link.svg" alt="InteractiveContent" class="float-left margin-right-xs"
               *ngIf="content?.mimeType === 'application/vnd.ekstep.html-archive' || content?.mimeType === 'text/x-url'">
             <img src="/assets/icons/content/grey/assessment.svg" alt="Assessment" class="float-left margin-right-xs"
@@ -220,7 +220,7 @@
             <img src="/assets/icons/content/grey/image.svg" alt="Image" class="float-left margin-right-xs"
               *ngIf="content?.mimeType === 'image/png' || content?.mimeType === 'image/jpeg'">
             <img src="/assets/icons/content/grey/content_copy.svg" class="contenticon" alt="Course"
-              *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection'">
+              *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection' || content?.mimeType === 'application/survey'">
             <span class="ws-mat-black60-text">{{ (content?.duration || 120)| pipeDurationTransform: 'hms' }}</span>
             <!-- </span> -->
           </div>
