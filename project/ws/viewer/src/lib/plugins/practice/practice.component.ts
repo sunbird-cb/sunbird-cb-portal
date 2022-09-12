@@ -23,7 +23,7 @@ import { ViewerUtilService } from '../../viewer-util.service'
 import _ from 'lodash'
 import { NSQuiz } from '../quiz/quiz.model'
 import { environment } from 'src/environments/environment'
- // import { ViewerDataService } from '../../viewer-data.service'
+// import { ViewerDataService } from '../../viewer-data.service'
 export type FetchStatus = 'hasMore' | 'fetching' | 'done' | 'error' | 'none'
 @Component({
   selector: 'viewer-plugin-practice',
@@ -442,7 +442,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   get noOfQuestions(): number {
     if (this.quizJson.maxQuestions) {
       return this.quizJson.maxQuestions
-    }  if (this.retake) {
+    } if (this.retake) {
       return _.get(this.activatedRoute, 'snapshot.data.content.data.maxQuestions') || 0
     }
     return 0
@@ -484,8 +484,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   updateTimer() {
     this.startTime = Date.now()
     this.timeLeft = this.quizJson.timeLimit
-    this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
-    if (this.quizJson.timeLimit > 0) {
+    if (this.quizJson.timeLimit > 0 && this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
+    ) {
       this.timerSubscription = interval(1000)
         .pipe(
           map(
