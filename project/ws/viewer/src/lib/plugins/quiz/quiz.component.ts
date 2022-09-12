@@ -180,7 +180,9 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   fillSelectedItems(question: NSQuiz.IQuestion, optionId: string) {
-    this.raiseTelemetry('mark', optionId, 'click')
+    if (typeof (optionId) === 'string') {
+      this.raiseTelemetry('mark', optionId, 'click')
+    }
     if (this.viewState === 'answer') {
       if (this.questionsReference) {
         this.questionsReference.forEach(questionReference => {
@@ -236,10 +238,12 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
     this.raiseTelemetry('quiz', null, 'submit')
     this.isSubmitted = true
     this.ngOnDestroy()
+
     if (!this.quizJson.isAssessment) {
       this.viewState = 'review'
       this.calculateResults()
     } else {
+      this.calculateResults()
       this.viewState = 'answer'
     }
     const submitQuizJson = JSON.parse(JSON.stringify(this.quizJson))
@@ -306,7 +310,7 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
   showAnswers() {
     this.showMtfAnswers()
     this.showFitbAnswers()
-    this.viewState = 'answer'
+    this.viewState = 'review'
   }
 
   showMtfAnswers() {

@@ -9,7 +9,7 @@
       <div class="card-section">
         <h3 class="mat-h3">
           <ng-container i18n="quiz difficulty label">Difficulty : </ng-container>
-          {{ complexityLevel }}
+          {{ complexityLevel  || 'N/A'}}
         </h3>
         <h3 class="mat-h3">
           <ng-container i18n="quiz duration label">Duration : </ng-container>
