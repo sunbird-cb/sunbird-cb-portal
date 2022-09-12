@@ -74,6 +74,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   fetchingQuestionsStatus: FetchStatus = 'none'
   isCompleted = false
   isIdeal = false
+  retake = false
   isSubmitted = false
   markedQuestions = new Set([])
   numCorrectAnswers = 0
@@ -181,10 +182,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.paperSections = _.get(this.quizSvc.paperSections, 'value.questionSet.children')
       const showTimer = _.toLower(_.get(this.quizSvc.paperSections, 'value.questionSet.showTimer')) === 'yes'
       if (showTimer) {
-        this.quizJson.timeLimit = (_.get(this.quizSvc.paperSections, 'value.questionSet.expectedDuration') || 0) * 60
+        this.quizJson.timeLimit = (_.get(this.quizSvc.paperSections, 'value.questionSet.expectedDuration') || 0)
       } else {
         // this.quizJson.timeLimit = this.duration * 60
-        this.quizJson.timeLimit = this.quizJson.timeLimit * 60
+        this.quizJson.timeLimit = this.quizJson.timeLimit
       }
       this.fetchingSectionsStatus = 'done'
       this.viewState = 'detail'
@@ -197,10 +198,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           /** this is to enable or disable Timer */
           const showTimer = _.toLower(_.get(section, 'result.questionSet.showTimer')) === 'yes'
           if (showTimer) {
-            this.quizJson.timeLimit = section.result.questionSet.expectedDuration * 60
+            this.quizJson.timeLimit = section.result.questionSet.expectedDuration
           } else {
             // this.quizJson.timeLimit = this.duration * 60
-            this.quizJson.timeLimit = this.quizJson.timeLimit * 60
+            this.quizJson.timeLimit = this.quizJson.timeLimit
           }
           this.quizSvc.paperSections.next(section.result)
           const tempObj = _.get(section, 'result.questionSet.children')
@@ -213,7 +214,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           })
           // this.paperSections = _.get(section, 'result.questionSet.children')
           this.viewState = 'detail'
-          this.updateTimer()
+          // this.updateTimer()
           this.startIfonlySection()
         }
       })
@@ -283,7 +284,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
                 multiSelection: ((q.qType || '').toLowerCase() === 'mcq-mca' ? true : false),
                 questionType: (q.qType || '').toLowerCase(),
                 questionId: q.identifier,
-                instructions: q.body,
+                instructions: null,
                 options: this.getOptions(q),
               })
             }
@@ -433,7 +434,12 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     return questions.length
   }
   get noOfQuestions(): number {
-    return this.quizJson.maxQuestions
+    if (this.quizJson.maxQuestions) {
+      return this.quizJson.maxQuestions
+    }  if (this.retake) {
+      return _.get(this.activatedRoute, 'snapshot.data.content.data.maxQuestions') || 0
+    }
+    return 0
   }
   backToSections() {
     this.viewState = 'detail'
@@ -441,6 +447,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
 
   overViewed(event: NSPractice.TUserSelectionType) {
     if (event === 'start') {
+      this.retake = false
       this.startQuiz()
       // call content progress with status 1 i.e, started
       this.updateProgress(1)
@@ -481,8 +488,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           ),
         )
         .subscribe(_timeRemaining => {
-          this.timeLeft = _timeRemaining
-          // console.log(this.timeLeft)
+          this.timeLeft -= 1
           if (this.timeLeft < 0) {
             this.isIdeal = true
             this.timeLeft = 0
@@ -963,6 +969,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         // raise telemetry
         this.clearStoragePartial()
         this.clearStorage()
+        this.retake = true
         this.init()
         break
     }

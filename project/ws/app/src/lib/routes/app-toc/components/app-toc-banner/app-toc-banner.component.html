@@ -5,12 +5,32 @@
             <div class="header-title flex-col sm:flex-row">
                 <!-- image -->
                 <div *ngIf="content?.posterImage" class="float-left">
-                    <img [src]="content?.posterImage | pipePublicURL" [id]="'source_' + content.identifier" class="app-icon" [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
+                    <!-- <img [src]="content?.posterImage | pipePublicURL" [id]="'source_' + content.identifier" [wsUtilsDefaultThumbnail]="defaultSLogo" class="app-icon"  [alt]="content.sourceName || iGOT"
+
+                    /> -->
+                  <img [src]="content?.posterImage | pipePublicURL" [id]="'source_' + content.identifier" class="app-icon" [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
                 </div>
                 <div *ngIf="!content?.posterImage" class="float-left">
+                  <ng-container *ngIf="content?.appIcon; else defaultImg">
+                    <img [src]="content?.appIcon | pipePublicURL" [id]="'source_' + content.identifier" class="app-icon" [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
+                  </ng-container>
+                  <ng-template #defaultImg>
                     <img src="/assets/instances/eagle/app_logos/default.png" [id]="'source_' + content.identifier" class="app-icon" [alt]="content.sourceName || iGOT" />
-                </div>
+                  </ng-template>
+              </div>
+                <!-- <div *ngIf="!content?.posterImage" class="float-left">
+                  <ng-container *ngIf="content?.appIcon; else defaultImg">
+                    <img [src]="content?.appIcon | pipePublicURL" [id]="'source_' + content.identifier" class="app-icon" [alt]="content.sourceName || iGOT" />
+                  </ng-container>
+                  <ng-template #defaultImg class="float-left">
+                    <img [src]="defaultSLogo" loading="lazy" style="position: absolute; z-index: 2;"
+                    class="card-img ws-mat-primary-lite-background"
+                    [alt]="content.sourceName || iGOT" />
+                  </ng-template>
+                </div> -->
                 <!-- data -->
+                <!-- {{ defaultThumbnail | json }}//
+                {{ defaultSLogo | json }} // -->
                 <div class="sm:ml-5 flex flex-auto" [id]="'m-c-'+ content.identifier">
 
                     <div class="sm:ml-5 flex flex-col flex-auto">

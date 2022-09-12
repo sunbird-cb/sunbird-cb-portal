@@ -655,11 +655,35 @@
           [queryParams]="(widgetData.content | pipeContentRoute).queryParams" class="rounded-t" role="link"
           aria-label="Content" i18n-aria-label="Content | Click to view"> -->
         <div style="position: relative; z-index: 1;">
-          <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" loading="lazy" style="position: absolute; z-index: 2;"
-            class="card-img ws-mat-primary-lite-background" [wsUtilsDefaultThumbnail]="defaultThumbnail"
+          <ng-container *ngIf="widgetData.content.posterImage">
+            <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" loading="lazy" style="position: absolute; z-index: 2;"
+            class="card-img ws-mat-primary-lite-background"
             [alt]="widgetData.content.name" />
+          </ng-container>
+          <ng-container *ngIf="!widgetData.content.posterImage">
+            <ng-container *ngIf="widgetData.content.appIcon; else defaultImg">
+              <img mat-card-image [src]="widgetData.content.appIcon | pipePublicURL" loading="lazy" style="position: absolute; z-index: 2;"
+              class="card-img ws-mat-primary-lite-background"  [wsUtilsDefaultThumbnail]="defaultThumbnail"
+              [alt]="widgetData.content.name" />
+            </ng-container>
+            <ng-template #defaultImg>
+              <img mat-card-image [src]="defaultThumbnail" loading="lazy" style="position: absolute; z-index: 2;"
+              class="card-img ws-mat-primary-lite-background"
+              [alt]="widgetData.content.name" />
+            </ng-template>
+          </ng-container>
+
+
+
+
+
+            <!-- <img mat-card-image [src]="widgetData.content.appIcon | pipePublicURL" loading="lazy" style="position: absolute; z-index: 2;"
+            class="card-img ws-mat-primary-lite-background"
+            [alt]="widgetData.content.name" /> -->
 
             <!-- image overlay box-->
+
+
             <div class="course_logo_box">
               <img [src]="widgetData.content.creatorLogo | pipePublicURL " class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
               [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
