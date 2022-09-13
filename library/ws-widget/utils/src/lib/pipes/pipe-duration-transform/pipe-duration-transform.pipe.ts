@@ -1,11 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core'
+import moment from 'moment'
 
 @Pipe({
   name: 'pipeDurationTransform',
 })
 export class PipeDurationTransformPipe implements PipeTransform {
 
-  transform(data: number, type: 'time24' | 'hms' | 'hour'): any {
+  transform(data: number, type: 'time24' | 'hms' | 'hour' | 'hms2H' | 'hms2M'): any {
     if (data <= 0) {
       return ''
     }
@@ -35,6 +36,16 @@ export class PipeDurationTransformPipe implements PipeTransform {
           duration += type === 'hms' ? `${space}${s}s` : `${space}${s} sec`
         }
         return duration
+      case 'hms2H':
+        /**to Print HH:mm:ss */
+        const duration2 = moment.duration(data, 'seconds');
+        const resultstring = moment.utc(duration2.asMilliseconds()).format('HH:mm:ss');
+        return resultstring
+      case 'hms2M':/**to Print mm:ss */
+        const duration2H = moment.duration(data, 'seconds');
+        const resultstring2H = moment.utc(duration2H.asMilliseconds()).format('mm:ss');
+
+        return resultstring2H
       case 'hour':
         if (h === 0) {
           duration += 'less than an hour'
