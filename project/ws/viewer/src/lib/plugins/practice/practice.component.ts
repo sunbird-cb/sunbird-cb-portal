@@ -484,7 +484,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   updateTimer() {
     this.startTime = Date.now()
     this.timeLeft = this.quizJson.timeLimit
-    if (this.quizJson.timeLimit > 0 && this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
+    // && this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
+    if (this.quizJson.timeLimit > 0
     ) {
       this.timerSubscription = interval(1000)
         .pipe(

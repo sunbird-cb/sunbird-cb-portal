@@ -325,12 +325,23 @@
   <div *ngIf="timeLeft" class="flex flex-1 flex-center">
     <mat-icon>timelapse</mat-icon>
     &nbsp;&nbsp;
-    <div *ngIf="timeLeft > 120" [ngClass]="{ 'mat-body-strong': !isSubmitted }">
-      <span class="mat-title ws-mat-default-text"> {{ timeLeft | pipeDurationTransform: 'hms' }}</span>
-    </div>
-    <div *ngIf="timeLeft <= 120" class="ws-mat-red-text" [ngClass]="{ 'mat-body-strong': !isSubmitted }">
-      <span class="mat-title ws-mat-red-text"> {{ timeLeft | pipeDurationTransform: 'hms' }}</span>
-    </div>
+    <ng-container *ngIf="quizJson.timeLimit >= 3600">
+      <div *ngIf="timeLeft > 120" [ngClass]="{ 'mat-body-strong': !isSubmitted }">
+        <span class="mat-title ws-mat-default-text"> {{ timeLeft | pipeDurationTransform: 'hms2H' }}</span>
+      </div>
+      <div *ngIf="timeLeft <= 120" class="ws-mat-red-text" [ngClass]="{ 'mat-body-strong': !isSubmitted }">
+        <span class="mat-title ws-mat-red-text"> {{ timeLeft | pipeDurationTransform: 'hms2H' }}</span>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="quizJson.timeLimit < 3600">
+      <div *ngIf="timeLeft > 120" [ngClass]="{ 'mat-body-strong': !isSubmitted }">
+        <span class="mat-title ws-mat-default-text"> {{ timeLeft | pipeDurationTransform: 'hms2M' }}</span>
+      </div>
+      <div *ngIf="timeLeft <= 120" class="ws-mat-red-text" [ngClass]="{ 'mat-body-strong': !isSubmitted }">
+        <span class="mat-title ws-mat-red-text"> {{ timeLeft | pipeDurationTransform: 'hms2M' }}</span>
+      </div>
+    </ng-container>
+
     <div *ngIf="isSubmitted" class="margin-left-xs mat-body-strong" i18n>
       <span class="mat-title ws-mat-default-text"> (Submitted)</span>
     </div>
