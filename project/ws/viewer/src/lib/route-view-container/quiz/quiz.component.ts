@@ -24,9 +24,10 @@ export class QuizComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    if (this.quizData) {
-      this.quizData.duration = this.quizData.duration * 60
-    }
+    //  if (this.quizData) {
+    //   this.quizData.duration = this.quizData.duration * 60
+    // }
+    
     this.isTypeOfCollection = this.activatedRoute.snapshot.queryParams.collectionType ? true : false
     if (this.isTypeOfCollection) {
       this.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
