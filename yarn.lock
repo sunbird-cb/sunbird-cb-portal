@@ -1182,10 +1182,10 @@
   dependencies:
     tslib "^1.9.0"
 
-"@sunbird-cb/rain-dashboards@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/rain-dashboards/-/rain-dashboards-0.2.0.tgz#c924fbcd50b4f5b01a13da185ea86609e57a4980"
-  integrity sha512-lOgTwWlynknDrUC52nMq3xZznMJbt6oCdyRlfOFuq2gibvESzj3QpkfaNnW8HjJVrnCO/p7lL/HeAkFWGiQuKw==
+"@sunbird-cb/rain-dashboards@^0.2.6":
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/rain-dashboards/-/rain-dashboards-0.2.6.tgz#fa7756dddbfd5679770232884bf41a43afb953e2"
+  integrity sha512-kAn28KzMniibhSi+jV6zLzl3+VF1mEBD6Da4AeTP1itP+dNVwiDw1SgvzJV1SgcGmbEnfLoBY/FTSECA25x2AA==
   dependencies:
     tslib "^1.9.0"
 
