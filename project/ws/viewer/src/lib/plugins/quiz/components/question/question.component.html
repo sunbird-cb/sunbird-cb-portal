@@ -48,7 +48,9 @@
         'incorrect-answer': viewState === 'answer' && !option?.isCorrect && isSelected(option)
       }" *ngFor="let option of question?.options">
       <mat-list-option checkboxPosition="before" (click)="itemSelected.emit(option.optionId)">
-        <mat-error *ngIf="viewState === 'answer' && !option?.isCorrect && isSelected(option)">
+        <mat-error [ngClass]="{
+        'incorrect-answer-sca': (viewState === 'answer' && !option?.isCorrect)
+        }" *ngIf="viewState === 'answer' && !option?.isCorrect && isSelected(option)">
           {{ option?.text }}
         </mat-error>
         <div [ngClass]="{
@@ -90,7 +92,9 @@
           'incorrect-answer': viewState === 'answer' && !option?.isCorrect && isSelected(option)
         }" [value]="option.optionId" (change)="itemSelected.emit(option.optionId)">
         <span class="wrap-mat-radio-label">
-          <mat-error *ngIf="viewState === 'answer' && !option?.isCorrect && isSelected(option)">
+          <mat-error [ngClass]="{
+            'incorrect-answer-sca': (viewState === 'answer' && !option?.isCorrect)
+          }" *ngIf="viewState === 'answer' && !option?.isCorrect && isSelected(option)">
             {{ option?.text }}
           </mat-error>
           <div [ngClass]="{
