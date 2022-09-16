@@ -11,7 +11,7 @@
           (click)="sidenav.toggle()">
           <mat-icon aria-label="open questions navigation">menu</mat-icon>
         </button>
-        <a mat-button *ngIf="!isSubmitted && viewState !== 'detail'" (click)="backToSections()"
+        <a mat-button *ngIf="!isSubmitted && viewState !== 'detail' && !isOnlySection" (click)="backToSections()"
           class="flex cursor-pointer">
           <mat-icon class="ws-mat-default-text m-auto">arrow_back</mat-icon>
           <span class="ws-mat-default-text subheading-1">Back to sections</span>
