@@ -227,7 +227,6 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
   startIfonlySection() {
-    debugger
     // directly start section if only section is there is set
     if (this.isOnlySection) {
       const firstSection = _.first(this.paperSections) || null
@@ -656,7 +655,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
                       index: (_o.optionId).toString(),
                       selectedAnswer: !!_o.userSelected,
                     } as NSPractice.IResponseOptions
-                  } else { return null }
+                  } return null
                 })),
               },
             }
@@ -676,7 +675,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
                       index: (_o.optionId).toString(),
                       selectedAnswer: _o.userSelected,
                     } as NSPractice.IResponseOptions
-                  } else { return null }
+                  } return null
                 })),
               },
             }
@@ -696,7 +695,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
                       index: (_o.optionId || idx).toString(),
                       selectedAnswer: _o.response || '',
                     } as NSPractice.IResponseOptions
-                  } else { return null }
+                  } return null
                 })),
                 // selectedAnswer: _.join(_.map(sq.options, (_o: NSPractice.IOption) => {
                 //   return _o.response
@@ -722,7 +721,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
                       index: (_o.optionId).toString(),
                       selectedAnswer: _o.response,
                     } as NSPractice.IResponseOptions
-                  } else { return null }
+                  } return null
                 })),
               },
             }

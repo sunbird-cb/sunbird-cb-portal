@@ -38,12 +38,12 @@ export class PipeDurationTransformPipe implements PipeTransform {
         return duration
       case 'hms2H':
         /**to Print HH:mm:ss */
-        const duration2 = moment.duration(data, 'seconds');
-        const resultstring = moment.utc(duration2.asMilliseconds()).format('HH:mm:ss');
+        const duration2 = moment.duration(data, 'seconds')
+        const resultstring = moment.utc(duration2.asMilliseconds()).format('HH:mm:ss')
         return resultstring
-      case 'hms2M':/**to Print mm:ss */
-        const duration2H = moment.duration(data, 'seconds');
-        const resultstring2H = moment.utc(duration2H.asMilliseconds()).format('mm:ss');
+      case 'hms2M': /**to Print mm:ss */
+        const duration2H = moment.duration(data, 'seconds')
+        const resultstring2H = moment.utc(duration2H.asMilliseconds()).format('mm:ss')
 
         return resultstring2H
       case 'hour':
