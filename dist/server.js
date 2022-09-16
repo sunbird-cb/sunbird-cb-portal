@@ -81,7 +81,7 @@ uiHostCreator('', 'en')
 app.use(haltOnTimedOut)
 
 const port = CONSTANTS.PORTAL_PORT
-app.listen(port, '0.0.0.0', err => {
+app.listen(3006, '0.0.0.0', err => {
   console.error(err || 'No Error', `Server started at ${port}`)
 })
 
