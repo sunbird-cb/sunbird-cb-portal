@@ -27,7 +27,7 @@ export class MyDashboardHomeComponent implements OnInit {
 
   // API endpoints needs to be passed here
   getDashboardForKM = '/apis/proxies/v8/dashboard/analytics/getDashboardConfig/Karmayogi'
-  getDashboardForProfile = '/apis/proxies/v8/dashboard/analytics/getDashboardsForProfile/Karmayogi'
+  getDashboardForProfile = '/apis/proxies/v8/dashboard/analytics/getDashboardsForProfile/Karmayogi?realm=igot'
   getChartV2 = '/apis/proxies/v8/dashboard/analytics/getChartV2/Karmayogi'
 
   dashboardEmpty = dashboardEmptyData

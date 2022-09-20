@@ -228,7 +228,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
   startIfonlySection() {
     // directly start section if only section is there is set
-    if (this.paperSections && this.paperSections.length === 1) {
+    if (this.isOnlySection) {
       const firstSection = _.first(this.paperSections) || null
       if (firstSection) {
         this.nextSection(firstSection)
@@ -237,6 +237,9 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     }
     this.updateTimer()
 
+  }
+  get isOnlySection(): boolean {
+    return !!this.paperSections && !!(this.paperSections.length === 1)
   }
   updataDB(sections: NSPractice.IPaperSection[]) {
     const data: NSPractice.ISecAttempted[] = []
@@ -484,7 +487,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   updateTimer() {
     this.startTime = Date.now()
     this.timeLeft = this.quizJson.timeLimit
-    if (this.quizJson.timeLimit > 0 && this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
+    // && this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
+    if (this.quizJson.timeLimit > 0
     ) {
       this.timerSubscription = interval(1000)
         .pipe(
@@ -645,12 +649,14 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               primaryCategory: NsContent.EPrimaryCategory.MULTIPLE_CHOICE_QUESTION,
               qType: 'MCQ-MCA',
               editorState: {
-                options: _.map(sq.options, (_o: NSPractice.IOption) => {
-                  return {
-                    index: (_o.optionId).toString(),
-                    selectedAnswer: !!_o.userSelected,
-                  } as NSPractice.IResponseOptions
-                }),
+                options: _.compact(_.map(sq.options, (_o: NSPractice.IOption) => {
+                  if (_o.userSelected) {
+                    return {
+                      index: (_o.optionId).toString(),
+                      selectedAnswer: !!_o.userSelected,
+                    } as NSPractice.IResponseOptions
+                  } return null
+                })),
               },
             }
             responseQ.push(mcqMca)
@@ -663,12 +669,14 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               primaryCategory: NsContent.EPrimaryCategory.SINGLE_CHOICE_QUESTION,
               qType: 'MCQ-SCA',
               editorState: {
-                options: _.map(sq.options, (_o: NSPractice.IOption) => {
-                  return {
-                    index: (_o.optionId).toString(),
-                    selectedAnswer: _o.userSelected,
-                  } as NSPractice.IResponseOptions
-                }),
+                options: _.compact(_.map(sq.options, (_o: NSPractice.IOption) => {
+                  if (_o.userSelected) {
+                    return {
+                      index: (_o.optionId).toString(),
+                      selectedAnswer: _o.userSelected,
+                    } as NSPractice.IResponseOptions
+                  } return null
+                })),
               },
             }
             responseQ.push(mcqSca)
@@ -681,12 +689,14 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               primaryCategory: NsContent.EPrimaryCategory.FTB_QUESTION,
               qType: 'FTB',
               editorState: {
-                options: _.map(sq.options, (_o: NSPractice.IOption, idx: number) => {
-                  return {
-                    index: (_o.optionId || idx).toString(),
-                    selectedAnswer: _o.response || '',
-                  } as NSPractice.IResponseOptions
-                }),
+                options: _.compact(_.map(sq.options, (_o: NSPractice.IOption, idx: number) => {
+                  if (_o.response) {
+                    return {
+                      index: (_o.optionId || idx).toString(),
+                      selectedAnswer: _o.response || '',
+                    } as NSPractice.IResponseOptions
+                  } return null
+                })),
                 // selectedAnswer: _.join(_.map(sq.options, (_o: NSPractice.IOption) => {
                 //   return _o.response
                 // }),
@@ -705,12 +715,14 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               primaryCategory: NsContent.EPrimaryCategory.MTF_QUESTION,
               qType: 'MTF',
               editorState: {
-                options: _.map(sq.options, (_o: NSPractice.IOption) => {
-                  return {
-                    index: (_o.optionId).toString(),
-                    selectedAnswer: _o.response,
-                  } as NSPractice.IResponseOptions
-                }),
+                options: _.compact(_.map(sq.options, (_o: NSPractice.IOption) => {
+                  if (_o.response) {
+                    return {
+                      index: (_o.optionId).toString(),
+                      selectedAnswer: _o.response,
+                    } as NSPractice.IResponseOptions
+                  } return null
+                })),
               },
             }
             responseQ.push(mtf)

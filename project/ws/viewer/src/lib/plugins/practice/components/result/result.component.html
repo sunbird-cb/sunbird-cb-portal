@@ -17,7 +17,8 @@
       <ng-container *ngFor="let _parts of quizResponse?.children; let i = index">
         <mat-card *ngIf="_parts" class="ws-mat-accent-border box-c result_box">
           <mat-card-title>
-            <span class="mat-subheading-1">{{'Section ' + (i+1)}}</span>
+            <span class="mat-subheading-1" *ngIf="!isOnlySection">{{'Section ' + (i+1)}}</span>
+            <span class="mat-subheading-1" *ngIf="isOnlySection">{{'Default Section'}}</span>
             <span class="mat-subheading-2 block ws-mat-black60-text">{{'Insights'}}</span>
           </mat-card-title>
           <mat-card-content class="flex flex-1 flex-column">

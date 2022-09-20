@@ -24,5 +24,7 @@ export class ResultComponent implements OnInit {
   action(event: NSPractice.TUserSelectionType) {
     this.userSelection.emit(event)
   }
-
+  get isOnlySection(): boolean {
+    return this.quizResponse.children.length === 1
+  }
 }
