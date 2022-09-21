@@ -93,7 +93,9 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
       this.activatedRoute.snapshot.queryParams.collectionId : ''
     const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
       this.activatedRoute.snapshot.queryParams.batchId : ''
-    this.viewerSvc.realTimeProgressUpdateQuiz(this.widgetData.identifier, collectionId, batchId, status)
+    // tslint:disable-next-line:max-line-length
+    const id = this.activatedRoute.snapshot.data.content ? this.activatedRoute.snapshot.data.content.data.identifier : this.widgetData.identifier
+    this.viewerSvc.realTimeProgressUpdateQuiz(id, collectionId, batchId, status)
   }
 
   // fireRealTimeProgress(id: string) {
