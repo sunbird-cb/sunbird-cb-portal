@@ -167,7 +167,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         //   )
         // }
         if (this.htmlContent.streamingUrl && this.htmlContent.initFile) {
-          if (this.htmlContent.streamingUrl.includes('latest')) {
+          if (this.htmlContent.streamingUrl.includes('latest') && !this.htmlContent.initFile) {
             this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
               // tslint:disable-next-line:max-line-length
               `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-latest/index.html?timestamp = '${new Date().getTime()}`
