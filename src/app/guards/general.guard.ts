@@ -41,34 +41,39 @@ export class GeneralGuard implements CanActivate {
     return returnValue
   }
   private async shouldAllow<T>(
-    _state: RouterStateSnapshot,
+    state: RouterStateSnapshot,
     requiredFeatures: string[],
     requiredRoles: string[],
   ): Promise<T | UrlTree | boolean> {
     /**
      * Test IF User is authenticated===> in now from backend
      */
-    // if (!this.configSvc.isAuthenticated) {
-    // let refAppend = ''
-    // if (state.url) {
-    //   refAppend = `?ref=${encodeURIComponent(state.url)}`
-    // }
-    // return this.router.parseUrl(`/login${refAppend}`)
+    debugger
+    if (
+      this.configSvc.userProfile === null
+      && !(window.location.href.includes('/public/') || window.location.href.includes('&preview=true'))
+      // !this.configSvc.isAuthenticated
+    ) {
+      let refAppend = ''
+      let redirectUrl
+      if (state.url) {
+        refAppend = `?ref=${encodeURIComponent(state.url)}`
+        return this.router.parseUrl(`/login${refAppend}`)
+      }
 
-    // let redirectUrl
-    // if (refAppend) {
-    //   redirectUrl = document.baseURI + refAppend
-    // } else {
-    //   redirectUrl = document.baseURI
-    // }
+      if (refAppend) {
+        redirectUrl = document.baseURI + refAppend
+      } else {
+        redirectUrl = document.baseURI
+      }
 
-    //   try {
-    //     // Promise.resolve(this.authSvc.login('S', redirectUrl))
-    //     return true
-    //   } catch (e) {
-    //     return false
-    //   }
-    // }
+      try {
+        Promise.resolve(this.authSvc.login('S', redirectUrl))
+        // return true
+      } catch (e) {
+        return false
+      }
+    }
 
     // if Invalid Role: now checking in init.service
     //  if (

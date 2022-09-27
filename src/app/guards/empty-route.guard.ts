@@ -28,10 +28,10 @@ export class EmptyRouteGuard implements CanActivate {
       return this.router.parseUrl('/page/home')
     }
     // this.router.parseUrl('/page/home')
-    // if (this.configSvc.isAuthenticated) {
-    //   // logger.log('Redirecting to application home page');
-    //   return this.router.parseUrl('/page/home')
-    // }
+    if (this.configSvc.isAuthenticated) {
+      // logger.log('Redirecting to application home page');
+      return this.router.parseUrl('/page/home')
+    }
     // logger.log('redirecting to login page as the user is not loggedIn');
     // return this.router.parseUrl('/login')
     // const paramsMap = this.activateRoute.snapshot.queryParamMap
@@ -43,6 +43,6 @@ export class EmptyRouteGuard implements CanActivate {
     // }
     // Promise.resolve() // this.authSvc.login('S', redirectUrl)
     // return false
-    return this.router.parseUrl('/public/home')
+    return this.router.parseUrl('/page/home')
   }
 }

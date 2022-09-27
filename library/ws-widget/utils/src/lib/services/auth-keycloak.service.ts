@@ -130,7 +130,13 @@ export class AuthKeycloakService {
       redirectUri: redirectUrl,
     })
   }
-
+  loginV2(
+    _idpHint: 'E' | 'N' | 'S' = 'E',
+    redirectUrl: string = this.defaultRedirectUrl,
+  ): Promise<void> {
+    window.location.href = redirectUrl
+    return Promise.resolve()
+  }
   register(
     redirectUrl: string = this.defaultRedirectUrl,
   ): Promise<void> {
