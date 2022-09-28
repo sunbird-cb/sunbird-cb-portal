@@ -169,6 +169,12 @@ export class CollectionResolverService {
       }
       return ICON_TYPE.pdf
     }
+    if (content.mimeType === MIME_TYPE.survey) {
+      if (!content.artifactUrl) {
+        return ICON_TYPE.emptyFile
+      }
+      return ICON_TYPE.survey
+    }
     if (content.mimeType === MIME_TYPE.youtube) {
       return ICON_TYPE.youtube
     }

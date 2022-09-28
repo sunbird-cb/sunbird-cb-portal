@@ -203,6 +203,9 @@ export class AppTocService {
         case NsContent.EMimeTypes.TEXT_WEB:
           tocStructure.webPage += 1
           break
+        case NsContent.EMimeTypes.SURVEY:
+          tocStructure.survey += 1
+          break
         case NsContent.EMimeTypes.QUIZ:
         case NsContent.EMimeTypes.APPLICATION_JSON:
           // if (content.resourceType === 'Assessment') {

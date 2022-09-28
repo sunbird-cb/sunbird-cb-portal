@@ -1,5 +1,6 @@
 import { Type } from '@angular/core'
 import { SafeStyle } from '@angular/platform-browser'
+import { Omit } from 'lodash'
 type TUrl = undefined | 'none' | 'back' | string
 export namespace NsWidgetResolver {
   export type UnitPermissionPrimitive = undefined | null | string
