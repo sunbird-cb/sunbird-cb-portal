@@ -11,6 +11,12 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
+          "i18n": {
+            "sourceLocale": "en-US",
+            "locales": {
+              "nb": "messages.nb.xlf"
+            }
+          },
           "options": {
             "outputPath": "dist/www/fusion",
             "index": "src/index.html",
@@ -62,6 +68,9 @@
             ]
           },
           "configurations": {
+            "nb": {
+              "i18nLocale": "nb"
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -82,12 +91,19 @@
                 {
                   "type": "initial",
                   "maximumWarning": "4mb",
-                  "maximumError": "15mb"
+                  "maximumError": "20mb"
                 }
               ],
               "serviceWorker": false,
               "ngswConfigPath": "ngsw-config.json"
             },
+            "hi":{
+              "aot": true,
+              "i18nFile": "locale/messages.hi.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "hi",
+              "i18nMissingTranslation": "warning"
+          },
             "np": {
               "fileReplacements": [
                 {
@@ -203,6 +219,12 @@
           "configurations": {
             "production": {
               "browserTarget": "fusion:build:production"
+            },
+            "hi": {
+              "browserTarget": "fusion:build:hi"
+            },
+            "nb": {
+              "browserTarget": "fusion:build:nb"
             },
             "de": {
               "browserTarget": "fusion:build:de"
