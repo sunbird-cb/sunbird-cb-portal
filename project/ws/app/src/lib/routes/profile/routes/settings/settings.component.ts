@@ -89,9 +89,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   langSelect(lang: string) {
-    if (lang == 'en') {
+    if (lang === 'en') {
       this.router.navigate(['page/home'])
-    } else if (lang == 'hi') {
+    } else if (lang === 'hi') {
       this.router.navigate(['hi/page/home'])
     }
   }
