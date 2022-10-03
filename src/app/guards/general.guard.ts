@@ -48,7 +48,6 @@ export class GeneralGuard implements CanActivate {
     /**
      * Test IF User is authenticated===> in now from backend
      */
-    debugger
     if (
       this.configSvc.userProfile === null
       && !(window.location.href.includes('/public/') || window.location.href.includes('&preview=true'))
@@ -58,7 +57,7 @@ export class GeneralGuard implements CanActivate {
       let redirectUrl
       if (state.url) {
         refAppend = `?ref=${encodeURIComponent(state.url)}`
-        return this.router.parseUrl(`/login${refAppend}`)
+        // return this.router.parseUrl(`/login${refAppend}`)
       }
 
       if (refAppend) {
@@ -68,7 +67,7 @@ export class GeneralGuard implements CanActivate {
       }
 
       try {
-        Promise.resolve(this.authSvc.login('S', redirectUrl))
+        Promise.resolve(this.authSvc.loginV2('S', redirectUrl))
         // return true
       } catch (e) {
         return false
