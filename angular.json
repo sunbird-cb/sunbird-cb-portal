@@ -97,6 +97,13 @@
               "serviceWorker": false,
               "ngswConfigPath": "ngsw-config.json"
             },
+            "hi":{
+              "aot": true,
+              "i18nFile": "locale/messages.hi.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "hi",
+              "i18nMissingTranslation": "warning"
+          },
             "np": {
               "fileReplacements": [
                 {
@@ -212,6 +219,9 @@
           "configurations": {
             "production": {
               "browserTarget": "fusion:build:production"
+            },
+            "hi": {
+              "browserTarget": "fusion:build:hi"
             },
             "nb": {
               "browserTarget": "fusion:build:nb"

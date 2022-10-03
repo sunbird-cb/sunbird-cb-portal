@@ -88,6 +88,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.initSettings()
   }
 
+  langSelect(lang: string) {
+    if (lang === 'en') {
+      this.router.navigate(['page/home'])
+    } else if (lang === 'hi') {
+      this.router.navigate(['hi/page/home'])
+    }
+  }
+
   private initSettings() {
     const instanceConfig = this.configSvc.instanceConfig
     this.isIntranetAllowed = !this.utilitySvc.isMobile

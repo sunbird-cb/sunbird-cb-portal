@@ -7,7 +7,8 @@ COPY . .
 #RUN yarn global add @angular/cli@latest
 
 RUN yarn && yarn add moment && yarn add vis-util && npm run build --prod --build-optimizer
-#RUN ng build --prod --outputPath=dist/www/en --baseHref=/ --i18nLocale=en --verbose=true
+RUN ng build --prod --outputPath=dist/www/en --baseHref=/ --i18nLocale=en --verbose=true
+RUN ng build --prod --i18n-locale hi --i18n-format xlf --i18n-file locale/messages.hi.xlf --output-path=dist/www/hi --baseHref /hi/
 RUN npm run compress:brotli
 #RUN npm run compress:gzip
 

@@ -4,6 +4,7 @@
     "scripts": {
         "ng": "ng",
         "start": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng serve --proxy-config proxy/localhost.proxy.json -o",
+        "start:hi": "node --max_old_space_size=10000 ./node_modules/@angular/cli/bin/ng serve --proxy-config proxy/localhost.proxy.json -o --c=hi",
         "prebuild": "npm run lint:fix",
         "build-dev": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --prod --configuration=dev --outputPath=dist/www/en --baseHref=/ --i18nLocale=en",
         "build-np": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --prod --configuration=np --outputPath=dist/www/en --baseHref=/ --i18nLocale=en",
@@ -47,7 +48,7 @@
         "@project-sunbird/telemetry-sdk": "0.0.26",
         "@sunbird-cb/design-system": "0.0.2",
         "@sunbird-cb/discussions-ui-v8": "2.1.0",
-        "@sunbird-cb/micro-surveys": "^2.0.1",
+        "@sunbird-cb/micro-surveys": "^1.2.3",
         "@sunbird-cb/rain-dashboards": "^0.2.6",
         "@types/file-saver": "^2.0.1",
         "@types/uuid": "^8.3.1",
