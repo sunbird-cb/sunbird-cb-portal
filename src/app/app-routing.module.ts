@@ -10,6 +10,7 @@ import { EmptyRouteGuard } from './guards/empty-route.guard'
 import { ExternalUrlResolverService } from './guards/external-url-resolver.service'
 import { GeneralGuard } from './guards/general.guard'
 import { LoginGuard } from './guards/login.guard'
+import { RedirectGuard } from './guards/redirect.guard'
 import { FeaturesComponent } from './routes/features/features.component'
 import { FeaturesModule } from './routes/features/features.module'
 import { MobileAppHomeComponent } from './routes/public/mobile-app/components/mobile-app-home.component'
@@ -29,6 +30,7 @@ import { PublicLoginWGComponent } from './routes/public/public-login-wg/public-l
 import { WelcomeUserResolverService } from './services/welcome-user-resolver.service'
 import { PublicTocComponent } from './routes/public/public-toc/public-toc.component'
 import { AppPublicTocResolverService } from './routes/public/public-toc/app-public-toc-resolver.service'
+import { environment } from 'src/environments/environment';
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
 // Please declare routes in alphabetical order
@@ -58,6 +60,14 @@ const routes: Routes = [
   //   data: {
   //   },
   // },
+  {
+    path: 'static-home',
+    canActivate: [RedirectGuard],
+    component: RedirectGuard,
+    data: {
+      externalUrl: environment.staticHomePageUrl,
+    },
+  },
   {
     path: 'app/activities',
     loadChildren: () => import('./routes/route-activities.module').then(u => u.RouteActivitiesModule),
