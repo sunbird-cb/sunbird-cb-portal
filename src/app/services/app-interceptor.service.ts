@@ -85,7 +85,7 @@ export class AppInterceptorService implements HttpInterceptor {
                   }
                   if (localUrl.includes('localhost')) {
                     // tslint:disable-next-line: prefer-template
-                    window.location.href = error.error.redirectUrl + `?redirect_uri= ${pagePath}`
+                    window.location.href = error.error.redirectUrl + `?redirect_uri=${pagePath}`
                   } else {
                     // tslint:disable-next-line: prefer-template
                     window.location.href = error.error.redirectUrl + `?redirect_uri=${pageName} `

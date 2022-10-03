@@ -43,6 +43,8 @@ export class EmptyRouteGuard implements CanActivate {
     // }
     // Promise.resolve() // this.authSvc.login('S', redirectUrl)
     // return false
-    return this.router.parseUrl('/page/home')
+    // return this.router.parseUrl('/page/home')
+    Promise.resolve()
+    return false
   }
 }
