@@ -49,7 +49,8 @@ export class ViewerUtilService {
           mimeType === NsContent.EMimeTypes.M3U8 ||
           mimeType === NsContent.EMimeTypes.MP3 ||
           mimeType === NsContent.EMimeTypes.M4A ||
-          mimeType === NsContent.EMimeTypes.YOUTUBE
+          mimeType === NsContent.EMimeTypes.YOUTUBE ||
+          mimeType === NsContent.EMimeTypes.SURVEY
         ) {
           if (percent <= 5) {
             // if percentage is less than 5% make it 0
@@ -77,7 +78,8 @@ export class ViewerUtilService {
         mimeType === NsContent.EMimeTypes.MP4 ||
         mimeType === NsContent.EMimeTypes.M3U8 ||
         mimeType === NsContent.EMimeTypes.MP3 ||
-        mimeType === NsContent.EMimeTypes.M4A
+        mimeType === NsContent.EMimeTypes.M4A ||
+        mimeType === NsContent.EMimeTypes.SURVEY
       ) {
         // if percentage is less than 5% then make status started
         if (Math.ceil(percentage) <= 5) {
@@ -156,7 +158,6 @@ export class ViewerUtilService {
       req = {}
       // do nothing
     }
-
   }
 
   getContent(contentId: string): Observable<NsContent.IContent> {
@@ -201,4 +202,22 @@ export class ViewerUtilService {
     const mainUrl = url.split('/content').pop() || ''
     return `${environment.contentHost}/${environment.contentBucket}/content${mainUrl}`
   }
+
+  //  fetchContent(
+  //   contentId: string,
+  //   hierarchyType: 'all' | 'minimal' | 'detail' = 'detail'
+  //   ): Observable<NsContent.IContent> {
+  //     let url = ''
+  //     const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+  //       if (!forPreview) {
+  //         url = `/apis/proxies/v8/action/content/v3/hierarchy/${contentId}?hierarchyType=${hierarchyType}`
+  //       } else {
+  //         url = `/api/course/v1/hierarchy/${contentId}?hierarchyType=${hierarchyType}`
+  //       }
+  //       return this.http.get<NsContent.IContent>(url)
+  //   }
+
+    fetchContent(id: string, type: string) {
+      return this.http.get<NsContent.IContent>(`/apis/proxies/v8/action/content/v3/hierarchy/${id}?mode=${type}`)
+    }
 }

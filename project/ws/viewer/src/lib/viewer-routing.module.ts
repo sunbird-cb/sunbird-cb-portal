@@ -18,6 +18,7 @@ import { VideoComponent } from './routes/video/video.component'
 import { VideoModule } from './routes/video/video.module'
 import { YoutubeComponent } from './routes/youtube/youtube.component'
 import { YoutubeModule } from './routes/youtube/youtube.module'
+import { SurveyModule } from './routes/survey/survey.module'
 // import { ConfigurationsService } from './resolvers/config-resolver.service'
 // import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
@@ -189,6 +190,22 @@ const routes: Routes = [
     },
   },
   {
+    path: 'survey',
+    // component: SurveyComponent,
+    data: {
+      resourceType: 'survey',
+      module: 'Learn',
+      pageId: 'survey',
+    },
+    resolve: {
+      content: ViewerResolve,
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
+    },
+    loadChildren: () =>
+    import('./routes/survey/survey.module').then(u => u.SurveyModule),
+  },
+  {
     path: 'quiz',
     data: {
       resourceType: 'quiz',
@@ -339,6 +356,7 @@ const routes: Routes = [
     AudioNativeModule,
     HtmlModule,
     PdfModule,
+    SurveyModule,
     PracticeTestModule,
     VideoModule,
     YoutubeModule,
