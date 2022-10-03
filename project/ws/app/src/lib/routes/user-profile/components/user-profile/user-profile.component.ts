@@ -1225,48 +1225,58 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
 
     // console.log( reqUpdate)
-    this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(res => {
-      this.uploadSaveData = false
-      if (res.params.status === 'success') {
-        this.openSnackbar(this.toastSuccess.nativeElement.value)
-        if ('professionalDetails' in reqUpdates.request.profileDetails) {
-          if ('personalDetails' in reqUpdates.request.profileDetails ||
-            'employmentDetails' in reqUpdates.request.profileDetails ||
-            'academics' in reqUpdates.request.profileDetails ||
-            'interests' in reqUpdates.request.profileDetails ||
-            'skills' in reqUpdates.request.profileDetails) {
-            if (res.result.personalDetails.status === 'success' && res.result.transitionDetails.status === 'success') {
-              this.openSnackbar(this.toastSuccess.nativeElement.value)
-              this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+    this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(
+      res => {
+        this.uploadSaveData = false
+        if (res.params.status === 'success') {
+          this.openSnackbar(this.toastSuccess.nativeElement.value)
+          if ('professionalDetails' in reqUpdates.request.profileDetails) {
+            if ('personalDetails' in reqUpdates.request.profileDetails ||
+              'employmentDetails' in reqUpdates.request.profileDetails ||
+              'academics' in reqUpdates.request.profileDetails ||
+              'interests' in reqUpdates.request.profileDetails ||
+              'skills' in reqUpdates.request.profileDetails) {
+              if (res.result.personalDetails.status === 'success' && res.result.transitionDetails.status === 'success') {
+                this.openSnackbar(this.toastSuccess.nativeElement.value)
+                this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+              }
+            } else {
+              if (res.result.transitionDetails.status === 'success') {
+                this.openSnackbar(this.toastSuccess.nativeElement.value)
+                this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+              }
+
             }
           } else {
-            if (res.result.transitionDetails.status === 'success') {
-              this.openSnackbar(this.toastSuccess.nativeElement.value)
-              this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+            if ('personalDetails' in reqUpdates.request.profileDetails ||
+              'employmentDetails' in reqUpdates.request.profileDetails ||
+              'interests' in reqUpdates.request.profileDetails ||
+              'academics' in reqUpdates.request.profileDetails ||
+              'skills' in reqUpdates.request.profileDetails) {
+              if (res.result.personalDetails.status === 'success') {
+                this.openSnackbar(this.toastSuccess.nativeElement.value)
+                this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+              }
+            } else {
+              // this.uploadSaveData = false
+              this.openSnackbar(this.toastError.nativeElement.value, this.userProfileData.id)
             }
-
           }
+
         } else {
-          if ('personalDetails' in reqUpdates.request.profileDetails ||
-            'employmentDetails' in reqUpdates.request.profileDetails ||
-            'interests' in reqUpdates.request.profileDetails ||
-            'academics' in reqUpdates.request.profileDetails ||
-            'skills' in reqUpdates.request.profileDetails) {
-            if (res.result.personalDetails.status === 'success') {
-              this.openSnackbar(this.toastSuccess.nativeElement.value)
-              this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
-            }
-          } else {
-            // this.uploadSaveData = false
-            this.openSnackbar(this.toastError.nativeElement.value, this.userProfileData.id)
-          }
+          this.openSnackbar(this.toastError.nativeElement.value)
         }
-
-      } else {
-        this.openSnackbar(this.toastError.nativeElement.value)
+      },
+      (err: any) => {
+        console.log('err -----', err)
+        const errMsg = _.get(err, 'error.params.errmsg')
+        if (errMsg) {
+          this.openSnackbar(errMsg)
+        } else {
+          this.openSnackbar(this.toastError.nativeElement.value)
+        }
+        this.uploadSaveData = false
       }
-    }
-
     )
     // this.userProfileSvc.updateProfileDetails(reqUpdate).subscribe(
     //   () => {
