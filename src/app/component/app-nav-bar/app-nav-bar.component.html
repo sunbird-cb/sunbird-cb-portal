@@ -1,21 +1,26 @@
-<mat-toolbar *ngIf="showAppNavBar && currentRoute !== 'all/assessment'" [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
-  class="mat-elevation-z3 custom mobile">
-  <div class="fix-ww" id="root-tool-bar" title="toolbar" i18n-aria-label role="toolbar">
-    <ng-container *ngIf="mode === 'top'">
-      <a routerLink="/page/home" class="logo-dim" role="link" title="Home" i18n-aria-title i18n-aria-label>
-        <img [src]="appIcon" alt="Application Logo" class="app-logo" />
-      </a>
-      <!-- <span class="spacer"></span> -->
-      <ng-container *ngIf="primaryNavbarConfig?.mediumScreen">
-        <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: item }"
-          *ngFor="let item of primaryNavbarConfig?.mediumScreen?.left">
-        </ng-container>
-
-        <ws-app-search-input-home placeHolder="Search for learning contents" class="my-search flex-1" [ref]="'home'">
-        </ws-app-search-input-home>
-        <span class="spacer"></span>
-        <div ngClass="search-small-logo">
-          <ng-container [wsResolverWidget]="{
+<ng-container *ngIf="fullMenuDispaly">
+  <mat-toolbar *ngIf="sShowAppNavBar && !needToHide"
+    [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
+    class="mat-elevation-z3 custom mobile">
+    <div class="fix-ww" id="root-tool-bar" title="toolbar" i18n-aria-label role="toolbar">
+      <ng-container *ngIf="mode === 'top'">
+        <a [routerLink]="!isforPreview ? '/page/home' : '/public/home'" class="logo-dim" role="link" title="Home"
+          i18n-aria-title i18n-aria-label>
+          <img [src]="appIcon" alt="Application Logo" class="app-logo" />
+        </a>
+        <!-- <span class="spacer"></span> -->
+        <ng-container *ngIf="primaryNavbarConfig?.mediumScreen">
+          <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: item }"
+            *ngFor="let item of primaryNavbarConfig?.mediumScreen?.left">
+          </ng-container>
+          <ng-container *ngIf="!isforPreview">
+            <ws-app-search-input-home placeHolder="Search for learning contents" class="my-search flex-1"
+              [ref]="'home'">
+            </ws-app-search-input-home>
+          </ng-container>
+          <span class="spacer"></span>
+          <div *ngIf="!isforPreview" ngClass="search-small-logo">
+            <ng-container [wsResolverWidget]="{
         'widgetType': 'actionButton',
         'widgetSubType': 'buttonFeature',
         'widgetData': {
@@ -26,77 +31,82 @@
           }
         }
       }"></ng-container>
-        </div>
-        <div class="flex items-center">
-          <img [src]="appIconSecondary" alt="Application Logo" class="app-logo" />
-        </div>
-        <span class="spacer"></span>
-        <!-- <button class="home-help" mat-icon-button id='helper' [matMenuTriggerFor]="helpMenu" *ngIf="!isHelpMenuRestricted"
+          </div>
+          <div class="flex items-center">
+            <img [src]="appIconSecondary" alt="Application Logo" class="app-logo" />
+          </div>
+          <span *ngIf="!isforPreview"  class="spacer"></span>
+          <!-- <button class="home-help" mat-icon-button id='helper' [matMenuTriggerFor]="helpMenu" *ngIf="!isHelpMenuRestricted"
         >
         <mat-icon>help_outline</mat-icon>
       </button> -->
-        <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: item }"
-          *ngFor="let item of primaryNavbarConfig?.mediumScreen?.right">
-        </ng-container>
-        <!-- <div class="mat-icon-button pipe-icon">
+          <ng-container *ngIf="!isforPreview">
+            <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: item }"
+              *ngFor="let item of primaryNavbarConfig?.mediumScreen?.right">
+            </ng-container>
+          </ng-container>
+          <!-- <div class="mat-icon-button pipe-icon">
         |
       </div> -->
-        <!-- <ng-container [wsResolverWidget]="btnAppsConfig"></ng-container> -->
-      </ng-container>
+          <!-- <ng-container [wsResolverWidget]="btnAppsConfig"></ng-container> -->
+        </ng-container>
 
-    </ng-container>
-    <div class="flex justify-between items-center w-full" *ngIf="mode === 'bottom'">
-      <ng-container *ngIf="primaryNavbarConfig?.smallScreen">
-        <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: item }"
-          *ngFor="let item of primaryNavbarConfig?.smallScreen?.left">
-        </ng-container>
       </ng-container>
-      <a role="button" matRipple class="flex items-center flex-col px-2 box-sizing-box" routerLink="/page/home" active
-        routerLinkActive="ws-mat-accent-text">
-        <ng-container *ngIf="!appBottomIcon">
-          <mat-icon>home</mat-icon>
+      <div class="flex justify-between items-center w-full" *ngIf="mode === 'bottom'">
+        <ng-container *ngIf="primaryNavbarConfig?.smallScreen">
+          <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: item }"
+            *ngFor="let item of primaryNavbarConfig?.smallScreen?.left">
+          </ng-container>
+        </ng-container>
+        <a role="button" matRipple class="flex items-center flex-col px-2 box-sizing-box" routerLink="/page/home" active
+          routerLinkActive="ws-mat-accent-text">
+          <ng-container *ngIf="!appBottomIcon">
+            <mat-icon>home</mat-icon>
 
-          <span [ngClass]="instanceVal === 'Ford' ? 'title font-sans' : 'mat-caption'">Home</span>
+            <span [ngClass]="instanceVal === 'Ford' ? 'title font-sans' : 'mat-caption'">Home</span>
+          </ng-container>
+          <ng-container *ngIf="appBottomIcon">
+            <img width="40px" height="40px" [src]="appBottomIcon" i18n-alt alt="Home" />
+          </ng-container>
+        </a>
+        <ng-container *ngIf="primaryNavbarConfig?.smallScreen">
+          <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: item }"
+            *ngFor="let item of primaryNavbarConfig?.smallScreen?.right">
+          </ng-container>
         </ng-container>
-        <ng-container *ngIf="appBottomIcon">
-          <img width="40px" height="40px" [src]="appBottomIcon" i18n-alt alt="Home" />
-        </ng-container>
-      </a>
-      <ng-container *ngIf="primaryNavbarConfig?.smallScreen">
-        <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: item }"
-          *ngFor="let item of primaryNavbarConfig?.smallScreen?.right">
-        </ng-container>
-      </ng-container>
-      <ng-container [wsResolverWidget]="btnAppsConfig"></ng-container>
+        <ng-container [wsResolverWidget]="btnAppsConfig"></ng-container>
+      </div>
     </div>
-  </div>
-  <!-- <div class="fix-ww" *ngIf="mode === 'top'">
+    <!-- <div class="fix-ww" *ngIf="mode === 'top'">
     <ng-container [wsResolverWidget]="{ 'widgetType': 'card',
       'widgetSubType': 'cardHomeHubs',
       widgetData: {}}">
     </ng-container>
   </div> -->
-</mat-toolbar>
-<mat-toolbar *ngIf="!showAppNavBar">
-  <div class="fix-ww flex flex-row mt-3" id="root-tool-bar" title="toolbar" i18n-aria-label role="toolbar">
-    <ng-container *ngIf="mode === 'top'">
-      <div class="flex flex-1">
-        <a class="logo-dim" role="link" title="Home" i18n-aria-title i18n-aria-label routerLink="/page/home" *ngIf="isSetUpPage" >
-          <img [src]="appIcon" alt="Application Logo" class="app-logo" />
-        </a>
-        <a class="logo-dim" role="link" title="Home" i18n-aria-title i18n-aria-label routerLink="/public/home" *ngIf="!isSetUpPage" >
-          <img [src]="appIcon" alt="Application Logo" class="app-logo" />
-        </a>
-      </div>
+  </mat-toolbar>
+  <mat-toolbar *ngIf="!sShowAppNavBar">
+    <div class="fix-ww flex flex-row mt-3" id="root-tool-bar" title="toolbar" i18n-aria-label role="toolbar">
+      <ng-container *ngIf="mode === 'top'">
+        <div class="flex flex-1">
+          <a class="logo-dim" role="link" title="Home" i18n-aria-title i18n-aria-label routerLink="/page/home"
+            *ngIf="isThisSetUpPage">
+            <img [src]="appIcon" alt="Application Logo" class="app-logo" />
+          </a>
+          <a class="logo-dim" role="link" title="Home" i18n-aria-title i18n-aria-label routerLink="/public/home"
+            *ngIf="!isThisSetUpPage && isforPreview">
+            <img [src]="appIcon" alt="Application Logo" class="app-logo" />
+          </a>
+        </div>
 
 
-    </ng-container>
-    <div class=" text-end flex flex-row signup_div" *ngIf="isPublicHomePage">
-      <a href="/protected/v8/resource"  class="btn btn-link">Sign In</a>
-      <a routerLink="/public/signup"  class="btn btn-primary text-center margin-left-s">Register</a>
+      </ng-container>
+      <!-- <div class=" text-end flex flex-row signup_div" *ngIf="isPublicHomePage">
+      <a href="/protected/v8/resource" class="btn btn-link">Sign In</a>
+      <a routerLink="/public/signup" class="btn btn-primary text-center margin-left-s">Register</a>
+    </div> -->
     </div>
-  </div>
-</mat-toolbar>
+  </mat-toolbar>
+</ng-container>
 <ng-template #navbarSide let-item="item">
   <ng-container *ngIf="item.type === 'widgetButton'" [wsResolverWidget]="item.config"></ng-container>
   <ws-widget-btn-feature *ngIf="item.type === 'featureButton'" [id]="item.config.actionBtnId" [widgetData]="item.config"

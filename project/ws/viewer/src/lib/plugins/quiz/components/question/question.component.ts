@@ -17,6 +17,9 @@ export class QuestionComponent implements OnInit, AfterViewInit {
   @Input() question: NSQuiz.IQuestion = {
     multiSelection: false,
     question: '',
+    instructions: '',
+    section: '',
+    questionType: undefined,
     questionId: '',
     options: [
       {
@@ -79,6 +82,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
       const arr = this.shuffle(array)
       for (let i = 0; i < this.question.options.length; i += 1) {
         this.question.options[i].matchForView = arr[i]
+        this.question.options[i].hint = this.question.options[i].match
       }
       const matchHintDisplayLocal = [...this.question.options]
       matchHintDisplayLocal.forEach(element => {

@@ -3,7 +3,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { IBtnAppsConfig, CustomTourService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, NsInstanceConfig, NsPage } from '@sunbird-cb/utils'
-import { Router, NavigationStart, NavigationEnd, Event } from '@angular/router'
+import { Router, NavigationStart, NavigationEnd } from '@angular/router'
 
 @Component({
   selector: 'ws-app-nav-bar',
@@ -20,6 +20,9 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     widgetSubType: 'actionButtonApps',
     widgetData: { allListingUrl: '' }, // /app/features
   }
+  forPreview = window.location.href.includes('/public/')
+    || window.location.href.includes('&preview=true')
+  isPlayerPage = window.location.href.includes('/viewer/')
   instanceVal = ''
   btnAppsConfig!: NsWidgetResolver.IRenderConfigWithTypedData<IBtnAppsConfig>
   appIcon: SafeUrl | null = null
@@ -35,7 +38,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   showAppNavBar = false
   popupTour: any
   currentRoute = 'page/home'
-  isPublicHomePage = false
+  isPublicHomePage = window.location.href.includes('/public/home')
   isSetUpPage = false
   constructor(
     private domSanitizer: DomSanitizer,
@@ -51,6 +54,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       if (event instanceof NavigationStart) {
         this.cancelTour()
       } else if (event instanceof NavigationEnd) {
+        this.routeSubs(event)
         this.cancelTour()
         this.bindUrl(event.url.replace('/app/competencies/', ''))
       }
@@ -58,29 +62,6 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.router.events.subscribe((e: Event) => {
-      if (e instanceof NavigationEnd) {
-        if (e.url.includes('/app/setup')) {
-          this.isSetUpPage = true
-        } else {
-          this.isSetUpPage = false
-        }
-
-        if (e.url.includes('/public/logout') || e.url.includes('/public/home')) {
-          this.showAppNavBar = false
-          if (e.url.includes('/public/home')) {
-            this.isPublicHomePage = true
-          } else {
-            this.isPublicHomePage = false
-          }
-        } else if ((e.url.includes('/app/setup') && this.configSvc.instanceConfig && !this.configSvc.instanceConfig.showNavBarInSetup)) {
-          this.showAppNavBar = false
-        } else {
-          this.showAppNavBar = true
-        }
-      }
-    })
-
     if (this.configSvc.instanceConfig) {
       this.appIcon = this.domSanitizer.bypassSecurityTrustResourceUrl(
         this.configSvc.instanceConfig.logos.app,
@@ -110,8 +91,37 @@ export class AppNavBarComponent implements OnInit, OnChanges {
         this.popupTour = this.tourService.createPopupTour()
       }
     })
+    this.startTour()
   }
-
+  routeSubs(e: NavigationEnd) {
+    // this.router.events.subscribe((e: Event) => {
+    //   if (e instanceof NavigationEnd) {
+    if (e.url.includes('/app/setup')) {
+      this.isSetUpPage = true
+    } else {
+      this.isSetUpPage = false
+    }
+    if (
+      e.url.includes('/public/logout')
+      || e.url.includes('/public/home')
+      || e.url.includes('/public/sso')
+      || e.url.includes('/public/google/sso')
+      || e.url.startsWith('/viewer')
+    ) {
+      this.showAppNavBar = false
+      if (e.url.includes('/public/home')) {
+        this.isPublicHomePage = true
+      } else {
+        this.isPublicHomePage = false
+      }
+    } else if ((e.url.includes('/app/setup') && this.configSvc.instanceConfig && !this.configSvc.instanceConfig.showNavBarInSetup)) {
+      this.showAppNavBar = false
+    } else {
+      this.showAppNavBar = true
+    }
+    //   }
+    // })
+  }
   ngOnChanges(changes: SimpleChanges) {
     for (const property in changes) {
       if (property === 'mode') {
@@ -133,21 +143,21 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
 
   startTour() {
-    this.tourService.startTour()
-    this.tourService.isTourComplete.subscribe((result: boolean) => {
-      if ((result)) {
-        this.tourService.startPopupTour()
-        this.configSvc.completedTour = true
-        this.configSvc.prefChangeNotifier.next({ completedTour: this.configSvc.completedTour })
-        // this.tour = tour
-        setTimeout(
-          () => {
-            this.tourService.cancelPopupTour()
-          },
-          3000,
-        )
-      }
-    })
+    // this.tourService.createPopupTour()
+    // this.tourService.isTourComplete.subscribe((result: boolean) => {
+    //   if ((result)) {
+    //     this.tourService.createPopupTour()
+    //     this.configSvc.completedTour = true
+    //     this.configSvc.prefChangeNotifier.next({ completedTour: this.configSvc.completedTour })
+    //     // this.tour = tour
+    //     setTimeout(
+    //       () => {
+    //         this.tourService.startPopupTour()
+    //       },
+    //       3000,
+    //     )
+    //   }
+    // })
   }
   cancelTour() {
     if (this.popupTour) {
@@ -163,5 +173,33 @@ export class AppNavBarComponent implements OnInit, OnChanges {
         this.currentRoute = path
       }
     }
+  }
+  get stillOnHomePage(): boolean {
+    this.isPublicHomePage = window.location.href.includes('/public/home')
+    return this.isPublicHomePage
+  }
+  get fullMenuDispaly(): boolean {
+    this.isPlayerPage = window.location.href.includes('/viewer/')
+    return !(this.isPlayerPage || this.stillOnHomePage)
+  }
+  get sShowAppNavBar(): boolean {
+    return this.showAppNavBar
+  }
+  get needToHide(): boolean {
+    return this.currentRoute.includes('all/assessment/')
+  }
+  // parichay changes
+  get isforPreview(): boolean {
+    this.forPreview = window.location.href.includes('/public/')
+    || window.location.href.includes('&preview=true')
+    return this.forPreview
+  }
+  get isThisSetUpPage(): boolean {
+    if (window.location.pathname.includes('/app/setup')) {
+      this.isSetUpPage = true
+    } else {
+      this.isSetUpPage = false
+    }
+    return this.isSetUpPage
   }
 }

@@ -21,7 +21,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   quizData: NsContent.IContent | null = null
   oldData: NsContent.IContent | null = null
   alreadyRaised = false
-  quizJson: NSQuiz.IQuiz = {
+  quizJson: Partial<NSQuiz.IQuiz> = {
     timeLimit: 0,
     questions: [],
     isAssessment: false,
@@ -39,7 +39,8 @@ export class QuizComponent implements OnInit, OnDestroy {
       async data => {
         this.quizData = data.content.data
         if (this.quizData) {
-          this.quizData.artifactUrl = this.generateUrl(this.quizData.artifactUrl)
+          const url = this.viewSvc.getPublicUrl(this.quizData.artifactUrl)
+          this.quizData.artifactUrl = this.generateUrl(url)
         }
         if (this.alreadyRaised && this.oldData) {
           this.raiseEvent(WsEvents.EnumTelemetrySubType.Unloaded, this.oldData)
@@ -49,6 +50,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         }
         if (this.quizData) {
           this.quizJson = await this.transformQuiz(this.quizData)
+          this.quizJson.timeLimit = this.quizData.duration
         }
         if (this.quizData) {
           this.oldData = this.quizData
@@ -82,9 +84,9 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   raiseEvent(state: WsEvents.EnumTelemetrySubType, data: NsContent.IContent) {
-    if (this.forPreview) {
-      return
-    }
+    // if (this.forPreview) {
+    //   return
+    // }
     const event = {
       eventType: WsEvents.WsEventType.Telemetry,
       eventLogLevel: WsEvents.WsEventLogLevel.Info,
@@ -125,7 +127,8 @@ export class QuizComponent implements OnInit, OnDestroy {
     // const artifactUrl = this.forPreview
     //   ? this.viewSvc.getAuthoringUrl(content.artifactUrl)
     //   : content.artifactUrl
-    const artifactUrl = this.generateUrl(content.artifactUrl)
+    const url = this.viewSvc.getPublicUrl(content.artifactUrl)
+    const artifactUrl = this.generateUrl(url)
     const newHttpClient = new HttpClient(this.httpBackend)
     let quizJSON: NSQuiz.IQuiz = await newHttpClient
       .get<any>(artifactUrl || '')

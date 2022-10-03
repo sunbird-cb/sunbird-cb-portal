@@ -34,12 +34,16 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
   @Input() complexityLevel = ''
   @Input() duration = 0
   @Input() collectionId = ''
-  @Input() quizJson = {
+  forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+  @Input() quizJson: Partial<NSQuiz.IQuiz> = {
     timeLimit: 0,
     questions: [
       {
         multiSelection: false,
         question: '',
+        instructions: '',
+        section: '',
+        questionType: undefined,
         questionId: '',
         options: [
           {
@@ -134,11 +138,14 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
   updateProgress(status: number) {
     // status = 1 indicates started
     // status = 2 indicates completed
+    if (this.forPreview) {
+      return
+    }
     const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-              this.activatedRoute.snapshot.queryParams.collectionId : ''
-      const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-              this.activatedRoute.snapshot.queryParams.batchId : ''
-      this.viewerSvc.realTimeProgressUpdateQuiz(this.identifier, collectionId, batchId, status)
+      this.activatedRoute.snapshot.queryParams.collectionId : ''
+    const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+      this.activatedRoute.snapshot.queryParams.batchId : ''
+    this.viewerSvc.realTimeProgressUpdateQuiz(this.identifier, collectionId, batchId, status)
   }
 
   startQuiz() {
@@ -149,13 +156,13 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
     this.markedQuestions = new Set([])
     this.questionAnswerHash = {}
     this.currentQuestionIndex = 0
-    this.timeLeft = this.quizJson.timeLimit
-    if (this.quizJson.timeLimit > -1) {
+    this.timeLeft = this.quizJson.timeLimit || 0
+    if (this.quizJson.timeLimit && this.quizJson.timeLimit > -1) {
       this.timerSubscription = interval(100)
         .pipe(
           map(
             () =>
-              this.startTime + this.quizJson.timeLimit - Date.now(),
+              this.startTime + (this.quizJson.timeLimit || 0) - Date.now(),
           ),
         )
         .subscribe(_timeRemaining => {
@@ -173,7 +180,9 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   fillSelectedItems(question: NSQuiz.IQuestion, optionId: string) {
-    this.raiseTelemetry('mark', optionId, 'click')
+    if (typeof (optionId) === 'string') {
+      this.raiseTelemetry('mark', optionId, 'click')
+    }
     if (this.viewState === 'answer') {
       if (this.questionsReference) {
         this.questionsReference.forEach(questionReference => {
@@ -204,7 +213,7 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
     if (this.timeLeft) {
       if (
         Object.keys(this.questionAnswerHash).length !==
-        this.quizJson.questions.length
+        (this.quizJson.questions || []).length
       ) {
         this.submissionState = 'unanswered'
       } else if (this.markedQuestions.size) {
@@ -229,10 +238,12 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
     this.raiseTelemetry('quiz', null, 'submit')
     this.isSubmitted = true
     this.ngOnDestroy()
+
     if (!this.quizJson.isAssessment) {
       this.viewState = 'review'
       this.calculateResults()
     } else {
+      this.calculateResults()
       this.viewState = 'answer'
     }
     const submitQuizJson = JSON.parse(JSON.stringify(this.quizJson))
@@ -242,7 +253,7 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
       this.name,
       {
         ...submitQuizJson,
-        timeLimit: this.quizJson.timeLimit * 1000,
+        timeLimit: (this.quizJson.timeLimit || 0) * 1000,
       },
       this.questionAnswerHash,
     )
@@ -299,7 +310,7 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
   showAnswers() {
     this.showMtfAnswers()
     this.showFitbAnswers()
-    this.viewState = 'answer'
+    this.viewState = 'review'
   }
 
   showMtfAnswers() {
@@ -319,7 +330,7 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   calculateResults() {
-    const correctAnswers = this.quizJson.questions.map(
+    const correctAnswers = (this.quizJson.questions || []).map(
       (question: NSQuiz.IQuestion) => {
         return {
           questionType: question.questionType,
@@ -424,7 +435,7 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
       }
     })
     this.numUnanswered =
-      this.quizJson.questions.length -
+      (this.quizJson.questions || []).length -
       this.numCorrectAnswers -
       this.numIncorrectAnswers
   }
@@ -457,6 +468,9 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   raiseTelemetry(action: string, optionId: string | null, event: string) {
+    // if (this.forPreview) {
+    //   return
+    // }
     if (optionId) {
       this.events.raiseInteractTelemetry(
         {
@@ -481,7 +495,7 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
         {
           pageIdExt: `quiz`,
           module: WsEvents.EnumTelemetrymodules.LEARN,
-      })
+        })
     }
   }
 }

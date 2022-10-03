@@ -215,6 +215,8 @@ export class WidgetContentService {
       content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT ||
       content.primaryCategory === NsContent.EPrimaryCategory.PROGRAM ||
       content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE ||
+      content.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT ||
+      content.primaryCategory === NsContent.EPrimaryCategory.COMP_ASSESSMENT ||
       content.primaryCategory === NsContent.EPrimaryCategory.MANDATORY_COURSE_GOAL
     ) {
       return content

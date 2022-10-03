@@ -47,6 +47,7 @@ export class ProviderAllCbpComponent implements OnInit, OnDestroy {
       offset: 0,
       fields: [],
       facets: ['primaryCategory', 'mimeType', 'source'],
+      fuzzy: true,
     },
   }
 
@@ -85,7 +86,7 @@ export class ProviderAllCbpComponent implements OnInit, OnDestroy {
   getAllCbps(req?: any) {
     const request = req || this.searchReq
     this.browseProviderSvc.fetchSearchData(request).subscribe((res: any) => {
-      console.log('res ::', res)
+      // console.log('res ::', res)
       if(res.result.count === 0) {
         this.disableLoadMore = true
         this.cbps = []

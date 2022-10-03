@@ -11,6 +11,7 @@ export namespace NSProfileDataV3 {
             uri?: string
         }
         enabled: boolean
+        check: boolean
         routerLink: string
         step: number
         description: string

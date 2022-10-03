@@ -1,7 +1,6 @@
 <viewer-overview *ngIf="viewState === 'initial'" [learningObjective]="learningObjective"
   [complexityLevel]="complexityLevel" [duration]="duration" [timeLimit]="quizJson?.timeLimit"
   [noOfQuestions]="quizJson?.questions?.length" (userSelection)="overViewed($event)"></viewer-overview>
-
 <div #quizContainer *ngIf="viewState !== 'initial'" class="quiz-container">
   <nav class="quiz-nav-bar mat-toolbar mat-caption">
     <span>
@@ -47,7 +46,7 @@
     </mat-sidenav>
     <mat-sidenav-content>
       <div class="margin-m">
-        <ng-container *ngIf="!(viewState === 'answer' && quizJson?.isAssessment)">
+        <ng-container *ngIf="!(viewState === 'review' && quizJson?.isAssessment)">
           <viewer-question #questionsReference [id]="'question' + (i + 1)"
             *ngFor="let question of quizJson?.questions; let i = index" [markedQuestions]="markedQuestions"
             [artifactUrl]="artifactUrl" [questionNumber]="i + 1" [total]="quizJson?.questions.length"
@@ -107,12 +106,12 @@
         </mat-card>
         <div class="text-center">
           <button class="margin-right-m" mat-raised-button color="primary"
-            *ngIf="!(viewState === 'answer' && quizJson?.isAssessment)" (click)="proceedToSubmit()"
-            i18n="button quiz submit">
+            *ngIf="!((viewState === 'answer' || viewState === 'review') && quizJson?.isAssessment) && !forPreview"
+            (click)="proceedToSubmit()" i18n="button quiz submit">
             Submit
           </button>
-          <button mat-raised-button color="primary" *ngIf="viewState === 'review'" (click)="showAnswers()"
-            i18n="button quiz show answers">
+          <button mat-raised-button color="primary" *ngIf="viewState === 'review' && isSubmitted"
+            (click)="showAnswers()" i18n="button quiz show answers">
             Show Answers
           </button>
         </div>

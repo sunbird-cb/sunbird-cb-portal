@@ -9,6 +9,7 @@ import { TopicComponent } from './routes/topics/topic.component'
 import { RolesAndActivitiesComponent } from './routes/roles-and-activities/roles-and-activities.component'
 import { CompetencyResolverService } from './resolvers/competency.resolver'
 import { WelcomeOnboardComponent } from './routes/welcome-onboard/welcome-onboard.component'
+import { BasicProfileResolver } from './services/basic-profile-resolver.service'
 
 const routes: Routes = [
   {
@@ -33,6 +34,9 @@ const routes: Routes = [
         data: {
           pageId: 'welcome',
           module: 'profile-v3',
+        },
+        resolve: {
+          // basicProfile: BasicProfileResolver,
         },
       },
       {
@@ -97,6 +101,7 @@ const routes: Routes = [
   providers: [
     TopicResolverService,
     CompetencyResolverService,
+    BasicProfileResolver,
   ],
   // Don't forget to pass RouteResolver into the providers array
 })

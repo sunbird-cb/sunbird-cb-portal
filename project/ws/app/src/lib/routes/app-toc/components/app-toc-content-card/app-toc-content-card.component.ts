@@ -27,6 +27,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
     learningModule: 0,
     other: 0,
     pdf: 0,
+    survey: 0,
     podcast: 0,
     practiceTest: 0,
     quiz: 0,
@@ -68,6 +69,8 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
         this.content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE
         // || this.content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT
         || this.content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+        || this.content.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT
+        || this.content.primaryCategory === NsContent.EPrimaryCategory.COMP_ASSESSMENT
       )
     }
     return false
@@ -126,6 +129,9 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
             case NsContent.EMimeTypes.PDF:
               this.contentStructure.pdf += 1
               break
+            case NsContent.EMimeTypes.SURVEY:
+              this.contentStructure.survey += 1
+              break
             case NsContent.EMimeTypes.HTML:
               this.contentStructure.webPage += 1
               break
@@ -137,6 +143,8 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
               }
               break
             case NsContent.EMimeTypes.PRACTICE_RESOURCE:
+            // case NsContent.EMimeTypes.FINAL_ASSESSMENT:
+            // case NsContent.EMimeTypes.PRACTICE_RESOURCE:
               this.contentStructure.practiceTest += 1
               break
             case NsContent.EMimeTypes.WEB_MODULE:
@@ -175,6 +183,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
   }
 
   public raiseTelemetry() {
+    // if (this.forPreview) { return }
     if (this.content) {
       this.events.raiseInteractTelemetry(
         {

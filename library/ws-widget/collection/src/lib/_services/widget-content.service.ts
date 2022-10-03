@@ -12,7 +12,7 @@ const PROTECTED_SLAG_V8 = '/apis/protected/v8'
 
 const API_END_POINTS = {
   CONTENT: `${PROTECTED_SLAG_V8}/content`,
-  AUTHORING_CONTENT: `/apis/authApi/hierarchy`,
+  AUTHORING_CONTENT: `/api/course/v1/hierarchy`,
   CONTENT_LIKES: `${PROTECTED_SLAG_V8}/content/likeCount`,
   SET_S3_COOKIE: `${PROTECTED_SLAG_V8}/content/setCookie`,
   SET_S3_IMAGE_COOKIE: `${PROTECTED_SLAG_V8}/content/setImageCookie`,
@@ -45,13 +45,14 @@ const API_END_POINTS = {
 export class WidgetContentService {
   constructor(
     private http: HttpClient,
-    private configSvc: ConfigurationsService
-  ) { }
+    private configSvc: ConfigurationsService,
+  ) {
+  }
 
   isResource(primaryCategory: string) {
     if (primaryCategory) {
       const isResource = (primaryCategory === NsContent.EResourcePrimaryCategories.LEARNING_RESOURCE) ||
-       (primaryCategory === NsContent.EResourcePrimaryCategories.PRACTICE_RESOURCE)
+        (primaryCategory === NsContent.EResourcePrimaryCategories.PRACTICE_RESOURCE)
       return isResource
     }
     return false
@@ -73,25 +74,33 @@ export class WidgetContentService {
   ): Observable<NsContent.IContent> {
     // const url = `${API_END_POINTS.CONTENT}/${contentId}?hierarchyType=${hierarchyType}`
     let url = ''
+    const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
     if (primaryCategory && this.isResource(primaryCategory)) {
-      url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
+      if (!forPreview) {
+        url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
+      } else {
+        url = `/api/content/v1/read/${contentId}`
+      }
     } else {
-      url = `/apis/proxies/v8/action/content/v3/hierarchy/${contentId}?hierarchyType=${hierarchyType}`
+      if (!forPreview) {
+        url = `/apis/proxies/v8/action/content/v3/hierarchy/${contentId}?hierarchyType=${hierarchyType}`
+      } else {
+        url = `/api/course/v1/hierarchy/${contentId}?hierarchyType=${hierarchyType}`
+      }
     }
     // return this.http
     //   .post<NsContent.IContent>(url, { additionalFields })
     //   .pipe(retry(1))
-    const apiData = this.http
+    return this.http
       .get<NsContent.IContent>(url)
       .pipe(retry(1))
     // if (apiData && apiData.result) {
     //   return apiData.result.content
     // }
-    return apiData
   }
   fetchAuthoringContent(contentId: string): Observable<NsContent.IContent> {
-    const url = `${API_END_POINTS.AUTHORING_CONTENT}/${contentId}`
-    return this.http.get<NsContent.IContent>(url).pipe(retry(1))
+    const url = `${API_END_POINTS.AUTHORING_CONTENT}/${contentId}?hierarchyType=detail`
+    return this.http.get<NsContent.IContent>(url).pipe(retry(1), r => r)
   }
   fetchMultipleContent(ids: string[]): Observable<NsContent.IContent[]> {
     return this.http.get<NsContent.IContent[]>(
@@ -268,7 +277,7 @@ export class WidgetContentService {
     }
     if (
       (content.primaryCategory === NsContent.EPrimaryCategory.PROGRAM &&
-      !(content.artifactUrl && content.artifactUrl.length)) ||
+        !(content.artifactUrl && content.artifactUrl.length)) ||
       content.primaryCategory === NsContent.EPrimaryCategory.MANDATORY_COURSE_GOAL
     ) {
       const child = content.children[0]
@@ -278,7 +287,9 @@ export class WidgetContentService {
       content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE ||
       content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT ||
       content.primaryCategory === NsContent.EPrimaryCategory.PROGRAM ||
-      content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+      content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE ||
+      content.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT ||
+      content.primaryCategory === NsContent.EPrimaryCategory.COMP_ASSESSMENT
     ) {
       return content
     }

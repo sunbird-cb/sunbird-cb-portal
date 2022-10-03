@@ -41,7 +41,8 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   @Input() content: NsContent.IContent | null = null
   @Input() initialrouteData: any
   routeSubscription: Subscription | null = null
-  @Input() forPreview = false
+  @Input() forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+
   @Input() resumeData: NsContent.IContinueLearningData | null = null
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   tocConfig: any = null
@@ -115,13 +116,12 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
+
     this.searchForm = new FormGroup({
       sortByControl: new FormControl(this.sortReviewValues[0]),
       searchKey: new FormControl(''),
     })
-    if (!this.forPreview) {
-      this.forPreview = window.location.href.includes('/author/')
-    }
+
     // if (this.route && this.route.parent) {
     //   this.routeSubscription = this.route.parent.data.subscribe((data: Data) => {
     //     this.initData(data)
@@ -157,11 +157,11 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
         takeUntil(this.unsubscribe)
       ).subscribe()
 
-      this.updateReviewsSubscription =  this.tocSharedSvc.updateReviewsObservable.subscribe((value: boolean) => {
-        if (value) {
-          this.updateReviews()
-        }
-      })
+    this.updateReviewsSubscription = this.tocSharedSvc.updateReviewsObservable.subscribe((value: boolean) => {
+      if (value) {
+        this.updateReviews()
+      }
+    })
 
   }
 
@@ -239,17 +239,17 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     if (this.content && this.content.identifier) {
       this.fetchRatingSummary()
     }
-    const competencies = this.content && this.content.competencies_v3 || this.content &&  this.content.competencies
-    const competenciesData = this.content && competencies ? competencies : []
-    if (competenciesData && competenciesData.length) {
-      const str = competenciesData.replace(/\\/g, '')
+    let competencies = this.content && this.content.competencies_v3 || this.content && this.content.competencies
+    const isString = typeof (competencies) === 'string'
+    if (competencies && isString) {
       try {
-        this.competencies = JSON.parse(str)
+        competencies = JSON.parse(competencies)
       } catch (ex) {
-        this.competencies = []
+        competencies = []
         this.logger.error('Competency Parse Error', ex)
       }
     }
+    this.competencies = competencies || []
     this.discussionConfig.contextIdArr = (this.content) ? [this.content.identifier] : []
     if (this.content) {
       this.discussionConfig.categoryObj = {
@@ -338,6 +338,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
       learningModule: 0,
       other: 0,
       pdf: 0,
+      survey: 0,
       podcast: 0,
       practiceTest: 0,
       quiz: 0,
@@ -497,27 +498,26 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
 
   fetchRatingSummary() {
     this.displayLoader = true
-    if (this.content && this.content.identifier && this.content.primaryCategory) {
-        this.ratingSvc.getRatingSummary(this.content.identifier, this.content.primaryCategory).subscribe(
-          (res: any) =>  {
-            this.displayLoader = false
-            // console.log('Rating summary res ', res)
-            if (res && res.result && res.result.response) {
-              this.ratingSummary = res.result.response
-            }
-
-            // TODO: To be removed
-            // this.hardcodeData()
-            this.ratingSummaryProcessed = this.processRatingSummary()
-          },
-          (err: any) => {
-            this.displayLoader = false
-            this.logger.error('USER RATING FETCH ERROR >', err)
-            // TODO: To be removed
-            // this.hardcodeData()
-            // this.ratingSummaryProcessed = this.processRatingSummary()
+    if (!this.forPreview && this.content && this.content.identifier && this.content.primaryCategory) {
+      this.ratingSvc.getRatingSummary(this.content.identifier, this.content.primaryCategory).subscribe(
+        (res: any) => {
+          this.displayLoader = false
+          if (res && res.result && res.result.response) {
+            this.ratingSummary = res.result.response
           }
-        )
+
+          // TODO: To be removed
+          // this.hardcodeData()
+          this.ratingSummaryProcessed = this.processRatingSummary()
+        },
+        (err: any) => {
+          this.displayLoader = false
+          this.logger.error('USER RATING FETCH ERROR >', err)
+          // TODO: To be removed
+          // this.hardcodeData()
+          // this.ratingSummaryProcessed = this.processRatingSummary()
+        }
+      )
     }
   }
 
@@ -533,26 +533,29 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
         ...((this.lastLookUp && this.lastLookUp.updatedOnUUID) ? { updateOn: (this.lastLookUp && this.lastLookUp.updatedOnUUID) } : null),
       }
       this.ratingSvc.getRatingLookup(req).subscribe(
-        (res: any) =>  {
+        (res: any) => {
           this.displayLoader = false
           // // console.log('Rating summary res ', res)
           if (res && res.result && res.result.response) {
-            this.ratingLookup = res.result.response
+            if (this.reviewPage > 1) {
+              res.result.response.map((item: any) => {
+                if (!this.ratingLookup.find((o: any) => o.updatedOnUUID === item.updatedOnUUID)) {
+                  this.ratingLookup.push(item)
+                }
+              })
+            } else {
+              this.ratingLookup = res.result.response
+            }
           }
 
-          // TODO: To be removed
-          // this.hardcodeData1()
-          this.processRatingLookup()
+          this.processRatingLookup(res.result.response)
         },
         (err: any) => {
           this.displayLoader = false
           this.logger.error('USER RATING FETCH ERROR >', err)
-          // TODO: To be removed
-          // this.hardcodeData1()
-          // this.processRatingLookup()
         }
       )
-  }
+    }
   }
 
   showALLReviews(length: number) {
@@ -565,10 +568,11 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
       breakDown: breakDownArray,
       latest50Reviews: breakDownArray,
       ratingsNumber: breakDownArray,
-      total_number_of_ratings: this.ratingSummary.total_number_of_ratings || 0,
+      total_number_of_ratings: _.get(this.ratingSummary, 'total_number_of_ratings') || 0,
       avgRating: 0,
     }
-    const totRatings = this.ratingSummary.sum_of_total_ratings
+
+    const totRatings = _.get(this.ratingSummary, 'sum_of_total_ratings') || 0
     ratingSummaryPr.breakDown.push({
       percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount1stars'), totRatings),
       key: 1,
@@ -594,16 +598,26 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
       key: 5,
       value: _.get(this.ratingSummary, 'totalcount5stars'),
     })
-    ratingSummaryPr.latest50Reviews = JSON.parse(this.ratingSummary.latest50Reviews)
-    // ratingSummaryPr.latest50Reviews = this.ratingSummary.latest50Reviews
-    this.ratingReviews = JSON.parse(this.ratingSummary.latest50Reviews)
+    // tslint:disable-next-line:max-line-length
+    // ratingSummaryPr.latest50Reviews = this.ratingSummary && this.ratingSummary.latest50Reviews ? JSON.parse(this.ratingSummary.latest50Reviews) : []
+    // // ratingSummaryPr.latest50Reviews = this.ratingSummary.latest50Reviews
+    // this.ratingReviews = this.ratingSummary && this.ratingSummary.latest50Reviews ? JSON.parse(this.ratingSummary.latest50Reviews) : []
     // ratingSummaryPr.avgRating = parseFloat(((((totRatings / this.ratingSummary.total_number_of_ratings) * 100) * 5) / 100).toFixed(1))
+    if (this.ratingSummary && this.ratingSummary.latest50Reviews) {
+      ratingSummaryPr.latest50Reviews = JSON.parse(this.ratingSummary.latest50Reviews)
+      this.ratingReviews = JSON.parse(this.ratingSummary.latest50Reviews)
+    }
     const meanRating = ratingSummaryPr.breakDown.reduce((val, item) => {
       // console.log('item', item)
       return val + (item.key * item.value)
-    // tslint:disable-next-line: align
+      // tslint:disable-next-line: align
     }, 0)
-    ratingSummaryPr.avgRating = parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1))
+    // tslint:disable-next-line:max-line-length
+    // ratingSummaryPr.avgRating = this.ratingSummary && this.ratingSummary.total_number_of_ratings ? parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1)) : 0
+
+    if (this.ratingSummary && this.ratingSummary.total_number_of_ratings) {
+      ratingSummaryPr.avgRating = parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1))
+    }
     if (this.content) {
       this.content.averageRating = ratingSummaryPr.avgRating
       this.content.totalRating = ratingSummaryPr.total_number_of_ratings
@@ -612,14 +626,15 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     return ratingSummaryPr
   }
 
-  processRatingLookup() {
-    if (this.ratingLookup.length < this.lookupLimit) {
+  processRatingLookup(response: any) {
+    if (response.length < this.lookupLimit) {
       this.disableLoadMore = true
     } else {
       this.disableLoadMore = false
     }
-    this.lastLookUp = this.ratingLookup[this.ratingLookup.length - 1]
+    this.lastLookUp = response[response.length - 1]
     this.ratingReviews = this.ratingLookup
+    this.ratingReviews = this.ratingReviews.slice()
   }
 
   countStarsPercentage(value: any, total: any) {
@@ -636,25 +651,34 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
 
   sortReviews(sort: string) {
     // Reset the counters/ previous values before changing the filter and view
-    this.ratingViewCount  = this.ratingViewCountDefault
+    this.ratingViewCount = this.ratingViewCountDefault
     this.lastLookUp = ''
     this.ratingReviews = []
-
-    if (sort === this.sortReviewValues[0]) {
-      this.fetchRatingSummary()
-    } else {
-      this.fetchRatingLookup()
+    this.reviewPage = 1
+    this.disableLoadMore = false
+    this.ratingLookup = []
+    if (!this.forPreview) {
+      if (sort === this.sortReviewValues[0]) {
+        this.fetchRatingSummary()
+      } else {
+        this.fetchRatingLookup()
+      }
     }
   }
 
- // To updated both reviews, and rating summary at once in case of edit scenario
+  // To updated both reviews, and rating summary at once in case of edit scenario
   updateReviews() {
     // Reset the counters/ previous values before changing the filter and view
-    this.ratingViewCount  = this.ratingViewCountDefault
+    this.ratingViewCount = this.ratingViewCountDefault
     this.lastLookUp = ''
     this.ratingReviews = []
+    this.reviewPage = 1
+    this.disableLoadMore = false
+    this.ratingLookup = []
     this.fetchRatingSummary()
-    this.fetchRatingLookup()
+    if (this.previousFilter !== this.sortReviewValues[0]) {
+      this.fetchRatingLookup()
+    }
   }
 
   get usr() {
@@ -662,6 +686,9 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   public tabClicked(tabEvent: MatTabChangeEvent) {
+    // if (this.forPreview) {
+    //   return
+    // }
     const data: WsEvents.ITelemetryTabData = {
       label: `${tabEvent.tab.textLabel}`,
       index: tabEvent.index,

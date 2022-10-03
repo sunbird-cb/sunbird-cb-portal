@@ -81,7 +81,7 @@ export namespace NsContent {
     playgroundInstructions?: string
     playgroundResources?: IResourcePlayground[]
     postContents?: IPrePostContent[]
-    posterImage?: string
+    posterImage: string
     preContents?: IPrePostContent[]
     preRequisites: string
     price?: {
@@ -224,7 +224,7 @@ export namespace NsContent {
     name: string
     creatorDetails: ICreator[]
     creatorContacts: ICreator[]
-    PosterImage: string
+    posterImage: string
     primaryCategory: EPrimaryCategory
     resourceType?: string
     totalRating?: number
@@ -343,6 +343,8 @@ export namespace NsContent {
     GOALS = 'GOALS',
     PLAYLIST = 'PLAYLIST',
     PRACTICE_RESOURCE = 'Practice Question Set',
+    FINAL_ASSESSMENT = 'Course Assessment',
+    COMP_ASSESSMENT = 'Competency Assessment',
     FTB_QUESTION = 'FTB Question',
     MTF_QUESTION = 'MTF Question',
     MULTIPLE_CHOICE_QUESTION = 'Multiple Choice Question',
@@ -370,6 +372,7 @@ export namespace NsContent {
   export enum EResourcePrimaryCategories {
     LEARNING_RESOURCE = 'Learning Resource',
     PRACTICE_RESOURCE = 'Practice Question Set',
+    FINAL_ASSESSMENT = 'Course Assessment',
   }
 
   export enum EMiscPlayerSupportedCollectionTypes {
@@ -420,10 +423,12 @@ export namespace NsContent {
     COLLECTION_RESOURCE = 'resource/collection',
     APPLICATION_JSON = 'application/json',
     PRACTICE_RESOURCE = 'application/vnd.sunbird.questionset',
+    FINAL_ASSESSMENT = 'application/vnd.sunbird.questionset',
     // Added on UI Only
     CERTIFICATION = 'application/certification',
     PLAYLIST = 'application/playlist',
     TEXT_WEB = 'text/x-url',
+    SURVEY = 'application/survey',
     QUESTION_SET = 'application/vnd.sunbird.questionset',
     QUESTION = 'application/vnd.sunbird.question',
     UNKNOWN = 'application/unknown',
@@ -431,6 +436,7 @@ export namespace NsContent {
   export enum EDisplayContentTypes {
     ASSESSMENT = 'ASSESSMENT',
     PRACTICE_RESOURCE = 'Practice Question Set',
+    FINAL_ASSESSMENT = 'Course Assessment',
     AUDIO = 'AUDIO',
     CERTIFICATION = 'CERTIFICATION',
     CHANNEL = 'Channel',
@@ -448,6 +454,7 @@ export namespace NsContent {
     KNOWLEDGE_ARTIFACT = 'KNOWLEDGE_ARTIFACT',
     MODULE = 'MODULE',
     PDF = 'PDF',
+    SURVEY = 'SURVEY',
     PLAYLIST = 'PLAYLIST',
     PROGRAM = 'PROGRAM',
     QUIZ = 'QUIZ',
@@ -479,5 +486,20 @@ export namespace NsContent {
     EMimeTypes.APPLICATION_JSON,
     EMimeTypes.WEB_MODULE_EXERCISE,
 
+  ]
+  export const PUBLIC_SUPPORTED_CONTENT_TYPES: EMimeTypes[] = [
+    // EMimeTypes.APPLICATION_JSON,
+    // EMimeTypes.FINAL_ASSESSMENT,
+    EMimeTypes.HTML,
+    EMimeTypes.HTML_TEXT,
+    EMimeTypes.ZIP,
+    EMimeTypes.ZIP2,
+    EMimeTypes.M4A,
+    EMimeTypes.MP3,
+    EMimeTypes.MP4,
+    EMimeTypes.PDF,
+    EMimeTypes.YOUTUBE,
+    EMimeTypes.TEXT_WEB,
+    EMimeTypes.SURVEY,
   ]
 }

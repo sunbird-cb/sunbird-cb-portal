@@ -27,6 +27,7 @@ import _ from 'lodash'
 import { map } from 'rxjs/operators'
 import { v4 as uuid } from 'uuid'
 import { Subscription } from 'rxjs'
+import { NSProfileDataV3 } from '@ws/app/src/lib/routes/profile-v3/models/profile-v3.models'
 // import { of } from 'rxjs'
 /* tslint:enable */
 // interface IDetailsResponse {
@@ -63,6 +64,8 @@ export class InitService {
       wid: 'cc0c1749-4c47-49c8-9f46-2bbdd42ef877',
     }),
   }
+
+  isAnonymousTelemetry = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
 
   constructor(
     private logger: LoggerService,
@@ -130,9 +133,18 @@ export class InitService {
     // )
   }
 
+  get isAnonymousTelemetryRequired(): boolean {
+    this.isAnonymousTelemetry = window.location.href.includes('/public/')
+      || window.location.href.includes('&preview=true')
+    return this.isAnonymousTelemetry
+  }
+
   async init() {
+    if (this.updateProfileSubscription) {
+      this.updateProfileSubscription.unsubscribe()
+    }
     // to update the profile from user read api
-    this.updateProfileSubscription =  this.configSvc.updateProfileObservable.subscribe(async (value: boolean) => {
+    this.updateProfileSubscription = this.configSvc.updateProfileObservable.subscribe(async (value: boolean) => {
       if (value) {
         await this.fetchUserDetails()
       }
@@ -149,13 +161,21 @@ export class InitService {
     // Invalid User
     try {
       const path = window.location.pathname
-      if (!path.startsWith('/public')) {
+      const isPublic = window.location.href.includes('/public/')
+        || window.location.href.includes('&preview=true')
+      this.setTelemetrySessionId()
+      if (!path.startsWith('/public') && !isPublic) {
+        await this.fetchStartUpDetails()
+      } else if (path.includes('/public/welcome')) {
         await this.fetchStartUpDetails()
       }// detail: depends only on userID
     } catch (e) {
       this.settingsSvc.initializePrefChanges(environment.production)
       this.updateNavConfig()
+      this.isAnonymousTelemetry = true
+      this.updateTelemetryConfig()
       this.logger.info('Not Authenticated')
+      await this.initFeatured()
       // window.location.reload() // can do this
       return false
 
@@ -174,39 +194,7 @@ export class InitService {
       // }
       // await this.fetchUserProfileV2()
       // await this.createUserInNodebb()
-      const appsConfigPromise = this.fetchAppsConfig()
-      const instanceConfigPromise = this.fetchInstanceConfig() // config: depends only on details
-      const widgetStatusPromise = this.fetchWidgetStatus() // widget: depends only on details & feature
-      await this.fetchFeaturesStatus() // feature: depends only on details
-      /**
-       * Wait for the widgets and get the list of restricted widgets
-       */
-      const widgetConfig = await widgetStatusPromise
-      this.processWidgetStatus(widgetConfig)
-      this.widgetResolverService.initialize(
-        this.configSvc.restrictedWidgets,
-        this.configSvc.userRoles,
-        this.configSvc.userGroups,
-        this.configSvc.restrictedFeatures,
-      )
-      /**
-       * Wait for the instance config and after that
-       */
-      await instanceConfigPromise
-      /*
-       * Wait for the apps config and after that
-       */
-      const appsConfig = await appsConfigPromise
-      this.configSvc.appsConfig = this.processAppsConfig(appsConfig)
-      if (this.configSvc.instanceConfig) {
-        this.configSvc.instanceConfig.featuredApps = this.configSvc.instanceConfig.featuredApps.filter(
-          id => appsConfig.features[id],
-        )
-      }
-
-      // Apply the settings using settingsService
-      this.settingsSvc.initializePrefChanges(environment.production)
-      this.userPreference.initialize()
+      await this.initFeatured()
     } catch (e) {
       this.logger.warn(
         'Initialization process encountered some error. Application may not work as expected',
@@ -223,7 +211,42 @@ export class InitService {
     //   })
     return true
   }
+  async initFeatured() {
+    const appsConfigPromise = this.fetchAppsConfig()
+    const instanceConfigPromise = this.fetchInstanceConfig() // config: depends only on details
+    const widgetStatusPromise = this.fetchWidgetStatus() // widget: depends only on details & feature
+    await this.fetchFeaturesStatus() // feature: depends only on details
+    /**
+     * Wait for the widgets and get the list of restricted widgets
+     */
+    const widgetConfig = await widgetStatusPromise
+    this.processWidgetStatus(widgetConfig)
+    this.widgetResolverService.initialize(
+      this.configSvc.restrictedWidgets,
+      this.configSvc.userRoles,
+      this.configSvc.userGroups,
+      this.configSvc.restrictedFeatures,
+    )
+    /**
+     * Wait for the instance config and after that
+     */
+    await instanceConfigPromise
+    this.updateTelemetryConfig()
+    /*
+     * Wait for the apps config and after that
+     */
+    const appsConfig = await appsConfigPromise
+    this.configSvc.appsConfig = this.processAppsConfig(appsConfig)
+    if (this.configSvc.instanceConfig) {
+      this.configSvc.instanceConfig.featuredApps = this.configSvc.instanceConfig.featuredApps.filter(
+        id => appsConfig.features[id],
+      )
+    }
 
+    // Apply the settings using settingsService
+    this.settingsSvc.initializePrefChanges(environment.production)
+    this.userPreference.initialize()
+  }
   // private reloadAccordingToLocale() {
   //   if (window.location.origin.indexOf('http://localhost:') > -1) {
   //     return
@@ -281,7 +304,18 @@ export class InitService {
       .toPromise()
     return appsConfig
   }
-
+  private async fetchWelcomeConfig(): Promise<NSProfileDataV3.IProfileTab> {
+    const welcomeConfig = await this.http
+      .get<NSProfileDataV3.IProfileTab>(`${this.baseUrl}/feature/profile-v3.json`)
+      .toPromise()
+    return welcomeConfig
+  }
+  private setTelemetrySessionId() {
+    if (localStorage.getItem('telemetrySessionId')) {
+      localStorage.removeItem('telemetrySessionId')
+    }
+    localStorage.setItem('telemetrySessionId', uuid())
+  }
   private async fetchStartUpDetails(): Promise<any> {
     // const userRoles: string[] = []
     if (this.configSvc.instanceConfig && !Boolean(this.configSvc.instanceConfig.disablePidCheck)) {
@@ -300,10 +334,12 @@ export class InitService {
           //   const organisationData = userPidProfile.result.response.organisations
           //   userRoles = (organisationData[0].roles.length > 0) ? organisationData[0].roles : []
           // }
-          if (localStorage.getItem('telemetrySessionId')) {
-            localStorage.removeItem('telemetrySessionId')
-          }
-          localStorage.setItem('telemetrySessionId', uuid())
+          // if (localStorage.getItem('telemetrySessionId')) {
+          //   localStorage.removeItem('telemetrySessionId')
+          // }
+          // localStorage.setItem('telemetrySessionId', uuid())
+          this.setTelemetrySessionId()
+          this.updateTelemetryConfig()
           this.configSvc.unMappedUser = userPidProfile
           const profileV2 = _.get(userPidProfile, 'profileDetails')
           this.configSvc.userProfile = {
@@ -352,6 +388,7 @@ export class InitService {
           }
         } else {
           this.authSvc.force_logout()
+          this.updateTelemetryConfig()
         }
         const details = {
           group: [],
@@ -369,9 +406,11 @@ export class InitService {
         this.configSvc.userGroups = new Set(details.group)
         this.configSvc.userRoles = new Set((details.roles || []).map((v: string) => v.toLowerCase()))
         this.configSvc.isActive = details.isActive
+        this.configSvc.welcomeTabs = await this.fetchWelcomeConfig()
         return details
       } catch (e) {
         this.configSvc.userProfile = null
+        this.updateTelemetryConfig()
         throw new Error('Invalid user')
       }
     } else {
@@ -406,10 +445,13 @@ export class InitService {
           //   const organisationData = userPidProfile.result.response.organisations
           //   userRoles = (organisationData[0].roles.length > 0) ? organisationData[0].roles : []
           // }
-          if (localStorage.getItem('telemetrySessionId')) {
-            localStorage.removeItem('telemetrySessionId')
-          }
-          localStorage.setItem('telemetrySessionId', uuid())
+          // if (localStorage.getItem('telemetrySessionId')) {
+          //   localStorage.removeItem('telemetrySessionId')
+          // }
+          // localStorage.setItem('telemetrySessionId', uuid())
+          this.setTelemetrySessionId()
+          // make the endpoint private for logged in user
+          this.updateTelemetryConfig()
           this.configSvc.unMappedUser = userPidProfile
           const profileV2 = _.get(userPidProfile, 'profileDetails')
           this.configSvc.userProfile = {
@@ -457,6 +499,7 @@ export class InitService {
           }
         } else {
           this.authSvc.force_logout()
+          this.updateTelemetryConfig()
         }
         const details = {
           group: [],
@@ -477,6 +520,7 @@ export class InitService {
         return details
       } catch (e) {
         this.configSvc.userProfile = null
+        this.updateTelemetryConfig()
         throw new Error('Invalid user')
       }
     } else {
@@ -504,6 +548,7 @@ export class InitService {
     this.configSvc.activeOrg = publicConfig.org[0]
     this.configSvc.positions = publicConfig.positions
     this.updateAppIndexMeta()
+    this.updateTelemetryConfig()
     return publicConfig
   }
 
@@ -606,6 +651,16 @@ export class InitService {
       }
       if (this.configSvc.instanceConfig.primaryNavBarConfig) {
         this.configSvc.primaryNavBarConfig = this.configSvc.instanceConfig.primaryNavBarConfig
+      }
+    }
+  }
+
+  private updateTelemetryConfig() {
+    if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.telemetryConfig) {
+      if (this.isAnonymousTelemetryRequired) {
+        this.configSvc.instanceConfig.telemetryConfig.endpoint = this.configSvc.instanceConfig.telemetryConfig.publicEndpoint
+      } else {
+        this.configSvc.instanceConfig.telemetryConfig.endpoint = this.configSvc.instanceConfig.telemetryConfig.protectedEndpoint
       }
     }
   }

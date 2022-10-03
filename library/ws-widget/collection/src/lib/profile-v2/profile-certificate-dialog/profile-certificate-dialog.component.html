@@ -22,7 +22,7 @@
     <div>
       <div *ngIf="this.data.value.content?.appIcon" class="float-left">
         <img
-          [src]="this.data.value.content?.appIcon"
+          [src]="this.data.value.content?.posterImage | pipePublicURL"
           class="app-icon course-image"
           [alt]="this.data.value.content.name || iGOT"
         />

@@ -16,7 +16,7 @@ import {
 } from '@angular/material'
 import { ResourceCollectionComponent } from './resource-collection.component'
 import { ViewSubmissionComponent } from './components/view-submission/view-submission.component'
-import { PlayerPdfModule, PlayerVideoModule } from '@sunbird-cb/collection'
+import { PlayerPdfModule, PlayerVideoModule, PlayerSurveyModule } from '@sunbird-cb/collection'
 
 @NgModule({
   declarations: [ResourceCollectionComponent, ViewSubmissionComponent],
@@ -37,6 +37,7 @@ import { PlayerPdfModule, PlayerVideoModule } from '@sunbird-cb/collection'
     MatProgressSpinnerModule,
     PlayerPdfModule,
     PlayerVideoModule,
+    PlayerSurveyModule,
   ],
   entryComponents: [
     ViewSubmissionComponent,

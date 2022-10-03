@@ -8,9 +8,9 @@ import { TopicService } from '../../services/topics.service'
   selector: 'ws-app-topic-card',
   templateUrl: './topic-card.component.html',
   styleUrls: ['./topic-card.component.scss'],
-    /* tslint:disable */
-    host: { class: 'flex flex-1 top_main flex-col' },
-    /* tslint:enable */
+  /* tslint:disable */
+  host: { class: 'flex flex-1 top_main flex-col' },
+  /* tslint:enable */
 })
 export class TopicCardComponent implements OnInit {
   @Input() topic!: NSProfileDataV3.ITopic
@@ -65,5 +65,9 @@ export class TopicCardComponent implements OnInit {
   }
   showMore() {
     this.show += 10
+  }
+
+  showLess() {
+    this.show = 6
   }
 }

@@ -1,11 +1,26 @@
 .comments-card{
-    padding: 24px 16px;
-    .comments-rating {
-      height: 16px;
-      width: 16px;
-      font-size: 16px;
-    }
-    .name {
-      font: 600 16px/21px Lato;
-    }
+  padding: 24px 16px;
+  .comments-rating {
+    height: 16px;
+    width: 16px;
+    font-size: 16px;
   }
+  .name {
+    font: 600 16px/21px Lato;
+  }
+}
+
+.blue-border{
+  border: 2px  solid #00A9F4 !important
+}
+.mat-stroked-button {
+  line-height: 24px;
+  color: #00A9F4 !important;
+  font-size: 12px !important;
+  padding: 0 10px !important;
+}
+
+.custom-link {
+  font: 600 14px/21px Lato !important;
+  color: #0074b6 !important;
+}

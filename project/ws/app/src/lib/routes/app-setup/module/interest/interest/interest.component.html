@@ -31,7 +31,7 @@
         </mat-checkbox>
 
         <div class="display-contents">
-          <img mat-card-image [src]="content.appIcon" class="card-img ws-mat-primary-lite-background"
+          <img mat-card-image [src]="content.posterImage | pipePublicURL" class="card-img ws-mat-primary-lite-background"
             [alt]="content.name" [title]="content.name" />
         </div>
         <mat-card-content>

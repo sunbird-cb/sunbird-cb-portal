@@ -65,6 +65,12 @@ export * from './lib/pipes/pipe-partial-content/pipe-partial-content.pipe'
 export * from './lib/pipes/pipe-safe-sanitizer/pipe-safe-sanitizer.module'
 export * from './lib/pipes/pipe-safe-sanitizer/pipe-safe-sanitizer.pipe'
 
+export * from './lib/pipes/pipe-public-URL/pipe-public-URL.module'
+export * from './lib/pipes/pipe-public-URL/pipe-public-URL.pipe'
+
+export * from './lib/pipes/pipe-certificate-image-URL/pipe-certimage-URL.module'
+export * from './lib/pipes/pipe-certificate-image-URL/pipe-certimage-URL.pipe'
+
 export * from './lib/resolvers/explore-detail.resolver'
 export * from './lib/resolvers/marketing-offering.resolve'
 export * from './lib/resolvers/page.model'

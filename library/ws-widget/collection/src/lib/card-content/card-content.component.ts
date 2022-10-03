@@ -20,6 +20,7 @@ export class CardContentComponent extends WidgetBaseComponent
   @Input() widgetData!: NsCardContent.ICard
   @HostBinding('id')
   public id = `ws-card_${Math.random()}`
+  forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   defaultThumbnail = ''
   defaultSLogo = ''
   showFlip = false
@@ -242,8 +243,11 @@ export class CardContentComponent extends WidgetBaseComponent
   }
 
   raiseTelemetry() {
+    // if(this.forPreview){
+    //   return
+    // }
     this.events.raiseInteractTelemetry(
-      { 
+      {
         type: 'click',
         subType: `${this.widgetType}-${this.widgetSubType}`,
         // id: this.widgetData.content.identifier,
@@ -254,11 +258,11 @@ export class CardContentComponent extends WidgetBaseComponent
         context: this.widgetData.context,
         rollup: {},
         ver: `${this.widgetData.content.version}${''}`,
-      }, 
+      },
       {
         pageIdExt: `${_.camelCase(this.widgetData.content.primaryCategory)}-card`,
         module: _.camelCase(this.widgetData.content.primaryCategory),
-    })
+      })
   }
 
   get isGreyedImage() {

@@ -104,7 +104,7 @@
             </ng-container>
           </p>
         </div>
-        <img class="w-24 h-16 ws-mat-primary-lite-background" [src]="content?.appIcon"
+        <img class="w-24 h-16 ws-mat-primary-lite-background" [src]="content?.posterImage | pipePublicURL"
           [wsUtilsDefaultThumbnail]="defaultThumbnail" alt="Content Icon" i18n-alt />
       </label>
     </mat-checkbox>

@@ -13,7 +13,7 @@ export class QuizComponent implements OnInit {
   @Input() isErrorOccured = false
   @Input() quizData: NsContent.IContent | null = null
   @Input() forPreview = false
-  @Input() quizJson: NSQuiz.IQuiz = {
+  @Input() quizJson: Partial<NSQuiz.IQuiz> = {
     timeLimit: 0,
     questions: [],
     isAssessment: false,

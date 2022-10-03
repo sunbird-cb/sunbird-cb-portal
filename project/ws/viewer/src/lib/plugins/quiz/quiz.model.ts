@@ -3,10 +3,16 @@ export namespace NSQuiz {
     timeLimit: number
     questions: IQuestion[]
     isAssessment: boolean
+    maxQuestions: number
+    requiresSubmit: 'Yes' | 'No'
+    showTimer: 'Yes' | 'No'
+    allowSkip: 'Yes' | 'No'
   }
 
   export interface IQuestion {
     multiSelection: boolean
+    section: string
+    instructions: string | null
     question: string
     questionId: string
     options: IOption[]
@@ -16,7 +22,7 @@ export namespace NSQuiz {
   export interface IOption {
     optionId: string
     text: string
-    isCorrect: boolean
+    isCorrect?: boolean | undefined
     hint?: string
     match?: string
     matchForView?: string

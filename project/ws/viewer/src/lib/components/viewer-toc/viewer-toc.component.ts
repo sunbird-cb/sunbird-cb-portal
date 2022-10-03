@@ -118,6 +118,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       this.collectionType = params.get('collectionType') || 'course'
       const primaryCategory = params.get('primaryCategory')
       this.viewMode = params.get('viewMode') || 'START'
+      this.forPreview = params.get('preview') === 'true' ? true : false
       try {
         this.batchId = params.get('batchId')
       } catch {
@@ -140,7 +141,16 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
           this.isErrorOccurred = true
         }
         if (this.collection) {
-          this.queue = this.utilitySvc.getLeafNodes(this.collection, [])
+          if (this.forPreview) {
+            const localQueue = this.utilitySvc.getLeafNodes(this.collection, [])
+            this.queue = _.compact(_.map(localQueue, q => {
+              if (NsContent.PUBLIC_SUPPORTED_CONTENT_TYPES.includes(q.mimeType)) {
+                return q
+              } return null
+            }))
+          } else {
+            this.queue = this.utilitySvc.getLeafNodes(this.collection, [])
+          }
         }
       }
       if (this.resourceId) {
@@ -189,6 +199,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
         collectionType: content.collectionType,
         batchId: content.batchId,
         viewMode: content.viewMode,
+        preview: this.forPreview,
       },
       fragment: '',
     }
@@ -305,7 +316,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
     // }
     return {
       identifier: content.identifier,
-      viewerUrl: `${this.forPreview ? '/author' : ''}/viewer/${VIEWER_ROUTE_FROM_MIME(
+      viewerUrl: `${this.forPreview ? '' : ''}/viewer/${VIEWER_ROUTE_FROM_MIME(
         content.mimeType,
         // )}/${content.identifier}?primaryCategory=${content.primaryCategory}
         // &collectionId=${this.viewerDataSvc.collectionId}&collectionType=${this.collectionType}
@@ -345,13 +356,14 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
     //   duration: collection.duration,
     //   redirectUrl: this.getCollectionTypeRedirectUrl(collection.displayContentType, collection.identifier),
     // }
+    const img = collection.posterImage ? collection.posterImage : collection.appIcon
     return {
       type: this.getCollectionTypeCard(collection.primaryCategory),
       id: collection.identifier,
       title: collection.name,
       thumbnail: this.forPreview
-        ? this.viewSvc.getAuthoringUrl(collection.appIcon)
-        : collection.appIcon,
+        ? this.viewSvc.getAuthoringUrl(this.viewSvc.getPublicUrl(img))
+        : this.viewSvc.getPublicUrl(img),
       subText1: collection.primaryCategory,
       subText2: collection.difficultyLevel,
       duration: collection.duration,
@@ -392,7 +404,11 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       case NsContent.EDisplayContentTypes.PROGRAM:
       case NsContent.EDisplayContentTypes.COURSE:
       case NsContent.EDisplayContentTypes.MODULE:
-        url = `${this.forPreview ? '/author' : '/app'}/toc/${identifier}/overview`
+        if (!this.forPreview) {
+          url = `${this.forPreview ? '' : '/app'}/toc/${identifier}/overview`
+        } else {
+          url = `public/toc/${identifier}/overview`
+        }
         break
       case NsContent.EDisplayContentTypes.GOALS:
         url = `/app/goals/${identifier}`

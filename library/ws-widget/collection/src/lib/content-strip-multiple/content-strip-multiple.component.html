@@ -15,7 +15,7 @@
                   stripsResultDataMap[key]?.showOnError)
                 " [ngClass]="
                   !widgetData.isChannelStrip ? 'xs:px-8 sx:px-10ss py-2 my-1' : i > 0 ? 'mt-12' : ''
-                " [id]="key" class="margin-bottom-custom">
+                " [id]="key" [ngClass]="!widgetData.isChannelStrip ? margin-bottom-custom : margin-bottom-xs">
           <div [ngClass]="{ pad: stripsResultDataMap[key]?.stripBackground }"
             [ngStyle]="{ 'background-color': stripsResultDataMap[key]?.stripBackground }">
             <div class="flex items-center justify-between" [ngClass]="
@@ -64,30 +64,33 @@
               [wsResolverWidget]="stripsResultDataMap[key]?.noDataWidget"></ng-container>
             <ng-container *ngIf="stripsResultDataMap[key]?.showOnError"
               [wsResolverWidget]="stripsResultDataMap[key]?.errorWidget"></ng-container>
-            <ng-container *ngIf="key === 'continueLearning'" >
-              <ws-utils-horizontal-scroller *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
-              [loadStatus]="'done'">
-              <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets; trackBy: tracker" >
-              <ng-container *ngIf = "widget.widgetData.context.pageSection === 'continueLearning' " >
-                <ng-container *ngIf="widget.widgetData.content.completionPercentage !== 100" [wsResolverWidget]="widget"></ng-container>
-              </ng-container>
-              </ng-container>
-              <!-- <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets; trackBy: tracker" [wsResolverWidget]="widget"></ng-container> -->
-              <!-- <div *ngIf="stripsResultDataMap[key]?.viewMoreUrl" class="ml-4 mr-6 mb-2 view-more ws-mat-primary-text">
+            <ng-container *ngIf="key === 'continueLearning'">
+              <ws-utils-horizontal-scroller
+                *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)" [loadStatus]="'done'">
+                <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets; trackBy: tracker">
+                  <ng-container *ngIf="widget.widgetData.context.pageSection === 'continueLearning' ">
+                    <ng-container *ngIf="widget.widgetData.content.completionPercentage !== 100"
+                      [wsResolverWidget]="widget"></ng-container>
+                  </ng-container>
+                </ng-container>
+                <!-- <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets; trackBy: tracker" [wsResolverWidget]="widget"></ng-container> -->
+                <!-- <div *ngIf="stripsResultDataMap[key]?.viewMoreUrl" class="ml-4 mr-6 mb-2 view-more ws-mat-primary-text">
                 <a [routerLink]="stripsResultDataMap[key]?.viewMoreUrl?.path"
                   [queryParams]="stripsResultDataMap[key]?.viewMoreUrl?.queryParams">
                   <mat-icon class="icon">arrow_forward</mat-icon>
                   <h3 i18n>View All</h3>
                 </a>
               </div> -->
-            </ws-utils-horizontal-scroller>
-            </ng-container>
-            <ng-container *ngIf="key !== 'continueLearning'" >
-              <ws-utils-horizontal-scroller *ngIf="getLength(stripsResultDataMap[key]) && showAccordion(key)" [loadStatus]="'done'">
-                <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets; trackBy: tracker" [wsResolverWidget]="widget"></ng-container>
               </ws-utils-horizontal-scroller>
             </ng-container>
-           
+            <ng-container *ngIf="key !== 'continueLearning'">
+              <ws-utils-horizontal-scroller *ngIf="getLength(stripsResultDataMap[key]) && showAccordion(key)"
+                [loadStatus]="'done'">
+                <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets; trackBy: tracker"
+                  [wsResolverWidget]="widget"></ng-container>
+              </ws-utils-horizontal-scroller>
+            </ng-container>
+
           </div>
         </div>
       </a>

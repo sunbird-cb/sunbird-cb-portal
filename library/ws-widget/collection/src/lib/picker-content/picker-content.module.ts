@@ -16,7 +16,7 @@ import {
   MatTabsModule,
 } from '@angular/material'
 import { MatRadioModule } from '@angular/material/radio'
-import { DefaultThumbnailModule, PipeDurationTransformModule } from '@sunbird-cb/utils'
+import { DefaultThumbnailModule, PipeDurationTransformModule, PipePublicURLModule } from '@sunbird-cb/utils'
 import { DisplayContentTypeModule } from '../_common/display-content-type/display-content-type.module'
 import { PickerContentComponent } from './picker-content.component'
 
@@ -44,6 +44,7 @@ import { PickerContentComponent } from './picker-content.component'
     MatSelectModule,
     MatTabsModule,
     MatRadioModule,
+    PipePublicURLModule,
   ],
   exports: [PickerContentComponent],
 })

@@ -15,6 +15,7 @@ import { getAmpConfig, isIOS, LINKS } from './player-amp.utility'
 import { ROOT_WIDGET_CONFIG } from '../collection.config'
 import { first, filter } from 'rxjs/operators'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 
 @Component({
   selector: 'ws-widget-player-amp',
@@ -38,6 +39,7 @@ export class PlayerAmpComponent extends WidgetBaseComponent
   constructor(
     private dynamicLoaderSvc: DynamicAssetsLoaderService,
     private eventSvc: EventService,
+    private viewerSvc: ViewerUtilService,
   ) {
     super()
   }
@@ -87,7 +89,7 @@ export class PlayerAmpComponent extends WidgetBaseComponent
     if (!this.data || !this.data.tokens) {
       return
     }
-    this.player = amp(this.videoTag.nativeElement, getAmpConfig(this.data.posterImage), () => {
+    this.player = amp(this.videoTag.nativeElement, getAmpConfig(this.viewerSvc.getPublicUrl(this.data.posterImage || '')), () => {
       this.activityStartedAt = new Date()
       this.eventDispatcher(WsEvents.EnumTelemetrySubType.Loaded)
       this.heartbeatSubscription = interval(30000).subscribe(_ => {

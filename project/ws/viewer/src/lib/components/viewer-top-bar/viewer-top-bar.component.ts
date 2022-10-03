@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { MatDialog } from '@angular/material'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router'
+import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router'
 // import { NsContent } from '@sunbird-cb/collection'
 import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
@@ -38,6 +38,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   logo = true
   isPreview = false
   forChannel = false
+  currentRoute = window.location.pathname
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -51,6 +52,11 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
+    })
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.currentRoute = event.url
+      }
     })
   }
 
@@ -83,6 +89,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
             collectionType: data.prevResource.collectionType,
             batchId: data.prevResource.batchId,
             viewMode: data.prevResource.viewMode,
+            preview: this.forPreview,
           },
           fragment: '',
         }
@@ -100,6 +107,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
             batchId: data.nextResource.batchId,
             viewMode: data.nextResource.viewMode,
             courseName: this.courseName,
+            preview: this.forPreview,
           },
           fragment: '',
         }
@@ -140,6 +148,9 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   toggleSideBar() {
     this.toggle.emit()
   }
+  get needToHide(): boolean {
+    return this.router.url.includes('all/assessment/')
+  }
 
   back() {
     try {
@@ -153,15 +164,18 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
 
   }
   finishDialog() {
-    const dialogRef = this.dialog.open(CourseCompletionDialogComponent, {
-      autoFocus: false,
-      data: { courseName: this.activatedRoute.snapshot.queryParams.courseName },
-    })
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-
-        this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
-      }
-    })
+    if (!this.forPreview) {
+      const dialogRef = this.dialog.open(CourseCompletionDialogComponent, {
+        autoFocus: false,
+        data: { courseName: this.activatedRoute.snapshot.queryParams.courseName },
+      })
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+        }
+      })
+    } else {
+      this.router.navigateByUrl(`public/toc/${this.collectionId}/overview`)
+    }
   }
 }

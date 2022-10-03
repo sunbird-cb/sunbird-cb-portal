@@ -149,6 +149,7 @@ export class KnowledgeArtifactDetailsComponent implements OnInit, OnDestroy {
       learningModule: 0,
       other: 0,
       pdf: 0,
+      survey: 0,
       podcast: 0,
       practiceTest: 0,
       quiz: 0,

@@ -20,8 +20,11 @@ export const environment: IEnvironment = {
   // fracPortal: (window as { [key: string]: any })['env']['fracPath'] || '',
   azureOldHost: (window as { [key: string]: any })['env']['azureOldHost'] || '',
   azureOldBuket: (window as { [key: string]: any })['env']['azureOldBuket'] || '',
-  portalRoles: (((window as { [key: string]: any })['env']['portalRoles'] || '').split(',')) || [],
+  portalRoles: (((window as { [key: string]: any })['env']['portalRoles'] || '')) || [],
   recaptchaKey: (window as { [key: string]: any })['env']['recaptchaKey'] || [],
+  contentBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
+  certificateassets: (window as { [key: string]: any })['env']['certificateassets'] || '',
+  assessmentBuffer: (window as { [key: string]: any })['env']['assessmentBuffer'] || 0,
 }
 interface IEnvironment {
   name: string,
@@ -38,7 +41,10 @@ interface IEnvironment {
   portalRoles: string[]
   // otherPortalRoles: { cbp: string[], mdo: string[], cbc: string[], frac: string[] }
   portals: [{ sr: number, id: string, name: string, desc: string, icon?: string, uriPath: string, roles: [], isPublic: boolean }],
-  recaptchaKey?: string
+  recaptchaKey?: string,
+  contentBucket?: string,
+  certificateassets?: string,
+  assessmentBuffer: number,
 }
 
 /*

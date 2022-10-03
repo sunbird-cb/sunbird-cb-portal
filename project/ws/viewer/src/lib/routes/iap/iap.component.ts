@@ -32,7 +32,7 @@ export class IapComponent implements OnInit, OnDestroy {
     private respondSvc: SubapplicationRespondService,
   ) { }
   ngOnInit() {
-    if (this.activatedRoute.snapshot.queryParamMap.get('preview')) {
+    if (this.activatedRoute.snapshot.queryParamMap.get('preview') === 'true') {
       this.isPreviewMode = true
       this.routeDataSubscription = this.viewerSvc.getContent(this.activatedRoute.snapshot.paramMap.get('resourceId') || '').subscribe(
         async data => {

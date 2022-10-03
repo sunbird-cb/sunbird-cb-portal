@@ -35,7 +35,11 @@ export class DisplayContentTypeIconComponent implements OnInit {
         case NsContent.EMimeTypes.TEXT_WEB:
           this.displayContentType = NsContent.EDisplayContentTypes.LINK
           break
+        case NsContent.EMimeTypes.SURVEY:
+          this.displayContentType = NsContent.EDisplayContentTypes.SURVEY
+          break
         case NsContent.EMimeTypes.PRACTICE_RESOURCE:
+        case NsContent.EMimeTypes.FINAL_ASSESSMENT:
         case NsContent.EMimeTypes.APPLICATION_JSON:
         case NsContent.EMimeTypes.QUIZ:
           this.displayContentType = NsContent.EDisplayContentTypes.QUIZ
