@@ -1,9 +1,7 @@
 <viewer-overview *ngIf="viewState === 'initial'" [learningObjective]="learningObjective"
-  [complexityLevel]="complexityLevel" [duration]="duration" [timeLimit]="quizJson?.timeLimit"
+  [complexityLevel]="complexityLevel" [duration]="duration" [timeLimit]="(quizJson?.timeLimit || 0) + assessmentBuffer"
   [primaryCategory]="primaryCategory" [noOfQuestions]="noOfQuestions" (userSelection)="getSections($event)">
 </viewer-overview>
-
-
 <div #quizContainer class="quiz-container" *ngIf="viewState !== 'initial'">
   <div class="flex flex-1 flex-column quiz_inner_container">
     <nav class="quiz-nav-bar mat-toolbar mat-caption flex-column">
@@ -13,7 +11,7 @@
           (click)="sidenav.toggle()">
           <mat-icon aria-label="open questions navigation">menu</mat-icon>
         </button>
-        <a mat-button *ngIf="!isSubmitted && viewState !== 'detail'" (click)="backToSections()"
+        <a mat-button *ngIf="!isSubmitted && viewState !== 'detail' && !isOnlySection" (click)="backToSections()"
           class="flex cursor-pointer">
           <mat-icon class="ws-mat-default-text m-auto">arrow_back</mat-icon>
           <span class="ws-mat-default-text subheading-1">Back to sections</span>
@@ -102,7 +100,8 @@
           *ngIf="fetchingQuestionsStatus === 'done' && viewState !== 'detail' && !(viewState === 'answer') && !isSubmitted">
           <ng-container *ngIf="true">
             <div class="flex flex-1 padding-l card_inner_box flex-row">
-              <span class="mat-title margin-bottom-remove flex flex-1 practice_card_title">{{selectedSection.name}}</span>
+              <span
+                class="mat-title margin-bottom-remove flex flex-1 practice_card_title">{{selectedSection.name}}</span>
               <!-- <span class="spacer"></span> -->
               <ng-container [ngTemplateOutlet]="timer"></ng-container>
               <div class="flex flex-1 flex-row-reverse butto_box end">
@@ -326,12 +325,23 @@
   <div *ngIf="timeLeft" class="flex flex-1 flex-center">
     <mat-icon>timelapse</mat-icon>
     &nbsp;&nbsp;
-    <div *ngIf="timeLeft > 120" [ngClass]="{ 'mat-body-strong': !isSubmitted }">
-      <span class="mat-title ws-mat-default-text"> {{ timeLeft | pipeDurationTransform: 'hms' }}</span>
-    </div>
-    <div *ngIf="timeLeft <= 120" class="ws-mat-red-text" [ngClass]="{ 'mat-body-strong': !isSubmitted }">
-      <span class="mat-title ws-mat-red-text"> {{ timeLeft | pipeDurationTransform: 'hms' }}</span>
-    </div>
+    <ng-container *ngIf="quizJson.timeLimit >= 3600">
+      <div *ngIf="timeLeft > 120" [ngClass]="{ 'mat-body-strong': !isSubmitted }">
+        <span class="mat-title ws-mat-default-text"> {{ timeLeft | pipeDurationTransform: 'hms2H' }}</span>
+      </div>
+      <div *ngIf="timeLeft <= 120" class="ws-mat-red-text" [ngClass]="{ 'mat-body-strong': !isSubmitted }">
+        <span class="mat-title ws-mat-red-text"> {{ timeLeft | pipeDurationTransform: 'hms2H' }}</span>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="quizJson.timeLimit < 3600">
+      <div *ngIf="timeLeft > 120" [ngClass]="{ 'mat-body-strong': !isSubmitted }">
+        <span class="mat-title ws-mat-default-text"> {{ timeLeft | pipeDurationTransform: 'hms2M' }}</span>
+      </div>
+      <div *ngIf="timeLeft <= 120" class="ws-mat-red-text" [ngClass]="{ 'mat-body-strong': !isSubmitted }">
+        <span class="mat-title ws-mat-red-text"> {{ timeLeft | pipeDurationTransform: 'hms2M' }}</span>
+      </div>
+    </ng-container>
+
     <div *ngIf="isSubmitted" class="margin-left-xs mat-body-strong" i18n>
       <span class="mat-title ws-mat-default-text"> (Submitted)</span>
     </div>

@@ -16,6 +16,7 @@ export const environment = {
   recaptchaKey: (window as { [key: string]: any })['env']['recaptchaKey'] || [],
   contentBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
   certificateassets: (window as { [key: string]: any })['env']['certificateassets'] || '',
+  assessmentBuffer: (window as { [key: string]: any })['env']['assessmentBuffer'] || 0,
   // mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
   // spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',
   // cbcPortal: (window as { [key: string]: any })['env']['cbcPath'] || '',

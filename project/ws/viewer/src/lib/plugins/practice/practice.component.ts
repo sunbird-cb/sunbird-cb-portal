@@ -8,7 +8,7 @@ import {
   SimpleChanges,
   ViewChild, ViewChildren,
 } from '@angular/core'
-import { MatDialog, MatSidenav } from '@angular/material'
+import { MatDialog, MatSidenav, MatSnackBar } from '@angular/material'
 import { interval, Subscription } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
 import { NSPractice } from './practice.model'
@@ -22,6 +22,7 @@ import { ViewerUtilService } from '../../viewer-util.service'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { NSQuiz } from '../quiz/quiz.model'
+import { environment } from 'src/environments/environment'
 // import { ViewerDataService } from '../../viewer-data.service'
 export type FetchStatus = 'hasMore' | 'fetching' | 'done' | 'error' | 'none'
 @Component({
@@ -101,6 +102,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   currentQuestion!: NSPractice.IQuestionV2 | any
   process = false
   isXsmall = false
+  assessmentBuffer = 0
   constructor(
     private events: EventService,
     public dialog: MatDialog,
@@ -110,7 +112,11 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     private router: Router,
     private valueSvc: ValueService,
     // private vws: ViewerDataService,
+    public snackbar: MatSnackBar
   ) {
+    if (environment.assessmentBuffer) {
+      this.assessmentBuffer = environment.assessmentBuffer
+    }
     let canAttempt = true
     if (this.primaryCategory !== NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
       this.canAttend().then(r => {
@@ -181,11 +187,11 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       && _.get(this.quizSvc.paperSections, 'value.questionSet.children')) {
       this.paperSections = _.get(this.quizSvc.paperSections, 'value.questionSet.children')
       const showTimer = _.toLower(_.get(this.quizSvc.paperSections, 'value.questionSet.showTimer')) === 'yes'
-      if (showTimer) {
-        this.quizJson.timeLimit = (_.get(this.quizSvc.paperSections, 'value.questionSet.expectedDuration') || 0)
+      if (showTimer || this.primaryCategory !== NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
+        this.quizJson.timeLimit = (_.get(this.quizSvc.paperSections, 'value.questionSet.expectedDuration') || 0) + this.assessmentBuffer
       } else {
         // this.quizJson.timeLimit = this.duration * 60
-        this.quizJson.timeLimit = this.quizJson.timeLimit
+        this.quizJson.timeLimit = this.quizJson.timeLimit + this.assessmentBuffer
       }
       this.fetchingSectionsStatus = 'done'
       this.viewState = 'detail'
@@ -198,10 +204,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           /** this is to enable or disable Timer */
           const showTimer = _.toLower(_.get(section, 'result.questionSet.showTimer')) === 'yes'
           if (showTimer) {
-            this.quizJson.timeLimit = section.result.questionSet.expectedDuration
+            this.quizJson.timeLimit = section.result.questionSet.expectedDuration + this.assessmentBuffer
           } else {
             // this.quizJson.timeLimit = this.duration * 60
-            this.quizJson.timeLimit = this.quizJson.timeLimit
+            this.quizJson.timeLimit = this.quizJson.timeLimit + this.assessmentBuffer
           }
           this.quizSvc.paperSections.next(section.result)
           const tempObj = _.get(section, 'result.questionSet.children')
@@ -222,7 +228,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
   startIfonlySection() {
     // directly start section if only section is there is set
-    if (this.paperSections && this.paperSections.length === 1) {
+    if (this.isOnlySection) {
       const firstSection = _.first(this.paperSections) || null
       if (firstSection) {
         this.nextSection(firstSection)
@@ -231,6 +237,9 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     }
     this.updateTimer()
 
+  }
+  get isOnlySection(): boolean {
+    return !!this.paperSections && !!(this.paperSections.length === 1)
   }
   updataDB(sections: NSPractice.IPaperSection[]) {
     const data: NSPractice.ISecAttempted[] = []
@@ -436,7 +445,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   get noOfQuestions(): number {
     if (this.quizJson.maxQuestions) {
       return this.quizJson.maxQuestions
-    }  if (this.retake) {
+    } if (this.retake) {
       return _.get(this.activatedRoute, 'snapshot.data.content.data.maxQuestions') || 0
     }
     return 0
@@ -478,8 +487,9 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   updateTimer() {
     this.startTime = Date.now()
     this.timeLeft = this.quizJson.timeLimit
-    // this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
-    if (this.quizJson.timeLimit > 0) {
+    // && this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
+    if (this.quizJson.timeLimit > 0
+    ) {
       this.timerSubscription = interval(1000)
         .pipe(
           map(
@@ -639,12 +649,14 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               primaryCategory: NsContent.EPrimaryCategory.MULTIPLE_CHOICE_QUESTION,
               qType: 'MCQ-MCA',
               editorState: {
-                options: _.map(sq.options, (_o: NSPractice.IOption) => {
-                  return {
-                    index: (_o.optionId).toString(),
-                    selectedAnswer: !!_o.userSelected,
-                  } as NSPractice.IResponseOptions
-                }),
+                options: _.compact(_.map(sq.options, (_o: NSPractice.IOption) => {
+                  if (_o.userSelected) {
+                    return {
+                      index: (_o.optionId).toString(),
+                      selectedAnswer: !!_o.userSelected,
+                    } as NSPractice.IResponseOptions
+                  } return null
+                })),
               },
             }
             responseQ.push(mcqMca)
@@ -657,12 +669,14 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               primaryCategory: NsContent.EPrimaryCategory.SINGLE_CHOICE_QUESTION,
               qType: 'MCQ-SCA',
               editorState: {
-                options: _.map(sq.options, (_o: NSPractice.IOption) => {
-                  return {
-                    index: (_o.optionId).toString(),
-                    selectedAnswer: _o.userSelected,
-                  } as NSPractice.IResponseOptions
-                }),
+                options: _.compact(_.map(sq.options, (_o: NSPractice.IOption) => {
+                  if (_o.userSelected) {
+                    return {
+                      index: (_o.optionId).toString(),
+                      selectedAnswer: _o.userSelected,
+                    } as NSPractice.IResponseOptions
+                  } return null
+                })),
               },
             }
             responseQ.push(mcqSca)
@@ -675,12 +689,14 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               primaryCategory: NsContent.EPrimaryCategory.FTB_QUESTION,
               qType: 'FTB',
               editorState: {
-                options: _.map(sq.options, (_o: NSPractice.IOption, idx: number) => {
-                  return {
-                    index: (_o.optionId || idx).toString(),
-                    selectedAnswer: _o.response || '',
-                  } as NSPractice.IResponseOptions
-                }),
+                options: _.compact(_.map(sq.options, (_o: NSPractice.IOption, idx: number) => {
+                  if (_o.response) {
+                    return {
+                      index: (_o.optionId || idx).toString(),
+                      selectedAnswer: _o.response || '',
+                    } as NSPractice.IResponseOptions
+                  } return null
+                })),
                 // selectedAnswer: _.join(_.map(sq.options, (_o: NSPractice.IOption) => {
                 //   return _o.response
                 // }),
@@ -699,12 +715,14 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               primaryCategory: NsContent.EPrimaryCategory.MTF_QUESTION,
               qType: 'MTF',
               editorState: {
-                options: _.map(sq.options, (_o: NSPractice.IOption) => {
-                  return {
-                    index: (_o.optionId).toString(),
-                    selectedAnswer: _o.response,
-                  } as NSPractice.IResponseOptions
-                }),
+                options: _.compact(_.map(sq.options, (_o: NSPractice.IOption) => {
+                  if (_o.response) {
+                    return {
+                      index: (_o.optionId).toString(),
+                      selectedAnswer: _o.response,
+                    } as NSPractice.IResponseOptions
+                  } return null
+                })),
               },
             }
             responseQ.push(mtf)
@@ -798,6 +816,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       },
       (_error: any) => {
         this.fetchingResultsStatus = 'error'
+        this.snackbar.open(_error.error.params.errmsg)
       },
     )
     // this.fetchingResultsStatus = 'done'

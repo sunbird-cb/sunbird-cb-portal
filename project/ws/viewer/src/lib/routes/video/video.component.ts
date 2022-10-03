@@ -52,7 +52,7 @@ export class VideoComponent implements OnInit, OnDestroy {
     this.isNotEmbed =
       this.activatedRoute.snapshot.queryParamMap.get('embed') === 'true' ? false : true
     if (
-      this.activatedRoute.snapshot.queryParamMap.get('preview') &&
+      this.activatedRoute.snapshot.queryParamMap.get('preview') === 'true' &&
       !this.accessControlSvc.authoringConfig.newDesign
     ) {
       this.viewerDataSubscription = this.activatedRoute.data.subscribe(data => {
