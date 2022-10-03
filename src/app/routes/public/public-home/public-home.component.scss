@@ -758,6 +758,7 @@
   }
 
   .signup_div {
+    margin-top: 12px;
     @include breakpoint-xs {
       text-align: center;
       justify-content: space-between;
