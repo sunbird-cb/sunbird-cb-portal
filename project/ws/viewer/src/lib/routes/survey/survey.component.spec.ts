@@ -8,18 +8,18 @@ describe('SurveyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations:[ SurveyComponent ]
+      declarations: [SurveyComponent],
     })
     .compileComponents()
-  }));
+  }))
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SurveyComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
-  });
+  })
 
   it('should create', () => {
     expect(component).toBeTruthy()
-  });
-});
+  })
+})
