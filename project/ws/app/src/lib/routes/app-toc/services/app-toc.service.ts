@@ -215,7 +215,11 @@ export class AppTocService {
           // }
           break
         case NsContent.EMimeTypes.PRACTICE_RESOURCE:
-          tocStructure.practiceTest += 1
+          if (content.primaryCategory === this.primaryCategory.PRACTICE_RESOURCE) {
+            tocStructure.practiceTest += 1
+          } else if (content.primaryCategory === this.primaryCategory.FINAL_ASSESSMENT) {
+            tocStructure.finalTest += 1
+          }
           break
         // case NsContent.EMimeTypes.WEB_MODULE:
         //   tocStructure.webModule += 1
