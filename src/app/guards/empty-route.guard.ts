@@ -39,12 +39,12 @@ export class EmptyRouteGuard implements CanActivate {
     if (paramsMap.has('redirect_uri')) {
       redirectUrl =
         //  document.baseURI + 
-        paramsMap.get('redirect_uri') + ''
+        `${paramsMap.get('redirect_uri')}`
     }
     // else {
     //   redirectUrl = document.baseURI
     // }
-    Promise.resolve( this.authSvc.loginV2('S', redirectUrl))
+    Promise.resolve(this.authSvc.loginV2('S', redirectUrl))
     // return false
     // return this.router.parseUrl('/page/home')
     // Promise.resolve()
