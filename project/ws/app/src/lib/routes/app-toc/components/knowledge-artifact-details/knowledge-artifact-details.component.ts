@@ -143,6 +143,7 @@ export class KnowledgeArtifactDetailsComponent implements OnInit, OnDestroy {
   resetAndFetchTocStructure() {
     this.tocStructure = {
       assessment: 0,
+      finalTest: 0,
       course: 0,
       handsOn: 0,
       interactiveVideo: 0,
@@ -159,7 +160,7 @@ export class KnowledgeArtifactDetailsComponent implements OnInit, OnDestroy {
       youtube: 0,
       interactivecontent: 0,
     }
-    if (this.content) {
+    if (this.content && this.tocStructure) {
       this.hasTocStructure = true
       this.tocStructure.learningModule = this.content.primaryCategory === NsContent.EPrimaryCategory.MODULE ? -1 : 0
       this.tocStructure.course = this.content.primaryCategory === NsContent.EPrimaryCategory.COURSE ? -1 : 0

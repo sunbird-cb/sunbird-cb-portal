@@ -54,20 +54,20 @@ export class GeneralGuard implements CanActivate {
       // !this.configSvc.isAuthenticated
     ) {
       let refAppend = ''
-      let redirectUrl
+      // let redirectUrl
       if (state.url) {
-        refAppend = `?ref=${encodeURIComponent(state.url)}`
+        refAppend = `?redirect_uri=${encodeURIComponent(state.url)}`
         // return this.router.parseUrl(`/login${refAppend}`)
       }
 
-      if (refAppend) {
-        redirectUrl = document.baseURI + refAppend
-      } else {
-        redirectUrl = document.baseURI
-      }
-
+      // if (refAppend) {
+      //   redirectUrl = document.baseURI + refAppend
+      // } else {
+      //   redirectUrl = document.baseURI
+      // }
+      https://portal.igot-dev.in/auth/realms/sunbird/protocol/openid-connect/auth?client_id=portal&state=d2fc531a-0a4e-47b9-80eb-eaf628cc3c68&redirect_uri=http://portal.igot-dev.in/protected/v8/resource/?redirect_uri=app/toc/do_1136040544246824961116/overview?batchId=01360530960475750439&auth_callback=1&scope=openid&response_type=code
       try {
-        Promise.resolve(this.authSvc.loginV2('S', redirectUrl))
+        Promise.resolve(this.authSvc.loginV2('S', refAppend))
         // return true
       } catch (e) {
         return false
@@ -93,7 +93,7 @@ export class GeneralGuard implements CanActivate {
       window.location.pathname.includes('/page/home')
       // !Boolean(this.configSvc.instanceConfig.disablePidCheck)
     ) {
-      return this.router.parseUrl('/public/home')
+      return this.router.parseUrl('/static-home')
     }
     /**
      * Test IF User Tnc Is Accepted

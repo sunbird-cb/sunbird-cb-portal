@@ -5,9 +5,9 @@ import {
   RouterStateSnapshot,
   UrlTree,
   Router,
-  // ActivatedRoute,
+  ActivatedRoute,
 } from '@angular/router'
-import { ConfigurationsService } from '@sunbird-cb/utils' // AuthKeycloakService
+import { AuthKeycloakService, ConfigurationsService } from '@sunbird-cb/utils' // AuthKeycloakService
 import { Observable } from 'rxjs'
 
 @Injectable({
@@ -17,9 +17,9 @@ export class EmptyRouteGuard implements CanActivate {
   constructor(
     private router: Router,
     private configSvc: ConfigurationsService,
-    // private authSvc: AuthKeycloakService,
-    // private activateRoute: ActivatedRoute
-  ) {}
+    private authSvc: AuthKeycloakService,
+    private activateRoute: ActivatedRoute
+  ) { }
   canActivate(
     _next: ActivatedRouteSnapshot,
     _state: RouterStateSnapshot,
@@ -34,17 +34,20 @@ export class EmptyRouteGuard implements CanActivate {
     }
     // logger.log('redirecting to login page as the user is not loggedIn');
     // return this.router.parseUrl('/login')
-    // const paramsMap = this.activateRoute.snapshot.queryParamMap
-    // let redirectUrl
-    // if (paramsMap.has('ref')) {
-    //   redirectUrl = document.baseURI + paramsMap.get('ref')
-    // } else {
+    const paramsMap = this.activateRoute.snapshot.queryParamMap
+    let redirectUrl
+    if (paramsMap.has('redirect_uri')) {
+      redirectUrl =
+        //  document.baseURI + 
+        paramsMap.get('redirect_uri') + ''
+    }
+    // else {
     //   redirectUrl = document.baseURI
     // }
-    // Promise.resolve() // this.authSvc.login('S', redirectUrl)
+    Promise.resolve( this.authSvc.loginV2('S', redirectUrl))
     // return false
     // return this.router.parseUrl('/page/home')
-    Promise.resolve()
+    // Promise.resolve()
     return false
   }
 }

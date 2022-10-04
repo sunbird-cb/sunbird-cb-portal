@@ -361,6 +361,7 @@ export class PublicTocComponent implements OnInit, OnDestroy, AfterViewChecked, 
         this.contentParents = {}
         this.tocStructure = {
             assessment: 0,
+            finalTest: 0,
             course: 0,
             handsOn: 0,
             interactiveVideo: 0,

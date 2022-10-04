@@ -134,8 +134,11 @@ export class AuthKeycloakService {
     _idpHint: 'E' | 'N' | 'S' = 'E',
     redirectUrl: string = this.defaultRedirectUrl,
   ): Promise<void> {
-    window.location.href = redirectUrl
-    return Promise.resolve()
+    if (this.configSvc.instanceConfig) {
+      window.location.href = this.configSvc.instanceConfig.keycloak.url + redirectUrl
+      return Promise.resolve()
+    }
+    return Promise.reject()
   }
   register(
     redirectUrl: string = this.defaultRedirectUrl,
