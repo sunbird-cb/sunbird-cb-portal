@@ -46,7 +46,7 @@ interface IEnvironment {
   contentBucket?: string,
   certificateassets?: string,
   assessmentBuffer: number,
-  staticHomePageUrl: string,
+  staticHomePageUrl: string
 }
 
 /*

@@ -116,6 +116,7 @@ export class AppTocOverviewComponent implements OnInit, OnDestroy {
   resetAndFetchTocStructure() {
     this.tocStructure = {
       assessment: 0,
+      finalTest: 0,
       course: 0,
       handsOn: 0,
       interactiveVideo: 0,
