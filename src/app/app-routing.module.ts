@@ -29,7 +29,6 @@ import { PublicLoginWGComponent } from './routes/public/public-login-wg/public-l
 import { WelcomeUserResolverService } from './services/welcome-user-resolver.service'
 import { PublicTocComponent } from './routes/public/public-toc/public-toc.component'
 import { AppPublicTocResolverService } from './routes/public/public-toc/app-public-toc-resolver.service'
-import { RedirectGuard } from './guards/redirect.guard'
 import { environment } from 'src/environments/environment'
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
