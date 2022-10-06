@@ -168,7 +168,9 @@ export class AuthKeycloakService {
     if (storage.getItem('telemetrySessionId')) {
       storage.removeItem('telemetrySessionId')
     } else {
-      window.location.href = '/public/home'
+      // window.location.href = '/public/home'
+      storage.removeItem(storageKey)
+      await this.http.get('/apis/reset').toPromise()
     }
     try {
       sessionStorage.clear()

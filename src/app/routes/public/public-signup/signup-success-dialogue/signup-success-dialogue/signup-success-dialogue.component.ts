@@ -19,7 +19,7 @@ export class SignupSuccessDialogueComponent implements OnInit {
 
   closeDialog() {
     this.dialogRef.close()
-    this.router.navigate(['/public/home'])
+    this.router.navigate(['/static-home'])
   }
 
 }

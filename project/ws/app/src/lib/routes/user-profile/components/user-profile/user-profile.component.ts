@@ -1268,7 +1268,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         }
       },
       (err: any) => {
-        console.log('err -----', err)
+        // console.log('err -----', err)
         const errMsg = _.get(err, 'error.params.errmsg')
         if (errMsg) {
           this.openSnackbar(errMsg)
