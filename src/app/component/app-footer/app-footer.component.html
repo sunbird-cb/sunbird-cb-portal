@@ -1,7 +1,7 @@
 <div class="top_footer_box" *ngIf="!needToHide">
   <div class="top_footer_inner flex flex-row justify-between">
     <div class="flex flex-col justify-start">
-      <p class="footer_heading mat-subheading-1 margin-bottom-m">Hubs</p>
+      <p class="footer_heading mat-subheading-1 margin-bottom-m" i18n>Hubs</p>
       <ng-container *ngFor="let hub of (hubsList || [])">
         <ng-container *ngIf="hub.hubname == 'Discuss'">
           <a class="footer_sub_text mat-body cursor-pointer" (click)="navigate()">{{hub.hubname}}</a>
@@ -19,7 +19,7 @@
     </div>
 
     <div class="flex flex-col justify-start">
-      <p class="footer_heading mat-subheading-1 margin-bottom-m">Related links</p>
+      <p class="footer_heading mat-subheading-1 margin-bottom-m" i18n>Related links</p>
       <ng-container *ngFor="let portal of environment.portals | orderBy: 'sr'">
         <ng-container *ngIf="portal.isPublic || isAllowed(portal.id)">
           <a class="footer_sub_text mat-body" [attr.href]="portal.uriPath" target="_blank">{{portal.name}}</a>
@@ -32,16 +32,16 @@
     </div>
 
     <div class="flex flex-col justify-start">
-      <p class="footer_heading mat-subheading-1 margin-bottom-m">Support</p>
-      <a class="footer_sub_text mat-body" routerLink="/public/faq"> Frequently asked questions</a>
-      <a class="footer_sub_text mat-body" routerLink="/public/contact"> Contact Us</a>
+      <p class="footer_heading mat-subheading-1 margin-bottom-m" i18n>Support</p>
+      <a class="footer_sub_text mat-body" routerLink="/public/faq" i18n> Frequently asked questions</a>
+      <a class="footer_sub_text mat-body" routerLink="/public/contact" i18n> Contact Us</a>
       <!-- <a class="footer_sub_text mat-body" routerLink="/app/info/feedback">Feedback and suggestions</a>
       <a class="footer_sub_text mat-body" routerLink="/app/info/report-problem">Report a problem</a> -->
 
     </div>
 
     <div class="flex flex-col justify-start">
-      <p class="footer_heading mat-subheading-1 margin-bottom-m">About us</p>
+      <p class="footer_heading mat-subheading-1 margin-bottom-m" i18n>About us</p>
       <a class="footer_sub_text mat-body" rel="noreferrer" href="https://karmayogibharat.gov.in/" target="_blank">
         Karmayogi Bharat</a>
       <!-- <a class="footer_sub_text mat-body" href="" target="_blank"> Karmayogi Bharat</a>

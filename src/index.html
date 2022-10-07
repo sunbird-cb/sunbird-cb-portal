@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>iGot</title>
+  <title i18n>iGot</title>
   <base href="/" />
   <meta id="id-app-description" name="Description"
     content="iGOT 2.0 is a learning platform aimed at promoting capacity development among civil services. It is a solution built to be ‘fit for purpose’ to meet the exact learning needs of the civil services. iGOT 2.0 will help create impactful and relevant learning paths to achieve the outcomes relevant to their career aspirations." />
@@ -25,6 +25,7 @@
   <meta name="twitter:card" content="https://png.pngtree.com/thumb_back/fh260/back_our/20190620/ourmid/pngtree-fresh-natural-product-poster-background-image_146684.jpg"> -->
   <!-- <link  rel='preload' as='stylesheet' href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"> -->
   <script rel="preload" src="/assets/env.js" as="script"></script>
+ 
 </head>
 
 <body class="mat-app-background mat-body mat-typography custom-scroll">
@@ -100,9 +101,14 @@
     "text-shadow: 1px 1px 5px rgb(249, 162, 34);" +
     "filter: dropshadow(color=rgb(249, 162, 34), offx=1, offy=1);"
   setTimeout(console.log.bind(console, "%cStop!!!!!!!", cssRule), 0);
-  setTimeout(console.log.bind(console,`This is a browser feature for the developer. If someone asked you to copy-paste something here to enable a igot feature or to "hack" someone's account, it is fraud and will give them access to your igot account.`), 0);
+  setTimeout(console.log.bind(console, `This is a browser feature for the developer. If someone asked you to copy-paste something here to enable a igot feature or to "hack" someone's account, it is fraud and will give them access to your igot account.`), 0);
   // setTimeout(console.log.bind(console,`For more information visit https://en.wikipedia.org/wiki/Self-XSS`), 0);
 
 </script>
-
+<!-- <script>
+  lang = document.getElementsByTagName('html')[0].getAttribute('lang')
+  env = '/assets/env' + (lang === 'en' ? '' : '.' + lang) + '.js'
+  console.log(env)
+</script>
+<script src="{{window.env}}" as="script"></script> -->
 </html>

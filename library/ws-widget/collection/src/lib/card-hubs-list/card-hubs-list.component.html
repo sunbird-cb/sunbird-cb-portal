@@ -6,7 +6,7 @@
           accesskey="H" i18n-aria-label (click)="toggleVisibility()">
 
           <mat-icon class="margin-right-xs ws-mat-default-text">menu</mat-icon>
-          <span class="margin-auto ws-mat-default-text mat-subheading-2">EXPLORE</span>
+          <span class="margin-auto ws-mat-default-text mat-subheading-2" i18n>EXPLORE</span>
         </a>
         <ng-container *ngIf="!visible && !isMobile" [@enterAnimation]="visible">
           <div *ngFor="let hub of hubsList">

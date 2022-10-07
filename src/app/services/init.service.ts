@@ -184,7 +184,7 @@ export class InitService {
       // this.logger.info('User Authenticated', authenticated)
       // const userPrefPromise = await this.userPreference.fetchUserPreference() // pref: depends on rootOrg
       // this.configSvc.userPreference = userPrefPromise
-      // this.reloadAccordingToLocale()
+      this.reloadAccordingToLocale()
       // if (this.configSvc.userPreference.pinnedApps) {
       //   const pinnedApps = this.configSvc.userPreference.pinnedApps.split(',')
       //   this.configSvc.pinnedApps.next(new Set(pinnedApps))
@@ -247,36 +247,36 @@ export class InitService {
     this.settingsSvc.initializePrefChanges(environment.production)
     this.userPreference.initialize()
   }
-  // private reloadAccordingToLocale() {
-  //   if (window.location.origin.indexOf('http://localhost:') > -1) {
-  //     return
-  //   }
-  //   let pathName = window.location.href.replace(window.location.origin, '')
-  //   const runningAppLang = this.locale
-  //   if (pathName.startsWith(`//${runningAppLang}//`)) {
-  //     pathName = pathName.replace(`//${runningAppLang}//`, '/')
-  //   }
-  //   const instanceLocales = this.configSvc.instanceConfig && this.configSvc.instanceConfig.locals
-  //   if (Array.isArray(instanceLocales) && instanceLocales.length) {
-  //     const foundInLocales = instanceLocales.some(locale => {
-  //       return locale.path !== runningAppLang
-  //     })
-  //     if (foundInLocales) {
-  //       if (
-  //         this.configSvc.userPreference &&
-  //         this.configSvc.userPreference.selectedLocale &&
-  //         runningAppLang !== this.configSvc.userPreference.selectedLocale
-  //       ) {
-  //         let languageToLoad = this.configSvc.userPreference.selectedLocale
-  //         languageToLoad = `\\${languageToLoad}`
-  //         if (this.configSvc.userPreference.selectedLocale === 'en') {
-  //           languageToLoad = ''
-  //         }
-  //         location.assign(`${location.origin}${languageToLoad}${pathName}`)
-  //       }
-  //     }
-  //   }
-  // }
+  private reloadAccordingToLocale() {
+    if (window.location.origin.indexOf('http://localhost:') > -1) {
+      return
+    }
+    let pathName = window.location.href.replace(window.location.origin, '')
+    const runningAppLang = this.locale
+    if (pathName.startsWith(`//${runningAppLang}//`)) {
+      pathName = pathName.replace(`//${runningAppLang}//`, '/')
+    }
+    const instanceLocales = this.configSvc.instanceConfig && this.configSvc.instanceConfig.locals
+    if (Array.isArray(instanceLocales) && instanceLocales.length) {
+      const foundInLocales = instanceLocales.some(locale => {
+        return locale.path !== runningAppLang
+      })
+      if (foundInLocales) {
+        if (
+          this.configSvc.userPreference &&
+          this.configSvc.userPreference.selectedLocale &&
+          runningAppLang !== this.configSvc.userPreference.selectedLocale
+        ) {
+          let languageToLoad = this.configSvc.userPreference.selectedLocale
+          languageToLoad = `\\${languageToLoad}`
+          if (this.configSvc.userPreference.selectedLocale === 'en') {
+            languageToLoad = ''
+          }
+          location.assign(`${location.origin}${languageToLoad}${pathName}`)
+        }
+      }
+    }
+  }
 
   private async fetchDefaultConfig(): Promise<NsInstanceConfig.IConfig> {
     const publicConfig: NsInstanceConfig.IConfig = await this.http

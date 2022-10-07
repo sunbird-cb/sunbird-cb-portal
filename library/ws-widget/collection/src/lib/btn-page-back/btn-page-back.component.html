@@ -6,7 +6,7 @@
           <a class="flex cursor-pointer simple-hubs-link margin-left-0" (click)="toggleVisibility()" [class.disabled]="!isUserLoggegIn"
             href="javascript:void(0)" role="menuitem" accesskey="H" i18n-aria-label i18n-aria-label >
             <mat-icon class="margin-right-xs ws-mat-default-text">menu</mat-icon>
-            <span class="margin-auto ws-mat-default-text mat-subheading-2">EXPLORE</span>
+            <span class="margin-auto ws-mat-default-text mat-subheading-2" i18n>EXPLORE</span>
           </a>
           <ng-container *ngIf="widgetData.titles && widgetData.titles.length>0">
             <div class="flex" *ngFor="let title of widgetData.titles">
