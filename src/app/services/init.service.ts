@@ -538,8 +538,9 @@ export class InitService {
 
   private async fetchInstanceConfig(): Promise<NsInstanceConfig.IConfig> {
     // TODO: use the rootOrg and org to fetch the instance
+    const path = this.locale === 'en' ? 'site.config.json' : `site.config.${this.locale}.json`
     const publicConfig = await this.http
-      .get<NsInstanceConfig.IConfig>(`${this.configSvc.sitePath}/site.config.json`)
+      .get<NsInstanceConfig.IConfig>(`${this.configSvc.sitePath}/${path}`)
       .toPromise()
     this.configSvc.instanceConfig = publicConfig
     this.configSvc.rootOrg = publicConfig.rootOrg
