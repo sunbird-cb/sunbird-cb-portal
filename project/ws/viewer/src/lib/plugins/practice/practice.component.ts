@@ -630,9 +630,9 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.quizSvc.mtfSrc.getValue()
     )
     const request: NSPractice.IQuizSubmit = {
+      batchId,
       identifier: this.identifier,
       primaryCategory: this.primaryCategory,
-      batchId: batchId,
       courseId: collectionId,
       isAssessment: true,
       objectType: 'QuestionSet',
