@@ -751,7 +751,7 @@ const routes: Routes = [
   {
     path: 'public/home',
     pathMatch: 'full',
-    redirectTo: 'static-home'
+    redirectTo: 'static-home',
   },
   {
     path: 'public/toc/:id/overview',

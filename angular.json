@@ -14,7 +14,7 @@
           "i18n": {
             "sourceLocale": "en-US",
             "locales": {
-              "nb": "messages.nb.xlf"
+              "en": "messages.xlf"
             }
           },
           "options": {
@@ -68,9 +68,20 @@
             ]
           },
           "configurations": {
-            "nb": {
-              "i18nLocale": "nb"
+            "en": {
+              "aot": true,
+              "i18nFile": "locale/messages.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "en",
+              "i18nMissingTranslation": "warning"
             },
+            "hi":{
+              "aot": true,
+              "i18nFile": "locale/messages.hi.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "hi",
+              "i18nMissingTranslation": "warning"
+          },
             "production": {
               "fileReplacements": [
                 {
@@ -97,13 +108,6 @@
               "serviceWorker": false,
               "ngswConfigPath": "ngsw-config.json"
             },
-            "hi":{
-              "aot": true,
-              "i18nFile": "locale/messages.hi.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "hi",
-              "i18nMissingTranslation": "warning"
-          },
             "np": {
               "fileReplacements": [
                 {

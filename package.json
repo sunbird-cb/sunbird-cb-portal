@@ -10,7 +10,8 @@
         "build-np": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --prod --configuration=np --outputPath=dist/www/en --baseHref=/ --i18nLocale=en",
         "build-preprod": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --prod --configuration=preprod --outputPath=dist/www/en --baseHref=/ --i18nLocale=en",
         "build-benchmark": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --prod --configuration=benchmark --outputPath=dist/www/en --baseHref=/ --i18nLocale=en",
-        "build": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --prod --outputPath=dist/www/en --baseHref=/ --i18nLocale=en",
+        "build": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --prod --build-optimizer --outputPath=dist/www/en --baseHref=/ --i18nLocale=en",
+        "build:hi": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --prod --build-optimizer --outputPath=dist/www/hi --baseHref=/hi --i18nLocale=hi",
         "postbuild": "npm run compress:gzip && npm run compress:brotli",
         "compress:brotli": "gzipper --brotli --gzip-level=9 --verbose ./dist/www",
         "compress:gzip": "gzipper --verbose --gzip-level=9 ./dist/www",
@@ -25,7 +26,7 @@
         "tailwind": "./node_modules/.bin/tailwind build ./src/tailwind-build.scss  -o ./src/styles.scss",
         "prestart": "npm run tailwind",
         "bundle-report": "webpack-bundle-analyzer dist/stats.json",
-        "tt": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng serve --configuration=nb"
+        "tt": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng serve --configuration=en"
     },
     "private": true,
     "dependencies": {
