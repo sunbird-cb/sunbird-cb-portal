@@ -325,7 +325,9 @@ export namespace NSPractice {
     timeLimit: Number
     isAssessment: boolean
     identifier: string
-    objectType: 'QuestionSet',
+    objectType: 'QuestionSet'
+    courseId: string
+    batchId: string
     primaryCategory: NsContent.EPrimaryCategory
     children: ISubSec[]
   }
