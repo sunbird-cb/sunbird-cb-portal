@@ -9,8 +9,10 @@ COPY . .
 
 # RUN yarn && yarn add moment && yarn add vis-util && npm run build --prod --build-optimizer
 RUN yarn && yarn add moment && yarn add vis-util 
-RUN ng build --prod --build-optimizer --outputPath=dist/www/en --baseHref=/ --i18nLocale=en --verbose=true
-RUN ng build --prod --build-optimizer --output-path=dist/www/hi --baseHref /hi --i18nLocale=hi  --verbose=true --i18n-format xlf --i18n-file locale/messages.hi.xlf  
+# RUN ./node_modules/@angular/cli/bin/ng build --prod --build-optimizer --outputPath=dist/www/en --baseHref=/ --i18nLocale=en --verbose=true
+# RUN ./node_modules/@angular/cli/bin/ng build --prod --build-optimizer --output-path=dist/www/hi --baseHref /hi --i18nLocale=hi  --verbose=true --i18n-format xlf --i18n-file locale/messages.hi.xlf
+RUN npm run build
+RUN npm run build:hi  
 RUN npm run compress:brotli
 #RUN npm run compress:gzip
 
