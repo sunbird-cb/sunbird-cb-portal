@@ -297,7 +297,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         return
       }
       getAllItemsPerChildren(this.content)
-      console.log(flatList)
+      // console.log(flatList)
       const chld = _.first(_.filter(flatList, { identifier }))
       return chld.mimeType
     }
