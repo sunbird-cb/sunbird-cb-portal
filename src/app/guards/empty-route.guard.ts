@@ -38,7 +38,7 @@ export class EmptyRouteGuard implements CanActivate {
     let redirectUrl
     if (paramsMap.has('redirect_uri')) {
       redirectUrl =
-        //  document.baseURI + 
+        //  document.baseURI +
         `${paramsMap.get('redirect_uri')}`
     }
     // else {
