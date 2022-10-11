@@ -23,6 +23,8 @@ import * as dayjs from 'dayjs'
 import * as  lodash from 'lodash'
 import { TitleTagService } from '../../services/title-tag.service'
 import { ActionService } from '../../services/action.service'
+// tslint:disable-next-line
+import _ from 'lodash'
 
 @Component({
   selector: 'ws-app-toc-banner',
@@ -271,6 +273,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       }
     })
   }
+
+
   getMimeType(content: NsContent.IContent, identifier: string): NsContent.EMimeTypes {
     if (content.identifier === identifier) {
       return content.mimeType
@@ -284,14 +288,21 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         this.logger.log(content.identifier, 'Wrong mimetypes for resume')
         return content.mimeType
       }
-      for (let i = 0; i < content.children.length; i += 1) {
-        if (content.children[i].identifier === identifier) {
-          return content.children[i].mimeType
+      const flatList: any[] = []
+      const getAllItemsPerChildren: any = (item: NsContent.IContent) => {
+        flatList.push(item)
+        if (item.children) {
+          return item.children.map((i: NsContent.IContent) => getAllItemsPerChildren(i));
         }
-        return this.getMimeType(content.children[i], identifier)
+        return
       }
+      getAllItemsPerChildren(this.content)
+      console.log(flatList)
+      const chld = _.first(_.filter(flatList, { identifier }))
+      return chld.mimeType
     }
-    return content.mimeType
+    // return chld.mimeType
+    return NsContent.EMimeTypes.UNKNOWN
   }
 
   private getBatchId(): string {
