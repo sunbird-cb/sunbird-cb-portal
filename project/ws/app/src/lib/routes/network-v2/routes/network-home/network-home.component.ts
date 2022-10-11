@@ -15,7 +15,7 @@ import { CardNetWorkService } from '@sunbird-cb/collection'
 })
 export class NetworkHomeComponent implements OnInit {
   tabsData: NSNetworkDataV2.IProfileTab[]
-  recommendedUsers!: NSNetworkDataV2.IRecommendedUserResult
+  recommendedUsers: any = []
   connectionRequests!: any
   connectionRequestsSent!: any
   enableFeature = true
@@ -104,6 +104,7 @@ export class NetworkHomeComponent implements OnInit {
         (data: any) => {
           this.recommendedUsers = data.result.data
             .find((item: any) => item.field === 'employmentDetails.departmentName').results
+          this.getAllConnectionRequests()
         },
         (_err: any) => {
           // this.openSnackbar(err.error.message.split('|')[1] || this.defaultError)
@@ -125,6 +126,22 @@ export class NetworkHomeComponent implements OnInit {
     this.networkV2Service.fetchAllConnectionRequests().subscribe(
       (requests: any) => {
         this.connectionRequestsSent = requests.result.data
+
+        if (this.recommendedUsers && this.recommendedUsers.length > 0) {
+          // Filter all the connection requests sent
+          if (this.connectionRequestsSent &&  this.connectionRequestsSent.length > 0) {
+            this.connectionRequestsSent.map((user: any) => {
+              const userid = user.id || user.identifier || user.wid
+              if (userid) {
+                this.recommendedUsers.forEach((usr: any) => {
+                  if ((usr.userId || usr.wid) === userid) {
+                    usr['requestSent'] = true
+                  }
+                })
+              }
+            })
+          }
+        }
       })
   }
 
