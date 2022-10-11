@@ -408,6 +408,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       survey: 0,
       podcast: 0,
       practiceTest: 0,
+      finalTest: 0,
       quiz: 0,
       video: 0,
       webModule: 0,
@@ -494,17 +495,17 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.userId = this.configSvc.userProfile.userId || ''
     }
     if (this.content && this.content.identifier && this.content.primaryCategory) {
-        this.ratingSvc.getRating(this.content.identifier, this.content.primaryCategory, this.userId).subscribe(
-          (res: any) =>  {
-            if (res && res.result && res.result.response) {
-              this.userRating = res.result.response
-              this.tocSvc.changeUpdateReviews(true)
-            }
-          },
-          (err: any) => {
-            this.loggerSvc.error('USER RATING FETCH ERROR >', err)
+      this.ratingSvc.getRating(this.content.identifier, this.content.primaryCategory, this.userId).subscribe(
+        (res: any) => {
+          if (res && res.result && res.result.response) {
+            this.userRating = res.result.response
+            this.tocSvc.changeUpdateReviews(true)
           }
-        )
+        },
+        (err: any) => {
+          this.loggerSvc.error('USER RATING FETCH ERROR >', err)
+        }
+      )
     }
   }
 

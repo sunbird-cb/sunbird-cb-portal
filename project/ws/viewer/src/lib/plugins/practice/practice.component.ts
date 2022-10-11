@@ -180,6 +180,14 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     }
     // console.log(this.vws.resource)
   }
+  get getTimeLimit(): number {
+    let jsonTime = (this.quizJson.timeLimit || 0)
+    if (this.retake && jsonTime === 0) {
+      jsonTime = _.get(this.activatedRoute, 'snapshot.data.content.data.expectedDuration') || 0
+      this.quizJson.timeLimit = jsonTime
+    }
+    return jsonTime + this.assessmentBuffer
+  }
   getSections(_event: NSPractice.TUserSelectionType) {
     // this.identifier
     this.fetchingSectionsStatus = 'fetching'
@@ -188,10 +196,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.paperSections = _.get(this.quizSvc.paperSections, 'value.questionSet.children')
       const showTimer = _.toLower(_.get(this.quizSvc.paperSections, 'value.questionSet.showTimer')) === 'yes'
       if (showTimer || this.primaryCategory !== NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
-        this.quizJson.timeLimit = (_.get(this.quizSvc.paperSections, 'value.questionSet.expectedDuration') || 0) + this.assessmentBuffer
+        this.quizJson.timeLimit = (_.get(this.quizSvc.paperSections, 'value.questionSet.expectedDuration') || 0)
       } else {
         // this.quizJson.timeLimit = this.duration * 60
-        this.quizJson.timeLimit = this.quizJson.timeLimit + this.assessmentBuffer
+        this.quizJson.timeLimit = this.quizJson.timeLimit
       }
       this.fetchingSectionsStatus = 'done'
       this.viewState = 'detail'
@@ -204,10 +212,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           /** this is to enable or disable Timer */
           const showTimer = _.toLower(_.get(section, 'result.questionSet.showTimer')) === 'yes'
           if (showTimer) {
-            this.quizJson.timeLimit = section.result.questionSet.expectedDuration + this.assessmentBuffer
+            this.quizJson.timeLimit = section.result.questionSet.expectedDuration
           } else {
             // this.quizJson.timeLimit = this.duration * 60
-            this.quizJson.timeLimit = this.quizJson.timeLimit + this.assessmentBuffer
+            this.quizJson.timeLimit = this.quizJson.timeLimit
           }
           this.quizSvc.paperSections.next(section.result)
           const tempObj = _.get(section, 'result.questionSet.children')
@@ -445,7 +453,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   get noOfQuestions(): number {
     if (this.quizJson.maxQuestions) {
       return this.quizJson.maxQuestions
-    } if (this.retake) {
+    }
+    if (this.retake) {
       return _.get(this.activatedRoute, 'snapshot.data.content.data.maxQuestions') || 0
     }
     return 0
@@ -486,15 +495,15 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
   updateTimer() {
     this.startTime = Date.now()
-    this.timeLeft = this.quizJson.timeLimit
+    this.timeLeft = this.getTimeLimit
     // && this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
-    if (this.quizJson.timeLimit > 0
+    if (this.getTimeLimit > 0
     ) {
       this.timerSubscription = interval(1000)
         .pipe(
           map(
             () =>
-              this.startTime + this.quizJson.timeLimit - Date.now(),
+              this.startTime + this.getTimeLimit - Date.now(),
           ),
         )
         .subscribe(_timeRemaining => {
@@ -605,6 +614,11 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
   get generateRequest(): NSPractice.IQuizSubmit {
     const submitQuizJson = JSON.parse(JSON.stringify(this.quizJson))
+    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+      this.activatedRoute.snapshot.queryParams.collectionId : ''
+    const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+      this.activatedRoute.snapshot.queryParams.batchId : ''
+
     const req = this.quizSvc.createAssessmentSubmitRequest(
       this.identifier,
       this.name,
@@ -616,8 +630,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.quizSvc.mtfSrc.getValue()
     )
     const request: NSPractice.IQuizSubmit = {
+      batchId,
       identifier: this.identifier,
       primaryCategory: this.primaryCategory,
+      courseId: collectionId,
       isAssessment: true,
       objectType: 'QuestionSet',
       timeLimit: this.quizJson.timeLimit,
