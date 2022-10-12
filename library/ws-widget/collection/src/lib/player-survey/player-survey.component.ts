@@ -84,7 +84,8 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
     // this.renderSubject.next()
     // tslint:disable-next-line:no-console
     console.log(e)
-    this.openSnackbar('Survey is submitted')
+    this.openSnackbar('Survey is submitted successfully')
+    this.progressStatus = 2
     this.updateProgress(2)
   }
 
