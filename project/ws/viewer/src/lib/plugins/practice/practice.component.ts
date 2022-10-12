@@ -285,9 +285,15 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         this.fetchingQuestionsStatus = 'done'
         this.overViewed('start')
       } else {
-        this.quizSvc.getQuestions(section.childNodes || [], this.identifier).subscribe(qqr => {
+        // updated because there is a 20 questions limit
+        const lst = _.chunk(section.childNodes || [], 20)
+        const prom: any[] = []
+        _.each(lst, l => {
+          prom.push(this.getMultiQuestions(l))
+        })
+        Promise.all(prom).then(qqr => {
           this.fetchingQuestionsStatus = 'done'
-          const question = _.get(qqr, 'result')
+          const question = { questions: _.flatten(_.map(qqr, 'result.questions')) }
           const codes = _.compact(_.map(this.quizJson.questions, 'section') || [])
           this.quizSvc.startSection(section)
           // console.log(this.quizSvc.secAttempted.value)
@@ -308,8 +314,34 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           })
           this.overViewed('start')
         })
+        // this.quizSvc.getQuestions(section.childNodes || [], this.identifier).subscribe(qqr => {
+        //   this.fetchingQuestionsStatus = 'done'
+        //   const question = _.get(qqr, 'result')
+        //   const codes = _.compact(_.map(this.quizJson.questions, 'section') || [])
+        //   this.quizSvc.startSection(section)
+        //   // console.log(this.quizSvc.secAttempted.value)
+        //   _.eachRight(question.questions, q => {
+        //     // const qHtml = document.createElement('div')
+        //     // qHtml.innerHTML = q.editorState.question
+        //     if (codes.indexOf(section.identifier) === -1) {
+        //       this.quizJson.questions.push({
+        //         section: section.identifier,
+        //         question: q.body, // qHtml.textContent || qHtml.innerText || '',
+        //         multiSelection: ((q.qType || '').toLowerCase() === 'mcq-mca' ? true : false),
+        //         questionType: (q.qType || '').toLowerCase(),
+        //         questionId: q.identifier,
+        //         instructions: null,
+        //         options: this.getOptions(q),
+        //       })
+        //     }
+        //   })
+        //   this.overViewed('start')
+        // })
       }
     }
+  }
+  getMultiQuestions(ids: string[]) {
+    return this.quizSvc.getQuestions(ids, this.identifier).toPromise()
   }
   getOptions(question: NSPractice.IQuestionV2): NSPractice.IOption[] {
     // debugger

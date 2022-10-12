@@ -2,10 +2,16 @@
   <div class="flex flex-1 max-w relative result_image_box">
     <div class="flex percent-div">
       <div class="flex flex-1 flex-column flex-center center">
-        <mat-icon *ngIf="isPassed" class="ws-mat-green-2-text transform15 margin-top-m">check_circle</mat-icon>
-        <mat-icon *ngIf="!isPassed" class="ws-mat-red-text transform15 margin-top-m">highlight_off</mat-icon>
-        <span *ngIf="isPassed" class="mat-title ws-mat-black60-text margin-top-s">{{levelText || 'Passed'}}</span>
-        <span *ngIf="!isPassed" class="mat-title ws-mat-black60-text margin-top-s">{{levelText || 'Failed'}}</span>
+        <ng-container *ngIf="questionTYP.FINAL_ASSESSMENT === quizCategory">
+          <mat-icon *ngIf="isPassed" class="ws-mat-green-2-text transform15 margin-top-m">check_circle</mat-icon>
+          <mat-icon *ngIf="!isPassed" class="ws-mat-red-text transform15 margin-top-m">highlight_off</mat-icon>
+          <span *ngIf="isPassed" class="mat-title ws-mat-black60-text margin-top-s">{{levelText || 'Passed'}}</span>
+          <span *ngIf="!isPassed" class="mat-title ws-mat-black60-text margin-top-s">{{levelText || 'Failed'}}</span>
+        </ng-container>
+        <ng-container *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory">
+          <mat-icon class="ws-mat-green-2-text transform15 margin-top-m">check_box</mat-icon>
+          <span class="mat-title ws-mat-black60-text margin-top-s">{{'Attemped Successfully!!'}}</span>
+        </ng-container>
         <span class="mat-heading-1 ws-mat-default-text">{{(percentage || 0) | number: '1.2-2'}}%</span>
         <span class="mat-body-1 ws-mat-black60-text">your score</span>
       </div>
