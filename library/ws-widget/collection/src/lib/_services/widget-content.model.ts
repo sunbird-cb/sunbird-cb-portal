@@ -373,6 +373,8 @@ export namespace NsContent {
     LEARNING_RESOURCE = 'Learning Resource',
     PRACTICE_RESOURCE = 'Practice Question Set',
     FINAL_ASSESSMENT = 'Course Assessment',
+    COMP_ASSESSMENT = 'Competency Assessment',
+
   }
 
   export enum EMiscPlayerSupportedCollectionTypes {
