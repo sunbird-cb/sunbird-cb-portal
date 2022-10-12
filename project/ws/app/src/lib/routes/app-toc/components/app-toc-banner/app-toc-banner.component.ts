@@ -488,7 +488,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
             this.externalContentFetchStatus = 'done'
             this.registerForExternal = data.hasAccess
           },
-          _ => {
+          _error => {
             this.externalContentFetchStatus = 'done'
             this.registerForExternal = false
           },
