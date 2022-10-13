@@ -36,9 +36,9 @@ export class TopicService {
         if (index === -1) {
             topics.push(topic)
             this.isAdded.next(true)
-            this.desiredTopics.next(topics) 
+            this.desiredTopics.next(topics)
         } else {
-            this.snackBar.open('Alredy exist!!')
+            this.snackBar.open('Alredy exist!')
         }
 
     }
