@@ -28,18 +28,18 @@ export class TopicCardComponent implements OnInit {
       if (index !== -1) {
         /// remove from store
         this.topicService.removeSystemTopics(top)
-        localStorage.setItem('isSystemAdded', "false")
+        localStorage.setItem('isSystemAdded', 'false')
       } else {
         /// add to store
         this.topicService.addSystemTopics(top)
-        localStorage.setItem('isSystemAdded', "true")
+        localStorage.setItem('isSystemAdded', 'true')
       }
     } else {
       const index = _.indexOf(this.topicService.getCurrentSelectedDesTopics, top)
       // const cIndex = _.indexOf(this.topicService.getCurrentSelectedTopics[index].children, top)
       if (index !== -1) {
         /// remove from store
-        localStorage.setItem('isAdded', "true")
+        localStorage.setItem('isAdded', 'true')
         this.topicService.removeDesiredTopics(top)
       } else {
         /// add to store
