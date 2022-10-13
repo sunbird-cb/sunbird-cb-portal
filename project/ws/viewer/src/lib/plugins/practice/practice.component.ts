@@ -595,13 +595,12 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     // debugger
     // console.log(this.questionAnswerHash, '+++++')
     if (question.questionType && question.questionType === 'mtf') {
-      this.quizSvc.mtfSrc.next(
-        {
-          [question.questionId]: {
-            source: _.map(optionId, 'source.innerText'),
-            target: _.map(optionId, 'target.innerText'),
-          },
-        })
+      const mTfval=this.quizSvc.mtfSrc.getValue()
+      mTfval[question.questionId]= {
+        source: _.map(optionId, 'source.innerText'),
+        target: _.map(optionId, 'target.innerText'),
+      }
+      this.quizSvc.mtfSrc.next(mTfval)
     }
     this.quizSvc.qAnsHash({ ...this.questionAnswerHash })
     const answered = (this.quizSvc.questionAnswerHash.getValue() || [])
@@ -730,6 +729,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
             responseQ.push(mcqSca)
             break
           case 'ftb':
+            debugger
             const ftb: NSPractice.IMCQ_FTB = {
               identifier: sq.questionId,
               mimeType: NsContent.EMimeTypes.QUESTION,
