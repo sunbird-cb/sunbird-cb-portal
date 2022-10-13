@@ -729,7 +729,6 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
             responseQ.push(mcqSca)
             break
           case 'ftb':
-            debugger
             const ftb: NSPractice.IMCQ_FTB = {
               identifier: sq.questionId,
               mimeType: NsContent.EMimeTypes.QUESTION,
