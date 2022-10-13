@@ -8,7 +8,7 @@ import { TopicService } from '../../services/topics.service'
   selector: 'ws-app-topic-card',
   templateUrl: './topic-card.component.html',
   styleUrls: ['./topic-card.component.scss'],
-  /* tslint:disable */
+    /* tslint:disable */
   host: { class: 'flex flex-1 top_main flex-col' },
   /* tslint:enable */
 })

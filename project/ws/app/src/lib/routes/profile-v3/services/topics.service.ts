@@ -30,16 +30,15 @@ export class TopicService {
     }
     addDesiredTopics(topic: string) {
         const topics = this.desiredTopics.value
-        const index = _.indexOf(topics, topic) 
+        const index = _.indexOf(topics, topic)
         if (index === -1) {
             topics.push(topic)
-            localStorage.setItem('isAdded', "false")
+            localStorage.setItem('isAdded', 'false')
             this.desiredTopics.next(topics)
-        }
-        else{
+        } else {
             this.snackBar.open('Alredy exist!!')
         }
-        
+
     }
     /**
      * this method will fill all already added topics from users Profile.
