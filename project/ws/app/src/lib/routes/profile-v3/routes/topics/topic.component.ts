@@ -138,9 +138,15 @@ export class TopicComponent implements OnInit, OnDestroy {
         },
       }
       this.topicService.saveDesiredTopic(reqObj).subscribe(res => {
+        let isAdded =localStorage.getItem('isAdded')
         if (res) {
           this.configSvc.updateGlobalProfile(true)
-          this.snackBar.open('Updated!')
+          if(isAdded === "true"){
+            this.snackBar.open('Removed successfully!')
+          }
+          else{
+            this.snackBar.open('Added successfully!')
+          }         
         }
       })
     }
@@ -165,7 +171,12 @@ export class TopicComponent implements OnInit, OnDestroy {
       this.topicService.saveSystemTopic(reqObj).subscribe(res => {
         if (res) {
           this.configSvc.updateGlobalProfile(true)
-          this.snackBar.open('Updated!')
+          let isSystemAdded =localStorage.getItem('isSystemAdded')
+          if(isSystemAdded === 'true'){
+            this.snackBar.open('Added successfully!')
+          }else{
+            this.snackBar.open('Removed successfully!')
+          }
         }
       })
     }

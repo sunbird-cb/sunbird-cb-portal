@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
+import { MatSnackBar } from '@angular/material'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { BehaviorSubject, Observable } from 'rxjs'
@@ -17,7 +18,7 @@ export class TopicService {
     public desiredTopics = new BehaviorSubject<string[]>([])
     public autoSave = new BehaviorSubject<boolean>(false)
     constructor(
-        private http: HttpClient) {
+        private http: HttpClient, private snackBar: MatSnackBar) {
     }
     loadTopics(): Observable<any> {
         return this.http.get<any>(API_END_POINTS.getTopics)
@@ -29,8 +30,16 @@ export class TopicService {
     }
     addDesiredTopics(topic: string) {
         const topics = this.desiredTopics.value
-        topics.push(topic)
-        this.desiredTopics.next(topics)
+        const index = _.indexOf(topics, topic) 
+        if (index === -1) {
+            topics.push(topic)
+            localStorage.setItem('isAdded', "false")
+            this.desiredTopics.next(topics)
+        }
+        else{
+            this.snackBar.open('Alredy exist!!')
+        }
+        
     }
     /**
      * this method will fill all already added topics from users Profile.
