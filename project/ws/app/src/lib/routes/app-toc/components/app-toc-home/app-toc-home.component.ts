@@ -327,6 +327,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       const isResource = this.content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT ||
         this.content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE
         || this.content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+        || this.content.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT
+        || this.content.primaryCategory === NsContent.EPrimaryCategory.COMP_ASSESSMENT
         || !(this.content.children && this.content.children.length)
       if (isResource) {
         this.mobileAppsSvc.sendViewerData(this.content)
@@ -790,8 +792,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.contentSvc.fetchContentHistoryV2(req).subscribe(
         data => {
           if (data && data.result && data.result.contentList && data.result.contentList.length) {
-            this.resumeData = _.get(data, 'result.contentList')
-            this.resumeData = _.map(this.resumeData, rr => {
+            const tempResumeData = _.get(data, 'result.contentList')
+            this.resumeData = _.map(tempResumeData, rr => {
               // tslint:disable-next-line
               const items = _.filter(flattenItems(_.get(this.content, 'children') || [], 'children'), { 'identifier': rr.contentId, primaryCategory: 'Learning Resource' })
               _.set(rr, 'progressdetails.mimeType', _.get(_.first(items), 'mimeType'))
