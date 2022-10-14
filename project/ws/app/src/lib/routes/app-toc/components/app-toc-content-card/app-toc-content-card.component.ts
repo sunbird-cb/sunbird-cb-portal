@@ -213,4 +213,8 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
       return !(NsContent.UN_SUPPORTED_DATA_TYPES_FOR_NON_BATCH_USERS.indexOf(this.content.mimeType) >= 0)
     } return false
   }
+
+  get isEnabled(): boolean {
+    return false
+  }
 }
