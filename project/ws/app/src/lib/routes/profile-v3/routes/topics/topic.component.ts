@@ -141,9 +141,7 @@ export class TopicComponent implements OnInit, OnDestroy {
         if (res) {
           this.configSvc.updateGlobalProfile(true)
         }
-      }, (error: any) => {
-        // tslint:disable-next-line
-        console.log('error', error) 
+      }, (_error: any) => {
         this.snackBar.open('Server error!')
       }
       )
@@ -170,9 +168,7 @@ export class TopicComponent implements OnInit, OnDestroy {
         if (res) {
           this.configSvc.updateGlobalProfile(true)
         }        
-      }, (error: any) => {
-        // tslint:disable-next-line
-        console.log('error', error)
+      }, (_error: any) => {
         this.snackBar.open('Server error!')
       }
       )
