@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
+import { MatSnackBar } from '@angular/material'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { NSProfileDataV3 } from '../../models/profile-v3.models'
@@ -16,7 +17,7 @@ export class TopicCardComponent implements OnInit {
   @Input() topic!: NSProfileDataV3.ITopic
   show = 6
   // selectedTopics: Subscription | null = null
-  constructor(private topicService: TopicService) { }
+  constructor(private topicService: TopicService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
 
@@ -28,11 +29,11 @@ export class TopicCardComponent implements OnInit {
       if (index !== -1) {
         /// remove from store
         this.topicService.removeSystemTopics(top)
-        this.topicService.isSystemAdded.next(false)
+        this.snackBar.open('Removed successfully!')
       } else {
         /// add to store
         this.topicService.addSystemTopics(top)
-        this.topicService.isSystemAdded.next(true)
+        this.snackBar.open('Added successfully!')
       }
     } else {
       const index = _.indexOf(this.topicService.getCurrentSelectedDesTopics, top)
@@ -40,7 +41,6 @@ export class TopicCardComponent implements OnInit {
       if (index !== -1) {
         /// remove from store
         this.topicService.removeDesiredTopics(top)
-        this.topicService.isAdded.next(false)
       } else {
         /// add to store
         this.topicService.addDesiredTopics(top)

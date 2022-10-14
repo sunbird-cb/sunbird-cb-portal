@@ -17,8 +17,6 @@ export class TopicService {
     public systemTopics = new BehaviorSubject<NSProfileDataV3.ITopic[]>([])
     public desiredTopics = new BehaviorSubject<string[]>([])
     public autoSave = new BehaviorSubject<boolean>(false)
-    public isAdded = new BehaviorSubject<boolean>(false)
-    public isSystemAdded = new BehaviorSubject<boolean>(false)
     constructor(
         private http: HttpClient, private snackBar: MatSnackBar) {
     }
@@ -35,7 +33,7 @@ export class TopicService {
         const index = _.indexOf(topics, topic)
         if (index === -1) {
             topics.push(topic)
-            this.isAdded.next(true)
+            this.snackBar.open('Added successfully!')
             this.desiredTopics.next(topics)
         } else {
             this.snackBar.open('Alredy exist!')
@@ -68,6 +66,7 @@ export class TopicService {
         if (index !== -1) {
             topics.splice(index, 1)
             this.desiredTopics.next(topics)
+            this.snackBar.open('Removed successfully!')
         }
     }
     // removeDesiredTopics(topic: string) {

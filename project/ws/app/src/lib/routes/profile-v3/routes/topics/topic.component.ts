@@ -140,13 +140,13 @@ export class TopicComponent implements OnInit, OnDestroy {
       this.topicService.saveDesiredTopic(reqObj).subscribe(res => {
         if (res) {
           this.configSvc.updateGlobalProfile(true)
-          if (this.topicService.isAdded.value) {
-            this.snackBar.open('Added successfully!')
-          } else {
-            this.snackBar.open('Removed successfully!')
-          }
         }
-      })
+      }, (error: any) => {
+        // tslint:disable-next-line
+        console.log('error', error) 
+        this.snackBar.open('Server error!')
+      }
+      )
     }
   }
 
@@ -169,13 +169,13 @@ export class TopicComponent implements OnInit, OnDestroy {
       this.topicService.saveSystemTopic(reqObj).subscribe(res => {
         if (res) {
           this.configSvc.updateGlobalProfile(true)
-          if (this.topicService.isSystemAdded.value) {
-            this.snackBar.open('Added successfully!')
-          } else {
-            this.snackBar.open('Removed successfully!')
-          }
-        }
-      })
+        }        
+      }, (error: any) => {
+        // tslint:disable-next-line
+        console.log('error', error)
+        this.snackBar.open('Server error!')
+      }
+      )
     }
   }
 }
