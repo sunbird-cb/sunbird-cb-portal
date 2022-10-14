@@ -56,7 +56,7 @@ export class TopicCardComponent implements OnInit {
         return true
       }
       const index1 = _.findIndex(this.topicService.getCurrentSelectedSysTopics, { identifier: top.identifier })
-     
+
       if (index1 === -1) {
         return false
       }

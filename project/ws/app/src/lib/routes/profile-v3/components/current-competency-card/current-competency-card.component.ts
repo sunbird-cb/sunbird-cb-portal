@@ -46,8 +46,7 @@ export class CurrentCompetencyCardComponent implements OnInit {
       if (_.findIndex(this.compLocalService.currentComps.value, { id: competency.id }) !== -1) {
         if (_.findIndex(this.compLocalService.currentComps.value, { competencySelfAttestedLevel: complevel.id }) !== -1) {
           this.compLocalService.removecurrentComps(compobj)
-        }
-         else {
+        } else {
           this.compLocalService.removecurrentComps(compobj)
           this.compLocalService.addcurrentComps(compobj)
         }
