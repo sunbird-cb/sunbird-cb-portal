@@ -49,12 +49,14 @@ export class TopicCardComponent implements OnInit {
     if (top) {
       if (typeof (top) !== 'object') {
         const index = _.indexOf(this.topicService.getCurrentSelectedDesTopics, top)
+
         if (index === -1) {
           return false
         }
         return true
       }
       const index1 = _.findIndex(this.topicService.getCurrentSelectedSysTopics, { identifier: top.identifier })
+
       if (index1 === -1) {
         return false
       }

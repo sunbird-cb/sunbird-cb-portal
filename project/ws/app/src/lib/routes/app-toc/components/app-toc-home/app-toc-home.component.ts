@@ -327,6 +327,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       const isResource = this.content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT ||
         this.content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE
         || this.content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+        || this.content.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT
+        || this.content.primaryCategory === NsContent.EPrimaryCategory.COMP_ASSESSMENT
         || !(this.content.children && this.content.children.length)
       if (isResource) {
         this.mobileAppsSvc.sendViewerData(this.content)
@@ -408,6 +410,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       survey: 0,
       podcast: 0,
       practiceTest: 0,
+      finalTest: 0,
       quiz: 0,
       video: 0,
       webModule: 0,
@@ -494,17 +497,17 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.userId = this.configSvc.userProfile.userId || ''
     }
     if (this.content && this.content.identifier && this.content.primaryCategory) {
-        this.ratingSvc.getRating(this.content.identifier, this.content.primaryCategory, this.userId).subscribe(
-          (res: any) =>  {
-            if (res && res.result && res.result.response) {
-              this.userRating = res.result.response
-              this.tocSvc.changeUpdateReviews(true)
-            }
-          },
-          (err: any) => {
-            this.loggerSvc.error('USER RATING FETCH ERROR >', err)
+      this.ratingSvc.getRating(this.content.identifier, this.content.primaryCategory, this.userId).subscribe(
+        (res: any) => {
+          if (res && res.result && res.result.response) {
+            this.userRating = res.result.response
+            this.tocSvc.changeUpdateReviews(true)
           }
-        )
+        },
+        (err: any) => {
+          this.loggerSvc.error('USER RATING FETCH ERROR >', err)
+        }
+      )
     }
   }
 
@@ -789,8 +792,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.contentSvc.fetchContentHistoryV2(req).subscribe(
         data => {
           if (data && data.result && data.result.contentList && data.result.contentList.length) {
-            this.resumeData = _.get(data, 'result.contentList')
-            this.resumeData = _.map(this.resumeData, rr => {
+            const tempResumeData = _.get(data, 'result.contentList')
+            this.resumeData = _.map(tempResumeData, rr => {
               // tslint:disable-next-line
               const items = _.filter(flattenItems(_.get(this.content, 'children') || [], 'children'), { 'identifier': rr.contentId, primaryCategory: 'Learning Resource' })
               _.set(rr, 'progressdetails.mimeType', _.get(_.first(items), 'mimeType'))
