@@ -141,7 +141,7 @@ export class TopicComponent implements OnInit, OnDestroy {
         if (res) {
           this.configSvc.updateGlobalProfile(true)
         }
-      }, (_error: any) => {
+      },                                                   (_error: any) => {
         this.snackBar.open('Server error!')
       }
       )
@@ -167,8 +167,8 @@ export class TopicComponent implements OnInit, OnDestroy {
       this.topicService.saveSystemTopic(reqObj).subscribe(res => {
         if (res) {
           this.configSvc.updateGlobalProfile(true)
-        }        
-      }, (_error: any) => {
+        }
+      },                                                  (_error: any) => {
         this.snackBar.open('Server error!')
       }
       )
