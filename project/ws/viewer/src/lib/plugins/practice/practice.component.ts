@@ -595,8 +595,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     // debugger
     // console.log(this.questionAnswerHash, '+++++')
     if (question.questionType && question.questionType === 'mtf') {
-      const mTfval=this.quizSvc.mtfSrc.getValue()
-      mTfval[question.questionId]= {
+      const mTfval = this.quizSvc.mtfSrc.getValue()
+      mTfval[question.questionId] = {
         source: _.map(optionId, 'source.innerText'),
         target: _.map(optionId, 'target.innerText'),
       }

@@ -192,11 +192,13 @@
 
     <div class="flex flex-col sm:flex-row flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto">
        <!-- deactivated as per NIC CEO requirement to access course wthout login -->
-      <!-- <a [routerLink]="isAllowed && !forPreview ? resourceLink.url : null"
+      <!-- <a [routerLink]="isAllowed && !forPreview && enrolled ? resourceLink.url : null"
         [queryParams]="isAllowed  ? resourceLink.queryParams : null"> -->
 
-        <a [routerLink]="isAllowed ? resourceLink.url : null"
-        [queryParams]="isAllowed  ? resourceLink.queryParams : null">
+        <a class="disabled">
+
+        <!-- <a [routerLink]="isAllowed ? resourceLink.url : null"
+        [queryParams]="isAllowed  ? resourceLink.queryParams : null"> -->
                 <div class="text-truncate cursor-pointer" (click)="viewChildren = !viewChildren; raiseTelemetry()">
           <div class="flex flex-col sm:flex-row flex-wrap">
             <p class="margin-remove text-truncate mat-subheading-1 flex-auto">

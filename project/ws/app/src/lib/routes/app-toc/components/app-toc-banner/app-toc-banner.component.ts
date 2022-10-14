@@ -274,7 +274,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     })
   }
 
-
   getMimeType(content: NsContent.IContent, identifier: string): NsContent.EMimeTypes {
     if (content.identifier === identifier) {
       return content.mimeType
@@ -292,7 +291,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       const getAllItemsPerChildren: any = (item: NsContent.IContent) => {
         flatList.push(item)
         if (item.children) {
-          return item.children.map((i: NsContent.IContent) => getAllItemsPerChildren(i));
+          return item.children.map((i: NsContent.IContent) => getAllItemsPerChildren(i))
         }
         return
       }
