@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { MatDialog } from '@angular/material'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router'
-import { ContentProgressService } from '@sunbird-cb/collection/src/lib/_common/content-progress/content-progress.service'
 import { WidgetContentService } from '@sunbird-cb/collection/src/lib/_services/widget-content.service'
 // import { NsContent } from '@sunbird-cb/collection'
 import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
@@ -42,9 +41,9 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   isPreview = false
   forChannel = false
   currentRoute = window.location.pathname
-  identifier:any
-  batchId:any
-  leafNodesCount:any
+  identifier: any
+  batchId: any
+  leafNodesCount: any
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -56,7 +55,6 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private router: Router,
     private widgetServ: WidgetContentService,
-    private contProgessSev:ContentProgressService
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
@@ -176,43 +174,57 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
 
    getAuthDataIdentifer() {
     const collectionId = this.activatedRoute.snapshot.queryParams.collectionId
-    console.log(collectionId, 'collectionId')
-     this.widgetServ.fetchAuthoringContent(collectionId).subscribe((data)=> {
+     this.widgetServ.fetchAuthoringContent(collectionId).subscribe((data: any) => {
     this.leafNodesCount = data.result.content.leafNodesCount
 
     })
   }
   finishDialog() {
     if (!this.forPreview) {
+      this.contentProgressHash = []
       this.identifier = this.activatedRoute.snapshot.queryParams.collectionId
       this.batchId = this.activatedRoute.snapshot.queryParams.batchId
 
-      if(this.identifier && this.batchId && this.configSvc.userProfile) {
+      if (this.identifier && this.batchId && this.configSvc.userProfile) {
+        let userId
+        if (this.configSvc.userProfile) {
+          userId = this.configSvc.userProfile.userId || ''
+        }
+        const req  = {
+          request: {
+            userId,
+            batchId: this.batchId,
+            courseId: this.identifier || '',
+            contentIds: [],
+            fields: ['progressdetails'],
+          },
+        }
+        this.widgetServ.fetchContentHistoryV2(req).subscribe(
+          (data:  any) => {
+          this.contentProgressHash = data.result.contentList
 
-        this.contProgessSev.getProgressHash(this.identifier, this.batchId, this.configSvc.userProfile.userId)
-        .subscribe((progressHash:any)=>{
-          this.contentProgressHash = progressHash.result.contentList
-          const ipStatusCount = this.contentProgressHash.filter((item:any)=> item.status == 1)
+          if (this.leafNodesCount === this.contentProgressHash.length) {
+            const ipStatusCount = this.contentProgressHash.filter((item: any) => item.status === 1)
 
-          if(ipStatusCount.length == 0) {
-            const dialogRef = this.dialog.open(CourseCompletionDialogComponent, {
-              autoFocus: false,
-              data: { courseName: this.activatedRoute.snapshot.queryParams.courseName },
-            })
-            dialogRef.afterClosed().subscribe(result => {
-              if (result === true) {
-                this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
-              }
-            })
-
+            if (ipStatusCount.length === 0) {
+              const dialogRef = this.dialog.open(CourseCompletionDialogComponent, {
+                autoFocus: false,
+                data: { courseName: this.activatedRoute.snapshot.queryParams.courseName },
+              })
+              dialogRef.afterClosed().subscribe(result => {
+                if (result === true) {
+                  this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+                }
+              })
+            } else {
+              this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+            }
           } else {
             this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
           }
         })
       }
-
-    }
-    else {
+    } else {
       this.router.navigateByUrl(`public/toc/${this.collectionId}/overview`)
     }
   }
