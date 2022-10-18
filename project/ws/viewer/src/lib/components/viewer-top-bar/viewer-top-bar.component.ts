@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { MatDialog } from '@angular/material'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router'
+import { ContentProgressService } from '@sunbird-cb/collection/src/lib/_common/content-progress/content-progress.service'
+import { WidgetContentService } from '@sunbird-cb/collection/src/lib/_services/widget-content.service'
 // import { NsContent } from '@sunbird-cb/collection'
 import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
@@ -32,6 +34,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   resourceId: string = (this.viewerDataSvc.resourceId as string) || ''
   resourceName: string | null = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.name : ''
   resourcePrimaryCategory: string | null = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.primaryCategory : ''
+  contentProgressHash: any = []
   // previousResourcePrimaryCategory!: NsContent.EPrimaryCategory
   // nextResourcePrimaryCategory!: NsContent.EPrimaryCategory
   collectionId = ''
@@ -39,6 +42,9 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   isPreview = false
   forChannel = false
   currentRoute = window.location.pathname
+  identifier:any
+  batchId:any
+  leafNodesCount:any
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -49,6 +55,8 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     private valueSvc: ValueService,
     private dialog: MatDialog,
     private router: Router,
+    private widgetServ: WidgetContentService,
+    private contProgessSev:ContentProgressService
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
@@ -61,6 +69,8 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.getAuthDataIdentifer()
+
     if (window.location.href.includes('/channel/')) {
       this.forChannel = true
     }
@@ -163,18 +173,46 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     }
 
   }
+
+   getAuthDataIdentifer() {
+    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId
+    console.log(collectionId, 'collectionId')
+     this.widgetServ.fetchAuthoringContent(collectionId).subscribe((data)=> {
+    this.leafNodesCount = data.result.content.leafNodesCount
+
+    })
+  }
   finishDialog() {
     if (!this.forPreview) {
-      const dialogRef = this.dialog.open(CourseCompletionDialogComponent, {
-        autoFocus: false,
-        data: { courseName: this.activatedRoute.snapshot.queryParams.courseName },
-      })
-      dialogRef.afterClosed().subscribe(result => {
-        if (result === true) {
-          this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
-        }
-      })
-    } else {
+      this.identifier = this.activatedRoute.snapshot.queryParams.collectionId
+      this.batchId = this.activatedRoute.snapshot.queryParams.batchId
+
+      if(this.identifier && this.batchId && this.configSvc.userProfile) {
+
+        this.contProgessSev.getProgressHash(this.identifier, this.batchId, this.configSvc.userProfile.userId)
+        .subscribe((progressHash:any)=>{
+          this.contentProgressHash = progressHash.result.contentList
+          const ipStatusCount = this.contentProgressHash.filter((item:any)=> item.status == 1)
+
+          if(ipStatusCount.length == 0) {
+            const dialogRef = this.dialog.open(CourseCompletionDialogComponent, {
+              autoFocus: false,
+              data: { courseName: this.activatedRoute.snapshot.queryParams.courseName },
+            })
+            dialogRef.afterClosed().subscribe(result => {
+              if (result === true) {
+                this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+              }
+            })
+
+          } else {
+            this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+          }
+        })
+      }
+
+    }
+    else {
       this.router.navigateByUrl(`public/toc/${this.collectionId}/overview`)
     }
   }
