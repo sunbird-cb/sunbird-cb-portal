@@ -50,7 +50,8 @@ export class GeneralGuard implements CanActivate {
      */
     if (
       this.configSvc.userProfile === null
-      && !(window.location.href.includes('/public/') || window.location.href.includes('&preview=true'))
+      && !(window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+      || window.location.href.includes('/certs'))
       // !this.configSvc.isAuthenticated
     ) {
       let refAppend = ''
