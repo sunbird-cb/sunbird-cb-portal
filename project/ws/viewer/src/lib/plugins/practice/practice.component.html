@@ -3,7 +3,7 @@
   [primaryCategory]="primaryCategory" [noOfQuestions]="noOfQuestions" (userSelection)="getSections($event)">
 </viewer-overview>
 <div #quizContainer class="quiz-container" *ngIf="viewState !== 'initial'">
-  <div class="flex flex-1 flex-column quiz_inner_container">
+  <div class="flex flex-1 flex-column quiz_inner_container overflow-y-scroll">
     <nav class="quiz-nav-bar mat-toolbar mat-caption flex-column">
       <div class="flex flex-1">
         <!-- <span> -->
@@ -69,7 +69,7 @@
           </div>
         </div>
       </mat-sidenav>
-      <mat-sidenav-content>
+      <mat-sidenav-content class="overflow-y-scroll">
         <div *ngIf="!isSubmitted && !isXsmall && viewState === 'attempt'" class="flex flex-1">
           <ng-template *ngIf="fetchingQuestionsStatus === 'fetching'" [ngTemplateOutlet]="showLoading"></ng-template>
           <div class="flex flex-nowrap margin-right-s margin-left-s quest_num_box"
@@ -193,7 +193,7 @@
         </mat-card>
         <ng-container *ngIf="fetchingQuestionsStatus === 'done'  && current_Question && !process">
           <ng-container *ngIf="viewState === 'attempt' && !isSubmitted">
-            <div class="flex flex-1 flex-column margin-top-l margin-left-xs bottom_box">
+            <div class="flex flex-1 flex-column margin-top-l margin-left-xs bottom_box margin-bottom-xs">
               <div class="flex flex-end margin-right-m  cen">
                 <mat-icon class="flex margin-top-xs margin-bottom-xs">info_outline</mat-icon>
                 <span class="flex mat-body-2 padding-xs" i18n>Attempt all questions to finish assessment</span>
