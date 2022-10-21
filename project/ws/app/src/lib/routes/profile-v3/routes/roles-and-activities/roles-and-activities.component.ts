@@ -96,8 +96,6 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
                         this.selectedActivity = []
                         this.configSvc.updateGlobalProfile(true)
                         // setTimeout(this.updateRoles, 3000)
-
-                       
                         const el = document.getElementById(`${this.userRoles.length - 1}`)
                         // tslint:disable-next-line:no-unused-expression
                         el ? el.scrollIntoView({ behavior: 'smooth', block: 'start' }) : false
