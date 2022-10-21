@@ -30,7 +30,7 @@ export class TopicService {
     }
     addDesiredTopics(topic: string) {
         const topics = this.desiredTopics.value
-        const lowerTopics = topics.map((val)=> val.toLowerCase())
+        const lowerTopics = topics.map(val => val.toLowerCase())
         const lowercaseTopic = topic.toLowerCase()
         const index = _.indexOf(lowerTopics, lowercaseTopic)
         if (index === -1) {
