@@ -192,6 +192,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   get isforPreview(): boolean {
     this.forPreview = window.location.href.includes('/public/')
     || window.location.href.includes('&preview=true')
+    || window.location.href.includes('/certs')
     return this.forPreview
   }
   get isThisSetUpPage(): boolean {
