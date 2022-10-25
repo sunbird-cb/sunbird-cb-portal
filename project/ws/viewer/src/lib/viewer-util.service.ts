@@ -79,7 +79,8 @@ export class ViewerUtilService {
         mimeType === NsContent.EMimeTypes.M3U8 ||
         mimeType === NsContent.EMimeTypes.MP3 ||
         mimeType === NsContent.EMimeTypes.M4A ||
-        mimeType === NsContent.EMimeTypes.SURVEY
+        mimeType === NsContent.EMimeTypes.SURVEY ||
+        mimeType === NsContent.EMimeTypes.PDF
       ) {
         // if percentage is less than 5% then make status started
         if (Math.ceil(percentage) <= 5) {
