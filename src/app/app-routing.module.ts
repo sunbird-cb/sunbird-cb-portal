@@ -249,6 +249,11 @@ const routes: Routes = [
     },
     loadChildren: () => import('./routes/route-cert.module').then(u => u.RouteCertificateModule),
   },
+  {
+    path: 'public/certs',
+    redirectTo: 'certs',
+    // pathMatch: 'full',
+  },
   // {
   //   path: 'app/gamification',
   //   loadChildren: () =>

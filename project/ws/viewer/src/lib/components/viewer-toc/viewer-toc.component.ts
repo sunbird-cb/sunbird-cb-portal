@@ -171,6 +171,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
         .getProgressHash(this.collection.identifier, this.batchId, this.configSvc.userProfile.userId)
         .subscribe(progressHash => {
           this.contentProgressHash = progressHash
+
         })
     }
   }

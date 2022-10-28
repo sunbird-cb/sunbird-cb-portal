@@ -85,10 +85,10 @@ export class AppInterceptorService implements HttpInterceptor {
                   }
                   if (localUrl.includes('localhost')) {
                     // tslint:disable-next-line: prefer-template
-                    window.location.href = error.error.redirectUrl + `?redirect_uri=${pagePath}`
+                    window.location.href = error.error.redirectUrl + `?redirect_uri=${encodeURIComponent(pagePath)}`
                   } else {
                     // tslint:disable-next-line: prefer-template
-                    window.location.href = error.error.redirectUrl + `?redirect_uri=${pageName} `
+                    window.location.href = error.error.redirectUrl + `?redirect_uri=${encodeURIComponent(pageName)}`
                   }
                   // if (!window.location.href.includes('/public/home')) {
                   //   this.router.navigate(['public', 'home'])

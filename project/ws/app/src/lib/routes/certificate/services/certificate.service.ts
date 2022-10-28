@@ -24,7 +24,8 @@ export class CertificateService {
   validateCertificate(data: any): Observable<ServerResponse> {
     const option = {
       data,
-      url: `${urls.PROXIES_PREFIX}learner/${urls.VALIDATE_CERTIFICATE}`,
+      // url: `${urls.PROXIES_PREFIX}learner/${urls.VALIDATE_CERTIFICATE}`,
+      url: `${urls.LEARNER_PREFIX}${urls.VALIDATE_CERTIFICATE}`,
     }
     return this.apiService.post(option.url, option.data)
   }
