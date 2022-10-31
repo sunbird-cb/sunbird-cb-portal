@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core'
 import { FormGroup, FormControl, Validators, FormArray, FormBuilder, AbstractControl, ValidatorFn } from '@angular/forms'
 import { ENTER, COMMA } from '@angular/cdk/keycodes'
-import { Subscription, Observable } from 'rxjs'
+import { Subscription, Observable, interval } from 'rxjs'
 import { startWith, map, debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { MatSnackBar, MatChipInputEvent, DateAdapter, MAT_DATE_FORMATS, MatDialog, MatTabChangeEvent } from '@angular/material'
 import { AppDateAdapter, APP_DATE_FORMATS, changeformat } from '../../services/format-datepicker'
@@ -105,6 +105,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   approvalConfig!: NsUserProfileDetails.IApprovals
   unApprovedField!: any[]
   changedProperties: any = {}
+  otpSend = false
+  OTPTimer = 15
+  timerSubscription: Subscription | null = null
+  timeLeftforOTP = 0
+  isMobileVerified = false
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -1524,7 +1529,41 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       },
     })
   }
-
+  sendOtp() {
+    const mob = this.createUserForm.get('mobile')
+    if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
+      this.otpSend = true
+      alert('OTP send to your Mobile Number')
+      this.startCountDown()
+    } else {
+      this.snackBar.open("Please enter a valid Mobile No")
+    }
+  }
+  startCountDown() {
+    const startTime = Date.now()
+    this.timeLeftforOTP = this.OTPTimer
+    // && this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
+    if (this.OTPTimer > 0
+    ) {
+      this.timerSubscription = interval(1000)
+        .pipe(
+          map(
+            () =>
+              startTime + this.OTPTimer - Date.now(),
+          ),
+        )
+        .subscribe(_timeRemaining => {
+          this.timeLeftforOTP -= 1
+          if (this.timeLeftforOTP < 0) {
+            this.timeLeftforOTP = 0
+            if (this.timerSubscription) {
+              this.timerSubscription.unsubscribe()
+            }
+            // this.submitQuiz()
+          }
+        })
+    }
+  }
   public tabClicked(tabEvent: MatTabChangeEvent) {
     const data: WsEvents.ITelemetryTabData = {
       label: `${tabEvent.tab.textLabel}`,

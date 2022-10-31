@@ -33,6 +33,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { UserProfileService } from './services/user-profile.service'
 import { LoaderService } from '@ws/author/src/public-api'
 import { BtnPageBackModule } from '@sunbird-cb/collection'
+import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { BtnPageBackModule } from '@sunbird-cb/collection'
     MatButtonToggleModule,
     MatTabsModule,
     MatAutocompleteModule,
+    PipeDurationTransformModule,
   ],
   providers: [UserProfileService, LoaderService],
 })
