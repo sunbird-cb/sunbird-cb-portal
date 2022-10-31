@@ -5,11 +5,13 @@ const helmet = require('helmet')
 const timeout = require('connect-timeout')
 const morgan = require('morgan')
 const httpProxy = require('http-proxy')
+const healthcheck = require('express-healthcheck')
+
 
 const CONSTANTS = {
   PORTAL_PORT: parseInt(process.env.PORTAL_PORT || '3002', 10),
   LA_HOST_PROXY: process.env.LA_HOST_PROXY || 'http://localhost',
-  WEB_HOST_PROXY: process.env.WEB_HOST_PROXY || 'http://localhost:8080',
+  WEB_HOST_PROXY: process.env.WEB_HOST_PROXY || 'http://localhost:3007',
   FRAME_ANCESTORS: process.env.FRAME_ANCESTORS || "'self'",
 }
 
@@ -17,6 +19,11 @@ var app = express()
 var proxy = httpProxy.createProxyServer({
   timeout: 10000,
 })
+app.use('/healthcheck', healthcheck({
+  healthy() {
+    return { everything: 'is ok' }
+  },
+}))
 app.use(timeout('100s'))
 // Add required helmet configurations
 app.use(
@@ -45,34 +52,32 @@ app.use('/ScormCoursePlayer', proxyCreator(express.Router(), 'http://localhost/S
 
 serveAssets('')
 serveAssets('/hi')
-// serveAssets('/ar')
-// serveAssets('/de')
-// serveAssets('/es')
-// serveAssets('/fr')
-// serveAssets('/fr-ca')
-// serveAssets('/nl')
-// serveAssets('/zh-CN')
-// serveAssets('/ja')
+serveAssets('/ar')
+serveAssets('/de')
+serveAssets('/es')
+serveAssets('/fr')
+serveAssets('/fr-ca')
+serveAssets('/nl')
+serveAssets('/zh-CN')
+serveAssets('/ja')
 
 function serveAssets(hostPath) {
-  // console.log(path.join(__dirname, 'www', `${(hostPath || 'en')}`, `assets`))
+  console.log("hostPath====>", hostPath)
   app.use(
     `${hostPath}/assets`,
-    // proxyCreator(express.Router(), CONSTANTS.WEB_HOST_PROXY + '/assets/'),
-    // proxyCreator(express.Router(), path.join(__dirname, (hostPath || 'en'), 'assets')),
-    express.static(path.join(__dirname, 'www', `${(hostPath || 'en')}`, `assets`)) //  "public" off of current is root
-
+    // proxyCreator(express.Router(), CONSTANTS.WEB_HOST_PROXY + '/web-hosted/client-assets/dist'),
+    express.static(path.join(__dirname, `${hostPath}`, `assets`)) //  "public" off of current is root
   )
 }
 
-// uiHostCreator('/ar', 'ar')
-// uiHostCreator('/de', 'de')
-// uiHostCreator('/es', 'es')
-// uiHostCreator('/fr', 'fr')
-// uiHostCreator('/fr-ca', 'fr-ca')
-// uiHostCreator('/nl', 'nl')
-// uiHostCreator('/zh-CN', 'zh-CN')
-// uiHostCreator('/ja', 'ja')
+uiHostCreator('/ar', 'ar')
+uiHostCreator('/de', 'de')
+uiHostCreator('/es', 'es')
+uiHostCreator('/fr', 'fr')
+uiHostCreator('/fr-ca', 'fr-ca')
+uiHostCreator('/nl', 'nl')
+uiHostCreator('/zh-CN', 'zh-CN')
+uiHostCreator('/ja', 'ja')
 uiHostCreator('/hi', 'hi')
 uiHostCreator('', 'en')
 app.use(haltOnTimedOut)
@@ -92,6 +97,7 @@ function proxyCreator(route, baseUrl) {
 }
 
 function uiHostCreator(hostPath, hostFolderName) {
+  console.log("hostPath===>>", hostPath, "hostFolderName===>>", hostFolderName)
   app.use(
     `${hostPath}`,
     expressStaticGzip(path.join(__dirname, `www/${hostFolderName}`), {
@@ -101,9 +107,11 @@ function uiHostCreator(hostPath, hostFolderName) {
   )
   app.get(`${hostPath}/*`, (req, res) => {
     if (req.url.startsWith('/assets/') || req.url.endsWith('.js')) {
-      res.status(404).send('requested asset is not available')
+      res.sendFile(path.join(__dirname, `www/${hostFolderName}/${req.url}`))
+      // res.status(404).send('requested asset is not available')
     } else {
-      // res.sendFile(path.join(__dirname, `www/${hostFolderName}/index.html`))
+      console.log("path===>>", path, "hostFolderName===>", hostFolderName)
+      res.sendFile(path.join(__dirname, `www/${hostFolderName}/index.html`))
     }
   })
 }
