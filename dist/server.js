@@ -52,17 +52,17 @@ app.use('/ScormCoursePlayer', proxyCreator(express.Router(), 'http://localhost/S
 
 serveAssets('')
 serveAssets('/hi')
-serveAssets('/ar')
-serveAssets('/de')
-serveAssets('/es')
-serveAssets('/fr')
-serveAssets('/fr-ca')
-serveAssets('/nl')
-serveAssets('/zh-CN')
-serveAssets('/ja')
+// serveAssets('/ar')
+// serveAssets('/de')
+// serveAssets('/es')
+// serveAssets('/fr')
+// serveAssets('/fr-ca')
+// serveAssets('/nl')
+// serveAssets('/zh-CN')
+// serveAssets('/ja')
 
 function serveAssets(hostPath) {
-  console.log("hostPath====>", hostPath)
+  console.log("hostPath###====>", hostPath)
   app.use(
     `${hostPath}/assets`,
     // proxyCreator(express.Router(), CONSTANTS.WEB_HOST_PROXY + '/web-hosted/client-assets/dist'),
@@ -70,14 +70,14 @@ function serveAssets(hostPath) {
   )
 }
 
-uiHostCreator('/ar', 'ar')
-uiHostCreator('/de', 'de')
-uiHostCreator('/es', 'es')
-uiHostCreator('/fr', 'fr')
-uiHostCreator('/fr-ca', 'fr-ca')
-uiHostCreator('/nl', 'nl')
-uiHostCreator('/zh-CN', 'zh-CN')
-uiHostCreator('/ja', 'ja')
+// uiHostCreator('/ar', 'ar')
+// uiHostCreator('/de', 'de')
+// uiHostCreator('/es', 'es')
+// uiHostCreator('/fr', 'fr')
+// uiHostCreator('/fr-ca', 'fr-ca')
+// uiHostCreator('/nl', 'nl')
+// uiHostCreator('/zh-CN', 'zh-CN')
+// uiHostCreator('/ja', 'ja')
 uiHostCreator('/hi', 'hi')
 uiHostCreator('', 'en')
 app.use(haltOnTimedOut)
@@ -106,11 +106,12 @@ function uiHostCreator(hostPath, hostFolderName) {
     }),
   )
   app.get(`${hostPath}/*`, (req, res) => {
-    if (req.url.startsWith('/assets/') || req.url.endsWith('.js')) {
-      res.sendFile(path.join(__dirname, `www/${hostFolderName}/${req.url}`))
-      // res.status(404).send('requested asset is not available')
+    if (req.url.startsWith(`/${hostFolderName}/assets/`)) {
+      // res.sendFile(path.join(__dirname, `www/${hostFolderName}/${req.url}`))
+      res.status(404).send('requested asset is not available')
     } else {
-      console.log("path===>>", path, "hostFolderName===>", hostFolderName)
+      // console.log("path===>>", path)
+      console.log("hostFolderName===>", hostFolderName)
       res.sendFile(path.join(__dirname, `www/${hostFolderName}/index.html`))
     }
   })
