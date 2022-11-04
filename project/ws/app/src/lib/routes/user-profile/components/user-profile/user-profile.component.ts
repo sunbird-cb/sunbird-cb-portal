@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef 
 import { FormGroup, FormControl, Validators, FormArray, FormBuilder, AbstractControl, ValidatorFn } from '@angular/forms'
 import { ENTER, COMMA } from '@angular/cdk/keycodes'
 import { Subscription, Observable, interval } from 'rxjs'
-import { startWith, map, debounceTime, distinctUntilChanged } from 'rxjs/operators'
+import { startWith, map, debounceTime, distinctUntilChanged, pairwise } from 'rxjs/operators'
 import { MatSnackBar, MatChipInputEvent, DateAdapter, MAT_DATE_FORMATS, MatDialog, MatTabChangeEvent } from '@angular/material'
 import { AppDateAdapter, APP_DATE_FORMATS, changeformat } from '../../services/format-datepicker'
 import { ImageCropComponent, ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils'
@@ -106,10 +106,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   unApprovedField!: any[]
   changedProperties: any = {}
   otpSend = false
-  OTPTimer = 15
+  OTP_TIMER = 15
   timerSubscription: Subscription | null = null
   timeLeftforOTP = 0
-  isMobileVerified = false
+  isMobileVerified = true
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -131,7 +131,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       middlename: new FormControl('', [Validators.pattern(this.namePatern)]),
       surname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       photo: new FormControl('', []),
-      countryCode: new FormControl('', [Validators.required]),
+      countryCode: new FormControl('+91', [Validators.required]),
       mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
       telephone: new FormControl('', [Validators.pattern(this.telephonePattern)]),
       primaryEmail: new FormControl('', [Validators.required, Validators.email]),
@@ -196,8 +196,25 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       // need to call search API
     }
     this.getUserDetails()
-
+    this.checkIfMobileNoChanged()
     // this.assignPrimaryEmailType(this.isOfficialEmail)
+  }
+  checkIfMobileNoChanged(): void {
+    // this.createUserForm.controls['mobile'].valueChanges.subscribe((oldValue: any) => {
+    //   if (oldValue) { }
+    //   this.isMobileVerified = false
+    // })
+    const ctrl = this.createUserForm.get('mobile')
+    if (ctrl) {
+      ctrl
+        .valueChanges
+        .pipe(startWith(null), pairwise())
+        .subscribe(([prev, next]: [any, any]) => {
+          if (!(prev == null && next)) {
+            this.isMobileVerified = false
+          }
+        })
+    }
   }
   fetchMeta() {
     this.userProfileSvc.getMasterNationlity().subscribe(
@@ -720,7 +737,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       maritalStatus: data.personalDetails.maritalStatus,
       category: data.personalDetails.category,
       knownLanguages: data.personalDetails.knownLanguages,
-      countryCode: data.personalDetails.countryCode,
+      countryCode: data.personalDetails.countryCode || '+91',
       mobile: data.personalDetails.mobile,
       telephone: this.checkvalue(data.personalDetails.telephone),
       primaryEmail: data.personalDetails.primaryEmail || '',
@@ -1539,21 +1556,33 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.snackBar.open('Please enter a valid Mobile No')
     }
   }
+  resendOTP() {
+    const mob = this.createUserForm.get('mobile')
+    if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
+      this.otpSend = true
+      alert('OTP send to your Mobile Number')
+      this.startCountDown()
+    } else {
+      this.snackBar.open('Please enter a valid Mobile No')
+    }
+  }
   verifyOtp(otp: any) {
-    console.log(otp)
-    this.isMobileVerified = true
+    // console.log(otp)
+    if (otp) {
+      this.isMobileVerified = true
+    }
   }
   startCountDown() {
     const startTime = Date.now()
-    this.timeLeftforOTP = this.OTPTimer
+    this.timeLeftforOTP = this.OTP_TIMER
     // && this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
-    if (this.OTPTimer > 0
+    if (this.OTP_TIMER > 0
     ) {
       this.timerSubscription = interval(1000)
         .pipe(
           map(
             () =>
-              startTime + this.OTPTimer - Date.now(),
+              startTime + this.OTP_TIMER - Date.now(),
           ),
         )
         .subscribe(_timeRemaining => {

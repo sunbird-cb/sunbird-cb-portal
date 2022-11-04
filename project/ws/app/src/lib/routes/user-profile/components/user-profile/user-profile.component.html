@@ -395,7 +395,7 @@
                                   <span>Resend OTP after {{timeLeftforOTP | pipeDurationTransform: 'hms2M'}}</span>
                                 </mat-hint>
                                 <mat-hint *ngIf="timeLeftforOTP <= 0 ">
-                                  <span class="cursor-pointer ws-mat-default-text">Resend OTP</span>
+                                  <span class="cursor-pointer ws-mat-default-text" (click)="resendOTP()">Resend OTP</span>
                                 </mat-hint>
                               </mat-form-field>
                               <button mat-raised-button type="button" (click)="verifyOtp(otp)"
