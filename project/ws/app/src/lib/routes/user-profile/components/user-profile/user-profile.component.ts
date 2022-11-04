@@ -1536,8 +1536,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       alert('OTP send to your Mobile Number')
       this.startCountDown()
     } else {
-      this.snackBar.open("Please enter a valid Mobile No")
+      this.snackBar.open('Please enter a valid Mobile No')
     }
+  }
+  verifyOtp(otp: any) {
+    console.log(otp)
+    this.isMobileVerified = true
   }
   startCountDown() {
     const startTime = Date.now()
