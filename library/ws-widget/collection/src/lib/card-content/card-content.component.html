@@ -684,11 +684,11 @@
             <!-- image overlay box-->
 
 
-            <div class="course_logo_box">
+            <!-- <div class="course_logo_box">
               <img [src]="widgetData.content.creatorLogo | pipePublicURL " class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
               [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
-              <!-- <p class="mat-subheading-1 margin-remove">IGOT</p> -->
-            </div>
+
+            </div> -->
           <div class="source-div" style="display: none;">
             <!-- [src]="sourseIcon(widgetData.content.sourceName)" -->
             <img [src]="widgetData.content.creatorLogo" class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
@@ -708,6 +708,8 @@
             [queryParams]="(widgetData.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData"
             role="link" i18n-aria-label>
 
+
+
             <div class="text-gray-time complexity flex-between flex-center">
               <!-- <div *ngIf="widgetData.content.complexityLevel" i18n-title title="Complexity Level">
                 {{ widgetData.content.complexityLevel }}
@@ -724,6 +726,12 @@
                 <mat-icon>access_time</mat-icon>
                 <span class="time-text">0.0m</span>
               </div> -->
+            </div>
+
+            <div class="course_logo_box">
+              <img [src]="widgetData.content.creatorLogo | pipePublicURL " class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
+              [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
+              <!-- <p class="mat-subheading-1 margin-remove">IGOT</p> -->
             </div>
 
             <div class="course_widget">
