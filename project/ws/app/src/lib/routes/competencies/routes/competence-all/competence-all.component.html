@@ -9,10 +9,11 @@
       <div class="w-full" role="link" tabindex="0">
         <div class="flex flex-1 flex-column margin-fix mb-2" role="link" tabindex="0">
           <span class="mat-subheading-1">
-          Your competencies
+            Your competencies
           </span>
         </div>
-        <mat-card class="no-competency-card margin-right-s" > <!-- *ngIf="myCompetencies && myCompetencies.length === 0" -->
+        <mat-card class="no-competency-card margin-right-s">
+          <!-- *ngIf="myCompetencies && myCompetencies.length === 0" -->
           <mat-card-content class="flex flex-1 flex-col">
             <div class="flex flex-col items-center main_progress_box">
               <div class="flex flex-row inner_progress_box justify-between">
@@ -20,9 +21,8 @@
                   <!-- <mat-progress-bar class="green-progress" [color]="color"
                   mode="determinate"
                   [value]="value"></mat-progress-bar> -->
-                  <mat-progress-bar class="green-progress"
-                  mode="determinate"
-                  [value]="value" bufferValue="0"></mat-progress-bar>
+                  <mat-progress-bar class="green-progress" mode="determinate" [value]="value" bufferValue="0">
+                  </mat-progress-bar>
 
 
                   <p class="mat-h3 margin-remove">{{ myCompetencies.length }}</p>
@@ -33,10 +33,10 @@
                   <!-- <mat-progress-bar class="green-progress" [color]="color"
                   mode="determinate"
                   [value]="value"></mat-progress-bar> -->
-                  <mat-progress-bar class="green-progress"
-                  mode="determinate"
-                  [value]="value" bufferValue="0"></mat-progress-bar>
-                  <p class="mat-h3 margin-remove">{{ ((filteredCompetencies) ? filteredCompetencies.length : 0 ) + ((watCompetencies) ? watCompetencies.length : 0 )}}</p>
+                  <mat-progress-bar class="green-progress" mode="determinate" [value]="value" bufferValue="0">
+                  </mat-progress-bar>
+                  <p class="mat-h3 margin-remove">{{ ((filteredCompetencies) ? filteredCompetencies.length : 0 ) +
+                    ((watCompetencies) ? watCompetencies.length : 0 )}}</p>
                   <p class="mat-body-2 margin-remove">Recommended competencies</p>
                 </div>
               </div>
@@ -46,33 +46,34 @@
       </div>
       <div class="w-full pt-5">
         <div class="flex flex-1 flex-column margin-fix mt-5 filter_outer_box">
-            <div class="flex flex-1 filter">
-                <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'recommended',
+          <div class="flex flex-1 filter">
+            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'recommended',
                                 'ws-mat-accent-border':currentFilter !== 'recommended'}"
-                    (click)="filter('recommended'); tabTelemetry('Recommended from FRAC', 0)">
-                    Recommended from FRAC </a>
-                <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'recommended_from_wat',
+              (click)="filter('recommended'); tabTelemetry('Recommended from FRAC', 0)">
+              Recommended from FRAC </a>
+            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'recommended_from_wat',
                     'ws-mat-accent-border':currentFilter !== 'recommended_from_wat'}"
-                (click)="filter('recommended_from_wat'); tabTelemetry('Recommended from WAT', 1)">
-                Recommended from WAT </a>
-                <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'added_by_you',
+              (click)="filter('recommended_from_wat'); tabTelemetry('Recommended from WAT', 1)">
+              Recommended from WAT </a>
+            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'added_by_you',
                                 'ws-mat-accent-border':currentFilter !== 'added_by_you'}"
-                    (click)="filter('added_by_you'); tabTelemetry('Added by you', 2)">
-                    Added by you </a>
-            </div>
+              (click)="filter('added_by_you'); tabTelemetry('Added by you', 2)">
+              Added by you </a>
+          </div>
         </div>
 
         <div class="flex flex-1 flex-row margin-fix search">
           <form (submit)="updateQuery(queryControl.value)" class="flex-1 search_form">
             <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'">
               <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
-              <input type="search" #searchInput class="ml-2" i18n-placeholder="search content"
-                  [placeholder]="'Search'" i18-aria-label aria-label="Query" matInput [formControl]="queryControl"
-                  accesskey="F" />
+              <input type="search" #searchInput class="ml-2" i18n-placeholder="search content" [placeholder]="'Search'"
+                i18-aria-label aria-label="Query" matInput [formControl]="queryControl" accesskey="F" />
             </mat-form-field>
           </form>
-          <div class="flex" *ngIf="myCompetencies && myCompetencies.length > 0 && currentFilter && currentFilter === 'added_by_you'">
-            <a class="add_competency_btn text-white flex items-center justify-center cursor-pointer mat-subheading-2" routerLink="/app/competencies/all">Add a competency</a>
+          <div class="flex"
+            *ngIf="myCompetencies && myCompetencies.length > 0 && currentFilter && currentFilter === 'added_by_you'">
+            <a class="add_competency_btn text-white flex items-center justify-center cursor-pointer mat-subheading-2"
+              routerLink="/app/competencies/all">Add a competency</a>
           </div>
         </div>
 
@@ -82,7 +83,8 @@
               <img src="/assets/images/banners/competencies.svg">
               <p class="mat-h4 ws-mat-black60-text">No competencies found</p>
               <p class="mat-body ws-mat-black60-text">Find competencies to add from</p>
-              <p class="mat-body ws-mat-default-text"><a class="work_order_link" routerLink="/app/competencies/all">All competencies</a></p>
+              <p class="mat-body ws-mat-default-text"><a class="work_order_link" routerLink="/app/competencies/all">All
+                  competencies</a></p>
               <br />
             </div>
           </div>
@@ -90,21 +92,23 @@
           <!-- New -->
 
           <div class="flex flex-column flex-wrap margin-fix">
-            <ng-container *ngIf="myCompetencies && myCompetencies.length > 0" >
-              <ng-container *ngFor="let comp of myCompetencies | pipeFilterV2:'name': searchInput.value"> <!--  | pipeFilterV2:'name': searchInput.value   -->
-                <mat-card class="margin-bottom-m position-relative mat-card" [ngClass]="{'mat-copmetence': isSelected}" (click)=view(comp)>
+            <ng-container *ngIf="myCompetencies && myCompetencies.length > 0">
+              <ng-container *ngFor="let comp of myCompetencies | pipeFilterV2:'name': searchInput.value">
+                <!--  | pipeFilterV2:'name': searchInput.value   -->
+                <mat-card class="margin-bottom-m position-relative mat-card" [ngClass]="{'mat-copmetence': isSelected}"
+                  (click)=view(comp)>
                   <a role="button">
                     <mat-card-content>
-                        <div class="card_inner_content flex flex-row justify-between">
-                            <div class="card_inner_title_box flex-col">
-                                <h4 class="mat-h4">{{comp.name}}</h4>
-                                <p class="mat-body-2 ws-mat-black60-text">{{comp.competencyType}}</p>
-                            </div>
+                      <div class="card_inner_content flex flex-row justify-between">
+                        <div class="card_inner_title_box flex-col">
+                          <h4 class="mat-h4">{{comp.name}}</h4>
+                          <p class="mat-body-2 ws-mat-black60-text">{{comp.competencyType}}</p>
+                        </div>
 
 
 
-                            <div class="flex-col proficiency_text_box">
-                                <!-- <div class="flex flex-row justify-between">
+                        <div class="flex-col proficiency_text_box">
+                          <!-- <div class="flex flex-row justify-between">
                                   <div>
                                       <p>WPCAS:</p>
                                   </div>
@@ -149,57 +153,62 @@
                                   </div>
                                 </div> -->
 
-                                <div class="flex flex-row justify-between prof_txt_data">
-                                  <div>
-                                      <p>Self attestation</p>
-                                  </div>
-                                  <div class="proficiency_graph_box">
-                                    <ul class="tagIconList">
-                                      <ng-container *ngIf="comp.competencySelfAttestedLevel && comp.competencySelfAttestedLevel === 1" >
-                                        <li><a href="#" class="activeLevelIcon"></a> </li>
-                                        <li><a href="#" class="disableTagIcon"></a> </li>
-                                        <li><a href="#" class="disableTagIcon"></a> </li>
-                                        <li><a href="#" class="disableTagIcon"></a> </li>
-                                        <li><a href="#" class="disableTagIcon"></a> </li>
-                                      </ng-container>
-                                      <ng-container *ngIf="comp.competencySelfAttestedLevel && comp.competencySelfAttestedLevel === 2" >
-                                        <li><a href="#" class="activeLevelIcon"></a> </li>
-                                        <li><a href="#" class="activeLevelIcon"></a> </li>
-                                        <li><a href="#" class="disableTagIcon"></a> </li>
-                                        <li><a href="#" class="disableTagIcon"></a> </li>
-                                        <li><a href="#" class="disableTagIcon"></a> </li>
-                                      </ng-container>
-                                      <ng-container *ngIf="comp.competencySelfAttestedLevel && comp.competencySelfAttestedLevel === 3" >
-                                        <li><a href="#" class="activeLevelIcon"></a> </li>
-                                        <li><a href="#" class="activeLevelIcon"></a> </li>
-                                        <li><a href="#" class="activeLevelIcon"></a> </li>
-                                        <li><a href="#" class="disableTagIcon"></a> </li>
-                                        <li><a href="#" class="disableTagIcon"></a> </li>
-                                      </ng-container>
-                                      <ng-container *ngIf="comp.competencySelfAttestedLevel && comp.competencySelfAttestedLevel === 4" >
-                                        <li><a href="#" class="activeLevelIcon"></a> </li>
-                                        <li><a href="#" class="activeLevelIcon"></a> </li>
-                                        <li><a href="#" class="activeLevelIcon"></a> </li>
-                                        <li><a href="#" class="activeLevelIcon"></a> </li>
-                                        <li><a href="#" class="disableTagIcon"></a> </li>
-                                      </ng-container>
-                                      <ng-container *ngIf="comp.competencySelfAttestedLevel && comp.competencySelfAttestedLevel === 5" >
-                                        <li><a href="#" class="activeLevelIcon"></a> </li>
-                                        <li><a href="#" class="activeLevelIcon"></a> </li>
-                                        <li><a href="#" class="activeLevelIcon"></a> </li>
-                                        <li><a href="#" class="activeLevelIcon"></a> </li>
-                                        <li><a href="#" class="activeLevelIcon"></a> </li>
-                                      </ng-container>
-                                    </ul>
-                                  </div>
-                                </div>
+                          <div class="flex flex-row justify-between prof_txt_data">
+                            <div>
+                              <p>Self attestation</p>
                             </div>
-
-
-                            <div class="flex proficient_level_box">
-                                <p class="deactivate_text mat-body-2">Not enough data</p>
+                            <div class="proficiency_graph_box">
+                              <ul class="tagIconList">
+                                <ng-container
+                                  *ngIf="comp.competencySelfAttestedLevel && (comp.competencySelfAttestedLevel === 1 || comp.competencySelfAttestedLevel === '1')">
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                </ng-container>
+                                <ng-container
+                                  *ngIf="comp.competencySelfAttestedLevel && (comp.competencySelfAttestedLevel === 2 || comp.competencySelfAttestedLevel === '2')">
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                </ng-container>
+                                <ng-container
+                                  *ngIf="comp.competencySelfAttestedLevel && (comp.competencySelfAttestedLevel === 3 || comp.competencySelfAttestedLevel === '3')">
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                </ng-container>
+                                <ng-container
+                                  *ngIf="comp.competencySelfAttestedLevel && (comp.competencySelfAttestedLevel === 4 || comp.competencySelfAttestedLevel === '4')">
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                </ng-container>
+                                <ng-container
+                                  *ngIf="comp.competencySelfAttestedLevel && (comp.competencySelfAttestedLevel === 5 || comp.competencySelfAttestedLevel === '5')">
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                </ng-container>
+                              </ul>
                             </div>
+                          </div>
                         </div>
+
+
+                        <div class="flex proficient_level_box">
+                          <p class="deactivate_text mat-body-2">Not enough data</p>
+                        </div>
+                      </div>
                     </mat-card-content>
                   </a>
                 </mat-card>
@@ -212,7 +221,8 @@
           <div class="recommendation_box flex flex-col justify-start margin-bottom-l margin-top-l">
             <p class="mat-body margin-remove">
               <mat-icon class="info_icon mat-icon ws-mat-black60-text">info</mat-icon>
-              Recommendations are based on your position and are coming from your Work Allocation Order. These are the competencies you need to acquire as part of your position
+              Recommendations are based on your position and are coming from your Work Allocation Order. These are the
+              competencies you need to acquire as part of your position
             </p>
           </div>
           <div *ngIf="watCompetencies && watCompetencies.length == 0">
@@ -228,22 +238,25 @@
           <!-- New -->
 
           <div class="flex flex-column flex-wrap margin-fix">
-            <ng-container *ngIf="watCompetencies && watCompetencies.length > 0" >
-              <ng-container *ngFor="let comp of watCompetencies | pipeFilterV2:'name': searchInput.value"> <!--  | pipeFilterV2:'name': searchInput.value   -->
-                <mat-card class="margin-bottom-m position-relative mat-card" [ngClass]="{'mat-copmetence': isSelected}" [routerLink]="['/app/competencies/all', comp?.id, comp?.name, 'WAT']">
+            <ng-container *ngIf="watCompetencies && watCompetencies.length > 0">
+              <ng-container *ngFor="let comp of watCompetencies | pipeFilterV2:'name': searchInput.value">
+                <!--  | pipeFilterV2:'name': searchInput.value   -->
+                <mat-card class="margin-bottom-m position-relative mat-card" [ngClass]="{'mat-copmetence': isSelected}"
+                  [routerLink]="['/app/competencies/all', comp?.id, comp?.name, 'WAT']">
                   <a role="button">
                     <mat-card-content>
-                        <div class="card_inner_content flex flex-row justify-between">
-                            <div class="card_inner_title_box flex-col">
-                                <h4 class="mat-h4">{{comp.name}}</h4>
-                                <p class="mat-body-2 ws-mat-black60-text">{{comp?.additionalProperties?.competencyType || comp?.competencyType}}</p>
-                            </div>
-
-
-                            <div class="flex proficient_level_box">
-                                <p class="deactivate_text mat-body-2">Not enough data</p>
-                            </div>
+                      <div class="card_inner_content flex flex-row justify-between">
+                        <div class="card_inner_title_box flex-col">
+                          <h4 class="mat-h4">{{comp.name}}</h4>
+                          <p class="mat-body-2 ws-mat-black60-text">{{comp?.additionalProperties?.competencyType ||
+                            comp?.competencyType}}</p>
                         </div>
+
+
+                        <div class="flex proficient_level_box">
+                          <p class="deactivate_text mat-body-2">Not enough data</p>
+                        </div>
+                      </div>
                     </mat-card-content>
                   </a>
                 </mat-card>
@@ -262,8 +275,10 @@
             <div class="recommendation_box flex flex-col justify-start margin-bottom-l margin-top-l">
               <p class="mat-body margin-remove">
                 <mat-icon class="info_icon mat-icon ws-mat-black60-text">info</mat-icon>
-                Recommendations are based on your position and are coming from FRAC dictionary allocated to your position. Please go to your
-                <a class="work_order_link" routerLink="/app/person-profile/me" fragment="profileInfo">Profile</a> page to update your position
+                Recommendations are based on your position and are coming from FRAC dictionary allocated to your
+                position. Please go to your
+                <a class="work_order_link" routerLink="/app/person-profile/me" fragment="profileInfo">Profile</a> page
+                to update your position
               </p>
             </div>
             <div class="flex flex-col items-center justify-center post_image_box" *ngIf="userPosition == null">
@@ -275,20 +290,22 @@
           </div>
           <ng-container *ngIf="filteredCompetencies && filteredCompetencies.length > 0">
             <ng-container *ngFor="let comp of filteredCompetencies | pipeFilterV2:'name': searchInput.value">
-              <mat-card class="margin-bottom-m position-relative mat-card" [ngClass]="{'mat-copmetence': isSelected}" [routerLink]="['/app/competencies/all', comp?.id, comp?.name, 'FRAC']">
+              <mat-card class="margin-bottom-m position-relative mat-card" [ngClass]="{'mat-copmetence': isSelected}"
+                [routerLink]="['/app/competencies/all', comp?.id, comp?.name, 'FRAC']">
                 <a role="button">
                   <mat-card-content>
-                      <div class="card_inner_content flex flex-row justify-between">
-                          <div class="card_inner_title_box flex-col">
-                              <h4 class="mat-h4">{{comp.name}}</h4>
-                              <p class="mat-body-2 ws-mat-black60-text">{{comp?.additionalProperties?.competencyType || comp?.competencyType}}</p>
-                          </div>
-
-
-                          <div class="flex proficient_level_box">
-                              <p class="deactivate_text mat-body-2">Not enough data</p>
-                          </div>
+                    <div class="card_inner_content flex flex-row justify-between">
+                      <div class="card_inner_title_box flex-col">
+                        <h4 class="mat-h4">{{comp.name}}</h4>
+                        <p class="mat-body-2 ws-mat-black60-text">{{comp?.additionalProperties?.competencyType ||
+                          comp?.competencyType}}</p>
                       </div>
+
+
+                      <div class="flex proficient_level_box">
+                        <p class="deactivate_text mat-body-2">Not enough data</p>
+                      </div>
+                    </div>
                   </mat-card-content>
                 </a>
               </mat-card>
