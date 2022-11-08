@@ -26,6 +26,7 @@ import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
 import { LoaderService } from '@ws/author/src/public-api'
 /* tslint:disable */
 import _ from 'lodash'
+import { OtpService } from '../../services/otp.services';
 /* tslint:enable */
 
 export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
@@ -109,7 +110,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   OTP_TIMER = 15
   timerSubscription: Subscription | null = null
   timeLeftforOTP = 0
-  isMobileVerified = true
+  isMobileVerified = false
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -121,6 +122,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private loader: LoaderService,
     private eventSvc: EventService,
+    private otpService: OtpService,
   ) {
     this.approvalConfig = this.route.snapshot.data.pageData.data
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
@@ -549,6 +551,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             ...data.profileDetails || _.get(this.configSvc.unMappedUser, 'profileDetails'),
             id: data.id, userId: data.userId,
           }
+          this.isMobileVerified = _.get(data, 'phoneVerified') && true
           if (data.profileDetails && (userData.id || userData.userId)) {
             const academics = this.populateAcademics(userData)
             this.setDegreeValuesArray(academics)
@@ -780,7 +783,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.cd.markForCheck()
     this.setDropDownOther(organisation)
     this.setProfilePhotoValue(data)
-  }
+   }
 
   checkvalue(value: any) {
     if (value && value === 'undefined') {
@@ -1549,9 +1552,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   sendOtp() {
     const mob = this.createUserForm.get('mobile')
     if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
-      this.otpSend = true
-      alert('OTP send to your Mobile Number')
-      this.startCountDown()
+      this.otpService.sendOtp(mob.value).subscribe(() => {
+        this.otpSend = true
+        alert('OTP send to your Mobile Number')
+        this.startCountDown()
+      })
     } else {
       this.snackBar.open('Please enter a valid Mobile No')
     }
@@ -1559,17 +1564,34 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   resendOTP() {
     const mob = this.createUserForm.get('mobile')
     if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
-      this.otpSend = true
-      alert('OTP send to your Mobile Number')
-      this.startCountDown()
+      this.otpService.resendOtp(mob.value).subscribe((res: any) => {
+        if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
+          this.otpSend = true
+          alert('OTP send to your Mobile Number')
+          this.startCountDown()
+        }
+        // tslint:disable-next-line: align
+      }, (error: any) => {
+        this.snackBar.open(_.get(error, 'params.errmsg') || 'Please try again later')
+      })
     } else {
       this.snackBar.open('Please enter a valid Mobile No')
     }
   }
   verifyOtp(otp: any) {
     // console.log(otp)
-    if (otp) {
-      this.isMobileVerified = true
+    const mob = this.createUserForm.get('mobile')
+    if (otp && otp.value) {
+      if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
+        this.otpService.verifyOTP(otp.value, mob.value).subscribe((res: any) => {
+          if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
+            this.isMobileVerified = true
+          }
+          // tslint:disable-next-line: align
+        }, (error: any) => {
+          this.snackBar.open(_.get(error, 'params.errmsg') || 'Please try again later')
+        })
+      }
     }
   }
   startCountDown() {

@@ -38,6 +38,11 @@ export class ConnectionPeopleCardComponent implements OnInit {
     this.connectionHoverService.fetchProfile(userId).subscribe((res: any) => {
       if (res.profileDetails !== null) {
         this.howerUser = res.profileDetails
+        if (this.howerUser.phoneVerified) {
+          this.howerUser.phoneVerified = res.phoneVerified
+        } else {
+          this.howerUser.phoneVerified = false
+        }
         this.unmappedUser = res
       } else {
         this.howerUser = res || {}

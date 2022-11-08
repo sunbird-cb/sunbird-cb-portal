@@ -15,7 +15,6 @@
                 {{' '}}{{hoverUser?.personalDetails?.surname}} -->
                     {{getUserName}}
                 </div>
-                <mat-icon class="ws-mat-green-text margin-left-xs margin-top-xxs" svgIcon="verified"></mat-icon>
             </div>
             <div class="flex flex-1" *ngFor="let pro of hoverUser?.professionalDetails">
 
@@ -33,10 +32,12 @@
             <div class="flex flex-1 flex-column">
                 <div class="flex flex-1 m-margin cursor-pointer">
                     <mat-icon>call</mat-icon>
-                    <a *ngIf="hoverUser?.personalDetails?.mobile" href="tel:{{hoverUser?.personalDetails?.mobile}}">
+                    <a *ngIf="hoverUser?.personalDetails?.mobile" href="tel:{{hoverUser?.personalDetails?.mobile}}" class="flex">
                         <span class="mat-body-2 margin-left-s ws-mat-black60-text">
                             {{hoverUser?.personalDetails?.mobile || 'Not available'}}
                         </span>
+                        <mat-icon *ngIf="!hoverUser.phoneVerified"
+                            class="ws-mat-green-text margin-left-xs" svgIcon="verified"></mat-icon>
                     </a>
                     <span *ngIf="!hoverUser?.personalDetails?.mobile" class="mat-body-2 margin-left-s">
                         {{'Not available'}}

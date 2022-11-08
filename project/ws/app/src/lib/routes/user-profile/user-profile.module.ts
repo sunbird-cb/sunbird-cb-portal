@@ -34,6 +34,7 @@ import { UserProfileService } from './services/user-profile.service'
 import { LoaderService } from '@ws/author/src/public-api'
 import { BtnPageBackModule } from '@sunbird-cb/collection'
 import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
+import { OtpService } from './services/otp.services'
 
 @NgModule({
   declarations: [
@@ -74,6 +75,6 @@ import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
     MatAutocompleteModule,
     PipeDurationTransformModule,
   ],
-  providers: [UserProfileService, LoaderService],
+  providers: [UserProfileService, LoaderService, OtpService],
 })
 export class UserProfileModule { }

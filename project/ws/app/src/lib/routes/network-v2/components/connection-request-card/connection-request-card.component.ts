@@ -39,6 +39,11 @@ export class ConnectionRequestCardComponent implements OnInit {
       if (res.profileDetails !== null) {
         this.unmappedHowerUser = res
         this.howerUser = res.profileDetails
+        if (this.howerUser.phoneVerified) {
+          this.howerUser.phoneVerified = res.phoneVerified
+        } else {
+          this.howerUser.phoneVerified = false
+        }
       } else {
         this.unmappedHowerUser = res
         this.howerUser = res || {}
