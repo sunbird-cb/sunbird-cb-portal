@@ -1590,6 +1590,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
                 userId: this.configSvc.unMappedUser.id,
                 profileDetails: {
                   personalDetails: {
+                    mobile: mob.value,
                     phoneVerified: true,
                   },
                 },
