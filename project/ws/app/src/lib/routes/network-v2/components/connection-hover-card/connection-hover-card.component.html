@@ -36,7 +36,7 @@
                         <span class="mat-body-2 margin-left-s ws-mat-black60-text">
                             {{hoverUser?.personalDetails?.mobile || 'Not available'}}
                         </span>
-                        <mat-icon *ngIf="!hoverUser.phoneVerified"
+                        <mat-icon *ngIf="hoverUser.personalDetails.phoneVerified"
                             class="ws-mat-green-text margin-left-xs" svgIcon="verified"></mat-icon>
                     </a>
                     <span *ngIf="!hoverUser?.personalDetails?.mobile" class="mat-body-2 margin-left-s">

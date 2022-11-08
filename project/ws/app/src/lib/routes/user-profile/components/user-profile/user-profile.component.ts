@@ -551,8 +551,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             ...data.profileDetails || _.get(this.configSvc.unMappedUser, 'profileDetails'),
             id: data.id, userId: data.userId,
           }
-          this.isMobileVerified = _.get(data, 'phoneVerified') && true
           if (data.profileDetails && (userData.id || userData.userId)) {
+            this.isMobileVerified = _.get(data, 'profileDetails.personalDetails.phoneVerified') && true
             const academics = this.populateAcademics(userData)
             this.setDegreeValuesArray(academics)
             this.setPostDegreeValuesArray(academics)
@@ -783,7 +783,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.cd.markForCheck()
     this.setDropDownOther(organisation)
     this.setProfilePhotoValue(data)
-   }
+  }
 
   checkvalue(value: any) {
     if (value && value === 'undefined') {
@@ -1585,7 +1585,21 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
         this.otpService.verifyOTP(otp.value, mob.value).subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
-            this.isMobileVerified = true
+            const reqUpdates = {
+              request: {
+                userId: this.configSvc.unMappedUser.id,
+                profileDetails: {
+                  personalDetails: {
+                    phoneVerified: true,
+                  },
+                },
+              },
+            }
+            this.userProfileSvc.editProfileDetails(reqUpdates).subscribe((updateRes: any) => {
+              if (updateRes) {
+                this.isMobileVerified = true
+              }
+            })
           }
           // tslint:disable-next-line: align
         }, (error: any) => {
