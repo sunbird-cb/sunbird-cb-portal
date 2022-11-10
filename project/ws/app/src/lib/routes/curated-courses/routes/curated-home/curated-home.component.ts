@@ -55,7 +55,6 @@ export class CuratedHomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('Route data -- - - ', _.get(this.route, 'snapshot.data.pageData.data.search.searchReq'))
     this.searchReq = _.get(this.route, 'snapshot.data.pageData.data.search.searchReq') || this.searchReqDefault
     this.searchForm = new FormGroup({
       // sortByControl: new FormControl(''),

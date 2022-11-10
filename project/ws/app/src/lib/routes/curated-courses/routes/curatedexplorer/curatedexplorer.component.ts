@@ -61,7 +61,6 @@ export class CuratedexplorerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('Route data -- - - ', _.get(this.route, 'snapshot.data.pageData.data.search.searchReq'))
     this.searchReq = _.get(this.route, 'snapshot.data.pageData.data.search.searchReq') || this.searchReqDefault
     this.stateData = { param: '', path: 'curatedCollections' }
     this.displayLoader = this.curatedCollectionSvc.isLoading()
