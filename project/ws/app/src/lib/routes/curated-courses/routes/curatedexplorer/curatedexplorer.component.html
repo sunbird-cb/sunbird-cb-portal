@@ -3,7 +3,7 @@
 <div class="container-balanced min-height">
     <mat-sidenav-container name="discuss-menu" class="min-height">
         <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 sidenav-align">
-            <ws-app-curated-left-menu [unseen]="unread" [tabsData]="menuItems" (currentTab)="onTabLeftMenu($event)">
+            <ws-app-curated-left-menu [unseen]="" [tabsData]="menuItems" (currentTab)="onTabLeftMenu($event)">
             </ws-app-curated-left-menu>
         </mat-sidenav>
         <mat-sidenav-content class="sidenav-align-cont">
@@ -40,8 +40,4 @@
         </mat-sidenav-content>
     </mat-sidenav-container>
 
-</div>
-
-<div class="container-balanced min-height mt-24" align='center' *ngIf="resourceLoading">
-    <mat-progress-spinner mode="indeterminate" diameter='20' strokeWidth='50'></mat-progress-spinner>
 </div>
