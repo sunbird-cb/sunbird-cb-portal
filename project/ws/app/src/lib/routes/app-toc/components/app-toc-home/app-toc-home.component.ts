@@ -284,6 +284,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         const finalUrl = `/app/learn/browse-by/competency/all-competencies`
         // tslint:disable-next-line: max-line-length
         this.breadcrumbs = { url: 'home', titles: [{ title: 'all competencies', url: finalUrl }, { title: 'Details', url: 'none' }] }
+      } else if (this.historyData.path === 'curatedCollections') {
+        const finalUrl = `/app/curatedCollections/home`
+        // tslint:disable-next-line: max-line-length
+        this.breadcrumbs = { url: 'home', titles: [{ title: 'curated collections', url: finalUrl }, { title: 'Details', url: 'none' }] }
       } else {
         // tslint:disable-next-line:max-line-length
         this.breadcrumbs = { url: 'home', titles: [{ title: 'Learn', url: '/page/learn', icon: 'school' }, { title: 'Details', url: 'none' }] }
