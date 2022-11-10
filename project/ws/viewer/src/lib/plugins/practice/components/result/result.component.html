@@ -20,7 +20,7 @@
     <img class="flex-1 result_image" [src]="staticImage" alt="exam image" />
   </div>
   <div class="flex flex-1 flex-column result_text_box ws-mat-accent-border border-custom">
-    <div class="flex flex-1 flex-row flex-wrap margin-top-m">
+    <div class="flex flex-1 flex-column flex-wrap margin-top-m">
       <ng-container *ngFor="let _parts of quizResponse?.children; let i = index">
         <mat-card *ngIf="_parts" class="ws-mat-accent-border box-c result_box">
           <mat-card-title>
@@ -87,3 +87,4 @@
     <span class="mat-body-2 margin-left-xs">{{text}}</span>
   </mat-card>
 </ng-template>
+
