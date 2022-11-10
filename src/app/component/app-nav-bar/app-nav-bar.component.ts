@@ -40,7 +40,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   currentRoute = 'page/home'
   isPublicHomePage = window.location.href.includes('/public/home')
   isSetUpPage = false
-  isLoggedIn:boolean = false
+  isLoggedIn = false
   constructor(
     private domSanitizer: DomSanitizer,
     private configSvc: ConfigurationsService,
@@ -63,7 +63,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    if(this.configSvc.userProfile && this.configSvc.userProfile.userId) {
+    if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
         this.isLoggedIn = true
     }
     if (this.configSvc.instanceConfig) {

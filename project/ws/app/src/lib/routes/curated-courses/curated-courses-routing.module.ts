@@ -21,7 +21,7 @@ const routes: Routes = [
     },
     resolve: {
       pageData: PageResolve,
-    }
+    },
   },
   {
     path: ':collectionId',
@@ -34,7 +34,7 @@ const routes: Routes = [
     },
     resolve: {
       pageData: PageResolve,
-    }
+    },
   },
 ]
 

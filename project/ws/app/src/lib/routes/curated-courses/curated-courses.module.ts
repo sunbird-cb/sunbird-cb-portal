@@ -28,7 +28,7 @@ import { CuratedHomeComponent } from './routes/curated-home/curated-home.compone
 import { CuratedexplorerComponent } from './routes/curatedexplorer/curatedexplorer.component'
 import { CuratedCollectionCardComponent } from './components/curated-collection-card/curated-collection-card.component'
 import { CuratedPopularCardComponent } from './components/curated-popular-card/curated-popular-card.component'
-import { CuratedCollectionService } from './services/curated-collection.service';
+import { CuratedCollectionService } from './services/curated-collection.service'
 import { LeftMenuComponent } from './components/left-menu/left-menu.component'
 
 @NgModule({
@@ -37,7 +37,7 @@ import { LeftMenuComponent } from './components/left-menu/left-menu.component'
     CuratedexplorerComponent,
     CuratedCollectionCardComponent,
     CuratedPopularCardComponent,
-    LeftMenuComponent
+    LeftMenuComponent,
   ],
   imports: [
     CommonModule,
