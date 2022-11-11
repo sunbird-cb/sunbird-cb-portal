@@ -30,7 +30,8 @@
             <!-- <mat-divider class="p-inherit margin-top-s margin-bottom-s"></mat-divider> -->
 
             <div class="flex flex-1 flex-column">
-                <div class="flex flex-1 m-margin cursor-pointer">
+                <!-- Hidded mobile number for privacy related issues as per the inputs  -->
+                <!-- <div class="flex flex-1 m-margin cursor-pointer">
                     <mat-icon>call</mat-icon>
                     <a *ngIf="hoverUser?.personalDetails?.mobile" href="tel:{{hoverUser?.personalDetails?.mobile}}" class="flex">
                         <span class="mat-body-2 margin-left-s ws-mat-black60-text">
@@ -42,7 +43,7 @@
                     <span *ngIf="!hoverUser?.personalDetails?.mobile" class="mat-body-2 margin-left-s">
                         {{'Not available'}}
                     </span>
-                </div>
+                </div> -->
                 <div class="flex flex-1 m-margin cursor-pointer">
                     <mat-icon>email</mat-icon>
                     <a *ngIf="hoverUser?.personalDetails?.primaryEmail"
