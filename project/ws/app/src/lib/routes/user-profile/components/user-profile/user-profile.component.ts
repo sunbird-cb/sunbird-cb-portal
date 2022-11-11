@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core'
 import { FormGroup, FormControl, Validators, FormArray, FormBuilder, AbstractControl, ValidatorFn } from '@angular/forms'
 import { ENTER, COMMA } from '@angular/cdk/keycodes'
-import { Subscription, Observable } from 'rxjs'
-import { startWith, map, debounceTime, distinctUntilChanged } from 'rxjs/operators'
+import { Subscription, Observable, interval } from 'rxjs'
+import { startWith, map, debounceTime, distinctUntilChanged, pairwise } from 'rxjs/operators'
 import { MatSnackBar, MatChipInputEvent, DateAdapter, MAT_DATE_FORMATS, MatDialog, MatTabChangeEvent } from '@angular/material'
 import { AppDateAdapter, APP_DATE_FORMATS, changeformat } from '../../services/format-datepicker'
 import { ImageCropComponent, ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils'
@@ -26,6 +26,7 @@ import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
 import { LoaderService } from '@ws/author/src/public-api'
 /* tslint:disable */
 import _ from 'lodash'
+import { OtpService } from '../../services/otp.services';
 /* tslint:enable */
 
 export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
@@ -105,6 +106,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   approvalConfig!: NsUserProfileDetails.IApprovals
   unApprovedField!: any[]
   changedProperties: any = {}
+  otpSend = false
+  OTP_TIMER = 15
+  timerSubscription: Subscription | null = null
+  timeLeftforOTP = 0
+  isMobileVerified = false
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -116,6 +122,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private loader: LoaderService,
     private eventSvc: EventService,
+    private otpService: OtpService,
   ) {
     this.approvalConfig = this.route.snapshot.data.pageData.data
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
@@ -126,7 +133,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       middlename: new FormControl('', [Validators.pattern(this.namePatern)]),
       surname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       photo: new FormControl('', []),
-      countryCode: new FormControl('', [Validators.required]),
+      countryCode: new FormControl('+91', [Validators.required]),
       mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
       telephone: new FormControl('', [Validators.pattern(this.telephonePattern)]),
       primaryEmail: new FormControl('', [Validators.required, Validators.email]),
@@ -191,8 +198,25 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       // need to call search API
     }
     this.getUserDetails()
-
+    this.checkIfMobileNoChanged()
     // this.assignPrimaryEmailType(this.isOfficialEmail)
+  }
+  checkIfMobileNoChanged(): void {
+    // this.createUserForm.controls['mobile'].valueChanges.subscribe((oldValue: any) => {
+    //   if (oldValue) { }
+    //   this.isMobileVerified = false
+    // })
+    const ctrl = this.createUserForm.get('mobile')
+    if (ctrl) {
+      ctrl
+        .valueChanges
+        .pipe(startWith(null), pairwise())
+        .subscribe(([prev, next]: [any, any]) => {
+          if (!(prev == null && next)) {
+            this.isMobileVerified = false
+          }
+        })
+    }
   }
   fetchMeta() {
     this.userProfileSvc.getMasterNationlity().subscribe(
@@ -528,6 +552,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             id: data.id, userId: data.userId,
           }
           if (data.profileDetails && (userData.id || userData.userId)) {
+            this.isMobileVerified = _.get(data, 'profileDetails.personalDetails.phoneVerified') && true
             const academics = this.populateAcademics(userData)
             this.setDegreeValuesArray(academics)
             this.setPostDegreeValuesArray(academics)
@@ -715,7 +740,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       maritalStatus: data.personalDetails.maritalStatus,
       category: data.personalDetails.category,
       knownLanguages: data.personalDetails.knownLanguages,
-      countryCode: data.personalDetails.countryCode,
+      countryCode: data.personalDetails.countryCode || '+91',
       mobile: data.personalDetails.mobile,
       telephone: this.checkvalue(data.personalDetails.telephone),
       primaryEmail: data.personalDetails.primaryEmail || '',
@@ -1524,7 +1549,91 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       },
     })
   }
-
+  sendOtp() {
+    const mob = this.createUserForm.get('mobile')
+    if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
+      this.otpService.sendOtp(mob.value).subscribe(() => {
+        this.otpSend = true
+        alert('OTP send to your Mobile Number')
+        this.startCountDown()
+      })
+    } else {
+      this.snackBar.open('Please enter a valid Mobile No')
+    }
+  }
+  resendOTP() {
+    const mob = this.createUserForm.get('mobile')
+    if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
+      this.otpService.resendOtp(mob.value).subscribe((res: any) => {
+        if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
+          this.otpSend = true
+          alert('OTP send to your Mobile Number')
+          this.startCountDown()
+        }
+        // tslint:disable-next-line: align
+      }, (error: any) => {
+        this.snackBar.open(_.get(error, 'params.errmsg') || 'Please try again later')
+      })
+    } else {
+      this.snackBar.open('Please enter a valid Mobile No')
+    }
+  }
+  verifyOtp(otp: any) {
+    // console.log(otp)
+    const mob = this.createUserForm.get('mobile')
+    if (otp && otp.value) {
+      if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
+        this.otpService.verifyOTP(otp.value, mob.value).subscribe((res: any) => {
+          if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
+            const reqUpdates = {
+              request: {
+                userId: this.configSvc.unMappedUser.id,
+                profileDetails: {
+                  personalDetails: {
+                    mobile: mob.value,
+                    phoneVerified: true,
+                  },
+                },
+              },
+            }
+            this.userProfileSvc.editProfileDetails(reqUpdates).subscribe((updateRes: any) => {
+              if (updateRes) {
+                this.isMobileVerified = true
+              }
+            })
+          }
+          // tslint:disable-next-line: align
+        }, (error: any) => {
+          this.snackBar.open(_.get(error, 'params.errmsg') || 'Please try again later')
+        })
+      }
+    }
+  }
+  startCountDown() {
+    const startTime = Date.now()
+    this.timeLeftforOTP = this.OTP_TIMER
+    // && this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
+    if (this.OTP_TIMER > 0
+    ) {
+      this.timerSubscription = interval(1000)
+        .pipe(
+          map(
+            () =>
+              startTime + this.OTP_TIMER - Date.now(),
+          ),
+        )
+        .subscribe(_timeRemaining => {
+          this.timeLeftforOTP -= 1
+          if (this.timeLeftforOTP < 0) {
+            this.timeLeftforOTP = 0
+            if (this.timerSubscription) {
+              this.timerSubscription.unsubscribe()
+            }
+            // this.submitQuiz()
+          }
+        })
+    }
+  }
   public tabClicked(tabEvent: MatTabChangeEvent) {
     const data: WsEvents.ITelemetryTabData = {
       label: `${tabEvent.tab.textLabel}`,

@@ -351,28 +351,66 @@
                       Mobile Number
                     </label>
                     <div class="flex flex-align combined-field">
-                      <mat-form-field appearance="outline" class="margin-top-xs w80">
-                        <mat-select formControlName="countryCode" i18n-placeholder placeholder="--Select--"
-                          i18n-aria-label aria-label="Mobile Number label">
-                          <mat-option [value]="code" *ngFor="let code of countryCodes">{{code}}</mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                      <mat-form-field appearance="outline" class="margin-top-xs flex-expand w-minus-w80">
-                        <input id="mobileNumber" #mobile type="number" matInput placeholder="Mobile Number"
-                          formControlName="mobile" i18n-aria-label aria-label="Mobile Number input">
-                        <mat-error [hidden]="false" i18n="Mobile Number Error|Explains name is required"
-                          *ngIf="createUserForm?.controls['mobile'].errors?.required" i18n-aria-label
-                          aria-label="Mobile Number is mandatory">
-                          Mobile Number is mandatory
-                        </mat-error>
-                        <mat-error [hidden]="false" *ngIf="createUserForm?.controls['mobile'].errors?.pattern"
-                          i18n-aria-label aria-label="Please enter a valid 10 digit mobile number">
-                          Please enter a valid 10 digit mobile number
-                        </mat-error>
-                        <mat-hint align="start">Please add a valid mobile number</mat-hint>
-                        <!-- <mat-error *ngIf="createUserForm?.controls['mobile'].errors?.required">This field is mandatory.</mat-error>
-                        <mat-error *ngIf="createUserForm?.controls['mobile'].errors?.pattern">Minimum 8 charactors needed.</mat-error> -->
-                      </mat-form-field>
+                      <div class="flex flex-1 flex-column">
+                        <div class="flex flex-1">
+                          <mat-form-field appearance="outline" class="margin-top-xs w80">
+                            <mat-select formControlName="countryCode" i18n-placeholder placeholder="--Select--"
+                              i18n-aria-label aria-label="Mobile Number label">
+                              <mat-option [value]="code" *ngFor="let code of countryCodes">{{code}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="margin-top-xs flex-expand w-minus-w80">
+                            <input id="mobileNumber" #mobile type="number" matInput placeholder="Mobile Number"
+                              formControlName="mobile" i18n-aria-label aria-label="Mobile Number input">
+                            <mat-error [hidden]="false" i18n="Mobile Number Error|Explains Mobile no is required"
+                              *ngIf="createUserForm?.controls['mobile'].errors?.required" i18n-aria-label
+                              aria-label="Mobile Number is mandatory">
+                              Mobile Number is mandatory
+                            </mat-error>
+                            <mat-error [hidden]="false" *ngIf="createUserForm?.controls['mobile'].errors?.pattern"
+                              i18n-aria-label aria-label="Please enter a valid 10 digit mobile number">
+                              Please enter a valid 10 digit mobile number
+                            </mat-error>
+                            <mat-hint align="start">Please add a valid mobile number</mat-hint>
+                            <!-- <mat-error *ngIf="createUserForm?.controls['mobile'].errors?.required">This field is mandatory.</mat-error>
+                            <mat-error *ngIf="createUserForm?.controls['mobile'].errors?.pattern">Minimum 8 charactors needed.</mat-error> -->
+                          </mat-form-field>
+                          <div class="flex m-auto" *ngIf="isMobileVerified">
+                            <mat-icon class="ws-mat-green-text" svgIcon="verified"></mat-icon>
+                          </div>
+                        </div>
+                        <div *ngIf="!isMobileVerified" class="flex flex-1">
+                          <button *ngIf="!otpSend" mat-raised-button type="button" (click)="sendOtp()"
+                            class="text-white btn-success btn-responsive" [disabled]="createUserForm?.mobile?.invalid">
+                            <a class="text-white" i18n>
+                              Send OTP
+                            </a>
+                          </button>
+                          <div *ngIf="otpSend" class="flex flex-1 flex-column">
+                            <div class="flex flex-1 flex-row">
+                              <mat-form-field appearance="outline" class="margin-top-xs flex-expand w-minus-w50">
+                                <input class="margin-bottom-m margin-top-m" id="mobileNumber" #otp type="number"
+                                  matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input">
+                                <mat-hint *ngIf="timeLeftforOTP > 0 ">
+                                  <span>Resend OTP after {{timeLeftforOTP | pipeDurationTransform: 'hms2M'}}</span>
+                                </mat-hint>
+                                <mat-hint *ngIf="timeLeftforOTP <= 0 ">
+                                  <span class="cursor-pointer ws-mat-default-text" (click)="resendOTP()">Resend OTP</span>
+                                </mat-hint>
+                              </mat-form-field>
+                              <button mat-raised-button type="button" (click)="verifyOtp(otp)"
+                                class="text-white btn-success btn-responsive margin-top-s otp"
+                                [disabled]="createUserForm?.mobile?.invalid">
+                                <span class="text-white" i18n>
+                                  Verify OTP
+                                </span>
+                              </button>
+                            </div>
+
+
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="input-wrapper margin-top-s" *ngIf="!isForcedUpdate">
@@ -804,8 +842,7 @@
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <mat-select #designation formControlName="designation" i18n-placeholder placeholder="--Select--"
                         (selectionChange)="otherDropDownChange(designation.value, 'designation')">
-                        <mat-option [value]="designation.name"
-                          *ngFor="let designation of designationsMeta">
+                        <mat-option [value]="designation.name" *ngFor="let designation of designationsMeta">
                           {{designation.name}}
                         </mat-option>
                         <mat-option [value]="'Other'">Other</mat-option>
@@ -1056,10 +1093,10 @@
           </div>
         </mat-tab>
         <!-- <mat-tab label="Certification & Skills" *ngIf="!isForcedUpdate"> -->
-          <!-- <ng-template mat-tab-label i18n>
+        <!-- <ng-template mat-tab-label i18n>
             Certification & Skills
           </ng-template> -->
-          <!-- <div class="margin-top-xl new-mobile">
+        <!-- <div class="margin-top-xl new-mobile">
             <div class="flex flex-wrap mobile-break">
               <div class="w-full profile-cols-full bg-grey">
                 <div class="flex flex-column flex-wrap section-input-single">
@@ -1074,11 +1111,11 @@
                         [matAutosizeMinRows]="4" formControlName="skillAquiredDesc"
                         placeholder="Skills acquired or courses completed" i18n-placeholder
                         #skillAquiredDesc></textarea> -->
-                      <!-- <mat-hint align="end">{{ skillAquiredDesc.value.length }} /200 characters</mat-hint>
+        <!-- <mat-hint align="end">{{ skillAquiredDesc.value.length }} /200 characters</mat-hint>
                       <mat-error i18n>
                         You have exceeded 200 characters.
                       </mat-error> -->
-                    <!-- </mat-form-field>
+        <!-- </mat-form-field>
                   </div>
                   <p class="heading">Provide Certification Details</p>
                   <div class="item">
@@ -1090,14 +1127,14 @@
                       <textarea id="certDetail" matInput [matTextareaAutosize] [matAutosizeMaxRows]="10"
                         [matAutosizeMinRows]="4" formControlName="certificationDesc"
                         placeholder="Provide certification details" i18n-placeholder #certificationDesc></textarea> -->
-                      <!-- <mat-hint align="end">{{ certificationDesc.value.length }} /200 characters</mat-hint>
+        <!-- <mat-hint align="end">{{ certificationDesc.value.length }} /200 characters</mat-hint>
                       <mat-error i18n>
                         You have exceeded 200 characters.
                       </mat-error> -->
-                    <!-- </mat-form-field>
+        <!-- </mat-form-field>
                   </div>
                 </div> -->
-              <!-- </div>
+        <!-- </div>
               <div class="w-full profile-cols-full bg-grey">
                 <div class="flex flex-column flex-wrap section-input-single">
                   <p class="heading">Professional Interests</p>

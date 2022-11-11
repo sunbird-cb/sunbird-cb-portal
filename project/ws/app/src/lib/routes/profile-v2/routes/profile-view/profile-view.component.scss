@@ -11,10 +11,15 @@
   text-align: center;
 }
 
+.verified {
+  margin-left: $size-xs;
+  margin-top:#{$size-xs / 4}
+}
+
 .container-balanced {
   max-width: 1202px;
-  margin-left: auto!important;
-  margin-right: auto!important;
+  margin-left: auto !important;
+  margin-right: auto !important;
   height: auto;
   min-height: 400px;
 }
@@ -80,6 +85,7 @@
 .responsive_icon {
   display: none;
 }
+
 @media (min-width:320px) and (max-width:992px) {
   .responsive_icon {
     display: block;
@@ -88,15 +94,16 @@
 
 .sidenav_inner {
   width: 260px;
-  background-color: transparent!important;
-  border-right: 0!important;
+  background-color: transparent !important;
+  border-right: 0 !important;
 
   @include breakpoint-xs {
-    background-color: #fff!important;
+    background-color: #fff !important;
     // border-right: 1px solid !important;
   }
+
   @include breakpoint-s {
-    background-color: #fff!important;
+    background-color: #fff !important;
     // border-right: 1px solid !important;
   }
 
@@ -130,12 +137,12 @@
   .filter_outer_box {
     width: 100%;
     overflow-x: scroll;
-    margin: 0!important;
-    display: none!important;
+    margin: 0 !important;
+    display: none !important;
 
     .filter {
       width: 480px;
-  }
+    }
 
   }
 }
@@ -288,7 +295,7 @@ a:not([href]):not([tabindex]) {
 }
 
 .discussion-card {
-  padding:16px 8px;
+  padding: 16px 8px;
   box-sizing: border-box;
 }
 
@@ -318,6 +325,7 @@ a:not([href]):not([tabindex]) {
   @include breakpoint-xs {
     margin: 0 8px;
   }
+
   @include breakpoint-s {
     margin: 0 8px;
   }
