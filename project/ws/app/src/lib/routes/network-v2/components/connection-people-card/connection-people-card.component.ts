@@ -48,7 +48,7 @@ export class ConnectionPeopleCardComponent implements OnInit {
   }
 
   getUseravatarName() {
-      // if (this.user) {
+    // if (this.user) {
     //   return `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
     // }
     // return ''
@@ -95,7 +95,7 @@ export class ConnectionPeopleCardComponent implements OnInit {
   }
 
   goToUserProfile(user: any) {
-    this.router.navigate(['/app/person-profile', (user.userId || user.id || user.wid)])
+    this.router.navigate(['/app/person-profile', (user.userId || user.id || user.wid)], { fragment: 'profileInfo' })
     // this.router.navigate(['/app/person-profile'], { queryParams: { emailId: } })
   }
 

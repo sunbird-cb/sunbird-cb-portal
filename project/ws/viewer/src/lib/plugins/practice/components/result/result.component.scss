@@ -37,6 +37,7 @@
 }
 .result_image_box {
     overflow: hidden;
+    height: 600px;
 }
 .result_image {
     width: 100%;
@@ -152,6 +153,7 @@
 
 .result_box {
     padding: $size-xl;
+    margin-bottom:1.5rem;
 }
 
 .result_main {
