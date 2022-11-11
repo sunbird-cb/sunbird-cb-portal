@@ -34,6 +34,7 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
   public afterSubmitAction = this.checkAfterSubmit.bind(this)
   isReadOnly = false
   progressStatus: any
+  identifierId: any
 
   constructor(private activatedRoute: ActivatedRoute, private eventSvc: EventService, private viewerSvc: ViewerUtilService,
               private snackBar: MatSnackBar) {
@@ -95,8 +96,8 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
     const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
       this.activatedRoute.snapshot.queryParams.batchId : ''
     // tslint:disable-next-line:max-line-length
-    const id = this.activatedRoute.snapshot.data.content ? this.activatedRoute.snapshot.data.content.data.identifier : this.widgetData.identifier
-    this.viewerSvc.realTimeProgressUpdateQuiz(id, collectionId, batchId, status)
+    this.identifierId = this.activatedRoute.snapshot.data.content ? this.activatedRoute.snapshot.data.content.data.identifier : this.widgetData.identifier
+    this.viewerSvc.realTimeProgressUpdateQuiz(this.identifierId, collectionId, batchId, status)
   }
 
   // fireRealTimeProgress(id: string) {
