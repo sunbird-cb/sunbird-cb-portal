@@ -47,6 +47,7 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
     this.progressStatus = this.widgetData.progressStatus
     const sID = this.widgetData.surveyUrl.split('surveys/')
     this.surveyId = sID[1]
+    this.identifier = this.activatedRoute.snapshot.data.content.data.identifier
     this.apiData = {
       // tslint:disable-next-line:prefer-template
       getAPI: '/apis/proxies/v8/forms/getFormById?id=' + this.surveyId,
