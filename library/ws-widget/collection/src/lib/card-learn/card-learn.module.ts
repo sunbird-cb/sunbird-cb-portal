@@ -8,6 +8,7 @@ import { TourModule } from '../_common/tour-guide/tour-guide.module'
 import { UserImageModule } from '../_common/user-image/user-image.module'
 import { CardLearnComponent } from '././card-learn.component'
 import { ChallengeModule } from '../challenge/challenge.module'
+import { RouterModule } from '@angular/router'
 
 @NgModule({
   declarations: [CardLearnComponent],
@@ -24,6 +25,7 @@ import { ChallengeModule } from '../challenge/challenge.module'
     ActivityCardModule,
     TourModule,
     ChallengeModule,
+    RouterModule,
   ],
   entryComponents: [CardLearnComponent],
   schemas: [NO_ERRORS_SCHEMA],

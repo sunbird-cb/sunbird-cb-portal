@@ -1,0 +1,43 @@
+<ws-widget-btn-page-back [widgetData]="{ url: 'home',titles: title  }">
+</ws-widget-btn-page-back>
+<div class="container-balanced min-height">
+    <mat-sidenav-container name="discuss-menu" class="min-height">
+        <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0 sidenav-align">
+            <ws-app-curated-left-menu [unseen]="" [tabsData]="menuItems" (currentTab)="onTabLeftMenu($event)">
+            </ws-app-curated-left-menu>
+        </mat-sidenav>
+        <mat-sidenav-content class="sidenav-align-cont">
+            <div *ngIf="screenSizeIsLtMedium">
+                <button type="button" mat-icon-button (click)="sideNavBarOpened = !sideNavBarOpened"
+                    id="ws-auth-root-home-btn-menu" name="ws-auth-root-home-btn-menu">
+                    <mat-icon>menu</mat-icon>
+                </button>
+            </div>
+            <!-- <div class="flex flex-4">
+                <ws-widget-breadcrumbs-org (currentSelection)="getTab($event)"[widgetData]="{titles: tempArr, data: currentObj,  tab: currentTab1}" *ngIf="currentObj">
+                </ws-widget-breadcrumbs-org>
+            </div> -->
+            <div class="p-5">
+                <h2 *ngIf="currentCollectionHierarchy?.length>0">CBPs</h2>
+                <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
+                    <mat-spinner [diameter]="30"></mat-spinner>
+                </div>
+                <div class="flex flex-1">
+    
+                    <div class="margin-left-xll mb-1-imp flex flex-wrap">
+                        <div *ngFor="let c of currentCollectionHierarchy" class="mb-8">
+                            <ws-widget-card-content *ngIf="c" [widgetData]="{
+                                content: c,
+                                stateData: stateData
+                              }"></ws-widget-card-content>
+                        </div>
+                    </div>
+                </div>
+                <h4 *ngIf="currentCollectionHierarchy?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
+                    No CBPs under this collection! 
+                 </h4>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+
+</div>
