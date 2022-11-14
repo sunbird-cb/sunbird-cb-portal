@@ -47,7 +47,7 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
     this.progressStatus = this.widgetData.progressStatus
     const sID = this.widgetData.surveyUrl.split('surveys/')
     this.surveyId = sID[1]
-    this.identifier = this.activatedRoute.snapshot.data.content.data.identifier
+    this.identifierId = this.activatedRoute.snapshot.data.content.data.identifier
     this.apiData = {
       // tslint:disable-next-line:prefer-template
       getAPI: '/apis/proxies/v8/forms/getFormById?id=' + this.surveyId,
@@ -97,8 +97,8 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
     const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
       this.activatedRoute.snapshot.queryParams.batchId : ''
     // tslint:disable-next-line:max-line-length
-    this.identifierId = this.activatedRoute.snapshot.data.content ? this.activatedRoute.snapshot.data.content.data.identifier : this.widgetData.identifier
-    this.viewerSvc.realTimeProgressUpdateQuiz(this.identifierId, collectionId, batchId, status)
+    const id = this.activatedRoute.snapshot.data.content ? this.activatedRoute.snapshot.data.content.data.identifier : this.widgetData.identifier
+    this.viewerSvc.realTimeProgressUpdateQuiz(id, collectionId, batchId, status)
   }
 
   // fireRealTimeProgress(id: string) {
