@@ -1,0 +1,10 @@
+<mat-nav-list class="margin-left-xs margin-right-s margin-top-m" aria-label="collection menu">
+    <ng-container *ngFor="let tab of tabsData">
+      <a mat-list-item *ngIf="tab?.enabled" matRipple active routerLinkActive="ws-active-discuss-route" i18n-aria-label
+        [routerLink]="tab.routerLink" (click)="onChangeTab(tab)">
+        <!-- <mat-icon>account_circle</mat-icon> -->
+        <span class="padding-left-xs text-elipse">{{tab?.name}}</span>
+      </a>
+    </ng-container>
+  </mat-nav-list>
+  
