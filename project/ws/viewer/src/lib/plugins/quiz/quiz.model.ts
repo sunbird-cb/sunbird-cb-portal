@@ -16,6 +16,7 @@ export namespace NSQuiz {
     question: string
     questionId: string
     options: IOption[]
+    editorState?: any[],
     questionType?: TQuizQuestionType
   }
 
