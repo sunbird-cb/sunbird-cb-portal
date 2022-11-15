@@ -26,7 +26,7 @@ export class CuratedHomeComponent implements OnInit {
   private unsubscribe = new Subject<void>()
   titles = [
     { title: 'Learn', url: '/page/learn', icon: 'school' },
-    { title: 'Curated collection home', url: 'none', icon: '' },
+    { title: 'Curated collections', url: 'none', icon: '' },
   ]
   searchReq: any
   searchReqDefault = {
