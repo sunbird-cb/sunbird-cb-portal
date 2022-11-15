@@ -26,6 +26,7 @@ export const environment: IEnvironment = {
   certificateassets: (window as { [key: string]: any })['env']['certificateassets'] || '',
   assessmentBuffer: (window as { [key: string]: any })['env']['assessmentBuffer'] || 0,
   staticHomePageUrl: (window as { [key: string]: any })['env']['staticHomePageUrl'] || '',
+  resendOTPTIme: (window as { [key: string]: any })['env']['resendOTPTIme'] || 120,
 }
 interface IEnvironment {
   name: string,
@@ -47,6 +48,7 @@ interface IEnvironment {
   certificateassets?: string,
   assessmentBuffer: number,
   staticHomePageUrl: string
+  resendOTPTIme: number
 }
 
 /*
