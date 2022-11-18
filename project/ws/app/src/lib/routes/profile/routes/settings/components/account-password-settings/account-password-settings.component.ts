@@ -5,7 +5,7 @@ import { SettingsService } from '../../settings.service'
 import { MatSnackBar } from '@angular/material'
 
 @Component({
-  selector: 'ws-app-notification-settings',
+  selector: 'ws-app-account-password-settings',
   templateUrl: './account-password-settings.component.html',
   styleUrls: ['./account-password-settings.component.scss'],
 })
