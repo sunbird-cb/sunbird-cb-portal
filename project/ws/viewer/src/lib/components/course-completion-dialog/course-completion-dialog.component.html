@@ -22,6 +22,11 @@
     <span>You have completed the course successfully. Please check back in some time to view your
       certificate of completion.</span>
   </mat-card-content>
+
+  <mat-card-content class="px-5">
+    <span>Please <span class="ws-mat-default-text cursor-pointer" (click)="openFeedbackDialog()" [mat-dialog-close]="true" i18n><b>rate</b></span> this course</span>
+  </mat-card-content>
+
   <mat-divider inset></mat-divider>
   <mat-card-actions class="flex flex-row-reverse">
     <button mat-button  type="button"

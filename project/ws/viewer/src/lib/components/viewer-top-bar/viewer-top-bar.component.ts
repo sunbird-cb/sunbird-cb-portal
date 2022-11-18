@@ -44,6 +44,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   identifier: any
   batchId: any
   leafNodesCount: any
+  userid: any
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -189,6 +190,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
         let userId
         if (this.configSvc.userProfile) {
           userId = this.configSvc.userProfile.userId || ''
+          this.userid = this.configSvc.userProfile.userId || ''
         }
         const req  = {
           request: {
@@ -209,7 +211,12 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
             if (ipStatusCount.length === 0) {
               const dialogRef = this.dialog.open(CourseCompletionDialogComponent, {
                 autoFocus: false,
-                data: { courseName: this.activatedRoute.snapshot.queryParams.courseName },
+                data: {
+                  courseName: this.activatedRoute.snapshot.queryParams.courseName,
+                  userId: this.userid,
+                  identifier: this.identifier,
+                  primaryCategory: this.collectionType,
+                },
               })
               dialogRef.afterClosed().subscribe(result => {
                 if (result === true) {
