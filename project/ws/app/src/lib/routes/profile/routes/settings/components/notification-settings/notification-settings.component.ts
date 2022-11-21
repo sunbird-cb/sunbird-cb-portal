@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { NsSettings } from '../../settings.model'
 import { TFetchStatus } from '@sunbird-cb/utils'
 import { SettingsService } from '../../settings.service'
@@ -17,8 +17,12 @@ export class NotificationSettingsComponent implements OnInit {
   notificationPref!: NsSettings.INotificationPreferenceResponse
   notificationPrefList: NsSettings.INotificationPreference[] = []
   notificationsFetchStatus: TFetchStatus = 'none'
+  savePrefInprogress = false
   notificationsUpdateStatus: TFetchStatus = 'none'
-  userPreference: any
+  userPreference: any = {}
+  disableBtn = false
+  @ViewChild('toastSuccess', { static: true }) toastSuccess!: ElementRef<any>
+  @ViewChild('toastError', { static: true }) toastError!: ElementRef<any>
   constructor(
     private snackBar: MatSnackBar,
     private settingsSvc: SettingsService,
@@ -42,10 +46,7 @@ export class NotificationSettingsComponent implements OnInit {
             return n
           })
           this.fetchUserNotificationPref()
-          console.log('this.notificationPref', this.notificationPref)
-        }
-        // this.notificationSettings = data
-        
+        }        
       },
       _ => {
         this.notificationsFetchStatus = 'error'
@@ -58,59 +59,13 @@ export class NotificationSettingsComponent implements OnInit {
     this.settingsSvc.fetchUserNotificationPreference().subscribe(
       data => {
         this.notificationsFetchStatus = 'done'
-        console.log('user pref data::', data)
-        this.userPreference = _.get(data, 'result.notificationPreference')
-        // if (value) {
-        //   this.notificationPref = JSON.parse(value)
-        //   this.notificationPrefList = this.notificationPref.notificationPreferenceList || []
-        //   this.notificationPrefList = this.notificationPrefList.map(n => {
-        //     n.status = true
-        //     return n
-        //   })
-        //   console.log('this.notificationPref', this.notificationPref)
-        // }
-        // // this.notificationSettings = data
+        this.userPreference = _.get(data, 'result.notification_preference') || {}
         this.updateNotificationPref()
       },
       _ => {
-        this.mockData()
-        // this.notificationsFetchStatus = 'error'
+        this.notificationsFetchStatus = 'error'
       },
     )
-  }
-
-  mockData() {
-    this.notificationsFetchStatus = 'done'
-        const data = {
-          "id": "user.v1.notification.preference",
-          "ver": "1.0",
-          "ts": "2022-09-13 00:21:28:536+0000",
-          "params": {
-              "resmsgid": "00f176f1b7670185d56b3e624a579614",
-              "msgid": "00f176f1b7670185d56b3e624a579614",
-              "err": null,
-              "status": "SUCCESS",
-              "errmsg": null
-          },
-          "responseCode": "OK",
-          "result": {
-              "notificationPreference": {
-                "incompleteCourseReminder" : false,
-                // "networkRecommendation": false,
-                // "networkInvitation": true,
-                // "networkAccepted" : true,
-                // "ownTopicReplied" : true,
-                // "commentAddedOnMonitoringTopic": false,
-                // "replyAddedOnMonitoringTopic": false,
-                // "newJobPost": false,
-                // "competencyRecommendation": false,
-                // "newCoursePublishedOnInterestedTopic": false
-              }
-            }
-        }
-      
-        this.userPreference = _.get(data, 'result.notificationPreference')
-        this.updateNotificationPref()
   }
 
   updateStatus(notificationPref: NsSettings.INotificationPreference) {
@@ -122,26 +77,33 @@ export class NotificationSettingsComponent implements OnInit {
           this.userPreference[notificationPref.id] = this.notificationPrefList[i].status
       }
     })
-    console.log('this.notificationPrefList : ', this.notificationPrefList)
-    console.log('this.userPreference : ', this.userPreference)
   }
 
   submitUserPref() {
+    this.savePrefInprogress = true
+    this.disableBtn = true
     const req = {
       'request': this.userPreference
     }
-    console.log('req:', req)
     this.settingsSvc.updateUserNotificationPreference(req).subscribe(
-      data => {
-        console.log('data : ', data)
-        
+      _data => {
+        this.savePrefInprogress = false
+        this.disableBtn = false
+        this.openSnackbar(this.toastSuccess.nativeElement.value)
       },
       _ => {
-        // this.notificationsFetchStatus = 'error'
+        this.savePrefInprogress = false
+        this.disableBtn = false
+        this.openSnackbar(this.toastError.nativeElement.value)
       },
     )
   }
 
+  private openSnackbar(primaryMsg: string, duration: number = 5000) {
+    this.snackBar.open(primaryMsg, 'X', {
+      duration,
+    })
+  }
 
   updateNotificationPref() {
     if(this.notificationPrefList && this.notificationPrefList.length) {

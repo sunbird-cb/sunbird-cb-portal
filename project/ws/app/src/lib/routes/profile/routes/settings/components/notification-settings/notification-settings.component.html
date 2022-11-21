@@ -23,9 +23,12 @@
         </div>
       </ng-container>
       <ng-container>
-        <div class="mt-10 text-right">
+        <div class="mt-10 flex justify-end">
+          <ng-container *ngIf="savePrefInprogress">
+            <mat-spinner [diameter]="30" [strokeWidth]="3" class="mr-3"></mat-spinner>
+          </ng-container>
           <button mat-stroked-button type="submit" class="text-white ws-mat-primary-background flex-auto-display"
-              (click)="submitUserPref()">
+              (click)="submitUserPref()" [disabled]="disableBtn">
               <span class="text-white" i18n>Save preferences</span>
           </button>
         </div>
@@ -34,5 +37,7 @@
   </div>
 </div>
 
-<input type="hidden" i18n-value value="Settings Updated" #successUpdating />
-<input type="hidden" i18n-value value="Error in updating" #errorUpdating />
+<input type="hidden" i18-value i18-aria-value aria-value="Notification preferences saved successfully!"
+    value="Notification preferences saved successfully!" #toastSuccess />
+<input type="hidden" i18-value i18-aria-value aria-value="Unable to save notification preferences, please try again later!"
+    value="Unable to save notification preferences, please try again later!" #toastError />
