@@ -27,6 +27,7 @@ import { LoaderService } from '@ws/author/src/public-api'
 /* tslint:disable */
 import _ from 'lodash'
 import { OtpService } from '../../services/otp.services';
+import { environment } from 'src/environments/environment';
 /* tslint:enable */
 
 export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
@@ -107,7 +108,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   unApprovedField!: any[]
   changedProperties: any = {}
   otpSend = false
-  OTP_TIMER = 15
+  OTP_TIMER = environment.resendOTPTIme
   timerSubscription: Subscription | null = null
   timeLeftforOTP = 0
   isMobileVerified = false

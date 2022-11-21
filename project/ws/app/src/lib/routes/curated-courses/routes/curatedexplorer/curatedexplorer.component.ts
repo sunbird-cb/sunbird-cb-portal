@@ -17,7 +17,7 @@ export class CuratedexplorerComponent implements OnInit, OnDestroy {
   public screenSizeIsLtMedium = false
   title: any[] = [
     { title: 'Learn', url: '/page/learn', icon: 'school' },
-    { title: ('Curated collection home') , url: '/app/curatedCollections/home', icon: '' }
+    { title: ('Curated collections') , url: '/app/curatedCollections/home', icon: '' }
   ]
   currentCollectionId: any
   currentCollection: any
@@ -130,7 +130,7 @@ export class CuratedexplorerComponent implements OnInit, OnDestroy {
   updateBreadcrumbTitle() {
     this.title = [
       { title: 'Learn', url: '/page/learn', icon: 'school' },
-      { title: ('Curated collection home') , url: '/app/curatedCollections/home', icon: '' },
+      { title: ('Curated collections') , url: '/app/curatedCollections/home', icon: '' },
       { title: `${_.get(this.currentCollection, 'name') || ''}` , url: 'none', icon: '' }
     ]
   }
