@@ -221,6 +221,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     this.fetchBasedOnInterest(strip, calculateParentStatus)
     this.fetchMicrosoftCourses(strip, calculateParentStatus)
     this.fetchDAKSHTACourses(strip, calculateParentStatus)
+    this.fetchprarambhCourse(strip, calculateParentStatus)
   }
   fetchFromApi(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.api && Object.keys(strip.request.api).length) {
@@ -841,6 +842,53 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     }
   }
 
+  fetchprarambhCourse(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
+    if (strip.request && strip.request.prarambhCourse && Object.keys(strip.request.prarambhCourse).length) {
+      if (!(strip.request.prarambhCourse.locale && strip.request.prarambhCourse.locale.length > 0)) {
+        if (this.configSvc.activeLocale) {
+          strip.request.prarambhCourse.locale = [this.configSvc.activeLocale.locals[0]]
+        } else {
+          strip.request.prarambhCourse.locale = ['en']
+        }
+      }
+      this.contentSvc.searchV6(strip.request && strip.request.prarambhCourse).subscribe(
+        results => {
+          // const showViewMore = Boolean(
+          //   results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
+          // )
+          const showViewMore = false
+          const viewMoreUrl = showViewMore
+            ? {
+              path: '/app/search/learning',
+              queryParams: {
+                q: strip.request && strip.request.prarambhCourse && strip.request.prarambhCourse.query,
+                f:
+                  strip.request && strip.request.prarambhCourse && strip.request.prarambhCourse.filters
+                    ? JSON.stringify(
+                      // this.searchServSvc.transformSearchV6Filters(
+                      strip.request.prarambhCourse.filters
+                      // ),
+                    )
+                    : {},
+              },
+            }
+            : null
+          this.processStrip(
+            strip,
+            this.transformContentsToWidgets(results.result.content, strip),
+            'done',
+            calculateParentStatus,
+            viewMoreUrl,
+          )
+        },
+        () => {
+          this.processStrip(strip, [], 'error', calculateParentStatus, null)
+        },
+      )
+    }
+  }
+
+
   private transformContentsToWidgets(
     contents: NsContent.IContent[],
     strip: NsContentStripMultiple.IContentStripUnit,
@@ -991,7 +1039,8 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         (strip.request.mandatoryCourses && Object.keys(strip.request.mandatoryCourses).length) ||
         (strip.request.basedOnInterest && Object.keys(strip.request.basedOnInterest).length) ||
         (strip.request.microsoftCourses && Object.keys(strip.request.microsoftCourses).length) ||
-        (strip.request.DAKSHTACourses && Object.keys(strip.request.DAKSHTACourses).length)
+        (strip.request.DAKSHTACourses && Object.keys(strip.request.DAKSHTACourses).length) ||
+        (strip.request.prarambhCourse && Object.keys(strip.request.prarambhCourse).length)
       )
     ) {
       return true
