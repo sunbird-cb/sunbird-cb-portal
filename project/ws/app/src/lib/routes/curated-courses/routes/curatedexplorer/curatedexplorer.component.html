@@ -17,7 +17,11 @@
                 <ws-widget-breadcrumbs-org (currentSelection)="getTab($event)"[widgetData]="{titles: tempArr, data: currentObj,  tab: currentTab1}" *ngIf="currentObj">
                 </ws-widget-breadcrumbs-org>
             </div> -->
-            <div class="p-5">
+            <div class="p-5 pt-8">
+                <ng-container>
+                    <!-- <h2>{{currentCollection?.name}}</h2> -->
+                    <p class="mat-body-1 ws-mat-black60-text mb-3" *ngIf="currentCollection?.description">{{currentCollection?.description}}</p>
+                </ng-container>
                 <h2 *ngIf="currentCollectionHierarchy?.length>0">CBPs</h2>
                 <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
                     <mat-spinner [diameter]="30"></mat-spinner>

@@ -4,6 +4,7 @@
 : !((widgetData?.intranetMode || 'none') === 'hide' && !!showIntranetContent))"
   [ngSwitch]="( (widgetData && widgetData?.cardSubType) || 'cardStandard')">
   <ng-container *ngSwitchCase="'minimal'" [ngTemplateOutlet]="cardMinimal"></ng-container>
+  <ng-container *ngSwitchCase="'minimalV2'" [ngTemplateOutlet]="cardMinimalV2"></ng-container>
   <ng-container *ngSwitchCase="'space-saving'" [ngTemplateOutlet]="cardSpaceSaving"></ng-container>
   <ng-container *ngSwitchCase="'basic-info'" [ngTemplateOutlet]="cardBasicInformation"></ng-container>
   <!-- <ng-container *ngSwitchCase="'card-user-details'" [ngTemplateOutlet]="cardWithUserDetails"></ng-container> -->
@@ -75,6 +76,87 @@
       </ws-widget-content-progress>
       </ng-container> -->
 
+    </div>
+  </div>
+</ng-template>
+<ng-template #cardMinimalV2>
+  <div [attr.name]="'widget-card-content ' + widgetData.content.name" class="card-minimal-container mr-6" [ngClass]="{
+      greyOut:
+        widgetData.deletedMode === 'greyOut' && !isLiveOrMarkForDeletion
+          ? true
+          : widgetData?.intranetMode === 'greyOut' && showIntranetContent
+    }" (click)="(showIntranetContent || !isLiveOrMarkForDeletion) && showSnackbar()">
+    <div class="display-contents" [ngClass]="{
+        disableClick:
+          widgetData.deletedMode === 'greyOut' && !isLiveOrMarkForDeletion
+            ? true
+            : widgetData?.intranetMode === 'greyOut' && showIntranetContent
+      }">
+      <div class="status-danger" role="note" i18n-aria-label aria-label="Content expired or deleted" i18n-matTooltip
+        matTooltip="Content may be expired or deleted" *ngIf="!isLiveOrMarkForDeletion"></div>
+      <a (click)="raiseTelemetry(); $event.stopPropagation()" 
+      [routerLink]="widgetData.linkUrl ? widgetData.linkUrl : (widgetData.content | pipeContentRoute).url"
+      [queryParams]="(widgetData.content | pipeContentRoute).queryParams" class="card-link" role="link"
+      aria-label="Content" i18n-aria-label="Content | Click to view">
+        <ng-container *ngIf="widgetData?.linkUrl">
+          <!-- <a (click)="raiseTelemetry(); $event.stopPropagation()" [routerLink]="widgetData?.linkUrl"
+            [queryParams]="(widgetData.content | pipeContentRoute).queryParams" class="card-link" role="link"
+            aria-label="Content" i18n-aria-label="Content | Click to view"> -->
+              <ng-container *ngIf="widgetData.content.posterImage">
+                <img [src]="widgetData.content.posterImage | pipePublicURL" loading="lazy"
+                class="card-thumbnail ws-mat-primary-lite-background"
+                [alt]="widgetData.content.name" />
+              </ng-container>
+              <ng-container *ngIf="!widgetData.content.posterImage">
+                <ng-container *ngIf="widgetData.content.appIcon; else defaultImg">
+                  <img [src]="widgetData.content.appIcon | pipePublicURL" loading="lazy"
+                  class="card-thumbnail ws-mat-primary-lite-background"  [wsUtilsDefaultThumbnail]="defaultThumbnail"
+                  [alt]="widgetData.content.name" />
+                </ng-container>
+                <ng-template #defaultImg>
+                  <img [src]="defaultThumbnail" loading="lazy"
+                  class="card-thumbnail ws-mat-primary-lite-background"
+                  [alt]="widgetData.content.name" />
+                </ng-template>
+              </ng-container>
+          <!-- </a> -->
+        </ng-container>
+        <ng-container *ngIf="!widgetData?.linkUrl">
+          <!-- <a (click)="raiseTelemetry(); $event.stopPropagation()" [routerLink]="(widgetData.content | pipeContentRoute).url"
+            [queryParams]="(widgetData.content | pipeContentRoute).queryParams" class="card-link" role="link"
+            aria-label="Content" i18n-aria-label="Content | Click to view"> -->
+            <img [src]="widgetData.content.posterImage | pipePublicURL" class="card-thumbnail ws-mat-primary-lite-background"
+              [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
+              [title]="widgetData.content.name" />
+          <!-- </a> -->
+        </ng-container>
+        <div class="card-overlay">
+          <h3 *ngIf="widgetData.content.name" class="text-truncate card-title">
+            <!-- <a (click)="raiseTelemetry(); $event.stopPropagation()" [routerLink]="(widgetData.content | pipeContentRoute).url"
+              [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link"> -->
+              {{ widgetData.content.name }}
+            <!-- </a> -->
+
+          </h3>
+          <div class="mat-body-2 ws-mat-white-text description-text mt-2 text-truncate">
+            {{ widgetData.content.description | pipeHtmlTagRemoval }}
+          </div>
+          <!-- <div class="flex justify-between items-center">
+            <div>
+              <ws-widget-display-content-type i18n-title title="Content Type"
+                *ngIf="widgetData.content?.displayContentType" class="mr-4 font-normal"
+                [displayContentType]="widgetData.content?.displayContentType">
+              </ws-widget-display-content-type>
+              <span *ngIf="widgetData.content.duration" i18n-title title="Duration">
+                {{ widgetData.content.duration | pipeDurationTransform: 'hms' }}
+              </span>
+            </div>
+            <button mat-icon-button i18n-aria-label aria-label="action items" [matMenuTriggerFor]="cardMenu">
+              <mat-icon>more_vertical</mat-icon>
+            </button>
+          </div> -->
+        </div>
+      </a>
     </div>
   </div>
 </ng-template>
