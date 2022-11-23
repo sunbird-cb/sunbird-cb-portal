@@ -15,8 +15,8 @@ import _ from 'lodash'
 export class CuratedHomeComponent implements OnInit {
   public displayLoader!: Observable<boolean>
   page = 1
-  defaultLimit = 20
-  limit = 20
+  defaultLimit = 50
+  limit = 50
   searchForm: FormGroup | undefined
   sortBy: any
   searchQuery = ''
