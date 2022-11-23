@@ -16,7 +16,6 @@
         </div>
     </div>
 
-        <!--===========  All competencies section ============= -->
         <div class="all_provider_box">
             <h2 class="mat-h1 margin-bottom-m inline-block "> Curated collections </h2>
             <div class="all_provider_inner">
@@ -52,22 +51,26 @@
                         </div> -->
                     </div> <!-- search box and dropdown end -->
                 </form>
-               
     
-                <mat-sidenav-container>
-                    <!-- search cards -->
-                    <mat-sidenav-content class="custom-sidecontent  mat-drawer-content mat-sidenav-content">
+                <!-- <mat-sidenav-container>
+                    <mat-sidenav-content class="custom-sidecontent  mat-drawer-content mat-sidenav-content"> -->
     
                         <div class="provider_card_box">
                             <ng-container *ngFor="let c of allCollections | pipeFilterV3:{ 'name': searchKey.value}">
-                                <ws-app-curated-collection-card [collection]="c"></ws-app-curated-collection-card>
+                                <!-- <ws-app-curated-collection-card [collection]="c"></ws-app-curated-collection-card> -->
+                                <ws-widget-card-content *ngIf="c" [widgetData]="{
+                                    content: c,
+                                    stateData: stateData,
+                                    cardSubType: 'minimalV2',
+                                    linkUrl: '/app/curatedCollections/'+c.identifier
+                                  }"></ws-widget-card-content>
                             </ng-container>
                             <h4 *ngIf="allCollections?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
                                 No curated collections found! 
                              </h4>
                         </div>
-                    </mat-sidenav-content>
-                </mat-sidenav-container>
+                    <!-- </mat-sidenav-content>
+                </mat-sidenav-container> -->
                 <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
                     <mat-spinner [diameter]="30"></mat-spinner>
                 </div>

@@ -38,7 +38,7 @@ export class CuratedexplorerComponent implements OnInit, OnDestroy {
       sort_by: {
         name: 'asc',
       },
-      limit: 20,
+      limit: 50,
       offset: 0,
       fields: [],
       facets: ['primaryCategory', 'mimeType'],
