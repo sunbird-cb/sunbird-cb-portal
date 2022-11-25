@@ -155,7 +155,8 @@
                 [markedQuestions]="markedQuestions" [artifactUrl]="artifactUrl"
                 [questionNumber]="currentQuestionIndex + 1" [total]="secQuestions.length" [viewState]="viewState"
                 [question]="current_Question" [itemSelectedList]="questionAnswerHash[(current_Question?.questionId)]"
-                (itemSelected)="fillSelectedItems(current_Question, $event)">
+                [primaryCategory]="primaryCategory"
+                 (itemSelected)="fillSelectedItems(current_Question, $event)">
               </viewer-question>
             </ng-container>
             <div class="flex flex-1">
@@ -165,34 +166,6 @@
                   mat-raised-button (click)="checkAns(currentQuestionIndex + 1)" i18n="button quiz correct answer">
                   Check Answer
                 </button>
-                <div *ngIf="current_Question?.questionType && showAnswer">
-                  <ng-container
-                    *ngIf="current_Question.questionType === 'mtf' || 
-                    current_Question.questionType === 'ftb' || 
-                    current_Question.questionType === 'fitb' || 
-                    current_Question.questionType === 'mcq-mca' || 
-                    current_Question.questionType === 'mcq-sca'">
-                    <table mat-table [dataSource]="matchHintDisplay" class="mat-elevation-z8">
-                      <ng-container matColumnDef="text">
-                        <th mat-header-cell *matHeaderCellDef i18n="mtf explanation Option">
-                          Option
-                        </th>
-                        <td mat-cell *matCellDef="let element">{{ element.text }}</td>
-                      </ng-container>
-                      <ng-container matColumnDef="hint">
-                        <th mat-header-cell *matHeaderCellDef i18n="mtf explanation Hint">
-                          Hint
-                        </th>
-                        <td mat-cell *matCellDef="let element" [innerHTML]="element.hint"></td>
-                      </ng-container>
-                      <tr mat-header-row *matHeaderRowDef="['text', 'hint']"></tr>
-                      <tr mat-row *matRowDef="let row; columns: ['text', 'hint']"></tr>
-                    </table>
-                  </ng-container>
-                  <!-- <ng-container *ngIf="current_Question.questionType === 'ftb'">ftb</ng-container> -->
-                  <!-- <ng-container *ngIf="current_Question.questionType === 'mcq-mca'">mcq-mca</ng-container>
-                  <ng-container *ngIf="current_Question.questionType === 'mcq-sca'">mcq-sca</ng-container> -->
-                </div>
               </ng-container>
               <div class="flex flex-1 flex-row-reverse margin-right-m butto_box end">
                 <ng-container

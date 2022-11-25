@@ -11,6 +11,7 @@ export namespace NSPractice {
     multiSelection: boolean
     instructions: string
     section: string
+    editorState?: IEditor
     question: string
     questionId: string
     options: IOption[]
