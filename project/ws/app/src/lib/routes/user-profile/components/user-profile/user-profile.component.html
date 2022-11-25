@@ -360,8 +360,9 @@
                             </mat-select>
                           </mat-form-field>
                           <mat-form-field appearance="outline" class="margin-top-xs flex-expand w-minus-w80">
-                            <input id="mobileNumber" #mobile type="number" matInput placeholder="Mobile Number"
-                              formControlName="mobile" i18n-aria-label aria-label="Mobile Number input">
+                            <input [readonly]="otpSend && !otpVerified" id="mobileNumber" #mobile type="number" matInput
+                              placeholder="Mobile Number" formControlName="mobile" i18n-aria-label
+                              aria-label="Mobile Number input">
                             <mat-error [hidden]="false" i18n="Mobile Number Error|Explains Mobile no is required"
                               *ngIf="createUserForm?.controls['mobile'].errors?.required" i18n-aria-label
                               aria-label="Mobile Number is mandatory">
@@ -376,7 +377,7 @@
                             <mat-error *ngIf="createUserForm?.controls['mobile'].errors?.pattern">Minimum 8 charactors needed.</mat-error> -->
                           </mat-form-field>
                           <div class="flex m-auto" *ngIf="isMobileVerified">
-                            <mat-icon class="ws-mat-green-text" svgIcon="verified"></mat-icon>
+                            <mat-icon class="ws-mat-green-text margin-xs" svgIcon="verified"></mat-icon>
                           </div>
                         </div>
                         <div *ngIf="!isMobileVerified" class="flex flex-1">
@@ -395,7 +396,8 @@
                                   <span>Resend OTP after {{timeLeftforOTP | pipeDurationTransform: 'hms2M'}}</span>
                                 </mat-hint>
                                 <mat-hint *ngIf="timeLeftforOTP <= 0 ">
-                                  <span class="cursor-pointer ws-mat-default-text" (click)="resendOTP()">Resend OTP</span>
+                                  <span class="cursor-pointer ws-mat-default-text" (click)="resendOTP()">Resend
+                                    OTP</span>
                                 </mat-hint>
                               </mat-form-field>
                               <button mat-raised-button type="button" (click)="verifyOtp(otp)"
