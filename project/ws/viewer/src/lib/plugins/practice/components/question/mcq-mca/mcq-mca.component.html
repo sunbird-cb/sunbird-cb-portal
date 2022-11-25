@@ -1,30 +1,30 @@
 <mat-selection-list  class="flex flex-1 flex-column app-class">
     <div [ngClass]="{
   'correct-answer':
-    (viewState === 'review' && option?.isCorrect && isSelected(option)) ||
-    (viewState === 'answer' && option?.isCorrect),
-  'incorrect-answer': viewState === 'review' && !option?.isCorrect && isSelected(option)
+    (showAns && option?.isCorrect && isSelected(option)) ||
+    (showAns && option?.isCorrect),
+  'incorrect-answer': showAns && !option?.isCorrect && isSelected(option)
 }" *ngFor="let option of question?.options">
       <mat-list-option #lo checkboxPosition="before" class="margin-top-s" [ngClass]="{
         'ws-mat-accent-border': !(lo.selected),
         'ws-mat-accent-border-active ': (lo.selected)
       }" (click)="updateParent(option.optionId)"
       [selected]="isSelected(option)">
-        <mat-error *ngIf="viewState === 'review' && !option?.isCorrect && isSelected(option)">
+        <mat-error *ngIf="showAns && !option?.isCorrect && isSelected(option)">
           {{ option?.text }}
         </mat-error>
         <div [ngClass]="{
       'correct-option':
-        (viewState === 'review' && option?.isCorrect && isSelected(option)) ||
-        (viewState === 'answer' && option?.isCorrect)
-    }" [hidden]="viewState === 'review' && !option?.isCorrect && isSelected(option)">
+        (showAns && option?.isCorrect && isSelected(option)) ||
+        (showAns && option?.isCorrect)
+    }" [hidden]="showAns && !option?.isCorrect && isSelected(option)">
           <!-- {{option?.text}} -->
           <div class="no-margin-p" [innerHTML]="option?.text"></div>
         </div>
       </mat-list-option>
       <div class="background-well padding-left-m padding-xs"
-        *ngIf="viewState === 'review' && isSelected(option) && option?.hint">
-        <mat-error *ngIf="viewState === 'review' && !option?.isCorrect && isSelected(option)">
+        *ngIf="showAns && isSelected(option) && option?.hint">
+        <mat-error *ngIf="showAns && !option?.isCorrect && isSelected(option)">
           <p class="margin-remove mat-body-2" i18n="option explanation label">
             Explanation
           </p>
@@ -32,9 +32,9 @@
         </mat-error>
         <div [ngClass]="{
       'correct-option':
-        (viewState === 'review' && option?.isCorrect && isSelected(option)) ||
-        (viewState === 'answer' && option?.isCorrect)
-    }" [hidden]="viewState === 'review' && !option?.isCorrect && isSelected(option)">
+        (showAns && option?.isCorrect && isSelected(option)) ||
+        (showAns && option?.isCorrect)
+    }" [hidden]="showAns && !option?.isCorrect && isSelected(option)">
           <p class="margin-remove mat-body-2" i18n="option explanation label">
             Explanation
           </p>

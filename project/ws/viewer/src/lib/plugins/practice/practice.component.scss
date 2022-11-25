@@ -4,7 +4,7 @@
 $nav-height: 40px;
 
 .overflow-y-scroll {
-  height: auto!important;
+  height: auto !important;
 }
 
 .quiz-container {
@@ -112,9 +112,11 @@ $nav-height: 40px;
   scrollbar-width: thin;
 
 }
+
 .overflow-y-scroll::-webkit-scrollbar {
   width: .4em;
 }
+
 .white-border {
   border: solid white 2px;
 }
@@ -266,4 +268,13 @@ $nav-height: 40px;
   @include breakpoint-lt-xs {
     width: 100%;
   }
+}
+.mat-cell {
+  border: 1px solid orange;
+  padding: $size-s;
+}
+
+.mat-header-cell {
+  border: 1px solid orange;
+  padding: $size-s;
 }

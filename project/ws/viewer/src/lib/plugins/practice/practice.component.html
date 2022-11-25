@@ -155,39 +155,50 @@
                 [markedQuestions]="markedQuestions" [artifactUrl]="artifactUrl"
                 [questionNumber]="currentQuestionIndex + 1" [total]="secQuestions.length" [viewState]="viewState"
                 [question]="current_Question" [itemSelectedList]="questionAnswerHash[(current_Question?.questionId)]"
-                (itemSelected)="fillSelectedItems(current_Question, $event)">
+                [primaryCategory]="primaryCategory"
+                 (itemSelected)="fillSelectedItems(current_Question, $event)">
               </viewer-question>
             </ng-container>
-            <div class="flex flex-1 flex-row-reverse margin-right-m butto_box end">
+            <div class="flex flex-1">
               <ng-container
-                *ngIf="!allSecAttempted.full && allSecAttempted.next && ((currentQuestionIndex+1) === totalQCount)">
-                <button class="text-white ws-mat-primary-background margin-xs quest_btn" mat-raised-button
-                  (click)="nextSection(allSecAttempted.next)" i18n="button quiz submit">
-                  Next Section
+                *ngIf="ePrimaryCategory.PRACTICE_RESOURCE === primaryCategory && ((currentQuestionIndex+1) <= totalQCount)">
+                <button *ngIf="!showAnswer" class="text-white ws-mat-primary-background margin-xs quest_btn"
+                  mat-raised-button (click)="checkAns(currentQuestionIndex + 1)" i18n="button quiz correct answer">
+                  Check Answer
                 </button>
               </ng-container>
-
-              <a *ngIf="(currentQuestionIndex+1) !== totalQCount"
-                class="text-white ws-mat-primary-background margin-xs quest_btn" mat-button
-                (click)="getNextQuestion(currentQuestionIndex + 1)">
-                <ng-container *ngIf="isXsmall">
-                  <mat-icon>arrow_forward</mat-icon>
+              <div class="flex flex-1 flex-row-reverse margin-right-m butto_box end">
+                <ng-container
+                  *ngIf="!allSecAttempted.full && allSecAttempted.next && ((currentQuestionIndex+1) === totalQCount)">
+                  <button class="text-white ws-mat-primary-background margin-xs quest_btn" mat-raised-button
+                    (click)="nextSection(allSecAttempted.next)" i18n="button quiz submit">
+                    Next Section
+                  </button>
                 </ng-container>
-                <ng-container *ngIf="!isXsmall">NEXT QUESTION</ng-container>
-              </a>
-              &nbsp;&nbsp;
-              <a *ngIf="currentQuestionIndex !== 0" class="ws-mat-accent-border margin-xs quest_btn" mat-button
-                (click)="getNextQuestion(currentQuestionIndex - 1)">
-                <mat-icon class="margin-right-s">arrow_back</mat-icon>
-                <ng-container *ngIf="!isXsmall">PREVIOUS</ng-container>
-              </a>
-              <!-- <ng-container *ngIf="((currentQuestionIndex+1) === totalQCount) && allSecAttempted.full">
+
+                <a *ngIf="(currentQuestionIndex+1) !== totalQCount"
+                  class="text-white ws-mat-primary-background margin-xs quest_btn" mat-button
+                  (click)="getNextQuestion(currentQuestionIndex + 1)">
+                  <ng-container *ngIf="isXsmall">
+                    <mat-icon>arrow_forward</mat-icon>
+                  </ng-container>
+                  <ng-container *ngIf="!isXsmall">NEXT QUESTION</ng-container>
+                </a>
+                &nbsp;&nbsp;
+                <a *ngIf="currentQuestionIndex !== 0" class="ws-mat-accent-border margin-xs quest_btn" mat-button
+                  (click)="getNextQuestion(currentQuestionIndex - 1)">
+                  <mat-icon class="margin-right-s">arrow_back</mat-icon>
+                  <ng-container *ngIf="!isXsmall">PREVIOUS</ng-container>
+                </a>
+                <!-- <ng-container *ngIf="((currentQuestionIndex+1) === totalQCount) && allSecAttempted.full">
                 <button *ngIf="!isSubmitted" class="text-white ws-mat-primary-background margin-xs m-auto"
                   mat-raised-button (click)="proceedToSubmit()" i18n="button quiz submit">
                   Submit
                 </button>
               </ng-container> -->
+              </div>
             </div>
+
             <ng-template *ngIf="!(current_Question && !process)" [ngTemplateOutlet]="showLoading"></ng-template>
           </ng-container>
         </mat-card>

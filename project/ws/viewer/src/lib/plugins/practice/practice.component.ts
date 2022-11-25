@@ -103,6 +103,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   process = false
   isXsmall = false
   assessmentBuffer = 0
+  showAnswer = false
+  matchHintDisplay: any[] = []
   constructor(
     private events: EventService,
     public dialog: MatDialog,
@@ -309,6 +311,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
                 questionId: q.identifier,
                 instructions: null,
                 options: this.getOptions(q),
+                editorState: q.editorState,
               })
             }
           })
@@ -355,23 +358,25 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         case 'mcq-mca':
         case 'MCQ-MCA':
         case 'MCQ':
-          _.each(question.choices.options, o => {
-            // const aHtml = document.createElement('div')
-            // aHtml.innerHTML = o.value.body
+          _.each(this.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE && question.editorState
+            // tslint:disable-next-line: align
+            ? question.editorState.options : question.choices.options, o => {
+              // const aHtml = document.createElement('div')
+              // aHtml.innerHTML = o.value.body
 
-            // const vHtml = document.createElement('div')
-            // vHtml.innerHTML = o.value.value
-            options.push({
-              optionId: o.value.value,
-              text: o.value.body || '',
-              // isCorrect: o.answer,
-              // hint: '',
-              // match: '',
-              // matchForView: '',
-              // response: '',
-              // userSelected: false,
+              // const vHtml = document.createElement('div')
+              // vHtml.innerHTML = o.value.value
+              options.push({
+                optionId: o.value.value,
+                text: o.value.body || '',
+                isCorrect: o.answer,
+                // hint: '',
+                // match: '',
+                // matchForView: '',
+                // response: '',
+                // userSelected: false,
+              })
             })
-          })
           break
         case 'ftb':
         case 'FTB':
@@ -396,18 +401,20 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           break
         case 'mtf':
         case 'MTF':
-          _.each(question.choices.options, (o, idx) => {
-            options.push({
-              // isCorrect: true,
-              optionId: o.value.value,
-              text: (o.value.body || '').toString(), // modified
-              hint: o.value.body || '',
-              response: '',
-              userSelected: false,
-              matchForView: o.value.value,
-              match: _.nth(question.rhsChoices, idx),
+          _.each(this.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE && question.editorState
+            // tslint:disable-next-line: align
+            ? question.editorState.options : question.choices.options, (o, idx) => {
+              options.push({
+                // isCorrect: true,
+                optionId: o.value.value,
+                text: (o.value.body || '').toString(), // modified
+                hint: _.get(_.nth(question.editorState && question.editorState.options, idx), 'answer') || '',
+                response: '',
+                userSelected: false,
+                matchForView: '',
+                match: _.get(_.nth(question.editorState && question.editorState.options, idx), 'answer'),
+              })
             })
-          })
           break
       }
     }
@@ -471,8 +478,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.process = false
       // tslint:disable-next-line
     }, 10)
+    this.showAnswer = false
+    this.matchHintDisplay = []
   }
-  get current_Question() {
+  get current_Question(): NSPractice.IQuestionV2 {
     return this.currentQuestion
   }
   get currentIndex() {
@@ -568,11 +577,11 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     if (typeof (optionId) === 'string') {
       this.raiseTelemetry('mark', optionId, 'click')
     } if (this.viewState === 'answer') {
-      if (this.questionsReference) {
-        this.questionsReference.forEach(questionReference => {
-          questionReference.reset()
-        })
-      }
+      // if (this.questionsReference) {
+      //   this.questionsReference.forEach(qr => {
+      //     qr.reset()
+      //   })
+      // }
     }
     this.viewState = 'attempt'
     if (
@@ -1066,6 +1075,54 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           pageIdExt: `quiz`,
           module: WsEvents.EnumTelemetrymodules.LEARN,
         })
+    }
+  }
+  checkAns(quesIdx: number) {
+    if (quesIdx > 0 && quesIdx <= this.totalQCount && this.current_Question.editorState && this.current_Question.editorState.options) {
+      this.showAnswer = true
+      this.quizSvc.shCorrectAnswer(true)
+      // switch (this.current_Question.questionType) {
+      //   case 'mcq-sca':
+      //     const correctSca = [...this.current_Question.editorState.options]
+      //     correctSca.forEach(element => {
+      //       if (element.value && element.value.body) {
+      //         this.matchHintDisplay.push({ text: element.value.body, hint: element.answer })
+      //       }
+      //     })
+      //     break
+      //   case 'mcq-mca':
+      //     const correctMca = [...this.current_Question.editorState.options]
+      //     correctMca.forEach(element => {
+      //       if (element.value && element.value.body) {
+      //         this.matchHintDisplay.push({ text: element.value.body, hint: element.answer })
+      //       }
+      //     })
+      //     break
+      //   case 'fitb':
+      //     const correctFitb = [...this.current_Question.editorState.options]
+      //     correctFitb.forEach(element => {
+      //       if (element.value && element.answer && element.value.body) {
+      //         this.matchHintDisplay.push({ text: element.value.value + 1, hint: element.value.body })
+      //       }
+      //     })
+      //     break
+      //   case 'ftb':
+      //     const correctFtb = [...this.current_Question.editorState.options]
+      //     correctFtb.forEach(element => {
+      //       if (element.value && element.answer && element.value.body) {
+      //         this.matchHintDisplay.push({ text: element.value.value + 1, hint: element.value.body })
+      //       }
+      //     })
+      //     break
+      //   case 'mtf':
+      //     const matchHintDisplayLocal = [...this.current_Question.editorState.options]
+      //     matchHintDisplayLocal.forEach(element => {
+      //       if (element.value && element.answer && element.value.body) {
+      //         this.matchHintDisplay.push({ text: element.value.body, hint: element.answer })
+      //       }
+      //     })
+      //     break
+      // }
     }
   }
   clearStorage() {
