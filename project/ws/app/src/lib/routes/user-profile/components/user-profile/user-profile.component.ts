@@ -108,6 +108,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   unApprovedField!: any[]
   changedProperties: any = {}
   otpSend = false
+  otpVerified = false
   OTP_TIMER = environment.resendOTPTIme
   timerSubscription: Subscription | null = null
   timeLeftforOTP = 0
@@ -1082,7 +1083,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const personalDetail: any = {}
     const personalDetailsFields = ['firstname', 'middlename', 'surname',
       'dob', 'nationality', 'domicileMedium', 'gender', 'maritalStatus',
-      'category', 'knownLanguages', 'countryCode', 'mobile', 'telephone',
+      'category', 'knownLanguages', 'countryCode', 'mobile', 'phoneVerified', 'telephone',
       'primaryEmail', 'officialEmail', 'personalEmail', 'postalAddress',
       'pincode', 'secondaryEmail', 'residenceAddress', 'primaryEmailType']
     const skillsFields = ['skillAquiredDesc', 'certificationDesc']
@@ -1113,7 +1114,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       }
       if (currentControl.dirty) {
         personalDetailsFields.forEach(item => {
-
+          if (item === 'phoneVerified') {
+            personalDetail[item] = this.isMobileVerified
+          }
           if (item === name) {
             switch (name) {
               case 'knownLanguages': return personalDetail['knownLanguages'] = form.value.knownLanguages
@@ -1121,9 +1124,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               case 'secondaryEmail': return personalDetail['personalEmail'] = form.value.secondaryEmail
               case 'residenceAddress': return personalDetail['postalAddress'] = form.value.residenceAddress
               case 'telephone': return personalDetail['telephone'] = `${form.value.telephone}` || ''
-
+              case 'phoneVerified': return personalDetail['phoneVerified'] = this.isMobileVerified
             }
-
             personalDetail[name] = currentControl.value
 
           }
@@ -1557,6 +1559,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.otpSend = true
         alert('OTP send to your Mobile Number')
         this.startCountDown()
+        // tslint:disable-next-line: align
+      }, (error: any) => {
+        this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
       this.snackBar.open('Please enter a valid Mobile No')
@@ -1573,7 +1578,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         }
         // tslint:disable-next-line: align
       }, (error: any) => {
-        this.snackBar.open(_.get(error, 'params.errmsg') || 'Please try again later')
+        this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
       this.snackBar.open('Please enter a valid Mobile No')
@@ -1586,6 +1591,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
         this.otpService.verifyOTP(otp.value, mob.value).subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
+            this.otpVerified = true
             const reqUpdates = {
               request: {
                 userId: this.configSvc.unMappedUser.id,
@@ -1605,7 +1611,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           }
           // tslint:disable-next-line: align
         }, (error: any) => {
-          this.snackBar.open(_.get(error, 'params.errmsg') || 'Please try again later')
+          this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
         })
       }
     }
