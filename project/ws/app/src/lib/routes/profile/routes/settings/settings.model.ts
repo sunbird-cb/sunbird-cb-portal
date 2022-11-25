@@ -23,4 +23,25 @@ export namespace NsSettings {
     mode_name: string
     status: boolean
   }
+
+  export interface INotificationPreferenceResponse {
+    defaultNotificationDuration: INotificationDuration,
+    notificationPreferenceList: INotificationPreference[]
+  }
+
+  export interface INotificationPreference {
+    displayName: string
+    helpText: string
+    id: string
+    isVisible: boolean
+    labelText: string
+    notificationDuration: INotificationDuration
+    status?: boolean
+  }
+
+  export interface INotificationDuration {
+    day: string
+    occurance: string
+    time: string
+  }
 }

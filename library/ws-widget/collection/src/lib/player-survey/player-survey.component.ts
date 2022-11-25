@@ -34,6 +34,7 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
   public afterSubmitAction = this.checkAfterSubmit.bind(this)
   isReadOnly = false
   progressStatus: any
+  identifierId: any
 
   constructor(private activatedRoute: ActivatedRoute, private eventSvc: EventService, private viewerSvc: ViewerUtilService,
               private snackBar: MatSnackBar) {
@@ -46,6 +47,7 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
     this.progressStatus = this.widgetData.progressStatus
     const sID = this.widgetData.surveyUrl.split('surveys/')
     this.surveyId = sID[1]
+    this.identifierId = this.activatedRoute.snapshot.data.content.data.identifier
     this.apiData = {
       // tslint:disable-next-line:prefer-template
       getAPI: '/apis/proxies/v8/forms/getFormById?id=' + this.surveyId,

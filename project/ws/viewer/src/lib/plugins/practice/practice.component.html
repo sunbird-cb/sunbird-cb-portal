@@ -69,7 +69,7 @@
           </div>
         </div>
       </mat-sidenav>
-      <mat-sidenav-content class="overflow-y-scroll">
+      <mat-sidenav-content class="overflow-y-scroll" id="result-nav">
         <div *ngIf="!isSubmitted && !isXsmall && viewState === 'attempt'" class="flex flex-1">
           <ng-template *ngIf="fetchingQuestionsStatus === 'fetching'" [ngTemplateOutlet]="showLoading"></ng-template>
           <div class="flex flex-nowrap margin-right-s margin-left-s quest_num_box"

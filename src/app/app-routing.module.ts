@@ -187,6 +187,19 @@ const routes: Routes = [
     // loadChildren: () => import('./routes/route-cert.module').then(u => u.RouteCertificateModule),
   },
   {
+    path: 'app/curatedCollections',
+    loadChildren: () =>
+      import('./routes/route-curated-course.module').then(u => u.RouteCuratedCourseModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageId: 'app/curatedCollections',
+      module: 'explore',
+    },
+    resolve: {
+      // pageData: PageResolve,
+    },
+  },
+  {
     path: 'app/learn/browse-by/competency',
     loadChildren: () =>
       import('./routes/route-browse-competency.module').then(u => u.RouteBrowseCompetencyModule),
@@ -248,6 +261,11 @@ const routes: Routes = [
       module: 'Profile',
     },
     loadChildren: () => import('./routes/route-cert.module').then(u => u.RouteCertificateModule),
+  },
+  {
+    path: 'public/certs',
+    redirectTo: 'certs',
+    // pathMatch: 'full',
   },
   // {
   //   path: 'app/gamification',

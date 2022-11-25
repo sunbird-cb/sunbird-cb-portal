@@ -18,6 +18,8 @@ export const environment = {
   certificateassets: (window as { [key: string]: any })['env']['certificateassets'] || '',
   assessmentBuffer: (window as { [key: string]: any })['env']['assessmentBuffer'] || 0,
   staticHomePageUrl: (window as { [key: string]: any })['env']['staticHomePageUrl'] || '',
+  resendOTPTIme: (window as { [key: string]: any })['env']['resendOTPTIme'] || 120,
+
   // mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
   // spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',
   // cbcPortal: (window as { [key: string]: any })['env']['cbcPath'] || '',

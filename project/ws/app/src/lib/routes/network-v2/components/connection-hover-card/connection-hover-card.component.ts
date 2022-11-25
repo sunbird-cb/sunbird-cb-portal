@@ -76,7 +76,7 @@ export class ConnectionHoverCardComponent implements OnInit, AfterViewInit {
     return name
   }
   goToUserProfile() {
-    this.router.navigate(['/app/person-profile', (this.hoverUser.id)])
+    this.router.navigate(['/app/person-profile', (this.hoverUser.id)], { fragment: 'profileInfo' })
     // this.router.navigate(['/app/person-profile'], { queryParams: { emailId: } })
   }
 

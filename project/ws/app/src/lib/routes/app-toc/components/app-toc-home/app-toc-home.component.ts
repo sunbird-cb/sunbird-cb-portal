@@ -284,6 +284,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         const finalUrl = `/app/learn/browse-by/competency/all-competencies`
         // tslint:disable-next-line: max-line-length
         this.breadcrumbs = { url: 'home', titles: [{ title: 'all competencies', url: finalUrl }, { title: 'Details', url: 'none' }] }
+      } else if (this.historyData.path === 'curatedCollections') {
+        const finalUrl = `/app/curatedCollections/home`
+        // tslint:disable-next-line: max-line-length
+        this.breadcrumbs = { url: 'home', titles: [{ title: 'curated collections', url: finalUrl }, { title: 'Details', url: 'none' }] }
       } else {
         // tslint:disable-next-line:max-line-length
         this.breadcrumbs = { url: 'home', titles: [{ title: 'Learn', url: '/page/learn', icon: 'school' }, { title: 'Details', url: 'none' }] }
@@ -350,22 +354,23 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     } return 'NA'
   }
   get isBatchInProgress() {
-    if (this.content && this.content['batches']) {
+    // if (this.content && this.content['batches']) {
       // const batches = this.content['batches'] as NsContent.IBatch
       if (this.currentCourseBatchId) {
         const now = moment()
-        const batch = _.first(_.filter(this.content['batches'], { batchId: this.currentCourseBatchId }) || [])
-        if (batch) {
-          return (
-            // batch.status &&
-            moment(batch.startDate).isSameOrBefore(now)
-            && moment(batch.endDate || new Date()).isSameOrAfter(now)
-          )
+        if (this.batchData && this.batchData.content) {
+          const batch = _.first(_.filter(this.batchData.content, { batchId: this.currentCourseBatchId }) || [])
+          if (batch) {
+            return (
+              // batch.status &&
+              moment(batch.startDate).isSameOrBefore(now)
+              && moment(batch.endDate || new Date()).isSameOrAfter(now)
+            )
+          }
+          return false
         }
         return false
-      }
-      return false
-    } return false
+      } return false
   }
   private initData(data: Data) {
     const initData = this.tocSvc.initData(data, true)
