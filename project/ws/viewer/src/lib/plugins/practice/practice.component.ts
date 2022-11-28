@@ -127,6 +127,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     }
     if (canAttempt) {
       this.init()
+      this.updateVisivility()
     }
   }
   async canAttend() {
@@ -1081,49 +1082,12 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     if (quesIdx > 0 && quesIdx <= this.totalQCount && this.current_Question.editorState && this.current_Question.editorState.options) {
       this.showAnswer = true
       this.quizSvc.shCorrectAnswer(true)
-      // switch (this.current_Question.questionType) {
-      //   case 'mcq-sca':
-      //     const correctSca = [...this.current_Question.editorState.options]
-      //     correctSca.forEach(element => {
-      //       if (element.value && element.value.body) {
-      //         this.matchHintDisplay.push({ text: element.value.body, hint: element.answer })
-      //       }
-      //     })
-      //     break
-      //   case 'mcq-mca':
-      //     const correctMca = [...this.current_Question.editorState.options]
-      //     correctMca.forEach(element => {
-      //       if (element.value && element.value.body) {
-      //         this.matchHintDisplay.push({ text: element.value.body, hint: element.answer })
-      //       }
-      //     })
-      //     break
-      //   case 'fitb':
-      //     const correctFitb = [...this.current_Question.editorState.options]
-      //     correctFitb.forEach(element => {
-      //       if (element.value && element.answer && element.value.body) {
-      //         this.matchHintDisplay.push({ text: element.value.value + 1, hint: element.value.body })
-      //       }
-      //     })
-      //     break
-      //   case 'ftb':
-      //     const correctFtb = [...this.current_Question.editorState.options]
-      //     correctFtb.forEach(element => {
-      //       if (element.value && element.answer && element.value.body) {
-      //         this.matchHintDisplay.push({ text: element.value.value + 1, hint: element.value.body })
-      //       }
-      //     })
-      //     break
-      //   case 'mtf':
-      //     const matchHintDisplayLocal = [...this.current_Question.editorState.options]
-      //     matchHintDisplayLocal.forEach(element => {
-      //       if (element.value && element.answer && element.value.body) {
-      //         this.matchHintDisplay.push({ text: element.value.body, hint: element.answer })
-      //       }
-      //     })
-      //     break
-      // }
     }
+  }
+  updateVisivility() {
+    this.quizSvc.displayCorrectAnswer.subscribe(displayAns => {
+      this.showAnswer = displayAns
+    })
   }
   clearStorage() {
     this.quizSvc.paperSections.next(null)
