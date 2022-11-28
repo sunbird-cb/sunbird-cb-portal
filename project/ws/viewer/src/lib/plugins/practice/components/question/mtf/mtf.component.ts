@@ -64,9 +64,8 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
         }
         this.shCorrectAnsSubscription = this.practiceSvc.displayCorrectAnswer.subscribe(displayAns => {
             this.showAns = displayAns
-            if (this.showAns) {
-                this.changeColor()
-            }
+            setTimeout(() => { this.changeColor() }, 200)
+
         })
         this.localQuestion = this.question.question
         this.question.options.map(option => (option.matchForView = option.match))
@@ -206,9 +205,13 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
     }
     changeColor() {
         const a = this.jsPlumbInstance.getAllConnections() as any[]
-        if (a.length < this.question.options.length) {
-            this.showAns = false
+        if (a.length < this.question.options.length && this.showAns) {
             alert('Please select all answers')
+            this.showAns = false
+            this.practiceSvc.shCorrectAnswer(false)
+            return
+        }
+        if (!this.showAns) {
             return
         }
         a.forEach(element => {

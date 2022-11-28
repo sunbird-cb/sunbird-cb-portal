@@ -79,12 +79,12 @@
                               isSVG: false,
                               text: ( timeLimit | pipeDurationTransform: 'hms')
                             }"></ng-container>
-        <ng-container *ngIf="questionTYP.PRACTICE_RESOURCE  !==primaryCategory" [ngTemplateOutlet]="testdetail"
+        <!-- <ng-container *ngIf="questionTYP.PRACTICE_RESOURCE  !==primaryCategory" [ngTemplateOutlet]="testdetail"
           [ngTemplateOutletContext]="{
                   icon: 'replay',
                   isSVG: false,
                   text: 'Unlimited retakes are not allowed'
-                }"></ng-container>
+                }"></ng-container> -->
       </div>
       <div class="flex flex-1 flex-column margin-top-xl">
         <span class="mat-subheading-2 ws-mat-black60-text">Points to note</span>
