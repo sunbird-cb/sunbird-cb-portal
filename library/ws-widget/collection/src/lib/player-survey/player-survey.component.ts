@@ -125,7 +125,7 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
       from: {
         type: 'widget',
         widgetType: ROOT_WIDGET_CONFIG.player._type,
-        widgetSubType: ROOT_WIDGET_CONFIG.player.pdf,
+        widgetSubType: ROOT_WIDGET_CONFIG.player.survey,
       },
       to: '',
       data: {
