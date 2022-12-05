@@ -202,7 +202,7 @@
                 <mat-autocomplete #ministryAutocomplete="matAutocomplete" autoActiveFirstOption="true" i18n-aria-label
                   aria-label="Ministry list masterMinistry" [displayWith]="displayFnState"
                   (optionSelected)="ministrySelected($event.option.value)">
-                  <mat-option *ngFor="let option of masterMinisteries| async" [value]="option" i18n-aria-label
+                  <mat-option *ngFor="let option of masterMinisteries| async | orderBy: 'orgname' :'asc'" [value]="option" i18n-aria-label
                     aria-label="Ministry list autocomplete option">
                     {{ option.orgname }}
                   </mat-option>
@@ -233,7 +233,7 @@
                   <mat-autocomplete #departmentAutocomplete="matAutocomplete" autoActiveFirstOption="true"
                     i18n-aria-label aria-label="Department list masterDepartments" [displayWith]="displayFnState"
                     (optionSelected)="departmentSelected($event.option.value)">
-                    <mat-option *ngFor="let option of masterDepartments | async" [value]="option" i18n-aria-label
+                    <mat-option *ngFor="let option of masterDepartments | async | orderBy: 'orgname' :'asc'" [value]="option" i18n-aria-label
                       aria-label="Department list autocomplete option">
                       {{ option.orgname }}
                     </mat-option>
@@ -280,7 +280,7 @@
                 </mat-form-field>
                 <mat-autocomplete #organisationAutocomplete="matAutocomplete" autoActiveFirstOption="true"
                   i18n-aria-label aria-label="Organisation list masterStates" [displayWith]="displayFnState">
-                  <mat-option *ngFor="let option of masterOrgs | async" [value]="option" i18n-aria-label
+                  <mat-option *ngFor="let option of masterOrgs | async | orderBy: 'orgname' :'asc'" [value]="option" i18n-aria-label
                     aria-label="Organisation list autocomplete option">
                     {{ option.orgname }}
                   </mat-option>
