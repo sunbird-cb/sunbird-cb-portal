@@ -203,6 +203,9 @@ export class AppTocService {
         case NsContent.EMimeTypes.TEXT_WEB:
           tocStructure.webPage += 1
           break
+        case NsContent.EMimeTypes.SURVEY:
+          tocStructure.survey += 1
+          break
         case NsContent.EMimeTypes.QUIZ:
         case NsContent.EMimeTypes.APPLICATION_JSON:
           // if (content.resourceType === 'Assessment') {
@@ -212,7 +215,11 @@ export class AppTocService {
           // }
           break
         case NsContent.EMimeTypes.PRACTICE_RESOURCE:
-          tocStructure.practiceTest += 1
+          if (content.primaryCategory === this.primaryCategory.PRACTICE_RESOURCE) {
+            tocStructure.practiceTest += 1
+          } else if (content.primaryCategory === this.primaryCategory.FINAL_ASSESSMENT) {
+            tocStructure.finalTest += 1
+          }
           break
         // case NsContent.EMimeTypes.WEB_MODULE:
         //   tocStructure.webModule += 1

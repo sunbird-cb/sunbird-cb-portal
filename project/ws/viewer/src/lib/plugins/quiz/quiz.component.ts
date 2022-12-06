@@ -34,6 +34,7 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
   @Input() complexityLevel = ''
   @Input() duration = 0
   @Input() collectionId = ''
+  forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   @Input() quizJson: Partial<NSQuiz.IQuiz> = {
     timeLimit: 0,
     questions: [
@@ -137,6 +138,9 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
   updateProgress(status: number) {
     // status = 1 indicates started
     // status = 2 indicates completed
+    if (this.forPreview) {
+      return
+    }
     const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
       this.activatedRoute.snapshot.queryParams.collectionId : ''
     const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
@@ -176,7 +180,9 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   fillSelectedItems(question: NSQuiz.IQuestion, optionId: string) {
-    this.raiseTelemetry('mark', optionId, 'click')
+    if (typeof (optionId) === 'string') {
+      this.raiseTelemetry('mark', optionId, 'click')
+    }
     if (this.viewState === 'answer') {
       if (this.questionsReference) {
         this.questionsReference.forEach(questionReference => {
@@ -232,10 +238,12 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
     this.raiseTelemetry('quiz', null, 'submit')
     this.isSubmitted = true
     this.ngOnDestroy()
+
     if (!this.quizJson.isAssessment) {
       this.viewState = 'review'
       this.calculateResults()
     } else {
+      this.calculateResults()
       this.viewState = 'answer'
     }
     const submitQuizJson = JSON.parse(JSON.stringify(this.quizJson))
@@ -302,7 +310,7 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
   showAnswers() {
     this.showMtfAnswers()
     this.showFitbAnswers()
-    this.viewState = 'answer'
+    this.viewState = 'review'
   }
 
   showMtfAnswers() {
@@ -460,6 +468,9 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   raiseTelemetry(action: string, optionId: string | null, event: string) {
+    // if (this.forPreview) {
+    //   return
+    // }
     if (optionId) {
       this.events.raiseInteractTelemetry(
         {

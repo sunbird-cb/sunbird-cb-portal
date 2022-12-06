@@ -964,7 +964,7 @@ export class AssessmentComponent implements OnInit {
 
     ngOnInit() {
         if (
-            this.activatedRoute.snapshot.queryParamMap.get('preview')
+            this.activatedRoute.snapshot.queryParamMap.get('preview') === 'true'
             // &&
             // !this.accessControlSvc.authoringConfig.newDesign
         ) {

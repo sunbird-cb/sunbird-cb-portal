@@ -5,7 +5,7 @@ import { SettingsService } from '../../settings.service'
 import { MatSnackBar } from '@angular/material'
 
 @Component({
-  selector: 'ws-app-notification-settings',
+  selector: 'ws-app-privacy-settings',
   templateUrl: './privacy-settings.component.html',
   styleUrls: ['./privacy-settings.component.scss'],
 })

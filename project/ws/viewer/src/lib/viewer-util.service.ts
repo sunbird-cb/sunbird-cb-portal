@@ -49,7 +49,8 @@ export class ViewerUtilService {
           mimeType === NsContent.EMimeTypes.M3U8 ||
           mimeType === NsContent.EMimeTypes.MP3 ||
           mimeType === NsContent.EMimeTypes.M4A ||
-          mimeType === NsContent.EMimeTypes.YOUTUBE
+          mimeType === NsContent.EMimeTypes.YOUTUBE ||
+          mimeType === NsContent.EMimeTypes.SURVEY
         ) {
           if (percent <= 5) {
             // if percentage is less than 5% make it 0
@@ -77,7 +78,9 @@ export class ViewerUtilService {
         mimeType === NsContent.EMimeTypes.MP4 ||
         mimeType === NsContent.EMimeTypes.M3U8 ||
         mimeType === NsContent.EMimeTypes.MP3 ||
-        mimeType === NsContent.EMimeTypes.M4A
+        mimeType === NsContent.EMimeTypes.M4A ||
+        mimeType === NsContent.EMimeTypes.SURVEY ||
+        mimeType === NsContent.EMimeTypes.PDF
       ) {
         // if percentage is less than 5% then make status started
         if (Math.ceil(percentage) <= 5) {
@@ -123,12 +126,13 @@ export class ViewerUtilService {
           ],
         },
       }
-    } else {
-      req = {}
-    }
-    this.http
+      this.http
       .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
       .subscribe(noop, noop)
+    } else {
+      req = {}
+      // do nothing
+    }
   }
 
   realTimeProgressUpdateQuiz(contentId: string, collectionId?: string, batchId?: string, status?: number) {
@@ -148,19 +152,27 @@ export class ViewerUtilService {
           ],
         },
       }
-    } else {
-      req = {}
-    }
-    this.http
+      this.http
       .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
       .subscribe(noop, noop)
+    } else {
+      req = {}
+      // do nothing
+    }
   }
 
   getContent(contentId: string): Observable<NsContent.IContent> {
+    const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+    let url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
+    if (!forPreview) {
+      url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
+    } else {
+      url = `/api/content/v1/read/${contentId}`
+    }
     return this.http.get<NsContent.IContent>(
       // tslint:disable-next-line:max-line-length
       // `/apis/authApi/action/content/hierarchy/${contentId}?rootOrg=${this.configservice.rootOrg || 'igot'}&org=${this.configservice.activeOrg || 'dopt'}`,
-      `apis/proxies/v8/action/content/v3/read/${contentId}`
+      url
     )
   }
 
@@ -191,4 +203,22 @@ export class ViewerUtilService {
     const mainUrl = url.split('/content').pop() || ''
     return `${environment.contentHost}/${environment.contentBucket}/content${mainUrl}`
   }
+
+  //  fetchContent(
+  //   contentId: string,
+  //   hierarchyType: 'all' | 'minimal' | 'detail' = 'detail'
+  //   ): Observable<NsContent.IContent> {
+  //     let url = ''
+  //     const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+  //       if (!forPreview) {
+  //         url = `/apis/proxies/v8/action/content/v3/hierarchy/${contentId}?hierarchyType=${hierarchyType}`
+  //       } else {
+  //         url = `/api/course/v1/hierarchy/${contentId}?hierarchyType=${hierarchyType}`
+  //       }
+  //       return this.http.get<NsContent.IContent>(url)
+  //   }
+
+    fetchContent(id: string, type: string) {
+      return this.http.get<NsContent.IContent>(`/apis/proxies/v8/action/content/v3/hierarchy/${id}?mode=${type}`)
+    }
 }

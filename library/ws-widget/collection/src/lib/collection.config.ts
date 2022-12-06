@@ -87,6 +87,7 @@ export const ROOT_WIDGET_CONFIG = {
     amp: 'playerAmp',
     audio: 'playerAudio',
     pdf: 'playerPDF',
+    survey: 'playerSurvey',
     slides: 'playerSlides',
     video: 'playerVideo',
     webPages: 'playerWebPages',

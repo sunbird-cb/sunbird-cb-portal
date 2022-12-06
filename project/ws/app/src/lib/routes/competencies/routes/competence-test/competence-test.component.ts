@@ -5,7 +5,7 @@ import { ValueService } from '@sunbird-cb/utils'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { RootService } from 'src/app/component/root/root.service'
 import { TStatus, ViewerDataService } from '@ws/viewer/src/lib/viewer-data.service'
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 
 // import { Router } from '@angular/router';
 // import { CompetenciesAssessmentComponent } from '../../components/competencies-assessment/competencies-assessment.component';
@@ -28,10 +28,10 @@ export enum ErrorType {
   host: { class: 'competency_main_test_wrapper' },
 })
 export class CompetencyTestComponent implements OnInit, OnDestroy, AfterViewChecked {
-
   fullScreenContainer: HTMLElement | null = null
   forPreview = window.location.href.includes('/author/')
   private isLtMedium$ = this.valueSvc.isLtMedium$
+  assessmentId: string | null = this.route.snapshot.params['assessmentId']
   sideNavBarOpened = false
   mode: 'over' | 'side' = 'side'
   private screenSizeSubscription: Subscription | null = null
@@ -46,7 +46,7 @@ export class CompetencyTestComponent implements OnInit, OnDestroy, AfterViewChec
       errorType: '',
     },
   }
-
+  assessmentData: any
   constructor(
     public dialog: MatDialog,
     private valueSvc: ValueService,
@@ -54,9 +54,12 @@ export class CompetencyTestComponent implements OnInit, OnDestroy, AfterViewChec
     private changeDetector: ChangeDetectorRef,
     private dataSvc: ViewerDataService,
     private router: Router,
-    // private router: Router
+    private route: ActivatedRoute,
   ) {
-
+    this.route.params.subscribe(params => {
+      this.assessmentId = params['assessmentId']
+    })
+    this.assessmentData = this.route.snapshot.data.compAssData.data
   }
 
   ngOnInit() {

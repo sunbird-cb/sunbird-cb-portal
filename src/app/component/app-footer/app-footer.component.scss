@@ -29,8 +29,11 @@
       margin-right: auto!important;
 
       img.footer_logo {
-        height: 32px;
+        // height: 32px;
         width: 120px;
+        background: #fff;
+        border-radius: 2px 2px;
+        padding: 6px 12px;
       }
   }
 

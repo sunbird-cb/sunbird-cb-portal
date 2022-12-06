@@ -1,6 +1,13 @@
 @import 'ws-vars';
 @import 'ws-mixins';
 
+.mat-card-content {
+  margin-bottom: 0!important;
+}
+#widgt-btn-box {
+  display: none;
+}
+
 .video-player-summary-container {
   height: auto;
   display: flex;

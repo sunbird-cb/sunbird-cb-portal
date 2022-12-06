@@ -1,5 +1,5 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core'
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 
@@ -25,11 +25,13 @@ export class CardLearnComponent extends WidgetBaseComponent
   isNewUser = false
   showActivities = false
   keyTag: string[] = []
+  exploreBtns = []
   @HostBinding('id')
   public id = 'w-card-learn'
   constructor(
     private configSvc: ConfigurationsService,
     private router: Router,
+    private activateroute: ActivatedRoute,
     // private activitiesSvc: ActivitiesService,
     // private snackBar: MatSnackBar,
   ) {
@@ -53,25 +55,23 @@ export class CardLearnComponent extends WidgetBaseComponent
   hasRole(role: string[]): boolean {
     let returnValue = false
     role.forEach(v => {
-      if ((this.configSvc.userRoles || new Set()).has(v)) {
+      const rolesList = (this.configSvc.userRoles || new Set())
+      if (rolesList.has(v.toLowerCase()) || rolesList.has(v.toUpperCase())) {
         returnValue = true
       }
     })
     return returnValue
   }
-  goToTaxonomyHome() {
-    this.router.navigate(['/app/taxonomy/home'])
-  }
-
-  goToCompentencyBrowse() {
-    this.router.navigate(['/app/learn/browse-by/competency/all-competencies'])
-  }
-
-  goToProviderBrowse() {
-    this.router.navigate(['/app/learn/browse-by/provider/all-providers'])
-  }
-
   ngOnInit() {
+    if (
+      this.activateroute.snapshot.parent
+      && this.activateroute.snapshot.parent.data
+      && this.activateroute.snapshot.data.pageData
+      && this.activateroute.snapshot.data.pageData.data
+      && this.activateroute.snapshot.data.pageData.data.ExploreButtons
+    ) {
+      this.exploreBtns = this.activateroute.snapshot.data.pageData.data.ExploreButtons
+    }
     if (this.showActivities) {
       // this.activitiesSvc.fetchLearnActivites().then((result: IActivity) => {
       //   if (result.activities.length !== 0) {

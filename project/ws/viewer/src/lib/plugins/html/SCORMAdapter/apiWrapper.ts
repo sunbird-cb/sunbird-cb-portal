@@ -101,7 +101,7 @@ With the understanding that:
     providedIn: 'root',
 })
 export class SCORMAdapterV2Service {
-    debug = true  // set this to false to turn debugging off
+    debug = false  // set this to false to turn debugging off
 
     output = window.console // output can be set to any object that has a log(string) function
     // such as: var output = { log: function(str){alert(str)} }

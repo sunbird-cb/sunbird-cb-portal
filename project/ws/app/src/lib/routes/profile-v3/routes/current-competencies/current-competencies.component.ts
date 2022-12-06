@@ -28,6 +28,7 @@ export class CurrentCompetenciesComponent implements OnInit, OnDestroy {
   // userDetails: any
   updatecompList: any = []
   competenciesList: any = []
+  infoIcon = false
   currentComps: NSProfileDataV3.ICompetencie[] = []
   private currentCompSubscription: Subscription | null = null
   queryControl = new FormControl('')
@@ -59,6 +60,7 @@ export class CurrentCompetenciesComponent implements OnInit, OnDestroy {
   getSelectedLevel(competency: NSProfileDataV3.ICompetencie) {
     return _.get(_.first(_.filter(this.currentComps, { id: competency.id })), 'competencySelfAttestedLevel')
   }
+
   getUserDetails() {
     // this.competenciesList = _.get(this.configService.userProfileV2, 'competencies') || []
     // if (this.overallCompetencies && this.overallCompetencies.length > 0) {
@@ -192,7 +194,7 @@ export class CurrentCompetenciesComponent implements OnInit, OnDestroy {
       width: '550px',
 
     })
-    dialogRef.afterClosed().subscribe(() => {
+    dialogRef.afterClosed().subscribe(_result => {
       this.infoIcon = false
     })
   }

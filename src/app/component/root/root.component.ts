@@ -64,10 +64,11 @@ export class RootComponent implements OnInit, AfterViewInit {
 
   isXSmall$ = this.valueSvc.isXSmall$
   routeChangeInProgress = false
-  showNavbar = false
-  showFooter = false
+  showNavbar = true
+  showFooter = true
   currentUrl!: string
-  isNavBarRequired = false
+  customHeight = false
+  isNavBarRequired = true
   isInIframe = false
   appStartRaised = false
   isSetupPage = false
@@ -92,8 +93,14 @@ export class RootComponent implements OnInit, AfterViewInit {
     private changeDetector: ChangeDetectorRef,
     private utilitySvc: UtilityService,
     // private dialogRef: MatDialogRef<any>,
-
   ) {
+    if (window.location.pathname.includes('/public/home')
+      || window.location.pathname.includes('/public/toc/')
+      || window.location.pathname.includes('/viewer/')
+      ) {
+      this.customHeight = true
+    }
+
     this.mobileAppsSvc.init()
     this.openIntro()
     // if (this.authSvc.token) {
@@ -169,6 +176,9 @@ export class RootComponent implements OnInit, AfterViewInit {
     this.skipper.nativeElement.focus()
   }
   ngOnInit() {
+    if (window.location.pathname.includes('/public/home')) {
+      this.customHeight = true
+    }
     try {
       this.isInIframe = window.self !== window.top
     } catch (_ex) {
@@ -204,7 +214,17 @@ export class RootComponent implements OnInit, AfterViewInit {
       ) {
         this.routeChangeInProgress = false
         this.currentUrl = event.url
-        if (!!this.currentUrl.startsWith('/public/logout') || !!this.currentUrl.startsWith('/public/signup')) {
+        if (this.currentUrl.includes('/public/home')) {
+          this.customHeight = true
+        } else {
+          this.customHeight = false
+        }
+        if (
+          !!this.currentUrl.startsWith('/public/logout')
+          || !!this.currentUrl.startsWith('/public/signup')
+          || !!this.currentUrl.startsWith('/public/welcome')
+          || !!this.currentUrl.startsWith('/viewer/')
+        ) {
           this.showFooter = false
           this.showNavbar = false
           this.isNavBarRequired = false
@@ -274,6 +294,22 @@ export class RootComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.initAppUpdateCheck()
+  }
+  get navBarRequired(): boolean {
+    return this.isNavBarRequired
+  }
+  get isShowNavbar(): boolean {
+    return this.showNavbar
+  }
+  get isCustomHeight(): boolean {
+    if (window.location.pathname.includes('/public/home')
+    || window.location.pathname.includes('/public/faq')
+    || window.location.pathname.includes('/public/contact')
+    || window.location.pathname.includes('/public/signup')
+    ) {
+      this.customHeight = true
+    }
+    return this.customHeight
   }
 
   getChildRouteData(snapshot: ActivatedRouteSnapshot, firstChild: ActivatedRouteSnapshot | null) {

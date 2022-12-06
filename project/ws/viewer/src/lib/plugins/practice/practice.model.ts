@@ -11,6 +11,7 @@ export namespace NSPractice {
     multiSelection: boolean
     instructions: string
     section: string
+    editorState?: IEditor
     question: string
     questionId: string
     options: IOption[]
@@ -83,8 +84,8 @@ export namespace NSPractice {
     total: number
     blank: number
     correct: number
-    passPercent: number
-    inCorrect: number
+    passPercentage: number
+    incorrect: number
     pass: boolean
   }
 
@@ -186,6 +187,7 @@ export namespace NSPractice {
   export interface IQuestionV2 {
     lastStatusChangedOn: string
     answer: any
+    editorState?: IEditor
     parent: string
     name: string
     body: string
@@ -219,6 +221,7 @@ export namespace NSPractice {
     artifactUrl: string
     visibility: string
     qType: TQuizQuestionType
+    questionType: TQuizQuestionType
     choices: IEditor
     rhsChoices?: string[]
     showSolutions: string
@@ -232,7 +235,7 @@ export namespace NSPractice {
     // question: string
   }
   export interface IOptionsV2 {
-    // answer: boolean | any
+    answer?: boolean | any
     value: {
       body: string | any
       value: number | any
@@ -325,7 +328,9 @@ export namespace NSPractice {
     timeLimit: Number
     isAssessment: boolean
     identifier: string
-    objectType: 'QuestionSet',
+    objectType: 'QuestionSet'
+    courseId: string
+    batchId: string
     primaryCategory: NsContent.EPrimaryCategory
     children: ISubSec[]
   }

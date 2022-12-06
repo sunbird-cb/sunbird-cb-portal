@@ -26,10 +26,11 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   fullScreenContainer: HTMLElement | null = null
   content: NsContent.IContent | null = null
   errorType = ErrorType
+  show = true
   private isLtMedium$ = this.valueSvc.isLtMedium$
   sideNavBarOpened = false
   mode: 'over' | 'side' = 'side'
-  forPreview = window.location.href.includes('/author/')
+  forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   isTypeOfCollection = true
   collectionId = this.activatedRoute.snapshot.queryParamMap.get('collectionId')
   batchId = this.activatedRoute.snapshot.queryParamMap.get('batchId')
@@ -144,5 +145,9 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (this.utilitySvc.isMobile) {
       this.sideNavBarOpened = false
     }
+  }
+  get isPreview(): boolean {
+    this.forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+    return this.forPreview
   }
 }

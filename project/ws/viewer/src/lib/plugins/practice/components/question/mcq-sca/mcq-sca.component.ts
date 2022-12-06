@@ -6,12 +6,14 @@ import {
     OnInit,
     Output,
     ViewEncapsulation,
+    OnDestroy,
 } from '@angular/core'
 import { NSPractice } from '../../../practice.model'
-// import { PracticeService } from '../../../practice.service'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { Subscription } from 'rxjs'
+import { PracticeService } from '../../../practice.service'
+import { NsContent } from '@sunbird-cb/utils/src/public-api'
 @Component({
     selector: 'viewer-mcq-sca-question',
     templateUrl: './mcq-sca.component.html',
@@ -20,13 +22,14 @@ import { Subscription } from 'rxjs'
     encapsulation: ViewEncapsulation.None,
     // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SingleChoiseQuesComponent implements OnInit {
+export class SingleChoiseQuesComponent implements OnInit, OnDestroy {
     @Input() question: NSPractice.IQuestion = {
         multiSelection: false,
         section: '',
         question: '',
         instructions: '',
         questionId: '',
+        editorState: undefined,
         options: [
             {
                 optionId: '',
@@ -36,15 +39,23 @@ export class SingleChoiseQuesComponent implements OnInit {
         ],
     }
     @Input() itemSelectedList: string[] = []
+    @Input() primaryCategory = NsContent.EPrimaryCategory.PRACTICE_RESOURCE
     @Output() update = new EventEmitter<string | Object>()
-    subscription!: Subscription
     localQuestion: string = this.question.question
+    shCorrectAnsSubscription: Subscription | null = null
+    showAns = false
     constructor(
-        // private practiceSvc: PracticeService,
+        private practiceSvc: PracticeService,
     ) {
 
     }
     ngOnInit() {
+        if (this.shCorrectAnsSubscription) {
+            this.shCorrectAnsSubscription.unsubscribe()
+        }
+        this.shCorrectAnsSubscription = this.practiceSvc.displayCorrectAnswer.subscribe(displayAns => {
+            this.showAns = displayAns
+        })
         this.localQuestion = this.question.question
         // this.subscription = this.practiceSvc.questionAnswerHash.subscribe((val) => {
         //     this.itemSelectedList = val[this.question.questionId]
@@ -83,4 +94,10 @@ export class SingleChoiseQuesComponent implements OnInit {
     //         // this.question.options = []
     //     }
     // }
+    ngOnDestroy(): void {
+        this.practiceSvc.shCorrectAnswer(false)
+        if (this.shCorrectAnsSubscription) {
+            this.shCorrectAnsSubscription.unsubscribe()
+        }
+    }
 }

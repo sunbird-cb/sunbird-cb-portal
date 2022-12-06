@@ -17,9 +17,10 @@
     </div>
   </mat-dialog-content>
 </ng-container>
-<ng-container *ngIf="pdfData|| videoData">
+<ng-container *ngIf="pdfData || surveyData || videoData">
   <mat-dialog-content class="h-full pdfVideoPadding">
     <ws-widget-player-pdf *ngIf="pdfData" [widgetData]="pdfData"></ws-widget-player-pdf>
+    <ws-widget-player-survey *ngIf="surveyData" [widgetData]="surveyData"></ws-widget-player-survey>
     <ws-widget-player-video *ngIf="videoData" [widgetData]="videoData"></ws-widget-player-video>
   </mat-dialog-content>
 </ng-container>

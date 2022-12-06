@@ -1,4 +1,5 @@
-<div class="main_container flex flex-row" style=" background: url(assets/instances/eagle/banners/home/9/Login_background.png) no-repeat center center fixed;">
+<div class="main_container flex flex-row"
+  style=" background: url(assets/instances/eagle/banners/home/9/Login_background.png) no-repeat center center fixed;">
   <div class="left_container flex flex-col items-center justify-center">
     <div class="logo_box flex items-center">
       <img src="/assets/instances/eagle/app_logos/dopt_logo.png" alt="logo" class="logo_img">
@@ -6,7 +7,7 @@
 
     <div class="slideshow-container">
 
-       <div class="mySlides">
+      <div class="mySlides">
         <img src="/assets/instances/eagle/app_logos/Hexagon.png" alt="karmayogi">
         <!-- <img src="/assets/instances/eagle/app_logos/card3.png" alt="slide 1"> -->
 
@@ -24,10 +25,10 @@
 
 
 
-      </div>
-      <br>
+    </div>
+    <br>
 
-      <!-- <div style="text-align:center">
+    <!-- <div style="text-align:center">
         <span class="dot"></span>
         <span class="dot"></span>
 
@@ -36,10 +37,14 @@
   <div class=" right_container flex flex-col items-center justify-center">
     <div class="right_inner_container">
       <div class="right_logo_box right_logo_box flex items-center justify-center">
-        <img src="/assets/instances/eagle/app_logos/iGOT_Karmayogi_logo_with_karmayogi_bharat.png" alt="logo">
+       <img src="/assets/instances/eagle/app_logos/eagle-logo-transparent.svg" alt="logo" class="logout_logo">
       </div>
       <div class="text_box flex items-center justify-center">
         <h2 class="mat-h2"> Welcome to iGOT Karmayogi!</h2>
+      </div>
+      <div *ngIf="message" class="flex flex-1 margin-s w-inherit justify-center flex-column">
+        <span class="mat-subheading-errmsg mat-error margin-auto flex-wrap">{{message}} <span>
+          <a mat-button class="mat-button ws-mat-accent-text" routerLink="/public/contact"><span class="mat-subheading-errmsg parichay-errmsg">Contact Us</span></a></span></span>
       </div>
       <div class="button_box flex flex-col items-center justify-center">
         <a mat-button class="flex button m_b_2" href="/protected/v8/resource">

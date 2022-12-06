@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
+import { MatSnackBar } from '@angular/material'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { BehaviorSubject, Observable } from 'rxjs'
@@ -17,7 +18,7 @@ export class TopicService {
     public desiredTopics = new BehaviorSubject<string[]>([])
     public autoSave = new BehaviorSubject<boolean>(false)
     constructor(
-        private http: HttpClient) {
+        private http: HttpClient, private snackBar: MatSnackBar) {
     }
     loadTopics(): Observable<any> {
         return this.http.get<any>(API_END_POINTS.getTopics)
@@ -29,10 +30,17 @@ export class TopicService {
     }
     addDesiredTopics(topic: string) {
         const topics = this.desiredTopics.value
-        if (!topics.includes(topic)) {
+        const lowerTopics = topics.map(val => val.toLowerCase())
+        const lowercaseTopic = topic.toLowerCase()
+        const index = _.indexOf(lowerTopics, lowercaseTopic)
+        if (index === -1) {
             topics.push(topic)
+            this.snackBar.open('Added successfully!')
             this.desiredTopics.next(topics)
+        } else {
+            this.snackBar.open('Alredy exist!')
         }
+
     }
     /**
      * this method will fill all already added topics from users Profile.
@@ -60,6 +68,7 @@ export class TopicService {
         if (index !== -1) {
             topics.splice(index, 1)
             this.desiredTopics.next(topics)
+            this.snackBar.open('Removed successfully!')
         }
     }
     // removeDesiredTopics(topic: string) {

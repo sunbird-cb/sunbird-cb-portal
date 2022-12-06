@@ -1,206 +1,205 @@
-<!-- <div class="header">
-    <div class="container container-balanced">
-      <div class="header flex flex-wrap items-center justify-between py-2 grid grid-col-2 flex-row">
-        <a href="" class="flex items-center flex-2">
-          <img class="logo" src="/assets/instances/eagle/landing-img/logo.svg" alt="Karamyogi Bharat logo">
-        </a>
-
-      </div>
-    </div>
-  </div> -->
-  <mat-toolbar class="mt-53">
+<div class="home">
+  <mat-toolbar class="mt-53 nav-toolbar">
     <div class="fix-ww flex flex-row mt-3" id="root-tool-bar" title="toolbar" i18n-aria-label role="toolbar">
-      <a class="logo-dim" role="link" title="Home" i18n-aria-title i18n-aria-label routerLink="/public/home">
-      <img [src]="appIcon" alt="Application Logo" class="app-logo" />
-    </a>
+      <a class="logo-dim" role="link" title="Home" i18n-aria-title i18n-aria-label routerLink="/static-home">
+        <!-- <img [src]="appIcon" alt="Application Logo" class="app-logo" /> -->
+        <img src="https://www.igot-dev.in/img/karmayogiLogo.svg" alt="Application Logo" class="app-logo" />
+      </a>
       <div class="text-end flex flex-1 flex-row-reverse signup_div">
         <a routerLink="/public/signup" class="btn btn-primary text-center margin-left-s">Register</a>
         <a href="/protected/v8/resource" class="btn btn-link">Sign In</a>
+        <!-- <a href="/apis/public/v8/google/auth" class="btn btn-link">Parichay</a> -->
         <!-- <a href="/apis/public/v8/google/auth" class="btn btn-link">Sign In with P</a> -->
       </div>
     </div>
   </mat-toolbar>
-  
-  <section class="main-section pb-20">
+
+  <section class="main-section">
     <div class="container container-balanced">
       <div class="items-center justify-between mainContent grid-cols-2 grid">
         <div class="content">
-          <p class="mb-4 title-heading">Learn. Network. Grow your career.</p>
-          <p class="mb-12 main-text">Gain skills to rocket your career growth. Connect with civil servants and experts to learn and
+          <h1 class="mb-4 title-heading">Learn. Network. Grow your career.</h1>
+          <p class="mb-12">Gain skills to rocket your career growth. Connect with civil servants and experts to learn
+            and
             discover new opportunities in the Indian civil services.</p>
           <div class="d-block float-left mb-12 mt-10 ">
             <a routerLink="/public/signup" class="btn btn-secondary mr-4">Register</a>
-            <!-- <button mat-raised-button color="primary" class="me-2">Register</button>
-                    <a href="/protected/v8/resource"  class="btn btn-link me-0 me-md-3">Sign In</a>
-        <a routerLink="/public/signup"  class="btn btn-primary">Register</a>
-              <button mat-stroked-button color="secondary">Basic</button> -->
-            <!-- <a href="/protected/v8/resource" class="btn btn-outline-secondary">Sign In</a> -->
           </div>
         </div>
         <div class="displayImg text-center">
-  
           <img src="/assets/instances/eagle/landing-img/image2.png" alt="igot screen display">
-  
         </div>
       </div>
-  
-      <div class="analyticsRecord">
+
+      <div *ngIf="learnNetworkSection?.length > 0" class="analyticsRecord">
         <div class="flex flex-col">
-          <p class="mb-12 text-center sub-heading">Learn and network with civil servants and subject matter experts across India</p>
-          <div class="grid-cols-4 grid recordBox">
+          <h1 class="mb-12 text-center">Learn and network with civil servants and subject matter experts across India
+          </h1>
+          <div class="grid-cols-4 grid recordBox mt-8">
             <div class="listInfo" *ngFor="let content of learnNetworkSection">
               <div class="icon"><img src="{{content?.image}}" alt="icon"></div>
               <h1 class="my-6">{{content?.count}}</h1>
-              <p class="m-0">{{content?.title}}</p>
+              <p class="m-0 margin-remove-bottom">{{content?.title}}</p>
             </div>
           </div>
-  
+
         </div>
       </div>
     </div>
   </section>
-  
-    <section class="servicesSection">
-      <div class="container container-balanced">
-        <div class="row">
-          <div class="servicesTab">
-          <p class="text-white text-center mt-12 pt-12 sub-heading">How does the platform enable you to become the best version of yourself?</p>
-  
-          <mat-tab-group mat-align-tabs="center" [disableRipple]=true color="transparent">
-            <mat-tab label="An experienced civil servant" class="nav-link">
-              <div class="tab-pane fade show active my-12" id="pillsExCivil" role="tabpanel" aria-labelledby="ex-civil">
-  
-                <div class="flex flex-1">
-                  <div class="exCivilVideo">
-                    <!-- <img src="/assets/instances/eagle/landing-img/video1.png" alt="video presentation"> -->
-                    <video width="100%" height="auto" controls poster="/assets/instances/eagle/landing-img/video12.png">
-                      <source src="https://igot.blob.core.windows.net/public/Sanjeev-final.mp4" type="video/mp4">
-                    </video>
-  
-                  </div>
-                </div>
-  
-                <div class="dd-border1"></div>
-                <div class="dd-border1 dd-border2"></div>
+  <section *ngIf="isWsInit && !loading && data && data.length && data[0]?.widget" class="journeySection1">
+    <div class="new-box">
+      <ng-container [wsResolverWidget]="data[0].widget"></ng-container>
+    </div>
+  </section>
+  <section>
+    <div *ngIf="loading || !isWsInit" class="text-center my-2">
+      <mat-spinner class="inline-block"></mat-spinner>
+    </div>
+  </section>
+
+  <section class="servicesSection">
+    <div class="container container-balanced">
+      <div class="row">
+        <div class="servicesTab pb-12">
+          <div class="mat-headline text-white text-left mt-12 service_heading">How does the platform enable you to
+            become the best version of
+            yourself?</div>
+
+          <div class="flex flex-1 flex-row player_box">
+            <div class="flex flex-1 flex-col">
+              <h4 class="margin-bottom-l text-white text-left">An experienced civil servant</h4>
+              <div class="exCivilVideo">
+                <!-- <img src="/assets/instances/eagle/landing-img/video1.png" alt="video presentation"> -->
+                <video width="100%" height="auto" controls poster="/assets/instances/eagle/landing-img/video1.png">
+                  <source src="https://igot.blob.core.windows.net/public/Sanjeev-final.mp4" type="video/mp4">
+                </video>
               </div>
-            </mat-tab>
-            <mat-tab label="A newly recruited civil servant" class="nav-link">
-              <div class="tab-pane fade my-12" id="pillsNewCivil" role="tabpanel" aria-labelledby="new-civil">
-                <div class="flex flex-1">
-  
-                  <div class="exCivilVideo">
-                    <video width="100%" height="auto" controls poster="/assets/instances/eagle/landing-img/video2.png">
-                      <source src="https://igot.blob.core.windows.net/public/Shilpa-final.mp4" type="video/mp4">
-                    </video>
-  
-                  </div>
-  
-                </div>
-                <div class="dd-border1"></div>
-                <div class="dd-border1 dd-border2"></div>
+            </div>
+
+            <div class="flex flex-1 flex-col margin-left-m">
+              <h4 class="margin-bottom-l text-white text-left">A newly recruited civil servant</h4>
+              <div class="exCivilVideo">
+                <video width="100%" height="auto" controls poster="/assets/instances/eagle/landing-img/video2.png">
+                  <source src="https://igot.blob.core.windows.net/public/Shilpa-final.mp4" type="video/mp4">
+                </video>
+
               </div>
-            </mat-tab>
-  
-          </mat-tab-group>
-  
+            </div>
+            <!-- <div class="dd-border1"></div>
+            <div class="dd-border1 dd-border2"></div> -->
+          </div>
         </div>
-  
       </div>
     </div>
   </section>
+
   <section class="journeySection">
     <div class="container container-balanced">
       <div class="flex flex-row w-100">
         <!-- <div class="grid-cols-1 grid"> -->
-          <div class="flex flex-column justify-center items-center journeyContent">
-            <p class="mb-3 sub-heading">Start your learning journey </p>
-            <p class="main-text">Are you a government official without an iGOT Karmayogi account yet? Start here.</p>
-            <div class="mt-2"><a routerLink="/public/signup" class="btn btn-primary">Register</a> </div>
-          </div>
-        <!-- </div> -->
+        <div class="flex flex-column justify-center items-center journeyContent">
+          <h1 class="mb-3">Start your learning journey </h1>
+          <p>Are you a government official without an iGOT Karmayogi account yet? Start here.</p>
+          <div class="mt-2"><a routerLink="/public/signup" class="btn btn-primary">Register</a> </div>
         </div>
         <!-- </div> -->
       </div>
-  
-    </section>
-    <section class="solutionService pt-24 pb-24">
-      <div class="container container-balanced">
-        <div class="row">
-          <p class=" text-center sub-heading mb-3">Solutioning space for all of Government</p>
-          <div class="grid-cols-3 grid gap-4 mt-8 solutionServiceInner" >
+    </div>
+  </section>
+
+  <section class="solutionService pt-12 pb-8">
+    <div class="container container-balanced">
+      <div class="row">
+        <h1 class=" text-center">Solutioning space for all of Government</h1>
+        <div class="grid-cols-3 grid gap-4 mt-8 solutionServiceInner">
           <div class="">
             <div class="servicesItem learning">
               <div class="icon"><img src="/assets/instances/eagle/landing-img/Learn.svg" alt="learning icon"></div>
-              <p class="ws-mat-primary-default-text min-heading ">Learning hub</p>
-              <p class="main-text">Learn anywhere, anytime and bridge your competency gaps using impactful and engaging learning content.</p>
+              <h2 class="ws-mat-primary-default-text">Learning hub</h2>
+              <p>Learn anywhere, anytime and bridge your competency gaps using impactful and engaging learning content.
+              </p>
             </div>
           </div>
           <div class="">
             <div class="servicesItem discussion">
-              <div class="icon"><img src="/assets/instances/eagle/landing-img/discussionIcon.svg" alt="Discussion icon"></div>
-              <p class="ws-mat-primary-default-text min-heading">Discussion hub</p>
-              <p class="main-text">Discuss and learn with peers, colleagues, civil servants and experts across the country.</p>
+              <div class="icon"><img src="/assets/instances/eagle/landing-img/discussionIcon.svg" alt="Discussion icon">
+              </div>
+              <h2 class="ws-mat-primary-default-text">Discussion hub</h2>
+              <p>Discuss and learn with peers, colleagues, civil servants and experts across the country.</p>
             </div>
           </div>
           <div class="">
             <div class="servicesItem user">
               <div class="icon"><img src="/assets/instances/eagle/landing-img/userIcon.svg" alt="User icon"></div>
-              <p class="ws-mat-primary-default-text min-heading">Network hub</p>
-              <p class="main-text">Connect with civil servants across the country. Grow your network within government circles.</p>
+              <h2 class="ws-mat-primary-default-text">Network hub</h2>
+              <p>Connect with civil servants across the country. Grow your network within government circles.</p>
             </div>
           </div>
           <div class="">
             <div class="servicesItem competency">
-              <div class="icon"><img src="/assets/instances/eagle/landing-img/competencyIcon.svg" alt="competency icon"></div>
-              <p class="ws-mat-primary-default-text min-heading">Competency hub</p>
-             <p class="main-text">Identify your competency requirements, competency gaps, so you can grow faster in the right direction.</p>
+              <div class="icon"><img src="/assets/instances/eagle/landing-img/competencyIcon.svg" alt="competency icon">
+              </div>
+              <h2 class="ws-mat-primary-default-text">Competency hub</h2>
+              <p>Identify your competency requirements, competency gaps, so you can grow faster in the right direction.
+              </p>
             </div>
           </div>
           <div class="">
             <div class="servicesItem career">
               <div class="icon"><img src="/assets/instances/eagle/landing-img/careerIcon.svg" alt="career icon"></div>
-              <p class="ws-mat-primary-default-text min-heading">Career hub</p>
-             <p class="main-text"> Explore career opportunities across the country and signal your expertise.</p>
+              <h2 class="ws-mat-primary-default-text">Career hub</h2>
+              <p> Explore career opportunities across the country and signal your expertise.</p>
             </div>
           </div>
           <div class="">
             <div class="servicesItem event">
               <div class="icon"><img src="/assets/instances/eagle/landing-img/eventIcon.svg" alt="event icon"></div>
-              <p class="ws-mat-primary-default-text min-heading"> Events hub</p>
-             <p class="main-text">Join online and in-person events to break silos and share ideas.</p>
+              <h2 class="ws-mat-primary-default-text"> Events hub</h2>
+              <p>Join online and in-person events to break silos and share ideas.</p>
             </div>
           </div>
         </div>
       </div>
-      </div>
-    </section>
-  
-    <section class="iGotWalkthrough">
-      <div class="container container-balanced">
-        <div class="flex flex-row items-center justify-center">
-          <div class="grid-cols-1 grid">
-            <p class="mb-3 text-center sub-heading ">Walkthrough of the iGOT Karmayogi Portal</p>
-            <div class="walkthroughVideo text-center mt-4">
-              <!-- <img src="/assets/instances/eagle/landing-img/walkthroughImg.svg" alt="video image"> -->
-              <video width="100%" height="auto" controls>
-                <source src="https://igot.blob.core.windows.net/public/video-guide.mp4" type="video/mp4">
-              </video>
-  
-          </div>
-        </div>
-      </div>
-      </div>
-    </section>
-  
-    <section class="growthSection">
-      <div class="container container-balanced">
-        <div class="flex flex-row justify-center  items-center ">
-          <div class="grid-cols-1 grid">
-            <div class="growthHub  text-center">
-              <p class="pb-2 sub-heading ">Learn. Network. Take your career growth to the next level.</p>
-             <div class=""><a routerLink="/public/signup" class="btn btn-primary">Register</a> </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    </div>
   </section>
+
+  <section class="iGotWalkthrough">
+    <div class="container container-balanced">
+      <div class="flex flex-row items-center justify-center">
+        <div class="grid-cols-1 grid">
+          <div class="flex flex-1 flex-row">
+            <div class="flex flex-1 flex-col">
+              <h1 class="mb-3">Walkthrough of the iGOT Karmayogi Portal</h1>
+              <p class="mb-12">Gain skills to rocket your career growth. Connect with civil servants and experts to
+                learn and discover new
+                opportunities in the Indian civil services.</p>
+            </div>
+
+            <div class="flex flex-1 flex-col">
+              <div class="exCivilVideo text-center mt-4 margin-left-m">
+                <video controls="" height="100%" width="100%">
+                  <source src="https://igot.blob.core.windows.net/public/video-guide.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="growthSection">
+    <div class="container container-balanced">
+      <div class="flex flex-row justify-center  items-center ">
+        <div class="grid-cols-1 grid">
+          <div class="growthHub  text-center">
+            <h1 class="pb-2">Learn. Network. Take your career growth to the next level.</h1>
+            <div class=""><a routerLink="/public/signup" class="btn btn-primary">Register</a> </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
