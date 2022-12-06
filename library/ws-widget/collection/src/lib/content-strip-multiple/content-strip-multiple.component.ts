@@ -888,7 +888,6 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     }
   }
 
-
   private transformContentsToWidgets(
     contents: NsContent.IContent[],
     strip: NsContentStripMultiple.IContentStripUnit,

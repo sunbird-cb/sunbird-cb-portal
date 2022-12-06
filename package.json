@@ -18,7 +18,7 @@
         "analyse": "webpack-bundle-analyzer ./dist/www/fusion/stats-es5.json",
         "test": "ng test",
         "lint": "ng lint",
-        "lint:fix": "ng lint --fix",
+        "lint:fix": "ng lint @ws/app --fix",
         "e2e": "ng e2e",
         "i18n": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng xi18n --output-path locale",
         "tailwind": "./node_modules/.bin/tailwind build ./src/tailwind-build.scss  -o ./src/styles.scss",
