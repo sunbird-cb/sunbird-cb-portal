@@ -36,7 +36,7 @@
 .correct-option {
   color: #357a38 !important;
   // font-size: larger !important;
-  font-weight: 700 !important;
+  font-weight: 900 !important;
   // border: 1px solid #357a38;
   pointer-events: none !important;
 }
@@ -44,7 +44,7 @@
 .incorrect-option {
   color: #f0506e;
   // font-size: larger !important;
-  font-weight: 700 !important;
+  font-weight: 900 !important;
   // border: 1px solid #f0506e;
   pointer-events: none !important;
 }
@@ -53,7 +53,7 @@
 .correct-answer {
   color: #357a38 !important;
   // font-size: larger;
-  font-weight: 700;
+  font-weight: 900;
   border: 1px solid #357a38;
   pointer-events: none;
 }
@@ -61,7 +61,7 @@
 .incorrect-answer {
   color: #f0506e;
   // font-size: larger;
-  font-weight: 700;
+  font-weight: 900;
   border: 1px solid #f0506e;
   pointer-events: none;
 }
@@ -69,7 +69,7 @@
 .incorrect-answer-sca {
   // color: #f0506e;
   // font-size: larger !important;
-  font-weight: 700 !important;
+  font-weight: 900 !important;
   // border: 1px solid #f0506e;
   pointer-events: none !important;
 }
