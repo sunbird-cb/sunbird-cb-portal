@@ -1,3 +1,6 @@
+{{quizData.primaryCategory}}
+--------------------------------
+{{quizJson.primaryCategory}}
 <div class="" *ngIf="quizData">
     <div class="flex flex-around flex-wrapped">
       <div class="w-full">
@@ -8,7 +11,7 @@
                 <ng-container *ngIf="isFetchingDataComplete">
                   <viewer-plugin-practice [identifier]="quizData?.identifier" [artifactUrl]="quizData?.artifactUrl"
                     [name]="quizData?.name" [learningObjective]="quizData?.name"
-                    [primaryCategory]="quizData?.primaryCategory"
+                    [primaryCategory]="quizJson.primaryCategory"
                     [complexityLevel]="quizData?.difficultyLevel" [duration]="quizData?.duration || quizJson?.timeLimit" [quizJson]="quizJson"
                     [collectionId]="collectionId"></viewer-plugin-practice>
                 </ng-container>
