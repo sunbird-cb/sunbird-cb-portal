@@ -1,13 +1,36 @@
 @import "ws-vars";
 @import "ws-common";
+
 .quiz-question {
-    overflow-x: auto;
+  overflow-x: auto;
 }
+
 .app-class .mat-list-option {
-    padding-top: $size-m;
-    padding-bottom: $size-m;
-    height: auto;
+  padding-top: $size-m;
+  padding-bottom: $size-m;
+  height: auto;
+}
+
+.background-well {
+  background: #eee;
+}
+
+.correct-answer {
+  mat-list-option {
+    border-color: #008000 !important;
   }
-  .background-well {
-    background: #eee;
+}
+
+.incorrect-answer {
+  mat-list-option {
+    border-color: #f44336 !important;
   }
+}
+
+.correct-option {
+  font-weight: bold;
+}
+
+.incorrect-option {
+  font-weight: bold;
+}

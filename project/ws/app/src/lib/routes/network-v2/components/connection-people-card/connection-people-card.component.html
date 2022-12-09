@@ -33,8 +33,12 @@
         </div>
         <div class="action-container flex items-center justify-center">
             <button mat-stroked-button color="accent" type="button" class="connect_btn mat-accent-border flex-auto-display"
-                (click)="connetToUser()">
+                (click)="connetToUser()" *ngIf="!user?.requestSent">
                 <span class="" i18n>Connect</span>
+            </button>
+            <button mat-stroked-button color="accent" type="button" class=" mat-accent-border flex-auto-display minwid"
+                disabled *ngIf="user?.requestSent">
+                <span class="" i18n>Connection sent</span>
             </button>
         </div>
     </div>

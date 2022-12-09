@@ -18,12 +18,15 @@
 .margin-top-xs-2 {
   margin-top: #{$size-xs / 2};
 }
+
 .cheight {
   height: $size-xs;
 }
+
 .margin-0 {
   margin-bottom: 0 !important;
 }
+
 .viewer-sidenav {
   width: 100%;
 
@@ -53,8 +56,14 @@
   width: 100vw;
 }
 
+.mat-drawer-content {
+  overflow: auto !important;
+  overflow-y: visible !important;
+}
+
 .sidenavContent::-webkit-scrollbar {
   width: 5px !important;
+
 }
 
 .flex-row-c {

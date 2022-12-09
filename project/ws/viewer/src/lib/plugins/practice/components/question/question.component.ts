@@ -8,6 +8,7 @@ import { SafeHtml } from '@angular/platform-browser'
 import { PracticeService } from '../../practice.service'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { NsContent } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
   selector: 'viewer-question',
@@ -21,10 +22,12 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() questionNumber = 0
   @Input() total = 0
   @Input() viewState = 'initial'
+  @Input() primaryCategory = NsContent.EPrimaryCategory.PRACTICE_RESOURCE
   @Input() question: NSPractice.IQuestion = {
     multiSelection: false,
     section: '',
     instructions: '',
+    editorState: undefined,
     question: '',
     questionId: '',
     options: [
@@ -89,14 +92,6 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
       }
     }
   }
-  get numConnections() {
-    if (this.jsPlumbInstance) {
-      return (this.jsPlumbInstance.getAllConnections() as any[]).length
-    }
-
-    return 0
-  }
-
   update($event: any) {
     this.itemSelected.emit($event)
   }
@@ -125,69 +120,4 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
-  ifFillInTheBlankCorrect(id: string) {
-    const blankPosition: number = id.slice(-1) as unknown as number
-    const text = this.question.options[blankPosition].text
-    const valueOfBlank = document.getElementById(id) as HTMLInputElement
-    if (text.trim().toLowerCase() === valueOfBlank.value.trim().toLowerCase()) {
-      this.correctOption[blankPosition] = true
-    } else {
-      this.correctOption[blankPosition] = false
-    }
-    if (valueOfBlank.value.length < 1) {
-      this.unTouchedBlank[blankPosition] = true
-    } else {
-      this.unTouchedBlank[blankPosition] = false
-    }
-  }
-  reset() {
-    if (this.question.questionType === 'ftb') {
-      // this.resetBlankBorder()
-    } else if (this.question.questionType === 'mtf') {
-      // this.resetColor()
-      // this.resetMtf()
-    }
-  }
-  // matchShowAnswer() {
-  //   if (this.question.questionType === 'mtf') {
-  //     this.jsPlumbInstance.deleteEveryConnection()
-  //     for (let i = 1; i <= this.question.options.length; i += 1) {
-  //       const questionSelector = `#c1${this.question.questionId}${i}`
-  //       for (let j = 1; j <= this.question.options.length; j += 1) {
-  //         const answerSelector = `#c2${this.question.questionId}${j}`
-  //         const options = this.question.options[i - 1]
-  //         if (options) {
-  //           const match = options.match
-  //           const selectors: HTMLElement[] = this.jsPlumbInstance.getSelector(answerSelector) as unknown as HTMLElement[]
-  //           if (match && match.trim() === selectors[0].innerText.trim()) {
-  //             const endpoint = `[
-  //               'Dot',
-  //               {
-  //                 radius: 5
-  //               }
-  //             ]`
-  //             this.jsPlumbInstance.connect({
-  //               endpoint,
-  //               source: this.jsPlumbInstance.getSelector(questionSelector) as unknown as Element,
-  //               target: this.jsPlumbInstance.getSelector(answerSelector) as unknown as Element,
-  //               anchors: ['Right', 'Left'],
-  //             })
-  //           }
-  //         }
-  //       }
-  //     }
-  //     this.changeColor()
-  //   }
-  // }
-
-  resetBlankBorder() {
-    // for (let i = 0; i < (this.question.question.match(/_______________/g) || []).length; i += 1) {
-    //   this.elementRef.nativeElement
-    //     .querySelector(`#${this.question.questionId}${i}`)
-    //     .setAttribute('style', 'border-style: none none solid none; border-width: 1px; padding: 8px 12px;')
-    // }
-  }
-  // log(val: any) {
-  //   // console.log(val)
-  // }
 }

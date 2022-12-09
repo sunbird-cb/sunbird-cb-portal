@@ -9,8 +9,8 @@
     ></lib-micro-survey>
 </section>
 
-<section #fullScreenContainer class="survey-container" *ngIf="progressStatus === 2">
+<section #fullScreenContainer class="survey-container" *ngIf="progressStatus === 2 && identifierId === widgetData.identifier">
   <div>
-    <p class="margin-xl mat-subheading-1">Survey is already submitted</p>
+    <p class="margin-xl mat-subheading-1">Survey is submitted</p>
   </div>
 </section>

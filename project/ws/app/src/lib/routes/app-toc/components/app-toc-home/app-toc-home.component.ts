@@ -284,6 +284,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         const finalUrl = `/app/learn/browse-by/competency/all-competencies`
         // tslint:disable-next-line: max-line-length
         this.breadcrumbs = { url: 'home', titles: [{ title: 'all competencies', url: finalUrl }, { title: 'Details', url: 'none' }] }
+      } else if (this.historyData.path === 'curatedCollections') {
+        const finalUrl = `/app/curatedCollections/home`
+        // tslint:disable-next-line: max-line-length
+        this.breadcrumbs = { url: 'home', titles: [{ title: 'curated collections', url: finalUrl }, { title: 'Details', url: 'none' }] }
       } else {
         // tslint:disable-next-line:max-line-length
         this.breadcrumbs = { url: 'home', titles: [{ title: 'Learn', url: '/page/learn', icon: 'school' }, { title: 'Details', url: 'none' }] }
@@ -327,6 +331,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       const isResource = this.content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT ||
         this.content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE
         || this.content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+        || this.content.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT
+        || this.content.primaryCategory === NsContent.EPrimaryCategory.COMP_ASSESSMENT
         || !(this.content.children && this.content.children.length)
       if (isResource) {
         this.mobileAppsSvc.sendViewerData(this.content)
@@ -348,22 +354,23 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     } return 'NA'
   }
   get isBatchInProgress() {
-    if (this.content && this.content['batches']) {
+    // if (this.content && this.content['batches']) {
       // const batches = this.content['batches'] as NsContent.IBatch
       if (this.currentCourseBatchId) {
         const now = moment()
-        const batch = _.first(_.filter(this.content['batches'], { batchId: this.currentCourseBatchId }) || [])
-        if (batch) {
-          return (
-            // batch.status &&
-            moment(batch.startDate).isSameOrBefore(now)
-            && moment(batch.endDate || new Date()).isSameOrAfter(now)
-          )
+        if (this.batchData && this.batchData.content) {
+          const batch = _.first(_.filter(this.batchData.content, { batchId: this.currentCourseBatchId }) || [])
+          if (batch) {
+            return (
+              // batch.status &&
+              moment(batch.startDate).isSameOrBefore(now)
+              && moment(batch.endDate || new Date()).isSameOrAfter(now)
+            )
+          }
+          return false
         }
         return false
-      }
-      return false
-    } return false
+      } return false
   }
   private initData(data: Data) {
     const initData = this.tocSvc.initData(data, true)
@@ -408,6 +415,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       survey: 0,
       podcast: 0,
       practiceTest: 0,
+      finalTest: 0,
       quiz: 0,
       video: 0,
       webModule: 0,
@@ -494,17 +502,17 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.userId = this.configSvc.userProfile.userId || ''
     }
     if (this.content && this.content.identifier && this.content.primaryCategory) {
-        this.ratingSvc.getRating(this.content.identifier, this.content.primaryCategory, this.userId).subscribe(
-          (res: any) =>  {
-            if (res && res.result && res.result.response) {
-              this.userRating = res.result.response
-              this.tocSvc.changeUpdateReviews(true)
-            }
-          },
-          (err: any) => {
-            this.loggerSvc.error('USER RATING FETCH ERROR >', err)
+      this.ratingSvc.getRating(this.content.identifier, this.content.primaryCategory, this.userId).subscribe(
+        (res: any) => {
+          if (res && res.result && res.result.response) {
+            this.userRating = res.result.response
+            this.tocSvc.changeUpdateReviews(true)
           }
-        )
+        },
+        (err: any) => {
+          this.loggerSvc.error('USER RATING FETCH ERROR >', err)
+        }
+      )
     }
   }
 
@@ -789,8 +797,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.contentSvc.fetchContentHistoryV2(req).subscribe(
         data => {
           if (data && data.result && data.result.contentList && data.result.contentList.length) {
-            this.resumeData = _.get(data, 'result.contentList')
-            this.resumeData = _.map(this.resumeData, rr => {
+            const tempResumeData = _.get(data, 'result.contentList')
+            this.resumeData = _.map(tempResumeData, rr => {
               // tslint:disable-next-line
               const items = _.filter(flattenItems(_.get(this.content, 'children') || [], 'children'), { 'identifier': rr.contentId, primaryCategory: 'Learning Resource' })
               _.set(rr, 'progressdetails.mimeType', _.get(_.first(items), 'mimeType'))

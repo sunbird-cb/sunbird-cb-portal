@@ -41,34 +41,38 @@ export class GeneralGuard implements CanActivate {
     return returnValue
   }
   private async shouldAllow<T>(
-    _state: RouterStateSnapshot,
+    state: RouterStateSnapshot,
     requiredFeatures: string[],
     requiredRoles: string[],
   ): Promise<T | UrlTree | boolean> {
     /**
      * Test IF User is authenticated===> in now from backend
      */
-    // if (!this.configSvc.isAuthenticated) {
-    // let refAppend = ''
-    // if (state.url) {
-    //   refAppend = `?ref=${encodeURIComponent(state.url)}`
-    // }
-    // return this.router.parseUrl(`/login${refAppend}`)
+    if (
+      this.configSvc.userProfile === null
+      && !(window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+      || window.location.href.includes('/certs'))
+      // !this.configSvc.isAuthenticated
+    ) {
+      let refAppend = ''
+      // let redirectUrl
+      if (state.url) {
+        refAppend = `?redirect_uri=${encodeURIComponent(state.url)}`
+        // return this.router.parseUrl(`/login${refAppend}`)
+      }
 
-    // let redirectUrl
-    // if (refAppend) {
-    //   redirectUrl = document.baseURI + refAppend
-    // } else {
-    //   redirectUrl = document.baseURI
-    // }
-
-    //   try {
-    //     // Promise.resolve(this.authSvc.login('S', redirectUrl))
-    //     return true
-    //   } catch (e) {
-    //     return false
-    //   }
-    // }
+      // if (refAppend) {
+      //   redirectUrl = document.baseURI + refAppend
+      // } else {
+      //   redirectUrl = document.baseURI
+      // }
+      try {
+        Promise.resolve(this.authSvc.loginV2('S', refAppend))
+        // return true
+      } catch (e) {
+        return false
+      }
+    }
 
     // if Invalid Role: now checking in init.service
     //  if (
@@ -89,7 +93,7 @@ export class GeneralGuard implements CanActivate {
       window.location.pathname.includes('/page/home')
       // !Boolean(this.configSvc.instanceConfig.disablePidCheck)
     ) {
-      return this.router.parseUrl('/public/home')
+      return this.router.parseUrl('/static-home')
     }
     /**
      * Test IF User Tnc Is Accepted

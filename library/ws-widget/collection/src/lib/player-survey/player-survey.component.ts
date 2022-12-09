@@ -34,6 +34,7 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
   public afterSubmitAction = this.checkAfterSubmit.bind(this)
   isReadOnly = false
   progressStatus: any
+  identifierId: any
 
   constructor(private activatedRoute: ActivatedRoute, private eventSvc: EventService, private viewerSvc: ViewerUtilService,
               private snackBar: MatSnackBar) {
@@ -46,6 +47,7 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
     this.progressStatus = this.widgetData.progressStatus
     const sID = this.widgetData.surveyUrl.split('surveys/')
     this.surveyId = sID[1]
+    this.identifierId = this.activatedRoute.snapshot.data.content.data.identifier
     this.apiData = {
       // tslint:disable-next-line:prefer-template
       getAPI: '/apis/proxies/v8/forms/getFormById?id=' + this.surveyId,
@@ -84,7 +86,8 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
     // this.renderSubject.next()
     // tslint:disable-next-line:no-console
     console.log(e)
-    this.openSnackbar('Survey is submitted')
+    this.openSnackbar('Survey is submitted successfully')
+    this.progressStatus = 2
     this.updateProgress(2)
   }
 
@@ -122,7 +125,7 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>, OnDestroy  {
       from: {
         type: 'widget',
         widgetType: ROOT_WIDGET_CONFIG.player._type,
-        widgetSubType: ROOT_WIDGET_CONFIG.player.pdf,
+        widgetSubType: ROOT_WIDGET_CONFIG.player.survey,
       },
       to: '',
       data: {

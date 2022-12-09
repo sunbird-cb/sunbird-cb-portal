@@ -96,7 +96,8 @@ export class RootComponent implements OnInit, AfterViewInit {
   ) {
     if (window.location.pathname.includes('/public/home')
       || window.location.pathname.includes('/public/toc/')
-      || window.location.pathname.includes('/viewer/')) {
+      || window.location.pathname.includes('/viewer/')
+      ) {
       this.customHeight = true
     }
 
@@ -304,7 +305,8 @@ export class RootComponent implements OnInit, AfterViewInit {
     if (window.location.pathname.includes('/public/home')
     || window.location.pathname.includes('/public/faq')
     || window.location.pathname.includes('/public/contact')
-    || window.location.pathname.includes('/public/signup')) {
+    || window.location.pathname.includes('/public/signup')
+    ) {
       this.customHeight = true
     }
     return this.customHeight

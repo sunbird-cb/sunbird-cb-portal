@@ -25,6 +25,8 @@ export const environment: IEnvironment = {
   contentBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
   certificateassets: (window as { [key: string]: any })['env']['certificateassets'] || '',
   assessmentBuffer: (window as { [key: string]: any })['env']['assessmentBuffer'] || 0,
+  staticHomePageUrl: (window as { [key: string]: any })['env']['staticHomePageUrl'] || '',
+  resendOTPTIme: (window as { [key: string]: any })['env']['resendOTPTIme'] || 120,
 }
 interface IEnvironment {
   name: string,
@@ -45,6 +47,8 @@ interface IEnvironment {
   contentBucket?: string,
   certificateassets?: string,
   assessmentBuffer: number,
+  staticHomePageUrl: string
+  resendOTPTIme: number
 }
 
 /*

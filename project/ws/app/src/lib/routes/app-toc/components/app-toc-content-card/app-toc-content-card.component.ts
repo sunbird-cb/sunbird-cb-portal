@@ -21,6 +21,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
   enumContentTypes = NsContent.EDisplayContentTypes
   contentStructure: NsAppToc.ITocStructure = {
     assessment: 0,
+    finalTest: 0,
     course: 0,
     handsOn: 0,
     interactiveVideo: 0,
@@ -143,8 +144,8 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
               }
               break
             case NsContent.EMimeTypes.PRACTICE_RESOURCE:
-            // case NsContent.EMimeTypes.FINAL_ASSESSMENT:
-            // case NsContent.EMimeTypes.PRACTICE_RESOURCE:
+              // case NsContent.EMimeTypes.FINAL_ASSESSMENT:
+              // case NsContent.EMimeTypes.PRACTICE_RESOURCE:
               this.contentStructure.practiceTest += 1
               break
             case NsContent.EMimeTypes.WEB_MODULE:
@@ -211,5 +212,9 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
     if (this.content) {
       return !(NsContent.UN_SUPPORTED_DATA_TYPES_FOR_NON_BATCH_USERS.indexOf(this.content.mimeType) >= 0)
     } return false
+  }
+
+  get isEnabled(): boolean {
+    return false
   }
 }

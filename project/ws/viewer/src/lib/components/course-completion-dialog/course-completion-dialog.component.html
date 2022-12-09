@@ -13,8 +13,8 @@
   <!-- class ="ws-mat-accent-border-active mat-accent" -->
 <!-- </div> -->
 
-<mat-card class="no-shadow">
-  
+<mat-card class="no-shadow" *ngIf="!showRating">
+
   <mat-card-title class="px-5 pb-5">
       <span i18n>Congratulations for completing the {{this.courseName}}</span>
   </mat-card-title>
@@ -22,6 +22,11 @@
     <span>You have completed the course successfully. Please check back in some time to view your
       certificate of completion.</span>
   </mat-card-content>
+
+  <mat-card-content class="px-5">
+    <span>Please take a moment to <span class="ws-mat-default-text cursor-pointer" (click)="openRatingDialog()" i18n><b>rate this course</b></span> and tell us about your experience.</span>
+  </mat-card-content>
+  
   <mat-divider inset></mat-divider>
   <mat-card-actions class="flex flex-row-reverse">
     <button mat-button  type="button"
@@ -29,4 +34,8 @@
       Close
     </button> 
   </mat-card-actions>
+</mat-card>
+
+<mat-card class="no-shadow" *ngIf="showRating">
+<ws-widget-content-rating-v2-dialog [ccuserRating]="userRating"  [navigatetoTOC]="true"></ws-widget-content-rating-v2-dialog>
 </mat-card>

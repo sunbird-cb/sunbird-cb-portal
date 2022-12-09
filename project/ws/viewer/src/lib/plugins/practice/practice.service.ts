@@ -22,6 +22,7 @@ export class PracticeService {
   mtfSrc: BehaviorSubject<NSPractice.IMtfSrc> = new BehaviorSubject<NSPractice.IMtfSrc>({})
   currentSection: BehaviorSubject<Partial<NSPractice.IPaperSection>> = new BehaviorSubject<Partial<NSPractice.IPaperSection>>({})
   // questionAnswerHashV2:BehaviorSubject<NSPractice.IQAnswer> = new BehaviorSubject<NSPractice.IQAnswer>({})
+  displayCorrectAnswer: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   constructor(
     private http: HttpClient,
   ) { }
@@ -246,5 +247,8 @@ export class PracticeService {
       return of(EMPTY)
     }
     return of(EMPTY)
+  }
+  shCorrectAnswer(val: boolean) {
+    this.displayCorrectAnswer.next(val)
   }
 }

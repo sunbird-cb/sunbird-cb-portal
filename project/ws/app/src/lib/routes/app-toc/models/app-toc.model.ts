@@ -55,6 +55,7 @@ export namespace NsAppToc {
     youtube: number
     interactivecontent: number
     practiceTest: number
+    finalTest: number
     [key: string]: number
   }
 }
