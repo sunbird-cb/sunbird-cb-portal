@@ -25,9 +25,9 @@
     flex: 1;
 
 }
-input.mat-input-element.mat-chip-input {
-    margin-top: 10px!important;
-}
+// input.mat-input-element.mat-chip-input {
+//     margin-top: 10px!important;
+// }
 .activity_span {
     padding:6px 10px;
     border-radius: 18px 18px;
@@ -67,11 +67,42 @@ a.hint_span {
     color: rgba($color: #000000, $alpha: .4);
 }
 
-.mat-subheading-1{
-    margin-left: 10px;
+// .mat-subheading-1{
+//     margin-left: 10px;
+// }
+
+.left-input-div {
+    width: 74%;
+    display: inline-block;
+}
+.right-input-div {
+    width: 23%;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 3%;
 }
 
-.btn-success {
-    min-width: 64px !important;
-    max-width: 76px !important;
+// .btn-success {
+//     min-width: 64px !important;
+//     max-width: 76px !important;
+// }
+.btn-add-activity {
+    width: 100%;
+    background: no-repeat padding-box #0074b6!important;
+    border-radius: 4px;
+    padding:3px 0;
+    box-sizing: border-box;
+    margin-top: 12px;
+}
+.mat-chip-list {
+    margin-top:8px;
+}
+::ng-deep.mat-progress-spinner {
+    display: block;
+    position: fixed!important;
+    top: 0;
+    margin-top: 30%;
+    left: 0;
+    margin-left: 45%;
+    z-index: 1;
 }

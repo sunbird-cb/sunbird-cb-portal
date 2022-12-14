@@ -3,6 +3,10 @@
 
 $nav-height: 40px;
 
+.overflow-y-scroll {
+  height: auto !important;
+}
+
 .quiz-container {
   height: 100%;
   width: 100%;
@@ -41,7 +45,7 @@ $nav-height: 40px;
 
 .back_button {
   @include breakpoint-xs {
-    margin-top:8px!important;
+    margin-top: 8px !important;
   }
 }
 
@@ -55,6 +59,7 @@ $nav-height: 40px;
   flex: 1 1 auto;
   // height: calc(100% - #{$nav-height});
 }
+
 .quiz_inner_container {
   height: auto;
 }
@@ -68,6 +73,7 @@ $nav-height: 40px;
   text-align: center;
   line-height: 40px;
 }
+
 .ovel {
   position: relative;
   cursor: pointer;
@@ -100,6 +106,17 @@ $nav-height: 40px;
   margin: 0;
 }
 
+.overflow-y-scroll {
+  overflow: auto !important;
+  overflow-y: visible !important;
+  scrollbar-width: thin;
+
+}
+
+.overflow-y-scroll::-webkit-scrollbar {
+  width: .4em;
+}
+
 .white-border {
   border: solid white 2px;
 }
@@ -117,21 +134,22 @@ $nav-height: 40px;
     margin: $size-s;
   }
 }
+
 .quest_mat_card {
   @include breakpoint-xs {
-    margin:0!important;
+    margin: 0 !important;
   }
 }
 
 .bottom_box {
   @include breakpoint-xs {
-    flex-direction: column!important;
+    flex-direction: column !important;
   }
 }
 
 .practice_card_title {
   @include breakpoint-xs {
-    margin-bottom:12px!important;
+    margin-bottom: 12px !important;
   }
 }
 
@@ -144,21 +162,27 @@ $nav-height: 40px;
   max-height: 176px;
   height: auto;
 }
+
 .br-8 {
   border-radius: $size-s;
 }
+
 .text-white {
   color: #fff !important;
 }
+
 .m-auto {
   margin: auto !important;
 }
+
 .pad-0 {
   padding: 0 !important;
 }
+
 .margin-zero {
   margin: 0 !important;
 }
+
 .spinner:before {
   content: "";
   box-sizing: border-box;
@@ -174,26 +198,31 @@ $nav-height: 40px;
   border-top-color: #000000;
   animation: spinner 0.8s linear infinite;
 }
+
 .complete {
   background-color: RGBA(29, 137, 35, 0.1) !important;
   border: 1px solid #1d8923 !important;
   border-radius: $size-xs;
 }
+
 .incomplete {
   background-color: RGBA(209, 57, 36, 0.1) !important;
   border: 1px solid #d13924 !important;
   border-radius: $size-xs;
 }
+
 .not-started {
   background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.4) !important;
   border-radius: $size-xs;
 }
+
 .selected {
   background-color: RGBA(0, 116, 182, 0.05) !important;
   border: 1px solid #0074b6 !important;
   border-radius: $size-xs;
 }
+
 .sbox {
   width: 16px;
   height: 16px;
@@ -202,16 +231,19 @@ $nav-height: 40px;
   margin-left: 12px;
 
   @include breakpoint-xs {
-   margin-bottom: 12px;
+    margin-bottom: 12px;
   }
 }
+
 .quest_num_box {
   overflow-y: auto;
 }
-.cen{
+
+.cen {
   align-items: center;
 }
-.end{
+
+.end {
   align-items: flex-end;
 }
 
@@ -223,8 +255,9 @@ $nav-height: 40px;
 
 .butto_box {
   @include breakpoint-lt-xs {
-    flex-direction: column!important;
+    flex-direction: column !important;
   }
+
   @include breakpoint-lt-m {
     margin-top: 16px;
   }
@@ -235,4 +268,13 @@ $nav-height: 40px;
   @include breakpoint-lt-xs {
     width: 100%;
   }
+}
+.mat-cell {
+  border: 1px solid orange;
+  padding: $size-s;
+}
+
+.mat-header-cell {
+  border: 1px solid orange;
+  padding: $size-s;
 }

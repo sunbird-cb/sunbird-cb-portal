@@ -128,4 +128,7 @@ export class AppFooterComponent implements OnInit {
     const value = this.hasRole(roles)
     return value
   }
+  get needToHide(): boolean {
+    return this.currentRoute.includes('all/assessment/')
+  }
 }

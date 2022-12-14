@@ -40,6 +40,9 @@
   }
 }
 
+.logout_logo {
+width:300px;
+}
 .slider_box {
   padding: 5rem 0 2rem 0;
   width: 320px;
@@ -112,4 +115,12 @@
 
 .w-inherit {
   width: inherit !important;
+}
+
+.mat-subheading-errmsg {
+  font: 500 16px/24px Montserrat!important;
+}
+.parichay-errmsg {
+    text-decoration: underline;
+    cursor: pointer;
 }

@@ -38,7 +38,7 @@
     <div class="right_inner_container profile-box">
       <div class="flex">
         <div class="flex items-center mr-5">
-          <a class=" ng-star-inserted" [routerLink]="'/public/home'" tabindex="0" aria-disabled="false">
+          <a class=" ng-star-inserted" [routerLink]="'/static-home'" tabindex="0" aria-disabled="false">
             <span class="flex">
               <mat-icon class="mat-icon notranslate material-icons ws-mat-primary-text" role="img" aria-hidden="true">
                 arrow_back
@@ -202,7 +202,7 @@
                 <mat-autocomplete #ministryAutocomplete="matAutocomplete" autoActiveFirstOption="true" i18n-aria-label
                   aria-label="Ministry list masterMinistry" [displayWith]="displayFnState"
                   (optionSelected)="ministrySelected($event.option.value)">
-                  <mat-option *ngFor="let option of masterMinisteries| async" [value]="option" i18n-aria-label
+                  <mat-option *ngFor="let option of masterMinisteries| async | orderBy: 'orgname' :'asc'" [value]="option" i18n-aria-label
                     aria-label="Ministry list autocomplete option">
                     {{ option.orgname }}
                   </mat-option>
@@ -233,7 +233,7 @@
                   <mat-autocomplete #departmentAutocomplete="matAutocomplete" autoActiveFirstOption="true"
                     i18n-aria-label aria-label="Department list masterDepartments" [displayWith]="displayFnState"
                     (optionSelected)="departmentSelected($event.option.value)">
-                    <mat-option *ngFor="let option of masterDepartments | async" [value]="option" i18n-aria-label
+                    <mat-option *ngFor="let option of masterDepartments | async | orderBy: 'orgname' :'asc'" [value]="option" i18n-aria-label
                       aria-label="Department list autocomplete option">
                       {{ option.orgname }}
                     </mat-option>
@@ -243,12 +243,12 @@
                   <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon>
                   <span class="tooltiptext"><p>
                     If you do not find your department or organization in the list here,
-                    please contact us to get it added.<br>
+                    please <a routerLink="/public/contact" class="ws-mat-accent-text">contact us</a> to get it added.<br>
 
                     <!-- Email: mission.karmayogi@gov.in<br>
 
                     Helpdesk: servicedesk.nic.in<br> -->
-                    "contact us": <a href="https://igot-stage.in/public/contact">https://igot-stage.in/public/contact</a>
+                    <!-- "contact us": https://igot-stage.in/public/contact</a> -->
 
                    </p></span>
 
@@ -280,7 +280,7 @@
                 </mat-form-field>
                 <mat-autocomplete #organisationAutocomplete="matAutocomplete" autoActiveFirstOption="true"
                   i18n-aria-label aria-label="Organisation list masterStates" [displayWith]="displayFnState">
-                  <mat-option *ngFor="let option of masterOrgs | async" [value]="option" i18n-aria-label
+                  <mat-option *ngFor="let option of masterOrgs | async | orderBy: 'orgname' :'asc'" [value]="option" i18n-aria-label
                     aria-label="Organisation list autocomplete option">
                     {{ option.orgname }}
                   </mat-option>
@@ -290,8 +290,8 @@
                 <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon>
                 <span class="tooltiptext"><p>
                   If you do not find your department or organization in the list here,
-                  please contact us to get it added.<br>
-                  "contact us": <a href="https://igot-stage.in/public/contact">https://igot-stage.in/public/contact</a>
+                  please <a routerLink="/public/contact" class="ws-mat-accent-text">contact us</a> to get it added.<br>
+
                  </p></span>
               </div>
             </div>

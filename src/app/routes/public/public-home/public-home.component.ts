@@ -2,8 +2,10 @@ import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core'
 import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ActivatedRoute } from '@angular/router'
-import { PublicHomeService } from 'src/app/services/public-home.service'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
+// tslint:disable-next-line
+import _ from 'lodash'
+import { WidgetResolverService } from '@sunbird-cb/resolver/src/public-api'
 
 @Component({
   selector: 'ws-public-home',
@@ -22,15 +24,28 @@ export class PublicHomeComponent implements OnInit, OnDestroy {
   pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
   private subscriptionContact: Subscription | null = null
   learnNetworkSection: any = []
+  data!: any
+  loading = true
 
   constructor(
-    private phomesrvc: PublicHomeService,
     private configSvc: ConfigurationsService,
     private activateRoute: ActivatedRoute,
     private domSanitizer: DomSanitizer,
-    // private authSvc: AuthKeycloakService,
-  ) { }
+    private ws: WidgetResolverService,
+  ) {
+    // setTimeout(() => {
+    this.loadData()
+    // },         1000)
+  }
 
+  get isWsInit(): boolean {
+    return this.ws.isInitialized
+  }
+  loadData() {
+    this.data = _.get(this.activateRoute.snapshot, 'data.pageData.data.featuredCourses')
+    this.learnNetworkSection = _.get(this.activateRoute.snapshot, 'data.pageData.data.learnNetwork')
+    this.loading = false
+  }
   ngOnInit() {
     if (this.configSvc.instanceConfig) {
       this.appIcon = this.domSanitizer.bypassSecurityTrustResourceUrl(
@@ -46,14 +61,6 @@ export class PublicHomeComponent implements OnInit, OnDestroy {
     if (this.configSvc.instanceConfig) {
       this.contactUsMail = this.configSvc.instanceConfig.mailIds.contactUs
     }
-
-    const url = `${this.configSvc.sitePath}/feature/public-home.json`
-    this.phomesrvc.fetchConfig(url).subscribe(
-      (config: any) => {
-        this.learnNetworkSection = config.learnNetwork
-      },
-      _err => { })
-    // this.authSvc.force_logout().then(() => { })
   }
 
   ngOnDestroy() {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { NSPractice } from './practice.model'
-import { BehaviorSubject, Observable } from 'rxjs'
+import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs'
 import { map, retry } from 'rxjs/operators'
 
 const API_END_POINTS = {
@@ -22,6 +22,7 @@ export class PracticeService {
   mtfSrc: BehaviorSubject<NSPractice.IMtfSrc> = new BehaviorSubject<NSPractice.IMtfSrc>({})
   currentSection: BehaviorSubject<Partial<NSPractice.IPaperSection>> = new BehaviorSubject<Partial<NSPractice.IPaperSection>>({})
   // questionAnswerHashV2:BehaviorSubject<NSPractice.IQAnswer> = new BehaviorSubject<NSPractice.IQAnswer>({})
+  displayCorrectAnswer: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   constructor(
     private http: HttpClient,
   ) { }
@@ -211,8 +212,9 @@ export class PracticeService {
   getSection(sectionId: string): Observable<NSPractice.ISectionResponse> {
     return this.http.get<NSPractice.ISectionResponse>(`${API_END_POINTS.QUESTION_PAPER_SECTIONS}/${sectionId}`).pipe(retry(2))
   }
-  getQuestions(identifiers: string[]): Observable<{ count: Number, questions: any[] }> {
+  getQuestions(identifiers: string[], assessmentId: string): Observable<{ count: Number, questions: any[] }> {
     const data = {
+      assessmentId,
       request: {
         search: {
           identifier: identifiers,
@@ -239,5 +241,14 @@ export class PracticeService {
     }
 
     return array
+  }
+  canAttend(identifier: string): Observable<any> {
+    if (identifier) {
+      return of(EMPTY)
+    }
+    return of(EMPTY)
+  }
+  shCorrectAnswer(val: boolean) {
+    this.displayCorrectAnswer.next(val)
   }
 }

@@ -55,7 +55,10 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
 
   }
   defineTabs() {
-    this.tabs = _.orderBy(this.tabsData, 'step')
+    this.tabs = _.orderBy(_.filter(this.tabsData, { enabled: true }), 'step')
+    _.each(this.tabs, (t, idx) => {
+      t.step = idx + 1
+    })
     this.stepService.allSteps.next(this.tabs.length)
   }
   init() {
@@ -84,7 +87,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
   updateCompentency() {
     this.tabs.forEach(s => {
       if (s.step === this.currentStep) {
-        if (s.key.indexOf('currentcompetencies') !== -1 && this.configSvc.userProfileV2) {
+        if (s.key.indexOf('competencies') !== -1 && this.configSvc.userProfileV2) {
           if (this.compLocalService.autoSaveCurrent.value) {
             // console.log("currentcompetencies========>", this.compLocalService.currentComps.value)
             this.profileSvc.updateCCProfileDetails({
@@ -102,7 +105,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
             })
 
           }
-        } else if (s.key.indexOf('desiredcompetencies') !== -1 && this.configSvc.userProfileV2) {
+        } else if (s.key.indexOf('desiredCompetencies') !== -1 && this.configSvc.userProfileV2) {
           if (this.compLocalService.autoSaveDesired.value) {
             // console.log("desiredcompetencies========>", this.compLocalService.desiredComps.value)
             this.profileSvc.updateDCProfileDetails({
@@ -180,7 +183,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
       if (s.step === this.currentStep) {
         if (s.key.indexOf('welcome') !== -1) {
           isAllowed = true
-        } else if (s.key.indexOf('roles') !== -1) {
+        } else if (s.key.indexOf('userRoles') !== -1) {
           if (
             (this.stepService.currentStep.value.allowSkip
               || this.configSvc.unMappedUser
@@ -190,7 +193,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
           ) {
             isAllowed = true
           }
-        } else if (s.key.indexOf('topics') !== -1) {
+        } else if (s.key.indexOf('systemTopics') !== -1) {
           if (this.stepService.currentStep.value.allowSkip
             || (this.configSvc.unMappedUser
               && this.configSvc.unMappedUser.profileDetails
@@ -206,7 +209,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
           ) {
             isAllowed = true
           }
-        } else if (s.key.indexOf('currentcompetencies') !== -1) {
+        } else if (s.key.indexOf('competencies') !== -1) {
           if (this.stepService.currentStep.value.allowSkip
             || (this.configSvc.unMappedUser
               && this.configSvc.unMappedUser.profileDetails
@@ -215,7 +218,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
           ) {
             isAllowed = true
           }
-        } else if (s.key.indexOf('desiredcompetencies') !== -1) {
+        } else if (s.key.indexOf('desiredCompetencies') !== -1) {
           if (this.stepService.currentStep.value.allowSkip
             || (this.configSvc.unMappedUser
               && this.configSvc.unMappedUser.profileDetails

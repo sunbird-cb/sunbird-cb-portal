@@ -40,6 +40,9 @@ export namespace NsContentStripMultiple {
       masterCompetency?: any
       mandatoryCourses?: any
       basedOnInterest?: any
+      microsoftCourses?: any,
+      DAKSHTACourses?: any,
+      prarambhCourse?: any
     }
     searchV6Type?: 'KB' | 'Collections' | 'searchQuery' | null
     stripBackground?: string

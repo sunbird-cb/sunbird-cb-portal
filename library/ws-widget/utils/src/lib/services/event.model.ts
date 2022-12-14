@@ -102,7 +102,12 @@ export namespace WsEvents {
     activityStartedAt: Date | null
     object: any
   }
+
+  export interface IWsEventTelemetrySurveyData extends IWsEventTelemetry {
+    object: any
+  }
   export type WsEventTelemetryPDF = IWsEvents<IWsEventTelemetryPdfData>
+  export type WsEventTelemetrySurvey = IWsEvents<IWsEventTelemetrySurveyData>
 
   // Interact Telemetry Event
   export interface IWsEventTelemetryInteract extends IWsEventTelemetry {

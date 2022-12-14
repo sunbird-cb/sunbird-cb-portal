@@ -13,6 +13,8 @@ import { PracticeService } from '../../../practice.service'
 import { jsPlumb, OnConnectionBindInfo } from 'jsplumb'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { Subscription } from 'rxjs'
+import { NsContent } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
     selector: 'viewer-mtf-question',
@@ -28,6 +30,7 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
         instructions: '',
         question: '',
         questionId: '',
+        editorState: undefined,
         options: [
             {
                 optionId: '',
@@ -36,11 +39,14 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
             },
         ],
     }
+    @Input() primaryCategory = NsContent.EPrimaryCategory.PRACTICE_RESOURCE
     @Output() update = new EventEmitter<string | Object>()
     jsPlumbInstance: any
     edit = false
+    showAns = false
     matchHintDisplay: NSPractice.IOption[] = []
     localQuestion: string = this.question.question
+    shCorrectAnsSubscription: Subscription | null = null
     constructor(
         private practiceSvc: PracticeService,
     ) {
@@ -52,13 +58,22 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
     }
     ngOnInit() {
         // console.log(this.practiceSvc.questionAnswerHash.value)
+        this.matchHintDisplay = []
+        if (this.shCorrectAnsSubscription) {
+            this.shCorrectAnsSubscription.unsubscribe()
+        }
+        this.shCorrectAnsSubscription = this.practiceSvc.displayCorrectAnswer.subscribe(displayAns => {
+            this.showAns = displayAns
+            setTimeout(() => { this.changeColor() }, 200)
+
+        })
         this.localQuestion = this.question.question
         this.question.options.map(option => (option.matchForView = option.match))
-        const array = this.question.options.map(elem => elem.match)
-        const arr = this.practiceSvc.shuffle(array)
-        for (let i = 0; i < this.question.options.length; i += 1) {
-            this.question.options[i].matchForView = arr[i]
-        }
+        // const array = this.question.options.map(elem => elem.match)
+        // const arr = this.practiceSvc.shuffle(array)
+        // for (let i = 0; i < this.question.options.length; i += 1) {
+        //     this.question.options[i].matchForView = arr[i]
+        // }
         const matchHintDisplayLocal = [...this.question.options]
         matchHintDisplayLocal.forEach(element => {
             if (element.hint) {
@@ -66,7 +81,12 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
             }
         })
     }
-
+    get numConnections() {
+        if (this.jsPlumbInstance) {
+            return (this.jsPlumbInstance.getAllConnections() as any[]).length
+        }
+        return 0
+    }
     ngOnChanges(changes: SimpleChanges): void {
         if (changes) {
 
@@ -97,8 +117,9 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
             //         finalConnection.push()
             //     }
             // }
-            if (!this.edit) {
-                this.update.emit([...this.jsPlumbInstance.getAllConnections()])
+            const newData = [...this.jsPlumbInstance.getAllConnections()]
+            if (!this.edit || _c) {
+                this.update.emit(newData)
             }
         })
         this.jsPlumbInstance.bind('connectionDetached', (i: OnConnectionBindInfo, _c: any) => {
@@ -149,14 +170,6 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
         })
         this.matchShowAnswer()
     }
-
-    setBorderColorById(id: string, color: string | null) {
-        const elementById: HTMLElement | null = document.getElementById(id)
-        if (elementById && color) {
-            elementById.style.borderColor = color
-        }
-    }
-
     setBorderColor(bindInfo: OnConnectionBindInfo, color: string) {
         const connnectionSourceId: HTMLElement | null = document.getElementById(bindInfo.sourceId)
         const connnectionTargetId: HTMLElement | null = document.getElementById(bindInfo.targetId)
@@ -184,10 +197,21 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
     repaintEveryThing() {
         this.jsPlumbInstance.repaintEverything()
     }
+    setBorderColorById(id: string, color: string | null) {
+        const elementById: HTMLElement | null = document.getElementById(id)
+        if (elementById && color) {
+            elementById.style.borderColor = color
+        }
+    }
     changeColor() {
         const a = this.jsPlumbInstance.getAllConnections() as any[]
-        if (a.length < this.question.options.length) {
+        if (a.length < this.question.options.length && this.showAns) {
             alert('Please select all answers')
+            this.showAns = false
+            this.practiceSvc.shCorrectAnswer(false)
+            return
+        }
+        if (!this.showAns) {
             return
         }
         a.forEach(element => {
@@ -195,7 +219,7 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
             const options = this.question.options
             if (options) {
                 const match = options[(b.slice(-1) as number) - 1].match
-                if (match && match.trim() === element.target.innerHTML.trim()) {
+                if (match && match.trim() === element.target.innerText.trim()) {
                     element.setPaintStyle({
                         stroke: '#357a38',
                     })
@@ -219,13 +243,14 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
             if (selectedOptions.length) {
                 this.edit = true
             }
-            for (let j = 1; j <= selectedOptions.length; j += 1) {
-                const answerSelector = `#c2${this.question.questionId}${j}`
-                const options = this.question.options[i - 1]
-                if (options) {
-                    const match = options.match
-                    const selectors: HTMLElement[] = this.jsPlumbInstance.getSelector(answerSelector) as unknown as HTMLElement[]
-                    if (match && match.trim() === selectors[0].innerText.trim()) {
+            for (let j = 0; j < selectedOptions.length; j += 1) {
+                // const answerSelector = `#c2${this.question.questionId}${j + 1}`
+                const sourceId = `#${_.get(selectedOptions[j], 'sourceId')}`
+                const targetId = `#${_.get(selectedOptions[j], 'targetId')}`              // this.question.options[i - 1]
+                if (sourceId === questionSelector && targetId) {
+                    const match = _.get(_.first(this.jsPlumbInstance.getSelector(targetId) as unknown as HTMLElement[]), 'innerText')
+                    // const selectors: HTMLElement[] = this.jsPlumbInstance.getSelector(targetId) as unknown as HTMLElement[]
+                    if (match && match.trim()) {/** ===  selectors[0].innerText.trim() */
                         this.jsPlumbInstance.connect({
                             endpoint: ['Dot', {
                                 cssClass: 'amit icon-svg',
@@ -235,7 +260,7 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
                                 },
                             }],
                             source: this.jsPlumbInstance.getSelector(questionSelector) as unknown as Element,
-                            target: this.jsPlumbInstance.getSelector(answerSelector) as unknown as Element,
+                            target: this.jsPlumbInstance.getSelector(targetId) as unknown as Element,
                             anchors: ['Right', 'Left'],
                             ConnectionsDetachable: false,
                         })
@@ -254,5 +279,9 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
     }
     ngOnDestroy(): void {
         this.resetMtf()
+        this.practiceSvc.shCorrectAnswer(false)
+        if (this.shCorrectAnsSubscription) {
+            this.shCorrectAnsSubscription.unsubscribe()
+        }
     }
 }

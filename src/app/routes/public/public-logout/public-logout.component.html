@@ -37,13 +37,14 @@
   <div class=" right_container flex flex-col items-center justify-center">
     <div class="right_inner_container">
       <div class="right_logo_box right_logo_box flex items-center justify-center">
-        <img src="/assets/instances/eagle/app_logos/iGOT_Karmayogi_logo_with_karmayogi_bharat.png" alt="logo">
+       <img src="/assets/instances/eagle/app_logos/eagle-logo-transparent.svg" alt="logo" class="logout_logo">
       </div>
       <div class="text_box flex items-center justify-center">
         <h2 class="mat-h2"> Welcome to iGOT Karmayogi!</h2>
       </div>
-      <div *ngIf="message" class="flex flex-1 margin-s w-inherit justify-center">
-        <span class="mat-subheading-1 mat-error margin-auto flex-wrap">{{message}}</span>
+      <div *ngIf="message" class="flex flex-1 margin-s w-inherit justify-center flex-column">
+        <span class="mat-subheading-errmsg mat-error margin-auto flex-wrap">{{message}} <span>
+          <a mat-button class="mat-button ws-mat-accent-text" routerLink="/public/contact"><span class="mat-subheading-errmsg parichay-errmsg">Contact Us</span></a></span></span>
       </div>
       <div class="button_box flex flex-col items-center justify-center">
         <a mat-button class="flex button m_b_2" href="/protected/v8/resource">

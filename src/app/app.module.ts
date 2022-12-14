@@ -73,12 +73,12 @@ import { NoConnectionComponent } from './component/no-connection/no-connection.c
 import { PublicLogoutModule } from './routes/public/public-logout/public-logout.module'
 import { PublicSignupModule } from './routes/public/public-signup/public-signup.module'
 import { PublicHomeComponent } from './routes/public/public-home/public-home.component'
-import { PublicHomeService } from './services/public-home.service'
 import { PublicContacthomeComponent } from './routes/public/public-contacthome/public-contacthome.component'
 import { PublicLoginWComponent } from './routes/public/public-login-w/public-login-w.component'
 import { PublicLoginWGComponent } from './routes/public/public-login-wg/public-login-wg.component'
 import { PublicWelcomeModule } from './routes/public/welcome/public-welcome.module'
 import { WelcomeUserResolverService } from './services/welcome-user-resolver.service'
+import { PublicTocModule } from './routes/public/public-toc/public-toc.module'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -162,6 +162,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PublicLogoutModule,
     PublicSignupModule,
     PublicWelcomeModule,
+    PublicTocModule,
     MobileAppModule,
     PipeSafeSanitizerModule,
     TourModule,
@@ -201,7 +202,6 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     TncAppResolverService,
     TncPublicResolverService,
     WelcomeUserResolverService,
-    PublicHomeService,
     ConfigurationsService,
     PipeContentRoutePipe,
     AppTocResolverService,

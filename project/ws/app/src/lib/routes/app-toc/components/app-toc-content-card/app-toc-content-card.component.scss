@@ -5,6 +5,12 @@
   top: -0.5em;
   right: 0;
 }
+
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
 .card-collection {
   display: flex;
   align-items: center;
@@ -26,7 +32,7 @@
 
   @media only screen and (max-width:469px) {
     flex-direction: column;
-    margin: $size-xs $size-xs $size-xs*2 $size-xs !important;
+    margin: $size-xs $size-xs $size-xs*2 $size-xs  !important;
     align-items: flex-start !important;
 
     .card-thumbnail {
@@ -72,7 +78,7 @@
 
   @media only screen and (max-width:469px) {
     flex-direction: column;
-    margin: $size-xs $size-xs $size-xs*2 $size-xs !important;
+    margin: $size-xs $size-xs $size-xs*2 $size-xs  !important;
     align-items: flex-start !important;
 
     .card-thumbnail {
@@ -115,9 +121,9 @@
 }
 
 // .children-container {
-  // border-left: 1px solid #00A9F4;
-  // padding-left: $size-s;
-  // margin: $size-s*2 0 $size-m $size-s*2;
+// border-left: 1px solid #00A9F4;
+// padding-left: $size-s;
+// margin: $size-s*2 0 $size-m $size-s*2;
 // }
 
 .resource-container {
@@ -144,6 +150,7 @@
   .mat-subheading-1 {
     font: 400 16px/24px Lato !important;
   }
+
   .resource-container {
     margin-bottom: 20px;
     margin-right: 8px;
@@ -263,8 +270,9 @@
 .progress-bar-thin ::ng-deep.theme-igot.day-mode .mat-progress-bar-background {
   fill: transparent;
 }
+
 .radiobtn {
-  color: rgba(0,0,0,0.16)
+  color: rgba(0, 0, 0, 0.16)
 }
 
 .resicons {
@@ -272,12 +280,13 @@
     width: 22px;
     opacity: 0.5;
     margin-top: 2px;
+    vertical-align: sub;
   }
 }
 
 
 // @media only screen and (max-width:469px) {
-  // .children-container {
-    // margin: $size-s 0 $size-m $size-s;
-  // }
+// .children-container {
+// margin: $size-s 0 $size-m $size-s;
+// }
 // }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core'
+import { Component, OnInit, Inject, Input } from '@angular/core'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { EventService, WsEvents, LoggerService, NsContent } from '@sunbird-cb/utils/src/public-api'
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material'
@@ -6,6 +6,7 @@ import { RatingService } from '@sunbird-cb/collection/src/lib/_services/rating.s
 import { switchMap, takeUntil } from 'rxjs/operators'
 import { Subject } from 'rxjs'
 import { NsAppRating } from '@ws/app/src/lib/routes/app-toc/models/rating.model'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'ws-widget-content-rating-v2-dialog',
@@ -13,6 +14,8 @@ import { NsAppRating } from '@ws/app/src/lib/routes/app-toc/models/rating.model'
   styleUrls: ['./content-rating-v2-dialog.component.scss'],
 })
 export class ContentRatingV2DialogComponent implements OnInit {
+  @Input() ccuserRating: any
+  @Input() navigatetoTOC: any
   content: NsContent.IContent | null = null
   userRating = 0
   feedbackForm: FormGroup
@@ -29,6 +32,7 @@ export class ContentRatingV2DialogComponent implements OnInit {
     private ratingSvc: RatingService,
     private loggerSvc: LoggerService,
     private snackBar: MatSnackBar,
+    private router: Router,
   ) {
     this.feedbackForm = new FormGroup({
       review: new FormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
@@ -37,6 +41,18 @@ export class ContentRatingV2DialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.ccuserRating || this.navigatetoTOC || (this.data && this.data.courseName)) {
+      const obj = {
+        identifier: this.data.identifier,
+        primaryCategory:  this.data.primaryCategory,
+      }
+      const dataobj = {
+        content: obj,
+        userId: this.data.userId,
+        userRating: this.ccuserRating,
+      }
+      this.data = dataobj
+    }
     if (this.data.userRating) {
       this.feedbackForm.patchValue({
         review: this.data.userRating.review,
@@ -142,7 +158,12 @@ export class ContentRatingV2DialogComponent implements OnInit {
   }
 
   closeDialog(val: boolean) {
-    this.dialogRef.close(val)
+    if (this.navigatetoTOC) {
+      this.dialogRef.close(val)
+      this.router.navigateByUrl(`app/toc/${this.data.content.identifier}/overview`)
+    } else {
+      this.dialogRef.close(val)
+    }
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {

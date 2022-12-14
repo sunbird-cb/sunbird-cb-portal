@@ -41,7 +41,8 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   @Input() content: NsContent.IContent | null = null
   @Input() initialrouteData: any
   routeSubscription: Subscription | null = null
-  @Input() forPreview = false
+  @Input() forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+
   @Input() resumeData: NsContent.IContinueLearningData | null = null
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   tocConfig: any = null
@@ -115,13 +116,12 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
+
     this.searchForm = new FormGroup({
       sortByControl: new FormControl(this.sortReviewValues[0]),
       searchKey: new FormControl(''),
     })
-    if (!this.forPreview) {
-      this.forPreview = window.location.href.includes('/author/')
-    }
+
     // if (this.route && this.route.parent) {
     //   this.routeSubscription = this.route.parent.data.subscribe((data: Data) => {
     //     this.initData(data)
@@ -332,12 +332,14 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   resetAndFetchTocStructure() {
     this.tocStructure = {
       assessment: 0,
+      finalTest: 0,
       course: 0,
       handsOn: 0,
       interactiveVideo: 0,
       learningModule: 0,
       other: 0,
       pdf: 0,
+      survey: 0,
       podcast: 0,
       practiceTest: 0,
       quiz: 0,
@@ -497,11 +499,10 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
 
   fetchRatingSummary() {
     this.displayLoader = true
-    if (this.content && this.content.identifier && this.content.primaryCategory) {
+    if (!this.forPreview && this.content && this.content.identifier && this.content.primaryCategory) {
       this.ratingSvc.getRatingSummary(this.content.identifier, this.content.primaryCategory).subscribe(
         (res: any) => {
           this.displayLoader = false
-          // console.log('Rating summary res ', res)
           if (res && res.result && res.result.response) {
             this.ratingSummary = res.result.response
           }
@@ -568,9 +569,10 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
       breakDown: breakDownArray,
       latest50Reviews: breakDownArray,
       ratingsNumber: breakDownArray,
-      total_number_of_ratings:  _.get(this.ratingSummary, 'total_number_of_ratings') || 0,
+      total_number_of_ratings: _.get(this.ratingSummary, 'total_number_of_ratings') || 0,
       avgRating: 0,
     }
+
     const totRatings = _.get(this.ratingSummary, 'sum_of_total_ratings') || 0
     ratingSummaryPr.breakDown.push({
       percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount1stars'), totRatings),
@@ -597,16 +599,26 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
       key: 5,
       value: _.get(this.ratingSummary, 'totalcount5stars'),
     })
-    ratingSummaryPr.latest50Reviews = JSON.parse(this.ratingSummary.latest50Reviews)
-    // ratingSummaryPr.latest50Reviews = this.ratingSummary.latest50Reviews
-    this.ratingReviews = JSON.parse(this.ratingSummary.latest50Reviews)
+    // tslint:disable-next-line:max-line-length
+    // ratingSummaryPr.latest50Reviews = this.ratingSummary && this.ratingSummary.latest50Reviews ? JSON.parse(this.ratingSummary.latest50Reviews) : []
+    // // ratingSummaryPr.latest50Reviews = this.ratingSummary.latest50Reviews
+    // this.ratingReviews = this.ratingSummary && this.ratingSummary.latest50Reviews ? JSON.parse(this.ratingSummary.latest50Reviews) : []
     // ratingSummaryPr.avgRating = parseFloat(((((totRatings / this.ratingSummary.total_number_of_ratings) * 100) * 5) / 100).toFixed(1))
+    if (this.ratingSummary && this.ratingSummary.latest50Reviews) {
+      ratingSummaryPr.latest50Reviews = JSON.parse(this.ratingSummary.latest50Reviews)
+      this.ratingReviews = JSON.parse(this.ratingSummary.latest50Reviews)
+    }
     const meanRating = ratingSummaryPr.breakDown.reduce((val, item) => {
       // console.log('item', item)
       return val + (item.key * item.value)
       // tslint:disable-next-line: align
     }, 0)
-    ratingSummaryPr.avgRating = parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1))
+    // tslint:disable-next-line:max-line-length
+    // ratingSummaryPr.avgRating = this.ratingSummary && this.ratingSummary.total_number_of_ratings ? parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1)) : 0
+
+    if (this.ratingSummary && this.ratingSummary.total_number_of_ratings) {
+      ratingSummaryPr.avgRating = parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1))
+    }
     if (this.content) {
       this.content.averageRating = ratingSummaryPr.avgRating
       this.content.totalRating = ratingSummaryPr.total_number_of_ratings
@@ -646,11 +658,12 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     this.reviewPage = 1
     this.disableLoadMore = false
     this.ratingLookup = []
-
-    if (sort === this.sortReviewValues[0]) {
-      this.fetchRatingSummary()
-    } else {
-      this.fetchRatingLookup()
+    if (!this.forPreview) {
+      if (sort === this.sortReviewValues[0]) {
+        this.fetchRatingSummary()
+      } else {
+        this.fetchRatingLookup()
+      }
     }
   }
 
@@ -674,6 +687,9 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   public tabClicked(tabEvent: MatTabChangeEvent) {
+    // if (this.forPreview) {
+    //   return
+    // }
     const data: WsEvents.ITelemetryTabData = {
       label: `${tabEvent.tab.textLabel}`,
       index: tabEvent.index,

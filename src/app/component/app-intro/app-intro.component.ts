@@ -39,4 +39,5 @@ export class AppIntroComponent implements OnInit, AfterViewInit {
         }
         this.dialogRef.close()
     }
+
 }

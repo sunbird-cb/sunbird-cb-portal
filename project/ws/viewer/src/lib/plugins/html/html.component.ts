@@ -29,6 +29,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   intranetUrlPatterns: string[] | undefined = []
   isIntranetUrl = false
   collectionId = ''
+  forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   progress = 100
   constructor(
     private domSanitizer: DomSanitizer,
@@ -60,7 +61,9 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     if (this.htmlContent && this.htmlContent.identifier) {
       this.scormAdapterService.contentId = this.htmlContent.identifier
-      this.scormAdapterService.loadDataV2()
+      if (!this.forPreview) {
+        this.scormAdapterService.loadDataV2()
+      }
     }
   }
   ngOnDestroy() {
@@ -164,14 +167,17 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         //   )
         // }
         if (this.htmlContent.streamingUrl && this.htmlContent.initFile) {
-          if (this.htmlContent.streamingUrl.includes('latest')) {
+          if (this.htmlContent.streamingUrl.includes('latest') && !this.htmlContent.initFile) {
             this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
-            // tslint:disable-next-line:max-line-length
-            `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-latest/index.html?timestamp = '${new Date().getTime()}`
+              // tslint:disable-next-line:max-line-length
+              `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-latest/index.html?timestamp='${new Date().getTime()}`
             )
           } else {
+            // `${this.htmlContent.streamingUrl}/${this.htmlContent.initFile}?timestamp='${new Date().getTime()}`)
             this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
-            `${this.htmlContent.streamingUrl}/${this.htmlContent.initFile}?timestamp='${new Date().getTime()}`)
+              // tslint:disable-next-line:max-line-length
+              `${this.generateUrl(this.htmlContent.streamingUrl)}/${this.htmlContent.initFile}?timestamp='${new Date().getTime()}`
+            )
           }
         } else {
           if (environment.production) {
@@ -295,6 +301,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   raiseTelemetry(data1: any) {
+    // if (this.forPreview) { return }
     let data: any
     if (this.htmlContent) {
       if (typeof data1 === 'string' || data1 instanceof String) {
@@ -327,7 +334,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         {
           pageIdExt: `${_.camelCase(this.htmlContent.primaryCategory)}`,
           module: _.camelCase(this.htmlContent.primaryCategory),
-      })
+        })
     }
   }
 

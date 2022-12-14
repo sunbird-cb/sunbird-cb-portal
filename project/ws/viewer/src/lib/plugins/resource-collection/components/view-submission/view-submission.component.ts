@@ -20,6 +20,11 @@ export class ViewSubmissionComponent implements OnInit {
       pdfUrl: string,
       hideControls: boolean
     } | null = null
+  surveyData:
+    {
+      surveyUrl: string,
+      hideControls: boolean
+    } | null = null
   videoData: { url: string, disableTelemetry: boolean } | null = null
   submissionType = ''
   submissionAnswerText: string[] = []
@@ -54,6 +59,11 @@ export class ViewSubmissionComponent implements OnInit {
       } else if (this.submissionType === 'pdf' && this.submissionUrl) {
         this.pdfData = {
           pdfUrl: this.submissionUrl,
+          hideControls: true,
+        }
+      } else if (this.submissionType === 'survey' && this.submissionUrl) {
+        this.surveyData = {
+          surveyUrl: this.submissionUrl,
           hideControls: true,
         }
       } else {

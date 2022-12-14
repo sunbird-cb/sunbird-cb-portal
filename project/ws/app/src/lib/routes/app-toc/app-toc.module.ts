@@ -115,6 +115,7 @@ import { ActionService } from './services/action.service'
 import { ConnectionNameModule } from '@sunbird-cb/collection/src/lib/_common/connection-name/connection-name.module'
 import { CertificateDialogModule } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.module'
 import { InfiniteScrollModule } from 'ngx-infinite-scroll'
+import { AppPublicTocResolverService } from 'src/app/routes/public/public-toc/app-public-toc-resolver.service'
 
 @NgModule({
   declarations: [
@@ -219,6 +220,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll'
   ],
   providers: [
     AppTocResolverService,
+    AppPublicTocResolverService,
     AppTocService,
     PipeContentRoutePipe,
     CertificationApiService,
@@ -230,7 +232,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll'
     ProfileResolverService,
     ActionService,
   ],
-  exports: [AppTocDiscussionComponent],
+  exports: [AppTocDiscussionComponent, AppTocSinglePageComponent, AppTocBannerComponent],
   entryComponents: [
     AppTocDialogIntroVideoComponent,
     AppTocOverviewComponent,

@@ -19,6 +19,8 @@ export const VIEWER_ROUTE_FROM_MIME = (mimeType: NsContent.EMimeTypes) => {
       return 'html'
     case NsContent.EMimeTypes.TEXT_WEB:
       return 'youtube'
+    case NsContent.EMimeTypes.SURVEY:
+      return 'survey'
     case NsContent.EMimeTypes.IAP:
       return 'iap'
     case NsContent.EMimeTypes.ILP_FP:
@@ -71,7 +73,7 @@ export function viewerRouteGenerator(
     collId = undefined
     collType = undefined
   }
-  const url = `${forPreview ? '/author' : ''}/viewer/${VIEWER_ROUTE_FROM_MIME(mimeType)}/${id}`
+  const url = `/viewer/${VIEWER_ROUTE_FROM_MIME(mimeType)}/${id}`
   let queryParams = {}
   if (primaryCategory) {
     queryParams = {
@@ -86,6 +88,9 @@ export function viewerRouteGenerator(
   }
   if (courseName) {
     queryParams = { ...queryParams, courseName }
+  }
+  if (forPreview) {
+    queryParams = { ...queryParams, preview: true }
   }
   return {
     queryParams,

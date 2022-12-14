@@ -10,6 +10,7 @@ import { EmptyRouteGuard } from './guards/empty-route.guard'
 import { ExternalUrlResolverService } from './guards/external-url-resolver.service'
 import { GeneralGuard } from './guards/general.guard'
 import { LoginGuard } from './guards/login.guard'
+import { RedirectGuard } from './guards/redirect.guard'
 import { FeaturesComponent } from './routes/features/features.component'
 import { FeaturesModule } from './routes/features/features.module'
 import { MobileAppHomeComponent } from './routes/public/mobile-app/components/mobile-app-home.component'
@@ -21,12 +22,14 @@ import { TncPublicResolverService } from './services/tnc-public-resolver.service
 import { AppTocResolverService } from '@ws/app/src/lib/routes/app-toc/resolvers/app-toc-resolver.service'
 import { PublicLogoutComponent } from './routes/public/public-logout/public-logout.component'
 import { PublicSignupComponent } from './routes/public/public-signup/public-signup.component'
-import { PublicHomeComponent } from './routes/public/public-home/public-home.component'
 import { PublicContacthomeComponent } from './routes/public/public-contacthome/public-contacthome.component'
 import { PublicLoginWComponent } from './routes/public/public-login-w/public-login-w.component'
 import { PublicWelcomeComponent } from './routes/public/welcome/public-welcome.component'
 import { PublicLoginWGComponent } from './routes/public/public-login-wg/public-login-wg.component'
 import { WelcomeUserResolverService } from './services/welcome-user-resolver.service'
+import { PublicTocComponent } from './routes/public/public-toc/public-toc.component'
+import { AppPublicTocResolverService } from './routes/public/public-toc/app-public-toc-resolver.service'
+import { environment } from 'src/environments/environment'
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
 // Please declare routes in alphabetical order
@@ -38,6 +41,15 @@ const routes: Routes = [
     redirectTo: 'page/home',
     pathMatch: 'full',
     canActivate: [EmptyRouteGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'home',
+      pageId: 'page/home',
+      module: 'home',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
   },
   // {
   //   path: 'practice/behavioral',
@@ -47,6 +59,14 @@ const routes: Routes = [
   //   data: {
   //   },
   // },
+  {
+    path: 'static-home',
+    canActivate: [RedirectGuard],
+    component: RedirectGuard,
+    data: {
+      externalUrl: environment.staticHomePageUrl,
+    },
+  },
   {
     path: 'app/activities',
     loadChildren: () => import('./routes/route-activities.module').then(u => u.RouteActivitiesModule),
@@ -167,6 +187,19 @@ const routes: Routes = [
     // loadChildren: () => import('./routes/route-cert.module').then(u => u.RouteCertificateModule),
   },
   {
+    path: 'app/curatedCollections',
+    loadChildren: () =>
+      import('./routes/route-curated-course.module').then(u => u.RouteCuratedCourseModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageId: 'app/curatedCollections',
+      module: 'explore',
+    },
+    resolve: {
+      // pageData: PageResolve,
+    },
+  },
+  {
     path: 'app/learn/browse-by/competency',
     loadChildren: () =>
       import('./routes/route-browse-competency.module').then(u => u.RouteBrowseCompetencyModule),
@@ -228,6 +261,11 @@ const routes: Routes = [
       module: 'Profile',
     },
     loadChildren: () => import('./routes/route-cert.module').then(u => u.RouteCertificateModule),
+  },
+  {
+    path: 'public/certs',
+    redirectTo: 'certs',
+    // pathMatch: 'full',
   },
   // {
   //   path: 'app/gamification',
@@ -715,9 +753,37 @@ const routes: Routes = [
     path: 'public/logout',
     component: PublicLogoutComponent,
   },
+  // {
+  //   path: 'public/home',
+  //   component: PublicHomeComponent,
+  //   data: {
+  //     pageType: 'feature',
+  //     pageKey: 'public-home',
+  //     pageId: 'public/home',
+  //     module: 'home',
+  //   },
+  //   resolve: {
+  //     pageData: PageResolve,
+  //   },
+  // },
   {
     path: 'public/home',
-    component: PublicHomeComponent,
+    pathMatch: 'full',
+    redirectTo: 'static-home',
+  },
+  {
+    path: 'public/toc/:id/overview',
+    component: PublicTocComponent,
+    data: {
+      pageType: 'feature',
+      pageKey: 'toc',
+      pageId: 'public/toc/:id',
+      module: 'Learn',
+    },
+    resolve: {
+      pageData: PageResolve,
+      content: AppPublicTocResolverService,
+    },
   },
   {
     path: 'public/sso',
@@ -748,6 +814,10 @@ const routes: Routes = [
   },
   {
     path: 'public/google/sso',
+    component: PublicLoginWComponent,
+  },
+  {
+    path: 'public/sso',
     component: PublicLoginWComponent,
   },
   {
@@ -822,6 +892,7 @@ const routes: Routes = [
       urlUpdateStrategy: 'eager',
       onSameUrlNavigation: 'reload',
       scrollOffset: [0, 80],
+      // enableTracing: true,
     }),
   ],
   exports: [RouterModule],

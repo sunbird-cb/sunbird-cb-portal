@@ -1,0 +1,16 @@
+<section #fullScreenContainer class="survey-container" *ngIf="progressStatus < 2">
+  <lib-micro-survey class="course-survey"
+      [apiData]="apiData"
+      [afterSubmitAction]="afterSubmitAction"
+      [isReadOnly]="isReadOnly"
+      [surveyId]="surveyId"
+      [courseId]="courseId"
+      [courseName]="courseName"
+    ></lib-micro-survey>
+</section>
+
+<section #fullScreenContainer class="survey-container" *ngIf="progressStatus === 2 && identifierId === widgetData.identifier">
+  <div>
+    <p class="margin-xl mat-subheading-1">Survey is submitted</p>
+  </div>
+</section>

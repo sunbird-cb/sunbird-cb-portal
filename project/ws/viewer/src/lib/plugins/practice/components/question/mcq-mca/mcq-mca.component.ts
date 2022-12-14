@@ -5,10 +5,12 @@ import {
     Input,
     OnChanges, OnInit,
     Output,
-    SimpleChanges, ViewEncapsulation,
+    SimpleChanges, ViewEncapsulation, OnDestroy,
 } from '@angular/core'
 import { NSPractice } from '../../../practice.model'
-// import { PracticeService } from '../../../practice.service'
+import { Subscription } from 'rxjs'
+import { PracticeService } from '../../../practice.service'
+import { NsContent } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
     selector: 'viewer-mcq-mca-question',
@@ -17,13 +19,14 @@ import { NSPractice } from '../../../practice.model'
     // tslint:disable-next-line
     encapsulation: ViewEncapsulation.None
 })
-export class MultipleChoiseQuesComponent implements OnInit, OnChanges, AfterViewInit {
+export class MultipleChoiseQuesComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
     @Input() question: NSPractice.IQuestion = {
         multiSelection: false,
         section: '',
         question: '',
         instructions: '',
         questionId: '',
+        editorState: undefined,
         options: [
             {
                 optionId: '',
@@ -33,14 +36,23 @@ export class MultipleChoiseQuesComponent implements OnInit, OnChanges, AfterView
         ],
     }
     @Input() itemSelectedList: string[] = []
+    @Input() primaryCategory = NsContent.EPrimaryCategory.PRACTICE_RESOURCE
     @Output() update = new EventEmitter<string | Object>()
     localQuestion: string = this.question.question
+    shCorrectAnsSubscription: Subscription | null = null
+    showAns = false
     constructor(
-        // private practiceSvc: PracticeService,
+        private practiceSvc: PracticeService,
     ) {
 
     }
     ngOnInit() {
+        if (this.shCorrectAnsSubscription) {
+            this.shCorrectAnsSubscription.unsubscribe()
+        }
+        this.shCorrectAnsSubscription = this.practiceSvc.displayCorrectAnswer.subscribe(displayAns => {
+            this.showAns = displayAns
+        })
         this.localQuestion = this.question.question
     }
     ngOnChanges(changes: SimpleChanges): void {
@@ -54,5 +66,11 @@ export class MultipleChoiseQuesComponent implements OnInit, OnChanges, AfterView
     }
     updateParent($event: any) {
         this.update.emit($event)
+    }
+    ngOnDestroy(): void {
+        this.practiceSvc.shCorrectAnswer(false)
+        if (this.shCorrectAnsSubscription) {
+            this.shCorrectAnsSubscription.unsubscribe()
+        }
     }
 }

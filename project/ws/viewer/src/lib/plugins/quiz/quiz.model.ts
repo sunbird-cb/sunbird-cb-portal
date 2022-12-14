@@ -12,10 +12,11 @@ export namespace NSQuiz {
   export interface IQuestion {
     multiSelection: boolean
     section: string
-    instructions: string
+    instructions: string | null
     question: string
     questionId: string
     options: IOption[]
+    editorState?: any[],
     questionType?: TQuizQuestionType
   }
 

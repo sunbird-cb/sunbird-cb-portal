@@ -20,6 +20,9 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     widgetSubType: 'actionButtonApps',
     widgetData: { allListingUrl: '' }, // /app/features
   }
+  forPreview = window.location.href.includes('/public/')
+    || window.location.href.includes('&preview=true')
+  isPlayerPage = window.location.href.includes('/viewer/')
   instanceVal = ''
   btnAppsConfig!: NsWidgetResolver.IRenderConfigWithTypedData<IBtnAppsConfig>
   appIcon: SafeUrl | null = null
@@ -35,8 +38,9 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   showAppNavBar = false
   popupTour: any
   currentRoute = 'page/home'
-  isPublicHomePage = false
+  isPublicHomePage = window.location.href.includes('/public/home')
   isSetUpPage = false
+  isLoggedIn = false
   constructor(
     private domSanitizer: DomSanitizer,
     private configSvc: ConfigurationsService,
@@ -56,10 +60,12 @@ export class AppNavBarComponent implements OnInit, OnChanges {
         this.bindUrl(event.url.replace('/app/competencies/', ''))
       }
     })
-
   }
 
   ngOnInit() {
+    if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
+        this.isLoggedIn = true
+    }
     if (this.configSvc.instanceConfig) {
       this.appIcon = this.domSanitizer.bypassSecurityTrustResourceUrl(
         this.configSvc.instanceConfig.logos.app,
@@ -104,6 +110,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       || e.url.includes('/public/home')
       || e.url.includes('/public/sso')
       || e.url.includes('/public/google/sso')
+      || e.url.startsWith('/viewer')
     ) {
       this.showAppNavBar = false
       if (e.url.includes('/public/home')) {
@@ -170,5 +177,34 @@ export class AppNavBarComponent implements OnInit, OnChanges {
         this.currentRoute = path
       }
     }
+  }
+  get stillOnHomePage(): boolean {
+    this.isPublicHomePage = window.location.href.includes('/public/home')
+    return this.isPublicHomePage
+  }
+  get fullMenuDispaly(): boolean {
+    this.isPlayerPage = window.location.href.includes('/viewer/')
+    return !(this.isPlayerPage || this.stillOnHomePage)
+  }
+  get sShowAppNavBar(): boolean {
+    return this.showAppNavBar
+  }
+  get needToHide(): boolean {
+    return this.currentRoute.includes('all/assessment/')
+  }
+  // parichay changes
+  get isforPreview(): boolean {
+    this.forPreview = window.location.href.includes('/public/')
+    || window.location.href.includes('&preview=true')
+    || window.location.href.includes('/certs')
+    return this.forPreview
+  }
+  get isThisSetUpPage(): boolean {
+    if (window.location.pathname.includes('/app/setup')) {
+      this.isSetUpPage = true
+    } else {
+      this.isSetUpPage = false
+    }
+    return this.isSetUpPage
   }
 }
