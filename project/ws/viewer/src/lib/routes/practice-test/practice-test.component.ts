@@ -30,6 +30,7 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
         maxQuestions: 0,
         requiresSubmit: 'Yes',
         showTimer: 'Yes',
+        primaryCategory: NsContent.EPrimaryCategory.PRACTICE_RESOURCE,
     }
     private dataSubscription: Subscription | null = null
     private viewerDataSubscription: Subscription | null = null
@@ -66,6 +67,7 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
             this.quizJson.requiresSubmit = this.testData.requiresSubmit
             this.quizJson.showTimer = this.testData.requiresSubmit
             this.quizJson.timeLimit = this.testData.expectedDuration
+            this.quizJson.primaryCategory = this.testData.primaryCategory
             this.alreadyRaised = true
             this.raiseEvent(WsEvents.EnumTelemetrySubType.Loaded, this.testData)
         }
@@ -151,5 +153,6 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
         if (this.telemetryIntervalSubscription) {
             this.telemetryIntervalSubscription.unsubscribe()
         }
+        this.isFetchingDataComplete = false
     }
 }

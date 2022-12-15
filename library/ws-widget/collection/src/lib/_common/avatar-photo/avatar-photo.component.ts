@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core'
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core'
 
 @Component({
   selector: 'ws-widget-avatar-photo',
   templateUrl: './avatar-photo.component.html',
   styleUrls: ['./avatar-photo.component.scss'],
 })
-export class AvatarPhotoComponent implements OnInit {
+export class AvatarPhotoComponent implements OnInit, OnChanges {
   @Input() datalen: any
 
   @Input()
@@ -60,7 +60,14 @@ export class AvatarPhotoComponent implements OnInit {
     }
 
   }
-
+  ngOnChanges(change: SimpleChanges) {
+    if (change.name.currentValue !== change.name.previousValue && !change.name.firstChange) {
+      this.createInititals()
+    }
+  }
+  get userInitials() {
+    return this.initials
+  }
   private createInititals(): void {
     let initials = ''
     const array = `${this.name} `.toString().split(' ')

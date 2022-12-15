@@ -9,6 +9,7 @@ const API_END_POINTS = {
   ASSESSMENT_SUBMIT_V3: `/apis/protected/v8/user/evaluate/assessment/submit/v3`,
   QUESTION_PAPER_SECTIONS: `/apis/proxies/v8/assessment/read`,
   QUESTION_PAPER_QUESTIONS: `/apis/proxies/v8/question/read`,
+  CAN_ATTEMPT: (assessmentId: any) => `/apis/proxies/v8/user/assessment/retake/${assessmentId}`,
 }
 @Injectable({
   providedIn: 'root',
@@ -244,7 +245,7 @@ export class PracticeService {
   }
   canAttend(identifier: string): Observable<any> {
     if (identifier) {
-      return of(EMPTY)
+      return this.http.get<any>(API_END_POINTS.CAN_ATTEMPT(identifier))
     }
     return of(EMPTY)
   }

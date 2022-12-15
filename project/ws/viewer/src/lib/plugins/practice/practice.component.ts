@@ -64,6 +64,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     maxQuestions: 0,
     requiresSubmit: 'Yes',
     showTimer: 'Yes',
+    primaryCategory: NsContent.EPrimaryCategory.PRACTICE_RESOURCE,
   }
   @ViewChildren('questionsReference') questionsReference: QueryList<QuestionComponent> | null = null
   @ViewChild('sidenav', { static: false }) sideNav: MatSidenav | null = null
@@ -119,21 +120,6 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     if (environment.assessmentBuffer) {
       this.assessmentBuffer = environment.assessmentBuffer
     }
-    let canAttempt = true
-    if (this.primaryCategory !== NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
-      this.canAttend().then(r => {
-        canAttempt = !!r
-      })
-    }
-    if (canAttempt) {
-      this.init()
-      this.updateVisivility()
-    }
-  }
-  async canAttend() {
-    const data = this.quizSvc.canAttend(this.identifier)
-    await data.toPromise()
-    return data
   }
   init() {
     // this.getSections()
@@ -174,7 +160,22 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     }
     return
   }
+  async canAttend() {
+    const data = this.quizSvc.canAttend(this.identifier)
+    await data.toPromise()
+    return data
+  }
   ngOnInit() {
+    let canAttempt = true
+    if (this.primaryCategory !== NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
+      this.canAttend().then(r => {
+        canAttempt = !!r
+      })
+    }
+    if (canAttempt) {
+      this.init()
+      this.updateVisivility()
+    }
     this.attemptSubscription = this.quizSvc.secAttempted.subscribe(data => {
       this.attemptSubData = data
     })
@@ -1124,6 +1125,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       maxQuestions: 0,
       requiresSubmit: 'Yes',
       showTimer: 'Yes',
+      primaryCategory: NsContent.EPrimaryCategory.PRACTICE_RESOURCE,
     }
   }
   ngOnDestroy() {
