@@ -53,15 +53,7 @@ export class BtnProfileComponent extends WidgetBaseComponent
     super()
     this.btnAppsConfig = { ...this.basicBtnAppsConfig }
     this.btnSettingsConfig = { ... this.settingBtnConfig }
-    if (this.configSvc.userProfile) {
-      this.givenName = `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}`
-      this.profileImage = this.configSvc.userProfile.profileImage ||
-        (this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.profileImage : null) || null
-      if (!this.profileImage && localStorage.getItem(this.configSvc.userProfile.userId)) {
-        this.profileImage = localStorage.getItem(this.configSvc.userProfile.userId)
-      }
-    }
-
+    this.updateUserInfo()
     if (this.configSvc.appsConfig) {
       const appsConfig = this.configSvc.appsConfig
       const availGroups: NsAppsConfig.IGroup[] = []
@@ -99,8 +91,29 @@ export class BtnProfileComponent extends WidgetBaseComponent
       )
     }
   }
-
+  updateUserInfo() {
+    if (this.configSvc.userProfile) {
+      this.givenName = `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}`
+      this.profileImage = this.configSvc.userProfile.profileImage ||
+        (this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.profileImage : null) || null
+      if (!this.profileImage && localStorage.getItem(this.configSvc.userProfile.userId)) {
+        this.profileImage = localStorage.getItem(this.configSvc.userProfile.userId)
+      }
+    }
+  }
+  get getGivenName() {
+    if (this.configSvc.userProfile) {
+      this.givenName = `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}`
+      return this.givenName
+    }
+    return 'Guest'
+  }
   ngOnInit() {
+    // this.configSvc.updateProfileObservable.subscribe(yes => {
+    //   if (yes) {
+    //     setTimeout(this.updateUserInfo.bind(this), 2000)
+    //   }
+    // })
     this.setPinnedApps()
     if (this.widgetData && this.widgetData.actionBtnId) {
       this.id = this.widgetData.actionBtnId

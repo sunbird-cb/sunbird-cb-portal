@@ -1,3 +1,5 @@
+import { NsContent } from '@sunbird-cb/collection/src/public-api'
+
 export namespace NSQuiz {
   export interface IQuiz {
     timeLimit: number
@@ -7,6 +9,7 @@ export namespace NSQuiz {
     requiresSubmit: 'Yes' | 'No'
     showTimer: 'Yes' | 'No'
     allowSkip: 'Yes' | 'No'
+    primaryCategory: NsContent.EPrimaryCategory
   }
 
   export interface IQuestion {
