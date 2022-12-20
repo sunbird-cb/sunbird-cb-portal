@@ -2,7 +2,7 @@ import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit } fro
 import { ActivatedRoute, Router } from '@angular/router'
 import { NsContent } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { UtilityService, ValueService } from '@sunbird-cb/utils'
+import { UtilityService, ValueService, ConfigurationsService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { RootService } from '../../../../../src/app/component/root/root.service'
 import { TStatus, ViewerDataService } from './viewer-data.service'
@@ -37,6 +37,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   status: TStatus = 'none'
   error: any | null = null
   isNotEmbed = true
+  discussionConfig: any = {}
   errorWidgetData: NsWidgetResolver.IRenderConfigWithTypedData<any> = {
     widgetType: 'errorResolver',
     widgetSubType: 'errorResolver',
@@ -54,6 +55,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     private rootSvc: RootService,
     private utilitySvc: UtilityService,
     private changeDetector: ChangeDetectorRef,
+    public configSvc: ConfigurationsService,
   ) {
     this.rootSvc.showNavbarDisplay$.next(false)
   }
@@ -67,6 +69,27 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnInit() {
+    this.discussionConfig = {
+      // menuOptions: [{ route: 'categories', enable: true }],
+      userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
+    }
+    this.discussionConfig.contextIdArr = (this.content) ? [this.content.identifier] : []
+    if (this.content) {
+      this.discussionConfig.categoryObj = {
+        category: {
+          name: this.content.name,
+          pid: '',
+          description: this.content.description,
+          context: [
+            {
+              type: 'course',
+              identifier: this.content.identifier,
+            },
+          ],
+        },
+      }
+    }
+    this.discussionConfig.contextType = 'course'
     this.isNotEmbed = !(
       window.location.href.includes('/embed/') ||
       this.activatedRoute.snapshot.queryParams.embed === 'true'

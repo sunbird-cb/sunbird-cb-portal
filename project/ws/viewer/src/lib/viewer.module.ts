@@ -46,6 +46,7 @@ import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { ViewerComponent } from './viewer.component'
 import { ViewerTocComponent } from './components/viewer-toc/viewer-toc.component'
 import { ViewerTopBarModule } from './components/viewer-top-bar/viewer-top-bar.module'
+import { DiscussionUiModule } from '@sunbird-cb/discussions-ui-v8'
 
 @NgModule({
   declarations: [ViewerComponent, ViewerTocComponent],
@@ -84,6 +85,7 @@ import { ViewerTopBarModule } from './components/viewer-top-bar/viewer-top-bar.m
     MatTabsModule,
     PlayerBriefModule,
     ViewerTopBarModule,
+    DiscussionUiModule,
   ],
 })
 export class ViewerModule { }
