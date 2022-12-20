@@ -45,7 +45,7 @@ export class CuratedHomeComponent implements OnInit {
       offset: 0,
       fields: [],
       facets: ['primaryCategory', 'mimeType'],
-      fuzzy: true,
+      fuzzy: false,
     },
   }
 
