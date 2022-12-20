@@ -5,7 +5,6 @@ import { ConfigurationsService, AuthKeycloakService } from '@sunbird-cb/utils'
 import { catchError } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { NOTIFICATION_TIME } from '@sunbird-cb/collection/src/lib/_common/ck-editor/constants/constant'
-import { Router } from '@angular/router'
 // import 'rxjs/add/operator/do'
 
 @Injectable({
@@ -16,7 +15,7 @@ export class AppInterceptorService implements HttpInterceptor {
     private configSvc: ConfigurationsService,
     private snackBar: MatSnackBar,
     private authSvc: AuthKeycloakService,
-    private router: Router,
+    // private router: Router,
     @Inject(LOCALE_ID) private locale: string,
   ) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -63,7 +62,8 @@ export class AppInterceptorService implements HttpInterceptor {
           catchError(error => {
             if (error instanceof HttpErrorResponse) {
               const localUrl = location.origin
-              // const pagePath = `/public/logout`
+              const pagePath = location.href || `${localUrl}/page/home`
+              const pageName = (location.href || '').replace(localUrl, '')
               switch (error.status) {
                 case 0:
                   if (localUrl.includes('localhost')) {
@@ -83,17 +83,17 @@ export class AppInterceptorService implements HttpInterceptor {
                   if (localStorage.getItem('telemetrySessionId')) {
                     localStorage.removeItem('telemetrySessionId')
                   }
-                  // if (localUrl.includes('localhost')) {
-                  //   // tslint:disable-next-line: prefer-template
-                  //   window.location.href = error.error.redirectUrl + `?q= ${pagePath}`
-                  // } else {
-                  //   // tslint:disable-next-line: prefer-template
-                  //   window.location.href = error.error.redirectUrl + `?q=${pageName} `
-                  // }
-                  if (!window.location.href.includes('/public/home')) {
-                    this.router.navigate(['public', 'home'])
-                    // window.location.href = '/public/home'
+                  if (localUrl.includes('localhost')) {
+                    // tslint:disable-next-line: prefer-template
+                    window.location.href = error.error.redirectUrl + `?redirect_uri=${encodeURIComponent(pagePath)}`
+                  } else {
+                    // tslint:disable-next-line: prefer-template
+                    window.location.href = error.error.redirectUrl + `?redirect_uri=${encodeURIComponent(pageName)}`
                   }
+                  // if (!window.location.href.includes('/public/home')) {
+                  //   this.router.navigate(['public', 'home'])
+                  //   // window.location.href = '/public/home'
+                  // }
                   // this.authSvc.force_logout()
                   break
               }

@@ -1,6 +1,7 @@
 <mat-card class="flex flex-1 flex-column padding-xl ws-mat-accent-border no-shadow">
   <span class="mat-subheading-2" i18n>Instruction</span>
-  <span class="mat-body-2 margin-bottom-l" i18n>{{ question?.instructions || 'Fill in the blank with the best word'}}</span>
+  <span class="mat-body-2 margin-bottom-l" i18n>{{ question?.instructions || 'Fill in the blank with the best
+    word'}}</span>
   <h2 *ngIf="question.questionType === 'ftb'" class="mat-h2" [innerHTML]="safeQuestion" class="quiz-question">
   </h2>
 
@@ -11,10 +12,10 @@
   }" *ngIf="viewState === 'answer' && option?.isCorrect">
         {{ option?.text }}
       </div>
-      <div class="background-well padding-left-m padding-xs"
-        *ngIf="viewState === 'review' && option?.hint && !unTouchedBlank[i]" [ngClass]="{
-    'correct-option': viewState === 'review' && correctOption[i],
-    'incorrect-option': viewState === 'review' && !correctOption[i]
+      <div class="background-well padding-left-m padding-xs" *ngIf="showAns && option?.hint && !unTouchedBlank[i]"
+        [ngClass]="{
+    'correct-option': showAns && correctOption[i],
+    'incorrect-option': showAns && !correctOption[i]
   }">
         <p class="margin-remove mat-body-2">
           <ng-container i18n="explanation/hint message for blank label in fill-in-the-blanks">
@@ -26,4 +27,8 @@
       </div>
     </div>
   </div>
+  <mat-card-footer *ngIf="showAns">
+    <span class="mat-subheading-1 margin-left-m" i18n>Correct Answer(s): </span>
+    <span class="mat-body-1 ws-mat-green-text margin-left-m">{{correctAns}}</span>
+  </mat-card-footer>
 </mat-card>

@@ -142,13 +142,13 @@
         <ng-container *ngIf="userRoles && userRoles.length>0">
             <div class="flex flex-1 flex-column margin-top-xs">
                 <ng-container *ngFor="let role of userRoles; let i = index">
-                    <mat-card class="flex flex-1 flex-column margin-bottom-s" id="{{i}}">
+                    <mat-card class="flex flex-1 flex-column margin-bottom-s" id="{{i + 1}}" *ngIf="role && role.name">
                         <div class="flex flex-row">
                             <div class="flex flex-1">
                                 <p class="mat-subheading-1 margin-bottom-m">{{role.name}} </p>
                             </div>
                             <div class="flex flex-row justify-between">
-                                <a class="cursor-pointer flex margin-right-xs" (click)="edit(role)">
+                                <a class="cursor-pointer flex margin-right-xs" (click)="edit(role, i)">
                                     <mat-icon class="flex  ws-mat-black60-text margin-right-xs" >edit
                                     </mat-icon>
                                     Edit

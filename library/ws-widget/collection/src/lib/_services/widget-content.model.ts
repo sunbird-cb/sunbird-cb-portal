@@ -373,6 +373,7 @@ export namespace NsContent {
     LEARNING_RESOURCE = 'Learning Resource',
     PRACTICE_RESOURCE = 'Practice Question Set',
     FINAL_ASSESSMENT = 'Course Assessment',
+    COMP_ASSESSMENT = 'Competency Assessment',
   }
 
   export enum EMiscPlayerSupportedCollectionTypes {
@@ -427,7 +428,8 @@ export namespace NsContent {
     // Added on UI Only
     CERTIFICATION = 'application/certification',
     PLAYLIST = 'application/playlist',
-    TEXT_WEB = 'text/x-url', // URL or Youtube
+    TEXT_WEB = 'text/x-url',
+    SURVEY = 'application/survey',
     QUESTION_SET = 'application/vnd.sunbird.questionset',
     QUESTION = 'application/vnd.sunbird.question',
     UNKNOWN = 'application/unknown',
@@ -453,6 +455,7 @@ export namespace NsContent {
     KNOWLEDGE_ARTIFACT = 'KNOWLEDGE_ARTIFACT',
     MODULE = 'MODULE',
     PDF = 'PDF',
+    SURVEY = 'SURVEY',
     PLAYLIST = 'PLAYLIST',
     PROGRAM = 'PROGRAM',
     QUIZ = 'QUIZ',
@@ -498,5 +501,6 @@ export namespace NsContent {
     EMimeTypes.PDF,
     EMimeTypes.YOUTUBE,
     EMimeTypes.TEXT_WEB,
+    EMimeTypes.SURVEY,
   ]
 }

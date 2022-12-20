@@ -369,6 +369,12 @@ TODO: edit option while preview Mode
               <span *ngIf="tocStructure?.webPage === 1" i18n> Web Page</span>
               <span *ngIf="tocStructure?.webPage > 1" i18n> Web Pages</span>
             </p>
+            <p *ngIf="tocStructure?.survey > 0" class="mat-body-2 cs-icons">
+              <img src="/assets/icons/content/grey/content_copy.svg" alt="Survey" class="margin-right-xs"> {{
+              tocStructure?.survey }}
+              <span *ngIf="tocStructure?.survey === 1" i18n> Survey</span>
+              <span *ngIf="tocStructure?.survey > 1" i18n> Surveys</span>
+            </p>
             <p *ngIf="tocStructure?.interactivecontent > 0" class="mat-body-2 cs-icons">
               <img src="/assets/icons/content/grey/link.svg" alt="Interactive Content" class="margin-right-xs"> {{
               tocStructure?.interactivecontent }}
@@ -391,6 +397,12 @@ TODO: edit option while preview Mode
               tocStructure?.practiceTest }}
               <span *ngIf="tocStructure?.practiceTest === 1" i18n> Practice test</span>
               <span *ngIf="tocStructure?.practiceTest > 1" i18n> Practice Tests</span>
+            </p>
+            <p *ngIf="tocStructure?.finalTest > 0" class="mat-body-2 cs-icons">
+              <img src="/assets/icons/content/grey/assessment.svg" alt="Assessment" class="margin-right-xs"> {{
+              tocStructure?.finalTest }}
+              <span *ngIf="tocStructure?.finalTest === 1" i18n>Final test</span>
+              <span *ngIf="tocStructure?.finalTest > 1" i18n> Final Tests</span>
             </p>
             <p *ngIf="tocStructure?.other > 0" class="mat-body-2 cs-icons">
               <img src="/assets/icons/content/grey/course.svg" alt="Course" class="margin-right-xs"> {{

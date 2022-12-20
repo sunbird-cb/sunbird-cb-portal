@@ -108,15 +108,15 @@ input[type=number] {
 
   ::ng-deep .mat-tab-header {
     margin: 0 3rem;
-    border-bottom: none!important;
+    border-bottom: none !important;
 
     @include breakpoint-xs {
       margin: 0 0.5rem;
     }
   }
 
-  ::ng-deep .mat-tab-header-pagination  {
-    box-shadow: none!important;
+  ::ng-deep .mat-tab-header-pagination {
+    box-shadow: none !important;
   }
 
 
@@ -159,7 +159,7 @@ input[type=number] {
         width: 340px;
 
         @include breakpoint-xs {
-          width:auto;
+          width: auto;
         }
 
         // display: contents;
@@ -381,6 +381,7 @@ input[type=number] {
   @include breakpoint-xs {
     display: block;
   }
+
   @include breakpoint-s {
     display: block;
   }
@@ -542,16 +543,27 @@ input.mat-input-element {
 }
 
 .w-minus-w80 {
-  max-width: calc(100% - 80px)!important;
+  max-width: calc(100% - 80px) !important;
 }
 
+.w-minus-w50 {
+  max-width: calc(100% - 50%) !important;
+}
+
+.otp {
+  flex: 1;
+  max-height: 49px;
+  margin-right: 0;
+  margin-left: 16px;
+}
 
 .btn-success {
   @include breakpoint-xs {
-    margin:0px 8px!important;
+    margin: 0px 8px !important;
   }
+
   @include breakpoint-s {
-    margin-right:1rem!important;
+    margin-right: 1rem !important;
   }
 }
 

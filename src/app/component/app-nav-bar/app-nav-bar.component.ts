@@ -40,6 +40,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   currentRoute = 'page/home'
   isPublicHomePage = window.location.href.includes('/public/home')
   isSetUpPage = false
+  isLoggedIn = false
   constructor(
     private domSanitizer: DomSanitizer,
     private configSvc: ConfigurationsService,
@@ -62,6 +63,9 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
+        this.isLoggedIn = true
+    }
     if (this.configSvc.instanceConfig) {
       this.appIcon = this.domSanitizer.bypassSecurityTrustResourceUrl(
         this.configSvc.instanceConfig.logos.app,
@@ -192,6 +196,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   get isforPreview(): boolean {
     this.forPreview = window.location.href.includes('/public/')
     || window.location.href.includes('&preview=true')
+    || window.location.href.includes('/certs')
     return this.forPreview
   }
   get isThisSetUpPage(): boolean {

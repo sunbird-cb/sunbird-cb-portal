@@ -1,9 +1,10 @@
+@import 'ws-common';
 @import 'ws-vars';
+@import 'ws-mixins';
 
 .notifications-container {
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 8px;
-  padding: 0;
 
   .group-name-container {
     padding: 16px;
@@ -22,3 +23,7 @@
 .event-name {
   font-weight: 500;
 }
+
+// .prefItem:hover {
+//   background-color: rgba(0, 0, 0, 0.16);
+// }

@@ -1,6 +1,6 @@
 {
   "/apis/*": {
-    "target": "https://igot-dev.in",
+    "target": "https://portal.igot-dev.in",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true,
@@ -8,11 +8,11 @@
       "/apis": "/apis"
     },
     "headers": {
-      "Cookie": "connect.sid=s%3AhjdfAfHT7eiKxWe3P5ZUWBLQJy3rSd85.ezO5Q7Q702%2FszpBDonxfAqiUfFUYUkbTtnEEVdpEOLo"
+      "Cookie": "connect.sid=s%3AnLKtkhFIIiM6OMTdMkyajo_-v_jm9eBM.QUNVg8HL%2FKp2AdR2cgr05in4yQqAR21IY6gfML%2Fgi44"
     }
   },
   "/api/*": {
-    "target": "https://igot-dev.in",
+    "target": "https://portal.igot-dev.in",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true,

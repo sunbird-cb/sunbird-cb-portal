@@ -46,6 +46,7 @@ export namespace NsAppToc {
     learningModule: number
     other: number
     pdf: number
+    survey: number
     podcast: number
     quiz: number
     video: number
@@ -54,6 +55,7 @@ export namespace NsAppToc {
     youtube: number
     interactivecontent: number
     practiceTest: number
+    finalTest: number
     [key: string]: number
   }
 }

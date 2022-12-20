@@ -8,6 +8,7 @@ export const ICON_TYPE = {
   html: 'web',
   zip: 'compress',
   pdf: 'picture_as_pdf',
+  survey: 'pic_as_survey',
   youtube: 'subscriptions',
   assessment: 'assessment',
   quiz: 'assignment_turned_in',

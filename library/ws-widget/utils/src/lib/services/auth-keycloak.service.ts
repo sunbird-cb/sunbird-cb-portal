@@ -130,7 +130,16 @@ export class AuthKeycloakService {
       redirectUri: redirectUrl,
     })
   }
-
+  loginV2(
+    _idpHint: 'E' | 'N' | 'S' = 'E',
+    redirectUrl: string = this.defaultRedirectUrl,
+  ): Promise<void> {
+    if (this.configSvc.instanceConfig) {
+      window.location.href = this.configSvc.instanceConfig.keycloak.url + redirectUrl
+      return Promise.resolve()
+    }
+    return Promise.reject()
+  }
   register(
     redirectUrl: string = this.defaultRedirectUrl,
   ): Promise<void> {
@@ -168,7 +177,9 @@ export class AuthKeycloakService {
     if (storage.getItem('telemetrySessionId')) {
       storage.removeItem('telemetrySessionId')
     } else {
-      window.location.href = '/public/home'
+      // window.location.href = '/public/home'
+      storage.removeItem(storageKey)
+      await this.http.get('/apis/reset').toPromise()
     }
     try {
       sessionStorage.clear()

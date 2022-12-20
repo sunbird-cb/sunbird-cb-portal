@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core'
- import { NsContent } from '@sunbird-cb/utils/src/public-api'
+import { NsContent } from '@sunbird-cb/utils/src/public-api'
 import { NSQuiz } from '@ws/viewer/src/lib/plugins/quiz/quiz.model'
 // import { NSQuiz } from '@ws/viewer/src/lib/plugins/quiz/quiz.model'
 import { NSCompetencie } from '../../models/competencies.model'
@@ -54,6 +54,7 @@ export class CompetenciesAssessmentComponent implements OnInit {
             maxQuestions: this.assessmentData.maxQuestions,
             requiresSubmit: 'Yes',
             showTimer: 'Yes',
+            primaryCategory: NsContent.EPrimaryCategory.COMP_ASSESSMENT,
         }
         this.learningObjective = this.assessmentData.name
         // let complexityLevel =  this.assessmentData.name

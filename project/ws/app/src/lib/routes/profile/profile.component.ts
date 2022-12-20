@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { ConfigurationsService, LogoutComponent, NsPage, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { map } from 'rxjs/operators'
+/* tslint:disable*/
+import _ from 'lodash'
 
 @Component({
   selector: 'ws-app-profile',
@@ -34,15 +36,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.tabsData = [{
-      name: 'General Settings', key: 'Network Home', badges: { enabled: true, uri: '' },
-       enabled: true, routerLink: '/app/profile/settings' },
-    { name: 'Notifications', key: 'Network Home', badges: { enabled: true, uri: '' },
-     enabled: true, routerLink: '/app/profile/notification' },
-    { name: 'Account and Password', key: 'Network Home', badges: { enabled: true, uri: '' },
-    enabled: true, routerLink: '/app/profile/accountandpassword' },
-    { name: 'Privacy', key: 'Network Home', badges: { enabled: true, uri: '' },
-    enabled: true, routerLink: '/app/profile/privacy' }]
+    this.tabsData = _.get(this.activatedRoute, 'snapshot.data.pageData.data.settingSideMenu') || []
     this.sideNavBarOpened = true
     const tab = this.router.url.split('/')[3]
     if (tab === 'dashboard') {

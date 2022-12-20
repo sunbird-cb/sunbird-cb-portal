@@ -48,7 +48,7 @@ export class TelemetryService {
   private navigationStart() {
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationStart) {
-        if (event.url.includes('/public/') || event.url.includes('&preview=true')) {
+        if (event.url.includes('/public/') || event.url.includes('&preview=true') || event.url.includes('/certs')) {
           this.isAnonymousTelemetry = true
           this.updateTelemetryConfig()
           const instanceConfig = this.configSvc.instanceConfig

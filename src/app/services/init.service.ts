@@ -66,6 +66,7 @@ export class InitService {
   }
 
   isAnonymousTelemetry = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+  || window.location.href.includes('/certs')
 
   constructor(
     private logger: LoggerService,
@@ -114,6 +115,10 @@ export class InitService {
       'hubs',
       domSanitizer.bypassSecurityTrustResourceUrl('fusion-assets/icons/hubs.svg'),
     )
+    iconRegistry.addSvgIcon(
+      'verified',
+      domSanitizer.bypassSecurityTrustResourceUrl('fusion-assets/icons/verified.svg'),
+    )
     ///
     // iconRegistry.addSvgIcon(
     //   'mdo',
@@ -135,7 +140,7 @@ export class InitService {
 
   get isAnonymousTelemetryRequired(): boolean {
     this.isAnonymousTelemetry = window.location.href.includes('/public/')
-      || window.location.href.includes('&preview=true')
+      || window.location.href.includes('&preview=true') || window.location.href.includes('/certs')
     return this.isAnonymousTelemetry
   }
 
@@ -162,7 +167,7 @@ export class InitService {
     try {
       const path = window.location.pathname
       const isPublic = window.location.href.includes('/public/')
-        || window.location.href.includes('&preview=true')
+        || window.location.href.includes('&preview=true') || window.location.href.includes('/certs')
       this.setTelemetrySessionId()
       if (!path.startsWith('/public') && !isPublic) {
         await this.fetchStartUpDetails()

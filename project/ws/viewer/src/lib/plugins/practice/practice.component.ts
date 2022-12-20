@@ -64,6 +64,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     maxQuestions: 0,
     requiresSubmit: 'Yes',
     showTimer: 'Yes',
+    primaryCategory: NsContent.EPrimaryCategory.PRACTICE_RESOURCE,
   }
   @ViewChildren('questionsReference') questionsReference: QueryList<QuestionComponent> | null = null
   @ViewChild('sidenav', { static: false }) sideNav: MatSidenav | null = null
@@ -103,6 +104,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   process = false
   isXsmall = false
   assessmentBuffer = 0
+  showAnswer = false
+  matchHintDisplay: any[] = []
   constructor(
     private events: EventService,
     public dialog: MatDialog,
@@ -117,20 +120,6 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     if (environment.assessmentBuffer) {
       this.assessmentBuffer = environment.assessmentBuffer
     }
-    let canAttempt = true
-    if (this.primaryCategory !== NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
-      this.canAttend().then(r => {
-        canAttempt = !!r
-      })
-    }
-    if (canAttempt) {
-      this.init()
-    }
-  }
-  async canAttend() {
-    const data = this.quizSvc.canAttend(this.identifier)
-    await data.toPromise()
-    return data
   }
   init() {
     // this.getSections()
@@ -171,7 +160,22 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     }
     return
   }
+  async canAttend() {
+    const data = this.quizSvc.canAttend(this.identifier)
+    await data.toPromise()
+    return data
+  }
   ngOnInit() {
+    let canAttempt = true
+    if (this.primaryCategory !== NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
+      this.canAttend().then(r => {
+        canAttempt = !!r
+      })
+    }
+    if (canAttempt) {
+      this.init()
+      this.updateVisivility()
+    }
     this.attemptSubscription = this.quizSvc.secAttempted.subscribe(data => {
       this.attemptSubData = data
     })
@@ -179,6 +183,14 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.questionAnswerHash = this.quizSvc.questionAnswerHash.getValue()
     }
     // console.log(this.vws.resource)
+  }
+  get getTimeLimit(): number {
+    let jsonTime = (this.quizJson.timeLimit || 0)
+    if (this.retake && jsonTime === 0) {
+      jsonTime = _.get(this.activatedRoute, 'snapshot.data.content.data.expectedDuration') || 0
+      this.quizJson.timeLimit = jsonTime
+    }
+    return jsonTime + this.assessmentBuffer
   }
   getSections(_event: NSPractice.TUserSelectionType) {
     // this.identifier
@@ -188,10 +200,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.paperSections = _.get(this.quizSvc.paperSections, 'value.questionSet.children')
       const showTimer = _.toLower(_.get(this.quizSvc.paperSections, 'value.questionSet.showTimer')) === 'yes'
       if (showTimer || this.primaryCategory !== NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
-        this.quizJson.timeLimit = (_.get(this.quizSvc.paperSections, 'value.questionSet.expectedDuration') || 0) + this.assessmentBuffer
+        this.quizJson.timeLimit = (_.get(this.quizSvc.paperSections, 'value.questionSet.expectedDuration') || 0)
       } else {
         // this.quizJson.timeLimit = this.duration * 60
-        this.quizJson.timeLimit = this.quizJson.timeLimit + this.assessmentBuffer
+        this.quizJson.timeLimit = this.quizJson.timeLimit
       }
       this.fetchingSectionsStatus = 'done'
       this.viewState = 'detail'
@@ -204,10 +216,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           /** this is to enable or disable Timer */
           const showTimer = _.toLower(_.get(section, 'result.questionSet.showTimer')) === 'yes'
           if (showTimer) {
-            this.quizJson.timeLimit = section.result.questionSet.expectedDuration + this.assessmentBuffer
+            this.quizJson.timeLimit = section.result.questionSet.expectedDuration
           } else {
             // this.quizJson.timeLimit = this.duration * 60
-            this.quizJson.timeLimit = this.quizJson.timeLimit + this.assessmentBuffer
+            this.quizJson.timeLimit = this.quizJson.timeLimit
           }
           this.quizSvc.paperSections.next(section.result)
           const tempObj = _.get(section, 'result.questionSet.children')
@@ -277,9 +289,15 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         this.fetchingQuestionsStatus = 'done'
         this.overViewed('start')
       } else {
-        this.quizSvc.getQuestions(section.childNodes || [], this.identifier).subscribe(qqr => {
+        // updated because there is a 20 questions limit
+        const lst = _.chunk(section.childNodes || [], 20)
+        const prom: any[] = []
+        _.each(lst, l => {
+          prom.push(this.getMultiQuestions(l))
+        })
+        Promise.all(prom).then(qqr => {
           this.fetchingQuestionsStatus = 'done'
-          const question = _.get(qqr, 'result')
+          const question = { questions: _.flatten(_.map(qqr, 'result.questions')) }
           const codes = _.compact(_.map(this.quizJson.questions, 'section') || [])
           this.quizSvc.startSection(section)
           // console.log(this.quizSvc.secAttempted.value)
@@ -295,13 +313,40 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
                 questionId: q.identifier,
                 instructions: null,
                 options: this.getOptions(q),
+                editorState: q.editorState,
               })
             }
           })
           this.overViewed('start')
         })
+        // this.quizSvc.getQuestions(section.childNodes || [], this.identifier).subscribe(qqr => {
+        //   this.fetchingQuestionsStatus = 'done'
+        //   const question = _.get(qqr, 'result')
+        //   const codes = _.compact(_.map(this.quizJson.questions, 'section') || [])
+        //   this.quizSvc.startSection(section)
+        //   // console.log(this.quizSvc.secAttempted.value)
+        //   _.eachRight(question.questions, q => {
+        //     // const qHtml = document.createElement('div')
+        //     // qHtml.innerHTML = q.editorState.question
+        //     if (codes.indexOf(section.identifier) === -1) {
+        //       this.quizJson.questions.push({
+        //         section: section.identifier,
+        //         question: q.body, // qHtml.textContent || qHtml.innerText || '',
+        //         multiSelection: ((q.qType || '').toLowerCase() === 'mcq-mca' ? true : false),
+        //         questionType: (q.qType || '').toLowerCase(),
+        //         questionId: q.identifier,
+        //         instructions: null,
+        //         options: this.getOptions(q),
+        //       })
+        //     }
+        //   })
+        //   this.overViewed('start')
+        // })
       }
     }
+  }
+  getMultiQuestions(ids: string[]) {
+    return this.quizSvc.getQuestions(ids, this.identifier).toPromise()
   }
   getOptions(question: NSPractice.IQuestionV2): NSPractice.IOption[] {
     // debugger
@@ -315,23 +360,25 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         case 'mcq-mca':
         case 'MCQ-MCA':
         case 'MCQ':
-          _.each(question.choices.options, o => {
-            // const aHtml = document.createElement('div')
-            // aHtml.innerHTML = o.value.body
+          _.each(this.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE && question.editorState
+            // tslint:disable-next-line: align
+            ? question.editorState.options : question.choices.options, o => {
+              // const aHtml = document.createElement('div')
+              // aHtml.innerHTML = o.value.body
 
-            // const vHtml = document.createElement('div')
-            // vHtml.innerHTML = o.value.value
-            options.push({
-              optionId: o.value.value,
-              text: o.value.body || '',
-              // isCorrect: o.answer,
-              // hint: '',
-              // match: '',
-              // matchForView: '',
-              // response: '',
-              // userSelected: false,
+              // const vHtml = document.createElement('div')
+              // vHtml.innerHTML = o.value.value
+              options.push({
+                optionId: o.value.value,
+                text: o.value.body || '',
+                isCorrect: o.answer,
+                // hint: '',
+                // match: '',
+                // matchForView: '',
+                // response: '',
+                // userSelected: false,
+              })
             })
-          })
           break
         case 'ftb':
         case 'FTB':
@@ -356,18 +403,20 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           break
         case 'mtf':
         case 'MTF':
-          _.each(question.choices.options, (o, idx) => {
-            options.push({
-              // isCorrect: true,
-              optionId: o.value.value,
-              text: (o.value.body || '').toString(), // modified
-              hint: o.value.body || '',
-              response: '',
-              userSelected: false,
-              matchForView: o.value.value,
-              match: _.nth(question.rhsChoices, idx),
+          _.each(this.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE && question.editorState
+            // tslint:disable-next-line: align
+            ? question.editorState.options : question.choices.options, (o, idx) => {
+              options.push({
+                // isCorrect: true,
+                optionId: o.value.value,
+                text: (o.value.body || '').toString(), // modified
+                hint: _.get(_.nth(question.editorState && question.editorState.options, idx), 'answer') || '',
+                response: '',
+                userSelected: false,
+                matchForView: '',
+                match: _.get(_.nth(question.editorState && question.editorState.options, idx), 'answer'),
+              })
             })
-          })
           break
       }
     }
@@ -431,8 +480,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.process = false
       // tslint:disable-next-line
     }, 10)
+    this.showAnswer = false
+    this.matchHintDisplay = []
   }
-  get current_Question() {
+  get current_Question(): NSPractice.IQuestionV2 {
     return this.currentQuestion
   }
   get currentIndex() {
@@ -445,7 +496,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   get noOfQuestions(): number {
     if (this.quizJson.maxQuestions) {
       return this.quizJson.maxQuestions
-    } if (this.retake) {
+    }
+    if (this.retake) {
       return _.get(this.activatedRoute, 'snapshot.data.content.data.maxQuestions') || 0
     }
     return 0
@@ -486,15 +538,15 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
   updateTimer() {
     this.startTime = Date.now()
-    this.timeLeft = this.quizJson.timeLimit
+    this.timeLeft = this.getTimeLimit
     // && this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
-    if (this.quizJson.timeLimit > 0
+    if (this.getTimeLimit > 0
     ) {
       this.timerSubscription = interval(1000)
         .pipe(
           map(
             () =>
-              this.startTime + this.quizJson.timeLimit - Date.now(),
+              this.startTime + this.getTimeLimit - Date.now(),
           ),
         )
         .subscribe(_timeRemaining => {
@@ -527,11 +579,11 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     if (typeof (optionId) === 'string') {
       this.raiseTelemetry('mark', optionId, 'click')
     } if (this.viewState === 'answer') {
-      if (this.questionsReference) {
-        this.questionsReference.forEach(questionReference => {
-          questionReference.reset()
-        })
-      }
+      // if (this.questionsReference) {
+      //   this.questionsReference.forEach(qr => {
+      //     qr.reset()
+      //   })
+      // }
     }
     this.viewState = 'attempt'
     if (
@@ -554,13 +606,12 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     // debugger
     // console.log(this.questionAnswerHash, '+++++')
     if (question.questionType && question.questionType === 'mtf') {
-      this.quizSvc.mtfSrc.next(
-        {
-          [question.questionId]: {
-            source: _.map(optionId, 'source.innerText'),
-            target: _.map(optionId, 'target.innerText'),
-          },
-        })
+      const mTfval = this.quizSvc.mtfSrc.getValue()
+      mTfval[question.questionId] = {
+        source: _.map(optionId, 'source.innerText'),
+        target: _.map(optionId, 'target.innerText'),
+      }
+      this.quizSvc.mtfSrc.next(mTfval)
     }
     this.quizSvc.qAnsHash({ ...this.questionAnswerHash })
     const answered = (this.quizSvc.questionAnswerHash.getValue() || [])
@@ -605,6 +656,11 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
   get generateRequest(): NSPractice.IQuizSubmit {
     const submitQuizJson = JSON.parse(JSON.stringify(this.quizJson))
+    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+      this.activatedRoute.snapshot.queryParams.collectionId : ''
+    const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+      this.activatedRoute.snapshot.queryParams.batchId : ''
+
     const req = this.quizSvc.createAssessmentSubmitRequest(
       this.identifier,
       this.name,
@@ -616,8 +672,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.quizSvc.mtfSrc.getValue()
     )
     const request: NSPractice.IQuizSubmit = {
+      batchId,
       identifier: this.identifier,
       primaryCategory: this.primaryCategory,
+      courseId: collectionId,
       isAssessment: true,
       objectType: 'QuestionSet',
       timeLimit: this.quizJson.timeLimit,
@@ -1021,6 +1079,17 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         })
     }
   }
+  checkAns(quesIdx: number) {
+    if (quesIdx > 0 && quesIdx <= this.totalQCount && this.current_Question.editorState && this.current_Question.editorState.options) {
+      this.showAnswer = true
+      this.quizSvc.shCorrectAnswer(true)
+    }
+  }
+  updateVisivility() {
+    this.quizSvc.displayCorrectAnswer.subscribe(displayAns => {
+      this.showAnswer = displayAns
+    })
+  }
   clearStorage() {
     this.quizSvc.paperSections.next(null)
     this.quizSvc.questionAnswerHash.next({})
@@ -1056,6 +1125,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       maxQuestions: 0,
       requiresSubmit: 'Yes',
       showTimer: 'Yes',
+      primaryCategory: NsContent.EPrimaryCategory.PRACTICE_RESOURCE,
     }
   }
   ngOnDestroy() {

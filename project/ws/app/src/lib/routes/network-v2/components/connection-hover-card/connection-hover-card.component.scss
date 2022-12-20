@@ -11,11 +11,15 @@
     min-height: 338px;
     min-width: 320px;
 
-   
+
 }
 
 .m-t-fix {
     margin-top: calc(2* #{$size-m} + #{$size-xs});
+}
+
+.margin-top-xxs {
+    margin-top: #{$size-xs / 2 };
 }
 
 .fixd {

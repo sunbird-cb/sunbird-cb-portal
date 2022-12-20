@@ -10,6 +10,7 @@ export const MIME_TYPE = {
   mp4: 'application/x-mpegURL',
   interaction: 'video/interactive',
   pdf: 'application/pdf',
+  survey: 'application/survey',
   quiz: 'application/quiz',
   webm: 'video/webm',
   webModule: 'application/web-module',

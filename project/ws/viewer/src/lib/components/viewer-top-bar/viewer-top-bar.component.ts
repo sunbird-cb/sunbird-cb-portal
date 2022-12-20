@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { MatDialog } from '@angular/material'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router'
+import { WidgetContentService } from '@sunbird-cb/collection/src/lib/_services/widget-content.service'
 // import { NsContent } from '@sunbird-cb/collection'
 import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
@@ -32,6 +33,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   resourceId: string = (this.viewerDataSvc.resourceId as string) || ''
   resourceName: string | null = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.name : ''
   resourcePrimaryCategory: string | null = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.primaryCategory : ''
+  contentProgressHash: any = []
   // previousResourcePrimaryCategory!: NsContent.EPrimaryCategory
   // nextResourcePrimaryCategory!: NsContent.EPrimaryCategory
   collectionId = ''
@@ -39,6 +41,10 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   isPreview = false
   forChannel = false
   currentRoute = window.location.pathname
+  identifier: any
+  batchId: any
+  leafNodesCount: any
+  userid: any
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -49,6 +55,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     private valueSvc: ValueService,
     private dialog: MatDialog,
     private router: Router,
+    private widgetServ: WidgetContentService,
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
@@ -61,6 +68,8 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.getAuthDataIdentifer()
+
     if (window.location.href.includes('/channel/')) {
       this.forChannel = true
     }
@@ -163,17 +172,65 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     }
 
   }
+
+   getAuthDataIdentifer() {
+    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId
+     this.widgetServ.fetchAuthoringContent(collectionId).subscribe((data: any) => {
+    this.leafNodesCount = data.result.content.leafNodesCount
+
+    })
+  }
   finishDialog() {
     if (!this.forPreview) {
-      const dialogRef = this.dialog.open(CourseCompletionDialogComponent, {
-        autoFocus: false,
-        data: { courseName: this.activatedRoute.snapshot.queryParams.courseName },
-      })
-      dialogRef.afterClosed().subscribe(result => {
-        if (result === true) {
-          this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+      this.contentProgressHash = []
+      this.identifier = this.activatedRoute.snapshot.queryParams.collectionId
+      this.batchId = this.activatedRoute.snapshot.queryParams.batchId
+
+      if (this.identifier && this.batchId && this.configSvc.userProfile) {
+        let userId
+        if (this.configSvc.userProfile) {
+          userId = this.configSvc.userProfile.userId || ''
+          this.userid = this.configSvc.userProfile.userId || ''
         }
-      })
+        const req  = {
+          request: {
+            userId,
+            batchId: this.batchId,
+            courseId: this.identifier || '',
+            contentIds: [],
+            fields: ['progressdetails'],
+          },
+        }
+        this.widgetServ.fetchContentHistoryV2(req).subscribe(
+          (data:  any) => {
+          this.contentProgressHash = data.result.contentList
+
+          if (this.leafNodesCount === this.contentProgressHash.length) {
+            const ipStatusCount = this.contentProgressHash.filter((item: any) => item.status === 1)
+
+            if (ipStatusCount.length === 0) {
+              const dialogRef = this.dialog.open(CourseCompletionDialogComponent, {
+                autoFocus: false,
+                data: {
+                  courseName: this.activatedRoute.snapshot.queryParams.courseName,
+                  userId: this.userid,
+                  identifier: this.identifier,
+                  primaryCategory: this.collectionType,
+                },
+              })
+              dialogRef.afterClosed().subscribe(result => {
+                if (result === true) {
+                  this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+                }
+              })
+            } else {
+              this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+            }
+          } else {
+            this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+          }
+        })
+      }
     } else {
       this.router.navigateByUrl(`public/toc/${this.collectionId}/overview`)
     }

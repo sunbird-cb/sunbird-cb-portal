@@ -1175,17 +1175,17 @@
   dependencies:
     tslib "^1.9.0"
 
-"@sunbird-cb/micro-surveys@^1.2.3":
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/micro-surveys/-/micro-surveys-1.2.3.tgz#32413eee0ce7addcb54b7c00186364b38f1e53ea"
-  integrity sha512-aJ99ZydR8d5Qa0LoslMSBQ6Vb1/vUglHXGRXGwlWvXbdhFZptw/REBTYGP0pjEsraI1t6bf1I965I2LyGgDaxQ==
+"@sunbird-cb/micro-surveys@^2.0.4":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/micro-surveys/-/micro-surveys-2.0.5.tgz#5d4b27c9fc99a28d5baadae8f4b12af60ade7294"
+  integrity sha512-0TeP5PxIzjz2XH0UVzQk4/0wE7kmgitN8ZUf4A6Ev1JbJf5/s9l0rbT1h/955og3ANllOwptAD96cmp0Ke68sA==
   dependencies:
     tslib "^1.9.0"
 
-"@sunbird-cb/rain-dashboards@^0.2.6":
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/rain-dashboards/-/rain-dashboards-0.2.6.tgz#fa7756dddbfd5679770232884bf41a43afb953e2"
-  integrity sha512-kAn28KzMniibhSi+jV6zLzl3+VF1mEBD6Da4AeTP1itP+dNVwiDw1SgvzJV1SgcGmbEnfLoBY/FTSECA25x2AA==
+"@sunbird-cb/rain-dashboards@^0.3.4":
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/rain-dashboards/-/rain-dashboards-0.3.4.tgz#417c0ec449708ad0d1816bd53250784d6fa860d1"
+  integrity sha512-hkJ+FdQkxjdNWu4ikmug+7mUkv6myhBkyuZzQ6k85Ewuy0RxeIUrMFV7NoxC5v2i34UGzmPU2tSUm7+STJqERQ==
   dependencies:
     tslib "^1.9.0"
 
