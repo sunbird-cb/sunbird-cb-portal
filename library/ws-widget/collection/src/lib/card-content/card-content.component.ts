@@ -58,6 +58,9 @@ export class CardContentComponent extends WidgetBaseComponent
     }
 
     if (this.widgetData) {
+      if (this.widgetData.context && this.widgetData.context.pageSection === 'curatedCollections') {
+        this.widgetData.content.linkUrl = '/app/curatedCollections/'+ this.widgetData.content.identifier
+      }
       this.btnPlaylistConfig = {
         contentId: this.widgetData.content.identifier,
         contentName: this.widgetData.content.name,

@@ -222,6 +222,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     this.fetchMicrosoftCourses(strip, calculateParentStatus)
     this.fetchDAKSHTACourses(strip, calculateParentStatus)
     this.fetchprarambhCourse(strip, calculateParentStatus)
+    this.fetchCuratedCollections(strip, calculateParentStatus)
   }
   fetchFromApi(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.api && Object.keys(strip.request.api).length) {
@@ -538,6 +539,36 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           })
       }
       // Competency based recommendations end
+    }
+  }
+
+  // curated collection
+  fetchCuratedCollections(strip: any, calculateParentStatus = true) {
+    if (strip.request && strip.request.curatedCollections && Object.keys(strip.request.curatedCollections).length) {
+      const searchRequest = strip.request.curatedCollections
+      this.contentSvc.searchRelatedCBPV6(searchRequest).subscribe(
+        results => {
+          const showViewMore = Boolean(
+            results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
+          )
+          const viewMoreUrl = showViewMore
+            ? {
+              path: '/app/curatedCollections/home',
+              queryParams: {},
+            }
+            : null
+          this.processStrip(
+            strip,
+            this.transformContentsToWidgets(results.result.content, strip),
+            'done',
+            calculateParentStatus,
+            viewMoreUrl,
+          )
+        },
+        () => {
+          this.processStrip(strip, [], 'error', calculateParentStatus, null)
+        },
+      )
     }
   }
 
@@ -1039,7 +1070,8 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         (strip.request.basedOnInterest && Object.keys(strip.request.basedOnInterest).length) ||
         (strip.request.microsoftCourses && Object.keys(strip.request.microsoftCourses).length) ||
         (strip.request.DAKSHTACourses && Object.keys(strip.request.DAKSHTACourses).length) ||
-        (strip.request.prarambhCourse && Object.keys(strip.request.prarambhCourse).length)
+        (strip.request.prarambhCourse && Object.keys(strip.request.prarambhCourse).length) ||
+        (strip.request.curatedCollections && Object.keys(strip.request.curatedCollections).length)
       )
     ) {
       return true
