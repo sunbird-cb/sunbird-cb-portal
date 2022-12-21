@@ -55,7 +55,7 @@ export namespace NSSearch {
       sort_by: { lastUpdatedOn: string },
       fields: string[],
       facets: string[],
-      fuzzy?: true
+      fuzzy?: false
     }
   }
 
