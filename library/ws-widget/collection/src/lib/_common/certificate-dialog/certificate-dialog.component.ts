@@ -1,13 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import * as pdfjsLib from 'pdfjs-dist/webpack'
+
 @Component({
   selector: 'ws-widget-certificate-dialog',
   templateUrl: './certificate-dialog.component.html',
   styleUrls: ['./certificate-dialog.component.scss'],
 })
 export class CertificateDialogComponent implements OnInit {
-
   url!: string
   constructor(
     public dialogRef: MatDialogRef<CertificateDialogComponent>,
@@ -58,6 +58,10 @@ export class CertificateDialogComponent implements OnInit {
     if (svg) {
       svg = svg.replace(/data:image\/svg\+xml,/, '')
       svg = svg.replace(/\r?\n|\r/g, '').trim()
+      // console.log(PDFJSMain)
+      // const doc = new PDFJSMain()
+
+      // console.log(doc)
       const pdfDoc = await pdfjsLib.getDocument({ data: svg }).promise
       const page = await pdfDoc.getPage(1)
       const canvas = document.createElement('canvas')
