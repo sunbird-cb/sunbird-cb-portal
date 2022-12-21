@@ -75,7 +75,7 @@ export class ProfileCertificateDialogComponent implements OnInit {
   dwonloadCert() {
     const a: any = document.createElement('a')
     a.href = this.data.cet
-    a.download = 'çertificate'
+    a.download = 'Certificate'
     document.body.appendChild(a)
     a.style = 'display: none'
     a.click()
