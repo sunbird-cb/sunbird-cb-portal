@@ -3,9 +3,8 @@ import { CommonModule } from '@angular/common'
 import { CertificateDialogComponent } from './certificate-dialog.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { EditorQuillModule } from '../../discussion-forum/editor-quill/editor-quill.module'
-import { MatButtonModule, MatIconModule, MatTooltipModule, MatDialogModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatCardModule } from '@angular/material'
+import { MatButtonModule, MatIconModule, MatTooltipModule, MatDialogModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatCardModule, MatMenuModule } from '@angular/material'
 import { PipeSafeSanitizerModule } from '@sunbird-cb/utils/src/public-api'
-
 @NgModule({
   declarations: [CertificateDialogComponent],
   imports: [
@@ -22,8 +21,9 @@ import { PipeSafeSanitizerModule } from '@sunbird-cb/utils/src/public-api'
       MatFormFieldModule,
       MatInputModule,
       MatSnackBarModule,
+      MatMenuModule,
       PipeSafeSanitizerModule,
-  ],
+   ],
   exports: [
     CertificateDialogComponent,
   ],

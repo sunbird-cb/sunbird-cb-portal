@@ -6,12 +6,30 @@
         <span i18n>Download Certificate</span>
     </mat-card-title>
     <mat-card-content>
-        <img [src]="url| pipeSafeSanitizer: 'url'" alt="Certificate" role="image" class="certificate-banner-image">
+        <img #certificate [src]="url| pipeSafeSanitizer: 'url'" alt="Certificate" role="image" class="certificate-banner-image">
     </mat-card-content>
     <mat-card-actions class="flex flex-row-reverse">
-        <a mat-button (click)='dwonloadCert()' class="ws-mat-accent-border-active mat-accent">
+        <a mat-button  [matMenuTriggerFor]="menu" class="ws-mat-accent-border-active mat-accent">
             <mat-icon class="mat-icon material-icons-outlined download_icon margin-right-xs">cloud_download</mat-icon>
             Download
         </a>
+        <!-- <a mat-icon-button [matMenuTriggerFor]="menu" aria-label="icon-button with a menu" class="ws-mat-accent-border-active mat-accent">
+            <mat-icon class="mat-icon material-icons-outlined download_icon margin-right-xs">cloud_download</mat-icon>
+            Download
+         </a> -->
+        <mat-menu #menu="matMenu">
+            <!-- <button mat-menu-item (click)='dwonloadCertPdf()'>
+                <mat-icon>picture_as_pdf</mat-icon>
+                <span>PDF</span>
+            </button> -->
+            <button mat-menu-item (click)='dwonloadCertPng()'>
+                <mat-icon>photo</mat-icon>
+                <span>PNG</span>
+            </button>
+            <button mat-menu-item (click)='dwonloadCert()'>
+                <mat-icon>photo_size_select_actual</mat-icon>
+                <span>SVG</span>
+            </button>
+        </mat-menu>
     </mat-card-actions>
 </mat-card>
