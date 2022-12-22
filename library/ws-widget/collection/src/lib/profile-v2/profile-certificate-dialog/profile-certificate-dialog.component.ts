@@ -75,7 +75,7 @@ export class ProfileCertificateDialogComponent implements OnInit {
   dwonloadCert() {
     const a: any = document.createElement('a')
     a.href = this.data.cet
-    a.download = 'çertificate'
+    a.download = 'Certificate'
     document.body.appendChild(a)
     a.style = 'display: none'
     a.click()
@@ -84,7 +84,29 @@ export class ProfileCertificateDialogComponent implements OnInit {
     // download as jpge
 
   }
-
+  dwonloadCertPng() {
+    const uriData = this.data.cet
+    const img = new Image()
+    img.src = uriData
+    img.width = 1200
+    img.height = 700
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      [canvas.width, canvas.height] = [img.width, img.height]
+      const ctx = canvas.getContext('2d')
+      if (ctx) {
+        ctx.imageSmoothingEnabled = true
+        ctx.drawImage(img, 0, 0, img.width, img.height)
+        const a = document.createElement('a')
+        const quality = 1.0 // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingQuality
+        a.href = canvas.toDataURL('image/png', quality)
+        a.download = 'Certificate'
+        a.append(canvas)
+        a.click()
+        a.remove()
+      }
+    }
+  }
   shareCert() {
     // svg.svgAsPngUri(document.getElementById('certificate'), {}, (uri:any) => {
     //   console.log('png base 64 encoded', uri);

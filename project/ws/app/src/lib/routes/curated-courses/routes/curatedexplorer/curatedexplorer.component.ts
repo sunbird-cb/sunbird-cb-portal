@@ -42,7 +42,7 @@ export class CuratedexplorerComponent implements OnInit, OnDestroy {
       offset: 0,
       fields: [],
       facets: ['primaryCategory', 'mimeType'],
-      fuzzy: true,
+      fuzzy: false,
     },
   }
   stateData: {

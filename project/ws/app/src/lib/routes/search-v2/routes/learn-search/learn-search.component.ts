@@ -31,7 +31,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
       facets: ['primaryCategory', 'mimeType', 'source', 'competencies_v3.name', 'topics'],
       limit: 100,
       offset: 0,
-      fuzzy: true,
+      fuzzy: false,
     },
   }
   totalResults: any
@@ -167,7 +167,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
           facets: ['primaryCategory', 'mimeType', 'source'],
           limit: 100,
           offset: 0,
-          fuzzy: true,
+          fuzzy: false,
         },
       }
       this.newQueryParam = queryparam

@@ -1,16 +1,11 @@
 <mat-card class="no-shadow flex flex-1">
- 
+
   <mat-card-content>
     <div #images>
-      <img
-      [src]="url | pipeSafeSanitizer: 'url'"
-      alt="Certificate"
-      role="image"
-      class="certificate-banner-image"
-    />
+      <img [src]="url | pipeSafeSanitizer: 'url'" alt="Certificate" role="image" class="certificate-banner-image" />
     </div>
     <!-- <canvas id="certCanvas"  class="certificate-banner-image"></canvas> -->
-      
+
 
   </mat-card-content>
 
@@ -21,34 +16,25 @@
 
     <div>
       <div *ngIf="this.data.value.content?.appIcon" class="float-left">
-        <img
-          [src]="this.data.value.content?.posterImage | pipePublicURL"
-          class="app-icon course-image"
-          [alt]="this.data.value.content.name || iGOT"
-        />
+        <img [src]="this.data.value.content?.posterImage | pipePublicURL" class="app-icon course-image"
+          [alt]="this.data.value.content.name || iGOT" />
       </div>
       <div *ngIf="!this.data.value.content?.appIcon" class="float-left">
-        <img
-          src="/assets/instances/eagle/app_logos/default.png"
-          class="app-icon course-image"
-          [alt]="this.data.value.content.name || iGOT"
-        />
+        <img src="/assets/instances/eagle/app_logos/default.png" class="app-icon course-image"
+          [alt]="this.data.value.content.name || iGOT" />
       </div>
     </div>
-    <div
-      class="subheading pb-1 cursor-pointer"
-      
-    >
-     {{ this.data.value.content?.name }}
+    <div class="subheading pb-1 cursor-pointer">
+      {{ this.data.value.content?.name }}
     </div>
     <div>
       {{ this.data.value.content?.description }}
     </div>
-    <a  (click)="navigate(this.data.value.collectionId)" [mat-dialog-close]="true" class="link-course cursor-pointer">
+    <a (click)="navigate(this.data.value.collectionId)" [mat-dialog-close]="true" class="link-course cursor-pointer">
       View Course
     </a>
     <div class="flex flex-row gap-3 mtop">
-      <a
+      <!-- <a
         mat-button
         (click)="dwonloadCert()"
         class="ws-mat-accent-border-active mat-accent px-3"
@@ -58,18 +44,29 @@
           >cloud_download</mat-icon
         >
         Download
+      </a> -->
+      <a mat-button [matMenuTriggerFor]="menu" class="ws-mat-accent-border-active mat-accent">
+        <mat-icon class="mat-icon material-icons-outlined download_icon margin-right-xs">cloud_download</mat-icon>
+        Download
       </a>
-      <a
-        mat-button
-        (click)="shareCert()"
-        class="ws-mat-accent-border-active mat-accent"
-      >
-        <mat-icon
-          class="mat-icon material-icons-outlined download_icon margin-right-xs"
-          >share</mat-icon
-        >
+      <a mat-button (click)="shareCert()" class="ws-mat-accent-border-active mat-accent">
+        <mat-icon class="mat-icon material-icons-outlined download_icon margin-right-xs">share</mat-icon>
         Share
       </a>
     </div>
   </div>
 </mat-card>
+<mat-menu #menu="matMenu">
+  <!-- <button mat-menu-item (click)='dwonloadCertPdf()'>
+    <mat-icon>picture_as_pdf</mat-icon>
+    <span>PDF</span>
+  </button> -->
+  <button mat-menu-item (click)='dwonloadCertPng()'>
+    <mat-icon>photo</mat-icon>
+    <span>PNG</span>
+  </button>
+  <button mat-menu-item (click)='dwonloadCert()'>
+    <mat-icon>photo_size_select_actual</mat-icon>
+    <span>SVG</span>
+  </button>
+</mat-menu>

@@ -130,17 +130,17 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       //     },
       //   )
       // }
-      this.showIsLoadingMessage = false
-      if (this.htmlContent.isIframeSupported !== 'No') {
-        setTimeout(
-          () => {
-            if (this.pageFetchStatus === 'fetching') {
-              this.showIsLoadingMessage = true
-            }
-          },
-          3000,
-        )
-      }
+      this.showIsLoadingMessage = true
+      // if (this.htmlContent.isIframeSupported !== 'No') {
+      //   setTimeout(
+      //     () => {
+      //       if (this.pageFetchStatus === 'fetching') {
+      //         this.showIsLoadingMessage = true
+      //       }
+      //     },
+      //     3000,
+      //   )
+      // }
       // this.scormAdapterService.downladFile(this.htmlContent.artifactUrl).subscribe(data => {
       //   const blob = new Blob([data], {
       //     type: 'application/zip',

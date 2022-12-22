@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ProfileCertificateDialogComponent } from './profile-certificate-dialog.component'
-import { MatButtonModule, MatCardModule, MatDialogModule, MatIconModule, MatSnackBarModule, MatTooltipModule } from '@angular/material'
+import { MatButtonModule, MatCardModule, MatDialogModule, MatIconModule, MatSnackBarModule, MatTooltipModule, MatMenuModule } from '@angular/material'
 import { PipeSafeSanitizerModule, PipePublicURLModule } from '@sunbird-cb/utils/src/public-api'
 
 @NgModule({
@@ -14,6 +14,7 @@ import { PipeSafeSanitizerModule, PipePublicURLModule } from '@sunbird-cb/utils/
     MatIconModule,
     MatTooltipModule,
     MatDialogModule,
+    MatMenuModule,
     MatSnackBarModule,
     PipeSafeSanitizerModule,
     PipePublicURLModule,
