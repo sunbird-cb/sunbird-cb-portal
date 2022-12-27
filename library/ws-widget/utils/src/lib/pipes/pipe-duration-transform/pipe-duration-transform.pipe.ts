@@ -6,7 +6,7 @@ import moment from 'moment'
 })
 export class PipeDurationTransformPipe implements PipeTransform {
 
-  transform(data: number, type: 'time24' | 'hms' | 'hour' | 'hms2H' | 'hms2M'): any {
+  transform(data: number, type: 'time24' | 'hms' | 'hour' | 'hms2H' | 'hms2M'| 'day'): any {
     if (data <= 0) {
       return ''
     }
@@ -14,28 +14,11 @@ export class PipeDurationTransformPipe implements PipeTransform {
     const m = Math.floor((data % 3600) / 60)
     const s = Math.floor((data % 3600) % 60)
     let duration = ''
-    let space = ''
-
     switch (type) {
       case 'time24':
         return this.defaultDuration(h, m, s)
       case 'hms':
-        if (h > 0) {
-          duration += type === 'hms' ? `${h}h` : `${h} hr`
-        }
-        if (m > 0) {
-          if (h > 0) {
-            space = ' '
-          }
-          duration += type === 'hms' ? `${space}${m}m` : `${space}${m} min`
-        }
-        if (s > 0 && h === 0) {
-          if (m > 0) {
-            space = ' '
-          }
-          duration += type === 'hms' ? `${space}${s}s` : `${space}${s} sec`
-        }
-        return duration
+        return this.hmsCalculation(h, m, s, duration, type)
       case 'hms2H':
         /**to Print HH:mm:ss */
         const duration2 = moment.duration(data, 'seconds')
@@ -57,6 +40,13 @@ export class PipeDurationTransformPipe implements PipeTransform {
           duration += `${h} hours`
         }
         return duration
+      case 'day':
+        if (h > 24) {
+          const duration3 = moment.duration(data, 'seconds')
+          return `${duration3.days()} day(s)`
+        }
+        return this.hmsCalculation(h, m, s, duration, type)
+
       default:
         return this.defaultDuration(h, m, s)
     }
@@ -67,6 +57,26 @@ export class PipeDurationTransformPipe implements PipeTransform {
     duration += h > 0 ? `${h.toString().padStart(2)}:` : ''
     duration += m > 0 ? `${m.toString().padStart(2)}:` : '00:'
     duration += s > 0 ? s.toString().padStart(2) : '00'
+    return duration
+  }
+  hmsCalculation(h: number, m: number, s: number, dur: string, type: string) {
+    let space = ''
+    let duration = dur
+    if (h > 0) {
+      duration += type === 'hms' ? `${h}h` : `${h} hr`
+    }
+    if (m > 0) {
+      if (h > 0) {
+        space = ' '
+      }
+      duration += type === 'hms' ? `${space}${m}m` : `${space}${m} min`
+    }
+    if (s > 0 && h === 0) {
+      if (m > 0) {
+        space = ' '
+      }
+      duration += type === 'hms' ? `${space}${s}s` : `${space}${s} sec`
+    }
     return duration
   }
 
