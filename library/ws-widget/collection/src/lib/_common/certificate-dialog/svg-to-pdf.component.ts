@@ -1,9 +1,9 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core'
-import { saveAs } from 'file-saver'
+// import { saveAs } from 'file-saver'
 @Component({
   selector: 'ws-widget-svg-to-pdf',
   // tslint:disable-next-line: max-line-length
-  template: ``
+  template: ``,
 })
 export class SvgToPdfComponent implements AfterViewInit {
   @ViewChild('svg', { static: true }) svgElement!: ElementRef
@@ -24,14 +24,14 @@ export class SvgToPdfComponent implements AfterViewInit {
     const ctx = canvas.getContext('2d')
     // Draw the SVG onto the canvas
     if (ctx) {
-      ctx.drawSvg(svg.outerHTML, 0, 0)
-      // Get the data URL of the PDF
-      const pdfUrl = canvas.toDataURL()
+      // ctx.drawSvg(svg.outerHTML, 0, 0)
+      // // Get the data URL of the PDF
+      // const pdfUrl = canvas.toDataURL()
 
-      // Use the data URL to create a PDF object
-      const pdf = new Blob([pdfUrl], { type: 'application/pdf' })
+      // // Use the data URL to create a PDF object
+      // const pdf = new Blob([pdfUrl], { type: 'application/pdf' })
 
-      saveAs(pdf, 'certi.pdf')
+      // saveAs(pdf, 'certi.pdf')
     }
 
     // You can now use the PDF object, for example:
