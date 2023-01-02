@@ -334,4 +334,9 @@ export namespace NSPractice {
     primaryCategory: NsContent.EPrimaryCategory
     children: ISubSec[]
   }
+  export interface IRetakeAssessment {
+    retakeMinutesLeft: number
+    retakeAssessments: boolean
+    retakeAssessmentDuration: number
+  }
 }

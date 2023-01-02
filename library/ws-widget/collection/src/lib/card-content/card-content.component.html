@@ -95,7 +95,7 @@
       }">
       <div class="status-danger" role="note" i18n-aria-label aria-label="Content expired or deleted" i18n-matTooltip
         matTooltip="Content may be expired or deleted" *ngIf="!isLiveOrMarkForDeletion"></div>
-      <a (click)="raiseTelemetry(); $event.stopPropagation()" 
+      <a (click)="raiseTelemetry(); $event.stopPropagation()"
       [routerLink]="widgetData.linkUrl ? widgetData.linkUrl : (widgetData.content | pipeContentRoute).url"
       [queryParams]="(widgetData.content | pipeContentRoute).queryParams" class="card-link" role="link"
       aria-label="Content" i18n-aria-label="Content | Click to view">
@@ -132,14 +132,16 @@
           <!-- </a> -->
         </ng-container>
         <div class="card-overlay">
-          <h3 *ngIf="widgetData.content.name" class="text-truncate card-title">
+          <!-- <h3 *ngIf="widgetData.content.name" class="text-truncate card-title"> -->
+            <h3 *ngIf="widgetData.content.name" class="card-title mat-subheading-1">
             <!-- <a (click)="raiseTelemetry(); $event.stopPropagation()" [routerLink]="(widgetData.content | pipeContentRoute).url"
               [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link"> -->
               {{ widgetData.content.name }}
             <!-- </a> -->
 
           </h3>
-          <div class="mat-body-2 ws-mat-white-text description-text mt-2 text-truncate">
+          <!-- <div class="mat-body-2 ws-mat-white-text description-text mt-2 text-truncate"> -->
+            <div class="mat-body-2 description-text mt-2 ws-mat-primary-text text-truncate">
             {{ widgetData.content.description | pipeHtmlTagRemoval }}
           </div>
           <!-- <div class="flex justify-between items-center">
