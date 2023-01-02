@@ -1182,7 +1182,7 @@
   dependencies:
     tslib "^1.9.0"
 
-"@sunbird-cb/micro-surveys@^2.0.11":
+"@sunbird-cb/micro-surveys@^2.0.12":
   version "2.0.12"
   resolved "https://registry.yarnpkg.com/@sunbird-cb/micro-surveys/-/micro-surveys-2.0.12.tgz#deaa925bbf61781170f9958fdb0ffd37be601549"
   integrity sha512-3DDt1VAVwcNPM6jsbdnUnI/rpWGADtlNlALoqRrQB1S8oF6yLORyjIljQP6fOS1SAOyXr1tD2zkNb4T6+yj89w==
