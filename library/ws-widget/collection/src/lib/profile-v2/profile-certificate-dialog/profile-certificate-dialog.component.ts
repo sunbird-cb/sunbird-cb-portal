@@ -1,13 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { Router } from '@angular/router'
-// import { DomSanitizer } from '@angular/platform-browser'
-// import * as svg from 'save-svg-as-png';
-// import domtoimage from 'dom-to-image';
-// import FileSaver from 'file-saver';
-// import { WidgetContentService } from '@sunbird-cb/collection/src/public-api';
-// var domtoimage = require('dom-to-image');
-// var download = require('downloadjs');
+import { jsPDF } from 'jspdf'
 
 @Component({
   selector: 'ws-widget-app-profile-certificate-dialog',
@@ -72,7 +66,7 @@ export class ProfileCertificateDialogComponent implements OnInit {
     this.router.navigateByUrl(`/app/toc/${data}/overview`)
   }
 
-  dwonloadCert() {
+  downloadCert() {
     const a: any = document.createElement('a')
     a.href = this.data.cet
     a.download = 'Certificate'
@@ -84,18 +78,18 @@ export class ProfileCertificateDialogComponent implements OnInit {
     // download as jpge
 
   }
-  dwonloadCertPng() {
+  downloadCertPng() {
     const uriData = this.data.cet
     const img = new Image()
     img.src = uriData
-    img.width = 1200
-    img.height = 700
+    img.width = 1820
+    img.height = 1000
     img.onload = () => {
       const canvas = document.createElement('canvas');
       [canvas.width, canvas.height] = [img.width, img.height]
       const ctx = canvas.getContext('2d')
       if (ctx) {
-        ctx.imageSmoothingEnabled = true
+        // ctx.imageSmoothingEnabled = true
         ctx.drawImage(img, 0, 0, img.width, img.height)
         const a = document.createElement('a')
         const quality = 1.0 // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingQuality
@@ -107,89 +101,32 @@ export class ProfileCertificateDialogComponent implements OnInit {
       }
     }
   }
+  async downloadCertPdf() {
+    const uriData = this.data.cet
+    const img = new Image()
+    img.src = uriData
+    img.width = 1820
+    img.height = 1000
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      [canvas.width, canvas.height] = [img.width, img.height]
+      const ctx = canvas.getContext('2d')
+      if (ctx) {
+        ctx.drawImage(img, 0, 0, img.width, img.height)
+        const quality = 1.0 // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingQuality
+        const dataImg = canvas.toDataURL('application/pdf', quality)
+        const pdf = new jsPDF('landscape', 'px', 'a4')
+
+        // add the image to the PDF
+        pdf.addImage(dataImg, 10, 20, 600, 350)
+
+        // download the PDF
+        pdf.save('Certificate.pdf')
+      }
+    }
+  }
   shareCert() {
-    // svg.svgAsPngUri(document.getElementById('certificate'), {}, (uri:any) => {
-    //   console.log('png base 64 encoded', uri);
-    // });
-    // console.log("share")
-    // const node = document.getElementById('certificate');
-    // console.log("node", node)
-    // if (node !== null) {
-    //   domtoimage.toJpeg(node)
-    //     .then((dataUrl: any) => {
-    //       var link = document.createElement('a');
-    //       console.log(link);
-    //       link.setAttribute('type', 'hidden');
-    //       link.download = 'my-image-name.jpeg';
-    //       link.href = dataUrl;
-    //       document.body.appendChild(link);
-    //       link.click();
-    //       link.remove();
-    //       // link.download = 'my-image-name.jpeg';
-    //       // link.href = dataUrl;
-    //       this.contentSvc.pushJpgeCert(dataUrl).subscribe(
-    //         (res) => {
-    //           console.log(res)
-    //         }
-    //       )
-    //       // link.click();
-    //     });
-
-    //   // let link = document.createElement('a');
-
-    // }
-
-    // console.log(navUrl);
-
     return window.open(this.navUrl, '_blank')
   }
 
-//   downloadCertInLocal(cert:any){
-// console.log(this.images);
-
-// const img = new Image()
-// const url = cert
-// let link = ''
-// let cet = ''
-// img.onload = function () {
-//   const canvas: any = document.getElementById('certCanvas') || {}
-//   const ctx = canvas.getContext('2d')
-//   const imgWidth = img.width
-//   const imgHeight = img.height
-//   canvas.width = imgWidth
-//   canvas.height = imgHeight
-//   ctx.drawImage(img, 0, 0, imgWidth, imgHeight)
-//   let imgURI = canvas
-//     .toDataURL('image/jpeg')
-
-//   imgURI = decodeURIComponent(imgURI.replace('data:image/jpeg,', ''))
-//   cet = imgURI
-//   const arr = imgURI.split(',')
-//   const mime = arr[0].match(/:(.*?);/)[1]
-//   const bstr = atob(arr[1])
-//   let n = bstr.length
-//   const u8arr = new Uint8Array(n)
-//   while (n) {
-//     n = n - 1
-//     u8arr[n] = bstr.charCodeAt(n)
-//   }
-//   const blob = new Blob([u8arr], { type: mime })
-//   link = URL.createObjectURL(blob)
-// console.log(link);
-//   localStorage.setItem('certificate.jpeg', link)
-//   // FileSaver.saveAs(blob, 'certificate.jpeg')
-//   // if (localStorage.getItem(`certificate_downloaded_${self.content ? self.content.identifier : ''}`)) {
-//   //   localStorage.removeItem(`certificate_downloaded_${self.content ? self.content.identifier : ''}`)
-//   // }
-// }
-// setTimeout(() => {
-
-//   this.navUrl = "https://www.linkedin.com/shareArticle?title=I%20earned%20a%20certficiation&url=" + link
-//   console.log(this.navUrl)
-// }, 5000);
-
-// img.src = url
-
-// console.log(img)
-//   }
 }
