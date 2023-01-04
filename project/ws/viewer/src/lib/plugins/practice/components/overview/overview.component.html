@@ -46,10 +46,23 @@
   <div class="flex flex-1 flex-column margin-left-xl ws-mat-accent-border border-custom assessment_summary_box">
     <div class="flex flex-1 flex-column">
       <span class="mat-headline text-justify margin-bottom-xl">{{learningObjective | pipeLimitTo: 300 }}</span>
-      <a mat-button (click)="overviewed('start')" [class.spinner]="loading" [disabled]="loading"
-        class="ws-mat-primary-background text-white m-w padding-xs">
+      <a *ngIf="canAttempt?.retakeMinutesLeft === 0 " mat-button (click)="overviewed('start')" [class.spinner]="loading"
+        [disabled]="loading" class="ws-mat-primary-background text-white m-w padding-xs">
         <span class="padding-xs" i18n>Start assessment now</span>
       </a>
+      <mat-hint class="mat-title" *ngIf="canAttempt?.retakeMinutesLeft !== 0 ">Please retake after
+        {{canAttempt?.retakeMinutesLeft * 60 | pipeDurationTransform: 'day'}}</mat-hint>
+      <!-- <div class="flex flex-1">
+        <div class="flex">
+          <mat-hint class="mat-title">Hint: </mat-hint>
+        </div>
+        <div class="margin-left-s flex flex-column">
+          <mat-hint>h: Hour(s) </mat-hint>
+          <mat-hint>m: Minute(s) </mat-hint>
+          <mat-hint>s: Second(s) </mat-hint>
+        </div>
+      </div> -->
+
       <div class="flex margin-top-xl flex-column">
         <span class="mat-subheading-2 ws-mat-black60-text">Summary</span>
         <ng-container [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{

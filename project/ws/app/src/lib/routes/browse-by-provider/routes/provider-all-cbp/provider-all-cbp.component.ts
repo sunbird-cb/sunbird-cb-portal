@@ -47,7 +47,7 @@ export class ProviderAllCbpComponent implements OnInit, OnDestroy {
       offset: 0,
       fields: [],
       facets: ['primaryCategory', 'mimeType', 'source'],
-      fuzzy: true,
+      fuzzy: false,
     },
   }
 

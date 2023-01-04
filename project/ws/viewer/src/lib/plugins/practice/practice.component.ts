@@ -64,6 +64,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     maxQuestions: 0,
     requiresSubmit: 'Yes',
     showTimer: 'Yes',
+    primaryCategory: NsContent.EPrimaryCategory.PRACTICE_RESOURCE,
   }
   @ViewChildren('questionsReference') questionsReference: QueryList<QuestionComponent> | null = null
   @ViewChild('sidenav', { static: false }) sideNav: MatSidenav | null = null
@@ -105,6 +106,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   assessmentBuffer = 0
   showAnswer = false
   matchHintDisplay: any[] = []
+  canAttempt!: NSPractice.IRetakeAssessment
   constructor(
     private events: EventService,
     public dialog: MatDialog,
@@ -119,21 +121,6 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     if (environment.assessmentBuffer) {
       this.assessmentBuffer = environment.assessmentBuffer
     }
-    let canAttempt = true
-    if (this.primaryCategory !== NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
-      this.canAttend().then(r => {
-        canAttempt = !!r
-      })
-    }
-    if (canAttempt) {
-      this.init()
-      this.updateVisivility()
-    }
-  }
-  async canAttend() {
-    const data = this.quizSvc.canAttend(this.identifier)
-    await data.toPromise()
-    return data
   }
   init() {
     // this.getSections()
@@ -174,7 +161,21 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     }
     return
   }
+  canAttend() {
+    this.quizSvc.canAttend(this.identifier).subscribe(response => {
+      if (this.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT) {
+        if (response) {
+          this.canAttempt = response
+        }
+        if (this.canAttempt.retakeMinutesLeft === 0 || this.canAttempt.retakeAssessments) {
+          this.init()
+          this.updateVisivility()
+        }
+      }
+    })
+  }
   ngOnInit() {
+    this.canAttend()
     this.attemptSubscription = this.quizSvc.secAttempted.subscribe(data => {
       this.attemptSubData = data
     })
@@ -1124,6 +1125,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       maxQuestions: 0,
       requiresSubmit: 'Yes',
       showTimer: 'Yes',
+      primaryCategory: NsContent.EPrimaryCategory.PRACTICE_RESOURCE,
     }
   }
   ngOnDestroy() {

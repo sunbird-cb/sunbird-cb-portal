@@ -1264,12 +1264,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               'academics' in reqUpdates.request.profileDetails ||
               'interests' in reqUpdates.request.profileDetails ||
               'skills' in reqUpdates.request.profileDetails) {
-              if (res.result.personalDetails.status === 'success' && res.result.transitionDetails.status === 'success') {
+              if (res.result && res.result.personalDetails && res.result.personalDetails.status === 'success'
+                && res.result.transitionDetails.status === 'success') {
                 this.openSnackbar(this.toastSuccess.nativeElement.value)
                 this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
               }
             } else {
-              if (res.result.transitionDetails.status === 'success') {
+              if (res.result && res.result.transitionDetails && res.result.transitionDetails.status === 'success') {
                 this.openSnackbar(this.toastSuccess.nativeElement.value)
                 this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
               }
@@ -1281,7 +1282,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               'interests' in reqUpdates.request.profileDetails ||
               'academics' in reqUpdates.request.profileDetails ||
               'skills' in reqUpdates.request.profileDetails) {
-              if (res.result.personalDetails.status === 'success') {
+              if (res.result && res.result.personalDetails && res.result.personalDetails.status === 'success') {
                 this.openSnackbar(this.toastSuccess.nativeElement.value)
                 this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
               }
@@ -1290,7 +1291,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               this.openSnackbar(this.toastError.nativeElement.value, this.userProfileData.id)
             }
           }
-
+          this.configSvc.updateGlobalProfile(true)
         } else {
           this.openSnackbar(this.toastError.nativeElement.value)
         }

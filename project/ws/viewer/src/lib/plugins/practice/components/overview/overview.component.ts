@@ -14,6 +14,7 @@ export class OverviewComponent implements OnInit {
   @Input() duration = 0
   @Input() timeLimit = 0
   @Input() noOfQuestions = 0
+  @Input() canAttempt!: NSPractice.IRetakeAssessment
   @Output() userSelection = new EventEmitter<NSPractice.TUserSelectionType>()
   questionTYP = NsContent.EPrimaryCategory
   staticImage = '/assets/images/exam/practice-test.png'

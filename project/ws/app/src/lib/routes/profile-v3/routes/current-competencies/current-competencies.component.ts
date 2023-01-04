@@ -24,7 +24,6 @@ export class CurrentCompetenciesComponent implements OnInit, OnDestroy {
   overallCompetencies!: NSProfileDataV3.ICompetencie[]
   changedProperties: any = {}
   placeHolder = 'Search here'
-  infoIcon = false
   // userDetails: any
   updatecompList: any = []
   competenciesList: any = []
