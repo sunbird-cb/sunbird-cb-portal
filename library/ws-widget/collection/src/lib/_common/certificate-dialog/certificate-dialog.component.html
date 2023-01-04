@@ -9,7 +9,7 @@
         <img #certificate [src]="url| pipeSafeSanitizer: 'url'" alt="Certificate" role="image" class="certificate-banner-image">
     </mat-card-content>
     <mat-card-actions class="flex flex-row-reverse">
-        <ws-widget-svg-to-pdf></ws-widget-svg-to-pdf>
+        <!-- <ws-widget-svg-to-pdf></ws-widget-svg-to-pdf> -->
         <a mat-button  [matMenuTriggerFor]="menu" class="ws-mat-accent-border-active mat-accent">
             <mat-icon class="mat-icon material-icons-outlined download_icon margin-right-xs">cloud_download</mat-icon>
             Download
@@ -19,15 +19,15 @@
             Download
          </a> -->
         <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)='dwonloadCertPdf()'>
+            <button mat-menu-item (click)='downloadCertPdf()'>
                 <mat-icon>picture_as_pdf</mat-icon>
                 <span>PDF</span>
             </button>
-            <button mat-menu-item (click)='dwonloadCertPng()'>
+            <button mat-menu-item (click)='downloadCertPng()'>
                 <mat-icon>photo</mat-icon>
                 <span>PNG</span>
             </button>
-            <button mat-menu-item (click)='dwonloadCert()'>
+            <button mat-menu-item (click)='downloadCert()'>
                 <mat-icon>photo_size_select_actual</mat-icon>
                 <span>SVG</span>
             </button>
