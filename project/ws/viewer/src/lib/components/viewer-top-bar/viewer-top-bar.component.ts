@@ -8,6 +8,7 @@ import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ViewerDataService } from '../../viewer-data.service'
 import { CourseCompletionDialogComponent } from '../course-completion-dialog/course-completion-dialog.component'
+import { ContentFeedbackComponent } from '../content-feedback/content-feedback.component'
 
 @Component({
   selector: 'viewer-viewer-top-bar',
@@ -234,5 +235,24 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigateByUrl(`public/toc/${this.collectionId}/overview`)
     }
+  }
+
+  // content feedback form
+  addFeedback() {
+    const dialogRef = this.dialog.open(ContentFeedbackComponent, {
+      width: '400px',
+      autoFocus: false,
+      data: {
+        courseName: this.activatedRoute.snapshot.queryParams.courseName,
+        userId: this.userid,
+        identifier: this.identifier,
+        primaryCategory: this.collectionType,
+      },
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+      }
+    })
   }
 }

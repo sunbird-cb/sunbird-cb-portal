@@ -1,0 +1,11 @@
+@import "ws-mixins";
+.no-shadow {
+    box-shadow: none !important;
+}
+
+.submit-button {
+    background: no-repeat padding-box #0074b6 !important;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: white;
+}

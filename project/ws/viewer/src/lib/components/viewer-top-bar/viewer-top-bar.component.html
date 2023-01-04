@@ -41,12 +41,16 @@
   </h1>
   <!-- [disabled]="!nextResourceUrl" -->
   <!-- {{nextResourceUrl}} -->
+  <a class="width-auto mat-body-2 feedback-link" (click)="addFeedback()" accesskey=">">
+    <span *ngIf="logo">Content feedback</span>
+  </a>
+
   <a mat-icon-button class="width-auto mr-10" [routerLink]="nextResourceUrl"
     [queryParams]="nextResourceUrlParams?.queryParams" *ngIf="isTypeOfCollection && nextResourceUrl"
     queryParamsHandling="" accesskey=">">
     <span *ngIf="logo">NEXT</span>
     <mat-icon>skip_next</mat-icon>
-  </a>
+  </a>  
   <!-- <button mat-icon-button class="width-auto mr-10" routerLink="/page/home" *ngIf="isTypeOfCollection && !nextResourceUrl" -->
   <button mat-icon-button class="width-auto mr-10" (click)="finishDialog()"
     *ngIf="isTypeOfCollection && !nextResourceUrl" accesskey=">">
