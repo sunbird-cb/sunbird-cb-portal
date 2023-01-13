@@ -64,16 +64,17 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
         }
         this.shCorrectAnsSubscription = this.practiceSvc.displayCorrectAnswer.subscribe(displayAns => {
             this.showAns = displayAns
-            setTimeout(() => { this.changeColor() }, 200)
-
+            if (this.showAns) {
+                this.changeColor()
+            }
         })
         this.localQuestion = this.question.question
         this.question.options.map(option => (option.matchForView = option.match))
-        const array = this.question.options.map(elem => elem.match)
-        const arr = this.practiceSvc.shuffle(array)
-        for (let i = 0; i < this.question.options.length; i += 1) {
-            this.question.options[i].matchForView = arr[i]
-        }
+        // const array = this.question.options.map(elem => elem.match)
+        // const arr = this.practiceSvc.shuffle(array)
+        // for (let i = 0; i < this.question.options.length; i += 1) {
+        //     this.question.options[i].matchForView = arr[i]
+        // }
         const matchHintDisplayLocal = [...this.question.options]
         matchHintDisplayLocal.forEach(element => {
             if (element.hint) {
@@ -205,13 +206,9 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
     }
     changeColor() {
         const a = this.jsPlumbInstance.getAllConnections() as any[]
-        if (a.length < this.question.options.length && this.showAns) {
-            alert('Please select all answers')
+        if (a.length < this.question.options.length) {
             this.showAns = false
-            this.practiceSvc.shCorrectAnswer(false)
-            return
-        }
-        if (!this.showAns) {
+            alert('Please select all answers')
             return
         }
         a.forEach(element => {
@@ -238,15 +235,15 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
         for (let i = 1; i <= this.question.options.length; i += 1) {
             const questionSelector = `#c1${this.question.questionId}${i}`
             // for (let j = 1; j <= this.question.options.length; j += 1) {
-            const selectedOptions = _.map(this.practiceSvc.mtfSrc.value[this.question.questionId] || []) || []
+            const selectedOptions = _.first(this.practiceSvc.questionAnswerHash.value[this.question.questionId] || []) || []
             // tslint:disable-next-line
             if (selectedOptions.length) {
                 this.edit = true
             }
             for (let j = 0; j < selectedOptions.length; j += 1) {
                 // const answerSelector = `#c2${this.question.questionId}${j + 1}`
-                const sourceId = `#${selectedOptions[j].sourceId}` // need to match with text
-                const targetId = `#${selectedOptions[j].targetId}`              // this.question.options[i - 1]
+                const sourceId = `#${_.get(selectedOptions[j], 'sourceId')}`
+                const targetId = `#${_.get(selectedOptions[j], 'targetId')}`              // this.question.options[i - 1]
                 if (sourceId === questionSelector && targetId) {
                     const match = _.get(_.first(this.jsPlumbInstance.getSelector(targetId) as unknown as HTMLElement[]), 'innerText')
                     // const selectors: HTMLElement[] = this.jsPlumbInstance.getSelector(targetId) as unknown as HTMLElement[]
