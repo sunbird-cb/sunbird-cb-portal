@@ -163,15 +163,19 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
   canAttend() {
     this.quizSvc.canAttend(this.identifier).subscribe(response => {
-      if (this.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT) {
-        if (response) {
-          this.canAttempt = response
-        }
-        if (this.canAttempt.retakeMinutesLeft === 0 || this.canAttempt.retakeAssessments) {
-          this.init()
-          this.updateVisivility()
+      if (response) {
+        this.canAttempt = response
+      }
+      if (this.primaryCategory !== NsContent.EPrimaryCategory.FINAL_ASSESSMENT) {
+        // ** Except final assessment user can retake all assessment without time boundaries */
+        this.canAttempt = {
+          retakeMinutesLeft: 0,
+          retakeAssessments: true,
+          retakeAssessmentDuration: 0,
         }
       }
+      this.init()
+      this.updateVisivility()
     })
   }
   ngOnInit() {
@@ -403,6 +407,11 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           break
         case 'mtf':
         case 'MTF':
+          // const array = this.question.options.map(elem => elem.match)
+          // const arr = this.practiceSvc.shuffle(array)
+          // for (let i = 0; i < this.question.options.length; i += 1) {
+          //     this.question.options[i].matchForView = arr[i]
+          // }
           _.each(this.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE && question.editorState
             // tslint:disable-next-line: align
             ? question.editorState.options : question.choices.options, (o, idx) => {
@@ -410,11 +419,15 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
                 // isCorrect: true,
                 optionId: o.value.value,
                 text: (o.value.body || '').toString(), // modified
-                hint: _.get(_.nth(question.editorState && question.editorState.options, idx), 'answer') || '',
+                hint: this.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+                  ? _.get(_.nth(question.editorState && question.editorState.options, idx), 'answer')
+                  : _.nth(question.rhsChoices, idx),
                 response: '',
                 userSelected: false,
                 matchForView: '',
-                match: _.get(_.nth(question.editorState && question.editorState.options, idx), 'answer'),
+                match: this.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+                  ? _.get(_.nth(question.editorState && question.editorState.options, idx), 'answer')
+                  : _.nth(question.rhsChoices, idx),
               })
             })
           break
@@ -575,7 +588,6 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     return { next, full: fullAttempted }
   }
   fillSelectedItems(question: NSPractice.IQuestion, optionId: string) {
-    // debugger
     if (typeof (optionId) === 'string') {
       this.raiseTelemetry('mark', optionId, 'click')
     } if (this.viewState === 'answer') {
@@ -608,8 +620,11 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     if (question.questionType && question.questionType === 'mtf') {
       const mTfval = this.quizSvc.mtfSrc.getValue()
       mTfval[question.questionId] = {
-        source: _.map(optionId, 'source.innerText'),
-        target: _.map(optionId, 'target.innerText'),
+        [_.first(_.map(optionId, 'source.innerText'))]: {
+          target: _.first(_.map(optionId, 'target.innerText')),
+          sourceId: _.first(_.map(optionId, 'source.id')),
+          targetId: _.first(_.map(optionId, 'target.id')),
+        },
       }
       this.quizSvc.mtfSrc.next(mTfval)
     }
