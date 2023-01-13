@@ -621,10 +621,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       const mTfval = this.quizSvc.mtfSrc.getValue()
       mTfval[question.questionId] = {
         // [_.first(_.map(optionId, 'source.innerText'))]: {
-          source: _.first(_.map(optionId, 'source.innerText')),
-          target: _.first(_.map(optionId, 'target.innerText')),
-          sourceId: _.first(_.map(optionId, 'source.id')),
-          targetId: _.first(_.map(optionId, 'target.id')),
+        source: _.map(optionId, 'source.innerText'),
+        target: _.map(optionId, 'target.innerText'),
+        // sourceId: _.first(_.map(optionId, 'source.id')),
+        // targetId: _.first(_.map(optionId, 'target.id')),
         // },
       }
       this.quizSvc.mtfSrc.next(mTfval)
@@ -685,7 +685,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         timeLimit: this.quizJson.timeLimit * 1000,
       },
       this.questionAnswerHash,
-      this.quizSvc.mtfSrc.getValue(),
+      this.quizSvc.mtfSrc.getValue() as any ,
     )
     const request: NSPractice.IQuizSubmit = {
       batchId,
