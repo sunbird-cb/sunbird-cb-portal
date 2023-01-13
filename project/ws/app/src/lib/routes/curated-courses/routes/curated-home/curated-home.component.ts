@@ -75,7 +75,9 @@ export class CuratedHomeComponent implements OnInit {
 
   getAllCuratedCollection(req?: any) {
     const request = req || this.searchReq
+    console.log(request, 'request----')
     this.curatedCollectionSvc.fetchSearchData(request).subscribe((res: any) => {
+      console.log(res, 'responseeeee---')
       if (res && res.result && res.result.count === 0) {
         this.disableLoadMore = true
         this.allCollections = []

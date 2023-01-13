@@ -10,6 +10,10 @@ export class CuratedPopularCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.collection, 'collection value single page======')
+    if(this.collection.name) {
+      
+    }
   }
 
 }
