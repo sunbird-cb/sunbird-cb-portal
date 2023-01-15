@@ -248,15 +248,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     })
 
     if (this.content) {
-      console.log(this.content, 'this.content---')
       if((this.content.name).toLowerCase() === this.dakshtaName.toLowerCase()) {
         // console.log(res.result.content.name.toLowerCase(), 'this.currentCollection.name_________++++')
         // console.log(this.dakshtaName.toLowerCase(), 'this.dakshtaName.toLowerCase()==')
         this.showBtn = true
-        console.log(this.showBtn, 'this.showBtn')
+
       } else {
         this.showBtn = false
-        console.log(this.showBtn, 'this.showBtn')
+
       }
       this.btnPlaylistConfig = {
         contentId: this.content.identifier,
