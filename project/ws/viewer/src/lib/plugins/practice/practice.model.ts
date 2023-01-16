@@ -48,8 +48,14 @@ export namespace NSPractice {
   }
   export interface IMtfSrc {
     [questionId: string]: {
+      // [source: string]:  {
+      // source: string
+      // target: string,
+      // sourceId: string
+      // targetId: string
       source: string[]
       target: string[]
+      // }
     }
   }
   export interface IQuizSubmitResponse {
