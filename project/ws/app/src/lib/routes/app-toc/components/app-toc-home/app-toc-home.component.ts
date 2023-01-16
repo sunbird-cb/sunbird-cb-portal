@@ -28,6 +28,7 @@ import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_
 import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
 import moment from 'moment'
 import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
+import { environment } from 'src/environments/environment'
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -138,6 +139,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   certData: any
   userId: any
   userRating: any
+  dakshtaName = environment.dakshtaName
+  cscmsUrl = environment.cscmsUrl
+  showBtn = false
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -244,6 +248,15 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     })
 
     if (this.content) {
+      if((this.content.name).toLowerCase() === this.dakshtaName.toLowerCase()) {
+        // console.log(res.result.content.name.toLowerCase(), 'this.currentCollection.name_________++++')
+        // console.log(this.dakshtaName.toLowerCase(), 'this.dakshtaName.toLowerCase()==')
+        this.showBtn = true
+
+      } else {
+        this.showBtn = false
+
+      }
       this.btnPlaylistConfig = {
         contentId: this.content.identifier,
         contentName: this.content.name,
