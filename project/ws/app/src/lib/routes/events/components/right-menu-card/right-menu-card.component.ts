@@ -49,21 +49,21 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
       const now = new Date()
       const today = moment(now).format('YYYY-MM-DD HH:mm')
 
-      if (eventDate < today) {
-        this.pastEvent = true
-        this.currentEvent = false
-        this.futureEvent = false
-      }
-      if (eventDate > today) {
-        this.futureEvent = true
-        this.pastEvent = false
-        this.currentEvent = false
-      }
       const isToday = this.compareDate(eventDate, eventendDate, this.eventData)
       if (isToday) {
         this.currentEvent = true
         this.futureEvent = false
         this.pastEvent = false
+      } else {
+        this.currentEvent = false
+        if (eventDate < today && eventendDate < today) {
+          this.pastEvent = true
+          this.futureEvent = false
+        }
+        if (eventDate > today && eventendDate > today) {
+          this.futureEvent = true
+          this.pastEvent = false
+        }
       }
     }
   }
@@ -78,13 +78,12 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
   compareDate(selectedStartDate: any, selectedEndDate: any, eventData: any) {
     const now = new Date()
     const today = moment(now).format('YYYY-MM-DD HH:mm')
-
-    const day = new Date().getDate()
-    const year = new Date().getFullYear()
-    // tslint:disable-next-line:prefer-template
-    const month = ('0' + (now.getMonth() + 1)).slice(-2)
-    const todaysdate = `${year}-${month}-${day}`
-
+    const todaysdate = moment(now).format('YYYY-MM-DD')
+    // const day = new Date().getDate()
+    // const year = new Date().getFullYear()
+    // // tslint:disable-next-line:prefer-template
+    // const month = ('0' + (now.getMonth() + 1)).slice(-2)
+    // const todaysdate = `${year}-${month}-${day}`
     const stime = eventData.startTime.split('+')[0]
     const shour = stime.substr(0, 2) * 60
     const smin = stime.substr(3, 2) * 1

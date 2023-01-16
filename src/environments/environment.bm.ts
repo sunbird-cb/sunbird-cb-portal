@@ -17,6 +17,8 @@ export const environment = {
     certificateassets: (window as { [key: string]: any })['env']['certificateassets'] || '',
     assessmentBuffer: (window as { [key: string]: any })['env']['assessmentBuffer'] || 0,
     staticHomePageUrl: (window as { [key: string]: any })['env']['staticHomePageUrl'] || '',
+    cscmsUrl:(window as { [key: string]: any })['env']['cscmsUrl'] || '',
+    dakshtaName:(window as { [key: string]: any })['env']['dakshtaName'] || '',
     // mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
     // spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',
     // cbcPortal: (window as { [key: string]: any })['env']['cbcPath'] || '',

@@ -114,7 +114,7 @@ TODO: edit option while preview Mode
                   [routerLink]="resumeData ? resumeDataLink?.url : firstResourceLink?.url"
                   [queryParams]="resumeData ? generateQuery('RESUME') : generateQuery('START')"
                   class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white">
-                  
+
                   <ng-container *ngIf="!content.completionPercentage || content.completionPercentage < 100">
                     <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
                       {{resumeData? "Resume" : "Start"}}
@@ -171,7 +171,7 @@ TODO: edit option while preview Mode
               isBatchInProgress &&
               (actionBtnStatus === 'grant' &&
               !(isMobile && content?.isInIntranet) &&
-             (content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId) || 
+             (content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId) ||
              (content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL && currentCourseBatchId) )
             ">
                 <a *ngIf="showStart.show && !isPostAssessment"
@@ -257,6 +257,14 @@ TODO: edit option while preview Mode
           [contentId]="content?.identifier" [progress]="100" [progressType]="'percentage'">
         </ws-widget-content-progress>
       </ng-container> -->
+
+      <div *ngIf="showBtn">
+        <a href="{{cscmsUrl}}" target="_blank" class="text-white custom-button mat-button margin-bottom-m">Apply for physical training</a>
+    </div>
+    <!-- <div>
+      <a href="{{cscmsUrl}}" target="_blank" class="text-white custom-button mat-button margin-bottom-m">Apply for physical training</a>
+  </div> -->
+
       <ng-container *ngIf="content?.completionStatus < 2 && isBatchInProgress">
        <div class="flex flex-row justify-between w-full">
         <p class="mat-body-2 font-bold-imp ws-mat-black60-text">Your progress</p>
@@ -274,8 +282,8 @@ TODO: edit option while preview Mode
           <mat-icon class=" icon-margin mat-icon notranslate material-icons mat-icon-no-color">star_purple500</mat-icon>
           <ng-container *ngIf="!userRating">
             <span> Rate this </span>
-            <span class="lowercase"> 
-               
+            <span class="lowercase">
+
               <ng-container *ngIf="content?.primaryCategory === primaryCategory.PROGRAM">
                 {{content?.primaryCategory}}
               </ng-container>
