@@ -46,12 +46,11 @@
   <div class="flex flex-1 flex-column margin-left-xl ws-mat-accent-border border-custom assessment_summary_box">
     <div class="flex flex-1 flex-column">
       <span class="mat-headline text-justify margin-bottom-xl">{{learningObjective | pipeLimitTo: 300 }}</span>
-      <a *ngIf="canAttempt?.retakeAssessments" mat-button (click)="overviewed('start')" [class.spinner]="loading"
+      <a *ngIf="canAttempt.attemptsMade <= canAttempt.attemptsAllowed" mat-button (click)="overviewed('start')" [class.spinner]="loading"
         [disabled]="loading" class="ws-mat-primary-background text-white m-w padding-xs">
         <span class="padding-xs" i18n>Start assessment now</span>
       </a>
-      <mat-hint class="mat-title" *ngIf="!canAttempt?.retakeAssessments">Please retake after
-        {{canAttempt?.retakeMinutesLeft * 60 | pipeDurationTransform: 'day'}}</mat-hint>
+      <mat-hint class="mat-title" *ngIf="canAttempt.attemptsMade > canAttempt.attemptsAllowed">You have exceeded the maximum allowed attempt</mat-hint>
       <!-- <div class="flex flex-1">
         <div class="flex">
           <mat-hint class="mat-title">Hint: </mat-hint>
