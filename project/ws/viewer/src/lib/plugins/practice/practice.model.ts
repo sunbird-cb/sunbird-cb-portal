@@ -341,8 +341,7 @@ export namespace NSPractice {
     children: ISubSec[]
   }
   export interface IRetakeAssessment {
-    retakeMinutesLeft: number
-    retakeAssessments: boolean
-    retakeAssessmentDuration: number
+    attemptsMade: number,
+    attemptsAllowed: number
   }
 }

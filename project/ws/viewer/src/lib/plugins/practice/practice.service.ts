@@ -248,9 +248,8 @@ export class PracticeService {
       return this.http.get<any>(API_END_POINTS.CAN_ATTEMPT(identifier)).pipe(map(r => r.result))
     }
     return of({
-      retakeMinutesLeft: 0,
-      retakeAssessments: true,
-      retakeAssessmentDuration: 0,
+      attemptsMade: 0,
+      attemptsAllowed: 1,
     })
   }
   shCorrectAnswer(val: boolean) {
