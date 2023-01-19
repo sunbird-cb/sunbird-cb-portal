@@ -21,7 +21,7 @@ export class OverviewComponent implements OnInit {
   loading = false
   points = [
     { icon: 'info', text: 'No negative marking' },
-    { icon: 'info', text: 'Assessment will have no time duration' },
+    { icon: 'info', text: 'Assessment will have time duration' },
     { icon: 'info', text: 'Skipped question can be attempted again before submitting' },
   ]
   constructor() { }
