@@ -1,4 +1,4 @@
-<viewer-overview *ngIf="viewState === 'initial' && (canAttempt.attemptsMade - canAttempt.attemptsAllowed) >= 0" [learningObjective]="learningObjective"
+<viewer-overview *ngIf="viewState === 'initial'" [learningObjective]="learningObjective"
   [complexityLevel]="complexityLevel" [duration]="duration" [timeLimit]="getTimeLimit"
   [primaryCategory]="primaryCategory" [canAttempt]="canAttempt" [noOfQuestions]="noOfQuestions" (userSelection)="getSections($event)">
 </viewer-overview>

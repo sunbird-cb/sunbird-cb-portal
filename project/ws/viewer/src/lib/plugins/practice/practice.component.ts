@@ -169,15 +169,15 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       }
       this.init()
       this.updateVisivility()
-      return
+    } else {
+      this.quizSvc.canAttend(this.identifier).subscribe(response => {
+        if (response) {
+          this.canAttempt = response
+        }
+        this.init()
+        this.updateVisivility()
+      })
     }
-    this.quizSvc.canAttend(this.identifier).subscribe(response => {
-      if (response) {
-        this.canAttempt = response
-      }
-      this.init()
-      this.updateVisivility()
-    })
   }
   ngOnInit() {
     this.canAttend()
