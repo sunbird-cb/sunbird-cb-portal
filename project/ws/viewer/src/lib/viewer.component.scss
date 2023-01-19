@@ -78,3 +78,50 @@
     }
   }
 }
+
+.custom-tabgroup {
+  .fixed-width {
+    padding: 0 !important;
+  }
+  .unit-cohort {
+    background: #E7EAEB;
+    margin: 10px 0;
+    padding: 22px 15px;
+    border-radius: 4px;
+    align-self: center;
+    .circle-l-xs, .circle-l-s, .circle-l, .circle-xl, .circle-m, .circle-xxl {
+      width: 56px !important;
+      height: 56px !important;
+    }
+  }
+}
+::ng-deep.mat-tab-header {
+  border: 0 !important;
+}
+::ng-deep.mat-tab-body {
+  padding: 15px 0 220px 0!important;
+  box-sizing: border-box;
+  overflow-y: initial!important;
+}
+::ng-deep.mat-tab-body.mat-tab-body-active {
+  @media(min-width: 767px) and (max-width:1050px) {
+    overflow-x: initial !important;
+  }
+}
+
+::ng-deep.mat-tab-body-wrapper {
+    overflow: inherit!important;
+}
+
+::ng-deep.mat-tab-label {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  margin-right: 3%;
+  .mat-tab-label-content {
+    text-transform: uppercase;
+  }
+}
+::ng-deep.mat-tab-label-active {
+  .mat-tab-label-content {
+    font-weight: 700 !important;
+  }
+}

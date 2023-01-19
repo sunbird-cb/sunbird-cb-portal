@@ -14,7 +14,7 @@ export class ContentFeedbackComponent implements OnInit {
                @Inject(MAT_DIALOG_DATA) public data: any) {
     this.contentFeedbackForm = new FormGroup({
       title: new FormControl(null, [Validators.minLength(4), Validators.maxLength(100)]),
-      feedback: new FormControl(null, [Validators.minLength(4), Validators.maxLength(1000)]),
+      feedback: new FormControl(null, [Validators.minLength(4), Validators.maxLength(500)]),
     })
 
   }
@@ -22,7 +22,7 @@ export class ContentFeedbackComponent implements OnInit {
   ngOnInit() {
     const matDialogConfig = new MatDialogConfig()
 
-    matDialogConfig.position = { right: `10px`, bottom: `0px` }
+    matDialogConfig.position = { right: `20px`, top: `52px` }
     this.dialogRef.updatePosition(matDialogConfig.position)
   }
 

@@ -1,11 +1,17 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
+import { AfterViewChecked, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { NsContent } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { UtilityService, ValueService, ConfigurationsService } from '@sunbird-cb/utils'
+import { UtilityService, ValueService, WsEvents, EventService, ConfigurationsService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { RootService } from '../../../../../src/app/component/root/root.service'
 import { TStatus, ViewerDataService } from './viewer-data.service'
+import { NsCohorts } from '@ws/app/src/lib/routes/app-toc/models/app-toc.model'
+import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
+import { MatTabChangeEvent } from '@angular/material'
+// tslint:disable-next-line
+import _ from 'lodash'
+import { BaseWrapperComponent, ConfigService, DiscussionService, EventsService, NavigationServiceService } from '@sunbird-cb/discussions-ui-v8'
 
 export enum ErrorType {
   accessForbidden = 'accessForbidden',
@@ -22,7 +28,7 @@ export enum ErrorType {
   templateUrl: './viewer.component.html',
   styleUrls: ['./viewer.component.scss'],
 })
-export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class ViewerComponent  extends BaseWrapperComponent implements OnInit, OnDestroy, AfterViewChecked {
   fullScreenContainer: HTMLElement | null = null
   content: NsContent.IContent | null = null
   errorType = ErrorType
@@ -38,6 +44,20 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   error: any | null = null
   isNotEmbed = true
   discussionConfig: any = {}
+  detailsToggle = true
+  category = 'category'
+  detailsPage = 'categoryDetails'
+  tagAllDiscussPage =  'tagAllDiscuss'
+  homePage = 'categoryHome'
+  showTrendTagPost = 0
+  tid!: number
+  slug!: string
+  context: any = { categories: { result: [] } }
+  categoryId: any
+  alldiscussPage = 'alldiscuss'
+  previousState: any
+  cIds: any = {}
+  cid: any
   errorWidgetData: NsWidgetResolver.IRenderConfigWithTypedData<any> = {
     widgetType: 'errorResolver',
     widgetSubType: 'errorResolver',
@@ -45,6 +65,10 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
       errorType: '',
     },
   }
+  cohortResults: {
+    [key: string]: { hasError: boolean; contents: NsCohorts.ICohortsContent[] }
+  } = {}
+  cohortTypesEnum = NsCohorts.ECohortTypes
   private screenSizeSubscription: Subscription | null = null
   private resourceChangeSubscription: Subscription | null = null
   constructor(
@@ -54,10 +78,68 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     private dataSvc: ViewerDataService,
     private rootSvc: RootService,
     private utilitySvc: UtilityService,
+    public configService: ConfigurationsService,
     private changeDetector: ChangeDetectorRef,
-    public configSvc: ConfigurationsService,
-  ) {
+    private tocSharedSvc: AppTocService,
+    private eventSvc: EventService,
+    @Inject(ConfigService)
+    configSvc: ConfigService,
+    @Inject(DiscussionService)
+    discussionService: DiscussionService,
+    @Inject(NavigationServiceService)
+    navigationServiceService: NavigationServiceService,
+    @Inject(EventsService)
+    eventService: EventsService) {
+    super(navigationServiceService, eventService, configSvc, discussionService)
+
     this.rootSvc.showNavbarDisplay$.next(false)
+    if (this.collectionId) {
+      this.discussionConfig = {
+        // menuOptions: [{ route: 'categories', enable: true }],
+        userName: (this.configService.nodebbUserProfile && this.configService.nodebbUserProfile.username) || '',
+      }
+      this.discussionConfig.contextType = 'course'
+      this.discussionConfig.contextIdArr = (this.collectionId) ? [this.collectionId] : []
+      // this.discussionConfig.categoryObj = {
+      //   category: {
+      //     name: this.content.name,
+      //     pid: '',
+      //     description: this.content.description,
+      //     context: [
+      //       {
+      //         type: 'course',
+      //         identifier: this.collectionId,
+      //       },
+      //     ],
+      //   },
+      // }
+      this.fetchCohorts(this.cohortTypesEnum.ACTIVE_USERS, this.collectionId)
+    }
+  }
+
+  widgetBackClick() {
+    this.state = this.alldiscussPage
+    this.showTrendTagPost = 0
+  }
+
+  stateChange(event: any) {
+    // debugger
+    // console.log(event)
+    this.previousState = this.state
+    this.state = event.action
+    if (event.action === this.detailsPage) {
+      this.tid = event.tid
+      this.slug = event.title
+      this.showTrendTagPost = 0
+      this.cid = event.cId[0]
+    }
+
+    if (event.action === this.tagAllDiscussPage) {
+      this.tid = event.tid
+      this.slug = event.title
+      this.showTrendTagPost = 1
+      this.cIds.result = event.cIds
+    }
   }
 
   getContentData(e: any) {
@@ -69,27 +151,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.discussionConfig = {
-      // menuOptions: [{ route: 'categories', enable: true }],
-      userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
-    }
-    this.discussionConfig.contextIdArr = (this.content) ? [this.content.identifier] : []
-    if (this.content) {
-      this.discussionConfig.categoryObj = {
-        category: {
-          name: this.content.name,
-          pid: '',
-          description: this.content.description,
-          context: [
-            {
-              type: 'course',
-              identifier: this.content.identifier,
-            },
-          ],
-        },
-      }
-    }
-    this.discussionConfig.contextType = 'course'
+    this.state = this.alldiscussPage
     this.isNotEmbed = !(
       window.location.href.includes('/embed/') ||
       this.activatedRoute.snapshot.queryParams.embed === 'true'
@@ -169,8 +231,67 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.sideNavBarOpened = false
     }
   }
+
   get isPreview(): boolean {
     this.forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
     return this.forPreview
+  }
+
+  fetchCohorts(cohortType: NsCohorts.ECohortTypes, contentID: any) {
+    if (!this.cohortResults[cohortType] && !this.forPreview) {
+      this.tocSharedSvc.fetchContentCohorts(cohortType, contentID).subscribe(
+        (data: any) => {
+          this.cohortResults[cohortType] = {
+            contents: _.map(data, d => {
+              return {
+                first_name: _.get(d, 'first_name'),
+                last_name: _.get(d, 'last_name'),
+                department: _.get(d, 'department'),
+                designation: _.get(d, 'designation'),
+                email: _.get(d, 'email'),
+                desc: _.get(d, 'desc'),
+                uid: _.get(d, 'user_id'),
+                last_ts: _.get(d, 'last_ts'),
+                phone_No: _.get(d, 'phone_No'),
+                city: _.get(d, 'city'),
+                userLocation: _.get(d, 'userLocation'),
+              }
+            }) || [],
+            hasError: false,
+          }
+        },
+        () => {
+          this.cohortResults[cohortType] = {
+            contents: [],
+            hasError: true,
+          }
+        },
+      )
+    } else if (this.cohortResults[cohortType] && !this.forPreview) {
+      return
+    } else {
+      this.cohortResults[cohortType] = {
+        contents: [],
+        hasError: false,
+      }
+    }
+  }
+
+  public tabClicked(tabEvent: MatTabChangeEvent) {
+    // if (this.forPreview) {
+    //   return
+    // }
+    const data: WsEvents.ITelemetryTabData = {
+      label: `${tabEvent.tab.textLabel}`,
+      index: tabEvent.index,
+    }
+    this.eventSvc.handleTabTelemetry(
+      WsEvents.EnumInteractSubTypes.COURSE_TAB,
+      data,
+      {
+        id: this.content && this.content.identifier,
+        type: this.content && this.content.primaryCategory,
+      }
+    )
   }
 }

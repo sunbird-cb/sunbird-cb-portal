@@ -7,5 +7,9 @@
     background: no-repeat padding-box #0074b6 !important;
     border-radius: 4px;
     box-sizing: border-box;
-    color: white;
+    color: white !important;
+}
+
+.mat-raised-button[disabled] {
+    opacity: 0.5;
 }

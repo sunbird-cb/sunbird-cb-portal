@@ -103,18 +103,17 @@
         <mat-tab label="Discussion">
             <ng-template matTabContent>
                 <section id="discussion-forum">
-                    <div class="fixed-width toc-discussion-container">
-                      Discussion
-                        <!-- <ws-app-toc-discussion [content]="content" class="discussion"></ws-app-toc-discussion> -->
-                        <!-- <all-discussion-widget style=' width: 100%;' [config]="discussionConfig"></all-discussion-widget> -->
+                    <div class="fixed-width">
+                        <!-- <lib-discuss-all *ngIf='state === alldiscussPage' [context]='config' (stateChange)='stateChange($event)'></lib-discuss-all>
+                        <lib-discussion-details *ngIf='state === detailsPage'  [topicId]='tid' [slug]='slug' [cid]='cid' (stateChange)='stateChange($event)'></lib-discussion-details>
+                        <lib-tag-all-discussion *ngIf='showTrendTagPost' [widgetTagName]='slug' [widgetcIds]='cIds' (stateChange)='stateChange($event)'></lib-tag-all-discussion> -->
                     </div>
                 </section>
             </ng-template>
         </mat-tab>
         <mat-tab label="Learners">
             <ng-template matTabContent>
-              Learners
-                <!-- <div *ngIf="cohortResults[cohortTypesEnum.ACTIVE_USERS]">
+                <div *ngIf="cohortResults[cohortTypesEnum.ACTIVE_USERS]">
                     <h3 *ngIf="cohortResults[cohortTypesEnum.ACTIVE_USERS].hasError" class="mat-error text-center" i18n>
                         Failed to fetch active users
                     </h3>
@@ -129,7 +128,7 @@
                             [ngTemplateOutlet]="unitCohortNew" [ngTemplateOutletContext]="{ user: cohort }">
                         </ng-container>
                     </div>
-                </div> -->
+                </div>
             </ng-template>
         </mat-tab>
     </mat-tab-group>
@@ -139,3 +138,21 @@
 <div class="full-height-width-iframe" *ngIf="!isNotEmbed">
   <router-outlet></router-outlet>
 </div>
+
+<ng-template #unitCohortNew let-user="user">
+  <div class="unit-cohort sm:pr-8 md:pr-10">
+    {{user.first_name}}
+      <ws-widget-avatar-photo class="float-left margin-right-s" [size]="'m'" [photoUrl]="user.photo || ''"
+          [name]="getUserFullName(user)" size="l-xs">
+      </ws-widget-avatar-photo>
+      <div class="margin-left-l">
+          <div (click)="goToUserProfile(user)" [ngClass]="{'cursor-pointer': enablePeopleSearch}"
+              class="width-expand padding-left-xs">
+              <ws-widget-connection-name
+                  [hoverUser]="{firstName: user.first_name, lastName:user.last_name , id:user.uid,designation: user.designation,department:user.department}">
+              </ws-widget-connection-name>
+              <p class="mat-body-2 ws-mat-black60-text">{{user.designation}}</p>
+          </div>
+      </div>
+  </div>
+</ng-template>
