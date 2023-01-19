@@ -20,7 +20,7 @@ export class OverviewComponent implements OnInit {
   staticImage = '/assets/images/exam/practice-test.png'
   loading = false
   points = [
-    { icon: 'info', text: 'No negative mark' },
+    { icon: 'info', text: 'No negative marking' },
     { icon: 'info', text: 'Assessment will have no time duration' },
     { icon: 'info', text: 'Skipped question can be attempted again before submitting' },
   ]
