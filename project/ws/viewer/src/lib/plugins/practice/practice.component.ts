@@ -162,21 +162,22 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     return
   }
   canAttend() {
-    this.quizSvc.canAttend(this.identifier).subscribe(response => {
-      if (response) {
-        this.canAttempt = response
-      }
-      if (this.primaryCategory !== NsContent.EPrimaryCategory.FINAL_ASSESSMENT) {
-        // ** Except final assessment user can retake all assessment without time boundaries */
-        this.canAttempt = {
-          retakeMinutesLeft: 0,
-          retakeAssessments: true,
-          retakeAssessmentDuration: 0,
-        }
+    if (this.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
+      this.canAttempt = {
+        attemptsAllowed: 1,
+        attemptsMade: 0,
       }
       this.init()
       this.updateVisivility()
-    })
+    } else {
+      this.quizSvc.canAttend(this.identifier).subscribe(response => {
+        if (response) {
+          this.canAttempt = response
+        }
+        this.init()
+        this.updateVisivility()
+      })
+    }
   }
   ngOnInit() {
     this.canAttend()
