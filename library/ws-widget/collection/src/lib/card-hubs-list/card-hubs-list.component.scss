@@ -25,6 +25,18 @@
 .base-header {
   margin-left: 5px;
 }
+.grid {
+  // display: grid;
+  display: grid!important;
+  // grid-gap: 32px;
+  // grid-template-columns: repeat(auto-fill,276px);
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr))!important;
+  width: 100%;
+  // grid-template-columns: repeat(auto-fill,276px)!important;
+}
 
 .mat-grid-tile {
   display: inline;
