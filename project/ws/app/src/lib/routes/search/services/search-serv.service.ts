@@ -72,7 +72,7 @@ export class SearchServService {
         },
         facets: Object.keys(this.searchConfig.search.visibleFiltersV2),
         fields: request.request.fields,
-        fuzzy: true,
+        fuzzy: false,
       },
     }
     return this.searchApi.getSearchV6Results(v6Request, this.searchConfig.defaultsearch)

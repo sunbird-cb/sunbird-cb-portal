@@ -7,6 +7,7 @@ import { ValueService } from '@sunbird-cb/utils/src/public-api';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
+
 @Component({
   selector: 'ws-app-curatedexplorer',
   templateUrl: './curatedexplorer.component.html',
@@ -15,6 +16,7 @@ import { Observable } from 'rxjs';
 export class CuratedexplorerComponent implements OnInit, OnDestroy {
   sideNavBarOpened = true
   public screenSizeIsLtMedium = false
+  userEmail : any
   title: any[] = [
     { title: 'Learn', url: '/page/learn', icon: 'school' },
     { title: ('Curated collections') , url: '/app/curatedCollections/home', icon: '' }
@@ -42,7 +44,7 @@ export class CuratedexplorerComponent implements OnInit, OnDestroy {
       offset: 0,
       fields: [],
       facets: ['primaryCategory', 'mimeType'],
-      fuzzy: true,
+      fuzzy: false,
     },
   }
   stateData: {
@@ -52,12 +54,14 @@ export class CuratedexplorerComponent implements OnInit, OnDestroy {
   mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
   private defaultSideNavBarOpenedSubscription: any
 
+
   constructor(
     private route: ActivatedRoute,
     private curatedCollectionSvc: CuratedCollectionService,
     private valueSvc: ValueService,
   ) {
     this.currentCollectionId = this.route.snapshot.url.toString().split('/').pop() || ''
+
   }
 
   ngOnInit() {
@@ -68,16 +72,19 @@ export class CuratedexplorerComponent implements OnInit, OnDestroy {
       this.sideNavBarOpened = !isLtMedium
       this.screenSizeIsLtMedium = isLtMedium
     })
+
     this.getAllCuratedCollection()
     this.getCurrentCollectionHirarchy()
   }
 
   getAllCuratedCollection(req?: any) {
     const request = req || this.searchReq
+
     this.curatedCollectionSvc.fetchSearchData(request).subscribe((res: any) => {
       if (res && res.result &&  res.result && res.result.content) {
         this.allCollections = _.get(res, 'result.content')
         this.currentCollection = _.find(this.allCollections, ac => ac.identifier === this.currentCollectionId)
+
         this.updateBreadcrumbTitle()
         this.getMenuItems()
       }
@@ -98,11 +105,19 @@ export class CuratedexplorerComponent implements OnInit, OnDestroy {
         //     tempRequestParam.push(temobj)
         //     }
         //   })
+
           this.currentCollectionHierarchy = _.get(res, 'result.content.children')
         }
       // }
     })
   }
+
+  // redirectUrl() {
+  //   this.userEmail =  this.configSvc && this.configSvc.userProfile ? this.configSvc.userProfile.email : ''
+  //   console.log(this.cscmsUrl, 'this.cscmsUrl+++')
+  //   // this.router.navigateByUrl('', {state: { email: this.userEmail} });
+  //   this.router.navigate([this.cscmsUrl], this.userEmail)
+  // }
 
   getMenuItems() {
     this.allCollections.map((col: any) => {
@@ -121,7 +136,7 @@ export class CuratedexplorerComponent implements OnInit, OnDestroy {
     this.currentCollection = _.find(this.allCollections, ac => ac.identifier === this.currentCollectionId)
     this.updateBreadcrumbTitle()
     this.getCurrentCollectionHirarchy()
-  } 
+  }
 
   getRouterString(identifier: string) {
     return `/app/curatedCollections/${identifier}`

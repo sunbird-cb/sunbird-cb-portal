@@ -9,7 +9,7 @@
             </ng-container>
         </div>
         <h4 *ngIf="allCollections?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
-            No curated collections found! 
+            No curated collections found!
         </h4>
         <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
             <mat-spinner [diameter]="30"></mat-spinner>
@@ -34,7 +34,7 @@
                                 </mat-form-field>
                             </div>
                         </div>
-    
+
                         <!-- <div class="item_dropdown_box">
                             <div class="flex flex-1 flex-wrap section-input">
                                 <div class="item">
@@ -46,15 +46,15 @@
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
-    
+
                             </div>
                         </div> -->
                     </div> <!-- search box and dropdown end -->
                 </form>
-    
+
                 <!-- <mat-sidenav-container>
                     <mat-sidenav-content class="custom-sidecontent  mat-drawer-content mat-sidenav-content"> -->
-    
+
                         <div class="provider_card_box">
                             <ng-container *ngFor="let c of allCollections | pipeFilterV3:{ 'name': searchKey.value}">
                                 <!-- <ws-app-curated-collection-card [collection]="c"></ws-app-curated-collection-card> -->
@@ -66,7 +66,7 @@
                                   }"></ws-widget-card-content>
                             </ng-container>
                             <h4 *ngIf="allCollections?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
-                                No curated collections found! 
+                                No curated collections found!
                              </h4>
                         </div>
                     <!-- </mat-sidenav-content>
@@ -78,7 +78,7 @@
                 [hidden]="disableLoadMore || (displayLoader | async)" >
                     Load more
                 </a> -->
-    
+
             </div>
         </div>
 </div>
