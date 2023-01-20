@@ -42,7 +42,7 @@
           <h3 class="mat-error text-center" *ngIf="hubsList.length === 0" i18n>
             No hubs Info Available
           </h3>
-          <div class="grid grid-cols-3 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2" role="menubar">
+          <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2" role="menubar">
             <ng-container *ngFor="let hubsObj of hubsList" [ngTemplateOutlet]="userIndividualNew"
               [ngTemplateOutletContext]="{ hubs: hubsObj }">
 
@@ -55,7 +55,7 @@
           <h4 class="mat-h4 nav_sub_heading">Do more</h4>
         </div>
         <div class="flex flex-1">
-          <div class="grid grid-cols-3 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">
+          <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">
             <a class="flex flex-wrap mb-4" role="menuitem" [routerLink]="['/app/knowledge-resource/all']">
               <div class="icon ws-mat-primary-tags">
                 <mat-icon class=" m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
@@ -107,7 +107,7 @@
           <h4 class="mat-h4 margin-bottom-remove nav_sub_heading">Quick links</h4>
         </div>
         <div class="flex flex-1">
-          <div class="grid grid-cols-3 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">
+          <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">
             <ng-container *ngFor="let portal of environment.portals | orderBy: 'sr'">
               <ng-container *ngIf="portal.isPublic || isAllowed(portal.id)">
                 <a class="flex flex-wrap mb-4" role="menuitem" [attr.href]="portal.uriPath" target="_blank">
