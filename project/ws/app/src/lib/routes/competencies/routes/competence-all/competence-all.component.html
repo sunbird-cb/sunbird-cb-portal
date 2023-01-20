@@ -47,18 +47,18 @@
       <div class="w-full pt-5">
         <div class="flex flex-1 flex-column margin-fix mt-5 filter_outer_box">
           <div class="flex flex-1 filter">
-            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'recommended',
-                                'ws-mat-accent-border':currentFilter !== 'recommended'}"
-              (click)="filter('recommended'); tabTelemetry('Recommended from FRAC', 0)">
-              Recommended from FRAC </a>
-            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'recommended_from_wat',
-                    'ws-mat-accent-border':currentFilter !== 'recommended_from_wat'}"
+            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'acquired_by_you', 'ws-mat-accent-border':currentFilter !== 'acquired_by_you'}" 
+            (click)="filter('acquired_by_you'); tabTelemetry('Added by you', 2)">
+            Acquired by you </a>
+            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'desired_competencies', 'ws-mat-accent-border':currentFilter !== 'desired_competencies'}"
+            (click)="filter('desired_competencies'); tabTelemetry('Added by you', 2)"> 
+            Desired competencies </a>
+            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'recommended', 'ws-mat-accent-border':currentFilter !== 'recommended'}" 
+            (click)="filter('recommended'); tabTelemetry('Recommended from FRAC', 0)">
+            Recommended from FRAC </a>
+            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'recommended_from_wat', 'ws-mat-accent-border':currentFilter !== 'recommended_from_wat'}"
               (click)="filter('recommended_from_wat'); tabTelemetry('Recommended from WAT', 1)">
-              Recommended from WAT </a>
-            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'added_by_you',
-                                'ws-mat-accent-border':currentFilter !== 'added_by_you'}"
-              (click)="filter('added_by_you'); tabTelemetry('Added by you', 2)">
-              Added by you </a>
+            Recommended from WAT </a>
           </div>
         </div>
 
@@ -71,13 +71,13 @@
             </mat-form-field>
           </form>
           <div class="flex"
-            *ngIf="myCompetencies && myCompetencies.length > 0 && currentFilter && currentFilter === 'added_by_you'">
+            *ngIf="myCompetencies && myCompetencies.length > 0 && currentFilter && currentFilter === 'acquired_by_you'">
             <a class="add_competency_btn text-white flex items-center justify-center cursor-pointer mat-subheading-2"
               routerLink="/app/competencies/all">Add a competency</a>
           </div>
         </div>
 
-        <div *ngIf="currentFilter && currentFilter === 'added_by_you'">
+        <div *ngIf="currentFilter && currentFilter === 'acquired_by_you'">
           <div *ngIf="myCompetencies && myCompetencies.length == 0">
             <div class="flex flex-col items-center justify-center post_image_box">
               <img src="/assets/images/banners/competencies.svg">
@@ -90,7 +90,6 @@
           </div>
 
           <!-- New -->
-
           <div class="flex flex-column flex-wrap margin-fix">
             <ng-container *ngIf="myCompetencies && myCompetencies.length > 0">
               <ng-container *ngFor="let comp of myCompetencies | pipeFilterV2:'name': searchInput.value">
@@ -104,9 +103,6 @@
                           <h4 class="mat-h4">{{comp.name}}</h4>
                           <p class="mat-body-2 ws-mat-black60-text">{{comp.competencyType}}</p>
                         </div>
-
-
-
                         <div class="flex-col proficiency_text_box">
                           <!-- <div class="flex flex-row justify-between">
                                   <div>
@@ -136,23 +132,56 @@
                                       <li><a href="#" class="disableTagIcon"></a> </li>
                                     </ul>
                                   </div>
-                                </div>
-
-                                <div class="flex flex-row justify-between">
-                                  <div>
-                                      <p>CBP assessment</p>
-                                  </div>
-                                  <div class="proficiency_graph_box">
-                                    <ul class="tagIconList">
-                                      <li><a href="#" class="activeLevelIcon"></a> </li>
-                                      <li><a href="#" class="activeLevelIcon"></a> </li>
-                                      <li><a href="#" class="activeLevelIcon"></a> </li>
-                                      <li><a href="#" class="disableTagIcon"></a> </li>
-                                      <li><a href="#" class="disableTagIcon"></a> </li>
-                                    </ul>
-                                  </div>
                                 </div> -->
-
+                          <div class="flex flex-row justify-between">
+                            <div>
+                                <p>CBP assessment</p>
+                            </div>
+                            <div class="proficiency_graph_box">
+                              <ul class="tagIconList">
+                                <ng-container
+                                  *ngIf="comp.competencySelfAttestedLevel && (comp.competencySelfAttestedLevel === 1 || comp.competencySelfAttestedLevel === '1')">
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                </ng-container>
+                                <ng-container
+                                  *ngIf="comp.competencySelfAttestedLevel && (comp.competencySelfAttestedLevel === 2 || comp.competencySelfAttestedLevel === '2')">
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                </ng-container>
+                                <ng-container
+                                  *ngIf="comp.competencySelfAttestedLevel && (comp.competencySelfAttestedLevel === 3 || comp.competencySelfAttestedLevel === '3')">
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                </ng-container>
+                                <ng-container
+                                  *ngIf="comp.competencySelfAttestedLevel && (comp.competencySelfAttestedLevel === 4 || comp.competencySelfAttestedLevel === '4')">
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                </ng-container>
+                                <ng-container
+                                  *ngIf="comp.competencySelfAttestedLevel && (comp.competencySelfAttestedLevel === 5 || comp.competencySelfAttestedLevel === '5')">
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                </ng-container>
+                              </ul>
+                            </div>
+                          </div>
                           <div class="flex flex-row justify-between prof_txt_data">
                             <div>
                               <p>Self attestation</p>
@@ -203,8 +232,94 @@
                             </div>
                           </div>
                         </div>
+                        <div class="flex proficient_level_box">
+                          <p class="deactivate_text mat-body-2">Not enough data</p>
+                        </div>
+                      </div>
+                    </mat-card-content>
+                  </a>
+                </mat-card>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
 
+        <div *ngIf="currentFilter && currentFilter === 'desired_competencies'">
+          <div *ngIf="desiredCompetencies && desiredCompetencies.length == 0">
+            <div class="flex flex-col items-center justify-center post_image_box">
+              <img src="/assets/images/banners/competencies.svg">
+              <p class="mat-h4 ws-mat-black60-text">No competencies found</p>
+              <p class="mat-body ws-mat-black60-text">Find competencies to add from</p>
+              <p class="mat-body ws-mat-default-text"><a class="work_order_link" routerLink="/app/competencies/all">All
+                  competencies</a></p>
+              <br />
+            </div>
+          </div>
 
+          <div class="flex flex-column flex-wrap margin-fix">
+            <ng-container *ngIf="desiredCompetencies && desiredCompetencies.length > 0">
+              <ng-container *ngFor="let comp of desiredCompetencies | pipeFilterV2:'name': searchInput.value">
+                <!--  | pipeFilterV2:'name': searchInput.value   -->
+                <mat-card class="margin-bottom-m position-relative mat-card" [ngClass]="{'mat-copmetence': isSelected}"
+                  (click)=view(comp)>
+                  <a role="button">
+                    <mat-card-content>
+                      <div class="card_inner_content flex flex-row justify-between">
+                        <div class="card_inner_title_box flex-col">
+                          <h4 class="mat-h4">{{comp.name}}</h4>
+                          <p class="mat-body-2 ws-mat-black60-text">{{comp.competencyType}}</p>
+                        </div>
+                        <div class="flex-col proficiency_text_box">
+                          <div class="flex flex-row justify-between prof_txt_data">
+                            <div>
+                              <p>Self attestation</p>
+                            </div>
+                            <div class="proficiency_graph_box">
+                              <ul class="tagIconList">
+                                <ng-container
+                                  *ngIf="comp.competencySelfAttestedLevel && (comp.competencySelfAttestedLevel === 1 || comp.competencySelfAttestedLevel === '1')">
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                </ng-container>
+                                <ng-container
+                                  *ngIf="comp.competencySelfAttestedLevel && (comp.competencySelfAttestedLevel === 2 || comp.competencySelfAttestedLevel === '2')">
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                </ng-container>
+                                <ng-container
+                                  *ngIf="comp.competencySelfAttestedLevel && (comp.competencySelfAttestedLevel === 3 || comp.competencySelfAttestedLevel === '3')">
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                </ng-container>
+                                <ng-container
+                                  *ngIf="comp.competencySelfAttestedLevel && (comp.competencySelfAttestedLevel === 4 || comp.competencySelfAttestedLevel === '4')">
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="disableTagIcon"></a> </li>
+                                </ng-container>
+                                <ng-container
+                                  *ngIf="comp.competencySelfAttestedLevel && (comp.competencySelfAttestedLevel === 5 || comp.competencySelfAttestedLevel === '5')">
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                  <li><a href="#" class="activeLevelIcon"></a> </li>
+                                </ng-container>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
                         <div class="flex proficient_level_box">
                           <p class="deactivate_text mat-body-2">Not enough data</p>
                         </div>
@@ -267,7 +382,6 @@
             </ng-container>
           </div>
         </div>
-
 
         <div class="flex flex-column flex-wrap margin-fix" *ngIf="currentFilter && currentFilter === 'recommended'">
 

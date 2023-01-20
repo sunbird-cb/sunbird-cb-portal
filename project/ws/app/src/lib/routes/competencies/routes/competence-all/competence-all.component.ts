@@ -35,6 +35,7 @@ export class CompetenceAllComponent implements OnInit {
   elementPosition: any
   currentFilter = 'recommended'
   myCompetencies: NSCompetencie.ICompetencie[] = []
+  desiredCompetencies: NSCompetencie.ICompetencie[] = []
   tabsData: NSCompetencie.ICompetenciesTab[]
   allCompetencies!: NSCompetencie.ICompetencie[]
   watCompetencies: NSCompetencie.ICompetencie[] = []
@@ -74,6 +75,17 @@ export class CompetenceAllComponent implements OnInit {
       } else {
         this.myCompetencies = []
       }
+
+      if (
+        this.route.snapshot.data.profile.data[0].desiredCompetencies &&
+        this.route.snapshot.data.profile.data[0].desiredCompetencies.length > 0
+      ) {
+        this.desiredCompetencies =
+          this.route.snapshot.data.profile.data[0].desiredCompetencies || []
+      } else {
+        this.desiredCompetencies = []
+      }
+
       this.currentProfile = this.route.snapshot.data.profile.data[0]
     } else {
       this.getProfile()
@@ -104,6 +116,7 @@ export class CompetenceAllComponent implements OnInit {
       if (response) {
         // console.log("My Comp", response.profileDetails.competencies)
         this.myCompetencies = response.profileDetails.competencies || []
+        this.desiredCompetencies = response.profileDetails.desiredCompetencies || []
         this.currentProfile = response.profileDetails
 
         const profDetails = response.profileDetails.professionalDetails
@@ -151,7 +164,7 @@ export class CompetenceAllComponent implements OnInit {
     }
   }
 
-  filter(key: string | 'recommended' | 'added_by_you' | 'recommended_from_wat') {
+  filter(key: string | 'recommended' | 'acquired_by_you' | 'recommended_from_wat' | 'desired_competencies') {
     if (key) {
       this.currentFilter = key
       // this.refreshData()
