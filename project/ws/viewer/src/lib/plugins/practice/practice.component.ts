@@ -172,11 +172,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       this.quizSvc.canAttend(this.identifier).subscribe(response => {
         if (response) {
-          // this.canAttempt = response
-          this.canAttempt = {
-            attemptsAllowed: 2,
-            attemptsMade: 2,
-          }
+           this.canAttempt = response
         }
         this.init()
         this.updateVisivility()
