@@ -33,7 +33,7 @@ export class CompetenceAllComponent implements OnInit {
 
   sticky = false
   elementPosition: any
-  currentFilter = 'recommended'
+  currentFilter = 'acquired_by_you'
   myCompetencies: NSCompetencie.ICompetencie[] = []
   desiredCompetencies: NSCompetencie.ICompetencie[] = []
   tabsData: NSCompetencie.ICompetenciesTab[]

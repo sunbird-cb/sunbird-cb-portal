@@ -239,7 +239,9 @@
     border-right-width: 0;
   }
 }
-
+.matbold {
+  font-weight: 600 !important;
+}
 .max-height-60 {
   max-height: 60px;
 }
@@ -509,14 +511,19 @@ a.work_order_link {
     text-decoration: underline;
   }
 }
+::ng-deep .comp-search {
+  .mat-form-field-infix {
+    padding: 6px 8px 12px !important;
+  }
+}
 
 .add_competency_btn {
   background: #0074b6;
   border-radius: 4px 4px;
   // padding: 14px 16px;
-  width: 155px;
-  height: 56px;
-  margin: 0;
+  width: 152px;
+  height: 42px;
+  margin: 5px 0 0;
   color: #fff!important;
 
   @include breakpoint-s  {
