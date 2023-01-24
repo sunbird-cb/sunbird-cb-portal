@@ -215,8 +215,8 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
             const b = element.sourceId
             const options = this.question.options
             if (options) {
-                const match = options[(b.slice(-1) as number) - 1].match
-                if (match && match.trim() === element.target.innerText.trim()) {
+                const hint = options[(b.slice(-1) as number) - 1].hint
+                if (hint && hint.trim() === element.target.innerText.trim()) {
                     element.setPaintStyle({
                         stroke: '#357a38',
                     })

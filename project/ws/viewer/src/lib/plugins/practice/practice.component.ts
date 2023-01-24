@@ -172,7 +172,11 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       this.quizSvc.canAttend(this.identifier).subscribe(response => {
         if (response) {
-          this.canAttempt = response
+          // this.canAttempt = response
+          this.canAttempt = {
+            attemptsAllowed: 2,
+            attemptsMade: 2,
+          }
         }
         this.init()
         this.updateVisivility()
@@ -426,9 +430,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
                 response: '',
                 userSelected: false,
                 matchForView: '',
-                match: this.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
-                  ? _.get(_.nth(question.editorState && question.editorState.options, idx), 'answer')
-                  : _.nth(question.rhsChoices, idx),
+                match: _.nth(question.rhsChoices, idx),
+                // this.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+                //   ? _.get(_.nth(question.editorState && question.editorState.options, idx), 'answer')
+                //   : _.nth(question.rhsChoices, idx),
               })
             })
           break
