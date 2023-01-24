@@ -46,7 +46,7 @@
   <div class="flex flex-1 flex-column margin-left-xl ws-mat-accent-border border-custom assessment_summary_box">
     <div class="flex flex-1 flex-column">
       <span class="mat-headline text-justify margin-bottom-xl">{{learningObjective | pipeLimitTo: 300 }}</span>
-      <a *ngIf="canAttempt?.attemptsMade <= canAttempt?.attemptsAllowed" mat-button (click)="overviewed('start')"
+      <a *ngIf="canAttempt?.attemptsMade < canAttempt?.attemptsAllowed" mat-button (click)="overviewed('start')"
         [class.spinner]="loading" [disabled]="loading" class="ws-mat-primary-background text-white m-w padding-xs">
         <span class="padding-xs" i18n>Start assessment now</span>
       </a>
@@ -80,7 +80,7 @@
           [ngTemplateOutletContext]="{
                   icon: 'replay',
                   isSVG: false,
-                  text: 'Maximum '+ (canAttempt?.attemptsAllowed || 0) + ' retake(s) are allowed, and you already attempted ' + (anAttempt?.attemptsMade || 0) + ' time(s) '
+                  text: 'Maximum '+ (canAttempt?.attemptsAllowed || 0) + ' retake(s) are allowed, and you already attempted ' + (canAttempt?.attemptsMade || 0) + ' time(s) '
                 }"></ng-container>
         <!-- <ng-container *ngIf="questionTYP.FINAL_ASSESSMENT === primaryCategory" [ngTemplateOutlet]="testdetail"
           [ngTemplateOutletContext]="{
