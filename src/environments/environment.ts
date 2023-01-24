@@ -27,8 +27,8 @@ export const environment: IEnvironment = {
   assessmentBuffer: (window as { [key: string]: any })['env']['assessmentBuffer'] || 0,
   staticHomePageUrl: (window as { [key: string]: any })['env']['staticHomePageUrl'] || '',
   resendOTPTIme: (window as { [key: string]: any })['env']['resendOTPTIme'] || 120,
-  cscmsUrl:(window as { [key: string]: any })['env']['cscmsUrl'] || '',
-  dakshtaName:(window as { [key: string]: any })['env']['dakshtaName'] || '',
+  cscmsUrl: (window as { [key: string]: any })['env']['cscmsUrl'] || '',
+  dakshtaName: (window as { [key: string]: any })['env']['dakshtaName'] || '',
 }
 interface IEnvironment {
   name: string,
@@ -51,7 +51,7 @@ interface IEnvironment {
   assessmentBuffer: number,
   staticHomePageUrl: string,
   resendOTPTIme: number,
-  cscmsUrl:string,
+  cscmsUrl: string,
   dakshtaName: string
 }
 
