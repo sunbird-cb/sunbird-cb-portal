@@ -46,11 +46,12 @@
   <div class="flex flex-1 flex-column margin-left-xl ws-mat-accent-border border-custom assessment_summary_box">
     <div class="flex flex-1 flex-column">
       <span class="mat-headline text-justify margin-bottom-xl">{{learningObjective | pipeLimitTo: 300 }}</span>
-      <a *ngIf="canAttempt?.attemptsMade <= canAttempt?.attemptsAllowed" mat-button (click)="overviewed('start')" [class.spinner]="loading"
-        [disabled]="loading" class="ws-mat-primary-background text-white m-w padding-xs">
+      <a *ngIf="canAttempt?.attemptsMade <= canAttempt?.attemptsAllowed" mat-button (click)="overviewed('start')"
+        [class.spinner]="loading" [disabled]="loading" class="ws-mat-primary-background text-white m-w padding-xs">
         <span class="padding-xs" i18n>Start assessment now</span>
       </a>
-      <mat-hint class="mat-title" *ngIf="canAttempt?.attemptsMade >= canAttempt?.attemptsAllowed">You have exceeded the maximum allowed attempt</mat-hint>
+      <mat-hint class="mat-title" *ngIf="canAttempt?.attemptsMade >= canAttempt?.attemptsAllowed">You have exceeded the
+        maximum allowed attempt</mat-hint>
       <!-- <div class="flex flex-1">
         <div class="flex">
           <mat-hint class="mat-title">Hint: </mat-hint>
@@ -77,10 +78,16 @@
                 }"></ng-container>
         <ng-container *ngIf="questionTYP.FINAL_ASSESSMENT === primaryCategory" [ngTemplateOutlet]="testdetail"
           [ngTemplateOutletContext]="{
+                  icon: 'replay',
+                  isSVG: false,
+                  text: 'Maximum '+ (canAttempt?.attemptsAllowed || 0) + ' retake(s) are allowed, and you already attempted ' + (anAttempt?.attemptsMade || 0) + ' time(s) '
+                }"></ng-container>
+        <!-- <ng-container *ngIf="questionTYP.FINAL_ASSESSMENT === primaryCategory" [ngTemplateOutlet]="testdetail"
+          [ngTemplateOutletContext]="{
                         icon: 'stop',
                         isSVG: false,
                         text: 'Retakes are not allowed'
-                      }"></ng-container>
+                      }"></ng-container> -->
         <ng-container *ngIf="complexityLevel" [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{
                         icon: 'replay',
                         isSVG: false,
