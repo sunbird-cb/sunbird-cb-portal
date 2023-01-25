@@ -127,6 +127,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     this.isSubmitted = false
     this.markedQuestions = new Set([])
     this.questionAnswerHash = {}
+    this.quizSvc.mtfSrc.next({})
     // quizSvc.questionAnswerHash.subscribe(qaHash => {
     //   this.questionAnswerHash = qaHash
     // })
@@ -792,7 +793,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               qType: 'MTF',
               editorState: {
                 options: _.compact(_.map(sq.options, (_o: NSPractice.IOption) => {
-                  if (_o.response) {
+                  if (_o.userSelected) {
                     return {
                       index: (_o.optionId).toString(),
                       selectedAnswer: _o.response,
