@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http'
 import { NSPractice } from './practice.model'
 import { BehaviorSubject, Observable, of } from 'rxjs'
 import { map, retry } from 'rxjs/operators'
+// tslint:disable-next-line
+import _ from 'lodash'
 
 const API_END_POINTS = {
   ASSESSMENT_SUBMIT_V2: `/apis/protected/v8/user/evaluate/assessment/submit/v2`,
@@ -172,12 +174,16 @@ export class PracticeService {
       } else if (question.questionType === 'mtf') {
         for (let i = 0; i < question.options.length; i += 1) {
           // this.mtfSrc['']
-          if (mtfSrc[question.questionId] && mtfSrc[question.questionId].source[i] && mtfSrc[question.questionId].target[i]) {
-            for (let j = 0; j < mtfSrc[question.questionId].source.length; j += 1) {
-              if (question.options[i].text.trim() === mtfSrc[question.questionId].source[j].trim()) {
-                question.options[i].response = mtfSrc[question.questionId].target[j].trim()
-              }
-            }
+          // if (mtfSrc[question.questionId] && mtfSrc[question.questionId].source[i] && mtfSrc[question.questionId].target[i]) {
+          //   for (let j = 0; j < question.options.length; j += 1) {
+              const opText = question.options[i].text.trim()
+              if (mtfSrc[question.questionId] && mtfSrc[question.questionId].source.length
+                && mtfSrc[question.questionId].source.includes(opText)) {
+                const idxOfSource = _.indexOf(mtfSrc[question.questionId].source, question.options[i].text.trim())
+                question.options[i].response = mtfSrc[question.questionId].target[idxOfSource].trim()
+                question.options[i].userSelected = true
+              // }
+            // }
           } else {
             question.options[i].response = ''
           }
