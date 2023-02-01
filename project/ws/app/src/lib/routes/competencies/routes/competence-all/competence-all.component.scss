@@ -554,26 +554,26 @@ ul.tagIconList {
 ul.tagIconList li {
   float: left;
 }
-ul.tagIconList li a {
+ul.tagIconList li span {
   width: 8px;
   margin-left: 3px;
   height: 5px;
   border-radius: 2px 2px;
   display: block;
 }
-a.activeTagIcon {
+span.activeTagIcon {
   background-color: #0074B6;
   border: 2px solid #0074B6;
 }
-a.activeLevelIcon {
+span.activeLevelIcon {
   background-color: #1D8923;
   border: 2px solid #1D8923;
 }
-a.deactiveLevelIcon {
+span.deactiveLevelIcon {
   background-color: rgba(0, 0, 0, 0.08);
   border: 2px solid #D13924;
 }
-a.disableTagIcon, a.disableLevelIcon {
+span.disableTagIcon, span.disableLevelIcon {
   background-color: rgba(0, 0, 0, 0.08);
   border: 2px solid rgba(0, 0, 0, 0.08);
 }

@@ -72,6 +72,13 @@ export class CompetenceAllComponent implements OnInit {
       ) {
         this.myCompetencies =
           this.route.snapshot.data.profile.data[0].competencies || []
+
+        if (this.myCompetencies && this.myCompetencies.length > 0) {
+          this.myCompetencies.forEach((val: any) => {
+            val.competencyCBPCompletionLevel = Number(val.competencyCBPCompletionLevel)
+            val.competencySelfAttestedLevel = Number(val.competencySelfAttestedLevel)
+          })
+        }
       } else {
         this.myCompetencies = []
       }
@@ -118,6 +125,13 @@ export class CompetenceAllComponent implements OnInit {
         this.myCompetencies = response.profileDetails.competencies || []
         this.desiredCompetencies = response.profileDetails.desiredCompetencies || []
         this.currentProfile = response.profileDetails
+
+        if (this.myCompetencies && this.myCompetencies.length > 0) {
+          this.myCompetencies.forEach((val: any) => {
+            val.competencyCBPCompletionLevel = Number(val.competencyCBPCompletionLevel)
+            val.competencySelfAttestedLevel = Number(val.competencySelfAttestedLevel)
+          })
+        }
 
         const profDetails = response.profileDetails.professionalDetails
         // tslint:disable-next-line: ter-prefer-arrow-callback
