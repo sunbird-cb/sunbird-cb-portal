@@ -371,7 +371,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
               channel: hierarchyObj.orgname || '',
               organisationType: hierarchyObj.sborgtype || '',
               organisationSubType: hierarchyObj.sbsuborgtype || '',
-              mapId: hierarchyObj.mapid || '',
+              mapId: hierarchyObj.mapId || '',
               // If 1st level i.e, state/ministry then the ministry/state objects sbrootorgid will be set
               // IF 2nd or 3rd level i.e, org or department is selected then parent ministry/state sborgid will be set
               sbRootOrgId: (isSecondLevel ? ministryObj.sborgid : ministryObj.sbrootorgid),
