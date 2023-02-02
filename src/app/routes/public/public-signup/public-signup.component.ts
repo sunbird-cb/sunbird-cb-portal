@@ -425,8 +425,8 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   }
 
   ministrySelected(value: any) {
-    if (value && value.mapid) {
-      this.signupSvc.getDeparmentsOfState(value.mapid).subscribe(res => {
+    if (value && value.mapId) {
+      this.signupSvc.getDeparmentsOfState(value.mapId).subscribe(res => {
         if (res && res.result && res.result && res.result.response && res.result.response.content) {
           this.departments = res.result.response.content
 
@@ -442,8 +442,8 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   }
 
   departmentSelected(value: any) {
-    if (value && value.mapid) {
-      this.signupSvc.getOrgsOfDepartment(value.mapid).subscribe(res => {
+    if (value && value.mapId) {
+      this.signupSvc.getOrgsOfDepartment(value.mapId).subscribe(res => {
         if (res && res.result && res.result && res.result.response && res.result.response.content) {
           this.orgs = res.result.response.content
 
