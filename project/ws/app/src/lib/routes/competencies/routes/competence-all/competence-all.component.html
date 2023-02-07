@@ -255,9 +255,9 @@
                           <p class="matbold mat-body-2" *ngIf="comp.competencySelfAttestedLevel && !comp.competencyCBPCompletionLevel">{{comp.competencySelfAttestedLevelValue}}</p>
                           <p class="matbold mat-body-2" *ngIf="!comp.competencySelfAttestedLevel && comp.competencyCBPCompletionLevel">{{comp.competencyCBPCompletionLevelValue}}</p>
                           <p class="matbold mat-body-2" *ngIf="comp.competencySelfAttestedLevel && comp.competencyCBPCompletionLevelName">
-                            <span *ngIf="comp.competencyCBPCompletionLevel > comp.competencySelfAttestedLevel">{{comp.competencyCBPCompletionLevelValue}}</span>
-                            <span *ngIf="comp.competencySelfAttestedLevel > comp.competencyCBPCompletionLevel">{{comp.competencySelfAttestedLevelValue}}</span>
-                            <span *ngIf="comp.competencySelfAttestedLevel === comp.competencyCBPCompletionLevel">{{comp.competencySelfAttestedLevelValue}}</span>
+                            <span *ngIf="comp.competencyCBPCompletionLevel < comp.competencySelfAttestedLevel">{{comp.competencyCBPCompletionLevelValue}}</span>
+                            <span *ngIf="comp.competencySelfAttestedLevel < comp.competencyCBPCompletionLevel">{{comp.competencySelfAttestedLevelValue}}</span>
+                            <span *ngIf="comp.competencySelfAttestedLevel === comp.competencyCBPCompletionLevel">{{comp.competencySelfAttestedLevelValue}} <mat-icon class="completedicon">check_circle</mat-icon></span>
                           </p>
                           <p class="deactivate_text mat-body-2" *ngIf="!comp.competencySelfAttestedLevel && !comp.competencyCBPCompletionLevel">Not enough data</p>
                         </div>
@@ -286,8 +286,7 @@
             <ng-container *ngIf="desiredCompetencies && desiredCompetencies.length > 0">
               <ng-container *ngFor="let comp of desiredCompetencies | pipeFilterV2:'name': searchInput.value">
                 <!--  | pipeFilterV2:'name': searchInput.value   -->
-                <mat-card class="cursor-pointer margin-bottom-m position-relative mat-card" [ngClass]="{'mat-copmetence': isSelected}"
-                  (click)=view(comp)>
+                <mat-card class="cursor-pointer margin-bottom-m position-relative mat-card" [ngClass]="{'mat-copmetence': isSelected}">
                   <a role="button">
                     <mat-card-content>
                       <div class="card_inner_content flex flex-row justify-between">
