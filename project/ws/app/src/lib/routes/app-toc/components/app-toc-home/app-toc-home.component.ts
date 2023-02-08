@@ -368,22 +368,22 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
   get isBatchInProgress() {
     // if (this.content && this.content['batches']) {
-      // const batches = this.content['batches'] as NsContent.IBatch
-      if (this.currentCourseBatchId) {
-        const now = moment()
-        if (this.batchData && this.batchData.content) {
-          const batch = _.first(_.filter(this.batchData.content, { batchId: this.currentCourseBatchId }) || [])
-          if (batch) {
-            return (
-              // batch.status &&
-              moment(batch.startDate).isSameOrBefore(now)
-              && moment(batch.endDate || new Date()).isSameOrAfter(now)
-            )
-          }
-          return false
+    // const batches = this.content['batches'] as NsContent.IBatch
+    if (this.currentCourseBatchId) {
+      const now = moment()
+      if (this.batchData && this.batchData.content) {
+        const batch = _.first(_.filter(this.batchData.content, { batchId: this.currentCourseBatchId }) || [])
+        if (batch) {
+          return (
+            // batch.status &&
+            moment(batch.startDate).isSameOrBefore(now)
+            && moment(batch.endDate || new Date()).isSameOrAfter(now)
+          )
         }
         return false
-      } return false
+      }
+      return false
+    } return false
   }
   private initData(data: Data) {
     const initData = this.tocSvc.initData(data, true)

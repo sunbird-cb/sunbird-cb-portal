@@ -69,6 +69,7 @@ export class CompetenceSysComponent implements OnInit {
     } else {
       this.getProfile()
     }
+    // console.log('this.route =======', this.route.snapshot.queryParams)
   }
   ngOnInit() {
     // load page based on 'page' query param or default to 1

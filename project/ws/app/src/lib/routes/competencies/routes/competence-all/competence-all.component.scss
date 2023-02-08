@@ -239,7 +239,9 @@
     border-right-width: 0;
   }
 }
-
+.matbold {
+  font-weight: 600 !important;
+}
 .max-height-60 {
   max-height: 60px;
 }
@@ -509,14 +511,19 @@ a.work_order_link {
     text-decoration: underline;
   }
 }
+::ng-deep .comp-search {
+  .mat-form-field-infix {
+    padding: 6px 8px 12px !important;
+  }
+}
 
 .add_competency_btn {
   background: #0074b6;
   border-radius: 4px 4px;
   // padding: 14px 16px;
-  width: 155px;
-  height: 56px;
-  margin: 0;
+  width: 152px;
+  height: 42px;
+  margin: 5px 0 0;
   color: #fff!important;
 
   @include breakpoint-s  {
@@ -547,26 +554,26 @@ ul.tagIconList {
 ul.tagIconList li {
   float: left;
 }
-ul.tagIconList li a {
+ul.tagIconList li span {
   width: 8px;
   margin-left: 3px;
   height: 5px;
   border-radius: 2px 2px;
   display: block;
 }
-a.activeTagIcon {
+span.activeTagIcon {
   background-color: #0074B6;
   border: 2px solid #0074B6;
 }
-a.activeLevelIcon {
+span.activeLevelIcon {
   background-color: #1D8923;
   border: 2px solid #1D8923;
 }
-a.deactiveLevelIcon {
+span.deactiveLevelIcon {
   background-color: rgba(0, 0, 0, 0.08);
   border: 2px solid #D13924;
 }
-a.disableTagIcon, a.disableLevelIcon {
+span.disableTagIcon, span.disableLevelIcon {
   background-color: rgba(0, 0, 0, 0.08);
   border: 2px solid rgba(0, 0, 0, 0.08);
 }
@@ -631,4 +638,13 @@ p.proficiency_text {
     color: #0074B6;
     text-decoration: underline;
   }
+}
+
+.completedicon {
+  color: #1D8923;
+  width: 20px !important;
+  height: 20px !important;
+  vertical-align: sub;
+  font-size: 20px !important;
+  margin-left: 4px;
 }
