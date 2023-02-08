@@ -68,6 +68,7 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
             this.quizJson.showTimer = this.testData.requiresSubmit
             this.quizJson.timeLimit = this.testData.expectedDuration
             this.quizJson.primaryCategory = this.testData.primaryCategory
+            this.quizJson.questions = []
             this.alreadyRaised = true
             this.raiseEvent(WsEvents.EnumTelemetrySubType.Loaded, this.testData)
         }
