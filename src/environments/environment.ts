@@ -29,6 +29,8 @@ export const environment: IEnvironment = {
   resendOTPTIme: (window as { [key: string]: any })['env']['resendOTPTIme'] || 120,
   cscmsUrl: (window as { [key: string]: any })['env']['cscmsUrl'] || '',
   dakshtaName: (window as { [key: string]: any })['env']['dakshtaName'] || '',
+  contactMeetLink: (window as { [key: string]: any })['env']['contactMeetLink'] || '',
+
 }
 interface IEnvironment {
   name: string,
@@ -52,7 +54,8 @@ interface IEnvironment {
   staticHomePageUrl: string,
   resendOTPTIme: number,
   cscmsUrl: string,
-  dakshtaName: string
+  dakshtaName: string,
+  contactMeetLink: string
 }
 
 /*
