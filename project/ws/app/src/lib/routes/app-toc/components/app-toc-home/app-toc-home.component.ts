@@ -250,7 +250,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (this.content) {
       const contentName = this.content.name.trim()
 
-      if((contentName).toLowerCase() === this.dakshtaName.toLowerCase()) {
+      if ((contentName).toLowerCase() === this.dakshtaName.toLowerCase()) {
         this.showBtn = true
 
       } else {

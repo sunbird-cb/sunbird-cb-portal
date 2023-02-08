@@ -21,6 +21,7 @@ export const environment = {
   resendOTPTIme: (window as { [key: string]: any })['env']['resendOTPTIme'] || 120,
   cscmsUrl:(window as { [key: string]: any })['env']['cscmsUrl'] || '',
   dakshtaName:(window as { [key: string]: any })['env']['dakshtaName'] || '',
+  contactMeetLink:(window as { [key: string]: any })['env']['contactMeetLink'] || '',
 
   // mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
   // spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',

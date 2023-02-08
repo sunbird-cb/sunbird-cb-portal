@@ -19,6 +19,7 @@ export const environment = {
     staticHomePageUrl: (window as { [key: string]: any })['env']['staticHomePageUrl'] || '',
     cscmsUrl:(window as { [key: string]: any })['env']['cscmsUrl'] || '',
     dakshtaName:(window as { [key: string]: any })['env']['dakshtaName'] || '',
+    contactMeetLink:(window as { [key: string]: any })['env']['contactMeetLink'] || '',
     // mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
     // spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',
     // cbcPortal: (window as { [key: string]: any })['env']['cbcPath'] || '',
