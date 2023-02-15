@@ -206,11 +206,11 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
     }
     changeColor() {
         const a = this.jsPlumbInstance.getAllConnections() as any[]
-        if (a.length < this.question.options.length) {
-            this.showAns = false
-            alert('Please select all answers')
-            return
-        }
+        // if (a.length < this.question.options.length) {
+        //     this.showAns = false
+        //     alert('Please select all answers')
+        //     return
+        // }
         a.forEach(element => {
             const b = element.sourceId
             const options = this.question.options

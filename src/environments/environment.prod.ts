@@ -19,8 +19,9 @@ export const environment = {
   assessmentBuffer: (window as { [key: string]: any })['env']['assessmentBuffer'] || 0,
   staticHomePageUrl: (window as { [key: string]: any })['env']['staticHomePageUrl'] || '',
   resendOTPTIme: (window as { [key: string]: any })['env']['resendOTPTIme'] || 120,
-  cscmsUrl: (window as { [key: string]: any })['env']['cscmsUrl'] || '',
-  dakshtaName: (window as { [key: string]: any })['env']['dakshtaName'] || '',
+  cscmsUrl:(window as { [key: string]: any })['env']['cscmsUrl'] || '',
+  dakshtaName:(window as { [key: string]: any })['env']['dakshtaName'] || '',
+  contactMeetLink:(window as { [key: string]: any })['env']['contactMeetLink'] || '',
 
   // mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
   // spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',

@@ -9,6 +9,7 @@ import { ImageCropComponent, ConfigurationsService, WsEvents, EventService } fro
 import { IMAGE_MAX_SIZE, IMAGE_SUPPORT_TYPES } from '@ws/author/src/lib/constants/upload'
 import { UserProfileService } from '../../services/user-profile.service'
 import { Router, ActivatedRoute } from '@angular/router'
+
 import {
   INationality,
   ILanguages,
@@ -255,7 +256,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       })
     this.userProfileSvc.getAllDepartments().subscribe(
       (data: any) => {
-        this.allDept = data
+        const newData = data.map((el: any) => {
+          return el.trim()
+        })
+        this.allDept = newData.sort((a: any, b: any) => {
+          return a.toLowerCase().localeCompare(b.toLowerCase())
+      })
+
       },
       (_err: any) => {
       })

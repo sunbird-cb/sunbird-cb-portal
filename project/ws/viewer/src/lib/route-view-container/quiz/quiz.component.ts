@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, OnDestroy } from '@angular/core'
 import { NsContent } from '@sunbird-cb/collection'
 import { NSQuiz } from '../../plugins/quiz/quiz.model'
 import { ActivatedRoute } from '@angular/router'
@@ -8,7 +8,8 @@ import { ActivatedRoute } from '@angular/router'
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.scss'],
 })
-export class QuizComponent implements OnInit {
+export class QuizComponent implements OnInit, OnDestroy {
+
   @Input() isFetchingDataComplete = false
   @Input() isErrorOccured = false
   @Input() quizData: NsContent.IContent | null = null
@@ -21,12 +22,15 @@ export class QuizComponent implements OnInit {
   @Input() isPreviewMode = false
   isTypeOfCollection = false
   collectionId: string | null = null
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.isTypeOfCollection = this.activatedRoute.snapshot.queryParams.collectionType ? true : false
     if (this.isTypeOfCollection) {
       this.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
     }
+  }
+  ngOnDestroy(): void {
+    this.isFetchingDataComplete = false
   }
 }
