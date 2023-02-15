@@ -37,6 +37,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.dataSubscription = this.activatedRoute.data.subscribe(
       async data => {
+        this.isFetchingDataComplete = false
         this.quizData = data.content.data
         if (this.quizData) {
           const url = this.viewSvc.getPublicUrl(this.quizData.artifactUrl)
@@ -57,13 +58,15 @@ export class QuizComponent implements OnInit, OnDestroy {
           this.alreadyRaised = true
           this.raiseEvent(WsEvents.EnumTelemetrySubType.Loaded, this.quizData)
         }
-        this.isFetchingDataComplete = true
+        setTimeout(() => { this.isFetchingDataComplete = true }, 100)
+
       },
       () => { },
     )
   }
 
   async ngOnDestroy() {
+    this.isFetchingDataComplete = false
     if (this.activatedRoute.snapshot.queryParams.collectionId &&
       this.activatedRoute.snapshot.queryParams.collectionType
       && this.quizData) {
