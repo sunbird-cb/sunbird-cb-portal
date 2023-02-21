@@ -19,6 +19,7 @@ export class CurrentCompetencyCardComponent implements OnInit {
     //   _.each
     //   this.selectedCompId=comp.
     // })
+    this.selectedLevelId = String(this.selectedLevelId)
   }
 
   selectLevel(complevel: any, competency: any) {

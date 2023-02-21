@@ -27,6 +27,7 @@ export class CompetenceViewComponent implements OnInit {
   @Input() isUpdate!: boolean
   selectedLevel: string | undefined
   selectIndex: any
+  selectLevelName: any
   assessmentIdForTest = ''
   constructor(
     private snackBar: MatSnackBar,
@@ -56,7 +57,8 @@ export class CompetenceViewComponent implements OnInit {
         id: this.dData.id,
         action: 'ADD',
         levelId: this.selectIndex,
-        levelName: this.selectedLevel,
+        levelName: this.selectLevelName,
+        levelValue: this.selectedLevel,
       })
     }
   }
@@ -65,7 +67,8 @@ export class CompetenceViewComponent implements OnInit {
     this.selectIndex = indexOfelement + 1
     this.selectedId = comp.id
     // tslint:disable-next-line: prefer-template
-    this.selectedLevel = comp.name + '(' + comp.level + ')'
+    this.selectedLevel = comp.level
+    this.selectLevelName = comp.name
     const requestData = {
       request: {
         filters: {

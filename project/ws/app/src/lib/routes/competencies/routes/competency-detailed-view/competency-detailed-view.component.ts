@@ -60,6 +60,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
         ],
     },
   }
+  currentCompetency: any
   constructor(
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
@@ -107,9 +108,13 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
         })
         .first()
         .value()
-
         if(vc && ('id' in vc) && !_.isEmpty(vc.id)) {
-          this.isAdded = true;
+          this.currentCompetency = vc
+          if (vc.competencySelfAttestedLevel && vc.competencySelfAttestedLevel !== '') {
+            this.isAdded = true;
+          } else {
+            this.isAdded = false;
+          }
         }
       }
     })
@@ -121,20 +126,20 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  addCompetency(id: string, levelId: any, levelName: any) {
-    if (id) {
+  addCompetency(res: any) {
+    if (res.id) {
       // API is not available
       const data = [this.competencyData]
       const vc = _.chain(data)
         .filter(i => {
-          return i.id === id
+          return i.id === res.id
         })
         .first()
         .value()
 
       // console.log(vc)
       // this.myCompetencies.push(vc)
-      this.addToProfile(vc, levelId, levelName)
+      this.addToProfile(vc, res)
       // this.reset()
     }
   }
@@ -160,15 +165,18 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
   removeFromProfile(item: NSCompetencie.ICompetencie) {
     if (item) {
       const currentCompetencies = _.get(this, 'currentProfile.competencies');
-      const updatedProfile = { ...this.currentProfile };
+      // const updatedProfile = { ...this.currentProfile };
+      let updatedProfile = this.currentProfile.competencies
       _.remove(currentCompetencies, (itm) => _.get(itm, 'id') === item.id);
       if (updatedProfile) {
-        updatedProfile.competencies = currentCompetencies;
+        updatedProfile = currentCompetencies;
       }
       const reqUpdate = {
         request: {
           userId: this.configSvc.unMappedUser.id,
-          profileDetails: updatedProfile,
+          profileDetails: {
+            competencies: updatedProfile,
+          },
         },
       }
       this.competencySvc.updateProfile(reqUpdate).subscribe(
@@ -187,7 +195,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  addToProfile(item: NSCompetencie.ICompetencie, levelId: any, levelName: any) {
+  addToProfile(item: NSCompetencie.ICompetencie, result: any) {
     if (item) {
       const newCompetence = {
         type: item.type || 'COMPETENCY',
@@ -197,28 +205,33 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
         status: item.status || '',
         source: item.source || '',
         competencyType: _.get(item, 'additionalProperties.competencyType') || item.type,
-        competencySelfAttestedLevel: levelId || '',
-        competencySelfAttestedLevelValue: levelName || '',
+        competencySelfAttestedLevel: result.levelId || '',
+        competencySelfAttestedLevelValue: result.levelValue || '',
+        competencySelfAttestedLevelName: result.levelName || '',
+        competencyCBPCompletionLevel: this.currentCompetency.competencyCBPCompletionLevel ? this.currentCompetency.competencyCBPCompletionLevel : '',
+        competencyCBPCompletionLevelName: this.currentCompetency.competencyCBPCompletionLevelName ? this.currentCompetency.competencyCBPCompletionLevelName : '',
+        competencyCBPCompletionLevelValue: this.currentCompetency.competencyCBPCompletionLevelValue ? this.currentCompetency.competencyCBPCompletionLevelValue : '',
       }
 
-      // console.log(newCompetence)
-      const updatedProfile = { ...this.currentProfile }
+      let updatedProfile = this.currentProfile.competencies
       if (
         _.get(this, 'currentProfile.competencies') &&
         _.get(this, 'currentProfile.competencies').length > 0
       ) {
         _.remove(
-          updatedProfile.competencies, itm => _.get(itm, 'id') === item.id
+          updatedProfile, itm => _.get(itm, 'id') === item.id
         )
-        updatedProfile.competencies.push(newCompetence)
+        updatedProfile.push(newCompetence)
       } else {
-        updatedProfile.competencies = []
-        updatedProfile.competencies.push(newCompetence)
+        updatedProfile = []
+        updatedProfile.push(newCompetence)
       }
       const reqUpdate = {
         request: {
           userId: this.configSvc.unMappedUser.id,
-          profileDetails: updatedProfile,
+          profileDetails: {
+            competencies: updatedProfile,
+          },
         },
       }
       this.competencySvc.updateProfile(reqUpdate).subscribe(response => {
@@ -251,7 +264,7 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((response: any) => {
       // console.log(response)
       if (response && response.action === 'ADD') {
-        this.addCompetency(response.id, response.levelId, response.levelName);
+        this.addCompetency(response);
         // this.refreshData(this.currentActivePage)
       } else if (response && response.action === 'DELETE') {
         this.deleteCompetency(response.id);
