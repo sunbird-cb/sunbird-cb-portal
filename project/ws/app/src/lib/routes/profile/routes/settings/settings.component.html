@@ -15,9 +15,19 @@
 
       <div class="col-md-4 mt-10">
         <span mat-line class="radio-select">
-          <mat-radio-group><mat-radio-button [checked]="true"></mat-radio-button>EN - English</mat-radio-group>
+          <mat-radio-group>
+            <mat-radio-button value="1" [checked]="true" (click)="langSelect('en')">EN - English</mat-radio-button>
+            &nbsp;
+          </mat-radio-group>
         </span>
       </div>   
+      <div class="col-md-4 mt-10">
+        <span mat-line class="radio-select">
+          <mat-radio-group>
+            <mat-radio-button value="2" href="/hi/" [checked]="false" (click)="langSelect('hi')">HI - Hindi</mat-radio-button>
+          </mat-radio-group>
+        </span>
+      </div>
       <!-- <mat-form-field class="language-drop-down-width">
          <mat-select [value]="appLanguage" (selectionChange)="langChanged($event)">
            <mat-option value="en" *ngIf="isLocaleAvailable('')" [disabled]="!isLocaleEnabled('')">
