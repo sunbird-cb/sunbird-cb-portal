@@ -443,26 +443,7 @@
             </section>
         </ng-template>
     </mat-tab>
-    <mat-tab label="Learners" *ngIf="!forPreview">
-        <ng-template matTabContent>
-            <div *ngIf="cohortResults[cohortTypesEnum.ACTIVE_USERS]">
-                <h3 *ngIf="cohortResults[cohortTypesEnum.ACTIVE_USERS].hasError" class="mat-error text-center" i18n>
-                    Failed to fetch active users
-                </h3>
-                <h3 *ngIf="
-                    !cohortResults[cohortTypesEnum.ACTIVE_USERS].hasError &&
-                    !cohortResults[cohortTypesEnum.ACTIVE_USERS].contents.length
-                    " class="text-center" i18n>
-                    None
-                </h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 col-gap-4">
-                    <ng-container *ngFor="let cohort of cohortResults[cohortTypesEnum.ACTIVE_USERS].contents"
-                        [ngTemplateOutlet]="unitCohortNew" [ngTemplateOutletContext]="{ user: cohort }">
-                    </ng-container>
-                </div>
-            </div>
-        </ng-template>
-    </mat-tab>
+
 </mat-tab-group>
 
 
