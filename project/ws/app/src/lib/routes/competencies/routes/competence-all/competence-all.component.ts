@@ -75,8 +75,22 @@ export class CompetenceAllComponent implements OnInit {
 
         if (this.myCompetencies && this.myCompetencies.length > 0) {
           this.myCompetencies.forEach((val: any) => {
-            val.competencyCBPCompletionLevel = Number(val.competencyCBPCompletionLevel)
-            val.competencySelfAttestedLevel = Number(val.competencySelfAttestedLevel)
+            if (val.competencyCBPCompletionLevel) {
+              if (!isNaN(Number(val.competencyCBPCompletionLevel))) {
+                val.competencyCBPCompletionLevel = val.competencyCBPCompletionLevel
+              } else {
+                val.competencyCBPCompletionLevel = val.competencyCBPCompletionLevel
+              }
+            }
+            if (val.competencySelfAttestedLevel) {
+              if (!isNaN(Number(val.competencySelfAttestedLevel))) {
+                val.competencySelfAttestedLevel = val.competencySelfAttestedLevel
+              } else {
+                val.competencySelfAttestedLevel = val.competencySelfAttestedLevel
+              }
+            }
+            // val.competencyCBPCompletionLevel = Number(val.competencyCBPCompletionLevel)
+            // val.competencySelfAttestedLevel = Number(val.competencySelfAttestedLevel)
           })
         }
       } else {
@@ -128,8 +142,22 @@ export class CompetenceAllComponent implements OnInit {
 
         if (this.myCompetencies && this.myCompetencies.length > 0) {
           this.myCompetencies.forEach((val: any) => {
-            val.competencyCBPCompletionLevel = Number(val.competencyCBPCompletionLevel)
-            val.competencySelfAttestedLevel = Number(val.competencySelfAttestedLevel)
+            if (val.competencyCBPCompletionLevel) {
+              if (!isNaN(Number(val.competencyCBPCompletionLevel))) {
+                val.competencyCBPCompletionLevel = val.competencyCBPCompletionLevel
+              } else {
+                val.competencyCBPCompletionLevel = val.competencyCBPCompletionLevel
+              }
+            }
+            if (val.competencySelfAttestedLevel) {
+              if (!isNaN(Number(val.competencySelfAttestedLevel))) {
+                val.competencySelfAttestedLevel = val.competencySelfAttestedLevel
+              } else {
+                val.competencySelfAttestedLevel = val.competencySelfAttestedLevel
+              }
+            }
+            // val.competencyCBPCompletionLevel = Number(val.competencyCBPCompletionLevel)
+            // val.competencySelfAttestedLevel = Number(val.competencySelfAttestedLevel)
           })
         }
 
@@ -382,7 +410,13 @@ export class CompetenceAllComponent implements OnInit {
       data: item,
     });
     const instance = dialogRef.componentInstance;
-    instance.isUpdate = true;
+    // console.log('item', item)
+    if(item && item.competencySelfAttestedLevel !== ''){
+      instance.isUpdate = true
+    } else {
+      instance.isUpdate = false
+    }
+   
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response && response.action === 'ADD') {
         this.addCompetency(response.id);

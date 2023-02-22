@@ -29,6 +29,7 @@ export class CompetenceViewComponent implements OnInit {
   selectIndex: any
   selectLevelName: any
   assessmentIdForTest = ''
+  onlyCBP = false
   constructor(
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<CompetenceViewComponent>,
@@ -37,6 +38,16 @@ export class CompetenceViewComponent implements OnInit {
     private aAService: CompetenceAssessmentService
   ) { }
   ngOnInit() {
+    if (this.dData && this.dData.competencySelfAttestedLevel && this.dData.competencySelfAttestedLevel !== '') {
+      this.isUpdate = true
+    } else {
+      this.isUpdate = false
+      if (this.dData && this.dData.competencyCBPCompletionLevel && this.dData.competencyCBPCompletionLevel !== '') {
+        this.onlyCBP = true
+      } else {
+        this.onlyCBP = false
+      }
+    }
   }
 
   closeModal() {
@@ -119,5 +130,10 @@ export class CompetenceViewComponent implements OnInit {
       this.closeModal()
       this.router.navigate(['app', 'competencies', 'all', 'assessment', this.assessmentId])
     }
+  }
+
+  navigateTo() {
+    this.closeModal()
+    this.router.navigate(['/app/competencies/all/', this.dData.id, this.dData.name, 'ALL'])
   }
 }
