@@ -100,8 +100,10 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
     // if (this.currentProgress > 70 && this.currentProgress <= 100) {
     //   return '#1D8923'
     // }
+   
     return '#1D8923'
   }
+
 
   private evaluateImmediateChildrenStructure() {
     if (this.content && this.content.children && this.content.children.length) {

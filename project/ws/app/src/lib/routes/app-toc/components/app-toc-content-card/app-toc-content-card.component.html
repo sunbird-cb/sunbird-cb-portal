@@ -244,11 +244,12 @@
           class="" [matMenuTriggerFor]="buttonMenu">
           <mat-icon>more_vertical</mat-icon>
         </button>
-        <ng-container *ngIf="!forPreview && content?.identifier && content?.completionPercentage">
+        <ng-container *ngIf="!forPreview && content?.identifier && content?.completionPercentage ; else elseBlock">
+        
           <ng-container *ngIf="content?.completionStatus == 2">
             <circle-progress class="flex items-center progress" [percent]="100" [radius]="12" [outerStrokeWidth]="3"
               [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()"
-              [innerStrokeColor]="'rgba(0,0,0,.16)'" [animation]="true" [animationDuration]="300" [showTitle]="false"
+              [innerStrokeColor]="'rgba(0, 0, 0, 0.16)'" [animation]="true" [animationDuration]="300" [showTitle]="false"
               [showUnits]="false" [showSubtitle]="false" [showInnerStroke]="true" [clockwise]="true"
               [backgroundOpacity]="0" [backgroundGradient]="false" [backgroundStrokeWidth]="3"
               [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false" [backgroundPadding]="0"
@@ -262,7 +263,7 @@
           <ng-container *ngIf="content?.completionStatus < 2">
             <circle-progress class="flex items-center progress" [percent]="content?.completionPercentage" [radius]="12"
               [outerStrokeWidth]="3" [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()"
-              [innerStrokeColor]="'rgba(0,0,0,.16)'" [animation]="true" [animationDuration]="300" [showTitle]="false"
+              [innerStrokeColor]="'rgba(0, 0, 0, 0.16)'" [animation]="true" [animationDuration]="300" [showTitle]="false"
               [showUnits]="false" [showSubtitle]="false" [showInnerStroke]="true" [clockwise]="true"
               [backgroundOpacity]="0" [backgroundGradient]="false" [backgroundStrokeWidth]="3"
               [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false" [backgroundPadding]="0"
@@ -273,8 +274,33 @@
               [progressType]="'percentage'">
             </ws-widget-content-progress> -->
           </ng-container>
+          
         </ng-container>
+        <ng-template #elseBlock>
+        <circle-progress  class="flex items-center progress"
+          [percent]="0"
+          [radius]="12"
+          [outerStrokeWidth]="3"
+          [innerStrokeWidth]="3"
+          [outerStrokeColor]="'#e84625'"
+          [innerStrokeColor]="'#e84625'"
+          [animation]="true"
+          [space]="-3"
+          [showUnits]="false"
+          [animationDuration]="300"
+          [showTitle]="false"
+          [backgroundPadding]="0"
+          [backgroundPadding]="-9"
+          [outerStrokeLinecap]="'butt'"
+          matTooltip="Not started"
+          [showSubtitle]="false" 
+          [showInnerStroke]="true" 
+          [clockwise]="true" [imageHeight]="24" [imageWidth]="24" [showBackground]="false"></circle-progress>
+        <!-- <p>no data</p> -->
+        </ng-template>
       </div>
+
+      
 
       <!-- <button *ngIf="content?.artifactUrl" type="button" mat-icon-button [matMenuTriggerFor]="buttonMenu">
         <mat-icon>more_vertical</mat-icon>
