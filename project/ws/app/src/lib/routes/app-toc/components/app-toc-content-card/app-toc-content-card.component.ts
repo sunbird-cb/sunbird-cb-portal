@@ -104,6 +104,10 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
     return '#1D8923'
   }
 
+  public progressColor2(): string {
+    return '#f27d00'
+  }
+
 
   private evaluateImmediateChildrenStructure() {
     if (this.content && this.content.children && this.content.children.length) {
