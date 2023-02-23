@@ -111,16 +111,16 @@ TODO: edit option while preview Mode
           && !(content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId)
         ">
                 <a *ngIf="showStart.show && !isPostAssessment"
-                  [routerLink]="resumeData ? resumeDataLink?.url : firstResourceLink?.url"
-                  [queryParams]="resumeData ? generateQuery('RESUME') : generateQuery('START')"
+                  [routerLink]="(resumeData && !certData) ? resumeDataLink?.url : firstResourceLink?.url"
+                  [queryParams]="(resumeData && !certData) ? generateQuery('RESUME') : generateQuery('START')"
                   class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white">
 
-                  <ng-container *ngIf="!content.completionPercentage || content.completionPercentage < 100">
+                  <ng-container *ngIf="(!content.completionPercentage || content.completionPercentage < 100) && !certData">
                     <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
                       {{resumeData? "Resume" : "Start"}}
                     </ng-container>
                   </ng-container>
-                  <ng-container *ngIf="content.completionPercentage === 100">
+                  <ng-container *ngIf="content.completionPercentage === 100 || certData">
                     {{resumeData? "Start again" : "Start"}}
                   </ng-container>
                 </a>
@@ -224,7 +224,7 @@ TODO: edit option while preview Mode
         <!--======== certificate section ========== -->
 
         <!-- <div (click)="openCertificateDialog()" *ngIf='content?.completionStatus == 2' class="margin-bottom-xs"> -->
-        <div  *ngIf="content?.completionStatus == 2"  class="margin-bottom-xs">
+        <div  *ngIf="content?.completionStatus == 2 || certData"  class="margin-bottom-xs">
           <ng-container *ngIf="!certData">
             The certificate is not issued by the trusted certificate authority. Once issued you will be able to download it
           </ng-container>
@@ -265,7 +265,7 @@ TODO: edit option while preview Mode
       <a href="{{cscmsUrl}}" target="_blank" class="text-white custom-button mat-button margin-bottom-m">Apply for physical training</a>
   </div> -->
 
-      <ng-container *ngIf="content?.completionStatus < 2 && isBatchInProgress">
+      <ng-container *ngIf="content?.completionStatus < 2 && isBatchInProgress && !certData">
        <div class="flex flex-row justify-between w-full">
         <p class="mat-body-2 font-bold-imp ws-mat-black60-text">Your progress</p>
 
