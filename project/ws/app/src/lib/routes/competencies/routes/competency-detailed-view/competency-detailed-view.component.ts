@@ -262,7 +262,6 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
     const instance = dialogRef.componentInstance;
     instance.isUpdate = (this.isAdded) ? true : false;
     dialogRef.afterClosed().subscribe((response: any) => {
-      // console.log(response)
       if (response && response.action === 'ADD') {
         this.addCompetency(response);
         // this.refreshData(this.currentActivePage)
@@ -272,6 +271,9 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
     });
   }
 
+  remove(item: NSCompetencie.ICompetencie) {
+    this.deleteCompetency(item.id);
+  }
 
   getCbps() {
       this.searchReq.request.filters['competencies_v3.name'].splice(0, 1, this.competencyName)

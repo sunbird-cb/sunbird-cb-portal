@@ -286,23 +286,26 @@ export class CompetenceAllComponent implements OnInit {
         source: item.source || '',
         competencyType: _.get(item, 'additionalProperties.competencyType') || item.type,
       }
-      const updatedProfile = { ...this.currentProfile }
+      // const updatedProfile = { ...this.currentProfile }
+      let updatedProfile = this.currentProfile.competencies
       if (
         _.get(this, 'currentProfile.competencies') &&
         _.get(this, 'currentProfile.competencies').length > 0
       ) {
         _.remove(
-          updatedProfile.competencies, itm => _.get(itm, 'id') === item.id
+          updatedProfile, itm => _.get(itm, 'id') === item.id
         )
-        updatedProfile.competencies.push(newCompetence)
+        updatedProfile.push(newCompetence)
       } else {
-        updatedProfile.competencies = []
-        updatedProfile.competencies.push(newCompetence)
+        updatedProfile = []
+        updatedProfile.push(newCompetence)
       }
       const reqUpdate = {
         request: {
           userId: this.configSvc.unMappedUser.id,
-          profileDetails: updatedProfile,
+          profileDetails: {
+            competencies: updatedProfile,
+          },
         },
       }
 
@@ -323,17 +326,26 @@ export class CompetenceAllComponent implements OnInit {
   removeFromProfile(item: NSCompetencie.ICompetencie) {
     if (item) {
       const currentCompetencies = _.get(this, 'currentProfile.competencies');
-      const updatedProfile = { ...this.currentProfile };
+      // const updatedProfile = { ...this.currentProfile };
+      let updatedProfile = this.currentProfile.competencies
       _.remove(currentCompetencies, (itm) => _.get(itm, 'id') === item.id);
       if (updatedProfile) {
-        updatedProfile.competencies = currentCompetencies;
+        updatedProfile = currentCompetencies;
       }
       const reqUpdate = {
         request: {
           userId: this.configSvc.unMappedUser.id,
-          profileDetails: updatedProfile,
+          profileDetails: {
+            competencies: updatedProfile,
+          },
         },
       }
+      // const reqUpdate = {
+      //   request: {
+      //     userId: this.configSvc.unMappedUser.id,
+      //     profileDetails: updatedProfile,
+      //   },
+      // }
       this.competencySvc.updateProfile(reqUpdate).subscribe(
         (response) => {
           if (response) {

@@ -289,12 +289,12 @@
                 <mat-card class="cursor-pointer margin-bottom-m position-relative mat-card" [ngClass]="{'mat-copmetence': isSelected}">
                   <a role="button">
                     <mat-card-content>
-                      <div class="card_inner_content flex flex-row justify-between">
-                        <div class="card_inner_title_box flex-col">
+                      <div class="card_inner_content flex flex-row">
+                        <div class="card_inner_title_box flex-col desired-card">
                           <h4 class="mat-h4">{{comp.name}}</h4>
                           <p class="mat-body-2 ws-mat-black60-text">{{comp.competencyType}}</p>
                         </div>
-                        <div class="flex-col proficiency_text_box">
+                        <!-- <div class="flex-col proficiency_text_box">
                           <div class="flex flex-row justify-between prof_txt_data">
                             <div>
                               <p>Self attestation</p>
@@ -344,7 +344,7 @@
                               </ul>
                             </div>
                           </div>
-                        </div>
+                        </div> -->
                         <div class="flex proficient_level_box">
                           <p class="matbold mat-body-2" *ngIf="comp.competencySelfAttestedLevel">{{comp.competencySelfAttestedLevelValue}}</p>
                           <p class="deactivate_text mat-body-2" *ngIf="!comp.competencySelfAttestedLevel">Not enough data</p>
