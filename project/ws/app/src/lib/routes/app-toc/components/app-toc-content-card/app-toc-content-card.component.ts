@@ -105,7 +105,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
   }
 
   public progressColor2(): string {
-    return '#f27d00'
+    return '#808080'
   }
 
 
