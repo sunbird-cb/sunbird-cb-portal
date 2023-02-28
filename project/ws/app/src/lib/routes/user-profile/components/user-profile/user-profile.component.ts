@@ -1523,10 +1523,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     if (file.size > IMAGE_MAX_SIZE) {
       this.snackBar.openFromComponent(NotificationComponent, {
         data: {
-          type: Notify.SIZE_ERROR,
+          type: Notify.PROFILE_IMG_SIZE_ERROR,
         },
+        
         duration: NOTIFICATION_TIME * 1000,
+        
       })
+      
       return
     }
 
