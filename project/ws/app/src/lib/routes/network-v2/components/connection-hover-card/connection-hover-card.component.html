@@ -49,7 +49,7 @@
                     <a *ngIf="hoverUser?.personalDetails?.primaryEmail"
                         href="mailto:{{hoverUser?.personalDetails?.primaryEmail}}">
                         <span class="mat-body-2 margin-left-s ws-mat-black60-text">
-                            {{hoverUser?.personalDetails?.primaryEmail || 'Not available'}}
+                            {{hoverUser?.personalDetails?.primaryEmail | pipeEmail }}
                         </span>
                     </a>
                     <span *ngIf="!hoverUser?.personalDetails?.primaryEmail" class="mat-body-2 margin-left-s">
