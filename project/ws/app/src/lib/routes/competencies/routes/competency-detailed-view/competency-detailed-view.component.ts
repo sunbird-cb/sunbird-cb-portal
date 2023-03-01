@@ -168,6 +168,21 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
       // const updatedProfile = { ...this.currentProfile };
       let updatedProfile = this.currentProfile.competencies
       _.remove(currentCompetencies, (itm) => _.get(itm, 'id') === item.id);
+      if (this.currentCompetency && this.currentCompetency.competencyCBPCompletionLevel) {
+        const newCompetence = {
+          type: this.currentCompetency.type,
+          id: this.currentCompetency.id,
+          name: this.currentCompetency.name,
+          description: this.currentCompetency.description,
+          status: this.currentCompetency.status,
+          source: this.currentCompetency.source,
+          competencyType: this.currentCompetency.type,
+          competencyCBPCompletionLevel: this.currentCompetency.competencyCBPCompletionLevel ? this.currentCompetency.competencyCBPCompletionLevel : '',
+          competencyCBPCompletionLevelName: this.currentCompetency.competencyCBPCompletionLevelName ? this.currentCompetency.competencyCBPCompletionLevelName : '',
+          competencyCBPCompletionLevelValue: this.currentCompetency.competencyCBPCompletionLevelValue ? this.currentCompetency.competencyCBPCompletionLevelValue : '',
+        }
+        updatedProfile.push(newCompetence)
+      }
       if (updatedProfile) {
         updatedProfile = currentCompetencies;
       }
@@ -208,9 +223,9 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
         competencySelfAttestedLevel: result.levelId || '',
         competencySelfAttestedLevelValue: result.levelValue || '',
         competencySelfAttestedLevelName: result.levelName || '',
-        competencyCBPCompletionLevel: this.currentCompetency.competencyCBPCompletionLevel ? this.currentCompetency.competencyCBPCompletionLevel : '',
-        competencyCBPCompletionLevelName: this.currentCompetency.competencyCBPCompletionLevelName ? this.currentCompetency.competencyCBPCompletionLevelName : '',
-        competencyCBPCompletionLevelValue: this.currentCompetency.competencyCBPCompletionLevelValue ? this.currentCompetency.competencyCBPCompletionLevelValue : '',
+        competencyCBPCompletionLevel: this.currentCompetency && this.currentCompetency.competencyCBPCompletionLevel ? this.currentCompetency.competencyCBPCompletionLevel : '',
+        competencyCBPCompletionLevelName: this.currentCompetency && this.currentCompetency.competencyCBPCompletionLevelName ? this.currentCompetency.competencyCBPCompletionLevelName : '',
+        competencyCBPCompletionLevelValue: this.currentCompetency && this.currentCompetency.competencyCBPCompletionLevelValue ? this.currentCompetency.competencyCBPCompletionLevelValue : '',
       }
 
       let updatedProfile = this.currentProfile.competencies

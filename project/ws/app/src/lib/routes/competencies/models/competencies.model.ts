@@ -33,6 +33,7 @@ export namespace NSCompetencie {
     competencyCBPCompletionLevel?: string
     competencyCBPCompletionLevelName?: string
     competencyCBPCompletionLevelValue?: string
+    children?: any[]
   }
   export interface IWebResponse {
     errorMessage: string

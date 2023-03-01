@@ -67,7 +67,7 @@ export class CompetenceViewComponent implements OnInit {
       this.dialogRef.close({
         id: this.dData.id,
         action: 'ADD',
-        levelId: this.selectIndex,
+        levelId: this.selectedId,
         levelName: this.selectLevelName,
         levelValue: this.selectedLevel,
       })

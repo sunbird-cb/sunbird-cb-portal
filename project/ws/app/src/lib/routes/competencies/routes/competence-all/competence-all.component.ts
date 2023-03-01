@@ -10,8 +10,6 @@ import { CompetenceViewComponent } from '../../components/competencies-view/comp
 import { MatSnackBar } from '@angular/material';
 import { ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
 import {ThemePalette} from '@angular/material/core'
-/* tslint:enable */
-
 @Component({
   selector: 'app-competence-all',
   templateUrl: './competence-all.component.html',
@@ -56,6 +54,23 @@ export class CompetenceAllComponent implements OnInit {
     private configSvc: ConfigurationsService,
     private eventSvc: EventService,
   ) {
+    this.searchJson = [
+      { type: 'COMPETENCY', field: 'name', keyword: '' },
+      { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
+    ]
+
+    const searchObj = {
+      searches: this.searchJson,
+      childNodes: true,
+    }
+    this.competencySvc
+      .fetchCompetency(searchObj)
+      .subscribe((reponse: NSCompetencie.ICompetencieResponse) => {
+        if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
+          this.allCompetencies = reponse.responseData
+          // this.resetcomp()
+        }
+      })
     this.tabsData =
       (this.route.parent &&
         this.route.parent.snapshot.data.pageData.data.tabs) ||
@@ -73,30 +88,34 @@ export class CompetenceAllComponent implements OnInit {
         this.myCompetencies =
           this.route.snapshot.data.profile.data[0].competencies || []
 
-        if (this.myCompetencies && this.myCompetencies.length > 0) {
-          this.myCompetencies.forEach((val: any) => {
-            if (val.competencyCBPCompletionLevel) {
-              if (!isNaN(Number(val.competencyCBPCompletionLevel))) {
-                val.competencyCBPCompletionLevel = val.competencyCBPCompletionLevel
-              } else {
-                val.competencyCBPCompletionLevel = val.competencyCBPCompletionLevel
-              }
+          if (this.myCompetencies && this.myCompetencies.length > 0) {
+            if (this.allCompetencies && this.allCompetencies.length > 0) {
+              this.myCompetencies.forEach((comp: any) => {
+                if (comp.competencyCBPCompletionLevel) {
+                  if (!isNaN(Number(comp.competencyCBPCompletionLevel))) {
+                    comp.competencyCBPCompletionLevel = Number(comp.competencyCBPCompletionLevel)
+                  } else {
+                    comp.competencyCBPCompletionLevel = comp.competencyCBPCompletionLevel
+                  }
+                }
+                if (comp.competencySelfAttestedLevel) {
+                  if (!isNaN(Number(comp.competencySelfAttestedLevel))) {
+                    comp.competencySelfAttestedLevel = Number(comp.competencySelfAttestedLevel)
+                  } else {
+                    comp.competencySelfAttestedLevel = comp.competencySelfAttestedLevel
+                  }
+                }
+                // const orgcomp = this.allCompetencies.filter((obj: any) => this.myCompetencies.includes(obj.id))
+                const orgcomp = this.allCompetencies.filter(x => x.id === comp.id)
+                if (orgcomp && orgcomp.length > 0) {
+                  comp.children =  orgcomp[0].children
+                }
+              })
             }
-            if (val.competencySelfAttestedLevel) {
-              if (!isNaN(Number(val.competencySelfAttestedLevel))) {
-                val.competencySelfAttestedLevel = val.competencySelfAttestedLevel
-              } else {
-                val.competencySelfAttestedLevel = val.competencySelfAttestedLevel
-              }
-            }
-            // val.competencyCBPCompletionLevel = Number(val.competencyCBPCompletionLevel)
-            // val.competencySelfAttestedLevel = Number(val.competencySelfAttestedLevel)
-          })
-        }
+          }
       } else {
         this.myCompetencies = []
       }
-
       if (
         this.route.snapshot.data.profile.data[0].desiredCompetencies &&
         this.route.snapshot.data.profile.data[0].desiredCompetencies.length > 0
@@ -112,25 +131,7 @@ export class CompetenceAllComponent implements OnInit {
       this.getProfile()
     }
   }
-  ngOnInit() {
-    // load page based on 'page' query param or default to 1
-    // this.searchJson = [
-    //   { type: 'COMPETENCY', field: 'name', keyword: '' },
-    //   { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
-    // ]
-
-    // const searchObj = {
-    //   searches: this.searchJson,
-    // }
-    // this.competencySvc
-    //   .fetchCompetency(searchObj)
-    //   .subscribe((reponse: NSCompetencie.ICompetencieResponse) => {
-    //     if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
-    //       this.allCompetencies = reponse.responseData
-    //       this.resetcomp()
-    //     }
-    //   })
-  }
+  ngOnInit() { }
 
   getProfile() {
     this.competencySvc.fetchProfileById(this.configSvc.unMappedUser.id).subscribe(response => {
@@ -141,24 +142,29 @@ export class CompetenceAllComponent implements OnInit {
         this.currentProfile = response.profileDetails
 
         if (this.myCompetencies && this.myCompetencies.length > 0) {
-          this.myCompetencies.forEach((val: any) => {
-            if (val.competencyCBPCompletionLevel) {
-              if (!isNaN(Number(val.competencyCBPCompletionLevel))) {
-                val.competencyCBPCompletionLevel = val.competencyCBPCompletionLevel
-              } else {
-                val.competencyCBPCompletionLevel = val.competencyCBPCompletionLevel
+          if (this.allCompetencies && this.allCompetencies.length > 0) {
+            this.myCompetencies.forEach((comp: any) => {
+              if (comp.competencyCBPCompletionLevel) {
+                if (!isNaN(Number(comp.competencyCBPCompletionLevel))) {
+                  comp.competencyCBPCompletionLevel = Number(comp.competencyCBPCompletionLevel)
+                } else {
+                  comp.competencyCBPCompletionLevel = comp.competencyCBPCompletionLevel
+                }
               }
-            }
-            if (val.competencySelfAttestedLevel) {
-              if (!isNaN(Number(val.competencySelfAttestedLevel))) {
-                val.competencySelfAttestedLevel = val.competencySelfAttestedLevel
-              } else {
-                val.competencySelfAttestedLevel = val.competencySelfAttestedLevel
+              if (comp.competencySelfAttestedLevel) {
+                if (!isNaN(Number(comp.competencySelfAttestedLevel))) {
+                  comp.competencySelfAttestedLevel = Number(comp.competencySelfAttestedLevel)
+                } else {
+                  comp.competencySelfAttestedLevel = comp.competencySelfAttestedLevel
+                }
               }
-            }
-            // val.competencyCBPCompletionLevel = Number(val.competencyCBPCompletionLevel)
-            // val.competencySelfAttestedLevel = Number(val.competencySelfAttestedLevel)
-          })
+              // const orgcomp = this.allCompetencies.filter((obj: any) => this.myCompetencies.includes(obj.id))
+              const orgcomp = this.allCompetencies.filter(x => x.id === comp.id)
+              if (orgcomp && orgcomp.length > 0) {
+                comp.children =  orgcomp[0].children && orgcomp[0].children.length > 0 ? orgcomp[0].children : []
+              }
+            })
+          }
         }
 
         const profDetails = response.profileDetails.professionalDetails
@@ -308,7 +314,6 @@ export class CompetenceAllComponent implements OnInit {
           },
         },
       }
-
       this.competencySvc.updateProfile(reqUpdate).subscribe(response => {
         if (response) {
           // success
@@ -325,10 +330,26 @@ export class CompetenceAllComponent implements OnInit {
   }
   removeFromProfile(item: NSCompetencie.ICompetencie) {
     if (item) {
+      // console.log('item ---', item)
       const currentCompetencies = _.get(this, 'currentProfile.competencies');
       // const updatedProfile = { ...this.currentProfile };
       let updatedProfile = this.currentProfile.competencies
       _.remove(currentCompetencies, (itm) => _.get(itm, 'id') === item.id);
+      if (item && item.competencyCBPCompletionLevel) {
+        const newCompetence = {
+          type: item.type,
+          id: item.id,
+          name: item.name,
+          description: item.description,
+          status: item.status,
+          source: item.source,
+          competencyType: item.type,
+          competencyCBPCompletionLevel: item.competencyCBPCompletionLevel ? item.competencyCBPCompletionLevel : '',
+          competencyCBPCompletionLevelName: item.competencyCBPCompletionLevelName ? item.competencyCBPCompletionLevelName : '',
+          competencyCBPCompletionLevelValue: item.competencyCBPCompletionLevelValue ? item.competencyCBPCompletionLevelValue : '',
+        }
+        updatedProfile.push(newCompetence)
+      }
       if (updatedProfile) {
         updatedProfile = currentCompetencies;
       }
