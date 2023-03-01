@@ -38,6 +38,11 @@
   <span i18n>Size is greater than allowed, check info</span>
 </p>
 
+<p *ngIf="type === notify.PROFILE_IMG_SIZE_ERROR">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Fail">error</mat-icon>
+  <span i18n>Maximum upload file size : 1 MB</span>
+</p>
+
 <p *ngIf="type === notify.DATA_PRESENT">
   <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Fail">error</mat-icon>
   <span i18n>Data is already present</span>
