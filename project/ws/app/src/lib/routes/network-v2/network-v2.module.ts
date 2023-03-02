@@ -6,6 +6,7 @@ import {
   PipeOrderByModule,
   PipeRelativeTimeModule,
   PipeFilterSearchModule,
+  PipeEmailModule
 } from '@sunbird-cb/utils'
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatExpansionModule } from '@angular/material/expansion'
@@ -98,6 +99,7 @@ import { TooltipDirective } from './directives/tooltip.directive'
     PipeHtmlTagRemovalModule,
     PipeRelativeTimeModule,
     PipeFilterSearchModule,
+    PipeEmailModule,
     AvatarPhotoModule,
     EditorSharedModule,
     // CkEditorModule,
