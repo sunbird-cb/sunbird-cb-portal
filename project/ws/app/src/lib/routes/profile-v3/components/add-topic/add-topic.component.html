@@ -2,7 +2,7 @@
 <form [formGroup]="createTopic" class="flex flex-1 flex-column margin-top-m">
   <div class="input-column px-2 text-input-col">
     <mat-form-field appearance="outline" class="margin-top-xs">
-      <input matInput autocomplete="off" id="topicName" #topicName name="topicName" placeholder="Type here" formControlName="topicName" />
+      <input matInput maxlength="100" autocomplete="off" id="topicName" #topicName name="topicName" placeholder="Type here" formControlName="topicName" />
     </mat-form-field>
   </div>
   <div class="flex flex-1 flex-row-reverse">
