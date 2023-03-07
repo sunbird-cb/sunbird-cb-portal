@@ -38,8 +38,9 @@ export class ConnectionHoverCardComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // const userId = this.user.id || this.user.identifier
   }
-
+// Afzal changes
   get getUserName() {
+    // debugger
     let name = 'Guest'
     if (this.hoverUser && !this.hoverUser.personalDetails) {
       if (this.hoverUser.firstName) {
@@ -51,12 +52,15 @@ export class ConnectionHoverCardComponent implements OnInit, AfterViewInit {
       if (this.hoverUser.personalDetails.middlename) {
         // tslint:disable-next-line: max-line-length
         name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.middlename} ${this.hoverUser.personalDetails.surname}`
+      } else if(this.hoverUser.personalDetails.firstName){
+        name = `${this.hoverUser.personalDetails.firstName} ${this.hoverUser.personalDetails.surname}`
       } else {
         name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.surname}`
       }
     }
     return name
   }
+  // Afzal changes
   getUseravatarName() {
     let name = 'Guest'
     if (this.hoverUser && !this.hoverUser.personalDetails) {
@@ -69,6 +73,8 @@ export class ConnectionHoverCardComponent implements OnInit, AfterViewInit {
       if (this.hoverUser.personalDetails.middlename) {
         // tslint:disable-next-line: max-line-length
         name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.middlename} ${this.hoverUser.personalDetails.surname}`
+      } else if(this.hoverUser.personalDetails.firstName){
+        name = `${this.hoverUser.personalDetails.firstName} ${this.hoverUser.personalDetails.surname}`
       } else {
         name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.surname}`
       }

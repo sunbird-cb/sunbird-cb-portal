@@ -34,7 +34,9 @@ export class ConnectionNameComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
 
   }
+  // Afzal changes
   get getUseravatarName() {
+    // debugger
     let name = 'Guest'
     if (this.hoverUser && !this.hoverUser.personalDetails) {
       if (this.hoverUser.firstName) {
@@ -46,6 +48,8 @@ export class ConnectionNameComponent implements OnInit, AfterViewInit {
       if (this.hoverUser.personalDetails.middlename) {
         // tslint:disable-next-line: max-line-length
         name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.middlename} ${this.hoverUser.personalDetails.surname}`
+      } else if(this.hoverUser.personalDetails.firstName){
+        name = `${this.hoverUser.personalDetails.firstName} ${this.hoverUser.personalDetails.surname}`
       } else {
         name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.surname}`
       }
