@@ -608,16 +608,18 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
       ratingSummaryPr.latest50Reviews = JSON.parse(this.ratingSummary.latest50Reviews)
       this.ratingReviews = JSON.parse(this.ratingSummary.latest50Reviews)
     }
-    const meanRating = ratingSummaryPr.breakDown.reduce((val, item) => {
-      // console.log('item', item)
-      return val + (item.key * item.value)
-      // tslint:disable-next-line: align
-    }, 0)
+    // rating changes 07 march 23
+    // const meanRating = ratingSummaryPr.breakDown.reduce((val, item) => {
+    //   // console.log('item', item)
+    //   return val + (item.key * item.value)
+    //   // tslint:disable-next-line: align
+    // }, 0)
     // tslint:disable-next-line:max-line-length
     // ratingSummaryPr.avgRating = this.ratingSummary && this.ratingSummary.total_number_of_ratings ? parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1)) : 0
 
     if (this.ratingSummary && this.ratingSummary.total_number_of_ratings) {
-      ratingSummaryPr.avgRating = parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1))
+      // ratingSummaryPr.avgRating = parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1))
+      ratingSummaryPr.avgRating = parseFloat((this.ratingSummary.sum_of_total_ratings / this.ratingSummary.total_number_of_ratings).toFixed(1))
     }
     if (this.content) {
       this.content.averageRating = ratingSummaryPr.avgRating
