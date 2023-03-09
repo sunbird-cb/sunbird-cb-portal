@@ -279,10 +279,10 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     this.resetAndFetchTocStructure()
     // this.getTrainingCount()
     // this.getContentParent()
-    if (this.content && this.content.identifier) {
-      this.fetchCohorts(this.cohortTypesEnum.ACTIVE_USERS, this.content.identifier)
-      this.fetchCohorts(this.cohortTypesEnum.AUTHORS, this.content.identifier)
-    }
+    // if (this.content && this.content.identifier) {
+    //   this.fetchCohorts(this.cohortTypesEnum.ACTIVE_USERS, this.content.identifier)
+    //   this.fetchCohorts(this.cohortTypesEnum.AUTHORS, this.content.identifier)
+    // }
   }
   sanitize(data: any) {
     return this.domSanitizer.bypassSecurityTrustHtml(data)
