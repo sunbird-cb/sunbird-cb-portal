@@ -34,7 +34,6 @@ export class ConnectionNameComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
 
   }
-  // Afzal changes
   get getUseravatarName() {
     let name = 'Guest'
     if (this.hoverUser && !this.hoverUser.personalDetails) {

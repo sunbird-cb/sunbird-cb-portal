@@ -46,9 +46,7 @@ export class ConnectionPeopleCardComponent implements OnInit {
       return this.howerUser
     })
   }
-// Afzal changes
   getUseravatarName() {
-    // debugger
     // if (this.user) {
     //   return `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
     // }

@@ -169,7 +169,6 @@ export namespace NSNetworkDataV2 {
         osid: string
         professional: any[]
     }
-    // Afzal changes
     export interface IPersonalDetails {
         firstName: string
         category: string

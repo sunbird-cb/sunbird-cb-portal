@@ -38,9 +38,7 @@ export class ConnectionHoverCardComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // const userId = this.user.id || this.user.identifier
   }
-// Afzal changes
   get getUserName() {
-    // debugger
     let name = 'Guest'
     if (this.hoverUser && !this.hoverUser.personalDetails) {
       if (this.hoverUser.firstName) {
@@ -60,7 +58,6 @@ export class ConnectionHoverCardComponent implements OnInit, AfterViewInit {
     }
     return name
   }
-  // Afzal changes
   getUseravatarName() {
     let name = 'Guest'
     if (this.hoverUser && !this.hoverUser.personalDetails) {
