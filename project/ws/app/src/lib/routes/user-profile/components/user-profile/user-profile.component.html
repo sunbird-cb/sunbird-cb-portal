@@ -43,7 +43,7 @@
                         </label>
                         <mat-form-field appearance="outline" class="margin-top-xs">
                           <input id="firstName" matInput #firstname formControlName="firstname" i18n-placeholder
-                            placeholder="Enter First Name" i18n-aria-label aria-label="First Name input" />
+                            placeholder="Enter First Name" i18n-aria-label aria-label="First Name input" maxlength="150" />
                           <mat-error [hidden]="false" i18n="First Name Error|Explains name is required" i18n-aria-label
                             aria-label="First Name Error|Explains name is required "
                             *ngIf="createUserForm?.controls['firstname'].errors?.required">
@@ -85,7 +85,7 @@
                         </label>
                         <mat-form-field appearance="outline" class="margin-top-xs">
                           <input id="surName" matInput #surname formControlName="surname" i18n-placeholder
-                            placeholder="Enter Surname" i18n-aria-label aria-label="Surname input field" />
+                            placeholder="Enter Surname" i18n-aria-label aria-label="Surname input field" maxlength="150" />
                           <mat-error [hidden]="false" i18n="Surname Error|Explains name is required"
                             *ngIf="createUserForm?.controls['surname'].errors?.required" i18n-aria-label
                             aria-label="Surname is mandatory error">
@@ -126,7 +126,7 @@
                           <input id="country" matInput tab-directive type="text" placeholder="Nationality"
                             i18n-placeholder="Nationality" formControlName="nationality"
                             [matAutocomplete]="nationalityAutocomplete" i18n-aria-label aria-label="Nationality"
-                            #nationality i18n-aria-label aria-label="Nationality Field input" />
+                            #nationality i18n-aria-label aria-label="Nationality Field input" maxlength="30" />
                           <mat-error [hidden]="false" i18n="Nationality Error|Explains Nationality is required"
                             *ngIf="createUserForm?.controls['nationality'].errors?.required" i18n-aria-label
                             aria-label="Nationality is mandatory">
@@ -155,7 +155,7 @@
                           <input id="language" matInput type="text" placeholder="Mother Tongue"
                             i18n-placeholder="Mother Tongue" formControlName="domicileMedium"
                             [matAutocomplete]="motherTongueAuto" i18n-aria-label
-                            aria-label="Domicile Medium (Mother Tongue)" #motherTongue />
+                            aria-label="Domicile Medium (Mother Tongue)" #motherTongue  maxlength="30" />
                           <mat-error [hidden]="false" i18n="domicileMedium Error|Explains Domicile Medium is required"
                             *ngIf="createUserForm?.controls['domicileMedium'].errors?.required" i18n-aria-label
                             aria-label="Domicile Medium is mandatory">
@@ -329,7 +329,7 @@
                           formControlName="knownLanguages" i18n-aria-label aria-label="Known Languages"
                           [matAutocomplete]="knownLanguagesAuto" #knownLanguagesInput [matChipInputFor]="chipList"
                           [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="add($event)"
-                          i18n-aria-label aria-label="Other Languages Known input mutiple select autocomplete" />
+                          i18n-aria-label aria-label="Other Languages Known input mutiple select autocomplete" maxlength="30" />
                       </mat-chip-list>
                       <mat-error [hidden]="false" i18n="Other Languages Known is mandatory">
                         Other Languages Known is mandatory
@@ -362,7 +362,7 @@
                           <mat-form-field appearance="outline" class="margin-top-xs flex-expand w-minus-w80">
                             <input [readonly]="otpSend && !otpVerified" id="mobileNumber" #mobile type="number" matInput
                               placeholder="Mobile Number" formControlName="mobile" i18n-aria-label
-                              aria-label="Mobile Number input">
+                              aria-label="Mobile Number input" maxlength="12">
                             <mat-error [hidden]="false" i18n="Mobile Number Error|Explains Mobile no is required"
                               *ngIf="createUserForm?.controls['mobile'].errors?.required" i18n-aria-label
                               aria-label="Mobile Number is mandatory">
@@ -391,7 +391,7 @@
                             <div class="flex flex-1 flex-row">
                               <mat-form-field appearance="outline" class="margin-top-xs flex-expand w-minus-w50">
                                 <input class="margin-bottom-m margin-top-m" id="mobileNumber" #otp type="number"
-                                  matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input">
+                                  matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input" maxlength="10">
                                 <mat-hint *ngIf="timeLeftforOTP > 0 ">
                                   <span>Resend OTP after {{timeLeftforOTP | pipeDurationTransform: 'hms2M'}}</span>
                                 </mat-hint>
@@ -421,7 +421,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="telephoneNumber" #telephone type="text" matInput placeholder="Telephone Number"
-                        formControlName="telephone" i18n-aria-label>
+                        formControlName="telephone" i18n-aria-label maxlength="12">
                       <mat-error [hidden]="false" *ngIf="createUserForm?.controls['telephone'].errors?.pattern">
                         Please enter a valid telephone number (e.g., 0123-26104183 or 012327204281)
                       </mat-error>
@@ -440,7 +440,7 @@
                     <mat-form-field appearance="outline" class="margin-top-xs no-pb">
                       <input id="primaryEmail" name="primaryEmailField" type="email" matInput
                         placeholder="Primary Email" #primaryEmail formControlName="primaryEmail" readonly
-                        i18n-aria-label aria-label="Primary Email readonly input">
+                        i18n-aria-label aria-label="Primary Email readonly input" maxlength="320">
                       <mat-error [hidden]="false" i18n="Primary Email Error|Explains name is required">
                         Primary Email is mandatory
                       </mat-error>
@@ -467,7 +467,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="w-full margin-top-xs">
                       <input id="secondaryEmail" type="email" matInput placeholder="Secondary Email"
-                        formControlName="secondaryEmail" i18n-aria-label aria-label="Secondary Email input filed">
+                        formControlName="secondaryEmail" i18n-aria-label aria-label="Secondary Email input filed" maxlength="320">
                     </mat-form-field>
                   </div>
                   <div class="input-wrapper margin-top-s">
@@ -503,7 +503,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="pinCode" #pincode type="text" matInput placeholder="123456" formControlName="pincode"
-                        i18n-aria-label aria-label="Pin Code inpput field" autocomplete="off">
+                        i18n-aria-label aria-label="Pin Code inpput field" autocomplete="off" maxlength="6">
                       <mat-error [hidden]="false" i18n="Pin Code Error|Explains pincode is required"
                         *ngIf="createUserForm?.controls['pincode'].errors?.required" i18n-aria-label
                         aria-label="Pin Code Error|Explains pincode is required">
@@ -546,7 +546,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="schoolName10" matInput #schoolName10 formControlName="schoolName10" i18n-placeholder
-                        placeholder="Enter School Name" />
+                        placeholder="Enter School Name" maxlength="50"/>
                       <mat-error [hidden]="false" i18n="School Name Error|Explains name is required">
                         School Name is mandatory
                       </mat-error>
@@ -566,7 +566,7 @@
                         Year of Passsing is mandatory
                       </mat-error> -->
                       <input id="yearOfPassing" matInput #yop10 type="text" name="yop10" formControlName="yop10"
-                        i18n-placeholder placeholder="1998" />
+                        i18n-placeholder placeholder="1998" maxlength="4" />
                       <mat-error [hidden]="false" *ngIf="createUserForm?.controls['yop10'].errors?.pattern">
                         Please enter a valid 4 digit year
                       </mat-error>
@@ -584,7 +584,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="schoolName" matInput #schoolName12 formControlName="schoolName12" i18n-placeholder
-                        placeholder="Enter School Name" />
+                        placeholder="Enter School Name" maxlength="50" />
                       <mat-error [hidden]="false" i18n="School Name Error|Explains name is required">
                         School Name is mandatory
                       </mat-error>
@@ -604,7 +604,7 @@
                         Year of Passsing is mandatory
                       </mat-error> -->
                       <input id="yearOfPassing12" matInput #yop12 type="text" formControlName="yop12" i18n-placeholder
-                        placeholder="1998" />
+                        placeholder="1998" maxlength="4" />
                       <mat-error [hidden]="false" *ngIf="createUserForm?.controls['yop12'].errors?.pattern">
                         Please enter a valid 4 digit year
                       </mat-error>
@@ -641,7 +641,7 @@
                       </mat-form-field> -->
                       <mat-form-field appearance="outline" class="margin-top-xs">
                         <input id="instituteName" matInput #instituteName formControlName="instituteName"
-                          i18n-placeholder placeholder="Enter Institute Name" />
+                          i18n-placeholder placeholder="Enter Institute Name" maxlength="50" />
                         <mat-error [hidden]="false" i18n="School Name Error|Explains name is required">
                           Institute Name is mandatory
                         </mat-error>
@@ -661,7 +661,7 @@
                           Year of Passsing is mandatory
                         </mat-error> -->
                         <input id="yOP" matInput #yop type="text" formControlName="yop" i18n-placeholder
-                          placeholder="1998" />
+                          placeholder="1998" maxlength="4" />
                         <mat-error [hidden]="false" *ngIf="degrees.get('yop').errors?.pattern">
                           Please enter a valid 4 digit year
                         </mat-error>
@@ -710,7 +710,7 @@
                       </mat-form-field> -->
                       <mat-form-field appearance="outline" class="margin-top-xs">
                         <input id="institute" matInput #instituteName formControlName="instituteName" i18n-placeholder
-                          placeholder="Enter Institute Name" />
+                          placeholder="Enter Institute Name" maxlength="50" />
                         <mat-error [hidden]="false" i18n="School Name Error|Explains name is required">
                           Institute Name is mandatory
                         </mat-error>
@@ -730,7 +730,7 @@
                           Year of Passsing is mandatory
                         </mat-error> -->
                         <input id="yOP1" matInput #yop type="text" formControlName="yop" i18n-placeholder
-                          placeholder="1998" />
+                          placeholder="1998" maxlength="4" />
                         <mat-error [hidden]="false" *ngIf="degrees.get('yop').errors?.pattern">
                           Please enter a valid 4 digit year
                         </mat-error>
@@ -793,7 +793,7 @@
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input matInput #orgNameOther formControlName="orgNameOther" i18n-placeholder
-                        placeholder="Enter Other Organisation Name" />
+                        placeholder="Enter Other Organisation Name" maxlength="50"/>
                       <mat-error [hidden]="false" i18n="Other Organisation Name  Error|Explains name is required">
                         Other Organisation Name is mandatory
                       </mat-error>
@@ -826,7 +826,7 @@
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input matInput #industryOther formControlName="industryOther" i18n-placeholder
-                        placeholder="Enter Other Industry Name" />
+                        placeholder="Enter Other Industry Name" maxlength="50" />
                       <mat-error [hidden]="false" i18n="Other Industry Name  Error|Explains name is required">
                         Other Industry Name is mandatory
                       </mat-error>
@@ -860,7 +860,7 @@
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input matInput #designationOther formControlName="designationOther" i18n-placeholder
-                        placeholder="Enter Other Designation Name" />
+                        placeholder="Enter Other Designation Name" maxlength="50" />
                       <mat-error [hidden]="false" i18n="Other Designation Name  Error|Explains name is required">
                         Other Designation Name is mandatory
                       </mat-error>
@@ -872,7 +872,7 @@
                   <div class="item" [ngClass]="{ disable: !isAllowed('location') }">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Location label|Label which explains the user to enter Location">
-                      Location
+                      Country
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <mat-select formControlName="location" i18n-placeholder placeholder="--Select--">
@@ -1002,7 +1002,7 @@
                         Allotment Year of Service is mandatory
                       </mat-error> -->
                       <input id="allotmentYearService" matInput #allotmentYear type="text"
-                        formControlName="allotmentYear" i18n-placeholder placeholder="1998" />
+                        formControlName="allotmentYear" i18n-placeholder placeholder="1998" maxlength="4" />
                       <mat-error [hidden]="false" *ngIf="createUserForm?.controls['allotmentYear'].errors?.pattern">
                         Please enter a valid 4 digit year
                       </mat-error>
@@ -1033,7 +1033,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="civilListNumber" matInput type="number" #civilListNo formControlName="civilListNo"
-                        i18n-placeholder placeholder="Enter Civil List Number" />
+                        i18n-placeholder placeholder="Enter Civil List Number" maxlength="25" />
                       <mat-error [hidden]="false" i18n="Civil List Number  Error|Explains name is required">
                         Civil List Number is mandatory
                       </mat-error>
@@ -1046,7 +1046,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="empCode" matInput type="number" #employeeCode formControlName="employeeCode"
-                        i18n-placeholder placeholder="Enter Employee Code" />
+                        i18n-placeholder placeholder="Enter Employee Code" maxlength="25" />
                       <mat-error [hidden]="false" i18n="Employee Code  Error|Explains name is required">
                         Employee Code is mandatory
                       </mat-error>
@@ -1079,7 +1079,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="pinCode1" matInput #otherDetailsOfficePinCode type="number"
-                        formControlName="otherDetailsOfficePinCode" i18n-placeholder placeholder="Enter Pin Code" />
+                        formControlName="otherDetailsOfficePinCode" i18n-placeholder placeholder="Enter Pin Code" maxlength="6" />
                       <mat-error [hidden]="false" i18n="Pin Code  Error|Explains name is required">
                         Pin Code is mandatory
                       </mat-error>

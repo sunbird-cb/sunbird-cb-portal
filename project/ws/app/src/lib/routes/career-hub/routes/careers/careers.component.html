@@ -13,7 +13,7 @@
                 <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
                 <input type="search" #searchInput class="ml-2" i18n-placeholder="search content"
                     [placeholder]="'Search'" i18-aria-label aria-label="Query" matInput [formControl]="queryControl"
-                    accesskey="F" />
+                    accesskey="F" maxlength="50" />
             </mat-form-field>
         </form>
     </div>
