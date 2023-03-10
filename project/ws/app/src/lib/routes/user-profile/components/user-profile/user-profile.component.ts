@@ -1525,11 +1525,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         data: {
           type: Notify.PROFILE_IMG_SIZE_ERROR,
         },
-        
         duration: NOTIFICATION_TIME * 1000,
-        
       })
-      
       return
     }
 
