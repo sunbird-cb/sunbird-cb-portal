@@ -60,7 +60,7 @@ export class ConnectionPeopleCardComponent implements OnInit {
       if (this.user.personalDetails.middlename) {
         // tslint:disable-next-line: max-line-length
         name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.middlename} ${this.user.personalDetails.surname}`
-      } else if(this.user.personalDetails.firstName){
+      } else if (this.user.personalDetails.firstName) {
         name = `${this.user.personalDetails.firstName} ${this.user.personalDetails.surname}`
       } else {
         name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`

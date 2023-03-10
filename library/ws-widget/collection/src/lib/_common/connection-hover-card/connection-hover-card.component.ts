@@ -50,7 +50,7 @@ export class ConnectionHoverCardComponent implements OnInit, AfterViewInit {
       if (this.hoverUser.personalDetails.middlename) {
         // tslint:disable-next-line: max-line-length
         name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.middlename} ${this.hoverUser.personalDetails.surname}`
-      } else if(this.hoverUser.personalDetails.firstName){
+      } else if (this.hoverUser.personalDetails.firstName) {
         name = `${this.hoverUser.personalDetails.firstName} ${this.hoverUser.personalDetails.surname}`
       } else {
         name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.surname}`
@@ -70,7 +70,7 @@ export class ConnectionHoverCardComponent implements OnInit, AfterViewInit {
       if (this.hoverUser.personalDetails.middlename) {
         // tslint:disable-next-line: max-line-length
         name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.middlename} ${this.hoverUser.personalDetails.surname}`
-      } else if(this.hoverUser.personalDetails.firstName){
+      } else if (this.hoverUser.personalDetails.firstName) {
         name = `${this.hoverUser.personalDetails.firstName} ${this.hoverUser.personalDetails.surname}`
       } else {
         name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.surname}`
