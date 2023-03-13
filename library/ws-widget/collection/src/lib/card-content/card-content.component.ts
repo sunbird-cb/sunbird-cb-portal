@@ -9,6 +9,7 @@ import { NsContent } from '../_services/widget-content.model'
 import { NsCardContent } from './card-content.model'
 /* tslint:disable*/
 import _ from 'lodash'
+// import { Router } from '@angular/router'
 
 @Component({
   selector: 'ws-widget-card-content',
@@ -39,6 +40,7 @@ export class CardContentComponent extends WidgetBaseComponent
     private configSvc: ConfigurationsService,
     private utilitySvc: UtilityService,
     private snackBar: MatSnackBar,
+  
   ) {
     super()
   }
@@ -101,6 +103,13 @@ export class CardContentComponent extends WidgetBaseComponent
       )
     }
     return true
+  }
+
+  redirectToUrl() {
+    let url = window.location.href
+    let indexValue = url.split('curatedCollections/')
+    window.location.href = indexValue[0] + 'curatedCollections/'  + this.widgetData.content.identifier
+
   }
 
   checkMimeTypeCriteria() {
