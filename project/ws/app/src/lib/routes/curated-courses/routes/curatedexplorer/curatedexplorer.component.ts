@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { CuratedCollectionService } from '../../services/curated-collection.service'
 /* tslint:disable*/
 import _ from 'lodash'
@@ -59,6 +59,7 @@ export class CuratedexplorerComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private curatedCollectionSvc: CuratedCollectionService,
     private valueSvc: ValueService,
+    private router: Router,
   ) {
     this.currentCollectionId = this.route.snapshot.url.toString().split('/').pop() || ''
 
@@ -107,6 +108,7 @@ export class CuratedexplorerComponent implements OnInit, OnDestroy {
         //   })
 
           this.currentCollectionHierarchy = _.get(res, 'result.content.children')
+          console.log(this.currentCollectionHierarchy, 'this.currentCollectionHierarchy==')
         }
       // }
     })
@@ -117,6 +119,20 @@ export class CuratedexplorerComponent implements OnInit, OnDestroy {
   //   console.log(this.cscmsUrl, 'this.cscmsUrl+++')
   //   // this.router.navigateByUrl('', {state: { email: this.userEmail} });
   //   this.router.navigate([this.cscmsUrl], this.userEmail)
+  // }
+
+
+  collectDataRefresh(do_id:any) {
+    console.log(do_id, 'do_id====')
+    // return `app/curatedCollections/${do_id}`
+    this.router.navigate(['app/curatedCollections/', do_id])
+  }
+
+
+  // reloadPage(event:any){
+  //   console.log('btn clicked')
+  //   this.getCurrentCollectionHirarchy()
+  //   // window.location.reload()
   // }
 
   getMenuItems() {
