@@ -391,7 +391,7 @@
                             <div class="flex flex-1 flex-row">
                               <mat-form-field appearance="outline" class="margin-top-xs flex-expand w-minus-w50">
                                 <input class="margin-bottom-m margin-top-m" id="mobileNumber" #otp type="number"
-                                  matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input" maxlength="10">
+                                  matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input" onKeyPress="if(this.value.length === 8) return false;">
                                 <mat-hint *ngIf="timeLeftforOTP > 0 ">
                                   <span>Resend OTP after {{timeLeftforOTP | pipeDurationTransform: 'hms2M'}}</span>
                                 </mat-hint>
@@ -1033,7 +1033,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="civilListNumber" matInput type="number" #civilListNo formControlName="civilListNo"
-                        i18n-placeholder placeholder="Enter Civil List Number" maxlength="25" />
+                        i18n-placeholder placeholder="Enter Civil List Number" onKeyPress="if(this.value.length === 25) return false;" />
                       <mat-error [hidden]="false" i18n="Civil List Number  Error|Explains name is required">
                         Civil List Number is mandatory
                       </mat-error>
@@ -1046,7 +1046,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="empCode" matInput type="number" #employeeCode formControlName="employeeCode"
-                        i18n-placeholder placeholder="Enter Employee Code" maxlength="25" />
+                        i18n-placeholder placeholder="Enter Employee Code" onKeyPress="if(this.value.length === 25) return false;" />
                       <mat-error [hidden]="false" i18n="Employee Code  Error|Explains name is required">
                         Employee Code is mandatory
                       </mat-error>
