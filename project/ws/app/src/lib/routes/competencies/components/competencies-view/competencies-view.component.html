@@ -24,7 +24,7 @@
   </mat-card-actions>
 </mat-card>
 
-<mat-card class="competency-view-card" *ngIf="!isUpdate">
+<mat-card class="competency-view-card" *ngIf="!isUpdate && !onlyCBP">
   <mat-card-content class="flex flex-1 custom">
     <div class="flex justify-between flex-row">
       <span class="mat-h2 font-medium">Select your competency level</span>
@@ -84,6 +84,30 @@
         i18n-aria-label *ngIf="!isUpdate">
         <span i18n>{{'Take assessment to add this competency' + assessmentId}}</span>
     </button>
+    </div>
+  </mat-card-actions>
+</mat-card>
+
+<!-- if only cbp level is added -->
+<mat-card class="competency-view-card" *ngIf="!isUpdate && onlyCBP">
+  <mat-card-content class="flex flex-1 custom">
+    <span class="mat-h2 font-bold margin-bottom-m">{{dData.name}}</span>
+    <h3 class="mat-h3">{{dData.description}}</h3>
+    <div class="flex">
+      <h3 class="mat-h3">Competency type: &nbsp;</h3>
+      <span class="mat-h3 font-medium">{{dData?.additionalProperties?.competencyType || dData?.competencyType}}</span>
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="flex flex-row-reverse responsive">
+    <div class="mb-2 ws-mat-accent-text view-all ws-mat-primary-lite-background-important wid-auro">
+      <a href="javascript:void(0)" mat-button mat-dialog-close i18n-aria-label class="flex">
+        <span i18n>&nbsp; {{'Cancel'}}</span>
+      </a>
+    </div>
+    <div class="mb-2 ml-2 mr-2 flex view-more text-white others">
+      <a href="javascript:void(0)" mat-button i18n-aria-label (click)="navigateTo()">
+        <span i18n>{{'Add to your competencies'}}</span>
+      </a>
     </div>
   </mat-card-actions>
 </mat-card>

@@ -29,7 +29,7 @@
     <div class="flex flex-col">
         <mat-card class="learn-card margin-bottom-m position-relative mat-card padding-m"
             *ngFor="let competency of overallCompetencies| pipeListFilter:'name,description,id,source':queryControl.value">
-            <ws-app-current-competency-card [competency]="competency" [selectedLevelId]="getSelectedLevel(competency)"
+            <ws-app-current-competency-card [competency]="competency" [selectedCompetency]="getSelectedLevel(competency)"
                 [isSelected]="isSelected(competency)"></ws-app-current-competency-card>
         </mat-card>
     </div>

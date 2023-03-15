@@ -143,16 +143,16 @@
                                 <p>CBP course</p>
                             </div>
                             <div class="proficiency_graph_box">
-                              <ul class="tagIconList nolevel" *ngIf="!comp.competencyCBPCompletionLevel || comp.competencyCBPCompletionLevel === ''">
+                              <ul class="tagIconList nolevel" *ngIf="!comp.competencyCBPCompletionLevel || comp.competencyCBPCompletionLevel === '' || !comp.children">
                                 <li><span class="disableTagIcon"></span> </li>
                                 <li><span class="disableTagIcon"></span> </li>
                                 <li><span class="disableTagIcon"></span> </li>
                                 <li><span class="disableTagIcon"></span> </li>
                                 <li><span class="disableTagIcon"></span> </li>
                               </ul>
-                              <ul class="tagIconList" *ngIf="comp.competencyCBPCompletionLevel && comp.competencyCBPCompletionLevel !== ''">
+                              <ul class="tagIconList" *ngIf="comp.competencyCBPCompletionLevel && comp.competencyCBPCompletionLevel !== '' && comp.children">
                                 <ng-container
-                                  *ngIf="comp.competencyCBPCompletionLevel && (comp.competencyCBPCompletionLevel === 1 || comp.competencyCBPCompletionLevel === '1')">
+                                  *ngIf="comp.competencyCBPCompletionLevel && ((comp.children[0] && comp.children[0].id === comp.competencyCBPCompletionLevel) || comp.competencyCBPCompletionLevel === 1 || comp.competencyCBPCompletionLevel === '1')">
                                   <li><span class="activeLevelIcon"></span> </li>
                                   <li><span class="disableTagIcon"></span> </li>
                                   <li><span class="disableTagIcon"></span> </li>
@@ -160,7 +160,7 @@
                                   <li><span class="disableTagIcon"></span> </li>
                                 </ng-container>
                                 <ng-container
-                                  *ngIf="comp.competencyCBPCompletionLevel && (comp.competencyCBPCompletionLevel === 2 || comp.competencyCBPCompletionLevel === '2')">
+                                  *ngIf="comp.competencyCBPCompletionLevel && ((comp.children[1] && comp.children[1].id === comp.competencyCBPCompletionLevel) || comp.competencyCBPCompletionLevel === 2 || comp.competencyCBPCompletionLevel === '2')">
                                   <li><span class="activeLevelIcon"></span> </li>
                                   <li><span class="activeLevelIcon"></span> </li>
                                   <li><span class="disableTagIcon"></span> </li>
@@ -168,7 +168,7 @@
                                   <li><span class="disableTagIcon"></span> </li>
                                 </ng-container>
                                 <ng-container
-                                  *ngIf="comp.competencyCBPCompletionLevel && (comp.competencyCBPCompletionLevel === 3 || comp.competencyCBPCompletionLevel === '3')">
+                                  *ngIf="comp.competencyCBPCompletionLevel && ((comp.children[2] && comp.children[2].id === comp.competencyCBPCompletionLevel) || comp.competencyCBPCompletionLevel === 3 || comp.competencyCBPCompletionLevel === '3')">
                                   <li><span class="activeLevelIcon"></span> </li>
                                   <li><span class="activeLevelIcon"></span> </li>
                                   <li><span class="activeLevelIcon"></span> </li>
@@ -176,7 +176,7 @@
                                   <li><span class="disableTagIcon"></span> </li>
                                 </ng-container>
                                 <ng-container
-                                  *ngIf="comp.competencyCBPCompletionLevel && (comp.competencyCBPCompletionLevel === 4 || comp.competencyCBPCompletionLevel === '4')">
+                                  *ngIf="comp.competencyCBPCompletionLevel && ((comp.children[3] && comp.children[3].id === comp.competencyCBPCompletionLevel) || comp.competencyCBPCompletionLevel === 4 || comp.competencyCBPCompletionLevel === '4')">
                                   <li><span class="activeLevelIcon"></span> </li>
                                   <li><span class="activeLevelIcon"></span> </li>
                                   <li><span class="activeLevelIcon"></span> </li>
@@ -184,7 +184,7 @@
                                   <li><span class="disableTagIcon"></span> </li>
                                 </ng-container>
                                 <ng-container
-                                  *ngIf="comp.competencyCBPCompletionLevel && (comp.competencyCBPCompletionLevel === 5 || comp.competencyCBPCompletionLevel === '5')">
+                                  *ngIf="comp.competencyCBPCompletionLevel && ((comp.children[4] && comp.children[4].id === comp.competencyCBPCompletionLevel) || comp.competencyCBPCompletionLevel === 5 || comp.competencyCBPCompletionLevel === '5')">
                                   <li><span class="activeLevelIcon"></span> </li>
                                   <li><span class="activeLevelIcon"></span> </li>
                                   <li><span class="activeLevelIcon"></span> </li>
@@ -199,16 +199,16 @@
                               <p>Self attestation</p>
                             </div>
                             <div class="proficiency_graph_box">
-                              <ul class="tagIconList nolevel" *ngIf="!comp.competencySelfAttestedLevel || comp.competencySelfAttestedLevel === ''">
+                              <ul class="tagIconList nolevel" *ngIf="!comp.competencySelfAttestedLevel || comp.competencySelfAttestedLevel === '' || !comp.children">
                                 <li><span class="disableTagIcon"></span> </li>
                                 <li><span class="disableTagIcon"></span> </li>
                                 <li><span class="disableTagIcon"></span> </li>
                                 <li><span class="disableTagIcon"></span> </li>
                                 <li><span class="disableTagIcon"></span> </li>
                               </ul>
-                              <ul class="tagIconList" *ngIf="comp.competencySelfAttestedLevel && comp.competencySelfAttestedLevel !== ''">
+                              <ul class="tagIconList" *ngIf="comp.competencySelfAttestedLevel && comp.competencySelfAttestedLevel !== '' && comp.children">
                                 <ng-container
-                                  *ngIf="comp.competencySelfAttestedLevel && (comp.competencySelfAttestedLevel === 1 || comp.competencySelfAttestedLevel === '1')">
+                                  *ngIf="comp.competencySelfAttestedLevel && ((comp.children[0] && comp.children[0].id === comp.competencySelfAttestedLevel) || comp.competencySelfAttestedLevel === 1 || comp.competencySelfAttestedLevel === '1')">
                                   <li><span class="activeLevelIcon"></span> </li>
                                   <li><span class="disableTagIcon"></span> </li>
                                   <li><span class="disableTagIcon"></span> </li>
@@ -216,7 +216,7 @@
                                   <li><span class="disableTagIcon"></span> </li>
                                 </ng-container>
                                 <ng-container
-                                  *ngIf="comp.competencySelfAttestedLevel && (comp.competencySelfAttestedLevel === 2 || comp.competencySelfAttestedLevel === '2')">
+                                  *ngIf="comp.competencySelfAttestedLevel && ((comp.children[1] && comp.children[1].id === comp.competencySelfAttestedLevel) || comp.competencySelfAttestedLevel === 2 || comp.competencySelfAttestedLevel === '2')">
                                   <li><span class="activeLevelIcon"></span> </li>
                                   <li><span class="activeLevelIcon"></span> </li>
                                   <li><span class="disableTagIcon"></span> </li>
@@ -224,7 +224,7 @@
                                   <li><span class="disableTagIcon"></span> </li>
                                 </ng-container>
                                 <ng-container
-                                  *ngIf="comp.competencySelfAttestedLevel && (comp.competencySelfAttestedLevel === 3 || comp.competencySelfAttestedLevel === '3')">
+                                  *ngIf="comp.competencySelfAttestedLevel && ((comp.children[2] && comp.children[2].id === comp.competencySelfAttestedLevel) || comp.competencySelfAttestedLevel === 3 || comp.competencySelfAttestedLevel === '3')">
                                   <li><span class="activeLevelIcon"></span> </li>
                                   <li><span class="activeLevelIcon"></span> </li>
                                   <li><span class="activeLevelIcon"></span> </li>
@@ -232,7 +232,7 @@
                                   <li><span class="disableTagIcon"></span> </li>
                                 </ng-container>
                                 <ng-container
-                                  *ngIf="comp.competencySelfAttestedLevel && (comp.competencySelfAttestedLevel === 4 || comp.competencySelfAttestedLevel === '4')">
+                                  *ngIf="comp.competencySelfAttestedLevel && ((comp.children[3] && comp.children[3].id === comp.competencySelfAttestedLevel) || comp.competencySelfAttestedLevel === 4 || comp.competencySelfAttestedLevel === '4')">
                                   <li><span class="activeLevelIcon"></span> </li>
                                   <li><span class="activeLevelIcon"></span> </li>
                                   <li><span class="activeLevelIcon"></span> </li>
@@ -240,7 +240,7 @@
                                   <li><span class="disableTagIcon"></span> </li>
                                 </ng-container>
                                 <ng-container
-                                  *ngIf="comp.competencySelfAttestedLevel && (comp.competencySelfAttestedLevel === 5 || comp.competencySelfAttestedLevel === '5')">
+                                  *ngIf="comp.competencySelfAttestedLevel && ((comp.children[4] && comp.children[4].id === comp.competencySelfAttestedLevel) || comp.competencySelfAttestedLevel === 5 || comp.competencySelfAttestedLevel === '5')">
                                   <li><span class="activeLevelIcon"></span> </li>
                                   <li><span class="activeLevelIcon"></span> </li>
                                   <li><span class="activeLevelIcon"></span> </li>
@@ -289,12 +289,12 @@
                 <mat-card class="cursor-pointer margin-bottom-m position-relative mat-card" [ngClass]="{'mat-copmetence': isSelected}">
                   <a role="button">
                     <mat-card-content>
-                      <div class="card_inner_content flex flex-row justify-between">
-                        <div class="card_inner_title_box flex-col">
+                      <div class="card_inner_content flex flex-row">
+                        <div class="card_inner_title_box flex-col desired-card">
                           <h4 class="mat-h4">{{comp.name}}</h4>
                           <p class="mat-body-2 ws-mat-black60-text">{{comp.competencyType}}</p>
                         </div>
-                        <div class="flex-col proficiency_text_box">
+                        <!-- <div class="flex-col proficiency_text_box">
                           <div class="flex flex-row justify-between prof_txt_data">
                             <div>
                               <p>Self attestation</p>
@@ -344,7 +344,7 @@
                               </ul>
                             </div>
                           </div>
-                        </div>
+                        </div> -->
                         <div class="flex proficient_level_box">
                           <p class="matbold mat-body-2" *ngIf="comp.competencySelfAttestedLevel">{{comp.competencySelfAttestedLevelValue}}</p>
                           <p class="deactivate_text mat-body-2" *ngIf="!comp.competencySelfAttestedLevel">Not enough data</p>
