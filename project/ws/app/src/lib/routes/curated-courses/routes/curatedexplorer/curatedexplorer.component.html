@@ -31,17 +31,49 @@
 
                     <div class="margin-left-xll mb-1-imp flex flex-wrap">
                         <div *ngFor="let c of currentCollectionHierarchy" class="mb-8">
-                            <ws-widget-card-content *ngIf="c" [widgetData]="{
-                                content: c,
-                                stateData: stateData
-                              }"></ws-widget-card-content>
+                          
+                            <div *ngIf="c.primaryCategory=='Course' || c.primaryCategory=='Program'">
+                                <ws-widget-card-content *ngIf="c" [widgetData]="{
+                                    content: c,
+                                    stateData: stateData
+                                  }"></ws-widget-card-content>
+                            </div>
+
+                            <div *ngIf="c.primaryCategory=='CuratedCollections'">
+                                <h2 >Curated Collection</h2>
+                                 <!-- <div *ngFor="let c of currentCollectionHierarchy" class="mb-8"> -->
+                                 
+                                        <ws-widget-card-content *ngIf="c" role="link"  [widgetData]="{
+                                            content: c,
+                                            stateData: stateData,
+                                            cardSubType: 'cardCuratedCollection',   
+                                            linkUrl: '/app/curatedCollections/'+c.identifier
+                                           
+                                        }"></ws-widget-card-content> 
+                                   
+                                       
+                                <!-- </div> -->
+                                <!-- <div *ngFor="let item of c.children">
+                                    
+                                <ws-widget-card-content *ngIf="item" [widgetData]="{
+                                    content: item,
+                                    stateData: stateData,
+                                    cardSubType: 'minimalV2',
+                                    linkUrl: '/app/curatedCollections/'+item.identifier
+                                  }"></ws-widget-card-content>
+                                </div> -->
+                            </div>
+                           
                         </div>
+                       
                     </div>
                 </div>
                 <h4 *ngIf="currentCollectionHierarchy?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
                     No CBPs under this collection!
                  </h4>
             </div>
+
+           
         </mat-sidenav-content>
     </mat-sidenav-container>
 

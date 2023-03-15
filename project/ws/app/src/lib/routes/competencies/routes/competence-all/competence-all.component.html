@@ -67,7 +67,7 @@
             <mat-form-field appearance="outline" class="autocomplete-form comp-search" color="primary" [floatLabel]="'never'">
               <mat-icon matPrefix class="flex items-center justify-center">search</mat-icon>
               <input type="search" #searchInput i18n-placeholder="search content" [placeholder]="'Search'"
-                i18-aria-label aria-label="Query" matInput [formControl]="queryControl" accesskey="F" />
+                i18-aria-label aria-label="Query" matInput [formControl]="queryControl" accesskey="F" maxlength="50" />
             </mat-form-field>
           </form>
           <div class="flex"

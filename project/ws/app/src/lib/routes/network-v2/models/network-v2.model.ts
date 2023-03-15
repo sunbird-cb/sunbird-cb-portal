@@ -170,6 +170,7 @@ export namespace NSNetworkDataV2 {
         professional: any[]
     }
     export interface IPersonalDetails {
+        firstName: string
         category: string
         countryCode: string
         dob: string

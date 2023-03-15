@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment'
 export class PublicContacthomeComponent implements OnInit {
   contactUsMail = ''
   environment!: any
-  meetLink: string = ""
+  meetLink = ''
 
   pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
   constructor(private configSvc: ConfigurationsService) {}
