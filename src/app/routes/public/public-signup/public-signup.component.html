@@ -62,7 +62,7 @@
                 </label>
                 <mat-form-field appearance="outline" class="margin-top-s">
                   <input id="firstName" matInput #firstname formControlName="firstname" i18n-placeholder
-                    placeholder="Enter your first name" i18n-aria-label aria-label="First Name input" />
+                    placeholder="Enter your first name" i18n-aria-label aria-label="First Name input" maxlength="150" />
                   <mat-error [hidden]="false" i18n="First Name Error|Explains name is required" i18n-aria-label
                     aria-label="First Name Error|Explains name is required "
                     *ngIf="registrationForm?.controls['firstname'].errors?.required">
@@ -83,7 +83,7 @@
                 </label>
                 <mat-form-field appearance="outline" class="margin-top-s">
                   <input id="lastName" matInput #lastname formControlName="lastname" i18n-placeholder
-                    placeholder="Enter your surname" i18n-aria-label aria-label="Last name input" />
+                    placeholder="Enter your surname" i18n-aria-label aria-label="Last name input" maxlength="150" />
                   <mat-error [hidden]="false" i18n="Surname Error|Explains name is required"
                     *ngIf="registrationForm?.controls['lastname'].errors?.required" i18n-aria-label
                     aria-label="Surname is mandatory">
@@ -124,7 +124,7 @@
                 <mat-form-field appearance="outline" class="margin-top-s w-full">
                   <input id="position" matInput tab-directive type="text" placeholder="Select your position"
                     i18n-placeholder="position" formControlName="position" [matAutocomplete]="positionAutocomplete"
-                    i18n-aria-label aria-label="Position" #position i18n-aria-label aria-label="Position Field input" />
+                    i18n-aria-label aria-label="Position" #position i18n-aria-label aria-label="Position Field input" maxlength="50" />
                   <mat-error [hidden]="false" i18n="Position Error|Explains Position is required"
                     *ngIf="registrationForm?.controls['position'].errors?.required" i18n-aria-label
                     aria-label="Position is mandatory">
@@ -192,7 +192,7 @@
                 <mat-form-field appearance="outline" class="margin-top-s w-full">
                   <input id="ministry" matInput tab-directive type="text" placeholder="Select your {{typeValue}}"
                     i18n-placeholder="Ministry" formControlName="ministry" [matAutocomplete]="ministryAutocomplete"
-                    i18n-aria-label aria-label="Ministry" #ministry i18n-aria-label aria-label="Ministry Field input" />
+                    i18n-aria-label aria-label="Ministry" #ministry i18n-aria-label aria-label="Ministry Field input" maxlength="50" />
                   <mat-error [hidden]="false" i18n="Ministry Error|Explains Ministry is required"
                     *ngIf="registrationForm?.controls['ministry'].errors?.required" i18n-aria-label
                     aria-label="Ministry is mandatory">
@@ -223,7 +223,7 @@
                     <input id="department" matInput tab-directive type="text" placeholder="Select your department"
                       i18n-placeholder="department" formControlName="department"
                       [matAutocomplete]="departmentAutocomplete" i18n-aria-label aria-label="Department" #department
-                      i18n-aria-label aria-label="Department Field input" />
+                      i18n-aria-label aria-label="Department Field input" maxlength="50" />
                     <mat-error [hidden]="false" i18n="Department Error|Explains Department is required"
                       *ngIf="registrationForm?.controls['department'].errors?.required" i18n-aria-label
                       aria-label="Department is mandatory">
@@ -271,7 +271,7 @@
                   <input id="Organisation" matInput tab-directive type="text" placeholder="Select your organisation"
                     i18n-placeholder="Organisation" formControlName="organisation"
                     [matAutocomplete]="organisationAutocomplete" i18n-aria-label aria-label="Organisation" #organisation
-                    i18n-aria-label aria-label="Organisation Field input" />
+                    i18n-aria-label aria-label="Organisation Field input" maxlength="50" />
                   <mat-error [hidden]="false" i18n="Organisation Error|Explains Organisation is required"
                     *ngIf="registrationForm?.controls['organisation'].errors?.required" i18n-aria-label
                     aria-label="Organisation is mandatory">

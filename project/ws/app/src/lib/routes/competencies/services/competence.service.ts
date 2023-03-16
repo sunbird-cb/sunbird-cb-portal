@@ -18,7 +18,8 @@ const API_ENDPOINTS = {
   // fetchProfile: '/apis/protected/v8/user/profileDetails/getUserRegistry',
   fetchCompetencyDetails: (id: string, type: string) => `/apis/protected/v8/frac/getNodeById/${id}/${type}`,
   fetchProfile: '/apis/proxies/v8/api/user/v2/read',
-  updateProfile: '/apis/protected/v8/user/profileDetails/updateUser',
+  // updateProfile: '/apis/protected/v8/user/profileDetails/updateUser',
+  updateProfile: '/apis/proxies/v8/user/v1/extPatch',
   fetchWatCompetency: (id: string) => `/apis/protected/v8/workallocation/getUserCompetencies/${id}`,
 }
 /* this page needs refactor*/
@@ -68,7 +69,7 @@ export class CompetenceService {
   }
 
   updateProfile(profileData: any): Observable<any> {
-    return this.http.patch<any>(API_ENDPOINTS.updateProfile, profileData)
+    return this.http.post<any>(API_ENDPOINTS.updateProfile, profileData)
   }
 
   fetchSearchData(request: any): Observable<any> {

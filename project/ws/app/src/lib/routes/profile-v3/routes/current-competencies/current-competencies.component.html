@@ -21,7 +21,7 @@
             <!-- <mat-label>Search</mat-label> -->
             <input id="searchInput" type="text" role="combobox" accesskey="C" #searchInput [attr.title]="placeHolder"
                 i18n-placeholder="search content" [placeholder]="placeHolder" i18-aria-label aria-label="search content"
-                matInput [formControl]="queryControl" class="width-1-1" />
+                matInput [formControl]="queryControl" class="width-1-1" maxlength="50" />
             <mat-icon matSuffix (click)="clearSearchText()" class="cursor-pointer" *ngIf="queryControl.value">close
             </mat-icon>
         </mat-form-field>
@@ -29,7 +29,7 @@
     <div class="flex flex-col">
         <mat-card class="learn-card margin-bottom-m position-relative mat-card padding-m"
             *ngFor="let competency of overallCompetencies| pipeListFilter:'name,description,id,source':queryControl.value">
-            <ws-app-current-competency-card [competency]="competency" [selectedLevelId]="getSelectedLevel(competency)"
+            <ws-app-current-competency-card [competency]="competency" [selectedCompetency]="getSelectedLevel(competency)"
                 [isSelected]="isSelected(competency)"></ws-app-current-competency-card>
         </mat-card>
     </div>

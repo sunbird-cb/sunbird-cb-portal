@@ -5,8 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core'
 })
 export class PipeEmailPipe implements PipeTransform {
 
-  transform(value:string):any {
-    return value.split(".").join("[dot]").replace("@", "[at]")
+  transform(value: string): any {
+    return value.split('.').join('[dot]').replace('@', '[at]')
 
   }
 
