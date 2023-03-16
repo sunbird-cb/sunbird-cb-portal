@@ -444,6 +444,10 @@
                       <mat-error [hidden]="false" i18n="Primary Email Error|Explains name is required">
                         Primary Email is mandatory
                       </mat-error>
+                      <!-- <div *ngIf="!emailLengthVal" class="email-error"
+                      i18n="Email Error|Explains character validation">
+                      Max 64 characters before "@" & 255 characters after "@" are valid.
+                    </div> -->
                     </mat-form-field>
                     <div class="input-wrapper margin-top-s margin-bottom-s">
                       <div class="flex flex-middle">
@@ -467,7 +471,12 @@
                     </label>
                     <mat-form-field appearance="outline" class="w-full margin-top-xs">
                       <input id="secondaryEmail" type="email" matInput placeholder="Secondary Email"
-                        formControlName="secondaryEmail" i18n-aria-label aria-label="Secondary Email input filed" maxlength="320">
+                        formControlName="secondaryEmail" i18n-aria-label aria-label="Secondary Email input filed" maxlength="320" 
+                        (input)="emailVerification($event.target.value)">
+                        <div *ngIf="emailLengthVal" class="email-error"
+                        i18n="Email Error|Explains character validation">
+                        Max 64 characters before "@" & 255 characters after "@" are valid.
+                      </div>
                     </mat-form-field>
                   </div>
                   <div class="input-wrapper margin-top-s">
