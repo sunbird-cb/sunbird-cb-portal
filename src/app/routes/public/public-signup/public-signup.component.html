@@ -62,7 +62,7 @@
                 </label>
                 <mat-form-field appearance="outline" class="margin-top-s">
                   <input id="firstName" matInput #firstname formControlName="firstname" i18n-placeholder
-                    placeholder="Enter your first name" i18n-aria-label aria-label="First Name input" maxlength="30" />
+                    placeholder="Enter your first name" i18n-aria-label aria-label="First Name input" maxlength="150" />
                   <mat-error [hidden]="false" i18n="First Name Error|Explains name is required" i18n-aria-label
                     aria-label="First Name Error|Explains name is required "
                     *ngIf="registrationForm?.controls['firstname'].errors?.required">
@@ -83,7 +83,7 @@
                 </label>
                 <mat-form-field appearance="outline" class="margin-top-s">
                   <input id="lastName" matInput #lastname formControlName="lastname" i18n-placeholder
-                    placeholder="Enter your surname" i18n-aria-label aria-label="Last name input" maxlength="30" />
+                    placeholder="Enter your surname" i18n-aria-label aria-label="Last name input" maxlength="150" />
                   <mat-error [hidden]="false" i18n="Surname Error|Explains name is required"
                     *ngIf="registrationForm?.controls['lastname'].errors?.required" i18n-aria-label
                     aria-label="Surname is mandatory">
@@ -150,8 +150,8 @@
                   Email
                 </label>
                 <mat-form-field appearance="outline" class="margin-top-s">
-                  <input id="email" name="emailField" type="email" matInput placeholder="Enter your email id" #email
-                    formControlName="email" i18n-aria-label aria-label="Email input" maxlength="30">
+                  <input id="email" name="emailField" type="email" maxlength="320" (input)="emailVerification($event.target.value)" matInput placeholder="Enter your email id" #email
+                    formControlName="email" i18n-aria-label aria-label="Email input">
                   <mat-hint>Only government email ids are allowed</mat-hint>
                   <mat-error [hidden]="false" *ngIf="registrationForm?.controls['email'].errors?.required"
                     i18n="Email Error|Explains name is required">
@@ -161,6 +161,10 @@
                     i18n-aria-label aria-label="Name fields cannot contain numbers and special characters except '">
                     Email id is not valid
                   </mat-error>
+                  <div *ngIf="emailLengthVal" class="email-error"
+                    i18n="Email Error|Explains character validation">
+                    Max 64 characters before "@" & 255 characters after "@" are valid.
+                  </div>
                 </mat-form-field>
               </div>
               <div class="input-wrapper margin-top-s">

@@ -106,6 +106,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   masterMinisteries!: Observable<any> | undefined
   orgs: any[] = []
   masterOrgs!: Observable<any> | undefined
+  emailLengthVal = false
 
   private subscriptionContact: Subscription | null = null
   private recaptchaSubscription!: Subscription
@@ -155,6 +156,8 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         this.fetchDropDownValues(value)
       }
     })
+
+    // this.emailVerification(this.registrationForm.email)
   }
 
   get typeValueStartCase() {
@@ -184,6 +187,20 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
           this.onMinisteriesChange()
         }
       })
+    }
+  }
+
+  emailVerification(emailId: string) {
+    this.emailLengthVal = false
+    if (emailId && emailId.length > 0) {
+      const email = emailId.split('@')
+      if (email && email.length === 2) {
+        if ((email[0] && email[0].length > 64) || (email[1] && email[1].length > 255)) {
+          this.emailLengthVal = true
+        }
+      } else {
+        this.emailLengthVal = false
+      }
     }
   }
 
@@ -379,7 +396,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
             }
           }
 
-          // console.log('req: ', req)
+          console.log('hierarchyObj===: ', hierarchyObj)
 
           this.signupSvc.register(req).subscribe(
             (_res: any) => {

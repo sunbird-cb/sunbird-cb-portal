@@ -83,6 +83,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   yearPattern = '(^[0-9]{4}$)'
   namePatern = `^[a-zA-Z\\s\\']{1,32}$`
   telephonePattern = `^[0-9]+-?[0-9]+$`
+  emailLengthVal = false
   @ViewChild('toastSuccess', { static: true }) toastSuccess!: ElementRef<any>
   @ViewChild('toastError', { static: true }) toastError!: ElementRef<any>
   @ViewChild('knownLanguagesInput', { static: true }) knownLanguagesInputRef!: ElementRef<HTMLInputElement>
@@ -290,6 +291,21 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       (_err: any) => {
       })
   }
+
+  emailVerification(emailId: string) {
+    this.emailLengthVal = false
+    if (emailId && emailId.length > 0) {
+      const email = emailId.split('@')
+      if (email && email.length === 2) {
+        if ((email[0] && email[0].length > 64) || (email[1] && email[1].length > 255)) {
+          this.emailLengthVal = true
+        }
+      } else {
+        this.emailLengthVal = false
+      }
+    }
+  }
+
   createDegree(): FormGroup {
     return this.fb.group({
       degree: new FormControl('', []),
