@@ -52,6 +52,8 @@
       }
     }
 
+    
+
     .left_container {
       padding: 5rem 6rem;
       box-sizing: border-box;
@@ -824,4 +826,11 @@
 {
   display:flex;
   flex-direction: row;
+}
+
+.email-error {
+  position: absolute;
+  font-size: 10px;
+  color: #f44336;
+  top: 55px;
 }
