@@ -30,6 +30,7 @@ import { WelcomeUserResolverService } from './services/welcome-user-resolver.ser
 import { PublicTocComponent } from './routes/public/public-toc/public-toc.component'
 import { AppPublicTocResolverService } from './routes/public/public-toc/app-public-toc-resolver.service'
 import { environment } from 'src/environments/environment'
+import { AppPublicPositionResolverService } from './routes/public/public-signup/position-resolver.service';
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
 // Please declare routes in alphabetical order
@@ -826,6 +827,9 @@ const routes: Routes = [
     data: {
       module: 'Login',
       pageId: 'public/signup',
+    },
+    resolve: {
+      positions: AppPublicPositionResolverService,
     },
   },
   {
