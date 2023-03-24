@@ -22,12 +22,22 @@ export class PipeCertificateImageURL implements PipeTransform {
         return value ? finalURL : ''
       }
       if (value.indexOf('/igot/collection') > -1) {
-        const mainUrl = value && value.split('/igot').pop() || ''
+        const mainUrl = value && value.split('/igot/').pop() || ''
         const finalURL = `${environment.contentHost}/${environment.contentBucket}${mainUrl}`
         return value ? finalURL : ''
       }
       if (value.indexOf('/igot/collection') === -1) {
-        const mainUrl = value && value.split('/igot').pop() || ''
+        const mainUrl = value && value.split('/igot/').pop() || ''
+        const finalURL = `${environment.contentHost}/${environment.contentBucket}${mainUrl}`
+        return value ? finalURL : ''
+      }
+      if (value.indexOf('/igotprod/collection') > -1) {
+        const mainUrl = value && value.split('/igotprod/').pop() || ''
+        const finalURL = `${environment.contentHost}/${environment.contentBucket}${mainUrl}`
+        return value ? finalURL : ''
+      }
+      if (value.indexOf('/igotprod/collection') === -1) {
+        const mainUrl = value && value.split('/igotprod/').pop() || ''
         const finalURL = `${environment.contentHost}/${environment.contentBucket}${mainUrl}`
         return value ? finalURL : ''
       }
