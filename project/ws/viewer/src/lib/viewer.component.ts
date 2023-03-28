@@ -1,6 +1,6 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { NsContent } from '@sunbird-cb/collection'
+import { NsContent, WidgetContentService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { UtilityService, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
@@ -46,6 +46,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
   private screenSizeSubscription: Subscription | null = null
   private resourceChangeSubscription: Subscription | null = null
+  leafNodesCount: any
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -54,6 +55,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     private rootSvc: RootService,
     private utilitySvc: UtilityService,
     private changeDetector: ChangeDetectorRef,
+    private widgetServ: WidgetContentService,
   ) {
     this.rootSvc.showNavbarDisplay$.next(false)
   }
@@ -65,8 +67,15 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
       }
     })
   }
+  getAuthDataIdentifer() {
+    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId
+    this.widgetServ.fetchAuthoringContent(collectionId).subscribe((data: any) => {
+        this.leafNodesCount = data.result.content.leafNodesCount
+    })
+  }
 
   ngOnInit() {
+    this.getAuthDataIdentifer()
     this.isNotEmbed = !(
       window.location.href.includes('/embed/') ||
       this.activatedRoute.snapshot.queryParams.embed === 'true'

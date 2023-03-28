@@ -18,6 +18,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   @Input() frameReference: any
   @Input() forPreview = false
   @Output() toggle = new EventEmitter()
+  @Input() leafNodesCount: any
   private viewerDataServiceSubscription: Subscription | null = null
   private paramSubscription: Subscription | null = null
   private viewerDataServiceResourceSubscription: Subscription | null = null
@@ -43,7 +44,6 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   currentRoute = window.location.pathname
   identifier: any
   batchId: any
-  leafNodesCount: any
   userid: any
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
@@ -68,7 +68,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getAuthDataIdentifer()
+    // this.getAuthDataIdentifer()
 
     if (window.location.href.includes('/channel/')) {
       this.forChannel = true
@@ -170,16 +170,15 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     } catch (_ex) {
       window.history.back()
     }
-
   }
 
-   getAuthDataIdentifer() {
-    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId
-     this.widgetServ.fetchAuthoringContent(collectionId).subscribe((data: any) => {
-    this.leafNodesCount = data.result.content.leafNodesCount
-
-    })
-  }
+  //  getAuthDataIdentifer() {
+  //   const collectionId = this.activatedRoute.snapshot.queryParams.collectionId
+  //   this.widgetServ.fetchAuthoringContent(collectionId).subscribe((data: any) => {
+  //       this.leafNodesCount = data.result.content.leafNodesCount
+  //       console.log('this.leafNodesCount inside api call-------', this.leafNodesCount)
+  //   })
+  // }
   finishDialog() {
     if (!this.forPreview) {
       this.contentProgressHash = []
