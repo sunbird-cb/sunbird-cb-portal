@@ -586,8 +586,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     const sections = this.quizSvc.secAttempted.getValue()
     let fullAttempted = false
     if (sections && sections.length) {
-      const Attempted = _.filter(sections, s => s.fullAttempted || s.isAttempted)
-      fullAttempted = (Attempted || []).length === sections.length
+      const attemped = _.filter(sections, s => s.fullAttempted || s.isAttempted)
+      fullAttempted = (attemped || []).length === sections.length
     }
     const currentSectionId = _.get(this.selectedSection, 'identifier') || _.get(this.quizSvc, 'currentSection.value.identifier')
     const nextId = _.get(_.first(_.filter(_.get(this.quizSvc.secAttempted, 'value'), { identifier: currentSectionId })), 'nextSection')
