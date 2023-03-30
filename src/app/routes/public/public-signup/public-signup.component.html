@@ -206,7 +206,7 @@
                     <!-- <div class="flex flex-1 flex-row"> -->
                       <mat-form-field appearance="outline" class="margin-top-xs w-full">
                         <input  id="mobileNumber" #otp type="password"
-                          matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input" onKeyPress="if(this.value.length === 8) return false;">
+                          matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input" onKeyPress="if(this.value.length === 8) return false;" autocomplete="new-password">
                         <mat-hint *ngIf="timeLeftforOTP > 0 ">
                           <span>Resend OTP after {{timeLeftforOTP | pipeDurationTransform: 'hms2M'}}</span>
                         </mat-hint>
