@@ -167,7 +167,68 @@
                   </div>
                 </mat-form-field>
               </div>
-              <div class="input-wrapper margin-top-s">
+              <div class="input-wrapper mobile-wrapper margin-top-l">
+                <label for="mobileNumber" class=" margin-remove-bottom form-label required"
+                  i18n="Mobile Number label|Label which explains the user to enter Mobile Number" i18n-aria-label
+                  aria-label="Mobile Number label">
+                  Mobile Number
+                </label>
+                <div class="flex flex-1">
+
+                  <mat-form-field appearance="outline" class="w-full">
+                    <!-- <input [readonly]="otpSend && !otpVerified" id="mobileNumber" #mobile type="number" matInput
+                      placeholder="Mobile Number" formControlName="mobile" i18n-aria-label
+                      aria-label="Mobile Number input" maxlength="12"> -->
+                    <input  id="mobileNumber" #mobile type="number" matInput
+                      placeholder="Mobile Number" formControlName="mobile" i18n-aria-label
+                      aria-label="Mobile Number input" maxlength="12">
+                    <mat-icon matSuffix class="ws-mat-green-text margin-xs" svgIcon="verified" [hidden]="!isMobileVerified"></mat-icon>
+                    <mat-error [hidden]="false" i18n="Mobile Number Error|Explains Mobile no is required"
+                      *ngIf="registrationForm?.controls['mobile'].errors?.required" i18n-aria-label
+                      aria-label="Mobile Number is mandatory">
+                      Mobile Number is mandatory
+                    </mat-error>
+                    <mat-error [hidden]="false" *ngIf="registrationForm?.controls['mobile'].errors?.pattern"
+                      i18n-aria-label aria-label="Please enter a valid 10 digit mobile number">
+                      Please enter a valid 10 digit mobile number
+                    </mat-error>
+                    <mat-hint align="start">Please add a valid mobile number</mat-hint>
+                  </mat-form-field>
+                </div>
+                <div *ngIf="!isMobileVerified" class="flex flex-1 margin-top-s justify-end">
+                  <button *ngIf="!otpSend" mat-raised-button type="button" (click)="sendOtp()"
+                    class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text btn-responsive" [disabled]="registrationForm?.mobile?.invalid">
+                    <a class="text-white" i18n>
+                      Send OTP
+                    </a>
+                  </button>
+                  <div *ngIf="otpSend" class="flex flex-1 flex-column">
+                    <!-- <div class="flex flex-1 flex-row"> -->
+                      <mat-form-field appearance="outline" class="margin-top-xs w-full">
+                        <input  id="mobileNumber" #otp type="password"
+                          matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input" onKeyPress="if(this.value.length === 8) return false;" autocomplete="new-password">
+                        <mat-hint *ngIf="timeLeftforOTP > 0 ">
+                          <span>Resend OTP after {{timeLeftforOTP | pipeDurationTransform: 'hms2M'}}</span>
+                        </mat-hint>
+                        <mat-hint *ngIf="timeLeftforOTP <= 0 ">
+                          <span class="cursor-pointer ws-mat-default-text" (click)="resendOTP()">Resend
+                            OTP</span>
+                        </mat-hint>
+                      </mat-form-field>
+                      <div class="flex flex-1 margin-top-s justify-end">
+                        <button mat-raised-button type="button" (click)="verifyOtp(otp)"
+                          class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text margin-top-s otp"
+                          [disabled]="registrationForm?.mobile?.invalid">
+                          <span class="text-white" i18n>
+                            Verify OTP
+                          </span>
+                        </button>
+                      </div>
+                    <!-- </div> -->
+                  </div>
+                </div>
+              </div>
+              <div class="input-wrapper margin-top-m">
                 <label for="type" class=" margin-remove-bottom form-label required"
                   i18n="Department|Label which explains the user to enter Department" i18n-aria-label
                   aria-label="Department Field label">
@@ -347,7 +408,7 @@
                 <div class="button_box flex flex-col items-center justify-center">
                   <button mat-flat-button type="submit"
                     class="submitBtn text-white ws-mat-primary-background ws-mat-white-text" (click)="signup()"
-                    [disabled]="!registrationForm?.valid || !confirm || disableBtn">
+                    [disabled]="!registrationForm?.valid || !confirm || disableBtn || !isMobileVerified">
                     SIGN UP
                   </button>
                 </div>

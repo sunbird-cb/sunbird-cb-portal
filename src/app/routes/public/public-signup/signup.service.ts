@@ -9,6 +9,9 @@ const API_END_POINTS = {
   GET_DEPARTMENTS_OF_STATE: '/apis/public/v8/org/v1/list',
   GET_ORGS_OF_DEPT: '/apis/public/v8/org/v1/list',
   GET_POSITIONS: '/apis/proxies/v8/user/v1/positions',
+  sendOtp: '/api/otp/v1/generate',
+  ReSendOtp: '/api/otp/v1/generate',
+  VerifyOtp: '/api/otp/v1/verify',
 }
 
 @Injectable({
@@ -39,5 +42,36 @@ export class SignupService {
   }
   getPositions(): Observable<any> {
     return this.http.get<any>(API_END_POINTS.GET_POSITIONS)
+  }
+
+  sendOtp(mob: number): Observable<any> {
+    const reqObj = {
+      request: {
+        type: 'phone',
+        key: `${mob}`,
+      },
+    }
+    return this.http.post(API_END_POINTS.sendOtp, reqObj)
+  }
+  resendOtp(mob: number) {
+    const reqObj = {
+      request: {
+        type: 'phone',
+        key: `${mob}`,
+      },
+    }
+    return this.http.post(API_END_POINTS.ReSendOtp, reqObj)
+
+  }
+  verifyOTP(otp: number, mob: number) {
+    const reqObj = {
+      request: {
+        otp,
+        type: 'phone',
+        key: `${mob}`,
+      },
+    }
+    return this.http.post(API_END_POINTS.VerifyOtp, reqObj)
+
   }
 }
