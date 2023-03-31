@@ -11,6 +11,7 @@ import { SignupSuccessDialogueComponent } from './signup-success-dialogue/signup
 import { DOCUMENT, isPlatformBrowser } from '@angular/common'
 // tslint:disable-next-line: import-name
 import _ from 'lodash'
+import { ActivatedRoute } from '@angular/router';
 
 // export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
 //   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -124,6 +125,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     private configSvc: ConfigurationsService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
+    private activatedRoute: ActivatedRoute,
     private recaptchaV3Service: ReCaptchaV3Service,
     @Inject(DOCUMENT) private _document: any,
     @Inject(PLATFORM_ID) private _platformId: any,
@@ -147,7 +149,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.fetchDropDownValues('ministry')
     const instanceConfig = this.configSvc.instanceConfig
-    this.positionsOriginal = this.configSvc.positions || []
+    this.positionsOriginal = this.activatedRoute.snapshot.data.positions.data || []
     this.onPositionsChange()
     this.onPhoneChange()
     if (instanceConfig) {
