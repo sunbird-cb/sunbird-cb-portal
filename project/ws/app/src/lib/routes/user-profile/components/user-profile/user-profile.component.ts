@@ -6,7 +6,7 @@ import { startWith, map, debounceTime, distinctUntilChanged, pairwise } from 'rx
 import { MatSnackBar, MatChipInputEvent, DateAdapter, MAT_DATE_FORMATS, MatDialog, MatTabChangeEvent } from '@angular/material'
 import { AppDateAdapter, APP_DATE_FORMATS, changeformat } from '../../services/format-datepicker'
 import { ImageCropComponent, ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils'
-import { IMAGE_MAX_SIZE, IMAGE_SUPPORT_TYPES } from '@ws/author/src/lib/constants/upload'
+import { IMAGE_MAX_SIZE, PROFILE_IMAGE_SUPPORT_TYPES } from '@ws/author/src/lib/constants/upload'
 import { UserProfileService } from '../../services/user-profile.service'
 import { Router, ActivatedRoute } from '@angular/router'
 
@@ -76,7 +76,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   eCategory = NsUserProfileDetails.ECategory
   userProfileFields!: NsUserProfileDetails.IUserProfileFields
   inReview = 'In Review!'
-  imageTypes = IMAGE_SUPPORT_TYPES
+  imageTypes = PROFILE_IMAGE_SUPPORT_TYPES
   today = new Date()
   phoneNumberPattern = '^((\\+91-?)|0)?[0-9]{10}$'
   pincodePattern = '(^[0-9]{6}$)'
@@ -1519,7 +1519,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const fileName = file.name.replace(/[^A-Za-z0-9.]/g, '')
     if (
       !(
-        IMAGE_SUPPORT_TYPES.indexOf(
+        PROFILE_IMAGE_SUPPORT_TYPES.indexOf(
           `.${fileName
             .toLowerCase()
             .split('.')
@@ -1529,9 +1529,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     ) {
       this.snackBar.openFromComponent(NotificationComponent, {
         data: {
-          type: Notify.INVALID_FORMAT,
+          type: Notify.INVALID_IMG_FORMAT,
         },
-        duration: NOTIFICATION_TIME * 1000,
+        duration: NOTIFICATION_TIME * 1500,
       })
       return
     }
@@ -1541,7 +1541,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         data: {
           type: Notify.PROFILE_IMG_SIZE_ERROR,
         },
-        duration: NOTIFICATION_TIME * 1000,
+        duration: NOTIFICATION_TIME * 1500,
       })
       return
     }
