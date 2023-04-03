@@ -15,7 +15,12 @@
 
 <p *ngIf="type === notify.INVALID_FORMAT">
   <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Fail">error</mat-icon>
-  <span i18n>Invalid format</span>
+  <span i18n>Invalid format.</span>
+</p>
+
+<p *ngIf="type === notify.INVALID_IMG_FORMAT">
+  <mat-icon class="icon" aria-hidden="false" i18n-aria-label aria-label="Fail">error</mat-icon>
+  <span i18n>Only png, jpg, jpeg image types are supported.</span>
 </p>
 
 <p *ngIf="type === notify.DELETED">
