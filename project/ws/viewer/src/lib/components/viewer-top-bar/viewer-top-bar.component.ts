@@ -7,6 +7,7 @@ import { WidgetContentService } from '@sunbird-cb/collection/src/lib/_services/w
 import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ViewerDataService } from '../../viewer-data.service'
+import { ViewerUtilService } from '../../viewer-util.service'
 import { CourseCompletionDialogComponent } from '../course-completion-dialog/course-completion-dialog.component'
 
 @Component({
@@ -56,6 +57,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private router: Router,
     private widgetServ: WidgetContentService,
+    private viewerSvc: ViewerUtilService, 
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
@@ -102,10 +104,14 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
           },
           fragment: '',
         }
+        // if(data.prevResource.optionalReading && data.prevResource.primaryCategory === "Learning Resource") {
+        //   this.updateProgress(2, data.prevResource.identifier)
+        // }
       } else {
         this.prevResourceUrl = null
       }
       if (data.nextResource) {
+       
         this.nextResourceUrl = data.nextResource.viewerUrl
         // this.nextResourcePrimaryCategory = data.nextResource.primaryCategory
         this.nextResourceUrlParams = {
@@ -119,6 +125,9 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
             preview: this.forPreview,
           },
           fragment: '',
+        }
+        if(data.nextResource.optionalReading && data.nextResource.primaryCategory === "Learning Resource") {
+          this.updateProgress(2, data.nextResource.identifier)
         }
       } else {
         this.nextResourceUrl = null
@@ -140,6 +149,16 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
         this.resourcePrimaryCategory = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.primaryCategory : ''
       },
     )
+  }
+
+
+  updateProgress(status: number, resourceId: any) {
+    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+      this.activatedRoute.snapshot.queryParams.collectionId : ''
+    const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+      this.activatedRoute.snapshot.queryParams.batchId : ''
+    // tslint:disable-next-line:max-line-length
+    this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)
   }
 
   ngOnDestroy() {
