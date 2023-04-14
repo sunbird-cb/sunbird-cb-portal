@@ -100,30 +100,13 @@
       margin-bottom: 1rem;
     }
 
+  .slideshow-container {
+    padding: 5rem 0 2rem 0;
 
-
-    // .main_container {
-    //   background-image : url(assets/instances/eagle/banners/home/9/Login_background.png) no-repeat center center fixed;
-    // }
-
-  // ::ng-deep .top-nav-bar {
-  //   display: none;
-  // }
-
-  // ::ng-deep .height-on-top {
-  //   padding-top: 0!important;
-  // }
-
-
-
-
-.slideshow-container {
-  padding: 5rem 0 2rem 0;
-
-  @include breakpoint-s {
-     padding: 3rem 0 2rem 0!important;
+    @include breakpoint-s {
+      padding: 3rem 0 2rem 0!important;
+    }
   }
-}
 
   .mySlides {
     height: auto;
@@ -408,11 +391,6 @@
         padding-bottom: 0;
       }
     }
-
-    // .mat-form-field-wrapper{
-
-    // }
-
 
     .combined-field {
       width: 100%;
@@ -848,12 +826,4 @@
   border: 1px dashed rgba(0,0,0,.40);
   padding: 16px;
   border-radius: 8px;
-}
-
-.blue-text {
-  color: #0074b6 !important;
-  font-weight: 600;
-}
-.mat-hint {
-  width: 100% !important;
 }
