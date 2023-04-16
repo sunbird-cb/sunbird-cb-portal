@@ -19,6 +19,7 @@ import {
   IProfileAcademics,
   INation,
   IdegreesMeta,
+  INameField,
 } from '../../models/user-profile.model'
 import { NsUserProfileDetails } from '@ws/app/src/lib/routes/user-profile/models/NsUserProfile'
 import { NotificationComponent } from '@ws/author/src/lib/modules/shared/components/notification/notification.component'
@@ -115,6 +116,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   timerSubscription: Subscription | null = null
   timeLeftforOTP = 0
   isMobileVerified = false
+  degreefilteredOptions: INameField[] | undefined
+  postDegreefilteredOptions: INameField[] | undefined
+
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -203,6 +207,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     this.getUserDetails()
     this.checkIfMobileNoChanged()
+
     // this.assignPrimaryEmailType(this.isOfficialEmail)
   }
   checkIfMobileNoChanged(): void {
@@ -251,6 +256,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.govtOrgMeta = data.govtOrg
         this.industriesMeta = data.industries
         this.degreesMeta = data.degrees
+        this.onChangesDegrees()
+        this.onChangesPostDegrees()
         // this.designationsMeta = data.designations
       },
       (_err: any) => {
@@ -322,11 +329,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       }
     })
   }
+
   isAllowed(name: string) {
     if (name && !!this.unApprovedField && this.unApprovedField.length > 0) {
       return !!!(this.unApprovedField.indexOf(name) >= 0)
     } return true
   }
+
   createDegreeWithValues(degree: any): FormGroup {
     return this.fb.group({
       degree: new FormControl(degree.degree, []),
@@ -403,8 +412,33 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         startWith(''),
         map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
-        map(name => name ? this.filterLanguage(name) : this.masterLanguagesEntries.slice())
+        map(name => name ? this.filterLanguage(name) : this.masterLanguagesEntries.slice()),
       )
+     // console.log('this.masterLanguagesEntries', this.masterLanguages)
+  }
+
+  onChangesDegrees() {
+    const controls = this.createUserForm.get('degrees') as FormArray
+    // tslint:disable-next-line: no-non-null-assertion
+    controls.at(controls.length - 1).get('degree')!.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      startWith<string | INameField>(''),
+      map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+      map(name => name ? this.filterDegrees(name) : this.degreesMeta.graduations.slice()),
+    ).subscribe(val => this.degreefilteredOptions = val)
+  }
+
+  onChangesPostDegrees() {
+    const controls = this.createUserForm.get('degrees') as FormArray
+    // tslint:disable-next-line: no-non-null-assertion
+    controls.at(controls.length - 1).get('degree')!.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      startWith<string | INameField>(''),
+      map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+      map(name => name ? this.filterPostDegrees(name) : this.degreesMeta.postGraduations.slice()),
+    ).subscribe(val => this.postDegreefilteredOptions = val)
   }
 
   onChangesKnownLanuage(): void {
@@ -454,6 +488,22 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       })
     }
     return this.masterLanguagesEntries
+  }
+
+  private filterDegrees(name: string): INameField[] {
+    if (name) {
+      const filterValue = name.toLowerCase()
+      return this.degreesMeta.graduations.filter(option => option.name.toLowerCase().includes(filterValue))
+    }
+    return this.degreesMeta.graduations
+  }
+
+  private filterPostDegrees(name: string): INameField[] {
+    if (name) {
+      const filterValue = name.toLowerCase()
+      return this.degreesMeta.postGraduations.filter(option => option.name.toLowerCase().includes(filterValue))
+    }
+    return this.degreesMeta.postGraduations
   }
 
   ngOnDestroy() {

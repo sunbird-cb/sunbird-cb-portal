@@ -630,12 +630,28 @@
                         i18n="Degree label|Label which explains the user to enter Degree">
                         Degree
                       </p>
-                      <mat-form-field appearance="outline" class="margin-top-xs">
+                      <!-- <mat-form-field appearance="outline" class="margin-top-xs">
                         <mat-select formControlName="degree" i18n-placeholder placeholder="--Select--">
                           <mat-option [value]="deg.name" *ngFor="let deg of degreesMeta?.graduations">{{deg.name}}
                           </mat-option>
                         </mat-select>
+                      </mat-form-field> -->
+                      <mat-form-field appearance="outline" class="margin-top-xs w-full">
+                        <input id="degree" matInput type="text" placeholder="--Select--"
+                          i18n-placeholder="Degree" formControlName="degree"
+                          [matAutocomplete]="auto" i18n-aria-label aria-label="Graduation Degree"
+                          #graduationDegree i18n-aria-label aria-label="Graduation Degree Field input" maxlength="30" 
+                          (keyup)="onChangesDegrees()"/>
+
+                        <mat-autocomplete #auto="matAutocomplete"
+                          i18n-aria-label aria-label="Degree list autocomplete">
+                          <mat-option *ngFor="let deg of degreefilteredOptions" [value]="deg.name"
+                            i18n-aria-label aria-label="Degree list autocomplete option">
+                            {{ deg.name }}
+                          </mat-option>
+                        </mat-autocomplete>
                       </mat-form-field>
+                      
                     </div>
                     <div class="item">
                       <label for="instituteName" class=" margin-remove-bottom form-label"
@@ -676,7 +692,7 @@
                         </mat-error>
                       </mat-form-field>
                     </div>
-                    <div class=" flex flex-align">
+                    <div class="flex flex-align">
                       <button mat-icon-button class="btn-danger" (click)="removeDegrees(i)">
                         <mat-icon class="color-danger">delete_outline</mat-icon>
                       </button>
@@ -699,12 +715,27 @@
                         i18n="Degree label|Label which explains the user to enter Degree">
                         Degree
                       </p>
-                      <mat-form-field appearance="outline" class="margin-top-xs">
+                      <mat-form-field appearance="outline" class="margin-top-xs w-full">
+                        <input id="post_degree" matInput type="text" placeholder="--Select--"
+                          i18n-placeholder="Post Degree" formControlName="degree"
+                          [matAutocomplete]="autoComplete" i18n-aria-label aria-label="Post Graduation Degree"
+                          #postDegree i18n-aria-label aria-label="Post Graduation Degree Field input" maxlength="30" 
+                          (keyup)="onChangesPostDegrees()"/>
+
+                        <mat-autocomplete #autoComplete="matAutocomplete"
+                          i18n-aria-label aria-label="Degree list autocomplete">
+                          <mat-option *ngFor="let deg of postDegreefilteredOptions" [value]="deg.name"
+                            i18n-aria-label aria-label="Degree list autocomplete option">
+                            {{ deg.name }}
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
+                      <!-- <mat-form-field appearance="outline" class="margin-top-xs">
                         <mat-select formControlName="degree" i18n-placeholder placeholder="--Select--">
                           <mat-option [value]="deg.name" *ngFor="let deg of degreesMeta?.postGraduations">{{deg.name}}
                           </mat-option>
                         </mat-select>
-                      </mat-form-field>
+                      </mat-form-field> -->
                     </div>
                     <div class="item">
                       <label for="institute" class=" margin-remove-bottom form-label"
