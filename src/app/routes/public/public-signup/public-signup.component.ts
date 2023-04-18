@@ -497,7 +497,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
           if (hierarchyObj) {
             req = {
               firstName: this.registrationForm.value.firstname || '',
-              // lastName: this.registrationForm.value.lastname || '',
+              lastName: '',
               email: this.registrationForm.value.email || '',
               phone: `${this.registrationForm.value.mobile}` || '',
               // deptId: this.registrationForm.value.department.identifier || '',
