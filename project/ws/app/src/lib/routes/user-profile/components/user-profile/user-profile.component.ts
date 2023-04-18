@@ -139,7 +139,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.createUserForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       middlename: new FormControl('', [Validators.pattern(this.namePatern)]),
-      surname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
+      // surname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       photo: new FormControl('', []),
       countryCode: new FormControl('+91', [Validators.required]),
       mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
@@ -640,7 +640,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               this.userProfileData = { ...userData, id: this.configSvc.userProfile.userId, userId: this.configSvc.userProfile.userId }
               this.createUserForm.patchValue({
                 firstname: this.configSvc.userProfile.firstName,
-                surname: this.configSvc.userProfile.lastName,
+                // surname: this.configSvc.userProfile.lastName,
                 primaryEmail: _.get(this.userProfileData, 'personalDetails.primaryEmail') || this.configSvc.userProfile.email,
                 orgName: this.configSvc.userProfile.rootOrgName,
               })
@@ -672,7 +672,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.userProfileData = _.get(this.configSvc, 'unMappedUser.profileDetails')
         this.createUserForm.patchValue({
           firstname: tempData.firstName,
-          surname: tempData.lastName,
+          // surname: tempData.lastName,
           primaryEmail: _.get(this.configSvc.unMappedUser, 'profileDetails.personalDetails.primaryEmail') || tempData.email,
           orgName: tempData.rootOrgName,
         })
@@ -806,7 +806,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.createUserForm.patchValue({
       firstname: data.personalDetails.firstname,
       middlename: data.personalDetails.middlename,
-      surname: data.personalDetails.surname,
+      // surname: data.personalDetails.surname,
       photo: data.photo,
       dob: this.getDateFromText(data.personalDetails.dob),
       nationality: data.personalDetails.nationality,

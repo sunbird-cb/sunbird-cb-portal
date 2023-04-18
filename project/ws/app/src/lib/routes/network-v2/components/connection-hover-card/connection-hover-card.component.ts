@@ -42,18 +42,18 @@ export class ConnectionHoverCardComponent implements OnInit, AfterViewInit {
     let name = 'Guest'
     if (this.hoverUser && !this.hoverUser.personalDetails) {
       if (this.hoverUser.firstName) {
-        name = `${this.hoverUser.firstName} ${this.hoverUser.lastName}`
+        name = `${this.hoverUser.firstName}`
       } else {
         name = `${this.hoverUser.name}`
       }
     } else if (this.hoverUser && this.hoverUser.personalDetails) {
       if (this.hoverUser.personalDetails.middlename) {
         // tslint:disable-next-line: max-line-length
-        name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.middlename} ${this.hoverUser.personalDetails.surname}`
+        name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.middlename}`
       } else if (this.hoverUser.personalDetails.firstName) {
-        name = `${this.hoverUser.personalDetails.firstName} ${this.hoverUser.personalDetails.surname}`
+        name = `${this.hoverUser.personalDetails.firstName}`
       } else {
-        name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.surname}`
+        name = `${this.hoverUser.personalDetails.firstname}`
       }
     }
     return name
@@ -62,18 +62,18 @@ export class ConnectionHoverCardComponent implements OnInit, AfterViewInit {
     let name = 'Guest'
     if (this.hoverUser && !this.hoverUser.personalDetails) {
       if (this.hoverUser.firstName) {
-        name = `${this.hoverUser.firstName} ${this.hoverUser.lastName}`
+        name = `${this.hoverUser.firstName}`
       } else {
         name = `${this.hoverUser.name}`
       }
     } else if (this.hoverUser && this.hoverUser.personalDetails) {
       if (this.hoverUser.personalDetails.middlename) {
         // tslint:disable-next-line: max-line-length
-        name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.middlename} ${this.hoverUser.personalDetails.surname}`
+        name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.middlename}`
       } else if (this.hoverUser.personalDetails.firstName) {
-        name = `${this.hoverUser.personalDetails.firstName} ${this.hoverUser.personalDetails.surname}`
+        name = `${this.hoverUser.personalDetails.firstName}`
       } else {
-        name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.surname}`
+        name = `${this.hoverUser.personalDetails.firstname}`
       }
     }
     return name
