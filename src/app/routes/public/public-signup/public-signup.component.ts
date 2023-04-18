@@ -132,7 +132,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   ) {
     this.registrationForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
-      lastname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
+      // lastname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       position: new FormControl('', [Validators.required, forbiddenNamesValidatorPosition(this.masterPositions)]),
       email: new FormControl('', [Validators.required, Validators.pattern(this.emailWhitelistPattern)]),
       // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
@@ -497,7 +497,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
           if (hierarchyObj) {
             req = {
               firstName: this.registrationForm.value.firstname || '',
-              lastName: this.registrationForm.value.lastname || '',
+              // lastName: this.registrationForm.value.lastname || '',
               email: this.registrationForm.value.email || '',
               phone: `${this.registrationForm.value.mobile}` || '',
               // deptId: this.registrationForm.value.department.identifier || '',
