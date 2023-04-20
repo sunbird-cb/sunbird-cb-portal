@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
+import { ActivatedRoute } from '@angular/router'
 // import { MatSnackBar, MatDialog } from '@angular/material'
 
 @Component({
@@ -12,8 +13,12 @@ export class PublicRequestComponent implements OnInit {
   namePatern = `[a-zA-Z\\s\\']{1,32}$`
   emailWhitelistPattern = `^[a-zA-Z0-9._-]{3,}\\b@\\b[a-zA-Z0-9]*|\\b(.gov|.nic)\b\\.\\b(in)\\b$`
   phoneNumberPattern = '^((\\+91-?)|0)?[0-9]{10}$'
+  confirm = false
+  disableBtn = false
+  isMobileVerified = false
+  requestType: any
 
-  constructor() {
+  constructor(private activatedRoute: ActivatedRoute) {
     this.requestForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       email: new FormControl('', [Validators.required, Validators.pattern(this.emailWhitelistPattern)]),
@@ -22,6 +27,7 @@ export class PublicRequestComponent implements OnInit {
       addDetails: new FormControl('', [Validators.required]),
       confirmBox: new FormControl(false, [Validators.required]),
     })
+    this.requestType = this.activatedRoute.snapshot.queryParams.type
    }
 
   ngOnInit() {

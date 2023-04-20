@@ -11,7 +11,7 @@ import { SignupSuccessDialogueComponent } from './signup-success-dialogue/signup
 import { DOCUMENT, isPlatformBrowser } from '@angular/common'
 // tslint:disable-next-line: import-name
 import _ from 'lodash'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 
 // export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
 //   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -127,6 +127,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private recaptchaV3Service: ReCaptchaV3Service,
+    private router: Router,
     @Inject(DOCUMENT) private _document: any,
     @Inject(PLATFORM_ID) private _platformId: any,
   ) {
@@ -633,5 +634,10 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   }
   get organisation(): FormControl {
     return this.registrationForm.get('organisation') as FormControl
+  }
+
+  navigateTo(param?: any) {
+    const url = '/public/request'
+    this.router.navigate([url], {  queryParams: { type: param } })
   }
 }

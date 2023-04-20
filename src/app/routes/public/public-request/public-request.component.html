@@ -23,9 +23,9 @@
             </span>
           </a>
         </div>
-        <h1 class="mat-h1 margin-remove inline-block ng-star-inserted">
+        <h2 class="mat-h1 margin-remove inline-block ng-star-inserted">
           Request to add your position
-        </h1>
+        </h2>
       </div>
       <form [formGroup]="requestForm">
         <div class="margin-top-l new-mobile">
@@ -108,7 +108,6 @@
                     </a>
                   </button>
                   <div *ngIf="otpSend" class="flex flex-1 flex-column">
-                    <!-- <div class="flex flex-1 flex-row"> -->
                       <mat-form-field appearance="outline" class="margin-top-xs w-full">
                         <input  id="mobileNumber" #otp type="password"
                           matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input" onKeyPress="if(this.value.length === 8) return false;" autocomplete="new-password">
@@ -129,11 +128,12 @@
                           </span>
                         </button>
                       </div>
-                    <!-- </div> -->
                   </div>
                 </div>
               </div>
-              <div class="input-wrapper margin-top-s">
+
+              <!-- Position field -->
+              <div class="input-wrapper margin-top-s" *ngIf="requestType === 'Position'">
                 <label for="position" class="margin-remove-bottom form-label required"
                   i18n="Position|Label which explains the user to enter Position" i18n-aria-label
                   aria-label="Position Field label">
@@ -150,6 +150,7 @@
                   </mat-error>
                 </mat-form-field>
               </div>
+
               <div class="input-wrapper margin-top-s">
                 <label for="addDetails" class="margin-remove-bottom form-label required"
                 i18n="Add deatils | Label which explains the Position" i18n-aria-label
