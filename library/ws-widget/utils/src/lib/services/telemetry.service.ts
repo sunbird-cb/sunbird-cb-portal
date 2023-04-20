@@ -128,7 +128,9 @@ export class TelemetryService {
                 ...this.pData,
                 id: this.pData.id,
               },
-              ...(pageContext && pageContext.module ? { env: pageContext.module } : null),
+              ...(pageContext && pageContext.module ?
+                (pageContext.module === 'Practice' ? { env: 'Learn' } :
+                { env: pageContext.module }) : null),
             },
             object: {
               ...(data) && data,

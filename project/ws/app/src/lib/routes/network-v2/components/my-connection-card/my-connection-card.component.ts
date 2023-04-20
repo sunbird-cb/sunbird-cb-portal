@@ -45,14 +45,14 @@ export class MyConnectionCardComponent implements OnInit {
     let name = ''
     if (this.user && !this.user.personalDetails) {
       if (this.user.firstName) {
-        name = `${this.user.firstName} ${this.user.lastName}`
+        name = `${this.user.firstName}`
       }
     } else if (this.user && this.user.personalDetails) {
       if (this.user.personalDetails.middlename) {
         // tslint:disable-next-line: max-line-length
-        name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.middlename} ${this.user.personalDetails.surname}`
+        name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.middlename}`
       } else {
-        name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
+        name = `${this.user.personalDetails.firstname}`
       }
     }
     return name

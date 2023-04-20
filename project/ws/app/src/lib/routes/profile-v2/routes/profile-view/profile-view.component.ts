@@ -84,7 +84,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
         this.portalProfile = data.profile.data
         _.set(this.portalProfile, 'personalDetails.firstname', _.get(data.profile.data, 'firstName'))
-        _.set(this.portalProfile, 'personalDetails.surname', _.get(data.profile.data, 'lastName'))
+        // _.set(this.portalProfile, 'personalDetails.surname', _.get(data.profile.data, 'lastName'))
         _.set(this.portalProfile, 'personalDetails.email', _.get(data.profile.data, 'email'))
         _.set(this.portalProfile, 'personalDetails.userId', _.get(data.profile.data, 'userId'))
         _.set(this.portalProfile, 'personalDetails.userName', _.get(data.profile.data, 'userName'))
@@ -108,7 +108,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
 
       if (!this.portalProfile.personalDetails && user === this.currentUser) {
         _.set(this.portalProfile, 'personalDetails.firstname', _.get(this.configSvc, 'userProfile.firstName'))
-        _.set(this.portalProfile, 'personalDetails.surname', _.get(this.configSvc, 'userProfile.lastName'))
+        // _.set(this.portalProfile, 'personalDetails.surname', _.get(this.configSvc, 'userProfile.lastName'))
       }
       /** // for loged in user only */
       this.decideAPICall()
