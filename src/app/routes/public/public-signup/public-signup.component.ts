@@ -115,6 +115,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   OTP_TIMER = environment.resendOTPTIme
   timerSubscription: Subscription | null = null
   timeLeftforOTP = 0
+  filteredOrgList!: Observable<any>
+  orgList: any
+  resultFetched = false
 
   private subscriptionContact: Subscription | null = null
   private recaptchaSubscription!: Subscription
@@ -147,9 +150,10 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.fetchDropDownValues('ministry')
+    // this.fetchDropDownValues('ministry')
     const instanceConfig = this.configSvc.instanceConfig
     this.positionsOriginal = this.activatedRoute.snapshot.data.positions.data || []
+    this.OrgsSearchChange()
     this.onPositionsChange()
     this.onPhoneChange()
     if (instanceConfig) {
@@ -162,13 +166,12 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     }
 
     // tslint:disable-next-line: no-non-null-assertion
-    this.registrationForm.get('type')!.valueChanges.subscribe((value: any) => {
-      if (value) {
-        this.fetchDropDownValues(value)
-      }
-    })
+    // this.registrationForm.get('type')!.valueChanges.subscribe((value: any) => {
+    //   if (value) {
+    //     this.fetchDropDownValues(value)
+    //   }
+    // })
 
-    // this.emailVerification(this.registrationForm.email)
   }
 
   get typeValueStartCase() {
@@ -338,6 +341,122 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     return this.orgs
   }
 
+  filterOrgsSearch(orgname: string) {
+    if (orgname) {
+      const result = {
+        "id": "api.org.extended.searchByName",
+        "ver": "1.0",
+        "ts": "2023-04-18T05:44:56.417Z",
+        "params": {
+            "resmsgid": null,
+            "msgid": null,
+            "err": null,
+            "status": "success",
+            "errmsg": null
+        },
+        "responseCode": "OK",
+        "result": {
+            "response": {
+                "count": 3,
+                "content": [
+                    {
+                       "orgName":"Bank",
+                       "channel": "Bank",
+                       "mapId":"M1",
+                       "parentMapId":"SPV",
+                       "sbOrgId":"",
+                       "sbRootOrgId":"",
+                       "sbOrgType":"ministry",
+                       "sbOrgSubType": "mdo",
+                       "l1MapId": "M1",
+                       "l2MapId": "",
+                       "l3MapId": ""
+                    },
+                    {
+                       "orgName":"Bank",
+                       "channel": "M1.Bank",
+                       "mapId":"D1",
+                       "parentMapId":"M1",
+                       "sbOrgId":"",
+                       "sbRootOrgId":"",
+                       "sbOrgType":"department",
+                       "sbOrgSubType": "mdo",
+                       "l1MapId": "M1",
+                       "l2MapId": "D1",
+                       "l3MapId": ""
+                    },
+                    {
+                       "orgName":"Canara Bank",
+                       "channel":"Canara Bank",
+                       "mapId":"O1",
+                       "parentMapId":"D1",
+                       "sbOrgId":"",
+                       "sbRootOrgId":"",
+                       "sbOrgType":"mdo",
+                       "sbOrgSubType": "cbp",
+                       "l1MapId": "M1",
+                       "l2MapId": "D1",
+                       "l3MapId": "O1"
+                    }
+                ]
+            }
+        }
+    }
+      const filterValue = orgname.toLowerCase()
+      // this.signupSvc.searchOrgs(filterValue).pipe(
+      //   map((res: any) => res.result.response.content.filter((org: any) => {
+      //     return org.orgName.toLowerCase().indexOf(filterValue) >= 0
+      //   }))
+      // )
+      return result.result.response.content.filter((org: any) => {
+        this.resultFetched = true
+        return org.orgName.toLowerCase().indexOf(filterValue) >= 0
+      })
+    }
+    return this.orgList
+  }
+
+  searchOrgs(searchValue: string) {
+    this.filteredOrgList =  this.filterOrgsSearch(searchValue)
+  }
+
+  OrgsSearchChange() {
+    this.registrationForm.get('organisation')!.valueChanges.subscribe( () => 
+      this.resultFetched = false
+    )
+    // this.filteredOrgList = this.registrationForm.get('organisation')!.valueChanges
+    //   .pipe(
+    //     debounceTime(500),
+    //     distinctUntilChanged(),
+    //     startWith(''),
+    //     map(value => typeof (value) === 'string' ? value : (value && value.orgname ? value.orgname : '')),
+    //     map(orgname => {
+    //       console.log("asdasdasd", orgname)
+    //       if (orgname) { return this.filterOrgsSearch(orgname) }
+    //       return []
+    //     })
+    //   )
+
+    // this.filteredOrgList.subscribe((_event: any) => {
+    //   // console.log('_event', _event)
+    // })
+
+  }
+
+  orgClicked(event: any) {
+    if (event) {
+      const frmctr = this.registrationForm.get('organisation') as FormControl
+      frmctr.patchValue(_.get(event, 'option.value') || '')
+
+      // const frmctr1 = this.officerForm.get('officerName') as FormControl
+      // // const fullName = _.get(event, 'option.value.userDetails.first_name') + ' ' + _.get(event, 'option.value.userDetails.last_name')
+      // // tslint:disable-next-line: prefer-template
+      // const fullName = _.get(event, 'option.value.firstName') + ' ' + _.get(event, 'option.value.lastName')
+      // frmctr1.patchValue(fullName || '')
+      // this.watStore.setOfficerGroup(this.officerForm.value, false, true)
+    }
+  }
+
   private filterPositions(name: string): any {
     if (name) {
       const filterValue = name.toLowerCase()
@@ -467,6 +586,10 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
 
   displayFnPosition = (value: any) => {
     return value ? value.name : undefined
+  }
+
+  displayFnOrg = (value: any) => {
+    return value ? value.orgName : undefined
   }
 
   signup() {
@@ -605,10 +728,6 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         }
       })
     }
-  }
-
-  displayFnState = (value: any) => {
-    return value ? value.orgname : undefined
   }
 
   ngOnDestroy() {

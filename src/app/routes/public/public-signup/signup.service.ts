@@ -12,6 +12,7 @@ const API_END_POINTS = {
   ReSendOtp: '/api/otp/v1/generate',
   VerifyOtp: '/api/otp/v1/verify',
   GET_POSITIONS: '/api/user/v1/positions',
+  SEARCH_ORG: '/api/org/v1/cb/ext/searchByName',
 }
 
 @Injectable({
@@ -73,5 +74,9 @@ export class SignupService {
     }
     return this.http.post(API_END_POINTS.VerifyOtp, reqObj)
 
+  }
+
+  searchOrgs(req: any) {
+    return this.http.post(API_END_POINTS.SEARCH_ORG, req)
   }
 }

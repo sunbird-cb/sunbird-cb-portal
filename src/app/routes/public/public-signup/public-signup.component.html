@@ -245,6 +245,63 @@
                 </mat-radio-group>
               </div>
               <div class="input-wrapper margin-top-s">
+                <label for="organisation" class=" margin-remove-bottom form-label required"
+                  i18n="Organisation label|Label which explains the user to enter Surname" i18n-aria-label
+                  aria-label="Organisation label">
+                  Organisation
+                </label>
+                <mat-form-field appearance="outline" class="flex-1 full-width no-pb square outline-color">
+                  <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+                  <input matInput onfocus="this.select()" aria-label="organisation" [matAutocomplete]="auto" #organisation
+                    name="organisation" formControlName="organisation" i18n-placeholder placeholder="Search organisation" i18n-aria-label
+                    aria-label="Type here" >
+                  <span matSuffix class="ws-mat-accent-text margin-xs cursor-pointer" (click)="searchOrgs(organisation.value)" >Search</span>
+                  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="orgClicked($event)"  
+                    autoActiveFirstOption="true" [displayWith]="displayFnOrg">
+                    <ng-container *ngIf="filteredOrgList || filteredOrgList?.length > 0">
+                      <mat-option *ngFor="let organisation of filteredOrgList " [value]="organisation">
+                        <ng-container [ngTemplateOutlet]="autocompleteCard" [ngTemplateOutletContext]="{organisation: organisation}">
+                        </ng-container>
+                      </mat-option>
+                    </ng-container>
+                    <mat-option  *ngIf="!filteredOrgList?.length && organisation.value && resultFetched" [value]="">
+                      <ng-container [ngTemplateOutlet]="noResult" [ngTemplateOutletContext]="{type: 'organisation'}">
+                      </ng-container>
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+                <div class="w-full margin-top-xs">
+                  <div class="flex items-center  mat-body-1 flex-1">
+                    <span class="flex-1">Not found yet?</span>
+                    <a href="" class="flex-1 ws-mat-accent-text text-right"> Request for help</a>
+                  </div>
+                </div>
+              </div>
+
+              <ng-template #autocompleteCard let-organisation="organisation">
+                <div class="px-6 py-3">
+                  <div>
+                    <h3 class="mat-h3 margin-remove">
+                      {{organisation?.orgName}}
+                    </h3>
+                  </div>
+                  <div class="flex flex-1 items-center flex-wrap text-left mat-body-2">
+                    <span *ngIf="organisation?.sbOrgType === 'department' || organisation?.sbOrgType === 'mdo' ">Under &nbsp;</span>
+                    <span>Ministry of bank</span>
+                    <span> <mat-icon matPrefix class=" flex items-center justify-center">navigate_next</mat-icon></span>
+                    <span class="flex-1">Department of bank</span>
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template #noResult let-type="type">
+                <div class="flex-col text-center items-center justify-center px-6 py-3">
+                  <div class="mat-body-1">We couldn't find any matches for your search. </div>
+                  <div class="mat-body-1 padding-top-xs">
+                    <a *ngIf="type === 'organisation'" href="" class="flex-1 ws-mat-accent-text "> Request for help</a>
+                  </div>
+                </div>
+              </ng-template>
+              <!-- <div class="input-wrapper margin-top-s">
                 <label for="Ministry" class=" margin-remove-bottom form-label required"
                   i18n="Ministry|Label which explains the user to enter Ministry" i18n-aria-label
                   aria-label="Ministry Field label">
@@ -265,7 +322,7 @@
                   </mat-error>
                 </mat-form-field>
                 <mat-autocomplete #ministryAutocomplete="matAutocomplete" autoActiveFirstOption="true" i18n-aria-label
-                  aria-label="Ministry list masterMinistry" [displayWith]="displayFnState"
+                  aria-label="Ministry list masterMinistry" [displayWith]="displayFnOrg"
                   (optionSelected)="ministrySelected($event.option.value)">
                   <mat-option *ngFor="let option of masterMinisteries| async | orderBy: 'orgname' :'asc'" [value]="option" i18n-aria-label
                     aria-label="Ministry list autocomplete option">
@@ -296,7 +353,7 @@
                     </mat-error>
                   </mat-form-field>
                   <mat-autocomplete #departmentAutocomplete="matAutocomplete" autoActiveFirstOption="true"
-                    i18n-aria-label aria-label="Department list masterDepartments" [displayWith]="displayFnState"
+                    i18n-aria-label aria-label="Department list masterDepartments" [displayWith]="displayFnOrg"
                     (optionSelected)="departmentSelected($event.option.value)">
                     <mat-option *ngFor="let option of masterDepartments | async | orderBy: 'orgname' :'asc'" [value]="option" i18n-aria-label
                       aria-label="Department list autocomplete option">
@@ -309,12 +366,6 @@
                   <span class="tooltiptext"><p>
                     If you do not find your department or organization in the list here,
                     please <a routerLink="/public/contact" class="ws-mat-accent-text">contact us</a> to get it added.<br>
-
-                    <!-- Email: mission.karmayogi@gov.in<br>
-
-                    Helpdesk: servicedesk.nic.in<br> -->
-                    <!-- "contact us": https://igot-stage.in/public/contact</a> -->
-
                    </p></span>
 
 
@@ -344,7 +395,7 @@
                   </mat-error>
                 </mat-form-field>
                 <mat-autocomplete #organisationAutocomplete="matAutocomplete" autoActiveFirstOption="true"
-                  i18n-aria-label aria-label="Organisation list masterStates" [displayWith]="displayFnState">
+                  i18n-aria-label aria-label="Organisation list masterStates" [displayWith]="displayFnOrg">
                   <mat-option *ngFor="let option of masterOrgs | async | orderBy: 'orgname' :'asc'" [value]="option" i18n-aria-label
                     aria-label="Organisation list autocomplete option">
                     {{ option.orgname }}
@@ -359,7 +410,7 @@
 
                  </p></span>
               </div>
-            </div>
+            </div> -->
               <!-- <div class="input-wrapper margin-top-s">
                 <label for="department" class=" margin-remove-bottom form-label required"
                   i18n="Department|Label which explains the user to enter Department" i18n-aria-label
