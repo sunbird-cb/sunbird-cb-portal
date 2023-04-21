@@ -90,6 +90,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     //   }
     // )
     this.viewerDataServiceSubscription = this.viewerDataSvc.tocChangeSubject.subscribe(data => {
+      console.log(data, 'viewer service data=====')
       if (data.prevResource) {
         this.prevResourceUrl = data.prevResource.viewerUrl
         // this.previousResourcePrimaryCategory = data.prevResource.primaryCategory
@@ -126,6 +127,8 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
           },
           fragment: '',
         }
+        console.log(data.nextResource, "data.nextResource--------")
+        console.log(data.nextResource.optionalReading, "data.nextResource.optionalReading++++++++++++")
         if(data.nextResource.optionalReading && data.nextResource.primaryCategory === "Learning Resource") {
           this.updateProgress(2, data.nextResource.identifier)
         }
