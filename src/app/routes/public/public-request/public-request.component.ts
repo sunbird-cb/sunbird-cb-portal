@@ -48,18 +48,21 @@ export class PublicRequestComponent implements OnInit {
   timeLeftforOTP = 0
 
   constructor(private activatedRoute: ActivatedRoute, private snackBar: MatSnackBar, private signupSvc: SignupService) {
+    this.requestType = this.activatedRoute.snapshot.queryParams.type
     this.requestForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       email: new FormControl('', [Validators.required, Validators.pattern(this.emailWhitelistPattern)]),
       mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
-      position: new FormControl('', [Validators.required, forbiddenNamesValidatorPosition(this.masterPositions)]),
-      addDetails: new FormControl('', [Validators.required]),
+      position: new FormControl('', this.requestType === 'Position'? [Validators.required, forbiddenNamesValidatorPosition(this.masterPositions)]:[]),
+      organisation: new FormControl('', this.requestType === 'Organisation' ? Validators.required : []),
+      addDetails: new FormControl('', []),
       confirmBox: new FormControl(false, [Validators.required]),
     })
-    this.requestType = this.activatedRoute.snapshot.queryParams.type
    }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 
   emailVerification(emailId: string) {
     this.emailLengthVal = false

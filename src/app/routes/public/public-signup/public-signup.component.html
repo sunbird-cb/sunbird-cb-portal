@@ -266,7 +266,7 @@
                       </mat-option>
                     </ng-container>
                     <mat-option  *ngIf="!filteredOrgList?.length && organisation.value && resultFetched" [value]="">
-                      <ng-container [ngTemplateOutlet]="noResult" [ngTemplateOutletContext]="{type: 'organisation'}">
+                      <ng-container [ngTemplateOutlet]="noResult" [ngTemplateOutletContext]="{type: 'Organisation'}">
                       </ng-container>
                     </mat-option>
                   </mat-autocomplete>
@@ -274,7 +274,7 @@
                 <div class="w-full margin-top-xs">
                   <div class="flex items-center  mat-body-1 flex-1">
                     <span class="flex-1">Not found yet?</span>
-                    <a href="" class="flex-1 ws-mat-accent-text text-right"> Request for help</a>
+                    <a href="" class="flex-1 ws-mat-accent-text text-right" (click)="navigateTo('Organisation')"> Request for help</a>
                   </div>
                 </div>
               </div>
@@ -298,7 +298,7 @@
                 <div class="flex-col text-center items-center justify-center px-6 py-3">
                   <div class="mat-body-1">We couldn't find any matches for your search. </div>
                   <div class="mat-body-1 padding-top-xs">
-                    <a *ngIf="type === 'organisation'" href="" class="flex-1 ws-mat-accent-text "> Request for help</a>
+                    <a href="" class="flex-1 ws-mat-accent-text " (click)="navigateTo(type)"> Request for help</a>
                   </div>
                 </div>
               </ng-template>
