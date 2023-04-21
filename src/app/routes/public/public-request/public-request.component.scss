@@ -100,30 +100,13 @@
       margin-bottom: 1rem;
     }
 
+  .slideshow-container {
+    padding: 5rem 0 2rem 0;
 
-
-    // .main_container {
-    //   background-image : url(assets/instances/eagle/banners/home/9/Login_background.png) no-repeat center center fixed;
-    // }
-
-  // ::ng-deep .top-nav-bar {
-  //   display: none;
-  // }
-
-  // ::ng-deep .height-on-top {
-  //   padding-top: 0!important;
-  // }
-
-
-
-
-.slideshow-container {
-  padding: 5rem 0 2rem 0;
-
-  @include breakpoint-s {
-     padding: 3rem 0 2rem 0!important;
+    @include breakpoint-s {
+      padding: 3rem 0 2rem 0!important;
+    }
   }
-}
 
   .mySlides {
     height: auto;
@@ -408,11 +391,6 @@
         padding-bottom: 0;
       }
     }
-
-    // .mat-form-field-wrapper{
-
-    // }
-
 
     .combined-field {
       width: 100%;
@@ -848,62 +826,4 @@
   border: 1px dashed rgba(0,0,0,.40);
   padding: 16px;
   border-radius: 8px;
-}
-
-// custom autocomplete styles start
-// ---------------------------------------
-
-.search-home {
-  border-radius: 0 4px 4px 0;
-  padding: 12px 4px 8px 1px;
-}
-::ng-deep .mat-autocomplete-panel {
-  max-height: 340px !important;
-}
-
-.mat-autocomplete-panel {
-  max-height: 340px !important;
-}
-
-::ng-deep mat-option.mat-option{
-height: auto;
-line-height: normal;
-padding: 0;
-white-space: normal;
-}
-
-::ng-deep mat-option .mat-icon {
-  margin-right: 0 !important;
-}
-::ng-deep mat-option .mat-option-text{
-height: auto;
-  display: block;
-}
-
-
-::ng-deep mat-form-field .mat-form-field-infix .mat-form-field-label,
-::ng-deep mat-form-field .mat-form-field-infix .mat-select-value {
-line-height: normal !important;
-}
-
-::ng-deep .theme-igot.day-mode .mat-form-field.mat-focused .mat-form-field-label {
-color: #333232 !important;
-}
-
-::ng-deep  .mat-form-field-appearance-outline .mat-form-field-infix {
-padding: 0.6em 0 0.6em 0 !important;
-display: flex;
-width: auto;
-// height: inherit;
-}
-
-// ---------------------------------------
-// custom autocomplete styles end
-.blue-text {
-  color: #0074b6 !important;
-  font-weight: 600;
-  cursor: pointer;
-}
-.mat-hint {
-  width: 100% !important;
 }

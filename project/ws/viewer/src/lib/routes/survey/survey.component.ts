@@ -199,7 +199,6 @@ export class SurveyComponent implements OnInit, OnDestroy {
     if (this.forPreview) {
       return
     }
-
     const event = {
       eventType: WsEvents.WsEventType.Telemetry,
       eventLogLevel: WsEvents.WsEventLogLevel.Info,
@@ -213,6 +212,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
         identifier: data ? data.identifier : null,
         mimeType: NsContent.EMimeTypes.PDF,
         url: data ? data.artifactUrl : null,
+        object: {id: data ? data.identifier : null, type: data ? data.primaryCategory : ''}
       },
     }
     this.eventSvc.dispatchEvent(event)

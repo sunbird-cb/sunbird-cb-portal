@@ -28,16 +28,16 @@ export class ConnectionRecommendedCardComponent implements OnInit {
     let name = ''
     if (this.user && !this.user.personalDetails) {
       if (this.user.firstName) {
-        name = `${this.user.firstName} ${this.user.lastName}`
+        name = `${this.user.firstName}`
       }
     } else if (this.user && this.user.personalDetails) {
       if (this.user.personalDetails.middlename) {
         // tslint:disable-next-line: max-line-length
-        name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.middlename} ${this.user.personalDetails.surname}`
+        name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.middlename}`
       } else if (this.user.personalDetails.firstName) {
-        name = `${this.user.personalDetails.firstName} ${this.user.personalDetails.surname}`
+        name = `${this.user.personalDetails.firstName}`
       } else {
-        name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
+        name = `${this.user.personalDetails.firstname}`
       }
     }
     return name
@@ -53,7 +53,7 @@ export class ConnectionRecommendedCardComponent implements OnInit {
       userDepartmentTo: '',
     }
     if (this.user.personalDetails) {
-      req.userNameTo = `${this.user.personalDetails.firstname}${this.user.personalDetails.surname}`
+      req.userNameTo = `${this.user.personalDetails.firstname}`
       req.userDepartmentTo =  this.user.employmentDetails.departmentName
     }
     if (!this.user.personalDetails && this.user.first_name) {
@@ -61,7 +61,7 @@ export class ConnectionRecommendedCardComponent implements OnInit {
       req.userDepartmentTo =  this.user.department_name
     }
     if (!this.user.personalDetails && this.user.firstName) {
-      req.userNameTo = `${this.user.firstName}${this.user.lastName}`
+      req.userNameTo = `${this.user.firstName}`
       req.userDepartmentTo =  this.user.channel
     }
 

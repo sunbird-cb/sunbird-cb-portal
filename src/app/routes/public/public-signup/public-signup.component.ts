@@ -11,7 +11,7 @@ import { SignupSuccessDialogueComponent } from './signup-success-dialogue/signup
 import { DOCUMENT, isPlatformBrowser } from '@angular/common'
 // tslint:disable-next-line: import-name
 import _ from 'lodash'
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router'
 
 // export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
 //   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -130,12 +130,13 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private recaptchaV3Service: ReCaptchaV3Service,
+    private router: Router,
     @Inject(DOCUMENT) private _document: any,
     @Inject(PLATFORM_ID) private _platformId: any,
   ) {
     this.registrationForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
-      lastname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
+      // lastname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       position: new FormControl('', [Validators.required, forbiddenNamesValidatorPosition(this.masterPositions)]),
       email: new FormControl('', [Validators.required, Validators.pattern(this.emailWhitelistPattern)]),
       // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
@@ -620,7 +621,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
           if (hierarchyObj) {
             req = {
               firstName: this.registrationForm.value.firstname || '',
-              lastName: this.registrationForm.value.lastname || '',
+              // lastName: this.registrationForm.value.lastname || '',
               email: this.registrationForm.value.email || '',
               phone: `${this.registrationForm.value.mobile}` || '',
               // deptId: this.registrationForm.value.department.identifier || '',
@@ -639,7 +640,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
             }
           }
 
-          console.log('hierarchyObj===: ', hierarchyObj)
+          // console.log('hierarchyObj===: ', hierarchyObj)
 
           this.signupSvc.register(req).subscribe(
             (_res: any) => {
@@ -752,5 +753,10 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   }
   get organisation(): FormControl {
     return this.registrationForm.get('organisation') as FormControl
+  }
+
+  navigateTo(param?: any) {
+    const url = '/public/request'
+    this.router.navigate([url], {  queryParams: { type: param } })
   }
 }

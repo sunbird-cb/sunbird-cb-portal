@@ -4,18 +4,12 @@
       <div mat-card-avatar class="example-header-image">
         <ng-container *ngIf="portalProfile.personalDetails.firstname">
           <ws-widget-avatar-photo [photoUrl]="portalProfile.photo || null" [name]="
-          portalProfile.personalDetails.firstname +
-          ' ' +
-          portalProfile.personalDetails.surname
-        " size="xxl-s">
+          portalProfile.personalDetails.firstname" size="xxl-s">
       </ws-widget-avatar-photo>
         </ng-container>
         <ng-container *ngIf="portalProfile.personalDetails.firstName">
         <ws-widget-avatar-photo [photoUrl]="portalProfile.photo || null" [name]="
-            portalProfile.personalDetails.firstName +
-            ' ' +
-            portalProfile.personalDetails.surname
-          " size="xxl-s">
+            portalProfile.personalDetails.firstName" size="xxl-s">
         </ws-widget-avatar-photo>
         </ng-container>
       </div>
@@ -24,18 +18,12 @@
           <div class="flex flex-4">
           <ng-container *ngIf="portalProfile.personalDetails.firstname">
             <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
-              portalProfile.personalDetails.firstname +
-              ' ' +
-              portalProfile.personalDetails.surname
-            ">
+              portalProfile.personalDetails.firstname">
             </mat-card-title>
             </ng-container>
           <ng-container *ngIf="portalProfile.personalDetails.firstName">
             <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
-              portalProfile.personalDetails.firstName +
-              ' ' +
-              portalProfile.personalDetails.surname
-            ">
+              portalProfile.personalDetails.firstName">
             </mat-card-title>
             </ng-container>
             <!-- <div class="flex verified">

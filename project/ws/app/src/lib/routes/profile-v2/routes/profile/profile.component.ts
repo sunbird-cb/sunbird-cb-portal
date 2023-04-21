@@ -39,7 +39,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
         if (event.urlAfterRedirects === '/app/person-profile/me') {
           if (this.configSvc.userProfile) {
-            this.userRouteName = `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}`
+            this.userRouteName = `${this.configSvc.userProfile.firstName}`
             this.titles = [{ title: 'NETWORK', url: '/app/network-v2', icon: 'group' }]
             if (this.userRouteName && this.userRouteName.trim()) {
               this.titles.push({
@@ -54,7 +54,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
             this.activeRoute.firstChild.data.subscribe(response => {
               this.userRouteName = response && response.profile && response.profile.data && response.profile.data[0]
                 && response.profile.data[0].personalDetails &&
-                `${(response.profile.data[0].personalDetails.firstname || '')} ${(response.profile.data[0].personalDetails.surname)}`
+                `${(response.profile.data[0].personalDetails.firstname || '')}`
             })
             this.titles = [{ title: 'NETWORK', url: '/app/network-v2', icon: 'group' }]
             if (this.userRouteName && this.userRouteName.trim()) {

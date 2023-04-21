@@ -349,6 +349,7 @@ export class TelemetryService {
   }
 
   addCustomEventListener() {
+
     this.eventsSvc.events$
       .pipe(
         filter(

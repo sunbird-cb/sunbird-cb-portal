@@ -32,7 +32,7 @@ export class BtnPlaylistService {
   private userId!: string
   constructor(private http: HttpClient, private configSvc: ConfigurationsService) {
     if (this.configSvc.userProfile) {
-      this.userName = (`${this.configSvc.userProfile.firstName}''${this.configSvc.userProfile.lastName}`)
+      this.userName = (`${this.configSvc.userProfile.firstName}`)
       this.userId = this.configSvc.userProfile.userId
     }
   }
