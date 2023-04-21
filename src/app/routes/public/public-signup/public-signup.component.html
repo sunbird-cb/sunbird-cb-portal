@@ -151,7 +151,7 @@
                 </label>
                 <mat-form-field appearance="outline" class="margin-top-s">
                   <input id="email" name="emailField" type="email" maxlength="320" (input)="emailVerification($event.target.value)" matInput placeholder="Enter your email id" #email
-                    formControlName="email" i18n-aria-label aria-label="Email input">
+                    formControlName="email" autocomplete="off" i18n-aria-label aria-label="Email input">
                   <mat-hint>Only government email ids are allowed</mat-hint>
                   <mat-error [hidden]="false" *ngIf="registrationForm?.controls['email'].errors?.required"
                     i18n="Email Error|Explains name is required">
