@@ -52,6 +52,7 @@
                   </mat-error>
                 </mat-form-field>
               </div>
+
               <div class="input-wrapper margin-top-s">
                 <label for="email" class=" margin-remove-bottom form-label required"
                   i18n="Email label|Label which explains the user to enter Email" i18n-aria-label
@@ -76,6 +77,7 @@
                   </div>
                 </mat-form-field>
               </div>
+
               <div class="input-wrapper mobile-wrapper margin-top-l">
                 <label for="mobileNumber" class=" margin-remove-bottom form-label required"
                   i18n="Mobile Number label|Label which explains the user to enter Mobile Number" i18n-aria-label
@@ -140,9 +142,9 @@
                   Position
                 </label>
                 <mat-form-field appearance="outline" class="margin-top-s w-full">
-                  <input id="position" matInput tab-directive type="text" placeholder="Enter your position"
+                  <input id="position" matInput type="text" placeholder="Enter your position"
                     i18n-placeholder="position" formControlName="position"
-                    i18n-aria-label aria-label="Position" #position i18n-aria-label aria-label="Position Field input" maxlength="150" />
+                    i18n-aria-label aria-label="Position" #position maxlength="150" />
                   <mat-error [hidden]="false" i18n="Position Error|Explains Position is required"
                     *ngIf="requestForm?.controls['position'].errors?.required" i18n-aria-label
                     aria-label="Position is mandatory">
@@ -156,7 +158,8 @@
                 i18n="Add deatils | Label which explains the Position" i18n-aria-label
                 aria-label="Position Details label">Add details</label>
                 <mat-form-field appearance="outline" class="margin-top-s w-full">
-                    <textarea name="addDetails" id="addDetails" cols="30" rows="5" formControlName="addDetails" placeholder="Type here"></textarea>
+                    <textarea matInput name="addDetails" id="addDetails" [matTextareaAutosize] [matAutosizeMaxRows]="5"
+                    [matAutosizeMinRows]="3"  maxlength="500" formControlName="addDetails" placeholder="Type here"></textarea>
                     <mat-error [hidden]="false" i18n="Position Details Error | Explains Position details is required"
                       *ngIf="requestForm?.controls['position'].errors?.required" i18n-aria-label
                       aria-label="Position details is mandatory">
@@ -176,9 +179,7 @@
                   </mat-checkbox>
                 </div>
               </div>
-              <!-- <div>
-                <re-captcha formControlName="recaptchaReactive"></re-captcha>
-              </div> -->
+
               <div class="w-full margin-top-l">
                 <div class="button_box flex flex-col items-center justify-center">
                   <button mat-flat-button type="submit"
@@ -188,11 +189,11 @@
                   </button>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
       </form>
     </div>
-
   </div>
 </div>
