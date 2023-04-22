@@ -103,6 +103,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         identifier: data ? data.identifier : null,
         mimeType: NsContent.EMimeTypes.QUIZ,
         url: data ? data.artifactUrl : null,
+        object: {id: data ? data.identifier : null, type: data ? data.primaryCategory : ''}
       },
     }
     this.eventSvc.dispatchEvent(event)
