@@ -11,7 +11,7 @@ import { SignupSuccessDialogueComponent } from './signup-success-dialogue/signup
 import { DOCUMENT, isPlatformBrowser } from '@angular/common'
 // tslint:disable-next-line: import-name
 import _ from 'lodash'
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router'
 
 // export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
 //   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -516,7 +516,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
             }
           }
 
-          console.log('hierarchyObj===: ', hierarchyObj)
+          //console.log('hierarchyObj===: ', hierarchyObj)
 
           this.signupSvc.register(req).subscribe(
             (_res: any) => {
