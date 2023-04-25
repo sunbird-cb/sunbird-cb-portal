@@ -176,7 +176,7 @@
                 </label>
                 <div class="flex flex-1">
 
-                  <mat-form-field appearance="outline" class="w-full">
+                  <mat-form-field appearance="outline" class="margin-top-s w-full">
                     <!-- <input [readonly]="otpSend && !otpVerified" id="mobileNumber" #mobile type="number" matInput
                       placeholder="Mobile Number" formControlName="mobile" i18n-aria-label
                       aria-label="Mobile Number input" maxlength="12"> -->
@@ -251,26 +251,51 @@
                   aria-label="Organisation label">
                   Organisation
                 </label>
-                <mat-form-field appearance="outline" class="flex-1 full-width no-pb square outline-color">
-                  <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
-                  <input matInput onfocus="this.select()" aria-label="organisation" [matAutocomplete]="auto" #organisation
-                    name="organisation" formControlName="organisation" i18n-placeholder placeholder="Search organisation" i18n-aria-label
-                    aria-label="Type here" >
-                  <span matSuffix class="ws-mat-accent-text margin-xs cursor-pointer" (click)="searchOrgs(organisation.value)" >Search</span>
-                  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="orgClicked($event)"  
-                    autoActiveFirstOption="true" [displayWith]="displayFnOrg">
-                    <ng-container *ngIf="filteredOrgList || filteredOrgList?.length > 0">
-                      <mat-option *ngFor="let organisation of filteredOrgList " [value]="organisation">
-                        <ng-container [ngTemplateOutlet]="autocompleteCard" [ngTemplateOutletContext]="{organisation: organisation}">
+                <!-- <ng-container *ngIf="!hideOrg"> -->
+                  <mat-form-field appearance="outline" class="margin-top-s  flex-1 full-width no-pb square outline-color" [hidden]="hideOrg">
+                    <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+                    <input matInput onfocus="this.select()" aria-label="organisation" [matAutocomplete]="auto" #organisation
+                      name="organisation" formControlName="organisation" i18n-placeholder placeholder="Search organisation" i18n-aria-label
+                      aria-label="Type here" >
+                    <span matSuffix class="ws-mat-accent-text margin-xs cursor-pointer" (click)="searchOrgs(organisation.value)" >Search</span>
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="orgClicked($event)"  
+                      autoActiveFirstOption="true" [displayWith]="displayFnOrg">
+                      <ng-container *ngIf="searching">
+                        <mat-option [value] = "" class="custom">
+                          <div  class="p-4 w-full flex items-center justify-center">
+                            <mat-spinner [diameter]="30"></mat-spinner>
+                          </div>
+                        </mat-option>
+                      </ng-container>
+                      <ng-container *ngIf="(filteredOrgList || filteredOrgList?.length > 0 ) && resultFetched">
+                        <mat-option class=" custom bordered" *ngFor="let organisation of filteredOrgList " [value]="organisation">
+                          <ng-container [ngTemplateOutlet]="autocompleteCard" [ngTemplateOutletContext]="{organisation: organisation}">
+                          </ng-container>
+                        </mat-option>
+                      </ng-container>
+                      <mat-option  class="custom bordered" *ngIf="(!filteredOrgList || !filteredOrgList?.length) && resultFetched" [value]="">
+                        <ng-container [ngTemplateOutlet]="noResult" [ngTemplateOutletContext]="{type: 'Organisation'}">
                         </ng-container>
                       </mat-option>
-                    </ng-container>
-                    <mat-option  *ngIf="!filteredOrgList?.length && organisation.value && resultFetched" [value]="">
-                      <ng-container [ngTemplateOutlet]="noResult" [ngTemplateOutletContext]="{type: 'Organisation'}">
-                      </ng-container>
-                    </mat-option>
-                  </mat-autocomplete>
-                </mat-form-field>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                <!-- </ng-container> -->
+                <ng-container *ngIf="hideOrg">
+                  <div class="orgBox margin-top-s px-4 py-3 relative">
+                    <div class="flex">
+                      <h3 class="mat-h2 margin-remove inline-block  flex-1">
+                        {{heirarchyObject?.orgName}}
+                      </h3>
+                      <mat-icon matPrefix class="flex items-right justify-right cursor-pointer close-rounded" (click)="editOrg()">close</mat-icon>
+                    </div>
+                    <div class="flex flex-1 items-center flex-wrap text-left mat-body-2">
+                      <span *ngIf="heirarchyObject?.l1OrgName">Under &nbsp;</span>
+                      <span *ngIf="heirarchyObject?.l1OrgName">{{heirarchyObject?.l1OrgName}}</span>
+                      <span *ngIf="heirarchyObject?.l2OrgName"> <mat-icon matPrefix class=" flex items-center justify-center">navigate_next</mat-icon></span>
+                      <span *ngIf="heirarchyObject?.l2OrgName" class="flex-1">{{heirarchyObject?.l2OrgName}}</span>
+                    </div>
+                  </div>
+                </ng-container>
                 <div class="w-full margin-top-xs">
                   <div class="flex items-center  mat-body-1 flex-1">
                     <span class="flex-1">Not found yet?</span>
@@ -280,17 +305,17 @@
               </div>
 
               <ng-template #autocompleteCard let-organisation="organisation">
-                <div class="px-6 py-3">
+                <div class="px-5 py-3">
                   <div>
                     <h3 class="mat-h3 margin-remove">
                       {{organisation?.orgName}}
                     </h3>
                   </div>
                   <div class="flex flex-1 items-center flex-wrap text-left mat-body-2">
-                    <span *ngIf="organisation?.sbOrgType === 'department' || organisation?.sbOrgType === 'mdo' ">Under &nbsp;</span>
-                    <span>Ministry of bank</span>
-                    <span> <mat-icon matPrefix class=" flex items-center justify-center">navigate_next</mat-icon></span>
-                    <span class="flex-1">Department of bank</span>
+                    <span *ngIf="organisation?.l1OrgName">Under &nbsp;</span>
+                    <span *ngIf="organisation?.l1OrgName">{{organisation?.l1OrgName}}</span>
+                    <span *ngIf="organisation?.l2OrgName"> <mat-icon matPrefix class=" flex items-center justify-center">navigate_next</mat-icon></span>
+                    <span *ngIf="organisation?.l2OrgName" class="flex-1">{{organisation?.l2OrgName}}</span>
                   </div>
                 </div>
               </ng-template>
@@ -460,7 +485,7 @@
                 <div class="button_box flex flex-col items-center justify-center">
                   <button mat-flat-button type="submit"
                     class="submitBtn text-white ws-mat-primary-background ws-mat-white-text" (click)="signup()"
-                    [disabled]="!registrationForm?.valid || !confirm || disableBtn || !isMobileVerified">
+                    [disabled]="!registrationForm?.valid || !confirm || disableBtn || !isMobileVerified || !heirarchyObject">
                     SIGN UP
                   </button>
                 </div>

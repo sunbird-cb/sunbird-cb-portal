@@ -828,8 +828,11 @@ const routes: Routes = [
     data: {
       module: 'Login',
       pageId: 'public/signup',
+      pageType: 'feature',
+      pageKey: 'signup',
     },
     resolve: {
+      // pageData: PageResolve,
       positions: AppPublicPositionResolverService,
     },
   },
