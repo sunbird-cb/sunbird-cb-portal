@@ -59,7 +59,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
           if (this.activeRoute.firstChild) {
             this.activeRoute.firstChild.data.subscribe(response => {
               // tslint:disable-next-line:max-line-length
-              if (response.profile.data[0].personalDetails.surname && response.profile.data[0].personalDetails.surname !== null && response.profile.data[0].personalDetails.surname !== undefined) {
+              if (response && response.profile && response.profile.data && response.profile.data[0]
+                && response.profile.data[0].personalDetails && response.profile.data[0].personalDetails.surname &&
+                response.profile.data[0].personalDetails.surname !== null &&
+                response.profile.data[0].personalDetails.surname !== undefined) {
                 this.userRouteName = response && response.profile && response.profile.data && response.profile.data[0]
                 && response.profile.data[0].personalDetails &&
                 `${(response.profile.data[0].personalDetails.firstname || '')} ${(response.profile.data[0].personalDetails.surname)}`
