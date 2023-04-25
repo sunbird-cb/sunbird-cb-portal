@@ -516,7 +516,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
             }
           }
 
-          // console.log('hierarchyObj===: ', hierarchyObj)
+          //console.log('hierarchyObj===: ', hierarchyObj)
 
           this.signupSvc.register(req).subscribe(
             (_res: any) => {

@@ -259,6 +259,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.onChangesDegrees()
         this.onChangesPostDegrees()
         // this.designationsMeta = data.designations
+        this.onChangesDegrees()
+        this.onChangesPostDegrees()
       },
       (_err: any) => {
       })
@@ -459,6 +461,30 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           return this.masterLanguagesEntries.slice()
         })
       )
+  }
+
+  onChangesDegrees() {
+    const controls = this.createUserForm.get('degrees') as FormArray
+    // tslint:disable-next-line: no-non-null-assertion
+    controls.at(controls.length - 1).get('degree')!.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      startWith<string | INameField>(''),
+      map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+      map(name => name ? this.filterDegrees(name) : this.degreesMeta.graduations.slice()),
+    ).subscribe(val => this.degreefilteredOptions = val)
+  }
+
+  onChangesPostDegrees() {
+    const controls = this.createUserForm.get('postDegrees') as FormArray
+    // tslint:disable-next-line: no-non-null-assertion
+    controls.at(controls.length - 1).get('degree')!.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      startWith<string | INameField>(''),
+      map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+      map(name => name ? this.filterPostDegrees(name) : this.degreesMeta.postGraduations.slice()),
+    ).subscribe(val => this.postDegreefilteredOptions = val)
   }
 
   private filterNationality(name: string): INation[] {
