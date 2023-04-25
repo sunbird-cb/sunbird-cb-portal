@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormControl, Validators, AbstractControl, ValidatorFn } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
-import { MatSnackBar } from '@angular/material'
+import { MatDialog, MatSnackBar } from '@angular/material'
 import { environment } from 'src/environments/environment'
 // tslint:disable-next-line: import-name
 import _ from 'lodash'
 import { Subscription, Observable, interval } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { SignupService } from '../public-signup/signup.service'
+import { RequestService } from './request.service'
+import { RequestSuccessDialogComponent } from './request-success-dialog/request-success-dialog.component'
 
 export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -46,14 +48,29 @@ export class PublicRequestComponent implements OnInit {
   OTP_TIMER = environment.resendOTPTIme
   timerSubscription: Subscription | null = null
   timeLeftforOTP = 0
+  // tslint:disable-next-line:max-line-length
+  requestObj: {
+    state: string
+    action: string
+    serviceName: string
+    userId: string
+    applicationId: string;
+    actorUserId: string
+    deptName: string
+    updateFieldValues: { name: string; description: string; userId: string} []}  | undefined
 
-  constructor(private activatedRoute: ActivatedRoute, private snackBar: MatSnackBar, private signupSvc: SignupService) {
+  constructor(private activatedRoute: ActivatedRoute,
+              private snackBar: MatSnackBar,
+              private signupSvc: SignupService,
+              private dialog: MatDialog,
+              private requestSvc: RequestService) {
     this.requestType = this.activatedRoute.snapshot.queryParams.type
     this.requestForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       email: new FormControl('', [Validators.required, Validators.pattern(this.emailWhitelistPattern)]),
       mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
-      position: new FormControl('', this.requestType === 'Position'? [Validators.required, forbiddenNamesValidatorPosition(this.masterPositions)]:[]),
+      // tslint:disable-next-line:max-line-length
+      position: new FormControl('', this.requestType === 'Position' ? [Validators.required, forbiddenNamesValidatorPosition(this.masterPositions)] : []),
       organisation: new FormControl('', this.requestType === 'Organisation' ? Validators.required : []),
       addDetails: new FormControl('', []),
       confirmBox: new FormControl(false, [Validators.required]),
@@ -153,6 +170,109 @@ export class PublicRequestComponent implements OnInit {
           }
         })
     }
+  }
+
+  public confirmChange() {
+    this.confirm = !this.confirm
+    this.requestForm.patchValue({
+      confirmBox: this.confirm,
+    })
+  }
+
+  submitRequest() {
+    // tslint:disable-next-line:no-console
+    console.log('this.requestForm', this.requestForm.value)
+    this.requestObj = {
+      state: 'INITIATE',
+      action: 'INITIATE',
+      serviceName: '',
+      userId: 'manas53',
+      applicationId: '1234',
+      actorUserId: '1237',
+      deptName : 'CS',
+      updateFieldValues: [],
+    }
+
+    if (this.requestType === 'Position') {
+      this.requestObj.serviceName = 'position'
+
+      const formobj = {
+        name: this.requestForm.value.position,
+        description: this.requestForm.value.addDetails,
+        userId : this.requestForm.value.firstname,
+      }
+      this.requestObj.updateFieldValues.push(formobj)
+
+      // tslint:disable-next-line:no-console
+      console.log('Pos create', this.requestObj)
+      // this.openDialog(this.requestType)
+
+      this.requestSvc.createPosition(this.requestObj).subscribe(
+        (_res: any) => {
+          this.openDialog(this.requestType)
+          this.disableBtn = false
+          this.isMobileVerified = true
+        },
+        (err: any) => {
+          this.disableBtn = false
+          // this.loggerSvc.error('Error in registering new user >', err)
+          if (err.error && err.error.params && err.error.params.errmsg) {
+            this.openSnackbar(err.error.params.errmsg)
+          } else {
+            this.openSnackbar('Something went wrong, please try again later!')
+          }
+        }
+      )
+
+    } else if (this.requestType === 'Organisation') {
+      this.requestObj.serviceName = 'organisation'
+
+      const formobj = {
+        name: this.requestForm.value.organisation,
+        description: this.requestForm.value.addDetails,
+        userId : this.requestForm.value.firstname,
+      }
+      this.requestObj.updateFieldValues.push(formobj)
+
+      // tslint:disable-next-line:no-console
+      console.log('Org create', this.requestObj)
+      // this.openDialog(this.requestType)
+
+      this.requestSvc.createOrg(this.requestObj).subscribe(
+        (_res: any) => {
+          this.openDialog(this.requestType)
+          this.disableBtn = false
+          this.isMobileVerified = true
+        },
+        (err: any) => {
+          this.disableBtn = false
+          // this.loggerSvc.error('Error in registering new user >', err)
+          if (err.error && err.error.params && err.error.params.errmsg) {
+            this.openSnackbar(err.error.params.errmsg)
+          } else {
+            this.openSnackbar('Something went wrong, please try again later!')
+          }
+        }
+      )
+
+    }
+  }
+
+  openDialog(type: any): void {
+    const dialogRef = this.dialog.open(RequestSuccessDialogComponent, {
+      // height: '400px',
+      width: '500px',
+      data:  { requestType: type },
+      // data: { content, userId: this.userId, userRating: this.userRating },
+    })
+    dialogRef.afterClosed().subscribe((_result: any) => {
+    })
+  }
+
+  private openSnackbar(primaryMsg: string, duration: number = 5000) {
+    this.snackBar.open(primaryMsg, 'X', {
+      duration,
+    })
   }
 
 }
