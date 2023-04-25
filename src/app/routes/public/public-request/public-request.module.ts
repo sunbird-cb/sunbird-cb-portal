@@ -30,9 +30,11 @@ import { RouterModule } from '@angular/router'
 import { PipeOrderByModule } from '@sunbird-cb/utils/src/lib/pipes/pipe-order-by/pipe-order-by.module'
 import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
 import { PublicRequestComponent } from './public-request.component'
+import { RequestService } from './request.service'
+import { RequestSuccessDialogComponent } from './request-success-dialog/request-success-dialog.component'
 
 @NgModule({
-  declarations: [PublicRequestComponent],
+  declarations: [PublicRequestComponent, RequestSuccessDialogComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -65,8 +67,8 @@ import { PublicRequestComponent } from './public-request.component'
     PipeDurationTransformModule,
   ],
   exports: [PublicRequestComponent],
-  providers: [],
-  entryComponents: [],
+  providers: [RequestService],
+  entryComponents: [RequestSuccessDialogComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class PublicRequestModule { }
