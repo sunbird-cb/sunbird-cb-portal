@@ -33,7 +33,7 @@ import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha'
 import { SignupSuccessDialogueComponent } from './signup-success-dialogue/signup-success-dialogue/signup-success-dialogue.component'
 import { environment } from 'src/environments/environment'
 import { PipeOrderByModule } from '@sunbird-cb/utils/src/lib/pipes/pipe-order-by/pipe-order-by.module'
-import { AppPublicPositionResolverService } from './position-resolver.service';
+import { AppPublicPositionResolverService } from './position-resolver.service'
 import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
 
 @NgModule({
