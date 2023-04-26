@@ -5,3 +5,16 @@
     <ng-container [wsResolverWidget]="col.widget"></ng-container>
   </div>
 </div>
+
+<div id="grid-container" class="footer" *ngIf="isNudgeOpen">
+<span>Update your mobile number </span>
+<button class="ui fluid-button button-43" (click)="fetchProfile()" role="button">Update Now</button>
+<button class="button-39" (click)="remindlater()" role="button">Remind Later</button>
+
+<span class='tool material-icons tooltips' matTooltip="My tooltip">error_outline</span>
+<span class="tooltip-check">Why it is important ?
+  <span class="tooltiptext-check">Update your mobile number. This will enable you to login with your mobile number easily and receive important alerts on your mobile.</span>
+</span>
+
+</div>
+
