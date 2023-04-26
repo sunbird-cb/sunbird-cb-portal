@@ -13,13 +13,11 @@ import {
   sizeSuffix,
   IGridLayoutDataMain,
 } from './grid-layout.model'
-import _ from 'lodash'
-
+import lodash from 'lodash'
 
 const API_END_POINTS = {
-  fetchProfileById: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`
+  fetchProfileById: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`,
 }
-
 
 @Component({
   selector: 'ws-widget-grid-layout',
@@ -36,18 +34,18 @@ export class GridLayoutComponent extends WidgetBaseComponent
     ) {
       super()
     }
-      
+
   @Input() widgetData!: IGridLayoutDataMain
   containerClass = ''
   processed: IGridLayoutProcessedData[][] = []
-  isNudgeOpen:boolean=true;
+  isNudgeOpen = true
 
   ngOnInit() {
-    this.fetchProfileById(this.configSvc.unMappedUser.id).subscribe(x=>{
-      if(x.profileDetails.mandatoryFieldsExists){
+    this.fetchProfileById(this.configSvc.unMappedUser.id).subscribe(x => {
+      if (x.profileDetails.mandatoryFieldsExists) {
         this.isNudgeOpen = false
       }
-      
+
     })
 
     if (this.widgetData.gutter != null) {
@@ -69,8 +67,8 @@ export class GridLayoutComponent extends WidgetBaseComponent
     )
   }
 
-  remindlater(){
-    this.isNudgeOpen=false;
+  remindlater() {
+    this.isNudgeOpen = false
   }
   tracker(index: number, item: any) {
     if (index >= 0) { }
@@ -87,8 +85,7 @@ export class GridLayoutComponent extends WidgetBaseComponent
         return _.get(res, 'result.response')
       }))
   }
-  fetchProfile()
-  {
+  fetchProfile() {
     this.router.navigate(['/app/user-profile/details'])
   }
 }
