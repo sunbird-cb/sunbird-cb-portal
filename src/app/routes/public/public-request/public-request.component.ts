@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators'
 import { SignupService } from '../public-signup/signup.service'
 import { RequestService } from './request.service'
 import { RequestSuccessDialogComponent } from './request-success-dialog/request-success-dialog.component'
+import { v4 as uuid } from 'uuid'
 
 export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -181,9 +182,9 @@ export class PublicRequestComponent implements OnInit {
       state: 'INITIATE',
       action: 'INITIATE',
       serviceName: reqType,
-      userId: '1234',
-      applicationId: '1234',
-      actorUserId: '1234',
+      userId: uuid(),
+      applicationId: uuid(),
+      actorUserId: uuid(),
       deptName : 'iGOT',
       updateFieldValues: [],
     }
