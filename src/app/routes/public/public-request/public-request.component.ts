@@ -50,7 +50,7 @@ export class PublicRequestComponent implements OnInit {
   timeLeftforOTP = 0
   // tslint:disable-next-line:max-line-length
   requestObj: { state: string; action: string; serviceName: string; userId: string;
-    applicationId: string; actorUserId: string; deptName: string; updateFieldValues: never[]}  | undefined
+    applicationId: string; actorUserId: string; deptName: string; updateFieldValues: any}  | undefined
   formobj: { toValue: {} ; fieldKey: any; description: any; firstName: any; email: any; mobile: any} | undefined
 
   constructor(private activatedRoute: ActivatedRoute,
