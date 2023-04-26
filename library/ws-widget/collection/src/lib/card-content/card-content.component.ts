@@ -46,49 +46,52 @@ export class CardContentComponent extends WidgetBaseComponent
   }
 
   ngOnInit() {
+
     // this.widgetInstanceId=his.id
-    this.isIntranetAllowedSettings = this.configSvc.isIntranetAllowed
-    this.prefChangeSubscription = this.configSvc.prefChangeNotifier.subscribe(() => {
+    if(this.widgetData.content.primaryCategory == 'Program'){
       this.isIntranetAllowedSettings = this.configSvc.isIntranetAllowed
-    })
-
-    const instanceConfig = this.configSvc.instanceConfig
-    if (instanceConfig) {
-      this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
-      this.sourceLogos = instanceConfig.sources
-      this.defaultSLogo = instanceConfig.logos.defaultSourceLogo || ''
-    }
-
-    if (this.widgetData) {
-      if (this.widgetData.context && this.widgetData.context.pageSection === 'curatedCollections') {
-        this.widgetData.content.linkUrl = '/app/curatedCollections/'+ this.widgetData.content.identifier
+      this.prefChangeSubscription = this.configSvc.prefChangeNotifier.subscribe(() => {
+        this.isIntranetAllowedSettings = this.configSvc.isIntranetAllowed
+      })
+  
+      const instanceConfig = this.configSvc.instanceConfig
+      if (instanceConfig) {
+        this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
+        this.sourceLogos = instanceConfig.sources
+        this.defaultSLogo = instanceConfig.logos.defaultSourceLogo || ''
       }
-      this.btnPlaylistConfig = {
-        contentId: this.widgetData.content.identifier,
-        contentName: this.widgetData.content.name,
-        contentType: this.widgetData.content.contentType,
-        primaryCategory: this.widgetData.content.primaryCategory,
-        mode: 'dialog',
+  
+      if (this.widgetData) {
+        if (this.widgetData.context && this.widgetData.context.pageSection === 'curatedCollections') {
+          this.widgetData.content.linkUrl = '/app/curatedCollections/'+ this.widgetData.content.identifier
+        }
+        this.btnPlaylistConfig = {
+          contentId: this.widgetData.content.identifier,
+          contentName: this.widgetData.content.name,
+          contentType: this.widgetData.content.contentType,
+          primaryCategory: this.widgetData.content.primaryCategory,
+          mode: 'dialog',
+        }
+        this.btnGoalsConfig = {
+          contentId: this.widgetData.content.identifier,
+          contentName: this.widgetData.content.name,
+          contentType: this.widgetData.content.contentType,
+          primaryCategory: this.widgetData.content.primaryCategory,
+  
+        }
+        this.modifySensibleContentRating()
       }
-      this.btnGoalsConfig = {
-        contentId: this.widgetData.content.identifier,
-        contentName: this.widgetData.content.name,
-        contentType: this.widgetData.content.contentType,
-        primaryCategory: this.widgetData.content.primaryCategory,
-
+  
+      // required for knowledge board
+      // TODO: make it more generic
+      this.showFlip = Boolean(this.widgetData.content.reason)
+      if (this.widgetData.content.mode) {
+        this.showIsMode = this.isLatest(this.convertToISODate(this.widgetData.content.addedOn))
       }
-      this.modifySensibleContentRating()
-    }
-
-    // required for knowledge board
-    // TODO: make it more generic
-    this.showFlip = Boolean(this.widgetData.content.reason)
-    if (this.widgetData.content.mode) {
-      this.showIsMode = this.isLatest(this.convertToISODate(this.widgetData.content.addedOn))
-    }
-    if (this.widgetData.contentTags) {
-      this.showContentTag =
-        this.checkCriteria() && this.checkContentTypeCriteria() && this.checkMimeTypeCriteria()
+      if (this.widgetData.contentTags) {
+        this.showContentTag =
+          this.checkCriteria() && this.checkContentTypeCriteria() && this.checkMimeTypeCriteria()
+      }
     }
   }
 
