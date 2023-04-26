@@ -112,7 +112,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   OTP_TIMER = environment.resendOTPTIme
   timerSubscription: Subscription | null = null
   timeLeftforOTP = 0
-  filteredOrgList!: Observable<any>
+  filteredOrgList!: any
   orgList: any
   resultFetched = false
   heirarchyObject: any
