@@ -210,10 +210,10 @@ export class PublicRequestComponent implements OnInit {
           this.openDialog(this.requestType)
           this.disableBtn = false
           this.isMobileVerified = true
+          this.requestForm.reset()
         },
         (err: any) => {
           this.disableBtn = false
-          // this.loggerSvc.error('Error in registering new user >', err)
           if (err.error && err.error.params && err.error.params.errmsg) {
             this.openSnackbar(err.error.params.errmsg)
           } else {
@@ -243,10 +243,10 @@ export class PublicRequestComponent implements OnInit {
           this.openDialog(this.requestType)
           this.disableBtn = false
           this.isMobileVerified = true
+          this.requestForm.reset()
         },
         (err: any) => {
           this.disableBtn = false
-          // this.loggerSvc.error('Error in registering new user >', err)
           if (err.error && err.error.params && err.error.params.errmsg) {
             this.openSnackbar(err.error.params.errmsg)
           } else {

@@ -1,19 +1,22 @@
 
 .request-dialog {
+    .title {
+        font: 600 18px/26px Montserrat !important;
+    }
     .completedicon {
         color: #1d8923;
-        width: 24px!important;
-        height: 24px!important;
+        width: 22px !important;
+        height: 22px !important;
         vertical-align: sub;
-        font-size: 24px!important;
-        margin-right: 4px;
+        font-size: 22px !important;
+        margin-right: 3px;
     }
 
 
     button {
         min-width: 112px;
         width: auto;
-        border: 1px solid #0075b7;
+        border: 2px solid #0075b7 !important;
         border-radius: 4px;
         color: #0075b7 !important;
         float: right;
