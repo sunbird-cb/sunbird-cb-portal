@@ -143,7 +143,7 @@
                     {{ option.name }}
                   </mat-option>
 
-                  <mat-option class="custom bordered" *ngIf="(!masterPositions || !masterPositions?.length)" [value]="">
+                  <mat-option class="custom bordered" *ngIf="(masterPositions | async)?.length === 0" [value]="">
                     <ng-container [ngTemplateOutlet]="noResult" [ngTemplateOutletContext]="{type: 'Position'}">
                     </ng-container>
                   </mat-option>

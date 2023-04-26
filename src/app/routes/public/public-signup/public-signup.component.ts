@@ -197,7 +197,6 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     this.heirarchyObject = null
   }
 
-
   onPositionsChange() {
     // tslint:disable-next-line: no-non-null-assertion
     this.masterPositions = this.registrationForm.get('position')!.valueChanges
@@ -216,7 +215,6 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     })
   }
 
-
   filterOrgsSearch(orgname: string = '') {
       const filterValue = orgname.toLowerCase()
       return this.signupSvc.searchOrgs(filterValue).subscribe((res: any) => {
@@ -225,7 +223,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         this.filteredOrgList =  res.result.response.filter((org: any) => {
           return org.orgName.toLowerCase().indexOf(filterValue) >= 0
         })
-      }, (err: any) => {
+      },                                                      (err: any) => {
         this.searching = false
         this.loggerSvc.error('Error in fetching organisations >', err)
         if (err.error && err.error.params && err.error.params.errmsg) {
@@ -238,7 +236,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
 
   async searchOrgs(searchValue: string) {
     this.searching = true
-    if(!searchValue){
+    if (!searchValue) {
       this.openSnackbar('Please enter organisation to search')
       this.searching = false
       return
@@ -255,8 +253,10 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     this.heirarchyObject = null
   }
 
+  // tslint:disable-next-line:function-name
   OrgsSearchChange() {
-    this.registrationForm.get('organisation')!.valueChanges.subscribe( () => 
+    // tslint:disable-next-line:no-non-null-assertion
+    this.registrationForm.get('organisation')!.valueChanges.subscribe(() =>
       this.resultFetched = false
     )
   }
@@ -475,7 +475,6 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((_result: any) => {
     })
   }
-
 
   ngOnDestroy() {
     if (this.subscriptionContact) {

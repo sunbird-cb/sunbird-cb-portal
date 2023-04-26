@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { RequestSuccessDialogComponent } from './request-success-dialog.component';
+import { RequestSuccessDialogComponent } from './request-success-dialog.component'
 
 describe('RequestSuccessDialogComponent', () => {
-  let component: RequestSuccessDialogComponent;
-  let fixture: ComponentFixture<RequestSuccessDialogComponent>;
+  let component: RequestSuccessDialogComponent
+  let fixture: ComponentFixture<RequestSuccessDialogComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RequestSuccessDialogComponent ]
+      declarations: [RequestSuccessDialogComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RequestSuccessDialogComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(RequestSuccessDialogComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

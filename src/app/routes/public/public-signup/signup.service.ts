@@ -78,12 +78,12 @@ export class SignupService {
 
   searchOrgs(orgName: any) {
     const req = {
-      "request": {
-        "filters": {
-          orgName
+      request: {
+        filters: {
+          orgName,
         },
-        "limit": 50
-      }
+        limit: 50,
+      },
     }
     return this.http.post(API_END_POINTS.SEARCH_ORG, req)
   }
