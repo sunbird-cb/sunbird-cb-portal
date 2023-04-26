@@ -49,15 +49,9 @@ export class PublicRequestComponent implements OnInit {
   timerSubscription: Subscription | null = null
   timeLeftforOTP = 0
   // tslint:disable-next-line:max-line-length
-  requestObj: {
-    state: string
-    action: string
-    serviceName: string
-    userId: string
-    applicationId: string;
-    actorUserId: string
-    deptName: string
-    updateFieldValues: { name: string; description: string; userId: string} []}  | undefined
+  requestObj: { state: string; action: string; serviceName: string; userId: string;
+    applicationId: string; actorUserId: string; deptName: string; updateFieldValues: never[]}  | undefined
+  formobj: { toValue: {} ; fieldKey: any; description: any; firstName: any; email: any; mobile: any} | undefined
 
   constructor(private activatedRoute: ActivatedRoute,
               private snackBar: MatSnackBar,
@@ -180,28 +174,32 @@ export class PublicRequestComponent implements OnInit {
   }
 
   submitRequest() {
+    const reqType = this.requestType.toLowerCase()
     // tslint:disable-next-line:no-console
     console.log('this.requestForm', this.requestForm.value)
     this.requestObj = {
       state: 'INITIATE',
       action: 'INITIATE',
-      serviceName: '',
-      userId: 'manas53',
+      serviceName: reqType,
+      userId: '1234',
       applicationId: '1234',
-      actorUserId: '1237',
-      deptName : 'CS',
+      actorUserId: '1234',
+      deptName : 'iGOT',
       updateFieldValues: [],
     }
 
     if (this.requestType === 'Position') {
-      this.requestObj.serviceName = 'position'
-
-      const formobj = {
-        name: this.requestForm.value.position,
-        description: this.requestForm.value.addDetails,
-        userId : this.requestForm.value.firstname,
+      this.formobj = {
+        toValue: {
+          position: this.requestForm.value.position,
+        },
+        fieldKey: reqType,
+        description: this.requestForm.value.addDetails || '',
+        firstName: this.requestForm.value.firstname || '',
+        email: this.requestForm.value.email || '',
+        mobile: this.requestForm.value.mobile || '',
       }
-      this.requestObj.updateFieldValues.push(formobj)
+      this.requestObj.updateFieldValues.push(this.formobj)
 
       // tslint:disable-next-line:no-console
       console.log('Pos create', this.requestObj)
@@ -223,16 +221,18 @@ export class PublicRequestComponent implements OnInit {
           }
         }
       )
-
     } else if (this.requestType === 'Organisation') {
-      this.requestObj.serviceName = 'organisation'
-
-      const formobj = {
-        name: this.requestForm.value.organisation,
-        description: this.requestForm.value.addDetails,
-        userId : this.requestForm.value.firstname,
+      this.formobj = {
+        toValue: {
+          organisation: this.requestForm.value.organisation,
+        },
+        fieldKey: reqType,
+        description: this.requestForm.value.addDetails || '',
+        firstName: this.requestForm.value.firstname || '',
+        email: this.requestForm.value.email || '',
+        mobile: this.requestForm.value.mobile || '',
       }
-      this.requestObj.updateFieldValues.push(formobj)
+      this.requestObj.updateFieldValues.push(this.formobj)
 
       // tslint:disable-next-line:no-console
       console.log('Org create', this.requestObj)
@@ -254,7 +254,6 @@ export class PublicRequestComponent implements OnInit {
           }
         }
       )
-
     }
   }
 

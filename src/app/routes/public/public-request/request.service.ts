@@ -3,8 +3,8 @@ import { Observable } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 
 const API_END_POINTS = {
-  positionCreate: `/v1/position/workflow/create`,
-  orgCreate: `/v1/org/workflow/create`,
+  positionCreate: `/api/workflow/position/create`,
+  orgCreate: `/api/workflow/org/create`,
 }
 
 @Injectable({
