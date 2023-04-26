@@ -121,7 +121,7 @@
                   aria-label="Position Field label">
                   Position
                 </label>
-                <mat-form-field appearance="outline" class="margin-top-s w-full">
+                <mat-form-field appearance="outline" class="margin-top-s w-full" id="position">
                   <input id="position" matInput tab-directive type="text" placeholder="Select your position"
                     i18n-placeholder="position" formControlName="position" [matAutocomplete]="positionAutocomplete"
                     i18n-aria-label aria-label="Position" #position i18n-aria-label aria-label="Position Field input" maxlength="50" />
@@ -134,13 +134,18 @@
                     aria-label="You must enter value from suggested list only.">
                     You must enter value from suggested list only.
                   </mat-error>
-                  <mat-hint>Not finding your position?<span class="float-right blue-text" (click)="navigateTo('Position')">Request for help</span></mat-hint> 
+                  <mat-hint class="pos-hint">Not finding your position?<span class="float-right blue-text font-bold" (click)="navigateTo('Position')">Request for help</span></mat-hint> 
                 </mat-form-field>
                 <mat-autocomplete #positionAutocomplete="matAutocomplete" autoActiveFirstOption="true" i18n-aria-label
                   aria-label="Position list masterPositions" [displayWith]="displayFnPosition">
                   <mat-option *ngFor="let option of masterPositions | async" [value]="option" i18n-aria-label
                     aria-label="Position list autocomplete option">
                     {{ option.name }}
+                  </mat-option>
+
+                  <mat-option class="custom bordered" *ngIf="(!masterPositions || !masterPositions?.length)" [value]="">
+                    <ng-container [ngTemplateOutlet]="noResult" [ngTemplateOutletContext]="{type: 'Position'}">
+                    </ng-container>
                   </mat-option>
                 </mat-autocomplete>
               </div>
@@ -297,9 +302,9 @@
                   </div>
                 </ng-container>
                 <div class="w-full margin-top-xs">
-                  <div class="flex items-center  mat-body-1 flex-1">
-                    <span class="flex-1">Not found yet?</span>
-                    <a class="flex-1 ws-mat-accent-text text-right cursor-pointer" (click)="navigateTo('Organisation')"> Request for help</a>
+                  <div class="flex items-center mat-body-2 flex-1">
+                    <span class="flex-1 ws-mat-black60-text">Not found yet?</span>
+                    <a class="flex-1 ws-mat-accent-text text-right cursor-pointer font-bold" (click)="navigateTo('Organisation')"> Request for help</a>
                   </div>
                 </div>
               </div>
@@ -321,9 +326,9 @@
               </ng-template>
               <ng-template #noResult let-type="type">
                 <div class="flex-col text-center items-center justify-center px-6 py-3">
-                  <div class="mat-body-1">We couldn't find any matches for your search. </div>
-                  <div class="mat-body-1 padding-top-xs">
-                    <a  class="flex-1 ws-mat-accent-text cursor-pointer" (click)="navigateTo(type)"> Request for help</a>
+                  <div class="mat-body-2 px-6">We couldn't find any matches for your search. </div>
+                  <div class="mat-body-2 padding-top-xs">
+                    <a  class="flex-1 ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo(type)"> Request for help</a>
                   </div>
                 </div>
               </ng-template>
