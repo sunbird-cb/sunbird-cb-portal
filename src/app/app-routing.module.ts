@@ -123,7 +123,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'competencie',
       pageId: 'app/competencies',
-      module: 'competency',
+      module: 'Competency',
     },
     resolve: {
       pageData: PageResolve,
@@ -194,7 +194,7 @@ const routes: Routes = [
     canActivate: [GeneralGuard],
     data: {
       pageId: 'app/curatedCollections',
-      module: 'explore',
+      module: 'Explore',
     },
     resolve: {
       // pageData: PageResolve,
@@ -388,7 +388,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'network-v2',
       pageId: 'app/network-v2',
-      module: 'newtwork',
+      module: 'Newtwork',
     },
     resolve: {
       pageData: PageResolve,
@@ -489,7 +489,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'globalsearch',
       pageId: 'app/globalsearch',
-      module: 'search',
+      module: 'Search',
     },
   },
   {

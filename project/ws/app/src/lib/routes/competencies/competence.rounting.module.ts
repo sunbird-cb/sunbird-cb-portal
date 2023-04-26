@@ -30,7 +30,7 @@ const routes: Routes = [
         component: CompetenceAllComponent,
         data: {
           pageId: 'home',
-          module: 'competency',
+          module: 'Competency',
         },
         resolve: {
           profile: ProfileResolve,
@@ -43,7 +43,7 @@ const routes: Routes = [
         component: CompetencyAllWrapperComponent,
         data: {
           pageId: 'all',
-          module: 'competency',
+          module: 'Competency',
         },
         resolve: {
           profile: ProfileResolve,
@@ -78,7 +78,7 @@ const routes: Routes = [
             component: CompetencyDetailedViewComponent,
             data: {
               pageId: ':competencyId/:competencyName/:routeType',
-              module: 'competency',
+              module: 'Competency',
             },
           },
           {
