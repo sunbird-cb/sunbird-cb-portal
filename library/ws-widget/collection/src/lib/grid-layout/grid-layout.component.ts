@@ -13,7 +13,6 @@ import {
   sizeSuffix,
   IGridLayoutDataMain,
 } from './grid-layout.model'
-import lodash from 'lodash'
 
 const API_END_POINTS = {
   fetchProfileById: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`,
