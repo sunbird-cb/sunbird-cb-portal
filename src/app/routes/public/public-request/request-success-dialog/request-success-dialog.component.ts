@@ -16,7 +16,7 @@ export class RequestSuccessDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('data', this.data)
+    // console.log('data', this.data)
     this.reqType = this.data.requestType.toLowerCase()
   }
 

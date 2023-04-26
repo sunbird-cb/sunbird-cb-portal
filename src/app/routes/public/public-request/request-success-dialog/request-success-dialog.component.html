@@ -1,12 +1,10 @@
-<div class="text-center">
-    <h2 class="mat-headline margin-remove-bottom ws-mat-black-text">
+<div class="request-dialog">
+    <p class="mat-title margin-remove-bottom ws-mat-black-text">
         <mat-icon class="completedicon mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">check_circle</mat-icon> Your {{reqType}} request has been successfully submitted
-    </h2>
-    <p class="margin-top-s padding-s mat-body-1 ws-mat-black60-text">
+    </p>
+    <p class="margin-top-s padding-s mat-body-2 ws-mat-black60-text">
         We will reach out to you in the next 48 hours to help you. Resume self-registration process to see if you have all the other required details for the registration process.
     </p>
-    <button mat-stroked-button type="submit" class="text-white ws-mat-primary-background flex-auto-display margin-top-s"
-        (click)="closeDialog()">
-        <span class="text-white" i18n>Resume registration</span>
-    </button>
+    <button mat-stroked-button type="submit" class="flex-auto-display mat-button mat-button-base mat-default ng-star-inserted"
+        (click)="closeDialog()">Resume registration</button>
 </div>
