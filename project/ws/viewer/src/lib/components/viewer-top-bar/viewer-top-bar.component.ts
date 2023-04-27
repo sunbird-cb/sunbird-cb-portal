@@ -118,7 +118,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
         this.nextResourceUrlParams = {
           queryParams: {
             primaryCategory: data.nextResource.primaryCategory,
-            collectionId: data.nextResource.collectionId,
+            collectionId: data.nextResource.collectionId, 
             collectionType: data.nextResource.collectionType,
             batchId: data.nextResource.batchId,
             viewMode: data.nextResource.viewMode,
