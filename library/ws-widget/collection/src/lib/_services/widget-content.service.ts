@@ -6,6 +6,7 @@ import { catchError, retry, map, shareReplay } from 'rxjs/operators'
 import { NsContentStripMultiple } from '../content-strip-multiple/content-strip-multiple.model'
 import { NsContent } from './widget-content.model'
 import { NSSearch } from './widget-search.model'
+import _ from 'lodash'
 
 // TODO: move this in some common place
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'
@@ -255,8 +256,12 @@ export class WidgetContentService {
     )
   }
   searchV6(req: NSSearch.ISearchV6Request): Observable<NSSearch.ISearchV6ApiResultV2> {
+    const apiPath = _.get(req, 'api.path')
     req.query = req.query || ''
-    return this.http.post<NSSearch.ISearchV6ApiResultV2>(API_END_POINTS.CONTENT_SEARCH_V6, req)
+    if(apiPath) {
+      return this.http.get<NSSearch.ISearchV6ApiResultV2>(apiPath)
+    }
+    return this.http.post<NSSearch.ISearchV6ApiResultV2>( API_END_POINTS.CONTENT_SEARCH_V6, req)
   }
 
   searchRelatedCBPV6(req: NSSearch.ISearchV6RequestV2): Observable<NSSearch.ISearchV6ApiResultV2> {
