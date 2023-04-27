@@ -13,6 +13,7 @@ import {
   sizeSuffix,
   IGridLayoutDataMain,
 } from './grid-layout.model'
+// tslint:disable-next-line
 import _ from 'lodash'
 
 const API_END_POINTS = {
