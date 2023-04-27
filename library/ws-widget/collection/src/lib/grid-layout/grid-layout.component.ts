@@ -1,5 +1,11 @@
+import { HttpClient } from '@angular/common/http'
 import { Component, OnInit, Input } from '@angular/core'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
+import { ConfigurationsService } from '@sunbird-cb/utils/src/lib/services/configurations.service'
+import { IUserProfileDetailsFromRegistry } from '@ws/app/src/lib/routes/user-profile/models/user-profile.model'
+import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
+import { Router } from '@angular/router'
 import {
   IGridLayoutData,
   IGridLayoutProcessedData,
@@ -7,18 +13,41 @@ import {
   sizeSuffix,
   IGridLayoutDataMain,
 } from './grid-layout.model'
+import _ from 'lodash'
+
+const API_END_POINTS = {
+  fetchProfileById: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`,
+}
+
 @Component({
   selector: 'ws-widget-grid-layout',
   templateUrl: './grid-layout.component.html',
   styleUrls: ['./grid-layout.component.scss'],
 })
+
 export class GridLayoutComponent extends WidgetBaseComponent
   implements OnInit, NsWidgetResolver.IWidgetData<IGridLayoutDataMain> {
+    constructor(
+      private router: Router,
+      private configSvc: ConfigurationsService,
+      private http: HttpClient,
+    ) {
+      super()
+    }
+
   @Input() widgetData!: IGridLayoutDataMain
   containerClass = ''
   processed: IGridLayoutProcessedData[][] = []
+  isNudgeOpen = true
 
   ngOnInit() {
+    this.fetchProfileById(this.configSvc.unMappedUser.id).subscribe(x => {
+      if (x.profileDetails.mandatoryFieldsExists) {
+        this.isNudgeOpen = false
+      }
+
+    })
+
     if (this.widgetData.gutter != null) {
       this.containerClass = `-mx-${this.widgetData.gutter}`
     }
@@ -37,6 +66,10 @@ export class GridLayoutComponent extends WidgetBaseComponent
       ),
     )
   }
+
+  remindlater() {
+    this.isNudgeOpen = false
+  }
   tracker(index: number, item: any) {
     if (index >= 0) { }
     return item
@@ -44,5 +77,15 @@ export class GridLayoutComponent extends WidgetBaseComponent
   tracker2(index: number, item: any) {
     if (index >= 0) { }
     return item
+  }
+
+  fetchProfileById(id: any): Observable<any> {
+    return this.http.get<[IUserProfileDetailsFromRegistry]>(API_END_POINTS.fetchProfileById(id))
+      .pipe(map((res: any) => {
+        return _.get(res, 'result.response')
+      }))
+  }
+  fetchProfile() {
+    this.router.navigate(['/app/user-profile/details'])
   }
 }
