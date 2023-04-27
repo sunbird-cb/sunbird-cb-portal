@@ -12,6 +12,7 @@ import { DOCUMENT, isPlatformBrowser } from '@angular/common'
 // tslint:disable-next-line: import-name
 import _ from 'lodash'
 import { ActivatedRoute } from '@angular/router'
+import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component'
 
 // export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
 //   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -570,7 +571,16 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((_result: any) => {
     })
   }
-
+  termsAndConditionClick(){
+    const dialogRef = this.dialog.open(TermsAndConditionComponent, {
+      maxHeight: 'auto',
+      height: '90%',
+      width: '90%',
+	    minHeight: 'auto',
+    })
+    dialogRef.afterClosed().subscribe((_result: any) => {
+    })
+  }
   ministrySelected(value: any) {
     if (value && value.mapId) {
       this.signupSvc.getDeparmentsOfState(value.mapId).subscribe(res => {
