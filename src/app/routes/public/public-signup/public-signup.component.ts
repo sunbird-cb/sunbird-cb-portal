@@ -101,6 +101,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   telemetryConfig: NsInstanceConfig.ITelemetryConfig | null = null
   portalID = ''
   confirm = false
+  confirmTerms = false
   disableBtn = false
   orgRequired = false
   ministeries: any[] = []
@@ -138,6 +139,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
       mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
       confirmBox: new FormControl(false, [Validators.required]),
+      confirmTermsBox: new FormControl(false, [Validators.required]),
       type: new FormControl('ministry', [Validators.required]),
       ministry: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterMinisteries)]),
       department: new FormControl('', [forbiddenNamesValidator(this.masterDepartments)]),
@@ -458,6 +460,13 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     this.confirm = !this.confirm
     this.registrationForm.patchValue({
       confirmBox: this.confirm,
+    })
+  }
+
+  public confirmTermsChange() {
+    this.confirmTerms = !this.confirmTerms
+    this.registrationForm.patchValue({
+      confirmTermsBox: this.confirmTerms,
     })
   }
 

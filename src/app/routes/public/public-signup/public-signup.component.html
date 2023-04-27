@@ -401,6 +401,18 @@
                   </mat-checkbox>
                 </div>
               </div>
+              <div class="input-wrapper margin-top-s">
+                <div class="flex flex-middle">
+                  <mat-checkbox aria-label="I agree to the IGOT karmayogi's Terms of Service." id="confirmTerms"
+                    [checked]="confirmTerms" (change)="confirmTermsChange()" i18n-aria-label
+                    aria-label="I agree to the IGOT karmayogi's Terms of Service. checkbox" required>
+                    <label class="margin-remove-bottom mat-body-2 ws-mat-black60-text" i18n-aria-label
+                      aria-label="I agree to the IGOT karmayogi's Terms of Service. checkbox label">
+                      I agree to the IGOT karmayogi's <a class="ws-mat-accent-text">Terms of Service</a>
+                    </label>
+                  </mat-checkbox>
+                </div>
+              </div>
               <!-- <div>
                 <re-captcha formControlName="recaptchaReactive"></re-captcha>
               </div> -->
@@ -408,7 +420,7 @@
                 <div class="button_box flex flex-col items-center justify-center">
                   <button mat-flat-button type="submit"
                     class="submitBtn text-white ws-mat-primary-background ws-mat-white-text" (click)="signup()"
-                    [disabled]="!registrationForm?.valid || !confirm || disableBtn || !isMobileVerified">
+                    [disabled]="!registrationForm?.valid || !confirm || !confirmTerms || disableBtn || !isMobileVerified">
                     SIGN UP
                   </button>
                 </div>
