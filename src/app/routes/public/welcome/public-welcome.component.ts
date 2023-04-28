@@ -397,6 +397,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
                     firstName: this.registrationForm.value.firstname || '',
                     lastName: this.registrationForm.value.lastname || '',
                     position: this.registrationForm.value.position.name || '',
+                    orgName: hierarchyObj.orgName,
                     channel: hierarchyObj.channel || '',
                     sbOrgId: hierarchyObj.sbOrgId,
                     mapId: hierarchyObj.mapId || '',
