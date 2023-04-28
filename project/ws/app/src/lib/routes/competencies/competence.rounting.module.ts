@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path: '',
     component: CompetenceComponent,
+    data: {
+      pageId: '',
+      module: 'Competency',
+    },
     children: [
       {
         path: '',
@@ -65,7 +69,7 @@ const routes: Routes = [
             component: CompetenceSysComponent,
             data: {
               pageId: 'list',
-              module: 'competency',
+              module: 'Competency',
             },
             resolve: {
               profile: ProfileResolve,
