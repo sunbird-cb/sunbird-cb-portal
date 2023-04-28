@@ -13,7 +13,7 @@ export class RequestSuccessDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<RequestSuccessDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private router: Router
-  ) { }
+  ) { this.dialogRef.disableClose = true }
 
   ngOnInit() {
     // console.log('data', this.data)
