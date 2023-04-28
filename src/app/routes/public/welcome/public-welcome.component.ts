@@ -397,12 +397,12 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
                     firstName: this.registrationForm.value.firstname || '',
                     lastName: this.registrationForm.value.lastname || '',
                     position: this.registrationForm.value.position.name || '',
-                    channel: hierarchyObj.orgname || '',
-                    sbOrgId: hierarchyObj.sborgid,
-                    mapId: hierarchyObj.mapid || '',
-                    sbRootOrgId: (isSecondLevel ? ministryObj.sborgid : ministryObj.sbrootorgid),
-                    organisationType: hierarchyObj.sborgtype || '',
-                    organisationSubType: hierarchyObj.sbsuborgtype || '',
+                    channel: hierarchyObj.channel || '',
+                    sbOrgId: hierarchyObj.sbOrgId,
+                    mapId: hierarchyObj.mapId || '',
+                    sbRootOrgId: (isSecondLevel ? ministryObj.sbOrgId : ministryObj.sbRootOrgId),
+                    organisationType: hierarchyObj.sbOrgType || '',
+                    organisationSubType: hierarchyObj.sbSubOrgType || '',
                 },
             }
         }
