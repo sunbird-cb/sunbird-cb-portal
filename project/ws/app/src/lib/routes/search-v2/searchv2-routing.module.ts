@@ -12,6 +12,7 @@ const routes: Routes = [
     data: {
       pageType: 'feature',
       pageKey: 'search',
+      pageId: '',
     },
     resolve: {
       searchPageData: PageResolve,

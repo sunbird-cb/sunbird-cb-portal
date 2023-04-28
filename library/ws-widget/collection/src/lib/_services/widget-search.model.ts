@@ -132,7 +132,8 @@ export namespace NSSearch {
     params: IParamsContent
     responseCode: string
     result: ISearchData
-    filters: IFilterUnitResponse[]
+    filters: IFilterUnitResponse[],
+    api: string
   }
 
   export interface IFacet {

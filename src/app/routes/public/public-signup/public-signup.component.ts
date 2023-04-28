@@ -12,6 +12,7 @@ import { DOCUMENT, isPlatformBrowser } from '@angular/common'
 // tslint:disable-next-line: import-name
 import _ from 'lodash'
 import { ActivatedRoute, Router } from '@angular/router'
+import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component'
 
 // export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
 //   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -98,6 +99,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   telemetryConfig: NsInstanceConfig.ITelemetryConfig | null = null
   portalID = ''
   confirm = false
+  confirmTerms = false
   disableBtn = false
   orgRequired = false
   ministeries: any[] = []
@@ -142,6 +144,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
       mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
       confirmBox: new FormControl(false, [Validators.required]),
+      confirmTermsBox: new FormControl(false, [Validators.required]),
       type: new FormControl('ministry', [Validators.required]),
       // ministry: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterMinisteries)]),
       // department: new FormControl('', [forbiddenNamesValidator(this.masterDepartments)]),
@@ -394,6 +397,13 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     })
   }
 
+  public confirmTermsChange() {
+    this.confirmTerms = !this.confirmTerms
+    this.registrationForm.patchValue({
+      confirmTermsBox: this.confirmTerms,
+    })
+  }
+
   displayFn = (value: any) => {
     return value ? value.channel : undefined
   }
@@ -471,6 +481,17 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       // height: '400px',
       width: '500px',
       // data: { content, userId: this.userId, userRating: this.userRating },
+    })
+    dialogRef.afterClosed().subscribe((_result: any) => {
+    })
+  }
+
+  termsAndConditionClick(){
+    const dialogRef = this.dialog.open(TermsAndConditionComponent, {
+      maxHeight: 'auto',
+      height: '90%',
+      width: '90%',
+      minHeight: 'auto',
     })
     dialogRef.afterClosed().subscribe((_result: any) => {
     })
