@@ -26,7 +26,7 @@
         "bundle-report": "webpack-bundle-analyzer dist/stats.json",
         "tt": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng serve --configuration=nb"
     },
-    "private": true,
+    "private": true,            
     "dependencies": {
         "@angular/animations": "~8.2.1",
         "@angular/cdk": "~8.1.2",
