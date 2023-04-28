@@ -21,6 +21,8 @@ export const environment = {
   cscmsUrl: (window as { [key: string]: any })['env']['cscmsUrl'] || '',
   dakshtaName: (window as { [key: string]: any })['env']['dakshtaName'] || '',
   contactMeetLink: (window as { [key: string]: any })['env']['contactMeetLink'] || '',
+  programStripName: (window as { [key: string]: any })['env']['programStripName'] || '',
+  programStripPrimaryCategory: (window as { [key: string]: any })['env']['programStripPrimaryCategory'] || '',
   // mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
   // spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',
   // cbcPortal: (window as { [key: string]: any })['env']['cbcPath'] || '',

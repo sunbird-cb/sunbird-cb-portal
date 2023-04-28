@@ -18,6 +18,7 @@ import { WidgetUserService } from '../_services/widget-user.service'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { HttpClient } from '@angular/common/http'
+import { environment } from 'src/environments/environment'
 interface IStripUnitContentData {
   key: string
   canHideStrip: boolean
@@ -66,6 +67,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
   baseUrl = this.configSvc.sitePath || ''
 
   changeEventSubscription: Subscription | null = null
+  environment!: any
 
   constructor(
     private contentStripSvc: ContentStripMultipleService,
@@ -81,6 +83,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
   }
 
   ngOnInit() {
+    this.environment = environment
     const url = window.location.href
     this.isFromAuthoring = this.searchArray.some((word: string) => {
       return url.indexOf(word) > -1
@@ -93,6 +96,24 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       this.changeEventSubscription.unsubscribe()
     }
   }
+
+  isStripShowing(data:any){
+    let count = 0;
+    if(data.stripTitle === this.environment.programStripName && data.widgets.length >1){
+      data.widgets.forEach((key: any) => {
+        if(key.widgetData.content.primaryCategory === this.environment.programStripPrimaryCategory){
+          count = count+1
+        }
+      })
+
+      if(count >1)
+        data.showStrip = true;
+      else
+        data.showStrip = false;
+    }
+    return data.showStrip
+  }
+
   get isMobile() {
     return this.utilitySvc.isMobile || false
   }
