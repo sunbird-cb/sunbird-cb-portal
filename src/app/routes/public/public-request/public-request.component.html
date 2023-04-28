@@ -33,21 +33,21 @@
             <div class="flex flex-col content-center flex-wrap">
               <div class="input-wrapper margin-top-s">
                 <label for="firstName" class=" margin-remove-bottom form-label required"
-                  i18n="First name label|Label which explains the user to enter first name" i18n-aria-label
-                  aria-label="First name label">
+                  i18n="Full name label|Label which explains the user to enter full name" i18n-aria-label
+                  aria-label="Full name label">
                   Full name
                 </label>
                 <mat-form-field appearance="outline" class="margin-top-s">
                   <input id="firstName" matInput #firstname formControlName="firstname" i18n-placeholder
-                    placeholder="Enter your first name" autocomplete="off" i18n-aria-label aria-label="First Name input" maxlength="150" />
-                  <mat-error [hidden]="false" i18n="First Name Error|Explains name is required" i18n-aria-label
-                    aria-label="First Name Error|Explains name is required "
+                    placeholder="Enter your full name" autocomplete="off" i18n-aria-label aria-label="Full Name input" maxlength="150" />
+                  <mat-error [hidden]="false" i18n="Full Name Error|Explains name is required" i18n-aria-label
+                    aria-label="Full Name Error|Explains name is required "
                     *ngIf="requestForm?.controls['firstname'].errors?.required">
-                    First name is mandatory
+                    Full name is mandatory
                   </mat-error>
                   <mat-error [hidden]="false" *ngIf="requestForm?.controls['firstname'].errors?.pattern"
                     i18n-aria-label
-                    aria-label="First name Error|Name fields cannot contain numbers and special characters except ">
+                    aria-label="Full name Error|Name fields cannot contain numbers and special characters except ">
                     Name fields cannot contain numbers and special characters except '
                   </mat-error>
                 </mat-form-field>
