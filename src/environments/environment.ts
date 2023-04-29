@@ -58,9 +58,9 @@ interface IEnvironment {
   cscmsUrl: string,
   dakshtaName: string,
   contactMeetLink: string,
-  programStripName:string,
-  programStripPrimaryCategory:string,
-  programStripKey:string
+  programStripName: string,
+  programStripPrimaryCategory: string,
+  programStripKey: string
 }
 
 /*
