@@ -99,7 +99,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
 
   isStripShowing(data:any){
     let count = 0
-    if(data &&  data.stripTitle === this.environment.programStripName && data.widgets.length >0){
+    if(data && data.key=== this.environment.programStripKey &&  data.stripTitle === this.environment.programStripName && data.widgets.length >0){
       data.widgets.forEach((key: any) => {
         if(key && key.widgetData.content.primaryCategory === this.environment.programStripPrimaryCategory){
           count = count+1
@@ -107,12 +107,10 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       })
       if(count >0) {
         data.showStrip = true
-      }
-        
+      }   
       else {
         data.showStrip = false
-      }
-        
+      }      
     }
     return data.showStrip
   }

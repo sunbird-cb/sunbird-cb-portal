@@ -32,6 +32,7 @@ export const environment: IEnvironment = {
   contactMeetLink: (window as { [key: string]: any })['env']['contactMeetLink'] || '',
   programStripName: (window as { [key: string]: any })['env']['programStripName'] || '',
   programStripPrimaryCategory: (window as { [key: string]: any })['env']['programStripPrimaryCategory'] || '',
+  programStripKey: (window as { [key: string]: any })['env']['programStripKey'] || '',
 }
 interface IEnvironment {
   name: string,
@@ -58,7 +59,8 @@ interface IEnvironment {
   dakshtaName: string,
   contactMeetLink: string,
   programStripName:string,
-  programStripPrimaryCategory:string
+  programStripPrimaryCategory:string,
+  programStripKey:string
 }
 
 /*
