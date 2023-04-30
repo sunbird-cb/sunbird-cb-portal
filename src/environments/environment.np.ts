@@ -23,6 +23,7 @@ export const environment = {
   contactMeetLink: (window as { [key: string]: any })['env']['contactMeetLink'] || '',
   programStripName: (window as { [key: string]: any })['env']['programStripName'] || '',
   programStripPrimaryCategory: (window as { [key: string]: any })['env']['programStripPrimaryCategory'] || '',
+  programStripKey: (window as { [key: string]: any })['env']['programStripKey'] || '',
   // mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
   // spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',
   // cbcPortal: (window as { [key: string]: any })['env']['cbcPath'] || '',
