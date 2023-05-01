@@ -110,9 +110,9 @@ export class EventService {
         id: `${_.camelCase(data.label)}-tab`,
       },
       {
-        context: {
-          position: data.index,
-        },
+        // context: {
+        //   position: data.index,
+        // },
         ...object
       },
       {

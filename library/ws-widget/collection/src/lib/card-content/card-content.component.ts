@@ -40,7 +40,7 @@ export class CardContentComponent extends WidgetBaseComponent
     private configSvc: ConfigurationsService,
     private utilitySvc: UtilityService,
     private snackBar: MatSnackBar,
-  
+
   ) {
     super()
   }
@@ -267,7 +267,7 @@ export class CardContentComponent extends WidgetBaseComponent
       {
         id: this.widgetData.content.identifier,
         type: this.widgetData.content.primaryCategory,
-        context: this.widgetData.context,
+        //context: this.widgetData.context,
         rollup: {},
         ver: `${this.widgetData.content.version}${''}`,
       },
