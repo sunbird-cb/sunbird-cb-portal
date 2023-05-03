@@ -39,9 +39,9 @@ export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
                 const index = optionsArray.findIndex((op: any) => {
                     // tslint:disable-next-line: prefer-template
                     // return new RegExp('^' + op.orgname + '$').test(control.orgname)
-                    return op.orgname === control.value.orgname
+                    return op.orgName === control.value.orgName
                 })
-                return index < 0 ? { forbiddenNames: { value: control.value.orgname } } : null
+                return index < 0 ? { forbiddenNames: { value: control.value.orgName } } : null
             }
             return null
         }
@@ -57,9 +57,9 @@ export function forbiddenNamesValidatorNonEmpty(optionsArray: any): ValidatorFn 
             const index = optionsArray.findIndex((op: any) => {
                 // tslint:disable-next-line: prefer-template
                 // return new RegExp('^' + op.orgname + '$').test(control.orgname)
-                return op.orgname === control.value.orgname
+                return op.orgName === control.value.orgName
             })
-            return index < 0 ? { forbiddenNames: { value: control.value.orgname } } : null
+            return index < 0 ? { forbiddenNames: { value: control.value.orgName } } : null
         }
     }
 }
@@ -234,7 +234,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
                 debounceTime(500),
                 distinctUntilChanged(),
                 startWith(''),
-                map(value => typeof (value) === 'string' ? value : (value && value.orgname ? value.orgname : '')),
+                map(value => typeof (value) === 'string' ? value : (value && value.orgName ? value.orgName : '')),
                 map(orgname => orgname ? this.filterMinisteries(orgname) : this.ministeries.slice())
             )
 
@@ -252,7 +252,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
                 debounceTime(500),
                 distinctUntilChanged(),
                 startWith(''),
-                map(value => typeof (value) === 'string' ? value : (value && value.orgname ? value.orgname : '')),
+                map(value => typeof (value) === 'string' ? value : (value && value.orgName ? value.orgName : '')),
                 map(orgname => orgname ? this.filterDepartments(orgname) : this.departments.slice())
             )
 
@@ -271,7 +271,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
                 debounceTime(500),
                 distinctUntilChanged(),
                 startWith(''),
-                map(value => typeof (value) === 'string' ? value : (value && value.orgname ? value.orgname : '')),
+                map(value => typeof (value) === 'string' ? value : (value && value.orgName ? value.orgName : '')),
                 map(orgname => orgname ? this.filterOrgs(orgname) : this.orgs.slice())
             )
 
@@ -307,7 +307,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     filterMinisteries(orgname: string) {
         if (orgname) {
             const filterValue = orgname.toLowerCase()
-            return this.ministeries.filter((option: any) => option.orgname.toLowerCase().includes(filterValue))
+            return this.ministeries.filter((option: any) => option.orgName.toLowerCase().includes(filterValue))
         }
         return this.ministeries
     }
@@ -315,7 +315,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     filterDepartments(orgname: string) {
         if (orgname) {
             const filterValue = orgname.toLowerCase()
-            return this.departments.filter((option: any) => option.orgname.toLowerCase().includes(filterValue))
+            return this.departments.filter((option: any) => option.orgName.toLowerCase().includes(filterValue))
         }
         return this.departments
     }
@@ -323,7 +323,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     filterOrgs(orgname: string) {
         if (orgname) {
             const filterValue = orgname.toLowerCase()
-            return this.orgs.filter((option: any) => option.orgname.toLowerCase().includes(filterValue))
+            return this.orgs.filter((option: any) => option.orgName.toLowerCase().includes(filterValue))
         }
         return this.orgs
     }
@@ -397,12 +397,13 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
                     firstName: this.registrationForm.value.firstname || '',
                     lastName: this.registrationForm.value.lastname || '',
                     position: this.registrationForm.value.position.name || '',
-                    channel: hierarchyObj.orgname || '',
-                    sbOrgId: hierarchyObj.sborgid,
-                    mapId: hierarchyObj.mapid || '',
-                    sbRootOrgId: (isSecondLevel ? ministryObj.sborgid : ministryObj.sbrootorgid),
-                    organisationType: hierarchyObj.sborgtype || '',
-                    organisationSubType: hierarchyObj.sbsuborgtype || '',
+                    orgName: hierarchyObj.orgName,
+                    channel: hierarchyObj.channel || '',
+                    sbOrgId: hierarchyObj.sbOrgId,
+                    mapId: hierarchyObj.mapId || '',
+                    sbRootOrgId: (isSecondLevel ? ministryObj.sbOrgId : ministryObj.sbRootOrgId),
+                    organisationType: hierarchyObj.sbOrgType || '',
+                    organisationSubType: hierarchyObj.sbOrgSubType || '',
                 },
             }
         }
@@ -456,8 +457,8 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     }
 
     ministrySelected(value: any) {
-        if (value && value.mapid) {
-            this.signupSvc.getDeparmentsOfState(value.mapid).subscribe(res => {
+        if (value && value.mapId) {
+            this.signupSvc.getDeparmentsOfState(value.mapId).subscribe(res => {
                 if (res && res.result && res.result && res.result.response && res.result.response.content) {
                     this.departments = res.result.response.content
 
@@ -473,15 +474,15 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     }
 
     departmentSelected(value: any) {
-        if (value && value.mapid) {
-            this.signupSvc.getOrgsOfDepartment(value.mapid).subscribe(res => {
+        if (value && value.mapId) {
+            this.signupSvc.getOrgsOfDepartment(value.mapId).subscribe(res => {
                 if (res && res.result && res.result && res.result.response && res.result.response.content) {
                     this.orgs = res.result.response.content
 
                     // If value in department is NA then make the organisation field as required
                     // tslint:disable-next-line: no-non-null-assertion
                     // const value = this.registrationForm.get('department')!.value
-                    if (value && (value.orgname === 'NA' || value.orgname === 'na')) {
+                    if (value && (value.orgName === 'NA' || value.orgName === 'na')) {
                         this.orgRequired = true
                         // tslint:disable-next-line
                         this.registrationForm.get('organisation')!.setValidators([Validators.required, forbiddenNamesValidatorNonEmpty(this.orgs)])
@@ -501,7 +502,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     }
 
     displayFnState = (value: any) => {
-        return value ? value.orgname : undefined
+        return value ? value.orgName : undefined
     }
 
     ngOnDestroy() {

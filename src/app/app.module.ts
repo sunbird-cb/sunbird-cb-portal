@@ -79,6 +79,7 @@ import { PublicLoginWGComponent } from './routes/public/public-login-wg/public-l
 import { PublicWelcomeModule } from './routes/public/welcome/public-welcome.module'
 import { WelcomeUserResolverService } from './services/welcome-user-resolver.service'
 import { PublicTocModule } from './routes/public/public-toc/public-toc.module'
+import { PublicRequestModule } from './routes/public/public-request/public-request.module'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -161,6 +162,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PublicContactModule,
     PublicLogoutModule,
     PublicSignupModule,
+    PublicRequestModule,
     PublicWelcomeModule,
     PublicTocModule,
     MobileAppModule,

@@ -121,7 +121,7 @@
                   aria-label="Position Field label">
                   Position
                 </label>
-                <mat-form-field appearance="outline" class="margin-top-s w-full">
+                <mat-form-field appearance="outline" class="margin-top-s w-full" id="position">
                   <input id="position" matInput tab-directive type="text" placeholder="Select your position"
                     i18n-placeholder="position" formControlName="position" [matAutocomplete]="positionAutocomplete"
                     i18n-aria-label aria-label="Position" #position i18n-aria-label aria-label="Position Field input" maxlength="50" />
@@ -134,12 +134,22 @@
                     aria-label="You must enter value from suggested list only.">
                     You must enter value from suggested list only.
                   </mat-error>
+                  <mat-error *ngIf="registrationForm?.controls['position'].errors?.pattern" i18n-aria-label
+                    aria-label="You must enter value from suggested list only.">
+                    Only alphabets, numbers, space and & - () are allowed.
+                  </mat-error>
+                  <mat-hint class="pos-hint">Not finding your position?<span class="float-right ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo('Position')">Request for help</span></mat-hint> 
                 </mat-form-field>
                 <mat-autocomplete #positionAutocomplete="matAutocomplete" autoActiveFirstOption="true" i18n-aria-label
                   aria-label="Position list masterPositions" [displayWith]="displayFnPosition">
                   <mat-option *ngFor="let option of masterPositions | async" [value]="option" i18n-aria-label
                     aria-label="Position list autocomplete option">
                     {{ option.name }}
+                  </mat-option>
+
+                  <mat-option class="custom bordered" *ngIf="(masterPositions | async)?.length === 0" [value]="">
+                    <ng-container [ngTemplateOutlet]="noResult" [ngTemplateOutletContext]="{type: 'Position'}">
+                    </ng-container>
                   </mat-option>
                 </mat-autocomplete>
               </div>
@@ -175,7 +185,7 @@
                 </label>
                 <div class="flex flex-1">
 
-                  <mat-form-field appearance="outline" class="w-full">
+                  <mat-form-field appearance="outline" class="margin-top-s w-full">
                     <!-- <input [readonly]="otpSend && !otpVerified" id="mobileNumber" #mobile type="number" matInput
                       placeholder="Mobile Number" formControlName="mobile" i18n-aria-label
                       aria-label="Mobile Number input" maxlength="12"> -->
@@ -245,150 +255,91 @@
                 </mat-radio-group>
               </div>
               <div class="input-wrapper margin-top-s">
-                <label for="Ministry" class=" margin-remove-bottom form-label required"
-                  i18n="Ministry|Label which explains the user to enter Ministry" i18n-aria-label
-                  aria-label="Ministry Field label">
-                  {{typeValueStartCase}}
-                </label>
-                <mat-form-field appearance="outline" class="margin-top-s w-full">
-                  <input id="ministry" matInput tab-directive type="text" placeholder="Select your {{typeValue}}"
-                    i18n-placeholder="Ministry" formControlName="ministry" [matAutocomplete]="ministryAutocomplete"
-                    i18n-aria-label aria-label="Ministry" #ministry i18n-aria-label aria-label="Ministry Field input" maxlength="50" />
-                  <mat-error [hidden]="false" i18n="Ministry Error|Explains Ministry is required"
-                    *ngIf="registrationForm?.controls['ministry'].errors?.required" i18n-aria-label
-                    aria-label="Ministry is mandatory">
-                    {{typeValueStartCase}} is mandatory
-                  </mat-error>
-                  <mat-error *ngIf="registrationForm?.controls['ministry'].errors?.forbiddenNames" i18n-aria-label
-                    aria-label="You must enter value from suggested list only.">
-                    You must enter value from suggested list only.
-                  </mat-error>
-                </mat-form-field>
-                <mat-autocomplete #ministryAutocomplete="matAutocomplete" autoActiveFirstOption="true" i18n-aria-label
-                  aria-label="Ministry list masterMinistry" [displayWith]="displayFnState"
-                  (optionSelected)="ministrySelected($event.option.value)">
-                  <mat-option *ngFor="let option of masterMinisteries| async | orderBy: 'orgname' :'asc'" [value]="option" i18n-aria-label
-                    aria-label="Ministry list autocomplete option">
-                    {{ option.orgname }}
-                  </mat-option>
-                </mat-autocomplete>
-              </div>
-              <div class="displayflex">
-                <div class="input-wrapper margin-top-s">
-                  <label for="Department" class=" margin-remove-bottom form-label"
-                    i18n="Department|Label which explains the user to enter Department" i18n-aria-label
-                    aria-label="Department Field label">
-                    Department
-                  </label>
-                  <mat-form-field appearance="outline" class="margin-top-s w-full">
-                    <input id="department" matInput tab-directive type="text" placeholder="Select your department"
-                      i18n-placeholder="department" formControlName="department"
-                      [matAutocomplete]="departmentAutocomplete" i18n-aria-label aria-label="Department" #department
-                      i18n-aria-label aria-label="Department Field input" maxlength="50" />
-                    <mat-error [hidden]="false" i18n="Department Error|Explains Department is required"
-                      *ngIf="registrationForm?.controls['department'].errors?.required" i18n-aria-label
-                      aria-label="Department is mandatory">
-                      Department is mandatory
-                    </mat-error>
-                    <mat-error *ngIf="registrationForm?.controls['department'].errors?.forbiddenNames" i18n-aria-label
-                      aria-label="You must enter value from suggested list only.">
-                      You must enter value from suggested list only.
-                    </mat-error>
-                  </mat-form-field>
-                  <mat-autocomplete #departmentAutocomplete="matAutocomplete" autoActiveFirstOption="true"
-                    i18n-aria-label aria-label="Department list masterDepartments" [displayWith]="displayFnState"
-                    (optionSelected)="departmentSelected($event.option.value)">
-                    <mat-option *ngFor="let option of masterDepartments | async | orderBy: 'orgname' :'asc'" [value]="option" i18n-aria-label
-                      aria-label="Department list autocomplete option">
-                      {{ option.orgname }}
-                    </mat-option>
-                  </mat-autocomplete>
-                </div>
-                <div class="tooltip">
-                  <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon>
-                  <span class="tooltiptext"><p>
-                    If you do not find your department or organization in the list here,
-                    please <a routerLink="/public/contact" class="ws-mat-accent-text">contact us</a> to get it added.<br>
-
-                    <!-- Email: mission.karmayogi@gov.in<br>
-
-                    Helpdesk: servicedesk.nic.in<br> -->
-                    <!-- "contact us": https://igot-stage.in/public/contact</a> -->
-
-                   </p></span>
-
-
-
-                </div>
-              </div>
-              <div class="displayflex">
-              <div class="input-wrapper margin-top-s">
-                <label for="Organisation" class=" margin-remove-bottom form-label"
-                  i18n="Organisation|Label which explains the user to enter Organisation" i18n-aria-label
-                  aria-label="Organisation Field label" [ngClass]="{'required': orgRequired}">
+                <label for="organisation" class=" margin-remove-bottom form-label required"
+                  i18n="Organisation label|Label which explains the user to enter Surname" i18n-aria-label
+                  aria-label="Organisation label">
                   Organisation
                 </label>
-                <mat-form-field appearance="outline" class="margin-top-s w-full">
-                  <input id="Organisation" matInput tab-directive type="text" placeholder="Select your organisation"
-                    i18n-placeholder="Organisation" formControlName="organisation"
-                    [matAutocomplete]="organisationAutocomplete" i18n-aria-label aria-label="Organisation" #organisation
-                    i18n-aria-label aria-label="Organisation Field input" maxlength="50" />
-                  <mat-error [hidden]="false" i18n="Organisation Error|Explains Organisation is required"
-                    *ngIf="registrationForm?.controls['organisation'].errors?.required" i18n-aria-label
-                    aria-label="Organisation is mandatory">
-                    Organisation is mandatory
-                  </mat-error>
-                  <mat-error *ngIf="registrationForm?.controls['organisation'].errors?.forbiddenNames" i18n-aria-label
-                    aria-label="You must enter value from suggested list only.">
-                    You must enter value from suggested list only.
-                  </mat-error>
-                </mat-form-field>
-                <mat-autocomplete #organisationAutocomplete="matAutocomplete" autoActiveFirstOption="true"
-                  i18n-aria-label aria-label="Organisation list masterStates" [displayWith]="displayFnState">
-                  <mat-option *ngFor="let option of masterOrgs | async | orderBy: 'orgname' :'asc'" [value]="option" i18n-aria-label
-                    aria-label="Organisation list autocomplete option">
-                    {{ option.orgname }}
-                  </mat-option>
-                </mat-autocomplete>
+                <!-- <ng-container *ngIf="!hideOrg"> -->
+                  <mat-form-field appearance="outline" class="margin-top-s w-full" [hidden]="hideOrg">
+                    <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+                    <input matInput onfocus="this.select()" aria-label="organisation" [matAutocomplete]="auto" #organisation
+                      name="organisation" formControlName="organisation" i18n-placeholder placeholder="Search organisation" i18n-aria-label
+                      aria-label="Type here" >
+                    <span matSuffix class="ws-mat-accent-text margin-xs cursor-pointer" (click)="searchOrgs(organisation.value)" >Search</span>
+                    <mat-error *ngIf="registrationForm?.controls['organisation'].errors?.pattern" i18n-aria-label
+                      aria-label="You must enter value from suggested list only.">
+                      Only alphabets, numbers, space, &, -, and  () are allowed.
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="orgClicked($event)"  
+                      autoActiveFirstOption="true" [displayWith]="displayFnOrg">
+                      <ng-container *ngIf="searching">
+                        <mat-option [value] = "" class="custom">
+                          <div  class="p-4 w-full flex items-center justify-center">
+                            <mat-spinner [diameter]="30"></mat-spinner>
+                          </div>
+                        </mat-option>
+                      </ng-container>
+                      <ng-container *ngIf="(filteredOrgList || filteredOrgList?.length > 0 ) && resultFetched">
+                        <mat-option class=" custom bordered" *ngFor="let organisation of filteredOrgList " [value]="organisation">
+                          <ng-container [ngTemplateOutlet]="autocompleteCard" [ngTemplateOutletContext]="{organisation: organisation}">
+                          </ng-container>
+                        </mat-option>
+                      </ng-container>
+                      <mat-option  class="custom bordered" *ngIf="(!filteredOrgList || !filteredOrgList?.length) && resultFetched" [value]="">
+                        <ng-container [ngTemplateOutlet]="noResult" [ngTemplateOutletContext]="{type: 'Organisation'}">
+                        </ng-container>
+                      </mat-option>
+                    </mat-autocomplete>
+                <!-- </ng-container> -->
+                <ng-container *ngIf="hideOrg">
+                  <div class="orgBox margin-top-s px-4 py-3 relative">
+                    <div class="flex">
+                      <h3 class="mat-h2 margin-remove inline-block  flex-1">
+                        {{heirarchyObject?.orgName}}
+                      </h3>
+                      <mat-icon matPrefix class="flex items-right justify-right cursor-pointer close-rounded" (click)="editOrg()">close</mat-icon>
+                    </div>
+                    <div class="flex flex-1 items-center flex-wrap text-left mat-body-2">
+                      <span *ngIf="heirarchyObject?.l1OrgName">Under &nbsp;</span>
+                      <span *ngIf="heirarchyObject?.l1OrgName">{{heirarchyObject?.l1OrgName}}</span>
+                      <span *ngIf="heirarchyObject?.l2OrgName"> <mat-icon matPrefix class=" flex items-center justify-center">navigate_next</mat-icon></span>
+                      <span *ngIf="heirarchyObject?.l2OrgName" class="flex-1">{{heirarchyObject?.l2OrgName}}</span>
+                    </div>
+                  </div>
+                </ng-container>
+                <div class="w-full margin-top-xs">
+                  <div class="flex items-center mat-body-2 flex-1">
+                    <span class="flex-1 ws-mat-black60-text">Not found yet?</span>
+                    <a class="flex-1 ws-mat-accent-text text-right cursor-pointer font-bold" (click)="navigateTo('Organisation')"> Request for help</a>
+                  </div>
+                </div>
               </div>
-              <div class="tooltip">
-                <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon>
-                <span class="tooltiptext"><p>
-                  If you do not find your department or organization in the list here,
-                  please <a routerLink="/public/contact" class="ws-mat-accent-text">contact us</a> to get it added.<br>
 
-                 </p></span>
-              </div>
-            </div>
-              <!-- <div class="input-wrapper margin-top-s">
-                <label for="department" class=" margin-remove-bottom form-label required"
-                  i18n="Department|Label which explains the user to enter Department" i18n-aria-label
-                  aria-label="Department Field label">
-                  Ministry/Department/Organization
-                </label>
-                <mat-form-field appearance="outline" class="margin-top-s w-full">
-                  <input id="department" matInput tab-directive type="text" placeholder="Select your Ministry/Department/Organization"
-                    i18n-placeholder="Department" formControlName="department"
-                    [matAutocomplete]="departmentAutocomplete" i18n-aria-label aria-label="Department" #department
-                    i18n-aria-label aria-label="Department Field input" />
-                  <mat-error [hidden]="false" i18n="Department Error|Explains Department is required"
-                    *ngIf="registrationForm?.controls['department'].errors?.required" i18n-aria-label
-                    aria-label="Department is mandatory">
-                    Ministry/Department/Organization is mandatory
-                  </mat-error>
-                  <mat-error *ngIf="registrationForm?.controls['department'].errors?.forbiddenNames" i18n-aria-label
-                    aria-label="You must enter value from suggested list only.">
-                    You must enter value from suggested list only.
-                  </mat-error>
-                </mat-form-field>
-                <mat-autocomplete #departmentAutocomplete="matAutocomplete" autoActiveFirstOption="true" i18n-aria-label
-                  aria-label="Department list masterDepartments" [displayWith]="displayFn">
-                  <mat-option *ngFor="let option of masterDepartments | async" [value]="option" i18n-aria-label
-                    aria-label="Department list autocomplete option">
-                    {{ option.channel }}
-                  </mat-option>
-                </mat-autocomplete>
-              </div> -->
+              <ng-template #autocompleteCard let-organisation="organisation">
+                <div class="px-5 py-3">
+                  <div>
+                    <h3 class="mat-h3 margin-remove">
+                      {{organisation?.orgName}}
+                    </h3>
+                  </div>
+                  <div class="flex flex-1 items-center flex-wrap text-left mat-body-2">
+                    <span *ngIf="organisation?.l1OrgName">Under &nbsp;</span>
+                    <span *ngIf="organisation?.l1OrgName">{{organisation?.l1OrgName}}</span>
+                    <span *ngIf="organisation?.l2OrgName"> <mat-icon matPrefix class=" flex items-center justify-center">navigate_next</mat-icon></span>
+                    <span *ngIf="organisation?.l2OrgName" class="flex-1">{{organisation?.l2OrgName}}</span>
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template #noResult let-type="type">
+                <div class="flex-col text-center items-center justify-center px-6 py-3">
+                  <div class="mat-body-2 px-6">We couldn't find any matches for your search. </div>
+                  <div class="mat-body-2 padding-top-xs">
+                    <a  class="flex-1 ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo(type)"> Request for help</a>
+                  </div>
+                </div>
+              </ng-template>
               <div class="input-wrapper margin-top-s">
                 <div class="flex flex-middle">
                   <mat-checkbox aria-label="I confirm that the above provided information are accurate." id="confirm"
@@ -421,7 +372,7 @@
                 <div class="button_box flex flex-col items-center justify-center">
                   <button mat-flat-button type="submit"
                     class="submitBtn text-white ws-mat-primary-background ws-mat-white-text" (click)="signup()"
-                    [disabled]="!registrationForm?.valid || !confirm || !confirmTerms || disableBtn || !isMobileVerified">
+                    [disabled]="!registrationForm?.valid || !confirm || disableBtn || !isMobileVerified || !heirarchyObject || !confirmTerms">
                     SIGN UP
                   </button>
                 </div>
