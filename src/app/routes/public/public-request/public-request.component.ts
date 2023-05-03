@@ -38,6 +38,7 @@ export class PublicRequestComponent implements OnInit {
   namePatern = `[a-zA-Z\\s\\']{1,32}$`
   emailWhitelistPattern = `^[a-zA-Z0-9._-]{3,}\\b@\\b[a-zA-Z0-9]*|\\b(.gov|.nic)\b\\.\\b(in)\\b$`
   phoneNumberPattern = '^((\\+91-?)|0)?[0-9]{10}$'
+  customCharsPattern = `^[a-zA-Z0-9 \\w\-\&\(\)]*$`
   confirm = false
   disableBtn = false
   isMobileVerified = false
@@ -65,8 +66,9 @@ export class PublicRequestComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.pattern(this.emailWhitelistPattern)]),
       mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
       // tslint:disable-next-line:max-line-length
-      position: new FormControl('', this.requestType === 'Position' ? [Validators.required, forbiddenNamesValidatorPosition(this.masterPositions)] : []),
-      organisation: new FormControl('', this.requestType === 'Organisation' ? Validators.required : []),
+      position: new FormControl('', this.requestType === 'Position' ? [Validators.pattern(this.customCharsPattern), 
+        Validators.required, forbiddenNamesValidatorPosition(this.masterPositions)] : []),
+      organisation: new FormControl('', this.requestType === 'Organisation' ? [Validators.required, Validators.pattern(this.customCharsPattern)] : []),
       addDetails: new FormControl('', []),
       confirmBox: new FormControl(false, [Validators.required]),
     })

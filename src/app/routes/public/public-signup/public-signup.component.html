@@ -134,6 +134,10 @@
                     aria-label="You must enter value from suggested list only.">
                     You must enter value from suggested list only.
                   </mat-error>
+                  <mat-error *ngIf="registrationForm?.controls['position'].errors?.pattern" i18n-aria-label
+                    aria-label="You must enter value from suggested list only.">
+                    Only alphabets, numbers, space and & - () are allowed.
+                  </mat-error>
                   <mat-hint class="pos-hint">Not finding your position?<span class="float-right ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo('Position')">Request for help</span></mat-hint> 
                 </mat-form-field>
                 <mat-autocomplete #positionAutocomplete="matAutocomplete" autoActiveFirstOption="true" i18n-aria-label
@@ -283,6 +287,10 @@
                         </ng-container>
                       </mat-option>
                     </mat-autocomplete>
+                    <mat-error *ngIf="registrationForm?.controls['organisation'].errors?.pattern" i18n-aria-label
+                      aria-label="You must enter value from suggested list only.">
+                      Only alphabets, numbers, space, &, -, and  () are allowed.
+                    </mat-error>
                   </mat-form-field>
                 <!-- </ng-container> -->
                 <ng-container *ngIf="hideOrg">

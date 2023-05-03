@@ -151,6 +151,10 @@
                       aria-label="Position is mandatory">
                       Position is mandatory
                     </mat-error>
+                    <mat-error *ngIf="requestForm?.controls['position'].errors?.pattern" i18n-aria-label
+                      aria-label="You must enter value from suggested list only.">
+                      Only alphabets, numbers, space, &, -, and  () are allowed.
+                    </mat-error>
                   </mat-form-field>
                 </div>
               </ng-container>
@@ -170,6 +174,10 @@
                       *ngIf="requestForm?.controls['organisation'].errors?.required" i18n-aria-label
                       aria-label="organisation is mandatory">
                       Organisation is mandatory
+                    </mat-error>
+                    <mat-error *ngIf="requestForm?.controls['organisation'].errors?.pattern" i18n-aria-label
+                      aria-label="You must enter value from suggested list only.">
+                      Only alphabets, numbers, space, &, -, and  () are allowed.
                     </mat-error>
                   </mat-form-field>
                 </div>

@@ -93,6 +93,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   // namePatern = `^[a-zA-Z']{1,32}$`
   namePatern = `[a-zA-Z\\s\\']{1,32}$`
   emailWhitelistPattern = `^[a-zA-Z0-9._-]{3,}\\b@\\b[a-zA-Z0-9]*|\\b(.gov|.nic)\b\\.\\b(in)\\b$`
+  customCharsPattern = `^[a-zA-Z0-9 \\w\-\&\(\)]*$`
   positionsOriginal!: []
   postions!: any
   masterPositions!: Observable<any> | undefined
@@ -139,7 +140,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     this.registrationForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       lastname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
-      position: new FormControl('', [Validators.required, forbiddenNamesValidatorPosition(this.masterPositions)]),
+      position: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterPositions)]),
       email: new FormControl('', [Validators.required, Validators.pattern(this.emailWhitelistPattern)]),
       // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
       mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
@@ -148,7 +149,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       type: new FormControl('ministry', [Validators.required]),
       // ministry: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterMinisteries)]),
       // department: new FormControl('', [forbiddenNamesValidator(this.masterDepartments)]),
-      organisation: new FormControl('', [Validators.required]),
+      organisation: new FormControl('', [Validators.required, Validators.pattern(this.customCharsPattern)]),
       // recaptchaReactive: new FormControl(null, [Validators.required]),
     })
   }
