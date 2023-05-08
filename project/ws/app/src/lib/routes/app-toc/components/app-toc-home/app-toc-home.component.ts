@@ -9,7 +9,7 @@ import {
   NsGoal,
 } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, LoggerService, NsPage, TFetchStatus, UtilityService } from '@sunbird-cb/utils'
+import { ConfigurationsService, LoggerService, NsPage, TFetchStatus, TelemetryService, UtilityService } from '@sunbird-cb/utils'
 import { Subscription, Observable } from 'rxjs'
 import { share } from 'rxjs/operators'
 import { NsAppToc } from '../../models/app-toc.model'
@@ -142,6 +142,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   dakshtaName = environment.dakshtaName
   cscmsUrl = environment.cscmsUrl
   showBtn = false
+  channelId: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -169,13 +170,16 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     // private progressSvc: ContentProgressService,
     private actionSVC: ActionService,
     private ratingSvc: RatingService,
+    private telemertyService: TelemetryService,
   ) {
     this.historyData = history.state
     this.handleBreadcrumbs()
   }
 
   ngOnInit() {
+
     // this.route.fragment.subscribe(fragment => { this.fragment = fragment })
+    this.channelId = this.telemertyService.telemetryConfig ? this.telemertyService.telemetryConfig.channel : ''
     try {
       this.isInIframe = window.self !== window.top
     } catch (_ex) {
@@ -1145,6 +1149,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       if (this.forPreview) {
         delete qParams.viewMode
       }
+      qParams = {
+        ...qParams,
+        channelId: this.channelId
+      }
       return qParams
     }
     if (this.resumeDataLink && type === 'RESUME') {
@@ -1163,6 +1171,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       }
       if (this.forPreview) {
         delete qParams.viewMode
+      }
+      qParams = {
+        ...qParams,
+        channelId: this.channelId
       }
       return qParams
     }

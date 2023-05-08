@@ -250,10 +250,11 @@ export class RootComponent implements OnInit, AfterViewInit {
         const data = {
           pageContext,
         }
+        const objectType = this.route.snapshot.queryParams.primaryCategory || ''
         this.raiseAppStartTelemetry()
         // console.log('data: ', data)
         if (data.pageContext.pageId && data.pageContext.module) {
-          this.telemetrySvc.impression(data)
+          this.telemetrySvc.impression(data, objectType)
         } else {
           this.telemetrySvc.impression()
         }

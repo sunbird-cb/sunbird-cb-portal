@@ -431,7 +431,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'profile-v2',
       pageId: 'app/person-profile',
-      module: 'profile',
+      module: 'Profile',
     },
     resolve: {
       pageData: PageResolve,
@@ -489,7 +489,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'globalsearch',
       pageId: 'app/globalsearch',
-      module: 'Search',
+      module: 'Home',
     },
   },
   {

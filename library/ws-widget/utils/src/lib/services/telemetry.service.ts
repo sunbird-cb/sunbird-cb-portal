@@ -212,7 +212,7 @@ export class TelemetryService {
     }
   }
 
-  impression(data?: any) {
+  impression(data?: any, objectType?: any) {
     try {
       const page = this.getPageDetails()
       if (data && data.pageContext) {
@@ -235,6 +235,7 @@ export class TelemetryService {
           },
           object: {
             id: page.objectId,
+            type: objectType,
             // This will override above id if the data has object in it.
             ...(data && data.object),
           },
