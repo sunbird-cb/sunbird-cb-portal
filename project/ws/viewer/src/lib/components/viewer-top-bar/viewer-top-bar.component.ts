@@ -100,7 +100,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
             batchId: data.prevResource.batchId,
             viewMode: data.prevResource.viewMode,
             preview: this.forPreview,
-            channelId: this.channelId
+            channelId: this.channelId,
           },
           fragment: '',
         }
@@ -119,7 +119,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
             viewMode: data.nextResource.viewMode,
             courseName: this.courseName,
             preview: this.forPreview,
-            channelId: this.channelId
+            channelId: this.channelId,
           },
           fragment: '',
         }

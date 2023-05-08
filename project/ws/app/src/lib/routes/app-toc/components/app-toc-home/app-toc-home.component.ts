@@ -1151,7 +1151,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       }
       qParams = {
         ...qParams,
-        channelId: this.channelId
+        channelId: this.channelId,
       }
       return qParams
     }
@@ -1174,7 +1174,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       }
       qParams = {
         ...qParams,
-        channelId: this.channelId
+        channelId: this.channelId,
       }
       return qParams
     }
