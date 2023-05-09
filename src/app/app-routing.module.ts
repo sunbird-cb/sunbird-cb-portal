@@ -195,7 +195,7 @@ const routes: Routes = [
     canActivate: [GeneralGuard],
     data: {
       pageId: 'app/curatedCollections',
-      module: 'Explore',
+      module: 'Learn',
     },
     resolve: {
       // pageData: PageResolve,
@@ -210,7 +210,7 @@ const routes: Routes = [
       // pageType: 'feature',
       // pageKey: 'browse by competency',
       pageId: 'app/learn/browse-by/competency',
-      module: 'explore',
+      module: 'Competency',
     },
     resolve: {
       pageData: PageResolve,
