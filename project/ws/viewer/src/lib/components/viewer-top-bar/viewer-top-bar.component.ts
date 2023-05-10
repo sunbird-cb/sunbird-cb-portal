@@ -89,6 +89,15 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     //     this.domSanitizer.bypassSecurityTrustResourceUrl(data.configData.data.logos.app)
     //   }
     // )
+    // const req  = {
+    //   request: {
+    //     userId,
+    //     batchId: this.batchId,
+    //     courseId: this.identifier || '',
+    //     contentIds: [],
+    //     fields: ['progressdetails'],
+    //   },
+    // }
     this.viewerDataServiceSubscription = this.viewerDataSvc.tocChangeSubject.subscribe(data => {
       console.log(data, 'viewer service data=====')
       if (data.prevResource) {
@@ -105,9 +114,13 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
           },
           fragment: '',
         }
-        // if(data.prevResource.optionalReading && data.prevResource.primaryCategory === "Learning Resource") {
-        //   this.updateProgress(2, data.prevResource.identifier)
-        // }
+        if(data.prevResource.optionalReading && data.prevResource.primaryCategory === "Learning Resource") {
+          // this.updateProgress(2, data.prevResource.identifier)
+          // this.widgetServ.fetchContentHistoryV2(data).subscribe(
+          //   (res:  any) => {
+          //     console.log(res, '===========res')
+          //   })
+        }
       } else {
         this.prevResourceUrl = null
       }
@@ -130,7 +143,30 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
         console.log(data.nextResource, "data.nextResource--------")
         console.log(data.nextResource.optionalReading, "data.nextResource.optionalReading++++++++++++")
         if(data.nextResource.optionalReading && data.nextResource.primaryCategory === "Learning Resource") {
+          //  this.getFetchHistory(, ).subscribe((resp)=> {
+          //   console.log(resp.result, 'svc response==========')
+           
+          //   // let fetchData = resp
+          //   // console.log(fetchData, 'fetchData next---')
+          //  })
+          if (this.configSvc.userProfile) {
+            this.userid = this.configSvc.userProfile.userId || ''
+          }
+        const req  = {
+          request: {
+            userId:this.userid,
+            batchId: JSON.stringify(data.nextResource.batchId),
+            courseId: data.nextResource.identifier,
+            contentIds: [],
+            fields: ['progressdetails'],
+          },
+        }
+        this.widgetServ.fetchContentHistoryV2(req).subscribe((resp)=> {
+          console.log(resp.result, 'resppppp-------')
+        })
+          // debugger
           this.updateProgress(2, data.nextResource.identifier)
+          console.log(this.updateProgress(2, data.nextResource.identifier), 'this.updateProgress(2, data.nextResource.identifier)--+++')
         }
       } else {
         this.nextResourceUrl = null
@@ -162,6 +198,8 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
       this.activatedRoute.snapshot.queryParams.batchId : ''
     // tslint:disable-next-line:max-line-length
     this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)
+    let progressData = this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)
+    console.log(progressData, "progressData====")
   }
 
   ngOnDestroy() {
@@ -194,6 +232,22 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     }
   }
 
+  // getFetchHistory(batchId:any, identifier:any) {
+  //     if (this.configSvc.userProfile) {
+  //       this.userid = this.configSvc.userProfile.userId || ''
+  //     }
+  //   const req  = {
+  //     request: {
+  //       userId:this.userid,
+  //       batchId: batchId,
+  //       courseId: identifier || '',
+  //       contentIds: [],
+  //       fields: ['progressdetails'],
+  //     },
+  //   }
+  //   return this.widgetServ.fetchContentHistoryV2(req)
+  // }
+
   //  getAuthDataIdentifer() {
   //   const collectionId = this.activatedRoute.snapshot.queryParams.collectionId
   //   this.widgetServ.fetchAuthoringContent(collectionId).subscribe((data: any) => {
@@ -224,6 +278,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
         }
         this.widgetServ.fetchContentHistoryV2(req).subscribe(
           (data:  any) => {
+
           this.contentProgressHash = data.result.contentList
 
           if (this.leafNodesCount === this.contentProgressHash.length) {

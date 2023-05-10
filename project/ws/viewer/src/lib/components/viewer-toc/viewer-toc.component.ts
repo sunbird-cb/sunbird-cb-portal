@@ -36,7 +36,7 @@ export interface IViewerTocCard {
   collectionType: string,
   batchId: string | number,
   viewMode: string,
-  optionalReading?:boolean,
+  optionalReading:boolean,
 }
 
 export type TCollectionCardType = 'content' | 'playlist' | 'goals'
@@ -159,6 +159,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       }
     })
     this.viewerDataServiceSubscription = this.viewerDataSvc.changedSubject.subscribe(_data => {
+      console.log(_data, '_data========')
       if (this.resourceId !== this.viewerDataSvc.resourceId) {
         this.resourceId = this.viewerDataSvc.resourceId
         this.processCurrentResourceChange()
@@ -337,6 +338,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       mimeType: content.mimeType,
       complexity: content.difficultyLevel || 'Easy',
       primaryCategory: content.primaryCategory,
+      optionalReading: content.optionalReading,
       children:
         Array.isArray(content.children) && content.children.length
           && content.mimeType !== NsContent.EMimeTypes.QUESTION_SET // this is because of ne api ( questionset structure)
