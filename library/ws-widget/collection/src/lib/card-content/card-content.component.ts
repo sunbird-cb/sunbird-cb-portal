@@ -262,7 +262,7 @@ export class CardContentComponent extends WidgetBaseComponent
       {
         type: 'click',
         subType: `${this.widgetType}-${this.widgetSubType}`,
-        // id: this.widgetData.content.identifier,
+        id: `${_.camelCase(this.widgetData.content.primaryCategory)}-card`,
       },
       {
         id: this.widgetData.content.identifier,
