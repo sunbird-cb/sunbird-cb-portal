@@ -221,7 +221,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
 
   filterOrgsSearch(orgname: string = '') {
       const filterValue = orgname.toLowerCase()
-      return this.signupSvc.searchOrgs(filterValue).subscribe((res: any) => {
+      return this.signupSvc.searchOrgs(filterValue, this.typeValue).subscribe((res: any) => {
         this.resultFetched = true
         this.searching = false
         this.filteredOrgList =  res.result.response.filter((org: any) => {
