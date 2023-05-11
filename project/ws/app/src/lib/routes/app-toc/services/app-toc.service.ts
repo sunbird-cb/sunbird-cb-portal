@@ -28,6 +28,8 @@ const API_END_POINTS = {
     `${PROTECTED_SLAG_V8}/khub/fetchRelatedResources/${contentId}/${contentType}`,
   POST_ASSESSMENT: (contentId: string) =>
     `${PROTECTED_SLAG_V8}/user/evaluate/post-assessment/${contentId}`,
+  GET_CONTENT: (contentId: string) =>
+    `${PROXY_SLAG_V8}/action/content/v3/read/${contentId}`
 }
 
 @Injectable()
@@ -389,6 +391,12 @@ export class AppTocService {
   fetchPostAssessmentStatus(contentId: string) {
     return this.http.get<{ result: NsAppToc.IPostAssessment[] }>(
       API_END_POINTS.POST_ASSESSMENT(contentId),
+    )
+  }
+
+  fetchGetContentData(contentId: string){
+    return this.http.get<{ result:any }>(
+      API_END_POINTS.GET_CONTENT(contentId),
     )
   }
 
