@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { ErrorResolverComponent, PageComponent, PageModule } from '@sunbird-cb/collection'
-import { ExploreDetailResolve, PageResolve, PageNameResolve } from '@sunbird-cb/utils'
+import { ExploreDetailResolve, PageResolve, PageNameResolve, ModuleNameResolve } from '@sunbird-cb/utils'
 import { LearningGuard } from '../../project/ws/app/src/lib/routes/my-learning/guards/my-learning.guard'
 import { InvalidUserComponent } from './component/invalid-user/invalid-user.component'
 import { LoginRootComponent } from './component/login-root/login-root.component'
@@ -687,7 +687,7 @@ const routes: Routes = [
     },
     resolve: {
       pageData: PageResolve,
-      module: PageNameResolve,
+      module: ModuleNameResolve,
       pageId: PageNameResolve,
     },
     canActivate: [GeneralGuard],
