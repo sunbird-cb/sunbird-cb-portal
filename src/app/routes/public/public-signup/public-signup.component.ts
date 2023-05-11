@@ -221,7 +221,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
 
   filterOrgsSearch(orgname: string = '') {
       const filterValue = orgname.toLowerCase()
-      return this.signupSvc.searchOrgs(filterValue).subscribe((res: any) => {
+      return this.signupSvc.searchOrgs(filterValue, this.typeValue).subscribe((res: any) => {
         this.resultFetched = true
         this.searching = false
         this.filteredOrgList =  res.result.response.filter((org: any) => {
@@ -260,15 +260,17 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line:function-name
   OrgsSearchChange() {
     // tslint:disable-next-line:no-non-null-assertion
-    this.registrationForm.get('organisation')!.valueChanges.subscribe(() =>
-      this.resultFetched = false
-    )
+    this.registrationForm.get('organisation')!.valueChanges.subscribe(() => {
+      this.resultFetched = false     
+      this.registrationForm.updateValueAndValidity()
+    })
   }
 
   orgClicked(event: any) {
     if (event) {
       const frmctr = this.registrationForm.get('organisation') as FormControl
-      frmctr.patchValue(_.get(event, 'option.value') || '')
+      frmctr.setValue(_.get(event, 'option.value.orgName') || '')
+      // frmctr.patchValue(_.get(event, 'option.value') || '')
       this.heirarchyObject = _.get(event, 'option.value')
       this.hideOrg = true
     }
@@ -414,7 +416,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   }
 
   displayFnOrg = (value: any) => {
-    return value ? value.orgName : undefined
+    return value ? value.orgName : ''
   }
 
   signup() {
