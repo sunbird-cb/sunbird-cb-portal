@@ -47,6 +47,8 @@ app.use(
   }),
 )
 app.use('/LA', proxyCreator(express.Router(), CONSTANTS.LA_HOST_PROXY))
+app.disable('etag')
+app.set('etag', false)
 app.use(morgan('combined'))
 app.use(haltOnTimedOut)
 app.use('/ScormCoursePlayer', proxyCreator(express.Router(), 'http://localhost/ScormCoursePlayer'))
