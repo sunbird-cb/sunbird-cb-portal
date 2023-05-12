@@ -488,7 +488,7 @@ export class TelemetryService {
                     ...this.pData,
                     id: this.pData.id,
                   },
-                  ...(event.data.pageContext && event.data.pageContext.module ? { env: event.data.pageContext.module } : null),
+                  ...(event.pageContext && event.pageContext.module ? { env: event.pageContext.module } : null),
                 },
                 object: {
                   ...event.data.object,
