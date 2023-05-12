@@ -144,7 +144,6 @@
         "tslint-config-airbnb": "^5.11.1",
         "typescript": "~3.5.3",
         "typescript-tslint-plugin": "^0.5.4",
-        "d3-funnel": "^2.1.1",
         "webpack-bundle-analyzer": "^4.6.1"
     }
 }
