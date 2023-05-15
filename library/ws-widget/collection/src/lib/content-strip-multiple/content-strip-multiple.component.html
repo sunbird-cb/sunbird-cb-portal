@@ -7,7 +7,7 @@
   <ng-container *ngIf="showParentError" [wsResolverWidget]="widgetData.errorWidget"></ng-container>
   <ng-container *ngIf="showParentNoData" [wsResolverWidget]="widgetData.noDataWidget"></ng-container>
   <ng-container *ngFor="let key of stripsKeyOrder; let i = index; trackBy: identify">
-    <ng-container *ngIf="stripsResultDataMap[key].showStrip">
+    <ng-container *ngIf="isStripShowing(stripsResultDataMap[key])">
       <a name="{{stripsResultDataMap[key]?.stripTitle}}">
         <div *ngIf="stripsResultDataMap && (getLength(stripsResultDataMap[key]) ||
                   stripsResultDataMap[key]?.showOnNoData ||
@@ -86,8 +86,15 @@
             <ng-container *ngIf="key !== 'continueLearning'">
               <ws-utils-horizontal-scroller *ngIf="getLength(stripsResultDataMap[key]) && showAccordion(key)"
                 [loadStatus]="'done'">
-                <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets; trackBy: tracker"
-                  [wsResolverWidget]="widget"></ng-container>
+                <div *ngFor="let widget of stripsResultDataMap[key]?.widgets; trackBy: tracker">
+                  <ng-container 
+                    *ngIf="widget.widgetData.content.primaryCategory === this.environment.programStripPrimaryCategory && stripsResultDataMap[key]?.key === this.environment.programStripKey && stripsResultDataMap[key]?.stripTitle === this.environment.programStripName"
+                    [wsResolverWidget]="widget"></ng-container>
+                  <ng-container *ngIf="stripsResultDataMap[key]?.key !== this.environment.programStripKey && stripsResultDataMap[key]?.stripTitle !== this.environment.programStripName"
+                    [wsResolverWidget]="widget"></ng-container>
+                 </div>
+                <!-- <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets; trackBy: tracker"
+                  [wsResolverWidget]="widget"></ng-container> -->
               </ws-utils-horizontal-scroller>
             </ng-container>
 

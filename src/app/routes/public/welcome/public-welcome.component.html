@@ -176,7 +176,7 @@
                                     (optionSelected)="ministrySelected($event.option.value)">
                                     <mat-option *ngFor="let option of masterMinisteries| async" [value]="option"
                                         i18n-aria-label aria-label="Ministry list autocomplete option">
-                                        {{ option.orgname }}
+                                        {{ option.orgName }}
                                     </mat-option>
                                 </mat-autocomplete>
                             </div>
@@ -211,7 +211,7 @@
                                     (optionSelected)="departmentSelected($event.option.value)">
                                     <mat-option *ngFor="let option of masterDepartments | async" [value]="option"
                                         i18n-aria-label aria-label="Department list autocomplete option">
-                                        {{ option.orgname }}
+                                        {{ option.orgName }}
                                     </mat-option>
                                 </mat-autocomplete>
                             </div>
@@ -244,7 +244,7 @@
                                     aria-label="Organisation list masterStates" [displayWith]="displayFnState">
                                     <mat-option *ngFor="let option of masterOrgs | async" [value]="option"
                                         i18n-aria-label aria-label="Organisation list autocomplete option">
-                                        {{ option.orgname }}
+                                        {{ option.orgName }}
                                     </mat-option>
                                 </mat-autocomplete>
                             </div>
