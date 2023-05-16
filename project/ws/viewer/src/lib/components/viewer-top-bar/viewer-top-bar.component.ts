@@ -125,7 +125,6 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
         this.prevResourceUrl = null
       }
       if (data.nextResource) {
-       
         this.nextResourceUrl = data.nextResource.viewerUrl
         // this.nextResourcePrimaryCategory = data.nextResource.primaryCategory
         this.nextResourceUrlParams = {
@@ -141,8 +140,12 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
           fragment: '',
         }
         console.log(data.nextResource, "data.nextResource--------")
-        console.log(data.nextResource.optionalReading, "data.nextResource.optionalReading++++++++++++")
-        if(data.nextResource.optionalReading && data.nextResource.primaryCategory === "Learning Resource") {
+        console.log(`identifier = ${data.nextResource.identifier}`,data.nextResource.optionalReading, "data.nextResource.optionalReading++++++++++++")
+       
+        // nitin code 
+        if(data.nextResource.optionalReading &&  data.nextResource.primaryCategory === "Learning Resource") {
+          
+          console.log('inside opt reading code block---')
           //  this.getFetchHistory(, ).subscribe((resp)=> {
           //   console.log(resp.result, 'svc response==========')
            
@@ -161,10 +164,12 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
             fields: ['progressdetails'],
           },
         }
+        
         this.widgetServ.fetchContentHistoryV2(req).subscribe((resp)=> {
           console.log(resp.result, 'resppppp-------')
         })
           // debugger
+          console.log(data.nextResource.identifier, 'data.nextResource.identifier')
           this.updateProgress(2, data.nextResource.identifier)
           console.log(this.updateProgress(2, data.nextResource.identifier), 'this.updateProgress(2, data.nextResource.identifier)--+++')
         }
