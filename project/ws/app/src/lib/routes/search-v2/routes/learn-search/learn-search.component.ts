@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges } from '@
 import { GbSearchService } from '../../services/gb-search.service'
 import { ConfigurationsService, EventService, ValueService } from '@sunbird-cb/utils'
 import { ActivatedRoute } from '@angular/router'
+// tslint:disable-next-line
+import _ from 'lodash'
 
 @Component({
   selector: 'ws-app-learn-search',
@@ -326,7 +328,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         {
           type: 'click',
           subType: `card-learnSearch`,
-          // id: content.identifier || '',
+          id: `${_.camelCase(content.primaryCategory)}-card`,
         },
         {
           id: content.identifier || '',
