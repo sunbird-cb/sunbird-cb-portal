@@ -29,6 +29,7 @@ import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_comm
 import moment from 'moment'
 import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
 import { environment } from 'src/environments/environment'
+import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -168,6 +169,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private utilitySvc: UtilityService,
     // private progressSvc: ContentProgressService,
     private actionSVC: ActionService,
+    private viewerSvc: ViewerUtilService,
     private ratingSvc: RatingService,
   ) {
     this.historyData = history.state
@@ -1028,6 +1030,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.tocSvc.filterToc(this.content, NsContent.EFilterCategory.ASSESS),
       )
       const firstPlayableContent = this.contentSvc.getFirstChildInHierarchy(this.content)
+      debugger
+      console.log(firstPlayableContent, 'firstPlayableContent===========')
+      console.log(firstPlayableContent.identifier, 'firstPlayableContent identifier===========')
       this.firstResourceLink = viewerRouteGenerator(
         firstPlayableContent.identifier,
         firstPlayableContent.mimeType,
@@ -1037,6 +1042,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.content.primaryCategory,
         this.getBatchId(),
       )
+      debugger
+      if(firstPlayableContent.optionalReading && firstPlayableContent.primaryCategory === "Learning Resource") {
+        this.updateProgress(2, firstPlayableContent.identifier)
+      }
     }
   }
   private assignPathAndUpdateBanner(url: string) {
@@ -1195,5 +1204,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.getUserRating()
       }
     })
+  }
+
+  updateProgress(status: number, resourceId: any) {
+    const collectionId = this.route.snapshot.queryParams.collectionId ?
+      this.route.snapshot.queryParams.collectionId : ''
+    const batchId = this.route.snapshot.queryParams.batchId ?
+      this.route.snapshot.queryParams.batchId : ''
+    return this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)
   }
 }

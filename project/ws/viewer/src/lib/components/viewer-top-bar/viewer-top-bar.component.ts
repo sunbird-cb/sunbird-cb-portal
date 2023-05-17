@@ -115,18 +115,13 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
           fragment: '',
         }
         if(data.prevResource.optionalReading && data.prevResource.primaryCategory === "Learning Resource") {
-          // this.updateProgress(2, data.prevResource.identifier)
-          // this.widgetServ.fetchContentHistoryV2(data).subscribe(
-          //   (res:  any) => {
-          //     console.log(res, '===========res')
-          //   })
+          this.updateProgress(2, data.prevResource.identifier)
         }
       } else {
         this.prevResourceUrl = null
       }
       if (data.nextResource) {
         this.nextResourceUrl = data.nextResource.viewerUrl
-        // this.nextResourcePrimaryCategory = data.nextResource.primaryCategory
         this.nextResourceUrlParams = {
           queryParams: {
             primaryCategory: data.nextResource.primaryCategory,
@@ -141,7 +136,6 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
         }
         console.log(data.nextResource, "data.nextResource--------")
         console.log(`identifier = ${data.nextResource.identifier}`,data.nextResource.optionalReading, "data.nextResource.optionalReading++++++++++++")
-       
         // nitin code 
         if(data.nextResource.optionalReading &&  data.nextResource.primaryCategory === "Learning Resource") {
           
@@ -152,22 +146,22 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
           //   // let fetchData = resp
           //   // console.log(fetchData, 'fetchData next---')
           //  })
-          if (this.configSvc.userProfile) {
-            this.userid = this.configSvc.userProfile.userId || ''
-          }
-        const req  = {
-          request: {
-            userId:this.userid,
-            batchId: JSON.stringify(data.nextResource.batchId),
-            courseId: data.nextResource.identifier,
-            contentIds: [],
-            fields: ['progressdetails'],
-          },
-        }
+        //   if (this.configSvc.userProfile) {
+        //     this.userid = this.configSvc.userProfile.userId || ''
+        //   }
+        // const req  = {
+        //   request: {
+        //     userId:this.userid,
+        //     batchId: JSON.stringify(data.nextResource.batchId),
+        //     courseId: this.activatedRoute.snapshot.queryParams.collectionId,
+        //     contentIds: [],
+        //     fields: ['progressdetails'],
+        //   },
+        // }
         
-        this.widgetServ.fetchContentHistoryV2(req).subscribe((resp)=> {
-          console.log(resp.result, 'resppppp-------')
-        })
+        // this.widgetServ.fetchContentHistoryV2(req).subscribe((resp)=> {
+        //   console.log(resp.result, 'resppppp-------')
+        // })
           // debugger
           console.log(data.nextResource.identifier, 'data.nextResource.identifier')
           this.updateProgress(2, data.nextResource.identifier)
@@ -186,6 +180,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
       this.collectionId = params.get('collectionId') as string
       this.isPreview = params.get('preview') === 'true' ? true : false
     })
+    
     this.viewerDataServiceResourceSubscription = this.viewerDataSvc.changedSubject.subscribe(
       _data => {
         this.resourceId = this.viewerDataSvc.resourceId as string
@@ -201,10 +196,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
       this.activatedRoute.snapshot.queryParams.collectionId : ''
     const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
       this.activatedRoute.snapshot.queryParams.batchId : ''
-    // tslint:disable-next-line:max-line-length
-    this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)
-    let progressData = this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)
-    console.log(progressData, "progressData====")
+    return this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)
   }
 
   ngOnDestroy() {

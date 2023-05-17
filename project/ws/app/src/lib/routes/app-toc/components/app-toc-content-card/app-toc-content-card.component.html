@@ -10,6 +10,7 @@
               <p class="margin-remove text-truncate mat-subheading-1 flex-auto">
                 {{ content?.name }}
               </p>
+              
               <div class="type-container resource mt-2 sm:mt-0" *ngIf="content?.category === 'Resource'">
                 <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>
                 <span>Resource</span>
@@ -200,6 +201,11 @@
               <!-- <mat-icon class="margin-right-xs radiobtn time-icon">radio_button_unchecked </mat-icon> -->
               {{ content?.name }}
             </p>
+            <div class="d-block">
+              <span class="mat-body-strong content-type">{{ content?.optionalReading }}</span>
+            <span class="mat-body-strong content-type">{{ content?.identifier }}</span>
+            </div>
+            
           </div>
           <div class="resicons ws-mat-black60-text">
             <!-- <span class="mat-body-strong content-type ws-mat-default-text">{{ content?.contentType }}</span> -->

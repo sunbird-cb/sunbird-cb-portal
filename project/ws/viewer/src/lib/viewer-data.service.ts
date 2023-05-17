@@ -53,6 +53,7 @@ export class ViewerDataService {
   }
   updateResource(resource: NsContent.IContent | null = null, error: any | null = null) {
     if (resource) {
+      console.log(resource, 'resource========')
       this.resource = resource
       if (resource && resource.identifier) {
         this.resourceId = resource.identifier
