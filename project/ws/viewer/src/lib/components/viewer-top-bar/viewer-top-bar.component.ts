@@ -89,20 +89,9 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     //     this.domSanitizer.bypassSecurityTrustResourceUrl(data.configData.data.logos.app)
     //   }
     // )
-    // const req  = {
-    //   request: {
-    //     userId,
-    //     batchId: this.batchId,
-    //     courseId: this.identifier || '',
-    //     contentIds: [],
-    //     fields: ['progressdetails'],
-    //   },
-    // }
     this.viewerDataServiceSubscription = this.viewerDataSvc.tocChangeSubject.subscribe(data => {
-      console.log(data, 'viewer service data=====')
       if (data.prevResource) {
         this.prevResourceUrl = data.prevResource.viewerUrl
-        // this.previousResourcePrimaryCategory = data.prevResource.primaryCategory
         this.prevResourceUrlParams = {
           queryParams: {
             primaryCategory: data.prevResource.primaryCategory,
@@ -134,38 +123,8 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
           },
           fragment: '',
         }
-        console.log(data.nextResource, "data.nextResource--------")
-        console.log(`identifier = ${data.nextResource.identifier}`,data.nextResource.optionalReading, "data.nextResource.optionalReading++++++++++++")
-        // nitin code 
         if(data.nextResource.optionalReading &&  data.nextResource.primaryCategory === "Learning Resource") {
-          
-          console.log('inside opt reading code block---')
-          //  this.getFetchHistory(, ).subscribe((resp)=> {
-          //   console.log(resp.result, 'svc response==========')
-           
-          //   // let fetchData = resp
-          //   // console.log(fetchData, 'fetchData next---')
-          //  })
-        //   if (this.configSvc.userProfile) {
-        //     this.userid = this.configSvc.userProfile.userId || ''
-        //   }
-        // const req  = {
-        //   request: {
-        //     userId:this.userid,
-        //     batchId: JSON.stringify(data.nextResource.batchId),
-        //     courseId: this.activatedRoute.snapshot.queryParams.collectionId,
-        //     contentIds: [],
-        //     fields: ['progressdetails'],
-        //   },
-        // }
-        
-        // this.widgetServ.fetchContentHistoryV2(req).subscribe((resp)=> {
-        //   console.log(resp.result, 'resppppp-------')
-        // })
-          // debugger
-          console.log(data.nextResource.identifier, 'data.nextResource.identifier')
           this.updateProgress(2, data.nextResource.identifier)
-          console.log(this.updateProgress(2, data.nextResource.identifier), 'this.updateProgress(2, data.nextResource.identifier)--+++')
         }
       } else {
         this.nextResourceUrl = null

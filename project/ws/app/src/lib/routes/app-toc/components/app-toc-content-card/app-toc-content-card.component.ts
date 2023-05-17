@@ -51,7 +51,6 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
     //   }
     // )
     
-    console.log(this.content, "content on toc card----")
   }
   ngOnChanges(changes: SimpleChanges) {
     for (const property in changes) {

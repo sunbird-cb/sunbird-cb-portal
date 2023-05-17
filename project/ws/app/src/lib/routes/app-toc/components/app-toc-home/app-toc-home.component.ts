@@ -1030,9 +1030,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.tocSvc.filterToc(this.content, NsContent.EFilterCategory.ASSESS),
       )
       const firstPlayableContent = this.contentSvc.getFirstChildInHierarchy(this.content)
-      debugger
-      console.log(firstPlayableContent, 'firstPlayableContent===========')
-      console.log(firstPlayableContent.identifier, 'firstPlayableContent identifier===========')
       this.firstResourceLink = viewerRouteGenerator(
         firstPlayableContent.identifier,
         firstPlayableContent.mimeType,
@@ -1042,7 +1039,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.content.primaryCategory,
         this.getBatchId(),
       )
-      debugger
       if(firstPlayableContent.optionalReading && firstPlayableContent.primaryCategory === "Learning Resource") {
         this.updateProgress(2, firstPlayableContent.identifier)
       }
