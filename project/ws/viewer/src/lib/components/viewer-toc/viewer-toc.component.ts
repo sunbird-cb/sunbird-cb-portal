@@ -36,7 +36,7 @@ export interface IViewerTocCard {
   collectionType: string,
   batchId: string | number,
   viewMode: string,
-  optionalReading:boolean,
+  optionalReading: boolean,
 }
 
 export type TCollectionCardType = 'content' | 'playlist' | 'goals'

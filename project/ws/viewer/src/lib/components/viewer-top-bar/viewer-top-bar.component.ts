@@ -57,7 +57,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private router: Router,
     private widgetServ: WidgetContentService,
-    private viewerSvc: ViewerUtilService, 
+    private viewerSvc: ViewerUtilService,
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
@@ -103,7 +103,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
           },
           fragment: '',
         }
-        if(data.prevResource.optionalReading && data.prevResource.primaryCategory === "Learning Resource") {
+        if (data.prevResource.optionalReading && data.prevResource.primaryCategory === 'Learning Resource') {
           this.updateProgress(2, data.prevResource.identifier)
         }
       } else {
@@ -114,7 +114,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
         this.nextResourceUrlParams = {
           queryParams: {
             primaryCategory: data.nextResource.primaryCategory,
-            collectionId: data.nextResource.collectionId, 
+            collectionId: data.nextResource.collectionId,
             collectionType: data.nextResource.collectionType,
             batchId: data.nextResource.batchId,
             viewMode: data.nextResource.viewMode,
@@ -123,7 +123,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
           },
           fragment: '',
         }
-        if(data.nextResource.optionalReading &&  data.nextResource.primaryCategory === "Learning Resource") {
+        if (data.nextResource.optionalReading &&  data.nextResource.primaryCategory === 'Learning Resource') {
           this.updateProgress(2, data.nextResource.identifier)
         }
       } else {
@@ -139,7 +139,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
       this.collectionId = params.get('collectionId') as string
       this.isPreview = params.get('preview') === 'true' ? true : false
     })
-    
+
     this.viewerDataServiceResourceSubscription = this.viewerDataSvc.changedSubject.subscribe(
       _data => {
         this.resourceId = this.viewerDataSvc.resourceId as string
@@ -148,7 +148,6 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
       },
     )
   }
-
 
   updateProgress(status: number, resourceId: any) {
     const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?

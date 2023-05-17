@@ -1039,7 +1039,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.content.primaryCategory,
         this.getBatchId(),
       )
-      if(firstPlayableContent.optionalReading && firstPlayableContent.primaryCategory === "Learning Resource") {
+      if (firstPlayableContent.optionalReading && firstPlayableContent.primaryCategory === 'Learning Resource') {
         this.updateProgress(2, firstPlayableContent.identifier)
       }
     }
