@@ -320,7 +320,7 @@ TODO: edit option while preview Mode
           <p class="mat-subheading-1 at-glance-heading" i18n>At a glance</p>
           <div class="info-item">
             <p *ngIf="tocConfig?.atAGlance?.duration?.enabled && content?.duration" class="mat-body-2 cs-icons">
-              <mat-icon class="margin-right-xxs">timer</mat-icon> {{ content?.duration | pipeDurationTransform: 'hms' }}
+              <mat-icon class="margin-right-xxs">timer</mat-icon> {{ contentDuration | pipeDurationTransform: 'hms' }}
             </p>
           </div>
           <div class="info-item"
