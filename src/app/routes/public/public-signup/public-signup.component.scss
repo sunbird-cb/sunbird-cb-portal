@@ -554,10 +554,14 @@
     }
   }
 
-  ::ng-deep #position .pos-hint {
-    font: 400 14px/21px Lato !important;
+  ::ng-deep #org-field {
+    font: 400 12px/18px Lato !important;
   }
   ::ng-deep #position .mat-form-field-hint-wrapper {
+    display: block !important;
+  }
+
+  ::ng-deep #email .mat-form-field-hint-wrapper {
     display: block !important;
   }
 
@@ -766,10 +770,10 @@
       margin: 0;
       padding: 10px 0;
 
-      .btn-success {
+      // .btn-success {
         // margin-right: 0;
         // margin: 0 8px!important;
-      }
+      // }
 
       .profile-cols {
         padding: 1rem;
