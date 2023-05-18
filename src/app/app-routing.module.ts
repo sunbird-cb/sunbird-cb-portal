@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { ErrorResolverComponent, PageComponent, PageModule } from '@sunbird-cb/collection'
-import { ExploreDetailResolve, PageResolve, PageNameResolve } from '@sunbird-cb/utils'
+import { ExploreDetailResolve, PageResolve, PageNameResolve, ModuleNameResolve } from '@sunbird-cb/utils'
 import { LearningGuard } from '../../project/ws/app/src/lib/routes/my-learning/guards/my-learning.guard'
 import { InvalidUserComponent } from './component/invalid-user/invalid-user.component'
 import { LoginRootComponent } from './component/login-root/login-root.component'
@@ -195,7 +195,7 @@ const routes: Routes = [
     canActivate: [GeneralGuard],
     data: {
       pageId: 'app/curatedCollections',
-      module: 'Explore',
+      module: 'Learn',
     },
     resolve: {
       // pageData: PageResolve,
@@ -210,7 +210,7 @@ const routes: Routes = [
       // pageType: 'feature',
       // pageKey: 'browse by competency',
       pageId: 'app/learn/browse-by/competency',
-      module: 'explore',
+      module: 'Competency',
     },
     resolve: {
       pageData: PageResolve,
@@ -432,7 +432,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'profile-v2',
       pageId: 'app/person-profile',
-      module: 'profile',
+      module: 'Profile',
     },
     resolve: {
       pageData: PageResolve,
@@ -490,7 +490,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'globalsearch',
       pageId: 'app/globalsearch',
-      module: 'Search',
+      module: 'Home',
     },
   },
   {
@@ -687,7 +687,7 @@ const routes: Routes = [
     },
     resolve: {
       pageData: PageResolve,
-      module: PageNameResolve,
+      module: ModuleNameResolve,
       pageId: PageNameResolve,
     },
     canActivate: [GeneralGuard],

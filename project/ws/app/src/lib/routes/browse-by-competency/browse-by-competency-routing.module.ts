@@ -15,7 +15,7 @@ const routes: Routes = [
     component: AllCompetenciesComponent,
     data: {
       pageId: 'all-competencies',
-      module: 'explore',
+      module: 'Competency',
     },
   },
   {
@@ -25,7 +25,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'browse-competency',
       pageId: ':competency-name',
-      module: 'explore',
+      module: 'Competency',
     },
     resolve: {
       searchPageData: PageResolve,
