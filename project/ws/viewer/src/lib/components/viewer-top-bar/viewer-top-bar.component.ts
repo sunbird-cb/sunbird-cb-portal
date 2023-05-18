@@ -124,6 +124,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
           fragment: '',
         }
         if (data.nextResource.optionalReading &&  data.nextResource.primaryCategory === 'Learning Resource') {
+          // console.log(data.nextResource.identifier, 'data.nextResource.identifier---')
           this.updateProgress(2, data.nextResource.identifier)
         }
       } else {
@@ -152,6 +153,8 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   updateProgress(status: number, resourceId: any) {
     const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
       this.activatedRoute.snapshot.queryParams.collectionId : ''
+    // const collectionId = this.activatedRoute.snapshot.params.id ?
+    // this.activatedRoute.snapshot.params.id : ''
     const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
       this.activatedRoute.snapshot.queryParams.batchId : ''
     return this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)

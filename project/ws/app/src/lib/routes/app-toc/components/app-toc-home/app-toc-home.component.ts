@@ -1203,8 +1203,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   updateProgress(status: number, resourceId: any) {
-    const collectionId = this.route.snapshot.queryParams.collectionId ?
-      this.route.snapshot.queryParams.collectionId : ''
+    const collectionId = this.route.snapshot.params.id ?
+    this.route.snapshot.params.id : ''
     const batchId = this.route.snapshot.queryParams.batchId ?
       this.route.snapshot.queryParams.batchId : ''
     return this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)
