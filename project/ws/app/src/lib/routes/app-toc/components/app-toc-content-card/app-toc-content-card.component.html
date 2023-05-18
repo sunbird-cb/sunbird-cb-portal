@@ -201,10 +201,10 @@
               <!-- <mat-icon class="margin-right-xs radiobtn time-icon">radio_button_unchecked </mat-icon> -->
               {{ content?.name }}
             </p>
-            <div class="d-block">
-              <span class="mat-body-strong content-type">{{ content?.optionalReading }}</span>
-            <span class="mat-body-strong content-type">{{ content?.identifier }}</span>
-            </div>
+          
+              <span class="content-type optional-span" *ngIf="content?.optionalReading">optional </span>
+            <!-- <span class="mat-body-strong content-type">{{ content?.identifier }}</span> -->
+          
             
           </div>
           <div class="resicons ws-mat-black60-text">
