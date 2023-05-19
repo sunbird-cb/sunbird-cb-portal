@@ -140,6 +140,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     this.registrationForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       lastname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
+      // tslint:disable-next-line:max-line-length
       position: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterPositions)]),
       email: new FormControl('', [Validators.required, Validators.pattern(this.emailWhitelistPattern)]),
       // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
@@ -227,7 +228,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         this.filteredOrgList =  res.result.response.filter((org: any) => {
           return org.orgName.toLowerCase().indexOf(filterValue) >= 0
         })
-      },                                                      (err: any) => {
+      },                                                                      (err: any) => {
         this.searching = false
         this.loggerSvc.error('Error in fetching organisations >', err)
         if (err.error && err.error.params && err.error.params.errmsg) {
@@ -261,7 +262,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   OrgsSearchChange() {
     // tslint:disable-next-line:no-non-null-assertion
     this.registrationForm.get('organisation')!.valueChanges.subscribe(() => {
-      this.resultFetched = false     
+      this.resultFetched = false
       this.registrationForm.updateValueAndValidity()
     })
   }
@@ -489,7 +490,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     })
   }
 
-  termsAndConditionClick(){
+  termsAndConditionClick() {
     const dialogRef = this.dialog.open(TermsAndConditionComponent, {
       maxHeight: 'auto',
       height: '90%',

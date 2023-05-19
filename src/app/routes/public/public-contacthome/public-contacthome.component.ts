@@ -23,8 +23,8 @@ export class PublicContacthomeComponent implements OnInit {
     }
   }
 
-  preventData(event:any) {
-    event.preventDefault();
+  preventData(event: any) {
+    event.preventDefault()
   }
 
 }
