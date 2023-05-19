@@ -25,20 +25,16 @@ import {
   MatTabsModule,
   MatAutocompleteModule,
 } from '@angular/material'
-import { PublicSignupComponent } from './public-signup.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
-import { SignupService } from './signup.service'
-import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha'
-import { SignupSuccessDialogueComponent } from './signup-success-dialogue/signup-success-dialogue/signup-success-dialogue.component'
-import { environment } from 'src/environments/environment'
 import { PipeOrderByModule } from '@sunbird-cb/utils/src/lib/pipes/pipe-order-by/pipe-order-by.module'
-import { AppPublicPositionResolverService } from './position-resolver.service'
-import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api';
-import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component'
+import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
+import { PublicRequestComponent } from './public-request.component'
+import { RequestService } from './request.service'
+import { RequestSuccessDialogComponent } from './request-success-dialog/request-success-dialog.component'
 
 @NgModule({
-  declarations: [PublicSignupComponent, SignupSuccessDialogueComponent, TermsAndConditionComponent],
+  declarations: [PublicRequestComponent, RequestSuccessDialogComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -67,20 +63,12 @@ import { TermsAndConditionComponent } from './terms-and-condition/terms-and-cond
     MatButtonToggleModule,
     MatTabsModule,
     MatAutocompleteModule,
-    RecaptchaV3Module,
     PipeOrderByModule,
     PipeDurationTransformModule,
   ],
-  exports: [PublicSignupComponent],
-  providers: [
-    SignupService,
-    AppPublicPositionResolverService,
-    {
-      provide: RECAPTCHA_V3_SITE_KEY,
-      useValue: environment.recaptchaKey,
-    },
-  ],
-  entryComponents: [SignupSuccessDialogueComponent, TermsAndConditionComponent],
+  exports: [PublicRequestComponent],
+  providers: [RequestService],
+  entryComponents: [RequestSuccessDialogComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class PublicSignupModule { }
+export class PublicRequestModule { }

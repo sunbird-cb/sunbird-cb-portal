@@ -1676,10 +1676,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               },
             }
             this.userProfileSvc.editProfileDetails(reqUpdates).subscribe((updateRes: any) => {
+              
               if (updateRes) {
                 this.isMobileVerified = true
               }
-            })
+            }, (error: any) => {
+              this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+            }
+            )
           }
           // tslint:disable-next-line: align
         }, (error: any) => {

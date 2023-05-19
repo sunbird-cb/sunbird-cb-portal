@@ -46,6 +46,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   identifier: any
   batchId: any
   userid: any
+  channelId: any
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -78,7 +79,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     this.isTypeOfCollection = this.activatedRoute.snapshot.queryParams.collectionType ? true : false
     this.collectionType = this.activatedRoute.snapshot.queryParams.collectionType
     this.courseName = this.activatedRoute.snapshot.queryParams.courseName
-
+    this.channelId = this.activatedRoute.snapshot.queryParams.channelId
     if (this.configSvc.instanceConfig) {
       this.appIcon = this.domSanitizer.bypassSecurityTrustResourceUrl(
         this.configSvc.instanceConfig.logos.app,
@@ -100,6 +101,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
             batchId: data.prevResource.batchId,
             viewMode: data.prevResource.viewMode,
             preview: this.forPreview,
+            channelId: this.channelId,
           },
           fragment: '',
         }
@@ -120,6 +122,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
             viewMode: data.nextResource.viewMode,
             courseName: this.courseName,
             preview: this.forPreview,
+            channelId: this.channelId,
           },
           fragment: '',
         }

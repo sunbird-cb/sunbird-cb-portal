@@ -33,6 +33,7 @@ export class AudioComponent implements OnInit, OnDestroy {
   discussionForumWidget: NsWidgetResolver.IRenderConfigWithTypedData<
     NsDiscussionForum.IDiscussionForumInput
   > | null = null
+  channelId: any
   constructor(
     private activatedRoute: ActivatedRoute,
     private contentSvc: WidgetContentService,
@@ -45,6 +46,7 @@ export class AudioComponent implements OnInit, OnDestroy {
     this.screenSizeSubscription = this.valueSvc.isXSmall$.subscribe(data => {
       this.isScreenSizeSmall = data
     })
+    this.channelId = this.activatedRoute.snapshot.queryParamMap.get('channelId')
     this.isNotEmbed = !(
       window.location.href.includes('/embed/') ||
       this.activatedRoute.snapshot.queryParams.embed === 'true'
@@ -80,6 +82,7 @@ export class AudioComponent implements OnInit, OnDestroy {
           this.widgetResolverAudioData.widgetData.primaryCategory = this.audioData.primaryCategory
           this.widgetResolverAudioData.widgetData.identifier = this.audioData.identifier
           this.widgetResolverAudioData.widgetData.version = `${this.audioData.version}${''}`
+          this.widgetResolverAudioData.widgetData.channel = this.channelId
         }
         this.widgetResolverAudioData.widgetData.disableTelemetry = false
         this.isFetchingDataComplete = true
@@ -141,6 +144,7 @@ export class AudioComponent implements OnInit, OnDestroy {
           this.widgetResolverAudioData.widgetData.primaryCategory = data.content.data.primaryCategory
 
           this.widgetResolverAudioData.widgetData.version = `${data.content.data.version}${''}`
+          this.widgetResolverAudioData.widgetData.channel = this.channelId
 
           if (data.content.data && data.content.data.subTitles && data.content.data.subTitles[0]) {
 
