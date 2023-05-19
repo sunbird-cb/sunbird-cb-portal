@@ -214,6 +214,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     }
     if (this.resumeData && this.content) {
       let resumeDataV2: any
+
       if (this.content.completionPercentage === 100) {
         resumeDataV2 = this.getResumeDataFromList('start')
       } else {
@@ -296,7 +297,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         return
       }
       getAllItemsPerChildren(this.content)
-      // console.log(flatList)
       const chld = _.first(_.filter(flatList, { identifier }))
       return chld.mimeType
     }

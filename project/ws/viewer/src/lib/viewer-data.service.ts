@@ -35,6 +35,7 @@ export class ViewerDataService {
   error: any
   status: TStatus = 'none'
   resourceChangedSubject = new Subject<string>()
+  optionalReading = false
   changedSubject = new ReplaySubject(1)
   tocChangeSubject = new ReplaySubject<IViewerTocChangeEvent>(1)
   navSupportForResource = new ReplaySubject<IViewerResourceOptions>(1)
@@ -48,6 +49,7 @@ export class ViewerDataService {
     this.primaryCategory = primaryCategory || ''
     this.collectionId = collectionId || '',
     this.changedSubject.next()
+    this.optionalReading = false
   }
   updateResource(resource: NsContent.IContent | null = null, error: any | null = null) {
     if (resource) {
@@ -55,6 +57,7 @@ export class ViewerDataService {
       if (resource && resource.identifier) {
         this.resourceId = resource.identifier
         this.primaryCategory = resource.primaryCategory
+        this.optionalReading = resource.optionalReading
       }
       this.error = null
       this.status = 'done'
