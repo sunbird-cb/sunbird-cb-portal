@@ -265,7 +265,7 @@
                     <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
                     <input matInput onfocus="this.select()" aria-label="organisation" [matAutocomplete]="auto" #organisation
                       name="organisation" formControlName="organisation" i18n-placeholder placeholder="Search organisation" i18n-aria-label
-                      aria-label="Type here" >
+                      aria-label="Type here" required>
                     <span matSuffix class="ws-mat-accent-text margin-xs cursor-pointer" (click)="searchOrgs(organisation.value)" >Search</span>
                     <mat-error *ngIf="registrationForm?.controls['organisation'].errors?.pattern" i18n-aria-label
                       aria-label="You must enter value from suggested list only.">
@@ -273,7 +273,7 @@
                     </mat-error>
                   </mat-form-field>
                   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="orgClicked($event)"  
-                      autoActiveFirstOption="true" [displayWith]="displayFnOrg">
+                      autoActiveFirstOption="true" >
                       <ng-container *ngIf="searching">
                         <mat-option [value] = "" class="custom">
                           <div  class="p-4 w-full flex items-center justify-center">
