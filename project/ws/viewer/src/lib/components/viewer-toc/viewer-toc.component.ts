@@ -36,6 +36,7 @@ export interface IViewerTocCard {
   collectionType: string,
   batchId: string | number,
   viewMode: string,
+  optionalReading: boolean,
   channelId: string
 }
 
@@ -339,6 +340,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       mimeType: content.mimeType,
       complexity: content.difficultyLevel || 'Easy',
       primaryCategory: content.primaryCategory,
+      optionalReading: content.optionalReading,
       channelId: this.channelId,
       children:
         Array.isArray(content.children) && content.children.length
