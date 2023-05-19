@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core'
+import { ConfigurationsService } from '@sunbird-cb/utils';
 // import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { ActivatedRoute } from '@angular/router'
 import { NsUser } from '@sunbird-cb/utils'
@@ -12,11 +13,13 @@ import { NsUser } from '@sunbird-cb/utils'
 })
 export class ConnectionNameComponent implements OnInit, AfterViewInit {
   @Input() hoverUser!: any
+  verifiedBadge=false
   me!: NsUser.IUserProfile
   // hoverUser!: NSProfileDataV2.IProfile
   constructor(
     // private router: Router,
     private activeRoute: ActivatedRoute,
+    private configSvc: ConfigurationsService,
     // private connectionHoverService: ConnectionHoverService,
   ) {
     if (this.activeRoute.parent) {
@@ -30,6 +33,9 @@ export class ConnectionNameComponent implements OnInit, AfterViewInit {
     // this.connectionHoverService.fetchProfile(userId).subscribe((fp: NSProfileDataV2.IProfile) => {
     //   this.hoverUser = fp
     // })
+    if (this.configSvc.unMappedUser.profileDetails.mandatoryFieldsExists == true) {
+      this.verifiedBadge = true
+    }
   }
   ngAfterViewInit() {
 

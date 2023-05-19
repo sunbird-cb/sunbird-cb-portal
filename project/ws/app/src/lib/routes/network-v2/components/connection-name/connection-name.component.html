@@ -1,5 +1,7 @@
 <div wsTooltipDirective>
     <span class="mat-body-1 name">{{getUseravatarName}}</span>
+    <span class="profile-badge" *ngIf="verifiedBadge">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
+    </span>
     <ng-template #tooltipTemplate>
         <div class="tooltip">
             <ws-app-connection-hover-card [hoverUser]="hoverUser"></ws-app-connection-hover-card>

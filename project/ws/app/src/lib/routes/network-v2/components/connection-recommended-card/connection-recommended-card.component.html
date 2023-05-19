@@ -8,9 +8,11 @@
         <div class="name-container flex flex-col width-expand">
             <a href="javascript:void(0)" class="" i18n-aria-label role="link" (click)="goToUserProfile(user)">
                 <div class="name ws-mat-black-text cursor-pointer" *ngIf="user && user?.personalDetails?.firstname">
-                    {{user?.personalDetails?.firstname}} {{user?.personalDetails?.middlename}}
-                    {{user?.personalDetails?.surname}}
+                    {{user?.personalDetails?.firstname}} 
+                    <span class="profile-badge" *ngIf="verifiedBadge">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
+                    </span>
                 </div>
+                
                 <div class="name ws-mat-black-text cursor-pointer" *ngIf="user && user?.personalDetails?.firstName">
                     {{user?.personalDetails?.firstName}} {{user?.personalDetails?.middlename}}
                     {{user?.personalDetails?.surname}}
