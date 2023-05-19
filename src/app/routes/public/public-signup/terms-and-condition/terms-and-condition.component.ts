@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material'
 @Component({
   selector: 'ws-terms-and-condition',
   templateUrl: './terms-and-condition.component.html',
-  styleUrls: ['./terms-and-condition.component.scss']
+  styleUrls: ['./terms-and-condition.component.scss'],
 })
 export class TermsAndConditionComponent implements OnInit {
 
