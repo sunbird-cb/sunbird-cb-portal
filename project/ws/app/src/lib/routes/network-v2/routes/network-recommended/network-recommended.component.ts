@@ -28,9 +28,7 @@ export class NetworkRecommendedComponent implements OnInit {
   ) {
     this.currentUserDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName
     this.data = this.route.snapshot.data.recommendedList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
-      console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",v)
       if (v && v.personalDetails && v.personalDetails.firstname) {
-      
         v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
       }
       return v
@@ -53,7 +51,6 @@ export class NetworkRecommendedComponent implements OnInit {
     this.data = []
     fulldata.forEach((user: any) => {
       this.networkV2Service.fetchProfile(user.id).subscribe((res: any) => {
-        console.log("Nrtwprl card >>>>>>>>>>>>>"+JSON.stringify(res))
         // this.data.push(res.result.UserProfile[0])
         this.data.push(res.result.response)
       })
