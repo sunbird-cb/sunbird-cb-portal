@@ -42,6 +42,7 @@ export class BtnProfileComponent extends WidgetBaseComponent
   btnSettingsConfig!: NsWidgetResolver.IRenderConfigWithTypedData<IBtnAppsConfig>
   private pinnedAppsSubs?: Subscription
   givenName = 'Guest'
+  verifiedBadge = false
   profileImage!: string | null
   private readonly featuresConfig: IGroupWithFeatureWidgets[] = []
   portalLinks: any[] = []
@@ -53,6 +54,9 @@ export class BtnProfileComponent extends WidgetBaseComponent
     super()
     this.btnAppsConfig = { ...this.basicBtnAppsConfig }
     this.btnSettingsConfig = { ... this.settingBtnConfig }
+    if(this.configSvc.unMappedUser.profileDetails.mandatoryFieldsExists == true){
+      this.verifiedBadge = true
+    }
     this.updateUserInfo()
     if (this.configSvc.appsConfig) {
       const appsConfig = this.configSvc.appsConfig
