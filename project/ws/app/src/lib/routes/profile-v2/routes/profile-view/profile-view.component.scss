@@ -394,8 +394,6 @@ a:not([href]):not([tabindex]) {
 }
 
 span.profile-badge {
-  float: left;
-  position: absolute;
-  padding-left: 134px;
-  padding-top: 6px;
+    padding-left: 5px;
+    padding-top: 5px;
 }

@@ -24,9 +24,7 @@ export class ConnectionRecommendedCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if(this.configSvc.unMappedUser.profileDetails.mandatoryFieldsExists == true){
-      this.verifiedBadge = true
-    }
+
   }
   getUseravatarName() {
     let name = ''

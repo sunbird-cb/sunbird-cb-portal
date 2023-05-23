@@ -27,21 +27,26 @@
             <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
               portalProfile.personalDetails.firstname 
             ">
+            <span *ngIf="verifiedBadge" class="profile-badge">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
+            </span>
            </mat-card-title>
             </ng-container>
           <ng-container *ngIf="portalProfile.personalDetails.firstName">
             <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
               portalProfile.personalDetails.firstName 
             ">
+            <span *ngIf="verifiedBadge" class="profile-badge">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
+            </span>
            </mat-card-title>
            
             </ng-container>
             <!-- <div class="flex verified">
               <mat-icon class="ws-mat-green-text" svgIcon="verified"></mat-icon>
             </div> -->
+            <span *ngIf="verifiedBadge" class="profile-badge">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
+            </span>
           </div>
-          <span *ngIf="verifiedBadge" class="profile-badge">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
-          </span>
+          
           <div class="flex flex-1 flex-row-reverse">
             <div *ngIf="
                 portalProfile.id === currentUser ||
