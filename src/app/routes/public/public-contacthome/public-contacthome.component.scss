@@ -32,6 +32,10 @@ h2.main_title_text {
   flex: 4;
 }
 
+a.mail_link {
+  cursor: default;
+}
+
 .custom {
   @include breakpoint-xs {
     flex-direction: column;

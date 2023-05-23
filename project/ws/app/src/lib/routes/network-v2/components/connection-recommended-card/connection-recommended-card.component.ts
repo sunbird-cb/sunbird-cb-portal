@@ -16,6 +16,7 @@ export class ConnectionRecommendedCardComponent implements OnInit {
   @Output() connection = new EventEmitter<string>()
   @ViewChild('toastSuccess', { static: true }) toastSuccess!: ElementRef<any>
   @ViewChild('toastError', { static: true }) toastError!: ElementRef<any>
+  verifiedBadge = false
   constructor(
     private networkV2Service: NetworkV2Service, private configSvc: ConfigurationsService,
     private snackBar: MatSnackBar,
@@ -23,6 +24,7 @@ export class ConnectionRecommendedCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
   }
   getUseravatarName() {
     let name = ''
