@@ -56,7 +56,7 @@ export namespace NSNetworkDataV2 {
     export interface INetworkUser {
         employmentDetails: IEmploymentDetails,
         personalDetails: IPersonalDetails,
-        verifiedKarmayogi : boolean,
+        verifiedKarmayogi: boolean,
         id: string,
         photo: string | null | undefined,
         identifier: string,
@@ -125,7 +125,7 @@ export namespace NSNetworkDataV2 {
         osCreatedBy: string
         osUpdatedAt: string
         osUpdatedBy: string
-        verifiedKarmayogiBadge : boolean
+        verifiedKarmayogiBadge: boolean
         osid: string
         personalDetails: IPersonalDetails
         professionalDetails: IProfessionalDetails[]
