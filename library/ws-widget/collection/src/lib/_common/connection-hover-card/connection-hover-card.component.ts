@@ -5,7 +5,6 @@ import { NsUser } from '@sunbird-cb/utils'
 // import { ConnectionHoverService } from './connection-hover.servive'
 // import { NSProfileDataV2 } from '../../../profile-v2/models/profile-v2.model'
 // import { ConnectionHoverService } from '../connection-name/connection-hover.servive'
-import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-widget-connection-hover-card',
@@ -19,12 +18,10 @@ export class ConnectionHoverCardComponent implements OnInit, AfterViewInit {
   @Input() hoverUser!: any
   // @Input() userId!: string
   me!: NsUser.IUserProfile
-  verifiedBadge = false
   // hoverUser!: NSProfileDataV2.IProfile
   constructor(
     private router: Router,
     private activeRoute: ActivatedRoute,
-    private configSvc: ConfigurationsService,
     // private connectionHoverService: ConnectionHoverService,
   ) {
     if (this.activeRoute.parent) {
@@ -36,9 +33,7 @@ export class ConnectionHoverCardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-        if(this.configSvc.unMappedUser.profileDetails.mandatoryFieldsExists == true){
-          this.verifiedBadge = true
-        }
+
   }
   ngAfterViewInit() {
     // const userId = this.user.id || this.user.identifier
