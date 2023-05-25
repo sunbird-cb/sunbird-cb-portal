@@ -29,7 +29,7 @@ const API_END_POINTS = {
   POST_ASSESSMENT: (contentId: string) =>
     `${PROTECTED_SLAG_V8}/user/evaluate/post-assessment/${contentId}`,
   GET_CONTENT: (contentId: string) =>
-    `${PROXY_SLAG_V8}/action/content/v3/read/${contentId}`
+    `${PROXY_SLAG_V8}/action/content/v3/read/${contentId}`,
 }
 
 @Injectable()
@@ -394,8 +394,8 @@ export class AppTocService {
     )
   }
 
-  fetchGetContentData(contentId: string){
-    return this.http.get<{ result:any }>(
+  fetchGetContentData(contentId: string) {
+    return this.http.get<{ result: any }>(
       API_END_POINTS.GET_CONTENT(contentId),
     )
   }

@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { TermsAndConditionComponent } from './terms-and-condition.component';
+import { TermsAndConditionComponent } from './terms-and-condition.component'
 
 describe('TermsAndConditionComponent', () => {
-  let component: TermsAndConditionComponent;
-  let fixture: ComponentFixture<TermsAndConditionComponent>;
+  let component: TermsAndConditionComponent
+  let fixture: ComponentFixture<TermsAndConditionComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TermsAndConditionComponent ]
+      declarations: [TermsAndConditionComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TermsAndConditionComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(TermsAndConditionComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})
