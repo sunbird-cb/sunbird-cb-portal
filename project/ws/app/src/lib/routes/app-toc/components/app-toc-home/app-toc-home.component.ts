@@ -143,6 +143,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   dakshtaName = environment.dakshtaName
   cscmsUrl = environment.cscmsUrl
   showBtn = false
+  contentDuration: any
   channelId: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -189,6 +190,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     if (this.route) {
       this.routeSubscription = this.route.data.subscribe((data: Data) => {
+        this.tocSvc.fetchGetContentData(data.content.data.identifier).subscribe(res => {
+          this.contentDuration = res.result.content.duration
+        })
         this.initialrouteData = data
         this.banners = data.pageData.data.banners
         this.tocSvc.subtitleOnBanners = data.pageData.data.subtitleOnBanners || false
