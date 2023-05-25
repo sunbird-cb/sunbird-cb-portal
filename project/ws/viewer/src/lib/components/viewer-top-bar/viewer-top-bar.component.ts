@@ -47,6 +47,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   batchId: any
   userid: any
   channelId: any
+  optionalLink = false
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -90,6 +91,14 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     //     this.domSanitizer.bypassSecurityTrustResourceUrl(data.configData.data.logos.app)
     //   }
     // )
+    this.viewerDataSvc.isSkipBtn.subscribe((data: any) => {
+      if (data !== undefined) {
+        this.optionalLink = data
+      } else {
+        this.optionalLink = false
+      }
+    })
+
     this.viewerDataServiceSubscription = this.viewerDataSvc.tocChangeSubject.subscribe(data => {
       if (data.prevResource) {
         this.prevResourceUrl = data.prevResource.viewerUrl
@@ -127,7 +136,6 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
           fragment: '',
         }
         if (data.nextResource.optionalReading &&  data.nextResource.primaryCategory === 'Learning Resource') {
-          // console.log(data.nextResource.identifier, 'data.nextResource.identifier---')
           this.updateProgress(2, data.nextResource.identifier)
         }
       } else {
