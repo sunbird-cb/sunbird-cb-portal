@@ -39,7 +39,7 @@ export class ViewerDataService {
   changedSubject = new ReplaySubject(1)
   tocChangeSubject = new ReplaySubject<IViewerTocChangeEvent>(1)
   navSupportForResource = new ReplaySubject<IViewerResourceOptions>(1)
-  isSkipBtn = new BehaviorSubject<boolean>(false);
+  isSkipBtn = new BehaviorSubject<boolean>(false)
   constructor() { }
 
   reset(resourceId: string | null = null, status: TStatus = 'none', primaryCategory?: string, collectionId?: string) {

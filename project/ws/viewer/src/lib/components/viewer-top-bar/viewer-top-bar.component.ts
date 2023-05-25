@@ -91,8 +91,8 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     //     this.domSanitizer.bypassSecurityTrustResourceUrl(data.configData.data.logos.app)
     //   }
     // )
-    this.viewerDataSvc.isSkipBtn.subscribe((data:any) => {
-      if(data !== undefined) {
+    this.viewerDataSvc.isSkipBtn.subscribe((data: any) => {
+      if (data !== undefined) {
         this.optionalLink = data
       } else {
         this.optionalLink = false
