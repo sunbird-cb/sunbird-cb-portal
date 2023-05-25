@@ -91,11 +91,13 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     //     this.domSanitizer.bypassSecurityTrustResourceUrl(data.configData.data.logos.app)
     //   }
     // )
-this.viewerDataSvc.isSkipBtn.subscribe((data:any) => {
-  if(data !== undefined) {
-    this.optionalLink = data
-  }
-})
+    this.viewerDataSvc.isSkipBtn.subscribe((data:any) => {
+      if(data !== undefined) {
+        this.optionalLink = data
+      } else {
+        this.optionalLink = false
+      }
+    })
 
     this.viewerDataServiceSubscription = this.viewerDataSvc.tocChangeSubject.subscribe(data => {
       if (data.prevResource) {
@@ -134,9 +136,6 @@ this.viewerDataSvc.isSkipBtn.subscribe((data:any) => {
           fragment: '',
         }
         if (data.nextResource.optionalReading &&  data.nextResource.primaryCategory === 'Learning Resource') {
-          // console.log(data.nextResource.identifier, 'data.nextResource.identifier---')
-          // console.log(data.nextResource.optionalReading , "data.nextResource.optionalReading")
-          // this.optionalLink = true
           this.updateProgress(2, data.nextResource.identifier)
         }
       } else {
