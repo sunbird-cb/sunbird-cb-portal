@@ -29,6 +29,7 @@ import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_comm
 import moment from 'moment'
 import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
 import { environment } from 'src/environments/environment'
+import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -170,6 +171,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private utilitySvc: UtilityService,
     // private progressSvc: ContentProgressService,
     private actionSVC: ActionService,
+    private viewerSvc: ViewerUtilService,
     private ratingSvc: RatingService,
     private telemertyService: TelemetryService,
   ) {
@@ -1045,6 +1047,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.content.primaryCategory,
         this.getBatchId(),
       )
+      if (firstPlayableContent.optionalReading && firstPlayableContent.primaryCategory === 'Learning Resource') {
+        this.updateProgress(2, firstPlayableContent.identifier)
+      }
     }
   }
   private assignPathAndUpdateBanner(url: string) {
@@ -1211,5 +1216,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.getUserRating()
       }
     })
+  }
+
+  updateProgress(status: number, resourceId: any) {
+    const collectionId = this.route.snapshot.params.id ?
+    this.route.snapshot.params.id : ''
+    const batchId = this.route.snapshot.queryParams.batchId ?
+      this.route.snapshot.queryParams.batchId : ''
+    return this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)
   }
 }
