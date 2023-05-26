@@ -1680,7 +1680,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               if (updateRes) {
                 this.isMobileVerified = true
               }
-            },                                                           (error: any) => {
+            // tslint:disable-next-line:align
+            }, (error: any) => {
+
               this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
             }
             )

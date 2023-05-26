@@ -138,7 +138,7 @@
               <ng-container *ngIf="requestType === 'Position'">
                 <div class="input-wrapper margin-top-s" >
                   <label for="position" class="margin-remove-bottom form-label required"
-                    i18n="Position|Label which explains the user to enter Position" i18n-aria-label
+                    i18n="Position | Label which explains the user to enter position" i18n-aria-label
                     aria-label="Position Field label">
                     Position
                   </label>
@@ -146,7 +146,7 @@
                     <input id="position" matInput type="text" placeholder="Enter your position"
                       i18n-placeholder="position" formControlName="position" autocomplete="off" 
                       i18n-aria-label aria-label="Position" #position maxlength="150" />
-                    <mat-error [hidden]="false" i18n="Position Error|Explains Position is required"
+                    <mat-error [hidden]="false" i18n="Position Error | Explains position is required"
                       *ngIf="requestForm?.controls['position'].errors?.required" i18n-aria-label
                       aria-label="Position is mandatory">
                       Position is mandatory
@@ -162,7 +162,7 @@
               <ng-container *ngIf="requestType === 'Organisation'">
                 <div class="input-wrapper margin-top-s">
                   <label for="organisation" class="margin-remove-bottom form-label required"
-                    i18n="Organisation|Label which explains the user to enter Organisation" i18n-aria-label
+                    i18n="Organisation | Label which explains the user to enter organisation" i18n-aria-label
                     aria-label="Organisation Field label">
                     Organisation
                   </label>
@@ -170,7 +170,7 @@
                     <input id="organisation" matInput type="text" placeholder="Enter your organisation"
                       i18n-placeholder="organisation" formControlName="organisation" autocomplete="off"
                       i18n-aria-label aria-label="organisation" #organisation maxlength="150" />
-                    <mat-error [hidden]="false" i18n="Organisation Error|Explains Organisation is required"
+                    <mat-error [hidden]="false" i18n="Organisation Error | Explains organisation is required"
                       *ngIf="requestForm?.controls['organisation'].errors?.required" i18n-aria-label
                       aria-label="organisation is mandatory">
                       Organisation is mandatory
@@ -178,6 +178,31 @@
                     <mat-error *ngIf="requestForm?.controls['organisation'].errors?.pattern" i18n-aria-label
                       aria-label="You must enter value from suggested list only.">
                       Only alphabets, numbers, space, &, -, and  () are allowed.
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </ng-container>
+
+              <!-- domain field -->
+              <ng-container *ngIf="requestType === 'Domain'">
+                <div class="input-wrapper margin-top-s">
+                  <label for="domain" class="margin-remove-bottom form-label required"
+                    i18n="Domain |Label which explains the user to enter domain" i18n-aria-label
+                    aria-label="Domain Field label">
+                    Domain
+                  </label>
+                  <mat-form-field appearance="outline" class="margin-top-s w-full">
+                    <input id="domain" matInput type="text" placeholder="Example: email.com"
+                      i18n-placeholder="domain" formControlName="domain" autocomplete="off"
+                      i18n-aria-label aria-label="domain" #domain maxlength="63" />
+                    <mat-error [hidden]="false" i18n="Domain Error | Explains domain is required"
+                      *ngIf="requestForm?.controls['domain'].errors?.required" i18n-aria-label
+                      aria-label="domain is mandatory">
+                      Domain is mandatory
+                    </mat-error>
+                    <mat-error *ngIf="requestForm?.controls['domain'].errors?.pattern" i18n-aria-label
+                      aria-label="You must enter value from suggested list only.">
+                      Example: email.com or email.com.in is allowed
                     </mat-error>
                   </mat-form-field>
                 </div>
@@ -220,7 +245,6 @@
                   </button>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
