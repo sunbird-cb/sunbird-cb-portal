@@ -9,7 +9,7 @@ import {
   NsGoal,
 } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, LoggerService, NsPage, TFetchStatus, UtilityService } from '@sunbird-cb/utils'
+import { ConfigurationsService, LoggerService, NsPage, TFetchStatus, TelemetryService, UtilityService } from '@sunbird-cb/utils'
 import { Subscription, Observable } from 'rxjs'
 import { share } from 'rxjs/operators'
 import { NsAppToc } from '../../models/app-toc.model'
@@ -142,6 +142,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   dakshtaName = environment.dakshtaName
   cscmsUrl = environment.cscmsUrl
   showBtn = false
+  contentDuration: any
+  channelId: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -169,13 +171,16 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     // private progressSvc: ContentProgressService,
     private actionSVC: ActionService,
     private ratingSvc: RatingService,
+    private telemertyService: TelemetryService,
   ) {
     this.historyData = history.state
     this.handleBreadcrumbs()
   }
 
   ngOnInit() {
+
     // this.route.fragment.subscribe(fragment => { this.fragment = fragment })
+    this.channelId = this.telemertyService.telemetryConfig ? this.telemertyService.telemetryConfig.channel : ''
     try {
       this.isInIframe = window.self !== window.top
     } catch (_ex) {
@@ -183,6 +188,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     if (this.route) {
       this.routeSubscription = this.route.data.subscribe((data: Data) => {
+        this.tocSvc.fetchGetContentData(data.content.data.identifier).subscribe(res => {
+          this.contentDuration = res.result.content.duration
+        })
         this.initialrouteData = data
         this.banners = data.pageData.data.banners
         this.tocSvc.subtitleOnBanners = data.pageData.data.subtitleOnBanners || false
@@ -248,9 +256,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     })
 
     if (this.content) {
-      if((this.content.name).toLowerCase() === this.dakshtaName.toLowerCase()) {
-        // console.log(res.result.content.name.toLowerCase(), 'this.currentCollection.name_________++++')
-        // console.log(this.dakshtaName.toLowerCase(), 'this.dakshtaName.toLowerCase()==')
+      const contentName = this.content.name.trim()
+
+      if ((contentName).toLowerCase() === this.dakshtaName.toLowerCase()) {
         this.showBtn = true
 
       } else {
@@ -368,22 +376,22 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
   get isBatchInProgress() {
     // if (this.content && this.content['batches']) {
-      // const batches = this.content['batches'] as NsContent.IBatch
-      if (this.currentCourseBatchId) {
-        const now = moment()
-        if (this.batchData && this.batchData.content) {
-          const batch = _.first(_.filter(this.batchData.content, { batchId: this.currentCourseBatchId }) || [])
-          if (batch) {
-            return (
-              // batch.status &&
-              moment(batch.startDate).isSameOrBefore(now)
-              && moment(batch.endDate || new Date()).isSameOrAfter(now)
-            )
-          }
-          return false
+    // const batches = this.content['batches'] as NsContent.IBatch
+    if (this.currentCourseBatchId) {
+      const now = moment()
+      if (this.batchData && this.batchData.content) {
+        const batch = _.first(_.filter(this.batchData.content, { batchId: this.currentCourseBatchId }) || [])
+        if (batch) {
+          return (
+            // batch.status &&
+            moment(batch.startDate).isSameOrBefore(now)
+            && moment(batch.endDate || new Date()).isSameOrAfter(now)
+          )
         }
         return false
-      } return false
+      }
+      return false
+    } return false
   }
   private initData(data: Data) {
     const initData = this.tocSvc.initData(data, true)
@@ -1145,6 +1153,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       if (this.forPreview) {
         delete qParams.viewMode
       }
+      qParams = {
+        ...qParams,
+        channelId: this.channelId,
+      }
       return qParams
     }
     if (this.resumeDataLink && type === 'RESUME') {
@@ -1163,6 +1175,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       }
       if (this.forPreview) {
         delete qParams.viewMode
+      }
+      qParams = {
+        ...qParams,
+        channelId: this.channelId,
       }
       return qParams
     }

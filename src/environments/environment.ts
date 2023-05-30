@@ -27,8 +27,12 @@ export const environment: IEnvironment = {
   assessmentBuffer: (window as { [key: string]: any })['env']['assessmentBuffer'] || 0,
   staticHomePageUrl: (window as { [key: string]: any })['env']['staticHomePageUrl'] || '',
   resendOTPTIme: (window as { [key: string]: any })['env']['resendOTPTIme'] || 120,
-  cscmsUrl:(window as { [key: string]: any })['env']['cscmsUrl'] || '',
-  dakshtaName:(window as { [key: string]: any })['env']['dakshtaName'] || '',
+  cscmsUrl: (window as { [key: string]: any })['env']['cscmsUrl'] || '',
+  dakshtaName: (window as { [key: string]: any })['env']['dakshtaName'] || '',
+  contactMeetLink: (window as { [key: string]: any })['env']['contactMeetLink'] || '',
+  programStripName: (window as { [key: string]: any })['env']['programStripName'] || '',
+  programStripPrimaryCategory: (window as { [key: string]: any })['env']['programStripPrimaryCategory'] || '',
+  programStripKey: (window as { [key: string]: any })['env']['programStripKey'] || '',
 }
 interface IEnvironment {
   name: string,
@@ -51,8 +55,12 @@ interface IEnvironment {
   assessmentBuffer: number,
   staticHomePageUrl: string,
   resendOTPTIme: number,
-  cscmsUrl:string,
-  dakshtaName: string
+  cscmsUrl: string,
+  dakshtaName: string,
+  contactMeetLink: string,
+  programStripName: string,
+  programStripPrimaryCategory: string,
+  programStripKey: string
 }
 
 /*

@@ -45,7 +45,7 @@
                     </div>
 
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1" [ngClass]="{ 'mat-focused': textBoxActive}">
-                        <input matInput autocomplete="off" id="roleName" #roleName name="roleName"
+                        <input matInput autocomplete="off" id="roleName" #roleName name="roleName" maxlength="100"
                             placeholder="Type the role name" formControlName="roleName" class="flex flex-1"  (input)="change($event)"/>
                             <mat-error [hidden]="false" i18n="Role Error|Explains Role is required"
                             *ngIf="createRole?.controls['roleName'].errors?.required" i18n-aria-label
@@ -78,7 +78,7 @@
 
                                 <input #activity matInput i18n-placeholder="Type the activity and press enter" rows="5"
                                     placeholder="Type the activity and press enter" formControlName="activity" i18n-aria-label
-                                    aria-label="Enter activity" [matChipInputFor]="chipListHobies"
+                                    aria-label="Enter activity" [matChipInputFor]="chipListHobies" maxlength="100"
                                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                                     (matChipInputTokenEnd)="addActivity($event)" class="w-full-imp" />
 

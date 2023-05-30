@@ -86,6 +86,9 @@ export class YoutubeComponent implements OnInit, OnDestroy {
         this.widgetResolverYoutubeData.widgetData.collectionId =
           this.activatedRoute.snapshot.queryParamMap.get('collectionId') || undefined
 
+        this.widgetResolverYoutubeData.widgetData.channel =
+          this.activatedRoute.snapshot.queryParamMap.get('channelId') || undefined
+
         if (this.platform.ANDROID) {
           this.widgetResolverYoutubeData.widgetData.isVideojs = false
         } else {

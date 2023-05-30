@@ -32,6 +32,10 @@ h2.main_title_text {
   flex: 4;
 }
 
+a.mail_link {
+  cursor: default;
+}
+
 .custom {
   @include breakpoint-xs {
     flex-direction: column;
@@ -52,4 +56,25 @@ h2.main_title_text {
   font-size: 20px;
   line-height: 0.6 !important;
   vertical-align: middle;
+}
+
+.meet_link {
+  display: block;
+  cursor: pointer;
+}
+
+.meet_link img {
+  height: 40px;
+  margin-top: 16px;
+
+  @include breakpoint-xs  {
+    height: 35px;
+    margin-top: 12px;
+  }
+}
+
+.height-on-top {
+  @include breakpoint-xs {
+    padding-top: 0;
+  }
 }

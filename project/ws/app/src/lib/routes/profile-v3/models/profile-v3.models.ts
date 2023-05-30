@@ -33,6 +33,9 @@ export namespace NSProfileDataV3 {
         name: string
         competencyLevel?: ICompetencyLevel[]
         children?: any[]
+        competencyCBPCompletionLevel?: string
+        competencyCBPCompletionLevelName?: string
+        competencyCBPCompletionLevelValue?: string
     }
 
     export interface ICompetencyLevel {

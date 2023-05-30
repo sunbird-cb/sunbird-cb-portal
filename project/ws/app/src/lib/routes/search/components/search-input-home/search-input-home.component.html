@@ -15,7 +15,7 @@
         <!-- <mat-label>Search</mat-label> -->
         <input type="text" role="combobox" accesskey="S" #searchInput [attr.title]="placeHolder"
          i18n-placeholder="search content" [placeholder]="placeHolder" i18-aria-label
-          aria-label="search content" matInput [formControl]="queryControl" [matAutocomplete]="auto" />
+          aria-label="search content" matInput [formControl]="queryControl" [matAutocomplete]="auto" maxlength="50" />
         
         <mat-icon matSuffix (click)="clearSearchText()" class="cursor-pointer" *ngIf="queryControl.value">close</mat-icon>
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"

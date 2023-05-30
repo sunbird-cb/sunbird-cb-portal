@@ -17,7 +17,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'curated-home',
       pageId: 'home',
-      module: 'explore',
+      module: 'Learn',
     },
     resolve: {
       pageData: PageResolve,
@@ -30,7 +30,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'curated-explorer',
       pageId: ':topic',
-      module: 'explore',
+      module: 'Learn',
     },
     resolve: {
       pageData: PageResolve,

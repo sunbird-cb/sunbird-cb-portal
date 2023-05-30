@@ -35,6 +35,9 @@ export * from './lib/pipes/pipe-html-tag-removal/pipe-html-tag-removal.pipe'
 export * from './lib/pipes/pipe-filter/pipe-filter.module'
 export * from './lib/pipes/pipe-filter/pipe-filter.pipe'
 
+export * from './lib/pipes/pipe-email/pipe-email.module'
+export * from './lib/pipes/pipe-email/pipe-email.pipe'
+
 export * from './lib/pipes/pipe-filter-v2/pipe-filter-v2.module'
 export * from './lib/pipes/pipe-filter-v2/pipe-filter-v2.pipe'
 
@@ -77,6 +80,7 @@ export * from './lib/resolvers/page.model'
 // resolvers
 export * from './lib/resolvers/page.resolver'
 export * from './lib/resolvers/page-name.resolver'
+export * from './lib/resolvers/module-name.resolver'
 export * from './lib/resolvers/resolver.model'
 // services
 export * from './lib/services/auth-keycloak.service'

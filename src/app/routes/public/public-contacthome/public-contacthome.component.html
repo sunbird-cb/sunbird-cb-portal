@@ -9,10 +9,17 @@
             <mat-card class="padding-xl">
                 <!-- <h2 class="flex mat-display-1 main_title_text margin-bottom-xl">Contact Us</h2> -->
                 <p class="mat-title">For any technical issues please contact,</p>
-                <p class="mat-body-1">Email: <a href="mailto:mission.karmayogi@gov.in"><b>mission.karmayogi@gov.in</b></a></p>
+                <p class="mat-body-1">Email: <a (click)="preventData($event)" class="mail_link"><b>mission[dot]karmayogi[at]gov[dot]in</b></a></p>
                 <p>Helpdesk: <a href="https://servicedesk.nic.in/" target="blank"><b>servicedesk.nic.in</b></a></p>
                 <p class="mat-body-1 margin-bottom-m">Call: <mat-icon class="custom-phone">phone</mat-icon><b> 1800 111 555</b></p>
-                <p class="mat-body-1 margin-top-xl margin-bottom-m">To know more click <a href="https://karmayogibharat.gov.in/">here.</a></p>
+                <p class="mat-body-1 margin-top-xl margin-bottom-m">To know more click <a href="https://karmayogibharat.gov.in/" target="_blank">here.</a></p>
+
+                <p *ngIf="meetLink.length > 0">Connect with us for discussions and queries between 3 PM to 4 PM from Monday to Friday on below link.
+
+                    <a href="{{meetLink}}" target="blank" class="meet_link">
+                        <img src="/assets/instances/eagle/landing-img/meet-link.jpg" />
+                    </a>
+                </p>
             </mat-card>
         </div>
     </div>

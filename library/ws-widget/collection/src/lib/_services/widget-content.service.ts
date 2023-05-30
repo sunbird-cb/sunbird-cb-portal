@@ -2,10 +2,13 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Observable, of, EMPTY } from 'rxjs'
-import { catchError, retry, map } from 'rxjs/operators'
+import { catchError, retry, map, shareReplay } from 'rxjs/operators'
 import { NsContentStripMultiple } from '../content-strip-multiple/content-strip-multiple.model'
 import { NsContent } from './widget-content.model'
 import { NSSearch } from './widget-search.model'
+// tslint:disable
+import _ from 'lodash'
+// tslint:enable
 
 // TODO: move this in some common place
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'
@@ -95,14 +98,14 @@ export class WidgetContentService {
     //   .pipe(retry(1))
     return this.http
       .get<NsContent.IContent>(url)
-      .pipe(retry(1))
+      .pipe(shareReplay(1))
     // if (apiData && apiData.result) {
     //   return apiData.result.content
     // }
   }
   fetchAuthoringContent(contentId: string): Observable<NsContent.IContent> {
     const url = `${API_END_POINTS.AUTHORING_CONTENT}/${contentId}?hierarchyType=detail`
-    return this.http.get<NsContent.IContent>(url).pipe(retry(1), r => r)
+    return this.http.get<NsContent.IContent>(url).pipe(shareReplay(1), r => r)
   }
   fetchMultipleContent(ids: string[]): Observable<NsContent.IContent[]> {
     return this.http.get<NsContent.IContent[]>(
@@ -255,7 +258,11 @@ export class WidgetContentService {
     )
   }
   searchV6(req: NSSearch.ISearchV6Request): Observable<NSSearch.ISearchV6ApiResultV2> {
+    const apiPath = _.get(req, 'api.path')
     req.query = req.query || ''
+    if (apiPath) {
+      return this.http.get<NSSearch.ISearchV6ApiResultV2>(apiPath)
+    }
     return this.http.post<NSSearch.ISearchV6ApiResultV2>(API_END_POINTS.CONTENT_SEARCH_V6, req)
   }
 

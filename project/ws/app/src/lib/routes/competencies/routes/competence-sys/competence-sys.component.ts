@@ -69,6 +69,7 @@ export class CompetenceSysComponent implements OnInit {
     } else {
       this.getProfile()
     }
+    // console.log('this.route =======', this.route.snapshot.queryParams)
   }
   ngOnInit() {
     // load page based on 'page' query param or default to 1
@@ -215,25 +216,25 @@ export class CompetenceSysComponent implements OnInit {
     }
   }
   resetcomp() {
-    let data: any[] = [];
+    // let data: any[] = [];
     const allCompetencies = [...this.allCompetencies];
-    if (this.myCompetencies && this.myCompetencies.length > 0) {
-      data = _.flatten(
-        _.map(this.myCompetencies, (item: NSCompetencie.ICompetencie) =>
-          _.filter(
-            allCompetencies,
-            (i: NSCompetencie.ICompetencie) => i.id === item.id
-          )
-        )
-      );
+    // if (this.myCompetencies && this.myCompetencies.length > 0) {
+    //   data = _.flatten(
+    //     _.map(this.myCompetencies, (item: NSCompetencie.ICompetencie) =>
+    //       _.filter(
+    //         allCompetencies,
+    //         (i: NSCompetencie.ICompetencie) => i.id === item.id
+    //       )
+    //     )
+    //   );
 
-      this.filteredCompetencies = this.allCompetencies.filter((obj) => {
-        return data.indexOf(obj) === -1;
-      });
-      // this.filteredCompetencies = data
-    } else {
+      // this.filteredCompetencies = this.allCompetencies.filter((obj) => {
+      //   return data.indexOf(obj) === -1;
+      // });
+    //   this.filteredCompetencies = data
+    // } else {
       this.filteredCompetencies = allCompetencies;
-    }
+    // }
   }
   refreshData() {
     this.searchJson = [
@@ -247,19 +248,19 @@ export class CompetenceSysComponent implements OnInit {
       .fetchCompetency(searchObj)
       .subscribe((reponse: NSCompetencie.ICompetencieResponse) => {
         if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
-          let data = reponse.responseData;
-          if (this.myCompetencies && this.myCompetencies.length > 0) {
-            data = _.flatten(
-              _.map(this.myCompetencies, (item) => {
-                return _.filter(reponse.responseData, (i) => i.id === item.id);
-              })
-            );
-            this.filteredCompetencies = reponse.responseData.filter((obj) => {
-              return data.indexOf(obj) === -1;
-            });
-          } else {
+          // let data = reponse.responseData;
+          // if (this.myCompetencies && this.myCompetencies.length > 0) {
+          //   data = _.flatten(
+          //     _.map(this.myCompetencies, (item) => {
+          //       return _.filter(reponse.responseData, (i) => i.id === item.id);
+          //     })
+          //   );
+          //   this.filteredCompetencies = reponse.responseData.filter((obj) => {
+          //     return data.indexOf(obj) === -1;
+          //   });
+          // } else {
             this.filteredCompetencies = reponse.responseData;
-          }
+          // }
         }
       });
   }

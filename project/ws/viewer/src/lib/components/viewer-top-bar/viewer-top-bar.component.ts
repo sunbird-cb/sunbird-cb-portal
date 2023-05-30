@@ -18,6 +18,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   @Input() frameReference: any
   @Input() forPreview = false
   @Output() toggle = new EventEmitter()
+  @Input() leafNodesCount: any
   private viewerDataServiceSubscription: Subscription | null = null
   private paramSubscription: Subscription | null = null
   private viewerDataServiceResourceSubscription: Subscription | null = null
@@ -43,8 +44,8 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   currentRoute = window.location.pathname
   identifier: any
   batchId: any
-  leafNodesCount: any
   userid: any
+  channelId: any
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -68,7 +69,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getAuthDataIdentifer()
+    // this.getAuthDataIdentifer()
 
     if (window.location.href.includes('/channel/')) {
       this.forChannel = true
@@ -76,7 +77,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     this.isTypeOfCollection = this.activatedRoute.snapshot.queryParams.collectionType ? true : false
     this.collectionType = this.activatedRoute.snapshot.queryParams.collectionType
     this.courseName = this.activatedRoute.snapshot.queryParams.courseName
-
+    this.channelId = this.activatedRoute.snapshot.queryParams.channelId
     if (this.configSvc.instanceConfig) {
       this.appIcon = this.domSanitizer.bypassSecurityTrustResourceUrl(
         this.configSvc.instanceConfig.logos.app,
@@ -99,6 +100,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
             batchId: data.prevResource.batchId,
             viewMode: data.prevResource.viewMode,
             preview: this.forPreview,
+            channelId: this.channelId,
           },
           fragment: '',
         }
@@ -117,6 +119,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
             viewMode: data.nextResource.viewMode,
             courseName: this.courseName,
             preview: this.forPreview,
+            channelId: this.channelId,
           },
           fragment: '',
         }
@@ -170,16 +173,15 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     } catch (_ex) {
       window.history.back()
     }
-
   }
 
-   getAuthDataIdentifer() {
-    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId
-     this.widgetServ.fetchAuthoringContent(collectionId).subscribe((data: any) => {
-    this.leafNodesCount = data.result.content.leafNodesCount
-
-    })
-  }
+  //  getAuthDataIdentifer() {
+  //   const collectionId = this.activatedRoute.snapshot.queryParams.collectionId
+  //   this.widgetServ.fetchAuthoringContent(collectionId).subscribe((data: any) => {
+  //       this.leafNodesCount = data.result.content.leafNodesCount
+  //       console.log('this.leafNodesCount inside api call-------', this.leafNodesCount)
+  //   })
+  // }
   finishDialog() {
     if (!this.forPreview) {
       this.contentProgressHash = []

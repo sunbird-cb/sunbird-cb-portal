@@ -16,6 +16,7 @@ export class ConnectionRecommendedCardComponent implements OnInit {
   @Output() connection = new EventEmitter<string>()
   @ViewChild('toastSuccess', { static: true }) toastSuccess!: ElementRef<any>
   @ViewChild('toastError', { static: true }) toastError!: ElementRef<any>
+  verifiedBadge = false
   constructor(
     private networkV2Service: NetworkV2Service, private configSvc: ConfigurationsService,
     private snackBar: MatSnackBar,
@@ -23,8 +24,8 @@ export class ConnectionRecommendedCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-  }
 
+  }
   getUseravatarName() {
     let name = ''
     if (this.user && !this.user.personalDetails) {
@@ -35,6 +36,8 @@ export class ConnectionRecommendedCardComponent implements OnInit {
       if (this.user.personalDetails.middlename) {
         // tslint:disable-next-line: max-line-length
         name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.middlename} ${this.user.personalDetails.surname}`
+      } else if (this.user.personalDetails.firstName) {
+        name = `${this.user.personalDetails.firstName} ${this.user.personalDetails.surname}`
       } else {
         name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
       }

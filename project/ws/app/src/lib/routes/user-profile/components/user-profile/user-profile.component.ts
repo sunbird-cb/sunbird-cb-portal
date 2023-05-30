@@ -6,9 +6,10 @@ import { startWith, map, debounceTime, distinctUntilChanged, pairwise } from 'rx
 import { MatSnackBar, MatChipInputEvent, DateAdapter, MAT_DATE_FORMATS, MatDialog, MatTabChangeEvent } from '@angular/material'
 import { AppDateAdapter, APP_DATE_FORMATS, changeformat } from '../../services/format-datepicker'
 import { ImageCropComponent, ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils'
-import { IMAGE_MAX_SIZE, IMAGE_SUPPORT_TYPES } from '@ws/author/src/lib/constants/upload'
+import { IMAGE_MAX_SIZE, PROFILE_IMAGE_SUPPORT_TYPES } from '@ws/author/src/lib/constants/upload'
 import { UserProfileService } from '../../services/user-profile.service'
 import { Router, ActivatedRoute } from '@angular/router'
+
 import {
   INationality,
   ILanguages,
@@ -18,6 +19,7 @@ import {
   IProfileAcademics,
   INation,
   IdegreesMeta,
+  INameField,
 } from '../../models/user-profile.model'
 import { NsUserProfileDetails } from '@ws/app/src/lib/routes/user-profile/models/NsUserProfile'
 import { NotificationComponent } from '@ws/author/src/lib/modules/shared/components/notification/notification.component'
@@ -75,13 +77,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   eCategory = NsUserProfileDetails.ECategory
   userProfileFields!: NsUserProfileDetails.IUserProfileFields
   inReview = 'In Review!'
-  imageTypes = IMAGE_SUPPORT_TYPES
+  imageTypes = PROFILE_IMAGE_SUPPORT_TYPES
   today = new Date()
   phoneNumberPattern = '^((\\+91-?)|0)?[0-9]{10}$'
   pincodePattern = '(^[0-9]{6}$)'
   yearPattern = '(^[0-9]{4}$)'
   namePatern = `^[a-zA-Z\\s\\']{1,32}$`
   telephonePattern = `^[0-9]+-?[0-9]+$`
+  emailLengthVal = false
   @ViewChild('toastSuccess', { static: true }) toastSuccess!: ElementRef<any>
   @ViewChild('toastError', { static: true }) toastError!: ElementRef<any>
   @ViewChild('knownLanguagesInput', { static: true }) knownLanguagesInputRef!: ElementRef<HTMLInputElement>
@@ -113,6 +116,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   timerSubscription: Subscription | null = null
   timeLeftforOTP = 0
   isMobileVerified = false
+  degreefilteredOptions: INameField[] | undefined
+  postDegreefilteredOptions: INameField[] | undefined
+
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -250,12 +256,20 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.industriesMeta = data.industries
         this.degreesMeta = data.degrees
         // this.designationsMeta = data.designations
+        this.onChangesDegrees()
+        this.onChangesPostDegrees()
       },
       (_err: any) => {
       })
     this.userProfileSvc.getAllDepartments().subscribe(
       (data: any) => {
-        this.allDept = data
+        const newData = data.map((el: any) => {
+          return el.trim()
+        })
+        this.allDept = newData.sort((a: any, b: any) => {
+          return a.toLowerCase().localeCompare(b.toLowerCase())
+      })
+
       },
       (_err: any) => {
       })
@@ -283,6 +297,21 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       (_err: any) => {
       })
   }
+
+  emailVerification(emailId: string) {
+    this.emailLengthVal = false
+    if (emailId && emailId.length > 0) {
+      const email = emailId.split('@')
+      if (email && email.length === 2) {
+        if ((email[0] && email[0].length > 64) || (email[1] && email[1].length > 255)) {
+          this.emailLengthVal = true
+        }
+      } else {
+        this.emailLengthVal = false
+      }
+    }
+  }
+
   createDegree(): FormGroup {
     return this.fb.group({
       degree: new FormControl('', []),
@@ -299,11 +328,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       }
     })
   }
+
   isAllowed(name: string) {
     if (name && !!this.unApprovedField && this.unApprovedField.length > 0) {
       return !!!(this.unApprovedField.indexOf(name) >= 0)
     } return true
   }
+
   createDegreeWithValues(degree: any): FormGroup {
     return this.fb.group({
       degree: new FormControl(degree.degree, []),
@@ -404,6 +435,30 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       )
   }
 
+  onChangesDegrees() {
+    const controls = this.createUserForm.get('degrees') as FormArray
+    // tslint:disable-next-line: no-non-null-assertion
+    controls.at(controls.length - 1).get('degree')!.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      startWith<string | INameField>(''),
+      map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+      map(name => name ? this.filterDegrees(name) : this.degreesMeta.graduations.slice()),
+    ).subscribe(val => this.degreefilteredOptions = val)
+  }
+
+  onChangesPostDegrees() {
+    const controls = this.createUserForm.get('postDegrees') as FormArray
+    // tslint:disable-next-line: no-non-null-assertion
+    controls.at(controls.length - 1).get('degree')!.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      startWith<string | INameField>(''),
+      map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+      map(name => name ? this.filterPostDegrees(name) : this.degreesMeta.postGraduations.slice()),
+    ).subscribe(val => this.postDegreefilteredOptions = val)
+  }
+
   private filterNationality(name: string): INation[] {
     if (name) {
       const filterValue = name.toLowerCase()
@@ -431,6 +486,22 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       })
     }
     return this.masterLanguagesEntries
+  }
+
+  private filterDegrees(name: string): INameField[] {
+    if (name) {
+      const filterValue = name.toLowerCase()
+      return this.degreesMeta.graduations.filter(option => option.name.toLowerCase().includes(filterValue))
+    }
+    return this.degreesMeta.graduations
+  }
+
+  private filterPostDegrees(name: string): INameField[] {
+    if (name) {
+      const filterValue = name.toLowerCase()
+      return this.degreesMeta.postGraduations.filter(option => option.name.toLowerCase().includes(filterValue))
+    }
+    return this.degreesMeta.postGraduations
   }
 
   ngOnDestroy() {
@@ -1496,7 +1567,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const fileName = file.name.replace(/[^A-Za-z0-9.]/g, '')
     if (
       !(
-        IMAGE_SUPPORT_TYPES.indexOf(
+        PROFILE_IMAGE_SUPPORT_TYPES.indexOf(
           `.${fileName
             .toLowerCase()
             .split('.')
@@ -1506,9 +1577,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     ) {
       this.snackBar.openFromComponent(NotificationComponent, {
         data: {
-          type: Notify.INVALID_FORMAT,
+          type: Notify.INVALID_IMG_FORMAT,
         },
-        duration: NOTIFICATION_TIME * 1000,
+        duration: NOTIFICATION_TIME * 1500,
       })
       return
     }
@@ -1516,9 +1587,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     if (file.size > IMAGE_MAX_SIZE) {
       this.snackBar.openFromComponent(NotificationComponent, {
         data: {
-          type: Notify.SIZE_ERROR,
+          type: Notify.PROFILE_IMG_SIZE_ERROR,
         },
-        duration: NOTIFICATION_TIME * 1000,
+        duration: NOTIFICATION_TIME * 1500,
       })
       return
     }
@@ -1608,7 +1679,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               if (updateRes) {
                 this.isMobileVerified = true
               }
-            })
+            // tslint:disable-next-line:align
+            }, (error: any) => {
+              this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+            }
+            )
           }
           // tslint:disable-next-line: align
         }, (error: any) => {
