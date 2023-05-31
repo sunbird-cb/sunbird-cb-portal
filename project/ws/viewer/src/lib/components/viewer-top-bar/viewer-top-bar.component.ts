@@ -7,6 +7,7 @@ import { WidgetContentService } from '@sunbird-cb/collection/src/lib/_services/w
 import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ViewerDataService } from '../../viewer-data.service'
+import { ViewerUtilService } from '../../viewer-util.service'
 import { CourseCompletionDialogComponent } from '../course-completion-dialog/course-completion-dialog.component'
 
 @Component({
@@ -46,6 +47,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   batchId: any
   userid: any
   channelId: any
+  optionalLink = false
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -57,6 +59,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private router: Router,
     private widgetServ: WidgetContentService,
+    private viewerSvc: ViewerUtilService,
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
@@ -88,10 +91,17 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     //     this.domSanitizer.bypassSecurityTrustResourceUrl(data.configData.data.logos.app)
     //   }
     // )
+    this.viewerDataSvc.isSkipBtn.subscribe((data: any) => {
+      if (data !== undefined) {
+        this.optionalLink = data
+      } else {
+        this.optionalLink = false
+      }
+    })
+
     this.viewerDataServiceSubscription = this.viewerDataSvc.tocChangeSubject.subscribe(data => {
       if (data.prevResource) {
         this.prevResourceUrl = data.prevResource.viewerUrl
-        // this.previousResourcePrimaryCategory = data.prevResource.primaryCategory
         this.prevResourceUrlParams = {
           queryParams: {
             primaryCategory: data.prevResource.primaryCategory,
@@ -104,12 +114,14 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
           },
           fragment: '',
         }
+        if (data.prevResource.optionalReading && data.prevResource.primaryCategory === 'Learning Resource') {
+          this.updateProgress(2, data.prevResource.identifier)
+        }
       } else {
         this.prevResourceUrl = null
       }
       if (data.nextResource) {
         this.nextResourceUrl = data.nextResource.viewerUrl
-        // this.nextResourcePrimaryCategory = data.nextResource.primaryCategory
         this.nextResourceUrlParams = {
           queryParams: {
             primaryCategory: data.nextResource.primaryCategory,
@@ -122,6 +134,9 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
             channelId: this.channelId,
           },
           fragment: '',
+        }
+        if (data.nextResource.optionalReading &&  data.nextResource.primaryCategory === 'Learning Resource') {
+          this.updateProgress(2, data.nextResource.identifier)
         }
       } else {
         this.nextResourceUrl = null
@@ -136,6 +151,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
       this.collectionId = params.get('collectionId') as string
       this.isPreview = params.get('preview') === 'true' ? true : false
     })
+
     this.viewerDataServiceResourceSubscription = this.viewerDataSvc.changedSubject.subscribe(
       _data => {
         this.resourceId = this.viewerDataSvc.resourceId as string
@@ -143,6 +159,16 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
         this.resourcePrimaryCategory = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.primaryCategory : ''
       },
     )
+  }
+
+  updateProgress(status: number, resourceId: any) {
+    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+      this.activatedRoute.snapshot.queryParams.collectionId : ''
+    // const collectionId = this.activatedRoute.snapshot.params.id ?
+    // this.activatedRoute.snapshot.params.id : ''
+    const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+      this.activatedRoute.snapshot.queryParams.batchId : ''
+    return this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)
   }
 
   ngOnDestroy() {
@@ -175,6 +201,22 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     }
   }
 
+  // getFetchHistory(batchId:any, identifier:any) {
+  //     if (this.configSvc.userProfile) {
+  //       this.userid = this.configSvc.userProfile.userId || ''
+  //     }
+  //   const req  = {
+  //     request: {
+  //       userId:this.userid,
+  //       batchId: batchId,
+  //       courseId: identifier || '',
+  //       contentIds: [],
+  //       fields: ['progressdetails'],
+  //     },
+  //   }
+  //   return this.widgetServ.fetchContentHistoryV2(req)
+  // }
+
   //  getAuthDataIdentifer() {
   //   const collectionId = this.activatedRoute.snapshot.queryParams.collectionId
   //   this.widgetServ.fetchAuthoringContent(collectionId).subscribe((data: any) => {
@@ -205,6 +247,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
         }
         this.widgetServ.fetchContentHistoryV2(req).subscribe(
           (data:  any) => {
+
           this.contentProgressHash = data.result.contentList
 
           if (this.leafNodesCount === this.contentProgressHash.length) {

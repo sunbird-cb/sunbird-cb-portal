@@ -99,7 +99,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
 
   isStripShowing(data: any) {
     let count = 0
-    if (data && data.key === this.environment.programStripKey &&  
+    if (data && data.key === this.environment.programStripKey &&
       data.stripTitle === this.environment.programStripName && data.widgets.length > 0) {
       data.widgets.forEach((key: any) => {
         if (key && key.widgetData.content.primaryCategory === this.environment.programStripPrimaryCategory) {
@@ -361,7 +361,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       this.contentSvc.searchV6(strip.request.searchV6).subscribe(
         results => {
           const showViewMore = Boolean(
-            results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
+            results.result.content && results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
           )
           const viewMoreUrl = showViewMore
             ? {

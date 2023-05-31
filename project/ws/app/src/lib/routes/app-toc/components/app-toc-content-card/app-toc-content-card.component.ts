@@ -50,6 +50,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
     //     this.defaultThumbnail = data.configData.data.logos.defaultContent
     //   }
     // )
+    
   }
   ngOnChanges(changes: SimpleChanges) {
     for (const property in changes) {
