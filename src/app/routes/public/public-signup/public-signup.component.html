@@ -149,17 +149,17 @@
                     formControlName="email" i18n-aria-label aria-label="Email input">
                   <!-- <mat-hint>Only government email ids are allowed</mat-hint> -->
                   <mat-error [hidden]="false" *ngIf="registrationForm?.controls['email'].errors?.required"
-                    i18n="Email Error|Explains name is required">
-                    Email id is mandatory
-                  </mat-error>
-                  <mat-error [hidden]="false" *ngIf="registrationForm?.controls['email'].errors?.pattern"
-                    i18n-aria-label aria-label="Name fields cannot contain numbers and special characters except '">
-                    Email id is not valid
-                  </mat-error>
-                  <div *ngIf="emailLengthVal" class="email-error"
-                    i18n="Email Error|Explains character validation">
-                    Max 64 characters before "@" & 255 characters after "@" are valid.
-                  </div>
+                  i18n="Email Error|Explains name is required">
+                  Email id is mandatory
+                </mat-error>
+                <mat-error [hidden]="false" *ngIf="registrationForm?.controls['email'].errors?.pattern"
+                  i18n-aria-label aria-label="Name fields cannot contain numbers and special characters except '">
+                  Email id is not valid
+                </mat-error>
+                <div *ngIf="emailLengthVal" class="email-error"
+                  i18n="Email Error|Explains character validation">
+                  Max 64 characters before "@" & 255 characters after "@" are valid.
+                </div>
                   <mat-hint class="pos-hint">Do not have a government email address?<span class="float-right ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo('Domain')">Request for help</span></mat-hint>
                 </mat-form-field>
               </div>
@@ -251,7 +251,7 @@
                     <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
                     <input matInput onfocus="this.select()" aria-label="organisation" [matAutocomplete]="auto" #organisation
                       name="organisation" formControlName="organisation" i18n-placeholder placeholder="Search organisation" i18n-aria-label
-                      aria-label="Type here" required>
+                      aria-label="Type here" required (keydown.enter)="searchOrgs($event.target.value)">
                     <span matSuffix class="ws-mat-accent-text margin-xs cursor-pointer" (click)="searchOrgs(organisation.value)" >Search</span>
                     <mat-error *ngIf="registrationForm?.controls['organisation'].errors?.pattern" i18n-aria-label
                       aria-label="You must enter value from suggested list only.">

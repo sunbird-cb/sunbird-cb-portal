@@ -203,6 +203,10 @@
     color: #333232 !important;
   }
 
+  ::ng-deep .theme-igot.day-mode .mat-option.mat-selected:not(.mat-option-multiple) {
+    background: rgba(0, 0, 0, 0.04) !important;
+  }
+
   .text-input-col {
     @include breakpoint-xs {
       padding-left: 0;
