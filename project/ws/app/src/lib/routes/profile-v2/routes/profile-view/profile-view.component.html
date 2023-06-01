@@ -20,32 +20,20 @@
           <div class="flex flex-4">
           <ng-container *ngIf="portalProfile.personalDetails.firstname && portalProfile.personalDetails.surname">
             <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
-<<<<<<< HEAD
-            portalProfile.personalDetails.firstname +
-            ' ' +
-            portalProfile.personalDetails.surname">
-            </mat-card-title>
-=======
               portalProfile.personalDetails.firstname 
             ">
             <span *ngIf="verifiedBadge" class="profile-badge">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
             </span>
            </mat-card-title>
->>>>>>> ee1df0fa483e038fae6f9e76cff4257624339aae
             </ng-container>
           <ng-container *ngIf="portalProfile.personalDetails.firstName && !portalProfile.personalDetails.surname">
             <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
-<<<<<<< HEAD
-              portalProfile.personalDetails.firstName">
-            </mat-card-title>
-=======
               portalProfile.personalDetails.firstName 
             ">
             <span *ngIf="verifiedBadge" class="profile-badge">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
             </span>
            </mat-card-title>
            
->>>>>>> ee1df0fa483e038fae6f9e76cff4257624339aae
             </ng-container>
             <!-- <div class="flex verified">
               <mat-icon class="ws-mat-green-text" svgIcon="verified"></mat-icon>
