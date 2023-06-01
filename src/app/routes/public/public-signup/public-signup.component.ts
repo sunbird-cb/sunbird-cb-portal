@@ -139,7 +139,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   ) {
     this.registrationForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
-      lastname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
+      // lastname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       // tslint:disable-next-line:max-line-length
       position: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterPositions)]),
       // tslint:disable-next-line:max-line-length
@@ -436,7 +436,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
           if (this.heirarchyObject) {
             req = {
               firstName: this.registrationForm.value.firstname || '',
-              lastName: this.registrationForm.value.lastname || '',
+              // lastName: this.registrationForm.value.lastname || '',
               email: this.registrationForm.value.email || '',
               phone: `${this.registrationForm.value.mobile}` || '',
               position: this.registrationForm.value.position.name || '',

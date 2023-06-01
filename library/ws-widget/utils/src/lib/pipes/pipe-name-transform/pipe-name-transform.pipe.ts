@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core'
 
 interface IUserName {
   firstName: string
-  lastName: string
+  // lastName: string
   email: string
 }
 
@@ -16,9 +16,9 @@ export class PipeNameTransformPipe implements PipeTransform {
     if (value.firstName) {
       result += value.firstName
     }
-    if (value.lastName && value.lastName !== value.firstName) {
-      result += ` ${value.lastName}`
-    }
+    // if (value.lastName && value.lastName !== value.firstName) {
+    //   result += ` ${value.lastName}`
+    // }
     if (result.trim() !== '') {
       return result
     }

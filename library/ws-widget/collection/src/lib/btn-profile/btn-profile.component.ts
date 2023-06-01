@@ -97,7 +97,12 @@ export class BtnProfileComponent extends WidgetBaseComponent
   }
   updateUserInfo() {
     if (this.configSvc.userProfile) {
-      this.givenName = `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}`
+      // tslint:disable-next-line:max-line-length
+      if (this.configSvc.userProfile.lastName && this.configSvc.userProfile.lastName !== null && this.configSvc.userProfile.lastName !== undefined) {
+        this.givenName = `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}`
+      } else {
+        this.givenName = `${this.configSvc.userProfile.firstName}`
+      }
       this.profileImage = this.configSvc.userProfile.profileImage ||
         (this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.profileImage : null) || null
       if (!this.profileImage && localStorage.getItem(this.configSvc.userProfile.userId)) {
@@ -107,7 +112,12 @@ export class BtnProfileComponent extends WidgetBaseComponent
   }
   get getGivenName() {
     if (this.configSvc.userProfile) {
-      this.givenName = `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}`
+      // tslint:disable-next-line:max-line-length
+      if (this.configSvc.userProfile.lastName && this.configSvc.userProfile.lastName !== null && this.configSvc.userProfile.lastName !== undefined) {
+        this.givenName = `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}`
+      } else {
+        this.givenName = `${this.configSvc.userProfile.firstName}`
+      }
       return this.givenName
     }
     return 'Guest'

@@ -43,15 +43,15 @@
                 <label for="firstName" class=" margin-remove-bottom form-label required"
                   i18n="First name label|Label which explains the user to enter first name" i18n-aria-label
                   aria-label="First name label">
-                  First name
+                  Full name
                 </label>
                 <mat-form-field appearance="outline" class="margin-top-s">
                   <input id="firstName" matInput #firstname formControlName="firstname" i18n-placeholder
-                    placeholder="Enter your first name" autocomplete="off" i18n-aria-label aria-label="First Name input" maxlength="150" />
+                    placeholder="Enter your full name" autocomplete="off" i18n-aria-label aria-label="First Name input" maxlength="150" />
                   <mat-error [hidden]="false" i18n="First Name Error|Explains name is required" i18n-aria-label
                     aria-label="First Name Error|Explains name is required "
                     *ngIf="registrationForm?.controls['firstname'].errors?.required">
-                    First name is mandatory
+                    Full name is mandatory
                   </mat-error>
                   <mat-error [hidden]="false" *ngIf="registrationForm?.controls['firstname'].errors?.pattern"
                     i18n-aria-label
@@ -60,7 +60,7 @@
                   </mat-error>
                 </mat-form-field>
               </div>
-              <div class="input-wrapper margin-top-s">
+              <!-- <div class="input-wrapper margin-top-s">
                 <label for="lastName" class=" margin-remove-bottom form-label required"
                   i18n="Surname label|Label which explains the user to enter Surname" i18n-aria-label
                   aria-label="Last name label">
@@ -79,7 +79,7 @@
                     Surname fields cannot contain numbers and special characters except '
                   </mat-error>
                 </mat-form-field>
-              </div>
+              </div> -->
               <!-- <div class="input-wrapper margin-top-s">
                 <label for="designation" class=" margin-remove-bottom form-label required"
                   i18n="designation label|Label which explains the user to enter designation" i18n-aria-label
