@@ -6,10 +6,10 @@
         </div> -->
         <div class="mr-3 cursor-pointer circle-m" (click)="goToUserProfile(user)">
             <div class="initials" *ngIf="user && user?.personalDetails">
-                {{user?.personalDetails?.firstname.charAt(0).toUpperCase()}}{{user?.personalDetails?.surname.charAt(0).toUpperCase()}}
+                {{user?.personalDetails?.firstname.charAt(0).toUpperCase()}}
             </div>
             <div class="initials" *ngIf="user && !user?.personalDetails && user.profileDetails === null">
-                {{user?.firstName.charAt(0).toUpperCase()}}{{user?.lastName.charAt(0).toUpperCase()}}
+                {{user?.firstName.charAt(0).toUpperCase()}}
             </div>
         </div>
         <div class="flex flex-col flex-1 cursor-pointer" (click)="goToUserProfile(user)">

@@ -199,7 +199,6 @@ export class SurveyComponent implements OnInit, OnDestroy {
     if (this.forPreview) {
       return
     }
-
     const event = {
       eventType: WsEvents.WsEventType.Telemetry,
       eventLogLevel: WsEvents.WsEventLogLevel.Info,
