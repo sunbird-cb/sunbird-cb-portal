@@ -640,7 +640,7 @@
                         <input id="degree" matInput type="text" placeholder="--Select--"
                           i18n-placeholder="Degree" formControlName="degree"
                           [matAutocomplete]="auto" i18n-aria-label aria-label="Graduation Degree"
-                          #graduationDegree i18n-aria-label aria-label="Graduation Degree Field input" maxlength="30" 
+                          #graduationDegree i18n-aria-label aria-label="Graduation Degree Field input" maxlength="70" 
                           (keyup)="onChangesDegrees()"/>
 
                         <mat-autocomplete #auto="matAutocomplete"
@@ -719,7 +719,7 @@
                         <input id="post_degree" matInput type="text" placeholder="--Select--"
                           i18n-placeholder="Post Degree" formControlName="degree"
                           [matAutocomplete]="autoComplete" i18n-aria-label aria-label="Post Graduation Degree"
-                          #postDegree i18n-aria-label aria-label="Post Graduation Degree Field input" maxlength="30" 
+                          #postDegree i18n-aria-label aria-label="Post Graduation Degree Field input" maxlength="70" 
                           (keyup)="onChangesPostDegrees()"/>
 
                         <mat-autocomplete #autoComplete="matAutocomplete"

@@ -93,7 +93,7 @@ function eventDispatchHelper(
           type: data.primaryCategory,
           ver: `${data.version}${''}`,
           rollup: {
-            l1: data.collectionId || '',
+            l1: data.channel || '',
           },
         },
       },

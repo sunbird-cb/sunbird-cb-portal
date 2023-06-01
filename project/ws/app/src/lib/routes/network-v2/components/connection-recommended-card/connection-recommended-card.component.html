@@ -7,9 +7,17 @@
         </div>
         <div class="name-container flex flex-col width-expand">
             <a href="javascript:void(0)" class="" i18n-aria-label role="link" (click)="goToUserProfile(user)">
+<<<<<<< HEAD
                 <div class="name ws-mat-black-text cursor-pointer" *ngIf="user && user?.personalDetails?.firstname && user?.personalDetails?.surname">
                     {{user?.personalDetails?.firstname}} {{user?.personalDetails?.middlename}} {{user?.personalDetails?.surname}}
+=======
+                <div class="name ws-mat-black-text cursor-pointer" *ngIf="user && user?.personalDetails?.firstname">
+                    {{user?.personalDetails?.firstname}} 
+                    <span class="profile-badge" *ngIf="user && user?.verifiedKarmayogi">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
+                    </span>
+>>>>>>> ee1df0fa483e038fae6f9e76cff4257624339aae
                 </div>
+                
                 <div class="name ws-mat-black-text cursor-pointer" *ngIf="user && user?.personalDetails?.firstName">
                     {{user?.personalDetails?.firstName}} {{user?.personalDetails?.middlename}}
                 </div>

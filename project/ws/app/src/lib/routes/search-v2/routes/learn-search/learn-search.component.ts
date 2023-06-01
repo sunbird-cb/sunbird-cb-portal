@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges } from '@
 import { GbSearchService } from '../../services/gb-search.service'
 import { ConfigurationsService, EventService, ValueService } from '@sunbird-cb/utils'
 import { ActivatedRoute } from '@angular/router'
+// tslint:disable-next-line
+import _ from 'lodash'
 
 @Component({
   selector: 'ws-app-learn-search',
@@ -129,12 +131,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
 
   getStartupData() {
     if (!this.paramFilters || this.paramFilters === 'undefined') {
-      this.paramFilters = [{
-         mainType: 'primaryCategory',
-         name: 'course',
-         count: '',
-         ischecked: true,
-       }]
+      this.paramFilters = []
      }
      if (this.paramFilters && this.paramFilters.length > 0) {
        this.paramFilters.forEach((pf: any) => {
@@ -158,6 +155,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
               'Course',
               'Learning Resource',
               'Program',
+              'Standalone Assessment'
             ],
             status: ['Live'],
           },
@@ -257,6 +255,8 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
           } else if (mf.name === 'Interactive Content') {
             this.mimeType.push('application/vnd.ekstep.html-archive')
             this.mimeType.push('application/vnd.ekstep.ecml-archive')
+          } else if (mf.name === 'Pratice / Final Assessment') {
+            this.mimeType.push('application/vnd.sunbird.questionset')
           } else {
             this.mimeType.push(mf.name)
           }
@@ -286,6 +286,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         this.primaryCategoryType.push('Course')
         this.primaryCategoryType.push('Learning Resource')
         this.primaryCategoryType.push('Program')
+        this.primaryCategoryType.push('Standalone Assessment')
         queryparam.request.filters.primaryCategory = this.primaryCategoryType
       }
 
@@ -326,7 +327,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         {
           type: 'click',
           subType: `card-learnSearch`,
-          // id: content.identifier || '',
+          id: `${_.camelCase(content.primaryCategory)}-card`,
         },
         {
           id: content.identifier || '',

@@ -9,7 +9,7 @@ import {
   NsGoal,
 } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, LoggerService, NsPage, TFetchStatus, UtilityService } from '@sunbird-cb/utils'
+import { ConfigurationsService, LoggerService, NsPage, TFetchStatus, TelemetryService, UtilityService } from '@sunbird-cb/utils'
 import { Subscription, Observable } from 'rxjs'
 import { share } from 'rxjs/operators'
 import { NsAppToc } from '../../models/app-toc.model'
@@ -29,6 +29,7 @@ import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_comm
 import moment from 'moment'
 import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
 import { environment } from 'src/environments/environment'
+import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -142,6 +143,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   dakshtaName = environment.dakshtaName
   cscmsUrl = environment.cscmsUrl
   showBtn = false
+  contentDuration: any
+  channelId: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -168,14 +171,18 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private utilitySvc: UtilityService,
     // private progressSvc: ContentProgressService,
     private actionSVC: ActionService,
+    private viewerSvc: ViewerUtilService,
     private ratingSvc: RatingService,
+    private telemertyService: TelemetryService,
   ) {
     this.historyData = history.state
     this.handleBreadcrumbs()
   }
 
   ngOnInit() {
+
     // this.route.fragment.subscribe(fragment => { this.fragment = fragment })
+    this.channelId = this.telemertyService.telemetryConfig ? this.telemertyService.telemetryConfig.channel : ''
     try {
       this.isInIframe = window.self !== window.top
     } catch (_ex) {
@@ -183,6 +190,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     if (this.route) {
       this.routeSubscription = this.route.data.subscribe((data: Data) => {
+        this.tocSvc.fetchGetContentData(data.content.data.identifier).subscribe(res => {
+          this.contentDuration = res.result.content.duration
+        })
         this.initialrouteData = data
         this.banners = data.pageData.data.banners
         this.tocSvc.subtitleOnBanners = data.pageData.data.subtitleOnBanners || false
@@ -1037,6 +1047,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.content.primaryCategory,
         this.getBatchId(),
       )
+      if (firstPlayableContent.optionalReading && firstPlayableContent.primaryCategory === 'Learning Resource') {
+        this.updateProgress(2, firstPlayableContent.identifier)
+      }
     }
   }
   private assignPathAndUpdateBanner(url: string) {
@@ -1145,6 +1158,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       if (this.forPreview) {
         delete qParams.viewMode
       }
+      qParams = {
+        ...qParams,
+        channelId: this.channelId,
+      }
       return qParams
     }
     if (this.resumeDataLink && type === 'RESUME') {
@@ -1163,6 +1180,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       }
       if (this.forPreview) {
         delete qParams.viewMode
+      }
+      qParams = {
+        ...qParams,
+        channelId: this.channelId,
       }
       return qParams
     }
@@ -1195,5 +1216,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.getUserRating()
       }
     })
+  }
+
+  updateProgress(status: number, resourceId: any) {
+    const collectionId = this.route.snapshot.params.id ?
+    this.route.snapshot.params.id : ''
+    const batchId = this.route.snapshot.queryParams.batchId ?
+      this.route.snapshot.queryParams.batchId : ''
+    return this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)
   }
 }

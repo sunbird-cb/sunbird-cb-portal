@@ -35,6 +35,7 @@ export class VideoComponent implements OnInit, OnDestroy {
     NsDiscussionForum.IDiscussionForumInput
   > | null = null
   batchId = this.activatedRoute.snapshot.queryParamMap.get('batchId')
+  channelId: any
   constructor(
     private activatedRoute: ActivatedRoute,
     private valueSvc: ValueService,
@@ -51,6 +52,7 @@ export class VideoComponent implements OnInit, OnDestroy {
     })
     this.isNotEmbed =
       this.activatedRoute.snapshot.queryParamMap.get('embed') === 'true' ? false : true
+      this.channelId = this.activatedRoute.snapshot.queryParamMap.get('channelId')
     if (
       this.activatedRoute.snapshot.queryParamMap.get('preview') === 'true' &&
       !this.accessControlSvc.authoringConfig.newDesign
@@ -83,6 +85,7 @@ export class VideoComponent implements OnInit, OnDestroy {
           this.widgetResolverVideoData.widgetData.contentType = this.videoData.contentType
           this.widgetResolverVideoData.widgetData.primaryCategory = this.videoData.primaryCategory
           this.widgetResolverVideoData.widgetData.version = `${this.videoData.version}${''}`
+          this.widgetResolverVideoData.widgetData.channel = this.channelId
         }
         this.isFetchingDataComplete = true
         // if (this.videoData.artifactUrl.indexOf('/content-store/') > -1) {
@@ -145,9 +148,8 @@ export class VideoComponent implements OnInit, OnDestroy {
           this.widgetResolverVideoData.widgetData.mimeType = data.content.data.mimeType
           this.widgetResolverVideoData.widgetData.contentType = data.content.data.contentType
           this.widgetResolverVideoData.widgetData.primaryCategory = data.content.data.primaryCategory
-
+          this.widgetResolverVideoData.widgetData.channel = this.channelId
           this.widgetResolverVideoData.widgetData.version = `${data.content.data.version}${''}`
-
           if (data.content.data.length > 0 && data.content.data.subTitles[0]) {
 
             let subTitlesUrl = ''
