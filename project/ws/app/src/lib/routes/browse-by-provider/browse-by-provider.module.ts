@@ -9,6 +9,8 @@ import {
   PipeRelativeTimeModule,
   PipeFilterSearchModule,
   PipeFilterV2Module,
+  PipePublicURLModule,
+  PipeDurationTransformModule,
 } from '@sunbird-cb/utils'
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatExpansionModule } from '@angular/material/expansion'
@@ -41,7 +43,6 @@ import { PopularProviderCardComponent } from './components/popular-provider-card
 import { ProviderCardComponent } from './components/provider-card/provider-card.component'
 import { ModeratedCoursesComponent } from './routes/moderated-courses/moderated-courses.component'
 import { InfiniteScrollModule } from 'ngx-infinite-scroll'
-import { PipePublicURLModule, PipeDurationTransformModule } from '@sunbird-cb/utils'
 
 @NgModule({
   declarations: [
@@ -53,7 +54,7 @@ import { PipePublicURLModule, PipeDurationTransformModule } from '@sunbird-cb/ut
     ProviderLeftMenuComponent,
     PopularProviderCardComponent,
     ProviderCardComponent,
-    ModeratedCoursesComponent
+    ModeratedCoursesComponent,
   ],
   imports: [
     CommonModule,
@@ -88,7 +89,7 @@ import { PipePublicURLModule, PipeDurationTransformModule } from '@sunbird-cb/ut
     CardContentModule,
     InfiniteScrollModule,
     PipePublicURLModule,
-    PipeDurationTransformModule
+    PipeDurationTransformModule,
   ],
   providers: [BrowseProviderService],
 })

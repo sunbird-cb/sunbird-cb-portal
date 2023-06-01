@@ -64,12 +64,12 @@ export namespace NSSearch {
       secureSettings: boolean,
       filters: {
         primaryCategory: string[]
-        status:string[]
+        status: string[]
       },
       query: string,
       sort_by: { lastUpdatedOn: string },
       facets: string[],
-      limit:number
+      limit: number
     }
   }
 

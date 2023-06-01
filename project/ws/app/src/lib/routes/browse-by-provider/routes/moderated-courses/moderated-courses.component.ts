@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { FormControl, FormGroup } from '@angular/forms'
 // tslint:disable
 import _ from 'lodash'
@@ -17,7 +17,7 @@ import { SearchApiService } from '@sunbird-cb/collection/src/lib/_services/searc
   templateUrl: './moderated-courses.component.html',
   styleUrls: ['./moderated-courses.component.scss'],
 })
-export class ModeratedCoursesComponent implements OnInit {
+export class ModeratedCoursesComponent implements OnInit, OnDestroy {
   titles = [
     { title: 'Learn', url: '/page/learn', icon: 'school' },
     { title: 'Moderated courses', url: 'none', icon: '' },
@@ -43,7 +43,7 @@ export class ModeratedCoursesComponent implements OnInit {
     private localDataService: LocalDataService,
     private browseCompServ: BrowseCompetencyService,
     private valueSvc: ValueService,
-    private searchApiService : SearchApiService
+    private searchApiService: SearchApiService
   ) { }
 
   ngOnInit() {
@@ -66,7 +66,7 @@ export class ModeratedCoursesComponent implements OnInit {
       this.sideNavBarOpened = !isLtMedium
       this.screenSizeIsLtMedium = isLtMedium
     })
-    this.getModeratedData();
+    this.getModeratedData()
   }
 
   ngOnDestroy() {
@@ -75,31 +75,30 @@ export class ModeratedCoursesComponent implements OnInit {
     }
   }
 
-  public getModeratedData(){
+  public getModeratedData() {
     const moderatedCoursesRequestBody: NSSearch.ISearchV6RequestV3 = {
       request: {
         secureSettings: true,
-        query: "",
+        query: '',
         filters: {
             primaryCategory: [
-                "Course"
+                'Course',
             ],
             status: [
-                "Live"
-            ]
+                'Live',
+            ],
         },
         sort_by: {
-            "lastUpdatedOn": "desc"
+            lastUpdatedOn: 'desc',
         },
         facets: [
-            "mimeType"
+            'mimeType',
         ],
-        limit : 20
-      }
+        limit : 20,
+      },
     }
 
    this.searchApiService.getSearchV6Results(moderatedCoursesRequestBody).subscribe(response => {
-    console.log("response.result.content",response.result.content)
     this.searchResults = response.result.content
     this.totalResults = response.result.count
     this.paramFilters = []
