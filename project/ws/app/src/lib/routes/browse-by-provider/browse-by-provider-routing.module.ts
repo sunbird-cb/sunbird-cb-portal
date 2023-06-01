@@ -5,6 +5,7 @@ import { ProviderDetailsComponent } from './routes/provider-details/provider-det
 import { ProviderOverviewComponent } from './routes/provider-overview/provider-overview.component'
 import { ProviderAllCbpComponent } from './routes/provider-all-cbp/provider-all-cbp.component'
 import { InsightsComponent } from './routes/insights/insights.component'
+import { ModeratedCoursesComponent } from './routes/moderated-courses/moderated-courses.component'
 
 const routes: Routes = [
   {
@@ -17,6 +18,14 @@ const routes: Routes = [
     component: AllProvidersComponent,
     data: {
       pageId: 'all-providers',
+      module: 'Learn',
+    },
+  },
+  {
+    path: 'moderated-courses',
+    component: ModeratedCoursesComponent,
+    data: {
+      pageId: 'moderated-courses',
       module: 'Learn',
     },
   },

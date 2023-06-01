@@ -59,6 +59,20 @@ export namespace NSSearch {
     }
   }
 
+  export interface ISearchV6RequestV3 {
+    request: {
+      secureSettings: boolean,
+      filters: {
+        primaryCategory: string[]
+        status:string[]
+      },
+      query: string,
+      sort_by: { lastUpdatedOn: string },
+      facets: string[],
+      limit:number
+    }
+  }
+
   export interface ISearchSort {
     [key: string]: 'asc' | 'desc'
   }
