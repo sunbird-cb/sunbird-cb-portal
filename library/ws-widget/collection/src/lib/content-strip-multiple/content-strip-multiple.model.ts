@@ -43,7 +43,8 @@ export namespace NsContentStripMultiple {
       microsoftCourses?: any,
       DAKSHTACourses?: any,
       prarambhCourse?: any,
-      curatedCollections?: any
+      curatedCollections?: any,
+      moderatedCourses?: any
     }
     searchV6Type?: 'KB' | 'Collections' | 'searchQuery' | null
     stripBackground?: string

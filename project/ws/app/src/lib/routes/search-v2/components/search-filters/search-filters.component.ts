@@ -20,6 +20,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   userFilters: any = []
   myFilterArray: any = []
   private subscription: Subscription = new Subscription
+  queryParams: any
 
   constructor(private searchSrvc: GbSearchService, private activated: ActivatedRoute) { }
 
@@ -87,6 +88,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     })
     this.filteroptions = this.newfacets
     this.activated.queryParamMap.subscribe(queryParams => {
+      this.queryParams = queryParams
       if (queryParams.has('f')) {
         const sfilters = JSON.parse(queryParams.get('f') || '{}')
         const fil = {
@@ -176,6 +178,16 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   }
 
   modifyUserFilters(fil: any, mainparentType: any) {
+    if (this.queryParams.has('t')) {
+      const reqfilter = {
+        mainType: 'primaryCategory',
+        name: 'moderated courses',
+        count: 0,
+        ischecked: true,
+      }
+      this.userFilters.push(reqfilter)
+      this.myFilterArray.push(reqfilter)
+    }
     const indx = this.getFilterName(fil)
     if (indx.length > 0) {
       this.userFilters.forEach((fs: any, index: number) => {

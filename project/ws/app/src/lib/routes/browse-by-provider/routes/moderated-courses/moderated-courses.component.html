@@ -161,6 +161,12 @@
 
         <!--filter sidebar-->
         <mat-sidenav [mode]="'side'" [(opened)]="sideNavBarOpened" position="end" class="custom-sidenav">
+            <ng-container>
+                <div>
+                    <!-- <ws-app-search-filters [urlparamFilters]="paramFilters"
+                        [newfacets]="facets"></ws-app-search-filters> -->
+                </div>
+            </ng-container>
         </mat-sidenav>
         <!--filter sidebar end-->
     </mat-sidenav-container>

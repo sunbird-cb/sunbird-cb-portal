@@ -2,7 +2,7 @@ import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit } fro
 import { ActivatedRoute, Router } from '@angular/router'
 import { NsContent, WidgetContentService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { UtilityService, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, UtilityService, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { RootService } from '../../../../../src/app/component/root/root.service'
 import { TStatus, ViewerDataService } from './viewer-data.service'
@@ -56,6 +56,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     private utilitySvc: UtilityService,
     private changeDetector: ChangeDetectorRef,
     private widgetServ: WidgetContentService,
+    private configSvc: ConfigurationsService,
   ) {
     this.rootSvc.showNavbarDisplay$.next(false)
   }
@@ -70,7 +71,10 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   getAuthDataIdentifer() {
     const collectionId = this.activatedRoute.snapshot.queryParams.collectionId
     this.widgetServ.fetchAuthoringContent(collectionId).subscribe((data: any) => {
-        this.leafNodesCount = data.result.content.leafNodesCount
+      if(data.result.content.csJwtToken !== 'undefined'){
+        this.configSvc.cstoken = data.result.content.csJwtToken;
+      }
+      this.leafNodesCount = data.result.content.leafNodesCount
     })
   }
 

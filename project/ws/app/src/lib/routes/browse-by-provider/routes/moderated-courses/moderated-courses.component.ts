@@ -10,6 +10,8 @@ import { BrowseCompetencyService } from '../../../browse-by-competency/services/
 import { ValueService } from '@sunbird-cb/utils'
 import { NSSearch } from '@sunbird-cb/collection'
 import { SearchApiService } from '@sunbird-cb/collection/src/lib/_services/search-api.service'
+import { ActivatedRoute } from '@angular/router'
+import { GbSearchService } from '../../../search-v2/services/gb-search.service'
 
 // tslint:enable
 @Component({
@@ -34,16 +36,20 @@ export class ModeratedCoursesComponent implements OnInit, OnDestroy {
   public screenSizeIsLtMedium = false
   searchResults: any
   totalResults: any
-  paramFilters: any
+  paramFilters: any = []
   totalpages: any
   scrollDistance = 0.2
   throttle = 100
+  facets: any = []
 
   constructor(
     private localDataService: LocalDataService,
     private browseCompServ: BrowseCompetencyService,
     private valueSvc: ValueService,
-    private searchApiService: SearchApiService
+    private searchApiService: SearchApiService,
+    private activated: ActivatedRoute,
+    private searchSrvc: GbSearchService,
+
   ) { }
 
   ngOnInit() {
@@ -67,6 +73,17 @@ export class ModeratedCoursesComponent implements OnInit, OnDestroy {
       this.screenSizeIsLtMedium = isLtMedium
     })
     this.getModeratedData()
+
+    if (!this.activated.snapshot.data.searchPageData) {
+      this.searchSrvc.getSearchConfig().then(data => {
+        this.activated.snapshot.data = {
+          searchPageData: { data },
+        }
+        this.facets = data.defaultsearch
+      })
+    } else {
+      this.facets = this.activated.snapshot.data.searchPageData.data.defaultsearch
+    }
   }
 
   ngOnDestroy() {
