@@ -35,7 +35,7 @@ const routes: Routes = [
         component: ProfileViewComponent,
         data: {
           pageId: ':userId',
-          module: 'Profile',
+          module: 'Network',
         },
         resolve: {
           profile: Profilev2Resolve,
