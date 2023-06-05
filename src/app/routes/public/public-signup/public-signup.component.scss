@@ -203,6 +203,10 @@
     color: #333232 !important;
   }
 
+  ::ng-deep .theme-igot.day-mode .mat-option.mat-selected:not(.mat-option-multiple) {
+    background: rgba(0, 0, 0, 0.04) !important;
+  }
+
   .text-input-col {
     @include breakpoint-xs {
       padding-left: 0;
@@ -554,10 +558,14 @@
     }
   }
 
-  ::ng-deep #position .pos-hint {
-    font: 400 14px/21px Lato !important;
+  ::ng-deep #org-field {
+    font: 400 12px/18px Lato !important;
   }
   ::ng-deep #position .mat-form-field-hint-wrapper {
+    display: block !important;
+  }
+
+  ::ng-deep #email .mat-form-field-hint-wrapper {
     display: block !important;
   }
 
@@ -766,10 +774,10 @@
       margin: 0;
       padding: 10px 0;
 
-      .btn-success {
+      // .btn-success {
         // margin-right: 0;
         // margin: 0 8px!important;
-      }
+      // }
 
       .profile-cols {
         padding: 1rem;
@@ -852,7 +860,8 @@
   position: absolute;
   font-size: 10px;
   color: #f44336;
-  top: 55px;
+  top: 65px;
+  margin-left:-10px
 }
 
 .mobile-wrapper {
@@ -892,7 +901,7 @@ height: auto;
 }
 
 ::ng-deep mat-option.mat-option.bordered {
-  border-bottom: 1px solid #eee
+  border-bottom: 1px solid rgba(0,0,0,1)
   }
 
 

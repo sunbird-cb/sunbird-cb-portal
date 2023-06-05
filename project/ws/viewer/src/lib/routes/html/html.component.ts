@@ -365,7 +365,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
         mimeType: NsContent.EMimeTypes.HTML,
         isIdeal: false,
         url: data ? data.artifactUrl : null,
-        object: {id: data ? data.identifier : null, type: data ? data.primaryCategory : ''}
+        object: { id: data ? data.identifier : null, type: data ? data.primaryCategory : '' },
       },
     }
     this.eventSvc.dispatchEvent(event)

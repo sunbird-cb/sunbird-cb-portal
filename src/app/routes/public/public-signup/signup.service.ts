@@ -76,11 +76,12 @@ export class SignupService {
 
   }
 
-  searchOrgs(orgName: any) {
+  searchOrgs(orgName: any, type: any) {
     const req = {
       request: {
         filters: {
           orgName,
+          parentType: type,
         },
         limit: 50,
       },

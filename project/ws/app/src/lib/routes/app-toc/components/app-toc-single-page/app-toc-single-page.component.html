@@ -407,14 +407,14 @@
                         [scrollWindow]="false"
                         (scrolled)="loadMore()">
                             <ng-container *ngFor="let c of ratingReviews| 
-                            pipeFilterV3:{ 'firstName': searchKey.value, 'lastName': searchKey.value, 'review': searchKey.value } : false; let i= index; let last = last">
+                            pipeFilterV3:{ 'firstName': searchKey.value, 'review': searchKey.value } : false; let i= index; let last = last">
                                 <ws-widget-card-rating-comment [review]="c" [contentid]="content?.identifier"></ws-widget-card-rating-comment>
                             </ng-container>
                         </div>
                         <div *ngIf="displayLoader" class="mt-5 pr-4 flex items-center justify-center">
                             <mat-spinner [diameter]="30"></mat-spinner>
                         </div>
-                        <h4 *ngIf="(ratingReviews | pipeFilterV3:{ 'firstName': searchKey.value, 'lastName': searchKey.value, 'review': searchKey.value } : false)?.length <=0 
+                        <h4 *ngIf="(ratingReviews | pipeFilterV3:{ 'firstName': searchKey.value, 'review': searchKey.value } : false)?.length <=0 
                         && (displayLoader  === false)" class="w-full text-left ws-mat-black60-text ">
                             No reviews found! 
                          </h4>
@@ -464,7 +464,7 @@
                 class="width-expand padding-left-xs">
                 <div class="mat-body-1 cohorts-name">
                     {{
-                    { firstName: user.first_name, lastName: user.last_name, email: user.email }
+                    { firstName: user.first_name, email: user.email }
                     | pipeNameTransform
                     }}
                 </div>
@@ -490,7 +490,7 @@
                 }}
             </div> -->
                 <ws-widget-connection-name
-                    [hoverUser]="{firstName: user.first_name, lastName:user.last_name , id:user.uid,designation: user.designation,department:user.department}">
+                    [hoverUser]="{firstName: user.first_name, id:user.uid,designation: user.designation,department:user.department}">
                 </ws-widget-connection-name>
                 <!-- {{user | json}} -->
                 <p class="mat-body-2 ws-mat-black60-text">{{user.designation}}</p>

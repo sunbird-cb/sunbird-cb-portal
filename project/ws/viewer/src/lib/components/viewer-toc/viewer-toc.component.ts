@@ -36,6 +36,7 @@ export interface IViewerTocCard {
   collectionType: string,
   batchId: string | number,
   viewMode: string,
+  optionalReading: boolean,
   channelId: string
 }
 
@@ -137,7 +138,8 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
         } else if (
           this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.MODULE.toLowerCase() ||
           this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.COURSE.toLowerCase() ||
-          this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.PROGRAM.toLowerCase()
+          this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.PROGRAM.toLowerCase() ||
+          this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.STANDALONE_ASSESSMENT.toLowerCase()
         ) {
           this.collection = await this.getCollection(this.collectionId, this.collectionType)
         } else {
@@ -339,6 +341,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       mimeType: content.mimeType,
       complexity: content.difficultyLevel || 'Easy',
       primaryCategory: content.primaryCategory,
+      optionalReading: content.optionalReading,
       channelId: this.channelId,
       children:
         Array.isArray(content.children) && content.children.length

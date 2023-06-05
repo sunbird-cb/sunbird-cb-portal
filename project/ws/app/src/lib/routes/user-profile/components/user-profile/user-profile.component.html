@@ -39,7 +39,7 @@
                         <label for="firstName" class=" margin-remove-bottom form-label required"
                           i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
                           aria-label="First Name label">
-                          First Name
+                          Full Name
                         </label>
                         <mat-form-field appearance="outline" class="margin-top-xs">
                           <input id="firstName" matInput #firstname formControlName="firstname" i18n-placeholder
@@ -77,7 +77,7 @@
                           </mat-error>
                         </mat-form-field>
                       </div> -->
-                      <div class="input-wrapper margin-top-s">
+                      <!-- <div class="input-wrapper margin-top-s">
                         <label for="surName" class=" margin-remove-bottom form-label required"
                           i18n="Surname label|Label which explains the user to enter Surname" i18n-aria-label
                           aria-label="Surname label">
@@ -97,7 +97,7 @@
                             Name fields cannot contain numbers and special characters except '
                           </mat-error>
                         </mat-form-field>
-                      </div>
+                      </div> -->
                       <div class="input-wrapper margin-top-s">
                         <label for="birthDate" class=" margin-remove-bottom form-label required"
                           i18n="Date of Birth|Label which explains the user to enter Date of Birth" i18n-aria-label
@@ -640,7 +640,7 @@
                         <input id="degree" matInput type="text" placeholder="--Select--"
                           i18n-placeholder="Degree" formControlName="degree"
                           [matAutocomplete]="auto" i18n-aria-label aria-label="Graduation Degree"
-                          #graduationDegree i18n-aria-label aria-label="Graduation Degree Field input" maxlength="30" 
+                          #graduationDegree i18n-aria-label aria-label="Graduation Degree Field input" maxlength="70" 
                           (keyup)="onChangesDegrees()"/>
 
                         <mat-autocomplete #auto="matAutocomplete"
@@ -651,6 +651,7 @@
                           </mat-option>
                         </mat-autocomplete>
                       </mat-form-field>
+                      
                     </div>
                     <div class="item">
                       <label for="instituteName" class=" margin-remove-bottom form-label"
@@ -691,7 +692,7 @@
                         </mat-error>
                       </mat-form-field>
                     </div>
-                    <div class=" flex flex-align">
+                    <div class="flex flex-align">
                       <button mat-icon-button class="btn-danger" (click)="removeDegrees(i)">
                         <mat-icon class="color-danger">delete_outline</mat-icon>
                       </button>
@@ -718,7 +719,7 @@
                         <input id="post_degree" matInput type="text" placeholder="--Select--"
                           i18n-placeholder="Post Degree" formControlName="degree"
                           [matAutocomplete]="autoComplete" i18n-aria-label aria-label="Post Graduation Degree"
-                          #postDegree i18n-aria-label aria-label="Post Graduation Degree Field input" maxlength="30" 
+                          #postDegree i18n-aria-label aria-label="Post Graduation Degree Field input" maxlength="70" 
                           (keyup)="onChangesPostDegrees()"/>
 
                         <mat-autocomplete #autoComplete="matAutocomplete"
@@ -874,8 +875,8 @@
                   </div>
                 </div>
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                  <div class="item">
-                    <!-- [ngClass]="{ disable: !isAllowed('designation') }" -->
+                  <div class="item"
+                    [ngClass]="{ disable: !isAllowed('designation') }">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Designation label|Label which explains the user to enter Designation">
                       Designation

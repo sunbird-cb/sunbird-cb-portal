@@ -36,9 +36,11 @@ export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn 
 export class PublicRequestComponent implements OnInit {
   requestForm!: FormGroup
   namePatern = `[a-zA-Z\\s\\']{1,32}$`
-  emailWhitelistPattern = `^[a-zA-Z0-9._-]{3,}\\b@\\b[a-zA-Z0-9]*|\\b(.gov|.nic)\b\\.\\b(in)\\b$`
+  // emailWhitelistPattern = `^[a-zA-Z0-9._-]{3,}\\b@\\b[a-zA-Z0-9]*|\\b(.gov|.nic)\b\\.\\b(in)\\b$`
   phoneNumberPattern = '^((\\+91-?)|0)?[0-9]{10}$'
   customCharsPattern = `^[a-zA-Z0-9 \\w\-\&\(\)]*$`
+  // domainPattern = `([a-z0-9A-Z]\.)*[a-z0-9-]+\.([a-z0-9]{2,24})+(\.co\.([a-z0-9]{2,24})|\.([a-z0-9]{2,24}))*`
+  domainPattern = `([a-z0-9\-]+\.){1,2}[a-z]{2,4}`
   confirm = false
   disableBtn = false
   isMobileVerified = false
@@ -63,12 +65,15 @@ export class PublicRequestComponent implements OnInit {
     this.requestType = this.activatedRoute.snapshot.queryParams.type
     this.requestForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
-      email: new FormControl('', [Validators.required, Validators.pattern(this.emailWhitelistPattern)]),
+      // tslint:disable-next-line:max-line-length
+      email: new FormControl('', [Validators.required, Validators.pattern(/^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@((?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?){2,}\.){1,3}(?:\w){2,}$/)]),
       mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
       // tslint:disable-next-line:max-line-length
-      position: new FormControl('', this.requestType === 'Position' ? [Validators.pattern(this.customCharsPattern), 
+      position: new FormControl('', this.requestType === 'Position' ? [Validators.pattern(this.customCharsPattern),
         Validators.required, forbiddenNamesValidatorPosition(this.masterPositions)] : []),
+      // tslint:disable-next-line:max-line-length
       organisation: new FormControl('', this.requestType === 'Organisation' ? [Validators.required, Validators.pattern(this.customCharsPattern)] : []),
+      domain: new FormControl('', this.requestType === 'Domain' ? [Validators.required, Validators.pattern(this.domainPattern)] : []),
       addDetails: new FormControl('', []),
       confirmBox: new FormControl(false, [Validators.required]),
     })
@@ -180,13 +185,14 @@ export class PublicRequestComponent implements OnInit {
     const reqType = this.requestType.toLowerCase()
     // tslint:disable-next-line:no-console
     console.log('this.requestForm', this.requestForm.value)
+    const uniqueID = uuid()
     this.requestObj = {
       state: 'INITIATE',
       action: 'INITIATE',
       serviceName: reqType,
-      userId: uuid(),
-      applicationId: uuid(),
-      actorUserId: uuid(),
+      userId: uniqueID,
+      applicationId: uniqueID,
+      actorUserId: uniqueID,
       deptName : 'iGOT',
       updateFieldValues: [],
     }
@@ -204,8 +210,6 @@ export class PublicRequestComponent implements OnInit {
       }
       this.requestObj.updateFieldValues.push(this.formobj)
 
-      // tslint:disable-next-line:no-console
-      console.log('Pos create', this.requestObj)
       // this.openDialog(this.requestType)
 
       this.requestSvc.createPosition(this.requestObj).subscribe(
@@ -237,11 +241,39 @@ export class PublicRequestComponent implements OnInit {
       }
       this.requestObj.updateFieldValues.push(this.formobj)
 
-      // tslint:disable-next-line:no-console
-      console.log('Org create', this.requestObj)
       // this.openDialog(this.requestType)
 
       this.requestSvc.createOrg(this.requestObj).subscribe(
+        (_res: any) => {
+          this.openDialog(this.requestType)
+          this.disableBtn = false
+          this.isMobileVerified = true
+          this.requestForm.reset()
+        },
+        (err: any) => {
+          this.disableBtn = false
+          if (err.error && err.error.params && err.error.params.errmsg) {
+            this.openSnackbar(err.error.params.errmsg)
+          } else {
+            this.openSnackbar('Something went wrong, please try again later!')
+          }
+        }
+      )
+    } else if (this.requestType === 'Domain') {
+      this.formobj = {
+        toValue: {
+          domain: this.requestForm.value.domain,
+        },
+        fieldKey: reqType,
+        description: this.requestForm.value.addDetails || '',
+        firstName: this.requestForm.value.firstname || '',
+        email: this.requestForm.value.email || '',
+        mobile: this.requestForm.value.mobile || '',
+      }
+      this.requestObj.updateFieldValues.push(this.formobj)
+      // this.openDialog(this.requestType)
+
+      this.requestSvc.createDomain(this.requestObj).subscribe(
         (_res: any) => {
           this.openDialog(this.requestType)
           this.disableBtn = false
@@ -276,5 +308,4 @@ export class PublicRequestComponent implements OnInit {
       duration,
     })
   }
-
 }

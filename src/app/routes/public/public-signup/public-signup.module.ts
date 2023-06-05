@@ -34,7 +34,7 @@ import { SignupSuccessDialogueComponent } from './signup-success-dialogue/signup
 import { environment } from 'src/environments/environment'
 import { PipeOrderByModule } from '@sunbird-cb/utils/src/lib/pipes/pipe-order-by/pipe-order-by.module'
 import { AppPublicPositionResolverService } from './position-resolver.service'
-import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api';
+import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
 import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component'
 
 @NgModule({

@@ -4,34 +4,19 @@
     <div class="logo_box flex items-center">
       <img src="/assets/instances/eagle/app_logos/dopt_logo.png" alt="logo" class="logo_img">
     </div>
-
     <div class="slideshow-container">
-
       <div class="mySlides">
         <img src="/assets/instances/eagle/app_logos/Hexagon.png" alt="karmayogi">
         <!-- <img src="/assets/instances/eagle/app_logos/card3.png" alt="slide 1"> -->
-
       </div>
-
       <!-- <div class="mySlides">
-
         <img src="/assets/instances/eagle/app_logos/Hexagon.png" alt="slide 2">
-
       </div> -->
-
-
-
-
-
-
-
     </div>
     <br>
-
     <!-- <div style="text-align:center">
         <span class="dot"></span>
         <span class="dot"></span>
-
       </div> -->
   </div>
   <div class=" right_container flex flex-col items-center justify-center py-16">
@@ -58,15 +43,15 @@
                 <label for="firstName" class=" margin-remove-bottom form-label required"
                   i18n="First name label|Label which explains the user to enter first name" i18n-aria-label
                   aria-label="First name label">
-                  First name
+                  Full name
                 </label>
                 <mat-form-field appearance="outline" class="margin-top-s">
                   <input id="firstName" matInput #firstname formControlName="firstname" i18n-placeholder
-                    placeholder="Enter your first name" autocomplete="off" i18n-aria-label aria-label="First Name input" maxlength="150" />
+                    placeholder="Enter your full name" autocomplete="off" i18n-aria-label aria-label="First Name input" maxlength="150" />
                   <mat-error [hidden]="false" i18n="First Name Error|Explains name is required" i18n-aria-label
                     aria-label="First Name Error|Explains name is required "
                     *ngIf="registrationForm?.controls['firstname'].errors?.required">
-                    First name is mandatory
+                    Full name is mandatory
                   </mat-error>
                   <mat-error [hidden]="false" *ngIf="registrationForm?.controls['firstname'].errors?.pattern"
                     i18n-aria-label
@@ -75,7 +60,7 @@
                   </mat-error>
                 </mat-form-field>
               </div>
-              <div class="input-wrapper margin-top-s">
+              <!-- <div class="input-wrapper margin-top-s">
                 <label for="lastName" class=" margin-remove-bottom form-label required"
                   i18n="Surname label|Label which explains the user to enter Surname" i18n-aria-label
                   aria-label="Last name label">
@@ -94,7 +79,7 @@
                     Surname fields cannot contain numbers and special characters except '
                   </mat-error>
                 </mat-form-field>
-              </div>
+              </div> -->
               <!-- <div class="input-wrapper margin-top-s">
                 <label for="designation" class=" margin-remove-bottom form-label required"
                   i18n="designation label|Label which explains the user to enter designation" i18n-aria-label
@@ -159,22 +144,23 @@
                   aria-label="Email label">
                   Email
                 </label>
-                <mat-form-field appearance="outline" class="margin-top-s">
+                <mat-form-field appearance="outline" class="margin-top-s" id="email">
                   <input id="email" name="emailField" autocomplete="off" type="email" maxlength="320" (input)="emailVerification($event.target.value)" matInput placeholder="Enter your email id" #email
                     formControlName="email" i18n-aria-label aria-label="Email input">
-                  <mat-hint>Only government email ids are allowed</mat-hint>
+                  <!-- <mat-hint>Only government email ids are allowed</mat-hint> -->
                   <mat-error [hidden]="false" *ngIf="registrationForm?.controls['email'].errors?.required"
-                    i18n="Email Error|Explains name is required">
-                    Email id is mandatory
-                  </mat-error>
-                  <mat-error [hidden]="false" *ngIf="registrationForm?.controls['email'].errors?.pattern"
-                    i18n-aria-label aria-label="Name fields cannot contain numbers and special characters except '">
-                    Email id is not valid
-                  </mat-error>
-                  <div *ngIf="emailLengthVal" class="email-error"
-                    i18n="Email Error|Explains character validation">
-                    Max 64 characters before "@" & 255 characters after "@" are valid.
-                  </div>
+                  i18n="Email Error|Explains name is required">
+                  Email id is mandatory
+                </mat-error>
+                <mat-error [hidden]="false" *ngIf="registrationForm?.controls['email'].errors?.pattern"
+                  i18n-aria-label aria-label="Name fields cannot contain numbers and special characters except '">
+                  Email id is not valid
+                </mat-error>
+                <div *ngIf="emailLengthVal" class="email-error"
+                  i18n="Email Error|Explains character validation">
+                  Max 64 characters before "@" & 255 characters after "@" are valid.
+                </div>
+                  <mat-hint class="pos-hint">Do not have a government email address?<span class="float-right ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo('Domain')">Request for help</span></mat-hint>
                 </mat-form-field>
               </div>
               <div class="input-wrapper mobile-wrapper margin-top-l">
@@ -265,7 +251,7 @@
                     <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
                     <input matInput onfocus="this.select()" aria-label="organisation" [matAutocomplete]="auto" #organisation
                       name="organisation" formControlName="organisation" i18n-placeholder placeholder="Search organisation" i18n-aria-label
-                      aria-label="Type here" >
+                      aria-label="Type here" required (keydown.enter)="searchOrgs($event.target.value)">
                     <span matSuffix class="ws-mat-accent-text margin-xs cursor-pointer" (click)="searchOrgs(organisation.value)" >Search</span>
                     <mat-error *ngIf="registrationForm?.controls['organisation'].errors?.pattern" i18n-aria-label
                       aria-label="You must enter value from suggested list only.">
@@ -273,7 +259,7 @@
                     </mat-error>
                   </mat-form-field>
                   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="orgClicked($event)"  
-                      autoActiveFirstOption="true" [displayWith]="displayFnOrg">
+                      autoActiveFirstOption="true" >
                       <ng-container *ngIf="searching">
                         <mat-option [value] = "" class="custom">
                           <div  class="p-4 w-full flex items-center justify-center">
@@ -309,8 +295,8 @@
                     </div>
                   </div>
                 </ng-container>
-                <div class="w-full margin-top-xs">
-                  <div class="flex items-center mat-body-2 flex-1">
+                <div class="w-full" id="org-field">
+                  <div class="flex items-center flex-1">
                     <span class="flex-1 ws-mat-black60-text">Not found yet?</span>
                     <a class="flex-1 ws-mat-accent-text text-right cursor-pointer font-bold" (click)="navigateTo('Organisation')"> Request for help</a>
                   </div>
@@ -388,6 +374,5 @@
         </div>
       </form>
     </div>
-
   </div>
 </div>
