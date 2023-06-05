@@ -63,7 +63,7 @@ const routes: Routes = [
         component: NetworkConnectionRequestsComponent,
         data: {
           pageId: 'connection-requests',
-          module: 'network',
+          module: 'Network',
         },
         resolve: {
           connectionRequests: ConnectionRequestResolveService,
@@ -75,7 +75,7 @@ const routes: Routes = [
         component: NetworkMyMdoComponent,
         data: {
           pageId: 'my-mdo',
-          module: 'network',
+          module: 'Network',
         },
         resolve: {
           myMdoList: MyMdoResolveService,
@@ -87,7 +87,7 @@ const routes: Routes = [
         component: NetworkRecommendedComponent,
         data: {
           pageId: 'recommended',
-          module: 'network',
+          module: 'Network',
         },
         resolve: {
           recommendedList: RecommendedResolveService,
