@@ -1,6 +1,6 @@
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { noop, Observable } from 'rxjs'
 import dayjs from 'dayjs'
 import { NsContent } from '@sunbird-cb/collection/src/lib/_services/widget-content.model'
@@ -126,9 +126,20 @@ export class ViewerUtilService {
           ],
         },
       }
-      this.http
-      .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
-      .subscribe(noop, noop)
+
+      if (this.configservice.cstoken !== '') {
+        const headers = new HttpHeaders()
+        .set('cstoken', this.configservice.cstoken)
+
+        this.http
+        .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, { headers } , req)
+        .subscribe(noop, noop)
+      } else {
+        this.http
+        .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
+        .subscribe(noop, noop)
+      }
+
     } else {
       req = {}
       // do nothing
@@ -152,9 +163,20 @@ export class ViewerUtilService {
           ],
         },
       }
-      this.http
-      .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
-      .subscribe(noop, noop)
+
+      if (this.configservice.cstoken !== '') {
+        const headers = new HttpHeaders()
+        .set('cstoken', this.configservice.cstoken)
+
+        this.http
+        .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, { headers } , req)
+        .subscribe(noop, noop)
+      } else {
+        this.http
+        .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
+        .subscribe(noop, noop)
+      }
+
     } else {
       req = {}
       // do nothing

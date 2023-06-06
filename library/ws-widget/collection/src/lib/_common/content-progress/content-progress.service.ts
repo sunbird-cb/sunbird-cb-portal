@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable, ReplaySubject } from 'rxjs'
 import { map } from 'rxjs/operators'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 // TODO: move this in some common place
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'
@@ -20,6 +21,7 @@ export class ContentProgressService {
 
   constructor(
     private http: HttpClient,
+    private configSvc: ConfigurationsService,
   ) { }
 
   getProgressFor(id: string, batch: number, userId: string): Observable<number> {
@@ -37,21 +39,43 @@ export class ContentProgressService {
   }
   private fetchProgressHash(contentId: string, batch: number, userId: string) {
     this.isFetchingProgress = true
-    this.http.post<{ [id: string]: number, [batch: number]: number }>(`apis/proxies/v8/read/content-progres/${contentId}`, {
-      request:
-      {
-        userId,
-        batchId: batch,
-        courseId: contentId,
-        contentIds: [],
-        fields: ['progressdetails'],
-      },
-    }).subscribe(data => {
-      // this.http.get<{ [id: string]: number }>(API_END_POINTS.PROGRESS_HASH).subscribe(data => {
-      this.progressHash = data
-      this.isFetchingProgress = false
-      this.progressHashSubject.next(data)
-    })
+
+    if (this.configSvc.cstoken !== '') {
+      const headers = new HttpHeaders()
+      .set('cstoken', this.configSvc.cstoken)
+
+      this.http.post<{ [id: string]: number, [batch: number]: number }>(`apis/proxies/v8/read/content-progres/${contentId}`, {
+        request:
+        {
+          userId,
+          batchId: batch,
+          courseId: contentId,
+          contentIds: [],
+          fields: ['progressdetails'],
+        },
+      },                                                                { headers }).subscribe(data => {
+        // this.http.get<{ [id: string]: number }>(API_END_POINTS.PROGRESS_HASH).subscribe(data => {
+        this.progressHash = data
+        this.isFetchingProgress = false
+        this.progressHashSubject.next(data)
+      })
+    } else {
+      this.http.post<{ [id: string]: number, [batch: number]: number }>(`apis/proxies/v8/read/content-progres/${contentId}`, {
+        request:
+        {
+          userId,
+          batchId: batch,
+          courseId: contentId,
+          contentIds: [],
+          fields: ['progressdetails'],
+        },
+      }).subscribe(data => {
+        // this.http.get<{ [id: string]: number }>(API_END_POINTS.PROGRESS_HASH).subscribe(data => {
+        this.progressHash = data
+        this.isFetchingProgress = false
+        this.progressHashSubject.next(data)
+      })
+    }
   }
   private get shouldFetchProgress(): boolean {
     return Boolean(this.progressHash === null && !this.isFetchingProgress)

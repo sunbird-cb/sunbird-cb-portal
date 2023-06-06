@@ -8,7 +8,7 @@ import {
   PipeOrderByModule,
   PipeRelativeTimeModule,
   PipeFilterSearchModule,
-  PipeFilterV2Module
+  PipeFilterV2Module,
 } from '@sunbird-cb/utils'
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatExpansionModule } from '@angular/material/expansion'

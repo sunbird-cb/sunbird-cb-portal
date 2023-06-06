@@ -1038,13 +1038,21 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.tocSvc.filterToc(this.content, NsContent.EFilterCategory.ASSESS),
       )
       const firstPlayableContent = this.contentSvc.getFirstChildInHierarchy(this.content)
+
+      let primaryCategory
+      if (this.content.secureSettings !== undefined) {
+        primaryCategory = 'Learning Resource'
+      } else {
+        primaryCategory = this.content.primaryCategory
+      }
+
       this.firstResourceLink = viewerRouteGenerator(
         firstPlayableContent.identifier,
         firstPlayableContent.mimeType,
         this.isResource ? undefined : this.content.identifier,
         this.isResource ? undefined : this.content.contentType,
         this.forPreview,
-        this.content.primaryCategory,
+        primaryCategory,
         this.getBatchId(),
       )
       if (firstPlayableContent.optionalReading && firstPlayableContent.primaryCategory === 'Learning Resource') {
