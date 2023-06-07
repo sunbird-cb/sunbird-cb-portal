@@ -185,7 +185,7 @@ const routes: Routes = [
     component: SettingsComponent,
     data: {
       pageId: 'notification',
-      module: 'profile',
+      module: 'Profile',
     },
   },
   {
@@ -193,7 +193,7 @@ const routes: Routes = [
     component: NotificationSettingsComponent,
     data: {
       pageId: 'notification',
-      module: 'profile',
+      module: 'Profile',
     },
   },
   {
@@ -201,7 +201,7 @@ const routes: Routes = [
     component: PrivacySettingsComponent,
     data: {
       pageId: 'privacy',
-      module: 'profile',
+      module: 'Profile',
     },
   },
   {
@@ -209,7 +209,7 @@ const routes: Routes = [
     component: AccountPasswordSettingsComponent,
     data: {
       pageId: 'accountandpassword',
-      module: 'profile',
+      module: 'Profile',
     },
   },
 ]

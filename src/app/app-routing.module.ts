@@ -104,7 +104,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'career',
       pageId: 'app/careers',
-      module: 'careers',
+      module: 'Careers',
     },
     resolve: {
       pageData: PageResolve,
@@ -367,7 +367,7 @@ const routes: Routes = [
     canActivate: [GeneralGuard, LearningGuard],
     data: {
       pageId: 'app/my-dashboard',
-      module: 'dashboard',
+      module: 'Dashboard',
     },
   },
   {
@@ -420,7 +420,7 @@ const routes: Routes = [
     canActivate: [GeneralGuard],
     data: {
       pageId: 'app/profile',
-      module: 'profile',
+      module: 'Profile',
     },
   },
   {

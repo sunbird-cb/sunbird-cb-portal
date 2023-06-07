@@ -36,7 +36,7 @@ export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn 
 export class PublicRequestComponent implements OnInit {
   requestForm!: FormGroup
   namePatern = `[a-zA-Z\\s\\']{1,32}$`
-  emailWhitelistPattern = `^[a-zA-Z0-9._-]{3,}\\b@\\b[a-zA-Z0-9]*|\\b(.gov|.nic)\b\\.\\b(in)\\b$`
+  // emailWhitelistPattern = `^[a-zA-Z0-9._-]{3,}\\b@\\b[a-zA-Z0-9]*|\\b(.gov|.nic)\b\\.\\b(in)\\b$`
   phoneNumberPattern = '^((\\+91-?)|0)?[0-9]{10}$'
   customCharsPattern = `^[a-zA-Z0-9 \\w\-\&\(\)]*$`
   // domainPattern = `([a-z0-9A-Z]\.)*[a-z0-9-]+\.([a-z0-9]{2,24})+(\.co\.([a-z0-9]{2,24})|\.([a-z0-9]{2,24}))*`
@@ -65,7 +65,8 @@ export class PublicRequestComponent implements OnInit {
     this.requestType = this.activatedRoute.snapshot.queryParams.type
     this.requestForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
-      email: new FormControl('', [Validators.required, Validators.pattern(this.emailWhitelistPattern)]),
+      // tslint:disable-next-line:max-line-length
+      email: new FormControl('', [Validators.required, Validators.pattern(/^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@((?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?){2,}\.){1,3}(?:\w){2,}$/)]),
       mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
       // tslint:disable-next-line:max-line-length
       position: new FormControl('', this.requestType === 'Position' ? [Validators.pattern(this.customCharsPattern),

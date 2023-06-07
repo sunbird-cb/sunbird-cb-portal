@@ -40,8 +40,8 @@ export class CardNetworkHomeComponent extends WidgetBaseComponent
   }
 
   getUserFullName(user: any) {
-    if (user && user.personalDetails.firstname && user.personalDetails.surname) {
-      return `${user.personalDetails.firstname.trim()} ${user.personalDetails.surname.trim()}`
+    if (user && user.personalDetails.firstname) {
+      return `${user.personalDetails.firstname.trim()}`
     }
     return ''
   }
