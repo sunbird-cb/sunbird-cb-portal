@@ -206,6 +206,10 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
             if (fasv.name === fil.name) {
               fasv.ischecked = false
             }
+
+            if(fasv.name === 'moderated courses' && !fasv.ischecked)
+              fasv.qParam = ''
+         
           })
         }
       })
@@ -218,7 +222,9 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
         name: fil.name,
         count: fil.count,
         ischecked: true,
+        qParam : ''
       }
+
       this.filteroptions.forEach((fas: any) => {
         if (fas.name === mainparentType) {
           fas.values.forEach((fasv: any) => {
@@ -228,6 +234,12 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
           })
         }
       })
+
+      if(reqfilter.name === 'moderated courses' && reqfilter.ischecked)
+        reqfilter.qParam = 't'
+      else
+        reqfilter.qParam = '' 
+
       this.myFilterArray.push(reqfilter)
       this.appliedFilter.emit(this.myFilterArray)
     }

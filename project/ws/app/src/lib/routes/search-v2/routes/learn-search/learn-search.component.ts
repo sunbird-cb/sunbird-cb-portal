@@ -62,7 +62,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
   statedata: {
     param: any, path: any
   } | undefined
-  resultFacets: any
+  resultFacets: any =[]
   facetsData: any = []
 
   constructor(
@@ -330,6 +330,8 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         }
         if (mf.name === 'moderated courses') {
           filterName = 'moderated courses'
+        }else{
+          filterName = ''
         }
       })
 
@@ -356,63 +358,52 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
       this.searchResults = []
       this.totalResults = 0
       this.newQueryParam = queryparam
-
-      this.newQueryParam = queryparam
-        this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
-          this.searchResults = response.result.content
-          this.totalResults = response.result.count
-          // this.facets = response.result.facets
-          this.primaryCategoryType = []
-          this.contentType = []
-          this.mimeType = []
-          this.sourceType = []
-          this.mediaType = []
-          this.paramFilters = []
-          this.totalpages = Math.ceil(this.totalResults / 100)
-          this.resultFacets = response.result.facets
-          this.getFacets(this.resultFacets)
-
-          if (filterName === 'moderated courses') {
-            const param = {
+      
+      
+      if (filterName === 'moderated courses') {
+        
+        const param = {
               request: {
               secureSettings: true,
               query: '',
                 filters: {
                   primaryCategory: [
                     'Course',
-
+    
                   ],
                   status: ['Live'],
                 },
                 sort_by: { lastUpdatedOn: 'desc' },
                 facets: ['mimeType'],
                 limit: 20,
-
+    
               },
             }
-
-            this.searchSrvc.fetchSearchData(param).subscribe((result: any) => {
-              this.searchResults.push(result.result.content)
-
-              this.totalResults = result.result.count + this.totalResults
-              // this.facets = response.result.facets
-              this.primaryCategoryType = []
-              this.contentType = []
-              this.mimeType = []
-              this.sourceType = []
-              this.mediaType = []
-              this.paramFilters = []
-              this.totalpages = Math.ceil(this.totalResults / 100)
-              this.resultFacets.push(result.result.facets)
-              this.getFacets(this.resultFacets)
-            })
-          }
-        })
-
+            this.fetchSearchDataFun(param)
+      } else {
+        this.fetchSearchDataFun(queryparam)
+      }
     } else {
       this.myFilters = filter
       this.getSearchedData()
     }
+  }
+
+  fetchSearchDataFun(data:any){
+    this.searchSrvc.fetchSearchData(data).subscribe((response: any) => {
+      this.searchResults = response.result.content
+      this.totalResults = response.result.count + this.totalResults
+      // this.facets = response.result.facets
+      this.primaryCategoryType = []
+      this.contentType = []
+      this.mimeType = []
+      this.sourceType = []
+      this.mediaType = []
+      this.paramFilters = []
+      this.totalpages = Math.ceil(this.totalResults / 100)
+      this.resultFacets = response.result.facets
+      this.getFacets(this.resultFacets)
+    })
   }
 
   removeFilter(mfilter: any) {

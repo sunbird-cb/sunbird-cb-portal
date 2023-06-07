@@ -71,8 +71,8 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   getAuthDataIdentifer() {
     const collectionId = this.activatedRoute.snapshot.queryParams.collectionId
     this.widgetServ.fetchAuthoringContent(collectionId).subscribe((data: any) => {
-      if(data.result.content.csJwtToken){
-        this.configSvc.cstoken = data.result.content.csJwtToken;
+      if(data.result.content.cstoken){
+        this.configSvc.cstoken = data.result.content.cstoken;
       }
       this.leafNodesCount = data.result.content.leafNodesCount
     })
