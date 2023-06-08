@@ -62,7 +62,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
   statedata: {
     param: any, path: any
   } | undefined
-  resultFacets: any =[]
+  resultFacets: any = []
   facetsData: any = []
 
   constructor(
@@ -331,7 +331,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         if (mf.name === 'moderated courses') {
           filterName = 'moderated courses'
         }
-        if(mf.name !== 'moderated courses') {
+        if (mf.name !== 'moderated courses') {
           filterName = mf.name
         }
       })
@@ -359,10 +359,9 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
       this.searchResults = []
       this.totalResults = 0
       this.newQueryParam = queryparam
-      
-      
+
       if (filterName === 'moderated courses') {
-        
+
         const param = {
               request: {
               secureSettings: true,
@@ -370,18 +369,18 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
                 filters: {
                   primaryCategory: [
                     'Course',
-    
+
                   ],
                   status: ['Live'],
                 },
                 sort_by: { lastUpdatedOn: 'desc' },
                 facets: ['mimeType'],
                 limit: 20,
-    
+
               },
             }
             this.fetchSearchDataFun(param)
-      } else if(filterName !== 'moderated courses' && filterName === 'moderated courses') {
+      } else if (filterName !== 'moderated courses' && filterName === 'moderated courses') {
         const param = {
           request: {
           secureSettings: true,
@@ -410,7 +409,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  fetchSearchDataFun(data:any){
+  fetchSearchDataFun(data: any) {
     this.searchSrvc.fetchSearchData(data).subscribe((response: any) => {
       this.searchResults = response.result.content
       this.totalResults = response.result.count + this.totalResults
