@@ -80,7 +80,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     this.tabs = this.route.data.subscribe(data => {
-      if (data.profile.data.profileDetails.mandatoryFieldsExists === true) {
+      if (data.profile.data.profileDetails.verifiedKarmayogi === true) {
         this.verifiedBadge = true
       }
       if (data.profile.data.profileDetails) {
