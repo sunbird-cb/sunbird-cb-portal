@@ -134,7 +134,17 @@ input[type=number] {
         min-width: 340px;
         margin-right: 30px;
         display: contents;
+        width: 340px;
 
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+      .item {
+        min-width: 340px;
+        margin-right: 0px;
+        display: contents;
+        width: 100%;
 
         &:last-child {
           margin-right: 0;
@@ -157,6 +167,7 @@ input[type=number] {
         min-width: 340px;
         margin-right: 30px;
         width: 340px;
+        // width: 100%;
 
         @include breakpoint-xs {
           width: auto;
@@ -171,10 +182,15 @@ input[type=number] {
           min-width: auto !important;
         }
       }
+      .item1 {
+        margin-right: 0;
+        width: 60%;
+        min-width: 340px;
+      }
     }
 
     .section-input-single {
-      .item {
+      .item, .item1 {
         display: contents;
       }
     }
@@ -249,7 +265,7 @@ input[type=number] {
 
   ::ng-deep .mat-form-field {
     width: 100%;
-    max-width: 340px;
+    // max-width: 340px;
 
     &.full-width {
       max-width: 100%;
@@ -584,8 +600,17 @@ input.mat-input-element {
 
       .section-input {
         .item {
-          min-width: 100%;
+          min-width: 340px;
           margin-right: 30px;
+          display: contents;
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+        .item1 {
+          min-width: 60%;
+          margin-right: 0px;
           display: contents;
 
           &:last-child {
@@ -605,8 +630,13 @@ input.mat-input-element {
 
       .section-input {
         .item {
-          min-width: 100%;
+          min-width: 340px;
           margin-right: 30px;
+          display: block;
+        }
+        .item1 {
+          min-width: 60%;
+          margin-right: 0px;
           display: block;
         }
       }
