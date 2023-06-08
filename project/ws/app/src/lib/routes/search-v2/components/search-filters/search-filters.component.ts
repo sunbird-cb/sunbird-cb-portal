@@ -235,10 +235,11 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
         }
       })
 
-      if(reqfilter.name === 'moderated courses' && reqfilter.ischecked)
+      if (reqfilter.name === 'moderated courses' && reqfilter.ischecked) {
         reqfilter.qParam = 't'
-      else
-        reqfilter.qParam = '' 
+      } else {
+        reqfilter.qParam = ''
+      }
 
       this.myFilterArray.push(reqfilter)
       this.appliedFilter.emit(this.myFilterArray)
