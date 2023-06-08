@@ -170,6 +170,9 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
           filters: {
             primaryCategory: [
               'Course',
+              'Learning Resource',
+              'Program',
+              'Standalone Assessment',
             ],
             status: ['Live'],
           },
