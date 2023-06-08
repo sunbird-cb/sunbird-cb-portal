@@ -330,8 +330,9 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         }
         if (mf.name === 'moderated courses') {
           filterName = 'moderated courses'
-        }else{
-          filterName = ''
+        }
+        if(mf.name !== 'moderated courses') {
+          filterName = mf.name
         }
       })
 
@@ -380,6 +381,26 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
               },
             }
             this.fetchSearchDataFun(param)
+      } else if(filterName !== 'moderated courses' && filterName === 'moderated courses') {
+        const param = {
+          request: {
+          secureSettings: true,
+          query: '',
+            filters: {
+              primaryCategory: [
+                'Course',
+
+              ],
+              status: ['Live'],
+            },
+            sort_by: { lastUpdatedOn: 'desc' },
+            facets: ['mimeType'],
+            limit: 20,
+
+          },
+        }
+        this.fetchSearchDataFun(param)
+        this.fetchSearchDataFun(queryparam)
       } else {
         this.fetchSearchDataFun(queryparam)
       }
