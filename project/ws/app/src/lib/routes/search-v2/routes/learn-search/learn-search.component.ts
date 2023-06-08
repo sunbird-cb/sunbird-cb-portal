@@ -62,6 +62,8 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
   statedata: {
     param: any, path: any
   } | undefined
+  resultFacets: any = []
+  facetsData: any = []
 
   constructor(
     private searchSrvc: GbSearchService,
@@ -93,8 +95,21 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
       })
     } else {
       this.facets = this.activated.snapshot.data.searchPageData.data.defaultsearch
+      if (this.param === 't=moderatedCourses') {
+        for (const key in this.facets[0].values) {
+          if (this.facets[0].values[key].name === 'moderated courses') {
+            this.facets[0].values[key].ischecked = true
+            const obj = {
+              mainType: 'primaryCategory',
+              name: 'moderated courses',
+              count: 0,
+              ischecked: true,
+            }
+            this.myFilters.push(obj)
+          }
+        }
+      }
     }
-
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -148,8 +163,10 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
 
   getSearchedData() {
     if (this.myFilters.length === 0 && this.paramFilters.length === 0) {
-      const queryparam = {
+      const queryparam1 = {
         request: {
+          secureSettings: true,
+          query: '',
           filters: {
             primaryCategory: [
               'Course',
@@ -159,24 +176,43 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
             ],
             status: ['Live'],
           },
-          query: this.param,
-          sort_by: { lastUpdatedOn: '' },
-          fields: [],
-          facets: ['primaryCategory', 'mimeType', 'source'],
-          limit: 100,
-          offset: 0,
-          fuzzy: false,
+          sort_by: { lastUpdatedOn: 'desc' },
+          facets: ['mimeType'],
+          limit: 20,
         },
       }
-      this.newQueryParam = queryparam
-      this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
-        this.searchResults = response.result.content
-        this.totalResults = response.result.count
-        // this.facets = response.result.facets
-        this.paramFilters = []
-        this.totalpages = Math.ceil(this.totalResults / 100)
-        this.getFacets(response.result.facets)
-      })
+
+      let queryparam2
+
+      if (this.param === 't=moderatedCourses') {
+        this.searchApiCall(queryparam1)
+      } else {
+        if (this.param === 't=moderatedCourses') {
+          this.param = ''
+        }
+        queryparam2 = {
+          request: {
+            filters: {
+              primaryCategory: [
+                'Course',
+                'Learning Resource',
+                'Program',
+                'Standalone Assessment',
+              ],
+              status: ['Live'],
+            },
+            query: this.param,
+            sort_by: { lastUpdatedOn: '' },
+            fields: [],
+            facets: ['primaryCategory', 'mimeType', 'source'],
+            limit: 100,
+            offset: 0,
+            fuzzy: false,
+          },
+        }
+        this.searchApiCall(queryparam1)
+        this.searchApiCall(queryparam2)
+      }
 
     }
     // if ((this.paramFilters && this.paramFilters.length > 0) || (this.myFilters && this.myFilters.length > 0)) {
@@ -207,11 +243,28 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
     // }
   }
 
+  searchApiCall(queryparam: any) {
+    this.newQueryParam = queryparam
+      this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
+        response.result.content.forEach((data: any) => {
+          this.searchResults.push(data)
+        })
+        this.totalResults = this.totalResults + response.result.count
+        // this.facets = response.result.facets
+        this.paramFilters = []
+        this.totalpages = Math.ceil(this.totalResults / 100)
+        this.facetsData.push(response.result.facets)
+        this.getFacets(this.facetsData)
+      })
+
+  }
+
   // viewContent(content: any) {
   // this.router.navigate([`/app/toc/${content.identifier}/overview?primaryCategory=/${content.primaryCategory}`])
   // }
 
   applyFilter(filter: any) {
+    let filterName = ''
     if (filter && filter.length > 0) {
       this.myFilters = filter
       const queryparam = this.searchRequestObject
@@ -228,17 +281,21 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
           //   queryparam.request.filters.contentType = this.contentType
           // }
           // queryparam.request.filters.contentType = this.contentType
-          const indx = this.primaryCategoryType.filter((x: any) => x === mf.name)
+          const indx = this.primaryCategoryType.filter((x: any) => x === mf.name && mf.name !== 'moderated courses')
           if (indx.length === 0) {
-            this.primaryCategoryType.push(mf.name)
-            queryparam.request.filters.primaryCategory = this.primaryCategoryType
+            if (mf.name !== 'moderated courses') {
+              this.primaryCategoryType.push(mf.name)
+              queryparam.request.filters.primaryCategory = this.primaryCategoryType
+            }
           }
           queryparam.request.filters.primaryCategory = this.primaryCategoryType
         } else if (mf.mainType === 'primaryCategory') {
-          const indx = this.primaryCategoryType.filter((x: any) => x === mf.name)
+          const indx = this.primaryCategoryType.filter((x: any) => x === mf.name && mf.name !== 'moderated courses')
           if (indx.length === 0) {
-            this.primaryCategoryType.push(mf.name)
-            queryparam.request.filters.primaryCategory = this.primaryCategoryType
+            if (mf.name !== 'moderated courses') {
+              this.primaryCategoryType.push(mf.name)
+              queryparam.request.filters.primaryCategory = this.primaryCategoryType
+            }
           }
           queryparam.request.filters.primaryCategory = this.primaryCategoryType
         } else if (mf.mainType === 'mimeType') {
@@ -274,6 +331,12 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
           this.competencNames = (mf.values)
           queryparam.request.filters['topics'] = mf.values
         }
+        if (mf.name === 'moderated courses') {
+          filterName = 'moderated courses'
+        }
+        if (mf.name !== 'moderated courses') {
+          filterName = mf.name
+        }
       })
 
       // if (queryparam.request.filters.contentType.length === 0) {
@@ -290,30 +353,80 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         queryparam.request.filters.primaryCategory = this.primaryCategoryType
       }
 
-      if (this.param) {
+      if (this.param && this.param !== 't=moderatedCourses' && filterName !== 'moderated courses') {
         queryparam.request.query = this.param
+      } else {
+        queryparam.request.query = ''
       }
       // this.facets = []
       this.searchResults = []
       this.totalResults = 0
       this.newQueryParam = queryparam
-      this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
-        this.searchResults = response.result.content
-        this.totalResults = response.result.count
-        // this.facets = response.result.facets
-        this.primaryCategoryType = []
-        this.contentType = []
-        this.mimeType = []
-        this.sourceType = []
-        this.mediaType = []
-        this.paramFilters = []
-        this.totalpages = Math.ceil(this.totalResults / 100)
-        this.getFacets(response.result.facets)
-      })
+
+      if (filterName === 'moderated courses') {
+
+        const param = {
+              request: {
+              secureSettings: true,
+              query: '',
+                filters: {
+                  primaryCategory: [
+                    'Course',
+
+                  ],
+                  status: ['Live'],
+                },
+                sort_by: { lastUpdatedOn: 'desc' },
+                facets: ['mimeType'],
+                limit: 20,
+
+              },
+            }
+            this.fetchSearchDataFun(param)
+      } else if (filterName !== 'moderated courses' && filterName === 'moderated courses') {
+        const param = {
+          request: {
+          secureSettings: true,
+          query: '',
+            filters: {
+              primaryCategory: [
+                'Course',
+
+              ],
+              status: ['Live'],
+            },
+            sort_by: { lastUpdatedOn: 'desc' },
+            facets: ['mimeType'],
+            limit: 20,
+
+          },
+        }
+        this.fetchSearchDataFun(param)
+        this.fetchSearchDataFun(queryparam)
+      } else {
+        this.fetchSearchDataFun(queryparam)
+      }
     } else {
       this.myFilters = filter
       this.getSearchedData()
     }
+  }
+
+  fetchSearchDataFun(data: any) {
+    this.searchSrvc.fetchSearchData(data).subscribe((response: any) => {
+      this.searchResults = response.result.content
+      this.totalResults = response.result.count + this.totalResults
+      // this.facets = response.result.facets
+      this.primaryCategoryType = []
+      this.contentType = []
+      this.mimeType = []
+      this.sourceType = []
+      this.mediaType = []
+      this.paramFilters = []
+      this.totalpages = Math.ceil(this.totalResults / 100)
+      this.resultFacets = response.result.facets
+      this.getFacets(this.resultFacets)
+    })
   }
 
   removeFilter(mfilter: any) {

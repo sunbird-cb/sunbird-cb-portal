@@ -73,7 +73,7 @@ export class ContentRatingV2DialogComponent implements OnInit {
       .pipe(
         switchMap(async formValue => {
           // tslint:disable-next-line: no-console
-          console.log('formValue.review :: ', formValue.review)
+          // console.log('formValue.review :: ', formValue.review)
           if (this.data.userRating) {
             if (formValue.review !== this.data.userRating.review || formValue.rating !== this.data.userRating.rating) {
               this.isEdited = true
