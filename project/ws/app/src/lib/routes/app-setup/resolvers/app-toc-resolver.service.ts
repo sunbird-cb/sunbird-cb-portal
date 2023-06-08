@@ -78,8 +78,8 @@ export class AppTocResolverService
         map(data => ({ data, error: null })),
         tap(resolveData => {
           resolveData.data = resolveData.data.result.content
-          if(resolveData.data.cstoken){
-            this.configSvc.cstoken = resolveData.data.cstoken;
+          if (resolveData.data.cstoken) {
+            this.configSvc.cstoken = resolveData.data.cstoken
           }
           let currentRoute: string[] | string = window.location.href.split('/')
           currentRoute = currentRoute[currentRoute.length - 1]
