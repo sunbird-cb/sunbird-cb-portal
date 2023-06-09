@@ -2,46 +2,46 @@
   <mat-card class="flex-custom" [attr.id]="tabsData && tabsData[0] && tabsData[0].key">
     <mat-card-header class="flex-custom-m" *ngIf="portalProfile && portalProfile.personalDetails">
       <div mat-card-avatar class="example-header-image">
-        <ng-container *ngIf="portalProfile.personalDetails.firstname">
-          <ws-widget-avatar-photo [photoUrl]="portalProfile.photo || null" [name]="
-          portalProfile.personalDetails.firstname +
+        <ng-container *ngIf="portalProfile.personalDetails.firstname && portalProfile.personalDetails.surname">
+          <ws-widget-avatar-photo [photoUrl]="portalProfile.photo || null" [name]="portalProfile.personalDetails.firstname +
           ' ' +
-          portalProfile.personalDetails.surname
-        " size="xxl-s">
-      </ws-widget-avatar-photo>
+          portalProfile.personalDetails.surname"  size="xxl-s">
+          </ws-widget-avatar-photo>
         </ng-container>
-        <ng-container *ngIf="portalProfile.personalDetails.firstName">
+        <ng-container *ngIf="portalProfile.personalDetails.firstName && !portalProfile.personalDetails.surname">
         <ws-widget-avatar-photo [photoUrl]="portalProfile.photo || null" [name]="
-            portalProfile.personalDetails.firstName +
-            ' ' +
-            portalProfile.personalDetails.surname
-          " size="xxl-s">
+            portalProfile.personalDetails.firstName" size="xxl-s">
         </ws-widget-avatar-photo>
         </ng-container>
       </div>
       <div class="flex-1">
+
         <div class="flex flex-1">
           <div class="flex flex-4">
-          <ng-container *ngIf="portalProfile.personalDetails.firstname">
+          <ng-container *ngIf="portalProfile.personalDetails.firstname && portalProfile.personalDetails.surname">
             <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
-              portalProfile.personalDetails.firstname +
-              ' ' +
-              portalProfile.personalDetails.surname
+              portalProfile.personalDetails.firstname 
             ">
-            </mat-card-title>
+            <span *ngIf="verifiedBadge" class="profile-badge">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
+            </span>
+           </mat-card-title>
             </ng-container>
-          <ng-container *ngIf="portalProfile.personalDetails.firstName">
+          <ng-container *ngIf="portalProfile.personalDetails.firstName && !portalProfile.personalDetails.surname">
             <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
-              portalProfile.personalDetails.firstName +
-              ' ' +
-              portalProfile.personalDetails.surname
+              portalProfile.personalDetails.firstName 
             ">
-            </mat-card-title>
+            <span *ngIf="verifiedBadge" class="profile-badge">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
+            </span>
+           </mat-card-title>
+           
             </ng-container>
             <!-- <div class="flex verified">
               <mat-icon class="ws-mat-green-text" svgIcon="verified"></mat-icon>
             </div> -->
+            <span *ngIf="verifiedBadge" class="profile-badge">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
+            </span>
           </div>
+          
           <div class="flex flex-1 flex-row-reverse">
             <div *ngIf="
                 portalProfile.id === currentUser ||

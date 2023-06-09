@@ -36,6 +36,8 @@ export interface IViewerTocCard {
   collectionType: string,
   batchId: string | number,
   viewMode: string,
+  optionalReading: boolean,
+  channelId: string
 }
 
 export type TCollectionCardType = 'content' | 'playlist' | 'goals'
@@ -79,6 +81,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
   collection: IViewerTocCard | null = null
   collectionType = 'course'
   collectionId: string | null = ''
+  channelId: any
   batchId: any
   viewMode = 'START'
   queue: IViewerTocCard[] = []
@@ -119,6 +122,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       const primaryCategory = params.get('primaryCategory')
       this.viewMode = params.get('viewMode') || 'START'
       this.forPreview = params.get('preview') === 'true' ? true : false
+      this.channelId = params.get('channelId')
       try {
         this.batchId = params.get('batchId')
       } catch {
@@ -134,7 +138,8 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
         } else if (
           this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.MODULE.toLowerCase() ||
           this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.COURSE.toLowerCase() ||
-          this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.PROGRAM.toLowerCase()
+          this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.PROGRAM.toLowerCase() ||
+          this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.STANDALONE_ASSESSMENT.toLowerCase()
         ) {
           this.collection = await this.getCollection(this.collectionId, this.collectionType)
         } else {
@@ -336,6 +341,8 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       mimeType: content.mimeType,
       complexity: content.difficultyLevel || 'Easy',
       primaryCategory: content.primaryCategory,
+      optionalReading: content.optionalReading,
+      channelId: this.channelId,
       children:
         Array.isArray(content.children) && content.children.length
           && content.mimeType !== NsContent.EMimeTypes.QUESTION_SET // this is because of ne api ( questionset structure)

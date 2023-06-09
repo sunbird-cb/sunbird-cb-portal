@@ -49,6 +49,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   allCertificate: any = []
 
   sideNavBarOpened = true
+  verifiedBadge = false
   private defaultSideNavBarOpenedSubscription: any
   public screenSizeIsLtMedium = false
   isLtMedium$ = this.valueSvc.isLtMedium$
@@ -79,16 +80,18 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     this.tabs = this.route.data.subscribe(data => {
+      if (data.profile.data.profileDetails.verifiedKarmayogi === true) {
+        this.verifiedBadge = true
+      }
       if (data.profile.data.profileDetails) {
         this.portalProfile = data.profile.data.profileDetails
       } else {
         this.portalProfile = data.profile.data
         _.set(this.portalProfile, 'personalDetails.firstname', _.get(data.profile.data, 'firstName'))
-        _.set(this.portalProfile, 'personalDetails.surname', _.get(data.profile.data, 'lastName'))
+        // _.set(this.portalProfile, 'personalDetails.surname', _.get(data.profile.data, 'lastName'))
         _.set(this.portalProfile, 'personalDetails.email', _.get(data.profile.data, 'email'))
         _.set(this.portalProfile, 'personalDetails.userId', _.get(data.profile.data, 'userId'))
         _.set(this.portalProfile, 'personalDetails.userName', _.get(data.profile.data, 'userName'))
-
       }
 
       const user = this.portalProfile.userId || this.portalProfile.id || _.get(data, 'profile.data.id') || ''
@@ -108,7 +111,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
 
       if (!this.portalProfile.personalDetails && user === this.currentUser) {
         _.set(this.portalProfile, 'personalDetails.firstname', _.get(this.configSvc, 'userProfile.firstName'))
-        _.set(this.portalProfile, 'personalDetails.surname', _.get(this.configSvc, 'userProfile.lastName'))
+        // _.set(this.portalProfile, 'personalDetails.surname', _.get(this.configSvc, 'userProfile.lastName'))
       }
       /** // for loged in user only */
       this.decideAPICall()

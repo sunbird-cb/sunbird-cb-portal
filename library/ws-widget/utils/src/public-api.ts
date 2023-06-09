@@ -80,6 +80,7 @@ export * from './lib/resolvers/page.model'
 // resolvers
 export * from './lib/resolvers/page.resolver'
 export * from './lib/resolvers/page-name.resolver'
+export * from './lib/resolvers/module-name.resolver'
 export * from './lib/resolvers/resolver.model'
 // services
 export * from './lib/services/auth-keycloak.service'

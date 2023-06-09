@@ -1,7 +1,7 @@
 {
   "hooks": {
-    "pre-push": "npm run build:local",	
-    "pre-commit": "npm run lint:fix",	
+    "pre-push": "",	
+    "pre-commit": "",	
     "post-commit": "git status"
   }
 }

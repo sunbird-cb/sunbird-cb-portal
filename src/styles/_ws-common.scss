@@ -22,3 +22,19 @@
     height: calc(100% - #{$mat-toolbar-gt-xs});
   }
 }
+
+
+.mat-select-pane {
+  max-width: 360px!important;
+}
+.mat-select-panel .mat-optgroup-label, .mat-select-panel .mat-option, .mat-option {
+  line-height: 1em!important;
+}
+
+.mat-option-text {
+  display: inline-block;
+  flex-grow: 1;
+  overflow: initial!important;
+  text-overflow: initial!important;
+  white-space: normal!important;
+}

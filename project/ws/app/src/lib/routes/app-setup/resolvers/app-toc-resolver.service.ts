@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router'
 import { NsContent, PipeContentRoutePipe, WidgetContentService } from '@sunbird-cb/collection'
-import { IResolveResponse } from '@sunbird-cb/utils'
+import { ConfigurationsService, IResolveResponse } from '@sunbird-cb/utils'
 import { Observable, of } from 'rxjs'
 import { catchError, map, tap } from 'rxjs/operators'
 
@@ -60,6 +60,7 @@ export class AppTocResolverService
     private contentSvc: WidgetContentService,
     private routePipe: PipeContentRoutePipe,
     private router: Router,
+    private configSvc: ConfigurationsService,
   ) { }
 
   resolve(
@@ -77,6 +78,9 @@ export class AppTocResolverService
         map(data => ({ data, error: null })),
         tap(resolveData => {
           resolveData.data = resolveData.data.result.content
+          if (resolveData.data.cstoken) {
+            this.configSvc.cstoken = resolveData.data.cstoken
+          }
           let currentRoute: string[] | string = window.location.href.split('/')
           currentRoute = currentRoute[currentRoute.length - 1]
           if (forPreview && currentRoute !== 'contents' && currentRoute !== 'overview') {

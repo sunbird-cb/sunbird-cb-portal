@@ -139,7 +139,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.createUserForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       middlename: new FormControl('', [Validators.pattern(this.namePatern)]),
-      surname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
+      // surname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       photo: new FormControl('', []),
       countryCode: new FormControl('+91', [Validators.required]),
       mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
@@ -207,6 +207,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     this.getUserDetails()
     this.checkIfMobileNoChanged()
+
     // this.assignPrimaryEmailType(this.isOfficialEmail)
   }
   checkIfMobileNoChanged(): void {
@@ -411,8 +412,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         startWith(''),
         map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
-        map(name => name ? this.filterLanguage(name) : this.masterLanguagesEntries.slice())
+        map(name => name ? this.filterLanguage(name) : this.masterLanguagesEntries.slice()),
       )
+     // console.log('this.masterLanguagesEntries', this.masterLanguages)
   }
 
   onChangesKnownLanuage(): void {
@@ -638,7 +640,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               this.userProfileData = { ...userData, id: this.configSvc.userProfile.userId, userId: this.configSvc.userProfile.userId }
               this.createUserForm.patchValue({
                 firstname: this.configSvc.userProfile.firstName,
-                surname: this.configSvc.userProfile.lastName,
+                // surname: this.configSvc.userProfile.lastName,
                 primaryEmail: _.get(this.userProfileData, 'personalDetails.primaryEmail') || this.configSvc.userProfile.email,
                 orgName: this.configSvc.userProfile.rootOrgName,
               })
@@ -670,7 +672,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.userProfileData = _.get(this.configSvc, 'unMappedUser.profileDetails')
         this.createUserForm.patchValue({
           firstname: tempData.firstName,
-          surname: tempData.lastName,
+          // surname: tempData.lastName,
           primaryEmail: _.get(this.configSvc.unMappedUser, 'profileDetails.personalDetails.primaryEmail') || tempData.email,
           orgName: tempData.rootOrgName,
         })
@@ -804,7 +806,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.createUserForm.patchValue({
       firstname: data.personalDetails.firstname,
       middlename: data.personalDetails.middlename,
-      surname: data.personalDetails.surname,
+      // surname: data.personalDetails.surname,
       photo: data.photo,
       dob: this.getDateFromText(data.personalDetails.dob),
       nationality: data.personalDetails.nationality,
@@ -1676,10 +1678,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               },
             }
             this.userProfileSvc.editProfileDetails(reqUpdates).subscribe((updateRes: any) => {
+
               if (updateRes) {
                 this.isMobileVerified = true
               }
-            })
+            // tslint:disable-next-line:align
+            }, (error: any) => {
+
+              this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+            }
+            )
           }
           // tslint:disable-next-line: align
         }, (error: any) => {

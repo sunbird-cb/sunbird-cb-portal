@@ -392,3 +392,8 @@ a:not([href]):not([tabindex]) {
 .no-shadow {
   box-shadow: none !important;
 }
+
+span.profile-badge {
+    padding-left: 5px;
+    padding-top: 5px;
+}

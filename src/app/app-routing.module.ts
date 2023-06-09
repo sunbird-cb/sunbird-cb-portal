@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { ErrorResolverComponent, PageComponent, PageModule } from '@sunbird-cb/collection'
-import { ExploreDetailResolve, PageResolve, PageNameResolve } from '@sunbird-cb/utils'
+import { ExploreDetailResolve, PageResolve, PageNameResolve, ModuleNameResolve } from '@sunbird-cb/utils'
 import { LearningGuard } from '../../project/ws/app/src/lib/routes/my-learning/guards/my-learning.guard'
 import { InvalidUserComponent } from './component/invalid-user/invalid-user.component'
 import { LoginRootComponent } from './component/login-root/login-root.component'
@@ -31,6 +31,7 @@ import { PublicTocComponent } from './routes/public/public-toc/public-toc.compon
 import { AppPublicTocResolverService } from './routes/public/public-toc/app-public-toc-resolver.service'
 import { environment } from 'src/environments/environment'
 import { AppPublicPositionResolverService } from './routes/public/public-signup/position-resolver.service'
+import { PublicRequestComponent } from './routes/public/public-request/public-request.component'
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
 // Please declare routes in alphabetical order
@@ -103,7 +104,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'career',
       pageId: 'app/careers',
-      module: 'careers',
+      module: 'Careers',
     },
     resolve: {
       pageData: PageResolve,
@@ -194,7 +195,7 @@ const routes: Routes = [
     canActivate: [GeneralGuard],
     data: {
       pageId: 'app/curatedCollections',
-      module: 'Explore',
+      module: 'Learn',
     },
     resolve: {
       // pageData: PageResolve,
@@ -209,7 +210,7 @@ const routes: Routes = [
       // pageType: 'feature',
       // pageKey: 'browse by competency',
       pageId: 'app/learn/browse-by/competency',
-      module: 'explore',
+      module: 'Competency',
     },
     resolve: {
       pageData: PageResolve,
@@ -366,7 +367,7 @@ const routes: Routes = [
     canActivate: [GeneralGuard, LearningGuard],
     data: {
       pageId: 'app/my-dashboard',
-      module: 'dashboard',
+      module: 'Dashboard',
     },
   },
   {
@@ -419,7 +420,7 @@ const routes: Routes = [
     canActivate: [GeneralGuard],
     data: {
       pageId: 'app/profile',
-      module: 'profile',
+      module: 'Profile',
     },
   },
   {
@@ -431,7 +432,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'profile-v2',
       pageId: 'app/person-profile',
-      module: 'profile',
+      module: 'Profile',
     },
     resolve: {
       pageData: PageResolve,
@@ -489,7 +490,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'globalsearch',
       pageId: 'app/globalsearch',
-      module: 'Search',
+      module: 'Home',
     },
   },
   {
@@ -686,7 +687,7 @@ const routes: Routes = [
     },
     resolve: {
       pageData: PageResolve,
-      module: PageNameResolve,
+      module: ModuleNameResolve,
       pageId: PageNameResolve,
     },
     canActivate: [GeneralGuard],
@@ -827,9 +828,20 @@ const routes: Routes = [
     data: {
       module: 'Login',
       pageId: 'public/signup',
+      pageType: 'feature',
+      pageKey: 'signup',
     },
     resolve: {
+      // pageData: PageResolve,
       positions: AppPublicPositionResolverService,
+    },
+  },
+  {
+    path: 'public/request',
+    component: PublicRequestComponent,
+    data: {
+      module: 'Login',
+      pageId: 'public/request',
     },
   },
   {

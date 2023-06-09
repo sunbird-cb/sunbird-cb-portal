@@ -95,6 +95,9 @@ export class ConfigurationsService {
   // )}`
   // setHostPath = (sitePath: string) => (sitePath).replace(':', '_')
   welcomeTabs: NSProfileDataV3.IProfileTab | null = null
+
+  // variable setting for csJwtToken
+  cstoken = ''
   updateGlobalProfile(state: boolean) {
     this.updateProfile.next(state)
   }

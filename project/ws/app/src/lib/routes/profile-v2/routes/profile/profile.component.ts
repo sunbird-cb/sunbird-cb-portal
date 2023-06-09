@@ -39,7 +39,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
         if (event.urlAfterRedirects === '/app/person-profile/me') {
           if (this.configSvc.userProfile) {
-            this.userRouteName = `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}`
+            // this.userRouteName = `${this.configSvc.userProfile.firstName}`
+            // tslint:disable-next-line:max-line-length
+            if (this.configSvc.userProfile.lastName && this.configSvc.userProfile.lastName !== null && this.configSvc.userProfile.lastName !== undefined) {
+              this.userRouteName = `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}`
+            } else {
+              this.userRouteName = `${this.configSvc.userProfile.firstName}`
+            }
             this.titles = [{ title: 'NETWORK', url: '/app/network-v2', icon: 'group' }]
             if (this.userRouteName && this.userRouteName.trim()) {
               this.titles.push({
@@ -52,9 +58,19 @@ export class ProfileComponent implements OnInit, OnDestroy {
         } else {
           if (this.activeRoute.firstChild) {
             this.activeRoute.firstChild.data.subscribe(response => {
-              this.userRouteName = response && response.profile && response.profile.data && response.profile.data[0]
+              // tslint:disable-next-line:max-line-length
+              if (response && response.profile && response.profile.data && response.profile.data[0]
+                && response.profile.data[0].personalDetails && response.profile.data[0].personalDetails.surname &&
+                response.profile.data[0].personalDetails.surname !== null &&
+                response.profile.data[0].personalDetails.surname !== undefined) {
+                this.userRouteName = response && response.profile && response.profile.data && response.profile.data[0]
                 && response.profile.data[0].personalDetails &&
                 `${(response.profile.data[0].personalDetails.firstname || '')} ${(response.profile.data[0].personalDetails.surname)}`
+              } else {
+                this.userRouteName = response && response.profile && response.profile.data && response.profile.data[0]
+                && response.profile.data[0].personalDetails &&
+                `${(response.profile.data[0].personalDetails.firstname || '')}`
+              }
             })
             this.titles = [{ title: 'NETWORK', url: '/app/network-v2', icon: 'group' }]
             if (this.userRouteName && this.userRouteName.trim()) {

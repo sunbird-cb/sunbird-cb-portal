@@ -214,6 +214,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     }
     if (this.resumeData && this.content) {
       let resumeDataV2: any
+
       if (this.content.completionPercentage === 100) {
         resumeDataV2 = this.getResumeDataFromList('start')
       } else {
@@ -296,7 +297,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         return
       }
       getAllItemsPerChildren(this.content)
-      // console.log(flatList)
       const chld = _.first(_.filter(flatList, { identifier }))
       return chld.mimeType
     }
@@ -390,8 +390,10 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
 
   private getResumeDataFromList(type?: string) {
     if (!type) {
-      const lastItem = this.resumeData && this.resumeData.pop()
-      return {
+     // const lastItem = this.resumeData && this.resumeData.pop()
+     // tslint:disable-next-line:max-line-length
+     const lastItem = this.resumeData && this.resumeData.sort((a: any, b: any) => new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
+     return {
         identifier: lastItem.contentId,
         mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,
       }

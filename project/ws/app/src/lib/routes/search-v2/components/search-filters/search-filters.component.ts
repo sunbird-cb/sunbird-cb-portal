@@ -20,6 +20,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   userFilters: any = []
   myFilterArray: any = []
   private subscription: Subscription = new Subscription
+  queryParams: any
 
   constructor(private searchSrvc: GbSearchService, private activated: ActivatedRoute) { }
 
@@ -35,7 +36,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
           if (nfv.name !== 'video/mp4' && nfv.name !== 'video/x-youtube' && nfv.name !== 'application/json' &&
             nfv.name !== 'application/x-mpegURL' && nfv.name !== 'application/quiz' && nfv.name !== 'image/jpeg' &&
             nfv.name !== 'image/png' && nfv.name !== 'application/vnd.ekstep.html-archive' &&
-            nfv.name !== 'application/vnd.ekstep.ecml-archive') {
+            nfv.name !== 'application/vnd.ekstep.ecml-archive' && nfv.name !== 'application/vnd.sunbird.questionset') {
             values.push(nfv)
           } else {
             if (nfv.name === 'video/mp4' || nfv.name === 'video/x-youtube' || nfv.name === 'application/x-mpegURL') {
@@ -66,6 +67,13 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
                 values.push(nv)
               }
             }
+            if (nfv.name === 'application/vnd.sunbird.questionset') {
+              nv.name = 'Pratice / Final Assessment'
+              const indx = values.filter((x: any) => x.name === nv.name)
+              if (indx.length === 0) {
+                values.push(nv)
+              }
+            }
           }
         })
         nf.values = values
@@ -80,6 +88,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     })
     this.filteroptions = this.newfacets
     this.activated.queryParamMap.subscribe(queryParams => {
+      this.queryParams = queryParams
       if (queryParams.has('f')) {
         const sfilters = JSON.parse(queryParams.get('f') || '{}')
         const fil = {
@@ -101,7 +110,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
         this.modifyUserFilters(fil, 'primaryCategory')
       } else {
         const fil = {
-          name: 'course',
+          name: '',
           count: '',
           ischecked: true,
         }
@@ -116,13 +125,15 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
             }
           })
         })
-        const reqfilter = {
-          mainType: 'primaryCategory',
-          name: fil.name,
-          count: fil.count,
-          ischecked: true,
+        if (fil.name && fil.count) {
+          const reqfilter = {
+            mainType: 'primaryCategory',
+            name: fil.name,
+            count: fil.count,
+            ischecked: true,
+          }
+          this.myFilterArray.push(reqfilter)
         }
-        this.myFilterArray.push(reqfilter)
         if (this.userFilters.length === 0) {
           this.userFilters.push(fil)
         }
@@ -167,6 +178,16 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   }
 
   modifyUserFilters(fil: any, mainparentType: any) {
+    if (this.queryParams.has('t')) {
+      const reqfilter = {
+        mainType: 'primaryCategory',
+        name: 'moderated courses',
+        count: 0,
+        ischecked: true,
+      }
+      this.userFilters.push(reqfilter)
+      this.myFilterArray.push(reqfilter)
+    }
     const indx = this.getFilterName(fil)
     if (indx.length > 0) {
       this.userFilters.forEach((fs: any, index: number) => {
@@ -185,6 +206,11 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
             if (fasv.name === fil.name) {
               fasv.ischecked = false
             }
+
+            if (fasv.name === 'moderated courses' && !fasv.ischecked) {
+              fasv.qParam = ''
+            }
+
           })
         }
       })
@@ -197,7 +223,9 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
         name: fil.name,
         count: fil.count,
         ischecked: true,
+        qParam : '',
       }
+
       this.filteroptions.forEach((fas: any) => {
         if (fas.name === mainparentType) {
           fas.values.forEach((fasv: any) => {
@@ -207,6 +235,13 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
           })
         }
       })
+
+      if (reqfilter.name === 'moderated courses' && reqfilter.ischecked) {
+        reqfilter.qParam = 't'
+      } else {
+        reqfilter.qParam = ''
+      }
+
       this.myFilterArray.push(reqfilter)
       this.appliedFilter.emit(this.myFilterArray)
     }

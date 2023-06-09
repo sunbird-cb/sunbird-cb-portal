@@ -212,7 +212,7 @@ export class TelemetryService {
     }
   }
 
-  impression(data?: any) {
+  impression(data?: any, objectType?: any) {
     try {
       const page = this.getPageDetails()
       if (data && data.pageContext) {
@@ -235,6 +235,7 @@ export class TelemetryService {
           },
           object: {
             id: page.objectId,
+            type: objectType,
             // This will override above id if the data has object in it.
             ...(data && data.object),
           },
@@ -349,6 +350,7 @@ export class TelemetryService {
   }
 
   addCustomEventListener() {
+
     this.eventsSvc.events$
       .pipe(
         filter(
@@ -487,7 +489,7 @@ export class TelemetryService {
                     ...this.pData,
                     id: this.pData.id,
                   },
-                  ...(event.data.pageContext && event.data.pageContext.module ? { env: event.data.pageContext.module } : null),
+                  ...(event.pageContext && event.pageContext.module ? { env: event.pageContext.module } : null),
                 },
                 object: {
                   ...event.data.object,

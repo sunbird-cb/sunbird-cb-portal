@@ -26,7 +26,7 @@
         "bundle-report": "webpack-bundle-analyzer dist/stats.json",
         "tt": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng serve --configuration=nb"
     },
-    "private": true,
+    "private": true,            
     "dependencies": {
         "@angular/animations": "~8.2.1",
         "@angular/cdk": "~8.1.2",
@@ -48,7 +48,7 @@
         "@sunbird-cb/design-system": "0.0.2",
         "@sunbird-cb/discussions-ui-v8": "2.1.0",
         "@sunbird-cb/micro-surveys": "^2.0.13",
-        "@sunbird-cb/rain-dashboards": "^0.4.14",
+        "@sunbird-cb/rain-dashboards": "^0.4.20",
         "@types/file-saver": "^2.0.1",
         "@types/uuid": "^8.3.1",
         "bootstrap": "5.1.2",

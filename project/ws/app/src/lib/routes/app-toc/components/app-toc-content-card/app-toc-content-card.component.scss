@@ -11,6 +11,16 @@ a.disabled {
   cursor: default;
 }
 
+span.optional-span {
+  margin-left: 8px;
+  padding: 0px 6px;
+  border-radius: 2px 2px;
+  display:inline-block;
+  background-color: #0074b6;
+  color: #fff;
+  font-size: 12px;
+}
+
 .card-collection {
   display: flex;
   align-items: center;

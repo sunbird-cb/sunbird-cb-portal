@@ -22,4 +22,5 @@ export interface IWidgetsPlayerMediaData {
   contentType?: string
   primaryCategory?: string
   version?: string
+  channel?: any
 }

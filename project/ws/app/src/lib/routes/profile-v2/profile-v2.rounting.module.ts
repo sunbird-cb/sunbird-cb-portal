@@ -14,7 +14,7 @@ const routes: Routes = [
     component: ProfileComponent,
     data: {
       pageId: '',
-      module: 'Newtwork',
+      module: 'Profile',
     },
     children: [
       {
@@ -22,7 +22,7 @@ const routes: Routes = [
         component: ProfileViewComponent,
         data: {
           pageId: 'me',
-          module: 'Newtwork',
+          module: 'Profile',
         },
         resolve: {
           profile: Profilev2Resolve,
@@ -35,7 +35,7 @@ const routes: Routes = [
         component: ProfileViewComponent,
         data: {
           pageId: ':userId',
-          module: 'Newtwork',
+          module: 'Network',
         },
         resolve: {
           profile: Profilev2Resolve,

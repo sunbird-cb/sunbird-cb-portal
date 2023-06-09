@@ -1,0 +1,26 @@
+
+.request-dialog {
+    .title {
+        font: 600 18px/26px Montserrat !important;
+    }
+    .completedicon {
+        color: #1d8923;
+        width: 22px !important;
+        height: 22px !important;
+        vertical-align: sub;
+        font-size: 22px !important;
+        margin-right: 3px;
+    }
+
+
+    button {
+        min-width: 112px;
+        width: auto;
+        border: 2px solid #0075b7 !important;
+        border-radius: 4px;
+        color: #0075b7 !important;
+        float: right;
+    }
+}
+
+
