@@ -910,8 +910,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           // const showViewMore = Boolean(
           //   results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
           // )
-          debugger
-          console.log(results, "results")
+
           const showViewMore = false
           const viewMoreUrl = showViewMore
             ? {
