@@ -572,7 +572,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       this.contentSvc.searchRelatedCBPV6(searchRequest).subscribe(
         results => {
           const showViewMore = Boolean(
-            results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
+            results.result.content && results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
           )
           const viewMoreUrl = showViewMore
             ? {
