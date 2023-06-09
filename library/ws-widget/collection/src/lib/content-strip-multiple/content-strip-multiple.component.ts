@@ -245,6 +245,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     this.fetchDAKSHTACourses(strip, calculateParentStatus)
     this.fetchprarambhCourse(strip, calculateParentStatus)
     this.fetchCuratedCollections(strip, calculateParentStatus)
+    this.fetchblendedLearning(strip, calculateParentStatus)
   }
   fetchFromApi(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.api && Object.keys(strip.request.api).length) {
@@ -895,6 +896,54 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     }
   }
 
+  fetchblendedLearning(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
+    if (strip.request && strip.request.blendedLearning && Object.keys(strip.request.blendedLearning).length) {
+      if (!(strip.request.blendedLearning.locale && strip.request.blendedLearning.locale.length > 0)) {
+        if (this.configSvc.activeLocale) {
+          strip.request.blendedLearning.locale = [this.configSvc.activeLocale.locals[0]]
+        } else {
+          strip.request.blendedLearning.locale = ['en']
+        }
+      }
+      this.contentSvc.searchV6(strip.request && strip.request.blendedLearning).subscribe(
+        results => {
+          // const showViewMore = Boolean(
+          //   results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
+          // )
+          debugger
+          console.log(results, "results")
+          const showViewMore = false
+          const viewMoreUrl = showViewMore
+            ? {
+              path: '/app/search/learning',
+              queryParams: {
+                q: strip.request && strip.request.blendedLearning && strip.request.blendedLearning.query,
+                f:
+                  strip.request && strip.request.blendedLearning && strip.request.blendedLearning.filters
+                    ? JSON.stringify(
+                      // this.searchServSvc.transformSearchV6Filters(
+                      strip.request.blendedLearning.filters
+                      // ),
+                    )
+                    : {},
+              },
+            }
+            : null
+          this.processStrip(
+            strip,
+            this.transformContentsToWidgets(results.result.content, strip),
+            'done',
+            calculateParentStatus,
+            viewMoreUrl,
+          )
+        },
+        () => {
+          this.processStrip(strip, [], 'error', calculateParentStatus, null)
+        },
+      )
+    }
+  }
+
   fetchprarambhCourse(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.prarambhCourse && Object.keys(strip.request.prarambhCourse).length) {
       if (!(strip.request.prarambhCourse.locale && strip.request.prarambhCourse.locale.length > 0)) {
@@ -1092,6 +1141,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         (strip.request.basedOnInterest && Object.keys(strip.request.basedOnInterest).length) ||
         (strip.request.microsoftCourses && Object.keys(strip.request.microsoftCourses).length) ||
         (strip.request.DAKSHTACourses && Object.keys(strip.request.DAKSHTACourses).length) ||
+        (strip.request.blendedLearning && Object.keys(strip.request.blendedLearning).length) ||
         (strip.request.prarambhCourse && Object.keys(strip.request.prarambhCourse).length) ||
         (strip.request.curatedCollections && Object.keys(strip.request.curatedCollections).length)
       )
