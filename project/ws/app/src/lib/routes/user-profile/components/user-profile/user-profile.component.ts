@@ -193,6 +193,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   async init() {
     await this.loadDesignations()
     this.fetchMeta()
+    
   }
   ngOnInit() {
     // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
@@ -207,8 +208,17 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     this.getUserDetails()
     this.checkIfMobileNoChanged()
+    
+    // this.fetchMeta()
+    // this.createUserForm.controls['nationality']!.setValue({name:'Indian'})
+    // console.log( this.createUserForm.get('nationality')!.value, "-------++++++++++++-----")
+    // this.onChangesNationality()
 
     // this.assignPrimaryEmailType(this.isOfficialEmail)
+  }
+
+  displayFnPosition = (value: any) => {
+    return value ? value.name : undefined
   }
   checkIfMobileNoChanged(): void {
     // this.createUserForm.controls['mobile'].valueChanges.subscribe((oldValue: any) => {
@@ -235,9 +245,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           this.countries.push({ name: item.name })
           this.countryCodes.push(item.countryCode)
         })
-        this.createUserForm.patchValue({
-          countryCode: this.countryCodes[0],
-        })
+        console.log(this.masterNationalities, "this.masterNationalities")
+        // this.createUserForm.patchValue({
+        //   // countryCode: this.countryCodes[0],
+        //   nationality: this.masterNationalities[74].name
+        // })
+        // this.createUserForm.get('nationality')!.setValue('Indian' ,{emitEvent:false})
         this.onChangesNationality()
       },
       (_err: any) => {
@@ -383,8 +396,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   onChangesNationality(): void {
+    // debugger
     if (this.createUserForm.get('nationality') != null) {
-
       // tslint:disable-next-line: no-non-null-assertion
       this.masterNationality = this.createUserForm.get('nationality')!.valueChanges
         .pipe(
@@ -395,12 +408,17 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           map(name => name ? this.filterNationality(name) : this.masterNationalities.slice())
         )
       const newLocal = 'nationality'
+      // this.createUserForm.controls['nationality']!.setValue('Indian')
+      // console.log(this.masterNationality, "masterNationality====")
       this.masterNationality.subscribe(event => {
         // tslint:disable-next-line: no-non-null-assertion
         this.createUserForm.get(newLocal)!.setValidators([Validators.required, forbiddenNamesValidator(event)])
         this.createUserForm.updateValueAndValidity()
+
       })
-    }
+      
+     
+    } 
   }
 
   onChangesLanuage(): void {
@@ -440,7 +458,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   onChangesDegrees() {
     const controls = this.createUserForm.get('degrees') as FormArray
     // tslint:disable-next-line: no-non-null-assertion
-    controls.at(controls.length - 1).get('degree')!.valueChanges.pipe(
+    controls.at(controls.length - 1)!.get('degree')!.valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged(),
       startWith<string | INameField>(''),
@@ -452,7 +470,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   onChangesPostDegrees() {
     const controls = this.createUserForm.get('postDegrees') as FormArray
     // tslint:disable-next-line: no-non-null-assertion
-    controls.at(controls.length - 1).get('degree')!.valueChanges.pipe(
+    controls.at(controls.length - 1)!.get('degree')!.valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged(),
       startWith<string | INameField>(''),
@@ -464,6 +482,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   private filterNationality(name: string): INation[] {
     if (name) {
       const filterValue = name.toLowerCase()
+      // console.log(filterValue, "filterValue")
       return this.masterNationalities.filter(option => option.name.toLowerCase().includes(filterValue))
     }
     return this.masterNationalities
