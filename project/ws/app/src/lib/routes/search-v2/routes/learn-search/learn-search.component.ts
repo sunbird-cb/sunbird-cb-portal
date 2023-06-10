@@ -245,17 +245,19 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
 
   searchApiCall(queryparam: any) {
     this.newQueryParam = queryparam
-      this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
-        response.result.content.forEach((data: any) => {
-          this.searchResults.push(data)
-        })
-        this.totalResults = this.totalResults + response.result.count
-        // this.facets = response.result.facets
-        this.paramFilters = []
-        this.totalpages = Math.ceil(this.totalResults / 100)
-        this.facetsData.push(response.result.facets)
-        this.getFacets(this.facetsData)
+    this.searchResults = []
+    this.totalResults = 0
+    this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
+      response.result.content.forEach((data: any) => {
+        this.searchResults.push(data)
       })
+      this.totalResults = this.totalResults + response.result.count
+      // this.facets = response.result.facets
+      this.paramFilters = []
+      this.totalpages = Math.ceil(this.totalResults / 100)
+      this.facetsData.push(response.result.facets)
+      this.getFacets(this.facetsData)
+    })
 
   }
 
@@ -265,6 +267,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
 
   applyFilter(filter: any) {
     let filterName = ''
+    let moderatedFilterName = ''
     if (filter && filter.length > 0) {
       this.myFilters = filter
       const queryparam = this.searchRequestObject
@@ -335,7 +338,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
           filterName = 'moderated courses'
         }
         if (mf.name !== 'moderated courses') {
-          filterName = mf.name
+          moderatedFilterName = mf.name
         }
       })
 
@@ -364,7 +367,6 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
       this.newQueryParam = queryparam
 
       if (filterName === 'moderated courses') {
-
         const param = {
               request: {
               secureSettings: true,
@@ -383,27 +385,9 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
               },
             }
             this.fetchSearchDataFun(param)
-      } else if (filterName !== 'moderated courses' && filterName === 'moderated courses') {
-        const param = {
-          request: {
-          secureSettings: true,
-          query: '',
-            filters: {
-              primaryCategory: [
-                'Course',
+      }
 
-              ],
-              status: ['Live'],
-            },
-            sort_by: { lastUpdatedOn: 'desc' },
-            facets: ['mimeType'],
-            limit: 20,
-
-          },
-        }
-        this.fetchSearchDataFun(param)
-        this.fetchSearchDataFun(queryparam)
-      } else {
+      if (moderatedFilterName !== 'moderated courses') {
         this.fetchSearchDataFun(queryparam)
       }
     } else {
@@ -414,7 +398,9 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
 
   fetchSearchDataFun(data: any) {
     this.searchSrvc.fetchSearchData(data).subscribe((response: any) => {
-      this.searchResults = response.result.content
+      response.result.content.forEach((res: any) => {
+        this.searchResults.push(res)
+      })
       this.totalResults = response.result.count + this.totalResults
       // this.facets = response.result.facets
       this.primaryCategoryType = []
@@ -424,7 +410,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
       this.mediaType = []
       this.paramFilters = []
       this.totalpages = Math.ceil(this.totalResults / 100)
-      this.resultFacets = response.result.facets
+      this.resultFacets.push(response.result.facets)
       this.getFacets(this.resultFacets)
     })
   }
