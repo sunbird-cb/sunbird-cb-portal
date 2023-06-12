@@ -359,7 +359,6 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     return this.quizSvc.getQuestions(ids, this.identifier).toPromise()
   }
   getOptions(question: NSPractice.IQuestionV2): NSPractice.IOption[] {
-    // debugger
     const options: NSPractice.IOption[] = []
     if (question && question.qType) {
       const qTyp = question.qType
@@ -622,8 +621,6 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.questionAnswerHash[question.questionId] = [optionId]
     }
     // tslint:disable-next-line
-    // debugger
-    // console.log(this.questionAnswerHash, '+++++')
     if (question.questionType && question.questionType === 'mtf') {
       const mTfval = this.quizSvc.mtfSrc.getValue()
       mTfval[question.questionId] = {
@@ -817,7 +814,6 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     this.raiseTelemetry('quiz', null, 'submit')
     this.isSubmitted = true
     this.ngOnDestroy()
-    // debugger
     //  this.generateRequest
     /// this above line have new response
     // if (response.identifier) {

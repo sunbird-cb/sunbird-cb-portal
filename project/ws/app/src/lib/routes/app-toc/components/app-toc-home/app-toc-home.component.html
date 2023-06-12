@@ -197,7 +197,14 @@ TODO: edit option while preview Mode
               </ng-container>
 
             </ng-container>
-            <ng-container *ngIf="content?.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT">
+            <ng-container *ngIf="content?.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT && !batchData?.enrolled">
+              <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" (click)="autoBatchAssign()">
+                <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
+                  Enroll
+                </ng-container>
+              </a>
+            </ng-container>
+            <ng-container *ngIf="content?.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT && batchData?.enrolled">
               <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" 
               [routerLink]="firstResourceLink?.url" [queryParams]="(resumeData && !certData) ? generateQuery('RESUME') : generateQuery('START')">
                 Take test

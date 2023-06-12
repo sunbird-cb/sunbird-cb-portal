@@ -233,7 +233,6 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private initData(data: Data) {
-    // debugger
     const initData = this.tocSharedSvc.initData(data)
     this.content = initData.content
     if (this.content && this.content.identifier) {
