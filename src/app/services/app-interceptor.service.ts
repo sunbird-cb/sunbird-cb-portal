@@ -47,7 +47,6 @@ export class AppInterceptorService implements HttpInterceptor {
       })
       return next.handle(modifiedReq)
         // .do(event => {
-        //   debugger
         //   if (event instanceof HttpResponseBase) {
         //     const response = event as HttpResponseBase
         //     if (response && response.ok && response.url && response.url.toLowerCase().indexOf(this.logoPartialUrl) >= 0) {
