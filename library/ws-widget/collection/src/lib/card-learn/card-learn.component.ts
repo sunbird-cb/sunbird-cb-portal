@@ -2,6 +2,8 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ConfigurationsService } from '@sunbird-cb/utils'
+import { NSSearch } from '@sunbird-cb/collection'
+import { SearchApiService } from '../_services/search-api.service'
 
 // import { ActivitiesService } from '@ws/app/src/lib/routes/activities/services/activities.service'
 // import { IActivity, IActivityCard, IChallenges } from '@ws/app/src/lib/routes/activities/interfaces/activities.model'
@@ -26,12 +28,15 @@ export class CardLearnComponent extends WidgetBaseComponent
   showActivities = false
   keyTag: string[] = []
   exploreBtns = []
+  showModeratedCourseTab = false
+
   @HostBinding('id')
   public id = 'w-card-learn'
   constructor(
     private configSvc: ConfigurationsService,
     private router: Router,
     private activateroute: ActivatedRoute,
+    private searchApiService: SearchApiService,
     // private activitiesSvc: ActivitiesService,
     // private snackBar: MatSnackBar,
   ) {
@@ -98,6 +103,36 @@ export class CardLearnComponent extends WidgetBaseComponent
       //   this.snackBar.open('Failed to load activities', 'X')
       // })
     }
+
+    this.callModeratedFunc()
+  }
+
+  callModeratedFunc() {
+    const moderatedCoursesRequestBody: NSSearch.ISearchV6RequestV3 = {
+      request: {
+        secureSettings: true,
+        query: '',
+        filters: {
+            primaryCategory: [
+                'Course',
+            ],
+            status: [
+                'Live',
+            ],
+        },
+        sort_by: {
+            lastUpdatedOn: 'desc',
+        },
+        facets: [
+            'mimeType',
+        ],
+        limit : 20,
+      },
+    }
+
+    this.searchApiService.getSearchV6Results(moderatedCoursesRequestBody).subscribe(results => {
+      this.showModeratedCourseTab = Boolean(results.result.content && results.result.content.length > 0)
+    })
   }
 
   allActivities() {
