@@ -37,7 +37,6 @@ export class TagWidgetComponent extends BaseWrapperComponent {
   // @Input() config
 
   wrapperInit() {
-    // debugger
     this.state = this.alldiscussPage
   }
 
