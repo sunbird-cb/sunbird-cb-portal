@@ -46,7 +46,7 @@
           {{btn.name}}
         </span>
       </button>
-      <button *ngIf="i>=1 && btn.name === 'Moderated courses'" mat-button type="button" class="explore_btn margin-left-xs small-button blue-border flex-auto-display"
+      <button *ngIf="i>=1 && btn.name === 'Moderated courses' && showModeratedCourseTab" mat-button type="button" class="explore_btn margin-left-xs small-button blue-border flex-auto-display"
         [routerLink]="(btn.route)" [queryParams]="{t: 'moderatedCourses'}">
         <mat-icon class="ws-mat-default-text icon-margin mat-icon notranslate material-icons mat-icon-no-color">
           {{btn.icon}}

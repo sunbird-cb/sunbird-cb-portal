@@ -168,12 +168,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
           secureSettings: true,
           query: '',
           filters: {
-            primaryCategory: [
-              'Course',
-              'Learning Resource',
-              'Program',
-              'Standalone Assessment',
-            ],
+            primaryCategory: ['Course'],
             status: ['Live'],
           },
           sort_by: { lastUpdatedOn: 'desc' },
@@ -195,7 +190,6 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
             filters: {
               primaryCategory: [
                 'Course',
-                'Learning Resource',
                 'Program',
                 'Standalone Assessment',
               ],
@@ -350,7 +344,6 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
       // }
       if (queryparam.request.filters.primaryCategory.length === 0) {
         this.primaryCategoryType.push('Course')
-        this.primaryCategoryType.push('Learning Resource')
         this.primaryCategoryType.push('Program')
         this.primaryCategoryType.push('Standalone Assessment')
         queryparam.request.filters.primaryCategory = this.primaryCategoryType
