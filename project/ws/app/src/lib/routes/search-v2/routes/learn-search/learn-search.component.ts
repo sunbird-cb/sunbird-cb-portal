@@ -95,7 +95,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
       })
     } else {
       this.facets = this.activated.snapshot.data.searchPageData.data.defaultsearch
-      if (this.param === 't=moderatedCourses') {
+      if (this.param === 'moderatedCourses') {
         for (const key in this.facets[0].values) {
           if (this.facets[0].values[key].name === 'moderated courses') {
             this.facets[0].values[key].ischecked = true
@@ -179,10 +179,10 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
 
       let queryparam2
 
-      if (this.param === 't=moderatedCourses') {
+      if (this.param === 'moderatedCourses') {
         this.searchApiCall(queryparam1)
       } else {
-        if (this.param === 't=moderatedCourses') {
+        if (this.param === 'moderatedCourses') {
           this.param = ''
         }
         queryparam2 = {
@@ -349,7 +349,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         queryparam.request.filters.primaryCategory = this.primaryCategoryType
       }
 
-      if (this.param && this.param !== 't=moderatedCourses' && filterName !== 'moderated courses') {
+      if (this.param && this.param !== 'moderatedCourses' && filterName !== 'moderated courses') {
         queryparam.request.query = this.param
       } else {
         queryparam.request.query = ''
