@@ -12,6 +12,7 @@ import _ from 'lodash'
 })
 export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
   @Input() param: any
+  @Input() userValue = ''
   @Input() paramFilters: any = []
   @Input() filtersPanel!: string
   searchResults: any = []
@@ -163,10 +164,15 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
 
   getSearchedData() {
     if (this.myFilters.length === 0 && this.paramFilters.length === 0) {
+      let param = ''
+      if (this.userValue === 'moderatedCourses') {
+        param = ''
+      }
+
       const queryparam1 = {
         request: {
           secureSettings: true,
-          query: '',
+          query: param,
           filters: {
             primaryCategory: ['Course'],
             status: ['Live'],
@@ -179,11 +185,11 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
 
       let queryparam2
 
-      if (this.param === 'moderatedCourses') {
+      if (this.userValue === 'moderatedCourses') {
         this.searchApiCall(queryparam1)
       } else {
-        if (this.param === 'moderatedCourses') {
-          this.param = ''
+        if (this.userValue === 'moderatedCourses') {
+          param = ''
         }
         queryparam2 = {
           request: {
@@ -195,7 +201,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
               ],
               status: ['Live'],
             },
-            query: this.param,
+            query: param,
             sort_by: { lastUpdatedOn: '' },
             fields: [],
             facets: ['primaryCategory', 'mimeType', 'source'],
@@ -260,8 +266,8 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
   // }
 
   applyFilter(filter: any) {
-    let filterName = ''
-    let moderatedFilterName = ''
+    let isFilterCheccked = false
+    let isModeratedFilterChecked = false
     if (filter && filter.length > 0) {
       this.myFilters = filter
       const queryparam = this.searchRequestObject
@@ -329,10 +335,10 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
           queryparam.request.filters['topics'] = mf.values
         }
         if (mf.name === 'moderated courses') {
-          filterName = 'moderated courses'
+          isModeratedFilterChecked = true
         }
         if (mf.name !== 'moderated courses') {
-          moderatedFilterName = mf.name
+          isFilterCheccked = true
         }
       })
 
@@ -349,7 +355,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         queryparam.request.filters.primaryCategory = this.primaryCategoryType
       }
 
-      if (this.param && this.param !== 'moderatedCourses' && filterName !== 'moderated courses') {
+      if (this.param && this.param !== 'moderatedCourses') {
         queryparam.request.query = this.param
       } else {
         queryparam.request.query = ''
@@ -359,11 +365,11 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
       this.totalResults = 0
       this.newQueryParam = queryparam
 
-      if (filterName === 'moderated courses') {
+      if (isModeratedFilterChecked) {
         const param = {
               request: {
               secureSettings: true,
-              query: '',
+              query: this.param,
                 filters: {
                   primaryCategory: [
                     'Course',
@@ -380,7 +386,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
             this.fetchSearchDataFun(param)
       }
 
-      if (moderatedFilterName !== 'moderated courses') {
+      if (isFilterCheccked) {
         this.fetchSearchDataFun(queryparam)
       }
     } else {
