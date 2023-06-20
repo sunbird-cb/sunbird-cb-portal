@@ -12,7 +12,7 @@ import _ from 'lodash'
 })
 export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
   @Input() param: any
-  @Input() moderatedParam = ''
+  @Input() userValue = ''
   @Input() paramFilters: any = []
   @Input() filtersPanel!: string
   searchResults: any = []
@@ -165,7 +165,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
   getSearchedData() {
     if (this.myFilters.length === 0 && this.paramFilters.length === 0) {
       let param = ''
-      if (this.moderatedParam === 'moderatedCourses') {
+      if (this.userValue === 'moderatedCourses') {
         param = ''
       }
 
@@ -185,10 +185,10 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
 
       let queryparam2
 
-      if (this.moderatedParam === 'moderatedCourses') {
+      if (this.userValue === 'moderatedCourses') {
         this.searchApiCall(queryparam1)
       } else {
-        if (this.moderatedParam === 'moderatedCourses') {
+        if (this.userValue === 'moderatedCourses') {
           param = ''
         }
         queryparam2 = {
