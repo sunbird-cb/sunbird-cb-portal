@@ -292,27 +292,25 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       username = this.configSvc.userProfile.firstName || ''
       departmentName = this.configSvc.userProfile.departmentName || ''
     }
-    const req = { 
-        state: "INITIATE", 
-        action: "INITIATE", 
-        applicationId: this.selectedBatch.batchId,
+    const req = {
+        rootOrgId,
         userId,
-        actorUserId: userId, 
-        serviceName: "blendedprogram", 
-        rootOrgId, 
+        actorUserId: userId,
+        state: 'INITIATE',
+        action: 'INITIATE',
+        applicationId: this.selectedBatch.batchId,
+        serviceName: 'blendedprogram',
         courseId : this.selectedBatch.courseId,
-        deptName : departmentName, 
-        updateFieldValues: [ 
-            { 
-                toValue: { 
-                    name: username 
-                } 
-            } 
-        ] 
+        deptName : departmentName,
+        updateFieldValues: [
+            {
+                toValue: {
+                    name: username,
+                },
+            },
+        ],
     }
-    console.log('req :', req)
     this.contentSvc.enrollUserToBatchWF(req).then((data: any) => {
-      console.log('Response from enrollUserToBatchWF --', data)
       if (data && data.result && data.result.response === 'SUCCESS') {
         // this.batchData = {
         //   content: [batch],
@@ -332,7 +330,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         this.disableEnrollBtn = false
       }
     },
-    (error: any) => {
+                                                  (error: any) => {
       this.openSnackbar(_.get(error, 'error.params.errmsg') || 'Something went wrong, please try again later!')
     })
   }
@@ -383,19 +381,16 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     //   console.log('Invalid Date')
     //   return false
     // } else {
-      return (enrollmentEndDate && enrollmentEndDate !== 'Invalid Date')? dayjs(enrollmentEndDate).isAfter(systemDate) : false
+      return (enrollmentEndDate && enrollmentEndDate !== 'Invalid Date') ? dayjs(enrollmentEndDate).isAfter(systemDate) : false
     // }
   }
 
   public setBatchControl() {
     // on first load select first value in the batch list if its having valid enrollment Date
-    if(this.content && this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM) {
-      if(this.batchData && this.batchData.content.length) {
-        console.log('this.batchData.content[0]=========', this.batchData.content[0])
-        const batch = this.batchData.content.find( (el:any) => {
-          console.log(el)
-          console.log('==this.handleEnrollmentEndDate(el)', this.handleEnrollmentEndDate(el))
-          if(this.handleEnrollmentEndDate(el)){
+    if (this.content && this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM) {
+      if (this.batchData && this.batchData.content.length) {
+        const batch = this.batchData.content.find((el: any) => {
+          if (this.handleEnrollmentEndDate(el)) {
             return el
           }
         })

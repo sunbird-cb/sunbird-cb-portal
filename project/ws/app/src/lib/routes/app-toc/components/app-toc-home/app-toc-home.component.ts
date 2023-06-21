@@ -104,6 +104,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   hideScrollHeight = 10
   elementPosition: any
   batchSubscription: Subscription | null = null
+  batchDataSubscription: Subscription | null = null
   @ViewChild('stickyMenu', { static: true }) menuElement!: ElementRef
   batchControl = new FormControl('', Validators.required)
   contentProgress = 0
@@ -224,10 +225,25 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.batchSubscription = this.tocSvc.batchReplaySubject.subscribe(
       () => {
         this.fetchBatchDetails()
+        if (this.content && (this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM)) {
+          // this.fetchBatchDetails()
+          this.fetchUserWFForBlended()
+        }
       },
       () => {
         // tslint:disable-next-line: no-console
         console.log('error on batchSubscription')
+      },
+    )
+    this.batchDataSubscription = this.tocSvc.setBatchDataSubject.subscribe(
+      () => {
+        if (this.content && (this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM)) {
+          this.fetchUserWFForBlended()
+        }
+      },
+      () => {
+        // tslint:disable-next-line: no-console
+        console.log('error on batchDataSubscription')
       },
     )
     const instanceConfig = this.configSvc.instanceConfig
@@ -325,6 +341,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     if (this.batchSubscription) {
       this.batchSubscription.unsubscribe()
+    }
+    if (this.batchDataSubscription) {
+      this.batchDataSubscription.unsubscribe()
     }
     this.tocSvc.analyticsFetchStatus = 'none'
     if (this.routerParamSubscription) {
@@ -545,8 +564,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     // tslint:disable-next-line
     if (this.content && this.content.identifier && this.content.primaryCategory !== this.primaryCategory.COURSE &&
       this.content.primaryCategory !== this.primaryCategory.PROGRAM &&
-      this.content.primaryCategory !== this.primaryCategory.MANDATORY_COURSE_GOAL && 
-      this.content.primaryCategory !== this.primaryCategory.STANDALONE_ASSESSMENT && 
+      this.content.primaryCategory !== this.primaryCategory.MANDATORY_COURSE_GOAL &&
+      this.content.primaryCategory !== this.primaryCategory.STANDALONE_ASSESSMENT &&
       this.content.primaryCategory !== this.primaryCategory.BLENDED_PROGRAM) {
       // const collectionId = this.isResource ? '' : this.content.identifier
       return this.getContinueLearningData(this.content.identifier)
@@ -603,9 +622,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               || this.content.primaryCategory !== this.primaryCategory.PROGRAM) {
               // Disabling auto enrollment to batch
               // this.autoBatchAssign()
-              if(this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM) {
+              if (this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM) {
                 this.fetchBatchDetails()
-                this.fetchUserWFForBlended()
+                // this.fetchUserWFForBlended()
               }
             }  else {
               this.fetchBatchDetails()
@@ -620,12 +639,12 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   public fetchUserWFForBlended() {
-    const applicationIds = (this.batchData && this.batchData.content )|| []
-    const req = { 
-      serviceName: 'blendedprogram', 
-      applicationIds, 
-      limit: 100, 
-      offset: 0 
+    const applicationIds = (this.batchData && this.batchData.content && this.batchData.content.map(e => e.batchId)) || []
+    const req = {
+      applicationIds,
+      serviceName: 'blendedprogram',
+      limit: 100,
+      offset: 0,
   }
     this.contentSvc.fetchBlendedUserWF(req).then(
       (data: NsContent.IBatchListResponse) => {
@@ -641,7 +660,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         //       queryParamsHandling: 'merge',
         //     })
         // }
-        console.log('fetchBlendedUserWF data == ', data)
+
+        this.loggerSvc.info('fetchBlendedUserWF data == ', data)
       },
       (error: any) => {
         this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)

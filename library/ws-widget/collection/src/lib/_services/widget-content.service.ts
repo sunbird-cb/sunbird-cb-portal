@@ -154,13 +154,13 @@ export class WidgetContentService {
       .toPromise()
   }
 
-  enrollUserToBatchWF(req: any){
+  enrollUserToBatchWF(req: any) {
     return this.http
       .post(API_END_POINTS.ENROLL_BATCH_WF, req)
       .toPromise()
   }
 
-  fetchBlendedUserWF(req: any){
+  fetchBlendedUserWF(req: any) {
     return this.http
       .post(API_END_POINTS.BLENDED_USER_WF, req)
       .toPromise()
