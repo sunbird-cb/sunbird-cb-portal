@@ -58,6 +58,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   banners: NsAppToc.ITocBanner | null = null
   showMoreGlance = false
   content: NsContent.IContent | null = null
+  contentReadData: NsContent.IContent | null = null
   errorCode: NsAppToc.EWsTocErrorCode | null = null
   resumeData: any = null
   batchData: NsContent.IBatchListResponse | null = null
@@ -192,6 +193,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.routeSubscription = this.route.data.subscribe((data: Data) => {
         this.tocSvc.fetchGetContentData(data.content.data.identifier).subscribe(res => {
           this.contentDuration = res.result.content.duration
+          this.contentReadData = res.result.content
         })
         this.initialrouteData = data
         this.banners = data.pageData.data.banners
@@ -543,7 +545,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     // tslint:disable-next-line
     if (this.content && this.content.identifier && this.content.primaryCategory !== this.primaryCategory.COURSE &&
       this.content.primaryCategory !== this.primaryCategory.PROGRAM &&
-      this.content.primaryCategory !== this.primaryCategory.MANDATORY_COURSE_GOAL) {
+      this.content.primaryCategory !== this.primaryCategory.MANDATORY_COURSE_GOAL && 
+      this.content.primaryCategory !== this.primaryCategory.BLENDED_PROGRAM) {
       // const collectionId = this.isResource ? '' : this.content.identifier
       return this.getContinueLearningData(this.content.identifier)
     }
@@ -599,7 +602,11 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               || this.content.primaryCategory !== this.primaryCategory.PROGRAM) {
               // Disabling auto enrollment to batch
               // this.autoBatchAssign()
-            } else {
+              if(this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM) {
+                this.fetchBatchDetails()
+                this.fetchUserWFForBlended()
+              }
+            }  else {
               this.fetchBatchDetails()
             }
           }
@@ -611,6 +618,35 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     )
   }
 
+  public fetchUserWFForBlended() {
+    const applicationIds = (this.batchData && this.batchData.content )|| []
+    const req = { 
+      serviceName: 'blendedprogram', 
+      applicationIds, 
+      limit: 100, 
+      offset: 0 
+  }
+    this.contentSvc.fetchBlendedUserWF(req).then(
+      (data: NsContent.IBatchListResponse) => {
+        // this.batchData = data
+        // this.batchData.enrolled = false
+        // this.tocSvc.setBatchData(this.batchData)
+        // if (this.getBatchId()) {
+        //   this.router.navigate(
+        //     [],
+        //     {
+        //       relativeTo: this.route,
+        //       // queryParams: { batchId: this.getBatchId() },
+        //       queryParamsHandling: 'merge',
+        //     })
+        // }
+        console.log('fetchBlendedUserWF data == ', data)
+      },
+      (error: any) => {
+        this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
+      },
+    )
+  }
   public getBatchId(): string {
     let batchId = ''
     if (this.batchData && this.batchData.content) {

@@ -352,6 +352,7 @@ export namespace NsContent {
     SINGLE_CHOICE_QUESTION = 'Single Choice Question',
     MANDATORY_COURSE_GOAL = 'Mandatory Course Goal',
     STANDALONE_ASSESSMENT = 'Standalone Assessment',
+    BLENDED_PROGRAM = 'Blended Program',
     // following will not be available soon
     /**
      * @deprecated The type should not be used

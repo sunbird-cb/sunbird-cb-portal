@@ -40,6 +40,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   @Input() forPreview = false
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   batchControl = new FormControl('', Validators.required)
+  primaryCategory = NsContent.EPrimaryCategory
   contentProgress = 0
   bannerUrl: SafeStyle | null = null
   routePath = 'overview'
@@ -73,6 +74,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   tocConfig: any = null
   defaultSLogo = ''
   disableEnrollBtn = false
+  selectedBatch!: any
 
   // configSvc: any
 
@@ -211,6 +213,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       this.modifySensibleContentRating()
       this.assignPathAndUpdateBanner(this.router.url)
       this.getLearningUrls()
+      this.setBatchControl()
     }
     if (this.resumeData && this.content) {
       let resumeDataV2: any
@@ -237,41 +240,100 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       this.actionSVC.setUpdateCompGroupO = this.resumeDataLink
     }
     this.batchControl.valueChanges.subscribe((batch: NsContent.IBatch) => {
-      this.disableEnrollBtn = true
-      let userId = ''
-      if (batch) {
-        if (this.configSvc.userProfile) {
-          userId = this.configSvc.userProfile.userId || ''
-        }
+      // this.disableEnrollBtn = true
+      this.selectedBatch = batch
+      // let userId = ''
+      // if (batch) {
+      //   if (this.configSvc.userProfile) {
+      //     userId = this.configSvc.userProfile.userId || ''
+      //   }
 
-        const req = {
-          request: {
-            userId,
-            courseId: batch.courseId,
-            batchId: batch.batchId,
-          },
-        }
-        this.contentSvc.enrollUserToBatch(req).then((data: any) => {
-          if (data && data.result && data.result.response === 'SUCCESS') {
-            this.batchData = {
-              content: [batch],
-              enrolled: true,
-            }
-            this.router.navigate(
-              [],
-              {
-                relativeTo: this.route,
-                queryParams: { batchId: batch.batchId },
-                queryParamsHandling: 'merge',
-              })
-            this.openSnackbar('Enrolled Successfully!')
-            this.disableEnrollBtn = false
-          } else {
-            this.openSnackbar('Something went wrong, please try again later!')
-            this.disableEnrollBtn = false
-          }
-        })
+      //   const req = {
+      //     request: {
+      //       userId,
+      //       courseId: batch.courseId,
+      //       batchId: batch.batchId,
+      //     },
+      //   }
+      //   this.contentSvc.enrollUserToBatch(req).then((data: any) => {
+      //     if (data && data.result && data.result.response === 'SUCCESS') {
+      //       this.batchData = {
+      //         content: [batch],
+      //         enrolled: true,
+      //       }
+      //       this.router.navigate(
+      //         [],
+      //         {
+      //           relativeTo: this.route,
+      //           queryParams: { batchId: batch.batchId },
+      //           queryParamsHandling: 'merge',
+      //         })
+      //       this.openSnackbar('Enrolled Successfully!')
+      //       this.disableEnrollBtn = false
+      //     } else {
+            // this.openSnackbar('Something went wrong, please try again later!')
+            // this.disableEnrollBtn = false
+      //     }
+      //   })
+      // }
+    })
+  }
+
+  public requestToEnroll() {
+    // this.disableEnrollBtn = true
+
+    let userId = ''
+    let rootOrgId = ''
+    let username = ''
+    let departmentName = ''
+    if (this.configSvc.userProfile) {
+      userId = this.configSvc.userProfile.userId || ''
+      rootOrgId = this.configSvc.userProfile.rootOrgId || ''
+      username = this.configSvc.userProfile.firstName || ''
+      departmentName = this.configSvc.userProfile.departmentName || ''
+    }
+    const req = { 
+        state: "INITIATE", 
+        action: "INITIATE", 
+        applicationId: this.selectedBatch.batchId,
+        userId,
+        actorUserId: userId, 
+        serviceName: "blendedprogram", 
+        rootOrgId, 
+        courseId : this.selectedBatch.courseId,
+        deptName : departmentName, 
+        updateFieldValues: [ 
+            { 
+                toValue: { 
+                    name: username 
+                } 
+            } 
+        ] 
+    }
+    console.log('req :', req)
+    this.contentSvc.enrollUserToBatchWF(req).then((data: any) => {
+      console.log('Response from enrollUserToBatchWF --', data)
+      if (data && data.result && data.result.response === 'SUCCESS') {
+        // this.batchData = {
+        //   content: [batch],
+        //   enrolled: true,
+        // }
+        // this.router.navigate(
+        //   [],
+        //   {
+        //     relativeTo: this.route,
+        //     queryParams: { batchId: batch.batchId },
+        //     queryParamsHandling: 'merge',
+        //   })
+        this.openSnackbar('Enrolled Successfully!')
+        this.disableEnrollBtn = false
+      } else {
+        this.openSnackbar('Something went wrong, please try again later!')
+        this.disableEnrollBtn = false
       }
+    },
+    (error: any) => {
+      this.openSnackbar(_.get(error, 'error.params.errmsg') || 'Something went wrong, please try again later!')
     })
   }
 
@@ -317,7 +379,29 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   public handleEnrollmentEndDate(batch: any) {
     const enrollmentEndDate = dayjs(lodash.get(batch, 'enrollmentEndDate')).format('YYYY-MM-DD')
     const systemDate = dayjs()
-    return enrollmentEndDate ? dayjs(enrollmentEndDate).isBefore(systemDate) : false
+    // if(enrollmentEndDate === 'Invalid Date'){
+    //   console.log('Invalid Date')
+    //   return false
+    // } else {
+      return (enrollmentEndDate && enrollmentEndDate !== 'Invalid Date')? dayjs(enrollmentEndDate).isAfter(systemDate) : false
+    // }
+  }
+
+  public setBatchControl() {
+    // on first load select first value in the batch list if its having valid enrollment Date
+    if(this.content && this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM) {
+      if(this.batchData && this.batchData.content.length) {
+        console.log('this.batchData.content[0]=========', this.batchData.content[0])
+        const batch = this.batchData.content.find( (el:any) => {
+          console.log(el)
+          console.log('==this.handleEnrollmentEndDate(el)', this.handleEnrollmentEndDate(el))
+          if(this.handleEnrollmentEndDate(el)){
+            return el
+          }
+        })
+        this.batchControl.setValue(batch)
+      }
+    }
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
