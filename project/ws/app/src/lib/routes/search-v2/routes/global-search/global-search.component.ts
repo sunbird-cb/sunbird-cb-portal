@@ -7,7 +7,8 @@ import { ActivatedRoute } from '@angular/router'
   styleUrls: ['./global-search.component.scss'],
 })
 export class GlobalSearchComponent implements OnInit {
-  searchParam: any
+  searchParam = ''
+  userValue = ''
   searchparamFilters: any
   filtersPanel!: string | null
   selectedTab = 1
@@ -19,6 +20,8 @@ export class GlobalSearchComponent implements OnInit {
 
   ngOnInit() {
     this.activated.queryParamMap.subscribe(queryParams => {
+      this.searchParam = ''
+      this.userValue = ''
       if (queryParams.has('tab')) {
         const tabn = queryParams.get('tab')
         this.tabs.forEach((t: any, index: number) => {
@@ -31,7 +34,8 @@ export class GlobalSearchComponent implements OnInit {
         this.searchParam = queryParams.get('q') || ''
       }
       if (queryParams.has('t')) {
-        this.searchParam = 't=moderatedCourses' || ''
+        this.searchParam = 'moderatedCourses' || ''
+        this.userValue = 'moderatedCourses'
       }
       if (queryParams.has('f')) {
         const sfilters = JSON.parse(queryParams.get('f') || '{}')

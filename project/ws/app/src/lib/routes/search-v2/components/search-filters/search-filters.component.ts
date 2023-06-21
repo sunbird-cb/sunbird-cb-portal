@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angu
 import { FormGroup, FormControl } from '@angular/forms'
 import { Subscription } from 'rxjs'
 import { GbSearchService } from '../../services/gb-search.service'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 // tslint:disable-next-line
 import _ from 'lodash'
 
@@ -22,7 +22,10 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription
   queryParams: any
 
-  constructor(private searchSrvc: GbSearchService, private activated: ActivatedRoute) { }
+  constructor(
+    private searchSrvc: GbSearchService,
+    private activated: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
     this.newfacets.forEach((nf: any) => {
@@ -167,6 +170,17 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
       }
       this.modifyUserFilters(fil, res.mainType)
     })
+
+    if (this.queryParams.has('t')) {
+      const reqfilter = {
+        mainType: 'primaryCategory',
+        name: 'moderated courses',
+        count: 0,
+        ischecked: true,
+      }
+      this.userFilters.push(reqfilter)
+      this.myFilterArray.push(reqfilter)
+    }
   }
 
   ngOnDestroy() {
@@ -178,19 +192,15 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   }
 
   modifyUserFilters(fil: any, mainparentType: any) {
-    if (this.queryParams.has('t')) {
-      const reqfilter = {
-        mainType: 'primaryCategory',
-        name: 'moderated courses',
-        count: 0,
-        ischecked: true,
-      }
-      this.userFilters.push(reqfilter)
-      this.myFilterArray.push(reqfilter)
-    }
     const indx = this.getFilterName(fil)
     if (indx.length > 0) {
       this.userFilters.forEach((fs: any, index: number) => {
+        if (fs.name === fil.name && this.queryParams.has('t')) {
+          setTimeout(() => {
+            this.router.navigate(['/app/globalsearch'] , { queryParams: { q: '' } })
+          }, 500)
+        }
+
         if (fs.name === fil.name) {
           this.userFilters.splice(index, 1)
         }

@@ -546,6 +546,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (this.content && this.content.identifier && this.content.primaryCategory !== this.primaryCategory.COURSE &&
       this.content.primaryCategory !== this.primaryCategory.PROGRAM &&
       this.content.primaryCategory !== this.primaryCategory.MANDATORY_COURSE_GOAL && 
+      this.content.primaryCategory !== this.primaryCategory.STANDALONE_ASSESSMENT && 
       this.content.primaryCategory !== this.primaryCategory.BLENDED_PROGRAM) {
       // const collectionId = this.isResource ? '' : this.content.identifier
       return this.getContinueLearningData(this.content.identifier)
