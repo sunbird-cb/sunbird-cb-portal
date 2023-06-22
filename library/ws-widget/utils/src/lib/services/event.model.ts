@@ -192,7 +192,7 @@ export namespace WsEvents {
     HOME = 'home',
     DASHBOARD = 'dashboard',
     SEARCH = 'search',
-    DISCUSS = 'discuss',
+    DISCUSS = 'Discuss',
     COMPETENCY = 'competency',
     EVENTS = 'events',
     CAREER = 'career',
