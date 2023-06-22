@@ -41,6 +41,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   batchControl = new FormControl('', Validators.required)
   primaryCategory = NsContent.EPrimaryCategory
+  WFBlendedProgramStatus = NsContent.WFBlendedProgramStatus
+  WFSTATUS_MSG_MAPPING = NsContent.WFSTATUS_MSG_MAPPING
   contentProgress = 0
   bannerUrl: SafeStyle | null = null
   routePath = 'overview'
@@ -323,7 +325,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         //     queryParams: { batchId: batch.batchId },
         //     queryParamsHandling: 'merge',
         //   })
-        this.openSnackbar('Enrolled Successfully!')
+        this.batchData.workFlow =  {
+          wfInitiated: true,
+          batch : this.selectedBatch,
+        }
+        this.openSnackbar('Request sent Successfully!')
         this.disableEnrollBtn = false
       } else {
         this.openSnackbar('Something went wrong, please try again later!')
@@ -413,6 +419,51 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       !this.content.children.length &&
       !this.content.artifactUrl
     )
+  }
+
+  get getWFMsg() {
+    if (
+      this.batchData &&
+      this.batchData.workFlow &&
+      this.batchData.workFlow.wfItem
+    ) {
+      const status = this.batchData.workFlow.wfItem.currentStatus
+      const msg = this.WFSTATUS_MSG_MAPPING[status]
+      return this.tocConfig[msg]
+    }
+  }
+
+  get showIcon() {
+    if (
+      this.batchData &&
+      this.batchData.workFlow &&
+      this.batchData.workFlow.wfItem
+    ) {
+      const status = this.batchData.workFlow.wfItem.currentStatus
+      if (status === this.WFBlendedProgramStatus.APPROVED ||
+        status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL) {
+        return true
+      }
+    }
+    return false
+  }
+
+  get iconColor() {
+    if (
+      this.batchData &&
+      this.batchData.workFlow &&
+      this.batchData.workFlow.wfItem
+    ) {
+      const status = this.batchData.workFlow.wfItem.currentStatus
+      if (status === this.WFBlendedProgramStatus.APPROVED) {
+        return 'ws-mat-green-text'
+      }  if (status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL) {
+        return 'ws-mat-orange-text'
+      }
+        return ''
+
+    }
+    return ' '
   }
 
   get isHeaderHidden() {

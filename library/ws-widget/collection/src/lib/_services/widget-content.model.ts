@@ -179,6 +179,11 @@ export namespace NsContent {
     content?: IBatch[]
     count?: number,
     enrolled?: boolean,
+    workFlow?: {
+      wfInitiated?: boolean
+      batch?: any
+      wfItem?: any
+    },
   }
 
   export interface ICourse {
@@ -370,6 +375,24 @@ export namespace NsContent {
     * @deprecated The type should not be used
     */
     CHANNEL = 'Channel',
+  }
+
+  export enum WFBlendedProgramStatus {
+    INITIATE = 'INITIATE',
+    SEND_FOR_MDO_APPROVAL = 'SEND_FOR_MDO_APPROVAL',
+    SEND_FOR_PC_APPROVAL = 'SEND_FOR_PC_APPROVAL',
+    APPROVED = 'APPROVED',
+    REJECTED = 'REJECTED',
+    WITHDRAWN = 'WITHDRAWN',
+  }
+
+  export const  WFSTATUS_MSG_MAPPING: any = {
+    INITIATE:  '',
+    SEND_FOR_MDO_APPROVAL:  'BatchEnrollL1Msg',
+    SEND_FOR_PC_APPROVAL:  'BatchEnrollL2Msg',
+    APPROVED:  'BatchEnrollApprovedMsg',
+    REJECTED:  '',
+    WITHDRAWN: '',
   }
 
   export enum EResourcePrimaryCategories {

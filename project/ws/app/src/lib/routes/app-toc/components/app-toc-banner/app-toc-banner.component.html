@@ -100,7 +100,7 @@
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
               <div class="padding-m batch-container">
                 <form>
-                  <ng-container *ngIf="batchData && !batchData?.enrolled && batchData?.content?.length">
+                  <ng-container *ngIf="batchData && !batchData?.enrolled && !batchData.workFlow?.wfInitiated && batchData?.content?.length">
                     <div>
                       
                         <mat-form-field appearance="outline" class="w-full">
@@ -131,6 +131,13 @@
                     </div>
                   </ng-container>
                 </form>
+                <ng-container *ngIf="batchData && batchData?.workFlow?.wfInitiated && batchData?.content?.length">
+                  <div>
+                    <p class="margin-remove-bottom mat-body-1 padding-m bg-white">
+                      {{batchData?.workFlow?.batch.name}} - ({{batchData?.workFlow?.batch.startDate}} - {{batchData?.workFlow?.batch.endDate || 'present'}})
+                    </p>
+                  </div>
+                </ng-container>
                 <ng-container *ngIf="batchData && batchData?.enrolled && batchData?.content?.length">
                   <h3 class="margin-remove-bottom pt-4 info-msg" i18n *ngFor="let batch of batchData.content">
                     Enrolled batch: {{batch.name}} ({{batch.startDate}} - {{batch.endDate || 'present'}})
@@ -142,11 +149,13 @@
                   </h3>
                 </ng-container>
               </div>
-              <div class="status-container mt-5">
+              <div class="status-container mt-5" >
                 <div class="flex">
-                  <mat-icon matSuffix class="ws-mat-green-text mr-3" svgIcon="verified"></mat-icon>
+                  <ng-container *ngIf="showIcon">
+                    <mat-icon matSuffix class="mr-3" [ngClass]="iconColor" svgIcon="verified"></mat-icon>
+                  </ng-container>
                   <div class="mat-body-1">
-                    <p class="margin-remove-bottom ">{{tocConfig.BatchEnrollL1Msg}}</p>
+                    <p class="margin-remove-bottom ">{{getWFMsg}}</p>
                     <p class="ws-mat-default-text">{{tocConfig.BatchEnrollSupportMsg}}<u>{{tocConfig.BatchEnrollSupportEmail}}</u></p>
                   </div>
                 </div>

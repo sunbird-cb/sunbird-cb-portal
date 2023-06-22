@@ -87,6 +87,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
   tocConfig: any = null
   primaryCategory = NsContent.EPrimaryCategory
+  WFBlendedProgramStatus = NsContent.WFBlendedProgramStatus
   askAuthorEnabled = true
   trainingLHubEnabled = false
   trainingLHubCount$?: Observable<number>
@@ -647,7 +648,19 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       offset: 0,
   }
     this.contentSvc.fetchBlendedUserWF(req).then(
-      (data: NsContent.IBatchListResponse) => {
+      (data: any) => {
+        if (data && data.result && data.result.data.length) {
+          const latestWF = _.maxBy(data.result.data[0].wfInfo, (el: any) => {
+            return new Date(el.lastUpdatedOn).getTime()
+          })
+           /* tslint:disable-next-line */
+          this.batchData!.workFlow = {
+              wfInitiated : true,
+              /* tslint:disable-next-line */
+              batch: this.batchData && this.batchData.content && this.batchData.content.find((e: any) => e.batchId === latestWF.applicationId),
+              wfItem: latestWF,
+          }
+        }
         // this.batchData = data
         // this.batchData.enrolled = false
         // this.tocSvc.setBatchData(this.batchData)
@@ -667,6 +680,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
       },
     )
+  }
+
+  public checkIfBatchExists(latest: any) {
+    if (!this.batchData || !this.batchData.content) {
+      return false
+    }
+    return this.batchData.content.find(b => b.batchId === latest.batchId)
   }
   public getBatchId(): string {
     let batchId = ''
