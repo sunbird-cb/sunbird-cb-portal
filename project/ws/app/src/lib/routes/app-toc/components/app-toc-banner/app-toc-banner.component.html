@@ -47,6 +47,10 @@
             <span *ngIf="contentProgress === 1" class="margin-left-s">
               <mat-icon class="ws-mat-accent-text">check_circle</mat-icon>
             </span>
+            <div *ngIf="content?.appIcon" class="apIcon float-left mb-4">
+              <img [src]="content?.creatorLogo | pipePublicURL" [id]="'source_' + content.identifier"
+                class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
+            </div>
             <div [ngSwitch]="routePath" class="header-meta" [ngClass]="{ 'header-meta-banner': bannerUrl }">
               <!-- Overview Section -->
               <div class="banner-overview-container" [hidden]="!content?.purpose && showSubtitleOnBanner"
@@ -81,7 +85,7 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="content?.averageRating" class="flex items-center rating margin-bottom-s">
+            <div *ngIf="content?.averageRating" class="flex items-center rating margin-bottom-m">
               <span class="rating-number mat-body-2">{{ content?.averageRating }}&nbsp;</span>
               <mat-icon class="mat-icon material-icons" *ngFor="let rating of [1, 2, 3, 4, 5]">
                 {{ getRatingIcon(rating) }}</mat-icon>
@@ -89,7 +93,7 @@
               <span class="margin-left-xs rating-count mat-body-2" *ngIf="content?.totalRating">
                 ( {{ content?.totalRating | pipeCountTransform }} )</span>
             </div>
-            <div *ngIf="!content?.averageRating" class="flex items-center rating margin-bottom-s">
+            <div *ngIf="!content?.averageRating" class="flex items-center rating margin-bottom-m">
               <span class="rating-number mat-body-2"> 0.0 &nbsp;</span>
               <mat-icon class="mat-icon material-icons" *ngFor="let rating of [1, 2, 3, 4, 5]">
                 {{ getRatingIcon(rating) }}</mat-icon>
@@ -100,14 +104,16 @@
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
               <div class="padding-m batch-container">
                 <form>
-                  <ng-container *ngIf="batchData && !batchData?.enrolled && !batchData.workFlow?.wfInitiated && batchData?.content?.length">
+                  <ng-container *ngIf="batchData && !batchData?.enrolled 
+                  && (!batchData.workFlow?.wfInitiated || (batchData.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED))
+                  && batchData?.content?.length">
                     <div>
                       
                         <mat-form-field appearance="outline" class="w-full">
                           <!-- <mat-label>Select batch to enroll</mat-label> -->
-                          <mat-select  #batchControlData [formControl]="batchControl" required autoSelctFirstOption>
+                          <mat-select  #batchControlData [formControl]="batchControl" required autoSelctFirstOption (selectionChange)="batchChange($event)"> 
                             <mat-option *ngFor="let batch of batchData.content; let i=index" [value]="batch" selected="index === 0"
-                            [disabled]="!handleEnrollmentEndDate(batch) || disableEnrollBtn">
+                            [disabled]="!handleEnrollmentEndDate(batch) || disableEnrollBtn ">
                               <p>{{batch.name}} 
                                 ({{batch.startDate}} - {{batch.endDate || 'present'}})</p>
                             </mat-option>
@@ -116,22 +122,31 @@
                         </mat-form-field>
                     </div>
                     <div class="flex flex-wrap">
-                      <div class="flex-1">
-                        <button class="mat-button mat-raised-button resumeButton custom-button width-1-1 text-white" 
-                        [disabled]="disableEnrollBtn || batchControl.hasError('required')" (click)="requestToEnroll()">
-                          <ng-container i18n>
-                            Request to enroll
-                          </ng-container>
-                        </button>
-                      </div>
-                      <div class="flex-col ml-3" *ngIf="selectedBatch && selectedBatch.enrollmentEndDate">
-                        <p class="mat-body-2 margin-remove-bottom">Last enrollment date</p>
-                        <p class="mat-body-2 font-bold-imp margin-remove-bottom">{{selectedBatch.enrollmentEndDate}}</p>
-                      </div>
+                      <ng-container *ngIf="!showRejected">
+                        <div class="flex-1">
+                          <button class="mat-button mat-raised-button resumeButton custom-button width-1-1 text-white" 
+                          [disabled]="disableEnrollBtn || batchControl.hasError('required')" (click)="requestToEnroll()">
+                            <ng-container i18n>
+                              Request to enroll
+                            </ng-container>
+                          </button>
+                        </div>
+                        <div class="flex-col ml-3" *ngIf="selectedBatch && selectedBatch.enrollmentEndDate">
+                          <p class="mat-body-2 margin-remove-bottom">Last enrollment date</p>
+                          <p class="mat-body-2 font-bold-imp margin-remove-bottom">{{selectedBatch.enrollmentEndDate}}</p>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngIf="showRejected">
+                        <h3 class="margin-remove-bottom mat-body-2 ws-default-text" i18n>
+                          Your enrollment request is rejected.
+                        </h3>
+                      </ng-container>
                     </div>
                   </ng-container>
                 </form>
-                <ng-container *ngIf="batchData && batchData?.workFlow?.wfInitiated && batchData?.content?.length">
+                <ng-container *ngIf="batchData && batchData?.workFlow?.wfInitiated
+                && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.REJECTED) 
+                && batchData?.content?.length">
                   <div>
                     <p class="margin-remove-bottom mat-body-1 padding-m bg-white">
                       {{batchData?.workFlow?.batch.name}} - ({{batchData?.workFlow?.batch.startDate}} - {{batchData?.workFlow?.batch.endDate || 'present'}})
@@ -140,31 +155,29 @@
                 </ng-container>
                 <ng-container *ngIf="batchData && batchData?.enrolled && batchData?.content?.length">
                   <h3 class="margin-remove-bottom pt-4 info-msg" i18n *ngFor="let batch of batchData.content">
-                    Enrolled batch: {{batch.name}} ({{batch.startDate}} - {{batch.endDate || 'present'}})
+                    {{batch.name}} ({{batch.startDate}} - {{batch.endDate || 'present'}})
                   </h3>
                 </ng-container>
                 <ng-container *ngIf="batchData && !batchData?.enrolled && !batchData?.content?.length">
-                  <h3 class="margin-remove-bottom pt-4 info-msg" i18n>
+                  <h3 class="margin-remove-bottom mat-body-2 ws-default-text" i18n>
                     No batches
                   </h3>
                 </ng-container>
               </div>
-              <div class="status-container mt-5" >
-                <div class="flex">
+              <div class="status-container mt-5" *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM && batchData?.workFlow?.wfInitiated">
+                <div class="flex" *ngIf="showMsg">
                   <ng-container *ngIf="showIcon">
-                    <mat-icon matSuffix class="mr-3" [ngClass]="iconColor" svgIcon="verified"></mat-icon>
+                    <!-- <mat-icon class="mr-3" [ngClass]="iconColor" svgIcon="verified"></mat-icon> -->
+                    <mat-icon class="mr-3" [ngClass]="iconColor" *ngIf="WFIcon === 'circle'">check_circle</mat-icon>
+                    <mat-icon class="mr-3 ws-mat-red-text"  style="transform: rotate(180deg);" *ngIf="WFIcon === 'info'">info</mat-icon>
                   </ng-container>
                   <div class="mat-body-1">
                     <p class="margin-remove-bottom ">{{getWFMsg}}</p>
-                    <p class="ws-mat-default-text">{{tocConfig.BatchEnrollSupportMsg}}<u>{{tocConfig.BatchEnrollSupportEmail}}</u></p>
+                    <p class="ws-mat-default-text">{{tocConfig.BatchEnrollSupportMsg}}<u>{{helpEmail}}</u></p>
                   </div>
                 </div>
               </div>
             </ng-container>
-            <div *ngIf="content?.appIcon" class="apIcon float-left">
-              <img [src]="content?.creatorLogo | pipePublicURL" [id]="'source_' + content.identifier"
-                class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
-            </div>
             <!-- tags -->
             <div class="tags margin-top-m margin-bottom-s" *ngIf="content?.keywords && content?.keywords?.length > 0">
               <!-- <span *ngFor="let tag of content.keywords" class="tag" [ngStyle]="getBgColor(tag)"> -->

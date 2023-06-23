@@ -38,6 +38,7 @@ export class AppTocService {
   analyticsFetchStatus: TFetchStatus = 'none'
   batchReplaySubject: Subject<any> = new Subject()
   setBatchDataSubject: Subject<any> = new Subject()
+  setWFDataSubject: Subject<any> = new Subject()
   resumeData: Subject<NsContent.IContinueLearningData | null> = new Subject<NsContent.IContinueLearningData | null>()
   private showSubtitleOnBanners = false
   private canShowDescription = false
@@ -68,6 +69,10 @@ export class AppTocService {
 
   setBatchData(data: NsContent.IBatchListResponse) {
     this.setBatchDataSubject.next(data)
+  }
+
+  setWFData(data: any){
+    this.setWFDataSubject.next(data)
   }
 
   updateResumaData(data: any) {

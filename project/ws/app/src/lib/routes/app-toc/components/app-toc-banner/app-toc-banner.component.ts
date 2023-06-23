@@ -25,6 +25,7 @@ import { TitleTagService } from '../../services/title-tag.service'
 import { ActionService } from '../../services/action.service'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'ws-app-toc-banner',
@@ -49,6 +50,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   validPaths = new Set(['overview', 'contents', 'analytics'])
   routerParamSubscription: Subscription | null = null
   routeSubscription: Subscription | null = null
+  batchWFDataSubscription: Subscription | null = null
   firstResourceLink: { url: string; queryParams: { [key: string]: any } } | null = null
   resumeDataLink: { url: string; queryParams: { [key: string]: any } } | null = null
   isAssessVisible = false
@@ -59,6 +61,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   btnPlaylistConfig: NsPlaylist.IBtnPlaylist | null = null
   btnGoalsConfig: NsGoal.IBtnGoal | null = null
   isRegistrationSupported = false
+  showRejected = false
   checkRegistrationSources: Set<string> = new Set([
     'SkillSoft Digitalization',
     'SkillSoft Leadership',
@@ -77,6 +80,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   defaultSLogo = ''
   disableEnrollBtn = false
   selectedBatch!: any
+  helpEmail = ''
 
   // configSvc: any
 
@@ -96,7 +100,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     private actionSVC: ActionService,
     private logger: LoggerService,
   ) {
-
+    this.helpEmail = environment.helpEmail
   }
 
   ngOnInit() {
@@ -130,6 +134,15 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         this.contextPath = contextPath
       }
     })
+    this.batchWFDataSubscription = this.tocSvc.setWFDataSubject.subscribe(
+      () => {
+        this.setBatchControl()
+      },
+      () => {
+        // tslint:disable-next-line: no-console
+        console.log('error on batchWFDataSubscription')
+      },
+    )
     if (this.configSvc.restrictedFeatures) {
       this.isRegistrationSupported = this.configSvc.restrictedFeatures.has('registrationExternal')
       this.showIntranetMessage = !this.configSvc.restrictedFeatures.has(
@@ -244,6 +257,14 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     this.batchControl.valueChanges.subscribe((batch: NsContent.IBatch) => {
       // this.disableEnrollBtn = true
       this.selectedBatch = batch
+      if(batch) {
+        if(this.checkRejected(batch)) {
+          this.showRejected = true
+          return
+        }
+      }
+      this.showRejected = false
+      return
       // let userId = ''
       // if (batch) {
       //   if (this.configSvc.userProfile) {
@@ -313,7 +334,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         ],
     }
     this.contentSvc.enrollUserToBatchWF(req).then((data: any) => {
-      if (data && data.result && data.result.response === 'SUCCESS') {
+      if (data && data.result && data.result.status === 'OK') {
         // this.batchData = {
         //   content: [batch],
         //   enrolled: true,
@@ -328,6 +349,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         this.batchData.workFlow =  {
           wfInitiated: true,
           batch : this.selectedBatch,
+          wfItem: {currentStatus: data.result.data.status},
         }
         this.openSnackbar('Request sent Successfully!')
         this.disableEnrollBtn = false
@@ -335,8 +357,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         this.openSnackbar('Something went wrong, please try again later!')
         this.disableEnrollBtn = false
       }
-    },
-                                                  (error: any) => {
+    }, (error: any) => {
       this.openSnackbar(_.get(error, 'error.params.errmsg') || 'Something went wrong, please try again later!')
     })
   }
@@ -391,18 +412,57 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     // }
   }
 
+  public checkRejected(batch: any) {
+    if (
+      batch && 
+      this.batchData &&
+      this.batchData.workFlow &&
+      this.batchData.workFlow.wfItem
+    ){
+      if(batch.batchId === this.batchData.workFlow.wfItem.applicationId 
+        && this.batchData.workFlow.wfItem.currentStatus === this.WFBlendedProgramStatus.REJECTED
+      ) {
+        return true
+      }
+      return false
+    }
+    return false
+  }
+
+  public batchChange(event: any) {
+    if(event && event.value) {
+      if(this.checkRejected(event.value)) {
+        this.showRejected = true
+        return
+      }
+    }
+    this.showRejected = false
+    return
+  }
+
   public setBatchControl() {
     // on first load select first value in the batch list if its having valid enrollment Date
     if (this.content && this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM) {
       if (this.batchData && this.batchData.content.length) {
-        const batch = this.batchData.content.find((el: any) => {
-          if (this.handleEnrollmentEndDate(el)) {
-            return el
-          }
-        })
-        this.batchControl.setValue(batch)
+        if(!this.batchData.workFlow || (this.batchData.workFlow &&  !this.batchData.workFlow.wfInitiated)) {
+          const batch = this.batchData.content.find((el: any) => {
+            if (this.handleEnrollmentEndDate(el)) {
+              return el
+            }
+          })
+          this.batchControl.setValue(batch)
+        } else {
+          const batch = this.batchData.content.find((el: any) => {
+            if (el.batchId === this.batchData.workFlow.wfItem.applicationId) {
+              return el
+            }
+          })
+          this.batchControl.patchValue(batch)
+          this.batchChange({value: batch})
+        }
       }
     }
+    
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
@@ -441,19 +501,58 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     ) {
       const status = this.batchData.workFlow.wfItem.currentStatus
       if (status === this.WFBlendedProgramStatus.APPROVED ||
-        status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL) {
+        status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL || 
+        status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL ||
+        status === this.WFBlendedProgramStatus.REJECTED) {
         return true
       }
     }
     return false
   }
 
-  get iconColor() {
+  get showMsg() {
     if (
       this.batchData &&
       this.batchData.workFlow &&
       this.batchData.workFlow.wfItem
     ) {
+      const status = this.batchData.workFlow.wfItem.currentStatus
+      if (status === this.WFBlendedProgramStatus.APPROVED ||
+        status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL || 
+        status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL ||
+        status === this.WFBlendedProgramStatus.REJECTED && this.showRejected) {
+        return true
+      }
+    }
+    return false
+  }
+
+  get WFIcon() {
+    if (
+      this.batchData &&
+      this.batchData.workFlow &&
+      this.batchData.workFlow.wfItem
+    ) {
+      const status = this.batchData.workFlow.wfItem.currentStatus
+      if (status === this.WFBlendedProgramStatus.APPROVED ||
+        status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL || 
+        status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL
+      ) {
+        return 'circle'
+      } 
+      if(status === this.WFBlendedProgramStatus.REJECTED) {
+        return 'info'
+      }
+    }
+    return ''
+  }
+
+  get iconColor() {
+    // if (
+    //   this.batchData &&
+    //   this.batchData.workFlow &&
+    //   this.batchData.workFlow.wfItem
+    // ) {
       const status = this.batchData.workFlow.wfItem.currentStatus
       if (status === this.WFBlendedProgramStatus.APPROVED) {
         return 'ws-mat-green-text'
@@ -462,8 +561,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       }
         return ''
 
-    }
-    return ' '
+    // }
+    // return ' '
   }
 
   get isHeaderHidden() {
@@ -515,6 +614,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     }
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe()
+    }
+    if(this.batchWFDataSubscription) {
+      this.batchWFDataSubscription.unsubscribe()
     }
   }
 

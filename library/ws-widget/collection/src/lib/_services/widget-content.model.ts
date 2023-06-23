@@ -391,7 +391,7 @@ export namespace NsContent {
     SEND_FOR_MDO_APPROVAL:  'BatchEnrollL1Msg',
     SEND_FOR_PC_APPROVAL:  'BatchEnrollL2Msg',
     APPROVED:  'BatchEnrollApprovedMsg',
-    REJECTED:  '',
+    REJECTED:  'BatchEnrollRejectedMsg',
     WITHDRAWN: '',
   }
 

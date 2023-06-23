@@ -138,6 +138,7 @@
         flex: 1;
         min-width: 1px;
         margin-right: $size-l;
+        margin-bottom: $size-s;
         @include breakpoint-xs {
             margin-right: 0;
         }

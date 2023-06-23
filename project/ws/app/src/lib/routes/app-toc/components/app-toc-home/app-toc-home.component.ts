@@ -653,6 +653,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           const latestWF = _.maxBy(data.result.data[0].wfInfo, (el: any) => {
             return new Date(el.lastUpdatedOn).getTime()
           })
+          latestWF.currentStatus = this.WFBlendedProgramStatus.REJECTED
            /* tslint:disable-next-line */
           this.batchData!.workFlow = {
               wfInitiated : true,
@@ -660,6 +661,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               batch: this.batchData && this.batchData.content && this.batchData.content.find((e: any) => e.batchId === latestWF.applicationId),
               wfItem: latestWF,
           }
+          this.tocSvc.setWFData(this.batchData)
         }
         // this.batchData = data
         // this.batchData.enrolled = false

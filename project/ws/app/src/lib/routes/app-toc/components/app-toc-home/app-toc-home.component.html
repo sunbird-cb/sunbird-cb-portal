@@ -212,9 +212,11 @@ TODO: edit option while preview Mode
               </a>
             </ng-container>
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
-                <ng-container *ngIf="batchData?.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.APPROVED">
-                  <div class="ws-mat-accent-text ">
-                    <p class="margin-remove-bottom padding-m font-bold">
+                <ng-container *ngIf="batchData?.workFlow?.wfInitiated && 
+                !(batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.APPROVED
+                || batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED)">
+                  <div class="ws-mat-accent-text ws-mat-accent-light-bg flex items-center justify-center statusMsg">
+                    <p class="margin-remove-bottom font-bold">
                       Request under review 
                     </p>
                   </div>
