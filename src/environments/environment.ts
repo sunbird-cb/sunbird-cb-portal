@@ -33,6 +33,7 @@ export const environment: IEnvironment = {
   programStripName: (window as { [key: string]: any })['env']['programStripName'] || '',
   programStripPrimaryCategory: (window as { [key: string]: any })['env']['programStripPrimaryCategory'] || '',
   programStripKey: (window as { [key: string]: any })['env']['programStripKey'] || '',
+  helpEmail: (window as { [key: string]: any })['env']['helpEmail'] || '',
 }
 interface IEnvironment {
   name: string,
@@ -61,6 +62,7 @@ interface IEnvironment {
   programStripName: string,
   programStripPrimaryCategory: string,
   programStripKey: string
+  helpEmail: string
 }
 
 /*
