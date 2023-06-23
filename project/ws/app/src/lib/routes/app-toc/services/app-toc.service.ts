@@ -71,7 +71,7 @@ export class AppTocService {
     this.setBatchDataSubject.next(data)
   }
 
-  setWFData(data: any){
+  setWFData(data: any) {
     this.setWFDataSubject.next(data)
   }
 

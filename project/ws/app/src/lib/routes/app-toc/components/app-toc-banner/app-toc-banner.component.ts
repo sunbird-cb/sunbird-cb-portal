@@ -257,8 +257,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     this.batchControl.valueChanges.subscribe((batch: NsContent.IBatch) => {
       // this.disableEnrollBtn = true
       this.selectedBatch = batch
-      if(batch) {
-        if(this.checkRejected(batch)) {
+      if (batch) {
+        if (this.checkRejected(batch)) {
           this.showRejected = true
           return
         }
@@ -349,7 +349,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         this.batchData.workFlow =  {
           wfInitiated: true,
           batch : this.selectedBatch,
-          wfItem: {currentStatus: data.result.data.status},
+          wfItem: { currentStatus: data.result.data.status },
         }
         this.openSnackbar('Request sent Successfully!')
         this.disableEnrollBtn = false
@@ -357,7 +357,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         this.openSnackbar('Something went wrong, please try again later!')
         this.disableEnrollBtn = false
       }
-    }, (error: any) => {
+    },                                            (error: any) => {
       this.openSnackbar(_.get(error, 'error.params.errmsg') || 'Something went wrong, please try again later!')
     })
   }
@@ -414,12 +414,12 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
 
   public checkRejected(batch: any) {
     if (
-      batch && 
+      batch &&
       this.batchData &&
       this.batchData.workFlow &&
       this.batchData.workFlow.wfItem
-    ){
-      if(batch.batchId === this.batchData.workFlow.wfItem.applicationId 
+    ) {
+      if (batch.batchId === this.batchData.workFlow.wfItem.applicationId
         && this.batchData.workFlow.wfItem.currentStatus === this.WFBlendedProgramStatus.REJECTED
       ) {
         return true
@@ -430,8 +430,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   public batchChange(event: any) {
-    if(event && event.value) {
-      if(this.checkRejected(event.value)) {
+    if (event && event.value) {
+      if (this.checkRejected(event.value)) {
         this.showRejected = true
         return
       }
@@ -444,7 +444,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     // on first load select first value in the batch list if its having valid enrollment Date
     if (this.content && this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM) {
       if (this.batchData && this.batchData.content.length) {
-        if(!this.batchData.workFlow || (this.batchData.workFlow &&  !this.batchData.workFlow.wfInitiated)) {
+        if (!this.batchData.workFlow || (this.batchData.workFlow &&  !this.batchData.workFlow.wfInitiated)) {
           const batch = this.batchData.content.find((el: any) => {
             if (this.handleEnrollmentEndDate(el)) {
               return el
@@ -458,11 +458,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
             }
           })
           this.batchControl.patchValue(batch)
-          this.batchChange({value: batch})
+          this.batchChange({ value: batch })
         }
       }
     }
-    
+
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
@@ -501,7 +501,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     ) {
       const status = this.batchData.workFlow.wfItem.currentStatus
       if (status === this.WFBlendedProgramStatus.APPROVED ||
-        status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL || 
+        status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL ||
         status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL ||
         status === this.WFBlendedProgramStatus.REJECTED) {
         return true
@@ -518,7 +518,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     ) {
       const status = this.batchData.workFlow.wfItem.currentStatus
       if (status === this.WFBlendedProgramStatus.APPROVED ||
-        status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL || 
+        status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL ||
         status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL ||
         status === this.WFBlendedProgramStatus.REJECTED && this.showRejected) {
         return true
@@ -535,12 +535,12 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     ) {
       const status = this.batchData.workFlow.wfItem.currentStatus
       if (status === this.WFBlendedProgramStatus.APPROVED ||
-        status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL || 
+        status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL ||
         status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL
       ) {
         return 'circle'
-      } 
-      if(status === this.WFBlendedProgramStatus.REJECTED) {
+      }
+      if (status === this.WFBlendedProgramStatus.REJECTED) {
         return 'info'
       }
     }
@@ -615,7 +615,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe()
     }
-    if(this.batchWFDataSubscription) {
+    if (this.batchWFDataSubscription) {
       this.batchWFDataSubscription.unsubscribe()
     }
   }
