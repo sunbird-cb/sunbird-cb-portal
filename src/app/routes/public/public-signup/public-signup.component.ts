@@ -270,7 +270,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
 
   orgClicked(event: any) {
     if (event) {
-      if (event.value && event.value.orgName) {
+      if (event.option && event.option.value && event.option.value.orgName) {
         const frmctr = this.registrationForm.get('organisation') as FormControl
         frmctr.setValue(_.get(event, 'option.value.orgName') || '')
         // frmctr.patchValue(_.get(event, 'option.value') || '')
