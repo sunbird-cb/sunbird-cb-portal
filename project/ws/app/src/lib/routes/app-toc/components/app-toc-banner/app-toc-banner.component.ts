@@ -358,7 +358,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         this.disableEnrollBtn = false
       }
     },                                            (error: any) => {
-      this.openSnackbar(_.get(error, 'error.params.errmsg') || 'Something went wrong, please try again later!')
+      this.openSnackbar(_.get(error, 'error.params.errmsg') || 
+      _.get(error, 'error.result.errmsg') || 
+      'Something went wrong, please try again later!')
     })
   }
 
