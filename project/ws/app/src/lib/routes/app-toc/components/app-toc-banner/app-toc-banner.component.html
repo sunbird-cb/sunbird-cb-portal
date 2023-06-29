@@ -144,7 +144,7 @@
                     </div>
                   </ng-container>
                 </form>
-                <ng-container *ngIf="batchData && batchData?.workFlow?.wfInitiated
+                <ng-container *ngIf="batchData && !batchData?.enrolled  && batchData?.workFlow?.wfInitiated
                 && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.REJECTED) 
                 && batchData?.content?.length">
                   <div>
@@ -154,7 +154,7 @@
                   </div>
                 </ng-container>
                 <ng-container *ngIf="batchData && batchData?.enrolled && batchData?.content?.length">
-                  <h3 class="margin-remove-bottom pt-4 info-msg" i18n *ngFor="let batch of batchData.content">
+                  <h3 class="margin-remove-bottom p-4 bg-white mat-body-1" i18n *ngFor="let batch of batchData.content">
                     {{batch.name}} ({{batch.startDate}} - {{batch.endDate || 'present'}})
                   </h3>
                 </ng-container>

@@ -358,8 +358,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         this.disableEnrollBtn = false
       }
     },                                            (error: any) => {
-      this.openSnackbar(_.get(error, 'error.params.errmsg') || 
-      _.get(error, 'error.result.errmsg') || 
+      this.openSnackbar(_.get(error, 'error.params.errmsg') ||
+      _.get(error, 'error.result.errmsg') ||
       'Something went wrong, please try again later!')
     })
   }
@@ -558,7 +558,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       const status = this.batchData.workFlow.wfItem.currentStatus
       if (status === this.WFBlendedProgramStatus.APPROVED) {
         return 'ws-mat-green-text'
-      }  if (status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL) {
+      }  if (status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL ||
+        status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL) {
         return 'ws-mat-orange-text'
       }
         return ''
