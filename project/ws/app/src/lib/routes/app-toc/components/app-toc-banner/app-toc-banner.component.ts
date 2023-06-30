@@ -410,7 +410,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     //   console.log('Invalid Date')
     //   return false
     // } else {
-      return (enrollmentEndDate && enrollmentEndDate !== 'Invalid Date') ? dayjs(enrollmentEndDate).isAfter(systemDate) : false
+      return (enrollmentEndDate && enrollmentEndDate !== 'Invalid Date') ? 
+      (dayjs(enrollmentEndDate).isSame(systemDate, 'day') || dayjs(enrollmentEndDate).isAfter(systemDate)) : false
     // }
   }
 
