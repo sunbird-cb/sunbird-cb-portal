@@ -45,14 +45,31 @@ export class MyConnectionCardComponent implements OnInit {
     let name = ''
     if (this.user && !this.user.personalDetails) {
       if (this.user.firstName) {
-        name = `${this.user.firstName} ${this.user.lastName}`
+        if (this.user.lastName && this.user.lastName !== null && this.user.lastName !== undefined) {
+          name = `${this.user.firstName} ${this.user.lastName}`
+        } else  {
+          name = `${this.user.firstName}`
+        }
+      } else {
+        name = `${this.user.name}`
       }
     } else if (this.user && this.user.personalDetails) {
       if (this.user.personalDetails.middlename) {
-        // tslint:disable-next-line: max-line-length
-        name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.middlename} ${this.user.personalDetails.surname}`
-      } else {
-        name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
+        // tslint:disable-next-line:max-line-length
+        if (this.user.personalDetails.surname && this.user.personalDetails.surname !== null && this.user.personalDetails.surname !== undefined) {
+          // tslint:disable-next-line: max-line-length
+          name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.middlename} ${this.user.personalDetails.surname}`
+        } else {
+          name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.middlename}`
+        }
+      } else if (this.user.personalDetails.firstname) {
+        // tslint:disable-next-line:max-line-length
+        if (this.user.personalDetails.surname && this.user.personalDetails.surname !== null && this.user.personalDetails.surname !== undefined) {
+          // tslint:disable-next-line: max-line-length
+          name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
+        } else {
+          name = `${this.user.personalDetails.firstname}`
+        }
       }
     }
     return name

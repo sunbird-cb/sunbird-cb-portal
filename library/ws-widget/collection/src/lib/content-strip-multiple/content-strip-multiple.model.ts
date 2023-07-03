@@ -45,6 +45,7 @@ export namespace NsContentStripMultiple {
       prarambhCourse?: any,
       curatedCollections?: any,
       blendedLearning?: any
+      moderatedCourses?: any
     }
     searchV6Type?: 'KB' | 'Collections' | 'searchQuery' | null
     stripBackground?: string

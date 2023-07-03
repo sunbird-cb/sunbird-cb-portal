@@ -1,14 +1,14 @@
 <h1 i18n>Notification Settings</h1>
-<!-- <h4>Feature coming soon.</h4> -->
-<div *ngIf="notificationsFetchStatus === 'fetching'" class="mt-4 text-center">
+<h4>Feature coming soon.</h4>
+<!-- <div *ngIf="notificationsFetchStatus === 'fetching'" class="mt-4 text-center">
   <mat-spinner></mat-spinner>
-</div>
-<h2 *ngIf="notificationsFetchStatus === 'error'" class="ws-mat-primary-text text-center margin-top-l" i18n>
+</div> -->
+<!-- <h2 *ngIf="notificationsFetchStatus === 'error'" class="ws-mat-primary-text text-center margin-top-l" i18n>
   Unable to fetch notification settings. Please try after sometime.
-</h2>
-<div *ngIf="notificationsFetchStatus === 'done'">
+</h2> -->
+<!--<div *ngIf="notificationsFetchStatus === 'done'">
   <p class="ws-mat-primary-text" i18n>Use the slider to enable or disable the email notifications.</p>
-  <div class="notifications-container mat-card w-full">
+   <div class="notifications-container mat-card w-full">
     <div class="flex flex-column justify-between ">
       <ng-container *ngFor="let n of notificationPrefList">
         <div class="flex flex-1 justify-between mb-2 prefItem" *ngIf="n.isVisible">
@@ -19,7 +19,7 @@
             <ng-container i18n *ngIf="n.status">On</ng-container>
             <ng-container i18n *ngIf="!n.status">Off</ng-container>
           </mat-slide-toggle>
-          <!-- <mat-divider *ngIf="!endMode"></mat-divider> -->
+
         </div>
       </ng-container>
       <ng-container>
@@ -35,9 +35,9 @@
       </ng-container>
     </div>
   </div>
-</div>
+</div> -->
 
-<input type="hidden" i18-value i18-aria-value aria-value="Notification preferences saved successfully!"
+<!-- <input type="hidden" i18-value i18-aria-value aria-value="Notification preferences saved successfully!"
     value="Notification preferences saved successfully!" #toastSuccess />
 <input type="hidden" i18-value i18-aria-value aria-value="Unable to save notification preferences, please try again later!"
-    value="Unable to save notification preferences, please try again later!" #toastError />
+    value="Unable to save notification preferences, please try again later!" #toastError /> -->

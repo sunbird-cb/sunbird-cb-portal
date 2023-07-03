@@ -39,11 +39,11 @@
                         <label for="firstName" class=" margin-remove-bottom form-label required"
                           i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
                           aria-label="First Name label">
-                          First Name
+                          Full Name
                         </label>
                         <mat-form-field appearance="outline" class="margin-top-xs">
                           <input id="firstName" matInput #firstname formControlName="firstname" i18n-placeholder
-                            placeholder="Enter First Name" i18n-aria-label aria-label="First Name input" maxlength="150" />
+                            placeholder="Enter Full Name" i18n-aria-label aria-label="First Name input" maxlength="150" />
                           <mat-error [hidden]="false" i18n="First Name Error|Explains name is required" i18n-aria-label
                             aria-label="First Name Error|Explains name is required "
                             *ngIf="createUserForm?.controls['firstname'].errors?.required">
@@ -77,7 +77,7 @@
                           </mat-error>
                         </mat-form-field>
                       </div> -->
-                      <div class="input-wrapper margin-top-s">
+                      <!-- <div class="input-wrapper margin-top-s">
                         <label for="surName" class=" margin-remove-bottom form-label required"
                           i18n="Surname label|Label which explains the user to enter Surname" i18n-aria-label
                           aria-label="Surname label">
@@ -97,7 +97,7 @@
                             Name fields cannot contain numbers and special characters except '
                           </mat-error>
                         </mat-form-field>
-                      </div>
+                      </div> -->
                       <div class="input-wrapper margin-top-s">
                         <label for="birthDate" class=" margin-remove-bottom form-label required"
                           i18n="Date of Birth|Label which explains the user to enter Date of Birth" i18n-aria-label
@@ -127,6 +127,7 @@
                             i18n-placeholder="Nationality" formControlName="nationality"
                             [matAutocomplete]="nationalityAutocomplete" i18n-aria-label aria-label="Nationality"
                             #nationality i18n-aria-label aria-label="Nationality Field input" maxlength="30" />
+                            
                           <mat-error [hidden]="false" i18n="Nationality Error|Explains Nationality is required"
                             *ngIf="createUserForm?.controls['nationality'].errors?.required" i18n-aria-label
                             aria-label="Nationality is mandatory">
@@ -139,7 +140,11 @@
                         </mat-form-field>
                         <mat-autocomplete #nationalityAutocomplete="matAutocomplete" autoActiveFirstOption="true"
                           i18n-aria-label aria-label="Nationality list autocomplete">
-                          <mat-option *ngFor="let option of masterNationality | async" [value]="option.name"
+                          <!-- <mat-option [value]="Indian" 
+                          i18n-aria-label aria-label="Nationality list autocomplete option">
+                          Indian
+                        </mat-option> -->
+                          <mat-option *ngFor="let option of masterNationality | async" [value]="option.name" 
                             i18n-aria-label aria-label="Nationality list autocomplete option">
                             {{ option.name }}
                           </mat-option>
@@ -354,7 +359,7 @@
                       <div class="flex flex-1 flex-column">
                         <div class="flex flex-1">
                           <mat-form-field appearance="outline" class="margin-top-xs w80">
-                            <mat-select formControlName="countryCode" i18n-placeholder placeholder="--Select--"
+                            <mat-select formControlName="countryCode" default="+91" i18n-placeholder placeholder="--Select--"
                               i18n-aria-label aria-label="Mobile Number label">
                               <mat-option [value]="code" *ngFor="let code of countryCodes">{{code}}</mat-option>
                             </mat-select>
@@ -651,6 +656,7 @@
                           </mat-option>
                         </mat-autocomplete>
                       </mat-form-field>
+                      
                     </div>
                     <div class="item">
                       <label for="instituteName" class=" margin-remove-bottom form-label"
@@ -691,7 +697,7 @@
                         </mat-error>
                       </mat-form-field>
                     </div>
-                    <div class=" flex flex-align">
+                    <div class="flex flex-align">
                       <button mat-icon-button class="btn-danger" (click)="removeDegrees(i)">
                         <mat-icon class="color-danger">delete_outline</mat-icon>
                       </button>
@@ -809,7 +815,7 @@
                   <span class="txt" *ngIf="!isAllowed('isGovtOrg')">{{inReview}}</span>
                 </div>
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                  <div class="item" [ngClass]="{ disable: !isAllowed('name') }">
+                  <div class="item1" [ngClass]="{ disable: !isAllowed('name') }">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Organisation Name label|Label which explains the user to enter Organisation Name">
                       Organisation Name
@@ -824,7 +830,7 @@
                     </mat-form-field>
                     <span class="txt" *ngIf="!isAllowed('name')">{{inReview}}</span>
                   </div>
-                  <div class="item" *ngIf="orgNameSelect.value === 'Other' || showOrgnameOther"
+                  <div class="item1" *ngIf="orgNameSelect.value === 'Other' || showOrgnameOther"
                     [ngClass]="{ disable: !isAllowed('showOrgnameOther') }">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Other label|Label which explains the user to enter Other">
@@ -841,7 +847,7 @@
                   </div>
                 </div>
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                  <div class="item" [ngClass]="{ disable: !isAllowed('industry') }">
+                  <div class="item1" [ngClass]="{ disable: !isAllowed('industry') }">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Industry label|Label which explains the user to enter Industry">
                       Industry
@@ -857,7 +863,7 @@
                     </mat-form-field>
                     <span class="txt" *ngIf="!isAllowed('industry')">{{inReview}}</span>
                   </div>
-                  <div class="item" *ngIf="industrySelect.value === 'Other' || showIndustryOther"
+                  <div class="item1" *ngIf="industrySelect.value === 'Other' || showIndustryOther"
                     [ngClass]="{ disable: !isAllowed('showIndustryOther') }">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Other label|Label which explains the user to enter Other">
@@ -874,8 +880,8 @@
                   </div>
                 </div>
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                  <div class="item">
-                    <!-- [ngClass]="{ disable: !isAllowed('designation') }" -->
+                  <div class="item1"
+                    [ngClass]="{ disable: !isAllowed('designation') }">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Designation label|Label which explains the user to enter Designation">
                       Designation
@@ -891,7 +897,7 @@
                     </mat-form-field>
                     <span class="txt" *ngIf="!isAllowed('designation')">{{inReview}}</span>
                   </div>
-                  <div class="item" *ngIf="designation.value === 'Other' || showDesignationOther"
+                  <div class="item1" *ngIf="designation.value === 'Other' || showDesignationOther"
                     [ngClass]="{ disable: !isAllowed('showDesignationOther') }">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Other label|Label which explains the user to enter Other">
@@ -908,7 +914,7 @@
                   </div>
                 </div>
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                  <div class="item" [ngClass]="{ disable: !isAllowed('location') }">
+                  <div class="item1" [ngClass]="{ disable: !isAllowed('location') }">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Location label|Label which explains the user to enter Location">
                       Country
@@ -923,7 +929,7 @@
                     <span class="txt" *ngIf="!isAllowed('location')">{{inReview}}</span>
 
                   </div>
-                  <!-- <div class="item">
+                  <!-- <div class="item1">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Other label|Label which explains the user to enter Other">
                       Other
@@ -938,7 +944,7 @@
                   </div> -->
                 </div>
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                  <div class="item" [ngClass]="{ disable: !isAllowed('doj') }">
+                  <div class="item1" [ngClass]="{ disable: !isAllowed('doj') }">
                     <label for="chooseDOJ" class=" margin-remove-bottom form-label"
                       i18n="Date of Joining|Label which explains the user to enter Date of Joining">
                       Date of Joining
@@ -958,7 +964,7 @@
                   </div>
                 </div>
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                  <div class="item">
+                  <div class="item1">
                     <label for="description" class=" margin-remove-bottom form-label"
                       i18n="Description label|Label which explains the user to enter Description">
                       Description
@@ -983,7 +989,7 @@
                   <label for="'Grade Pay'">Grade Pay</label>
                 </div> -->
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                  <div class="item">
+                  <div class="item1">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Service label|Label which explains the user to enter Service">
                       Pay Band (Grade Pay)
@@ -998,7 +1004,7 @@
                   </div>
                 </div>
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                  <div class="item">
+                  <div class="item1">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Service label|Label which explains the user to enter Service">
                       Service
@@ -1011,7 +1017,7 @@
                       </mat-select>
                     </mat-form-field>
                   </div>
-                  <div class="item">
+                  <div class="item1">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Cadre label|Label which explains the user to enter Cadre">
                       Cadre
@@ -1026,7 +1032,7 @@
                   </div>
                 </div>
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                  <div class="item">
+                  <div class="item1">
                     <label for="allotmentYearService" class=" margin-remove-bottom form-label"
                       i18n="Allotment Year of Service|Label which explains the user to enter Allotment Year of Service">
                       Allotment Year of Service
@@ -1047,7 +1053,7 @@
                       </mat-error>
                     </mat-form-field>
                   </div>
-                  <div class="item">
+                  <div class="item1">
                     <label for="doj" class=" margin-remove-bottom form-label"
                       i18n="Date of Joining|Label which explains the user to enter Date of Joining">
                       Date of Joining
@@ -1065,7 +1071,7 @@
                   </div>
                 </div>
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                  <div class="item">
+                  <div class="item1">
                     <label for="civilListNumber" class=" margin-remove-bottom form-label"
                       i18n="Civil List Number label|Label which explains the user to enter Civil List Number">
                       Civil List Number
@@ -1078,7 +1084,7 @@
                       </mat-error>
                     </mat-form-field>
                   </div>
-                  <div class="item">
+                  <div class="item1">
                     <label for="empCode" class=" margin-remove-bottom form-label"
                       i18n="Employee Code label|Label which explains the user to enter Employee Code">
                       Employee Code
@@ -1093,7 +1099,7 @@
                   </div>
                 </div>
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                  <div class="item">
+                  <div class="item1">
                     <label for="officePostalAddress" class=" margin-remove-bottom form-label"
                       i18n="Office Postal Address label|Label which explains the user to enter Office Postal Address">
                       Office Postal Address
@@ -1111,7 +1117,7 @@
                       </mat-error>
                     </mat-form-field>
                   </div>
-                  <div class="item">
+                  <div class="item1">
                     <label for="pinCode1" class=" margin-remove-bottom form-label"
                       i18n="Pin Code label|Label which explains the user to enter Pin Code">
                       Pin Code
@@ -1223,7 +1229,7 @@
           <mat-spinner [diameter]="30"></mat-spinner>
         </div>
         <button mat-raised-button type="submit" (click)="onSubmit(createUserForm)"
-          class="text-white btn-success btn-responsive" [disabled]="uploadSaveData || createUserForm?.invalid">
+          class="text-white btn-success btn-responsive" [disabled]="createUserForm?.invalid">
           <span class="text-white" i18n>
             Save Details
           </span>

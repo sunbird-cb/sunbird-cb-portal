@@ -350,6 +350,7 @@ export class TelemetryService {
   }
 
   addCustomEventListener() {
+
     this.eventsSvc.events$
       .pipe(
         filter(
@@ -635,13 +636,17 @@ export class TelemetryService {
   getPageDetails() {
     const path = window.location.pathname.replace('/', '')
     const url = path + window.location.search
+    let moduleValue = ''
+    if (path.includes("discussion-forum")) {
+      moduleValue = "Discuss"
+    }
     return {
       pageid: path,
       pageUrl: url,
       pageUrlParts: path.split('/'),
       refferUrl: this.previousUrl,
       objectId: this.extractContentIdFromUrlParts(path.split('/')),
-      module: '',
+      module: moduleValue,
     }
   }
 

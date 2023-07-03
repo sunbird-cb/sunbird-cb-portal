@@ -32,7 +32,7 @@ export class WrapperModule {
                         {
                             type: data.edata.type,
                             subType: data.edata.pageid,
-                            id: (data.object && data.object.id) || '',
+                            id: 'discussion',
                         },
                         data.object,
                         {

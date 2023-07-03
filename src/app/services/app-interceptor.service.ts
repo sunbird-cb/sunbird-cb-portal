@@ -40,13 +40,13 @@ export class AppInterceptorService implements HttpInterceptor {
           rootOrg: this.configSvc.rootOrg,
           locale: lang.join(','),
           wid: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
+          cstoken: (this.configSvc.cstoken) || '',
           // wid:'',
           hostPath: this.configSvc.hostPath,
         },
       })
       return next.handle(modifiedReq)
         // .do(event => {
-        //   debugger
         //   if (event instanceof HttpResponseBase) {
         //     const response = event as HttpResponseBase
         //     if (response && response.ok && response.url && response.url.toLowerCase().indexOf(this.logoPartialUrl) >= 0) {

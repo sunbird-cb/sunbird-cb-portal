@@ -39,7 +39,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'profile',
       pageId: 'dashboard',
-      module: 'profile',
+      module: 'Profile',
     },
     resolve: {
       pageData: PageResolve,
@@ -61,7 +61,7 @@ const routes: Routes = [
         component: BadgesComponent,
         data: {
           pageId: 'badges',
-          module: 'profile',
+          module: 'Profile',
         },
         resolve: {
           badges: BadgesResolver2,
@@ -74,7 +74,7 @@ const routes: Routes = [
         component: AchievementsComponent,
         data: {
           pageId: ':type',
-          module: 'profile',
+          module: 'Profile',
         },
         resolve: {
           competencyData: CompetencyResolverService,
@@ -86,7 +86,7 @@ const routes: Routes = [
         component: CardDetailComponent,
         data: {
           pageId: ':type/details',
-          module: 'profile',
+          module: 'Profile',
         },
       },
     ],
@@ -94,7 +94,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'profile',
       pageId: 'competency',
-      module: 'profile',
+      module: 'Profile',
     },
     resolve: {
       pageData: PageResolve,
@@ -157,7 +157,7 @@ const routes: Routes = [
     component: InterestComponent,
     data: {
       pageId: 'interest',
-      module: 'profile',
+      module: 'Profile',
     },
     resolve: {
       interests: InterestUserResolve,
@@ -169,7 +169,7 @@ const routes: Routes = [
     component: PlansComponent,
     data: {
       pageId: 'plans',
-      module: 'profile',
+      module: 'Profile',
     },
   },
   {
@@ -184,8 +184,10 @@ const routes: Routes = [
     path: 'settings',
     component: SettingsComponent,
     data: {
-      pageId: 'notification',
-      module: 'profile',
+      pageType: 'feature',
+      pageKey: 'profile',
+      pageId: 'settings',
+      module: 'Profile',
     },
   },
   {
@@ -193,7 +195,7 @@ const routes: Routes = [
     component: NotificationSettingsComponent,
     data: {
       pageId: 'notification',
-      module: 'profile',
+      module: 'Profile',
     },
   },
   {
@@ -201,7 +203,7 @@ const routes: Routes = [
     component: PrivacySettingsComponent,
     data: {
       pageId: 'privacy',
-      module: 'profile',
+      module: 'Profile',
     },
   },
   {
@@ -209,7 +211,7 @@ const routes: Routes = [
     component: AccountPasswordSettingsComponent,
     data: {
       pageId: 'accountandpassword',
-      module: 'profile',
+      module: 'Profile',
     },
   },
 ]
@@ -224,6 +226,7 @@ const routes: Routes = [
         data: {
           pageType: 'feature',
           pageKey: 'profile',
+          pageId: "app/profile"
         },
         resolve: {
           pageData: PageResolve,

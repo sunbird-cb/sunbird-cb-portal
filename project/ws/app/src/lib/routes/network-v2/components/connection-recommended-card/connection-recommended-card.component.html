@@ -15,10 +15,9 @@
                 
                 <div class="name ws-mat-black-text cursor-pointer" *ngIf="user && user?.personalDetails?.firstName">
                     {{user?.personalDetails?.firstName}} {{user?.personalDetails?.middlename}}
-                    {{user?.personalDetails?.surname}}
                 </div>
                 <div class="name ws-mat-black-text cursor-pointer" *ngIf="user && !user?.personalDetails">
-                    {{user?.firstName}} {{user?.lastName}}
+                    {{user?.firstName}}
                 </div>
                 <div class="designation ws-mat-black60-text" *ngIf="user?.employmentDetails">
                     {{user?.employmentDetails?.departmentName}}

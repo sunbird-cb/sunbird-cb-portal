@@ -92,7 +92,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   registrationForm!: FormGroup
   // namePatern = `^[a-zA-Z']{1,32}$`
   namePatern = `[a-zA-Z\\s\\']{1,32}$`
-  emailWhitelistPattern = `^[a-zA-Z0-9._-]{3,}\\b@\\b[a-zA-Z0-9]*|\\b(.gov|.nic)\b\\.\\b(in)\\b$`
+  // emailWhitelistPattern = `^[a-zA-Z0-9._-]{3,}\\b@\\b[a-zA-Z0-9]*|\\b(.gov|.nic)\b\\.\\b(in)\\b$`
   customCharsPattern = `^[a-zA-Z0-9 \\w\-\&\(\)]*$`
   positionsOriginal!: []
   postions!: any
@@ -139,10 +139,11 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   ) {
     this.registrationForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
-      lastname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
+      // lastname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       // tslint:disable-next-line:max-line-length
       position: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterPositions)]),
-      email: new FormControl('', [Validators.required, Validators.pattern(this.emailWhitelistPattern)]),
+      // tslint:disable-next-line:max-line-length
+      email: new FormControl('', [Validators.required, Validators.pattern(/^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@((?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?){2,}\.){1,3}(?:\w){2,}$/)]),
       // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
       mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
       confirmBox: new FormControl(false, [Validators.required]),
@@ -269,11 +270,15 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
 
   orgClicked(event: any) {
     if (event) {
-      const frmctr = this.registrationForm.get('organisation') as FormControl
-      frmctr.setValue(_.get(event, 'option.value.orgName') || '')
-      // frmctr.patchValue(_.get(event, 'option.value') || '')
-      this.heirarchyObject = _.get(event, 'option.value')
-      this.hideOrg = true
+      if (event.option && event.option.value && event.option.value.orgName) {
+        const frmctr = this.registrationForm.get('organisation') as FormControl
+        frmctr.setValue(_.get(event, 'option.value.orgName') || '')
+        // frmctr.patchValue(_.get(event, 'option.value') || '')
+        this.heirarchyObject = _.get(event, 'option.value')
+        this.hideOrg = true
+      } else {
+        this.hideOrg = false
+      }
     }
   }
 
@@ -431,7 +436,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
           if (this.heirarchyObject) {
             req = {
               firstName: this.registrationForm.value.firstname || '',
-              lastName: this.registrationForm.value.lastname || '',
+              // lastName: this.registrationForm.value.lastname || '',
               email: this.registrationForm.value.email || '',
               phone: `${this.registrationForm.value.mobile}` || '',
               position: this.registrationForm.value.position.name || '',

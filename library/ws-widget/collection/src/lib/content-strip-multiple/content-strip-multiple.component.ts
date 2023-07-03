@@ -19,6 +19,9 @@ import { WidgetUserService } from '../_services/widget-user.service'
 import _ from 'lodash'
 import { HttpClient } from '@angular/common/http'
 import { environment } from 'src/environments/environment'
+import { NSSearch } from '@sunbird-cb/collection'
+import { SearchApiService } from '../_services/search-api.service'
+
 interface IStripUnitContentData {
   key: string
   canHideStrip: boolean
@@ -78,6 +81,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     protected utilitySvc: UtilityService,
     private userSvc: WidgetUserService,
     private http: HttpClient,
+    private searchApiService: SearchApiService,
   ) {
     super()
   }
@@ -246,7 +250,62 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     this.fetchprarambhCourse(strip, calculateParentStatus)
     this.fetchCuratedCollections(strip, calculateParentStatus)
     this.fetchblendedLearning(strip, calculateParentStatus)
+    this.fetchModeratedCourses(strip, calculateParentStatus)
+      
   }
+
+  fetchModeratedCourses(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
+    if (strip.request && strip.request.moderatedCourses && Object.keys(strip.request.moderatedCourses).length) {
+      const moderatedCoursesRequestBody: NSSearch.ISearchV6RequestV3 = {
+        request: {
+          secureSettings: true,
+          query: '',
+          filters: {
+              primaryCategory: [
+                  'Course',
+              ],
+              status: [
+                  'Live',
+              ],
+          },
+          sort_by: {
+              lastUpdatedOn: 'desc',
+          },
+          facets: [
+              'mimeType',
+          ],
+          limit : 20,
+        },
+      }
+
+      this.searchApiService.getSearchV6Results(moderatedCoursesRequestBody).subscribe(results => {
+        const showViewMore = Boolean(
+          results.result.content && results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
+        )
+
+        const viewMoreUrl = showViewMore
+            ? {
+              path: '/app/globalsearch',
+              queryParams: {
+                t: 'moderatedCourses',
+              },
+            } : null
+
+            this.processStrip(
+              strip,
+              this.transformContentsToWidgets(results.result.content, strip),
+              'done',
+              calculateParentStatus,
+              viewMoreUrl,
+            )
+      },
+                                                                                      () => {
+        this.processStrip(strip, [], 'error', calculateParentStatus, null)
+      }
+      )
+    }
+  }
+
   fetchFromApi(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.api && Object.keys(strip.request.api).length) {
       this.contentStripSvc.getContentStripResponseApi(strip.request.api).subscribe(
@@ -599,7 +658,6 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     // topics based recommendations start
     if (strip.request && strip.request.basedOnInterest && Object.keys(strip.request.basedOnInterest).length) {
       if (this.configSvc.userProfileV2) {
-
         const systemTopics = this.configSvc.userProfileV2.systemTopics &&
           this.configSvc.userProfileV2.systemTopics.map((st: any) => st.identifier)
 
@@ -1142,7 +1200,8 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         (strip.request.DAKSHTACourses && Object.keys(strip.request.DAKSHTACourses).length) ||
         (strip.request.blendedLearning && Object.keys(strip.request.blendedLearning).length) ||
         (strip.request.prarambhCourse && Object.keys(strip.request.prarambhCourse).length) ||
-        (strip.request.curatedCollections && Object.keys(strip.request.curatedCollections).length)
+        (strip.request.curatedCollections && Object.keys(strip.request.curatedCollections).length) ||
+        (strip.request.moderatedCourses && Object.keys(strip.request.moderatedCourses).length)
       )
     ) {
       return true

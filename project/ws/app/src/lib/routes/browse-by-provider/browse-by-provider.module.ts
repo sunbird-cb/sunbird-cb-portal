@@ -39,6 +39,7 @@ import { ProviderLeftMenuComponent } from './components/left-menu/left-menu.comp
 import { BrowseProviderService } from './services/browse-provider.service'
 import { PopularProviderCardComponent } from './components/popular-provider-card/popular-provider-card.component'
 import { ProviderCardComponent } from './components/provider-card/provider-card.component'
+
 @NgModule({
   declarations: [
     AllProvidersComponent,

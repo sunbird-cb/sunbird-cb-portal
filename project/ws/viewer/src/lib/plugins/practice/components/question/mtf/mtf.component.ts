@@ -105,7 +105,6 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
         })
         const connectorType = ['Bezier', { curviness: 10 }]
         this.jsPlumbInstance.bind('connection', (_i: any, _c: any) => {
-            // debugger
             // root cause
             // const allConnection = this.jsPlumbInstance.getAllConnections()
             // const finalConnection=[]

@@ -48,7 +48,7 @@ export class CardRatingCommentComponent implements OnInit {
     if (!review && !review.firstName) {
         return ''
     }
-    return `${review.firstName} ${review.lastName}`
+    return `${review.firstName}`
   }
 
 }
