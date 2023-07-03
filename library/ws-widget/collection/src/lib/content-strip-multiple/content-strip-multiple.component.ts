@@ -1199,6 +1199,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         (strip.request.DAKSHTACourses && Object.keys(strip.request.DAKSHTACourses).length) ||
         (strip.request.prarambhCourse && Object.keys(strip.request.prarambhCourse).length) ||
         (strip.request.curatedCollections && Object.keys(strip.request.curatedCollections).length) ||
+        (strip.request.blendedLearning && Object.keys(strip.request.blendedLearning).length) || 
         (strip.request.moderatedCourses && Object.keys(strip.request.moderatedCourses).length)
       )
     ) {
