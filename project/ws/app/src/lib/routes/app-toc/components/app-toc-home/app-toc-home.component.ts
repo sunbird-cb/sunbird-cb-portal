@@ -58,6 +58,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   banners: NsAppToc.ITocBanner | null = null
   showMoreGlance = false
   content: NsContent.IContent | null = null
+  contentReadData: NsContent.IContent | null = null
   errorCode: NsAppToc.EWsTocErrorCode | null = null
   resumeData: any = null
   batchData: NsContent.IBatchListResponse | null = null
@@ -86,6 +87,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
   tocConfig: any = null
   primaryCategory = NsContent.EPrimaryCategory
+  WFBlendedProgramStatus = NsContent.WFBlendedProgramStatus
   askAuthorEnabled = true
   trainingLHubEnabled = false
   trainingLHubCount$?: Observable<number>
@@ -103,6 +105,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   hideScrollHeight = 10
   elementPosition: any
   batchSubscription: Subscription | null = null
+  batchDataSubscription: Subscription | null = null
   @ViewChild('stickyMenu', { static: true }) menuElement!: ElementRef
   batchControl = new FormControl('', Validators.required)
   contentProgress = 0
@@ -192,6 +195,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.routeSubscription = this.route.data.subscribe((data: Data) => {
         this.tocSvc.fetchGetContentData(data.content.data.identifier).subscribe(res => {
           this.contentDuration = res.result.content.duration
+          this.contentReadData = res.result.content
         })
         this.initialrouteData = data
         this.banners = data.pageData.data.banners
@@ -222,10 +226,25 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.batchSubscription = this.tocSvc.batchReplaySubject.subscribe(
       () => {
         this.fetchBatchDetails()
+        if (this.content && (this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM)) {
+          // this.fetchBatchDetails()
+          this.fetchUserWFForBlended()
+        }
       },
       () => {
         // tslint:disable-next-line: no-console
         console.log('error on batchSubscription')
+      },
+    )
+    this.batchDataSubscription = this.tocSvc.setBatchDataSubject.subscribe(
+      () => {
+        if (this.content && (this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM)) {
+          this.fetchUserWFForBlended()
+        }
+      },
+      () => {
+        // tslint:disable-next-line: no-console
+        console.log('error on batchDataSubscription')
       },
     )
     const instanceConfig = this.configSvc.instanceConfig
@@ -323,6 +342,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     if (this.batchSubscription) {
       this.batchSubscription.unsubscribe()
+    }
+    if (this.batchDataSubscription) {
+      this.batchDataSubscription.unsubscribe()
     }
     this.tocSvc.analyticsFetchStatus = 'none'
     if (this.routerParamSubscription) {
@@ -544,7 +566,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (this.content && this.content.identifier && this.content.primaryCategory !== this.primaryCategory.COURSE &&
       this.content.primaryCategory !== this.primaryCategory.PROGRAM &&
       this.content.primaryCategory !== this.primaryCategory.MANDATORY_COURSE_GOAL &&
-      this.content.primaryCategory !== this.primaryCategory.STANDALONE_ASSESSMENT) {
+      this.content.primaryCategory !== this.primaryCategory.STANDALONE_ASSESSMENT &&
+      this.content.primaryCategory !== this.primaryCategory.BLENDED_PROGRAM) {
       // const collectionId = this.isResource ? '' : this.content.identifier
       return this.getContinueLearningData(this.content.identifier)
     }
@@ -600,7 +623,11 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               || this.content.primaryCategory !== this.primaryCategory.PROGRAM) {
               // Disabling auto enrollment to batch
               // this.autoBatchAssign()
-            } else {
+              if (this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM) {
+                this.fetchBatchDetails()
+                // this.fetchUserWFForBlended()
+              }
+            }  else {
               this.fetchBatchDetails()
             }
           }
@@ -612,6 +639,57 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     )
   }
 
+  public fetchUserWFForBlended() {
+    const applicationIds = (this.batchData && this.batchData.content && this.batchData.content.map(e => e.batchId)) || []
+    const req = {
+      applicationIds,
+      serviceName: 'blendedprogram',
+      limit: 100,
+      offset: 0,
+  }
+    this.contentSvc.fetchBlendedUserWF(req).then(
+      (data: any) => {
+        if (data && data.result && data.result.data.length) {
+          const latestWF = _.maxBy(data.result.data[0].wfInfo, (el: any) => {
+            return new Date(el.lastUpdatedOn).getTime()
+          })
+          // latestWF.currentStatus = this.WFBlendedProgramStatus.REJECTED
+           /* tslint:disable-next-line */
+          this.batchData!.workFlow = {
+              wfInitiated : true,
+              /* tslint:disable-next-line */
+              batch: this.batchData && this.batchData.content && this.batchData.content.find((e: any) => e.batchId === latestWF.applicationId),
+              wfItem: latestWF,
+          }
+          this.tocSvc.setWFData(this.batchData)
+        }
+        // this.batchData = data
+        // this.batchData.enrolled = false
+        // this.tocSvc.setBatchData(this.batchData)
+        // if (this.getBatchId()) {
+        //   this.router.navigate(
+        //     [],
+        //     {
+        //       relativeTo: this.route,
+        //       // queryParams: { batchId: this.getBatchId() },
+        //       queryParamsHandling: 'merge',
+        //     })
+        // }
+
+        this.loggerSvc.info('fetchBlendedUserWF data == ', data)
+      },
+      (error: any) => {
+        this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
+      },
+    )
+  }
+
+  public checkIfBatchExists(latest: any) {
+    if (!this.batchData || !this.batchData.content) {
+      return false
+    }
+    return this.batchData.content.find(b => b.batchId === latest.batchId)
+  }
   public getBatchId(): string {
     let batchId = ''
     if (this.batchData && this.batchData.content) {
