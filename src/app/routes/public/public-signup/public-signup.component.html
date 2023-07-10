@@ -100,7 +100,9 @@
                   </mat-error>
                 </mat-form-field>
               </div> -->
-              <div class="input-wrapper margin-top-s">
+
+              <!-- position field -->
+              <!-- <div class="input-wrapper margin-top-s">
                 <label for="position" class=" margin-remove-bottom form-label required"
                   i18n="Position|Label which explains the user to enter Position" i18n-aria-label
                   aria-label="Position Field label">
@@ -134,6 +136,44 @@
 
                   <mat-option class="custom bordered" *ngIf="(masterPositions | async)?.length === 0" [value]="">
                     <ng-container [ngTemplateOutlet]="noResult" [ngTemplateOutletContext]="{type: 'Position'}">
+                    </ng-container>
+                  </mat-option>
+                </mat-autocomplete>
+              </div> -->
+
+              <div class="input-wrapper margin-top-s">
+                <label for="group" class=" margin-remove-bottom form-label required"
+                  i18n="Group | Label which explains the user to enter Group" i18n-aria-label
+                  aria-label="Group Field label">
+                  Group
+                </label>
+                <mat-form-field appearance="outline" class="margin-top-s w-full" id="group">
+                  <input id="group" matInput tab-directive type="text" placeholder="Select your group"
+                    i18n-placeholder="group" formControlName="group" [matAutocomplete]="groupAutocomplete"
+                    i18n-aria-label aria-label="Group" #group i18n-aria-label aria-label="Group Field input" maxlength="50" />
+                  <mat-error [hidden]="false" i18n="Group Error | Explains Group is required"
+                    *ngIf="registrationForm?.controls['group'].errors?.required" i18n-aria-label
+                    aria-label="Group is mandatory">
+                    Group is mandatory
+                  </mat-error>
+                  <mat-error *ngIf="registrationForm?.controls['group'].errors?.forbiddenNames" i18n-aria-label
+                    aria-label="You must enter value from suggested list only.">
+                    You must enter value from suggested list only.
+                  </mat-error>
+                  <mat-error *ngIf="registrationForm?.controls['group'].errors?.pattern" i18n-aria-label
+                    aria-label="You must enter value from suggested list only.">
+                    Only alphabets, numbers, space and & - () are allowed.
+                  </mat-error> 
+                </mat-form-field>
+                <mat-autocomplete #groupAutocomplete="matAutocomplete" autoActiveFirstOption="true" i18n-aria-label
+                  aria-label="Group list masterGroup" [displayWith]="displayFnGroup">
+                  <mat-option *ngFor="let option of masterGroup | async" [value]="option" i18n-aria-label
+                    aria-label="Group list autocomplete option">
+                    {{ option }}
+                  </mat-option>
+
+                  <mat-option class="custom bordered" *ngIf="(masterGroup | async)?.length === 0" [value]="">
+                    <ng-container [ngTemplateOutlet]="noResult" [ngTemplateOutletContext]="{type: 'Group'}">
                     </ng-container>
                   </mat-option>
                 </mat-autocomplete>

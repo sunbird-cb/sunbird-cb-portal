@@ -36,6 +36,7 @@ import { PipeOrderByModule } from '@sunbird-cb/utils/src/lib/pipes/pipe-order-by
 import { AppPublicPositionResolverService } from './position-resolver.service'
 import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
 import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component'
+import { AppPublicGroupResolverService } from './group-resolver.service'
 
 @NgModule({
   declarations: [PublicSignupComponent, SignupSuccessDialogueComponent, TermsAndConditionComponent],
@@ -75,6 +76,7 @@ import { TermsAndConditionComponent } from './terms-and-condition/terms-and-cond
   providers: [
     SignupService,
     AppPublicPositionResolverService,
+    AppPublicGroupResolverService,
     {
       provide: RECAPTCHA_V3_SITE_KEY,
       useValue: environment.recaptchaKey,

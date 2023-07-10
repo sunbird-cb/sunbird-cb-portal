@@ -12,6 +12,7 @@ const API_END_POINTS = {
   ReSendOtp: '/api/otp/v1/generate',
   VerifyOtp: '/api/otp/v1/verify',
   GET_POSITIONS: '/api/user/v1/positions',
+  GET_GROUPS: '/api/user/v1/groups',
   SEARCH_ORG: '/api/org/ext/v2/signup/search',
 }
 
@@ -43,6 +44,10 @@ export class SignupService {
   }
   getPositions(): Observable<any> {
     return this.http.get<any>(API_END_POINTS.GET_POSITIONS)
+  }
+
+  getGroups(): Observable<any> {
+    return this.http.get<any>(API_END_POINTS.GET_GROUPS)
   }
 
   sendOtp(mob: number): Observable<any> {

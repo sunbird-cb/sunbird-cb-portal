@@ -96,7 +96,8 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   customCharsPattern = `^[a-zA-Z0-9 \\w\-\&\(\)]*$`
   positionsOriginal!: []
   postions!: any
-  masterPositions!: Observable<any> | undefined
+  // masterPositions!: Observable<any> | undefined
+  masterGroup!: Observable<any> | undefined
   telemetryConfig: NsInstanceConfig.ITelemetryConfig | null = null
   portalID = ''
   confirm = false
@@ -124,6 +125,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   private subscriptionContact: Subscription | null = null
   private recaptchaSubscription!: Subscription
   searching = false
+  groupsOriginal: any = []
 
   constructor(
     private signupSvc: SignupService,
@@ -141,7 +143,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       // lastname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       // tslint:disable-next-line:max-line-length
-      position: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterPositions)]),
+      // position: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterPositions)]),
+      // tslint:disable-next-line:max-line-length
+      group: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterGroup)]),
       // tslint:disable-next-line:max-line-length
       email: new FormControl('', [Validators.required, Validators.pattern(/^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@((?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?){2,}\.){1,3}(?:\w){2,}$/)]),
       // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
@@ -160,8 +164,10 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     // this.fetchDropDownValues('ministry')
     const instanceConfig = this.configSvc.instanceConfig
     this.positionsOriginal = this.activatedRoute.snapshot.data.positions.data || []
+    this.groupsOriginal = this.activatedRoute.snapshot.data.group.data || []
     this.OrgsSearchChange()
-    this.onPositionsChange()
+    // this.onPositionsChange()
+    this.onGroupChange()
     this.onPhoneChange()
     if (instanceConfig) {
       this.telemetryConfig = instanceConfig.telemetryConfig
@@ -203,20 +209,38 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     this.heirarchyObject = null
   }
 
-  onPositionsChange() {
+  // onPositionsChange() {
+  //   // tslint:disable-next-line: no-non-null-assertion
+  //   this.masterPositions = this.registrationForm.get('position')!.valueChanges
+  //     .pipe(
+  //       debounceTime(500),
+  //       distinctUntilChanged(),
+  //       startWith(''),
+  //       map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+  //       map(name => name ? this.filterPositions(name) : this.positionsOriginal.slice())
+  //     )
+
+  //   this.masterPositions.subscribe((event: any) => {
+  //     // tslint:disable-next-line: no-non-null-assertion
+  //     this.registrationForm.get('position')!.setValidators([Validators.required, forbiddenNamesValidatorPosition(event)])
+  //     this.registrationForm.updateValueAndValidity()
+  //   })
+  // }
+
+  onGroupChange() {
     // tslint:disable-next-line: no-non-null-assertion
-    this.masterPositions = this.registrationForm.get('position')!.valueChanges
+    this.masterGroup = this.registrationForm.get('group')!.valueChanges
       .pipe(
         debounceTime(500),
         distinctUntilChanged(),
         startWith(''),
-        map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
-        map(name => name ? this.filterPositions(name) : this.positionsOriginal.slice())
+        map((value: any) => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+        map((name: any) => name ? this.filterGroups(name) : this.groupsOriginal.slice())
       )
 
-    this.masterPositions.subscribe((event: any) => {
+    this.masterGroup.subscribe((event: any) => {
       // tslint:disable-next-line: no-non-null-assertion
-      this.registrationForm.get('position')!.setValidators([Validators.required, forbiddenNamesValidatorPosition(event)])
+      this.registrationForm.get('group')!.setValidators([Validators.required, forbiddenNamesValidatorPosition(event)])
       this.registrationForm.updateValueAndValidity()
     })
   }
@@ -270,7 +294,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
 
   orgClicked(event: any) {
     if (event) {
-      if (event.value && event.value.orgName) {
+      if (event.option && event.option.value && event.option.value.orgName) {
         const frmctr = this.registrationForm.get('organisation') as FormControl
         frmctr.setValue(_.get(event, 'option.value.orgName') || '')
         // frmctr.patchValue(_.get(event, 'option.value') || '')
@@ -282,12 +306,20 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     }
   }
 
-  private filterPositions(name: string): any {
+  // private filterPositions(name: string): any {
+  //   if (name) {
+  //     const filterValue = name.toLowerCase()
+  //     return this.positionsOriginal.filter((option: any) => option.name.toLowerCase().includes(filterValue))
+  //   }
+  //   return this.positionsOriginal
+  // }
+
+  private filterGroups(name: string): any {
     if (name) {
       const filterValue = name.toLowerCase()
-      return this.positionsOriginal.filter((option: any) => option.name.toLowerCase().includes(filterValue))
+      return this.groupsOriginal.filter((option: any) => option.toLowerCase().includes(filterValue))
     }
-    return this.positionsOriginal
+    return this.groupsOriginal
   }
 
   onPhoneChange() {
@@ -386,7 +418,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
               startTime + this.OTP_TIMER - Date.now(),
           ),
         )
-        .subscribe(_timeRemaining => {
+        .subscribe((_timeRemaining: any) => {
           this.timeLeftforOTP -= 1
           if (this.timeLeftforOTP < 0) {
             this.timeLeftforOTP = 0
@@ -421,6 +453,10 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     return value ? value.name : undefined
   }
 
+  displayFnGroup = (value: any) => {
+    return value ? value : undefined
+  }
+
   displayFnOrg = (value: any) => {
     return value ? value.orgName : ''
   }
@@ -439,7 +475,8 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
               // lastName: this.registrationForm.value.lastname || '',
               email: this.registrationForm.value.email || '',
               phone: `${this.registrationForm.value.mobile}` || '',
-              position: this.registrationForm.value.position.name || '',
+              // position: this.registrationForm.value.position.name || '',
+              group: this.registrationForm.value.group || '',
               source: `${environment.name}.${this.portalID}` || '',
               orgName: this.heirarchyObject.orgName || '',
               channel: this.heirarchyObject.channel || '',
