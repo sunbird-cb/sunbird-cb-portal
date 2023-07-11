@@ -118,8 +118,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   isMobileVerified = false
   degreefilteredOptions: INameField[] | undefined
   postDegreefilteredOptions: INameField[] | undefined
-  userNationality: string = ""
-
+ 
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -211,14 +210,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.getUserDetails()
     this.init()
     this.checkIfMobileNoChanged()
-
-    // this.fetchMeta()
-    // this.createUserForm.controls['nationality']!.setValue({name:'Indian'})
-    // console.log( this.createUserForm.get('nationality')!.value, "-------++++++++++++-----")
-    // this.onChangesNationality()
-
-    // this.assignPrimaryEmailType(this.isOfficialEmail)
-    // console.log(this.createUserForm)
   }
 
   displayFnPosition = (value: any) => {
@@ -252,7 +243,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
         this.createUserForm.patchValue({
           countryCode: '+91',
-          // nationality: 'Indian'
         })
         
         if (this.createUserForm.value.nationality === null || this.createUserForm.value.nationality === undefined) {
@@ -260,12 +250,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             nationality: 'Indian',
           })
         }
-        // this.userNationality = this.createUserForm.value.nationality
         this.onChangesNationality()
-        
-        // console.log(this.onChangesNationality(), "this.onChangesNationality()")
-        console.log(this.createUserForm.value.nationality, "this.createUserForm.value.nationality===")
-        // console.log(this.userNationality, "this.userNationality")
       },
       (_err: any) => {
       })
@@ -412,7 +397,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   onChangesNationality(): void {
     
     if (this.createUserForm.get('nationality') != null) {
-      console.log(this.createUserForm.get('nationality'), "this.createUserForm.get('nationality')=======")
       // tslint:disable-next-line: no-non-null-assertion
       this.masterNationality = this.createUserForm.get('nationality')!.valueChanges
         .pipe(
@@ -434,7 +418,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       })
 
     }
-    console.log(this.createUserForm.value.nationality, "this.createUserForm.value.nationality===")
   }
 
   onChangesLanuage(): void {
@@ -499,7 +482,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     
     if (name) {
       const filterValue = name.toLowerCase()
-      console.log(filterValue, "filterValue")
       return this.masterNationalities.filter(option => option.name.toLowerCase().includes(filterValue))
     }
     return this.masterNationalities
@@ -841,7 +823,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   private constructFormFromRegistry(data: any, academics: NsUserProfileDetails.IAcademics, organisation: any) {
-    console.log(data, "data")
     /* tslint:disable */
     this.createUserForm.patchValue({
       firstname: data.personalDetails.firstname,
@@ -1227,13 +1208,20 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       }
       if (currentControl.dirty) {
         personalDetailsFields.forEach(item => {
+          
+          
           if (item === 'phoneVerified') {
             personalDetail[item] = this.isMobileVerified
           }
           if (item === name) {
+            
+            // console.log(name, "name--")
+            // console.log(form.value, "form.value")
             switch (name) {
+              
               case 'knownLanguages': return personalDetail['knownLanguages'] = form.value.knownLanguages
               case 'dob': return personalDetail['dob'] = form.value.dob
+              case 'nationality': return personalDetail['nationality']  = form.value.nationality
               case 'secondaryEmail': return personalDetail['personalEmail'] = form.value.secondaryEmail
               case 'residenceAddress': return personalDetail['postalAddress'] = form.value.residenceAddress
               case 'telephone': return personalDetail['telephone'] = `${form.value.telephone}` || ''
@@ -1328,17 +1316,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   async onSubmit(form: any) {
-    debugger
     this.uploadSaveData = true
     // DO some customization on the input data
     form.value.knownLanguages = this.selectedKnowLangs
     form.value.interests = this.personalInterests
     form.value.hobbies = this.selectedHobbies
-    console.log(form.value.nationality, "form.value.nationalityform")
-    form.value.nationality = this.userNationality
-    
-    console.log(this.userNationality, "this.userNationality===")
-    return 
     form.value.dob = changeformat(new Date(`${form.value.dob}`))
     form.value.allotmentYear = `${form.value.allotmentYear}`
     form.value.civilListNo = `${form.value.civilListNo}`
@@ -1349,9 +1331,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     if (form.value.doj) {
       form.value.doj = changeformat(new Date(`${form.value.doj}`))
-    }
-
-    // this.uploadSaveData = true
+    }        
     this.getEditedValues(form)
     // Construct the request structure for open saber
     // const profileRequest = this.constructReq(form)
@@ -1364,15 +1344,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     //   },
     // }
 
-    const reqUpdates = {
+    let reqUpdates = {
       request: {
         userId: this.configSvc.unMappedUser.id,
         avatar: this.photoUrl,
         ...this.changedProperties,
       },
-    }
 
-    // console.log( reqUpdate)
+    }
+    reqUpdates.request.profileDetails.personalDetails['nationality']  = form.value.nationality
+
     this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(
       res => {
         this.uploadSaveData = false
@@ -1411,7 +1392,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               this.openSnackbar(this.toastError.nativeElement.value, this.userProfileData.id)
             }
           }
-          console.log(reqUpdates.request.profileDetails, "reqUpdates.request.profileDetails")
           this.configSvc.updateGlobalProfile(true)
         } else {
           this.openSnackbar(this.toastError.nativeElement.value)
