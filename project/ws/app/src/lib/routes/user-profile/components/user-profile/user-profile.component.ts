@@ -29,7 +29,7 @@ import { LoaderService } from '@ws/author/src/public-api'
 /* tslint:disable */
 import _ from 'lodash'
 import { OtpService } from '../../services/otp.services';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment'
 /* tslint:enable */
 
 export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
@@ -188,7 +188,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       otherDetailsOfficePinCode: new FormControl('', []),
       departmentName: new FormControl('', []),
     })
-    this.init()
+    
   }
   async init() {
     await this.loadDesignations()
@@ -206,7 +206,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     if (approvalData.length > 0) {
       // need to call search API
     }
+
     this.getUserDetails()
+    this.init()
     this.checkIfMobileNoChanged()
     
     // this.fetchMeta()
@@ -215,6 +217,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     // this.onChangesNationality()
 
     // this.assignPrimaryEmailType(this.isOfficialEmail)
+    // console.log(this.createUserForm)
   }
 
   displayFnPosition = (value: any) => {
@@ -245,12 +248,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           this.countries.push({ name: item.name })
           this.countryCodes.push(item.countryCode)
         })
-        console.log(this.masterNationalities, "this.masterNationalities")
-        // this.createUserForm.patchValue({
-        //   // countryCode: this.countryCodes[0],
-        //   nationality: this.masterNationalities[74].name
-        // })
-        // this.createUserForm.get('nationality')!.setValue('Indian' ,{emitEvent:false})
+        
+        this.createUserForm.patchValue({
+          countryCode: '+91',
+          // nationality: 'Indian'
+        })
+        if(this.createUserForm.get('nationality')! === undefined || this.createUserForm.value.nationality === undefined){
+          this.createUserForm.patchValue({
+            nationality: 'Indian'
+          })
+        }
         this.onChangesNationality()
       },
       (_err: any) => {
@@ -396,7 +403,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   onChangesNationality(): void {
-    // debugger
     if (this.createUserForm.get('nationality') != null) {
       // tslint:disable-next-line: no-non-null-assertion
       this.masterNationality = this.createUserForm.get('nationality')!.valueChanges
@@ -413,6 +419,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.masterNationality.subscribe(event => {
         // tslint:disable-next-line: no-non-null-assertion
         this.createUserForm.get(newLocal)!.setValidators([Validators.required, forbiddenNamesValidator(event)])
+        
         this.createUserForm.updateValueAndValidity()
 
       })
@@ -641,6 +648,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       // if (this.configSvc.userProfile) {
       this.userProfileSvc.getUserdetailsFromRegistry(this.configSvc.unMappedUser.id).subscribe(
         (data: any) => {
+          
           const userData = {
             ...data.profileDetails || _.get(this.configSvc.unMappedUser, 'profileDetails'),
             id: data.id, userId: data.userId,
@@ -661,7 +669,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
                 firstname: this.configSvc.userProfile.firstName,
                 // surname: this.configSvc.userProfile.lastName,
                 primaryEmail: _.get(this.userProfileData, 'personalDetails.primaryEmail') || this.configSvc.userProfile.email,
-                orgName: this.configSvc.userProfile.rootOrgName,
+                orgName: this.configSvc.userProfile.rootOrgName
+            
+                
               })
             }
           }
@@ -693,7 +703,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           firstname: tempData.firstName,
           // surname: tempData.lastName,
           primaryEmail: _.get(this.configSvc.unMappedUser, 'profileDetails.personalDetails.primaryEmail') || tempData.email,
-          orgName: tempData.rootOrgName,
+          orgName: tempData.rootOrgName
+       
         })
       }
     }
@@ -1174,7 +1185,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     const personalDetail: any = {}
     const personalDetailsFields = ['firstname', 'middlename', 'surname',
-      'dob', 'nationality', 'domicileMedium', 'gender', 'maritalStatus',
+      'dob', 'nationality', 'domicileMedium', 'gender', 'maritalStatus', 'photo',
       'category', 'knownLanguages', 'countryCode', 'mobile', 'phoneVerified', 'telephone',
       'primaryEmail', 'officialEmail', 'personalEmail', 'postalAddress',
       'pincode', 'secondaryEmail', 'residenceAddress', 'primaryEmailType']
@@ -1340,6 +1351,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const reqUpdates = {
       request: {
         userId: this.configSvc.unMappedUser.id,
+        avatar: this.photoUrl,
         ...this.changedProperties,
       },
     }
