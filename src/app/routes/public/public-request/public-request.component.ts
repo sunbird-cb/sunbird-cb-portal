@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormControl, Validators, AbstractControl, ValidatorFn } from '@angular/forms'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { environment } from 'src/environments/environment'
 // tslint:disable-next-line: import-name
@@ -56,12 +56,21 @@ export class PublicRequestComponent implements OnInit {
   requestObj: { state: string; action: string; serviceName: string; userId: string;
     applicationId: string; actorUserId: string; deptName: string; updateFieldValues: any}  | undefined
   formobj: { toValue: {} ; fieldKey: any; description: any; firstName: any; email: any; mobile: any} | undefined
+  userform: any
 
   constructor(private activatedRoute: ActivatedRoute,
+              private router: Router,
               private snackBar: MatSnackBar,
               private signupSvc: SignupService,
               private dialog: MatDialog,
               private requestSvc: RequestService) {
+    const navigation = this.router.getCurrentNavigation()
+    if (navigation) {
+      const extraData = navigation.extras.state as {
+        userform: any
+      }
+      this.userform = extraData.userform
+    }
     this.requestType = this.activatedRoute.snapshot.queryParams.type
     this.requestForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
@@ -77,6 +86,22 @@ export class PublicRequestComponent implements OnInit {
       addDetails: new FormControl('', []),
       confirmBox: new FormControl(false, [Validators.required]),
     })
+    if (this.userform) {
+      this.requestForm.patchValue({
+        firstname: this.userform.firstname ? this.userform.firstname : '',
+        email: this.userform.email ? this.userform.email : '',
+        mobile: this.userform.mobile ? this.userform.mobile : '',
+        organisation: this.userform.organisation ? this.userform.organisation : '',
+        domain: this.userform.domain ? this.userform.domain : '',
+        addDetails: this.userform.addDetails ? this.userform.addDetails : '',
+        confirmBox: this.userform.confirmBox ? this.userform.confirmBox : '',
+      })
+      this.confirm = this.userform.confirmBox
+      this.requestForm.controls['firstname'].markAsTouched()
+      this.requestForm.controls['email'].markAsTouched()
+      this.requestForm.controls['mobile'].markAsTouched()
+      this.requestForm.controls['confirmBox'].markAsTouched()
+    }
    }
 
   ngOnInit() {
@@ -162,7 +187,7 @@ export class PublicRequestComponent implements OnInit {
               startTime + this.OTP_TIMER - Date.now(),
           ),
         )
-        .subscribe(_timeRemaining => {
+        .subscribe((_timeRemaining: any) => {
           this.timeLeftforOTP -= 1
           if (this.timeLeftforOTP < 0) {
             this.timeLeftforOTP = 0

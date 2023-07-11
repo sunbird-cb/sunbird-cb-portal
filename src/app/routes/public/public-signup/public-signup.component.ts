@@ -149,7 +149,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       // tslint:disable-next-line:max-line-length
       email: new FormControl('', [Validators.required, Validators.pattern(/^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@((?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?){2,}\.){1,3}(?:\w){2,}$/)]),
       // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
-      mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
+      mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern), Validators.maxLength(12)]),
       confirmBox: new FormControl(false, [Validators.required]),
       confirmTermsBox: new FormControl(false, [Validators.required]),
       type: new FormControl('ministry', [Validators.required]),
@@ -568,7 +568,8 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   // }
 
   navigateTo(param?: any) {
+    const formData = this.registrationForm.value
     const url = '/public/request'
-    this.router.navigate([url], {  queryParams: { type: param } })
+    this.router.navigate([url], {  queryParams: { type: param }, state: { userform: formData } })
   }
 }
