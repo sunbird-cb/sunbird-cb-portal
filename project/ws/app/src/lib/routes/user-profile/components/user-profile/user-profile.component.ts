@@ -260,10 +260,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             nationality: 'Indian',
           })
         }
+        // this.userNationality = this.createUserForm.value.nationality
         this.onChangesNationality()
-        this.userNationality = this.createUserForm.value.nationality
-        console.log(this.onChangesNationality(), "this.onChangesNationality()")
+        
+        // console.log(this.onChangesNationality(), "this.onChangesNationality()")
         console.log(this.createUserForm.value.nationality, "this.createUserForm.value.nationality===")
+        // console.log(this.userNationality, "this.userNationality")
       },
       (_err: any) => {
       })
@@ -408,7 +410,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   onChangesNationality(): void {
+    
     if (this.createUserForm.get('nationality') != null) {
+      console.log(this.createUserForm.get('nationality'), "this.createUserForm.get('nationality')=======")
       // tslint:disable-next-line: no-non-null-assertion
       this.masterNationality = this.createUserForm.get('nationality')!.valueChanges
         .pipe(
@@ -492,9 +496,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   private filterNationality(name: string): INation[] {
+    
     if (name) {
       const filterValue = name.toLowerCase()
-      // console.log(filterValue, "filterValue")
+      console.log(filterValue, "filterValue")
       return this.masterNationalities.filter(option => option.name.toLowerCase().includes(filterValue))
     }
     return this.masterNationalities
@@ -1323,11 +1328,17 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   async onSubmit(form: any) {
+    debugger
     this.uploadSaveData = true
     // DO some customization on the input data
     form.value.knownLanguages = this.selectedKnowLangs
     form.value.interests = this.personalInterests
     form.value.hobbies = this.selectedHobbies
+    console.log(form.value.nationality, "form.value.nationalityform")
+    form.value.nationality = this.userNationality
+    
+    console.log(this.userNationality, "this.userNationality===")
+    return 
     form.value.dob = changeformat(new Date(`${form.value.dob}`))
     form.value.allotmentYear = `${form.value.allotmentYear}`
     form.value.civilListNo = `${form.value.civilListNo}`
