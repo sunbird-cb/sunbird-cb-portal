@@ -118,6 +118,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   isMobileVerified = false
   degreefilteredOptions: INameField[] | undefined
   postDegreefilteredOptions: INameField[] | undefined
+  userNationality: string = ""
 
   constructor(
     private snackBar: MatSnackBar,
@@ -188,12 +189,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       otherDetailsOfficePinCode: new FormControl('', []),
       departmentName: new FormControl('', []),
     })
-    
+
   }
   async init() {
     await this.loadDesignations()
     this.fetchMeta()
-    
+
   }
   ngOnInit() {
     // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
@@ -210,7 +211,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.getUserDetails()
     this.init()
     this.checkIfMobileNoChanged()
-    
+
     // this.fetchMeta()
     // this.createUserForm.controls['nationality']!.setValue({name:'Indian'})
     // console.log( this.createUserForm.get('nationality')!.value, "-------++++++++++++-----")
@@ -248,17 +249,21 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           this.countries.push({ name: item.name })
           this.countryCodes.push(item.countryCode)
         })
-        
+
         this.createUserForm.patchValue({
           countryCode: '+91',
           // nationality: 'Indian'
         })
-        if(this.createUserForm.get('nationality')! === undefined || this.createUserForm.value.nationality === undefined){
+        
+        if (this.createUserForm.value.nationality === null || this.createUserForm.value.nationality === undefined) {
           this.createUserForm.patchValue({
-            nationality: 'Indian'
+            nationality: 'Indian',
           })
         }
         this.onChangesNationality()
+        this.userNationality = this.createUserForm.value.nationality
+        console.log(this.onChangesNationality(), "this.onChangesNationality()")
+        console.log(this.createUserForm.value.nationality, "this.createUserForm.value.nationality===")
       },
       (_err: any) => {
       })
@@ -419,13 +424,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.masterNationality.subscribe(event => {
         // tslint:disable-next-line: no-non-null-assertion
         this.createUserForm.get(newLocal)!.setValidators([Validators.required, forbiddenNamesValidator(event)])
-        
+
         this.createUserForm.updateValueAndValidity()
 
       })
-      
-     
-    } 
+
+    }
+    console.log(this.createUserForm.value.nationality, "this.createUserForm.value.nationality===")
   }
 
   onChangesLanuage(): void {
@@ -648,7 +653,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       // if (this.configSvc.userProfile) {
       this.userProfileSvc.getUserdetailsFromRegistry(this.configSvc.unMappedUser.id).subscribe(
         (data: any) => {
-          
+
           const userData = {
             ...data.profileDetails || _.get(this.configSvc.unMappedUser, 'profileDetails'),
             id: data.id, userId: data.userId,
@@ -669,9 +674,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
                 firstname: this.configSvc.userProfile.firstName,
                 // surname: this.configSvc.userProfile.lastName,
                 primaryEmail: _.get(this.userProfileData, 'personalDetails.primaryEmail') || this.configSvc.userProfile.email,
-                orgName: this.configSvc.userProfile.rootOrgName
-            
-                
+                orgName: this.configSvc.userProfile.rootOrgName,
+
               })
             }
           }
@@ -703,8 +707,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           firstname: tempData.firstName,
           // surname: tempData.lastName,
           primaryEmail: _.get(this.configSvc.unMappedUser, 'profileDetails.personalDetails.primaryEmail') || tempData.email,
-          orgName: tempData.rootOrgName
-       
+          orgName: tempData.rootOrgName,
+
         })
       }
     }
@@ -832,6 +836,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   private constructFormFromRegistry(data: any, academics: NsUserProfileDetails.IAcademics, organisation: any) {
+    console.log(data, "data")
     /* tslint:disable */
     this.createUserForm.patchValue({
       firstname: data.personalDetails.firstname,
@@ -1395,6 +1400,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               this.openSnackbar(this.toastError.nativeElement.value, this.userProfileData.id)
             }
           }
+          console.log(reqUpdates.request.profileDetails, "reqUpdates.request.profileDetails")
           this.configSvc.updateGlobalProfile(true)
         } else {
           this.openSnackbar(this.toastError.nativeElement.value)
