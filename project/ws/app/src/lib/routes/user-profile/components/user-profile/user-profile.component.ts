@@ -118,7 +118,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   isMobileVerified = false
   degreefilteredOptions: INameField[] | undefined
   postDegreefilteredOptions: INameField[] | undefined
- 
+
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -244,7 +244,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.createUserForm.patchValue({
           countryCode: '+91',
         })
-        
+
         if (this.createUserForm.value.nationality === null || this.createUserForm.value.nationality === undefined) {
           this.createUserForm.patchValue({
             nationality: 'Indian',
@@ -395,7 +395,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   onChangesNationality(): void {
-    
+
     if (this.createUserForm.get('nationality') != null) {
       // tslint:disable-next-line: no-non-null-assertion
       this.masterNationality = this.createUserForm.get('nationality')!.valueChanges
@@ -479,7 +479,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   private filterNationality(name: string): INation[] {
-    
+
     if (name) {
       const filterValue = name.toLowerCase()
       return this.masterNationalities.filter(option => option.name.toLowerCase().includes(filterValue))
@@ -1208,17 +1208,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       }
       if (currentControl.dirty) {
         personalDetailsFields.forEach(item => {
-          
-          
+
           if (item === 'phoneVerified') {
             personalDetail[item] = this.isMobileVerified
           }
           if (item === name) {
-            
+
             // console.log(name, "name--")
             // console.log(form.value, "form.value")
             switch (name) {
-              
+
               case 'knownLanguages': return personalDetail['knownLanguages'] = form.value.knownLanguages
               case 'dob': return personalDetail['dob'] = form.value.dob
               case 'nationality': return personalDetail['nationality']  = form.value.nationality
@@ -1331,7 +1330,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     if (form.value.doj) {
       form.value.doj = changeformat(new Date(`${form.value.doj}`))
-    }        
+    }
     this.getEditedValues(form)
     // Construct the request structure for open saber
     // const profileRequest = this.constructReq(form)
@@ -1344,7 +1343,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     //   },
     // }
 
-    let reqUpdates = {
+    const reqUpdates = {
       request: {
         userId: this.configSvc.unMappedUser.id,
         avatar: this.photoUrl,
