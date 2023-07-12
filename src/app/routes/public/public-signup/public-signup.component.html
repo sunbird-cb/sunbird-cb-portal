@@ -173,7 +173,7 @@
                   </mat-option>
 
                   <mat-option class="custom bordered" *ngIf="(masterGroup | async)?.length === 0" [value]="">
-                    <ng-container [ngTemplateOutlet]="noResult" [ngTemplateOutletContext]="{type: 'Group'}">
+                    <ng-container [ngTemplateOutlet]="onlynoResult" [ngTemplateOutletContext]="{type: 'Group'}">
                     </ng-container>
                   </mat-option>
                 </mat-autocomplete>
@@ -217,7 +217,7 @@
                       aria-label="Mobile Number input" maxlength="12"> -->
                     <input  id="mobileNumber" #mobile type="number" matInput
                       placeholder="Mobile Number" formControlName="mobile" i18n-aria-label
-                      aria-label="Mobile Number input" maxlength="12">
+                      aria-label="Mobile Number input">
                     <mat-icon matSuffix class="ws-mat-green-text margin-xs" svgIcon="verified" [hidden]="!isMobileVerified"></mat-icon>
                     <mat-error [hidden]="false" i18n="Mobile Number Error|Explains Mobile no is required"
                       *ngIf="registrationForm?.controls['mobile'].errors?.required" i18n-aria-label
@@ -364,6 +364,11 @@
                   <div class="mat-body-2 padding-top-xs">
                     <a  class="flex-1 ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo(type)"> Request for help</a>
                   </div>
+                </div>
+              </ng-template>
+              <ng-template #onlynoResult let-type="type">
+                <div class="flex-col text-center items-center justify-center px-6 py-3">
+                  <div class="mat-body-2 px-6">We couldn't find any matches for your search.</div>
                 </div>
               </ng-template>
               <div class="input-wrapper margin-top-s">
