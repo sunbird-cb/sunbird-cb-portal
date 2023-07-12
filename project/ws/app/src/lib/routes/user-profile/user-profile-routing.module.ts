@@ -12,7 +12,7 @@ const routes: Routes = [
         pageType: 'feature',
         pageKey: 'edit-profile',
         pageId: 'details',
-        module: 'Profile',
+        module: 'Network',
       },
     resolve: {
         profileData: ProfileResolverService,
