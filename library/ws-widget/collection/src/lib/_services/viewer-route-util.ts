@@ -54,6 +54,8 @@ export const VIEWER_ROUTE_FROM_MIME = (mimeType: NsContent.EMimeTypes) => {
       return 'practice'
     case NsContent.EMimeTypes.COLLECTION_RESOURCE:
       return 'resource-collection'
+    case NsContent.EMimeTypes.OFFLINE_SESSION:
+      return 'offline-session'
     default:
       return 'html'
   }

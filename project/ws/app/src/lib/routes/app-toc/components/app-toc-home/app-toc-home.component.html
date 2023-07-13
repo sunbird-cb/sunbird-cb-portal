@@ -382,6 +382,12 @@ TODO: edit option while preview Mode
               <span *ngIf="tocStructure?.video === 1" i18n> Video</span>
               <span *ngIf="tocStructure?.video > 1" i18n> Videos</span>
             </p>
+            <p *ngIf="tocStructure?.offlineSession > 0" class="mat-body-2 cs-icons">
+              <img src="/assets/icons/content/grey/module.svg" alt="Ofline sessions" class="margin-right-xs"> {{
+              tocStructure?.offlineSession }}
+              <span *ngIf="tocStructure?.offlineSession === 1" i18n> Session</span>
+              <span *ngIf="tocStructure?.offlineSession > 1" i18n> Sessions</span>
+            </p>
             <!-- <p *ngIf="tocStructure?.interactiveVideo > 0" class="mat-body-2 cs-icons">
                 <img src="/assets/icons/content/grey/video.svg" alt="Video" class="margin-right-xs"> {{ tocStructure?.interactiveVideo }}
                 <span *ngIf="tocStructure?.interactiveVideo === 1" i18n>
