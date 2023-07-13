@@ -9,6 +9,8 @@ import _ from 'lodash'
 const API_END_POINTS = {
   ASSESSMENT_SUBMIT_V2: `/apis/protected/v8/user/evaluate/assessment/submit/v2`,
   ASSESSMENT_SUBMIT_V3: `/apis/protected/v8/user/evaluate/assessment/submit/v3`,
+  ASSESSMENT_SUBMIT_V4: `/apis/protected/v8/user/evaluate/assessment/submit/v4`,
+  ASSESSMENT_RESULT_V4: `/apis/proxies/v8/user/assessment/v4/result`,
   QUESTION_PAPER_SECTIONS: `/apis/proxies/v8/assessment/read`,
   QUESTION_PAPER_QUESTIONS: `/apis/proxies/v8/question/read`,
   CAN_ATTEMPT: (assessmentId: any) => `/apis/proxies/v8/user/assessment/retake/${assessmentId}`,
@@ -63,7 +65,6 @@ export class PracticeService {
   }
   qAnsHash(value: any) {
     // tslint:disable-next-line
-    // console.log(value, '=====')
     this.questionAnswerHash.next(value)
   }
   submitQuizV2(req: NSPractice.IQuizSubmitRequest): Observable<NSPractice.IQuizSubmitResponse> {
@@ -73,67 +74,19 @@ export class PracticeService {
     return this.http.post<{ result: NSPractice.IQuizSubmitResponseV2 }>(API_END_POINTS.ASSESSMENT_SUBMIT_V3, req).pipe(map(response => {
       return response.result
     }))
-    // if (req) {
-    // const response = {
-    //   "id": "api.questions.list",
-    //   "ver": "3.0",
-    //   "ts": "2022-03-14T09:35:34ZZ",
-    //   "params": {
-    //     "resmsgid": "92ae178e-3f81-4fe5-8d48-47859a8d3c0e",
-    //     "msgid": null,
-    //     "err": null,
-    //     "status": "successful",
-    //     "errmsg": null
-    //   },
-    //   "responseCode": "OK",
-    //   "result": {
-    //     "identifier": "do_11331189852786688015725",
-    //     "isAssessment": true,
-    //     "objectType": "QuestionSet",
-    //     "primaryCategory": "Practice Question Set",
-    //     "children": [
-    //       {
-    //         "identifier": "do_113471599969681408116",
-    //         "objectType": "QuestionSet",
-    //         "primaryCategory": "Practice Question Set",
-    //         "scoreCutoffType": "SectionLevel",
-    //         "minimumPassPercentage": 60,
-    //         "result": 50,
-    //         "total": 4,
-    //         "blank": 0,
-    //         "correct": 2,
-    //         "passPercent": 60,
-    //         "inCorrect": 2,
-    //         "pass": false
-    //       },
-    //       {
-    //         "identifier": "xyz",
-    //         "objectType": "QuestionSet",
-    //         "primaryCategory": "Practice Question Set",
-    //         "scoreCutoffType": "SectionLevel",
-    //         "result": 66.66666666666667,
-    //         "total": 3,
-    //         "blank": 0,
-    //         "correct": 2,
-    //         "passPercent": 60,
-    //         "inCorrect": 1,
-    //         "pass": true
-    //       }
-    //     ],
-    //     "overallResult": 66.66666666666667,
-    //     "total": 7,
-    //     "blank": 0,
-    //     "correct": 6,
-    //     "passPercent": 60,
-    //     "inCorrect": 1,
-    //     "pass": false
-    //   },
-    // }
-    // tslint:disable-next-line
-    //   return of(JSON.parse(JSON.stringify(response.result)))
-    // }
-    // return EMPTY
   }
+  submitQuizV4(req: NSPractice.IQuizSubmit): Observable<any> {
+    return this.http.post<{ result: NSPractice.IQuizSubmitResponseV2 }>(API_END_POINTS.ASSESSMENT_SUBMIT_V4, req).pipe(map(response => {
+      return response
+    }))
+  }
+
+  quizResult(req: any) {
+    return this.http.post<{ result: NSPractice.IQuizSubmitResponseV2 }>(API_END_POINTS.ASSESSMENT_RESULT_V4, req).pipe(map(response => {
+      return response
+    }))
+  }
+
   createAssessmentSubmitRequest(
     identifier: string,
     title: string,
