@@ -226,7 +226,7 @@ const routes: Routes = [
         data: {
           pageType: 'feature',
           pageKey: 'profile',
-          pageId: "app/profile"
+          pageId: 'app/profile',
         },
         resolve: {
           pageData: PageResolve,
