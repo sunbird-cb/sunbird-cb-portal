@@ -14,6 +14,7 @@ export class ResultComponent implements OnChanges {
   @Input() quizCategory!: NsContent.EPrimaryCategory
   @Input() quizResponse!: NSPractice.IQuizSubmitResponseV2
   @Output() userSelection = new EventEmitter<string>()
+  @Output() fetchResult = new EventEmitter<string>()
   staticImage = '/assets/images/exam/practice-result.png'
   questionTYP = NsContent.EPrimaryCategory
   constructor() {
@@ -36,5 +37,9 @@ export class ResultComponent implements OnChanges {
       }
     }
     return false
+  }
+
+  retryResult() {
+    this.fetchResult.emit()
   }
 }

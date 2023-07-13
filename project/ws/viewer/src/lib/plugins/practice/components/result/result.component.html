@@ -32,7 +32,7 @@
           <span class="mat-heading" i18n>We are not able to fetch the result</span>
         </div>
         <div class="flex flex-row flex-center text-center flex-middle margin-top-xl">
-          <button mat-button  class="ws-mat-primary-background text-white m-w padding-xs">
+          <button mat-button  class="ws-mat-primary-background text-white m-w padding-xs" (click)="retryResult()">
             <mat-icon>refresh</mat-icon> Retry</button>
         </div>
       </ng-container>

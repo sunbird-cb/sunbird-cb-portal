@@ -824,14 +824,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     if (quizV4Res && quizV4Res.params && quizV4Res.params.status.toLowerCase() === 'success') {
       if (quizV4Res.result.primaryCategory === 'Course Assessment') {
         setTimeout(() => {
-          const req = {
-            request: {
-              assessmentId: this.generateRequest.identifier,
-              batchId: this.generateRequest.batchId,
-              courseId: this.generateRequest.courseId,
-            },
-          }
-          this.getQuizResult(req)
+          this.getQuizResult()
         },         environment.quizResultTimeout)
       } else if (quizV4Res.result.primaryCategory === 'Practice Question Set') {
         this.assignQuizResult(quizV4Res.result)
@@ -1129,7 +1122,14 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  async getQuizResult(req: any) {
+  async getQuizResult() {
+    const req = {
+      request: {
+        assessmentId: this.generateRequest.identifier,
+        batchId: this.generateRequest.batchId,
+        courseId: this.generateRequest.courseId,
+      },
+    }
     const resultRes: any = await this.quizSvc.quizResult(req).toPromise().catch(_error => {})
     if (resultRes && resultRes.params && resultRes.params.status.toLowerCase() === 'success') {
       if (resultRes.result) {
