@@ -93,6 +93,7 @@ export namespace NSPractice {
     passPercentage: number
     incorrect: number
     pass: boolean
+    isInProgress?: boolean
   }
 
   export interface IQPaper {
