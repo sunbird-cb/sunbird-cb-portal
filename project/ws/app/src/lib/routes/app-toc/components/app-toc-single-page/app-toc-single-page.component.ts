@@ -574,27 +574,27 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
 
     const totRatings = _.get(this.ratingSummary, 'sum_of_total_ratings') || 0
     ratingSummaryPr.breakDown.push({
-      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount1stars'), totRatings),
+      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount1stars'), 1, totRatings),
       key: 1,
       value: _.get(this.ratingSummary, 'totalcount1stars'),
     })
     ratingSummaryPr.breakDown.push({
-      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount2stars'), totRatings),
+      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount2stars'), 2, totRatings),
       key: 2,
       value: _.get(this.ratingSummary, 'totalcount2stars'),
     })
     ratingSummaryPr.breakDown.push({
-      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount3stars'), totRatings),
+      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount3stars'), 3, totRatings),
       key: 3,
       value: _.get(this.ratingSummary, 'totalcount3stars'),
     })
     ratingSummaryPr.breakDown.push({
-      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount4stars'), totRatings),
+      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount4stars'), 4, totRatings),
       key: 4,
       value: _.get(this.ratingSummary, 'totalcount4stars'),
     })
     ratingSummaryPr.breakDown.push({
-      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount5stars'), totRatings),
+      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount5stars'), 5, totRatings),
       key: 5,
       value: _.get(this.ratingSummary, 'totalcount5stars'),
     })
@@ -640,8 +640,11 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     this.ratingReviews = this.ratingReviews.slice()
   }
 
-  countStarsPercentage(value: any, total: any) {
-    return ((value / total) * 100).toFixed(2)
+  countStarsPercentage(value: any, key: any, total: any) {
+    if (value && total) {
+      return (((value * key) / total) * 100).toFixed(2)
+    }
+    return 0
   }
 
   getRatingIcon(ratingIndex: number, avg: number): 'star' | 'star_border' | 'star_half' {

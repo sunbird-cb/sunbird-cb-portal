@@ -27,7 +27,7 @@
   $iconColor: mat-color($foreground, icon);
   $colorGreen: #5fa800;
   $colorGreen2: #1d8923;
-  $colorRed: #ff0000;
+  $colorRed: #D13924;
   $colorOrange: rgba(246, 153, 83, 1);
   $footerColor: #373434;
   $footerTextColor: #dedfe0;
@@ -38,6 +38,7 @@
   $colorBlack16: rgba(0, 0, 0, 0.16);
   $colorBlack040: rgba(0, 0, 0, 0.04);
   $colorLighterGrey: #bbbcbc;
+  $colorLightBlue: #cbe2f0;
 
   outline-color: mat-color($accent, lighter);
 
@@ -123,6 +124,10 @@
 
     .ws-mat-accent-text {
       color: $colorAccentDark !important;
+    }
+
+    .ws-mat-accent-light-bg {
+      background-color: $colorLightBlue !important;
     }
 
     .ws-mat-primary-lite-background-on-day {
@@ -367,6 +372,10 @@
 
     .ws-mat-accent-text {
       color: $colorAccent;
+    }
+
+    .ws-mat-accent-light-bg {
+      background-color: $colorLightBlue !important;
     }
 
     .ws-mat-primary-lite-background-on-day {
