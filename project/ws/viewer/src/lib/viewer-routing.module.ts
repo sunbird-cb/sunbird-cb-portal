@@ -216,7 +216,7 @@ const routes: Routes = [
     resolve: {
       content: ViewerResolve,
     },
-    loadChildren: () => import('./routes/offline-resource/offline-resource.module').then(p => p.OfflineResourceModule),
+    loadChildren: () => import('./routes/offline-session/offline-session.module').then(p => p.OfflineSessionModule),
   },
   {
     path: 'survey',
