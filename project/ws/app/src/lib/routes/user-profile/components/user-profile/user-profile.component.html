@@ -43,7 +43,7 @@
                         </label>
                         <mat-form-field appearance="outline" class="margin-top-xs">
                           <input id="firstName" matInput #firstname formControlName="firstname" i18n-placeholder
-                            placeholder="Enter First Name" i18n-aria-label aria-label="First Name input" maxlength="150" />
+                            placeholder="Enter Full Name" i18n-aria-label aria-label="First Name input" maxlength="150" />
                           <mat-error [hidden]="false" i18n="First Name Error|Explains name is required" i18n-aria-label
                             aria-label="First Name Error|Explains name is required "
                             *ngIf="createUserForm?.controls['firstname'].errors?.required">
@@ -1229,7 +1229,7 @@
           <mat-spinner [diameter]="30"></mat-spinner>
         </div>
         <button mat-raised-button type="submit" (click)="onSubmit(createUserForm)"
-          class="text-white btn-success btn-responsive" [disabled]="uploadSaveData || createUserForm?.invalid">
+          class="text-white btn-success btn-responsive" [disabled]="createUserForm?.invalid">
           <span class="text-white" i18n>
             Save Details
           </span>

@@ -37,6 +37,7 @@ export class ContentProgressService {
   }
   private fetchProgressHash(contentId: string, batch: number, userId: string) {
     this.isFetchingProgress = true
+
     this.http.post<{ [id: string]: number, [batch: number]: number }>(`apis/proxies/v8/read/content-progres/${contentId}`, {
       request:
       {

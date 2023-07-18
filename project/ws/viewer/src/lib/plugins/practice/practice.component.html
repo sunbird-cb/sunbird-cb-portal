@@ -222,7 +222,7 @@
         <div id="quiz-end"></div>
         <ng-container *ngIf="isSubmitted && (viewState === 'answer' || viewState === 'review')">
           <viewer-result [quizCategory]="primaryCategory" [quizResponse]="finalResponse" [percentage]="result"
-            [isPassed]="finalResponse?.pass" (userSelection)="action($event)">
+            [isPassed]="finalResponse?.pass" (userSelection)="action($event)" (fetchResult)="getQuizResult()">
           </viewer-result>
           <!-- <mat-card class="margin-bottom-m margin-top-m">
             <div class="margin-m" *ngIf="fetchingResultsStatus === 'fetching'">

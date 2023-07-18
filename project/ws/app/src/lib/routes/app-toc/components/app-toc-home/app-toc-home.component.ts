@@ -543,7 +543,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     // tslint:disable-next-line
     if (this.content && this.content.identifier && this.content.primaryCategory !== this.primaryCategory.COURSE &&
       this.content.primaryCategory !== this.primaryCategory.PROGRAM &&
-      this.content.primaryCategory !== this.primaryCategory.MANDATORY_COURSE_GOAL) {
+      this.content.primaryCategory !== this.primaryCategory.MANDATORY_COURSE_GOAL &&
+      this.content.primaryCategory !== this.primaryCategory.STANDALONE_ASSESSMENT) {
       // const collectionId = this.isResource ? '' : this.content.identifier
       return this.getContinueLearningData(this.content.identifier)
     }
@@ -1038,13 +1039,21 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.tocSvc.filterToc(this.content, NsContent.EFilterCategory.ASSESS),
       )
       const firstPlayableContent = this.contentSvc.getFirstChildInHierarchy(this.content)
+
+      let primaryCategory
+      if (this.content.secureSettings !== undefined) {
+        primaryCategory = 'Learning Resource'
+      } else {
+        primaryCategory = this.content.primaryCategory
+      }
+
       this.firstResourceLink = viewerRouteGenerator(
         firstPlayableContent.identifier,
         firstPlayableContent.mimeType,
         this.isResource ? undefined : this.content.identifier,
         this.isResource ? undefined : this.content.contentType,
         this.forPreview,
-        this.content.primaryCategory,
+        primaryCategory,
         this.getBatchId(),
       )
       if (firstPlayableContent.optionalReading && firstPlayableContent.primaryCategory === 'Learning Resource') {

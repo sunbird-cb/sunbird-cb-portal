@@ -58,7 +58,6 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    // debugger
     this.init()
   }
 

@@ -126,9 +126,23 @@ export class ViewerUtilService {
           ],
         },
       }
+
+      // if (this.configservice.cstoken !== '') {
+      //   const headers = new HttpHeaders()
+      //   .set('cstoken', this.configservice.cstoken)
+
+      //   this.http
+      //   .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, { headers } , req)
+      //   .subscribe(noop, noop)
+      // } else {
+      //   this.http
+      //   .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
+      //   .subscribe(noop, noop)
+      // }
       this.http
-      .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
-      .subscribe(noop, noop)
+        .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
+        .subscribe(noop, noop)
+
     } else {
       req = {}
       // do nothing
@@ -152,9 +166,11 @@ export class ViewerUtilService {
           ],
         },
       }
+
       this.http
-      .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
-      .subscribe(noop, noop)
+        .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
+        .subscribe(noop, noop)
+
     } else {
       req = {}
       // do nothing

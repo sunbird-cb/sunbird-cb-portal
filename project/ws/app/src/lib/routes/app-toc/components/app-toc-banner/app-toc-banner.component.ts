@@ -390,8 +390,10 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
 
   private getResumeDataFromList(type?: string) {
     if (!type) {
-      const lastItem = this.resumeData && this.resumeData.pop()
-      return {
+     // const lastItem = this.resumeData && this.resumeData.pop()
+     // tslint:disable-next-line:max-line-length
+     const lastItem = this.resumeData && this.resumeData.sort((a: any, b: any) => new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
+     return {
         identifier: lastItem.contentId,
         mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,
       }
