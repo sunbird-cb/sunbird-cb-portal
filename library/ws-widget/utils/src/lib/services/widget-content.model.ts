@@ -336,6 +336,7 @@ export namespace NsContent {
     QUESTION_SET = 'application/vnd.sunbird.questionset',
     QUESTION = 'application/vnd.sunbird.question',
     UNKNOWN = 'application/unknown',
+    OFFLINE_SESSION = 'application/offline',
   }
   export enum EDisplayContentTypes {
     ASSESSMENT = 'ASSESSMENT',
