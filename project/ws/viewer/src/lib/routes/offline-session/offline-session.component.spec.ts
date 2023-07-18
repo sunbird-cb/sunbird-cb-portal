@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { OfflineResourceComponent } from './offline-resource.component'
+import { OfflineSessionComponent } from './offline-session.component'
 
-describe('OfflineResourceComponent', () => {
-  let component: OfflineResourceComponent;
-  let fixture: ComponentFixture<OfflineResourceComponent>;
+describe('OfflineSessionComponent', () => {
+  let component: OfflineSessionComponent;
+  let fixture: ComponentFixture<OfflineSessionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OfflineResourceComponent ]
+      declarations: [ OfflineSessionComponent ]
     })
     .compileComponents();
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OfflineResourceComponent);
+    fixture = TestBed.createComponent(OfflineSessionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   })
