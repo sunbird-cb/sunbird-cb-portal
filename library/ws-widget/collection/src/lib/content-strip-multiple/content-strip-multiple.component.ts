@@ -304,8 +304,6 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     }
   }
 
-
-
   fetchFromApi(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.api && Object.keys(strip.request.api).length) {
       this.contentStripSvc.getContentStripResponseApi(strip.request.api).subscribe(
