@@ -24,6 +24,7 @@ export const environment = {
   programStripName: (window as { [key: string]: any })['env']['programStripName'] || '',
   programStripPrimaryCategory: (window as { [key: string]: any })['env']['programStripPrimaryCategory'] || '',
   programStripKey: (window as { [key: string]: any })['env']['programStripKey'] || '',
+  quizResultTimeout: (window as { [key: string]: any })['env']['quizResultTimeout'] || '',
   helpEmail: (window as { [key: string]: any })['env']['helpEmail'] || '',
   // mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
   // spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',

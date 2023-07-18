@@ -637,8 +637,8 @@ export class TelemetryService {
     const path = window.location.pathname.replace('/', '')
     const url = path + window.location.search
     let moduleValue = ''
-    if (path.includes("discussion-forum")) {
-      moduleValue = "Discuss"
+    if (path.includes('discussion-forum')) {
+      moduleValue = 'Discuss'
     }
     return {
       pageid: path,
