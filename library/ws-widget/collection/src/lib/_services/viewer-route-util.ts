@@ -16,6 +16,8 @@ export const VIEWER_ROUTE_FROM_MIME = (mimeType: NsContent.EMimeTypes) => {
     case NsContent.EMimeTypes.HTML_TEXT:
     case NsContent.EMimeTypes.HTML:
     case NsContent.EMimeTypes.ZIP:
+      if(window.location.href.includes('mobile/html'))
+        return 'mobile/html'
       return 'html'
     case NsContent.EMimeTypes.TEXT_WEB:
       return 'youtube'
