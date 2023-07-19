@@ -107,6 +107,9 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     masterOrgs!: Observable<any> | undefined
     usr: any
     private subscriptionContact: Subscription | null = null
+    groupsOriginal: any = []
+    masterGroup!: Observable<any> | undefined
+    customCharsPattern = `^[a-zA-Z0-9 \\w\-\&\(\)]*$`
     //   private recaptchaSubscription!: Subscription
 
     constructor(
@@ -149,7 +152,9 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
         this.registrationForm = new FormGroup({
             firstname: new FormControl(_.get(this.usr, 'firstName') || '', [Validators.required, Validators.pattern(this.namePatern)]),
             lastname: new FormControl(_.get(this.usr, 'lastName') || '', [Validators.required, Validators.pattern(this.namePatern)]),
-            position: new FormControl('', [Validators.required, forbiddenNamesValidatorPosition(this.masterPositions)]),
+            // position: new FormControl('', [Validators.required, forbiddenNamesValidatorPosition(this.masterPositions)]),
+            // tslint:disable-next-line:max-line-length
+            group: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterGroup)]),
             email: new FormControl({ value: _.get(this.usr, 'email') || '', disabled: true }, [Validators.required, Validators.pattern(this.emailWhitelistPattern)]),
             // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
             confirmBox: new FormControl(false, [Validators.required]),
@@ -166,7 +171,9 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
             this.fetchDropDownValues('ministry')
             const instanceConfig = this.configSvc.instanceConfig
             this.positionsOriginal = this.configSvc.positions || []
-            this.onPositionsChange()
+            // this.onPositionsChange()
+            this.groupsOriginal = this.activatedRoute.snapshot.data.group.data || []
+            this.onGroupChange()
             if (instanceConfig) {
                 this.telemetryConfig = instanceConfig.telemetryConfig
                 this.portalID = `${this.telemetryConfig.pdata.id}`
@@ -304,6 +311,30 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
         })
     }
 
+    onGroupChange() {
+        // tslint:disable-next-line: no-non-null-assertion
+        this.masterGroup = this.registrationForm.get('group')!.valueChanges
+          .pipe(
+            debounceTime(500),
+            distinctUntilChanged(),
+            startWith(''),
+            map((value: any) => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+            map((name: any) => name ? this.filterGroups(name) : this.groupsOriginal.slice())
+          )
+        this.masterGroup.subscribe((event: any) => {
+          // tslint:disable-next-line: no-non-null-assertion
+          this.registrationForm.get('group')!.setValidators([Validators.required, forbiddenNamesValidatorPosition(event)])
+          this.registrationForm.updateValueAndValidity()
+        })
+    }
+    private filterGroups(name: string): any {
+    if (name) {
+        const filterValue = name.toLowerCase()
+        return this.groupsOriginal.filter((option: any) => option.toLowerCase().includes(filterValue))
+    }
+    return this.groupsOriginal
+    }
+
     filterMinisteries(orgname: string) {
         if (orgname) {
             const filterValue = orgname.toLowerCase()
@@ -351,6 +382,10 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
         return value ? value.name : undefined
     }
 
+    displayFnGroup = (value: any) => {
+        return value ? value : undefined
+      }
+
     signup() {
         this.disableBtn = true
         // this.recaptchaSubscription = this.recaptchaV3Service.execute('importantAction')
@@ -396,7 +431,8 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
                     userId: this.usr.userId,
                     firstName: this.registrationForm.value.firstname || '',
                     lastName: this.registrationForm.value.lastname || '',
-                    position: this.registrationForm.value.position.name || '',
+                    // position: this.registrationForm.value.position.name || '',
+                    group: this.registrationForm.value.group || '',
                     orgName: hierarchyObj.orgName,
                     channel: hierarchyObj.channel || '',
                     sbOrgId: hierarchyObj.sbOrgId,

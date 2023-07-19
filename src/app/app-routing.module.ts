@@ -815,6 +815,7 @@ const routes: Routes = [
     },
     resolve: {
       userData: WelcomeUserResolverService,
+      group: AppPublicGroupResolverService,
     },
   },
   {
