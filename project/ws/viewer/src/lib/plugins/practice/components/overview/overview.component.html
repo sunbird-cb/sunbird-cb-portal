@@ -80,8 +80,9 @@
           [ngTemplateOutletContext]="{
                   icon: 'replay',
                   isSVG: false,
-                  text: 'Maximum '+ (canAttempt?.attemptsAllowed || 0) + ' retake(s) are allowed, and you already attempted ' + (canAttempt?.attemptsMade || 0) + ' time(s) '
+                  text: 'Unlimited retakes allowed'
                 }"></ng-container>
+                <!-- text: 'Maximum '+ (canAttempt?.attemptsAllowed || 0) + ' retake(s) are allowed, and you already attempted ' + (canAttempt?.attemptsMade || 0) + ' time(s) ' -->
         <!-- <ng-container *ngIf="questionTYP.FINAL_ASSESSMENT === primaryCategory" [ngTemplateOutlet]="testdetail"
           [ngTemplateOutletContext]="{
                         icon: 'stop',
