@@ -137,25 +137,24 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
         // @Inject(PLATFORM_ID) private _platformId: any,
     ) {
         this.usr = _.get(this.activatedRoute, 'snapshot.data.userData.data')
-        // if (!this.usr.isUpdateRequired) {
-        //     if (!this.configSvc || !this.configSvc.userProfileV2) {
-        //         this.fetch().then(() => {
-        //             this.router.navigate(['/page/home'])
-        //         })
-        //     } else {
-        //         this.router.navigate(['/page/home'])
-        //     }
+        if (!this.usr.isUpdateRequired) {
+            if (!this.configSvc || !this.configSvc.userProfileV2) {
+                this.fetch().then(() => {
+                    this.router.navigate(['/page/home'])
+                })
+            } else {
+                this.router.navigate(['/page/home'])
+            }
 
-        // } else {
-        //     if (!this.configSvc || !this.configSvc.userProfileV2) {
-        //         this.fetch().then(() => {
-        //             this.init()
-        //         })
-        //     } else {
-        //         this.init()
-        //     }
-        // }
-        this.init()
+        } else {
+            if (!this.configSvc || !this.configSvc.userProfileV2) {
+                this.fetch().then(() => {
+                    this.init()
+                })
+            } else {
+                this.init()
+            }
+        }
     }
     async fetch() {
         await this.initSvc.init()
@@ -660,22 +659,6 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
                 this.otpVerified = true
                 this.isMobileVerified = true
                 this.disableBtn = false
-                // const reqUpdates = {
-                //   request: {
-                //     userId: this.configSvc.unMappedUser.id,
-                //     profileDetails: {
-                //       personalDetails: {
-                //         mobile: mob.value,
-                //         phoneVerified: true,
-                //       },
-                //     },
-                //   },
-                // }
-                // this.userProfileSvc.editProfileDetails(reqUpdates).subscribe((updateRes: any) => {
-                //   if (updateRes) {
-                //     this.isMobileVerified = true
-                //   }
-                // })
               }
               // tslint:disable-next-line: align
             }, (error: any) => {
