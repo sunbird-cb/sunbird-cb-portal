@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { Subscription, Observable } from 'rxjs'
+import { Subscription, Observable, interval } from 'rxjs'
 import { FormGroup, FormControl, Validators, AbstractControl, ValidatorFn } from '@angular/forms'
 import { WelcomeUsersService } from './public-welcome.service'
+import { SignupService } from '../public-signup/signup.service'
 import { LoggerService, ConfigurationsService, NsInstanceConfig } from '@sunbird-cb/utils/src/public-api'
-import { debounceTime, distinctUntilChanged, startWith, map } from 'rxjs/operators'
+import { debounceTime, distinctUntilChanged, startWith, map, pairwise } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material'
 // import { ReCaptchaV3Service } from 'ng-recaptcha'
 // import { DOCUMENT, isPlatformBrowser } from '@angular/common'
@@ -11,6 +12,7 @@ import { MatSnackBar } from '@angular/material'
 import _ from 'lodash'
 import { ActivatedRoute, Router } from '@angular/router'
 import { InitService } from 'src/app/services/init.service'
+import { environment } from 'src/environments/environment'
 
 // export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
 //   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -110,10 +112,20 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     groupsOriginal: any = []
     masterGroup!: Observable<any> | undefined
     customCharsPattern = `^[a-zA-Z0-9 \\w\-\&\(\)]*$`
+    // mobile field variables start
+    phoneNumberPattern = '^((\\+91-?)|0)?[0-9]{10}$'
+    timeLeftforOTP = 0
+    OTP_TIMER = environment.resendOTPTIme
+    timerSubscription: Subscription | null = null
+    isMobileVerified = false
+    otpSend = false
+    otpVerified = false
+    // mobile field variables end
     //   private recaptchaSubscription!: Subscription
 
     constructor(
-        private signupSvc: WelcomeUsersService,
+        private welcomeSignupSvc: WelcomeUsersService,
+        private signupSvc: SignupService,
         private loggerSvc: LoggerService,
         private configSvc: ConfigurationsService,
         private snackBar: MatSnackBar,
@@ -157,6 +169,9 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
             group: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterGroup)]),
             email: new FormControl({ value: _.get(this.usr, 'email') || '', disabled: true }, [Validators.required, Validators.pattern(this.emailWhitelistPattern)]),
             // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
+            // mobile field start
+            mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
+             // mobile field end
             confirmBox: new FormControl(false, [Validators.required]),
             type: new FormControl('ministry', [Validators.required]),
             ministry: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterMinisteries)]),
@@ -205,7 +220,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     fetchDropDownValues(type: string) {
         this.clearValues()
         if (type === 'state') {
-            this.signupSvc.getStatesOrMinisteries('state').subscribe(res => {
+            this.welcomeSignupSvc.getStatesOrMinisteries('state').subscribe(res => {
                 if (res && res.result && res.result && res.result.response && res.result.response.content) {
                     this.ministeries = res.result.response.content
                     this.onMinisteriesChange()
@@ -213,7 +228,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
             })
         }
         if (type === 'ministry') {
-            this.signupSvc.getStatesOrMinisteries('ministry').subscribe(res => {
+            this.welcomeSignupSvc.getStatesOrMinisteries('ministry').subscribe(res => {
                 if (res && res.result && res.result && res.result.response && res.result.response.content) {
                     this.ministeries = res.result.response.content
                     this.onMinisteriesChange()
@@ -433,6 +448,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
                     lastName: this.registrationForm.value.lastname || '',
                     // position: this.registrationForm.value.position.name || '',
                     group: this.registrationForm.value.group || '',
+                    phone: `${this.registrationForm.value.mobile}` || '',
                     orgName: hierarchyObj.orgName,
                     channel: hierarchyObj.channel || '',
                     sbOrgId: hierarchyObj.sbOrgId,
@@ -446,7 +462,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
 
         // console.log('req: ', req)
 
-        this.signupSvc.register(req).subscribe(
+        this.welcomeSignupSvc.register(req).subscribe(
             (_res: any) => {
                 // console.log('success', res)
                 // this.openDialog()
@@ -494,7 +510,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
 
     ministrySelected(value: any) {
         if (value && value.mapId) {
-            this.signupSvc.getDeparmentsOfState(value.mapId).subscribe(res => {
+            this.welcomeSignupSvc.getDeparmentsOfState(value.mapId).subscribe(res => {
                 if (res && res.result && res.result && res.result.response && res.result.response.content) {
                     this.departments = res.result.response.content
 
@@ -511,7 +527,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
 
     departmentSelected(value: any) {
         if (value && value.mapId) {
-            this.signupSvc.getOrgsOfDepartment(value.mapId).subscribe(res => {
+            this.welcomeSignupSvc.getOrgsOfDepartment(value.mapId).subscribe(res => {
                 if (res && res.result && res.result && res.result.response && res.result.response.content) {
                     this.orgs = res.result.response.content
 
@@ -553,4 +569,103 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
         //     this._document.body.classList.remove('cs-recaptcha')
         // }
     }
+    // resend otp countdown start
+    startCountDown() {
+        const startTime = Date.now()
+        this.timeLeftforOTP = this.OTP_TIMER
+        // && this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
+        if (this.OTP_TIMER > 0
+        ) {
+          this.timerSubscription = interval(1000)
+            .pipe(
+              map(
+                () =>
+                  startTime + this.OTP_TIMER - Date.now(),
+              ),
+            )
+            .subscribe(_timeRemaining => {
+              this.timeLeftforOTP -= 1
+              if (this.timeLeftforOTP < 0) {
+                this.timeLeftforOTP = 0
+                if (this.timerSubscription) {
+                  this.timerSubscription.unsubscribe()
+                }
+                // this.submitQuiz()
+              }
+            })
+        }
+      }
+    //   resend otp countdown end
+    //   onPhoneChange method start
+      onPhoneChange() {
+        const ctrl = this.registrationForm.get('mobile')
+        if (ctrl) {
+          ctrl
+            .valueChanges
+            .pipe(startWith(null), pairwise())
+            .subscribe(([prev, next]: [any, any]) => {
+              if (!(prev == null && next)) {
+                this.isMobileVerified = false
+                this.otpSend = false
+              }
+            })
+        }
+      }
+    //   onPhoneChange method end
+    //   sendOtp method start
+      sendOtp() {
+        const mob = this.registrationForm.get('mobile')
+        if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
+          this.signupSvc.sendOtp(mob.value).subscribe(() => {
+            this.otpSend = true
+            alert('OTP send to your Mobile Number')
+            this.startCountDown()
+            // tslint:disable-next-line: align
+          }, (error: any) => {
+            this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+          })
+        } else {
+          this.snackBar.open('Please enter a valid Mobile No')
+        }
+      }
+    //   sendOtp method end
+    //   resendOTP method start
+      resendOTP() {
+        const mob = this.registrationForm.get('mobile')
+        if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
+          this.signupSvc.resendOtp(mob.value).subscribe((res: any) => {
+            if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
+              this.otpSend = true
+              alert('OTP send to your Mobile Number')
+              this.startCountDown()
+            }
+            // tslint:disable-next-line: align
+          }, (error: any) => {
+            this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+          })
+        } else {
+          this.snackBar.open('Please enter a valid Mobile No')
+        }
+      }
+    // resendOTP method end
+    // verifyOtp method start
+      verifyOtp(otp: any) {
+        // console.log(otp)
+        const mob = this.registrationForm.get('mobile')
+        if (otp && otp.value) {
+          if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
+            this.signupSvc.verifyOTP(otp.value, mob.value).subscribe((res: any) => {
+              if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
+                this.otpVerified = true
+                this.isMobileVerified = true
+                this.disableBtn = false
+              }
+              // tslint:disable-next-line: align
+            }, (error: any) => {
+              this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+            })
+          }
+        }
+      }
+    //   verifyOtp method end
 }
