@@ -28,7 +28,6 @@ export const environment = {
   quizResultTimeout: (window as { [key: string]: any })['env']['quizResultTimeout'] || '',
   meetingLinkDetail: (window as { [key: string]: any })['env']['meetingLinkDetail'] || '',
   karmayogiBharatLink: (window as { [key: string]: any })['env']['karmayogiBharatLink'] || '',
-  isretakeAllowed: (window as { [key: string]: any })['env']['isretakeAllowed'] ,
   // mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
   // spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',
   // cbcPortal: (window as { [key: string]: any })['env']['cbcPath'] || '',

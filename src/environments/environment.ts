@@ -36,7 +36,6 @@ export const environment: IEnvironment = {
   quizResultTimeout: (window as { [key: string]: any })['env']['quizResultTimeout'] || '',
   meetingLinkDetail: (window as { [key: string]: any })['env']['meetingLinkDetail'] || '',
   karmayogiBharatLink: (window as { [key: string]: any })['env']['karmayogiBharatLink'] || '',
-  isretakeAllowed: (window as { [key: string]: any })['env']['isretakeAllowed'] ,
 }
 interface IEnvironment {
   name: string,
@@ -67,8 +66,7 @@ interface IEnvironment {
   programStripKey: string,
   quizResultTimeout: number,
   meetingLinkDetail: string,
-  karmayogiBharatLink: string,
-  isretakeAllowed: boolean
+  karmayogiBharatLink: string
 }
 
 // import { AnyCnameRecord } from 'dns'

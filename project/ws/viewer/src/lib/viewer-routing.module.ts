@@ -21,6 +21,7 @@ import { YoutubeModule } from './routes/youtube/youtube.module'
 import { SurveyModule } from './routes/survey/survey.module'
 // import { ConfigurationsService } from './resolvers/config-resolver.service'
 // import { ProfileResolverService } from './resolvers/profile-resolver.service'
+import { PageResolve } from '@sunbird-cb/utils'
 
 const routes: Routes = [
   {
@@ -224,11 +225,14 @@ const routes: Routes = [
     path: 'practice',
     // component: PracticeTestComponent,
     data: {
+      pageType: 'feature',
+      pageKey: 'practice',
       resourceType: 'practice',
       module: 'Learn',
       pageId: 'practice',
     },
     resolve: {
+      pageData: PageResolve,
       content: ViewerResolve,
     },
     loadChildren: () => import('./routes/practice-test/practice-test.module').then(p => p.PracticeTestModule),

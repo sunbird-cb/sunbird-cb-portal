@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { NsContent } from '@sunbird-cb/utils/src/public-api'
 import { NSPractice } from '../../practice.model'
-import { environment } from 'src/environments/environment'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'viewer-overview',
@@ -26,10 +26,22 @@ export class OverviewComponent implements OnInit {
     { icon: 'info', text: 'Skipped question can be attempted again before submitting' },
   ]
   isretakeAllowed : boolean = false;
-  constructor() { }
+  dataSubscription : any
+  
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.isretakeAllowed = environment.isretakeAllowed
+    this.dataSubscription = this.route.data.subscribe(data => {
+      if (data && data.pageData) {
+        this.isretakeAllowed = data.pageData.data.isretakeAllowed
+      }
+    })
+  }
+
+  ngOnDestroy() {
+    if (this.dataSubscription) {
+      this.dataSubscription.unsubscribe()
+    }
   }
 
   overviewed(event: NSPractice.TUserSelectionType) {
