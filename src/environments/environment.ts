@@ -65,8 +65,8 @@ interface IEnvironment {
   programStripPrimaryCategory: string,
   programStripKey: string,
   quizResultTimeout: number,
-  meetingLinkDetail:string,
-  karmayogiBharatLink:string
+  meetingLinkDetail: string,
+  karmayogiBharatLink: string
 }
 
 /*
