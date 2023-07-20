@@ -36,6 +36,7 @@ export const environment: IEnvironment = {
   quizResultTimeout: (window as { [key: string]: any })['env']['quizResultTimeout'] || '',
   meetingLinkDetail: (window as { [key: string]: any })['env']['meetingLinkDetail'] || '',
   karmayogiBharatLink: (window as { [key: string]: any })['env']['karmayogiBharatLink'] || '',
+  isretakeAllowed: (window as { [key: string]: any })['env']['isretakeAllowed'] ,
 }
 interface IEnvironment {
   name: string,
@@ -66,9 +67,11 @@ interface IEnvironment {
   programStripKey: string,
   quizResultTimeout: number,
   meetingLinkDetail: string,
-  karmayogiBharatLink: string
+  karmayogiBharatLink: string,
+  isretakeAllowed: boolean
 }
 
+// import { AnyCnameRecord } from 'dns'
 /*
  * For easier debugging in development mode, you can import the    file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

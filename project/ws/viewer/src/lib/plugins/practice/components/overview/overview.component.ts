@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { NsContent } from '@sunbird-cb/utils/src/public-api'
 import { NSPractice } from '../../practice.model'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'viewer-overview',
@@ -24,9 +25,11 @@ export class OverviewComponent implements OnInit {
     { icon: 'info', text: 'Assessment will have time duration' },
     { icon: 'info', text: 'Skipped question can be attempted again before submitting' },
   ]
+  isretakeAllowed : boolean = false;
   constructor() { }
 
   ngOnInit() {
+    this.isretakeAllowed = environment.isretakeAllowed
   }
 
   overviewed(event: NSPractice.TUserSelectionType) {
