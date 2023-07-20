@@ -76,11 +76,17 @@
                   isSVG: false,
                   text: 'Unlimited retakes allowed'
                 }"></ng-container>
-        <ng-container *ngIf="questionTYP.FINAL_ASSESSMENT === primaryCategory" [ngTemplateOutlet]="testdetail"
+        <ng-container *ngIf="questionTYP.FINAL_ASSESSMENT === primaryCategory && !isretakeAllowed" [ngTemplateOutlet]="testdetail"
           [ngTemplateOutletContext]="{
                   icon: 'replay',
                   isSVG: false,
                   text: 'Unlimited retakes allowed'
+                }"></ng-container>
+        <ng-container *ngIf="questionTYP.FINAL_ASSESSMENT === primaryCategory && isretakeAllowed" [ngTemplateOutlet]="testdetail"
+          [ngTemplateOutletContext]="{
+                  icon: 'replay',
+                  isSVG: false,
+                  text: 'Maximum '+ (canAttempt?.attemptsAllowed || 0) + ' retake(s) are allowed, and you already attempted ' + (canAttempt?.attemptsMade || 0) + ' time(s) '
                 }"></ng-container>
                 <!-- text: 'Maximum '+ (canAttempt?.attemptsAllowed || 0) + ' retake(s) are allowed, and you already attempted ' + (canAttempt?.attemptsMade || 0) + ' time(s) ' -->
         <!-- <ng-container *ngIf="questionTYP.FINAL_ASSESSMENT === primaryCategory" [ngTemplateOutlet]="testdetail"
