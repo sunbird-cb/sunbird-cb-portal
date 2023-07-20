@@ -40,10 +40,20 @@
     <mat-icon>expand_more</mat-icon>
     <span i18n>Explore all features</span>
   </a>
-  <div class="flex flex-row-reverse">
-    <button (click)="logout()" color="warn" mat-button>
-      <mat-icon>power_settings_new</mat-icon>&nbsp;
-      <span i18n>Logout</span>
-    </button>
+  <div class="flex flex-row-reverse flex-wrap">
+    <div class="width-1-1">
+      <a class="flex flex-wrap mb-2" role="menuitem" [routerLink]="['/app/my-dashboard']">
+        <div class="flex icon">
+          <mat-icon aria-hidden="false" class="mat-icon notranslate material-icons mat-icon-no-color" role="img"
+            aria-label="bar_chart" aria-labelledby="bar_chart"> bar_chart </mat-icon> <span class="ml-1">Dashboard</span>
+        </div>
+      </a>
+    </div>
+    <div class="width-1-1">
+      <button class="p-0" (click)="logout()" color="warn" mat-button>
+        <mat-icon>power_settings_new</mat-icon>&nbsp;
+        <span i18n>Logout</span>
+      </button>
+    </div>
   </div>
 </mat-menu>
