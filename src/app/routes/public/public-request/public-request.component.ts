@@ -11,6 +11,7 @@ import { SignupService } from '../public-signup/signup.service'
 import { RequestService } from './request.service'
 import { RequestSuccessDialogComponent } from './request-success-dialog/request-success-dialog.component'
 import { v4 as uuid } from 'uuid'
+import { Location } from '@angular/common'
 
 export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -57,19 +58,23 @@ export class PublicRequestComponent implements OnInit {
     applicationId: string; actorUserId: string; deptName: string; updateFieldValues: any}  | undefined
   formobj: { toValue: {} ; fieldKey: any; description: any; firstName: any; email: any; mobile: any} | undefined
   userform: any
+  backUrl: string = ''
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private snackBar: MatSnackBar,
               private signupSvc: SignupService,
               private dialog: MatDialog,
-              private requestSvc: RequestService) {
+              private requestSvc: RequestService,
+              private _location: Location) {
     const navigation = this.router.getCurrentNavigation()
     if (navigation) {
       const extraData = navigation.extras.state as {
         userform: any
+        backUrl: string
       }
       this.userform = extraData.userform
+      this.backUrl = extraData.backUrl
     }
     this.requestType = this.activatedRoute.snapshot.queryParams.type
     this.requestForm = new FormGroup({
@@ -332,5 +337,9 @@ export class PublicRequestComponent implements OnInit {
     this.snackBar.open(primaryMsg, 'X', {
       duration,
     })
+  }
+
+  public goBackUrl() {
+    this._location.back();
   }
 }
