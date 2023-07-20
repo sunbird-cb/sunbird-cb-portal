@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { NsContent } from '@sunbird-cb/utils/src/public-api'
 import { NSPractice } from '../../practice.model'
 import { ActivatedRoute } from '@angular/router'
@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router'
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss'],
 })
-export class OverviewComponent implements OnInit {
+export class OverviewComponent implements OnInit, OnDestroy {
   @Input() learningObjective = ''
   @Input() complexityLevel = ''
   @Input() primaryCategory = NsContent.EPrimaryCategory.PRACTICE_RESOURCE
@@ -25,9 +25,9 @@ export class OverviewComponent implements OnInit {
     { icon: 'info', text: 'Assessment will have time duration' },
     { icon: 'info', text: 'Skipped question can be attempted again before submitting' },
   ]
-  isretakeAllowed : boolean = false;
-  dataSubscription : any
-  
+  isretakeAllowed = false
+  dataSubscription: any
+
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
