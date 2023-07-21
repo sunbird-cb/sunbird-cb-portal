@@ -250,7 +250,6 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       this.fetchprarambhCourse(strip, calculateParentStatus)
       this.fetchCuratedCollections(strip, calculateParentStatus)
       this.fetchModeratedCourses(strip, calculateParentStatus)
-      this.fetchblendedLearning(strip, calculateParentStatus)
   }
 
   fetchModeratedCourses(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
@@ -301,53 +300,6 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
                                                                                       () => {
         this.processStrip(strip, [], 'error', calculateParentStatus, null)
       }
-      )
-    }
-  }
-
-  fetchblendedLearning(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
-    if (strip.request && strip.request.blendedLearning && Object.keys(strip.request.blendedLearning).length) {
-      if (!(strip.request.blendedLearning.locale && strip.request.blendedLearning.locale.length > 0)) {
-        if (this.configSvc.activeLocale) {
-          strip.request.blendedLearning.locale = [this.configSvc.activeLocale.locals[0]]
-        } else {
-          strip.request.blendedLearning.locale = ['en']
-        }
-      }
-      this.contentSvc.searchV6(strip.request && strip.request.blendedLearning).subscribe(
-        results => {
-          // const showViewMore = Boolean(
-          //   results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
-          // )
-
-          const showViewMore = false
-          const viewMoreUrl = showViewMore
-            ? {
-              path: '/app/search/learning',
-              queryParams: {
-                q: strip.request && strip.request.blendedLearning && strip.request.blendedLearning.query,
-                f:
-                  strip.request && strip.request.blendedLearning && strip.request.blendedLearning.filters
-                    ? JSON.stringify(
-                      // this.searchServSvc.transformSearchV6Filters(
-                      strip.request.blendedLearning.filters
-                      // ),
-                    )
-                    : {},
-              },
-            }
-            : null
-          this.processStrip(
-            strip,
-            this.transformContentsToWidgets(results.result.content, strip),
-            'done',
-            calculateParentStatus,
-            viewMoreUrl,
-          )
-        },
-        () => {
-          this.processStrip(strip, [], 'error', calculateParentStatus, null)
-        },
       )
     }
   }
@@ -1199,7 +1151,6 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         (strip.request.DAKSHTACourses && Object.keys(strip.request.DAKSHTACourses).length) ||
         (strip.request.prarambhCourse && Object.keys(strip.request.prarambhCourse).length) ||
         (strip.request.curatedCollections && Object.keys(strip.request.curatedCollections).length) ||
-        (strip.request.blendedLearning && Object.keys(strip.request.blendedLearning).length) ||
         (strip.request.moderatedCourses && Object.keys(strip.request.moderatedCourses).length)
       )
     ) {

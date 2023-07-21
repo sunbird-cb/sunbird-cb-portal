@@ -138,6 +138,7 @@
         flex: 1;
         min-width: 1px;
         margin-right: $size-l;
+        margin-bottom: $size-s;
         @include breakpoint-xs {
             margin-right: 0;
         }
@@ -243,6 +244,19 @@
         border: 1px solid rgba(0, 0, 0, .08);
         box-sizing: border-box;
     }
+}
+
+.batch-container {
+    background-color: #f1e0d3;
+    max-width: 435px;
+    border-radius: 4px;
+}
+
+.custom-button{
+    background: #0074B6 0% 0% no-repeat padding-box !important;
+    border-radius: 4px;
+    max-width: auto !important;
+    height: 42px !important;
 }
 
 .sticky-banner {

@@ -19,6 +19,8 @@ import { VideoModule } from './routes/video/video.module'
 import { YoutubeComponent } from './routes/youtube/youtube.component'
 import { YoutubeModule } from './routes/youtube/youtube.module'
 import { SurveyModule } from './routes/survey/survey.module'
+import { HtmlMobileComponent } from './routes/html-mobile/html-mobile.component'
+import { HtmlMobileModule } from './routes/html-mobile/html-mobile.module'
 // import { ConfigurationsService } from './resolvers/config-resolver.service'
 // import { ProfileResolverService } from './resolvers/profile-resolver.service'
 import { PageResolve } from '@sunbird-cb/utils'
@@ -115,6 +117,20 @@ const routes: Routes = [
       resourceType: 'html',
       module: 'Learn',
       pageId: 'html/:resourceId',
+    },
+    resolve: {
+      content: ViewerResolve,
+      // configData: ConfigurationsService,
+      // profileData: ProfileResolverService,
+    },
+  },
+  {
+    path: 'mobile/html/:resourceId',
+    component: HtmlMobileComponent,
+    data: {
+      resourceType: 'mobile/html',
+      module: 'Learn',
+      pageId: 'mobile/html/:resourceId',
     },
     resolve: {
       content: ViewerResolve,
@@ -359,6 +375,7 @@ const routes: Routes = [
     AudioModule,
     AudioNativeModule,
     HtmlModule,
+    HtmlMobileModule,
     PdfModule,
     SurveyModule,
     PracticeTestModule,

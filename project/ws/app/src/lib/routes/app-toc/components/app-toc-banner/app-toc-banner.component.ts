@@ -25,6 +25,7 @@ import { TitleTagService } from '../../services/title-tag.service'
 import { ActionService } from '../../services/action.service'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'ws-app-toc-banner',
@@ -40,12 +41,16 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   @Input() forPreview = false
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   batchControl = new FormControl('', Validators.required)
+  primaryCategory = NsContent.EPrimaryCategory
+  WFBlendedProgramStatus = NsContent.WFBlendedProgramStatus
+  WFSTATUS_MSG_MAPPING = NsContent.WFSTATUS_MSG_MAPPING
   contentProgress = 0
   bannerUrl: SafeStyle | null = null
   routePath = 'overview'
   validPaths = new Set(['overview', 'contents', 'analytics'])
   routerParamSubscription: Subscription | null = null
   routeSubscription: Subscription | null = null
+  batchWFDataSubscription: Subscription | null = null
   firstResourceLink: { url: string; queryParams: { [key: string]: any } } | null = null
   resumeDataLink: { url: string; queryParams: { [key: string]: any } } | null = null
   isAssessVisible = false
@@ -56,6 +61,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   btnPlaylistConfig: NsPlaylist.IBtnPlaylist | null = null
   btnGoalsConfig: NsGoal.IBtnGoal | null = null
   isRegistrationSupported = false
+  showRejected = false
   checkRegistrationSources: Set<string> = new Set([
     'SkillSoft Digitalization',
     'SkillSoft Leadership',
@@ -73,6 +79,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   tocConfig: any = null
   defaultSLogo = ''
   disableEnrollBtn = false
+  selectedBatch!: any
+  helpEmail = ''
 
   // configSvc: any
 
@@ -92,7 +100,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     private actionSVC: ActionService,
     private logger: LoggerService,
   ) {
-
+    this.helpEmail = environment.helpEmail
   }
 
   ngOnInit() {
@@ -126,6 +134,15 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         this.contextPath = contextPath
       }
     })
+    this.batchWFDataSubscription = this.tocSvc.setWFDataSubject.subscribe(
+      () => {
+        this.setBatchControl()
+      },
+      () => {
+        // tslint:disable-next-line: no-console
+        console.log('error on batchWFDataSubscription')
+      },
+    )
     if (this.configSvc.restrictedFeatures) {
       this.isRegistrationSupported = this.configSvc.restrictedFeatures.has('registrationExternal')
       this.showIntranetMessage = !this.configSvc.restrictedFeatures.has(
@@ -211,6 +228,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       this.modifySensibleContentRating()
       this.assignPathAndUpdateBanner(this.router.url)
       this.getLearningUrls()
+      this.setBatchControl()
     }
     if (this.resumeData && this.content) {
       let resumeDataV2: any
@@ -237,41 +255,112 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       this.actionSVC.setUpdateCompGroupO = this.resumeDataLink
     }
     this.batchControl.valueChanges.subscribe((batch: NsContent.IBatch) => {
-      this.disableEnrollBtn = true
-      let userId = ''
+      // this.disableEnrollBtn = true
+      this.selectedBatch = batch
       if (batch) {
-        if (this.configSvc.userProfile) {
-          userId = this.configSvc.userProfile.userId || ''
+        if (this.checkRejected(batch)) {
+          this.showRejected = true
+          return
         }
-
-        const req = {
-          request: {
-            userId,
-            courseId: batch.courseId,
-            batchId: batch.batchId,
-          },
-        }
-        this.contentSvc.enrollUserToBatch(req).then((data: any) => {
-          if (data && data.result && data.result.response === 'SUCCESS') {
-            this.batchData = {
-              content: [batch],
-              enrolled: true,
-            }
-            this.router.navigate(
-              [],
-              {
-                relativeTo: this.route,
-                queryParams: { batchId: batch.batchId },
-                queryParamsHandling: 'merge',
-              })
-            this.openSnackbar('Enrolled Successfully!')
-            this.disableEnrollBtn = false
-          } else {
-            this.openSnackbar('Something went wrong, please try again later!')
-            this.disableEnrollBtn = false
-          }
-        })
       }
+      this.showRejected = false
+      return
+      // let userId = ''
+      // if (batch) {
+      //   if (this.configSvc.userProfile) {
+      //     userId = this.configSvc.userProfile.userId || ''
+      //   }
+
+      //   const req = {
+      //     request: {
+      //       userId,
+      //       courseId: batch.courseId,
+      //       batchId: batch.batchId,
+      //     },
+      //   }
+      //   this.contentSvc.enrollUserToBatch(req).then((data: any) => {
+      //     if (data && data.result && data.result.response === 'SUCCESS') {
+      //       this.batchData = {
+      //         content: [batch],
+      //         enrolled: true,
+      //       }
+      //       this.router.navigate(
+      //         [],
+      //         {
+      //           relativeTo: this.route,
+      //           queryParams: { batchId: batch.batchId },
+      //           queryParamsHandling: 'merge',
+      //         })
+      //       this.openSnackbar('Enrolled Successfully!')
+      //       this.disableEnrollBtn = false
+      //     } else {
+            // this.openSnackbar('Something went wrong, please try again later!')
+            // this.disableEnrollBtn = false
+      //     }
+      //   })
+      // }
+    })
+  }
+
+  public requestToEnroll() {
+    // this.disableEnrollBtn = true
+
+    let userId = ''
+    let rootOrgId = ''
+    let username = ''
+    let departmentName = ''
+    if (this.configSvc.userProfile) {
+      userId = this.configSvc.userProfile.userId || ''
+      rootOrgId = this.configSvc.userProfile.rootOrgId || ''
+      username = this.configSvc.userProfile.firstName || ''
+      departmentName = this.configSvc.userProfile.departmentName || ''
+    }
+    const req = {
+        rootOrgId,
+        userId,
+        actorUserId: userId,
+        state: 'INITIATE',
+        action: 'INITIATE',
+        applicationId: this.selectedBatch.batchId,
+        serviceName: 'blendedprogram',
+        courseId : this.selectedBatch.courseId,
+        deptName : departmentName,
+        updateFieldValues: [
+            {
+                toValue: {
+                    name: username,
+                },
+            },
+        ],
+    }
+    this.contentSvc.enrollUserToBatchWF(req).then((data: any) => {
+      if (data && data.result && data.result.status === 'OK') {
+        // this.batchData = {
+        //   content: [batch],
+        //   enrolled: true,
+        // }
+        // this.router.navigate(
+        //   [],
+        //   {
+        //     relativeTo: this.route,
+        //     queryParams: { batchId: batch.batchId },
+        //     queryParamsHandling: 'merge',
+        //   })
+        this.batchData.workFlow =  {
+          wfInitiated: true,
+          batch : this.selectedBatch,
+          wfItem: { currentStatus: data.result.data.status },
+        }
+        this.openSnackbar('Request sent Successfully!')
+        this.disableEnrollBtn = false
+      } else {
+        this.openSnackbar('Something went wrong, please try again later!')
+        this.disableEnrollBtn = false
+      }
+    },                                            (error: any) => {
+      this.openSnackbar(_.get(error, 'error.params.errmsg') ||
+      _.get(error, 'error.result.errmsg') ||
+      'Something went wrong, please try again later!')
     })
   }
 
@@ -317,7 +406,66 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   public handleEnrollmentEndDate(batch: any) {
     const enrollmentEndDate = dayjs(lodash.get(batch, 'enrollmentEndDate')).format('YYYY-MM-DD')
     const systemDate = dayjs()
-    return enrollmentEndDate ? dayjs(enrollmentEndDate).isBefore(systemDate) : false
+    // if(enrollmentEndDate === 'Invalid Date'){
+    //   console.log('Invalid Date')
+    //   return false
+    // } else {
+      return (enrollmentEndDate && enrollmentEndDate !== 'Invalid Date') ?
+      (dayjs(enrollmentEndDate).isSame(systemDate, 'day') || dayjs(enrollmentEndDate).isAfter(systemDate)) : false
+    // }
+  }
+
+  public checkRejected(batch: any) {
+    if (
+      batch &&
+      this.batchData &&
+      this.batchData.workFlow &&
+      this.batchData.workFlow.wfItem
+    ) {
+      if (batch.batchId === this.batchData.workFlow.wfItem.applicationId
+        && this.batchData.workFlow.wfItem.currentStatus === this.WFBlendedProgramStatus.REJECTED
+      ) {
+        return true
+      }
+      return false
+    }
+    return false
+  }
+
+  public batchChange(event: any) {
+    if (event && event.value) {
+      if (this.checkRejected(event.value)) {
+        this.showRejected = true
+        return
+      }
+    }
+    this.showRejected = false
+    return
+  }
+
+  public setBatchControl() {
+    // on first load select first value in the batch list if its having valid enrollment Date
+    if (this.content && this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM) {
+      if (this.batchData && this.batchData.content.length) {
+        if (!this.batchData.workFlow || (this.batchData.workFlow &&  !this.batchData.workFlow.wfInitiated)) {
+          const batch = this.batchData.content.find((el: any) => {
+            if (this.handleEnrollmentEndDate(el)) {
+              return el
+            }
+          })
+          this.batchControl.setValue(batch)
+        } else {
+          const batch = this.batchData.content.find((el: any) => {
+            if (el.batchId === this.batchData.workFlow.wfItem.applicationId) {
+              return el
+            }
+          })
+          this.batchControl.patchValue(batch)
+          this.batchChange({ value: batch })
+        }
+      }
+    }
+
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
@@ -334,6 +482,91 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       !this.content.children.length &&
       !this.content.artifactUrl
     )
+  }
+
+  get getWFMsg() {
+    if (
+      this.batchData &&
+      this.batchData.workFlow &&
+      this.batchData.workFlow.wfItem
+    ) {
+      const status = this.batchData.workFlow.wfItem.currentStatus
+      const msg = this.WFSTATUS_MSG_MAPPING[status]
+      return this.tocConfig[msg]
+    }
+  }
+
+  get showIcon() {
+    if (
+      this.batchData &&
+      this.batchData.workFlow &&
+      this.batchData.workFlow.wfItem
+    ) {
+      const status = this.batchData.workFlow.wfItem.currentStatus
+      if (status === this.WFBlendedProgramStatus.APPROVED ||
+        status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL ||
+        status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL ||
+        status === this.WFBlendedProgramStatus.REJECTED) {
+        return true
+      }
+    }
+    return false
+  }
+
+  get showMsg() {
+    if (
+      this.batchData &&
+      this.batchData.workFlow &&
+      this.batchData.workFlow.wfItem
+    ) {
+      const status = this.batchData.workFlow.wfItem.currentStatus
+      if (status === this.WFBlendedProgramStatus.APPROVED ||
+        status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL ||
+        status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL ||
+        status === this.WFBlendedProgramStatus.REJECTED && this.showRejected) {
+        return true
+      }
+    }
+    return false
+  }
+
+  get WFIcon() {
+    if (
+      this.batchData &&
+      this.batchData.workFlow &&
+      this.batchData.workFlow.wfItem
+    ) {
+      const status = this.batchData.workFlow.wfItem.currentStatus
+      if (status === this.WFBlendedProgramStatus.APPROVED ||
+        status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL ||
+        status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL
+      ) {
+        return 'circle'
+      }
+      if (status === this.WFBlendedProgramStatus.REJECTED) {
+        return 'info'
+      }
+    }
+    return ''
+  }
+
+  get iconColor() {
+    // if (
+    //   this.batchData &&
+    //   this.batchData.workFlow &&
+    //   this.batchData.workFlow.wfItem
+    // ) {
+      const status = this.batchData.workFlow.wfItem.currentStatus
+      if (status === this.WFBlendedProgramStatus.APPROVED) {
+        return 'ws-mat-green-text'
+      }  if (status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL ||
+        status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL) {
+        return 'ws-mat-orange-text'
+      }
+        return ''
+
+    // }
+    // return ' '
   }
 
   get isHeaderHidden() {
@@ -385,6 +618,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     }
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe()
+    }
+    if (this.batchWFDataSubscription) {
+      this.batchWFDataSubscription.unsubscribe()
     }
   }
 
