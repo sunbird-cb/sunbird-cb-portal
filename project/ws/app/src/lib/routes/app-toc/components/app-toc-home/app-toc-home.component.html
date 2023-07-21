@@ -94,7 +94,7 @@ TODO: edit option while preview Mode
           content?.status !== 'Expired'
         ">
           <div [hidden]="isResource && !content?.artifactUrl?.length" class="text-center">
-            <ng-container *ngIf="content?.primaryCategory !== primaryCategory.PROGRAM && content?.primaryCategory !== primaryCategory.STANDALONE_ASSESSMENT && 
+            <ng-container *ngIf="content?.primaryCategory !== primaryCategory.PROGRAM && content?.primaryCategory !== primaryCategory.STANDALONE_ASSESSMENT &&
             content?.primaryCategory !== primaryCategory.BLENDED_PROGRAM">
               <ng-container *ngIf="
           (actionBtnStatus === 'grant' &&
@@ -206,23 +206,23 @@ TODO: edit option while preview Mode
               </a>
             </ng-container>
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT && batchData?.enrolled">
-              <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" 
+              <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white"
               [routerLink]="firstResourceLink?.url" [queryParams]="(resumeData && !certData) ? generateQuery('RESUME') : generateQuery('START')">
                 Take test
               </a>
             </ng-container>
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
-                <ng-container *ngIf="batchData?.workFlow?.wfInitiated && 
+                <ng-container *ngIf="batchData?.workFlow?.wfInitiated &&
                 !(batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.APPROVED
                 || batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED)">
                   <div class="ws-mat-accent-text ws-mat-accent-light-bg flex items-center justify-center statusMsg">
                     <p class="margin-remove-bottom font-bold">
-                      Request under review 
+                      Request under review
                     </p>
                   </div>
                 </ng-container>
                 <ng-container>
-                  <a *ngIf="showStart.show"
+                  <a *ngIf="showStart.show && batchData?.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.APPROVED"
                   [routerLink]="(resumeData && !certData) ? resumeDataLink?.url : firstResourceLink?.url"
                   [queryParams]="(resumeData && !certData) ? generateQuery('RESUME') : generateQuery('START')"
                   class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white">
