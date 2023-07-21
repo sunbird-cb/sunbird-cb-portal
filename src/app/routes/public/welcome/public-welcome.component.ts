@@ -92,9 +92,6 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     registrationForm!: FormGroup
     namePatern = `^[a-zA-Z\\s\\']{1,32}$`
     emailWhitelistPattern = `^[a-zA-Z0-9._-]{3,}\\b@\\b[a-zA-Z0-9]*|\\b(.gov|.nic)\b\\.\\b(in)\\b$`
-    positionsOriginal!: []
-    postions!: any
-    masterPositions!: Observable<any> | undefined
     telemetryConfig: NsInstanceConfig.ITelemetryConfig | null = null
     portalID = ''
     confirm = false
@@ -137,35 +134,35 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
         // @Inject(PLATFORM_ID) private _platformId: any,
     ) {
         this.usr = _.get(this.activatedRoute, 'snapshot.data.userData.data')
-        // if (!this.usr.isUpdateRequired) {
-        //     if (!this.configSvc || !this.configSvc.userProfileV2) {
-        //         this.fetch().then(() => {
-        //             this.router.navigate(['/page/home'])
-        //         })
-        //     } else {
-        //         this.router.navigate(['/page/home'])
-        //     }
+        if (!this.usr.isUpdateRequired) {
+            if (!this.configSvc || !this.configSvc.userProfileV2) {
+                this.fetch().then(() => {
+                    this.router.navigate(['/page/home'])
+                })
+            } else {
+                this.router.navigate(['/page/home'])
+            }
 
-        // } else {
-        //     if (!this.configSvc || !this.configSvc.userProfileV2) {
-        //         this.fetch().then(() => {
-        //             this.init()
-        //         })
-        //     } else {
-        //         this.init()
-        //     }
-        // }
-        this.init()
+        } else {
+            if (!this.configSvc || !this.configSvc.userProfileV2) {
+                this.fetch().then(() => {
+                    this.init()
+                })
+            } else {
+                this.init()
+            }
+        }
+        // this.init()
     }
     async fetch() {
         await this.initSvc.init()
     }
     init() {
         // tslint:disable
+        const fullname = this.usr && this.usr.firstName ? this.usr.firstName + '' + this.usr.lastName : ''
         this.registrationForm = new FormGroup({
-            firstname: new FormControl(_.get(this.usr, 'firstName') || '', [Validators.required, Validators.pattern(this.namePatern)]),
-            lastname: new FormControl(_.get(this.usr, 'lastName') || '', [Validators.required, Validators.pattern(this.namePatern)]),
-            // position: new FormControl('', [Validators.required, forbiddenNamesValidatorPosition(this.masterPositions)]),
+            firstname: new FormControl(fullname || '', [Validators.required, Validators.pattern(this.namePatern)]),
+            // lastname: new FormControl(_.get(this.usr, 'lastName') || '', [Validators.required, Validators.pattern(this.namePatern)]),
             // tslint:disable-next-line:max-line-length
             group: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterGroup)]),
             email: new FormControl({ value: _.get(this.usr, 'email') || '', disabled: true }, [Validators.required, Validators.pattern(this.emailWhitelistPattern)]),
@@ -182,10 +179,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     }
     ngOnInit() {
         if (this.registrationForm) {
-            // this.fetchDropDownValues('ministry')
             const instanceConfig = this.configSvc.instanceConfig
-            this.positionsOriginal = this.configSvc.positions || []
-            // this.onPositionsChange()
             this.groupsOriginal = this.activatedRoute.snapshot.data.group.data || []
             this.OrgsSearchChange()
             this.onGroupChange()
@@ -193,10 +187,6 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
                 this.telemetryConfig = instanceConfig.telemetryConfig
                 this.portalID = `${this.telemetryConfig.pdata.id}`
             }
-
-            // if (isPlatformBrowser(this._platformId)) {
-            //   this._document.body.classList.add('cs-recaptcha')
-            // }
         }
     }
 
@@ -228,7 +218,6 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
           }
         })
     }
-  
     async searchOrgs(searchValue: string) {
       this.searching = true
       if (!searchValue) {
@@ -239,7 +228,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
       await this.filterOrgsSearch(searchValue)
       // console.log('this.filteredOrgList :: ', this.filteredOrgList)
     }
-  
+
     editOrg() {
       this.hideOrg = false
       this.resultFetched = false
@@ -253,7 +242,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
         this.registrationForm.get('organisation')!.setValue('')
         this.heirarchyObject = null
     }
-  
+
     // tslint:disable-next-line:function-name
     OrgsSearchChange() {
       // tslint:disable-next-line:no-non-null-assertion
@@ -262,7 +251,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
         this.registrationForm.updateValueAndValidity()
       })
     }
-  
+
     orgClicked(event: any) {
       if (event) {
         if (event.option && event.option.value && event.option.value.orgName) {
@@ -275,27 +264,6 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
           this.hideOrg = false
         }
       }
-    }
-
-    onPositionsChange() {
-        if (!this.registrationForm) {
-            return
-        }
-        // tslint:disable-next-line: no-non-null-assertion
-        this.masterPositions = this.registrationForm.get('position')!.valueChanges
-            .pipe(
-                debounceTime(500),
-                distinctUntilChanged(),
-                startWith(''),
-                map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
-                map(name => name ? this.filterPositions(name) : this.positionsOriginal.slice())
-            )
-
-        this.masterPositions.subscribe((event: any) => {
-            // tslint:disable-next-line: no-non-null-assertion
-            this.registrationForm.get('position')!.setValidators([Validators.required, forbiddenNamesValidatorPosition(event)])
-            this.registrationForm.updateValueAndValidity()
-        })
     }
 
     onGroupChange() {
@@ -322,14 +290,6 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     return this.groupsOriginal
     }
 
-    private filterPositions(name: string): any {
-        if (name) {
-            const filterValue = name.toLowerCase()
-            return this.positionsOriginal.filter((option: any) => option.name.toLowerCase().includes(filterValue))
-        }
-        return this.positionsOriginal
-    }
-
     public confirmChange() {
         this.confirm = !this.confirm
         this.registrationForm.patchValue({
@@ -341,45 +301,19 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
         return value ? value.channel : undefined
     }
 
-    displayFnPosition = (value: any) => {
-        return value ? value.name : undefined
-    }
-
     displayFnGroup = (value: any) => {
         return value ? value : undefined
       }
 
     signup() {
         this.disableBtn = true
-        // this.recaptchaSubscription = this.recaptchaV3Service.execute('importantAction')
-        // .subscribe(
-        //   _token => {
-        //     // tslint:disable-next-line: no-console
-        //     console.log('captcha validation success')
-
         let req: any
-        // console.log('hierarchyObj: ', hierarchyObj)
         if (this.heirarchyObject) {
             req = {
-                // firstName: this.registrationForm.value.firstname || '',
-                // lastName: this.registrationForm.value.lastname || '',
-                // email: this.registrationForm.value.email || '',
-                // deptId: this.registrationForm.value.department.identifier || '',
-                // deptName: this.registrationForm.value.department.channel || '',
-                // position: this.registrationForm.value.position.name || '',
-                // source: `${environment.name}.${this.portalID}` || '',
-                // orgName: hierarchyObj.orgname || '',
-                // channel: hierarchyObj.orgname || '',
-                // organisationType: hierarchyObj.sborgtype || '',
-                // organisationSubType: hierarchyObj.sbsuborgtype || '',
-                // mapId: hierarchyObj.mapid || '',
-                // sbRootOrgId: hierarchyObj.sbrootorgid,
-                // sbOrgId: hierarchyObj.sborgid,
                 request: {
                     userId: this.usr.userId,
                     firstName: this.registrationForm.value.firstname || '',
-                    lastName: this.registrationForm.value.lastname || '',
-                    // position: this.registrationForm.value.position.name || '',
+                    // lastName: this.registrationForm.value.lastname || '',
                     group: this.registrationForm.value.group || '',
                     phone: `${this.registrationForm.value.mobile}` || '',
                     orgName: this.heirarchyObject.orgName,
@@ -392,13 +326,8 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
                 },
             }
         }
-
-        // console.log('req: ', req)
-
         this.welcomeSignupSvc.register(req).subscribe(
             (_res: any) => {
-                // console.log('success', res)
-                // this.openDialog()
                 this.disableBtn = false
                 this.configSvc.updateGlobalProfile(true)
                 this.router.navigate(['/app/setup'])

@@ -28,27 +28,27 @@
                         <div class="flex flex-1 flex-row content-center flex-wrap">
                             <div class="flex flex-1 input-wrapper margin-top-s">
                                 <label for="firstName" class=" margin-remove-bottom form-label required"
-                                    i18n="First name label|Label which explains the user to enter first name"
-                                    i18n-aria-label aria-label="First name label">
-                                    First name
+                                    i18n="Full name label|Label which explains the user to enter full name"
+                                    i18n-aria-label aria-label="Full name label">
+                                    Full name
                                 </label>
                                 <mat-form-field appearance="outline" class="margin-top-s">
                                     <input id="firstName" matInput #firstname formControlName="firstname"
-                                        i18n-placeholder placeholder="Enter your first name" i18n-aria-label
-                                        aria-label="First Name input" />
-                                    <mat-error [hidden]="false" i18n="First Name Error|Explains name is required"
-                                        i18n-aria-label aria-label="First Name Error|Explains name is required "
+                                        i18n-placeholder placeholder="Enter your full name" i18n-aria-label
+                                        aria-label="Full Name input" />
+                                    <mat-error [hidden]="false" i18n="Full Name Error|Explains name is required"
+                                        i18n-aria-label aria-label="Full Name Error|Explains name is required "
                                         *ngIf="registrationForm?.controls['firstname'].errors?.required">
-                                        First name is mandatory
+                                        Full name is mandatory
                                     </mat-error>
                                     <mat-error [hidden]="false"
                                         *ngIf="registrationForm?.controls['firstname'].errors?.pattern" i18n-aria-label
-                                        aria-label="First name Error|Name fields cannot contain numbers and special characters except ">
+                                        aria-label="Full name Error | Name fields cannot contain numbers and special characters except ">
                                         Name fields cannot contain numbers and special characters except '
                                     </mat-error>
                                 </mat-form-field>
                             </div>
-                            <div class="flex flex-1 input-wrapper margin-top-s">
+                            <!-- <div class="flex flex-1 input-wrapper margin-top-s">
                                 <label for="lastName" class=" margin-remove-bottom form-label required"
                                     i18n="Surname label|Label which explains the user to enter Surname" i18n-aria-label
                                     aria-label="Last name label">
@@ -68,7 +68,7 @@
                                         Name fields cannot contain numbers and special characters except '
                                     </mat-error>
                                 </mat-form-field>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="flex flex-1 fflex-row content-center flex-wrap">
                             <div class="flex flex-1 input-wrapper margin-top-s">
