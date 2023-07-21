@@ -17,6 +17,7 @@ export class OfflineSessionComponent implements OnInit {
     widgetType: 'player',
     widgetSubType: 'playerOfflineSession',
     widgetData: {
+      content: '',
       identifier: '',
       disableTelemetry: false,
       hideControls: true,

@@ -80,6 +80,7 @@ export class OfflineSessionComponent implements OnInit {
           this.widgetResolverOfflineSessionData.widgetData.primaryCategory = this.offlineSessionData.primaryCategory
 
           this.widgetResolverOfflineSessionData.widgetData.version = `${this.offlineSessionData.version}${''}`
+          this.widgetResolverOfflineSessionData.widgetData.content = this.offlineSessionData
         }
         this.isFetchingDataComplete = true
       })

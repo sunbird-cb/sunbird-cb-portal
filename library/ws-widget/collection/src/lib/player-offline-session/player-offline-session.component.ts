@@ -18,6 +18,7 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>, OnDestroy {
   @Input() widgetData!: IWidgetsPlayerOfflineSessionData
   viewerDataServiceSubscription: Subscription | null = null
   identifier: string | null = null
+  content: any
   enableTelemetry = false
 
   constructor() {
@@ -26,6 +27,12 @@ implements OnInit, NsWidgetResolver.IWidgetData<any>, OnDestroy {
 
   ngOnInit() {
     // TODO:When player is fully implemented put initial functions here
+  }
+
+  ngAfterViewInit() {
+    if (this.widgetData.content) {
+      this.content = this.widgetData.content
+    }
   }
 
   ngOnDestroy() {
