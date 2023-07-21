@@ -33,6 +33,9 @@ export const environment: IEnvironment = {
   programStripName: (window as { [key: string]: any })['env']['programStripName'] || '',
   programStripPrimaryCategory: (window as { [key: string]: any })['env']['programStripPrimaryCategory'] || '',
   programStripKey: (window as { [key: string]: any })['env']['programStripKey'] || '',
+  quizResultTimeout: (window as { [key: string]: any })['env']['quizResultTimeout'] || '',
+  meetingLinkDetail: (window as { [key: string]: any })['env']['meetingLinkDetail'] || '',
+  karmayogiBharatLink: (window as { [key: string]: any })['env']['karmayogiBharatLink'] || '',
   helpEmail: (window as { [key: string]: any })['env']['helpEmail'] || '',
 }
 interface IEnvironment {
@@ -61,7 +64,10 @@ interface IEnvironment {
   contactMeetLink: string,
   programStripName: string,
   programStripPrimaryCategory: string,
-  programStripKey: string
+  programStripKey: string,
+  quizResultTimeout: number,
+  meetingLinkDetail:string,
+  karmayogiBharatLink:string,
   helpEmail: string
 }
 

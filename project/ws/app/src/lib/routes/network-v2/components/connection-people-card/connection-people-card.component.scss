@@ -6,6 +6,7 @@
     // height: 231px;
     height: 255px;
     width:  268px;
+    overflow: hidden;
     border: 1px solid rgba(0,0,0,8%);
 }
 
@@ -30,6 +31,10 @@
 }
 .action-container{
     padding: $size-m 0;
+    // position: absolute;
+    position: relative;
+    bottom: 0; 
+    left: 0;
 }
 .connect_btn {
     width:230px;

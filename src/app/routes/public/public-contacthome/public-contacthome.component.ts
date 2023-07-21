@@ -11,6 +11,8 @@ export class PublicContacthomeComponent implements OnInit {
   contactUsMail = ''
   environment!: any
   meetLink = ''
+  meetingDetail = ''
+  karmayogiBharatLink =''
 
   pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
   constructor(private configSvc: ConfigurationsService) {}
@@ -18,6 +20,8 @@ export class PublicContacthomeComponent implements OnInit {
   ngOnInit() {
     this.environment = environment
     this.meetLink = environment.contactMeetLink
+    this.meetingDetail = environment.meetingLinkDetail
+    this.karmayogiBharatLink = environment.karmayogiBharatLink
     if (this.configSvc.instanceConfig) {
       this.contactUsMail = this.configSvc.instanceConfig.mailIds.contactUs
     }
