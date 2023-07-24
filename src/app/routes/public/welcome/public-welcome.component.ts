@@ -113,6 +113,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     isMobileVerified = false
     otpSend = false
     otpVerified = false
+    disableVerifyBtn = false
     filteredOrgList!: any
     orgList: any
     resultFetched = false
@@ -134,25 +135,25 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
         // @Inject(PLATFORM_ID) private _platformId: any,
     ) {
         this.usr = _.get(this.activatedRoute, 'snapshot.data.userData.data')
-        if (!this.usr.isUpdateRequired) {
-            if (!this.configSvc || !this.configSvc.userProfileV2) {
-                this.fetch().then(() => {
-                    this.router.navigate(['/page/home'])
-                })
-            } else {
-                this.router.navigate(['/page/home'])
-            }
+        // if (!this.usr.isUpdateRequired) {
+        //     if (!this.configSvc || !this.configSvc.userProfileV2) {
+        //         this.fetch().then(() => {
+        //             this.router.navigate(['/page/home'])
+        //         })
+        //     } else {
+        //         this.router.navigate(['/page/home'])
+        //     }
 
-        } else {
-            if (!this.configSvc || !this.configSvc.userProfileV2) {
-                this.fetch().then(() => {
-                    this.init()
-                })
-            } else {
-                this.init()
-            }
-        }
-        // this.init()
+        // } else {
+        //     if (!this.configSvc || !this.configSvc.userProfileV2) {
+        //         this.fetch().then(() => {
+        //             this.init()
+        //         })
+        //     } else {
+        //         this.init()
+        //     }
+        // }
+        this.init()
     }
     async fetch() {
         await this.initSvc.init()
@@ -188,6 +189,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
                 this.portalID = `${this.telemetryConfig.pdata.id}`
             }
         }
+        this.onPhoneChange()
     }
 
     get typeValueStartCase() {
@@ -435,6 +437,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
         if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
           this.signupSvc.sendOtp(mob.value).subscribe(() => {
             this.otpSend = true
+            this.disableVerifyBtn = false
             alert('OTP send to your Mobile Number')
             this.startCountDown()
             // tslint:disable-next-line: align
@@ -453,6 +456,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
           this.signupSvc.resendOtp(mob.value).subscribe((res: any) => {
             if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
               this.otpSend = true
+              this.disableVerifyBtn = false
               alert('OTP send to your Mobile Number')
               this.startCountDown()
             }
@@ -480,6 +484,9 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
               // tslint:disable-next-line: align
             }, (error: any) => {
               this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+              if (error.error && error.error.result) {
+                this.disableVerifyBtn = error.error.result.remainingAttempt === 0 ? true : false
+              }
             })
           }
         }
@@ -489,6 +496,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     navigateTo(param?: any) {
         const formData = this.registrationForm.value
         const url = '/public/request'
-        this.router.navigate([url], {  queryParams: { type: param }, state: { userform: formData, isMobileVerified:this.isMobileVerified } })
+        // tslint:disable-next-line:max-line-length
+        this.router.navigate([url], {  queryParams: { type: param }, state: { userform: formData, isMobileVerified: this.isMobileVerified } })
     }
 }

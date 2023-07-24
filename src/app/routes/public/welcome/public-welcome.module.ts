@@ -64,7 +64,7 @@ import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
     MatTabsModule,
     MatAutocompleteModule,
     RecaptchaV3Module,
-    PipeDurationTransformModule
+    PipeDurationTransformModule,
   ],
   exports: [PublicWelcomeComponent],
   providers: [
