@@ -358,6 +358,7 @@ export namespace NsContent {
     MANDATORY_COURSE_GOAL = 'Mandatory Course Goal',
     STANDALONE_ASSESSMENT = 'Standalone Assessment',
     BLENDED_PROGRAM = 'Blended Program',
+    OFFLINE_SESSION = 'Offline Session',
     // following will not be available soon
     /**
      * @deprecated The type should not be used
@@ -400,6 +401,7 @@ export namespace NsContent {
     PRACTICE_RESOURCE = 'Practice Question Set',
     FINAL_ASSESSMENT = 'Course Assessment',
     COMP_ASSESSMENT = 'Competency Assessment',
+    OFFLINE_SESSION = 'Offline Session',
   }
 
   export enum EMiscPlayerSupportedCollectionTypes {
@@ -451,6 +453,7 @@ export namespace NsContent {
     APPLICATION_JSON = 'application/json',
     PRACTICE_RESOURCE = 'application/vnd.sunbird.questionset',
     FINAL_ASSESSMENT = 'application/vnd.sunbird.questionset',
+    OFFLINE_SESSION = 'application/offline',
     // Added on UI Only
     CERTIFICATION = 'application/certification',
     PLAYLIST = 'application/playlist',

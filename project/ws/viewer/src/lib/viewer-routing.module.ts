@@ -207,6 +207,19 @@ const routes: Routes = [
     },
   },
   {
+    path: 'offline-session',
+    // component: PracticeTestComponent,
+    data: {
+      resourceType: 'offline-session',
+      module: 'Learn',
+      pageId: 'offline-session',
+    },
+    resolve: {
+      content: ViewerResolve,
+    },
+    loadChildren: () => import('./routes/offline-session/offline-session.module').then(p => p.OfflineSessionModule),
+  },
+  {
     path: 'survey',
     // component: SurveyComponent,
     data: {
