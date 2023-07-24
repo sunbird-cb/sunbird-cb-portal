@@ -200,8 +200,14 @@
                   i18n="Email Error|Explains character validation">
                   Max 64 characters before "@" & 255 characters after "@" are valid.
                 </div>
-                  <mat-hint class="pos-hint">Do not have a government email address?<span class="float-right ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo('Domain')">Request for help</span></mat-hint>
                 </mat-form-field>
+                <!-- <mat-hint class="pos-hint">Do not have a government email address?<span class="float-right ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo('Domain')">Request for help</span></mat-hint> -->
+                <div class="w-full" id="org-field">
+                  <div class="flex items-center flex-1">
+                    <span class="ws-mat-black60-text">Do not have a government email address?</span>
+                    <a class="flex-1 ws-mat-accent-text text-right cursor-pointer font-bold" (click)="navigateTo('Domain')"> Request for help</a>
+                  </div>
+                </div>
               </div>
               <div class="input-wrapper mobile-wrapper margin-top-l">
                 <label for="mobileNumber" class=" margin-remove-bottom form-label required"
