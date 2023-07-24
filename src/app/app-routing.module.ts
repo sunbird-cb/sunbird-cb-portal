@@ -32,6 +32,7 @@ import { AppPublicTocResolverService } from './routes/public/public-toc/app-publ
 import { environment } from 'src/environments/environment'
 import { AppPublicPositionResolverService } from './routes/public/public-signup/position-resolver.service'
 import { PublicRequestComponent } from './routes/public/public-request/public-request.component'
+import { AppPublicGroupResolverService } from './routes/public/public-signup/group-resolver.service'
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
 // Please declare routes in alphabetical order
@@ -814,6 +815,7 @@ const routes: Routes = [
     },
     resolve: {
       userData: WelcomeUserResolverService,
+      group: AppPublicGroupResolverService,
     },
   },
   {
@@ -836,6 +838,7 @@ const routes: Routes = [
     resolve: {
       // pageData: PageResolve,
       positions: AppPublicPositionResolverService,
+      group: AppPublicGroupResolverService,
     },
   },
   {

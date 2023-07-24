@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormControl, Validators, AbstractControl, ValidatorFn } from '@angular/forms'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { environment } from 'src/environments/environment'
 // tslint:disable-next-line: import-name
 import _ from 'lodash'
 import { Subscription, Observable, interval } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, pairwise, startWith } from 'rxjs/operators'
 import { SignupService } from '../public-signup/signup.service'
 import { RequestService } from './request.service'
 import { RequestSuccessDialogComponent } from './request-success-dialog/request-success-dialog.component'
 import { v4 as uuid } from 'uuid'
+import { Location } from '@angular/common'
 
 export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -43,6 +44,7 @@ export class PublicRequestComponent implements OnInit {
   domainPattern = `([a-z0-9\-]+\.){1,2}[a-z]{2,4}`
   confirm = false
   disableBtn = false
+  disableVerifyBtn = false
   isMobileVerified = false
   otpSend = false
   otpVerified = false
@@ -56,12 +58,27 @@ export class PublicRequestComponent implements OnInit {
   requestObj: { state: string; action: string; serviceName: string; userId: string;
     applicationId: string; actorUserId: string; deptName: string; updateFieldValues: any}  | undefined
   formobj: { toValue: {} ; fieldKey: any; description: any; firstName: any; email: any; mobile: any} | undefined
+  userform: any
+  backUrl: string = ''
 
   constructor(private activatedRoute: ActivatedRoute,
+              private router: Router,
               private snackBar: MatSnackBar,
               private signupSvc: SignupService,
               private dialog: MatDialog,
-              private requestSvc: RequestService) {
+              private requestSvc: RequestService,
+              private _location: Location) {
+    const navigation = this.router.getCurrentNavigation()
+    if (navigation) {
+      const extraData = navigation.extras.state as {
+        userform: any
+        backUrl: string
+        isMobileVerified: boolean
+      }
+      this.userform = extraData.userform
+      this.isMobileVerified = extraData.isMobileVerified
+      this.backUrl = extraData.backUrl
+    }
     this.requestType = this.activatedRoute.snapshot.queryParams.type
     this.requestForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
@@ -77,10 +94,27 @@ export class PublicRequestComponent implements OnInit {
       addDetails: new FormControl('', []),
       confirmBox: new FormControl(false, [Validators.required]),
     })
+    if (this.userform) {
+      this.requestForm.patchValue({
+        firstname: this.userform.firstname ? this.userform.firstname : '',
+        email: this.userform.email ? this.userform.email : '',
+        mobile: this.userform.mobile ? this.userform.mobile : '',
+        organisation: this.userform.organisation ? this.userform.organisation : '',
+        domain: this.userform.domain ? this.userform.domain : '',
+        addDetails: this.userform.addDetails ? this.userform.addDetails : '',
+        confirmBox: this.userform.confirmBox ? this.userform.confirmBox : '',
+      })
+      this.confirm = this.userform.confirmBox
+      // this.requestForm.controls['firstname'].markAsTouched()
+      // this.requestForm.controls['email'].markAsTouched()
+      // this.requestForm.controls['mobile'].markAsTouched()
+      // this.requestForm.controls['confirmBox'].markAsTouched()
+    }
    }
 
   ngOnInit() {
 
+    this.onPhoneChange()
   }
 
   emailVerification(emailId: string) {
@@ -94,6 +128,22 @@ export class PublicRequestComponent implements OnInit {
       } else {
         this.emailLengthVal = false
       }
+    }
+  }
+
+  onPhoneChange() {
+    const ctrl = this.requestForm.get('mobile')
+    if (ctrl) {
+      ctrl
+        .valueChanges
+        .pipe(startWith(null), pairwise())
+        .subscribe(([prev, next]: [any, any]) => {
+          if (!(prev == null && next)) {
+            this.isMobileVerified = false
+            this.disableVerifyBtn = false
+            this.otpSend = false
+          }
+        })
     }
   }
 
@@ -118,6 +168,7 @@ export class PublicRequestComponent implements OnInit {
       this.signupSvc.resendOtp(mob.value).subscribe((res: any) => {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
+          this.disableVerifyBtn = false
           alert('OTP send to your Mobile Number')
           this.startCountDown()
         }
@@ -144,6 +195,9 @@ export class PublicRequestComponent implements OnInit {
           // tslint:disable-next-line: align
         }, (error: any) => {
           this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+          if (error.error && error.error.result) {
+            this.disableVerifyBtn = error.error.result.remainingAttempt === 0 ? true : false
+          }
         })
       }
     }
@@ -162,7 +216,7 @@ export class PublicRequestComponent implements OnInit {
               startTime + this.OTP_TIMER - Date.now(),
           ),
         )
-        .subscribe(_timeRemaining => {
+        .subscribe((_timeRemaining: any) => {
           this.timeLeftforOTP -= 1
           if (this.timeLeftforOTP < 0) {
             this.timeLeftforOTP = 0
@@ -307,5 +361,9 @@ export class PublicRequestComponent implements OnInit {
     this.snackBar.open(primaryMsg, 'X', {
       duration,
     })
+  }
+
+  public goBackUrl() {
+    this._location.back()
   }
 }
