@@ -570,6 +570,6 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   navigateTo(param?: any) {
     const formData = this.registrationForm.value
     const url = '/public/request'
-    this.router.navigate([url], {  queryParams: { type: param }, state: { userform: formData } })
+    this.router.navigate([url], {  queryParams: { type: param }, state: { userform: formData, isMobileVerified:this.isMobileVerified } })
   }
 }
