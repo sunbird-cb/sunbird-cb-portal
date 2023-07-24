@@ -27,7 +27,7 @@
           Request to add {{requestType | lowercase}}
         </h2>
       </div>
-      <form [formGroup]="requestForm">
+      <form [formGroup]="requestForm" novalidate>
         <div class="margin-top-l new-mobile">
           <div class="flex flex-wrap mobile-break">
             <div class="flex flex-col content-center flex-wrap">
@@ -124,7 +124,7 @@
                       <div class="flex flex-1 margin-top-s justify-end">
                         <button mat-raised-button type="button" (click)="verifyOtp(otp)"
                           class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text margin-top-s otp"
-                          [disabled]="requestForm?.mobile?.invalid">
+                          [disabled]="requestForm?.mobile?.invalid || disableVerifyBtn">
                           <span class="text-white" i18n>
                             Verify OTP
                           </span>

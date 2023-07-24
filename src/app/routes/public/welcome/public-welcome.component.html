@@ -148,7 +148,7 @@
                                   <div class="flex flex-1 margin-top-s justify-end">
                                     <button mat-raised-button type="button" (click)="verifyOtp(otp)"
                                       class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text margin-top-s otp"
-                                      [disabled]="registrationForm?.mobile?.invalid">
+                                      [disabled]="registrationForm?.mobile?.invalid || disableVerifyBtn">
                                       <span class="text-white" i18n>
                                         Verify OTP
                                       </span>

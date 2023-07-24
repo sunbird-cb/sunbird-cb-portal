@@ -103,6 +103,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   confirm = false
   confirmTerms = false
   disableBtn = false
+  disableVerifyBtn = false
   orgRequired = false
   ministeries: any[] = []
   masterMinisteries!: Observable<any> | undefined
@@ -332,6 +333,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
           if (!(prev == null && next)) {
             this.isMobileVerified = false
             this.otpSend = false
+            this.disableVerifyBtn = false
           }
         })
     }
@@ -359,6 +361,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       this.signupSvc.resendOtp(mob.value).subscribe((res: any) => {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
+          this.disableVerifyBtn = false
           alert('OTP send to your Mobile Number')
           this.startCountDown()
         }
@@ -401,6 +404,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
           // tslint:disable-next-line: align
         }, (error: any) => {
           this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+          if(error.error&& error.error.result) {
+            this.disableVerifyBtn = error.error.result.remainingAttempt === 0 ? true : false
+          }
         })
       }
     }

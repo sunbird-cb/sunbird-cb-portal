@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment'
 // tslint:disable-next-line: import-name
 import _ from 'lodash'
 import { Subscription, Observable, interval } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, pairwise, startWith } from 'rxjs/operators'
 import { SignupService } from '../public-signup/signup.service'
 import { RequestService } from './request.service'
 import { RequestSuccessDialogComponent } from './request-success-dialog/request-success-dialog.component'
@@ -44,6 +44,7 @@ export class PublicRequestComponent implements OnInit {
   domainPattern = `([a-z0-9\-]+\.){1,2}[a-z]{2,4}`
   confirm = false
   disableBtn = false
+  disableVerifyBtn = false
   isMobileVerified = false
   otpSend = false
   otpVerified = false
@@ -113,6 +114,7 @@ export class PublicRequestComponent implements OnInit {
 
   ngOnInit() {
 
+    this.onPhoneChange()
   }
 
   emailVerification(emailId: string) {
@@ -126,6 +128,22 @@ export class PublicRequestComponent implements OnInit {
       } else {
         this.emailLengthVal = false
       }
+    }
+  }
+
+  onPhoneChange() {
+    const ctrl = this.requestForm.get('mobile')
+    if (ctrl) {
+      ctrl
+        .valueChanges
+        .pipe(startWith(null), pairwise())
+        .subscribe(([prev, next]: [any, any]) => {
+          if (!(prev == null && next)) {
+            this.isMobileVerified = false
+            this.disableVerifyBtn = false
+            this.otpSend = false
+          }
+        })
     }
   }
 
@@ -150,6 +168,7 @@ export class PublicRequestComponent implements OnInit {
       this.signupSvc.resendOtp(mob.value).subscribe((res: any) => {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
+          this.disableVerifyBtn = false
           alert('OTP send to your Mobile Number')
           this.startCountDown()
         }
@@ -176,6 +195,9 @@ export class PublicRequestComponent implements OnInit {
           // tslint:disable-next-line: align
         }, (error: any) => {
           this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+          if(error.error&& error.error.result) {
+            this.disableVerifyBtn = error.error.result.remainingAttempt === 0 ? true : false
+          }
         })
       }
     }

@@ -40,6 +40,11 @@
     }
 
 
+    .submitBtnSmall:disabled,
+    .submitBtnSmall[disabled] {
+      opacity: 0.6;
+    }
+    
     .submitBtn:disabled,
     .submitBtn[disabled] {
       opacity: 0.6;
