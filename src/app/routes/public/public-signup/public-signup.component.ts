@@ -404,7 +404,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
           // tslint:disable-next-line: align
         }, (error: any) => {
           this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
-          if(error.error&& error.error.result) {
+          if (error.error && error.error.result) {
             this.disableVerifyBtn = error.error.result.remainingAttempt === 0 ? true : false
           }
         })
@@ -576,6 +576,6 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   navigateTo(param?: any) {
     const formData = this.registrationForm.value
     const url = '/public/request'
-    this.router.navigate([url], {  queryParams: { type: param }, state: { userform: formData, isMobileVerified:this.isMobileVerified } })
+    this.router.navigate([url], {  queryParams: { type: param }, state: { userform: formData, isMobileVerified: this.isMobileVerified } })
   }
 }

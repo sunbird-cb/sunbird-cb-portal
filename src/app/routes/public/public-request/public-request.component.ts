@@ -195,7 +195,7 @@ export class PublicRequestComponent implements OnInit {
           // tslint:disable-next-line: align
         }, (error: any) => {
           this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
-          if(error.error&& error.error.result) {
+          if (error.error && error.error.result) {
             this.disableVerifyBtn = error.error.result.remainingAttempt === 0 ? true : false
           }
         })
@@ -364,6 +364,6 @@ export class PublicRequestComponent implements OnInit {
   }
 
   public goBackUrl() {
-    this._location.back();
+    this._location.back()
   }
 }
