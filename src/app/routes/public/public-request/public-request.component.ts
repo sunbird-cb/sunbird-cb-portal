@@ -72,8 +72,10 @@ export class PublicRequestComponent implements OnInit {
       const extraData = navigation.extras.state as {
         userform: any
         backUrl: string
+        isMobileVerified: boolean
       }
       this.userform = extraData.userform
+      this.isMobileVerified = extraData.isMobileVerified
       this.backUrl = extraData.backUrl
     }
     this.requestType = this.activatedRoute.snapshot.queryParams.type
@@ -102,10 +104,10 @@ export class PublicRequestComponent implements OnInit {
         confirmBox: this.userform.confirmBox ? this.userform.confirmBox : '',
       })
       this.confirm = this.userform.confirmBox
-      this.requestForm.controls['firstname'].markAsTouched()
-      this.requestForm.controls['email'].markAsTouched()
-      this.requestForm.controls['mobile'].markAsTouched()
-      this.requestForm.controls['confirmBox'].markAsTouched()
+      // this.requestForm.controls['firstname'].markAsTouched()
+      // this.requestForm.controls['email'].markAsTouched()
+      // this.requestForm.controls['mobile'].markAsTouched()
+      // this.requestForm.controls['confirmBox'].markAsTouched()
     }
    }
 
