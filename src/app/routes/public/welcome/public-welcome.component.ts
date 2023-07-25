@@ -135,25 +135,24 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
         // @Inject(PLATFORM_ID) private _platformId: any,
     ) {
         this.usr = _.get(this.activatedRoute, 'snapshot.data.userData.data')
-        // if (!this.usr.isUpdateRequired) {
-        //     if (!this.configSvc || !this.configSvc.userProfileV2) {
-        //         this.fetch().then(() => {
-        //             this.router.navigate(['/page/home'])
-        //         })
-        //     } else {
-        //         this.router.navigate(['/page/home'])
-        //     }
-
-        // } else {
-        //     if (!this.configSvc || !this.configSvc.userProfileV2) {
-        //         this.fetch().then(() => {
-        //             this.init()
-        //         })
-        //     } else {
-        //         this.init()
-        //     }
-        // }
-        this.init()
+        if (!this.usr.isUpdateRequired) {
+            if (!this.configSvc || !this.configSvc.userProfileV2) {
+                this.fetch().then(() => {
+                    this.router.navigate(['/page/home'])
+                })
+            } else {
+                this.router.navigate(['/page/home'])
+            }
+        } else {
+            if (!this.configSvc || !this.configSvc.userProfileV2) {
+                this.fetch().then(() => {
+                    this.init()
+                })
+            } else {
+                this.init()
+            }
+        }
+        // this.init()
     }
     async fetch() {
         await this.initSvc.init()
