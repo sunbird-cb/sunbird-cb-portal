@@ -170,6 +170,7 @@ export class AppTocService {
         // || content.primaryCategory === this.primaryCategory.KNOWLEDGE_ARTIFACT)
         || content.primaryCategory === this.primaryCategory.PRACTICE_RESOURCE
         || content.primaryCategory === this.primaryCategory.FINAL_ASSESSMENT
+        || content.primaryCategory === this.primaryCategory.OFFLINE_SESSION
       )) {
       if (content.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
         tocStructure.course += 1
@@ -186,7 +187,8 @@ export class AppTocService {
         content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE
         // || content.contentType === 'Knowledge Artifact'
         || content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
-        || content.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT)
+        || content.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT
+        || content.primaryCategory === NsContent.EPrimaryCategory.OFFLINE_SESSION)
     ) {
       switch (content.mimeType) {
         // case NsContent.EMimeTypes.HANDS_ON:
@@ -217,6 +219,13 @@ export class AppTocService {
         case NsContent.EMimeTypes.APPLICATION_JSON:
           // if (content.resourceType === 'Assessment') {
           tocStructure.assessment += 1
+          // } else {
+          //   tocStructure.quiz += 1
+          // }
+          break
+        case NsContent.EMimeTypes.OFFLINE_SESSION:
+          // if (content.resourceType === 'Assessment') {
+          tocStructure.offlineSession += 1
           // } else {
           //   tocStructure.quiz += 1
           // }
@@ -254,7 +263,8 @@ export class AppTocService {
     if (content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE
       //  || content.contentType === 'Knowledge Artifact'
       || content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
-      || content.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT) {
+      || content.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT
+      || content.primaryCategory === NsContent.EPrimaryCategory.OFFLINE_SESSION) {
       return this.filterUnitContent(content, filterCategory) ? content : null
     }
     const filteredChildren: NsContent.IContent[] =

@@ -20,7 +20,7 @@ export class AppPublicPositionResolverService
         _state: RouterStateSnapshot,
     ): Observable<IResolveResponse<any>> {
         return this.signupService.getPositions().pipe(
-            map(rData => ({ data: rData.responseData, error: null })), //  (rData.responseData || []).map((p: any) => p.name)
+            map((rData: any) => ({ data: rData.responseData, error: null })), //  (rData.responseData || []).map((p: any) => p.name)
             tap((resolveData: any) => {
                 return of({ error: null, data: resolveData })
             }),

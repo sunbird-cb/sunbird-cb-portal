@@ -29,7 +29,7 @@ import { LoaderService } from '@ws/author/src/public-api'
 /* tslint:disable */
 import _ from 'lodash'
 import { OtpService } from '../../services/otp.services';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment'
 /* tslint:enable */
 
 export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
@@ -188,11 +188,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       otherDetailsOfficePinCode: new FormControl('', []),
       departmentName: new FormControl('', []),
     })
-    this.init()
+
   }
   async init() {
     await this.loadDesignations()
     this.fetchMeta()
+
   }
   ngOnInit() {
     // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
@@ -205,10 +206,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     if (approvalData.length > 0) {
       // need to call search API
     }
-    this.getUserDetails()
-    this.checkIfMobileNoChanged()
 
-    // this.assignPrimaryEmailType(this.isOfficialEmail)
+    this.getUserDetails()
+    this.init()
+    this.checkIfMobileNoChanged()
+  }
+
+  displayFnPosition = (value: any) => {
+    return value ? value.name : undefined
   }
   checkIfMobileNoChanged(): void {
     // this.createUserForm.controls['mobile'].valueChanges.subscribe((oldValue: any) => {
@@ -235,9 +240,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           this.countries.push({ name: item.name })
           this.countryCodes.push(item.countryCode)
         })
+
         this.createUserForm.patchValue({
-          countryCode: this.countryCodes[0],
+          countryCode: '+91',
         })
+
+        if (this.createUserForm.value.nationality === null || this.createUserForm.value.nationality === undefined) {
+          this.createUserForm.patchValue({
+            nationality: 'Indian',
+          })
+        }
         this.onChangesNationality()
       },
       (_err: any) => {
@@ -383,8 +395,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   onChangesNationality(): void {
-    if (this.createUserForm.get('nationality') != null) {
 
+    if (this.createUserForm.get('nationality') != null) {
       // tslint:disable-next-line: no-non-null-assertion
       this.masterNationality = this.createUserForm.get('nationality')!.valueChanges
         .pipe(
@@ -395,11 +407,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           map(name => name ? this.filterNationality(name) : this.masterNationalities.slice())
         )
       const newLocal = 'nationality'
+      // this.createUserForm.controls['nationality']!.setValue('Indian')
+      // console.log(this.masterNationality, "masterNationality====")
       this.masterNationality.subscribe(event => {
         // tslint:disable-next-line: no-non-null-assertion
         this.createUserForm.get(newLocal)!.setValidators([Validators.required, forbiddenNamesValidator(event)])
+
         this.createUserForm.updateValueAndValidity()
+
       })
+
     }
   }
 
@@ -440,7 +457,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   onChangesDegrees() {
     const controls = this.createUserForm.get('degrees') as FormArray
     // tslint:disable-next-line: no-non-null-assertion
-    controls.at(controls.length - 1).get('degree')!.valueChanges.pipe(
+    controls.at(controls.length - 1)!.get('degree')!.valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged(),
       startWith<string | INameField>(''),
@@ -452,7 +469,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   onChangesPostDegrees() {
     const controls = this.createUserForm.get('postDegrees') as FormArray
     // tslint:disable-next-line: no-non-null-assertion
-    controls.at(controls.length - 1).get('degree')!.valueChanges.pipe(
+    controls.at(controls.length - 1)!.get('degree')!.valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged(),
       startWith<string | INameField>(''),
@@ -462,6 +479,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   private filterNationality(name: string): INation[] {
+
     if (name) {
       const filterValue = name.toLowerCase()
       return this.masterNationalities.filter(option => option.name.toLowerCase().includes(filterValue))
@@ -622,6 +640,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       // if (this.configSvc.userProfile) {
       this.userProfileSvc.getUserdetailsFromRegistry(this.configSvc.unMappedUser.id).subscribe(
         (data: any) => {
+
           const userData = {
             ...data.profileDetails || _.get(this.configSvc.unMappedUser, 'profileDetails'),
             id: data.id, userId: data.userId,
@@ -643,6 +662,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
                 // surname: this.configSvc.userProfile.lastName,
                 primaryEmail: _.get(this.userProfileData, 'personalDetails.primaryEmail') || this.configSvc.userProfile.email,
                 orgName: this.configSvc.userProfile.rootOrgName,
+
               })
             }
           }
@@ -675,6 +695,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           // surname: tempData.lastName,
           primaryEmail: _.get(this.configSvc.unMappedUser, 'profileDetails.personalDetails.primaryEmail') || tempData.email,
           orgName: tempData.rootOrgName,
+
         })
       }
     }
@@ -1155,7 +1176,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     const personalDetail: any = {}
     const personalDetailsFields = ['firstname', 'middlename', 'surname',
-      'dob', 'nationality', 'domicileMedium', 'gender', 'maritalStatus',
+      'dob', 'nationality', 'domicileMedium', 'gender', 'maritalStatus', 'photo',
       'category', 'knownLanguages', 'countryCode', 'mobile', 'phoneVerified', 'telephone',
       'primaryEmail', 'officialEmail', 'personalEmail', 'postalAddress',
       'pincode', 'secondaryEmail', 'residenceAddress', 'primaryEmailType']
@@ -1187,13 +1208,19 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       }
       if (currentControl.dirty) {
         personalDetailsFields.forEach(item => {
+
           if (item === 'phoneVerified') {
             personalDetail[item] = this.isMobileVerified
           }
           if (item === name) {
+
+            // console.log(name, "name--")
+            // console.log(form.value, "form.value")
             switch (name) {
+
               case 'knownLanguages': return personalDetail['knownLanguages'] = form.value.knownLanguages
               case 'dob': return personalDetail['dob'] = form.value.dob
+              case 'nationality': return personalDetail['nationality']  = form.value.nationality
               case 'secondaryEmail': return personalDetail['personalEmail'] = form.value.secondaryEmail
               case 'residenceAddress': return personalDetail['postalAddress'] = form.value.residenceAddress
               case 'telephone': return personalDetail['telephone'] = `${form.value.telephone}` || ''
@@ -1304,8 +1331,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     if (form.value.doj) {
       form.value.doj = changeformat(new Date(`${form.value.doj}`))
     }
-
-    // this.uploadSaveData = true
     this.getEditedValues(form)
     // Construct the request structure for open saber
     // const profileRequest = this.constructReq(form)
@@ -1321,11 +1346,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const reqUpdates = {
       request: {
         userId: this.configSvc.unMappedUser.id,
+        avatar: this.photoUrl,
         ...this.changedProperties,
       },
-    }
 
-    // console.log( reqUpdate)
+    }
+    reqUpdates.request.profileDetails.personalDetails['nationality']  = form.value.nationality
+
     this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(
       res => {
         this.uploadSaveData = false

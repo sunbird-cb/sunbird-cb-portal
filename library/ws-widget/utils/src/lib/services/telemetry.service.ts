@@ -240,6 +240,9 @@ export class TelemetryService {
             ...(data && data.object),
           },
         }
+        if (!page.objectId || !objectType) {
+          config.object = {}
+        }
         $t.impression(edata, config)
       } else {
         $t.impression(edata, {
@@ -636,13 +639,17 @@ export class TelemetryService {
   getPageDetails() {
     const path = window.location.pathname.replace('/', '')
     const url = path + window.location.search
+    let moduleValue = ''
+    if (path.includes('discussion-forum')) {
+      moduleValue = 'Discuss'
+    }
     return {
       pageid: path,
       pageUrl: url,
       pageUrlParts: path.split('/'),
       refferUrl: this.previousUrl,
       objectId: this.extractContentIdFromUrlParts(path.split('/')),
-      module: '',
+      module: moduleValue,
     }
   }
 

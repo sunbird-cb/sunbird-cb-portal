@@ -19,7 +19,7 @@ import { environment } from 'src/environments/environment'
   styleUrls: ['./html-mobile.component.scss'],
 })
 export class HtmlMobileComponent implements OnInit, OnDestroy {
-  
+
   private routeDataSubscription: Subscription | null = null
   private responseSubscription: Subscription | null = null
   private viewerDataSubscription: Subscription | null = null
@@ -64,7 +64,6 @@ export class HtmlMobileComponent implements OnInit, OnDestroy {
       window.location.href.includes('/embed/') ||
       this.activatedRoute.snapshot.queryParams.embed === 'true'
     )
-    debugger
     if (
       this.activatedRoute.snapshot.queryParamMap.get('preview') === 'true' &&
       !this.accessControlSvc.authoringConfig.newDesign

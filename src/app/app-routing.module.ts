@@ -32,6 +32,7 @@ import { AppPublicTocResolverService } from './routes/public/public-toc/app-publ
 import { environment } from 'src/environments/environment'
 import { AppPublicPositionResolverService } from './routes/public/public-signup/position-resolver.service'
 import { PublicRequestComponent } from './routes/public/public-request/public-request.component'
+import { AppPublicGroupResolverService } from './routes/public/public-signup/group-resolver.service'
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
 // Please declare routes in alphabetical order
@@ -164,7 +165,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'knowledge-resource',
       pageId: 'app/knowledge-resource',
-      module: 'knowledge-resource',
+      module: 'Knowledge Resources',
     },
     resolve: {
       pageData: PageResolve,
@@ -251,7 +252,7 @@ const routes: Routes = [
     pathMatch: 'full',
     redirectTo: 'app/discussion',
     data: {
-      pageId: 'app/discussion-forum',
+      pageId: '',
       module: 'Discuss',
     },
 
@@ -292,7 +293,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'profile-v3',
       pageId: 'app/profile-v3',
-      module: 'profile-v3',
+      module: 'Profile',
     },
     resolve: {
       pageData: PageResolve,
@@ -366,7 +367,7 @@ const routes: Routes = [
       import('./routes/route-my-dashboard.module').then(u => u.RouteMyDashboardModule),
     canActivate: [GeneralGuard, LearningGuard],
     data: {
-      pageId: 'app/my-dashboard',
+      pageId: '',
       module: 'Dashboard',
     },
   },
@@ -419,7 +420,9 @@ const routes: Routes = [
       import('./routes/route-profile-app.module').then(u => u.RouteProfileAppModule),
     canActivate: [GeneralGuard],
     data: {
-      pageId: 'app/profile',
+      pageType: 'feature',
+      pageKey: 'profile',
+      pageId: '',
       module: 'Profile',
     },
   },
@@ -812,6 +815,7 @@ const routes: Routes = [
     },
     resolve: {
       userData: WelcomeUserResolverService,
+      group: AppPublicGroupResolverService,
     },
   },
   {
@@ -834,6 +838,7 @@ const routes: Routes = [
     resolve: {
       // pageData: PageResolve,
       positions: AppPublicPositionResolverService,
+      group: AppPublicGroupResolverService,
     },
   },
   {

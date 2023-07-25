@@ -71,8 +71,8 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   getAuthDataIdentifer() {
     const collectionId = this.activatedRoute.snapshot.queryParams.collectionId
     this.widgetServ.fetchAuthoringContent(collectionId).subscribe((data: any) => {
-      if(data.result.content.cstoken){
-        this.configSvc.cstoken = data.result.content.cstoken;
+      if (data.result.content.cstoken) {
+        this.configSvc.cstoken = data.result.content.cstoken
       }
       this.leafNodesCount = data.result.content.leafNodesCount
     })
@@ -87,7 +87,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.isTypeOfCollection = this.activatedRoute.snapshot.queryParams.collectionType ? true : false
     this.screenSizeSubscription = this.isLtMedium$.subscribe(isSmall => {
       // this.sideNavBarOpened = !isSmall
-      this.sideNavBarOpened = isSmall ? false : false
+      this.sideNavBarOpened = isSmall ? false : true
       this.mode = isSmall ? 'over' : 'side'
     })
     this.resourceChangeSubscription = this.dataSvc.changedSubject.subscribe(_ => {

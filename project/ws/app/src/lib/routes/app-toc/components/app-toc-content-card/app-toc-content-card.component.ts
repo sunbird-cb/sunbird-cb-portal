@@ -37,6 +37,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
     webPage: 0,
     youtube: 0,
     interactivecontent: 0,
+    offlineSession: 0,
   }
   defaultThumbnail = ''
   viewChildren = false
@@ -73,6 +74,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
         || this.content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
         || this.content.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT
         || this.content.primaryCategory === NsContent.EPrimaryCategory.COMP_ASSESSMENT
+        || this.content.primaryCategory === NsContent.EPrimaryCategory.OFFLINE_SESSION
       )
     }
     return false
@@ -119,6 +121,8 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
           this.contentStructure.other += 1
         } else if (child.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
           this.contentStructure.learningModule += 1
+        } else if (child.primaryCategory === NsContent.EPrimaryCategory.OFFLINE_SESSION) {
+          this.contentStructure.offlineSession += 1
         } else if (child.primaryCategory === NsContent.EPrimaryCategory.RESOURCE) {
           switch (child.mimeType) {
             case NsContent.EMimeTypes.HANDS_ON:
@@ -136,6 +140,9 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
               break
             case NsContent.EMimeTypes.PDF:
               this.contentStructure.pdf += 1
+              break
+            case NsContent.EMimeTypes.OFFLINE_SESSION:
+              this.contentStructure.offlineSession += 1
               break
             case NsContent.EMimeTypes.SURVEY:
               this.contentStructure.survey += 1

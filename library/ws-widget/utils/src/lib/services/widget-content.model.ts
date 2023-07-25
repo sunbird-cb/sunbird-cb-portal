@@ -141,6 +141,8 @@ export namespace NsContent {
     MULTIPLE_CHOICE_QUESTION = 'Multiple Choice Question',
     SINGLE_CHOICE_QUESTION = 'Single Choice Question',
     MANDATORY_COURSE_GOAL = 'Mandatory Course Goal',
+    BLENDED_PROGRAM = 'Blended Program',
+    OFFLINE_SESSION = 'Offline Session',
     // following will not be available soon
     /**
      * @deprecated The type should not be used
@@ -334,6 +336,7 @@ export namespace NsContent {
     QUESTION_SET = 'application/vnd.sunbird.questionset',
     QUESTION = 'application/vnd.sunbird.question',
     UNKNOWN = 'application/unknown',
+    OFFLINE_SESSION = 'application/offline',
   }
   export enum EDisplayContentTypes {
     ASSESSMENT = 'ASSESSMENT',

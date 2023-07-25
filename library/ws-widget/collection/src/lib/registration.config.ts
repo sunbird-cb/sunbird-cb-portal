@@ -117,6 +117,8 @@ import { PlayerAudioComponent } from './player-audio/player-audio.component'
 import { PlayerAudioModule } from './player-audio/player-audio.module'
 import { PlayerPdfComponent } from './player-pdf/player-pdf.component'
 import { PlayerPdfModule } from './player-pdf/player-pdf.module'
+import { PlayerOfflineSessionComponent } from './player-offline-session/player-offline-session.component'
+import { PlayerOfflineSessionModule } from './player-offline-session/player-offline-session.module'
 import { PlayerSlidesComponent } from './player-slides/player-slides.component'
 import { PlayerSlidesModule } from './player-slides/player-slides.module'
 import { PlayerVideoComponent } from './player-video/player-video.component'
@@ -213,6 +215,7 @@ export const WIDGET_REGISTERED_MODULES = [
   PlayerAmpModule,
   PlayerAudioModule,
   PlayerPdfModule,
+  PlayerOfflineSessionModule,
   PlayerSurveyModule,
   PlayerSlidesModule,
   PlayerVideoModule,
@@ -473,6 +476,11 @@ export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] 
     widgetType: ROOT_WIDGET_CONFIG.player._type,
     widgetSubType: ROOT_WIDGET_CONFIG.player.survey,
     component: PlayerSurveyComponent,
+  },
+  {
+    widgetType: ROOT_WIDGET_CONFIG.player._type,
+    widgetSubType: ROOT_WIDGET_CONFIG.player.offlineSession,
+    component: PlayerOfflineSessionComponent,
   },
   {
     widgetType: ROOT_WIDGET_CONFIG.player._type,
