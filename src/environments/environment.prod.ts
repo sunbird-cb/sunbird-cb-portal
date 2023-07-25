@@ -26,6 +26,8 @@ export const environment = {
   programStripPrimaryCategory: (window as { [key: string]: any })['env']['programStripPrimaryCategory'] || '',
   programStripKey: (window as { [key: string]: any })['env']['programStripKey'] || '',
   quizResultTimeout: (window as { [key: string]: any })['env']['quizResultTimeout'] || '',
+  meetingLinkDetail: (window as { [key: string]: any })['env']['meetingLinkDetail'] || '',
+  karmayogiBharatLink: (window as { [key: string]: any })['env']['karmayogiBharatLink'] || '',
   helpEmail: (window as { [key: string]: any })['env']['helpEmail'] || '',
   // mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
   // spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',

@@ -27,9 +27,9 @@
     <button type="button" mat-icon-button *ngIf="links?.length" [matMenuTriggerFor]="quickLinksMenu">
       <mat-icon>more_vertical</mat-icon>
     </button>
-    <button class="home-help" mat-icon-button id='helper' [matMenuTriggerFor]="helpMenu" *ngIf="!isHlpMenuXs">
+    <!-- <button class="home-help" mat-icon-button id='helper' [matMenuTriggerFor]="helpMenu" *ngIf="!isHlpMenuXs">
       <mat-icon>more_vertical</mat-icon>
-    </button>
+    </button> -->
   </ng-container>
 </mat-toolbar>
 <ng-container *ngIf="!error" [wsResolverWidget]="pageData?.pageLayout"></ng-container>

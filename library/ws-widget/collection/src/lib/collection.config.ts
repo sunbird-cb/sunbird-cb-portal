@@ -92,6 +92,7 @@ export const ROOT_WIDGET_CONFIG = {
     video: 'playerVideo',
     webPages: 'playerWebPages',
     youtube: 'playerYoutube',
+    offlineSession: 'playerOfflineSession',
   },
   slider: {
     _type: 'slider',

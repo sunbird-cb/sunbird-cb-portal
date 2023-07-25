@@ -225,7 +225,7 @@ export class TelemetryService {
         uri: page.pageUrl,
       }
       if (page.objectId) {
-        const config = {
+        let config = {
           context: {
             pdata: {
               ...this.pData,
@@ -239,6 +239,9 @@ export class TelemetryService {
             // This will override above id if the data has object in it.
             ...(data && data.object),
           },
+        }
+        if (!page.objectId || !objectType) {
+          config.object = {}
         }
         $t.impression(edata, config)
       } else {

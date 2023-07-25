@@ -87,7 +87,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.isTypeOfCollection = this.activatedRoute.snapshot.queryParams.collectionType ? true : false
     this.screenSizeSubscription = this.isLtMedium$.subscribe(isSmall => {
       // this.sideNavBarOpened = !isSmall
-      this.sideNavBarOpened = isSmall ? false : false
+      this.sideNavBarOpened = isSmall ? false : true
       this.mode = isSmall ? 'over' : 'side'
     })
     this.resourceChangeSubscription = this.dataSvc.changedSubject.subscribe(_ => {
