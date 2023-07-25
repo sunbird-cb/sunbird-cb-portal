@@ -59,7 +59,6 @@ export class PublicRequestComponent implements OnInit {
     applicationId: string; actorUserId: string; deptName: string; updateFieldValues: any}  | undefined
   formobj: { toValue: {} ; fieldKey: any; description: any; firstName: any; email: any; mobile: any} | undefined
   userform: any
-  backUrl = ''
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
@@ -72,12 +71,10 @@ export class PublicRequestComponent implements OnInit {
     if (navigation) {
       const extraData = navigation.extras.state as {
         userform: any
-        backUrl: string
         isMobileVerified: boolean
       }
       this.userform = extraData.userform
       this.isMobileVerified = extraData.isMobileVerified
-      this.backUrl = extraData.backUrl
     }
     this.requestType = this.activatedRoute.snapshot.queryParams.type
     this.requestForm = new FormGroup({
