@@ -143,7 +143,6 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
             } else {
                 this.router.navigate(['/page/home'])
             }
-
         } else {
             if (!this.configSvc || !this.configSvc.userProfileV2) {
                 this.fetch().then(() => {
