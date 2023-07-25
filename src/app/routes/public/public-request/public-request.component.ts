@@ -59,7 +59,7 @@ export class PublicRequestComponent implements OnInit {
     applicationId: string; actorUserId: string; deptName: string; updateFieldValues: any}  | undefined
   formobj: { toValue: {} ; fieldKey: any; description: any; firstName: any; email: any; mobile: any} | undefined
   userform: any
-  backUrl: string = ''
+  backUrl = ''
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
