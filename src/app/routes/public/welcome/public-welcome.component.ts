@@ -160,7 +160,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     }
     init() {
         // tslint:disable
-        const fullname = this.usr && this.usr.firstName ? this.usr.firstName + '' + this.usr.lastName || '' : ''
+        const fullname = this.usr && this.usr.firstName ? this.usr.firstName + (this.usr.lastName ? ` ${this.usr.lastName}`: '') : ''
         this.registrationForm = new FormGroup({
             firstname: new FormControl(fullname || '', [Validators.required, Validators.pattern(this.namePatern)]),
             // lastname: new FormControl(_.get(this.usr, 'lastName') || '', [Validators.required, Validators.pattern(this.namePatern)]),
