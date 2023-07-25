@@ -225,7 +225,7 @@ export class TelemetryService {
         uri: page.pageUrl,
       }
       if (page.objectId) {
-        let config = {
+        const config = {
           context: {
             pdata: {
               ...this.pData,

@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   Input,
   OnDestroy,
@@ -14,7 +15,7 @@ import { IWidgetsPlayerOfflineSessionData } from './player-offline-session.model
   styleUrls: ['./player-offline-session.component.scss'],
 })
 export class PlayerOfflineSessionComponent extends WidgetBaseComponent
-implements OnInit, NsWidgetResolver.IWidgetData<any>, OnDestroy {
+  implements OnInit, NsWidgetResolver.IWidgetData<any>, AfterViewInit, OnDestroy {
   @Input() widgetData!: IWidgetsPlayerOfflineSessionData
   viewerDataServiceSubscription: Subscription | null = null
   identifier: string | null = null
