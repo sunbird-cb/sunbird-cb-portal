@@ -145,6 +145,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   showBtn = false
   contentDuration: any
   channelId: any
+  contentSourceName:any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -189,9 +190,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.isInIframe = false
     }
     if (this.route) {
-      this.routeSubscription = this.route.data.subscribe((data: Data) => {
+      this.routeSubscription = this.route.data.subscribe((data: Data) => {      
         this.tocSvc.fetchGetContentData(data.content.data.identifier).subscribe(res => {
           this.contentDuration = res.result.content.duration
+          this.contentSourceName = res.result.content.source
         })
         this.initialrouteData = data
         this.banners = data.pageData.data.banners
