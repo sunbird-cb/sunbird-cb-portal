@@ -210,6 +210,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.getUserDetails()
     this.init()
     this.checkIfMobileNoChanged()
+    this.onPhoneChange()
   }
 
   displayFnPosition = (value: any) => {
@@ -880,7 +881,20 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.setDropDownOther(organisation)
     this.setProfilePhotoValue(data)
   }
-
+  onPhoneChange() {
+    const ctrl = this.createUserForm.get('mobile')
+    if (ctrl) {
+      ctrl
+        .valueChanges
+        .pipe(startWith(null), pairwise())
+        .subscribe(([prev, next]: [any, any]) => {
+          if (!(prev == null && next)) {
+            this.isMobileVerified = false
+            this.otpSend = false
+          }
+        })
+    }
+  }
   checkvalue(value: any) {
     if (value && value === 'undefined') {
       // tslint:disable-next-line:no-parameter-reassignment
