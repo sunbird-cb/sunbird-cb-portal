@@ -118,7 +118,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   isMobileVerified = false
   degreefilteredOptions: INameField[] | undefined
   postDegreefilteredOptions: INameField[] | undefined
-
+  disableVerifyBtn= false
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -891,6 +891,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           if (!(prev == null && next)) {
             this.isMobileVerified = false
             this.otpSend = false
+            this.disableVerifyBtn = false
           }
         })
     }
@@ -1688,6 +1689,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.otpService.resendOtp(mob.value).subscribe((res: any) => {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
+          this.disableVerifyBtn = false
           alert('OTP send to your Mobile Number')
           this.startCountDown()
         }
@@ -1733,6 +1735,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           // tslint:disable-next-line: align
         }, (error: any) => {
           this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+          if (error.error && error.error.result) {
+            this.disableVerifyBtn = error.error.result.remainingAttempt === 0 ? true : false
+          }
         })
       }
     }

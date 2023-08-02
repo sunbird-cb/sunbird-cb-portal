@@ -407,7 +407,7 @@
                               </mat-form-field>
                               <button mat-raised-button type="button" (click)="verifyOtp(otp)"
                                 class="text-white btn-success btn-responsive margin-top-s otp"
-                                [disabled]="createUserForm?.mobile?.invalid">
+                                [disabled]="createUserForm?.mobile?.invalid  || disableVerifyBtn">
                                 <span class="text-white" i18n>
                                   Verify OTP
                                 </span>
