@@ -268,7 +268,7 @@ export class PublicRequestComponent implements OnInit {
           this.openDialog(this.requestType)
           this.disableBtn = false
           this.isMobileVerified = true
-          // this.requestForm.reset()
+          this.clearForm()
         },
         (err: any) => {
           this.disableBtn = false
@@ -299,7 +299,7 @@ export class PublicRequestComponent implements OnInit {
           this.openDialog(this.requestType)
           this.disableBtn = false
           this.isMobileVerified = true
-          // this.requestForm.reset()
+          this.clearForm()
         },
         (err: any) => {
           this.disableBtn = false
@@ -329,7 +329,7 @@ export class PublicRequestComponent implements OnInit {
           this.openDialog(this.requestType)
           this.disableBtn = false
           this.isMobileVerified = true
-          // this.requestForm.reset()
+          this.clearForm()
         },
         (err: any) => {
           this.disableBtn = false
@@ -341,6 +341,13 @@ export class PublicRequestComponent implements OnInit {
         }
       )
     }
+  }
+
+  clearForm() {
+    this.requestForm.reset()
+    Object.keys(this.requestForm.controls).forEach(control => {
+      this.requestForm.controls[control].setErrors(null)
+    })
   }
 
   openDialog(type: any): void {
