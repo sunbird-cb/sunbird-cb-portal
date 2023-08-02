@@ -160,6 +160,9 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     init() {
         // tslint:disable
         const fullname = this.usr && this.usr.firstName ? this.usr.firstName + (this.usr.lastName ? ` ${this.usr.lastName}`: '') : ''
+        if (this.usr.phone) {
+          this.isMobileVerified = true
+        }
         this.registrationForm = new FormGroup({
             firstname: new FormControl(fullname || '', [Validators.required, Validators.pattern(this.namePatern)]),
             // lastname: new FormControl(_.get(this.usr, 'lastName') || '', [Validators.required, Validators.pattern(this.namePatern)]),
@@ -167,7 +170,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
             group: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterGroup)]),
             email: new FormControl({ value: _.get(this.usr, 'email') || '', disabled: true }, [Validators.required, Validators.pattern(this.emailWhitelistPattern)]),
             // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
-            mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
+            mobile: new FormControl({ value: _.get(this.usr, 'phone') || '', disabled: true }, [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
             confirmBox: new FormControl(false, [Validators.required]),
             type: new FormControl('ministry', [Validators.required]),
             // ministry: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterMinisteries)]),
@@ -493,7 +496,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     //   verifyOtp method end
 
     navigateTo(param?: any) {
-        const formData = this.registrationForm.value
+        const formData = this.registrationForm.getRawValue()
         const url = '/public/request'
         // tslint:disable-next-line:max-line-length
         this.router.navigate([url], {  queryParams: { type: param }, state: { userform: formData, isMobileVerified: this.isMobileVerified } })
