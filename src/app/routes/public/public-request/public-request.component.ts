@@ -330,10 +330,6 @@ export class PublicRequestComponent implements OnInit {
           this.disableBtn = false
           this.isMobileVerified = true
           this.clearForm()
-          // this.requestForm.reset();
-          // (Object as any).values(this.requestForm.controls).forEach((control: FormControl) => {
-          //   control.setErrors(null);
-          // })
         },
         (err: any) => {
           this.disableBtn = false
