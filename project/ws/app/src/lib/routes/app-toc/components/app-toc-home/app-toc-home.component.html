@@ -359,7 +359,7 @@ TODO: edit option while preview Mode
           <p class="mat-subheading-1 at-glance-heading" i18n>At a glance</p>
           <div class="info-item">
             <p *ngIf="tocConfig?.atAGlance?.duration?.enabled && content?.duration" class="mat-body-2 cs-icons">
-              <mat-icon class="margin-right-xxs">timer</mat-icon> {{ contentDuration | pipeDurationTransform: 'hms' }}
+              <mat-icon class="margin-right-xxs">timer</mat-icon> {{ contentReadData?.duration | pipeDurationTransform: 'hms' }}
             </p>
           </div>
           <div class="info-item"
@@ -497,7 +497,8 @@ TODO: edit option while preview Mode
             <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.source?.displayName}}
             </h3>
             <h3 class="item-value width-expand">
-              {{content?.source}}
+              <!-- {{content?.source}} -->
+               {{contentReadData?.source}}
             </h3>
           </div>
           <div class="info-item" *ngIf="tocConfig?.atAGlance?.license?.enabled">
