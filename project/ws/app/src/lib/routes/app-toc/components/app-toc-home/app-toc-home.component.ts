@@ -1124,7 +1124,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       if (this.content.secureSettings !== undefined) {
         primaryCategory = 'Learning Resource'
       } else {
-        primaryCategory = this.content.primaryCategory
+        primaryCategory = firstPlayableContent.primaryCategory || this.content.primaryCategory
       }
 
       this.firstResourceLink = viewerRouteGenerator(

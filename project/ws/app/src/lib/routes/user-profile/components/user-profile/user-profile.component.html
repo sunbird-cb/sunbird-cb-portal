@@ -365,7 +365,7 @@
                             </mat-select>
                           </mat-form-field>
                           <mat-form-field appearance="outline" class="margin-top-xs flex-expand w-minus-w80">
-                            <input [readonly]="otpSend && !otpVerified" id="mobileNumber" #mobile type="number" matInput
+                            <input id="mobileNumber" #mobile type="number" matInput
                               placeholder="Mobile Number" formControlName="mobile" i18n-aria-label
                               aria-label="Mobile Number input" maxlength="12">
                             <mat-error [hidden]="false" i18n="Mobile Number Error|Explains Mobile no is required"
@@ -407,7 +407,7 @@
                               </mat-form-field>
                               <button mat-raised-button type="button" (click)="verifyOtp(otp)"
                                 class="text-white btn-success btn-responsive margin-top-s otp"
-                                [disabled]="createUserForm?.mobile?.invalid">
+                                [disabled]="createUserForm?.mobile?.invalid  || disableVerifyBtn">
                                 <span class="text-white" i18n>
                                   Verify OTP
                                 </span>

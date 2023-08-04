@@ -775,7 +775,12 @@ input.mat-input-element {
         }
     }
 }
-
+mat-option.mat-option.custom {
+    height: auto;
+}
+mat-option.mat-option.bordered {
+    border-bottom: 1px solid #000;
+}
 // only show recaptcha badge on needed pages
 ::ng-deep.cs-recaptcha {
     .grecaptcha-badge {
