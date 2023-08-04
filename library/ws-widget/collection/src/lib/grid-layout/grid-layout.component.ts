@@ -43,7 +43,11 @@ export class GridLayoutComponent extends WidgetBaseComponent
 
   ngOnInit() {
     this.fetchProfileById(this.configSvc.unMappedUser.id).subscribe(x => {
-      if (x.profileDetails.mandatoryFieldsExists) {
+      // console.log(x.profileDetails, "x.profileDetails====")
+      // if (x.profileDetails.mandatoryFieldsExists) {
+      //   this.isNudgeOpen = false
+      // }
+      if (x.profileDetails.personalDetails.phoneVerified) {
         this.isNudgeOpen = false
       }
 
