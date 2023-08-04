@@ -11,6 +11,7 @@ import {
   WidgetContentService,
 } from '@sunbird-cb/collection'
 import { TFetchStatus, UtilityService, ConfigurationsService, LoggerService } from '@sunbird-cb/utils'
+import { ConfirmDialogComponent } from '@sunbird-cb/collection/src/lib/_common/confirm-dialog/confirm-dialog.component'
 import { AccessControlService } from '@ws/author'
 import { Subscription } from 'rxjs'
 import { NsAnalytics } from '../../models/app-toc-analytics.model'
@@ -300,6 +301,22 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       //   })
       // }
     })
+  }
+
+  public requestToEnrollDialog() {
+    const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Are you sure you want to withdraw your request?',
+        message: 'You will miss the learning opportunity if you withdraw your enrolment.',
+        acceptButton:'Withdraw',
+        cancelButton:'Cancel'
+      },
+      disableClose: true,
+      panelClass:['animate__animated','animate__slideInLeft']
+    });
+    confirmDialog.afterClosed().subscribe(result => {
+      console.log('sdfghjk')
+    });
   }
 
   public requestToEnroll() {
