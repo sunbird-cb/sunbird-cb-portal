@@ -47,7 +47,7 @@ export class GridLayoutComponent extends WidgetBaseComponent
       // if (x.profileDetails.mandatoryFieldsExists) {
       //   this.isNudgeOpen = false
       // }
-      if (x.profileDetails.personalDetails.phoneVerified) {
+      if (x && x.profileDetails && x.profileDetails.personalDetails && x.profileDetails.personalDetails.phoneVerified) {
         this.isNudgeOpen = false
       }
 
