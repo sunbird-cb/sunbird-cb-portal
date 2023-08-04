@@ -365,9 +365,9 @@
                             </mat-select>
                           </mat-form-field>
                           <mat-form-field appearance="outline" class="margin-top-xs flex-expand w-minus-w80">
-                            <input id="mobileNumber" #mobile type="number" matInput
+                            <input id="mobileNumber" #mobile type="text" matInput
                               placeholder="Mobile Number" formControlName="mobile" i18n-aria-label
-                              aria-label="Mobile Number input" maxlength="12">
+                              aria-label="Mobile Number input" maxlength="10" (keypress)="numericOnly($event)">
                             <mat-error [hidden]="false" i18n="Mobile Number Error|Explains Mobile no is required"
                               *ngIf="createUserForm?.controls['mobile'].errors?.required" i18n-aria-label
                               aria-label="Mobile Number is mandatory">
@@ -517,7 +517,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="pinCode" #pincode type="text" matInput placeholder="123456" formControlName="pincode"
-                        i18n-aria-label aria-label="Pin Code inpput field" autocomplete="off" maxlength="6">
+                        i18n-aria-label aria-label="Pin Code inpput field" autocomplete="off" maxlength="6" (keypress)="numericOnly($event)">
                       <mat-error [hidden]="false" i18n="Pin Code Error|Explains pincode is required"
                         *ngIf="createUserForm?.controls['pincode'].errors?.required" i18n-aria-label
                         aria-label="Pin Code Error|Explains pincode is required">
@@ -580,7 +580,7 @@
                         Year of Passsing is mandatory
                       </mat-error> -->
                       <input id="yearOfPassing" matInput #yop10 type="text" name="yop10" formControlName="yop10"
-                        i18n-placeholder placeholder="1998" maxlength="4" />
+                        i18n-placeholder placeholder="1998" maxlength="4" (keypress)="numericOnly($event)" />
                       <mat-error [hidden]="false" *ngIf="createUserForm?.controls['yop10'].errors?.pattern">
                         Please enter a valid 4 digit year
                       </mat-error>
@@ -618,7 +618,7 @@
                         Year of Passsing is mandatory
                       </mat-error> -->
                       <input id="yearOfPassing12" matInput #yop12 type="text" formControlName="yop12" i18n-placeholder
-                        placeholder="1998" maxlength="4" />
+                        placeholder="1998" maxlength="4" (keypress)="numericOnly($event)"/>
                       <mat-error [hidden]="false" *ngIf="createUserForm?.controls['yop12'].errors?.pattern">
                         Please enter a valid 4 digit year
                       </mat-error>
@@ -691,7 +691,7 @@
                           Year of Passsing is mandatory
                         </mat-error> -->
                         <input id="yOP" matInput #yop type="text" formControlName="yop" i18n-placeholder
-                          placeholder="1998" maxlength="4" />
+                          placeholder="1998" maxlength="4" (keypress)="numericOnly($event)"/>
                         <mat-error [hidden]="false" *ngIf="degrees.get('yop').errors?.pattern">
                           Please enter a valid 4 digit year
                         </mat-error>
@@ -775,7 +775,7 @@
                           Year of Passsing is mandatory
                         </mat-error> -->
                         <input id="yOP1" matInput #yop type="text" formControlName="yop" i18n-placeholder
-                          placeholder="1998" maxlength="4" />
+                          placeholder="1998" maxlength="4" (keypress)="numericOnly($event)"/>
                         <mat-error [hidden]="false" *ngIf="degrees.get('yop').errors?.pattern">
                           Please enter a valid 4 digit year
                         </mat-error>
