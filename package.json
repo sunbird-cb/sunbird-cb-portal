@@ -5,12 +5,12 @@
         "ng": "ng",
         "start": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng serve --proxy-config proxy/localhost.proxy.json -o",
         "prebuild": "npm run lint:fix",
-        "build-dev": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --prod --configuration=dev --outputPath=dist/www/en --baseHref=/ --i18nLocale=en && npm run build:pkg",
-        "build-np": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --prod --configuration=np --outputPath=dist/www/en --baseHref=/ --i18nLocale=en && npm run build:pkg",
-        "build-preprod": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --prod --configuration=preprod --outputPath=dist/www/en --baseHref=/ --i18nLocale=en && npm run build:pkg",
-        "build-benchmark": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --prod --configuration=benchmark --outputPath=dist/www/en --baseHref=/ --i18nLocale=en && npm run build:pkg",
+        "build-dev": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --prod --configuration=dev --outputPath=dist/www/en --baseHref=/ --i18nLocale=en",
+        "build-np": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --prod --configuration=np --outputPath=dist/www/en --baseHref=/ --i18nLocale=en",
+        "build-preprod": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --prod --configuration=preprod --outputPath=dist/www/en --baseHref=/ --i18nLocale=en",
+        "build-benchmark": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --prod --configuration=benchmark --outputPath=dist/www/en --baseHref=/ --i18nLocale=en",
         "build": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --prod --outputPath=dist/www/en --baseHref=/ --i18nLocale=en",
-        "postbuild": "npm run compress:gzip && npm run compress:brotli && npm run build:pkg",
+        "postbuild": "npm run compress:gzip && npm run compress:brotli",
         "compress:brotli": "gzipper --brotli --gzip-level=9 --verbose ./dist/www",
         "compress:gzip": "gzipper --verbose --gzip-level=9 ./dist/www",
         "build:local": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --prod --build-optimizer",
@@ -24,8 +24,7 @@
         "tailwind": "./node_modules/.bin/tailwind build ./src/tailwind-build.scss  -o ./src/styles.scss",
         "prestart": "npm run tailwind",
         "bundle-report": "webpack-bundle-analyzer dist/stats.json",
-        "tt": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng serve --configuration=nb",
-        "build:pkg": "sed -i '' \"s/{git\\-hash}/$(git rev-parse --short HEAD)/g\" dist/www/*/index.html && sed -i '' \"s/{git\\-branch}/$(git symbolic-ref --short HEAD)/g\" dist/www/*/index.html"
+        "tt": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng serve --configuration=nb"
     },
     "private": true,
     "dependencies": {
