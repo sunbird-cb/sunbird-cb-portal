@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "serve": "node server.js",
-    "serve:prod": "npm run build:pkg && node index.js",
+    "serve:prod": "node index.js",
     "build:pkg": "sed -i '' \"s/{git\\-hash}/$(git rev-parse --short HEAD)/g\" www/*/index.html && sed -i '' \"s/{git\\-branch}/$(git symbolic-ref --short HEAD)/g\" www/*/index.html"
   },
   "keywords": [],
