@@ -120,6 +120,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     heirarchyObject: any
     hideOrg = false
     searching = false
+    isEmailVerified= false
 
     constructor(
         private welcomeSignupSvc: WelcomeUsersService,
@@ -160,6 +161,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     init() {
         // tslint:disable
         const fullname = this.usr && this.usr.firstName ? this.usr.firstName + (this.usr.lastName ? ` ${this.usr.lastName}`: '') : ''
+        this.isEmailVerified = this.usr && this.usr.email ? true : false
         let mobileDisabled = false
         if (this.usr.phone) {
           this.isMobileVerified = true
@@ -501,6 +503,6 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
         const formData = this.registrationForm.getRawValue()
         const url = '/public/request'
         // tslint:disable-next-line:max-line-length
-        this.router.navigate([url], {  queryParams: { type: param }, state: { userform: formData, isMobileVerified: this.isMobileVerified } })
+        this.router.navigate([url], {  queryParams: { type: param }, state: { userform: formData, isMobileVerified: this.isMobileVerified, isEmailVerified: this.isEmailVerified } })
     }
 }
