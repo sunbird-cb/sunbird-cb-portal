@@ -257,8 +257,34 @@
               </h3>
             </ng-container>
           </div>
-          <div class="padding-m batch-timer">
-
+          <div class="padding-m batch-timer flex" *ngIf="days >= 0">
+            <div class="">
+              <p class="timer-title">This batch starts in{{ currentTime }}</p>
+              <div class="flex time-wrapper">
+                <div>
+                  <p class="count">{{days || 0}}</p>
+                  <p class="time-label">DAYS</p>
+                </div>
+                <span>:</span>
+                <div >
+                  <p class="count">{{hours}}</p>
+                  <p class="time-label">HOURS</p>
+                </div>
+                <span>:</span>
+                <div>
+                  <p class="count">{{minutes}}</p>
+                  <p class="time-label">MINUTES</p>
+                </div>
+                <span>:</span>
+                <div>
+                  <p class="count">{{seconds}}</p>
+                  <p class="time-label">MINUTES</p>
+                </div>
+              </div>
+            </div>
+            <div class="help">
+              <p>Kindly check the location details and plan in advance.</p>
+            </div>
           </div>
           <!-- showIcon{{showIcon}} showMsg{{showMsg}} WFIcon{{WFIcon}} iconColor{{iconColor}} -->
       </div>
