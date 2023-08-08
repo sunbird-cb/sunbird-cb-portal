@@ -3,32 +3,38 @@
      padding-left: 10px;
 }
 .main-text-box{
-    padding: 24px 24px;
+    padding: 24px 36px;
 }
 .text-bold{
-    color: #000000;
+    color: #5f5f5f!important;
     font-weight: 700;
     text-decoration: none;
     vertical-align: baseline;
-    font-size: 12pt;
-    font-family: "Times New Roman";
+    font-size: 14px!important;
+    // font-family: "Times New Roman";
     font-style: normal;
 }
-.click-here{
-    font-size: 12pt;
-    font-family: "Times New Roman";
-    color: #ff0000;
-    font-weight: 400;
-}
+// .click-here{
+//     font-size: 12pt;
+//     font-family: "Times New Roman";
+//     color: #ff0000;
+//     font-weight: 400;
+// }
 .btn-center{
     text-align: center;
 }
 .content-text{
-    color: #000000;
-    font-weight: 400;
+    color: #5f5f5f!important;
+    font-weight: 400!important;
     text-decoration: none;
     vertical-align: baseline;
-    font-size: 12pt;
-    font-family: "Times New Roman";
+    // font-size: 12px!important;
     font-style: normal;
+    margin-bottom: 20px!important;
+}
+.mat-body-1 {
+    font: 400 14px/20px Lato!important;
+}
+.ul-list, .main-list-ol {
+    padding-left: 0!important;
 }
