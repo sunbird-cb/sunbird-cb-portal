@@ -248,7 +248,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
         if (this.createUserForm.value.nationality === null || this.createUserForm.value.nationality === undefined) {
           this.createUserForm.patchValue({
-            nationality: 'Indian',
+            nationality: 'India',
           })
         }
         this.onChangesNationality()
@@ -408,8 +408,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           map(name => name ? this.filterNationality(name) : this.masterNationalities.slice())
         )
       const newLocal = 'nationality'
-      // this.createUserForm.controls['nationality']!.setValue('Indian')
-      // console.log(this.masterNationality, "masterNationality====")
       this.masterNationality.subscribe(event => {
         // tslint:disable-next-line: no-non-null-assertion
         this.createUserForm.get(newLocal)!.setValidators([Validators.required, forbiddenNamesValidator(event)])

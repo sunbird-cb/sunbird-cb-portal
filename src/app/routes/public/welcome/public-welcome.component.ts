@@ -439,7 +439,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
       sendOtp() {
         const mob = this.registrationForm.get('mobile')
         if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
-          this.signupSvc.sendOtp(mob.value).subscribe(() => {
+          this.signupSvc.sendOtp(mob.value, 'phone').subscribe(() => {
             this.otpSend = true
             this.disableVerifyBtn = false
             alert('OTP send to your Mobile Number')
@@ -457,7 +457,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
       resendOTP() {
         const mob = this.registrationForm.get('mobile')
         if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
-          this.signupSvc.resendOtp(mob.value).subscribe((res: any) => {
+          this.signupSvc.resendOtp(mob.value, 'phone').subscribe((res: any) => {
             if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
               this.otpSend = true
               this.disableVerifyBtn = false
@@ -479,7 +479,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
         const mob = this.registrationForm.get('mobile')
         if (otp && otp.value) {
           if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
-            this.signupSvc.verifyOTP(otp.value, mob.value).subscribe((res: any) => {
+            this.signupSvc.verifyOTP(otp.value, mob.value, 'phone').subscribe((res: any) => {
               if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
                 this.otpVerified = true
                 this.isMobileVerified = true
