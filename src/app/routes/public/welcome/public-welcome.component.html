@@ -81,6 +81,7 @@
                                     <input id="email" name="emailField" type="email" matInput
                                         placeholder="Enter your email id" #email formControlName="email" i18n-aria-label
                                         aria-label="Email input">
+                                    <mat-icon matSuffix class="ws-mat-green-text margin-xs" svgIcon="verified" [hidden]="!isEmailVerified"></mat-icon>
                                     <mat-hint>Only government email ids are allowed</mat-hint>
                                     <mat-error [hidden]="false"
                                         *ngIf="registrationForm?.controls['email'].errors?.required"

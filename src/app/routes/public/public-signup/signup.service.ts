@@ -50,31 +50,31 @@ export class SignupService {
     return this.http.get<any>(API_END_POINTS.GET_GROUPS)
   }
 
-  sendOtp(mob: number): Observable<any> {
+  sendOtp(value: any, type: string): Observable<any> {
     const reqObj = {
       request: {
-        type: 'phone',
-        key: `${mob}`,
+        type: `${type}`,
+        key: `${value}`,
       },
     }
     return this.http.post(API_END_POINTS.sendOtp, reqObj)
   }
-  resendOtp(mob: number) {
+  resendOtp(value: any, type: string) {
     const reqObj = {
       request: {
-        type: 'phone',
-        key: `${mob}`,
+        type: `${type}`,
+        key: `${value}`,
       },
     }
     return this.http.post(API_END_POINTS.ReSendOtp, reqObj)
 
   }
-  verifyOTP(otp: number, mob: number) {
+  verifyOTP(otp: number, value: any, type: string) {
     const reqObj = {
       request: {
         otp,
-        type: 'phone',
-        key: `${mob}`,
+        type: `${type}`,
+        key: `${value}`,
       },
     }
     return this.http.post(API_END_POINTS.VerifyOtp, reqObj)

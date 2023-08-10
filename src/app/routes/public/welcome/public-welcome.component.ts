@@ -120,6 +120,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     heirarchyObject: any
     hideOrg = false
     searching = false
+    isEmailVerified= false
 
     constructor(
         private welcomeSignupSvc: WelcomeUsersService,
@@ -160,6 +161,12 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     init() {
         // tslint:disable
         const fullname = this.usr && this.usr.firstName ? this.usr.firstName + (this.usr.lastName ? ` ${this.usr.lastName}`: '') : ''
+        this.isEmailVerified = this.usr && this.usr.email ? true : false
+        let mobileDisabled = false
+        if (this.usr.phone) {
+          this.isMobileVerified = true
+          mobileDisabled = true
+        }
         this.registrationForm = new FormGroup({
             firstname: new FormControl(fullname || '', [Validators.required, Validators.pattern(this.namePatern)]),
             // lastname: new FormControl(_.get(this.usr, 'lastName') || '', [Validators.required, Validators.pattern(this.namePatern)]),
@@ -167,7 +174,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
             group: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterGroup)]),
             email: new FormControl({ value: _.get(this.usr, 'email') || '', disabled: true }, [Validators.required, Validators.pattern(this.emailWhitelistPattern)]),
             // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
-            mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
+            mobile: new FormControl({ value: _.get(this.usr, 'phone') || '', disabled: mobileDisabled }, [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
             confirmBox: new FormControl(false, [Validators.required]),
             type: new FormControl('ministry', [Validators.required]),
             // ministry: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterMinisteries)]),
@@ -434,7 +441,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
       sendOtp() {
         const mob = this.registrationForm.get('mobile')
         if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
-          this.signupSvc.sendOtp(mob.value).subscribe(() => {
+          this.signupSvc.sendOtp(mob.value, 'phone').subscribe(() => {
             this.otpSend = true
             this.disableVerifyBtn = false
             alert('OTP send to your Mobile Number')
@@ -452,7 +459,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
       resendOTP() {
         const mob = this.registrationForm.get('mobile')
         if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
-          this.signupSvc.resendOtp(mob.value).subscribe((res: any) => {
+          this.signupSvc.resendOtp(mob.value, 'phone').subscribe((res: any) => {
             if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
               this.otpSend = true
               this.disableVerifyBtn = false
@@ -474,7 +481,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
         const mob = this.registrationForm.get('mobile')
         if (otp && otp.value) {
           if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
-            this.signupSvc.verifyOTP(otp.value, mob.value).subscribe((res: any) => {
+            this.signupSvc.verifyOTP(otp.value, mob.value, 'phone').subscribe((res: any) => {
               if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
                 this.otpVerified = true
                 this.isMobileVerified = true
@@ -493,9 +500,9 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     //   verifyOtp method end
 
     navigateTo(param?: any) {
-        const formData = this.registrationForm.value
+        const formData = this.registrationForm.getRawValue()
         const url = '/public/request'
         // tslint:disable-next-line:max-line-length
-        this.router.navigate([url], {  queryParams: { type: param }, state: { userform: formData, isMobileVerified: this.isMobileVerified } })
+        this.router.navigate([url], {  queryParams: { type: param }, state: { userform: formData, isMobileVerified: this.isMobileVerified, isEmailVerified: this.isEmailVerified } })
     }
 }

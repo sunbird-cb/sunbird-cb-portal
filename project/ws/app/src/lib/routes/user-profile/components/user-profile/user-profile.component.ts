@@ -118,7 +118,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   isMobileVerified = false
   degreefilteredOptions: INameField[] | undefined
   postDegreefilteredOptions: INameField[] | undefined
-
+  disableVerifyBtn= false
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -210,6 +210,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.getUserDetails()
     this.init()
     this.checkIfMobileNoChanged()
+    this.onPhoneChange()
   }
 
   displayFnPosition = (value: any) => {
@@ -247,7 +248,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
         if (this.createUserForm.value.nationality === null || this.createUserForm.value.nationality === undefined) {
           this.createUserForm.patchValue({
-            nationality: 'Indian',
+            nationality: 'India',
           })
         }
         this.onChangesNationality()
@@ -407,8 +408,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           map(name => name ? this.filterNationality(name) : this.masterNationalities.slice())
         )
       const newLocal = 'nationality'
-      // this.createUserForm.controls['nationality']!.setValue('Indian')
-      // console.log(this.masterNationality, "masterNationality====")
       this.masterNationality.subscribe(event => {
         // tslint:disable-next-line: no-non-null-assertion
         this.createUserForm.get(newLocal)!.setValidators([Validators.required, forbiddenNamesValidator(event)])
@@ -457,25 +456,29 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   onChangesDegrees() {
     const controls = this.createUserForm.get('degrees') as FormArray
     // tslint:disable-next-line: no-non-null-assertion
-    controls.at(controls.length - 1)!.get('degree')!.valueChanges.pipe(
-      debounceTime(500),
-      distinctUntilChanged(),
-      startWith<string | INameField>(''),
-      map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
-      map(name => name ? this.filterDegrees(name) : this.degreesMeta.graduations.slice()),
-    ).subscribe(val => this.degreefilteredOptions = val)
+    if (controls.length > 0) {
+      controls.at(controls.length - 1)!.get('degree')!.valueChanges.pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        startWith<string | INameField>(''),
+        map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+        map(name => name ? this.filterDegrees(name) : this.degreesMeta.graduations.slice()),
+      ).subscribe(val => this.degreefilteredOptions = val)
+    }
   }
 
   onChangesPostDegrees() {
     const controls = this.createUserForm.get('postDegrees') as FormArray
     // tslint:disable-next-line: no-non-null-assertion
-    controls.at(controls.length - 1)!.get('degree')!.valueChanges.pipe(
-      debounceTime(500),
-      distinctUntilChanged(),
-      startWith<string | INameField>(''),
-      map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
-      map(name => name ? this.filterPostDegrees(name) : this.degreesMeta.postGraduations.slice()),
-    ).subscribe(val => this.postDegreefilteredOptions = val)
+    if (controls.length > 0) {
+      controls.at(controls.length - 1)!.get('degree')!.valueChanges.pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        startWith<string | INameField>(''),
+        map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+        map(name => name ? this.filterPostDegrees(name) : this.degreesMeta.postGraduations.slice()),
+      ).subscribe(val => this.postDegreefilteredOptions = val)
+    }
   }
 
   private filterNationality(name: string): INation[] {
@@ -880,7 +883,21 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.setDropDownOther(organisation)
     this.setProfilePhotoValue(data)
   }
-
+  onPhoneChange() {
+    const ctrl = this.createUserForm.get('mobile')
+    if (ctrl) {
+      ctrl
+        .valueChanges
+        .pipe(startWith(null), pairwise())
+        .subscribe(([prev, next]: [any, any]) => {
+          if (!(prev == null && next)) {
+            this.isMobileVerified = false
+            this.otpSend = false
+            this.disableVerifyBtn = false
+          }
+        })
+    }
+  }
   checkvalue(value: any) {
     if (value && value === 'undefined') {
       // tslint:disable-next-line:no-parameter-reassignment
@@ -1674,6 +1691,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.otpService.resendOtp(mob.value).subscribe((res: any) => {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
+          this.disableVerifyBtn = false
           alert('OTP send to your Mobile Number')
           this.startCountDown()
         }
@@ -1719,6 +1737,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           // tslint:disable-next-line: align
         }, (error: any) => {
           this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+          if (error.error && error.error.result) {
+            this.disableVerifyBtn = error.error.result.remainingAttempt === 0 ? true : false
+          }
         })
       }
     }
@@ -1757,5 +1778,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       WsEvents.EnumInteractSubTypes.PROFILE_EDIT_TAB,
       data,
     )
+  }
+
+  numericOnly(event:any): boolean {  
+    let pattren = /^([0-9])$/;
+    let result = pattren.test(event.key);
+    return result;
   }
 }
