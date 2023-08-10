@@ -48,7 +48,7 @@
         "@sunbird-cb/design-system": "0.0.2",
         "@sunbird-cb/discussions-ui-v8": "2.1.0",
         "@sunbird-cb/micro-surveys": "^2.0.13",
-        "@sunbird-cb/rain-dashboards": "0.4.25",
+        "@sunbird-cb/rain-dashboards": "0.4.27",
         "@types/file-saver": "^2.0.1",
         "@types/uuid": "^8.3.1",
         "bootstrap": "5.1.2",
