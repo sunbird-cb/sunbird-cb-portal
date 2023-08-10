@@ -358,9 +358,16 @@ TODO: edit option while preview Mode
         <div class="margin-bottom-m">
           <p class="mat-subheading-1 at-glance-heading" i18n>At a glance</p>
           <div class="info-item">
-            <p *ngIf="tocConfig?.atAGlance?.duration?.enabled && content?.duration" class="mat-body-2 cs-icons">
-              <mat-icon class="margin-right-xxs">timer</mat-icon> {{ contentReadData?.duration | pipeDurationTransform: 'hms' }}
-            </p>
+            <ng-container *ngIf="content.primaryCategory !== this.primaryCategory.BLENDED_PROGRAM">
+              <p *ngIf="tocConfig?.atAGlance?.duration?.enabled && content?.duration" class="mat-body-2 cs-icons">
+                <mat-icon class="margin-right-xxs">timer</mat-icon> {{ contentReadData?.duration | pipeDurationTransform: 'hms' }}
+              </p>
+            </ng-container>
+            <ng-container *ngIf="content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM">
+              <p *ngIf="tocConfig?.atAGlance?.duration?.enabled && content?.programDuration" class="mat-body-2 cs-icons">
+                <mat-icon class="margin-right-xxs">timer</mat-icon> {{ getProgramDuration(content?.programDuration) }}
+              </p>
+            </ng-container>
           </div>
           <div class="info-item"
             *ngIf="tocConfig?.atAGlance?.structure?.enabled && hasTocStructure && content?.children?.length">
