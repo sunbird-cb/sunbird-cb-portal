@@ -1314,4 +1314,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.route.snapshot.queryParams.batchId : ''
     return this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)
   }
+
+  getProgramDuration(pDuration: number){
+    return pDuration === 1 ? `${pDuration} day` : `${pDuration} days`
+  }
 }
