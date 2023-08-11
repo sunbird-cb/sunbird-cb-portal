@@ -201,7 +201,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
     //   console.log('ngOnInit - value', value);
     // })
-    console.log(this.countries, "country list----------")
     const approvalData = _.compact(_.map(this.approvalConfig, (v, k) => {
       return v.approvalRequired ? { [k]: v } : null
     }))
@@ -238,20 +237,18 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   fetchMeta() {
     this.userProfileSvc.getMasterCountries().subscribe(
       data => {
-        console.log(data, 'country list data===')
+        // console.log(data, 'country list data===')
         data.countries.map((item: ICountry) => {
           // this.masterNationalities.push({ name: item.name })
-          console.log(item, 'country item name')
+          // console.log(item, 'country item name')
           this.countries.push({ name: item.name })
           // this.countryCodes.push(item.countryCode)
         })
-        this.onChangesCountry();
+        this.onChangesCountry()
       },
       (_err: any) => {
-        console.log(_err, "_err==")
+        // console.log(_err, "_err==")
       })
-
-
 
     this.userProfileSvc.getMasterNationlity().subscribe(
       data => {
@@ -275,7 +272,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       (_err: any) => {
       })
 
-     
     this.userProfileSvc.getMasterLanguages().subscribe(
       data => {
         this.masterLanguagesEntries = data.languages
@@ -453,9 +449,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
      // console.log('this.masterLanguagesEntries', this.masterLanguages)
   }
 
-
   onChangesLanuage(): void {
-
     // tslint:disable-next-line: no-non-null-assertion
     this.masterLanguages = this.createUserForm.get('domicileMedium')!.valueChanges
       .pipe(
@@ -521,7 +515,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     return this.masterNationalities
   }
 
-  private filterCountry(name:string): INation[] {
+  private filterCountry(name: string): INation[] {
     if (name) {
       const filterValue = name.toLowerCase()
       return this.countries.filter(option => option.name.toLowerCase().includes(filterValue))
