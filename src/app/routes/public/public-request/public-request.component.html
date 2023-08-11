@@ -67,11 +67,11 @@
                       formControlName="email" i18n-aria-label aria-label="Email input">
                     <!-- <mat-hint>Only government email ids are allowed</mat-hint> -->
                   <mat-icon matSuffix class="ws-mat-green-text margin-xs" svgIcon="verified" [hidden]="!isEmailVerified"></mat-icon>
-                    <mat-error [hidden]="false" *ngIf="registrationForm?.controls['email'].errors?.required"
+                    <mat-error [hidden]="false" *ngIf="requestForm?.controls['email'].errors?.required"
                     i18n="Email Error|Explains name is required">
                     Email id is mandatory
                   </mat-error>
-                  <mat-error [hidden]="false" *ngIf="registrationForm?.controls['email'].errors?.pattern"
+                  <mat-error [hidden]="false" *ngIf="requestForm?.controls['email'].errors?.pattern"
                     i18n-aria-label aria-label="Name fields cannot contain numbers and special characters except '">
                     Email id is not valid
                   </mat-error>
@@ -90,7 +90,7 @@
                 
                 <div *ngIf="!isEmailVerified" class="flex flex-1 margin-top-s justify-end">
                   <button *ngIf="!otpEmailSend" mat-raised-button type="button" (click)="sendOtpEmail()"
-                    class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text btn-responsive" [disabled]="registrationForm?.email?.invalid">
+                    class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text btn-responsive" [disabled]="requestForm?.email?.invalid">
                     <a class="text-white" i18n>
                       Send OTP
                     </a>
@@ -110,7 +110,7 @@
                       <div class="flex flex-1 margin-top-s justify-end">
                         <button mat-raised-button type="button" (click)="verifyOtpEmail(emailotp)"
                           class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text margin-top-s otp"
-                          [disabled]="registrationForm?.email?.invalid || disableEmailVerifyBtn">
+                          [disabled]="requestForm?.email?.invalid || disableEmailVerifyBtn">
                           <span class="text-white" i18n>
                             Verify OTP
                           </span>
