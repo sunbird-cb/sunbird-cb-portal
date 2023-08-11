@@ -457,6 +457,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const controls = this.createUserForm.get('degrees') as FormArray
     // tslint:disable-next-line: no-non-null-assertion
     if (controls.length > 0) {
+      // tslint:disable-next-line: no-non-null-assertion
       controls.at(controls.length - 1)!.get('degree')!.valueChanges.pipe(
         debounceTime(500),
         distinctUntilChanged(),
@@ -471,6 +472,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const controls = this.createUserForm.get('postDegrees') as FormArray
     // tslint:disable-next-line: no-non-null-assertion
     if (controls.length > 0) {
+      // tslint:disable-next-line: no-non-null-assertion
       controls.at(controls.length - 1)!.get('degree')!.valueChanges.pipe(
         debounceTime(500),
         distinctUntilChanged(),
