@@ -20,6 +20,7 @@ import {
   INation,
   IdegreesMeta,
   INameField,
+  ICountry,
 } from '../../models/user-profile.model'
 import { NsUserProfileDetails } from '@ws/app/src/lib/routes/user-profile/models/NsUserProfile'
 import { NotificationComponent } from '@ws/author/src/lib/modules/shared/components/notification/notification.component'
@@ -62,10 +63,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   uploadSaveData = false
   selectedIndex = 0
   masterNationality: Observable<INation[]> | undefined
-  countries: INation[] = []
+  country: Observable<INation[]> | undefined
   masterLanguages: Observable<ILanguages[]> | undefined
   masterKnownLanguages: Observable<ILanguages[]> | undefined
   masterNationalities: INation[] = []
+  countries: INation[] = []
   masterLanguagesEntries!: ILanguages[]
   selectedKnowLangs: ILanguages[] = []
   separatorKeysCodes: number[] = [ENTER, COMMA]
@@ -199,6 +201,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
     //   console.log('ngOnInit - value', value);
     // })
+    console.log(this.countries, "country list----------")
     const approvalData = _.compact(_.map(this.approvalConfig, (v, k) => {
       return v.approvalRequired ? { [k]: v } : null
     }))
@@ -233,11 +236,28 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
   fetchMeta() {
+    this.userProfileSvc.getMasterCountries().subscribe(
+      data => {
+        console.log(data, 'country list data===')
+        data.countries.map((item: ICountry) => {
+          // this.masterNationalities.push({ name: item.name })
+          console.log(item, 'country item name')
+          this.countries.push({ name: item.name })
+          // this.countryCodes.push(item.countryCode)
+        })
+        this.onChangesCountry();
+      },
+      (_err: any) => {
+        console.log(_err, "_err==")
+      })
+
+
+
     this.userProfileSvc.getMasterNationlity().subscribe(
       data => {
-        data.nationalities.map((item: INationality) => {
+        data.nationality.map((item: INationality) => {
           this.masterNationalities.push({ name: item.name })
-          this.countries.push({ name: item.name })
+          // this.countries.push({ name: item.name })
           this.countryCodes.push(item.countryCode)
         })
 
@@ -247,7 +267,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
         if (this.createUserForm.value.nationality === null || this.createUserForm.value.nationality === undefined) {
           this.createUserForm.patchValue({
-            nationality: 'India',
+            nationality: 'Indian',
           })
         }
         this.onChangesNationality()
@@ -255,6 +275,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       (_err: any) => {
       })
 
+     
     this.userProfileSvc.getMasterLanguages().subscribe(
       data => {
         this.masterLanguagesEntries = data.languages
@@ -418,6 +439,21 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
 
+  onChangesCountry(): void {
+
+    // tslint:disable-next-line: no-non-null-assertion
+    this.country = this.createUserForm.get('location')!.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        startWith(''),
+        map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+        map(name => name ? this.filterCountry(name) : this.countries.slice()),
+      )
+     // console.log('this.masterLanguagesEntries', this.masterLanguages)
+  }
+
+
   onChangesLanuage(): void {
 
     // tslint:disable-next-line: no-non-null-assertion
@@ -483,6 +519,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       return this.masterNationalities.filter(option => option.name.toLowerCase().includes(filterValue))
     }
     return this.masterNationalities
+  }
+
+  private filterCountry(name:string): INation[] {
+    if (name) {
+      const filterValue = name.toLowerCase()
+      return this.countries.filter(option => option.name.toLowerCase().includes(filterValue))
+    }
+    return this.countries
   }
 
   private filterLanguage(name: string): ILanguages[] {
