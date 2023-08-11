@@ -674,21 +674,23 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   processRatingLookup(response: any) {
-    if (response.length < this.lookupLimit) {
-      this.disableLoadMore = true
-    } else {
-      this.disableLoadMore = false
-      this.lookupLoading = false
+    if (response) {
+      if ( response && response.length < this.lookupLimit) {
+        this.disableLoadMore = true
+      } else {
+        this.disableLoadMore = false
+        this.lookupLoading = false
+      }
+      this.lastLookUp = response[response.length - 1]
+      this.ratingReviews = this.ratingLookup
+      this.authReplies = []
+      this.authReplies = _.keyBy(this.ratingReviews, 'userId')
+      const userIds = _.map(this.ratingReviews, 'userId')
+      if (this.content && userIds) {
+        this.getAuthorReply(this.content.identifier, this.content.primaryCategory, userIds)
+      }
+      this.ratingReviews = this.ratingReviews.slice()
     }
-    this.lastLookUp = response[response.length - 1]
-    this.ratingReviews = this.ratingLookup
-    this.authReplies = []
-    this.authReplies = _.keyBy(this.ratingReviews, 'userId')
-    const userIds = _.map(this.ratingReviews, 'userId')
-    if (this.content) {
-      this.getAuthorReply(this.content.identifier, this.content.primaryCategory, userIds)
-    }
-    this.ratingReviews = this.ratingReviews.slice()
   }
 
   countStarsPercentage(value: any, key: any, total: any) {
