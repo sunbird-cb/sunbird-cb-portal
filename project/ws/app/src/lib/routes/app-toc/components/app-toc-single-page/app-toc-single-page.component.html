@@ -408,7 +408,7 @@
                         (scrolled)="loadMore()">
                             <ng-container *ngFor="let c of ratingReviews| 
                             pipeFilterV3:{ 'firstName': searchKey.value, 'review': searchKey.value } : false; let i= index; let last = last">
-                                <ws-widget-card-rating-comment [review]="c" [contentid]="content?.identifier"></ws-widget-card-rating-comment>
+                                <ws-widget-card-rating-comment [review]="authReplies[c.userId]" [contentid]="content?.identifier"></ws-widget-card-rating-comment>
                             </ng-container>
                         </div>
                         <div *ngIf="displayLoader" class="mt-5 pr-4 flex items-center justify-center">
