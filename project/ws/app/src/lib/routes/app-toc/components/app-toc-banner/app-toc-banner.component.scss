@@ -277,22 +277,23 @@
     display: flex;
     justify-content: space-between;
     gap: 25px;
+    width: 100%;
 }
 .batch-timer {
     width: 60%;
     background-color: white;
     align-items: center;
+    .timer-title {
+        opacity: 1;
+        color: rgba(0,0,0,0.4);
+        font-size: 14px;
+        font-weight: 700;
+        font-style: normal;
+        letter-spacing: 0.25px;
+        text-align: left;
+        line-height: 20px;
+    }
     .time-wrapper {
-        .timer-title{
-                opacity: 1;
-                color: rgba(0,0,0,0.4);
-                font-size: 14px;
-                font-weight: 700;
-                font-style: normal;
-                letter-spacing: 0.25px;
-                text-align: left;
-                line-height: 20px;
-        }
         div{
             p.count{
                 border-radius: 4px;
@@ -328,7 +329,22 @@
         }
     }
     .help {
-        padding: 16px;
+        width: 100%;
+        .batch-duration-wrap {
+            padding: 0 24px;
+            .duration-days {
+                opacity: 1;
+                color: rgba(0,0,0,0.87);
+                font-family: "Montserrat-SemiBold";
+                font-size: 36px;
+                font-weight: 600;
+                font-style: normal;
+                letter-spacing: -0.2px;
+                text-align: left;
+                line-height: 48px;
+                padding-bottom: 16px;
+            }
+        }
     }
 }
 

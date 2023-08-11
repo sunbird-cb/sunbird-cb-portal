@@ -225,6 +225,12 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     return this.showIntranetMessage
   }
 
+  get getBatchDuration() {
+    let startDate = dayjs(this.batchControl.value.startDate)
+    let endDate = dayjs(this.batchControl.value.endDate)
+    return endDate.diff(startDate, 'days')
+  }
+
   get showStart() {
     return this.tocSvc.showStartButton(this.content)
   }
