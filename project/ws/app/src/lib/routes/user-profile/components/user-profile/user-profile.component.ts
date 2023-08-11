@@ -30,7 +30,7 @@ import { LoaderService } from '@ws/author/src/public-api'
 import _ from 'lodash'
 import { OtpService } from '../../services/otp.services';
 import { environment } from 'src/environments/environment'
-import { constants } from 'os'
+
 /* tslint:enable */
 
 export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
