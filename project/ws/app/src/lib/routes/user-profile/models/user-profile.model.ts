@@ -48,8 +48,15 @@ export interface INationality {
   name: string
   countryCode: string
 }
+export interface ICountry {
+  name: string
+  countryCode: string
+}
 export interface INationalityApiData {
-  nationalities: INationality[]
+  nationality: INationality[]
+}
+export interface ICountryApiData {
+  countries: ICountry[]
 }
 
 export interface INameField {
