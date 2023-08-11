@@ -30,6 +30,7 @@ import { LoaderService } from '@ws/author/src/public-api'
 import _ from 'lodash'
 import { OtpService } from '../../services/otp.services';
 import { environment } from 'src/environments/environment'
+import { constants } from 'os'
 /* tslint:enable */
 
 export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
@@ -118,7 +119,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   isMobileVerified = false
   degreefilteredOptions: INameField[] | undefined
   postDegreefilteredOptions: INameField[] | undefined
-  disableVerifyBtn= false
+  disableVerifyBtn = false
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -1781,10 +1782,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       data,
     )
   }
-
   numericOnly(event:any): boolean {  
-    let pattren = /^([0-9])$/;
-    let result = pattren.test(event.key);
-    return result;
+    const pattren = /^([0-9])$/
+    const result = pattren.test(event.key)
+    return result
   }
 }
