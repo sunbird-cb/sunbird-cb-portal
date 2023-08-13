@@ -593,7 +593,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     this.ratingViewCount = length
   }
 
-  async processRatingSummary() {
+  processRatingSummary() {
     const breakDownArray: any[] = []
     const ratingSummaryPr = {
       breakDown: breakDownArray,
@@ -646,7 +646,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
       this.authReplies = _.keyBy(latest50Reviews, 'user_id')
       const userIds = _.map(latest50Reviews, 'user_id')
       if (this.content) {
-        await this.getAuthorReply(this.content.identifier, this.content.primaryCategory, userIds)
+        this.getAuthorReply(this.content.identifier, this.content.primaryCategory, userIds)
       }
       ratingSummaryPr.latest50Reviews = modifiedReviews
       this.ratingReviews = modifiedReviews
