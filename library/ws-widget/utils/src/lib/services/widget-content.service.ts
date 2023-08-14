@@ -217,7 +217,8 @@ export class WidgetContentService {
       content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE ||
       content.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT ||
       content.primaryCategory === NsContent.EPrimaryCategory.COMP_ASSESSMENT ||
-      content.primaryCategory === NsContent.EPrimaryCategory.MANDATORY_COURSE_GOAL
+      content.primaryCategory === NsContent.EPrimaryCategory.MANDATORY_COURSE_GOAL ||
+      content.primaryCategory === NsContent.EPrimaryCategory.OFFLINE_SESSION
     ) {
       return content
     }

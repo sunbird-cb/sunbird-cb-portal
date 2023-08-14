@@ -376,6 +376,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         || this.content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
         || this.content.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT
         || this.content.primaryCategory === NsContent.EPrimaryCategory.COMP_ASSESSMENT
+        || this.content.primaryCategory === NsContent.EPrimaryCategory.OFFLINE_SESSION
         || !(this.content.children && this.content.children.length)
       if (isResource) {
         this.mobileAppsSvc.sendViewerData(this.content)
@@ -465,6 +466,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       webPage: 0,
       youtube: 0,
       interactivecontent: 0,
+      offlineSession: 0,
     }
     if (this.content) {
       this.hasTocStructure = false

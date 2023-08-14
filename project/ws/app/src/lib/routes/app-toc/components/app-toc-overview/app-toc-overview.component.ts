@@ -132,6 +132,7 @@ export class AppTocOverviewComponent implements OnInit, OnDestroy {
       webPage: 0,
       youtube: 0,
       interactivecontent: 0,
+      offlineSession: 0,
     }
     if (this.content) {
       this.hasTocStructure = false
