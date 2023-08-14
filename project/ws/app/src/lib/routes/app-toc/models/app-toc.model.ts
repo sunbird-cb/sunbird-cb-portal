@@ -56,6 +56,7 @@ export namespace NsAppToc {
     interactivecontent: number
     practiceTest: number
     finalTest: number
+    offlineSession: number
     [key: string]: number
   }
 }
