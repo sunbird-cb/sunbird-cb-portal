@@ -229,7 +229,7 @@ export class PlayerVideoComponent extends WidgetBaseComponent
       this.videoTag.nativeElement,
       {
         ...videoJsOptions,
-        poster: this.viewerSvc.getCdnUrl(this.widgetData.posterImage || ''),
+        poster: this.viewerSvc.getPublicUrl(this.widgetData.posterImage || ''),
         autoplay: this.widgetData.autoplay || false,
       },
       dispatcher,
@@ -261,7 +261,7 @@ export class PlayerVideoComponent extends WidgetBaseComponent
         })
       }
       if (this.widgetData.url) {
-        initObj.player.src(this.widgetData.url)
+        initObj.player.src(this.viewerSvc.getCdnUrl(this.widgetData.url))
       }
     })
   }
@@ -272,7 +272,7 @@ export class PlayerVideoComponent extends WidgetBaseComponent
     if (content.artifactUrl && content.artifactUrl.indexOf('/content-store/') > -1) {
       this.widgetData.url = content.artifactUrl
       this.widgetData.posterImage = content.appIcon
-      this.widgetData.posterImage = this.viewerSvc.getCdnUrl(this.widgetData.posterImage || '')
+      this.widgetData.posterImage = this.viewerSvc.getPublicUrl(this.widgetData.posterImage || '')
       await this.contentSvc.setS3Cookie(this.widgetData.identifier || '').toPromise()
     }
 
