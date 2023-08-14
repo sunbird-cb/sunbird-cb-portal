@@ -195,6 +195,8 @@ export class AccessControlService {
         return content.primaryCategory || 'Course'
       case 'Program':
         return content.primaryCategory || 'Program'
+      case 'Offline Session':
+        return content.primaryCategory || 'Offline Session'
       default:
         return this.getCategory(content)
     }

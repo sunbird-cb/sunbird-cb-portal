@@ -59,7 +59,8 @@ export class WidgetContentService {
       const isResource = (primaryCategory === NsContent.EResourcePrimaryCategories.LEARNING_RESOURCE) ||
         (primaryCategory === NsContent.EResourcePrimaryCategories.PRACTICE_RESOURCE) ||
         (primaryCategory === NsContent.EResourcePrimaryCategories.FINAL_ASSESSMENT) ||
-        (primaryCategory === NsContent.EResourcePrimaryCategories.COMP_ASSESSMENT)
+        (primaryCategory === NsContent.EResourcePrimaryCategories.COMP_ASSESSMENT) ||
+        (primaryCategory === NsContent.EResourcePrimaryCategories.OFFLINE_SESSION)
       return isResource
     }
     return false
@@ -305,7 +306,11 @@ export class WidgetContentService {
     if (
       (content.primaryCategory === NsContent.EPrimaryCategory.PROGRAM &&
         !(content.artifactUrl && content.artifactUrl.length)) ||
-      content.primaryCategory === NsContent.EPrimaryCategory.MANDATORY_COURSE_GOAL
+      content.primaryCategory === NsContent.EPrimaryCategory.MANDATORY_COURSE_GOAL ||
+      (content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM &&
+        !(content.artifactUrl && content.artifactUrl.length)) ||
+      (content.primaryCategory === NsContent.EPrimaryCategory.MODULE &&
+        !(content.artifactUrl && content.artifactUrl.length))
     ) {
       const child = content.children[0]
       return this.getFirstChildInHierarchy(child)
