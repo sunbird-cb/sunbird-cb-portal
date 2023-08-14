@@ -13,7 +13,7 @@ const API_END_POINTS = {
   GET_RATING_LOOKUP: `${PROXY_SLAG_V8}/ratings/v1/ratingLookUp`,
   GET_AUTHOR_REPLY: (contentId: string, userID: string) =>
   `${PROXY_SLAG_V8}/ratings/v1/read/${contentId}/Course/${userID}`,
-  POST_AUTHOR_REPLY: `${PROXY_SLAG_V8}/ratings/v1/read`,
+  POST_AUTHOR_REPLY: `${PROXY_SLAG_V8}/ratings/v2/read`,
 }
 
 @Injectable({
