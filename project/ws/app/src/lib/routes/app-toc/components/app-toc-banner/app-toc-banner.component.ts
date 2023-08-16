@@ -353,7 +353,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     });
     confirmDialog.afterClosed().subscribe(result => {
       if (result) {
-        this.requestToEnroll()
+        // this.requestToEnroll()
+        this.openSnackbar('Withdraw Request sent Successfully!')
       }
     });
   }
@@ -366,7 +367,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       data: {
         title: 'You’re ocne step away from enrolling!',
         message: `This batch starting on ${this.datePipe.transform(batchData.startDate, 'dd-MM-yyyy')}  -  ${this.datePipe.transform(batchData.endDate, 'dd-MM-yyyy')}, kindly go through the content and be prepared.`,
-        acceptButton:'Withdraw',
+        acceptButton:'Confirm',
         cancelButton:'Cancel'
       },
       disableClose: true,
