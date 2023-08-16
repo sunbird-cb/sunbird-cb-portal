@@ -438,7 +438,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         break
       }
     }
-    this.getUserRating()
+    this.getUserRating(false)
     this.getUserEnrollmentList()
     this.body = this.domSanitizer.bypassSecurityTrustHtml(
       this.content && this.content.body
@@ -542,7 +542,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     })
   }
 
-  getUserRating() {
+  getUserRating(fireUpdate: boolean) {
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId || ''
     }
@@ -551,7 +551,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         (res: any) => {
           if (res && res.result && res.result.response) {
             this.userRating = res.result.response
-            this.tocSvc.changeUpdateReviews(true)
+            if (fireUpdate) {
+              this.tocSvc.changeUpdateReviews(true)
+            }
           }
         },
         (err: any) => {
@@ -1300,7 +1302,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     // dialogRef.componentInstance.xyz = this.configSvc
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
-        this.getUserRating()
+        this.getUserRating(true)
       }
     })
   }
