@@ -172,7 +172,7 @@ export class PlayerPdfComponent extends WidgetBaseComponent
     )
     if (this.widgetData && this.widgetData.pdfUrl) {
       // this.loadDocument(this.widgetData.pdfUrl)
-      const publicUrl = this.viewerSvc.getPublicUrl(this.widgetData.pdfUrl)
+      const publicUrl = this.viewerSvc.getCdnUrl(this.widgetData.pdfUrl)
       this.loadDocument(publicUrl)
       if (this.widgetData.identifier) {
         this.identifier = this.widgetData.identifier

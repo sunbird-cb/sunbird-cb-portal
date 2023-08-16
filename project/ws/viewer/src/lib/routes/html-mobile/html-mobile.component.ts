@@ -19,7 +19,6 @@ import { environment } from 'src/environments/environment'
   styleUrls: ['./html-mobile.component.scss'],
 })
 export class HtmlMobileComponent implements OnInit, OnDestroy {
-
   private routeDataSubscription: Subscription | null = null
   private responseSubscription: Subscription | null = null
   private viewerDataSubscription: Subscription | null = null

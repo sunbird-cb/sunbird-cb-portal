@@ -261,7 +261,7 @@ export class PlayerVideoComponent extends WidgetBaseComponent
         })
       }
       if (this.widgetData.url) {
-        initObj.player.src(this.widgetData.url)
+        initObj.player.src(this.viewerSvc.getCdnUrl(this.widgetData.url))
       }
     })
   }

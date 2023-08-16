@@ -20,6 +20,7 @@ import {
   INation,
   IdegreesMeta,
   INameField,
+  ICountry,
 } from '../../models/user-profile.model'
 import { NsUserProfileDetails } from '@ws/app/src/lib/routes/user-profile/models/NsUserProfile'
 import { NotificationComponent } from '@ws/author/src/lib/modules/shared/components/notification/notification.component'
@@ -30,6 +31,7 @@ import { LoaderService } from '@ws/author/src/public-api'
 import _ from 'lodash'
 import { OtpService } from '../../services/otp.services';
 import { environment } from 'src/environments/environment'
+
 /* tslint:enable */
 
 export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
@@ -62,10 +64,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   uploadSaveData = false
   selectedIndex = 0
   masterNationality: Observable<INation[]> | undefined
-  countries: INation[] = []
+  country: Observable<INation[]> | undefined
   masterLanguages: Observable<ILanguages[]> | undefined
   masterKnownLanguages: Observable<ILanguages[]> | undefined
   masterNationalities: INation[] = []
+  countries: INation[] = []
   masterLanguagesEntries!: ILanguages[]
   selectedKnowLangs: ILanguages[] = []
   separatorKeysCodes: number[] = [ENTER, COMMA]
@@ -118,7 +121,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   isMobileVerified = false
   degreefilteredOptions: INameField[] | undefined
   postDegreefilteredOptions: INameField[] | undefined
-  disableVerifyBtn= false
+  disableVerifyBtn = false
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -234,11 +237,26 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
   fetchMeta() {
+    this.userProfileSvc.getMasterCountries().subscribe(
+      data => {
+        // console.log(data, 'country list data===')
+        data.countries.map((item: ICountry) => {
+          // this.masterNationalities.push({ name: item.name })
+          // console.log(item, 'country item name')
+          this.countries.push({ name: item.name })
+          // this.countryCodes.push(item.countryCode)
+        })
+        this.onChangesCountry()
+      },
+      (_err: any) => {
+        // console.log(_err, "_err==")
+      })
+
     this.userProfileSvc.getMasterNationlity().subscribe(
       data => {
-        data.nationalities.map((item: INationality) => {
+        data.nationality.map((item: INationality) => {
           this.masterNationalities.push({ name: item.name })
-          this.countries.push({ name: item.name })
+          // this.countries.push({ name: item.name })
           this.countryCodes.push(item.countryCode)
         })
 
@@ -248,7 +266,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
         if (this.createUserForm.value.nationality === null || this.createUserForm.value.nationality === undefined) {
           this.createUserForm.patchValue({
-            nationality: 'India',
+            nationality: 'Indian',
           })
         }
         this.onChangesNationality()
@@ -419,8 +437,21 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  onChangesLanuage(): void {
+  onChangesCountry(): void {
 
+    // tslint:disable-next-line: no-non-null-assertion
+    this.country = this.createUserForm.get('location')!.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        startWith(''),
+        map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+        map(name => name ? this.filterCountry(name) : this.countries.slice()),
+      )
+     // console.log('this.masterLanguagesEntries', this.masterLanguages)
+  }
+
+  onChangesLanuage(): void {
     // tslint:disable-next-line: no-non-null-assertion
     this.masterLanguages = this.createUserForm.get('domicileMedium')!.valueChanges
       .pipe(
@@ -457,6 +488,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const controls = this.createUserForm.get('degrees') as FormArray
     // tslint:disable-next-line: no-non-null-assertion
     if (controls.length > 0) {
+      // tslint:disable-next-line: no-non-null-assertion
       controls.at(controls.length - 1)!.get('degree')!.valueChanges.pipe(
         debounceTime(500),
         distinctUntilChanged(),
@@ -471,6 +503,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const controls = this.createUserForm.get('postDegrees') as FormArray
     // tslint:disable-next-line: no-non-null-assertion
     if (controls.length > 0) {
+      // tslint:disable-next-line: no-non-null-assertion
       controls.at(controls.length - 1)!.get('degree')!.valueChanges.pipe(
         debounceTime(500),
         distinctUntilChanged(),
@@ -488,6 +521,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       return this.masterNationalities.filter(option => option.name.toLowerCase().includes(filterValue))
     }
     return this.masterNationalities
+  }
+
+  private filterCountry(name: string): INation[] {
+    if (name) {
+      const filterValue = name.toLowerCase()
+      return this.countries.filter(option => option.name.toLowerCase().includes(filterValue))
+    }
+    return this.countries
   }
 
   private filterLanguage(name: string): ILanguages[] {
@@ -1779,10 +1820,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       data,
     )
   }
-
   numericOnly(event:any): boolean {  
-    let pattren = /^([0-9])$/;
-    let result = pattren.test(event.key);
-    return result;
+    const pattren = /^([0-9])$/
+    const result = pattren.test(event.key)
+    return result
   }
 }

@@ -358,12 +358,12 @@ TODO: edit option while preview Mode
         <div class="margin-bottom-m">
           <p class="mat-subheading-1 at-glance-heading" i18n>At a glance</p>
           <div class="info-item">
-            <ng-container *ngIf="content.primaryCategory !== this.primaryCategory.BLENDED_PROGRAM">
+            <ng-container *ngIf="content?.primaryCategory !== this.primaryCategory.BLENDED_PROGRAM">
               <p *ngIf="tocConfig?.atAGlance?.duration?.enabled && content?.duration" class="mat-body-2 cs-icons">
                 <mat-icon class="margin-right-xxs">timer</mat-icon> {{ contentReadData?.duration | pipeDurationTransform: 'hms' }}
               </p>
             </ng-container>
-            <ng-container *ngIf="content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM">
+            <ng-container *ngIf="content?.primaryCategory === this.primaryCategory.BLENDED_PROGRAM">
               <p *ngIf="tocConfig?.atAGlance?.duration?.enabled && content?.programDuration" class="mat-body-2 cs-icons">
                 <mat-icon class="margin-right-xxs">timer</mat-icon> {{ getProgramDuration(content?.programDuration) }}
               </p>
@@ -411,6 +411,12 @@ TODO: edit option while preview Mode
               <img src="/assets/icons/content/grey/pdf.svg" alt="PDF" class="margin-right-xs"> {{ tocStructure?.pdf }}
               <span *ngIf="tocStructure?.pdf === 1" i18n> PDF</span>
               <span *ngIf="tocStructure?.pdf > 1" i18n> PDFs</span>
+            </p>
+            <p *ngIf="tocStructure?.offlineSession > 0" class="mat-body-2 cs-icons">
+              <img src="/assets/icons/content/grey/module.svg" alt="Ofline sessions" class="margin-right-xs"> {{
+              tocStructure?.offlineSession }}
+              <span *ngIf="tocStructure?.offlineSession === 1" i18n> Session</span>
+              <span *ngIf="tocStructure?.offlineSession > 1" i18n> Sessions</span>
             </p>
             <p *ngIf="tocStructure?.podcast > 0" class="mat-body-2 cs-icons">
               <img src="/assets/icons/content/grey/audio.svg" alt="Podcast" class="margin-right-xs"> {{

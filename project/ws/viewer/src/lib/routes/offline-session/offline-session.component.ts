@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { NsContent, NsDiscussionForum, WidgetContentService } from '@sunbird-cb/collection'
@@ -12,7 +12,7 @@ import { WsEvents, EventService } from '@sunbird-cb/utils'
   templateUrl: './offline-session.component.html',
   styleUrls: ['./offline-session.component.scss'],
 })
-export class OfflineSessionComponent implements OnInit {
+export class OfflineSessionComponent implements OnInit, OnDestroy {
   private dataSubscription: Subscription | null = null
   private viewerDataSubscription: Subscription | null = null
   private telemetryIntervalSubscription: Subscription | null = null
@@ -61,7 +61,7 @@ export class OfflineSessionComponent implements OnInit {
             this.discussionForumWidget.widgetData.isDisabled = true
           }
         }
-        // this.widgetResolverPdfData.widgetData.pdfUrl = this.pdfData
+        // this.widgetResolverOfflineSessionData.widgetData.pdfUrl = this.pdfData
         //   ? `/apis/authContent/${encodeURIComponent(this.pdfData.artifactUrl)}`
         //   : ''
         if (this.activatedRoute.snapshot.queryParams.collectionId) {
@@ -126,6 +126,7 @@ export class OfflineSessionComponent implements OnInit {
             this.widgetResolverOfflineSessionData.widgetData.primaryCategory = this.offlineSessionData.primaryCategory
 
             this.widgetResolverOfflineSessionData.widgetData.version = `${this.offlineSessionData.version}${''}`
+            this.widgetResolverOfflineSessionData.widgetData.content = this.offlineSessionData
           }
           this.widgetResolverOfflineSessionData = JSON.parse(JSON.stringify(this.widgetResolverOfflineSessionData))
           if (this.offlineSessionData) {

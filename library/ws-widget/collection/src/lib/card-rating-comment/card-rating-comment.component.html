@@ -38,10 +38,10 @@
                     <div class="margin-top-m mat-body-1 break-all">
                         {{review.review}}
                     </div>
-                    <div *ngIf="authorReply" class="margin-top-m">
+                    <div *ngIf="review?.comment" class="margin-top-m">
                         <a class="custom-link" (click)="showAuthReply()">View reply</a>
                         <div class="margin-top-m mat-body-1 break-all" *ngIf="showauthreply">
-                            {{authorReply}}
+                            {{review?.comment}}
                         </div>
                     </div>
                 </div>

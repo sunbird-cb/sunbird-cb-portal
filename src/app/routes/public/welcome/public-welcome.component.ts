@@ -120,7 +120,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     heirarchyObject: any
     hideOrg = false
     searching = false
-    isEmailVerified= false
+    isEmailVerified = false
 
     constructor(
         private welcomeSignupSvc: WelcomeUsersService,

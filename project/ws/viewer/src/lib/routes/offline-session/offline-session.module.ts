@@ -36,7 +36,7 @@ import { ViewerResolve } from '../../viewer.resolve'
 
 const routes: Routes = [
   {
-    path: ':resourceId',
+    path: '',
     component: OfflineSessionComponent,
     resolve: {
       content: ViewerResolve,

@@ -5,6 +5,7 @@ import {
   IUserProfileDetails,
   ILanguagesApiData,
   INationalityApiData,
+  ICountryApiData,
   IUserProfileDetailsFromRegistry,
   IProfileMetaApiData,
 } from '../models/user-profile.model'
@@ -18,6 +19,7 @@ const API_ENDPOINTS = {
   getUserdetailsFromRegistry: '/apis/proxies/v8/api/user/v2/read',
   getUserdetails: '/apis/protected/v8/user/details/detailV1',
   getMasterNationlity: '/apis/protected/v8/user/profileRegistry/getMasterNationalities',
+  getMasterCountries: '/apis/protected/v8/user/profileRegistry/getMasterCountries',
   getMasterLanguages: '/apis/protected/v8/user/profileRegistry/getMasterLanguages',
   getProfilePageMeta: '/apis/protected/v8/user/profileRegistry/getProfilePageMeta',
   getAllDepartments: '/apis/protected/v8/portal/listDeptNames',
@@ -47,6 +49,9 @@ export class UserProfileService {
   }
   getMasterNationlity(): Observable<INationalityApiData> {
     return this.http.get<INationalityApiData>(API_ENDPOINTS.getMasterNationlity)
+  }
+  getMasterCountries(): Observable<ICountryApiData> {
+    return this.http.get<ICountryApiData>(API_ENDPOINTS.getMasterCountries)
   }
   getProfilePageMeta(): Observable<IProfileMetaApiData> {
     return this.http.get<IProfileMetaApiData>(API_ENDPOINTS.getProfilePageMeta)
