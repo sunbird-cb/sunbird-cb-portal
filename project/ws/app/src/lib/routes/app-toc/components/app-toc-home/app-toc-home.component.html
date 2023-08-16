@@ -223,9 +223,9 @@ TODO: edit option while preview Mode
                 </ng-container>
                 <ng-container>
                   <a *ngIf="showStart.show && batchData?.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.APPROVED"
-                  [routerLink]="(resumeData && !certData) ? resumeDataLink?.url : firstResourceLink?.url"
-                  [queryParams]="(resumeData && !certData) ? generateQuery('RESUME') : generateQuery('START')"
-                  class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white">
+                  [routerLink]="isBatchInProgress? (resumeData && !certData) ? resumeDataLink?.url : firstResourceLink?.url : '' "
+                  [queryParams]="isBatchInProgress ? (resumeData && !certData) ? generateQuery('RESUME') : generateQuery('START') : '' "
+                  class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" [ngClass]="{'disable-start-btn': !isBatchInProgress}">
 
                   <ng-container *ngIf="(!content.completionPercentage || content.completionPercentage < 100) && !certData">
                     <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>

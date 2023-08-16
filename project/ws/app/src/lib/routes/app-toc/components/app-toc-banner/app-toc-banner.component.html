@@ -47,9 +47,16 @@
             <span *ngIf="contentProgress === 1" class="margin-left-s">
               <mat-icon class="ws-mat-accent-text">check_circle</mat-icon>
             </span>
-            <div *ngIf="content?.appIcon" class="apIcon float-left mb-4">
-              <img [src]="content?.creatorLogo | pipePublicURL" [id]="'source_' + content.identifier"
-                class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
+            <div>
+              <div *ngIf="content?.primaryCategory" class="apIcon float-left mb-4">
+                <img src="/assets/icons/content/course.svg" [id]="'source_' + content.identifier"
+                  class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
+                  <span>{{content?.primaryCategory}}</span>
+              </div>
+              <div *ngIf="content?.appIcon" class="apIcon float-left mb-4">
+                <img [src]="content?.creatorLogo | pipePublicURL" [id]="'source_' + content.identifier"
+                  class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
+              </div>
             </div>
             <div [ngSwitch]="routePath" class="header-meta" [ngClass]="{ 'header-meta-banner': bannerUrl }">
               <!-- Overview Section -->
@@ -102,7 +109,7 @@
                 ( {{ 0 | pipeCountTransform }} )</span>
             </div>
             <!-- tags -->
-            <div class="tags margin-top-m margin-bottom-s" *ngIf="content?.keywords && content?.keywords?.length > 0">
+            <div class="tags margin-bottom-s" *ngIf="content?.keywords && content?.keywords?.length > 0">
               <!-- <span *ngFor="let tag of content.keywords" class="tag" [ngStyle]="getBgColor(tag)"> -->
               <span *ngFor="let tag of content.keywords" class="tag">
                 {{tag}}
@@ -191,7 +198,7 @@
 </div>
 <!-- </div> -->
 
-<div class="header-synopsis fixed-width margin-top-xl" [ngClass]="{ 'header-synopsis-gradient': bannerUrl }"
+<div class="header-synopsis fixed-width margin-top-l" [ngClass]="{ 'header-synopsis-gradient': bannerUrl }"
   *ngIf="content">
   <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
     <div class="flex flex-row">
@@ -260,6 +267,7 @@
               <h3 class="margin-remove-bottom p-4 bg-white mat-body-1" i18n *ngFor="let batch of batchData.content">
                 {{batch.name}} ({{batch.startDate | date: 'dd-MM-yyyy' }} - {{batch.endDate | date: 'dd-MM-yyyy' || 'present'}})
               </h3>
+              <ng-container [ngTemplateOutlet]="statusMsg"></ng-container>
             </ng-container>
             <ng-container *ngIf="batchData && !batchData?.enrolled && !batchData?.content?.length">
               <h3 class="margin-remove-bottom mat-body-2 ws-default-text" i18n>
@@ -294,32 +302,20 @@
             </div>
             <div class="help">
               <div class="flex batch-wrapper">
-                <ng-container>
+                <ng-container *ngIf="!showMsg">
                     <div class="batch-duration-wrap">
                       <p class="timer-title">Batch duration</p>
                       <p class="duration-days">{{getBatchDuration}} Days</p>
                     </div>
                 </ng-container>
+                <p class="batch-info" *ngIf="showMsg">Kindly check the location details and plan in advance.</p>
               </div>
-              <p style="display: none;">Kindly check the location details and plan in advance.</p>
             </div>
           </div>
           <!-- showIcon{{showIcon}} showMsg{{showMsg}} WFIcon{{WFIcon}} iconColor{{iconColor}} -->
       </div>
     </div>
-    <div class="status-container mt-5" *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM && batchData?.workFlow?.wfInitiated">
-      <div class="flex" *ngIf="showMsg">
-        <ng-container *ngIf="showIcon">
-          <!-- <mat-icon class="mr-3" [ngClass]="iconColor" svgIcon="verified"></mat-icon> -->
-          <mat-icon class="mr-3" [ngClass]="iconColor" *ngIf="WFIcon === 'circle'">check_circle</mat-icon>
-          <mat-icon class="mr-3 ws-mat-red-text"  style="transform: rotate(180deg);" *ngIf="WFIcon === 'info'">info</mat-icon>
-        </ng-container>
-        <div class="mat-body-1">
-          <p class="margin-remove-bottom ">{{getWFMsg}}</p>
-          <!-- <p class="ws-mat-default-text">{{tocConfig.BatchEnrollSupportMsg}}<u>{{helpEmail}}</u></p> -->
-        </div>
-      </div>
-    </div>
+    <ng-container  *ngIf="batchData && !batchData?.enrolled && batchData?.content?.length" [ngTemplateOutlet]="statusMsg"></ng-container>
   </ng-container>
 </div>
 
@@ -363,3 +359,18 @@
   </ws-widget-btn-content-feedback-v2>
 </ng-template>
 <ng-template #authView i18n>View</ng-template>
+<ng-template #statusMsg>
+  <div class="status-container mt-5" *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM && batchData?.workFlow?.wfInitiated">
+    <div class="flex" *ngIf="showMsg">
+      <ng-container *ngIf="showIcon">
+        <!-- <mat-icon class="mr-3" [ngClass]="iconColor" svgIcon="verified"></mat-icon> -->
+        <mat-icon class="mr-3" [ngClass]="iconColor" *ngIf="WFIcon === 'circle'">check_circle</mat-icon>
+        <mat-icon class="mr-3 ws-mat-red-text"  style="transform: rotate(180deg);" *ngIf="WFIcon === 'info'">info</mat-icon>
+      </ng-container>
+      <div class="mat-body-1">
+        <p class="margin-remove-bottom ">{{getWFMsg}}</p>
+        <!-- <p class="ws-mat-default-text">{{tocConfig.BatchEnrollSupportMsg}}<u>{{helpEmail}}</u></p> -->
+      </div>
+    </div>
+  </div>
+</ng-template>
