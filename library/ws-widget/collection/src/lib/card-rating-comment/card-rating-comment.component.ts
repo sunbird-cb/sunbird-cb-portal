@@ -22,14 +22,15 @@ export class CardRatingCommentComponent implements OnInit {
   }
 
   getAuthorReply(review: any) {
-    const uID =  review.userId  ?  review.userId :  review.user_id
-    const contentid = review.activityId ? review.activityId : this.contentid
-    this.ratingService.getAuthorReply(contentid, uID).subscribe(
-        (res: any) => {
-          if (res.result.response && res.result.response.comment && res.result.response.comment !== null) {
-            this.authorReply = res.result.response.comment
-          }
-    })
+    this.authorReply = review.comment
+    // const uID =  review.userId  ?  review.userId :  review.user_id
+    // const contentid = review.activityId ? review.activityId : this.contentid
+    // this.ratingService.getAuthorReply(contentid, uID).subscribe(
+    //     (res: any) => {
+    //       if (res.result.response && res.result.response.comment && res.result.response.comment !== null) {
+    //         this.authorReply = res.result.response.comment
+    //       }
+    // })
   }
 
   showAuthReply() {
