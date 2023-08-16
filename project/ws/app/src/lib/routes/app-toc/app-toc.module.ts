@@ -114,6 +114,7 @@ import { TagWidgetComponent } from '../discuss/widget/tag-widget/tag-widget.comp
 import { ActionService } from './services/action.service'
 import { ConnectionNameModule } from '@sunbird-cb/collection/src/lib/_common/connection-name/connection-name.module'
 import { CertificateDialogModule } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.module'
+import { ConfirmDialogModule } from '@sunbird-cb/collection/src/lib/_common/confirm-dialog/confirm-dialog.module'
 import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 import { AppPublicTocResolverService } from 'src/app/routes/public/public-toc/app-public-toc-resolver.service'
 
@@ -193,6 +194,7 @@ import { AppPublicTocResolverService } from 'src/app/routes/public/public-toc/ap
     ContentRatingV2DialogModule,
     RatingSummaryModule,
     CertificateDialogModule,
+    ConfirmDialogModule,
     BtnGoalsModule,
     BtnPlaylistModule,
     BtnMailUserModule,
