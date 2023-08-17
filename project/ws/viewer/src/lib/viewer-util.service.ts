@@ -220,6 +220,11 @@ export class ViewerUtilService {
     return `${environment.contentHost}/${environment.contentBucket}/content${mainUrl}`
   }
 
+  getCdnUrl(url: string): string {
+    const mainUrl = url.split('/content').pop() || ''
+    return `${environment.cdnContentHost}/${environment.cdnContentBucket}/content${mainUrl}`
+  }
+
   //  fetchContent(
   //   contentId: string,
   //   hierarchyType: 'all' | 'minimal' | 'detail' = 'detail'

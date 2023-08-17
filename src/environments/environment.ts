@@ -23,6 +23,8 @@ export const environment: IEnvironment = {
   portalRoles: (((window as { [key: string]: any })['env']['portalRoles'] || '')) || [],
   recaptchaKey: (window as { [key: string]: any })['env']['recaptchaKey'] || [],
   contentBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
+  cdnContentHost: (window as { [key: string]: any })['env']['cdnContentHost'] || '',
+  cdnContentBucket: (window as { [key: string]: any })['env']['cdnContentBucket'] || '',
   certificateassets: (window as { [key: string]: any })['env']['certificateassets'] || '',
   assessmentBuffer: (window as { [key: string]: any })['env']['assessmentBuffer'] || 0,
   staticHomePageUrl: (window as { [key: string]: any })['env']['staticHomePageUrl'] || '',
@@ -66,7 +68,9 @@ interface IEnvironment {
   programStripKey: string,
   quizResultTimeout: number,
   meetingLinkDetail: string,
-  karmayogiBharatLink: string
+  karmayogiBharatLink: string,
+  cdnContentHost: string,
+  cdnContentBucket: string
 }
 
 // import { AnyCnameRecord } from 'dns'
