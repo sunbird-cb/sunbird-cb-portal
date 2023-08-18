@@ -224,6 +224,7 @@ export class ViewerUtilService {
     const mainUrl = url.split('/content').pop() || ''
     return `${environment.cdnContentHost}/${environment.cdnContentBucket}/content${mainUrl}`
   }
+
   //  fetchContent(
   //   contentId: string,
   //   hierarchyType: 'all' | 'minimal' | 'detail' = 'detail'
