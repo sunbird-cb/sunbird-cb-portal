@@ -433,6 +433,17 @@
             </section>
         </ng-template>
     </mat-tab>
+    
+    <mat-tab label="Sessions" *ngIf="content?.children?.length && (content?.primaryCategory === primaryCategory.BLENDED_PROGRAM)">
+        <ng-template matTabContent>
+            <section id="content">
+                <div class="fixed-width">
+                    <ws-app-app-toc-sessions [batchId]="batchId" [content]="content" [forPreview]="forPreview">
+                    </ws-app-app-toc-sessions>
+                </div>
+            </section>
+        </ng-template>
+    </mat-tab>
     <mat-tab label="Discussion" *ngIf="!forPreview">
         <ng-template matTabContent>
             <section id="discussion-forum">
