@@ -20,6 +20,7 @@ import {
   INation,
   IdegreesMeta,
   INameField,
+  ICountry,
 } from '../../models/user-profile.model'
 import { NsUserProfileDetails } from '@ws/app/src/lib/routes/user-profile/models/NsUserProfile'
 import { NotificationComponent } from '@ws/author/src/lib/modules/shared/components/notification/notification.component'
@@ -62,10 +63,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   uploadSaveData = false
   selectedIndex = 0
   masterNationality: Observable<INation[]> | undefined
-  countries: INation[] = []
+  country: Observable<INation[]> | undefined
   masterLanguages: Observable<ILanguages[]> | undefined
   masterKnownLanguages: Observable<ILanguages[]> | undefined
   masterNationalities: INation[] = []
+  countries: INation[] = []
   masterLanguagesEntries!: ILanguages[]
   selectedKnowLangs: ILanguages[] = []
   separatorKeysCodes: number[] = [ENTER, COMMA]
@@ -147,7 +149,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       primaryEmail: new FormControl('', [Validators.required, Validators.email]),
       primaryEmailType: new FormControl(this.assignPrimaryEmailTypeCheckBox(this.ePrimaryEmailType.OFFICIAL), []),
       secondaryEmail: new FormControl('', []),
-      nationality: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterNationality)]),
+      nationality: new FormControl('', [Validators.required]),
       dob: new FormControl('', [Validators.required]),
       gender: new FormControl('', [Validators.required]),
       maritalStatus: new FormControl('', [Validators.required]),
@@ -233,11 +235,21 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
   fetchMeta() {
+    this.userProfileSvc.getMasterCountries().subscribe(
+      data => {
+        data.countries.map((item: ICountry) => {
+          this.countries.push({ name: item.name })
+          // this.countryCodes.push(item.countryCode)
+        })
+        this.onChangesCountry()
+      },
+      (_err: any) => {
+      })
+
     this.userProfileSvc.getMasterNationlity().subscribe(
       data => {
-        data.nationalities.map((item: INationality) => {
+        data.nationality.map((item: INationality) => {
           this.masterNationalities.push({ name: item.name })
-          this.countries.push({ name: item.name })
           this.countryCodes.push(item.countryCode)
         })
 
@@ -247,7 +259,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
         if (this.createUserForm.value.nationality === null || this.createUserForm.value.nationality === undefined) {
           this.createUserForm.patchValue({
-            nationality: 'India',
+            nationality: 'Indian',
           })
         }
         this.onChangesNationality()
@@ -406,16 +418,30 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           map(value => typeof value === 'string' ? value : (value && value.name ? value.name : '')),
           map(name => name ? this.filterNationality(name) : this.masterNationalities.slice())
         )
-      const newLocal = 'nationality'
-      this.masterNationality.subscribe(event => {
-        // tslint:disable-next-line: no-non-null-assertion
-        this.createUserForm.get(newLocal)!.setValidators([Validators.required, forbiddenNamesValidator(event)])
+      // const newLocal = 'nationality'
+      // this.masterNationality.subscribe(event => {
+      //   // tslint:disable-next-line: no-non-null-assertion
+      //   this.createUserForm.get(newLocal)!.setValidators([Validators.required])
 
-        this.createUserForm.updateValueAndValidity()
+      //   this.createUserForm.updateValueAndValidity()
 
-      })
+      // })
 
     }
+  }
+
+  onChangesCountry(): void {
+
+    // tslint:disable-next-line: no-non-null-assertion
+    this.country = this.createUserForm.get('location')!.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        startWith(''),
+        map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+        map(name => name ? this.filterCountry(name) : this.countries.slice()),
+      )
+     // console.log('this.masterLanguagesEntries', this.masterLanguages)
   }
 
   onChangesLanuage(): void {
@@ -483,6 +509,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       return this.masterNationalities.filter(option => option.name.toLowerCase().includes(filterValue))
     }
     return this.masterNationalities
+  }
+
+  private filterCountry(name: string): INation[] {
+    if (name) {
+      const filterValue = name.toLowerCase()
+      return this.countries.filter(option => option.name.toLowerCase().includes(filterValue))
+    }
+    return this.countries
   }
 
   private filterLanguage(name: string): ILanguages[] {
@@ -1212,8 +1246,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           }
           if (item === name) {
 
-            // console.log(name, "name--")
-            // console.log(form.value, "form.value")
             switch (name) {
 
               case 'knownLanguages': return personalDetail['knownLanguages'] = form.value.knownLanguages
