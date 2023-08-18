@@ -196,7 +196,7 @@
   <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
     <div class="flex flex-row">
       <div class="flex-auto batch-wrapper">
-          <div class="padding-m batch-container">
+          <div class="padding-m batch-container ws-mat-orange-light-bg">
             <form>
               <ng-container *ngIf="batchData && !batchData?.enrolled
               && (!batchData.workFlow?.wfInitiated || (batchData.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED))

@@ -551,7 +551,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   // setting batch start date
   setbatchDateToCountDown(baatchStartDate:string){
-    debugger
     this.targetDate = new Date(baatchStartDate);
     this.targetTime = this.targetDate.getTime();
     this.currentTime = `${
