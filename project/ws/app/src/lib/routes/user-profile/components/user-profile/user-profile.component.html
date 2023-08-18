@@ -122,7 +122,15 @@
                           aria-label="Nationality Field label">
                           Nationality
                         </label>
-                        <mat-form-field appearance="outline" class="margin-top-xs w-full">
+                        
+                        <mat-form-field appearance="outline" class="margin-top-xs">
+                          <mat-select formControlName="nationality" i18n-placeholder placeholder="--Select--">
+                            <mat-option [value]="option.name" *ngFor="let option of masterNationalities">
+                              {{ option.name }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <!-- <mat-form-field appearance="outline" class="margin-top-xs w-full">
                           <input id="country" matInput tab-directive type="text" placeholder="Nationality"
                             i18n-placeholder="Nationality" formControlName="nationality" 
                             [matAutocomplete]="nationalityAutocomplete" i18n-aria-label aria-label="Nationality"
@@ -137,18 +145,18 @@
                             i18n-aria-label aria-label="You must enter value from suggested list only.">
                             You must enter value from suggested list only.
                           </mat-error>
-                        </mat-form-field>
-                        <mat-autocomplete #nationalityAutocomplete="matAutocomplete" autoActiveFirstOption="true"
-                          i18n-aria-label aria-label="Nationality list autocomplete">
+                        </mat-form-field> -->
+                        <!-- <mat-autocomplete #nationalityAutocomplete="matAutocomplete" autoActiveFirstOption="true"
+                          i18n-aria-label aria-label="Nationality list autocomplete"> -->
                           <!-- <mat-option [value]="Indian" 
                           i18n-aria-label aria-label="Nationality list autocomplete option">
                           Indian
                         </mat-option> -->
-                          <mat-option *ngFor="let option of masterNationality | async" [value]="option.name" 
+                          <!-- <mat-option *ngFor="let option of masterNationality | async" [value]="option.name" 
                             i18n-aria-label aria-label="Nationality list autocomplete option">
                             {{ option.name }}
                           </mat-option>
-                        </mat-autocomplete>
+                        </mat-autocomplete> -->
                       </div>
                       <div class="input-wrapper margin-top-s">
                         <label for="language" class=" margin-remove-bottom form-label required"

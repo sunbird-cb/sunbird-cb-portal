@@ -545,10 +545,16 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
           })
         }
         return this.authReplies
+        // TODO: To be removed
+        // this.hardcodeData()
+        // this.ratingSummaryProcessed = this.processRatingSummary()
       },
       (err: any) => {
         this.displayLoader = false
         this.logger.error('USER RATING FETCH ERROR >', err)
+        // TODO: To be removed
+        // this.hardcodeData()
+        // this.ratingSummaryProcessed = this.processRatingSummary()
       }
     )
   }
