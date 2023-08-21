@@ -206,7 +206,7 @@
           <div class="padding-m batch-container">
             <form>
               <ng-container *ngIf="batchData && !batchData?.enrolled
-              && (!batchData.workFlow?.wfInitiated || (batchData.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED))
+              && (!batchData.workFlow?.wfInitiated || (batchData.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED ||  batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.WITHDRAWN))
               && batchData?.content?.length">
                 <div>
         

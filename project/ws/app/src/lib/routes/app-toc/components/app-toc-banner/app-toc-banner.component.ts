@@ -353,7 +353,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     });
     confirmDialog.afterClosed().subscribe(result => {
       if (result) {
-        // this.requestToEnroll()
+        this.requestAndWithDrawEnroll('SEND_FOR_PC_APPROVAL','WITHDRAW',this.batchData.workFlow.wfItem.wfId)
         this.openSnackbar('Withdraw Request sent Successfully!')
       }
     });
@@ -375,12 +375,12 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     });
     confirmDialog.afterClosed().subscribe(result => {
       if (result) {
-        this.requestToEnroll()
+        this.requestAndWithDrawEnroll('INITIATE','INITIATE',null)
       }
     });
   }
 
-  public requestToEnroll() {
+  public requestAndWithDrawEnroll(state:string,action:string,wfIdValue: any) {
     // this.disableEnrollBtn = true
 
     let userId = ''
@@ -393,12 +393,12 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       username = this.configSvc.userProfile.firstName || ''
       departmentName = this.configSvc.userProfile.departmentName || ''
     }
-    const req = {
+    let req = {
         rootOrgId,
         userId,
         actorUserId: userId,
-        state: 'INITIATE',
-        action: 'INITIATE',
+        state: state,
+        action: action,
         applicationId: this.selectedBatch.batchId,
         serviceName: 'blendedprogram',
         courseId : this.selectedBatch.courseId,
@@ -410,6 +410,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
                 },
             },
         ],
+    }
+    if (wfIdValue) {
+      req['wfId']= wfIdValue
     }
     this.contentSvc.enrollUserToBatchWF(req).then((data: any) => {
       if (data && data.result && data.result.status === 'OK') {
@@ -551,7 +554,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   // setting batch start date
   setbatchDateToCountDown(baatchStartDate:string){
-    debugger
     this.targetDate = new Date(baatchStartDate);
     this.targetTime = this.targetDate.getTime();
     this.currentTime = `${
