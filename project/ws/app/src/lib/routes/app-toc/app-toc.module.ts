@@ -90,6 +90,7 @@ import {
   ContentRatingV2DialogModule,
   RatingSummaryModule,
   CardRatingCommentModule,
+  AttendanceHelperModule,
 } from '@sunbird-cb/collection'
 import { AppTocDialogIntroVideoComponent } from './components/app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { CertificationMetaResolver } from './routes/app-toc-certification/resolvers/certification-meta.resolver'
@@ -118,7 +119,8 @@ import { ConfirmDialogModule } from '@sunbird-cb/collection/src/lib/_common/conf
 import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 import { AppPublicTocResolverService } from 'src/app/routes/public/public-toc/app-public-toc-resolver.service';
 import { AppTocSessionsComponent } from './components/app-toc-sessions/app-toc-sessions.component';
-import { AppTocSessionCardComponent } from './components/app-toc-session-card/app-toc-session-card.component'
+import { AppTocSessionCardComponent } from './components/app-toc-session-card/app-toc-session-card.component';
+import { AppTocAttendanceCardComponent } from './components/app-toc-attendance-card/app-toc-attendance-card.component'
 
 @NgModule({
   declarations: [
@@ -147,6 +149,7 @@ import { AppTocSessionCardComponent } from './components/app-toc-session-card/ap
     TagWidgetComponent,
     AppTocSessionsComponent,
     AppTocSessionCardComponent,
+    AppTocAttendanceCardComponent,
   ],
   imports: [
     CommonModule,
@@ -222,6 +225,7 @@ import { AppTocSessionCardComponent } from './components/app-toc-session-card/ap
     ConnectionNameModule,
     CardRatingCommentModule,
     InfiniteScrollModule,
+    AttendanceHelperModule,
     NgCircleProgressModule.forRoot({}),
   ],
   providers: [

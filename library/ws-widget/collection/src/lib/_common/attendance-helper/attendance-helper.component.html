@@ -1,0 +1,29 @@
+<mat-card class="no-shadow padding-xs">
+    <div class="flex align-right justify-end">
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-card-title>
+        <h2 i18n class="mat-h2 font-bold text-center">{{helperConfig?.title}}</h2>
+    </mat-card-title>
+    <mat-card-content class="mt-10">
+        <div class="step-container">
+            <div  class="" *ngFor="let step of helperConfig?.steps">
+                <div class="flex">
+                    <div class="p-2">
+                        <mat-icon class="matIcon">close</mat-icon>
+                    </div>
+                    <div class="flex-col flex-1 p-2">
+                        <div class="mat-body-2 ws-mat-black60-text mb-1">{{step?.step}}</div>
+                        <div i18n class="mat-body-3 font-bold mb-1">{{step?.title}}</div>
+                        <div class="mat-body-2 ws-mat-black60-text">{{step?.description}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+    <mat-card-actions class="flex justify-center mt-2">
+        <div class="mat-body-2 ws-mat-black60-text">{{helperConfig?.helpText}}</div>
+    </mat-card-actions>
+</mat-card>
