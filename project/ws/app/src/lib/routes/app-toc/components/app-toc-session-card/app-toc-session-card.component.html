@@ -83,23 +83,6 @@
         </ng-template>
     </div>
 </div>
-<div class="">
-    <span class="font-bold ws-mat-black60-text"> Attendance status</span>
-    <div class="ws-mat-orange-light-bg p-5">
-        <div class="flex justify-center items-center">
-            <div class="mr-5">
-                <span>Session attendance</span>
-                <div class="flex">
-                    <mat-icon class="mat-icon">check_circle</mat-icon>
-                    <span>Unmarked</span>
-                </div>
-            </div>
-            <div class="flex-1 flex justify-center">
-                <span>After the batch starts, you will be able to mark the attendace through mobile.</span>
-            </div>
-            <div class="text-right ml-5">
-                <mat-icon class="mat-icon">check_circle_outline</mat-icon>
-            </div>
-        </div>
-    </div>
-</div>
+<ng-container>
+    <ws-app-app-toc-attendance-card [session]=""  [status]=""></ws-app-app-toc-attendance-card>
+</ng-container>
