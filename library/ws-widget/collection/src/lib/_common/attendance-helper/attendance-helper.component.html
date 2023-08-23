@@ -9,12 +9,12 @@
     </mat-card-title>
     <mat-card-content class="mt-10">
         <div class="step-container">
-            <div  class="" *ngFor="let step of helperConfig?.steps">
-                <div class="flex">
-                    <div class="p-2">
-                        <mat-icon class="matIcon">close</mat-icon>
+            <div class="" *ngFor="let step of helperConfig?.steps">
+                <div class="flex mr-2">
+                    <div class="p-1">
+                        <img class="mat-icon1" src="{{step?.img}}" alt="{{step?.step}}" title="{{step?.step}}" />
                     </div>
-                    <div class="flex-col flex-1 p-2">
+                    <div class="flex-col flex-1 p-1">
                         <div class="mat-body-2 ws-mat-black60-text mb-1">{{step?.step}}</div>
                         <div i18n class="mat-body-3 font-bold mb-1">{{step?.title}}</div>
                         <div class="mat-body-2 ws-mat-black60-text">{{step?.description}}</div>

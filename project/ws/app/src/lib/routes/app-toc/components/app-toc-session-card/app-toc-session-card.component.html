@@ -1,4 +1,4 @@
-<div class="flex flex-col sm:flex-row flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto">
+<div class="flex flex-col sm:flex-row flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto mb-4">
     <a [class.disabled]="(forPreview || !isEnabled) ? true : null"
         [routerLink]="(isAllowed && !forPreview && !isEnabled) ? resourceLink.url : null"
         [queryParams]="(isAllowed && !forPreview && !isEnabled)  ? resourceLink.queryParams : null">
