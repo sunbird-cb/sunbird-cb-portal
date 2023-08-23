@@ -208,10 +208,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     if (v6filters.constructor === Array) {
       v6filters.forEach(((f: any) => {
         Object.keys(f).forEach(key => {
-          console.log('key', key)
           filters[key] = f[key]
-          console.log('filters[key]', filters[key])
-          console.log('f[key]', f[key])
         })
       }))
       return filters
@@ -402,9 +399,11 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
   }
 
   checkForDateFilters(filters: any) {
-    if(filters && filters.hasOwnProperty('batches.endDate')) {
+    if (filters && filters.hasOwnProperty('batches.endDate')) {
+      // tslint:disable-next-line
       filters['batches.endDate']['>'] = eval(filters['batches.endDate']['>'])
     } else if (filters && filters.hasOwnProperty('batches.enrollmentEndDate')) {
+      // tslint:disable-next-line
       filters['batches.enrollmentEndDate']['>'] = eval(filters['batches.enrollmentEndDate']['>'])
     }
     return filters
@@ -427,7 +426,6 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         originalFilters = strip.request.searchV6.request.filters
 
         strip.request.searchV6.request.filters = this.checkForDateFilters(strip.request.searchV6.request.filters)
-        console.log('strip.request.searchV6.request.filters,', strip.request.searchV6.request.filters,)
         strip.request.searchV6.request.filters = this.getFiltersFromArray(
           strip.request.searchV6.request.filters,
           )
