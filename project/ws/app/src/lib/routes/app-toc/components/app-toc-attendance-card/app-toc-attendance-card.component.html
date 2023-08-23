@@ -1,19 +1,25 @@
 <div class="">
-    <span class="font-bold ws-mat-black60-text"> Attendance status</span>
+    <span class="font-bold mat-body-1 ws-mat-black60-text"> Attendance status</span>
     <div class="ws-mat-orange-light-bg p-5">
         <div class="flex justify-center items-center">
-            <div class="mr-5">
-                <span>Session attendance</span>
-                <div class="flex">
-                    <mat-icon class="mat-icon">check_circle</mat-icon>
-                    <span>Unmarked</span>
+            <div class="mr-5" [ngStyle]="{'opacity': (session?.completionStatus === 2) ? 1 : 0.7}">
+                <span class="mat-body-2">Session attendance</span>
+
+                <div class="flex" *ngIf="!session?.completionStatus || session?.completionStatus !== 2">
+                    <img class="mat-icon mr-3" src="/assets/icons/attendance_qr.svg" alt="qr icon" title="attendance" />
+                    <span class="mat-body-2">Unmarked</span>
+                </div>
+                <div class="flex" *ngIf="session?.completionStatus === 2">
+                    <mat-icon class="ws-mat-green-2-text mr-3">check_circle</mat-icon>
+                    <span class="mat-body-2">Marked @9:45 AM</span>
                 </div>
             </div>
             <div class="flex-1 flex justify-center">
-                <span>After the batch starts, you will be able to mark the attendace through mobile.</span>
+                <span class="mat-body-2">After the batch starts, you will be able to mark the attendace through mobile.</span>
             </div>
             <div class="text-right ml-5">
-                <mat-icon class="mat-icon cursor-pointer" (click)="openHelp()">check_circle_outline</mat-icon>
+                <img class="mat-icon cursor-pointer" src="/assets/icons/rounded_question.svg" alt="attendance help"
+                    title="attendance help" (click)="openHelp()" />
             </div>
         </div>
     </div>

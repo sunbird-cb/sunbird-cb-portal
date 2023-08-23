@@ -1,4 +1,5 @@
 @import "ws-mixins";
+
 .no-shadow {
     box-shadow: none !important;
 }
@@ -6,10 +7,17 @@
 .step-container {
     display: flex;
     flex-wrap: nowrap;
+
     @include breakpoint-xs {
-       flex-wrap: wrap;
+        flex-wrap: wrap;
     }
+
     @include breakpoint-s {
         flex-wrap: wrap;
     }
+}
+
+.mat-icon1 {
+    max-width: 48px;
+    max-height: 48px;
 }
