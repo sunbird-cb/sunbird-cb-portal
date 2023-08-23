@@ -682,7 +682,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
 
   processRatingLookup(response: any) {
     if (response) {
-      if ( response && response.length < this.lookupLimit) {
+      if (response && response.length < this.lookupLimit) {
         this.disableLoadMore = true
       } else {
         this.disableLoadMore = false
