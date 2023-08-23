@@ -405,6 +405,8 @@
     }
     .batch-timer {
         width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
     }
     .batch-container {
         width: 100%;

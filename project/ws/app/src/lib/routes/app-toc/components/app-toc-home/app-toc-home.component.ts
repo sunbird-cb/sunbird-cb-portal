@@ -63,7 +63,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   resumeData: any = null
   batchData: NsContent.IBatchListResponse | null = null
   currentCourseBatchId: string | null = null
-  userEnrollmentList = null
+  userEnrollmentList!: NsContent.ICourse[]
   routeSubscription: Subscription | null = null
   pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
   isCohortsRestricted = false
@@ -147,6 +147,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   cscmsUrl = environment.cscmsUrl
   showBtn = false
   channelId: any
+  selectedBatchData: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -182,7 +183,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   ngOnInit() {
-
+    this.tocSvc.getSelectedBatch.subscribe(res => {
+      this.selectedBatchData = res
+    } )
     // this.route.fragment.subscribe(fragment => { this.fragment = fragment })
     this.channelId = this.telemertyService.telemetryConfig ? this.telemertyService.telemetryConfig.channel : ''
     try {
@@ -524,6 +527,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               content: [batch],
               enrolled: true,
             }
+            this.tocSvc.getSelectedBatchData(batch)
             this.router.navigate(
               [],
               {
@@ -573,7 +577,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       // const collectionId = this.isResource ? '' : this.content.identifier
       return this.getContinueLearningData(this.content.identifier)
     }
-    this.userEnrollmentList = null
+    this.userEnrollmentList = []
     let userId
     if (this.configSvc.userProfile) {
       userId = this.configSvc.userProfile.userId || ''
@@ -584,6 +588,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     // )
     this.userSvc.fetchUserBatchList(userId).subscribe(
       (courses: NsContent.ICourse[]) => {
+        this.userEnrollmentList = courses
         let enrolledCourse: NsContent.ICourse | undefined
         if (this.content && this.content.identifier && !this.forPreview) {
           if (courses && courses.length) {
@@ -609,6 +614,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               enrolled: true,
             }
             this.tocSvc.setBatchData(this.batchData)
+            this.tocSvc.getSelectedBatchData(enrolledCourse.batch)
             if (this.getBatchId()) {
               this.router.navigate(
                 [],

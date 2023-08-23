@@ -81,6 +81,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   updateReviewsSubscription: Subscription | null = null
   authReplies: any
   lookupLoading: Boolean = true
+  selectedBatchData: any
   // configSvc: any
 
   constructor(
@@ -118,7 +119,9 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
-
+    this.tocSharedSvc.getSelectedBatch.subscribe(res => {
+      this.selectedBatchData = res
+    } )
     this.searchForm = new FormGroup({
       sortByControl: new FormControl(this.sortReviewValues[0]),
       searchKey: new FormControl(''),

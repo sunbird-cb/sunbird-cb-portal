@@ -214,7 +214,7 @@ TODO: edit option while preview Mode
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
                 <ng-container *ngIf="batchData?.workFlow?.wfInitiated &&
                 !(batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.APPROVED
-                || batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED)">
+                || batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED || batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.WITHDRAWN)">
                   <div class="ws-mat-accent-text ws-mat-accent-light-bg flex items-center justify-center statusMsg">
                     <p class="margin-remove-bottom font-bold">
                       Request under review
@@ -363,11 +363,6 @@ TODO: edit option while preview Mode
                 <mat-icon class="margin-right-xxs">timer</mat-icon> {{ contentReadData?.duration | pipeDurationTransform: 'hms' }}
               </p>
             </ng-container>
-            <ng-container *ngIf="content?.primaryCategory === this.primaryCategory.BLENDED_PROGRAM">
-              <p *ngIf="tocConfig?.atAGlance?.duration?.enabled && content?.programDuration" class="mat-body-2 cs-icons">
-                <mat-icon class="margin-right-xxs">timer</mat-icon> {{ getProgramDuration(content?.programDuration) }}
-              </p>
-            </ng-container>
           </div>
           <div class="info-item"
             *ngIf="tocConfig?.atAGlance?.structure?.enabled && hasTocStructure && content?.children?.length">
@@ -478,6 +473,40 @@ TODO: edit option while preview Mode
             </p>
           </div>
           <mat-divider class="margin-bottom-m"></mat-divider>
+          <ng-container *ngIf="content?.primaryCategory === this.primaryCategory.BLENDED_PROGRAM">
+            <div class="info-item"  *ngIf="tocConfig?.atAGlance?.batchDate?.enabled && selectedBatchData?.startDate">
+              <h3 class="item-heading ws-mat-default-text">
+                {{tocConfig?.atAGlance?.batchDate?.displayName}}
+              </h3>
+              <h3 class="item-value width-expand">
+                {{ selectedBatchData?.startDate | date: 'dd/MM/yyyy'}} - {{ selectedBatchData?.endDate | date: 'dd/MM/yyyy'}}
+              </h3>
+            </div>
+            <div class="info-item" *ngIf="tocConfig?.atAGlance?.batchDuration?.enabled && content?.programDuration">
+              <h3 class="item-heading ws-mat-default-text">
+                {{tocConfig?.atAGlance?.batchDuration?.displayName}}
+              </h3>
+              <h3 class="item-value width-expand">
+                {{ getProgramDuration(content?.programDuration) }}
+              </h3>
+            </div>
+            <div class="info-item"  *ngIf="tocConfig?.atAGlance?.contentType?.enabled && content?.primaryCategory">
+              <h3 class="item-heading ws-mat-default-text">
+                {{tocConfig?.atAGlance?.contentType?.displayName}}
+              </h3>
+              <h3 class="item-value width-expand">
+                {{ content?.primaryCategory}}
+              </h3>
+            </div>
+          </ng-container>
+          <div class="info-item" *ngIf="tocConfig?.atAGlance?.complexityLevel?.enabled && content?.complexityLevel">
+            <h3 class="item-heading ws-mat-default-text">
+              {{tocConfig?.atAGlance?.complexityLevel?.displayName}}
+            </h3>
+            <h3 class="item-value width-expand">
+              {{ content?.complexityLevel }}
+            </h3>
+          </div>
           <div class="info-item"
             *ngIf="tocConfig?.atAGlance?.displayContentType?.enabled && content?.displayContentType">
             <h3 class="item-heading ws-mat-default-text">

@@ -209,7 +209,6 @@
               && (!batchData.workFlow?.wfInitiated || (batchData.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED ||  batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.WITHDRAWN))
               && batchData?.content?.length">
                 <div>
-        
                     <mat-form-field appearance="outline" class="w-full">
                       <!-- <mat-label>Select batch to enroll</mat-label> -->
                       <mat-select  #batchControlData [formControl]="batchControl" required autoSelctFirstOption (selectionChange)="batchChange($event)">
@@ -246,7 +245,8 @@
               </ng-container>
             </form>
             <ng-container *ngIf="batchData && !batchData?.enrolled  && batchData?.workFlow?.wfInitiated
-            && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.REJECTED)
+            && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.REJECTED) && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.WITHDRAWN) 
+            && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.APPROVED)
             && batchData?.content?.length">
               <div>
                 <p class="margin-remove-bottom mat-body-1 padding-m bg-white">

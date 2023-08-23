@@ -38,6 +38,7 @@ export class AppTocService {
   analyticsFetchStatus: TFetchStatus = 'none'
   batchReplaySubject: Subject<any> = new Subject()
   setBatchDataSubject: Subject<any> = new Subject()
+  getSelectedBatch: Subject<any> = new Subject()
   setWFDataSubject: Subject<any> = new Subject()
   resumeData: Subject<NsContent.IContinueLearningData | null> = new Subject<NsContent.IContinueLearningData | null>()
   private showSubtitleOnBanners = false
@@ -81,6 +82,9 @@ export class AppTocService {
 
   changeUpdateReviews(state: boolean) {
     this.updateReviews.next(state)
+  }
+  getSelectedBatchData(data: any) {
+    this.getSelectedBatch.next(data)
   }
 
   showStartButton(content: NsContent.IContent | null): { show: boolean; msg: string } {

@@ -360,7 +360,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
   
   public requestToEnrollDialog() {
-    console.log(this.batchControl.value)
     let batchData = this.batchControl.value;
     const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
       width: '434px',
@@ -375,14 +374,13 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     });
     confirmDialog.afterClosed().subscribe(result => {
       if (result) {
-        this.requestAndWithDrawEnroll('INITIATE','INITIATE',null)
+        this.requestAndWithDrawEnroll('INITIATE','INITIATE')
       }
     });
   }
 
-  public requestAndWithDrawEnroll(state:string,action:string,wfIdValue: any) {
+  public requestAndWithDrawEnroll(state:string,action:string,wfIdValue?:string ) {
     // this.disableEnrollBtn = true
-
     let userId = ''
     let rootOrgId = ''
     let username = ''
@@ -403,6 +401,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         serviceName: 'blendedprogram',
         courseId : this.selectedBatch.courseId,
         deptName : departmentName,
+        ...(wfIdValue? { wfId: wfIdValue } : null),
         updateFieldValues: [
             {
                 toValue: {
@@ -410,9 +409,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
                 },
             },
         ],
-    }
-    if (wfIdValue) {
-      req['wfId']= wfIdValue
     }
     this.contentSvc.enrollUserToBatchWF(req).then((data: any) => {
       if (data && data.result && data.result.status === 'OK') {
@@ -438,7 +434,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.openSnackbar('Something went wrong, please try again later!')
         this.disableEnrollBtn = false
       }
-    },                                            (error: any) => {
+    }, (error: any) => {
       this.openSnackbar(_.get(error, 'error.params.errmsg') ||
       _.get(error, 'error.result.errmsg') ||
       'Something went wrong, please try again later!')
@@ -518,9 +514,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       if (this.checkRejected(event.value)) {
         this.showRejected = true
         this.setbatchDateToCountDown(event.value.startDate)
+        this.tocSvc.getSelectedBatchData(event.value)
         return
       } 
       this.setbatchDateToCountDown(event.value.startDate)
+      this.tocSvc.getSelectedBatchData(event.value)
     }
     this.showRejected = false
     return
@@ -536,8 +534,10 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
               return el
             }
           })
-          this.batchControl.setValue(batch)
-          this.setbatchDateToCountDown(batch.startDate)
+          if (batch) {
+            this.batchControl.setValue(batch)
+            this.setbatchDateToCountDown(batch.startDate)
+          }
         } else {
           const batch = this.batchData.content.find((el: any) => {
             if (el.batchId === this.batchData.workFlow.wfItem.applicationId) {
@@ -549,7 +549,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
       }
     }
-
+    this.tocSvc.getSelectedBatchData(this.batchControl.value)
   }
 
   // setting batch start date
