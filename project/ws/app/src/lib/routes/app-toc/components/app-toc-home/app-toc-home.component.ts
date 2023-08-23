@@ -148,6 +148,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   showBtn = false
   channelId: any
   selectedBatchData: any
+  selectedBatchSubscription: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -183,8 +184,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   ngOnInit() {
-    this.tocSvc.getSelectedBatch.subscribe(res => {
-      this.selectedBatchData = res
+    this.selectedBatchSubscription = this.tocSvc.getSelectedBatch.subscribe(batchData => {
+      this.selectedBatchData = batchData
     } )
     // this.route.fragment.subscribe(fragment => { this.fragment = fragment })
     this.channelId = this.telemertyService.telemetryConfig ? this.telemertyService.telemetryConfig.channel : ''
@@ -350,6 +351,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.tocSvc.analyticsFetchStatus = 'none'
     if (this.routerParamSubscription) {
       this.routerParamSubscription.unsubscribe()
+    }
+    if (this.selectedBatchSubscription) {
+      this.selectedBatchSubscription.unsubscribe()
     }
   }
 

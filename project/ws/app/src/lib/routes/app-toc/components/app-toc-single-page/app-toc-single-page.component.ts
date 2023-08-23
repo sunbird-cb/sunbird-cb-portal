@@ -82,6 +82,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   authReplies: any
   lookupLoading: Boolean = true
   selectedBatchData: any
+  batchSubscription: any
   // configSvc: any
 
   constructor(
@@ -119,8 +120,8 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
-    this.tocSharedSvc.getSelectedBatch.subscribe(res => {
-      this.selectedBatchData = res
+    this.batchSubscription = this.tocSharedSvc.getSelectedBatch.subscribe(batchData => {
+      this.selectedBatchData = batchData
     } )
     this.searchForm = new FormGroup({
       sortByControl: new FormControl(this.sortReviewValues[0]),
@@ -204,6 +205,9 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     }
     if (this.updateReviewsSubscription) {
       this.updateReviewsSubscription.unsubscribe()
+    }
+    if(this.batchSubscription) {
+      this.batchSubscription.unsubscribe()
     }
   }
 
