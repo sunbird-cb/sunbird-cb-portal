@@ -13,7 +13,7 @@ export class AppTocSessionCardComponent implements OnInit {
   @Input() rootId!: string
   @Input() rootContentType!: string
   @Input() forPreview = false
-  @Input() batchId!: string
+  @Input() batchData!: string
 
   constructor() { }
 

@@ -10,6 +10,7 @@
 .app-icon {
     height: 180px;
     width: 280px;
+    border-radius: 4px;
 }
 
 .banner-container {
@@ -50,14 +51,27 @@
     @extend %container-padding;
     box-sizing: border-box;
     .apIcon {
-        min-width: 86px;
+        background-color: #fff;
+        margin-right: 16px;
+        padding: 4px 8px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
         img {
-            height: 32px;
-            width: 86px;
-            background-color: #fff;
-            padding: 4px;
-            border-radius: 12px;
+            height: 15px;
             object-fit: contain;
+            margin-right: 8px;
+        }
+        span {
+            opacity: 1;
+            color: rgba(0,0,0,0.6);
+            font-size: 12px;
+            font-weight: 400;
+            font-style: normal;
+            letter-spacing: 0.25px;
+            text-align: left;
+            line-height: 16px;
         }
     }
     .header-title {
@@ -139,6 +153,14 @@
         min-width: 1px;
         margin-right: $size-l;
         margin-bottom: $size-s;
+        opacity: 1;
+        color: rgba(0,0,0,0.87);
+        font-size: 16px;
+        font-weight: 400;
+        font-style: normal;
+        letter-spacing: 0.25px;
+        text-align: left;
+        line-height: 24px;
         @include breakpoint-xs {
             margin-right: 0;
         }
@@ -236,7 +258,7 @@
         // border-radius: 20px 5px 5px 20px;
         display: inline-block;
         border-radius: 100px 4px 4px 100px;
-        padding: 4px 12px;
+        padding: 1px 12px;
         width: auto;
         justify-content: space-between;
         margin: 0 8px 8px 0;
@@ -365,6 +387,17 @@
         text-transform: capitalize;
     }
 }
+.batch-info {
+    opacity: 1;
+    color: rgba(0,0,0,0.87);
+    font-size: 14px;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0.25px;
+    text-align: left;
+    line-height: 20px;
+    padding: 26px;
+}
 
 @media (max-width:768px) {
     .batch-wrapper {
@@ -372,6 +405,8 @@
     }
     .batch-timer {
         width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
     }
     .batch-container {
         width: 100%;

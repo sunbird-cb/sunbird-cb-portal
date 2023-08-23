@@ -419,3 +419,8 @@ p.certificate_text {
     margin-right: 6px;
   }
 }
+.disable-start-btn {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.5;
+}

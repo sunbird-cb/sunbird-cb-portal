@@ -7,7 +7,7 @@ import { NsContent } from '@sunbird-cb/collection'
   styleUrls: ['./app-toc-sessions.component.scss']
 })
 export class AppTocSessionsComponent implements OnInit {
-  @Input() batchId!: string
+  @Input() batchData: any
   @Input() content: NsContent.IContent | null = null
   @Input() forPreview = false
 

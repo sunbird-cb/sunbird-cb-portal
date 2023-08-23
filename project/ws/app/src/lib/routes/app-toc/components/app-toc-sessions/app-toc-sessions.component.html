@@ -6,7 +6,7 @@
             [rootContentType]="contextPath" [content]="card"></ws-app-toc-content-card>
         </div> -->
         <div class="content-card padding-right-m padding-left-m padding-top-s padding-bottom-s margin-bottom-m" *ngFor="let card of content?.children; trackBy: contentTrackBy">
-            <ws-app-toc-session-card [forPreview]="forPreview" [expandAll]="expandAll" [rootId]="contextId" [batchId]="batchId"
+            <ws-app-toc-session-card [forPreview]="forPreview" [expandAll]="expandAll" [rootId]="contextId" [batchData]="batchData"
               [rootContentType]="contextPath" [content]="card"></ws-app-toc-session-card>
           </div>
       </ng-container>
