@@ -208,7 +208,10 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     if (v6filters.constructor === Array) {
       v6filters.forEach(((f: any) => {
         Object.keys(f).forEach(key => {
+          console.log('key', key)
           filters[key] = f[key]
+          console.log('filters[key]', filters[key])
+          console.log('f[key]', f[key])
         })
       }))
       return filters
@@ -397,6 +400,16 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         )
     }
   }
+
+  checkForDateFilters(filters: any) {
+    if(filters && filters.hasOwnProperty('batches.endDate')) {
+      filters['batches.endDate']['>'] = eval(filters['batches.endDate']['>'])
+    } else if (filters && filters.hasOwnProperty('batches.enrollmentEndDate')) {
+      filters['batches.enrollmentEndDate']['>'] = eval(filters['batches.enrollmentEndDate']['>'])
+    }
+    return filters
+  }
+
   fetchFromSearchV6(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.searchV6 && Object.keys(strip.request.searchV6).length) {
       // if (!(strip.request.searchV6.locale && strip.request.searchV6.locale.length > 0)) {
@@ -412,9 +425,12 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         strip.request.searchV6.request &&
         strip.request.searchV6.request.filters) {
         originalFilters = strip.request.searchV6.request.filters
+
+        strip.request.searchV6.request.filters = this.checkForDateFilters(strip.request.searchV6.request.filters)
+        console.log('strip.request.searchV6.request.filters,', strip.request.searchV6.request.filters,)
         strip.request.searchV6.request.filters = this.getFiltersFromArray(
           strip.request.searchV6.request.filters,
-        )
+          )
       }
       this.contentSvc.searchV6(strip.request.searchV6).subscribe(
         results => {
