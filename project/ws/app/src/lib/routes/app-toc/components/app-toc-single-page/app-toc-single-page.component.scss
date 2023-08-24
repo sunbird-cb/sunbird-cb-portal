@@ -415,3 +415,11 @@ mat-divider {
 .bold-imp {
   font-weight: bold !important;
 }
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+.user-card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
