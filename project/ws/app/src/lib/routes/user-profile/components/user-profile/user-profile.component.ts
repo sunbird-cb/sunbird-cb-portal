@@ -150,7 +150,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       primaryEmail: new FormControl('', [Validators.required, Validators.email]),
       primaryEmailType: new FormControl(this.assignPrimaryEmailTypeCheckBox(this.ePrimaryEmailType.OFFICIAL), []),
       secondaryEmail: new FormControl('', []),
-      nationality: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterNationality)]),
+      nationality: new FormControl('', [Validators.required]),
       dob: new FormControl('', [Validators.required]),
       gender: new FormControl('', [Validators.required]),
       maritalStatus: new FormControl('', [Validators.required]),
@@ -239,24 +239,19 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   fetchMeta() {
     this.userProfileSvc.getMasterCountries().subscribe(
       data => {
-        // console.log(data, 'country list data===')
         data.countries.map((item: ICountry) => {
-          // this.masterNationalities.push({ name: item.name })
-          // console.log(item, 'country item name')
           this.countries.push({ name: item.name })
           // this.countryCodes.push(item.countryCode)
         })
         this.onChangesCountry()
       },
       (_err: any) => {
-        // console.log(_err, "_err==")
       })
 
     this.userProfileSvc.getMasterNationlity().subscribe(
       data => {
         data.nationality.map((item: INationality) => {
           this.masterNationalities.push({ name: item.name })
-          // this.countries.push({ name: item.name })
           this.countryCodes.push(item.countryCode)
         })
 
@@ -425,14 +420,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           map(value => typeof value === 'string' ? value : (value && value.name ? value.name : '')),
           map(name => name ? this.filterNationality(name) : this.masterNationalities.slice())
         )
-      const newLocal = 'nationality'
-      this.masterNationality.subscribe(event => {
-        // tslint:disable-next-line: no-non-null-assertion
-        this.createUserForm.get(newLocal)!.setValidators([Validators.required, forbiddenNamesValidator(event)])
+      // const newLocal = 'nationality'
+      // this.masterNationality.subscribe(event => {
+      //   // tslint:disable-next-line: no-non-null-assertion
+      //   this.createUserForm.get(newLocal)!.setValidators([Validators.required])
 
-        this.createUserForm.updateValueAndValidity()
+      //   this.createUserForm.updateValueAndValidity()
 
-      })
+      // })
 
     }
   }
@@ -1272,8 +1267,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           }
           if (item === name) {
 
-            // console.log(name, "name--")
-            // console.log(form.value, "form.value")
             switch (name) {
 
               case 'knownLanguages': return personalDetail['knownLanguages'] = form.value.knownLanguages
