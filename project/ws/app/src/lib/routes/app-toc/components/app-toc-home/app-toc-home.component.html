@@ -358,9 +358,16 @@ TODO: edit option while preview Mode
         <div class="margin-bottom-m">
           <p class="mat-subheading-1 at-glance-heading" i18n>At a glance</p>
           <div class="info-item">
-            <p *ngIf="tocConfig?.atAGlance?.duration?.enabled && content?.duration" class="mat-body-2 cs-icons">
-              <mat-icon class="margin-right-xxs">timer</mat-icon> {{ contentDuration | pipeDurationTransform: 'hms' }}
-            </p>
+            <ng-container *ngIf="content?.primaryCategory !== this.primaryCategory.BLENDED_PROGRAM">
+              <p *ngIf="tocConfig?.atAGlance?.duration?.enabled && content?.duration" class="mat-body-2 cs-icons">
+                <mat-icon class="margin-right-xxs">timer</mat-icon> {{ contentReadData?.duration | pipeDurationTransform: 'hms' }}
+              </p>
+            </ng-container>
+            <ng-container *ngIf="content?.primaryCategory === this.primaryCategory.BLENDED_PROGRAM">
+              <p *ngIf="tocConfig?.atAGlance?.duration?.enabled && content?.programDuration" class="mat-body-2 cs-icons">
+                <mat-icon class="margin-right-xxs">timer</mat-icon> {{ getProgramDuration(content?.programDuration) }}
+              </p>
+            </ng-container>
           </div>
           <div class="info-item"
             *ngIf="tocConfig?.atAGlance?.structure?.enabled && hasTocStructure && content?.children?.length">
@@ -404,6 +411,12 @@ TODO: edit option while preview Mode
               <img src="/assets/icons/content/grey/pdf.svg" alt="PDF" class="margin-right-xs"> {{ tocStructure?.pdf }}
               <span *ngIf="tocStructure?.pdf === 1" i18n> PDF</span>
               <span *ngIf="tocStructure?.pdf > 1" i18n> PDFs</span>
+            </p>
+            <p *ngIf="tocStructure?.offlineSession > 0" class="mat-body-2 cs-icons">
+              <img src="/assets/icons/content/grey/module.svg" alt="Ofline sessions" class="margin-right-xs"> {{
+              tocStructure?.offlineSession }}
+              <span *ngIf="tocStructure?.offlineSession === 1" i18n> Session</span>
+              <span *ngIf="tocStructure?.offlineSession > 1" i18n> Sessions</span>
             </p>
             <p *ngIf="tocStructure?.podcast > 0" class="mat-body-2 cs-icons">
               <img src="/assets/icons/content/grey/audio.svg" alt="Podcast" class="margin-right-xs"> {{
@@ -497,7 +510,8 @@ TODO: edit option while preview Mode
             <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.source?.displayName}}
             </h3>
             <h3 class="item-value width-expand">
-              {{content?.source}}
+              <!-- {{content?.source}} -->
+               {{contentReadData?.source}}
             </h3>
           </div>
           <div class="info-item" *ngIf="tocConfig?.atAGlance?.license?.enabled">

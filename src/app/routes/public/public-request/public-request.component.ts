@@ -45,13 +45,19 @@ export class PublicRequestComponent implements OnInit {
   confirm = false
   disableBtn = false
   disableVerifyBtn = false
+  disableEmailVerifyBtn = false
   isMobileVerified = false
+  isEmailVerified = false
+  otpEmailSend = false
+  timeLeftforOTPEmail = 0
   otpSend = false
   otpVerified = false
   requestType: any
   masterPositions!: Observable<any> | undefined
   emailLengthVal = false
   OTP_TIMER = environment.resendOTPTIme
+  OTP_TIMER_EMAIL = environment.resendOTPTIme
+  timerSubscriptionEmail: Subscription | null = null
   timerSubscription: Subscription | null = null
   timeLeftforOTP = 0
   // tslint:disable-next-line:max-line-length
@@ -72,9 +78,11 @@ export class PublicRequestComponent implements OnInit {
       const extraData = navigation.extras.state as {
         userform: any
         isMobileVerified: boolean
+        isEmailVerified: boolean
       }
       this.userform = extraData.userform
       this.isMobileVerified = extraData.isMobileVerified
+      this.isEmailVerified = extraData.isEmailVerified
     }
     this.requestType = this.activatedRoute.snapshot.queryParams.type
     this.requestForm = new FormGroup({
@@ -112,6 +120,7 @@ export class PublicRequestComponent implements OnInit {
   ngOnInit() {
 
     this.onPhoneChange()
+    this.onEmailChange()
   }
 
   emailVerification(emailId: string) {
@@ -144,10 +153,26 @@ export class PublicRequestComponent implements OnInit {
     }
   }
 
+  onEmailChange() {
+    const ctrl = this.requestForm.get('email')
+    if (ctrl) {
+      ctrl
+        .valueChanges
+        .pipe(startWith(null), pairwise())
+        .subscribe(([prev, next]: [any, any]) => {
+          if (!(prev == null && next)) {
+            this.isEmailVerified = false
+            this.disableEmailVerifyBtn = false
+            this.otpEmailSend = false
+          }
+        })
+    }
+  }
+
   sendOtp() {
     const mob = this.requestForm.get('mobile')
     if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
-      this.signupSvc.sendOtp(mob.value).subscribe(() => {
+      this.signupSvc.sendOtp(mob.value, 'phone').subscribe(() => {
         this.otpSend = true
         alert('OTP send to your Mobile Number')
         this.startCountDown()
@@ -162,7 +187,7 @@ export class PublicRequestComponent implements OnInit {
   resendOTP() {
     const mob = this.requestForm.get('mobile')
     if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
-      this.signupSvc.resendOtp(mob.value).subscribe((res: any) => {
+      this.signupSvc.resendOtp(mob.value, 'phone').subscribe((res: any) => {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
           this.disableVerifyBtn = false
@@ -183,7 +208,7 @@ export class PublicRequestComponent implements OnInit {
     const mob = this.requestForm.get('mobile')
     if (otp && otp.value) {
       if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
-        this.signupSvc.verifyOTP(otp.value, mob.value).subscribe((res: any) => {
+        this.signupSvc.verifyOTP(otp.value, mob.value, 'phone').subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
             this.otpVerified = true
             this.isMobileVerified = true
@@ -197,6 +222,89 @@ export class PublicRequestComponent implements OnInit {
           }
         })
       }
+    }
+  }
+
+  verifyOtpEmail(otp: any) {
+    // console.log(otp)
+    const email = this.requestForm.get('email')
+    if (email && email.value) {
+      if (email && email.value && email.valid) {
+        this.signupSvc.verifyOTP(otp.value, email.value, 'email').subscribe((res: any) => {
+          if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
+            this.otpEmailSend = true
+            this.isEmailVerified = true
+            this.disableBtn = false
+          }
+          // tslint:disable-next-line: align
+        }, (error: any) => {
+          this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+          if (error.error && error.error.result) {
+            this.disableEmailVerifyBtn = error.error.result.remainingAttempt === 0 ? true : false
+          }
+        })
+      }
+    }
+  }
+
+  startCountDownEmail() {
+    const startTime = Date.now()
+    this.timeLeftforOTPEmail = this.OTP_TIMER_EMAIL
+    // && this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
+    if (this.OTP_TIMER_EMAIL > 0
+    ) {
+      this.timerSubscriptionEmail = interval(1000)
+        .pipe(
+          map(
+            () =>
+              startTime + this.OTP_TIMER_EMAIL - Date.now(),
+          ),
+        )
+        .subscribe(_timeRemaining => {
+          this.timeLeftforOTPEmail -= 1
+          if (this.timeLeftforOTPEmail < 0) {
+            this.timeLeftforOTPEmail = 0
+            if (this.timerSubscription) {
+              this.timerSubscription.unsubscribe()
+            }
+            // this.submitQuiz()
+          }
+        })
+    }
+  }
+
+  sendOtpEmail() {
+    const email = this.requestForm.get('email')
+    if (email && email.value && email.valid) {
+      this.signupSvc.sendOtp(email.value, 'email').subscribe(() => {
+        this.otpEmailSend = true
+        alert('OTP send to your email')
+        this.startCountDownEmail()
+        // tslint:disable-next-line: align
+      }, (error: any) => {
+        this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+      })
+    } else {
+      this.snackBar.open('Please enter a valid email')
+    }
+  }
+
+  resendOTPEmail() {
+    const email = this.requestForm.get('email')
+    if (email && email.value && email.valid) {
+      this.signupSvc.resendOtp(email.value, 'email').subscribe((res: any) => {
+        if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
+          this.otpEmailSend = true
+          this.disableEmailVerifyBtn = false
+          alert('OTP send to your email')
+          this.startCountDownEmail()
+        }
+        // tslint:disable-next-line: align
+      }, (error: any) => {
+        this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+      })
+    } else {
+      this.snackBar.open('Please enter a valid email')
     }
   }
 

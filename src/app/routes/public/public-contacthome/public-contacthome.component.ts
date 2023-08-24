@@ -12,7 +12,7 @@ export class PublicContacthomeComponent implements OnInit {
   environment!: any
   meetLink = ''
   meetingDetail = ''
-  karmayogiBharatLink =''
+  karmayogiBharatLink = ''
 
   pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
   constructor(private configSvc: ConfigurationsService) {}

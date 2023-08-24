@@ -146,7 +146,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   dakshtaName = environment.dakshtaName
   cscmsUrl = environment.cscmsUrl
   showBtn = false
-  contentDuration: any
   channelId: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -194,7 +193,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (this.route) {
       this.routeSubscription = this.route.data.subscribe((data: Data) => {
         this.tocSvc.fetchGetContentData(data.content.data.identifier).subscribe(res => {
-          this.contentDuration = res.result.content.duration
           this.contentReadData = res.result.content
         })
         this.initialrouteData = data
@@ -440,7 +438,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         break
       }
     }
-    this.getUserRating()
+    this.getUserRating(false)
     this.getUserEnrollmentList()
     this.body = this.domSanitizer.bypassSecurityTrustHtml(
       this.content && this.content.body
@@ -544,7 +542,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     })
   }
 
-  getUserRating() {
+  getUserRating(fireUpdate: boolean) {
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId || ''
     }
@@ -553,7 +551,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         (res: any) => {
           if (res && res.result && res.result.response) {
             this.userRating = res.result.response
-            this.tocSvc.changeUpdateReviews(true)
+            if (fireUpdate) {
+              this.tocSvc.changeUpdateReviews(true)
+            }
           }
         },
         (err: any) => {
@@ -1302,7 +1302,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     // dialogRef.componentInstance.xyz = this.configSvc
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
-        this.getUserRating()
+        this.getUserRating(true)
       }
     })
   }
@@ -1313,5 +1313,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     const batchId = this.route.snapshot.queryParams.batchId ?
       this.route.snapshot.queryParams.batchId : ''
     return this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)
+  }
+
+  getProgramDuration(pDuration: number) {
+    return pDuration === 1 ? `${pDuration} day` : `${pDuration} days`
   }
 }
