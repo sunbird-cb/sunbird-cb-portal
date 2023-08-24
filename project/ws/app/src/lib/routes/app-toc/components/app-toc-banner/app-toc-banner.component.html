@@ -318,7 +318,12 @@
     <ng-container  *ngIf="batchData && !batchData?.enrolled && batchData?.content?.length" [ngTemplateOutlet]="statusMsg"></ng-container>
   </ng-container>
 </div>
-
+<div class="header-synopsis fixed-width margin-top-l" [ngClass]="{ 'header-synopsis-gradient': bannerUrl }" *ngIf="content">
+  <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
+    <h2>Batch location</h2>
+    <p>Bengaluru University, Mysore Rd, Jnana Bharathi, Bengaluru, Karnataka 560056</p>
+  </ng-container>
+</div>
 <mat-menu #actionMenu="matMenu">
   <div mat-menu-item>
     <ng-container *ngIf="content" [ngTemplateOutlet]="actions"></ng-container>
