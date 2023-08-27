@@ -1,0 +1,89 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.container-balanced {
+  @extend %page-center;
+  height: auto;
+  // min-height: 400px;
+  min-height: calc(100vh - 160px);
+
+  @media (max-width:1024px) {
+    padding:0px 8px;
+  }
+}
+
+.container-balanced-banner {
+  @extend %page-center;
+  height: auto;
+}
+
+.sub-side-content .learn-card {
+    border-radius: 10px;
+    background: #fff;
+    height: 170px;
+    min-height: 170px;
+    box-shadow: none!important;
+}
+
+.sub-side-content .learn-card .imageholder {
+    width: 34%;
+    height: 170px;
+
+    img {
+        width: 100%;
+        display: block;
+        height: auto;
+        object-fit: cover;
+        object-position: center;
+        max-height: 170px;
+        border-radius: 10px 0 0 10px;   
+    }
+}
+.sub-side-content .learn-card .mat-card-content {
+    margin-left: 36%;
+    padding: 8px;
+    position: relative;
+    height: 152px;
+}
+.sub-side-content .learn-card .mat-card-content .bottomsection {
+    position: absolute;
+    bottom: 0;
+    width: 96%;
+}
+.sub-side-content .learn-card .mat-card-content ul {
+    list-style-type: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.sub-side-content .learn-card .mat-card-content ul li {
+    display: inline-block;
+    padding-right: 10px;
+    // margin-bottom: 12px;
+
+    img {
+        vertical-align: bottom;
+    }
+}
+
+.register-btn {
+    background-color: #1B4CA1;
+    color: #fff;
+    border-radius: 4px 4px;
+    padding: 6px 12px;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+}
+.top-content {
+    display: block;
+    margin:0px 16px;
+    border:1px solid transparent;
+
+    // ul li {
+    //     // margin-bottom: 6px;
+    // }
+}
+
+
