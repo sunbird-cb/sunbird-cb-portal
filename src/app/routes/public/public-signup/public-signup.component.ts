@@ -392,6 +392,8 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
           this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
         })
       }
+    } else {
+      this.snackBar.open('Mandatory parameter otp is missing')
     }
   }
   startCountDown() {
