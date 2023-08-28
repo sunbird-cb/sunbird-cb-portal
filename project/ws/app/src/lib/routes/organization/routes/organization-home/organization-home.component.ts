@@ -148,7 +148,7 @@ export class OrganizationHomeComponent implements OnInit {
 
     this.courses = this.route.parent && this.route.parent.snapshot.data.pageData.data.course || []
     // console.log(this.route.parent?.snapshot.data.pageData.data.course, "this.route.parent.snapshot.data.pageData.data")
-    console.log(this.courses, "this.courses")
+
   }
 
   bindUrl(path: string) {
