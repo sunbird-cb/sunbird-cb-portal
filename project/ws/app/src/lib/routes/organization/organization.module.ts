@@ -1,11 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatCardModule,MatIconModule, MatSidenavModule, MatTableModule } from '@angular/material'
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { MatCardModule, MatIconModule, MatSidenavModule, MatTableModule } from '@angular/material'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { BtnPageBackModule } from '@sunbird-cb/collection'
 import { OrganizationRoutingModule } from './organization-routing.module'
 import { OrganizationHomeComponent } from './routes/organization-home/organization-home.component'
-
 
 @NgModule({
   declarations: [OrganizationHomeComponent],
@@ -17,7 +16,7 @@ import { OrganizationHomeComponent } from './routes/organization-home/organizati
     MatSidenavModule,
     MatCardModule,
     MatIconModule,
-    MatTableModule
-  ]
+    MatTableModule,
+  ],
 })
 export class OrganizationModule { }

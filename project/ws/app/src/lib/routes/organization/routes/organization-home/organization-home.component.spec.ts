@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { OrganizationHomeComponent } from './organization-home.component';
+import { OrganizationHomeComponent } from './organization-home.component'
 
 describe('OrganizationHomeComponent', () => {
-  let component: OrganizationHomeComponent;
-  let fixture: ComponentFixture<OrganizationHomeComponent>;
+  let component: OrganizationHomeComponent
+  let fixture: ComponentFixture<OrganizationHomeComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrganizationHomeComponent ]
+      declarations: [OrganizationHomeComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OrganizationHomeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(OrganizationHomeComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})
