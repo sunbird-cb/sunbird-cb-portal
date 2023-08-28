@@ -545,10 +545,16 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
           })
         }
         return this.authReplies
+        // TODO: To be removed
+        // this.hardcodeData()
+        // this.ratingSummaryProcessed = this.processRatingSummary()
       },
       (err: any) => {
         this.displayLoader = false
         this.logger.error('USER RATING FETCH ERROR >', err)
+        // TODO: To be removed
+        // this.hardcodeData()
+        // this.ratingSummaryProcessed = this.processRatingSummary()
       }
     )
   }
@@ -676,7 +682,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
 
   processRatingLookup(response: any) {
     if (response) {
-      if ( response && response.length < this.lookupLimit) {
+      if (response && response.length < this.lookupLimit) {
         this.disableLoadMore = true
       } else {
         this.disableLoadMore = false
