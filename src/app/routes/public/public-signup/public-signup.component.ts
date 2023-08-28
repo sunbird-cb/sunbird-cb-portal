@@ -505,8 +505,8 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
           this.timeLeftforOTPEmail -= 1
           if (this.timeLeftforOTPEmail < 0) {
             this.timeLeftforOTPEmail = 0
-            if (this.timerSubscription) {
-              this.timerSubscription.unsubscribe()
+            if (this.timerSubscriptionEmail) {
+              this.timerSubscriptionEmail.unsubscribe()
             }
             // this.submitQuiz()
           }
