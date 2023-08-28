@@ -1687,14 +1687,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
       this.otpService.sendOtp(mob.value).subscribe(() => {
         this.otpSend = true
-        alert('OTP send to your Mobile Number')
+        alert('An OTP has been sent to your mobile number')
         this.startCountDown()
         // tslint:disable-next-line: align
       }, (error: any) => {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid Mobile No')
+      this.snackBar.open('Please enter a valid mobile number')
     }
   }
   resendOTP() {
@@ -1703,7 +1703,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.otpService.resendOtp(mob.value).subscribe((res: any) => {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
-          alert('OTP send to your Mobile Number')
+          alert('An OTP has been sent to your mobile number')
           this.startCountDown()
         }
         // tslint:disable-next-line: align
@@ -1711,7 +1711,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid Mobile No')
+      this.snackBar.open('Please enter a valid mobile number')
     }
   }
   verifyOtp(otp: any) {
