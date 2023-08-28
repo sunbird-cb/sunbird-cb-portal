@@ -131,7 +131,7 @@ export class OrganizationHomeComponent implements OnInit, OnDestroy {
   dataSource = ELEMENT_DATA
 
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private router: Router
     ) {
     this.router.events.subscribe((event: Event) => {

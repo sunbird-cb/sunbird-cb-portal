@@ -53,7 +53,7 @@
     width: 96%;
 }
 .sub-side-content .learn-card .mat-card-content ul {
-    list-style-type: none;
+    // list-style-type: circle;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -82,9 +82,9 @@
     margin:0px 16px;
     border:1px solid transparent;
 
-    ul {
-      list-style: none;
-    }
+    // ul {
+    //   list-style: none;
+    // }
 }
 th.mat-header-cell , td.mat-cell {
     padding: 0px 16px;
@@ -105,6 +105,10 @@ th.mat-header-cell , td.mat-cell {
         object-fit: cover;
         object-position: center;
     }
+  }
+
+  .mat-caption .mat-icon {
+    vertical-align: middle;
   }
 
 
