@@ -29,14 +29,15 @@
 .sub-side-content .learn-card .imageholder {
     width: 34%;
     height: 170px;
+    overflow: hidden;
 
     img {
         width: 100%;
         display: block;
         height: auto;
-        object-fit: cover;
-        object-position: center;
-        max-height: 170px;
+        // object-fit: cover;
+        // object-position: center;
+        // max-height: 170px;
         border-radius: 10px 0 0 10px;   
     }
 }
@@ -69,7 +70,7 @@
 
 .register-btn {
     background-color: #1B4CA1;
-    color: #fff;
+    color: #fff!important;
     border-radius: 4px 4px;
     padding: 6px 12px;
     font-size: 14px;
@@ -81,9 +82,29 @@
     margin:0px 16px;
     border:1px solid transparent;
 
-    // ul li {
-    //     // margin-bottom: 6px;
-    // }
+    ul {
+      list-style: none;
+    }
 }
+th.mat-header-cell , td.mat-cell {
+    padding: 0px 16px;
+    border: 1px solid #b6b3b3;
+  }
+
+  th.mat-header-cell {
+    font-weight: 600;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.87);
+  }
+
+  .img_box {
+    height: 400px;
+
+    img {
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+  }
 
 
