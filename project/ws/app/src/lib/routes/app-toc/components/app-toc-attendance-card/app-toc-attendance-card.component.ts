@@ -28,7 +28,7 @@ export class AppTocAttendanceCardComponent implements OnInit {
     })
   }
 
-  openHelp(content: any): void {
+  openHelp(content?: any): void {
       const dialogRef = this.dialog.open(AttendanceHelperComponent, {
         // height: '400px',
         // width: '770px',

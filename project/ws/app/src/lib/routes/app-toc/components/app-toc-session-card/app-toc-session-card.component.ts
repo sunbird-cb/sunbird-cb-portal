@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { NsContent } from '@sunbird-cb/collection'
 
-
 @Component({
   selector: 'ws-app-toc-session-card',
   templateUrl: './app-toc-session-card.component.html',
@@ -14,10 +13,15 @@ export class AppTocSessionCardComponent implements OnInit {
   @Input() rootContentType!: string
   @Input() forPreview = false
   @Input() batchData!: string
+  isEnabled = true
+  isAllowed = true
+  viewChildren = true
+  resourceLink: any
 
   constructor() { }
 
   ngOnInit() {
   }
+  raiseTelemetry() { }
 
 }

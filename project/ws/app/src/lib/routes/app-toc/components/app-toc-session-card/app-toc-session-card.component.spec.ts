@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { AppTocSessionCardComponent } from './app-toc-session-card.component';
+import { AppTocSessionCardComponent } from './app-toc-session-card.component'
 
 describe('AppTocSessionCardComponent', () => {
-  let component: AppTocSessionCardComponent;
-  let fixture: ComponentFixture<AppTocSessionCardComponent>;
+  let component: AppTocSessionCardComponent
+  let fixture: ComponentFixture<AppTocSessionCardComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AppTocSessionCardComponent ]
+      declarations: [AppTocSessionCardComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppTocSessionCardComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(AppTocSessionCardComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

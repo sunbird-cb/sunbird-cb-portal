@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core'
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router'
@@ -20,7 +20,7 @@ import { AppTocService } from '../../services/app-toc.service'
 import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import { FormControl, Validators } from '@angular/forms'
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 import * as  lodash from 'lodash'
 import { TitleTagService } from '../../services/title-tag.service'
 import { ActionService } from '../../services/action.service'
@@ -28,12 +28,14 @@ import { ActionService } from '../../services/action.service'
 import _ from 'lodash'
 import { environment } from 'src/environments/environment'
 import { DatePipe } from '@angular/common'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+dayjs.extend(isSameOrBefore)
 
 @Component({
   selector: 'ws-app-toc-banner',
   templateUrl: './app-toc-banner.component.html',
   styleUrls: ['./app-toc-banner.component.scss'],
-  providers: [AccessControlService,DatePipe],
+  providers: [AccessControlService, DatePipe],
 })
 export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
   @Input() banners: NsAppToc.ITocBanner | null = null
@@ -42,6 +44,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   @Input() analytics: NsAnalytics.IAnalytics | null = null
   @Input() forPreview = false
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
+  @Input() userEnrollmentList: NsContent.ICourse[] | null = null
+  @Output() withdrawOrEnroll = new EventEmitter<string>()
   batchControl = new FormControl('', Validators.required)
   primaryCategory = NsContent.EPrimaryCategory
   WFBlendedProgramStatus = NsContent.WFBlendedProgramStatus
@@ -87,31 +91,15 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   // configSvc: any
 
   // countdown var
-  date: any;
-  now: any;
-  targetDate: any;
-  targetTime: any;
-  difference: number = 0;
-  months: Array<string> = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
-  currentTime: any;
-  days: any;
-  hours: any;
-  minutes: any;
-  seconds: any;
-
+  date: any
+  now: any
+  targetDate: any
+  targetTime: any
+  difference = 0
+  days: any
+  hours: any
+  minutes: any
+  seconds: any
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -128,7 +116,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     private tagSvc: TitleTagService,
     private actionSVC: ActionService,
     private logger: LoggerService,
-    private datePipe:DatePipe
+    private datePipe: DatePipe
   ) {
     this.helpEmail = environment.helpEmail
   }
@@ -226,8 +214,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   get getBatchDuration() {
-    let startDate = dayjs(this.batchControl.value.startDate)
-    let endDate = dayjs(this.batchControl.value.endDate)
+    const startDate = dayjs(this.batchControl.value.startDate)
+    const endDate = dayjs(this.batchControl.value.endDate)
     return endDate.diff(startDate, 'days')
   }
 
@@ -339,47 +327,60 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   public requestToWithdrawDialog() {
-    console.log(this.batchControl)
     const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
       width: '434px',
       data: {
         title: 'Are you sure you want to withdraw your request?',
         message: 'You will miss the learning opportunity if you withdraw your enrolment.',
-        acceptButton:'Withdraw',
-        cancelButton:'Cancel'
+        acceptButton: 'Withdraw',
+        cancelButton: 'Cancel',
       },
       disableClose: true,
-      panelClass:['animate__animated','animate__slideInLeft']
-    });
+      panelClass: ['animate__animated', 'animate__slideInLeft'],
+    })
     confirmDialog.afterClosed().subscribe(result => {
       if (result) {
-        this.requestAndWithDrawEnroll('SEND_FOR_PC_APPROVAL','WITHDRAW',this.batchData.workFlow.wfItem.wfId)
-        this.openSnackbar('Withdraw Request sent Successfully!')
+        this.requestAndWithDrawEnroll('SEND_FOR_PC_APPROVAL', 'WITHDRAW', this.batchData.workFlow.wfItem.wfId)
+        // this.openSnackbar('Withdraw Request sent Successfully!')
       }
-    });
-  }
-  
-  public requestToEnrollDialog() {
-    let batchData = this.batchControl.value;
-    const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
-      width: '434px',
-      data: {
-        title: 'You’re ocne step away from enrolling!',
-        message: `This batch starting on ${this.datePipe.transform(batchData.startDate, 'dd-MM-yyyy')}  -  ${this.datePipe.transform(batchData.endDate, 'dd-MM-yyyy')}, kindly go through the content and be prepared.`,
-        acceptButton:'Confirm',
-        cancelButton:'Cancel'
-      },
-      disableClose: true,
-      panelClass:['animate__animated','animate__slideInLeft']
-    });
-    confirmDialog.afterClosed().subscribe(result => {
-      if (result) {
-        this.requestAndWithDrawEnroll('INITIATE','INITIATE')
-      }
-    });
+    })
   }
 
-  public requestAndWithDrawEnroll(state:string,action:string,wfIdValue?:string ) {
+  public requestToEnrollDialog() {
+    const userList = this.userEnrollmentList && this.userEnrollmentList.filter(ele => {
+      if (ele.content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
+        if (ele.batch.endDate) {
+          const endDate = dayjs(ele.batch.endDate)
+          return dayjs(dayjs(new Date()).format('YYYY-MM-DD')).isSameOrBefore(endDate)
+        }
+      }
+      return false
+    })
+    if (userList && userList.length === 0) {
+      const batchData = this.batchControl.value
+      const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
+        width: '434px',
+        data: {
+          title: 'You’re ocne step away from enrolling!',
+          // tslint:disable-next-line:max-line-length
+          message: `This batch starting on ${this.datePipe.transform(batchData.startDate, 'dd-MM-yyyy')}  -  ${this.datePipe.transform(batchData.endDate, 'dd-MM-yyyy')}, kindly go through the content and be prepared.`,
+          acceptButton: 'Confirm',
+          cancelButton: 'Cancel',
+        },
+        disableClose: true,
+        panelClass: ['animate__animated', 'animate__slideInLeft'],
+      })
+      confirmDialog.afterClosed().subscribe(result => {
+        if (result) {
+          this.requestAndWithDrawEnroll('INITIATE', 'INITIATE')
+        }
+      })
+    } else {
+      this.openSnackbar(`${NsContent.EPrimaryCategory.BLENDED_PROGRAM} is in progress`)
+    }
+  }
+
+  public requestAndWithDrawEnroll(state: string, action: string, wfIdValue?: string) {
     // this.disableEnrollBtn = true
     let userId = ''
     let rootOrgId = ''
@@ -391,17 +392,17 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       username = this.configSvc.userProfile.firstName || ''
       departmentName = this.configSvc.userProfile.departmentName || ''
     }
-    let req = {
+    const req = {
         rootOrgId,
         userId,
+        state,
+        action,
         actorUserId: userId,
-        state: state,
-        action: action,
         applicationId: this.selectedBatch.batchId,
         serviceName: 'blendedprogram',
         courseId : this.selectedBatch.courseId,
         deptName : departmentName,
-        ...(wfIdValue? { wfId: wfIdValue } : null),
+        ...(wfIdValue ? { wfId: wfIdValue } : null),
         updateFieldValues: [
             {
                 toValue: {
@@ -428,13 +429,14 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
           batch : this.selectedBatch,
           wfItem: { currentStatus: data.result.data.status },
         }
+        this.withdrawOrEnroll.emit(action)
         this.openSnackbar('Request sent Successfully!')
         this.disableEnrollBtn = false
       } else {
         this.openSnackbar('Something went wrong, please try again later!')
         this.disableEnrollBtn = false
       }
-    }, (error: any) => {
+    },                                            (error: any) => {
       this.openSnackbar(_.get(error, 'error.params.errmsg') ||
       _.get(error, 'error.result.errmsg') ||
       'Something went wrong, please try again later!')
@@ -516,7 +518,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.setbatchDateToCountDown(event.value.startDate)
         this.tocSvc.getSelectedBatchData(event.value)
         return
-      } 
+      }
       this.setbatchDateToCountDown(event.value.startDate)
       this.tocSvc.getSelectedBatchData(event.value)
     }
@@ -553,12 +555,12 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   // setting batch start date
-  setbatchDateToCountDown(baatchStartDate:string){
-    this.targetDate = new Date(baatchStartDate);
-    this.targetTime = this.targetDate.getTime();
-    this.currentTime = `${
-      this.months[this.targetDate.getMonth()]
-    } ${this.targetDate.getDate()}, ${this.targetDate.getFullYear()}`;
+  setbatchDateToCountDown(baatchStartDate: string) {
+    this.targetDate = new Date(baatchStartDate)
+    this.targetTime = this.targetDate.getTime()
+    // this.currentTime = `${
+    //   this.months[this.targetDate.getMonth()]
+    // } ${this.targetDate.getDate()}, ${this.targetDate.getFullYear()}`
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
@@ -599,6 +601,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       if (status === this.WFBlendedProgramStatus.APPROVED ||
         status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL ||
         status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL ||
+        status === this.WFBlendedProgramStatus.WITHDRAWN ||
         status === this.WFBlendedProgramStatus.REJECTED) {
         return true
       }
@@ -616,6 +619,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       if (status === this.WFBlendedProgramStatus.APPROVED ||
         status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL ||
         status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL ||
+        status === this.WFBlendedProgramStatus.WITHDRAWN ||
         status === this.WFBlendedProgramStatus.REJECTED && this.showRejected) {
         return true
       }
@@ -632,7 +636,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       const status = this.batchData.workFlow.wfItem.currentStatus
       if (status === this.WFBlendedProgramStatus.APPROVED ||
         status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL ||
-        status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL
+        status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL ||
+        status === this.WFBlendedProgramStatus.WITHDRAWN
       ) {
         return 'circle'
       }
@@ -644,13 +649,13 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   get iconColor() {
-    // if (
-    //   this.batchData &&
-    //   this.batchData.workFlow &&
-    //   this.batchData.workFlow.wfItem
-    // ) {
+    if (
+      this.batchData &&
+      this.batchData.workFlow &&
+      this.batchData.workFlow.wfItem
+    ) {
       const status = this.batchData.workFlow.wfItem.currentStatus
-      if (status === this.WFBlendedProgramStatus.APPROVED) {
+      if (status === this.WFBlendedProgramStatus.APPROVED || status === this.WFBlendedProgramStatus.WITHDRAWN) {
         return 'ws-mat-green-text'
       }  if (status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL ||
         status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL) {
@@ -658,8 +663,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       }
         return ''
 
-    // }
-    // return ' '
+    }
+    return ' '
   }
 
   get isHeaderHidden() {
@@ -937,18 +942,18 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   ngAfterViewInit() {
     setInterval(() => {
       // this.tickTock();
-      this.difference = this.targetTime - this.now;
-      this.difference = this.difference / (1000 * 60 * 60 * 24);
+      this.difference = this.targetTime - this.now
+      this.difference = this.difference / (1000 * 60 * 60 * 24)
 
-      this.date = new Date();
-      this.now = this.date.getTime();
-      this.days = Math.floor(this.difference);
-      this.hours = 23 - this.date.getHours();
-      this.minutes = 60 - this.date.getMinutes();
-      this.seconds= 60 - this.date.getSeconds();
+      this.date = new Date()
+      this.now = this.date.getTime()
+      this.days = Math.floor(this.difference)
+      this.hours = 23 - this.date.getHours()
+      this.minutes = 60 - this.date.getMinutes()
+      this.seconds = 60 - this.date.getSeconds()
       !isNaN(this.days)
         ? (this.days = Math.floor(this.difference))
-        : (this.days = `<img src="https://i.gifer.com/VAyR.gif" />`);
-    }, 1000);
+        : (this.days = `<img src="https://i.gifer.com/VAyR.gif" />`)
+    },          1000)
   }
 }

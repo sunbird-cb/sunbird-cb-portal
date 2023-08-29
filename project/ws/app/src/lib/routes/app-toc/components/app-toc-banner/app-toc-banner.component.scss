@@ -398,6 +398,9 @@
     line-height: 20px;
     padding: 26px;
 }
+.disable-btn {
+    opacity: 0.5;
+}
 
 @media (max-width:768px) {
     .batch-wrapper {

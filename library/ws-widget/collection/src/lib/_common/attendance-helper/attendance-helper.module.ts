@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { AttendanceHelperComponent } from './attendance-helper.component';
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { AttendanceHelperComponent } from './attendance-helper.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatButtonModule,
   MatIconModule,
@@ -11,9 +11,8 @@ import { MatButtonModule,
   MatInputModule,
   MatSnackBarModule,
   MatCardModule,
-  MatMenuModule
+  MatMenuModule,
 } from '@angular/material'
-
 
 @NgModule({
   declarations: [AttendanceHelperComponent],
@@ -33,6 +32,6 @@ import { MatButtonModule,
     MatMenuModule,
   ],
   exports: [AttendanceHelperComponent],
-  entryComponents: [AttendanceHelperComponent]
+  entryComponents: [AttendanceHelperComponent],
 })
 export class AttendanceHelperModule { }

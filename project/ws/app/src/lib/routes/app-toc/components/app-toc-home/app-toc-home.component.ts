@@ -186,7 +186,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   ngOnInit() {
     this.selectedBatchSubscription = this.tocSvc.getSelectedBatch.subscribe(batchData => {
       this.selectedBatchData = batchData
-    } )
+    })
     // this.route.fragment.subscribe(fragment => { this.fragment = fragment })
     this.channelId = this.telemertyService.telemetryConfig ? this.telemertyService.telemetryConfig.channel : ''
     try {
@@ -1327,5 +1327,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   getProgramDuration(pDuration: number) {
     return pDuration === 1 ? `${pDuration} day` : `${pDuration} days`
+  }
+  withdrawOrEnroll(data: string) {
+    if (data === NsContent.WFBlendedProgramStatus.INITIATE) {
+      this.fetchUserWFForBlended()
+    }
   }
 }
