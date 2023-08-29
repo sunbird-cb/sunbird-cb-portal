@@ -98,7 +98,7 @@ th.mat-header-cell , td.mat-cell {
   }
 
   .img_box {
-    height: 400px;
+    // height: 400px;
 
     img {
         width: 100%;
@@ -110,5 +110,35 @@ th.mat-header-cell , td.mat-cell {
   .mat-caption .mat-icon {
     vertical-align: middle;
   }
+.learn-card .mat-card-content .content-title {
+  text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+  }
+
+  
+  .table_main_box {
+    width: 100%;
+    @include breakpoint-xs {
+      overflow-y: scroll;
+    }
+    
+  }
+
+.main-heading-text {
+  @include breakpoint-xs {
+    font: 600 20px/24px Montserrat;
+    margin: 0 0 16px;
+    width: 74%;
+    display: inline-block;
+   }
+  }
+
+.register-btn{
+  @include breakpoint-xs {
+    line-height: 1;
+   }
+}
 
 
