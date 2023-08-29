@@ -36,10 +36,10 @@
                 <img src="/assets/icons/content/grey/image.svg" alt="Image" class="float-left margin-right-xs"
                     *ngIf="content?.mimeType === 'image/png' || content?.mimeType === 'image/jpeg'">
                 <img src="/assets/icons/content/grey/content_copy.svg" class="contenticon" alt="Course"
-                    *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection' || content?.mimeType === 'application/survey'">
+                    *ngIf="content?.mimeType === 'application/vnd.ekstep.content-collection' || content?.mimeType === 'application/survey'">
                 <img src="/assets/icons/content/grey/module.svg" class="float-left margin-right-xs"
                     alt="offline sessions"
-                    *ngIf="content.mimeType === 'application/offline' || content?.mimeType === 'application/survey'">
+                    *ngIf="content?.mimeType === 'application/offline' || content?.mimeType === 'application/survey'">
                 <span class="ws-mat-black60-text">{{ (content?.duration || 120)| pipeDurationTransform: 'hms' }}</span>
                 <!-- </span> -->
             </div>

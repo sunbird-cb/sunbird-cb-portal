@@ -1,13 +1,13 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Component, Inject, OnInit } from '@angular/core'
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
 
 @Component({
   selector: 'ws-widget-attendance-helper',
   templateUrl: './attendance-helper.component.html',
-  styleUrls: ['./attendance-helper.component.scss']
+  styleUrls: ['./attendance-helper.component.scss'],
 })
 export class AttendanceHelperComponent implements OnInit {
-  helperConfig:any
+  helperConfig: any
 
   constructor(
     public dialogRef: MatDialogRef<AttendanceHelperComponent>,

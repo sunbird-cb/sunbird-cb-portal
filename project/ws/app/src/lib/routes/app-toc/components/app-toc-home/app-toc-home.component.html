@@ -16,7 +16,7 @@ TODO: edit option while preview Mode
 <ng-container>
   <div class="fixed-width flex flex-wrap">
     <div class="meta-section">
-      <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content"
+      <ws-app-toc-banner role="banner" [banners]="banners" [userEnrollmentList]="userEnrollmentList" (withdrawOrEnroll)="withdrawOrEnroll($event)" [forPreview]="forPreview" [content]="content"
         [analytics]="analytics" [resumeData]="resumeData" [batchData]="batchData">
       </ws-app-toc-banner>
       <div role="none" class="toc-body margin-top-xl">
@@ -488,6 +488,14 @@ TODO: edit option while preview Mode
               </h3>
               <h3 class="item-value width-expand">
                 {{ getProgramDuration(content?.programDuration) }}
+              </h3>
+            </div>
+            <div class="info-item" *ngIf="tocConfig?.atAGlance?.batchSize?.enabled && selectedBatchData?.batchAttributes?.currentBatchSize">
+              <h3 class="item-heading ws-mat-default-text">
+                {{tocConfig?.atAGlance?.batchSize?.displayName}}
+              </h3>
+              <h3 class="item-value width-expand">
+                {{ selectedBatchData.batchAttributes.currentBatchSize }}
               </h3>
             </div>
             <div class="info-item"  *ngIf="tocConfig?.atAGlance?.contentType?.enabled && content?.primaryCategory">

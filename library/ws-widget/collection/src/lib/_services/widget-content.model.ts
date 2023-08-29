@@ -393,7 +393,7 @@ export namespace NsContent {
     SEND_FOR_PC_APPROVAL:  'BatchEnrollL2Msg',
     APPROVED:  'BatchEnrollApprovedMsg',
     REJECTED:  'BatchEnrollRejectedMsg',
-    WITHDRAWN: '',
+    WITHDRAWN: 'BatchEnrollWithdrawMsg',
   }
 
   export enum EResourcePrimaryCategories {

@@ -224,7 +224,7 @@
                 <div class="flex flex-wrap">
                   <ng-container *ngIf="!showRejected">
                     <div class="flex-1">
-                      <button class="mat-button mat-raised-button resumeButton custom-button width-1-1 text-white"
+                      <button class="mat-button mat-raised-button resumeButton custom-button width-1-1 text-white" [ngClass]="{ 'disable-btn': disableEnrollBtn || batchControl.hasError('required') }" 
                       [disabled]="disableEnrollBtn || batchControl.hasError('required')" (click)="requestToEnrollDialog()">
                         <ng-container i18n>
                           Request to enroll

@@ -117,9 +117,9 @@ import { ConnectionNameModule } from '@sunbird-cb/collection/src/lib/_common/con
 import { CertificateDialogModule } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.module'
 import { ConfirmDialogModule } from '@sunbird-cb/collection/src/lib/_common/confirm-dialog/confirm-dialog.module'
 import { InfiniteScrollModule } from 'ngx-infinite-scroll'
-import { AppPublicTocResolverService } from 'src/app/routes/public/public-toc/app-public-toc-resolver.service';
-import { AppTocSessionsComponent } from './components/app-toc-sessions/app-toc-sessions.component';
-import { AppTocSessionCardComponent } from './components/app-toc-session-card/app-toc-session-card.component';
+import { AppPublicTocResolverService } from 'src/app/routes/public/public-toc/app-public-toc-resolver.service'
+import { AppTocSessionsComponent } from './components/app-toc-sessions/app-toc-sessions.component'
+import { AppTocSessionCardComponent } from './components/app-toc-session-card/app-toc-session-card.component'
 import { AppTocAttendanceCardComponent } from './components/app-toc-attendance-card/app-toc-attendance-card.component'
 
 @NgModule({
