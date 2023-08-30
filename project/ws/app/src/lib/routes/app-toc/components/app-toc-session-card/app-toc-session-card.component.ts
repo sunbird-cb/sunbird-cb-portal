@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { NsContent } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-app-toc-session-card',
@@ -7,7 +6,7 @@ import { NsContent } from '@sunbird-cb/collection'
   styleUrls: ['./app-toc-session-card.component.scss'],
 })
 export class AppTocSessionCardComponent implements OnInit {
-  @Input() content: NsContent.IContent | null = null
+  @Input() session: any = null
   @Input() expandAll = false
   @Input() rootId!: string
   @Input() rootContentType!: string
