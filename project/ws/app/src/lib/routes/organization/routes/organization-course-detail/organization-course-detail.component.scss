@@ -13,7 +13,7 @@
 
 .meta-section {
     // flex: 1;
-    width: 75%;
+    width: 100%;
 }
 .app-icon {
     height: 180px;
@@ -62,4 +62,21 @@
     overflow: hidden;
     white-space: nowrap;
 }
+
+.back_btn {
+    background-color: #1B4CA1;
+    color: #fff !important;
+    border-radius: 4px 4px;
+    padding: 0px 12px;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+    margin-left: 32px;
+    height: 40px;
+    line-height: 40px;
+
+ }
   
+.main-description-box {
+    width: 70%;
+}

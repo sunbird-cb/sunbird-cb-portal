@@ -16,13 +16,14 @@ export class OrganizationCourseDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.route.snapshot.params.id, 'route data params=')
     this.courseId = this.route.snapshot.params.id
-    console.log(this.courseId)
-    // let result = this.coursesDetail.filter((data:any) => data.id === courseId)
      // tslint:disable-next-line: align
     const courseData = this.coursesDetail.filter((data: any) => data.id == this.courseId)
     this.result = courseData[0]
+  }
+
+  backHistory() {
+    history.back()
   }
 
 }
