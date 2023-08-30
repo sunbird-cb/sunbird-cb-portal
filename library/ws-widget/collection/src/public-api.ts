@@ -212,6 +212,8 @@ export * from './lib/_common/rating-summary/rating-summary.module'
 export * from './lib/_common/rating-summary/rating-summary.component'
 export * from './lib/_common/attendance-helper/attendance-helper.module'
 export * from './lib/_common/attendance-helper/attendance-helper.component'
+export * from './lib/_common/attendance-card/attendance-card.module'
+export * from './lib/_common/attendance-card/attendance-card.component'
 // constants
 export * from './lib/_constants/widget-content.constants'
 export * from './lib/_models/error.model'
