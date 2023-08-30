@@ -7,11 +7,12 @@ import { NsContent } from '@sunbird-cb/utils'
 import _ from 'lodash'
 
 @Component({
-  selector: 'ws-app-app-toc-attendance-card',
-  templateUrl: './app-toc-attendance-card.component.html',
-  styleUrls: ['./app-toc-attendance-card.component.scss'],
+  selector: 'ws-widget-attendance-card',
+  templateUrl: './attendance-card.component.html',
+  styleUrls: ['./attendance-card.component.scss']
 })
-export class AppTocAttendanceCardComponent implements OnInit {
+export class AttendanceCardComponent implements OnInit {
+
   @Input() session: NsContent.IContent | null = null
   @Input() status = 0
   tocConfig: any = null
@@ -42,5 +43,4 @@ export class AppTocAttendanceCardComponent implements OnInit {
         }
       })
   }
-
 }

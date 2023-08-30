@@ -7,7 +7,7 @@
             <div class="flex flex-col sm:flex-row flex-wrap">
                 <p class="margin-remove text-truncate mat-subheading-1 flex-auto">
                     <!-- <mat-icon class="margin-right-xs radiobtn time-icon">radio_button_unchecked </mat-icon> -->
-                    {{ content?.name }}
+                    {{ session?.title }}
                 </p>
 
                 <span class="content-type optional-span" *ngIf="content?.optionalReading">optional </span>
@@ -15,38 +15,21 @@
 
 
             </div>
-            <div class="resicons ws-mat-black60-text">
-                <!-- <span class="mat-body-strong content-type ws-mat-default-text">{{ content?.contentType }}</span> -->
-                <!-- <span class="ml-5"> -->
-                <!-- <ng-container *ngIf="content?.displayContentType">&nbsp;&nbsp;|&nbsp;&nbsp;</ng-container> -->
-                <!-- <mat-icon class="time-icon">schedule</mat-icon> -->
-                <img src="/assets/icons/content/grey/video.svg" alt="Video" class="float-left margin-right-xs" *ngIf="content?.mimeType === 'video/mp4' || content?.mimeType === 'video/x-youtube' ||
-                content?.mimeType ==='application/x-mpegURL'">
-                <img src="/assets/icons/content/grey/audio.svg" alt="Audio" class="float-left margin-right-xs"
-                    *ngIf="content?.mimeType === 'audio/mpeg'">
-                <img src="/assets/icons/content/grey/pdf.svg" alt="PDF" class="float-left margin-right-xs"
-                    *ngIf="content?.mimeType === 'application/pdf'">
-                <!-- <img src="/assets/icons/content/grey/resource.svg" alt="Survey" class="float-left margin-right-xs"
-              *ngIf="content?.mimeType === 'application/survey'"> -->
-                <img src="/assets/icons/content/grey/link.svg" alt="InteractiveContent"
-                    class="float-left margin-right-xs"
-                    *ngIf="content?.mimeType === 'application/vnd.ekstep.html-archive' || content?.mimeType === 'text/x-url'">
-                <img src="/assets/icons/content/grey/assessment.svg" alt="Assessment" class="float-left margin-right-xs"
-                    *ngIf="content?.mimeType === 'application/json' || content?.mimeType === 'application/quiz' || content?.mimeType === 'application/vnd.sunbird.questionset'">
-                <img src="/assets/icons/content/grey/image.svg" alt="Image" class="float-left margin-right-xs"
-                    *ngIf="content?.mimeType === 'image/png' || content?.mimeType === 'image/jpeg'">
-                <img src="/assets/icons/content/grey/content_copy.svg" class="contenticon" alt="Course"
-                    *ngIf="content?.mimeType === 'application/vnd.ekstep.content-collection' || content?.mimeType === 'application/survey'">
-                <img src="/assets/icons/content/grey/module.svg" class="float-left margin-right-xs"
-                    alt="offline sessions"
-                    *ngIf="content?.mimeType === 'application/offline' || content?.mimeType === 'application/survey'">
-                <span class="ws-mat-black60-text">{{ (content?.duration || 120)| pipeDurationTransform: 'hms' }}</span>
+            <div class="mat-body-2 ws-mat-black60-text">
+                <div class="flex flex-1 flex-row">
+                    <div class="flex margin-right-s">{{session?.type || 'No response'}}</div>
+                    <div class="flex margin-right-s bullet-span">{{session?.startDate | date: 'dd MMM yyyy'}}</div>
+                    <div class="flex bullet-span">{{session?.sessionDuration}}Hrs, {{session?.startTime || 'No response' }} -
+                      {{session?.endTime || 'No response'}}
+                    </div>
+                </div>
+                <!-- <span class="ws-mat-black60-text">{{ (content?.duration || 120)| pipeDurationTransform: 'hms' }}</span> -->
                 <!-- </span> -->
             </div>
         </div>
     </a>
     <div class="flex flex-wrap items-center justify-start sm:justify-end">
-        <ng-container *ngIf="!forPreview && content?.identifier && content?.completionPercentage ; else elseBlock">
+        <ng-container *ngIf="!forPreview && session?.identifier && session?.completionPercentage ; else elseBlock">
 
             <ng-container *ngIf="content?.completionStatus == 2">
                 <circle-progress class="flex items-center progress" [percent]="100" [radius]="12" [outerStrokeWidth]="3"
@@ -84,5 +67,5 @@
     </div>
 </div>
 <ng-container>
-    <ws-app-app-toc-attendance-card [session]=""  [status]=""></ws-app-app-toc-attendance-card>
+    <ws-widget-attendance-card [session]=""  [status]=""></ws-widget-attendance-card>
 </ng-container>

@@ -294,6 +294,11 @@ span.optional-span {
   }
 }
 
+.bullet-span::before {
+  content: "\2022";
+  padding-right: 12px;
+}
+
 
 // @media only screen and (max-width:469px) {
 // .children-container {

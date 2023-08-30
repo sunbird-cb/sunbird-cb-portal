@@ -174,7 +174,7 @@ export class PublicRequestComponent implements OnInit {
     if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
       this.signupSvc.sendOtp(mob.value, 'phone').subscribe(() => {
         this.otpSend = true
-        alert('OTP send to your Mobile Number')
+        alert('OTP sent to your Mobile Number')
         this.startCountDown()
         // tslint:disable-next-line: align
       }, (error: any) => {
@@ -191,7 +191,7 @@ export class PublicRequestComponent implements OnInit {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
           this.disableVerifyBtn = false
-          alert('OTP send to your Mobile Number')
+          alert('OTP sent to your Mobile Number')
           this.startCountDown()
         }
         // tslint:disable-next-line: align
