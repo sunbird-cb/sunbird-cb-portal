@@ -1,36 +1,130 @@
-course detail page
-<div class="fixed-width flex flex-wrap">
-    <div class="meta-section">
-        <div class="header-title flex-col sm:flex-row">
+ <!-- {{ result | json }} -->
+ <ws-widget-btn-page-back [widgetData]="{url: '', titles: titles }">
+</ws-widget-btn-page-back>
+
+
+<div class="fixed-width flex flex-wrap margin-top-xl">
+    <ng-container *ngIf="result">
+    <div class="meta-section flex-col">
+        <div class="header-title flex flex-row sm:flex-row">
             <div class="course-banner-img">
-                <img class="app-icon" />
+                <img class="app-icon" src="{{ result.image }}" />
             </div>
             <div class="sm:ml-5 flex flex-auto">
                 <div class="sm:ml-5 flex flex-auto flex-col">
                     <h1 class="mat-headline margin-remove-bottom padding-bottom-xs hidden sm:block"></h1>
                     <div class="banner-overview-container">
-
+                        <h1>{{ result.name }}</h1>
+                        <h3>{{ result.institute}} </h3>
                     </div>
                 </div>
             </div>
         </div>
-        <div class=" main-description-box">
+        <div class=" main-description-box margin-top-xl">
             <mat-tab-group>
                 <!-- overview tab -->
                 <mat-tab label="OVERVIEW">
                     <div class="overview-section-data">
                         <div class="summary-section">
-                            <h2 class="section-heading"></h2>
+                            <h2 class="section-heading">Summary</h2>
+                            <p class="section-content mat-body-1"> {{ result.summary }}</p>
+                        </div>
+
+                        <div class="summary-section">
+                            <h2 class="section-heading">Description</h2>
+   
+                            <p class="section-content mat-body-1"  *ngIf=" result.description.desc1"> {{ result.description.desc1 }}</p>
+                            <p class="section-content mat-body-1"  *ngIf=" result.description.desc2"> {{ result.description.desc2 }}</p>
+                             <div *ngIf="result.description.list">
+                               
+                                <p class="section-content mat-body-1"  *ngIf=" result.description.list.listSubject"> {{ result.description.list.listSubject }} </p>
+                                <div *ngIf="result.description.list.listDescription">
+                                  <ul *ngFor="let data of result.description.list.listDescription">
+                                    <li> {{ data.listdesc }} </li>
+                                  </ul>  
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contacts-container">
+                            <h2 class="section-heading"> Authors and curators </h2>
+                            <!-- <ng-container *ngIf="result.authorAndCurator && result.authorAndCurator > 0"> -->
+                                <!-- {{ result.authorAndCurator | json }} -->
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 col-gap-4">
+                                    <div class="unit-cohort sm:pr-8 md:pr-10 ng-star-inserted" *ngFor="let item of result.authorAndCurator">
+                                        <div class="user-name"> {{ item.author }} </div>
+                                        <p class="mat-body-2 ws-mat-black60-text user-desc"> {{ item.curator }} </p>
+                                    </div>
+                                </div>
+                            
+                        </div>
+                        <div>
+                            <h2 class="section-heading">Competencies</h2>
+                            <div *ngIf="result.competency">
+                                <table class="compt-table width-1-1 text-left">
+                                    <tr>
+                                        <!-- <th class="padding-xs ws-mat-black60-text mat-body-1">Competency</th> -->
+                                        <th class="padding-xs ws-mat-black60-text mat-body-1">Type</th>
+                                    </tr>
+                                    <tr>
+                                        <!-- <td class="padding-xs mat-body-1">{{comp.name}}</td> -->
+                                        <td class="padding-xs mat-body-1">{{result.competency}}</td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </mat-tab>
                 <mat-tab label="CONTENT">
-                     Content 
+                     <div *ngIf="result.content">
+                        <div class="margin-top-l">
+                        
+                            <h2  class="section-heading">Topic</h2>
+                           
+                            <ul *ngFor="let item of result.content.topic">
+                                <li> {{ item.topicTitle }}</li>
+                            </ul>
+                           
+                        </div>
+                        <div *ngIf="result.content.topicDescription" class="margin-bottom-xl">
+                            <h2  class="section-heading">Description</h2>
+                            <p class="section-content mat-body-1"  *ngIf=" result.content.topicDescription.desc1"> {{ result.content.topicDescription.desc1 }}</p>
+                            <p class="section-content mat-body-1"  *ngIf=" result.content.topicDescription.desc1"> {{ result.content.topicDescription.desc2 }}</p>
+                            <!-- <ul *ngFor="let item of result.content.topicDescription.list">
+                                <li> {{ result.content.topic.topicTitle }}</li>
+                            </ul> -->
+                          
+                           
+                            <div *ngIf="result.content.topicDescription.list">
+                                <p class="section-content mat-body-1"  *ngIf="result.content.topicDescription.list.listSubject"> {{ result.content.topicDescription.list.listSubject }} </p>
+                                <div *ngIf="result.content.topicDescription.list.listDescription">
+                            
+                                  <ul *ngFor="let data of result.content.topicDescription.list.listDescription">
+                                    <li> {{ data.listdesc }} </li>
+                                  </ul>  
+                                </div>
+                            </div>  
+                            <div *ngIf="result.content.topicDescription.list1">
+                                <p class="section-content mat-body-1"  *ngIf="result.content.topicDescription.list1.listSubject"> {{ result.content.topicDescription.list1.listSubject }} </p>
+                                <div *ngIf="result.content.topicDescription.list1.listDescription">
+                            
+                                  <ul *ngFor="let data of result.content.topicDescription.list1.listDescription">
+                                    <li> {{ data.listdesc }} </li>
+                                  </ul>  
+                                </div>
+                            </div>  
+                            <p class="section-content mat-body-1"  *ngIf=" result.content.topicDescription.desc3"> {{ result.content.topicDescription.desc3 }}</p>
+                            <p class="section-content mat-body-1"  *ngIf=" result.content.topicDescription.desc4"> {{ result.content.topicDescription.desc4 }}</p>
+                            <p class="section-content mat-body-1"  *ngIf=" result.content.topicDescription.desc5"> {{ result.content.topicDescription.desc5 }}</p>
+                            <p class="section-content mat-body-1"  *ngIf=" result.content.topicDescription.link"><a href="{{ result.content.topicDescription.link }}" target="_blank">{{ result.content.topicDescription.link }}</a> </p>
+                            <p class="section-content mat-body-1"  *ngIf=" result.content.topicDescription.link"><a href="{{ result.content.topicDescription.link1 }}" target="_blank">{{ result.content.topicDescription.link1 }}</a> </p>
+                        </div>
+                     </div> 
                      </mat-tab>
                
               </mat-tab-group>
         </div>
     </div>
 
-   
+</ng-container>
 </div>
