@@ -1709,7 +1709,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
       this.otpService.sendOtp(mob.value).subscribe(() => {
         this.otpSend = true
-        alert('OTP send to your Mobile Number')
+        alert('OTP sent to your Mobile Number')
         this.startCountDown()
         // tslint:disable-next-line: align
       }, (error: any) => {
@@ -1726,7 +1726,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
           this.disableVerifyBtn = false
-          alert('OTP send to your Mobile Number')
+          alert('OTP sent to your Mobile Number')
           this.startCountDown()
         }
         // tslint:disable-next-line: align
