@@ -17,8 +17,7 @@ export class OrganizationCourseDetailComponent implements OnInit {
 
   ngOnInit() {
     this.courseId = this.route.snapshot.params.id
-     // tslint:disable-next-line: align
-    const courseData = this.coursesDetail.filter((data: any) => data.id == this.courseId)
+    const courseData = this.coursesDetail.filter((data: any) => (data.id).toString() === this.courseId)
     this.result = courseData[0]
   }
 
