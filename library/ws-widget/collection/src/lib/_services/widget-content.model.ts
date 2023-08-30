@@ -401,7 +401,7 @@ export namespace NsContent {
     PRACTICE_RESOURCE = 'Practice Question Set',
     FINAL_ASSESSMENT = 'Course Assessment',
     COMP_ASSESSMENT = 'Competency Assessment',
-    OFFLINE_SESSION = 'Offline Session'
+    OFFLINE_SESSION = 'Offline Session',
   }
 
   export enum EMiscPlayerSupportedCollectionTypes {

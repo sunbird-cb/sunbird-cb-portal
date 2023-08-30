@@ -94,7 +94,7 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
       // content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT
       content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE ||
       content.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT ||
-      content.primaryCategory === NsContent.EPrimaryCategory.COMP_ASSESSMENT || 
+      content.primaryCategory === NsContent.EPrimaryCategory.COMP_ASSESSMENT ||
       content.primaryCategory === NsContent.EPrimaryCategory.OFFLINE_SESSION
     ) {
       switch (content.mimeType) {
