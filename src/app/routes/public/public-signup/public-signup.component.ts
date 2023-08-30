@@ -365,7 +365,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
       this.signupSvc.sendOtp(mob.value, 'phone').subscribe(() => {
         this.otpSend = true
-        alert('OTP send to your Mobile Number')
+        alert('An OTP has been sent to your mobile number (valid for 15 minutes).')
         this.startCountDown()
         // tslint:disable-next-line: align
       }, (error: any) => {
@@ -383,7 +383,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
           this.disableVerifyBtn = false
-          alert('OTP send to your Mobile Number')
+          alert('An OTP has been sent to your mobile number (valid for 15 minutes).')
           this.startCountDown()
         }
         // tslint:disable-next-line: align
@@ -430,6 +430,8 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
           }
         })
       }
+    } else {
+      this.snackBar.open('Mandatory parameter otp is missing')
     }
   }
   startCountDown() {
@@ -463,7 +465,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     if (email && email.value && email.valid) {
       this.signupSvc.sendOtp(email.value, 'email').subscribe(() => {
         this.otpEmailSend = true
-        alert('OTP send to your email')
+        alert('An OTP has been sent to your registered email address (valid for 15 minutes).')
         this.startCountDownEmail()
         // tslint:disable-next-line: align
       }, (error: any) => {
@@ -480,7 +482,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       this.signupSvc.resendOtp(email.value, 'email').subscribe((res: any) => {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpEmailSend = true
-          alert('OTP send to your email')
+          alert('An OTP has been sent to your registered email address (valid for 15 minutes).')
           this.startCountDownEmail()
         }
         // tslint:disable-next-line: align
@@ -543,8 +545,8 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
           this.timeLeftforOTPEmail -= 1
           if (this.timeLeftforOTPEmail < 0) {
             this.timeLeftforOTPEmail = 0
-            if (this.timerSubscription) {
-              this.timerSubscription.unsubscribe()
+            if (this.timerSubscriptionEmail) {
+              this.timerSubscriptionEmail.unsubscribe()
             }
             // this.submitQuiz()
           }

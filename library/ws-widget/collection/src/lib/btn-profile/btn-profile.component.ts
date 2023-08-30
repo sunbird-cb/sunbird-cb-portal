@@ -113,11 +113,12 @@ export class BtnProfileComponent extends WidgetBaseComponent
   get getGivenName() {
     if (this.configSvc.userProfile) {
       // tslint:disable-next-line:max-line-length
-      if (this.configSvc.userProfile.lastName && this.configSvc.userProfile.lastName !== null && this.configSvc.userProfile.lastName !== undefined) {
-        this.givenName = `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}`
-      } else {
-        this.givenName = `${this.configSvc.userProfile.firstName}`
-      }
+      // if (this.configSvc.userProfile.lastName && this.configSvc.userProfile.lastName !== null && this.configSvc.userProfile.lastName !== undefined) {
+      //   this.givenName = `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}`
+      // } else {
+      //   this.givenName = `${this.configSvc.userProfile.firstName}`
+      // }
+      this.givenName = `${this.configSvc.userProfile.firstName}`
       return this.givenName
     }
     return 'Guest'

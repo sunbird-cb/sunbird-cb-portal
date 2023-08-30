@@ -14,7 +14,8 @@ $banner-min-height: 243px;
 
 
 .banner-overlay {
-  position: absolute;
+  // position: absolute;
+  // display: none;
   z-index: 1;
   top: 0;
   left: 0;
@@ -43,7 +44,7 @@ $banner-min-height: 243px;
     width: 100%;
     min-height: $banner-min-height;
     display: block;
-    height: 350px;
+    // height: 350px;
     border-radius: 12px;
   }
 }
@@ -77,10 +78,11 @@ $banner-min-height: 243px;
 
     .dot {
       cursor: pointer;
-      height: $size-m;
-      width: $size-m;
+      height: $size-xs;
+      width: $size-xs;
       margin: 0 6px;
-      background-color: rgba(120, 120, 120, 0.75);
+      // background-color: rgba(120, 120, 120, 0.75);
+      background-color: #d3d3d3;
       box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
       border-radius: 50%;
       display: inline-block;
@@ -94,9 +96,9 @@ $banner-min-height: 243px;
     }
 
     .dot.active {
-      background-color: #d3d3d3;
-      height: $size-m + ($size-xs / 4);
-      width: $size-m + ($size-xs / 4);
+      background-color: #f0f0f0;
+      height: $size-xs + ($size-xs / 4);
+      width: $size-xs + ($size-xs / 4);
 
       @include breakpoint-xs {
         height: $size-xs + ($size-xs / 4);

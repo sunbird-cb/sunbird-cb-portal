@@ -1,0 +1,150 @@
+
+<ws-widget-btn-page-back [widgetData]="{url: '', titles: titles }">
+</ws-widget-btn-page-back>
+<mat-sidenav-container autosize class="container-balanced" [hasBackdrop]="false">
+
+    <div class="flex flex-1 flex-row justify-between margin-top-m">
+        <h1>Register for Inservice Training Program 2023-24
+        </h1>
+        <div><a class="register-btn flex btn" href="https://mctp-inservice.nic.in" target="_blank">Register now</a></div>
+    </div>
+    <div class="container-balanced-banner margin-top-m margin-bottom-l img_box">
+        <ng-container [wsResolverWidget]="banner"></ng-container>
+        <!-- <img src="assets/instances/eagle/banners/orgs/landing.png" /> -->
+      </div>
+
+      <div class="top-content margin-bottom-m">
+        <h2>In-Service Training Programme (IST)</h2>
+        <p>Department of Personnel and Training in collaboration with Civil Services Training Institutions/ Management/ Academic Institutions/ organizations offers In-service Training 5 days offline and 3 days online training programs for All India Service (IAS, IPS & IFoS) Officers, Officers working under Central Staffing Scheme and Officers of Central Secretariat Service (CSS)/Central Secretariat Stenographers Service (CSSS) (Officers of the level of DS/Sr.PPS and above).  These programs aim to address the competency requirements of civil servants at mid and senior management level. They provide an 
+            opportunity to the officers to enhance their skills and develop a deeper appreciation of national priorities and goals  
+        </p>
+
+        <h2 class="margin-top-l">Eligibility:</h2>
+        <ul>
+            <li> Officers eligible to apply : </li>
+                <ul>
+                    <li> AIS (IAS, IPS IFoS) officers with minimum 4 years of service (as on April 1, 2023)  and up to 
+                        2018 batch (upto the ranking of Secretary/ Chief Secretary). </li>
+                    <li> Group ‘A’ Officers working under Central Staffing Scheme of DoPT.  </li>
+                    <li> Officers of the level of DS/Sr. PPS and above of Central Secretariat Service (CSS) and Central Secretariat Stenographer Service (CSSS). </li>
+                </ul>
+            
+            <li> An Officer can attend only one In-service training programme during IST calendar. </li>
+            <li> Officers superannuating in the month of training are not eligible for the program scheduled in that month. </li>
+            <li> Officers may not apply for training program which they have already attended during the last 3 years (2020-21, 2021-22 and 2022-23) 
+            </li>
+            <!-- <li>An Officer can attend only one In-service training programme during an IST calendar</li>   
+            <li>The officers should not have attended the same training from the same institute in last 3 years </li> -->
+        </ul>
+      </div>
+      <div class="margin-bottom-xl">
+        <h2 class="text-center">Training Calendar  for 2023-24 </h2>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+          
+            <!-- Position Column -->
+            <ng-container matColumnDef="sNo">
+              <th mat-header-cell *matHeaderCellDef> S.No.  </th>
+              <td mat-cell *matCellDef="let element"> {{element.sNo}} </td>
+            </ng-container>
+          
+            <!-- Name Column -->
+            <ng-container matColumnDef="nameOfInstitute">
+              <th mat-header-cell *matHeaderCellDef> Name of the Institute  </th>
+              <td mat-cell *matCellDef="let element"> {{element.nameOfInstitute}} </td>
+            </ng-container>
+          
+            <!-- Weight Column -->
+            <ng-container matColumnDef="program">
+              <th mat-header-cell *matHeaderCellDef> Program </th>
+              <td mat-cell *matCellDef="let element"> {{element.program}} </td>
+            </ng-container>
+          
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="dates">
+              <th mat-header-cell *matHeaderCellDef> Tentative Dates  </th>
+              <td mat-cell *matCellDef="let element"> {{element.dates}} </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          
+          
+      </div>
+      <div class="sub-side-content margin-top-l">
+        <mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card" *ngFor="let item of courses">
+            <div class="imageholder float-left">
+            <img alt="" class="margin-remove mat-card-image" mat-card-image="" src="{{ item.image}}">
+        </div>
+        <mat-card-content class="mat-card-content">
+            <p class="mat-caption ws-mat-black60-text margin-bottom-xxs text-uppercase">
+                <mat-icon class="mat-icon ws-mat-default-text margin-right-xs notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">video_library </mat-icon>
+                 Course </p><p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title">
+                    <a class="item-name">{{ item.name}}</a>
+                </p>
+                <div class="bottomsection">
+                <p class="mat-body-2 margin-bottom-xxs"> {{ item.institute}} </p>
+                <div class="contentdata margin-bottom-xm">
+                    <ul class="mat-body-2 margin-remove-top margin-bottom-xs padding-remove ws-mat-black60-text">
+                        <li> {{ item.date }} </li>
+                        <li><img src="/assets/icons/content/separator.svg"> {{ item.duration }} </li>
+                        <li><img src="/assets/icons/content/separator.svg"> {{ item.vanue }} </li>
+                    </ul>
+                </div>
+                    </div>
+            </mat-card-content>
+        </mat-card>
+
+        <!-- <mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card">
+            <div class="imageholder float-left">
+            <img alt="" class="margin-remove mat-card-image" mat-card-image="" src="https://portal.karmayogibm.nic.in/assets/public/content/do_113864556579454976114/artifact/do_113864556579454976114_1692450754657_capture61692450754739.png">
+        </div>
+        <mat-card-content class="mat-card-content">
+            <p class="mat-caption ws-mat-black60-text margin-bottom-xxs text-uppercase">
+                <mat-icon class="mat-icon ws-mat-default-text margin-right-xs notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">video_library </mat-icon>
+                 Course </p><p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title">
+                    <a href="#">Digital Governance and Management </a>
+                </p>
+                <div class="bottomsection">
+                <p class="mat-body-2 margin-bottom-xxs">By Indian Institute of Management, Visakhapatnam</p>
+                <div class="contentdata margin-bottom-xm">
+                    <ul class="mat-body-2 margin-remove-top margin-bottom-xs padding-remove ws-mat-black60-text">
+                        <li>30 Oct 2023 </li>
+                        <li><img src="/assets/icons/content/separator.svg"> 5 days </li>
+                        <li><img src="/assets/icons/content/separator.svg"> IIM Visakhapatnam Campus </li>
+                    </ul>
+                </div>
+                    </div>
+            </mat-card-content>
+        </mat-card> -->
+       
+        <!-- <mat-card class="learn-card margin-bottom-m padding-remove position-relative mat-card">
+            <div class="imageholder float-left">
+            <img alt="" class="margin-remove mat-card-image" mat-card-image="" src="https://portal.karmayogibm.nic.in/assets/public/content/do_113864556579454976114/artifact/do_113864556579454976114_1692450754657_capture61692450754739.png">
+        </div>
+        <mat-card-content class="mat-card-content">
+            <p class="mat-caption ws-mat-black60-text margin-bottom-xxs text-uppercase">
+                <mat-icon class="mat-icon ws-mat-default-text margin-right-xs notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">video_library </mat-icon>
+                 Course </p><p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title">
+                    <a href="#">Yoga for healing</a>
+                </p>
+                <div class="bottomsection">
+                <p class="mat-body-2 margin-bottom-xxs">By Isha Foundaton</p>
+                <div class="contentdata margin-bottom-xm">
+                    <ul class="mat-body-2 margin-remove-top margin-bottom-xs padding-remove ws-mat-black60-text">
+                        <li>10 Oct 2023 </li>
+                        <li><img src="/assets/icons/content/separator.svg"> 5 days </li>
+                        <li><img src="/assets/icons/content/separator.svg"> Coimbatore </li>
+                    </ul>
+                </div>
+                    </div>
+            </mat-card-content>
+        </mat-card> -->
+
+
+        
+      </div>
+</mat-sidenav-container>
