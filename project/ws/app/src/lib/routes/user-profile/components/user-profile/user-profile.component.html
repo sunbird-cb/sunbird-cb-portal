@@ -34,6 +34,9 @@
                         </div>
                       </div>
                     </div>
+                    <div class="profile-pic-div"> 
+                      <span class="profile-pic">Max file size: 1 MB</span>
+                      <span class="profile-pic">Supported file types: JPG, JPEG, PNG</span></div>
                     <div class="input-column px-2 text-input-col">
                       <div class="input-wrapper margin-top-s">
                         <label for="firstName" class=" margin-remove-bottom form-label required"
@@ -385,7 +388,7 @@
                               i18n-aria-label aria-label="Please enter a valid 10 digit mobile number">
                               Please enter a valid 10 digit mobile number
                             </mat-error>
-                            <mat-hint align="start">Please add a valid mobile number</mat-hint>
+                            <mat-hint align="start" *ngIf="createUserForm?.controls['mobile'].errors?.pattern">Please add a valid mobile number</mat-hint>
                             <!-- <mat-error *ngIf="createUserForm?.controls['mobile'].errors?.required">This field is mandatory.</mat-error>
                             <mat-error *ngIf="createUserForm?.controls['mobile'].errors?.pattern">Minimum 8 charactors needed.</mat-error> -->
                           </mat-form-field>
