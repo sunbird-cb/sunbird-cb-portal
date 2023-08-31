@@ -338,7 +338,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid mobile number')
+      this.snackBar.open('Please enter a valid mobile number',)
     }
   }
 
@@ -363,8 +363,11 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   verifyOtp(otp: any) {
     // console.log(otp)
     const mob = this.registrationForm.get('mobile')
+    
     if (otp && otp.value) {
-      if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
+      if(otp && otp.value.length < 6) {
+        this.snackBar.open('Please enter a 6-digit OTP.')
+      } else if ((otp && otp.value.length == 6) && mob && mob.value && Math.floor(mob.value) && mob.valid) {
         this.signupSvc.verifyOTP(otp.value, mob.value, 'phone').subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
             this.otpVerified = true
@@ -393,7 +396,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         })
       }
     } else {
-      this.snackBar.open('Mandatory parameter otp is missing')
+      this.snackBar.open('Please enter a 6-digit OTP.')
     }
   }
   startCountDown() {
@@ -457,10 +460,12 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   }
 
   verifyOtpEmail(otp: any) {
-    // console.log(otp)
+    console.log(otp)
     const email = this.registrationForm.get('email')
-    if (email && email.value) {
-      if (email && email.value && email.valid) {
+    if (otp && otp.value) {
+      if(otp && otp.value.length < 6) {
+        this.snackBar.open('Please enter a 6-digit OTP.')
+      } else if ( email && email.value && email.valid) {
         this.signupSvc.verifyOTP(otp.value, email.value, 'email').subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
             this.otpEmailSend = true
@@ -488,6 +493,8 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
           this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
         })
       }
+    } else {
+      this.snackBar.open('Please enter a 6-digit OTP.')
     }
   }
   startCountDownEmail() {
