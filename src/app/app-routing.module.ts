@@ -171,6 +171,20 @@ const routes: Routes = [
       pageData: PageResolve,
     },
   },
+  {
+    path: 'app/organisation',
+    loadChildren: () =>
+      import('./routes/route-organization.module').then(u => u.RouteOrganizationModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'organization',
+      module: 'Organization',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
 
   {
     path: 'app/taxonomy',
