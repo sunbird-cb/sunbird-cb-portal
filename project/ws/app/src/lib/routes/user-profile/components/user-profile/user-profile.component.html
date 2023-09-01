@@ -34,6 +34,9 @@
                         </div>
                       </div>
                     </div>
+                    <div class="profile-pic-div"> 
+                      <span class="profile-pic">Max file size: 1 MB</span>
+                      <span class="profile-pic">Supported file types: JPG, JPEG, PNG</span></div>
                     <div class="input-column px-2 text-input-col">
                       <div class="input-wrapper margin-top-s">
                         <label for="firstName" class=" margin-remove-bottom form-label required"
@@ -525,7 +528,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="pinCode" #pincode type="text" matInput placeholder="123456" formControlName="pincode"
-                        i18n-aria-label aria-label="Pin Code inpput field" autocomplete="off" maxlength="6">
+                        i18n-aria-label aria-label="Pin Code inpput field" autocomplete="off" (keypress)="numericOnly($event)" maxlength="6">
                       <mat-error [hidden]="false" i18n="Pin Code Error|Explains pincode is required"
                         *ngIf="createUserForm?.controls['pincode'].errors?.required" i18n-aria-label
                         aria-label="Pin Code Error|Explains pincode is required">
@@ -1081,12 +1084,13 @@
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
                   <div class="item1">
                     <label for="civilListNumber" class=" margin-remove-bottom form-label"
-                      i18n="Civil List Number label|Label which explains the user to enter Civil List Number">
+                      i18n="Civil List Number label|Label which explains the user to enter Civil List Number">     
+                      
                       Civil List Number
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <input id="civilListNumber" matInput type="number" #civilListNo formControlName="civilListNo"
-                        i18n-placeholder placeholder="Enter Civil List Number" onKeyPress="if(this.value.length === 25) return false;" />
+                      <input id="civilListNumber" matInput type="text" #civilListNo formControlName="civilListNo"
+                        i18n-placeholder placeholder="Enter Civil List Number" (keypress)="numericOnly($event)" onKeyPress="if(this.value.length === 25) return false;" />
                       <mat-error [hidden]="false" i18n="Civil List Number  Error|Explains name is required">
                         Civil List Number is mandatory
                       </mat-error>
@@ -1098,8 +1102,8 @@
                       Employee Code
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <input id="empCode" matInput type="number" #employeeCode formControlName="employeeCode"
-                        i18n-placeholder placeholder="Enter Employee Code" onKeyPress="if(this.value.length === 25) return false;" />
+                      <input id="empCode" matInput type="text" #employeeCode formControlName="employeeCode" 
+                        i18n-placeholder placeholder="Enter Employee Code" (keypress)="numericOnly($event)" onKeyPress="if(this.value.length === 25) return false;" />
                       <mat-error [hidden]="false" i18n="Employee Code  Error|Explains name is required">
                         Employee Code is mandatory
                       </mat-error>
@@ -1131,8 +1135,8 @@
                       Pin Code
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <input id="pinCode1" matInput #otherDetailsOfficePinCode type="number"
-                        formControlName="otherDetailsOfficePinCode" i18n-placeholder placeholder="Enter Pin Code" maxlength="6" />
+                      <input id="pinCode1" matInput #otherDetailsOfficePinCode type="text"
+                        formControlName="otherDetailsOfficePinCode" (keypress)="numericOnly($event)" i18n-placeholder placeholder="Enter Pin Code" maxlength="6" />
                       <mat-error [hidden]="false" i18n="Pin Code  Error|Explains name is required">
                         Pin Code is mandatory
                       </mat-error>
