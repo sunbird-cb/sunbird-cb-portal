@@ -5349,7 +5349,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="2f1948b40bf8f7e56ce3ee565a62be4d28b6d6fc" datatype="html">
-        <source>You must enter value from suggested list only.</source>
+        <source>Please choose a value from the list provided above.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routes/public/public-signup/public-signup.component.html</context>
           <context context-type="linenumber">134</context>
@@ -5448,7 +5448,7 @@
       </trans-unit>
       <trans-unit id="eff5fb3100cc7e12cef8efe5adcace5e493faf73" datatype="html">
         <source>
-                    Email id is mandatory
+                    Please enter your email ID
                   </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routes/public/public-signup/public-signup.component.html</context>
@@ -5768,7 +5768,7 @@
       </trans-unit>
       <trans-unit id="a3c891583620682670aad9bd98e47d38265ee3a0" datatype="html">
         <source>
-                    Organisation is mandatory
+                    Please enter your organisation name
                   </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routes/public/public-signup/public-signup.component.html</context>
@@ -5778,7 +5778,7 @@
         <note priority="1" from="meaning">Organisation Error</note>
       </trans-unit>
       <trans-unit id="b6241ba0849e9751d74f835a0b694f26eaec323b" datatype="html">
-        <source>Organisation is mandatory</source>
+        <source>Please enter your organisation name</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routes/public/public-signup/public-signup.component.html</context>
           <context context-type="linenumber">273</context>
@@ -5900,7 +5900,7 @@
       </trans-unit>
       <trans-unit id="2eee9c63e0854b511b404f337f99fd7aeb6413a1" datatype="html">
         <source>
-                                        Email id is mandatory
+                                        Please enter your email ID
                                     </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routes/public/welcome/public-welcome.component.html</context>
@@ -5999,7 +5999,7 @@
       </trans-unit>
       <trans-unit id="f8922deb38637d28f8bfef820eb930620e546304" datatype="html">
         <source>
-                                        Organisation is mandatory
+                                        Please enter your organisation name
                                     </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routes/public/welcome/public-welcome.component.html</context>
@@ -12100,7 +12100,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="fc4998256e6dabeb09db02d7f79a3cdf01f6615f" datatype="html">
-        <source>Organisation is mandatory </source>
+        <source>Please enter your organisation name</source>
         <context-group purpose="location">
           <context context-type="sourcefile">project/ws/author/src/lib/routing/modules/editor/shared/components/edit-meta/edit-meta.component.html</context>
           <context context-type="linenumber">1005</context>
@@ -18164,7 +18164,7 @@
       </trans-unit>
       <trans-unit id="22cd8384bd4ae9d410ad793f5c4455a1683b93ad" datatype="html">
         <source>
-                          Mobile Number is mandatory
+                          Please enter your mobile number
                         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">project/ws/app/src/lib/routes/user-profile/components/user-profile/user-profile.component.html</context>
@@ -18174,7 +18174,7 @@
         <note priority="1" from="meaning">Mobile Number Error</note>
       </trans-unit>
       <trans-unit id="b318df313153d4909de0028ebd656ea1912462b7" datatype="html">
-        <source>Mobile Number is mandatory</source>
+        <source>Please enter your mobile number</source>
         <context-group purpose="location">
           <context context-type="sourcefile">project/ws/app/src/lib/routes/user-profile/components/user-profile/user-profile.component.html</context>
           <context context-type="linenumber">365</context>

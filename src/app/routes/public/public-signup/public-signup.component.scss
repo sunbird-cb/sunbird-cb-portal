@@ -860,7 +860,7 @@
   position: absolute;
   font-size: 10px;
   color: #f44336;
-  top: 65px;
+  top: 75px;
   margin-left:-10px
 }
 
@@ -942,4 +942,13 @@ width: auto;
 }
 a.terms-text{
   cursor: pointer;
+}
+.help-request {
+  position: relative;
+  top: -3px;
+ // right: 2px;
+}
+
+.pos-request {
+  margin-right: 8px;
 }
