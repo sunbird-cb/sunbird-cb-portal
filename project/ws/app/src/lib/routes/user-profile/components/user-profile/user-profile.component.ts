@@ -921,6 +921,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
 
+  numericOnly(event: any): boolean {
+    const pattren = /^([0-9])$/
+    const result = pattren.test(event.key)
+    return result
+  }
+
   setProfilePhotoValue(data: any) {
     this.photoUrl = data.photo || undefined
   }
@@ -928,6 +934,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   setDropDownOther(organisation?: any) {
     if (organisation.designation === 'Other') {
       this.showDesignationOther = true
+    } else {
+      this.showDesignationOther = false
     }
     if (organisation.orgName === 'Other') {
       this.showOrgnameOther = true
