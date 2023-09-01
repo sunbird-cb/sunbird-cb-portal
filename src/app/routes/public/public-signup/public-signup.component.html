@@ -185,7 +185,7 @@
                   <div *ngIf="otpEmailSend" class="flex flex-1 flex-column">
                     <!-- <div class="flex flex-1 flex-row"> -->
                       <mat-form-field appearance="outline" class="margin-top-xs w-full">
-                        <input  id="emailOTP" #emailotp type="password" minlength="6" maxlength="6"
+                        <input  id="emailOTP" #emailotp type="password" minlength="4" maxlength="6"
                           matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input" onKeyPress="if(this.value.length === 8) return false;" autocomplete="new-password">
                         <mat-hint *ngIf="timeLeftforOTPEmail > 0 ">
                           <span>Resend OTP after {{timeLeftforOTPEmail | pipeDurationTransform: 'hms2M'}}</span>
@@ -246,7 +246,7 @@
                   <div *ngIf="otpSend" class="flex flex-1 flex-column">
                     <!-- <div class="flex flex-1 flex-row"> -->
                       <mat-form-field appearance="outline" class="margin-top-xs w-full">
-                        <input  id="mobileNumber" #otp type="password" minlength="6" maxlength="6"
+                        <input  id="mobileNumber" #otp type="password" minlength="4" maxlength="6"
                           matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input" onKeyPress="if(this.value.length === 8) return false;" autocomplete="new-password">
                         <mat-hint *ngIf="timeLeftforOTP > 0 ">
                           <span>Resend OTP after {{timeLeftforOTP | pipeDurationTransform: 'hms2M'}}</span>

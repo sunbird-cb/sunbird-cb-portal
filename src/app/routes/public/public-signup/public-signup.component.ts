@@ -365,9 +365,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     const mob = this.registrationForm.get('mobile')
     
     if (otp && otp.value) {
-      if(otp && otp.value.length < 6) {
-        this.snackBar.open('Please enter a 6-digit OTP.')
-      } else if ((otp && otp.value.length == 6) && mob && mob.value && Math.floor(mob.value) && mob.valid) {
+      if(otp && otp.value.length < 4) {
+        this.snackBar.open('Please enter a valid OTP.')
+      } else if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
         this.signupSvc.verifyOTP(otp.value, mob.value, 'phone').subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
             this.otpVerified = true
@@ -396,7 +396,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         })
       }
     } else {
-      this.snackBar.open('Please enter a 6-digit OTP.')
+      this.snackBar.open('Please enter a valid OTP.')
     }
   }
   startCountDown() {
@@ -463,8 +463,8 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     console.log(otp)
     const email = this.registrationForm.get('email')
     if (otp && otp.value) {
-      if(otp && otp.value.length < 6) {
-        this.snackBar.open('Please enter a 6-digit OTP.')
+      if(otp && otp.value.length < 4) {
+        this.snackBar.open('Please enter a valid OTP.')
       } else if ( email && email.value && email.valid) {
         this.signupSvc.verifyOTP(otp.value, email.value, 'email').subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
@@ -494,7 +494,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         })
       }
     } else {
-      this.snackBar.open('Please enter a 6-digit OTP.')
+      this.snackBar.open('Please enter a valid OTP.')
     }
   }
   startCountDownEmail() {

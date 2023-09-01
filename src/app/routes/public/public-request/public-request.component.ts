@@ -134,8 +134,8 @@ export class PublicRequestComponent implements OnInit {
     // console.log(otp)
     const mob = this.requestForm.get('mobile')
     if (otp && otp.value) {
-      if(otp && otp.value.length < 6) {
-        this.snackBar.open('Please enter a 6-digit OTP.')
+      if(otp && otp.value.length < 4) {
+        this.snackBar.open('Please enter a valid OTP.')
       } else if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
         this.signupSvc.verifyOTP(otp.value, mob.value, 'phone').subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
@@ -149,7 +149,7 @@ export class PublicRequestComponent implements OnInit {
         })
       }
     } else {
-      this.snackBar.open('Please enter a 6-digit OTP.')
+      this.snackBar.open('Please enter a valid OTP.')
     }
   }
 
