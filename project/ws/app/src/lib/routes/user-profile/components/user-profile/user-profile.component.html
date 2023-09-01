@@ -55,7 +55,7 @@
                           <mat-error [hidden]="false" *ngIf="createUserForm?.controls['firstname'].errors?.pattern"
                             i18n-aria-label
                             aria-label="First Name Error|Name fields cannot contain numbers and special characters except ">
-                            Name fields cannot contain numbers and special characters except '
+                            Name field can only contain letters, space and the character (').
                           </mat-error>
                         </mat-form-field>
                       </div>
@@ -75,8 +75,8 @@
                           </mat-error>
                           <mat-error [hidden]="false" *ngIf="createUserForm?.controls['middlename'].errors?.pattern"
                             i18n-aria-label
-                            aria-label="Name fields cannot contain numbers and special characters except '">
-                            Name fields cannot contain numbers and special characters except '
+                            aria-label="Name field can only contain letters, space and the character (').">
+                            Name field can only contain letters, space and the character (').
                           </mat-error>
                         </mat-form-field>
                       </div> -->
@@ -97,7 +97,7 @@
                           <mat-error [hidden]="false" *ngIf="createUserForm?.controls['surname'].errors?.pattern"
                             i18n-aria-label
                             aria-label="Surname field cannot contain numbers and special characters except '">
-                            Name fields cannot contain numbers and special characters except '
+                            Name field can only contain letters, space and the character (').
                           </mat-error>
                         </mat-form-field>
                       </div> -->
@@ -145,8 +145,8 @@
                             Nationality is mandatory
                           </mat-error>
                           <mat-error *ngIf="createUserForm?.controls['nationality'].errors?.forbiddenNames"
-                            i18n-aria-label aria-label="You must enter value from suggested list only.">
-                            You must enter value from suggested list only.
+                            i18n-aria-label aria-label="Please choose a value from the list provided above.">
+                            Please choose a value from the list provided above.
                           </mat-error>
                         </mat-form-field> -->
                         <!-- <mat-autocomplete #nationalityAutocomplete="matAutocomplete" autoActiveFirstOption="true"
@@ -178,8 +178,8 @@
                             Domicile Medium is mandatory
                           </mat-error>
                           <mat-error *ngIf="createUserForm?.controls['domicileMedium'].errors?.forbiddenNames"
-                            i18n-aria-label aria-label="You must enter value from suggested list only.">
-                            You must enter value from suggested list only.
+                            i18n-aria-label aria-label="Please choose a value from the list provided above.">
+                            Please choose a value from the list provided above.
                           </mat-error>
                         </mat-form-field>
                         <mat-autocomplete #motherTongueAuto="matAutocomplete" autoActiveFirstOption="true">
@@ -381,14 +381,14 @@
                               aria-label="Mobile Number input" maxlength="12">
                             <mat-error [hidden]="false" i18n="Mobile Number Error|Explains Mobile no is required"
                               *ngIf="createUserForm?.controls['mobile'].errors?.required" i18n-aria-label
-                              aria-label="Mobile Number is mandatory">
-                              Mobile Number is mandatory
+                              aria-label="Please enter your mobile number">
+                              Please enter your mobile number
                             </mat-error>
                             <mat-error [hidden]="false" *ngIf="createUserForm?.controls['mobile'].errors?.pattern"
                               i18n-aria-label aria-label="Please enter a valid 10 digit mobile number">
                               Please enter a valid 10 digit mobile number
                             </mat-error>
-                            <mat-hint align="start" *ngIf="createUserForm?.controls['mobile'].errors?.pattern">Please add a valid mobile number</mat-hint>
+                            <!-- <mat-hint align="start">Please add a valid mobile number</mat-hint> -->
                             <!-- <mat-error *ngIf="createUserForm?.controls['mobile'].errors?.required">This field is mandatory.</mat-error>
                             <mat-error *ngIf="createUserForm?.controls['mobile'].errors?.pattern">Minimum 8 charactors needed.</mat-error> -->
                           </mat-form-field>

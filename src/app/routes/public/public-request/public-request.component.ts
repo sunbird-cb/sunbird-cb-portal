@@ -102,14 +102,14 @@ export class PublicRequestComponent implements OnInit {
     if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
       this.signupSvc.sendOtp(mob.value, 'phone').subscribe(() => {
         this.otpSend = true
-        alert('OTP sent to your Mobile Number')
+        alert('An OTP has been sent to your mobile number (valid for 15 minutes)')
         this.startCountDown()
         // tslint:disable-next-line: align
       }, (error: any) => {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid Mobile No')
+      this.snackBar.open('Please enter a valid mobile number')
     }
   }
   resendOTP() {
@@ -118,7 +118,7 @@ export class PublicRequestComponent implements OnInit {
       this.signupSvc.resendOtp(mob.value, 'phone').subscribe((res: any) => {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
-          alert('OTP sent to your Mobile Number')
+          alert('An OTP has been sent to your mobile number (valid for 15 minutes)')
           this.startCountDown()
         }
         // tslint:disable-next-line: align
@@ -126,7 +126,7 @@ export class PublicRequestComponent implements OnInit {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid Mobile No')
+      this.snackBar.open('Please enter a valid mobile number')
     }
   }
 
@@ -134,7 +134,9 @@ export class PublicRequestComponent implements OnInit {
     // console.log(otp)
     const mob = this.requestForm.get('mobile')
     if (otp && otp.value) {
-      if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
+      if(otp && otp.value.length < 4) {
+        this.snackBar.open('Please enter a valid OTP.')
+      } else if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
         this.signupSvc.verifyOTP(otp.value, mob.value, 'phone').subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
             this.otpVerified = true
@@ -146,6 +148,8 @@ export class PublicRequestComponent implements OnInit {
           this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
         })
       }
+    } else {
+      this.snackBar.open('Please enter a valid OTP.')
     }
   }
 
