@@ -14,6 +14,8 @@
                     <!-- {{hoverUser?.personalDetails?.firstname}}{{' '}}{{hoverUser?.personalDetails?.middlename}}
                 {{' '}}{{hoverUser?.personalDetails?.surname}} -->
                     {{getUserName}}
+                    <span class="profile-badge" *ngIf="hoverUser && hoverUser?.verifiedKarmayogi">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
+                    </span>
                 </div>
             </div>
             <div class="flex flex-1" *ngFor="let pro of hoverUser?.professionalDetails">

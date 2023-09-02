@@ -7,6 +7,8 @@
         <div class="name-container flex flex-col width-expand">
             <div class="name ws-mat-black-text cursor-pointer" (click)="goToUserProfile(user)">
                 {{user?.firstName}}
+                <span class="profile-badge" *ngIf="user && user?.profileDetails && user?.profileDetails?.verifiedKarmayogi">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
+                </span>
             </div>
             <div class="designation ws-mat-black60-text">
                 {{user?.rootOrgName}}
