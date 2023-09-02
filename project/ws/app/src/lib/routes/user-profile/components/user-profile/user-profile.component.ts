@@ -759,7 +759,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         industry: organisation.industry,
         industryOther: organisation.industryOther,
         // tslint:disable-next-line
-        designation: isDesiAvailable ? organisation.designation : 'Other',
+        // designation: isDesiAvailable ? organisation.designation : 'Other',
+        designation: organisation.designation || 'Other',
         designationOther: isDesiAvailable ? '' : organisation.designation || organisation.designationOther,
         location: organisation.location,
         responsibilities: organisation.responsibilities,
