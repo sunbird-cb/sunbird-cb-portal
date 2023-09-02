@@ -11,10 +11,10 @@ export class PipeFilterSearchPipe implements PipeTransform {
     const searchTextLowerCase = searchText.toLowerCase()
     if (keys && keys.length) {
       const result =  items.filter(it => {
-        if(it.profileDetails){
+        if (it.profileDetails) {
         return it['profileDetails']['personalDetails'][keys[0]].toLowerCase().includes(searchTextLowerCase)
         }
-         if(it.personalDetails){
+         if (it.personalDetails) {
           return it['personalDetails'][keys[0]].toLowerCase().includes(searchTextLowerCase)
          }
         // keys.map((key: any) => {
