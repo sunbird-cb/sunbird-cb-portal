@@ -18,8 +18,8 @@
             <div class="mat-body-2 ws-mat-black60-text">
                 <div class="flex flex-1 flex-row">
                     <div class="flex margin-right-s">{{session?.type || 'No response'}}</div>
-                    <div class="flex margin-right-s bullet-span">{{session?.startDate | date: 'dd MMM yyyy'}}</div>
-                    <div class="flex bullet-span">{{session?.sessionDuration}}Hrs, {{session?.startTime || 'No response' }} -
+                    <div class="flex margin-right-s bullet-span">{{session?.startDate | date: 'dd-MM-yyyy' }}</div>
+                    <div class="flex bullet-span">{{session?.sessionDuration | pipeDurationTransform: 'hms'}}, {{session?.startTime || 'No response' }} -
                       {{session?.endTime || 'No response'}}
                     </div>
                 </div>
