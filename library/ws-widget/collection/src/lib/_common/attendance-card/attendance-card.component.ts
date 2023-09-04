@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material'
-import { ActivatedRoute } from '@angular/router'
+// import { ActivatedRoute } from '@angular/router'
 import { AttendanceHelperComponent } from '@sunbird-cb/collection/src/public-api'
 import { NsContent } from '@sunbird-cb/utils'
 // tslint:disable
@@ -15,18 +15,18 @@ export class AttendanceCardComponent implements OnInit {
 
   @Input() session: NsContent.IContent | null = null
   @Input() status = 0
-  tocConfig: any = null
+  @Input() config:any = null
 
   constructor(
-    private route: ActivatedRoute,
+    // private route: ActivatedRoute,
     private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
-    this.route.data.subscribe(data => {
-      this.tocConfig = data.pageData.data
-      console.log(this.tocConfig)
-    })
+    // this.route.data.subscribe(data => {
+    //   this.pageConfig = data.pageData.data
+    //   console.log(this.pageConfig)
+    // })
   }
 
   openHelp(content?: any): void {
@@ -34,7 +34,7 @@ export class AttendanceCardComponent implements OnInit {
         // height: '400px',
         // width: '770px',
         maxWidth: '1250px',
-        data: { content, helperConfig: _.get(this.tocConfig, 'attendenceHelp')},
+        data: { content, helperConfig: _.get(this.config, 'attendenceHelp')},
       })
       // dialogRef.componentInstance.xyz = this.configSvc
       dialogRef.afterClosed().subscribe((result: any) => {

@@ -10,6 +10,7 @@ import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { Subscription } from 'rxjs'
 import { IWidgetsPlayerOfflineSessionData } from './player-offline-session.model'
 import { ViewerDataService } from '@ws/viewer/src/lib/viewer-data.service'
+import { WidgetContentService } from '../_services/widget-content.service'
 
 @Component({
   selector: 'ws-widget-player-offline-session',
@@ -23,14 +24,17 @@ export class PlayerOfflineSessionComponent extends WidgetBaseComponent
   identifier: string | null = null
   content: any
   enableTelemetry = false
+  tocConfig = null
 
   constructor(
     private viewerDataSvc: ViewerDataService,
+    private widgetContentSvc: WidgetContentService,
   ) {
     super()
   }
 
   ngOnInit() {
+    this.tocConfig  = this.widgetContentSvc.tocConfigData
     // TODO:When player is fully implemented put initial functions here
   }
 

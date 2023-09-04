@@ -1,25 +1,15 @@
 <div class="contents-container">
     <div class="main-container">
-      <ng-container *ngIf="batchData?.batchAttributes?.sessionDetails?.length > 0; else noChildren">
-        <!-- <div class="content-card padding-right-m padding-left-m padding-top-s padding-bottom-s margin-bottom-m" *ngFor="let card of content?.children; trackBy: contentTrackBy">
-          <ws-app-toc-content-card [forPreview]="forPreview" [expandAll]="expandAll" [rootId]="contextId" [batchId]="batchId"
-            [rootContentType]="contextPath" [content]="card"></ws-app-toc-content-card>
-        </div> -->
-        <div class="content-card padding-right-m padding-left-m padding-top-s padding-bottom-s margin-bottom-m" *ngFor="let session of batchData?.batchAttributes?.sessionDetails; trackBy: contentTrackBy">
-            <ws-app-toc-session-card [forPreview]="forPreview" [rootId]="contextId" [batchData]="batchData"
+      <ng-container *ngIf="batchData?.batchAttributes?.sessionDetails_v2?.length > 0; else noChildren">
+        <div class="content-card padding-right-m padding-left-m padding-top-s padding-bottom-s margin-bottom-m" *ngFor="let session of batchData?.batchAttributes?.sessionDetails_v2; trackBy: contentTrackBy">
+            <ws-app-toc-session-card [forPreview]="forPreview" [rootId]="contextId" [batchData]="batchData" [config]="config"
               [session]="session"></ws-app-toc-session-card>
           </div>
       </ng-container>
       <ng-template #noChildren>
-        <div *ngIf="!isPlayable"
-          class="ws-mat-primary-default-text ws-mat-primary-lite-background px-6 py-8 font-normal text-base noChildren"
-          i18n>
-          The preview for this type of content is unavailable. Please click on Start button above to view.
-        </div>
         <div>
           No sessions available in this batch
         </div>
-        <!-- <ng-container *ngIf="isPlayable" [wsResolverWidget]="contentPlayWidgetConfig"></ng-container> -->
       </ng-template>
     </div>
   </div>

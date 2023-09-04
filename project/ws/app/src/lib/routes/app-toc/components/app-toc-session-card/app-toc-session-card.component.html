@@ -17,10 +17,10 @@
             </div>
             <div class="mat-body-2 ws-mat-black60-text">
                 <div class="flex flex-1 flex-row">
-                    <div class="flex margin-right-s">{{session?.type || 'No response'}}</div>
+                    <div class="flex margin-right-s">{{session?.sessionType || ''}}</div>
                     <div class="flex margin-right-s bullet-span">{{session?.startDate | date: 'dd-MM-yyyy' }}</div>
-                    <div class="flex bullet-span">{{session?.sessionDuration | pipeDurationTransform: 'hms'}}, {{session?.startTime || 'No response' }} -
-                      {{session?.endTime || 'No response'}}
+                    <div class="flex bullet-span">{{session?.sessionDuration || '_'}}, {{session?.startTime || '_' }} -
+                      {{session?.endTime || '_'}}
                     </div>
                 </div>
                 <!-- <span class="ws-mat-black60-text">{{ (content?.duration || 120)| pipeDurationTransform: 'hms' }}</span> -->
@@ -67,5 +67,5 @@
     </div>
 </div>
 <ng-container>
-    <ws-widget-attendance-card [session]=""  [status]=""></ws-widget-attendance-card>
+    <ws-widget-attendance-card [session]=""  [status]="" [config]="config"></ws-widget-attendance-card>
 </ng-container>

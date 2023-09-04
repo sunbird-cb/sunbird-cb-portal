@@ -10,6 +10,7 @@ export class AppTocSessionsComponent implements OnInit {
   @Input() batchData: any
   @Input() content: NsContent.IContent | null = null
   @Input() forPreview = false
+  @Input() config = null
 
   constructor() { }
 
