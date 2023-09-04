@@ -347,15 +347,18 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   public requestToEnrollDialog() {
-    const userList = this.userEnrollmentList && this.userEnrollmentList.filter(ele => {
-      if (ele.content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
-        if (ele.batch.endDate) {
-          const endDate = dayjs(ele.batch.endDate)
-          return dayjs(dayjs(new Date()).format('YYYY-MM-DD')).isSameOrBefore(endDate)
-        }
-      }
-      return false
-    })
+    // conflicts check start
+    const userList :any=[]
+    // const userList = this.userEnrollmentList && this.userEnrollmentList.filter(ele => {
+    //   if (ele.content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
+    //     if (ele.batch.endDate) {
+    //       const endDate = dayjs(ele.batch.endDate)
+    //       return dayjs(dayjs(new Date()).format('YYYY-MM-DD')).isSameOrBefore(endDate)
+    //     }
+    //   }
+    //   return false
+    // })
+    // conflicts check end
     if (userList && userList.length === 0) {
       const batchData = this.batchControl.value
       const confirmDialog = this.dialog.open(ConfirmDialogComponent, {

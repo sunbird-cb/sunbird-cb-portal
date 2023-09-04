@@ -407,12 +407,6 @@ TODO: edit option while preview Mode
               <span *ngIf="tocStructure?.pdf === 1" i18n> PDF</span>
               <span *ngIf="tocStructure?.pdf > 1" i18n> PDFs</span>
             </p>
-            <p *ngIf="tocStructure?.offlineSession > 0" class="mat-body-2 cs-icons">
-              <img src="/assets/icons/content/grey/module.svg" alt="Ofline sessions" class="margin-right-xs"> {{
-              tocStructure?.offlineSession }}
-              <span *ngIf="tocStructure?.offlineSession === 1" i18n> Session</span>
-              <span *ngIf="tocStructure?.offlineSession > 1" i18n> Sessions</span>
-            </p>
             <p *ngIf="tocStructure?.podcast > 0" class="mat-body-2 cs-icons">
               <img src="/assets/icons/content/grey/audio.svg" alt="Podcast" class="margin-right-xs"> {{
               tocStructure?.podcast }}
@@ -479,7 +473,7 @@ TODO: edit option while preview Mode
                 {{tocConfig?.atAGlance?.batchDate?.displayName}}
               </h3>
               <h3 class="item-value width-expand">
-                {{ selectedBatchData?.startDate | date: 'dd/MM/yyyy'}} - {{ selectedBatchData?.endDate | date: 'dd/MM/yyyy'}}
+                {{ selectedBatchData?.startDate | date: 'dd-MM-yyyy'}} - {{ selectedBatchData?.endDate | date: 'dd-MM-yyyy'}}
               </h3>
             </div>
             <div class="info-item" *ngIf="tocConfig?.atAGlance?.batchDuration?.enabled && content?.programDuration">

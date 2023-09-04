@@ -318,26 +318,16 @@
                     <div class="fixed-width flex flex-col flex-wrap">
                         <h2 _ngcontent-qml-c28="" class="mat-toolbar contacts-head">Program director & facilitators</h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 col-gap-4">
-                            <!-- Program director -->
-                            <div class="unit-cohort user-card sm:pr-8 md:pr-10">
-                                <ws-widget-avatar-photo class="float-left margin-right-s" [randomColor]="true"
-                                    [datalen]="parseJsonData(content?.creatorContacts).length"
-                                    [size]="'m'" [photoUrl]="'' || ''" [name]="'Sharath'" size="l-xs">
+                            <!-- facilitator -->
+                            <div *ngFor="let facilitator of selectedBatchData?.batchAttributes?.sessionDetails[0]?.facilatorDetails"
+                                class="unit-cohort sm:pr-8 md:pr-10">
+                                <ws-widget-avatar-photo class="float-left margin-right-s " [randomColor]="true"
+                                    [datalen]="selectedBatchData?.batchAttributes?.sessionDetails[0]?.facilatorDetails.length"
+                                    [size]="'m'" [photoUrl]="facilitator.photo || ''" [name]="facilitator.name" size="l-xs">
                                 </ws-widget-avatar-photo>
-                                <div class="">
-                                    <div class="user-name">{{'Sharath' }}</div>
-                                    <p class="mat-body-2 mb-0  ws-mat-black60-text">Program director</p>
-                                </div>
-                            </div>
-                            <!-- facilitators -->
-                            <div  class="unit-cohort user-card sm:pr-8 md:pr-10">
-                                <ws-widget-avatar-photo class="float-left margin-right-s" [randomColor]="true"
-                                    [datalen]="parseJsonData(content?.creatorContacts).length"
-                                    [size]="'m'" [photoUrl]="'' || ''" [name]="'Bharath'" size="l-xs">
-                                </ws-widget-avatar-photo>
-                                <div class="">
-                                    <div class="user-name">{{ author?.name || 'bharath'  }}</div>
-                                    <p class="mat-body-2 mb-0 ws-mat-black60-text">facilitators</p>
+                                <div class="margin-left-xl">
+                                    <div class="user-name">{{ facilitator.name }}</div>
+                                    <p class="mat-body-2  mb-0  ws-mat-black60-text">Facilitator</p>
                                 </div>
                             </div>
                         </div>
