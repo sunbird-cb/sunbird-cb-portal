@@ -55,6 +55,8 @@ export class WidgetContentService {
   ) {
   }
 
+  tocConfigData: any = null
+
   isResource(primaryCategory: string) {
     if (primaryCategory) {
       const isResource = (primaryCategory === NsContent.EResourcePrimaryCategories.LEARNING_RESOURCE) ||
@@ -73,6 +75,10 @@ export class WidgetContentService {
     // return this.http.get(url).toPromise()
     if (url) { }
     return of().toPromise()
+  }
+
+  updateTocConfig(data: any){
+    this.tocConfigData = data
   }
 
   fetchContent(

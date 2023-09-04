@@ -107,6 +107,7 @@ export class PlayerBriefComponent implements OnInit {
     const url = `${this.configSvc.sitePath}/feature/toc.json`
     this.widgetContentSvc.fetchConfig(url).subscribe(data => {
       this.tocConfig = data
+      this.widgetContentSvc.updateTocConfig(data)
     })
   }
 

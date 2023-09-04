@@ -319,10 +319,10 @@
                         <h2 _ngcontent-qml-c28="" class="mat-toolbar contacts-head">Program director & facilitators</h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 col-gap-4">
                             <!-- facilitator -->
-                            <div *ngFor="let facilitator of selectedBatchData?.batchAttributes?.sessionDetails[0]?.facilatorDetails"
+                            <div *ngFor="let facilitator of selectedBatchData?.batchAttributes?.sessionDetails_v2[0]?.facilatorDetails"
                                 class="unit-cohort sm:pr-8 md:pr-10">
                                 <ws-widget-avatar-photo class="float-left margin-right-s " [randomColor]="true"
-                                    [datalen]="selectedBatchData?.batchAttributes?.sessionDetails[0]?.facilatorDetails.length"
+                                    [datalen]="selectedBatchData?.batchAttributes?.sessionDetails_v2[0]?.facilatorDetails.length"
                                     [size]="'m'" [photoUrl]="facilitator.photo || ''" [name]="facilitator.name" size="l-xs">
                                 </ws-widget-avatar-photo>
                                 <div class="margin-left-xl">
@@ -460,7 +460,7 @@
         <ng-template matTabContent>
             <section id="content">
                 <div class="fixed-width">
-                    <ws-app-app-toc-sessions [batchData]="selectedBatchData"  [content]="content" [forPreview]="forPreview">
+                    <ws-app-app-toc-sessions [batchData]="selectedBatchData"  [content]="content" [forPreview]="forPreview" [config]="tocConfig">
                     </ws-app-app-toc-sessions>
                 </div>
             </section>
