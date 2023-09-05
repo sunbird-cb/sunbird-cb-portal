@@ -1,0 +1,71 @@
+<div class="flex flex-col sm:flex-row flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto mb-4">
+    <a [class.disabled]="(forPreview || !isEnabled) ? true : null"
+        [routerLink]="(isAllowed && !forPreview && !isEnabled) ? resourceLink.url : null"
+        [queryParams]="(isAllowed && !forPreview && !isEnabled)  ? resourceLink.queryParams : null">
+        <div class="text-truncate " [ngClass]="{'cursor-pointer': !isEnabled}"
+            (click)="viewChildren = !viewChildren; raiseTelemetry()">
+            <div class="flex flex-col sm:flex-row flex-wrap">
+                <p class="margin-remove text-truncate mat-subheading-1 flex-auto">
+                    <!-- <mat-icon class="margin-right-xs radiobtn time-icon">radio_button_unchecked </mat-icon> -->
+                    {{ session?.title }}
+                </p>
+
+                <span class="content-type optional-span" *ngIf="content?.optionalReading">optional </span>
+                <!-- <span class="mat-body-strong content-type">{{ content?.identifier }}</span> -->
+
+
+            </div>
+            <div class="mat-body-2 ws-mat-black60-text">
+                <div class="flex flex-1 flex-row">
+                    <div class="flex margin-right-s">{{session?.sessionType || ''}}</div>
+                    <div class="flex margin-right-s bullet-span">{{session?.startDate | date: 'dd-MM-yyyy' }}</div>
+                    <div class="flex bullet-span">{{session?.sessionDuration || '_'}}, {{session?.startTime || '_' }} -
+                      {{session?.endTime || '_'}}
+                    </div>
+                </div>
+                <!-- <span class="ws-mat-black60-text">{{ (content?.duration || 120)| pipeDurationTransform: 'hms' }}</span> -->
+                <!-- </span> -->
+            </div>
+        </div>
+    </a>
+    <div class="flex flex-wrap items-center justify-start sm:justify-end">
+        <ng-container *ngIf="!forPreview && session?.identifier && session?.completionPercentage ; else elseBlock">
+
+            <ng-container *ngIf="content?.completionStatus == 2">
+                <circle-progress class="flex items-center progress" [percent]="100" [radius]="12" [outerStrokeWidth]="3"
+                    [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()"
+                    [innerStrokeColor]="'rgba(0, 0, 0, 0.16)'" [animation]="true" [animationDuration]="300"
+                    [showTitle]="false" [showUnits]="false" [showSubtitle]="false" [showInnerStroke]="true"
+                    [clockwise]="true" [backgroundOpacity]="0" [backgroundGradient]="false" [backgroundStrokeWidth]="3"
+                    matTooltip="Completed" [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false"
+                    [backgroundPadding]="0" [imageHeight]="24" [imageWidth]="24" [showBackground]="false"
+                    [outerStrokeLinecap]="'butt'">
+                </circle-progress>
+            </ng-container>
+            <ng-container *ngIf="content?.completionStatus < 2">
+                <circle-progress class="flex items-center progress" [percent]="content?.completionPercentage"
+                    [radius]="12" [outerStrokeWidth]="3" [innerStrokeWidth]="3" [space]="-3"
+                    [outerStrokeColor]="progressColor2()" [innerStrokeColor]="'rgba(0, 0, 0, 0.16)'" [animation]="true"
+                    [animationDuration]="300" [showTitle]="false" [showUnits]="false" [showSubtitle]="false"
+                    [showInnerStroke]="true" [clockwise]="true" [backgroundOpacity]="0" [backgroundGradient]="false"
+                    [backgroundStrokeWidth]="3" matTooltip="In progress" [showZeroOuterStroke]=false
+                    [backgroundPadding]="-9" [startFromZero]="false" [backgroundPadding]="0" [imageHeight]="24"
+                    [imageWidth]="24" [showBackground]="false" [outerStrokeLinecap]="'butt'">
+                </circle-progress>
+            </ng-container>
+
+        </ng-container>
+        <ng-template #elseBlock>
+            <circle-progress class="flex items-center progress" [percent]="0" [radius]="12" [outerStrokeWidth]="3"
+                [innerStrokeWidth]="3" [outerStrokeColor]="'#808080'" [innerStrokeColor]="'#808080'" [animation]="true"
+                [space]="-3" [showUnits]="false" [animationDuration]="300" [showTitle]="false" [backgroundPadding]="0"
+                [backgroundPadding]="-9" [outerStrokeLinecap]="'butt'" matTooltip="Not started" [showSubtitle]="false"
+                [showInnerStroke]="true" [clockwise]="true" [imageHeight]="24" [imageWidth]="24"
+                [showBackground]="false"></circle-progress>
+            <!-- <p>no data</p> -->
+        </ng-template>
+    </div>
+</div>
+<ng-container>
+    <ws-widget-attendance-card [session]=""  [status]="" [config]="config"></ws-widget-attendance-card>
+</ng-container>

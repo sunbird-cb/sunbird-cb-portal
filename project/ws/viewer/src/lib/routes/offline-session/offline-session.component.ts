@@ -38,6 +38,7 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
     NsDiscussionForum.IDiscussionForumInput
   > | null = null
   batchId = this.activatedRoute.snapshot.queryParamMap.get('batchId')
+  batchData: any
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -47,42 +48,24 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    if (
-      this.activatedRoute.snapshot.queryParamMap.get('preview') &&
-      !this.accessControlSvc.authoringConfig.newDesign
-    ) {
+    if (this.activatedRoute.snapshot.queryParamMap.get('preview') && !this.accessControlSvc.authoringConfig.newDesign) {
+      
       this.isPreviewMode = true
-      this.viewerDataSubscription = this.activatedRoute.data
-      .subscribe(data => {
-        this.offlineSessionData = data.content.data
-        if (this.offlineSessionData) {
-          this.formDiscussionForumWidget(this.offlineSessionData)
-          if (this.discussionForumWidget) {
-            this.discussionForumWidget.widgetData.isDisabled = true
-          }
-        }
-        // this.widgetResolverOfflineSessionData.widgetData.pdfUrl = this.pdfData
-        //   ? `/apis/authContent/${encodeURIComponent(this.pdfData.artifactUrl)}`
-        //   : ''
-        if (this.activatedRoute.snapshot.queryParams.collectionId) {
-          this.widgetResolverOfflineSessionData.widgetData.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
+      this.viewerDataSubscription = this.activatedRoute.data.subscribe(data => {
+        if (this.batchData) {
+          // if batchData exist then move to sessionData to form data
+          this.getSessionData(data)
         } else {
-          this.widgetResolverOfflineSessionData.widgetData.collectionId = ''
+          // fetching batch data from api
+          const batchID : any= this.activatedRoute.snapshot.queryParamMap.get('batchId')
+          this.contentSvc.fetchCourseBatch(batchID).subscribe(response => {
+            if(response.result && response.result.response) {
+              this.batchData = response.result.response
+            }
+            // after getting batch data move to sessionData to form data
+            this.getSessionData(data)
+          })
         }
-        // this.widgetResolverOfflineSessionData.widgetData.identifier=''
-        // tslint:disable-next-line
-        this.widgetResolverOfflineSessionData.widgetData.OfflineSessionUrl = this.generateUrl(this.offlineSessionData!.artifactUrl)
-        this.widgetResolverOfflineSessionData.widgetData.disableTelemetry = true
-        if (this.offlineSessionData) {
-          this.widgetResolverOfflineSessionData.widgetData.identifier = this.offlineSessionData.identifier
-          this.widgetResolverOfflineSessionData.widgetData.mimeType = this.offlineSessionData.mimeType
-          this.widgetResolverOfflineSessionData.widgetData.contentType = this.offlineSessionData.contentType
-          this.widgetResolverOfflineSessionData.widgetData.primaryCategory = this.offlineSessionData.primaryCategory
-
-          this.widgetResolverOfflineSessionData.widgetData.version = `${this.offlineSessionData.version}${''}`
-          this.widgetResolverOfflineSessionData.widgetData.content = this.offlineSessionData
-        }
-        this.isFetchingDataComplete = true
       })
     } else {
       this.dataSubscription = this.activatedRoute.data.subscribe(
@@ -139,6 +122,51 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
         () => { },
       )
     }
+  }
+
+  // get session  data  from batch api start
+  getSessionData(resolveData: any) {
+    let sessionData = this.batchData.batchAttributes.sessionDetails_v2.find((obj: any) => {
+      return obj.session_id ===  this.activatedRoute.snapshot.params.resourceId
+      
+    })
+    resolveData.content.data['sessionData'] = sessionData
+    // calling initData to form the data
+    this.initData(resolveData)
+  }
+  // get session data  from batch api end
+
+  initData(data:any) {
+    this.offlineSessionData = data.content.data
+    if (this.offlineSessionData) {
+      this.formDiscussionForumWidget(this.offlineSessionData)
+      if (this.discussionForumWidget) {
+        this.discussionForumWidget.widgetData.isDisabled = true
+      }
+    }
+    if (this.activatedRoute.snapshot.queryParams.collectionId) {
+      this.widgetResolverOfflineSessionData.widgetData.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
+    } else {
+      this.widgetResolverOfflineSessionData.widgetData.collectionId = ''
+    }
+    // tslint:disable-next-line
+    this.widgetResolverOfflineSessionData.widgetData.OfflineSessionUrl = this.generateUrl(this.offlineSessionData!.artifactUrl)
+    this.widgetResolverOfflineSessionData.widgetData.disableTelemetry = true
+    if (this.offlineSessionData) {
+      this.widgetResolverOfflineSessionData.widgetData.identifier = this.offlineSessionData.identifier
+      this.widgetResolverOfflineSessionData.widgetData.mimeType = this.offlineSessionData.mimeType
+      this.widgetResolverOfflineSessionData.widgetData.contentType = this.offlineSessionData.contentType
+      this.widgetResolverOfflineSessionData.widgetData.primaryCategory = this.offlineSessionData.primaryCategory
+
+      this.widgetResolverOfflineSessionData.widgetData.version = `${this.offlineSessionData.version}${''}`
+
+      this.widgetResolverOfflineSessionData.widgetData.content = this.offlineSessionData
+
+      
+      this.widgetResolverOfflineSessionData.widgetData.sessionData = data.batchData
+    }
+    this.isFetchingDataComplete = true
+   
   }
 
   generateUrl(oldUrl: string) {

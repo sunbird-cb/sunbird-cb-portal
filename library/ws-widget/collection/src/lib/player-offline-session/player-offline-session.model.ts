@@ -7,6 +7,7 @@ export interface IWidgetsPlayerOfflineSessionData {
   courseName?: any
   progressStatus?: any
   content?: any
+  sessionData?:any
 }
 
 export interface IPlayerOfflineSession {

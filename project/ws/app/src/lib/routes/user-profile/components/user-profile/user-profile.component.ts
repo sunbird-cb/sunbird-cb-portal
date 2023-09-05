@@ -1813,7 +1813,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       data,
     )
   }
-  numericOnly(event:any): boolean {  
+  numericOnly(event: any): boolean {
     const pattren = /^([0-9])$/
     const result = pattren.test(event.key)
     return result
