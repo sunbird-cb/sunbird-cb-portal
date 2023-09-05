@@ -100,6 +100,7 @@ export class SCORMAdapterService {
       // let newData = JSON.stringify(data)
       // data = Base64.encode(newData)
       let _return = false
+      console.log('data', data)
       this.addDataV2(data).subscribe((response) => {
         // console.log(response)
         if (response) {

@@ -9,6 +9,7 @@ import { SCORMAdapterService } from './SCORMAdapter/scormAdapter'
 /* tslint:disable */
 import _ from 'lodash'
 import { environment } from 'src/environments/environment';
+import { Subscription } from 'rxjs'
 /* tslint:enable */
 
 @Component({
@@ -31,6 +32,12 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   collectionId = ''
   forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   progress = 100
+
+  ticks = 0
+  private timer!: any
+  // Subscription object
+  private sub!: Subscription
+
   constructor(
     private domSanitizer: DomSanitizer,
     public mobAppSvc: MobileAppsService,
@@ -42,33 +49,45 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     private activatedRoute: ActivatedRoute,
   ) {
     (window as any).API = this.scormAdapterService
-    // if (window.addEventListener) {
+    if (window.addEventListener) {
     window.addEventListener('message', this.receiveMessage.bind(this))
-    // }
-    // else {
-    //   (<any>window).attachEvent('onmessage', this.receiveMessage.bind(this))
-    // }
-    // window.addEventListener('message', function (event) {
-    //   /* tslint:disable-next-line */
-    //   console.log('message', event)
-    // })
-    // window.addEventListener('onmessage', function (event) {
-    //   /* tslint:disable-next-line */
-    //   console.log('onmessage===>', event)
-    // })
+    }
+    else {
+      (<any>window).attachEvent('onmessage', this.receiveMessage.bind(this))
+    }
+    window.addEventListener('message', function (event) {
+      /* tslint:disable-next-line */
+      console.log('message', event)
+    })
+    window.addEventListener('onmessage', function (event) {
+      /* tslint:disable-next-line */
+      console.log('onmessage===>', event)
+    })
   }
 
   ngOnInit() {
+    console.log('ngOnInit')
     if (this.htmlContent && this.htmlContent.identifier) {
       this.scormAdapterService.contentId = this.htmlContent.identifier
       if (!this.forPreview) {
         this.scormAdapterService.loadDataV2()
+        // this.timer = timer(1000, 1000)
+        // subscribing to a observable returns a subscription object
+        // this.sub = this.timer.subscribe((t: any) => this.tickerFunc(t))
       }
     }
   }
+
+  tickerFunc(tick: any){
+    console.log('tick', tick)
+      this.ticks = tick
+  }
+
   ngOnDestroy() {
     window.removeEventListener('message', this.receiveMessage)
-    // window.removeEventListener('onmessage', this.receiveMessage)
+    window.removeEventListener('onmessage', this.receiveMessage)
+    console.log('this.ticks: ', this.ticks)
+    // this.sub.unsubscribe();
   }
   ngOnChanges() {
     this.isIntranetUrl = false
@@ -234,7 +253,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   }
   receiveMessage(msg: any) {
     // /* tslint:disable-next-line */
-    // console.log("msg=>", msg)
+    console.log("msg=>", msg)
     if (msg.data) {
       this.raiseTelemetry(msg.data)
     } else {
