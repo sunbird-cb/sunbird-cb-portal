@@ -531,7 +531,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               content: [batch],
               enrolled: true,
             }
-            this.tocSvc.getSelectedBatchData(batch)
+            this.tocSvc.getSelectedBatchData(this.batchData)
             this.router.navigate(
               [],
               {
@@ -618,7 +618,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               enrolled: true,
             }
             this.tocSvc.setBatchData(this.batchData)
-            this.tocSvc.getSelectedBatchData(enrolledCourse.batch)
+            this.tocSvc.getSelectedBatchData(this.batchData)
             if (this.getBatchId()) {
               this.router.navigate(
                 [],
