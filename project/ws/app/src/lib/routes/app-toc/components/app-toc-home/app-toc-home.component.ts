@@ -532,6 +532,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               enrolled: true,
             }
             this.tocSvc.getSelectedBatchData(this.batchData)
+            this.tocSvc.mapSessionCompletionPercentage(this.batchData)
             this.router.navigate(
               [],
               {
@@ -619,6 +620,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             }
             this.tocSvc.setBatchData(this.batchData)
             this.tocSvc.getSelectedBatchData(this.batchData)
+            this.tocSvc.mapSessionCompletionPercentage(this.batchData)
             if (this.getBatchId()) {
               this.router.navigate(
                 [],
