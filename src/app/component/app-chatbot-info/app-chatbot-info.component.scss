@@ -1,0 +1,46 @@
+.default-info {
+  .default-icon {
+    width: 60px;
+    float: left;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .default-msg{
+    background-color: rgba(0,0,0, 0.04);
+    border: 1px solid rgba(0,0,0, 0.16);
+    border-top-left-radius: 0;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.hints {
+  margin-left: 50px;
+  font-weight: 600;
+}
+.list {
+  margin-left: 50px;
+}
+
+.btn-cover {
+  display: flex;
+  flex-wrap: wrap;
+}
+.my-5px {
+  margin-top: 5px;
+  margin-bottom: 5px
+}
+.mr-5px {
+  margin-right: 5px
+}
+.btn-default {
+  background: #fff;
+  border: 1px solid rgba(0,0,0, 0.16);
+  color: black;
+  padding: 12px;
+  font-size: 14px;
+  cursor: pointer;
+}

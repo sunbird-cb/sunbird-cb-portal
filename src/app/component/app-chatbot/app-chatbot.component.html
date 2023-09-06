@@ -2,7 +2,7 @@
 <ng-container>
   <div class="fixed-width flex flex-wrap">
     <div class="chatbot-icon" *ngIf="showIcon">
-      <mat-icon (click)="iconClick()">chat_bubble</mat-icon>
+    <img alt="chatbot-icon" src="/assets/icons/chatbot-default.png" (click)="iconClick()">
     </div>
     <div class="chatbot" *ngIf="!showIcon">
       <div class="flex flex-wrap cb-header padding-m">
@@ -19,6 +19,12 @@
         <div class=""><mat-icon class="cb-close" (click)="iconClick()">close</mat-icon></div>
       </div>
       <div class="flex flex-wrap cb-content padding-m">
+        <ng-container *ngIf="currentFilter === 'info'">
+          <ws-app-chatbot-info></ws-app-chatbot-info>
+        </ng-container>
+        <ng-container *ngIf="currentFilter === 'issue'">
+          <ws-app-chatbot-issue></ws-app-chatbot-issue>
+        </ng-container>
       </div>
       <div class="flex flex-wrap cb-topics">
         <div class="cat-list">
@@ -27,10 +33,8 @@
           </ng-container>
         </div>
       </div>
-
-
       <div class="flex flex-wrap cb-footer">
-        <div class="info br-bl padding-top-xs active">
+        <div class="info br-bl padding-top-xs" [ngClass]="{active: currentFilter === 'info'}" (click)="toggleFilter('info')">
           <div class="info-icon">
             <mat-icon>info</mat-icon>
           </div>
@@ -38,7 +42,7 @@
             Information
           </div>
         </div>
-        <div class="info br-br padding-top-xs">
+        <div class="info br-br padding-top-xs" [ngClass]="{active: currentFilter === 'issue'}" (click)="toggleFilter('issue')">
           <div class="info-icon">
             <mat-icon>warning</mat-icon>
           </div>
@@ -46,7 +50,6 @@
             Issue
           </div>
         </div>
-
       </div>
     </div>
   </div>

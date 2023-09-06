@@ -1,17 +1,18 @@
 .chatbot-icon {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 20px;
+  right: 25px;
   cursor: pointer;
   z-index: 1000;
+  height: 52px;
 }
 
 .chatbot {
   width: 400px;
-  min-height: 702px;
+  min-height: 502px;
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 20px;
+  right: 25px;
   z-index: 1000;
   border-radius: 15px;
   background-color: white;
@@ -31,7 +32,7 @@
   justify-content: space-between;
 }
 .cb-content {
-  min-height: 500px;
+  min-height: 300px;
   background-color: white;
 }
 .cb-topics {
@@ -56,6 +57,7 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    cursor: pointer;
     .info-text {
       font-size: 10px;
       width: 100%;
@@ -74,7 +76,6 @@
 .active {
   background-color: #EF951E;
 }
-
 .cb-topics {
   .cat-list {
     margin: 0;
@@ -100,6 +101,7 @@
       width: fit-content;
       margin-right: 12px;
       height: fit-content;
+      cursor: pointer;
       white-space: nowrap;
     }
   }

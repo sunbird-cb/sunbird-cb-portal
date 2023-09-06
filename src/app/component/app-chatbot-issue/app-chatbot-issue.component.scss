@@ -1,0 +1,18 @@
+.default-info {
+  .default-icon {
+    width: 60px;
+    float: left;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .default-msg{
+    background-color: rgba(0,0,0, 0.04);
+    border: 1px solid rgba(0,0,0, 0.16);
+    border-top-left-radius: 0;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}

@@ -80,7 +80,9 @@ import { PublicWelcomeModule } from './routes/public/welcome/public-welcome.modu
 import { WelcomeUserResolverService } from './services/welcome-user-resolver.service'
 import { PublicTocModule } from './routes/public/public-toc/public-toc.module'
 import { PublicRequestModule } from './routes/public/public-request/public-request.module';
-import { AppChatbotComponent } from './component/app-chatbot/app-chatbot.component'
+import { AppChatbotComponent } from './component/app-chatbot/app-chatbot.component';
+import { AppChatbotInfoComponent } from './component/app-chatbot-info/app-chatbot-info.component';
+import { AppChatbotIssueComponent } from './component/app-chatbot-issue/app-chatbot-issue.component'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -123,6 +125,8 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PublicLoginWComponent,
     PublicLoginWGComponent,
     AppChatbotComponent,
+    AppChatbotInfoComponent,
+    AppChatbotIssueComponent,
   ],
   imports: [
     FormsModule,
