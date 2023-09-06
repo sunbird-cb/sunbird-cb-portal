@@ -27,12 +27,15 @@
   color: white !important;
   border-top-left-radius: inherit;
   border-top-right-radius: inherit;
+  align-items: center;
+  justify-content: space-between;
 }
 .cb-content {
   min-height: 500px;
   background-color: white;
 }
 .cb-topics {
+  padding: 16px 16px 0 16px;
   background-color: #F5F5F5;
 }
 
@@ -71,39 +74,14 @@
 .active {
   background-color: #EF951E;
 }
-.cb-topics {
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    li {
-      padding: 10px 16px;
-      border-radius: 21px;
-      border: 1px solid rgba(0,0,0, 0.16);
-      opacity: 1;
-      background-color: rgba(0,0,0, 0.04);
-      opacity: 1;
-      color: rgba(0,0,0,0.87);
-      font-family: "Lato-Regular";
-      font-size: 14px;
-      font-weight: 400;
-      font-style: normal;
-      letter-spacing: 0.25px;
-      text-align: center;
-      line-height: 20px;
-    }
-  }
-}
 
 .cb-topics {
   .cat-list {
-    list-style-type: none;
     margin: 0;
     padding: 0;
     width: 100%;
     display: flex;
-    overflow: hidden;
-    height: fit-content;
+    overflow: auto;
     .cat-item {
       padding: 10px 16px;
       border-radius: 21px;
@@ -122,13 +100,28 @@
       width: fit-content;
       margin-right: 12px;
       height: fit-content;
+      white-space: nowrap;
     }
   }
 }
+::-webkit-scrollbar {
+  width: 0px;
+  padding: 0;
+  background: transparent; /* make scrollbar transparent */
+}
+::ng-deep mat-form-field {
+  width: 70px;
+  .mat-form-field-flex {
+    background-color: white !important;
+  }
+  .mat-form-field-underline {
+    background-color: transparent !important;
+  }
+}
+::ng-deep .mat-form-field-wrapper {
+  padding: 0 !important;
+}
 
-
-
-
-
-
-
+::ng-deep .mat-form-field-infix {
+  border-top: unset !important;
+}

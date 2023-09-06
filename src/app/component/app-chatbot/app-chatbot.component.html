@@ -6,19 +6,21 @@
     </div>
     <div class="chatbot" *ngIf="!showIcon">
       <div class="flex flex-wrap cb-header padding-m">
-        <div class="flex flex-1">KarmaSahayogi - Digital Assistant</div>
-        <div class="flex flex-2">
-          <mat-select class="language">
-            <mat-option value="english" selected>English</mat-option>
-            <mat-option value="hindi">Hindi</mat-option>
-          </mat-select>
+        <div class="">KarmaSahayogi - Digital Assistant</div>
+        <div class="">
+          <mat-form-field>
+            <mat-select>
+              <mat-option *ngFor="let food of foods" [value]="food.value">
+                {{food.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
-        <div class="flex flex-3"><mat-icon class="cb-close" (click)="iconClick()">close</mat-icon></div>
+        <div class=""><mat-icon class="cb-close" (click)="iconClick()">close</mat-icon></div>
       </div>
       <div class="flex flex-wrap cb-content padding-m">
-
       </div>
-      <div class="flex flex-wrap cb-topics padding-m">
+      <div class="flex flex-wrap cb-topics">
         <div class="cat-list">
           <ng-container *ngFor="let item of categories">
             <div class="cat-item">{{item}}</div>
