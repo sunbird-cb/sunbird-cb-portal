@@ -8,8 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class AppChatbotComponent implements OnInit {
 
   showIcon :boolean = true
-  categories: any[] = ["Karmayogi", "Registration", "Login", "Profile", "Hubs", "Learning, Assessment and Certifications"]
-
+  categories: any[] = ["Karmayogi", "Registration", "Login", "Profile", "Hubs", "Learning Assessment and Certifications"]
+  foods: any[] = [
+    {value: 'english', viewValue: 'English'},
+    {value: 'hindi', viewValue: 'Hindi'},
+    {value: 'kannada', viewValue: 'Kannada'},
+  ];
   constructor() { }
 
   ngOnInit() {
