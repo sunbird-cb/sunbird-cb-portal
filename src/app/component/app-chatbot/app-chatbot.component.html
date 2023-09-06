@@ -7,29 +7,28 @@
     <div class="chatbot" *ngIf="!showIcon">
       <div class="flex flex-wrap cb-header padding-m">
         <div class="flex flex-1">KarmaSahayogi - Digital Assistant</div>
-        <div class="flex flex-2"><mat-icon class="cb-close" (click)="iconClick()">close</mat-icon></div>
+        <div class="flex flex-2">
+          <mat-select class="language">
+            <mat-option value="english" selected>English</mat-option>
+            <mat-option value="hindi">Hindi</mat-option>
+          </mat-select>
+        </div>
+        <div class="flex flex-3"><mat-icon class="cb-close" (click)="iconClick()">close</mat-icon></div>
       </div>
       <div class="flex flex-wrap cb-content padding-m">
 
       </div>
       <div class="flex flex-wrap cb-topics padding-m">
         <div class="cat-list">
-          <div class="cat-item">Home</div>
-          <div class="cat-item">News</div>
-          <div class="cat-item">Contactasfsdfsdfsdfsdf</div>
-          <div class="cat-item">About</div>
-          <div class="cat-item">Support</div>
-          <div class="cat-item">Blog</div>
-          <div class="cat-item">Tools</div>  
-          <div class="cat-item">Base</div>
-          <div class="cat-item">Custom</div>
-          <div class="cat-item">More</div>
+          <ng-container *ngFor="let item of categories">
+            <div class="cat-item">{{item}}</div>
+          </ng-container>
         </div>
       </div>
 
 
       <div class="flex flex-wrap cb-footer">
-        <div class="info br-bl">
+        <div class="info br-bl padding-top-xs active">
           <div class="info-icon">
             <mat-icon>info</mat-icon>
           </div>
@@ -37,8 +36,7 @@
             Information
           </div>
         </div>
-
-        <div class="info br-br">
+        <div class="info br-br padding-top-xs">
           <div class="info-icon">
             <mat-icon>warning</mat-icon>
           </div>
