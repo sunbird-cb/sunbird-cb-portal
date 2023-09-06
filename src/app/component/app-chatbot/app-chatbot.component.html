@@ -1,0 +1,39 @@
+
+<ng-container>
+  <div class="fixed-width flex flex-wrap">
+    <div class="chatbot-icon" *ngIf="showIcon">
+      <mat-icon (click)="iconClick()">chat_bubble</mat-icon>
+    </div>
+    <div class="chatbot" *ngIf="!showIcon">
+      <div class="flex flex-wrap cb-header padding-m">
+        <div class="flex flex-1">KarmaSahayogi - Digital Assistant</div>
+        <div class="flex flex-2"><mat-icon class="cb-close" (click)="iconClick()">close</mat-icon></div>
+      </div>
+      <div class="flex flex-wrap cb-content padding-m">
+
+      </div>
+      <div class="flex flex-wrap cb-topics padding-m">
+dfdfd
+      </div>
+      <div class="flex flex-wrap cb-footer">
+        <div class="info active">
+          <mat-icon>info</mat-icon>
+          <div class="issue-text info-center">
+            Information
+          </div>
+        </div>
+
+        <div class="flex flex-1 issue active">
+          <div class="flex flex-col margin-auto">
+            <div class="flex flex-1">
+              <mat-icon>warning</mat-icon>
+            </div>
+            <div class="flex flex-2 issue-text text-center">
+              Issue
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

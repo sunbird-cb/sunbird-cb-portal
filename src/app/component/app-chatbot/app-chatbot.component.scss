@@ -1,0 +1,61 @@
+.chatbot-icon {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 99999;
+  cursor: pointer;
+}
+
+.chatbot {
+  width: 400px;
+  min-height: 712px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 99999;
+  border-radius: 15px;
+}
+
+.cb-close {
+  cursor: pointer;
+}
+
+.cb-header {
+  background-color: #1B4CA1;
+  color: white !important;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+.cb-content {
+  min-height: 500px;
+  background-color: white;
+}
+.cb-topics {
+  background-color: #F5F5F5;
+}
+
+.cb-footer {
+  background-color: white;
+}
+.info {
+  width: 50%;
+  border-bottom-left-radius: 15px;
+  padding: 5px 0
+}
+
+.issue {
+  width: 50%;
+  border-bottom-right-radius: 15px;
+  padding: 5px 0
+}
+
+.issue-text, .info-text {
+  font-size: 10px;
+}
+
+.margin-auto {
+  margin: auto;
+}
+.active {
+  background-color: #EF951E!important;
+}
