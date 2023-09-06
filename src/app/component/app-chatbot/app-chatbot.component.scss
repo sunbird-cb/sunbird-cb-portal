@@ -14,6 +14,7 @@
   right: 30px;
   z-index: 99999;
   border-radius: 15px;
+  background-color: white;
 }
 
 .cb-close {
@@ -23,8 +24,8 @@
 .cb-header {
   background-color: #1B4CA1;
   color: white !important;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
+  // border-top-left-radius: 15px;
+  // border-top-right-radius: 15px;
 }
 .cb-content {
   min-height: 500px;
@@ -34,28 +35,38 @@
   background-color: #F5F5F5;
 }
 
-.cb-footer {
-  background-color: white;
-}
+// .cb-footer {
+//   background-color: white;
+// }
 .info {
   width: 50%;
-  border-bottom-left-radius: 15px;
-  padding: 5px 0
+  padding: 5px 0;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .issue {
   width: 50%;
-  border-bottom-right-radius: 15px;
-  padding: 5px 0
+  padding: 5px 0;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .issue-text, .info-text {
   font-size: 10px;
+  width: 100%;
+  text-align: center;
 }
 
-.margin-auto {
-  margin: auto;
+.info-icon {
+  height: 24px;
 }
+
+
 .active {
   background-color: #EF951E!important;
 }
