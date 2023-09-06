@@ -18,8 +18,13 @@
 }
 .name{
     font-size: 16px;
-    line-height: 24px;
     text-transform: capitalize;
+    display: block;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 2.5em;
+    line-height: 1.2em;
 }
 .designation{
     line-height: 21px;

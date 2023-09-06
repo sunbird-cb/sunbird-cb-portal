@@ -22,7 +22,9 @@
                 <!-- <div class="name ws-mat-black-text cursor-pointer" *ngIf="user && !user?.personalDetails">
                     {{user?.firstName}} {{user?.lastName}}
                 </div> -->
+                <div class="name">
                 <ws-app-connection-name [hoverUser]="user"></ws-app-connection-name>
+                </div>
                 <div class="designation ws-mat-black60-text mat-body-2" *ngIf="user?.employmentDetails">
                     {{user?.employmentDetails?.departmentName}}
                 </div>
