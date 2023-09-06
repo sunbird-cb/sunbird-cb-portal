@@ -348,7 +348,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   public requestToEnrollDialog() {
     // conflicts check start
-    const userList :any=[]
+    const userList: any = []
     // const userList = this.userEnrollmentList && this.userEnrollmentList.filter(ele => {
     //   if (ele.content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
     //     if (ele.batch.endDate) {
@@ -504,9 +504,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.batchData.workFlow &&
       this.batchData.workFlow.wfItem
     ) {
-      if (batch.batchId === this.batchData.workFlow.wfItem.applicationId
-        && (this.batchData.workFlow.wfItem.currentStatus === this.WFBlendedProgramStatus.REJECTED || this.batchData.workFlow.wfItem.currentStatus  === this.WFBlendedProgramStatus.REMOVED)
-      ) {
+      // tslint:disable-next-line:max-line-length
+      if (batch.batchId === this.batchData.workFlow.wfItem.applicationId && (this.batchData.workFlow.wfItem.currentStatus === this.WFBlendedProgramStatus.REJECTED || this.batchData.workFlow.wfItem.currentStatus  === this.WFBlendedProgramStatus.REMOVED)) {
         return true
       }
       return false
@@ -516,17 +515,14 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   public batchChange(event: any) {
     if (event && event.value) {
+      const batchData = {
+        content: [event.value],
+      }
       if (this.checkRejected(event.value)) {
         this.showRejected = true
         this.setbatchDateToCountDown(event.value.startDate)
-        let batchData = {
-          content: [event.value]
-        }
         this.tocSvc.getSelectedBatchData(batchData)
         return
-      }
-      let batchData = {
-        content: [event.value]
       }
       this.setbatchDateToCountDown(event.value.startDate)
       this.tocSvc.getSelectedBatchData(batchData)
@@ -560,8 +556,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
       }
     }
-    let batchData = {
-      content: [this.batchControl.value]
+    const batchData = {
+      content: [this.batchControl.value],
     }
     this.tocSvc.getSelectedBatchData(batchData)
   }
@@ -656,7 +652,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         return 'circle'
       }
       if (status === this.WFBlendedProgramStatus.REJECTED ||
-        status === this.WFBlendedProgramStatus.REMOVED ) {
+        status === this.WFBlendedProgramStatus.REMOVED) {
         return 'info'
       }
     }
