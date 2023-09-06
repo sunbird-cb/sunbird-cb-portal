@@ -274,7 +274,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   async searchOrgs(searchValue: string) {
     this.searching = true
     if (!searchValue) {
-      this.openSnackbar('Please enter organisation to search')
+      this.openSnackbar('Please enter your organisation name')
       this.searching = false
       return
     }
@@ -365,14 +365,14 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
       this.signupSvc.sendOtp(mob.value, 'phone').subscribe(() => {
         this.otpSend = true
-        alert('An OTP has been sent to your mobile number (valid for 15 minutes).')
+        alert('An OTP has been sent to your mobile number (valid for 15 minutes)')
         this.startCountDown()
         // tslint:disable-next-line: align
       }, (error: any) => {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid Mobile No')
+      this.snackBar.open('Please enter a valid mobile number',)
     }
   }
 
@@ -383,7 +383,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
           this.disableVerifyBtn = false
-          alert('An OTP has been sent to your mobile number (valid for 15 minutes).')
+          alert('An OTP has been sent to your mobile number (valid for 15 minutes)')
           this.startCountDown()
         }
         // tslint:disable-next-line: align
@@ -391,15 +391,18 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid Mobile No')
+      this.snackBar.open('Please enter a valid mobile number')
     }
   }
 
   verifyOtp(otp: any) {
     // console.log(otp)
     const mob = this.registrationForm.get('mobile')
+    
     if (otp && otp.value) {
-      if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
+      if(otp && otp.value.length < 4) {
+        this.snackBar.open('Please enter a valid OTP.')
+      } else if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
         this.signupSvc.verifyOTP(otp.value, mob.value, 'phone').subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
             this.otpVerified = true
@@ -431,7 +434,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         })
       }
     } else {
-      this.snackBar.open('Mandatory parameter otp is missing')
+      this.snackBar.open('Please enter a valid OTP.')
     }
   }
   startCountDown() {
@@ -465,14 +468,14 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     if (email && email.value && email.valid) {
       this.signupSvc.sendOtp(email.value, 'email').subscribe(() => {
         this.otpEmailSend = true
-        alert('An OTP has been sent to your registered email address (valid for 15 minutes).')
+        alert('An OTP has been sent to your registered email address (valid for 15 minutes)')
         this.startCountDownEmail()
         // tslint:disable-next-line: align
       }, (error: any) => {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid email')
+      this.snackBar.open('Please enter a valid email address.')
     }
   }
 
@@ -482,7 +485,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       this.signupSvc.resendOtp(email.value, 'email').subscribe((res: any) => {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpEmailSend = true
-          alert('An OTP has been sent to your registered email address (valid for 15 minutes).')
+          alert('An OTP has been sent to your registered email address (valid for 15 minutes)')
           this.startCountDownEmail()
         }
         // tslint:disable-next-line: align
@@ -490,15 +493,17 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid email')
+      this.snackBar.open('Please enter a valid email address.')
     }
   }
 
   verifyOtpEmail(otp: any) {
-    // console.log(otp)
+    console.log(otp)
     const email = this.registrationForm.get('email')
-    if (email && email.value) {
-      if (email && email.value && email.valid) {
+    if (otp && otp.value) {
+      if(otp && otp.value.length < 4) {
+        this.snackBar.open('Please enter a valid OTP.')
+      } else if ( email && email.value && email.valid) {
         this.signupSvc.verifyOTP(otp.value, email.value, 'email').subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
             this.otpEmailSend = true
@@ -526,6 +531,8 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
           this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
         })
       }
+    } else {
+      this.snackBar.open('Please enter a valid OTP.')
     }
   }
   startCountDownEmail() {
