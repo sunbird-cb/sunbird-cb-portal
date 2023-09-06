@@ -8,7 +8,7 @@
 
 .chatbot {
   width: 400px;
-  min-height: 712px;
+  min-height: 702px;
   position: fixed;
   bottom: 30px;
   right: 30px;
@@ -24,8 +24,8 @@
 .cb-header {
   background-color: #1B4CA1;
   color: white !important;
-  // border-top-left-radius: 15px;
-  // border-top-right-radius: 15px;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
 }
 .cb-content {
   min-height: 500px;
@@ -35,38 +35,42 @@
   background-color: #F5F5F5;
 }
 
-// .cb-footer {
-//   background-color: white;
-// }
-.info {
-  width: 50%;
-  padding: 5px 0;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
+.cb-footer {
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+  .br-br {
+    border-bottom-right-radius: inherit;
+  }
+  .br-bl {
+    border-bottom-left-radius: inherit;
+  }
 
-.issue {
-  width: 50%;
-  padding: 5px 0;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  .info {
+    width: 50%;
+    padding: 5px 0;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    .info-text {
+      font-size: 10px;
+      width: 100%;
+      text-align: center;
+    }
+    .info-icon {
+      height: 24px;
+    }
+  }
 }
-
-.issue-text, .info-text {
-  font-size: 10px;
-  width: 100%;
-  text-align: center;
-}
-
-.info-icon {
-  height: 24px;
-}
-
 
 .active {
-  background-color: #EF951E!important;
+  background-color: #EF951E;
 }
+
+
+
+
+
+
+
+
