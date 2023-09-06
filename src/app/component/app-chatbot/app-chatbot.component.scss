@@ -15,6 +15,7 @@
   z-index: 99999;
   border-radius: 15px;
   background-color: white;
+  box-shadow: 0 6px 16px #0000003d;
 }
 
 .cb-close {
@@ -66,7 +67,58 @@
 .active {
   background-color: #EF951E;
 }
+.cb-topics {
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    li {
+      padding: 10px 16px;
+      border-radius: 21px;
+      border: 1px solid rgba(0,0,0, 0.16);
+      opacity: 1;
+      background-color: rgba(0,0,0, 0.04);
+      opacity: 1;
+      color: rgba(0,0,0,0.87);
+      font-family: "Lato-Regular";
+      font-size: 14px;
+      font-weight: 400;
+      font-style: normal;
+      letter-spacing: 0.25px;
+      text-align: center;
+      line-height: 20px;
+    }
+  }
+}
 
+.cb-topics {
+  .cat-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    overflow: auto;
+    .cat-item {
+      padding: 10px 16px;
+      border-radius: 21px;
+      border: 1px solid rgba(0,0,0, 0.16);
+      opacity: 1;
+      background-color: rgba(0,0,0, 0.04);
+      opacity: 1;
+      color: rgba(0,0,0,0.87);
+      font-family: "Lato-Regular";
+      font-size: 14px;
+      font-weight: 400;
+      font-style: normal;
+      letter-spacing: 0.25px;
+      text-align: center;
+      line-height: 20px;
+      width: fit-content;
+      margin-right: 12px;
+    }
+  }
+}
 
 
 
