@@ -14,14 +14,12 @@
       Here are the most frequently asked questions users have looked for
     </div>
     <div class="list btn-cover my-5px">
-      <div class="my-5px mr-5px">
-        <div class="btn-default">What is Mission Karmayogi?</div>
+      <div class="my-5px mr-5px"*ngFor="let question of defaultQuestions" >
+        <div class="btn-default">{{question}}</div>
       </div>
       <div class="my-5px mr-5px">
-        <div class="btn-default">What is iGOT?</div>
-      </div>
-      <div class="my-5px mr-5px">
-        <div class="btn-default">How to register?</div>
+        <div class="btn-show-more">
+          + &nbsp; show more</div>
       </div>
     </div>
   </div>

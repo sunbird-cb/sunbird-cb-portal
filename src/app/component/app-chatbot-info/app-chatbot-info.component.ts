@@ -6,8 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app-chatbot-info.component.scss']
 })
 export class AppChatbotInfoComponent implements OnInit {
-
-  constructor() { }
+  defaultQuestions: any [] = ['What is Mission Karmayogi?', 'What is iGOT?', 'How to register?']
+   constructor() { }
 
   ngOnInit() {
   }
