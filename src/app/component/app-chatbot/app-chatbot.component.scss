@@ -32,12 +32,14 @@
   justify-content: space-between;
   .lang-select {
     height: 32px;
-    
+
   }
 }
 .cb-content {
+  max-height: 300px;
   min-height: 300px;
   background-color: white;
+  overflow: auto;
 }
 .cb-topics {
   padding: 16px 16px 0 16px;
@@ -80,6 +82,9 @@
 .active {
   background-color: rgb(251 234 209);
   border-top: 3px solid rgb(239, 149, 30);
+  .mat-icon {
+    color: rgb(239, 149, 30) !important;
+  }
 }
 
 .cb-topics {

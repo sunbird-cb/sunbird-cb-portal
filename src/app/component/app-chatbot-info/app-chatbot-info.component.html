@@ -10,16 +10,66 @@
     </div>
   </div>
   <div class="flex flex-wrap">
-    <div class="hints padding-xs">
+    <div class="hints-left padding-top-xs padding-bottom-s">
       Here are the most frequently asked questions users have looked for
     </div>
-    <div class="list btn-cover my-5px">
-      <div class="my-5px mr-5px"*ngFor="let question of defaultQuestions" >
-        <div class="btn-default">{{question}}</div>
+    <div class="list-left btn-cover my-5px">
+      <div class="my-5px mr-5px"*ngFor="let question of level1Questions.slice(0, showLevel1ItemCount); let i = index" >
+        <div class="btn-default" [ngClass]="{'btn-active': i === clickedL1ButtonIndex }" (click)="onButtonClick(i)">{{question}}</div>
       </div>
-      <div class="my-5px mr-5px">
-        <div class="btn-show-more">
-          + &nbsp; show more</div>
+    </div>
+    <div class="list-left">
+      <div class="my-5px mr-5px" *ngIf="showLevel1ItemCount === 3">
+        <div class="btn-show-more flex" (click)="showLevel1ItemCount = level1Questions.length">
+          <mat-icon class="showmore-icon padding-right-s">add</mat-icon>show more
+        </div>
+      </div>
+      <div class="my-5px mr-5px" *ngIf="showLevel1ItemCount !== 3">
+        <div class="btn-show-less flex" (click)="showLevel1ItemCount = 3">
+          <mat-icon class="showmore-icon padding-right-s">remove</mat-icon>show more
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-wrap padding-top-m right-section">
+    <div class="default-user-info">
+      <div class="default-user-icon">
+        <img alt="chatbot-icon" src="/assets/icons/chatbot-default-user.png">
+      </div>
+      <div class="user-msg padding-s">
+        What is iGOT?
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-wrap padding-top-m">
+    <div class="default-info">
+      <div class="default-icon">
+        <img alt="chatbot-icon" src="/assets/icons/chatbot-default.png">
+      </div>
+      <div class="default-msg padding-s">
+        iGOT means intgrated online training program by government of india.
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-wrap">
+    <div class="hints-left padding-top-xs padding-bottom-s">
+      Questions related to <span class="active-question">'What is IGOT?'</span>
+    </div>
+    <div class="list-left btn-cover my-5px">
+      <div class="my-5px mr-5px"*ngFor="let question of level2Questions.slice(0, showLevel2ItemCount); let i = index" >
+        <div class="btn-default" [ngClass]="{'btn-active': i === clickedL2ButtonIndex }" (click)="onButtonClick(i)">{{question}}</div>
+      </div>
+    </div>
+    <div class="list-left">
+      <div class="my-5px mr-5px" *ngIf="showLevel2ItemCount === 3">
+        <div class="btn-show-more flex" (click)="showLevel2ItemCount = level2Questions.length">
+          <mat-icon class="showmore-icon padding-right-s">add</mat-icon>show more
+        </div>
+      </div>
+      <div class="my-5px mr-5px" *ngIf="showLevel2ItemCount !== 3">
+        <div class="btn-show-less flex" (click)="showLevel2ItemCount = 3">
+          <mat-icon class="showmore-icon padding-right-s">remove</mat-icon>show more
+        </div>
       </div>
     </div>
   </div>
