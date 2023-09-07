@@ -117,17 +117,17 @@
                     aria-label="Position is mandatory">
                     Please select a position from the provided list.
                   </mat-error>
-                  <!-- <mat-error *ngIf="(disableBtn || registrationForm.controls['position'].touched) && registrationForm?.controls['position'].errors?.forbiddenNames" i18n-aria-label
+                  <mat-error *ngIf="(disableBtn || registrationForm.controls['position'].touched) && registrationForm?.controls['position'].errors?.forbiddenNames" i18n-aria-label
                     aria-label="Please choose a value from the list provided above.">
                     Please choose a value from the list provided above.
                   </mat-error> -->
-                  <mat-error *ngIf="registrationForm.controls['position'].touched && registrationForm?.controls['position'].errors?.pattern" i18n-aria-label
+                  <!-- <mat-error *ngIf="registrationForm.controls['position'].touched && registrationForm?.controls['position'].errors?.pattern" i18n-aria-label
                     aria-label="Only alphabets, numbers, space and & - () are allowed.">
                     Only alphabets, numbers, space and & - () are allowed.
-                  </mat-error>
+                  </mat-error> -->
                   <!-- <mat-hint class="ws-mat-black60-text">Not finding your position?</mat-hint> -->
                   <!-- <mat-hint class="pos-hint">Not finding your position?<span class="float-right ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo('Position')">Request for help</span></mat-hint>  -->
-                </mat-form-field>
+                <!-- </mat-form-field>
                 <div class="w-full help-request" id="org-field">
                   <div class="flex items-center flex-1">
                     <span class="flex-1 ws-mat-black60-text">Not finding your position?</span>
@@ -146,7 +146,7 @@
                     </ng-container>
                   </mat-option>
                 </mat-autocomplete>
-              </div> -->
+              </div>  -->
 
               <div class="input-wrapper margin-top-s">
                 <label for="group" class=" margin-remove-bottom form-label required"
