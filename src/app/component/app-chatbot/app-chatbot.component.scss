@@ -30,6 +30,10 @@
   border-top-right-radius: inherit;
   align-items: center;
   justify-content: space-between;
+  .lang-select {
+    height: 32px;
+    
+  }
 }
 .cb-content {
   min-height: 300px;
@@ -74,8 +78,10 @@
 }
 
 .active {
-  background-color: #EF951E;
+  background-color: rgb(251 234 209);
+  border-top: 3px solid rgb(239, 149, 30);
 }
+
 .cb-topics {
   .cat-list {
     margin: 0;

@@ -8,13 +8,16 @@
       <div class="flex flex-wrap cb-header padding-m">
         <div class="">KarmaSahayogi - Digital Assistant</div>
         <div class="">
-          <mat-form-field>
+          <!-- <mat-form-field>
             <mat-select>
               <mat-option *ngFor="let lang of language" [value]="lang.value">
                 {{lang.viewValue}}
               </mat-option>
             </mat-select>
-          </mat-form-field>
+          </mat-form-field> -->
+          <select class="lang-select" name="language" id="language">
+            <option [value]="lang.value" *ngFor="let lang of language">{{lang.viewValue}}</option>
+          </select>
         </div>
         <div class=""><mat-icon class="cb-close" (click)="iconClick()">close</mat-icon></div>
       </div>
