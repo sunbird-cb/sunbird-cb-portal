@@ -3,12 +3,14 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
 import { Router, ActivatedRoute } from '@angular/router'
 import { NsContent } from '@sunbird-cb/collection'
-import { ConfigurationsService, EventService, TFetchStatus } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, LoggerService, TFetchStatus } from '@sunbird-cb/utils'
 import { MobileAppsService } from '../../../../../../../src/app/services/mobile-apps.service'
 import { SCORMAdapterService } from './SCORMAdapter/scormAdapter'
 /* tslint:disable */
 import _ from 'lodash'
 import { environment } from 'src/environments/environment';
+import { Subscription, timer } from 'rxjs'
+import { Storage } from './SCORMAdapter/storage'
 /* tslint:enable */
 
 @Component({
@@ -31,6 +33,21 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   collectionId = ''
   forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   progress = 100
+  progressThreshold = 70
+  realTimeProgressRequest = {
+    content_type: 'Resource',
+    primaryCategory: NsContent.EPrimaryCategory.RESOURCE,
+    current: ['0'],
+    max_size: 0,
+    mime_type: NsContent.EMimeTypes.ZIP,
+    user_id_type: 'uuid',
+  }
+
+  ticks = 0
+  private timer!: any
+  // Subscription object
+  private sub!: Subscription
+
   constructor(
     private domSanitizer: DomSanitizer,
     public mobAppSvc: MobileAppsService,
@@ -40,6 +57,8 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     private snackBar: MatSnackBar,
     private events: EventService,
     private activatedRoute: ActivatedRoute,
+    private store: Storage,
+    private loggerSvc: LoggerService
   ) {
     (window as any).API = this.scormAdapterService
     // if (window.addEventListener) {
@@ -63,13 +82,99 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       this.scormAdapterService.contentId = this.htmlContent.identifier
       if (!this.forPreview) {
         this.scormAdapterService.loadDataV2()
+        this.timer = timer(1000, 1000)
+        // subscribing to a observable returns a subscription object
+        this.sub = this.timer.subscribe((t: any) => this.tickerFunc(t))
       }
     }
   }
+
+  tickerFunc(tick: any) {
+    console.log('tick', tick)
+    this.ticks = tick
+  }
+
   ngOnDestroy() {
     window.removeEventListener('message', this.receiveMessage)
-    // window.removeEventListener('onmessage', this.receiveMessage)
+    window.removeEventListener('onmessage', this.receiveMessage)
+    console.log('this.ticks: ', this.ticks)
+    this.raiseRealTimeProgress()
+
   }
+
+  private raiseRealTimeProgress() {
+    this.realTimeProgressRequest = {
+      ...this.realTimeProgressRequest,
+      current: ['1'],
+      max_size: 1,
+    }
+    this.fireRealTimeProgress()
+    this.sub.unsubscribe();
+  }
+
+  private fireRealTimeProgress() {
+    if (this.htmlContent) {
+      console.log('this.htmlContent', this.htmlContent, '::', this.ticks)
+      this.realTimeProgressRequest.content_type = this.htmlContent.contentType
+      this.realTimeProgressRequest.primaryCategory = this.htmlContent.primaryCategory
+
+      // const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+      //   this.activatedRoute.snapshot.queryParams.collectionId : ''
+
+      // const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+      //   this.activatedRoute.snapshot.queryParams.batchId : ''
+      const completionData = this.calculateCompletionStatus()
+      const req = {
+        ...this.realTimeProgressRequest,
+        status: (completionData && completionData.status) || 0,
+        completionPercentage: (completionData && completionData.completionPercentage) || 0,
+        progressDetails: { spentTime: (completionData && completionData.completionPercentage) || 0 }
+      }
+      this.scormAdapterService.addDataV3(req).subscribe((_res: any) => {
+        this.loggerSvc.log('Progress updated successfully')
+      }, (err) => {
+        this.loggerSvc.error('Error calling progress update for scorm content', err)
+      }
+      )
+    }
+    return
+  }
+
+  calculateCompletionStatus() {
+    const data = this.store.getAll()
+    let spentTime = 0
+    let percentage = 0
+    // if ((data && data['completionStatus'] === 2)) {
+    //   return {
+    //     completionPercentage: data && data['completionPercentage'],
+    //     status: data && data['completionStatus'],
+    //   }
+    // } else {
+
+      if (data) {
+        spentTime = (this.ticks * 1000) + (data && data["spentTime"] || 0)
+        if (this.htmlContent && spentTime) {
+          // ~~ will remove decimal after division
+          percentage = ~~((spentTime / this.htmlContent.duration) * 100)
+        }
+      }
+
+      if (percentage >= this.progressThreshold) {
+        return {
+          completionPercentage: 100,
+          status: 2,
+          spentTime: spentTime
+        }
+      } else {
+        return {
+          completionPercentage: percentage,
+          status: 1,
+          spentTime: spentTime
+        }
+      }
+    // }
+  }
+
   ngOnChanges() {
     this.isIntranetUrl = false
     this.progress = 100
