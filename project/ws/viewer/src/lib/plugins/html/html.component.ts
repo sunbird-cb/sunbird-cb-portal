@@ -90,7 +90,6 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   tickerFunc(tick: any) {
-    console.log('tick', tick)
     this.ticks = tick
   }
 
@@ -128,7 +127,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         ...this.realTimeProgressRequest,
         status: (completionData && completionData.status) || 0,
         completionPercentage: (completionData && completionData.completionPercentage) || 0,
-        progressDetails: { spentTime: (completionData && completionData.completionPercentage) || 0 }
+        progressDetails: { spentTime: (completionData && completionData.spentTime) || 0 }
       }
       this.scormAdapterService.addDataV3(req).subscribe((_res: any) => {
         this.loggerSvc.log('Progress updated successfully')
@@ -144,12 +143,13 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     const data = this.store.getAll()
     let spentTime = 0
     let percentage = 0
-    // if ((data && data['completionStatus'] === 2)) {
-    //   return {
-    //     completionPercentage: data && data['completionPercentage'],
-    //     status: data && data['completionStatus'],
-    //   }
-    // } else {
+    if ((data && data['completionStatus'] === 2)) {
+      return {
+        completionPercentage: data && data['completionPercentage'],
+        status: data && data['completionStatus'],
+        spentTime: data && data['spentTime']
+      }
+    } else {
 
       if (data) {
         spentTime = (this.ticks * 1000) + (data && data["spentTime"] || 0)
@@ -172,7 +172,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
           spentTime: spentTime
         }
       }
-    // }
+    }
   }
 
   ngOnChanges() {
