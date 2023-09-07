@@ -348,19 +348,18 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   public requestToEnrollDialog() {
     // conflicts check start
-    const userList: any = []
-    // const userList = this.userEnrollmentList && this.userEnrollmentList.filter(ele => {
-    //   if (ele.content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
-    //     if (ele.batch.endDate) {
-    //       const endDate = dayjs(ele.batch.endDate)
-    //       return dayjs(dayjs(new Date()).format('YYYY-MM-DD')).isSameOrBefore(endDate)
-    //     }
-    //   }
-    //   return false
-    // })
+    const batchData = this.batchControl.value
+    const userList: any = this.userEnrollmentList && this.userEnrollmentList.filter(ele => {
+      if (ele.content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
+        if (!(dayjs(batchData.startDate).isBefore(dayjs(ele.batch.startDate)) && dayjs(batchData.endDate).isBefore(dayjs(ele.batch.startDate)) || dayjs(batchData.startDate).isAfter(dayjs(ele.batch.endDate)) && dayjs(batchData.endDate).isAfter(dayjs(ele.batch.endDate)))) {
+          return true
+        }
+        return false
+      }
+      return false
+    })
     // conflicts check end
     if (userList && userList.length === 0) {
-      const batchData = this.batchControl.value
       const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
         width: '434px',
         data: {
@@ -379,7 +378,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
       })
     } else {
-      this.openSnackbar(`${NsContent.EPrimaryCategory.BLENDED_PROGRAM} is in progress`)
+      if (userList && userList.length === 1) {
+        this.openSnackbar(`${userList[0].courseName} ${NsContent.EPrimaryCategory.BLENDED_PROGRAM} is in progress`)
+      } else {
+        this.openSnackbar(`${NsContent.EPrimaryCategory.BLENDED_PROGRAM} is in progress`)
+      }
     }
   }
 
