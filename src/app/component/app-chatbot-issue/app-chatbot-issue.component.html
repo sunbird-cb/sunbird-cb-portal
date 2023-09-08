@@ -2,7 +2,7 @@
   <div class="flex row-start">
     <div class="system-icon"><img alt="chatbot-icon" src="/assets/icons/chatbot-default.png"></div>
     <div class="system-msg padding-xs">
-      Hi, I'm KarmaSahayogi - Digital Assistant, I'm here to help you.
+      Hi {{currentUser.firstName || ''}}, I'm KarmaSahayogi - Digital Assistant, I'm here to help you.
     </div>
   </div>
   <div class="flex">
@@ -11,8 +11,8 @@
     </div>
   </div>
   <div class="recommended-question my-5px">
-    <div class="my-5px mr-5px"*ngFor="let question of level1Questions.slice(0, showLevel1ItemCount); let i = index" >
-      <div class="btn-default" [ngClass]="{'btn-active': i === clickedL1ButtonIndex }" (click)="onButtonClick(i)">{{question.name}}</div>
+    <div class="my-5px"*ngFor="let question of recomandedQuestions.slice(0, showLevel1ItemCount)" >
+      <div class="btn-default" [ngClass]="{'btn-active': question.quesId === clickedL1ButtonIndex }" (click)="onButtonClick(question.quesId, question)">{{question.quesValue}}</div>
     </div>
     <div class="my-5px mr-5px" *ngIf="showLevel1ItemCount === 3">
       <div class="btn-show-more flex" (click)="showLevel1ItemCount = level1Questions.length">

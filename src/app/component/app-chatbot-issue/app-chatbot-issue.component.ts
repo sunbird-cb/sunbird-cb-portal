@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EventService, WsEvents } from '@sunbird-cb/utils';
+import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils';
 
 @Component({
   selector: 'ws-app-chatbot-issue',
@@ -9,21 +9,21 @@ import { EventService, WsEvents } from '@sunbird-cb/utils';
 export class AppChatbotIssueComponent implements OnInit {
 
   level1Questions: any [] = [
-    { questionId: 1, name: 'What is Mission Karmayogi?', level: 1, parent: 0},
-    { questionId: 2, name: 'What is iGOT?', level: 1, parent: 0},
-    { questionId: 3, name: 'I am unable to login?', level: 1, parent: 0},
-    { questionId: 4, name: 'Why I am unable to get OTP?', level: 1, parent: 0},
-    { questionId: 5, name: 'How to register?', level: 1, parent: 0},
-    { questionId: 6, name: 'Level 1 rec Q1', level: 2, parent: 1},
-    { questionId: 7, name: 'Level 1 rec Q2', level: 2, parent: 1},
-    { questionId: 8, name: 'Level 2 rec Q1', level: 2, parent: 2},
-    { questionId: 9, name: 'Level 2 rec Q2', level: 2, parent: 2},
-    { questionId: 10, name: 'Level 3 rec Q1', level: 2, parent: 3},
-    { questionId: 11, name: 'Level 3 rec Q2', level: 2, parent: 3},
-    { questionId: 12, name: 'Level 4 rec Q1', level: 2, parent: 4},
-    { questionId: 13, name: 'Level 4 rec Q2', level: 2, parent: 4},
-    { questionId: 14, name: 'Level 5 rec Q1', level: 2, parent: 5},
-    { questionId: 15, name: 'Level 5 rec Q2', level: 2, parent: 5},
+    { questionId: 1, name: 'What is Mission Karmayogi?', level: 1, parent: 0, category: "info"},
+    { questionId: 2, name: 'What is iGOT?', level: 1, parent: 0, category: "info"},
+    { questionId: 3, name: 'I am unable to login?', level: 1, parent: 0, category: "info"},
+    { questionId: 4, name: 'Why I am unable to get OTP?', level: 1, parent: 0, category: "info"},
+    { questionId: 5, name: 'How to register?', level: 1, parent: 0, category: "info"},
+    { questionId: 6, name: 'Level 1 rec Q1', level: 2, parent: 1, category: "info"},
+    { questionId: 7, name: 'Level 1 rec Q2', level: 2, parent: 1, category: "info"},
+    { questionId: 8, name: 'Level 2 rec Q1', level: 2, parent: 2, category: "info"},
+    { questionId: 9, name: 'Level 2 rec Q2', level: 2, parent: 2, category: "info"},
+    { questionId: 10, name: 'Level 3 rec Q1', level: 2, parent: 3, category: "info"},
+    { questionId: 11, name: 'Level 3 rec Q2', level: 2, parent: 3, category: "info"},
+    { questionId: 12, name: 'Level 4 rec Q1', level: 2, parent: 4, category: "info"},
+    { questionId: 13, name: 'Level 4 rec Q2', level: 2, parent: 4, category: "info"},
+    { questionId: 14, name: 'Level 5 rec Q1', level: 2, parent: 5, category: "info"},
+    { questionId: 15, name: 'Level 5 rec Q2', level: 2, parent: 5, category: "info"},
   ]
 
   showLevel1ItemCount = 3;
@@ -38,6 +38,10 @@ export class AppChatbotIssueComponent implements OnInit {
   categoriesISS: any = {}
   recommendINF: any = {}
   recommendISS: any = {}
+
+  recomandedQuestions: any[] = []
+
+  currentUser: any
 
 
 
@@ -947,9 +951,12 @@ export class AppChatbotIssueComponent implements OnInit {
         ]
       }
     }
-  constructor(private eventSvc: EventService,) { }
+  constructor(private eventSvc: EventService,private configSvc: ConfigurationsService,) { }
 
   ngOnInit() {
+    this.raiseAppStartTelemetry()
+    console.log(this.response)
+    this.currentUser = this.configSvc.userProfile
     this.response.config.EN.map((resp: any) => {
       if (resp.quesMapIN) {
         resp.quesMapIN.map((q: any) => {
@@ -961,6 +968,7 @@ export class AppChatbotIssueComponent implements OnInit {
           this.questionISS[q.quesId] = q
         })
       }
+
       if (resp.categoryMapIN) {
         resp.categoryMapIN.map((q: any) => {
           this.categoriesINF[q.catId] = q
@@ -981,6 +989,7 @@ export class AppChatbotIssueComponent implements OnInit {
           this.recommendISS[q.catId] = q
         })
       }
+
     })
     console.log("questionINF ", this.questionINF)
     console.log("questionISS ",this.questionISS)
@@ -988,38 +997,72 @@ export class AppChatbotIssueComponent implements OnInit {
     console.log("categoriesISS ",this.categoriesISS)
     console.log("recommendINF ",this.recommendINF)
     console.log("recommendISS ",this.recommendISS)
+
+
+    Object.keys(this.recommendISS).map((key) => {
+      const el: any =this.recommendISS[key]
+      el.recommendedQues.map((q1: any) => {
+        q1.recommendedQues.map((q2: any) => {
+          let qObj: any = this.questionISS[q2.quesID]
+          qObj.categoryId = el.catId
+          this.recomandedQuestions.push(qObj)
+        })
+      })
+    });
+    console.log(this.recomandedQuestions)
   }
 
   getQuestion(count: number){
     return this.level1Questions.slice(0, count)
   }
 
-  onButtonClick(index: number) {
-    this.clickedL1ButtonIndex = index;
+  onButtonClick(questionId: number, question: any) {
+    this.clickedL1ButtonIndex = questionId;
+    this.questionClicked(question)
   }
 
   getLevel1Question(){
     let q = this.level1Questions.map((q: any) => {
       q.level === 1 && q.parent === 0
     })
-    console.log(q)
     return q
   }
 
-  // public questionClicked() {
+  public questionClicked(question: any) {
+    this.eventSvc.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType: question.categoryId,
+        id: question.quesId,
+      },
+      {
+        id: question.quesId,
+        type: 'information'
+      },
+      {
+      pageIdExt: 'chartbot',
+      module: "chatbot"
+    })
+    console.log("done")
 
-  //   const data: WsEvents.ITelemetryTabData = {
-  //     label: `${tabEvent.tab.textLabel}`,
-  //     index: tabEvent.index,
-  //   }
-  //   this.eventSvc.handleTabTelemetry(
-  //     WsEvents.EnumInteractSubTypes.COURSE_TAB,
-  //     data,
-  //     {
-  //       id: "",
-  //       type: "",
-  //     }
-  //   )
-  // }
+  }
+
+  raiseAppStartTelemetry() {
+    const event = {
+      eventType: WsEvents.WsEventType.Telemetry,
+      eventLogLevel: WsEvents.WsEventLogLevel.Info,
+      data: {
+        edata: { type: '' },
+        object: {},
+        state: WsEvents.EnumTelemetrySubType.Loaded,
+        eventSubType: WsEvents.EnumTelemetrySubType.Loaded,
+        type: 'session',
+        mode: 'view',
+      },
+      from: '',
+      to: 'Telemetry',
+    }
+    this.eventSvc.dispatchEvent<WsEvents.IWsEventTelemetryInteract>(event)
+  }
 
 }

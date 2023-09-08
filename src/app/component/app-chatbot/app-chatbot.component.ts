@@ -28,7 +28,9 @@ export class AppChatbotComponent implements OnInit {
   }
 
   toggleFilter(tab: string) {
+    console.log("tab ", tab)
     tab === 'info' ? this.currentFilter = 'info' : this.currentFilter = 'issue'
+    console.log("this.currentFilter ", this.currentFilter)
   }
 
 }

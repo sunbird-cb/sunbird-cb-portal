@@ -72,6 +72,11 @@
   .showmore-icon {
     align-items: flex-start;
   }
+  .btn-active{
+    background: #1B4CA1;
+    border: 1px solid rgba(0,0,0, 0.16);
+    color: white;
+  }
 }
 
 .row-end {
@@ -93,3 +98,5 @@
     max-width: 62%;
   }
 }
+
+
