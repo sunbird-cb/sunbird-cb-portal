@@ -975,7 +975,7 @@
                   </div>
                 </div>
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                  <div class="item1">
+                  <div class="item1" [ngClass]="{ disable: !isAllowed('description') }">
                     <label for="description" class=" margin-remove-bottom form-label"
                       i18n="Description label|Label which explains the user to enter Description">
                       Description
@@ -989,6 +989,8 @@
                         You have exceeded 500 characters.
                       </mat-error>
                     </mat-form-field>
+                    <br>
+                    <span class="txt" *ngIf="!isAllowed('description')">{{inReview}}</span>
                   </div>
                 </div>
                 <p class="heading mt-10">Other Details For Government Employees (If Applicable)</p>
