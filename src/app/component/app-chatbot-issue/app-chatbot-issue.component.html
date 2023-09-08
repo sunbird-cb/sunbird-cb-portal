@@ -12,7 +12,7 @@
   </div>
   <div class="recommended-question my-5px">
     <div class="my-5px mr-5px"*ngFor="let question of level1Questions.slice(0, showLevel1ItemCount); let i = index" >
-      <div class="btn-default" [ngClass]="{'btn-active': i === clickedL1ButtonIndex }" (click)="onButtonClick(i)">{{question}}</div>
+      <div class="btn-default" [ngClass]="{'btn-active': i === clickedL1ButtonIndex }" (click)="onButtonClick(i)">{{question.name}}</div>
     </div>
     <div class="my-5px mr-5px" *ngIf="showLevel1ItemCount === 3">
       <div class="btn-show-more flex" (click)="showLevel1ItemCount = level1Questions.length">
@@ -27,10 +27,16 @@
   </div>
   <div class="flex row-end padding-top-l padding-bottom-m">
     <div class="user-seleted-question padding-xs">
-      What is iGOT?
+      What is Mission Karmayogi?
     </div>
     <div class="user-icon">
       <img alt="chatbot-icon" src="/assets/icons/chatbot-default-user.png">
+    </div>
+  </div>
+  <div class="flex row-start">
+    <div class="system-icon"><img alt="chatbot-icon" src="/assets/icons/chatbot-default.png"></div>
+    <div class="system-msg padding-xs">
+      Mission Karmayogi - is a National Programme for Civil Services Capacity Building has been envisioned by the Government of India to address the changing needs and aspiration of the citizen. The Programme has been designed to enhance the civil services under a national Programme, anchored by an apex body headed by the Prime Minister.​
     </div>
   </div>
 </ng-container>
