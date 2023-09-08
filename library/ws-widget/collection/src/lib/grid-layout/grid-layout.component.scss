@@ -419,3 +419,90 @@
 // }
 
 }
+
+.nps-footer {
+  min-height: 125px !important;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #fcf9f9;
+  z-index: 1000;
+  text-align: center;
+
+  .center-box {
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+  }
+
+  .rating-div {
+    .cstext {
+      display: inline-block;
+      font-style: italic;
+      color: rgba(0,0,0,0.6);
+      font: 400 12px/24px Helvetica
+    }
+  }
+
+  ul {
+    list-style-type: none;
+    display: inline-flex;
+    margin: 0 1em !important;
+    padding: 0;
+    li {
+      display: inline-flex;
+      margin: 0 8px
+    }
+
+    .rating, .rating-img {
+      border: 1px solid rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: block;
+      line-height: 2.6;
+    }
+  }
+
+  .karmasahayogi {
+    position: absolute;
+    right: 13%;
+    bottom: 0;
+  }
+
+  .closeicon {
+    position: absolute;
+    top: 8px;
+    right: 4%;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    width: 20px;
+    height: 20px;
+    color: rgba(0,0,0,0.6);
+    display: flex;
+
+    .mat-icon {
+      font-size: 14px;
+      margin: 0 2px 0;
+      line-height: 1.4;
+    }
+  }
+  .reviewdiv {
+    width: 100% !important;
+  }
+  .reviewbox {
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    width: 45%;
+    margin: 0 auto;
+    padding: 8px;
+  }
+
+  button {
+    margin: 0 auto;
+  }
+
+  textarea::placeholder {
+    opacity: 0.7;
+  } 
+}

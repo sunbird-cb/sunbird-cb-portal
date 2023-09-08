@@ -41,6 +41,39 @@ export class GridLayoutComponent extends WidgetBaseComponent
   processed: IGridLayoutProcessedData[][] = []
   isNudgeOpen = true
 
+  // NPS
+  ratingGiven: any
+  onSuccessRating = false
+  phtext: any
+  reviewText: any
+  ratingList = [
+    {
+      value:  1,
+      image: '/assets/images/nps/Rating_1@2x.svg',
+      showImage: false,
+    },
+    {
+      value:  2,
+      image: '/assets/images/nps/Rating_2@2x.svg',
+      showImage: false,
+    },
+    {
+      value:  3,
+      image: '/assets/images/nps/Rating_3@2x.svg',
+      showImage: false,
+    },
+    {
+      value:  4,
+      image: '/assets/images/nps/Rating_4@2x.svg',
+      showImage: false,
+    },
+    {
+      value:  5,
+      image: '/assets/images/nps/Rating_5@2x.svg',
+      showImage: false,
+    },
+  ]
+
   ngOnInit() {
     this.fetchProfileById(this.configSvc.unMappedUser.id).subscribe(x => {
       // console.log(x.profileDetails, "x.profileDetails====")
@@ -92,5 +125,29 @@ export class GridLayoutComponent extends WidgetBaseComponent
   }
   fetchProfile() {
     this.router.navigate(['/app/user-profile/details'])
+  }
+
+  // NPS
+  toggleImg(rating: any) {
+    this.ratingList.forEach((r: any) => {
+      if (rating.value === r.value) {
+        r.showImage = true
+        this.ratingGiven = r
+        if (rating.value < 4) {
+          this.phtext = 'How can we make it better for you next time?'
+        } else  {
+          this.phtext = 'Inspire Others by sharing your experience'
+        }
+        // console.log('ratingGiven', this.ratingGiven)
+      } else {
+        r.showImage = false
+      }
+    })
+  }
+
+  submitRating(value: any) {
+    console.log('this.ratingGiven', this.ratingGiven)
+    console.log('reviewText', value)
+    this.onSuccessRating = true
   }
 }
