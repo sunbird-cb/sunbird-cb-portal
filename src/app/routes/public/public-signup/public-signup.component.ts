@@ -670,7 +670,10 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       minHeight: 'auto',
     })
     dialogRef.afterClosed().subscribe((_result: any) => {
-    })
+      if (_result) {
+        this.confirmTerms = _result
+      }
+     })
   }
 
   ngOnDestroy() {
