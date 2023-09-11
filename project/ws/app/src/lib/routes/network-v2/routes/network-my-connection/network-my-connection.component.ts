@@ -54,12 +54,12 @@ export class NetworkMyConnectionComponent implements OnInit {
       const userrId = usr.identifier || usr.id
       if (userrId) {
         this.connectionHoverService.fetchProfile(userrId).subscribe((res: any) => {
-          if (res.profileDetails && res.profileDetails.personalDetails) { 
+          if (res.profileDetails && res.profileDetails.personalDetails) {
             res.profileDetails.personalDetails.firstname = res.profileDetails.personalDetails.firstname.toLowerCase()
-  
-          } else if (!res.profileDetails && res.personalDetails ) { 
+
+          } else if (!res.profileDetails && res.personalDetails) {
             res.personalDetails.firstname = res.personalDetails.firstname.toLowerCase()
-  
+
           }
         })
       }

@@ -71,11 +71,11 @@ export class NetworkRecommendedComponent implements OnInit {
       }
     this.networkV2Service.fetchAllRecommendedUsers(req).subscribe((data: any) => {
       this.data = data.result.data[0].results
-      this.data.forEach((value: any)=>{
-        if (value.profileDetails && value.profileDetails.personalDetails) { 
+      this.data.forEach((value: any) => {
+        if (value.profileDetails && value.profileDetails.personalDetails) {
           value.profileDetails.personalDetails.firstname = value.profileDetails.personalDetails.firstname.toLowerCase()
 
-        } else if (!value.profileDetails && value.personalDetails ) { 
+        } else if (!value.profileDetails && value.personalDetails) {
           value.personalDetails.firstname = value.personalDetails.firstname.toLowerCase()
         }
        })
