@@ -468,12 +468,12 @@ TODO: edit option while preview Mode
           </div>
           <mat-divider class="margin-bottom-m"></mat-divider>
           <ng-container *ngIf="content?.primaryCategory === this.primaryCategory.BLENDED_PROGRAM">
-            <div class="info-item"  *ngIf="tocConfig?.atAGlance?.batchDate?.enabled && selectedBatchData?.startDate">
+            <div class="info-item"  *ngIf="tocConfig?.atAGlance?.batchDate?.enabled && selectedBatchData?.content[0]?.startDate">
               <h3 class="item-heading ws-mat-default-text">
                 {{tocConfig?.atAGlance?.batchDate?.displayName}}
               </h3>
               <h3 class="item-value width-expand">
-                {{ selectedBatchData?.startDate | date: 'dd-MM-yyyy'}} - {{ selectedBatchData?.endDate | date: 'dd-MM-yyyy'}}
+                {{ selectedBatchData?.content[0]?.startDate | date: 'dd-MM-yyyy'}} - {{ selectedBatchData?.content[0]?.endDate | date: 'dd-MM-yyyy'}}
               </h3>
             </div>
             <div class="info-item" *ngIf="tocConfig?.atAGlance?.batchDuration?.enabled && content?.programDuration">
@@ -484,12 +484,12 @@ TODO: edit option while preview Mode
                 {{ getProgramDuration(content?.programDuration) }}
               </h3>
             </div>
-            <div class="info-item" *ngIf="tocConfig?.atAGlance?.batchSize?.enabled && selectedBatchData?.batchAttributes?.currentBatchSize">
+            <div class="info-item" *ngIf="tocConfig?.atAGlance?.batchSize?.enabled && selectedBatchData?.content[0]?.batchAttributes?.currentBatchSize">
               <h3 class="item-heading ws-mat-default-text">
                 {{tocConfig?.atAGlance?.batchSize?.displayName}}
               </h3>
               <h3 class="item-value width-expand">
-                {{ selectedBatchData?.batchAttributes?.currentBatchSize }}
+                {{ selectedBatchData?.content[0]?.batchAttributes?.currentBatchSize }}
               </h3>
             </div>
             <div class="info-item"  *ngIf="tocConfig?.atAGlance?.contentType?.enabled && content?.primaryCategory">

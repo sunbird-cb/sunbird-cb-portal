@@ -127,11 +127,14 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
   // get session  data  from batch api start
   getSessionData(resolveData: any) {
     let sessionData = this.batchData.batchAttributes.sessionDetails_v2.find((obj: any) => {
-      return obj.session_id ===  this.activatedRoute.snapshot.params.resourceId
+      return obj.sessionId ===  this.activatedRoute.snapshot.params.resourceId
       
     })
     resolveData.content.data['sessionData'] = sessionData
     // calling initData to form the data
+    this.contentSvc.fetchContent(this.activatedRoute.snapshot.paramMap.get('resourceId') || '').subscribe(res => {
+      console.log(res)
+    })
     this.initData(resolveData)
   }
   // get session data  from batch api end
