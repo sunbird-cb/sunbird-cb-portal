@@ -348,19 +348,18 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   public requestToEnrollDialog() {
     // conflicts check start
-    const userList :any=[]
-    // const userList = this.userEnrollmentList && this.userEnrollmentList.filter(ele => {
-    //   if (ele.content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
-    //     if (ele.batch.endDate) {
-    //       const endDate = dayjs(ele.batch.endDate)
-    //       return dayjs(dayjs(new Date()).format('YYYY-MM-DD')).isSameOrBefore(endDate)
-    //     }
-    //   }
-    //   return false
-    // })
+    const batchData = this.batchControl.value
+    const userList: any = this.userEnrollmentList && this.userEnrollmentList.filter(ele => {
+      if (ele.content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
+        if (!(dayjs(batchData.startDate).isBefore(dayjs(ele.batch.startDate)) && dayjs(batchData.endDate).isBefore(dayjs(ele.batch.startDate)) || dayjs(batchData.startDate).isAfter(dayjs(ele.batch.endDate)) && dayjs(batchData.endDate).isAfter(dayjs(ele.batch.endDate)))) {
+          return true
+        }
+        return false
+      }
+      return false
+    })
     // conflicts check end
     if (userList && userList.length === 0) {
-      const batchData = this.batchControl.value
       const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
         width: '434px',
         data: {
@@ -379,7 +378,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
       })
     } else {
-      this.openSnackbar(`${NsContent.EPrimaryCategory.BLENDED_PROGRAM} is in progress`)
+      if (userList && userList.length === 1) {
+        this.openSnackbar(`${userList[0].courseName} ${NsContent.EPrimaryCategory.BLENDED_PROGRAM} is in progress`)
+      } else {
+        this.openSnackbar(`${NsContent.EPrimaryCategory.BLENDED_PROGRAM} is in progress`)
+      }
     }
   }
 
@@ -504,9 +507,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.batchData.workFlow &&
       this.batchData.workFlow.wfItem
     ) {
-      if (batch.batchId === this.batchData.workFlow.wfItem.applicationId
-        && (this.batchData.workFlow.wfItem.currentStatus === this.WFBlendedProgramStatus.REJECTED || this.batchData.workFlow.wfItem.currentStatus  === this.WFBlendedProgramStatus.REMOVED)
-      ) {
+      // tslint:disable-next-line:max-line-length
+      if (batch.batchId === this.batchData.workFlow.wfItem.applicationId && (this.batchData.workFlow.wfItem.currentStatus === this.WFBlendedProgramStatus.REJECTED || this.batchData.workFlow.wfItem.currentStatus  === this.WFBlendedProgramStatus.REMOVED)) {
         return true
       }
       return false
@@ -516,17 +518,14 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   public batchChange(event: any) {
     if (event && event.value) {
+      const batchData = {
+        content: [event.value],
+      }
       if (this.checkRejected(event.value)) {
         this.showRejected = true
         this.setbatchDateToCountDown(event.value.startDate)
-        let batchData = {
-          content: [event.value]
-        }
         this.tocSvc.getSelectedBatchData(batchData)
         return
-      }
-      let batchData = {
-        content: [event.value]
       }
       this.setbatchDateToCountDown(event.value.startDate)
       this.tocSvc.getSelectedBatchData(batchData)
@@ -560,8 +559,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
       }
     }
-    let batchData = {
-      content: [this.batchControl.value]
+    const batchData = {
+      content: [this.batchControl.value],
     }
     this.tocSvc.getSelectedBatchData(batchData)
   }
@@ -656,7 +655,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         return 'circle'
       }
       if (status === this.WFBlendedProgramStatus.REJECTED ||
-        status === this.WFBlendedProgramStatus.REMOVED ) {
+        status === this.WFBlendedProgramStatus.REMOVED) {
         return 'info'
       }
     }

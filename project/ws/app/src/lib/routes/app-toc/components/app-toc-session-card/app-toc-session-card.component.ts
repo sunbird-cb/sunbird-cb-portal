@@ -23,5 +23,10 @@ export class AppTocSessionCardComponent implements OnInit {
   ngOnInit() {
   }
   raiseTelemetry() { }
-
+  public progressColor(): string {
+    return '#1D8923'
+  }
+  public progressColor2(): string {
+    return '#f27d00'
+  }
 }

@@ -88,17 +88,19 @@ export class AppTocService {
   }
 
   mapSessionCompletionPercentage(batchData: any) {
-    console.log('mapSessionCompletionPercentage :: batchData ', batchData)
     this.resumeDataSubscription = this.resumeData.subscribe(
       (dataResult: any) => {
         if (dataResult && dataResult.length && batchData.content && batchData.content.length) {
-          batchData.content[0].batchAttributes.sessionDetails_v2.map((sd: any) => {
-            const foundContent = dataResult.find((el: any) => el.contentId === sd.sessionId)
-            if (foundContent) {
-              sd.completionPercentage = foundContent.completionPercentage
-              sd.completionStatus = foundContent.status
-            }
-          })
+          if (batchData && batchData.content[0]) {
+            batchData.content[0].batchAttributes.sessionDetails_v2.map((sd: any) => {
+              const foundContent = dataResult.find((el: any) => el.contentId === sd.sessionId)
+              if (foundContent) {
+                sd.completionPercentage = foundContent.completionPercentage
+                sd.completionStatus = foundContent.status
+                sd.lastCompletedTime = foundContent.lastCompletedTime
+              }
+            })
+          }
         }
       },
       () => {
@@ -183,8 +185,6 @@ export class AppTocService {
       })
     }
   }
-
-  
 
   getTocStructure(
     content: NsContent.IContent,
