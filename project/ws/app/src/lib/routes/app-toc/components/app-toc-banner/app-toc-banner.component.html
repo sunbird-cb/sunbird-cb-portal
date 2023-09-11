@@ -36,13 +36,12 @@
         <!-- {{ defaultThumbnail | json }}//
                 {{ defaultSLogo | json }} // -->
         <div class="sm:ml-5 flex flex-auto" [id]="'m-c-'+ content.identifier">
-
           <div class="sm:ml-5 flex flex-col flex-auto">
-            <h1 class="mat-headline margin-remove-bottom padding-bottom-xs hidden sm:block" [title]="content?.name">
-              {{ content?.name }}
+            <h1 class="mat-headline margin-remove-bottom padding-bottom-xs hidden sm:block" [title]="contentReadData?.name">
+              {{ contentReadData?.name }}
             </h1>
-            <h1 class="mat-headline margin-remove-bottom padding-bottom-xs block sm:hidden" [title]="content?.name">
-              {{ content?.name }}
+            <h1 class="mat-headline margin-remove-bottom padding-bottom-xs block sm:hidden" [title]="contentReadData?.name">
+              {{ contentReadData?.name }}
             </h1>
             <span *ngIf="contentProgress === 1" class="margin-left-s">
               <mat-icon class="ws-mat-accent-text">check_circle</mat-icon>
@@ -295,7 +294,7 @@
   </ws-widget-btn-content-like> -->
   <ws-widget-btn-content-share id="prevforshare" [forPreview]="forPreview" [widgetData]="content">
   </ws-widget-btn-content-share>
-  <ws-widget-btn-kb [forPreview]="forPreview" id="prev" [contentId]="content?.identifier" [contentName]="content?.name"
+  <ws-widget-btn-kb [forPreview]="forPreview" id="prev" [contentId]="content?.identifier" [contentName]="contentReadData?.name"
     [contentType]="content?.contentType" [status]="content?.status">
   </ws-widget-btn-kb>
   <ws-widget-btn-goals [forPreview]="forPreview" id="goalsforprev" *ngIf="isGoalsEnabled && btnGoalsConfig"
