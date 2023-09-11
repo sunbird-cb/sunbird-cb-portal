@@ -1,6 +1,6 @@
 <div class="fixed-width flex flex-wrap">
   <div class="chatbot-icon" *ngIf="showIcon">
-      <img alt="chatbot-icon" src="/assets/icons/chatbot-default.svg" (click)="iconClick()" />
+      <img alt="chatbot-icon" src="/assets/icons/chatbot-default.svg" (click)="iconClick('start')" />
   </div>
   <div class="chatbot" *ngIf="!showIcon">
       <div class="flex flex-wrap cb-header padding-m">
@@ -11,11 +11,11 @@
               </select>
           </div>
           <div class="">
-              <mat-icon class="cb-close" (click)="iconClick()">close</mat-icon>
+              <mat-icon class="cb-close" (click)="iconClick('end')">close</mat-icon>
           </div>
       </div>
       <div class="flex flex-wrap cb-content padding-m">
-        <ng-container *ngFor="let chat of userJourney">
+        <ng-container *ngFor="let chat of getuserjourney(currentFilter)">
           <ng-container  *ngIf="chat.type === 'incoming'">
             <div class="flex row-start incoming-msg" *ngIf="chat?.message">
               <div class="system-icon"><img alt="chatbot-icon" src="/assets/icons/chatbot-default.svg"></div>
@@ -36,20 +36,23 @@
                       <div class="btn-default" [ngClass]="{'btn-active': question.quesID === chat.selectedValue }" (click)="selectedQuestion(question,chat)">{{questionsAndAns[question.quesID].quesValue}}</div>
                     </div>
                     <div class="my-5px  mr-2" *ngIf="chat.recommendedQues.length > 3">
-                      <div class="btn-show-more flex" (click)="more = !more">
-                        <mat-icon class="showmore-icon padding-right-s">{{more? 'remove':'add'}}</mat-icon>show {{more? 'less':'more'}}
+                      <div class="btn-show-more flex" (click)="more = !more" *ngIf="!more">
+                        <mat-icon class="showmore-icon padding-right-s">add</mat-icon>show more
                       </div>
+                      <!-- <div class="btn-show-more flex" (click)="more = !more">
+                        <mat-icon class="showmore-icon padding-right-s">{{more? 'remove':'add'}}</mat-icon>show {{more? 'less':'more'}}
+                      </div> -->
                     </div>
                   </div>
                 </ng-container>
             </ng-container>
-            <ng-container *ngIf="chat.recommendedQues.length === 0">
+            <!-- <ng-container *ngIf="chat.recommendedQues.length === 0">
               <div class="padding-top-l padding-bottom-m margin-left-17 my-5px mr-5px" >
                 <div class="btn-show-more flex" (click)="showMoreQuestion()">
                   Show more questions
                 </div>
               </div>
-            </ng-container>
+            </ng-container> -->
           </ng-container>
           <!-- <ng-container  *ngIf="chat.type === 'recommended'">
             <div class="flex">
@@ -92,7 +95,7 @@
             </div>
           </ng-container>
         </ng-container>
-        
+
           <!-- <ng-container *ngIf="currentFilter === 'info'">
               <ws-app-chatbot-info></ws-app-chatbot-info>
           </ng-container>

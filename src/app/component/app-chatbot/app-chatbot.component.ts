@@ -1,5 +1,6 @@
+import { filter } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
-import { ConfigurationsService } from '@sunbird-cb/utils';
+import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils';
 
 @Component({
   selector: 'ws-app-chatbot',
@@ -17,7 +18,6 @@ export class AppChatbotComponent implements OnInit {
   ];
   currentFilter: string = 'info'
 
-
   responseData:any
   userInfo:any
   userJourney: any = []
@@ -25,7 +25,7 @@ export class AppChatbotComponent implements OnInit {
   recomendedQns :any = {}
   questionsAndAns: any = {}
   more = false
-  constructor(private configSvc: ConfigurationsService) { }
+  constructor(private configSvc: ConfigurationsService, private eventSvc: EventService) { }
 
   ngOnInit() {
     this.userInfo = this.configSvc && this.configSvc.userProfile
@@ -578,6 +578,7 @@ export class AppChatbotComponent implements OnInit {
       recommendedQues:this.getPriorityQuestion(1),
       selectedValue:'',
       title:'Here are the most frequently asked questions users have looked for',
+      tab: 'info',
     }
 
     this.responseData.quesMapIN.map((q: any) => {
@@ -586,37 +587,43 @@ export class AppChatbotComponent implements OnInit {
 
     this.chatInfo.push(userDetails)
     this.userJourney = this.chatInfo
-
   }
 
-  iconClick() {
+  iconClick(type: string) {
     this.showIcon = !this.showIcon
     this.currentFilter = 'info'
+    type === 'start' ? this.raiseChatStartTelemetry() : this.raiseChatEndTelemetry()
   }
-  
+
   toggleFilter(tab: string) {
-    console.log("tab ", tab)
     tab === 'info' ? this.currentFilter = 'info' : this.currentFilter = 'issue'
-    console.log("this.currentFilter ", this.currentFilter)
   }
 
   selectedQuestion(question:any,data:any){
-    console.log(question,data)
     data.selectedValue = question.quesID
     let sendMsg = {
       type:'sendMsg',
-      question: this.questionsAndAns[question.quesID].quesValue
+      question: this.questionsAndAns[question.quesID].quesValue,
+      tab: 'info'
     }
     let incomingMsg = {
       type: 'incoming',
       message: this.questionsAndAns[question.quesID].ansVal,
       recommendedQues: question.recommendedQues || [],
       title:'Questions related to',
-      relatedQes:'above Question'
+      relatedQes:'above Question',
+      tab: 'info'
     }
     this.chatInfo.push(sendMsg)
     this.chatInfo.push(incomingMsg)
     this.userJourney = this.chatInfo
+    this.raiseTemeletyInterat(question.quesID)
+  }
+
+  getuserjourney(tab: string) {
+    console.log(tab)
+    debugger
+    return this.userJourney.filter((j: any) => j.tab === tab)
   }
 
   getPriorityQuestion(priority: any) {
@@ -645,7 +652,6 @@ export class AppChatbotComponent implements OnInit {
   }
 
   showCategory(catItem: any) {
-    console.log(catItem)
     let incomingMsg = {
       type: 'category',
       message: '',
@@ -674,6 +680,63 @@ export class AppChatbotComponent implements OnInit {
     this.chatInfo.push(incomingMsg)
     this.userJourney = this.chatInfo
   }
+
+  raiseChatStartTelemetry() {
+    const event = {
+      eventType: WsEvents.WsEventType.Telemetry,
+      eventLogLevel: WsEvents.WsEventLogLevel.Info,
+      data: {
+        edata: { type: '' },
+        object: {ype: "zse", id: "asd"},
+        state: WsEvents.EnumTelemetrySubType.Loaded,
+        eventSubType: WsEvents.EnumTelemetrySubType.Chatbot,
+        type: 'session',
+        mode: 'view',
+      },
+      pageContext: {pageId: "/chatbot", module: "Assistant"},
+      from: '',
+      to: 'Telemetry',
+    }
+    this.eventSvc.dispatchChatbotEvent<WsEvents.IWsEventTelemetryInteract>(event)
+  }
+
+  raiseChatEndTelemetry() {
+    const event = {
+      eventType: WsEvents.WsEventType.Telemetry,
+      eventLogLevel: WsEvents.WsEventLogLevel.Info,
+      data: {
+        edata: { type: '' },
+        object: {},
+        state: WsEvents.EnumTelemetrySubType.Unloaded,
+        eventSubType: WsEvents.EnumTelemetrySubType.Chatbot,
+        type: 'session',
+        mode: 'view',
+      },
+      pageContext: {pageId: "/chatbot", module: "Assistant"},
+      from: '',
+      to: 'Telemetry',
+    }
+    this.eventSvc.dispatchChatbotEvent<WsEvents.IWsEventTelemetryInteract>(event)
+  }
+
+  raiseTemeletyInterat(id: string) {
+    const event = {
+      eventType: WsEvents.WsEventType.Telemetry,
+      eventLogLevel: WsEvents.WsEventLogLevel.Info,
+      data: {
+        edata: { type: 'click', id: id},
+        object: {id: id, type: "Information"},
+        state: WsEvents.EnumTelemetrySubType.Interact,
+        eventSubType: WsEvents.EnumTelemetrySubType.Chatbot,
+        mode: 'view'
+      },
+      pageContext: {pageId: '/chatboat', module: 'Assistant'},
+      from: '',
+      to: 'Telemetry',
+    }
+    this.eventSvc.dispatchChatbotEvent<WsEvents.IWsEventTelemetryInteract>(event)
+  }
+
 
 }
 

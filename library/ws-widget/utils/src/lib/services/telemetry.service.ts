@@ -43,6 +43,7 @@ export class TelemetryService {
     this.addSearchListener()
     this.addHearbeatListener()
     this.addCustomImpressionListener()
+    this.addCustomListener()
   }
 
   private navigationStart() {
@@ -105,6 +106,7 @@ export class TelemetryService {
   }
 
   start(edata: any, data: any, pageContext?: WsEvents.ITelemetryPageContext) {
+    console.log("data ", data)
     try {
       if (this.telemetryConfig) {
         $t.start(
@@ -293,6 +295,69 @@ export class TelemetryService {
       // tslint:disable-next-line: no-console
       console.log('Error in telemetry externalImpression', e)
     }
+  }
+
+  addCustomListener() {
+    this.eventsSvc.chatbotEvents$
+      .pipe(
+        filter(
+          event =>
+            event &&
+            event.eventType === WsEvents.WsEventType.Telemetry &&
+            event.data.eventSubType === WsEvents.EnumTelemetrySubType.Chatbot &&
+            event.data.mode &&
+            event.data,
+        ),
+      )
+      .subscribe(event => {
+        if (event.data.state === WsEvents.EnumTelemetrySubType.Loaded) {
+          this.start(
+            {
+              type: event.data.type || WsEvents.WsTimeSpentType.Player,
+              mode: event.data.mode || WsEvents.WsTimeSpentMode.Play,
+            },
+            {},
+            event.pageContext
+          )
+        }
+        if (
+          event.data.state === WsEvents.EnumTelemetrySubType.Unloaded
+        ) {
+          this.end({
+            type: event.data.type || WsEvents.WsTimeSpentType.Player,
+            mode: event.data.mode || WsEvents.WsTimeSpentMode.Play,
+          },
+          {},
+          event.pageContext
+          )
+        }
+        if (
+          event.data.state === WsEvents.EnumTelemetrySubType.Interact
+        ) {
+          $t.interact(
+            {
+              type: event.data.edata.type,
+              subtype: event.data.edata.subType,
+              id: (event.data.edata && event.data.edata.id) ?
+                event.data.edata.id
+                : '',
+              pageid: event.pageContext && event.pageContext.pageId || '',
+            },
+            {
+              context: {
+                pdata: {
+                  ...this.pData,
+                  id: this.pData.id,
+                },
+                ...(event.pageContext && event.pageContext.module ? { env: event.pageContext.module } : null),
+              },
+              object: {
+                ...event.data.object,
+              },
+            })
+        }
+
+      })
   }
 
   addCustomImpressionListener() {
