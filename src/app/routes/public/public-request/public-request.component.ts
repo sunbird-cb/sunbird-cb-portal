@@ -233,7 +233,7 @@ export class PublicRequestComponent implements OnInit {
   verifyOtpEmail(otp: any) {
     // console.log(otp)
     const email = this.requestForm.get('email')
-    if (email && email.value && otp && otp.value.length === 6) {
+    if (email && email.value && otp) {
       if (email && email.value && email.valid) {
         this.signupSvc.verifyOTP(otp.value, email.value, 'email').subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
