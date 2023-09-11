@@ -64,7 +64,7 @@
                   <mat-form-field appearance="outline" class="margin-top-s">
                   <input id="email" name="emailField" autocomplete="off" type="email" maxlength="320" (input)="emailVerification($event.target.value)" matInput placeholder="Enter your email id" #email
                     formControlName="email" i18n-aria-label aria-label="Email input">
-                  <mat-hint>Please enter a government email ID</mat-hint>
+                  <!-- <mat-hint>Please enter a government email ID</mat-hint> -->
                   <mat-error [hidden]="false" *ngIf="requestForm?.controls['email'].errors?.required"
                     i18n="Email Error|Explains name is required">
                     Please enter your email ID
@@ -82,7 +82,7 @@
                 </div>
                 <div class="w-full" id="org-field">
                   <div class="flex items-center flex-1">
-                    <span class="ws-mat-black60-text">Only government email ids are allowed</span>
+                    <span class="ws-mat-black60-text">Please enter a government email ID  </span>
                   </div>
                 </div>
                 
