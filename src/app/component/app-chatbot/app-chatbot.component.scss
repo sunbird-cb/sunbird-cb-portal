@@ -88,35 +88,37 @@
 }
 
 .cb-topics {
-  .cat-list {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    display: flex;
-    overflow: auto;
-    .cat-item {
-      padding: 10px 16px;
-      border-radius: 21px;
-      border: 1px solid rgba(0,0,0, 0.16);
-      opacity: 1;
-      background-color: rgba(0,0,0, 0.04);
-      opacity: 1;
-      color: rgba(0,0,0,0.87);
-      font-family: "Lato-Regular";
-      font-size: 14px;
-      font-weight: 400;
-      font-style: normal;
-      letter-spacing: 0.25px;
-      text-align: center;
-      line-height: 20px;
-      width: fit-content;
-      margin-right: 12px;
-      height: fit-content;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-  }
+  
 }
+.cat-list {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  overflow: auto;
+}
+.cat-item {
+  padding: 10px 16px;
+  border-radius: 21px;
+  border: 1px solid rgba(0,0,0, 0.16);
+  opacity: 1;
+  background-color: rgba(0,0,0, 0.04);
+  opacity: 1;
+  color: rgba(0,0,0,0.87);
+  font-family: "Lato-Regular";
+  font-size: 14px;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0.25px;
+  text-align: center;
+  line-height: 20px;
+  width: fit-content;
+  margin-right: 12px;
+  height: fit-content;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
 ::-webkit-scrollbar {
   width: 0px;
   padding: 0;
@@ -137,4 +139,118 @@
 
 ::ng-deep .mat-form-field-infix {
   border-top: unset !important;
+}
+
+
+
+
+// changes in the chat
+.default-info {
+  .default-icon {
+    width: 60px;
+    float: left;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .default-msg{
+    background-color: rgba(0,0,0, 0.04);
+    border: 1px solid rgba(0,0,0, 0.16);
+    border-top-left-radius: 0;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+
+.row-start {
+  justify-content: flex-start;
+  .system-icon {
+    padding-right: 8px;
+  }
+  .system-msg {
+    background-color: rgba(0,0,0, 0.04);
+    border: 1px solid rgba(0,0,0, 0.16);
+    border-top-left-radius: 0;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 62%;
+  }
+}
+.margin-left-17 {
+  margin-left: 17%;
+  
+}
+.question-hint {
+  font-weight: bold;
+}
+.recommended-question {
+  margin-left: 17%;
+  display: flex;
+  flex-wrap: wrap;
+  .my-5px {
+    margin-top: 5px;
+    margin-bottom: 5px
+  }
+  .mr-5px {
+    margin-right: 5px
+  }
+  .btn-default {
+    background: #fff;
+    border: 1px solid rgba(0,0,0, 0.16);
+    color: black;
+    padding: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .showmore-icon {
+    align-items: flex-start;
+  }
+  .btn-active{
+    background: #1B4CA1;
+    border: 1px solid rgba(0,0,0, 0.16);
+    color: white;
+  }
+}
+
+.btn-show-more, .btn-show-less {
+  background: #1B4CA1;
+  color: white;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 40px;
+}
+
+.row-end {
+  justify-content: flex-end;
+  .user-icon {
+    padding-left: 8px;
+  }
+  .user-seleted-question {
+    background-color: #1B4CA1;
+    border-top-right-radius: 0;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    color: white;
+    float: right;
+    text-align: left;
+    max-width: 62%;
+  }
+}
+.highlight-title {
+  color:rgb(27, 76, 161)
+}
+
+.incoming-msg {
+  height: fit-content;
 }
