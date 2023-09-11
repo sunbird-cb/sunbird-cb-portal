@@ -505,7 +505,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.batchData.workFlow.wfItem
     ) {
       if (batch.batchId === this.batchData.workFlow.wfItem.applicationId
-        && this.batchData.workFlow.wfItem.currentStatus === this.WFBlendedProgramStatus.REJECTED
+        && (this.batchData.workFlow.wfItem.currentStatus === this.WFBlendedProgramStatus.REJECTED || this.batchData.workFlow.wfItem.currentStatus  === this.WFBlendedProgramStatus.REMOVED)
       ) {
         return true
       }
@@ -519,11 +519,17 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       if (this.checkRejected(event.value)) {
         this.showRejected = true
         this.setbatchDateToCountDown(event.value.startDate)
-        this.tocSvc.getSelectedBatchData(event.value)
+        let batchData = {
+          content: [event.value]
+        }
+        this.tocSvc.getSelectedBatchData(batchData)
         return
       }
+      let batchData = {
+        content: [event.value]
+      }
       this.setbatchDateToCountDown(event.value.startDate)
-      this.tocSvc.getSelectedBatchData(event.value)
+      this.tocSvc.getSelectedBatchData(batchData)
     }
     this.showRejected = false
     return
@@ -554,7 +560,10 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
       }
     }
-    this.tocSvc.getSelectedBatchData(this.batchControl.value)
+    let batchData = {
+      content: [this.batchControl.value]
+    }
+    this.tocSvc.getSelectedBatchData(batchData)
   }
 
   // setting batch start date
@@ -605,7 +614,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL ||
         status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL ||
         status === this.WFBlendedProgramStatus.WITHDRAWN ||
-        status === this.WFBlendedProgramStatus.REJECTED) {
+        status === this.WFBlendedProgramStatus.REJECTED ||
+        status === this.WFBlendedProgramStatus.REMOVED) {
         return true
       }
     }
@@ -623,7 +633,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL ||
         status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL ||
         status === this.WFBlendedProgramStatus.WITHDRAWN ||
-        status === this.WFBlendedProgramStatus.REJECTED && this.showRejected) {
+        status === this.WFBlendedProgramStatus.REJECTED  ||
+        status === this.WFBlendedProgramStatus.REMOVED && this.showRejected) {
         return true
       }
     }
@@ -644,7 +655,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       ) {
         return 'circle'
       }
-      if (status === this.WFBlendedProgramStatus.REJECTED) {
+      if (status === this.WFBlendedProgramStatus.REJECTED ||
+        status === this.WFBlendedProgramStatus.REMOVED ) {
         return 'info'
       }
     }
