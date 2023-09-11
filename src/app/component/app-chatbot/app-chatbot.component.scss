@@ -9,7 +9,7 @@
 
 .chatbot {
   width: 400px;
-  min-height: 502px;
+  min-height: 702px;
   position: fixed;
   bottom: 20px;
   right: 25px;
@@ -36,8 +36,8 @@
   }
 }
 .cb-content {
-  max-height: 300px;
-  min-height: 300px;
+  max-height: 500px;
+  min-height: 500px;
   background-color: white;
   overflow: auto;
 }

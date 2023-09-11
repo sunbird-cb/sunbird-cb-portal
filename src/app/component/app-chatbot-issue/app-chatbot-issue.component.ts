@@ -43,6 +43,8 @@ export class AppChatbotIssueComponent implements OnInit {
 
   currentUser: any
 
+  userJourney: any = []
+
 
 
     response : any = {
@@ -1002,11 +1004,15 @@ export class AppChatbotIssueComponent implements OnInit {
     Object.keys(this.recommendISS).map((key) => {
       const el: any =this.recommendISS[key]
       el.recommendedQues.map((q1: any) => {
-        q1.recommendedQues.map((q2: any) => {
-          let qObj: any = this.questionISS[q2.quesID]
-          qObj.categoryId = el.catId
+        if(q1.priority == 1) {
+          let qObj: any = this.questionISS[q1.quesID]
           this.recomandedQuestions.push(qObj)
-        })
+        }
+        // q1.recommendedQues.map((q2: any) => {
+        //   let qObj: any = this.questionISS[q2.quesID]
+        //   qObj.categoryId = el.catId
+        //   this.recomandedQuestions.push(qObj)
+        // })
       })
     });
     console.log(this.recomandedQuestions)
@@ -1019,6 +1025,9 @@ export class AppChatbotIssueComponent implements OnInit {
   onButtonClick(questionId: number, question: any) {
     this.clickedL1ButtonIndex = questionId;
     this.questionClicked(question)
+    this.userJourney.push({type: 'user', value: question.quesValue})
+    this.userJourney.push({type: 'system', value: question.ansVal})
+    console.log("this.userJourney ", this.userJourney)
   }
 
   getLevel1Question(){
