@@ -164,15 +164,15 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
 
   getSearchedData() {
     if (this.myFilters.length === 0 && this.paramFilters.length === 0) {
-      let param = ''
-      if (this.userValue === 'moderatedCourses') {
-        param = ''
-      }
+      // let param = ''
+      // if (this.userValue === 'moderatedCourses') {
+      //   param = ''
+      // }
 
       const queryparam1 = {
         request: {
           secureSettings: true,
-          query: param,
+          query: this.param,
           filters: {
             primaryCategory: ['Course'],
             status: ['Live'],
@@ -188,9 +188,9 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
       if (this.userValue === 'moderatedCourses') {
         this.searchApiCall(queryparam1)
       } else {
-        if (this.userValue === 'moderatedCourses') {
-          param = ''
-        }
+        // if (this.userValue === 'moderatedCourses') {
+        //   param = ''
+        // }
         queryparam2 = {
           request: {
             filters: {
@@ -201,7 +201,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
               ],
               status: ['Live'],
             },
-            query: param,
+            query: this.param,
             sort_by: { lastUpdatedOn: '' },
             fields: [],
             facets: ['primaryCategory', 'mimeType', 'source'],

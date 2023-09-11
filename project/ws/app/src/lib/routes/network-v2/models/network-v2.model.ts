@@ -99,6 +99,7 @@ export namespace NSNetworkDataV2 {
         firstName: string,
         lastName: string,
         channel: string,
+        profileDetails: any,
     }
 
     export interface IRecommendedUserResponse {

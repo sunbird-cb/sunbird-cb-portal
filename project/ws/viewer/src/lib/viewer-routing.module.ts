@@ -24,6 +24,8 @@ import { HtmlMobileModule } from './routes/html-mobile/html-mobile.module'
 // import { ConfigurationsService } from './resolvers/config-resolver.service'
 // import { ProfileResolverService } from './resolvers/profile-resolver.service'
 import { PageResolve } from '@sunbird-cb/utils'
+import { OfflineSessionComponent } from './routes/offline-session/offline-session.component'
+import { OfflineSessionModule } from './routes/offline-session/offline-session.module'
 
 const routes: Routes = [
   {
@@ -207,6 +209,19 @@ const routes: Routes = [
     },
   },
   {
+    path: 'offline-session/:resourceId',
+    component: OfflineSessionComponent,
+    data: {
+      resourceType: 'offline-session',
+      module: 'Learn',
+      pageId: 'offline-session/:resourceId',
+    },
+    resolve: {
+      content: ViewerResolve,
+    },
+    // loadChildren: () => import('./routes/offline-session/offline-session.module').then(p => p.OfflineSessionModule),
+  },
+  {
     path: 'survey',
     // component: SurveyComponent,
     data: {
@@ -382,6 +397,7 @@ const routes: Routes = [
     VideoModule,
     YoutubeModule,
     ChannelModule,
+    OfflineSessionModule,
     RouterModule.forChild([
       {
         path: '',

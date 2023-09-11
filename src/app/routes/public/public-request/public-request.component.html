@@ -15,7 +15,7 @@
     <div class="right_inner_container profile-box">
       <div class="flex">
         <div class="flex items-center mr-5">
-          <a class=" ng-star-inserted" [routerLink]="'/public/signup'" tabindex="0" aria-disabled="false">
+          <a class="cursor-pointer" (click)="goBackUrl()" tabindex="0" aria-disabled="false">
             <span class="flex">
               <mat-icon class="mat-icon notranslate material-icons ws-mat-primary-text" role="img" aria-hidden="true">
                 arrow_back
@@ -23,11 +23,11 @@
             </span>
           </a>
         </div>
-        <h2 class="mat-h1 margin-remove inline-block ng-star-inserted">
+        <h2 class="mat-h1 margin-remove inline-block">
           Request to add {{requestType | lowercase}}
         </h2>
       </div>
-      <form [formGroup]="requestForm">
+      <form [formGroup]="requestForm" novalidate>
         <div class="margin-top-l new-mobile">
           <div class="flex flex-wrap mobile-break">
             <div class="flex flex-col content-center flex-wrap">
@@ -53,16 +53,18 @@
                 </mat-form-field>
               </div>
 
-              <div class="input-wrapper margin-top-s">
+
+              <div class="input-wrapper  mobile-wrapper margin-top-l">
                 <label for="email" class=" margin-remove-bottom form-label required"
                   i18n="Email label|Label which explains the user to enter Email" i18n-aria-label
                   aria-label="Email label">
                   Email
                 </label>
-                <mat-form-field appearance="outline" class="margin-top-s">
+                <div class="flex flex-1">
+                  <mat-form-field appearance="outline" class="margin-top-s">
                   <input id="email" name="emailField" autocomplete="off" type="email" maxlength="320" (input)="emailVerification($event.target.value)" matInput placeholder="Enter your email id" #email
                     formControlName="email" i18n-aria-label aria-label="Email input">
-                  <mat-hint>Please enter a government email ID</mat-hint>
+                  <!-- <mat-hint>Please enter a government email ID</mat-hint> -->
                   <mat-error [hidden]="false" *ngIf="requestForm?.controls['email'].errors?.required"
                     i18n="Email Error|Explains name is required">
                     Please enter your email ID
@@ -75,7 +77,46 @@
                     i18n="Email Error|Explains character validation">
                     Max 64 characters before "@" & 255 characters after "@" are valid.
                   </div>
-                </mat-form-field>
+                    <!-- <mat-hint class="pos-hint">Do not have a government email id?<span class="float-right ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo('Domain')">Request for help</span></mat-hint> -->
+                  </mat-form-field>
+                </div>
+                <div class="w-full" id="org-field">
+                  <div class="flex items-center flex-1">
+                    <span class="ws-mat-black60-text">Please enter a government email ID  </span>
+                  </div>
+                </div>
+                
+                <div *ngIf="!isEmailVerified" class="flex flex-1 margin-top-s justify-end">
+                  <button *ngIf="!otpEmailSend" mat-raised-button type="button" (click)="sendOtpEmail()"
+                    class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text btn-responsive" [disabled]="requestForm?.email?.invalid">
+                    <a class="text-white" i18n>
+                      Send OTP
+                    </a>
+                  </button>
+                  <div *ngIf="otpEmailSend" class="flex flex-1 flex-column">
+                      <mat-form-field appearance="outline" class="margin-top-xs w-full">
+                        <input  id="emailOTP" #emailotp type="password"
+                          matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input" onKeyPress="if(this.value.length === 8) return false;" autocomplete="new-password">
+                        <mat-hint *ngIf="timeLeftforOTPEmail > 0 ">
+                          <span>Resend OTP after {{timeLeftforOTPEmail | pipeDurationTransform: 'hms2M'}}</span>
+                        </mat-hint>
+                        <mat-hint *ngIf="timeLeftforOTPEmail <= 0 ">
+                          <span class="cursor-pointer ws-mat-default-text" (click)="resendOTPEmail()">Resend
+                            OTP</span>
+                        </mat-hint>
+                      </mat-form-field>
+                      <div class="flex flex-1 margin-top-s justify-end">
+                        <button mat-raised-button type="button" (click)="verifyOtpEmail(emailotp)"
+                          class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text margin-top-s otp"
+                          [disabled]="requestForm?.email?.invalid || disableEmailVerifyBtn">
+                          <span class="text-white" i18n>
+                            Verify OTP
+                          </span>
+                        </button>
+                      </div>
+                  </div>
+                </div>
+                
               </div>
 
               <div class="input-wrapper mobile-wrapper margin-top-l">
@@ -124,7 +165,7 @@
                       <div class="flex flex-1 margin-top-s justify-end">
                         <button mat-raised-button type="button" (click)="verifyOtp(otp)"
                           class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text margin-top-s otp"
-                          [disabled]="requestForm?.mobile?.invalid">
+                          [disabled]="requestForm?.mobile?.invalid || disableVerifyBtn">
                           <span class="text-white" i18n>
                             Verify OTP
                           </span>
@@ -240,7 +281,7 @@
                 <div class="button_box flex flex-col items-center justify-center">
                   <button mat-flat-button type="submit"
                     class="submitBtn text-white ws-mat-primary-background ws-mat-white-text" (click)="submitRequest()"
-                    [disabled]="!requestForm?.valid || !confirm || disableBtn || !isMobileVerified">
+                    [disabled]="!requestForm?.valid || !confirm || disableBtn || !isMobileVerified || !isEmailVerified">
                     Submit
                   </button>
                 </div>

@@ -104,18 +104,18 @@
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
               <div class="padding-m batch-container">
                 <form>
-                  <ng-container *ngIf="batchData && !batchData?.enrolled 
+                  <ng-container *ngIf="batchData && !batchData?.enrolled
                   && (!batchData.workFlow?.wfInitiated || (batchData.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED))
                   && batchData?.content?.length">
                     <div>
-                      
+
                         <mat-form-field appearance="outline" class="w-full">
                           <!-- <mat-label>Select batch to enroll</mat-label> -->
-                          <mat-select  #batchControlData [formControl]="batchControl" required autoSelctFirstOption (selectionChange)="batchChange($event)"> 
+                          <mat-select  #batchControlData [formControl]="batchControl" required autoSelctFirstOption (selectionChange)="batchChange($event)">
                             <mat-option *ngFor="let batch of batchData.content; let i=index" [value]="batch" selected="index === 0"
                             [disabled]="!handleEnrollmentEndDate(batch) || disableEnrollBtn ">
-                              <p>{{batch.name}} 
-                                ({{batch.startDate}} - {{batch.endDate || 'present'}})</p>
+                              <p>{{batch.name}}
+                                ({{batch.startDate | date: 'dd-MM-yyyy'}} - {{batch.endDate | date: 'dd-MM-yyyy' || 'present'}})</p>
                             </mat-option>
                           </mat-select>
                           <mat-error *ngIf="batchControl.hasError('required')">Please choose a batch to start course</mat-error>
@@ -124,7 +124,7 @@
                     <div class="flex flex-wrap">
                       <ng-container *ngIf="!showRejected">
                         <div class="flex-1">
-                          <button class="mat-button mat-raised-button resumeButton custom-button width-1-1 text-white" 
+                          <button class="mat-button mat-raised-button resumeButton custom-button width-1-1 text-white"
                           [disabled]="disableEnrollBtn || batchControl.hasError('required')" (click)="requestToEnroll()">
                             <ng-container i18n>
                               Request to enroll
@@ -133,7 +133,7 @@
                         </div>
                         <div class="flex-col ml-3" *ngIf="selectedBatch && selectedBatch.enrollmentEndDate">
                           <p class="mat-body-2 margin-remove-bottom">Last enrollment date</p>
-                          <p class="mat-body-2 font-bold-imp margin-remove-bottom">{{selectedBatch.enrollmentEndDate}}</p>
+                          <p class="mat-body-2 font-bold-imp margin-remove-bottom">{{selectedBatch.enrollmentEndDate | date: 'dd-MM-yyyy'}}</p>
                         </div>
                       </ng-container>
                       <ng-container *ngIf="showRejected">
@@ -145,17 +145,17 @@
                   </ng-container>
                 </form>
                 <ng-container *ngIf="batchData && !batchData?.enrolled  && batchData?.workFlow?.wfInitiated
-                && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.REJECTED) 
+                && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.REJECTED)
                 && batchData?.content?.length">
                   <div>
                     <p class="margin-remove-bottom mat-body-1 padding-m bg-white">
-                      {{batchData?.workFlow?.batch.name}} - ({{batchData?.workFlow?.batch.startDate}} - {{batchData?.workFlow?.batch.endDate || 'present'}})
+                      {{batchData?.workFlow?.batch.name}} - ({{batchData?.workFlow?.batch.startDate | date: 'dd-MM-yyyy'}} - {{batchData?.workFlow?.batch.endDate | date: 'dd-MM-yyyy' || 'present'}})
                     </p>
                   </div>
                 </ng-container>
                 <ng-container *ngIf="batchData && batchData?.enrolled && batchData?.content?.length">
                   <h3 class="margin-remove-bottom p-4 bg-white mat-body-1" i18n *ngFor="let batch of batchData.content">
-                    {{batch.name}} ({{batch.startDate}} - {{batch.endDate || 'present'}})
+                    {{batch.name}} ({{batch.startDate | date: 'dd-MM-yyyy' }} - {{batch.endDate | date: 'dd-MM-yyyy' || 'present'}})
                   </h3>
                 </ng-container>
                 <ng-container *ngIf="batchData && !batchData?.enrolled && !batchData?.content?.length">

@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormControl, Validators, AbstractControl, ValidatorFn } from '@angular/forms'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { environment } from 'src/environments/environment'
 // tslint:disable-next-line: import-name
 import _ from 'lodash'
 import { Subscription, Observable, interval } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, pairwise, startWith } from 'rxjs/operators'
 import { SignupService } from '../public-signup/signup.service'
 import { RequestService } from './request.service'
 import { RequestSuccessDialogComponent } from './request-success-dialog/request-success-dialog.component'
 import { v4 as uuid } from 'uuid'
+import { Location } from '@angular/common'
 
 export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -43,25 +44,46 @@ export class PublicRequestComponent implements OnInit {
   domainPattern = `([a-z0-9\-]+\.){1,2}[a-z]{2,4}`
   confirm = false
   disableBtn = false
+  disableVerifyBtn = false
+  disableEmailVerifyBtn = false
   isMobileVerified = false
+  isEmailVerified = false
+  otpEmailSend = false
+  timeLeftforOTPEmail = 0
   otpSend = false
   otpVerified = false
   requestType: any
   masterPositions!: Observable<any> | undefined
   emailLengthVal = false
   OTP_TIMER = environment.resendOTPTIme
+  OTP_TIMER_EMAIL = environment.resendOTPTIme
+  timerSubscriptionEmail: Subscription | null = null
   timerSubscription: Subscription | null = null
   timeLeftforOTP = 0
   // tslint:disable-next-line:max-line-length
   requestObj: { state: string; action: string; serviceName: string; userId: string;
     applicationId: string; actorUserId: string; deptName: string; updateFieldValues: any}  | undefined
   formobj: { toValue: {} ; fieldKey: any; description: any; firstName: any; email: any; mobile: any} | undefined
+  userform: any
 
   constructor(private activatedRoute: ActivatedRoute,
+              private router: Router,
               private snackBar: MatSnackBar,
               private signupSvc: SignupService,
               private dialog: MatDialog,
-              private requestSvc: RequestService) {
+              private requestSvc: RequestService,
+              private _location: Location) {
+    const navigation = this.router.getCurrentNavigation()
+    if (navigation) {
+      const extraData = navigation.extras.state as {
+        userform: any
+        isMobileVerified: boolean
+        isEmailVerified: boolean
+      }
+      this.userform = extraData.userform
+      this.isMobileVerified = extraData.isMobileVerified
+      this.isEmailVerified = extraData.isEmailVerified
+    }
     this.requestType = this.activatedRoute.snapshot.queryParams.type
     this.requestForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
@@ -77,10 +99,28 @@ export class PublicRequestComponent implements OnInit {
       addDetails: new FormControl('', []),
       confirmBox: new FormControl(false, [Validators.required]),
     })
+    if (this.userform) {
+      this.requestForm.patchValue({
+        firstname: this.userform.firstname ? this.userform.firstname : '',
+        email: this.userform.email ? this.userform.email : '',
+        mobile: this.userform.mobile ? this.userform.mobile : '',
+        organisation: this.userform.organisation ? this.userform.organisation : '',
+        domain: this.userform.domain ? this.userform.domain : '',
+        addDetails: this.userform.addDetails ? this.userform.addDetails : '',
+        confirmBox: this.userform.confirmBox ? this.userform.confirmBox : '',
+      })
+      this.confirm = this.userform.confirmBox
+      // this.requestForm.controls['firstname'].markAsTouched()
+      // this.requestForm.controls['email'].markAsTouched()
+      // this.requestForm.controls['mobile'].markAsTouched()
+      // this.requestForm.controls['confirmBox'].markAsTouched()
+    }
    }
 
   ngOnInit() {
 
+    this.onPhoneChange()
+    this.onEmailChange()
   }
 
   emailVerification(emailId: string) {
@@ -94,6 +134,38 @@ export class PublicRequestComponent implements OnInit {
       } else {
         this.emailLengthVal = false
       }
+    }
+  }
+
+  onPhoneChange() {
+    const ctrl = this.requestForm.get('mobile')
+    if (ctrl) {
+      ctrl
+        .valueChanges
+        .pipe(startWith(null), pairwise())
+        .subscribe(([prev, next]: [any, any]) => {
+          if (!(prev == null && next)) {
+            this.isMobileVerified = false
+            this.disableVerifyBtn = false
+            this.otpSend = false
+          }
+        })
+    }
+  }
+
+  onEmailChange() {
+    const ctrl = this.requestForm.get('email')
+    if (ctrl) {
+      ctrl
+        .valueChanges
+        .pipe(startWith(null), pairwise())
+        .subscribe(([prev, next]: [any, any]) => {
+          if (!(prev == null && next)) {
+            this.isEmailVerified = false
+            this.disableEmailVerifyBtn = false
+            this.otpEmailSend = false
+          }
+        })
     }
   }
 
@@ -118,6 +190,8 @@ export class PublicRequestComponent implements OnInit {
       this.signupSvc.resendOtp(mob.value, 'phone').subscribe((res: any) => {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
+          this.disableVerifyBtn = false
+       
           alert('An OTP has been sent to your mobile number (valid for 15 minutes)')
           this.startCountDown()
         }
@@ -146,10 +220,96 @@ export class PublicRequestComponent implements OnInit {
           // tslint:disable-next-line: align
         }, (error: any) => {
           this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+          if (error.error && error.error.result) {
+            this.disableVerifyBtn = error.error.result.remainingAttempt === 0 ? true : false
+          }
         })
       }
     } else {
       this.snackBar.open('Please enter a valid OTP.')
+    }
+  }
+
+  verifyOtpEmail(otp: any) {
+    // console.log(otp)
+    const email = this.requestForm.get('email')
+    if (email && email.value) {
+      if (email && email.value && email.valid) {
+        this.signupSvc.verifyOTP(otp.value, email.value, 'email').subscribe((res: any) => {
+          if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
+            this.otpEmailSend = true
+            this.isEmailVerified = true
+            this.disableBtn = false
+          }
+          // tslint:disable-next-line: align
+        }, (error: any) => {
+          this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+          if (error.error && error.error.result) {
+            this.disableEmailVerifyBtn = error.error.result.remainingAttempt === 0 ? true : false
+          }
+        })
+      }
+    }
+  }
+
+  startCountDownEmail() {
+    const startTime = Date.now()
+    this.timeLeftforOTPEmail = this.OTP_TIMER_EMAIL
+    // && this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
+    if (this.OTP_TIMER_EMAIL > 0
+    ) {
+      this.timerSubscriptionEmail = interval(1000)
+        .pipe(
+          map(
+            () =>
+              startTime + this.OTP_TIMER_EMAIL - Date.now(),
+          ),
+        )
+        .subscribe(_timeRemaining => {
+          this.timeLeftforOTPEmail -= 1
+          if (this.timeLeftforOTPEmail < 0) {
+            this.timeLeftforOTPEmail = 0
+            if (this.timerSubscription) {
+              this.timerSubscription.unsubscribe()
+            }
+            // this.submitQuiz()
+          }
+        })
+    }
+  }
+
+  sendOtpEmail() {
+    const email = this.requestForm.get('email')
+    if (email && email.value && email.valid) {
+      this.signupSvc.sendOtp(email.value, 'email').subscribe(() => {
+        this.otpEmailSend = true
+        alert('OTP sent to your email')
+        this.startCountDownEmail()
+        // tslint:disable-next-line: align
+      }, (error: any) => {
+        this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+      })
+    } else {
+      this.snackBar.open('Please enter a valid email')
+    }
+  }
+
+  resendOTPEmail() {
+    const email = this.requestForm.get('email')
+    if (email && email.value && email.valid) {
+      this.signupSvc.resendOtp(email.value, 'email').subscribe((res: any) => {
+        if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
+          this.otpEmailSend = true
+          this.disableEmailVerifyBtn = false
+          alert('OTP sent to your email')
+          this.startCountDownEmail()
+        }
+        // tslint:disable-next-line: align
+      }, (error: any) => {
+        this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+      })
+    } else {
+      this.snackBar.open('Please enter a valid email')
     }
   }
 
@@ -166,7 +326,7 @@ export class PublicRequestComponent implements OnInit {
               startTime + this.OTP_TIMER - Date.now(),
           ),
         )
-        .subscribe(_timeRemaining => {
+        .subscribe((_timeRemaining: any) => {
           this.timeLeftforOTP -= 1
           if (this.timeLeftforOTP < 0) {
             this.timeLeftforOTP = 0
@@ -221,7 +381,7 @@ export class PublicRequestComponent implements OnInit {
           this.openDialog(this.requestType)
           this.disableBtn = false
           this.isMobileVerified = true
-          this.requestForm.reset()
+          this.clearForm()
         },
         (err: any) => {
           this.disableBtn = false
@@ -252,7 +412,7 @@ export class PublicRequestComponent implements OnInit {
           this.openDialog(this.requestType)
           this.disableBtn = false
           this.isMobileVerified = true
-          this.requestForm.reset()
+          this.clearForm()
         },
         (err: any) => {
           this.disableBtn = false
@@ -282,7 +442,7 @@ export class PublicRequestComponent implements OnInit {
           this.openDialog(this.requestType)
           this.disableBtn = false
           this.isMobileVerified = true
-          this.requestForm.reset()
+          this.clearForm()
         },
         (err: any) => {
           this.disableBtn = false
@@ -294,6 +454,13 @@ export class PublicRequestComponent implements OnInit {
         }
       )
     }
+  }
+
+  clearForm() {
+    this.requestForm.reset()
+    Object.keys(this.requestForm.controls).forEach(control => {
+      this.requestForm.controls[control].setErrors(null)
+    })
   }
 
   openDialog(type: any): void {
@@ -311,5 +478,9 @@ export class PublicRequestComponent implements OnInit {
     this.snackBar.open(primaryMsg, 'X', {
       duration,
     })
+  }
+
+  public goBackUrl() {
+    this._location.back()
   }
 }

@@ -96,12 +96,14 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   customCharsPattern = `^[a-zA-Z0-9 \\w\-\&\(\)]*$`
   positionsOriginal!: []
   postions!: any
-  masterPositions!: Observable<any> | undefined
+  // masterPositions!: Observable<any> | undefined
+  masterGroup!: Observable<any> | undefined
   telemetryConfig: NsInstanceConfig.ITelemetryConfig | null = null
   portalID = ''
   confirm = false
   confirmTerms = false
   disableBtn = false
+  disableVerifyBtn = false
   orgRequired = false
   ministeries: any[] = []
   masterMinisteries!: Observable<any> | undefined
@@ -129,6 +131,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   private subscriptionContact: Subscription | null = null
   private recaptchaSubscription!: Subscription
   searching = false
+  groupsOriginal: any = []
 
   constructor(
     private signupSvc: SignupService,
@@ -146,11 +149,13 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       // lastname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       // tslint:disable-next-line:max-line-length
-      position: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterPositions)]),
+      // position: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterPositions)]),
+      // tslint:disable-next-line:max-line-length
+      group: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterGroup)]),
       // tslint:disable-next-line:max-line-length
       email: new FormControl('', [Validators.required, Validators.pattern(/^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@((?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?){2,}\.){1,3}(?:\w){2,}$/)]),
       // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
-      mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
+      mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern), Validators.maxLength(12)]),
       confirmBox: new FormControl(false, [Validators.required]),
       confirmTermsBox: new FormControl(false, [Validators.required]),
       type: new FormControl('ministry', [Validators.required]),
@@ -165,8 +170,10 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     // this.fetchDropDownValues('ministry')
     const instanceConfig = this.configSvc.instanceConfig
     this.positionsOriginal = this.activatedRoute.snapshot.data.positions.data || []
+    this.groupsOriginal = this.activatedRoute.snapshot.data.group.data || []
     this.OrgsSearchChange()
-    this.onPositionsChange()
+    // this.onPositionsChange()
+    this.onGroupChange()
     this.onPhoneChange()
     this.onEmailChange()
     if (instanceConfig) {
@@ -209,20 +216,38 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     this.heirarchyObject = null
   }
 
-  onPositionsChange() {
+  // onPositionsChange() {
+  //   // tslint:disable-next-line: no-non-null-assertion
+  //   this.masterPositions = this.registrationForm.get('position')!.valueChanges
+  //     .pipe(
+  //       debounceTime(500),
+  //       distinctUntilChanged(),
+  //       startWith(''),
+  //       map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+  //       map(name => name ? this.filterPositions(name) : this.positionsOriginal.slice())
+  //     )
+
+  //   this.masterPositions.subscribe((event: any) => {
+  //     // tslint:disable-next-line: no-non-null-assertion
+  //     this.registrationForm.get('position')!.setValidators([Validators.required, forbiddenNamesValidatorPosition(event)])
+  //     this.registrationForm.updateValueAndValidity()
+  //   })
+  // }
+
+  onGroupChange() {
     // tslint:disable-next-line: no-non-null-assertion
-    this.masterPositions = this.registrationForm.get('position')!.valueChanges
+    this.masterGroup = this.registrationForm.get('group')!.valueChanges
       .pipe(
         debounceTime(500),
         distinctUntilChanged(),
         startWith(''),
-        map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
-        map(name => name ? this.filterPositions(name) : this.positionsOriginal.slice())
+        map((value: any) => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+        map((name: any) => name ? this.filterGroups(name) : this.groupsOriginal.slice())
       )
 
-    this.masterPositions.subscribe((event: any) => {
+    this.masterGroup.subscribe((event: any) => {
       // tslint:disable-next-line: no-non-null-assertion
-      this.registrationForm.get('position')!.setValidators([Validators.required, forbiddenNamesValidatorPosition(event)])
+      this.registrationForm.get('group')!.setValidators([Validators.required, forbiddenNamesValidatorPosition(event)])
       this.registrationForm.updateValueAndValidity()
     })
   }
@@ -288,12 +313,20 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     }
   }
 
-  private filterPositions(name: string): any {
+  // private filterPositions(name: string): any {
+  //   if (name) {
+  //     const filterValue = name.toLowerCase()
+  //     return this.positionsOriginal.filter((option: any) => option.name.toLowerCase().includes(filterValue))
+  //   }
+  //   return this.positionsOriginal
+  // }
+
+  private filterGroups(name: string): any {
     if (name) {
       const filterValue = name.toLowerCase()
-      return this.positionsOriginal.filter((option: any) => option.name.toLowerCase().includes(filterValue))
+      return this.groupsOriginal.filter((option: any) => option.toLowerCase().includes(filterValue))
     }
-    return this.positionsOriginal
+    return this.groupsOriginal
   }
 
   onPhoneChange() {
@@ -306,6 +339,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
           if (!(prev == null && next)) {
             this.isMobileVerified = false
             this.otpSend = false
+            this.disableVerifyBtn = false
           }
         })
     }
@@ -348,6 +382,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       this.signupSvc.resendOtp(mob.value, 'phone').subscribe((res: any) => {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
+          this.disableVerifyBtn = false
           alert('An OTP has been sent to your mobile number (valid for 15 minutes)')
           this.startCountDown()
         }
@@ -393,6 +428,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
           // tslint:disable-next-line: align
         }, (error: any) => {
           this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+          if (error.error && error.error.result) {
+            this.disableVerifyBtn = error.error.result.remainingAttempt === 0 ? true : false
+          }
         })
       }
     } else {
@@ -412,7 +450,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
               startTime + this.OTP_TIMER - Date.now(),
           ),
         )
-        .subscribe(_timeRemaining => {
+        .subscribe((_timeRemaining: any) => {
           this.timeLeftforOTP -= 1
           if (this.timeLeftforOTP < 0) {
             this.timeLeftforOTP = 0
@@ -545,6 +583,10 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     return value ? value.name : undefined
   }
 
+  displayFnGroup = (value: any) => {
+    return value ? value : undefined
+  }
+
   displayFnOrg = (value: any) => {
     return value ? value.orgName : ''
   }
@@ -563,7 +605,8 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
               // lastName: this.registrationForm.value.lastname || '',
               email: this.registrationForm.value.email || '',
               phone: `${this.registrationForm.value.mobile}` || '',
-              position: this.registrationForm.value.position.name || '',
+              // position: this.registrationForm.value.position.name || '',
+              group: this.registrationForm.value.group || '',
               source: `${environment.name}.${this.portalID}` || '',
               orgName: this.heirarchyObject.orgName || '',
               channel: this.heirarchyObject.channel || '',
@@ -627,7 +670,10 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       minHeight: 'auto',
     })
     dialogRef.afterClosed().subscribe((_result: any) => {
-    })
+      if (_result) {
+        this.confirmTerms = _result
+      }
+     })
   }
 
   ngOnDestroy() {
@@ -655,7 +701,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   // }
 
   navigateTo(param?: any) {
+    const formData = this.registrationForm.value
     const url = '/public/request'
-    this.router.navigate([url], {  queryParams: { type: param } })
+    // tslint:disable-next-line: max-line-length
+    this.router.navigate([url], {  queryParams: { type: param }, state: { userform: formData, isMobileVerified: this.isMobileVerified , isEmailVerified: this.isEmailVerified } })
   }
 }

@@ -240,6 +240,9 @@ export class TelemetryService {
             ...(data && data.object),
           },
         }
+        if (!page.objectId || !objectType) {
+          config.object = {}
+        }
         $t.impression(edata, config)
       } else {
         $t.impression(edata, {

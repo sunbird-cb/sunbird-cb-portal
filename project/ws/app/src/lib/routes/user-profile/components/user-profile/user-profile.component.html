@@ -376,7 +376,7 @@
                             </mat-select>
                           </mat-form-field>
                           <mat-form-field appearance="outline" class="margin-top-xs flex-expand w-minus-w80">
-                            <input [readonly]="otpSend && !otpVerified" id="mobileNumber" #mobile type="number" matInput
+                            <input id="mobileNumber" #mobile type="number" matInput
                               placeholder="Mobile Number" formControlName="mobile" i18n-aria-label
                               aria-label="Mobile Number input" maxlength="12">
                             <mat-error [hidden]="false" i18n="Mobile Number Error|Explains Mobile no is required"
@@ -418,7 +418,7 @@
                               </mat-form-field>
                               <button mat-raised-button type="button" (click)="verifyOtp(otp)"
                                 class="text-white btn-success btn-responsive margin-top-s otp"
-                                [disabled]="createUserForm?.mobile?.invalid">
+                                [disabled]="createUserForm?.mobile?.invalid  || disableVerifyBtn">
                                 <span class="text-white" i18n>
                                   Verify OTP
                                 </span>
@@ -975,7 +975,7 @@
                   </div>
                 </div>
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                  <div class="item1">
+                  <div class="item1" [ngClass]="{ disable: !isAllowed('description') }">
                     <label for="description" class=" margin-remove-bottom form-label"
                       i18n="Description label|Label which explains the user to enter Description">
                       Description
@@ -989,6 +989,8 @@
                         You have exceeded 500 characters.
                       </mat-error>
                     </mat-form-field>
+                    <br>
+                    <span class="txt" *ngIf="!isAllowed('description')">{{inReview}}</span>
                   </div>
                 </div>
                 <p class="heading mt-10">Other Details For Government Employees (If Applicable)</p>
@@ -1058,7 +1060,7 @@
                         Allotment Year of Service is mandatory
                       </mat-error> -->
                       <input id="allotmentYearService" matInput #allotmentYear type="text"
-                        formControlName="allotmentYear" i18n-placeholder placeholder="1998" maxlength="4" />
+                        formControlName="allotmentYear" i18n-placeholder placeholder="1998" maxlength="4" (keypress)="numericOnly($event)" />
                       <mat-error [hidden]="false" *ngIf="createUserForm?.controls['allotmentYear'].errors?.pattern">
                         Please enter a valid 4 digit year
                       </mat-error>

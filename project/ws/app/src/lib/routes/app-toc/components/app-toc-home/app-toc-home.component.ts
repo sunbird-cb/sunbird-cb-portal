@@ -1124,7 +1124,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       if (this.content.secureSettings !== undefined) {
         primaryCategory = 'Learning Resource'
       } else {
-        primaryCategory = this.content.primaryCategory
+        primaryCategory = firstPlayableContent.primaryCategory || this.content.primaryCategory
       }
 
       this.firstResourceLink = viewerRouteGenerator(
@@ -1313,5 +1313,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     const batchId = this.route.snapshot.queryParams.batchId ?
       this.route.snapshot.queryParams.batchId : ''
     return this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)
+  }
+
+  getProgramDuration(pDuration: number) {
+    return pDuration === 1 ? `${pDuration} day` : `${pDuration} days`
   }
 }

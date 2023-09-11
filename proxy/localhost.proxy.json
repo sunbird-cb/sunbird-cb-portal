@@ -1,6 +1,6 @@
 {
   "/apis/*": {
-    "target": "https://portal.igot-dev.in",
+    "target": "https://portal.karmayogi.nic.in/",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true,
@@ -12,7 +12,7 @@
     }
   },
   "/api/*": {
-    "target": "https://portal.igot-dev.in",
+    "target": "https://portal.karmayogi.nic.in/",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true,

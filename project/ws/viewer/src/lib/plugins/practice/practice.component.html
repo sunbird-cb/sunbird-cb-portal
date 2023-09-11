@@ -205,7 +205,13 @@
         <ng-container *ngIf="fetchingQuestionsStatus === 'done'  && current_Question && !process">
           <ng-container *ngIf="viewState === 'attempt' && !isSubmitted">
             <div class="flex flex-1 flex-column margin-top-l margin-left-xs bottom_box margin-bottom-xs">
-              <div class="flex flex-end margin-right-m  cen">
+              <div class="flex flex-start margin-left-m  cen">
+                <mat-icon class="flex margin-top-xs margin-bottom-xs">warning</mat-icon>
+                <span class="flex mat-body-2 padding-xs font-weight-700" i18n>Instructions </span>
+                <span class="flex mat-body-2 font-weight-700" i18n>:</span>
+                <span class="flex mat-body-2 padding-xs" i18n>{{selectedSection.additionalInstructions}}</span>
+              </div>
+              <div class="flex flex-start margin-left-m  cen">
                 <mat-icon class="flex margin-top-xs margin-bottom-xs">info_outline</mat-icon>
                 <span class="flex mat-body-2 padding-xs" i18n>Attempt all questions to finish assessment</span>
               </div>

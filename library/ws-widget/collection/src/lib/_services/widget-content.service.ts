@@ -321,7 +321,9 @@ export class WidgetContentService {
       content.primaryCategory === NsContent.EPrimaryCategory.PROGRAM ||
       content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE ||
       content.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT ||
-      content.primaryCategory === NsContent.EPrimaryCategory.COMP_ASSESSMENT
+      content.primaryCategory === NsContent.EPrimaryCategory.COMP_ASSESSMENT ||
+      content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM ||
+      content.primaryCategory === NsContent.EPrimaryCategory.OFFLINE_SESSION
     ) {
       return content
     }
