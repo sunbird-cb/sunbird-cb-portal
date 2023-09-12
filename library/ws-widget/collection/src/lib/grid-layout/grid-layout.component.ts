@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http'
-import { Component, OnInit, Input } from '@angular/core'
+import { Component, OnInit, Input, OnDestroy } from '@angular/core'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ConfigurationsService } from '@sunbird-cb/utils/src/lib/services/configurations.service'
 import { IUserProfileDetailsFromRegistry } from '@ws/app/src/lib/routes/user-profile/models/user-profile.model'
-import { Observable } from 'rxjs'
+import { Observable, Subscription } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { Router } from '@angular/router'
 import {
@@ -15,6 +15,7 @@ import {
 } from './grid-layout.model'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { NPSGridService } from './nps-grid.service'
 
 const API_END_POINTS = {
   fetchProfileById: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`,
@@ -27,11 +28,12 @@ const API_END_POINTS = {
 })
 
 export class GridLayoutComponent extends WidgetBaseComponent
-  implements OnInit, NsWidgetResolver.IWidgetData<IGridLayoutDataMain> {
+  implements OnInit, OnDestroy, NsWidgetResolver.IWidgetData<IGridLayoutDataMain> {
     constructor(
       private router: Router,
       private configSvc: ConfigurationsService,
       private http: HttpClient,
+      private npsService: NPSGridService,
     ) {
       super()
     }
@@ -42,6 +44,8 @@ export class GridLayoutComponent extends WidgetBaseComponent
   isNudgeOpen = true
 
   // NPS
+  updateTelemetryDataSubscription: Subscription | null = null
+  isNPSOpen = true
   ratingGiven: any
   onSuccessRating = false
   phtext: any
@@ -83,7 +87,15 @@ export class GridLayoutComponent extends WidgetBaseComponent
       if (x && x.profileDetails && x.profileDetails.personalDetails && x.profileDetails.personalDetails.phoneVerified) {
         this.isNudgeOpen = false
       }
+    })
 
+    this.updateTelemetryDataSubscription = this.npsService.updateTelemetryDataObservable.subscribe((value: boolean) => {
+      if (value) {
+        console.log('value', value)
+        this.npsService.getFeedStatus(this.configSvc.unMappedUser.id).subscribe((res: any) => {
+          console.log('res', res)
+        })
+      }
     })
 
     if (this.widgetData.gutter != null) {
@@ -103,6 +115,12 @@ export class GridLayoutComponent extends WidgetBaseComponent
         }),
       ),
     )
+  }
+
+  ngOnDestroy(): void {
+    if (this.updateTelemetryDataSubscription) {
+      this.updateTelemetryDataSubscription.unsubscribe()
+    }
   }
 
   remindlater() {
