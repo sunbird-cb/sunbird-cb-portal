@@ -359,6 +359,7 @@ export namespace NsContent {
     STANDALONE_ASSESSMENT = 'Standalone Assessment',
     BLENDED_PROGRAM = 'Blended Program',
     OFFLINE_SESSION = 'Offline Session',
+    CURATED_PROGRAM = 'Curated Program',
     // following will not be available soon
     /**
      * @deprecated The type should not be used
