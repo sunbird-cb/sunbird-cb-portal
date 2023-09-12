@@ -6,7 +6,7 @@
       <div class="flex flex-wrap cb-header padding-m">
           <div class="">KarmaSahayogi - Digital Assistant</div>
           <div class="">
-              <select class="lang-select" name="language" id="language">
+              <select class="lang-select" name="language" id="language" (change)="selectLaguage($event)">
                   <option [value]="lang.value" *ngFor="let lang of language">{{lang.viewValue}}</option>
               </select>
           </div>
@@ -14,7 +14,7 @@
               <mat-icon class="cb-close" (click)="iconClick('end')">close</mat-icon>
           </div>
       </div>
-      <div class="flex flex-wrap cb-content padding-m">
+      <div class="flex flex-wrap cb-content padding-m" id="chatbot-content">
         <ng-container *ngFor="let chat of getuserjourney(currentFilter)">
           <ng-container  *ngIf="chat.type === 'incoming'">
             <div class="flex row-start incoming-msg" *ngIf="chat?.message">
@@ -112,7 +112,7 @@
           </div>
       </div>
       <div class="flex flex-wrap cb-footer">
-          <div class="info br-bl padding-top-xs" [ngClass]="{active: currentFilter === 'info'}" (click)="toggleFilter('info')">
+          <div class="info br-bl padding-top-xs" [ngClass]="{active: currentFilter === 'information'}" (click)="toggleFilter('information')">
               <div class="info-icon">
                   <mat-icon>info</mat-icon>
               </div>
