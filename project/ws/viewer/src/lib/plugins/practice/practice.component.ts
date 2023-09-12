@@ -23,6 +23,7 @@ import { ViewerUtilService } from '../../viewer-util.service'
 import _ from 'lodash'
 import { NSQuiz } from '../quiz/quiz.model'
 import { environment } from 'src/environments/environment'
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 // import { ViewerDataService } from '../../viewer-data.service'
 export type FetchStatus = 'hasMore' | 'fetching' | 'done' | 'error' | 'none'
 @Component({
@@ -116,7 +117,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     private router: Router,
     private valueSvc: ValueService,
     // private vws: ViewerDataService,
-    public snackbar: MatSnackBar
+    public snackbar: MatSnackBar,
+    private sanitized: DomSanitizer
   ) {
     if (environment.assessmentBuffer) {
       this.assessmentBuffer = environment.assessmentBuffer
@@ -1162,5 +1164,19 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       top.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
     this.clearStoragePartial()
+  }
+  formate(text: string): SafeHtml {
+    let newText = '<ul>'
+    if (text) {
+      const splitTest = text.split('\n')
+      for (let index = 0; index < text.split('\n').length; index += 1) {
+        const text1 = splitTest[index]
+        if (text1 && text1.trim()) {
+          newText += `<li>${text1.trim()}</li>`
+        }
+      }
+    }
+    newText += `</ul>`
+    return this.sanitized.bypassSecurityTrustHtml(newText)
   }
 }
