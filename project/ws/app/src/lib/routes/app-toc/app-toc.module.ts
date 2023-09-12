@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { AppTocRoutingModule } from './app-toc-routing.module'
 import { NgCircleProgressModule } from 'ng-circle-progress'
-
 import {
   MatToolbarModule,
   MatIconModule,
@@ -90,6 +89,8 @@ import {
   ContentRatingV2DialogModule,
   RatingSummaryModule,
   CardRatingCommentModule,
+  AttendanceHelperModule,
+  AttendanceCardModule,
 } from '@sunbird-cb/collection'
 import { AppTocDialogIntroVideoComponent } from './components/app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { CertificationMetaResolver } from './routes/app-toc-certification/resolvers/certification-meta.resolver'
@@ -114,8 +115,11 @@ import { TagWidgetComponent } from '../discuss/widget/tag-widget/tag-widget.comp
 import { ActionService } from './services/action.service'
 import { ConnectionNameModule } from '@sunbird-cb/collection/src/lib/_common/connection-name/connection-name.module'
 import { CertificateDialogModule } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.module'
+import { ConfirmDialogModule } from '@sunbird-cb/collection/src/lib/_common/confirm-dialog/confirm-dialog.module'
 import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 import { AppPublicTocResolverService } from 'src/app/routes/public/public-toc/app-public-toc-resolver.service'
+import { AppTocSessionsComponent } from './components/app-toc-sessions/app-toc-sessions.component'
+import { AppTocSessionCardComponent } from './components/app-toc-session-card/app-toc-session-card.component'
 
 @NgModule({
   declarations: [
@@ -142,6 +146,8 @@ import { AppPublicTocResolverService } from 'src/app/routes/public/public-toc/ap
     CreateBatchDialogComponent,
     AllDiscussionWidgetComponent,
     TagWidgetComponent,
+    AppTocSessionsComponent,
+    AppTocSessionCardComponent,
   ],
   imports: [
     CommonModule,
@@ -193,6 +199,7 @@ import { AppPublicTocResolverService } from 'src/app/routes/public/public-toc/ap
     ContentRatingV2DialogModule,
     RatingSummaryModule,
     CertificateDialogModule,
+    ConfirmDialogModule,
     BtnGoalsModule,
     BtnPlaylistModule,
     BtnMailUserModule,
@@ -216,6 +223,8 @@ import { AppPublicTocResolverService } from 'src/app/routes/public/public-toc/ap
     ConnectionNameModule,
     CardRatingCommentModule,
     InfiniteScrollModule,
+    AttendanceHelperModule,
+    AttendanceCardModule,
     NgCircleProgressModule.forRoot({}),
   ],
   providers: [

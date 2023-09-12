@@ -16,7 +16,7 @@ TODO: edit option while preview Mode
 <ng-container>
   <div class="fixed-width flex flex-wrap">
     <div class="meta-section">
-      <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content"
+      <ws-app-toc-banner role="banner" [banners]="banners" [userEnrollmentList]="userEnrollmentList" (withdrawOrEnroll)="withdrawOrEnroll($event)" [forPreview]="forPreview" [content]="content"
         [analytics]="analytics" [resumeData]="resumeData" [batchData]="batchData">
       </ws-app-toc-banner>
       <div role="none" class="toc-body margin-top-xl">
@@ -222,7 +222,7 @@ TODO: edit option while preview Mode
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
                 <ng-container *ngIf="batchData?.workFlow?.wfInitiated &&
                 !(batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.APPROVED
-                || batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED)">
+                || batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED || batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.WITHDRAWN)">
                   <div class="ws-mat-accent-text ws-mat-accent-light-bg flex items-center justify-center statusMsg">
                     <p class="margin-remove-bottom font-bold">
                       Request under review
@@ -231,9 +231,9 @@ TODO: edit option while preview Mode
                 </ng-container>
                 <ng-container>
                   <a *ngIf="showStart.show && batchData?.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.APPROVED"
-                  [routerLink]="(resumeData && !certData) ? resumeDataLink?.url : firstResourceLink?.url"
-                  [queryParams]="(resumeData && !certData) ? generateQuery('RESUME') : generateQuery('START')"
-                  class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white">
+                  [routerLink]="isBatchInProgress? (resumeData && !certData) ? resumeDataLink?.url : firstResourceLink?.url : '' "
+                  [queryParams]="isBatchInProgress ? (resumeData && !certData) ? generateQuery('RESUME') : generateQuery('START') : '' "
+                  class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" [ngClass]="{'disable-start-btn': !isBatchInProgress}">
 
                   <ng-container *ngIf="(!content.completionPercentage || content.completionPercentage < 100) && !certData">
                     <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
@@ -371,11 +371,6 @@ TODO: edit option while preview Mode
                 <mat-icon class="margin-right-xxs">timer</mat-icon> {{ contentReadData?.duration | pipeDurationTransform: 'hms' }}
               </p>
             </ng-container>
-            <ng-container *ngIf="content?.primaryCategory === this.primaryCategory.BLENDED_PROGRAM">
-              <p *ngIf="tocConfig?.atAGlance?.duration?.enabled && content?.programDuration" class="mat-body-2 cs-icons">
-                <mat-icon class="margin-right-xxs">timer</mat-icon> {{ getProgramDuration(content?.programDuration) }}
-              </p>
-            </ng-container>
           </div>
           <div class="info-item"
             *ngIf="tocConfig?.atAGlance?.structure?.enabled && hasTocStructure && content?.children?.length">
@@ -419,12 +414,6 @@ TODO: edit option while preview Mode
               <img src="/assets/icons/content/grey/pdf.svg" alt="PDF" class="margin-right-xs"> {{ tocStructure?.pdf }}
               <span *ngIf="tocStructure?.pdf === 1" i18n> PDF</span>
               <span *ngIf="tocStructure?.pdf > 1" i18n> PDFs</span>
-            </p>
-            <p *ngIf="tocStructure?.offlineSession > 0" class="mat-body-2 cs-icons">
-              <img src="/assets/icons/content/grey/module.svg" alt="Ofline sessions" class="margin-right-xs"> {{
-              tocStructure?.offlineSession }}
-              <span *ngIf="tocStructure?.offlineSession === 1" i18n> Session</span>
-              <span *ngIf="tocStructure?.offlineSession > 1" i18n> Sessions</span>
             </p>
             <p *ngIf="tocStructure?.podcast > 0" class="mat-body-2 cs-icons">
               <img src="/assets/icons/content/grey/audio.svg" alt="Podcast" class="margin-right-xs"> {{
@@ -486,6 +475,48 @@ TODO: edit option while preview Mode
             </p>
           </div>
           <mat-divider class="margin-bottom-m"></mat-divider>
+          <ng-container *ngIf="content?.primaryCategory === this.primaryCategory.BLENDED_PROGRAM">
+            <div class="info-item"  *ngIf="tocConfig?.atAGlance?.batchDate?.enabled && selectedBatchData?.content[0]?.startDate">
+              <h3 class="item-heading ws-mat-default-text">
+                {{tocConfig?.atAGlance?.batchDate?.displayName}}
+              </h3>
+              <h3 class="item-value width-expand">
+                {{ selectedBatchData?.content[0]?.startDate | date: 'dd-MM-yyyy'}} - {{ selectedBatchData?.content[0]?.endDate | date: 'dd-MM-yyyy'}}
+              </h3>
+            </div>
+            <div class="info-item" *ngIf="tocConfig?.atAGlance?.batchDuration?.enabled && content?.programDuration">
+              <h3 class="item-heading ws-mat-default-text">
+                {{tocConfig?.atAGlance?.batchDuration?.displayName}}
+              </h3>
+              <h3 class="item-value width-expand">
+                {{ getProgramDuration(content?.programDuration) }}
+              </h3>
+            </div>
+            <div class="info-item" *ngIf="tocConfig?.atAGlance?.batchSize?.enabled && selectedBatchData?.content[0]?.batchAttributes?.currentBatchSize">
+              <h3 class="item-heading ws-mat-default-text">
+                {{tocConfig?.atAGlance?.batchSize?.displayName}}
+              </h3>
+              <h3 class="item-value width-expand">
+                {{ selectedBatchData?.content[0]?.batchAttributes?.currentBatchSize }}
+              </h3>
+            </div>
+            <div class="info-item"  *ngIf="tocConfig?.atAGlance?.contentType?.enabled && content?.primaryCategory">
+              <h3 class="item-heading ws-mat-default-text">
+                {{tocConfig?.atAGlance?.contentType?.displayName}}
+              </h3>
+              <h3 class="item-value width-expand">
+                {{ content?.primaryCategory}}
+              </h3>
+            </div>
+          </ng-container>
+          <div class="info-item" *ngIf="tocConfig?.atAGlance?.complexityLevel?.enabled && content?.complexityLevel">
+            <h3 class="item-heading ws-mat-default-text">
+              {{tocConfig?.atAGlance?.complexityLevel?.displayName}}
+            </h3>
+            <h3 class="item-value width-expand">
+              {{ content?.complexityLevel }}
+            </h3>
+          </div>
           <div class="info-item"
             *ngIf="tocConfig?.atAGlance?.displayContentType?.enabled && content?.displayContentType">
             <h3 class="item-heading ws-mat-default-text">

@@ -38,6 +38,7 @@ export class AppTocService {
   analyticsFetchStatus: TFetchStatus = 'none'
   batchReplaySubject: Subject<any> = new Subject()
   setBatchDataSubject: Subject<any> = new Subject()
+  getSelectedBatch: Subject<any> = new Subject()
   setWFDataSubject: Subject<any> = new Subject()
   resumeData: Subject<NsContent.IContinueLearningData | null> = new Subject<NsContent.IContinueLearningData | null>()
   private showSubtitleOnBanners = false
@@ -81,6 +82,31 @@ export class AppTocService {
 
   changeUpdateReviews(state: boolean) {
     this.updateReviews.next(state)
+  }
+  getSelectedBatchData(data: any) {
+    this.getSelectedBatch.next(data)
+  }
+
+  mapSessionCompletionPercentage(batchData: any) {
+    this.resumeDataSubscription = this.resumeData.subscribe(
+      (dataResult: any) => {
+        if (dataResult && dataResult.length && batchData.content && batchData.content.length) {
+          if (batchData && batchData.content[0]) {
+            batchData.content[0].batchAttributes.sessionDetails_v2.map((sd: any) => {
+              const foundContent = dataResult.find((el: any) => el.contentId === sd.sessionId)
+              if (foundContent) {
+                sd.completionPercentage = foundContent.completionPercentage
+                sd.completionStatus = foundContent.status
+                sd.lastCompletedTime = foundContent.lastCompletedTime
+              }
+            })
+          }
+        }
+      },
+      () => {
+        // tslint:disable-next-line: no-console
+        console.log('error on resumeDataSubscription')
+      })
   }
 
   showStartButton(content: NsContent.IContent | null): { show: boolean; msg: string } {
