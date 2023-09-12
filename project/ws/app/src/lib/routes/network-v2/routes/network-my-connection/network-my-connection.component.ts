@@ -62,7 +62,7 @@ export class NetworkMyConnectionComponent implements OnInit {
               item.personalDetails.firstname = item.personalDetails.firstname.toLowerCase()
             }
           })
-         
+
         })
       }
     })
