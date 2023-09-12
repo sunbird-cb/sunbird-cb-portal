@@ -11,11 +11,11 @@
                 </div>
                 <div class="flex" *ngIf="session?.completionStatus === 2">
                     <mat-icon class="ws-mat-green-2-text mr-3">check_circle</mat-icon>
-                    <span class="mat-body-2">Marked @9:45 AM</span>
+                    <span class="mat-body-2">Marked @{{session?.lastCompletedTime | date :'shortTime'}}</span>
                 </div>
             </div>
             <div class="flex-1 flex justify-center">
-                <span class="mat-body-2">After the batch starts, you will be able to mark the attendace through mobile.</span>
+                <span  *ngIf="showInfo" class="mat-body-2">After the batch starts, you will be able to mark the attendace through mobile.</span>
             </div>
             <div class="text-right ml-5">
                 <img class="mat-icon cursor-pointer" src="/assets/icons/rounded_question.svg" alt="attendance help"

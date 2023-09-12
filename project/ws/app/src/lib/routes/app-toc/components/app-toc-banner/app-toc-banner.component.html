@@ -238,7 +238,7 @@
                   </ng-container>
                   <ng-container *ngIf="showRejected">
                     <h3 class="margin-remove-bottom mat-body-2 ws-default-text" i18n>
-                      Your enrollment request is rejected.
+                      Your enrollment request is {{batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REMOVED ?'removed':'rejected'}}.
                     </h3>
                   </ng-container>
                 </div>
