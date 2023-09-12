@@ -248,9 +248,11 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
     this.searchResults = []
     this.totalResults = 0
     this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
-      response.result.content.forEach((data: any) => {
-        this.searchResults.push(data)
-      })
+      if (response && response.result && response.result.count > 0) {
+        response.result.content.forEach((data: any) => {
+          this.searchResults.push(data)
+        })
+      }
       this.totalResults = this.totalResults + response.result.count
       // this.facets = response.result.facets
       this.paramFilters = []
