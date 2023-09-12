@@ -7,7 +7,7 @@
 
   <!-- <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="border-0">
     <div class="contain">
-      <!-- <app-discuss-left-menu [unseen]="unread"></app-discuss-left-menu>
+       <app-discuss-left-menu [unseen]="unread"></app-discuss-left-menu>
     </div>
   </mat-sidenav> -->
   <mat-sidenav-content>
@@ -20,5 +20,8 @@
     <div class="flex flex-5">
       <router-outlet></router-outlet>
     </div>
+    
+    <!-- grid layout - update mobile number & nps panel -->
+    <ng-container [wsResolverWidget]="pageLayout"></ng-container>
   </mat-sidenav-content>
 </mat-sidenav-container>
