@@ -50,7 +50,7 @@
                           <mat-error [hidden]="false" i18n="First Name Error|Explains name is required" i18n-aria-label
                             aria-label="First Name Error|Explains name is required "
                             *ngIf="createUserForm?.controls['firstname'].errors?.required">
-                            First name is mandatory
+                            Full name is mandatory
                           </mat-error>
                           <mat-error [hidden]="false" *ngIf="createUserForm?.controls['firstname'].errors?.pattern"
                             i18n-aria-label
@@ -1009,7 +1009,7 @@
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <mat-select formControlName="payType" i18n-placeholder placeholder="--Select--">
-                        <mat-option [value]="pay.name" *ngFor="let pay of designationsMeta?.gradePay">
+                        <mat-option [value]="pay.name" *ngFor="let pay of gradePayData">
                           {{pay.name}}
                         </mat-option>
                       </mat-select>
