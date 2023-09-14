@@ -1,0 +1,16 @@
+<div #fullScreenContainer>
+    <div class="dialog-header text-right mb-2">
+        <!-- <h1 class="mr-2" mat-dialog-title>{{data.title}}</h1> -->
+        <mat-icon class="mat-icon notranslate material-icons close-icon cursor-pointer" matprefix="" role="img" aria-hidden="true" [mat-dialog-close]="false">close</mat-icon>
+    </div>
+    <div>
+        <lib-micro-survey class="course-survey"
+            [apiData]="data?.apiData"
+            [afterSubmitAction]="afterSubmitAction"
+            [isReadOnly]="isReadOnly"
+            [surveyId]="data?.surveyId"
+            [courseId]="data?.courseId"
+            [courseName]="data?.courseName"
+        ></lib-micro-survey>
+    </div>
+</div>
