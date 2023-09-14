@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, AfterViewInit  } from '@angular/core';
-import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils';
-// import { ChatbotService } from './chatbot.service';
-import { RootService } from './../root/root.service';
+import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild,   } from '@angular/core'
+import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
+// import { ChatbotService } from './chatbot.service'
+import { RootService } from './../root/root.service'
 
 
 @Component({
@@ -10,7 +10,7 @@ import { RootService } from './../root/root.service';
   styleUrls: ['./app-chatbot.component.scss'],
   // providers: [ChatbotService]
 })
-export class AppChatbotComponent implements OnInit {
+export class AppChatbotComponent implements OnInit, AfterViewChecked {
 
   showIcon :boolean = true
   categories: any[] = []
@@ -40,7 +40,7 @@ export class AppChatbotComponent implements OnInit {
       'issue': 'समस्या'
     }
   }
-  @ViewChild('scroll', { static: true }) scroll: any = undefined
+  @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef | undefined
 
   callText = "<a class='hint-text' target='_blank' href='https://bit.ly/44MJlo4'>Teams Call</a>"
   emailText = "<a class='hint-text' target='_blank' href='mailto:mission.karma@gov.in'>mission.karma@gov.in.</a>"
@@ -52,15 +52,6 @@ export class AppChatbotComponent implements OnInit {
     this.userInfo = this.configSvc && this.configSvc.userProfile
     this.checkForApiCalls()
     this.userIcon = this.userInfo.profileImage || "/assets/icons/chatbot-default-user.svg"
-  }
-
-  ngAfterViewChecked() {
-    console.log("aaa")
-    if(this.scroll) {
-      console.log("dfdd")
-      this.scroll.nativeElement.scrollTo(0, this.scroll.nativeElement.scrollHeight);
-    }
-
   }
 
   greetings(){
@@ -139,7 +130,7 @@ export class AppChatbotComponent implements OnInit {
   }
 
   goToBottom(){
-    window.scrollTo(0,document.body.scrollHeight);
+    window.scrollTo(0,document.body.scrollHeight)
   }
 
 
@@ -248,7 +239,7 @@ export class AppChatbotComponent implements OnInit {
           incomingMsg.type = 'incoming',
           incomingMsg.recommendedQues = element.recommendedQues
         }
-      });
+      })
     }
     let sendMsg = {
       type:'sendMsg',
@@ -347,7 +338,7 @@ export class AppChatbotComponent implements OnInit {
         this.getQns()
         this.getCategories()
       } else {
-        this.getLanguages();
+        this.getLanguages()
         // this.getData()
       }
     }
@@ -367,6 +358,17 @@ export class AppChatbotComponent implements OnInit {
         this.displayLoader = false
       }
     })
+  }
+
+  ngAfterViewChecked() {        
+    this.scrollToBottom()        
+  } 
+  scrollToBottom(): void {
+    try {
+      if (this.myScrollContainer) {
+        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight
+      }
+    } catch(err) { }                 
   }
 
 }

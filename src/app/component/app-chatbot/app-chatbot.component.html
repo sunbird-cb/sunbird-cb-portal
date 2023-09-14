@@ -17,7 +17,7 @@
               <mat-icon class="cb-close" (click)="iconClick('end')">close</mat-icon>
           </div>
       </div>
-      <div class="flex flex-wrap cb-content padding-m" id="chatbot-content">
+      <div class="flex flex-wrap cb-content padding-m" #scrollMe id="chatbot-content">
         <ng-container *ngIf="!displayLoader" #scroll>
           <ng-container *ngFor="let chat of userJourney">
             <ng-container  *ngIf="chat.type === 'incoming'">
