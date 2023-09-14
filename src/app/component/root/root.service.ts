@@ -55,11 +55,11 @@ export class RootService {
     const cpath = path ? `; path=${path}` : ''
     document.cookie = `${name}=${value}; ${expires}${cpath}`
   }
-  getChatData(tabType:any): any {
-    return this.http.post<any>(`${API_END_POINTS.CONFIG}`,tabType)
+  getChatData(tabType: any): any {
+    return this.http.post<any>(`${API_END_POINTS.CONFIG}`, tabType)
   }
 
-  getLangugages(): Observable<any>{
+  getLangugages(): Observable<any> {
     return this.http.get<any>(`${API_END_POINTS.LANGUAGES}`)
   }
 }

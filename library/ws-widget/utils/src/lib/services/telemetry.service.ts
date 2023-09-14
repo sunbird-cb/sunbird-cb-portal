@@ -106,7 +106,6 @@ export class TelemetryService {
   }
 
   start(edata: any, data: any, pageContext?: WsEvents.ITelemetryPageContext) {
-    console.log("data ", data)
     try {
       if (this.telemetryConfig) {
         $t.start(
@@ -327,8 +326,8 @@ export class TelemetryService {
             type: event.data.type || WsEvents.WsTimeSpentType.Player,
             mode: event.data.mode || WsEvents.WsTimeSpentMode.Play,
           },
-          {},
-          event.pageContext
+                   {},
+                   event.pageContext
           )
         }
         if (
