@@ -397,6 +397,18 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         )
     }
   }
+
+  checkForDateFilters(filters: any) {
+    if (filters && filters.hasOwnProperty('batches.endDate')) {
+      // tslint:disable-next-line
+      filters['batches.endDate']['>'] = eval(filters['batches.endDate']['>'])
+    } else if (filters && filters.hasOwnProperty('batches.enrollmentEndDate')) {
+      // tslint:disable-next-line
+      filters['batches.enrollmentEndDate']['>'] = eval(filters['batches.enrollmentEndDate']['>'])
+    }
+    return filters
+  }
+
   fetchFromSearchV6(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.searchV6 && Object.keys(strip.request.searchV6).length) {
       // if (!(strip.request.searchV6.locale && strip.request.searchV6.locale.length > 0)) {
@@ -412,9 +424,11 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         strip.request.searchV6.request &&
         strip.request.searchV6.request.filters) {
         originalFilters = strip.request.searchV6.request.filters
+
+        strip.request.searchV6.request.filters = this.checkForDateFilters(strip.request.searchV6.request.filters)
         strip.request.searchV6.request.filters = this.getFiltersFromArray(
           strip.request.searchV6.request.filters,
-        )
+          )
       }
       this.contentSvc.searchV6(strip.request.searchV6).subscribe(
         results => {
@@ -628,9 +642,9 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       const searchRequest = strip.request.curatedCollections
       this.contentSvc.searchRelatedCBPV6(searchRequest).subscribe(
         results => {
-          const showViewMore = Boolean(
+          const showViewMore =  results.result.count > 0 ?Boolean(
             results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
-          )
+          ): false
           const viewMoreUrl = showViewMore
             ? {
               path: '/app/curatedCollections/home',

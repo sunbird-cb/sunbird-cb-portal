@@ -164,15 +164,15 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
 
   getSearchedData() {
     if (this.myFilters.length === 0 && this.paramFilters.length === 0) {
-      let param = ''
-      if (this.userValue === 'moderatedCourses') {
-        param = ''
-      }
+      // let param = ''
+      // if (this.userValue === 'moderatedCourses') {
+      //   param = ''
+      // }
 
       const queryparam1 = {
         request: {
           secureSettings: true,
-          query: param,
+          query: this.param,
           filters: {
             primaryCategory: ['Course'],
             status: ['Live'],
@@ -188,9 +188,9 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
       if (this.userValue === 'moderatedCourses') {
         this.searchApiCall(queryparam1)
       } else {
-        if (this.userValue === 'moderatedCourses') {
-          param = ''
-        }
+        // if (this.userValue === 'moderatedCourses') {
+        //   param = ''
+        // }
         queryparam2 = {
           request: {
             filters: {
@@ -198,10 +198,11 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
                 'Course',
                 'Program',
                 'Standalone Assessment',
+                'Blended Program'
               ],
               status: ['Live'],
             },
-            query: param,
+            query: this.param,
             sort_by: { lastUpdatedOn: '' },
             fields: [],
             facets: ['primaryCategory', 'mimeType', 'source'],
@@ -248,9 +249,11 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
     this.searchResults = []
     this.totalResults = 0
     this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
-      response.result.content.forEach((data: any) => {
-        this.searchResults.push(data)
-      })
+      if (response && response.result && response.result.count > 0) {
+        response.result.content.forEach((data: any) => {
+          this.searchResults.push(data)
+        })
+      }
       this.totalResults = this.totalResults + response.result.count
       // this.facets = response.result.facets
       this.paramFilters = []

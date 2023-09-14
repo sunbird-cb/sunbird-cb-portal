@@ -48,34 +48,76 @@
                   <mat-error [hidden]="false" *ngIf="requestForm?.controls['firstname'].errors?.pattern"
                     i18n-aria-label
                     aria-label="Full name Error|Name fields cannot contain numbers and special characters except ">
-                    Name fields cannot contain numbers and special characters except '
+                    Name field can only contain letters, space and the character (').
                   </mat-error>
                 </mat-form-field>
               </div>
 
-              <div class="input-wrapper margin-top-s">
+
+              <div class="input-wrapper  mobile-wrapper margin-top-l">
                 <label for="email" class=" margin-remove-bottom form-label required"
                   i18n="Email label|Label which explains the user to enter Email" i18n-aria-label
                   aria-label="Email label">
                   Email
                 </label>
-                <mat-form-field appearance="outline" class="margin-top-s">
+                <div class="flex flex-1">
+                  <mat-form-field appearance="outline" class="margin-top-s">
                   <input id="email" name="emailField" autocomplete="off" type="email" maxlength="320" (input)="emailVerification($event.target.value)" matInput placeholder="Enter your email id" #email
                     formControlName="email" i18n-aria-label aria-label="Email input">
-                  <mat-hint>Only government email ids are allowed</mat-hint>
+                  <mat-icon matSuffix class="ws-mat-green-text margin-xs" svgIcon="verified" [hidden]="!isEmailVerified"></mat-icon>
+                  <!-- <mat-hint>Please enter a government email ID</mat-hint> -->
                   <mat-error [hidden]="false" *ngIf="requestForm?.controls['email'].errors?.required"
                     i18n="Email Error|Explains name is required">
-                    Email id is mandatory
+                    Please enter your email ID
                   </mat-error>
                   <mat-error [hidden]="false" *ngIf="requestForm?.controls['email'].errors?.pattern"
-                    i18n-aria-label aria-label="Name fields cannot contain numbers and special characters except '">
-                    Email id is not valid
+                    i18n-aria-label aria-label="Please enter a valid email ID">
+                    Please enter a valid email ID
                   </mat-error>
                   <div *ngIf="emailLengthVal" class="email-error"
                     i18n="Email Error|Explains character validation">
                     Max 64 characters before "@" & 255 characters after "@" are valid.
                   </div>
-                </mat-form-field>
+                    <!-- <mat-hint class="pos-hint">Do not have a government email id?<span class="float-right ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo('Domain')">Request for help</span></mat-hint> -->
+                  </mat-form-field>
+                </div>
+                <div class="w-full" id="org-field">
+                  <div class="flex items-center flex-1">
+                    <span class="ws-mat-black60-text">Please enter a government email ID  </span>
+                  </div>
+                </div>
+                
+                <div *ngIf="!isEmailVerified" class="flex flex-1 margin-top-s justify-end">
+                  <button *ngIf="!otpEmailSend" mat-raised-button type="button" (click)="sendOtpEmail()"
+                    class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text btn-responsive" [disabled]="requestForm?.email?.invalid">
+                    <a class="text-white" i18n>
+                      Send OTP
+                    </a>
+                  </button>
+                  <div *ngIf="otpEmailSend" class="flex flex-1 flex-column">
+                      <mat-form-field appearance="outline" class="margin-top-xs w-full">
+                        <input  id="emailOTP" #emailotp type="password"
+                          matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input" onKeyPress="if(this.value.length === 8) return false;" autocomplete="new-password">
+                        <mat-hint *ngIf="timeLeftforOTPEmail > 0 ">
+                          <span>Resend OTP after {{timeLeftforOTPEmail | pipeDurationTransform: 'hms2M'}}</span>
+                        </mat-hint>
+                        <mat-hint *ngIf="timeLeftforOTPEmail <= 0 ">
+                          <span class="cursor-pointer ws-mat-default-text" (click)="resendOTPEmail()">Resend
+                            OTP</span>
+                        </mat-hint>
+                      </mat-form-field>
+                      <div class="flex flex-1 margin-top-s justify-end">
+                        <button mat-raised-button type="button" (click)="verifyOtpEmail(emailotp)"
+                          class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text margin-top-s otp"
+                          [disabled]="requestForm?.email?.invalid || disableEmailVerifyBtn">
+                          <span class="text-white" i18n>
+                            Verify OTP
+                          </span>
+                        </button>
+                      </div>
+                  </div>
+                </div>
+                
               </div>
 
               <div class="input-wrapper mobile-wrapper margin-top-l">
@@ -92,14 +134,14 @@
                     <mat-icon matSuffix class="ws-mat-green-text margin-xs" svgIcon="verified" [hidden]="!isMobileVerified"></mat-icon>
                     <mat-error [hidden]="false" i18n="Mobile Number Error|Explains Mobile no is required"
                       *ngIf="requestForm?.controls['mobile'].errors?.required" i18n-aria-label
-                      aria-label="Mobile Number is mandatory">
-                      Mobile Number is mandatory
+                      aria-label="Please enter your mobile number">
+                      Please enter your mobile number
                     </mat-error>
                     <mat-error [hidden]="false" *ngIf="requestForm?.controls['mobile'].errors?.pattern"
                       i18n-aria-label aria-label="Please enter a valid 10 digit mobile number">
                       Please enter a valid 10 digit mobile number
                     </mat-error>
-                    <mat-hint align="start">Please add a valid mobile number</mat-hint>
+                    <!-- <mat-hint align="start">Please add a valid mobile number</mat-hint> -->
                   </mat-form-field>
                 </div>
                 <div *ngIf="!isMobileVerified" class="flex flex-1 margin-top-s justify-end">
@@ -111,7 +153,7 @@
                   </button>
                   <div *ngIf="otpSend" class="flex flex-1 flex-column">
                       <mat-form-field appearance="outline" class="margin-top-xs w-full">
-                        <input  id="mobileNumber" #otp type="password"
+                        <input  id="mobileNumber" #otp type="password" minlength="4" maxlength="6"
                           matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input" onKeyPress="if(this.value.length === 8) return false;" autocomplete="new-password">
                         <mat-hint *ngIf="timeLeftforOTP > 0 ">
                           <span>Resend OTP after {{timeLeftforOTP | pipeDurationTransform: 'hms2M'}}</span>
@@ -152,7 +194,7 @@
                       Position is mandatory
                     </mat-error>
                     <mat-error *ngIf="requestForm?.controls['position'].errors?.pattern" i18n-aria-label
-                      aria-label="You must enter value from suggested list only.">
+                      aria-label="Only alphabets, numbers, space, &, -, and  () are allowed.">
                       Only alphabets, numbers, space, &, -, and  () are allowed.
                     </mat-error>
                   </mat-form-field>
@@ -172,11 +214,11 @@
                       i18n-aria-label aria-label="organisation" #organisation maxlength="150" />
                     <mat-error [hidden]="false" i18n="Organisation Error | Explains organisation is required"
                       *ngIf="requestForm?.controls['organisation'].errors?.required" i18n-aria-label
-                      aria-label="organisation is mandatory">
-                      Organisation is mandatory
+                      aria-label="Please enter your organisation name">
+                      Please enter your organisation name
                     </mat-error>
                     <mat-error *ngIf="requestForm?.controls['organisation'].errors?.pattern" i18n-aria-label
-                      aria-label="You must enter value from suggested list only.">
+                      aria-label="Only alphabets, numbers, space, &, -, and  () are allowed.">
                       Only alphabets, numbers, space, &, -, and  () are allowed.
                     </mat-error>
                   </mat-form-field>
@@ -192,16 +234,16 @@
                     Domain
                   </label>
                   <mat-form-field appearance="outline" class="margin-top-s w-full">
-                    <input id="domain" matInput type="text" placeholder="Example: email.com"
+                    <input id="domain" matInput type="text" placeholder="Example: gov.in"
                       i18n-placeholder="domain" formControlName="domain" autocomplete="off"
                       i18n-aria-label aria-label="domain" #domain maxlength="63" />
                     <mat-error [hidden]="false" i18n="Domain Error | Explains domain is required"
                       *ngIf="requestForm?.controls['domain'].errors?.required" i18n-aria-label
                       aria-label="domain is mandatory">
-                      Domain is mandatory
+                      Enter your domain (Example: gov.in)
                     </mat-error>
                     <mat-error *ngIf="requestForm?.controls['domain'].errors?.pattern" i18n-aria-label
-                      aria-label="You must enter value from suggested list only.">
+                      aria-label="Please enter a valid domain name">
                       Please enter a valid domain name
                     </mat-error>
                   </mat-form-field>
@@ -240,7 +282,7 @@
                 <div class="button_box flex flex-col items-center justify-center">
                   <button mat-flat-button type="submit"
                     class="submitBtn text-white ws-mat-primary-background ws-mat-white-text" (click)="submitRequest()"
-                    [disabled]="!requestForm?.valid || !confirm || disableBtn || !isMobileVerified">
+                    [disabled]="!requestForm?.valid || !confirm || disableBtn || !isMobileVerified || !isEmailVerified">
                     Submit
                   </button>
                 </div>

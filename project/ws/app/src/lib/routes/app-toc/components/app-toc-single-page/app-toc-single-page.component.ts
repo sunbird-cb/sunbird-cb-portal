@@ -79,6 +79,8 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   displayLoader = false
   tabSelectedIndex = 0
   updateReviewsSubscription: Subscription | null = null
+  authReplies: any
+  lookupLoading: Boolean = true
   // configSvc: any
 
   constructor(
@@ -522,6 +524,41 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  getAuthorReply(identifier: string, primaryCategory: NsContent.EPrimaryCategory, userIds: any[]) {
+    const request = {
+      request: {
+          activityId: identifier,
+          activityType: primaryCategory,
+          userId: userIds,
+      },
+    }
+    return this.ratingSvc.getRatingReply(request).subscribe(
+      (res: any) => {
+        this.displayLoader = false
+        if (res && res.result && res.result.content) {
+          const reatingAuthReplay = res.result.content
+          _.forEach(reatingAuthReplay, value => {
+              if (this.authReplies[value.userId]) {
+                this.authReplies[value.userId]['comment'] = value.comment
+                this.authReplies[value.userId]['userId'] = value.userId
+              }
+          })
+        }
+        return this.authReplies
+        // TODO: To be removed
+        // this.hardcodeData()
+        // this.ratingSummaryProcessed = this.processRatingSummary()
+      },
+      (err: any) => {
+        this.displayLoader = false
+        this.logger.error('USER RATING FETCH ERROR >', err)
+        // TODO: To be removed
+        // this.hardcodeData()
+        // this.ratingSummaryProcessed = this.processRatingSummary()
+      }
+    )
+  }
+
   fetchRatingLookup() {
     this.displayLoader = true
     if (this.content && this.content.identifier && this.content.primaryCategory) {
@@ -605,8 +642,21 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     // this.ratingReviews = this.ratingSummary && this.ratingSummary.latest50Reviews ? JSON.parse(this.ratingSummary.latest50Reviews) : []
     // ratingSummaryPr.avgRating = parseFloat(((((totRatings / this.ratingSummary.total_number_of_ratings) * 100) * 5) / 100).toFixed(1))
     if (this.ratingSummary && this.ratingSummary.latest50Reviews) {
-      ratingSummaryPr.latest50Reviews = JSON.parse(this.ratingSummary.latest50Reviews)
-      this.ratingReviews = JSON.parse(this.ratingSummary.latest50Reviews)
+      // ratingSummaryPr.latest50Reviews = JSON.parse(this.ratingSummary.latest50Reviews)
+      // this.ratingReviews = JSON.parse(this.ratingSummary.latest50Reviews)
+      const latest50Reviews = JSON.parse(this.ratingSummary.latest50Reviews)
+      const modifiedReviews = _.map(latest50Reviews, rating => {
+        rating['userId'] =  rating.user_id
+        return rating
+      })
+      this.authReplies = []
+      this.authReplies = _.keyBy(latest50Reviews, 'user_id')
+      const userIds = _.map(latest50Reviews, 'user_id')
+      if (this.content) {
+        this.getAuthorReply(this.content.identifier, this.content.primaryCategory, userIds)
+      }
+      ratingSummaryPr.latest50Reviews = modifiedReviews
+      this.ratingReviews = modifiedReviews
     }
     // rating changes 07 march 23
     // const meanRating = ratingSummaryPr.breakDown.reduce((val, item) => {
@@ -631,14 +681,23 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   processRatingLookup(response: any) {
-    if (response.length < this.lookupLimit) {
-      this.disableLoadMore = true
-    } else {
-      this.disableLoadMore = false
+    if (response) {
+      if (response && response.length < this.lookupLimit) {
+        this.disableLoadMore = true
+      } else {
+        this.disableLoadMore = false
+        this.lookupLoading = false
+      }
+      this.lastLookUp = response[response.length - 1]
+      this.ratingReviews = this.ratingLookup
+      this.authReplies = []
+      this.authReplies = _.keyBy(this.ratingReviews, 'userId')
+      const userIds = _.map(this.ratingReviews, 'userId')
+      if (this.content && userIds) {
+        this.getAuthorReply(this.content.identifier, this.content.primaryCategory, userIds)
+      }
+      this.ratingReviews = this.ratingReviews.slice()
     }
-    this.lastLookUp = response[response.length - 1]
-    this.ratingReviews = this.ratingLookup
-    this.ratingReviews = this.ratingReviews.slice()
   }
 
   countStarsPercentage(value: any, key: any, total: any) {
@@ -711,7 +770,8 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   loadMore() {
-    if (!this.disableLoadMore) {
+    if (!this.disableLoadMore && !this.lookupLoading) {
+      this.lookupLoading = true
       // tslint:disable-next-line: no-non-null-assertion
       if ((this.searchForm!.get!('sortByControl')!.value === this.sortReviewValues[0])) {
         if ((this.reviewPage * this.ratingViewCount) > this.ratingReviews.length) {

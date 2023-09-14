@@ -20,6 +20,7 @@ import {
   INation,
   IdegreesMeta,
   INameField,
+  ICountry,
 } from '../../models/user-profile.model'
 import { NsUserProfileDetails } from '@ws/app/src/lib/routes/user-profile/models/NsUserProfile'
 import { NotificationComponent } from '@ws/author/src/lib/modules/shared/components/notification/notification.component'
@@ -30,6 +31,7 @@ import { LoaderService } from '@ws/author/src/public-api'
 import _ from 'lodash'
 import { OtpService } from '../../services/otp.services';
 import { environment } from 'src/environments/environment'
+
 /* tslint:enable */
 
 export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
@@ -62,10 +64,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   uploadSaveData = false
   selectedIndex = 0
   masterNationality: Observable<INation[]> | undefined
-  countries: INation[] = []
+  country: Observable<INation[]> | undefined
   masterLanguages: Observable<ILanguages[]> | undefined
   masterKnownLanguages: Observable<ILanguages[]> | undefined
   masterNationalities: INation[] = []
+  countries: INation[] = []
   masterLanguagesEntries!: ILanguages[]
   selectedKnowLangs: ILanguages[] = []
   separatorKeysCodes: number[] = [ENTER, COMMA]
@@ -100,6 +103,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   public degreeInstitutes = []
   public postDegreeInstitutes = []
   public countryCodes: string[] = []
+  gradePayData!: any
   showDesignationOther!: boolean
   showOrgnameOther!: boolean
   showIndustryOther!: boolean
@@ -118,7 +122,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   isMobileVerified = false
   degreefilteredOptions: INameField[] | undefined
   postDegreefilteredOptions: INameField[] | undefined
-  disableVerifyBtn= false
+  disableVerifyBtn = false
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -147,7 +151,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       primaryEmail: new FormControl('', [Validators.required, Validators.email]),
       primaryEmailType: new FormControl(this.assignPrimaryEmailTypeCheckBox(this.ePrimaryEmailType.OFFICIAL), []),
       secondaryEmail: new FormControl('', []),
-      nationality: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterNationality)]),
+      nationality: new FormControl('', [Validators.required]),
       dob: new FormControl('', [Validators.required]),
       gender: new FormControl('', [Validators.required]),
       maritalStatus: new FormControl('', [Validators.required]),
@@ -234,11 +238,21 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
   fetchMeta() {
+    this.userProfileSvc.getMasterCountries().subscribe(
+      data => {
+        data.countries.map((item: ICountry) => {
+          this.countries.push({ name: item.name })
+          // this.countryCodes.push(item.countryCode)
+        })
+        this.onChangesCountry()
+      },
+      (_err: any) => {
+      })
+
     this.userProfileSvc.getMasterNationlity().subscribe(
       data => {
-        data.nationalities.map((item: INationality) => {
+        data.nationality.map((item: INationality) => {
           this.masterNationalities.push({ name: item.name })
-          this.countries.push({ name: item.name })
           this.countryCodes.push(item.countryCode)
         })
 
@@ -269,6 +283,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.govtOrgMeta = data.govtOrg
         this.industriesMeta = data.industries
         this.degreesMeta = data.degrees
+        this.gradePayData = data.designations.gradePay.sort((a: any, b: any) => {
+          return a.name - b.name
+        })
         // this.designationsMeta = data.designations
         this.onChangesDegrees()
         this.onChangesPostDegrees()
@@ -407,22 +424,33 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           map(value => typeof value === 'string' ? value : (value && value.name ? value.name : '')),
           map(name => name ? this.filterNationality(name) : this.masterNationalities.slice())
         )
-      const newLocal = 'nationality'
-      // this.createUserForm.controls['nationality']!.setValue('Indian')
-      // console.log(this.masterNationality, "masterNationality====")
-      this.masterNationality.subscribe(event => {
-        // tslint:disable-next-line: no-non-null-assertion
-        this.createUserForm.get(newLocal)!.setValidators([Validators.required, forbiddenNamesValidator(event)])
+      // const newLocal = 'nationality'
+      // this.masterNationality.subscribe(event => {
+      //   // tslint:disable-next-line: no-non-null-assertion
+      //   this.createUserForm.get(newLocal)!.setValidators([Validators.required])
 
-        this.createUserForm.updateValueAndValidity()
+      //   this.createUserForm.updateValueAndValidity()
 
-      })
+      // })
 
     }
   }
 
-  onChangesLanuage(): void {
+  onChangesCountry(): void {
 
+    // tslint:disable-next-line: no-non-null-assertion
+    this.country = this.createUserForm.get('location')!.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        startWith(''),
+        map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+        map(name => name ? this.filterCountry(name) : this.countries.slice()),
+      )
+     // console.log('this.masterLanguagesEntries', this.masterLanguages)
+  }
+
+  onChangesLanuage(): void {
     // tslint:disable-next-line: no-non-null-assertion
     this.masterLanguages = this.createUserForm.get('domicileMedium')!.valueChanges
       .pipe(
@@ -459,6 +487,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const controls = this.createUserForm.get('degrees') as FormArray
     // tslint:disable-next-line: no-non-null-assertion
     if (controls.length > 0) {
+      // tslint:disable-next-line: no-non-null-assertion
       controls.at(controls.length - 1)!.get('degree')!.valueChanges.pipe(
         debounceTime(500),
         distinctUntilChanged(),
@@ -473,6 +502,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const controls = this.createUserForm.get('postDegrees') as FormArray
     // tslint:disable-next-line: no-non-null-assertion
     if (controls.length > 0) {
+      // tslint:disable-next-line: no-non-null-assertion
       controls.at(controls.length - 1)!.get('degree')!.valueChanges.pipe(
         debounceTime(500),
         distinctUntilChanged(),
@@ -490,6 +520,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       return this.masterNationalities.filter(option => option.name.toLowerCase().includes(filterValue))
     }
     return this.masterNationalities
+  }
+
+  private filterCountry(name: string): INation[] {
+    if (name) {
+      const filterValue = name.toLowerCase()
+      return this.countries.filter(option => option.name.toLowerCase().includes(filterValue))
+    }
+    return this.countries
   }
 
   private filterLanguage(name: string): ILanguages[] {
@@ -733,7 +771,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         industry: organisation.industry,
         industryOther: organisation.industryOther,
         // tslint:disable-next-line
-        designation: isDesiAvailable ? organisation.designation : 'Other',
+        // designation: isDesiAvailable ? organisation.designation : 'Other',
+        designation: organisation.designation || 'Other',
         designationOther: isDesiAvailable ? '' : organisation.designation || organisation.designationOther,
         location: organisation.location,
         responsibilities: organisation.responsibilities,
@@ -909,6 +948,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
 
+  numericOnly(event: any): boolean {
+    const pattren = /^([0-9])$/
+    const result = pattren.test(event.key)
+    return result
+  }
+
   setProfilePhotoValue(data: any) {
     this.photoUrl = data.photo || undefined
   }
@@ -916,6 +961,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   setDropDownOther(organisation?: any) {
     if (organisation.designation === 'Other') {
       this.showDesignationOther = true
+    } else {
+      this.showDesignationOther = false
     }
     if (organisation.orgName === 'Other') {
       this.showOrgnameOther = true
@@ -1233,8 +1280,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           }
           if (item === name) {
 
-            // console.log(name, "name--")
-            // console.log(form.value, "form.value")
             switch (name) {
 
               case 'knownLanguages': return personalDetail['knownLanguages'] = form.value.knownLanguages
@@ -1677,14 +1722,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
       this.otpService.sendOtp(mob.value).subscribe(() => {
         this.otpSend = true
-        alert('OTP send to your Mobile Number')
+        alert('An OTP has been sent to your mobile number')
         this.startCountDown()
         // tslint:disable-next-line: align
       }, (error: any) => {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid Mobile No')
+      this.snackBar.open('Please enter a valid mobile number')
     }
   }
   resendOTP() {
@@ -1694,7 +1739,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
           this.disableVerifyBtn = false
-          alert('OTP send to your Mobile Number')
+          alert('An OTP has been sent to your mobile number')
           this.startCountDown()
         }
         // tslint:disable-next-line: align
@@ -1702,7 +1747,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid Mobile No')
+      this.snackBar.open('Please enter a valid mobile number')
     }
   }
   verifyOtp(otp: any) {
@@ -1781,10 +1826,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       data,
     )
   }
-
-  numericOnly(event:any): boolean {  
-    let pattren = /^([0-9])$/;
-    let result = pattren.test(event.key);
-    return result;
-  }
+  // numericOnly(event:any): boolean {
+  //   const pattren = /^([0-9])$/
+  //   const result = pattren.test(event.key)
+  //   return result
+  // }
 }

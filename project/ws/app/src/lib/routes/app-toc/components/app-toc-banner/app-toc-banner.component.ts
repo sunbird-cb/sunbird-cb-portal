@@ -40,6 +40,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   @Input() analytics: NsAnalytics.IAnalytics | null = null
   @Input() forPreview = false
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
+  @Input() contentReadData: NsContent.IContent | null = null
   batchControl = new FormControl('', Validators.required)
   primaryCategory = NsContent.EPrimaryCategory
   WFBlendedProgramStatus = NsContent.WFBlendedProgramStatus
