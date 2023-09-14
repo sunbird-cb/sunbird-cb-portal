@@ -15,7 +15,6 @@ export class AppTocSessionsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log('this.batchData', this.batchData)
   }
 
 }

@@ -312,13 +312,12 @@
                     </div>
                 </div>
             </section>
-            <section id="authors" *ngIf="(content?.creatorDetails && content?.creatorDetails.length > 0) || (content?.creatorContacts && content?.creatorContacts.length > 0)  ||
+            <!-- <section id="authors" *ngIf="(content?.creatorDetails && content?.creatorDetails.length > 0) || (content?.creatorContacts && content?.creatorContacts.length > 0)  ||
                 (cohortResults[cohortTypesEnum.AUTHORS] && cohortResults[cohortTypesEnum.AUTHORS].length > 0)">
                 <div class="fluid-width contacts-container">
                     <div class="fixed-width flex flex-col flex-wrap">
                         <h2 _ngcontent-qml-c28="" class="mat-toolbar contacts-head">Program director & facilitators</h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 col-gap-4">
-                            <!-- facilitator -->
                             <div *ngFor="let facilitator of selectedBatchData?.batchAttributes?.sessionDetails_v2[0]?.facilatorDetails"
                                 class="unit-cohort sm:pr-8 md:pr-10">
                                 <ws-widget-avatar-photo class="float-left margin-right-s " [randomColor]="true"
@@ -333,7 +332,7 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> -->
             <section id="competencies"
                 *ngIf="(content?.competencies_v3 && competencies.length) || (content?.competencies && competencies.length)">
                 <div class="fluid-width contacts-container mb-10">

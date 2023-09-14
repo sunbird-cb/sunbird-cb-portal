@@ -1,8 +1,8 @@
 <div class="mat-h3 flex-col align-items-left justify-center text-left break-words whitespace-pre-wrap offline-wrapper">
     <ng-container *ngIf="widgetData.content.sessionData">
-        <h1 class="content-header">{{widgetData.content.sessionData.title}}</h1>
-        <p class="content-description margin-top-xl margin-bottom-xl">{{widgetData?.content?.sessionData.description}}</p>
-        <ng-container *ngFor="let link of widgetData?.content?.sessionData.attach_links">
+        <h1 class="content-header">{{widgetData?.content?.sessionData?.title}}</h1>
+        <p class="content-description margin-top-xl margin-bottom-xl">{{widgetData?.content?.sessionData?.description}}</p>
+        <ng-container *ngFor="let link of widgetData?.content?.sessionData?.attachLinks">
             <div class="attach-block margin-bottom-l">
                 <p class="attach-title">{{link.title}}</p>
                 <a class="attach-link" href="{{link.url}}" target=”_blank” >{{link.url}}</a>
@@ -10,6 +10,6 @@
         </ng-container>
     </ng-container>
     <div class="margin-top-xl">
-        <ws-widget-attendance-card [config]="tocConfig"></ws-widget-attendance-card>
+        <ws-widget-attendance-card [session]="widgetData?.content?.sessionData" [showInfo]="false" [config]="tocConfig"></ws-widget-attendance-card>
     </div>
 </div>

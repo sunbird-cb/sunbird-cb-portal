@@ -10,7 +10,7 @@
                     {{ session?.title }}
                 </p>
 
-                <span class="content-type optional-span" *ngIf="content?.optionalReading">optional </span>
+                <span class="content-type optional-span" *ngIf="session?.optionalReading">optional </span>
                 <!-- <span class="mat-body-strong content-type">{{ content?.identifier }}</span> -->
 
 
@@ -29,9 +29,8 @@
         </div>
     </a>
     <div class="flex flex-wrap items-center justify-start sm:justify-end">
-        <ng-container *ngIf="!forPreview && session?.identifier && session?.completionPercentage ; else elseBlock">
-
-            <ng-container *ngIf="content?.completionStatus == 2">
+        <ng-container *ngIf="!forPreview && session?.sessionId && session?.completionPercentage; else elseBlock">
+            <ng-container *ngIf="session?.completionStatus == 2">
                 <circle-progress class="flex items-center progress" [percent]="100" [radius]="12" [outerStrokeWidth]="3"
                     [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()"
                     [innerStrokeColor]="'rgba(0, 0, 0, 0.16)'" [animation]="true" [animationDuration]="300"
@@ -42,8 +41,8 @@
                     [outerStrokeLinecap]="'butt'">
                 </circle-progress>
             </ng-container>
-            <ng-container *ngIf="content?.completionStatus < 2">
-                <circle-progress class="flex items-center progress" [percent]="content?.completionPercentage"
+            <ng-container *ngIf="session?.completionStatus < 2">
+                <circle-progress class="flex items-center progress" [percent]="session?.completionPercentage"
                     [radius]="12" [outerStrokeWidth]="3" [innerStrokeWidth]="3" [space]="-3"
                     [outerStrokeColor]="progressColor2()" [innerStrokeColor]="'rgba(0, 0, 0, 0.16)'" [animation]="true"
                     [animationDuration]="300" [showTitle]="false" [showUnits]="false" [showSubtitle]="false"
@@ -66,6 +65,17 @@
         </ng-template>
     </div>
 </div>
+<div *ngIf="session?.sessionHandouts?.length > 0">
+    <p class=" font-bold mat-body-1 margin-bottom-xs  ws-mat-black60-text">Session Handouts</p>
+    <div class="flex flex-col flex-wrapped margin-bottom-s width-expand pr-0 w-100 sm:pr-4 sm:w-auto mb-4">
+        <ng-container *ngFor="let handout of session?.sessionHandouts">
+            <div class="">
+                <span class="mr-4">{{handout.filetitle}}</span>
+                <a class="download-link" target=”_blank” download href="{{handout.file}}">Download</a>
+            </div>
+        </ng-container>
+    </div>
+</div>
 <ng-container>
-    <ws-widget-attendance-card [session]=""  [status]="" [config]="config"></ws-widget-attendance-card>
+    <ws-widget-attendance-card [session]="session" [config]="config"></ws-widget-attendance-card>
 </ng-container>

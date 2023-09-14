@@ -27,7 +27,7 @@ import { AttendanceCardModule } from './../_common/attendance-card/attendance-ca
     ReactiveFormsModule,
     BtnFullscreenModule,
     MatInputModule,
-    AttendanceCardModule
+    AttendanceCardModule,
   ],
   exports: [PlayerOfflineSessionComponent],
   entryComponents: [PlayerOfflineSessionComponent],
