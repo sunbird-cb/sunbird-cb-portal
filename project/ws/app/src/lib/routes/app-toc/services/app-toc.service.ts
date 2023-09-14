@@ -91,7 +91,10 @@ export class AppTocService {
     this.resumeDataSubscription = this.resumeData.subscribe(
       (dataResult: any) => {
         if (dataResult && dataResult.length && batchData.content && batchData.content.length) {
-          if (batchData && batchData.content[0] && batchData.content[0].batchAttributes && batchData.content[0].batchAttributes.sessionDetails_v2) {
+          if (batchData && batchData.content[0] &&
+            batchData.content[0].batchAttributes &&
+            batchData.content[0].batchAttributes.sessionDetails_v2
+          ) {
             batchData.content[0].batchAttributes.sessionDetails_v2.map((sd: any) => {
               const foundContent = dataResult.find((el: any) => el.contentId === sd.sessionId)
               if (foundContent) {
