@@ -223,7 +223,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
         // }
           this.enrolledCourse.push(items)
           // return items;
-        
+
       })
       this.downloadAllCertificate(this.enrolledCourse)
     })
