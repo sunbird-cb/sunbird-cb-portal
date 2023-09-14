@@ -57,12 +57,7 @@
 .cb-footer {
   border-bottom-left-radius: inherit;
   border-bottom-right-radius: inherit;
-  .br-br {
-    border-bottom-right-radius: inherit;
-  }
-  .br-bl {
-    border-bottom-left-radius: inherit;
-  }
+  
 
   .info {
     width: 50%;
@@ -82,7 +77,12 @@
     }
   }
 }
-
+.br-br {
+  border-bottom-right-radius: inherit;
+}
+.br-bl {
+  border-bottom-left-radius: inherit;
+}
 .language {
   background-color:  rgba(0, 0, 0, 0.04);
 }
