@@ -7,7 +7,9 @@ import { BehaviorSubject } from 'rxjs'
 // tslint:enable
 
 const API_END_POINTS = {
-    readFeed: (id: string) => `/api/user/v1/feed/${id}`,
+    readFeed: (id: string) => `/apis/proxies/v8/user/v1/feed/${id}`,
+    getFormID: (id: string) => `/apis/proxies/v8/forms/getFormById?id=${id}`,
+    submitForm: `/apis/proxies/v8/forms/v1/saveFormSubmit`,
 }
 
 @Injectable()
@@ -24,5 +26,12 @@ export class NPSGridService {
 
   getFeedStatus(id: any) {
     return this.http.get<any>(API_END_POINTS.readFeed(id))
+  }
+
+  getFormData(formid: any) {
+    return this.http.get<any>(API_END_POINTS.getFormID(formid))
+  }
+  submitNPS(req: any) {
+    return this.http.post<any>(API_END_POINTS.submitForm, req)
   }
 }

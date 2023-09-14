@@ -21,7 +21,7 @@
 </div>
 
 <div id="grid-container" class="nps-footer" *ngIf="isNPSOpen"> 
-  <span class="closeicon  cursor-pointer"><mat-icon>close_small</mat-icon></span>
+  <span class="closeicon cursor-pointer" (click)="closeNPS()"><mat-icon>close_small</mat-icon></span>
   <div class="center-box padding-bottom-l padding-top-s" *ngIf="!onSuccessRating">
     <span *ngIf="!ratingGiven">How likely are you to recommend iGOT Karmayogi to your colleagues?</span>
     <div class="margin-bottom-m margin-top-m rating-div">
@@ -37,7 +37,7 @@
       <span class="cstext mat-body-2">Extremely likely</span>
     </div>
     <div class="reviewdiv" *ngIf="ratingGiven">
-      <textarea #textArea class="reviewbox display-block" name="review" id="review" cols="30" rows="3" placeholder="{{phtext}}" maxlength="500"></textarea>
+      <textarea #textArea class="reviewbox display-block" name="review" id="review" cols="30" rows="5" placeholder="{{phtext}}" maxlength="500"></textarea>
       <button mat-stroked-button type="submit" class="display-block text-white ws-mat-primary-background margin-top-m" 
       (click)="submitRating(textArea.value)"><span class="text-white" i18n>Submit</span>
       </button>

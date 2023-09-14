@@ -429,6 +429,7 @@
   background-color: #fcf9f9;
   z-index: 1000;
   text-align: center;
+  box-shadow: 0 6px 6px 3px;
 
   .center-box {
     display: flex;
@@ -438,7 +439,7 @@
 
   .rating-div {
     .cstext {
-      display: inline-block;
+      // display: inline-block;
       font-style: italic;
       color: rgba(0,0,0,0.6);
       font: 400 12px/24px Helvetica
@@ -455,13 +456,20 @@
       margin: 0 8px
     }
 
-    .rating, .rating-img {
+    .rating {
       border: 1px solid rgba(0, 0, 0, 0.6);
       border-radius: 50%;
       width: 40px;
       height: 40px;
       display: block;
-      line-height: 2.6;
+      line-height: 2.7;
+      text-align: center;
+    }
+    .rating-img {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: block;
     }
   }
 
@@ -473,8 +481,8 @@
 
   .closeicon {
     position: absolute;
-    top: 8px;
-    right: 4%;
+    top: 16px;
+    right: 16px;
     border-radius: 50%;
     border: 1px solid rgba(0, 0, 0, 0.2);
     width: 20px;
@@ -484,8 +492,10 @@
 
     .mat-icon {
       font-size: 14px;
-      margin: 0 2px 0;
+      margin: 0 2.5px 0;
       line-height: 1.4;
+      width: 18px;
+      height: 18px;
     }
   }
   .reviewdiv {
@@ -503,6 +513,7 @@
   }
 
   textarea::placeholder {
-    opacity: 0.7;
+    color: rgba(0, 0, 0, 0.4) !important;
+    font: 400 14px/20px Lato !important;
   } 
 }

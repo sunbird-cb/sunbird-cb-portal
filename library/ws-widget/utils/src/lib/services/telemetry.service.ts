@@ -108,7 +108,6 @@ export class TelemetryService {
 
   triggerNPSUpdate(data: any) {
     this.telArray.push(data)
-    console.log(this.telArray)
     if (this.telArray && this.telArray.length === 4) {
       this.telArray = []
        this.npsSvc.updateTelemetryData(true)

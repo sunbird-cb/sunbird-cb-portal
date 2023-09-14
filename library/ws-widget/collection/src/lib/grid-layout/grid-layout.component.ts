@@ -45,11 +45,12 @@ export class GridLayoutComponent extends WidgetBaseComponent
 
   // NPS
   updateTelemetryDataSubscription: Subscription | null = null
-  isNPSOpen = true
+  isNPSOpen = false
   ratingGiven: any
   onSuccessRating = false
   phtext: any
   reviewText: any
+  formID: any
   ratingList = [
     {
       value:  1,
@@ -91,9 +92,20 @@ export class GridLayoutComponent extends WidgetBaseComponent
 
     this.updateTelemetryDataSubscription = this.npsService.updateTelemetryDataObservable.subscribe((value: boolean) => {
       if (value) {
-        console.log('value', value)
         this.npsService.getFeedStatus(this.configSvc.unMappedUser.id).subscribe((res: any) => {
-          console.log('res', res)
+          if (res.result.response.userFeed && res.result.response.userFeed.length > 0) {
+            const feed = res.result.response.userFeed
+            feed.forEach((item: any) => {
+              if (item.category === 'NPS' && item.data.actionData.formId) {
+                this.isNPSOpen = true
+                this.formID = item.data.actionData.formId
+
+                this.npsService.getFormData(this.formID).subscribe((resform: any) => {
+                  console.log('resform', resform)
+                })
+              }
+            })
+          }
         })
       }
     })
@@ -164,8 +176,33 @@ export class GridLayoutComponent extends WidgetBaseComponent
   }
 
   submitRating(value: any) {
-    console.log('this.ratingGiven', this.ratingGiven)
-    console.log('reviewText', value)
-    this.onSuccessRating = true
+    const currenttimestamp = new Date().getTime()
+    const reqbody = {
+      formId: this.formID,
+      timestamp: currenttimestamp,
+      version: 1,
+      dataObject: {
+        'Please rate your experience  with the platform': this.ratingGiven.value,
+        'Tell us more about your experience': value,
+      },
+    }
+
+    this.npsService.submitNPS(reqbody).subscribe((resp: any) => {
+      if (resp) {
+        this.onSuccessRating = true
+      }
+    })
+  }
+
+  closeNPS() {
+    const reqbody = {
+      id: this.formID,
+      dataObject: {},
+    }
+    this.npsService.submitNPS(reqbody).subscribe((resp: any) => {
+      if (resp) {
+        this.isNPSOpen = false
+      }
+    })
   }
 }
