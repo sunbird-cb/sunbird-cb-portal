@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit  } from '@angular/core';
 import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils';
 // import { ChatbotService } from './chatbot.service';
 import { RootService } from './../root/root.service';
@@ -27,18 +27,48 @@ export class AppChatbotComponent implements OnInit {
   more = false
   chatInformation: any = []
   chatIssues: any = []
+  displayLoader: boolean = false
+  localization: any = {
+    'en' : {
+      'Hi' : 'Hi',
+      'information': 'Information',
+      'issue': 'Issues'
+    },
+    'hi' : {
+      'Hi' : 'जानकारी',
+      'information': 'जानकारी',
+      'issue': 'समस्या'
+    }
+  }
+  @ViewChild('scroll', { static: true }) scroll: any = undefined
+
+  callText = "<a class='hint-text' target='_blank' href='https://bit.ly/44MJlo4'>Teams Call</a>"
+  emailText = "<a class='hint-text' target='_blank' href='mailto:mission.karma@gov.in'>mission.karma@gov.in.</a>"
+
   constructor(private configSvc: ConfigurationsService, private eventSvc: EventService,
     private chatbotService: RootService) { }
 
   ngOnInit() {
     this.userInfo = this.configSvc && this.configSvc.userProfile
-    this.chatbotService.getLangugages().subscribe((resp: any) => {
-      if(resp.status.code === 200) {
-        this.language = resp.payload.languages
-        this.getData()
-      }
-    })
+    this.checkForApiCalls()
     this.userIcon = this.userInfo.profileImage || "/assets/icons/chatbot-default-user.svg"
+  }
+
+  ngAfterViewChecked() {
+    console.log("aaa")
+    if(this.scroll) {
+      console.log("dfdd")
+      this.scroll.nativeElement.scrollTo(0, this.scroll.nativeElement.scrollHeight);
+    }
+
+  }
+
+  greetings(){
+    return this.localization[this.selectedLaguage]['Hi'] || 'Hi'
+  }
+
+  getInfoText(label: string){
+    return this.localization[this.selectedLaguage][label] || label
   }
 
   getData(){
@@ -50,12 +80,13 @@ export class AppChatbotComponent implements OnInit {
       lang : this.selectedLaguage,
       config_type : lang[this.currentFilter]
     }
-
+    this.displayLoader = true
     this.chatbotService.getChatData(tabType).subscribe((res: any) => {
       if(res && res.payload && res.payload.config) {
         this.setDataToLocalStorage(res.payload.config)
         this.checkForApiCalls()
         // this.initData(res.payload.config)
+        this.displayLoader = false
       }
     })
   }
@@ -68,6 +99,7 @@ export class AppChatbotComponent implements OnInit {
   }
 
   initData(getData: any){
+    console.log(getData)
     this.userJourney = []
     let userDetails: any = {
       type: 'incoming',
@@ -90,8 +122,9 @@ export class AppChatbotComponent implements OnInit {
 
   selectLaguage(event: any) {
     this.selectedLaguage = event.target.value
-    //this.initData(this.selectedLaguage)
-    // this.toggleFilter(this.selectedLaguage)
+    this.chatInformation=[]
+    this.chatIssues = []
+    this.checkForApiCalls()
   }
 
   readFromLocalStorage(){
@@ -121,6 +154,9 @@ export class AppChatbotComponent implements OnInit {
       this.userJourney = []
       this.chatInformation = []
       this.chatIssues = []
+      this.selectedLaguage = 'en'
+      this.currentFilter = 'information'
+      this.checkForApiCalls()
     }
   }
 
@@ -130,7 +166,7 @@ export class AppChatbotComponent implements OnInit {
     let localStg: any = JSON.parse(localStorage.getItem('faq') || '{}')
      let localStorageData = localStg[this.selectedLaguage][this.currentFilter]
      console.log(localStorageData,'asdfghjk',this.currentFilter)
-    
+
   }
 
   selectedQuestion(question:any,data:any){
@@ -140,9 +176,10 @@ export class AppChatbotComponent implements OnInit {
       question: this.questionsAndAns[question.quesID].quesValue,
       tab: this.currentFilter
     }
+
     let incomingMsg = {
       type: 'incoming',
-      message: this.questionsAndAns[question.quesID].ansVal,
+      message: this.questionsAndAns[question.quesID].ansVal.replace("<teams_call_link>", this.callText).replace("<email_configuration>", this.emailText),
       recommendedQues: question.recommendedQues || [],
       title: '', //'Questions related to',
       relatedQes:'above Question',
@@ -192,9 +229,7 @@ export class AppChatbotComponent implements OnInit {
     this.pushData(showMoreQes)
   }
 
-
   showCategory(catItem: any) {
-    debugger
     let incomingMsg = {
       type: 'category',
       message: '',
@@ -281,8 +316,15 @@ export class AppChatbotComponent implements OnInit {
 
   checkForApiCalls(){
     let localStg: any = JSON.parse(localStorage.getItem('faq') || '{}')
-    if(localStg) {
-      if (localStg[this.selectedLaguage][this.currentFilter]){
+    let languageStg: any = JSON.parse(localStorage.getItem('faq-languages') || '{}')
+    if(languageStg.length > 0) {
+      this.language = languageStg
+    } else {
+      this.getLanguages()
+    }
+
+    if(localStg && languageStg) {
+      if (localStg[this.selectedLaguage] && localStg[this.selectedLaguage][this.currentFilter]){
         let localStorageData = localStg[this.selectedLaguage][this.currentFilter]
         this.userJourney=[]
         if(this.currentFilter === 'information') {
@@ -305,7 +347,8 @@ export class AppChatbotComponent implements OnInit {
         this.getQns()
         this.getCategories()
       } else {
-        this.getData()
+        this.getLanguages();
+        // this.getData()
       }
     }
   }
@@ -314,6 +357,16 @@ export class AppChatbotComponent implements OnInit {
     this.categories=[...this.categories, ...this.responseData.categoryMap]
   }
 
+  getLanguages(){
+    this.displayLoader = true
+    this.chatbotService.getLangugages().subscribe((resp: any) => {
+      if(resp.status.code === 200) {
+        this.language = resp.payload.languages
+        localStorage.setItem('faq-languages',JSON.stringify(resp.payload.languages))
+        this.getData()
+        this.displayLoader = false
+      }
+    })
+  }
 
 }
-

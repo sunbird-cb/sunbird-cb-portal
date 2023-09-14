@@ -57,7 +57,7 @@
 .cb-footer {
   border-bottom-left-radius: inherit;
   border-bottom-right-radius: inherit;
-  
+
 
   .info {
     width: 50%;
@@ -132,7 +132,7 @@
   padding: 0;
   background: transparent; /* make scrollbar transparent */
 }
-::ng-deep mat-form-field {
+.lang-select {
   width: 70px;
   .mat-form-field-flex {
     background-color: white !important;
@@ -147,6 +147,12 @@
 
 ::ng-deep .mat-form-field-infix {
   border-top: unset !important;
+}
+
+.loader {
+  position: absolute;
+  left: 50%;
+  top: 39%;
 }
 
 
@@ -187,7 +193,8 @@
     border-bottom-right-radius: 15px;
     display: flex;
     flex-wrap: wrap;
-    width: 62%;
+    width: 65%;
+    height: 100%;
   }
 }
 .margin-left-17 {
@@ -241,6 +248,7 @@
 
 .row-end {
   justify-content: flex-end;
+  height: 100%;
   .user-icon {
     padding-left: 8px;
   }
@@ -264,4 +272,7 @@
 
 .incoming-msg {
   height: fit-content;
+}
+.hint-text {
+  color: #1B4CA1;
 }
