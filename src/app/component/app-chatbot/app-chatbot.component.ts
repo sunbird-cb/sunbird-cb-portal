@@ -1,34 +1,61 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils';
+// import { ChatbotService } from './chatbot.service';
+import { RootService } from './../root/root.service';
+
 
 @Component({
   selector: 'ws-app-chatbot',
   templateUrl: './app-chatbot.component.html',
-  styleUrls: ['./app-chatbot.component.scss']
+  styleUrls: ['./app-chatbot.component.scss'],
+  // providers: [ChatbotService]
 })
 export class AppChatbotComponent implements OnInit {
 
   showIcon :boolean = true
   categories: any[] = []
-  language: any[] = [
-    {value: 'en', viewValue: 'English'},
-    {value: 'hi', viewValue: 'Hindi'},
-  ];
+  language: any[] = []
   currentFilter: string = 'information'
   selectedLaguage: string = 'en'
 
   responseData:any
   userInfo:any
   userJourney: any = []
-  chatInfo :any = []
   recomendedQns :any = {}
   questionsAndAns: any = {}
+  userIcon: string = ''
   more = false
-  constructor(private configSvc: ConfigurationsService, private eventSvc: EventService) { }
+  chatInformation: any = []
+  chatIssues: any = []
+  constructor(private configSvc: ConfigurationsService, private eventSvc: EventService,
+    private chatbotService: RootService) { }
 
   ngOnInit() {
     this.userInfo = this.configSvc && this.configSvc.userProfile
+    this.chatbotService.getLangugages().subscribe((resp: any) => {
+      if(resp.status.code === 200) {
+        this.language = resp.payload.languages
+        this.getData()
+      }
+    })
+    this.getData()
     this.toggleFilter('information')
+    this.userIcon = this.userInfo.profileImage || "/assets/icons/chatbot-default-user.svg"
+  }
+
+  getData(){
+    // let lang:any = {
+    //   information: 'IN',
+    //   issue: 'IS'
+    // }
+    // let tabType:any = {
+    //   lang : 'en',
+    //   config_type : lang[this.currentFilter]
+    // }
+
+    // this.chatbotService.getChatData(tabType).subscribe((r: any) => {
+    //   console.log("resp ", r)
+    // })
   }
 
   initData(getData: any){
@@ -42,22 +69,18 @@ export class AppChatbotComponent implements OnInit {
     this.userJourney = []
     let userDetails: any = {
       type: 'incoming',
-      message: ` Hi ${this.userInfo && this.userInfo.firstName || ''}, I'm KarmaSahayogi - Digital Assistant, I'm here to help you.`,
+      message: '', //` Hi ${this.userInfo && this.userInfo.firstName || ''}, I'm KarmaSahayogi - Digital Assistant, I'm here to help you.`,
       recommendedQues:this.getPriorityQuestion(1),
       selectedValue:'',
-      title:'Here are the most frequently asked questions users have looked for',
+      title: '',//'Here are the most frequently asked questions users have looked for',
       tab: 'information',
     }
-    let userDetailsForIssues: any = {
-      type: 'incoming',
-      message: ` Hi ${this.userInfo && this.userInfo.firstName || ''}, I'm KarmaSahayogi - Digital Assistant, I'm here to help you.`,
-      recommendedQues: this.getPriorityQuestion(1),
-      selectedValue:'',
-      title:'Here are the most frequently asked isuues users have looked for',
-      tab: 'issue',
-    }
-    this.userJourney.push(userDetails)
-    this.userJourney.push(userDetailsForIssues)
+
+    this.pushData(userDetails)
+    // this.pushData(userDetailsForIssues)
+    this.getQns()
+  }
+  getQns() {
     this.responseData.quesMap.map((q: any) => {
       this.questionsAndAns[q.quesId] = q
     })
@@ -80,18 +103,50 @@ export class AppChatbotComponent implements OnInit {
     }
   }
 
+  goToBottom(){
+    window.scrollTo(0,document.body.scrollHeight);
+  }
+
+
   iconClick(type: string) {
     this.showIcon = !this.showIcon
     this.currentFilter = 'information'
-    type === 'start' ? this.raiseChatStartTelemetry() : this.raiseChatEndTelemetry()
+    if (type === 'start'){
+      this.raiseChatStartTelemetry()
+      this.toggleFilter(this.currentFilter)
+      let lang:any = {
+      information: 'IN',
+      issue: 'IS'
+    }
+    let tabType:any = {
+      lang : 'en',
+      config_type : lang[this.currentFilter]
+    }
+
+    this.chatbotService.getChatData(tabType).subscribe((r: any) => {
+      console.log("resp ", r)
+    })
+    } else {
+      this.raiseChatEndTelemetry()
+      this.userJourney = []
+      this.chatInformation = []
+      this.chatIssues = []
+    }
+
   }
 
   toggleFilter(tab: string) {
-    tab === 'information' ? this.currentFilter = 'information' : this.currentFilter = 'issue'
+    this.currentFilter = tab
     let localStg: any = JSON.parse(localStorage.getItem('result') || '{}')
-    if (localStg) {
-      this.initData(localStg[this.selectedLaguage][this.currentFilter])
-    } else {
+    console.log(localStg)
+    // if (localStg) {
+    //   if (localStg[this.selectedLaguage][this.currentFilter]){
+    //     this.initData(localStg[this.selectedLaguage][this.currentFilter])
+    //   } else {
+    //     // API call to get the languge
+    //   }
+    //   this.initData(localStg[this.selectedLaguage][this.currentFilter])
+    // } else {
       let infoData:any =  {
         "categoryMap": [
           {
@@ -1171,13 +1226,25 @@ export class AppChatbotComponent implements OnInit {
           }
         ]
       }
-      if(this.currentFilter === 'information') {
-        this.initData(infoData)
-      } else {
-        this.initData(issueData)
-      }
-    }
 
+    this.userJourney=[]
+      if(this.currentFilter === 'information') {
+        if (this.chatInformation.length === 0) {
+          this.initData(infoData)
+        } else {
+          this.responseData = infoData
+          this.userJourney = this.chatInformation
+        }
+      } else {
+        if (this.chatIssues.length === 0) {
+          this.initData(issueData)
+        } else {
+          this.responseData = issueData
+          this.userJourney = this.chatIssues
+        }
+      }
+    //}
+    this.getQns()
   }
 
   selectedQuestion(question:any,data:any){
@@ -1191,14 +1258,24 @@ export class AppChatbotComponent implements OnInit {
       type: 'incoming',
       message: this.questionsAndAns[question.quesID].ansVal,
       recommendedQues: question.recommendedQues || [],
-      title:'Questions related to',
+      title: '', //'Questions related to',
       relatedQes:'above Question',
       tab: this.currentFilter
     }
-
-    this.userJourney.push(sendMsg)
-    this.userJourney.push(incomingMsg)
+    this.pushData(sendMsg)
+    this.pushData(incomingMsg)
     this.raiseTemeletyInterat(question.quesID)
+  }
+
+  pushData(msg: any){
+    this.userJourney=[]
+    if (this.currentFilter === 'information') {
+      this.chatInformation.push(msg)
+      this.userJourney = this.chatInformation
+    } else {
+      this.chatIssues.push(msg)
+      this.userJourney = this.chatIssues
+    }
   }
 
   getuserjourney(tab: string) {
@@ -1211,7 +1288,6 @@ export class AppChatbotComponent implements OnInit {
     this.responseData.recommendationMap.map((question: any) => {
       question.recommendedQues.map((ques:any)=> {
         if (ques.priority === priority && question.categoryType === isLogedIn) {
-          // this.recomendedQns.list.push(ques)
           recommendedQues.push(ques)
         }
       })
@@ -1225,22 +1301,24 @@ export class AppChatbotComponent implements OnInit {
       message: '',
       recommendedQues:this.getPriorityQuestion(1),
       selectedValue:'',
-      title:'Showing more questions',
+      title: '', //'Showing more questions',
     }
-    this.userJourney.push(showMoreQes)
+    this.pushData(showMoreQes)
   }
 
+
   showCategory(catItem: any) {
+    debugger
     let incomingMsg = {
       type: 'category',
       message: '',
       recommendedQues: [],
-      title:'What do you want to know under',
+      title: '', //'What do you want to know under',
       relatedQes:`${catItem.catName}?`,
       tab: this.currentFilter
     }
     if (catItem.catId === 'all') {
-      incomingMsg.title= 'Here is the list of all the topics'
+      incomingMsg.title= '',//'Here is the list of all the topics'
       incomingMsg.relatedQes = ''
       incomingMsg.recommendedQues = this.responseData.categoryMap
     } else {
@@ -1255,8 +1333,8 @@ export class AppChatbotComponent implements OnInit {
       type:'sendMsg',
       question: catItem.catName
     }
-    this.userJourney.push(sendMsg)
-    this.userJourney.push(incomingMsg)
+    this.pushData(sendMsg)
+    this.pushData(incomingMsg)
   }
 
   raiseChatStartTelemetry() {

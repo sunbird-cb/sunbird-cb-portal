@@ -6,6 +6,8 @@ const PROXY_CREATE_V8 = '/apis/proxies/v8'
 
 const API_END_POINTS = {
   CREATE_USER_API: `${PROXY_CREATE_V8}/discussion/user/v1/create`,
+  LANGUAGES: '/api/faq/v1/assistant/available/language',
+  CONFIG: '/api/faq/v1/assistant/configs/language',
 }
 
 @Injectable({
@@ -52,5 +54,12 @@ export class RootService {
     const expires = `expires=${d.toUTCString()}`
     const cpath = path ? `; path=${path}` : ''
     document.cookie = `${name}=${value}; ${expires}${cpath}`
+  }
+  getChatData(tabType:any): any {
+    return this.http.post<any>(`${API_END_POINTS.CONFIG}`,tabType)
+  }
+
+  getLangugages(): Observable<any>{
+    return this.http.get<any>(`${API_END_POINTS.LANGUAGES}`)
   }
 }

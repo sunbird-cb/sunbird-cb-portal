@@ -83,6 +83,7 @@ import { PublicRequestModule } from './routes/public/public-request/public-reque
 import { AppChatbotComponent } from './component/app-chatbot/app-chatbot.component';
 import { AppChatbotInfoComponent } from './component/app-chatbot-info/app-chatbot-info.component';
 import { AppChatbotIssueComponent } from './component/app-chatbot-issue/app-chatbot-issue.component'
+import { ChatbotService } from './component/app-chatbot/chatbot.service'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -221,6 +222,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     { provide: OverlayContainer, useClass: FullscreenOverlayContainer },
     { provide: HAMMER_GESTURE_CONFIG, useClass: HammerConfig },
     { provide: ErrorHandler, useClass: GlobalErrorHandlingService },
+    ChatbotService,
   ],
 })
 export class AppModule { }
