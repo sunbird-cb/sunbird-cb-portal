@@ -10,6 +10,7 @@ const API_END_POINTS = {
     readFeed: (id: string) => `/apis/proxies/v8/user/v1/feed/${id}`,
     getFormID: (id: string) => `/apis/proxies/v8/forms/getFormById?id=${id}`,
     submitForm: `/apis/proxies/v8/forms/v1/saveFormSubmit`,
+    deleteFeed: `/apis/proxies/v8/user/feed/v1/delete`,
 }
 
 @Injectable()
@@ -20,7 +21,6 @@ export class NPSGridService {
   constructor(private http: HttpClient) { }
 
   updateTelemetryData(state: boolean) {
-    console.log('state', state)
     this.telemetryEvents.next(state)
   }
 
@@ -31,7 +31,12 @@ export class NPSGridService {
   getFormData(formid: any) {
     return this.http.get<any>(API_END_POINTS.getFormID(formid))
   }
-  submitNPS(req: any) {
+
+  submitPlatformRating(req: any) {
     return this.http.post<any>(API_END_POINTS.submitForm, req)
+  }
+
+  deleteFeed(req: any) {
+    return this.http.post<any>(API_END_POINTS.deleteFeed, req)
   }
 }

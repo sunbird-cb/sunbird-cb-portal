@@ -51,6 +51,8 @@ export class GridLayoutComponent extends WidgetBaseComponent
   phtext: any
   reviewText: any
   formID: any
+  feedID: any
+  formFields: any
   ratingList = [
     {
       value:  1,
@@ -99,9 +101,12 @@ export class GridLayoutComponent extends WidgetBaseComponent
               if (item.category === 'NPS' && item.data.actionData.formId) {
                 this.isNPSOpen = true
                 this.formID = item.data.actionData.formId
+                this.feedID = item.id
 
                 this.npsService.getFormData(this.formID).subscribe((resform: any) => {
-                  console.log('resform', resform)
+                  if (resform) {
+                    this.formFields = resform.fields
+                  }
                 })
               }
             })
@@ -187,22 +192,53 @@ export class GridLayoutComponent extends WidgetBaseComponent
       },
     }
 
-    this.npsService.submitNPS(reqbody).subscribe((resp: any) => {
+    this.npsService.submitPlatformRating(reqbody).subscribe((resp: any) => {
       if (resp) {
-        this.onSuccessRating = true
+        // this.onSuccessRating = true
+        const req = {
+          request: {
+            userId: this.configSvc.unMappedUser.id,
+            category: 'NPS',
+            feedId: this.feedID,
+          },
+        }
+        this.npsService.deleteFeed(req).subscribe((res: any) => {
+          if (res) {
+            this.onSuccessRating = true
+          }
+        })
       }
     })
   }
 
   closeNPS() {
-    const reqbody = {
-      id: this.formID,
-      dataObject: {},
-    }
-    this.npsService.submitNPS(reqbody).subscribe((resp: any) => {
-      if (resp) {
-        this.isNPSOpen = false
+    if (!this.onSuccessRating) {
+      const currenttimestamp = new Date().getTime()
+      const reqbody = {
+        formId: this.formID,
+        timestamp: currenttimestamp,
+        version: 1,
+        dataObject: {},
       }
-    })
+      this.npsService.submitPlatformRating(reqbody).subscribe((resp: any) => {
+        if (resp) {
+          // this.isNPSOpen = false
+          const req = {
+            request: {
+              userId: this.configSvc.unMappedUser.id,
+              category: 'NPS',
+              feedId: this.feedID,
+            },
+          }
+          this.npsService.deleteFeed(req).subscribe((res: any) => {
+            if (res) {
+              this.isNPSOpen = false
+            }
+          })
+        }
+      })
+    } else {
+      this.isNPSOpen = false
+    }
   }
 }
