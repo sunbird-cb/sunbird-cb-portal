@@ -372,11 +372,10 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     const batchData = this.batchControl.value
     const userList: any = this.userEnrollmentList && this.userEnrollmentList.filter(ele => {
       if (ele.content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
-        if (!(dayjs(batchData.startDate).isBefore(dayjs(ele.batch.startDate))
-          && dayjs(batchData.endDate).isBefore(dayjs(ele.batch.startDate))
-          || dayjs(batchData.startDate).isAfter(dayjs(ele.batch.endDate))
-          && dayjs(batchData.endDate).isAfter(dayjs(ele.batch.endDate)))
-        ) {
+        if (!(dayjs(batchData.startDate).isBefore(dayjs(ele.batch.startDate)) &&
+        dayjs(batchData.endDate).isBefore(dayjs(ele.batch.startDate)) ||
+        dayjs(batchData.startDate).isAfter(dayjs(ele.batch.endDate)) &&
+        dayjs(batchData.endDate).isAfter(dayjs(ele.batch.endDate)))) {
           return true
         }
         return false
