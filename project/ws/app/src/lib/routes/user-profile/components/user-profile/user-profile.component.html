@@ -167,14 +167,14 @@
                           aria-label="Domicile Medium (Mother Tongue)">
                           Domicile Medium (Mother Tongue)
                         </label>
-                        <mat-form-field appearance="outline" class="margin-top-xs">
+                        <!-- <mat-form-field appearance="outline" class="margin-top-xs">
                           <mat-select formControlName="domicileMedium" i18n-placeholder placeholder="--Select--">
                             <mat-option [value]="option.name" *ngFor="let option of masterLanguagesEntries">
                               {{ option.name }}
                             </mat-option>
                           </mat-select>
-                        </mat-form-field>
-                        <!-- <mat-form-field appearance="outline" class="margin-top-xs">
+                        </mat-form-field> -->
+                        <mat-form-field appearance="outline" class="margin-top-xs">
                           <input id="language" matInput type="text" placeholder="Mother Tongue"
                             i18n-placeholder="Mother Tongue" formControlName="domicileMedium"
                             [matAutocomplete]="motherTongueAuto" i18n-aria-label
@@ -193,7 +193,7 @@
                           <mat-option *ngFor="let option of masterLanguages | async" [value]="option.name">
                             {{ option.name }}
                           </mat-option>
-                        </mat-autocomplete> -->
+                        </mat-autocomplete>
                       </div>
                       <div class="input-wrapper margin-top-s">
                         <fieldset>
