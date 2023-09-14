@@ -1281,7 +1281,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           if (item === name) {
 
             switch (name) {
-
+              
               case 'knownLanguages': return personalDetail['knownLanguages'] = form.value.knownLanguages
               case 'dob': return personalDetail['dob'] = form.value.dob
               case 'nationality': return personalDetail['nationality']  = form.value.nationality
@@ -1381,7 +1381,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   async onSubmit(form: any) {
     this.uploadSaveData = true
     // DO some customization on the input data
-    form.value.knownLanguages = this.selectedKnowLangs
+    form.controls['knownLanguages'].value = this.selectedKnowLangs
     form.value.interests = this.personalInterests
     form.value.hobbies = this.selectedHobbies
     form.value.dob = changeformat(new Date(`${form.value.dob}`))
@@ -1415,6 +1415,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       },
 
     }
+    reqUpdates.request.profileDetails.personalDetails['knownLanguages']  = this.selectedKnowLangs
     reqUpdates.request.profileDetails.personalDetails['nationality']  = form.value.nationality
 
     this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(
