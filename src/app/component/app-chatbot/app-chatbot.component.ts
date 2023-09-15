@@ -35,7 +35,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
       'issue': 'Issues'
     },
     'hi' : {
-      'Hi' : 'जानकारी',
+      'Hi' : 'नमस्ते',
       'information': 'जानकारी',
       'issue': 'समस्या'
     }
@@ -148,16 +148,14 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
       this.selectedLaguage = 'en'
       this.currentFilter = 'information'
       this.checkForApiCalls()
+      this.more = false
     }
   }
 
   toggleFilter(tab: string) {
     this.currentFilter = tab
     this.checkForApiCalls()
-    let localStg: any = JSON.parse(localStorage.getItem('faq') || '{}')
-     let localStorageData = localStg[this.selectedLaguage][this.currentFilter]
-     console.log(localStorageData,'asdfghjk',this.currentFilter)
-
+    this.more = false
   }
 
   selectedQuestion(question:any,data:any){
@@ -360,15 +358,15 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
     })
   }
 
-  ngAfterViewChecked() {        
-    this.scrollToBottom()        
-  } 
+  ngAfterViewChecked() {
+    this.scrollToBottom()
+  }
   scrollToBottom(): void {
     try {
       if (this.myScrollContainer) {
         this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight
       }
-    } catch(err) { }                 
+    } catch(err) { }
   }
 
 }
