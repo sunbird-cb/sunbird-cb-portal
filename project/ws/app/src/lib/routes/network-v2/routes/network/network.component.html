@@ -25,5 +25,8 @@
     <div class="flex flex-5 marbot main_network_box" [ngClass]="{'margin-top-56': currentRoute === 'home'}">
       <router-outlet></router-outlet>
     </div>
+
+    <!-- grid layout - update mobile number & nps panel -->
+    <ng-container [wsResolverWidget]="pageLayout"></ng-container>
   </mat-sidenav-content>
 </mat-sidenav-container>

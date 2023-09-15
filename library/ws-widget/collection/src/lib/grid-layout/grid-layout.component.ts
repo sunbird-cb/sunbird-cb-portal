@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http'
-import { Component, OnInit, Input } from '@angular/core'
+import { Component, OnInit, Input, OnDestroy } from '@angular/core'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ConfigurationsService } from '@sunbird-cb/utils/src/lib/services/configurations.service'
 import { IUserProfileDetailsFromRegistry } from '@ws/app/src/lib/routes/user-profile/models/user-profile.model'
-import { Observable } from 'rxjs'
+import { Observable, Subscription } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { Router } from '@angular/router'
 import {
@@ -15,6 +15,7 @@ import {
 } from './grid-layout.model'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { NPSGridService } from './nps-grid.service'
 
 const API_END_POINTS = {
   fetchProfileById: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`,
@@ -27,11 +28,12 @@ const API_END_POINTS = {
 })
 
 export class GridLayoutComponent extends WidgetBaseComponent
-  implements OnInit, NsWidgetResolver.IWidgetData<IGridLayoutDataMain> {
+  implements OnInit, OnDestroy, NsWidgetResolver.IWidgetData<IGridLayoutDataMain> {
     constructor(
       private router: Router,
       private configSvc: ConfigurationsService,
       private http: HttpClient,
+      private npsService: NPSGridService,
     ) {
       super()
     }
@@ -40,6 +42,44 @@ export class GridLayoutComponent extends WidgetBaseComponent
   containerClass = ''
   processed: IGridLayoutProcessedData[][] = []
   isNudgeOpen = true
+
+  // NPS
+  updateTelemetryDataSubscription: Subscription | null = null
+  isNPSOpen = false
+  ratingGiven: any
+  onSuccessRating = false
+  phtext: any
+  reviewText: any
+  formID: any
+  feedID: any
+  formFields: any
+  ratingList = [
+    {
+      value:  1,
+      image: '/assets/images/nps/Rating_1@2x.svg',
+      showImage: false,
+    },
+    {
+      value:  2,
+      image: '/assets/images/nps/Rating_2@2x.svg',
+      showImage: false,
+    },
+    {
+      value:  3,
+      image: '/assets/images/nps/Rating_3@2x.svg',
+      showImage: false,
+    },
+    {
+      value:  4,
+      image: '/assets/images/nps/Rating_4@2x.svg',
+      showImage: false,
+    },
+    {
+      value:  5,
+      image: '/assets/images/nps/Rating_5@2x.svg',
+      showImage: false,
+    },
+  ]
 
   ngOnInit() {
     this.fetchProfileById(this.configSvc.unMappedUser.id).subscribe(x => {
@@ -50,7 +90,29 @@ export class GridLayoutComponent extends WidgetBaseComponent
       if (x && x.profileDetails && x.profileDetails.personalDetails && x.profileDetails.personalDetails.phoneVerified) {
         this.isNudgeOpen = false
       }
+    })
 
+    this.updateTelemetryDataSubscription = this.npsService.updateTelemetryDataObservable.subscribe((value: boolean) => {
+      if (value) {
+        this.npsService.getFeedStatus(this.configSvc.unMappedUser.id).subscribe((res: any) => {
+          if (res.result.response.userFeed && res.result.response.userFeed.length > 0) {
+            const feed = res.result.response.userFeed
+            feed.forEach((item: any) => {
+              if (item.category === 'NPS' && item.data.actionData.formId) {
+                this.isNPSOpen = true
+                this.formID = item.data.actionData.formId
+                this.feedID = item.id
+
+                this.npsService.getFormData(this.formID).subscribe((resform: any) => {
+                  if (resform) {
+                    this.formFields = resform.fields
+                  }
+                })
+              }
+            })
+          }
+        })
+      }
     })
 
     if (this.widgetData.gutter != null) {
@@ -70,6 +132,12 @@ export class GridLayoutComponent extends WidgetBaseComponent
         }),
       ),
     )
+  }
+
+  ngOnDestroy(): void {
+    if (this.updateTelemetryDataSubscription) {
+      this.updateTelemetryDataSubscription.unsubscribe()
+    }
   }
 
   remindlater() {
@@ -92,5 +160,85 @@ export class GridLayoutComponent extends WidgetBaseComponent
   }
   fetchProfile() {
     this.router.navigate(['/app/user-profile/details'])
+  }
+
+  // NPS
+  toggleImg(rating: any) {
+    this.ratingList.forEach((r: any) => {
+      if (rating.value === r.value) {
+        r.showImage = true
+        this.ratingGiven = r
+        if (rating.value < 4) {
+          this.phtext = 'How can we make it better for you next time?'
+        } else  {
+          this.phtext = 'Inspire Others by sharing your experience'
+        }
+        // console.log('ratingGiven', this.ratingGiven)
+      } else {
+        r.showImage = false
+      }
+    })
+  }
+
+  submitRating(value: any) {
+    const currenttimestamp = new Date().getTime()
+    const reqbody = {
+      formId: this.formID,
+      timestamp: currenttimestamp,
+      version: 1,
+      dataObject: {
+        'Please rate your experience  with the platform': this.ratingGiven.value,
+        'Tell us more about your experience': value,
+      },
+    }
+
+    this.npsService.submitPlatformRating(reqbody).subscribe((resp: any) => {
+      if (resp) {
+        // this.onSuccessRating = true
+        const req = {
+          request: {
+            userId: this.configSvc.unMappedUser.id,
+            category: 'NPS',
+            feedId: this.feedID,
+          },
+        }
+        this.npsService.deleteFeed(req).subscribe((res: any) => {
+          if (res) {
+            this.onSuccessRating = true
+          }
+        })
+      }
+    })
+  }
+
+  closeNPS() {
+    if (!this.onSuccessRating) {
+      const currenttimestamp = new Date().getTime()
+      const reqbody = {
+        formId: this.formID,
+        timestamp: currenttimestamp,
+        version: 1,
+        dataObject: {},
+      }
+      this.npsService.submitPlatformRating(reqbody).subscribe((resp: any) => {
+        if (resp) {
+          // this.isNPSOpen = false
+          const req = {
+            request: {
+              userId: this.configSvc.unMappedUser.id,
+              category: 'NPS',
+              feedId: this.feedID,
+            },
+          }
+          this.npsService.deleteFeed(req).subscribe((res: any) => {
+            if (res) {
+              this.isNPSOpen = false
+            }
+          })
+        }
+      })
+    } else {
+      this.isNPSOpen = false
+    }
   }
 }

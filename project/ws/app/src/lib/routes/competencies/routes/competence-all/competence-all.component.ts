@@ -46,6 +46,7 @@ export class CompetenceAllComponent implements OnInit {
   selectedId = ''
   currentProfile: any
   userPosition: any = null
+  pageLayout: any
   constructor(
     public dialog: MatDialog,
     private route: ActivatedRoute,
@@ -71,6 +72,9 @@ export class CompetenceAllComponent implements OnInit {
           // this.resetcomp()
         }
       })
+
+    this.pageLayout = (this.route.parent &&
+      this.route.parent.snapshot.data.pageData.data.pageLayout) || []
     this.tabsData =
       (this.route.parent &&
         this.route.parent.snapshot.data.pageData.data.tabs) ||
