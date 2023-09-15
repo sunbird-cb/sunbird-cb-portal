@@ -9,7 +9,7 @@ import { LoggerService } from './logger.service'
 import { NsContent } from './widget-content.model'
 import { environment } from 'src/environments/environment'
 import { Router, NavigationStart } from '@angular/router'
-import { NPSGridService } from '@sunbird-cb/collection/src/lib/grid-layout/nps-grid.service'
+// import { NPSGridService } from '@sunbird-cb/collection/src/lib/grid-layout/nps-grid.service'
 
 declare var $t: any
 
@@ -22,7 +22,7 @@ export class TelemetryService {
   pData: any = null
   contextCdata = []
   isAnonymousTelemetry = true
-  telArray: any = []
+  // telArray: any = []
   externalApps: any = {
     RBCP: 'rbcp-web-ui',
   }
@@ -32,7 +32,7 @@ export class TelemetryService {
     // private authSvc: AuthKeycloakService,
     private logger: LoggerService,
     private router: Router,
-    private npsSvc: NPSGridService,
+    // private npsSvc: NPSGridService,
   ) {
     const instanceConfig = this.configSvc.instanceConfig
     this.navigationStart()
@@ -106,16 +106,16 @@ export class TelemetryService {
     return ''
   }
 
-  triggerNPSUpdate(data: any) {
-    this.telArray.push(data)
-    if (this.telArray && this.telArray.length === 4) {
-      this.telArray = []
-       this.npsSvc.updateTelemetryData(true)
-    }
-  }
+  // triggerNPSUpdate(data: any) {
+  //   this.telArray.push(data)
+  //   if (this.telArray && this.telArray.length === 4) {
+  //     this.telArray = []
+  //      this.npsSvc.updateTelemetryData(true)
+  //   }
+  // }
 
   start(edata: any, data: any, pageContext?: WsEvents.ITelemetryPageContext) {
-    this.triggerNPSUpdate(data)
+    // this.triggerNPSUpdate(data)
     try {
       if (this.telemetryConfig) {
         $t.start(
@@ -156,7 +156,7 @@ export class TelemetryService {
   }
 
   end(edata: any, data: any, pageContext?: WsEvents.ITelemetryPageContext) {
-    this.triggerNPSUpdate(data)
+    // this.triggerNPSUpdate(data)
     try {
       $t.end(
         {
@@ -186,7 +186,7 @@ export class TelemetryService {
   }
 
   audit(type: string, props: string, data: any) {
-    this.triggerNPSUpdate(data)
+    // this.triggerNPSUpdate(data)
     try {
       $t.audit(
         {
@@ -213,7 +213,7 @@ export class TelemetryService {
   }
 
   heartbeat(type: string, id: string) {
-    this.triggerNPSUpdate(id)
+    // this.triggerNPSUpdate(id)
     try {
       $t.heartbeat({
         id,
@@ -227,7 +227,7 @@ export class TelemetryService {
   }
 
   impression(data?: any, objectType?: any) {
-    this.triggerNPSUpdate(data)
+    // this.triggerNPSUpdate(data)
     try {
       const page = this.getPageDetails()
       if (data && data.pageContext) {
@@ -281,7 +281,7 @@ export class TelemetryService {
   }
 
   externalImpression(impressionData: any) {
-    this.triggerNPSUpdate(impressionData)
+    // this.triggerNPSUpdate(impressionData)
     try {
       const page = this.getPageDetails()
       if (this.externalApps[impressionData.subApplicationName]) {
