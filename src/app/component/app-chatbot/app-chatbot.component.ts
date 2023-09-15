@@ -51,7 +51,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     this.userInfo = this.configSvc && this.configSvc.userProfile
     this.checkForApiCalls()
-    this.userIcon = this.userInfo.profileImage || "/assets/icons/chatbot-default-user.svg"
+    this.userIcon = this.userInfo && this.userInfo.profileImage ? this.userInfo.profileImage : "/assets/icons/chatbot-default-user.svg"
   }
 
   greetings(){
