@@ -283,7 +283,7 @@ export class PublicRequestComponent implements OnInit {
     if (email && email.value && email.valid) {
       this.signupSvc.sendOtp(email.value, 'email').subscribe(() => {
         this.otpEmailSend = true
-        alert('OTP sent to your email')
+        alert('An OTP has been sent to your email (valid for 15 minutes)')
         this.startCountDownEmail()
         // tslint:disable-next-line: align
       }, (error: any) => {
@@ -301,7 +301,7 @@ export class PublicRequestComponent implements OnInit {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpEmailSend = true
           this.disableEmailVerifyBtn = false
-          alert('OTP sent to your email')
+          alert('An OTP has been sent to your email (valid for 15 minutes)')
           this.startCountDownEmail()
         }
         // tslint:disable-next-line: align
