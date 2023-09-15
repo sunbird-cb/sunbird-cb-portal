@@ -79,7 +79,9 @@ import { PublicLoginWGComponent } from './routes/public/public-login-wg/public-l
 import { PublicWelcomeModule } from './routes/public/welcome/public-welcome.module'
 import { WelcomeUserResolverService } from './services/welcome-user-resolver.service'
 import { PublicTocModule } from './routes/public/public-toc/public-toc.module'
-import { PublicRequestModule } from './routes/public/public-request/public-request.module'
+import { PublicRequestModule } from './routes/public/public-request/public-request.module';
+import { AppChatbotComponent } from './component/app-chatbot/app-chatbot.component';
+import { ChatbotService } from './component/app-chatbot/chatbot.service'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -121,6 +123,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PublicContacthomeComponent,
     PublicLoginWComponent,
     PublicLoginWGComponent,
+    AppChatbotComponent,
   ],
   imports: [
     FormsModule,
@@ -215,6 +218,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     { provide: OverlayContainer, useClass: FullscreenOverlayContainer },
     { provide: HAMMER_GESTURE_CONFIG, useClass: HammerConfig },
     { provide: ErrorHandler, useClass: GlobalErrorHandlingService },
+    ChatbotService,
   ],
 })
 export class AppModule { }

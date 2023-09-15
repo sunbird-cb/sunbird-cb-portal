@@ -11,6 +11,9 @@ export class EventService {
   private eventsSubject = new Subject<WsEvents.IWsEvents<any>>()
   public events$ = this.eventsSubject.asObservable()
 
+  private eventsChatbotSubject = new Subject<WsEvents.IWsEvents<any>>()
+  public chatbotEvents$ = this.eventsChatbotSubject.asObservable()
+
   constructor(
     private utilitySvc: UtilityService,
   ) {
@@ -20,6 +23,10 @@ export class EventService {
   dispatchEvent<T>(event: WsEvents.IWsEvents<T>) {
     event.pageContext = this.getContext(event.pageContext)
     this.eventsSubject.next(event)
+  }
+
+  dispatchChatbotEvent<T>(event: WsEvents.IWsEvents<T>) {
+    this.eventsChatbotSubject.next(event)
   }
 
   // helper functions
