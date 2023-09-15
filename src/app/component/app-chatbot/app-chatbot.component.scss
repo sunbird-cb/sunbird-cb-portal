@@ -57,8 +57,6 @@
 .cb-footer {
   border-bottom-left-radius: inherit;
   border-bottom-right-radius: inherit;
-
-
   .info {
     width: 50%;
     padding: 5px 0;
@@ -78,10 +76,10 @@
   }
 }
 .br-br {
-  border-bottom-right-radius: inherit;
+  border-bottom-right-radius: 15px;
 }
 .br-bl {
-  border-bottom-left-radius: inherit;
+  border-bottom-left-radius: 15px;
 }
 .language {
   background-color:  rgba(0, 0, 0, 0.04);
@@ -95,9 +93,6 @@
   }
 }
 
-.cb-topics {
-
-}
 .cat-list {
   margin: 0;
   padding: 0;
@@ -155,9 +150,6 @@
   top: 39%;
 }
 
-
-
-
 // changes in the chat
 .default-info {
   .default-icon {
@@ -177,7 +169,6 @@
     flex-wrap: wrap;
   }
 }
-
 
 .row-start {
   justify-content: flex-start;
