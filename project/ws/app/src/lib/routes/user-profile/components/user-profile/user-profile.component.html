@@ -34,6 +34,9 @@
                         </div>
                       </div>
                     </div>
+                    <div class="profile-pic-div"> 
+                      <span class="profile-pic">Max file size: 1 MB</span>
+                      <span class="profile-pic">Supported file types: JPG, JPEG, PNG</span></div>
                     <div class="input-column px-2 text-input-col">
                       <div class="input-wrapper margin-top-s">
                         <label for="firstName" class=" margin-remove-bottom form-label required"
@@ -47,12 +50,12 @@
                           <mat-error [hidden]="false" i18n="First Name Error|Explains name is required" i18n-aria-label
                             aria-label="First Name Error|Explains name is required "
                             *ngIf="createUserForm?.controls['firstname'].errors?.required">
-                            First name is mandatory
+                            Full name is mandatory
                           </mat-error>
                           <mat-error [hidden]="false" *ngIf="createUserForm?.controls['firstname'].errors?.pattern"
                             i18n-aria-label
                             aria-label="First Name Error|Name fields cannot contain numbers and special characters except ">
-                            Name fields cannot contain numbers and special characters except '
+                            Name field can only contain letters, space and the character (').
                           </mat-error>
                         </mat-form-field>
                       </div>
@@ -72,8 +75,8 @@
                           </mat-error>
                           <mat-error [hidden]="false" *ngIf="createUserForm?.controls['middlename'].errors?.pattern"
                             i18n-aria-label
-                            aria-label="Name fields cannot contain numbers and special characters except '">
-                            Name fields cannot contain numbers and special characters except '
+                            aria-label="Name field can only contain letters, space and the character (').">
+                            Name field can only contain letters, space and the character (').
                           </mat-error>
                         </mat-form-field>
                       </div> -->
@@ -94,7 +97,7 @@
                           <mat-error [hidden]="false" *ngIf="createUserForm?.controls['surname'].errors?.pattern"
                             i18n-aria-label
                             aria-label="Surname field cannot contain numbers and special characters except '">
-                            Name fields cannot contain numbers and special characters except '
+                            Name field can only contain letters, space and the character (').
                           </mat-error>
                         </mat-form-field>
                       </div> -->
@@ -142,8 +145,8 @@
                             Nationality is mandatory
                           </mat-error>
                           <mat-error *ngIf="createUserForm?.controls['nationality'].errors?.forbiddenNames"
-                            i18n-aria-label aria-label="You must enter value from suggested list only.">
-                            You must enter value from suggested list only.
+                            i18n-aria-label aria-label="Please choose a value from the list provided above.">
+                            Please choose a value from the list provided above.
                           </mat-error>
                         </mat-form-field> -->
                         <!-- <mat-autocomplete #nationalityAutocomplete="matAutocomplete" autoActiveFirstOption="true"
@@ -164,6 +167,13 @@
                           aria-label="Domicile Medium (Mother Tongue)">
                           Domicile Medium (Mother Tongue)
                         </label>
+                        <!-- <mat-form-field appearance="outline" class="margin-top-xs">
+                          <mat-select formControlName="domicileMedium" i18n-placeholder placeholder="--Select--">
+                            <mat-option [value]="option.name" *ngFor="let option of masterLanguagesEntries">
+                              {{ option.name }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field> -->
                         <mat-form-field appearance="outline" class="margin-top-xs">
                           <input id="language" matInput type="text" placeholder="Mother Tongue"
                             i18n-placeholder="Mother Tongue" formControlName="domicileMedium"
@@ -175,8 +185,8 @@
                             Domicile Medium is mandatory
                           </mat-error>
                           <mat-error *ngIf="createUserForm?.controls['domicileMedium'].errors?.forbiddenNames"
-                            i18n-aria-label aria-label="You must enter value from suggested list only.">
-                            You must enter value from suggested list only.
+                            i18n-aria-label aria-label="Please choose a value from the list provided above.">
+                            Please choose a value from the list provided above.
                           </mat-error>
                         </mat-form-field>
                         <mat-autocomplete #motherTongueAuto="matAutocomplete" autoActiveFirstOption="true">
@@ -378,14 +388,14 @@
                               aria-label="Mobile Number input" maxlength="10" (keypress)="numericOnly($event)">
                             <mat-error [hidden]="false" i18n="Mobile Number Error|Explains Mobile no is required"
                               *ngIf="createUserForm?.controls['mobile'].errors?.required" i18n-aria-label
-                              aria-label="Mobile Number is mandatory">
-                              Mobile Number is mandatory
+                              aria-label="Please enter your mobile number">
+                              Please enter your mobile number
                             </mat-error>
                             <mat-error [hidden]="false" *ngIf="createUserForm?.controls['mobile'].errors?.pattern"
                               i18n-aria-label aria-label="Please enter a valid 10 digit mobile number">
                               Please enter a valid 10 digit mobile number
                             </mat-error>
-                            <mat-hint align="start">Please add a valid mobile number</mat-hint>
+                            <!-- <mat-hint align="start">Please add a valid mobile number</mat-hint> -->
                             <!-- <mat-error *ngIf="createUserForm?.controls['mobile'].errors?.required">This field is mandatory.</mat-error>
                             <mat-error *ngIf="createUserForm?.controls['mobile'].errors?.pattern">Minimum 8 charactors needed.</mat-error> -->
                           </mat-form-field>
@@ -525,7 +535,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="pinCode" #pincode type="text" matInput placeholder="123456" formControlName="pincode"
-                        i18n-aria-label aria-label="Pin Code inpput field" autocomplete="off" maxlength="6" (keypress)="numericOnly($event)">
+                        i18n-aria-label aria-label="Pin Code inpput field" autocomplete="off" (keypress)="numericOnly($event)" maxlength="6">
                       <mat-error [hidden]="false" i18n="Pin Code Error|Explains pincode is required"
                         *ngIf="createUserForm?.controls['pincode'].errors?.required" i18n-aria-label
                         aria-label="Pin Code Error|Explains pincode is required">
@@ -972,7 +982,7 @@
                   </div>
                 </div>
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                  <div class="item1">
+                  <div class="item1" [ngClass]="{ disable: !isAllowed('description') }">
                     <label for="description" class=" margin-remove-bottom form-label"
                       i18n="Description label|Label which explains the user to enter Description">
                       Description
@@ -986,6 +996,8 @@
                         You have exceeded 500 characters.
                       </mat-error>
                     </mat-form-field>
+                    <br>
+                    <span class="txt" *ngIf="!isAllowed('description')">{{inReview}}</span>
                   </div>
                 </div>
                 <p class="heading mt-10">Other Details For Government Employees (If Applicable)</p>
@@ -1004,7 +1016,7 @@
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <mat-select formControlName="payType" i18n-placeholder placeholder="--Select--">
-                        <mat-option [value]="pay.name" *ngFor="let pay of designationsMeta?.gradePay">
+                        <mat-option [value]="pay.name" *ngFor="let pay of gradePayData">
                           {{pay.name}}
                         </mat-option>
                       </mat-select>
@@ -1081,12 +1093,13 @@
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
                   <div class="item1">
                     <label for="civilListNumber" class=" margin-remove-bottom form-label"
-                      i18n="Civil List Number label|Label which explains the user to enter Civil List Number">
+                      i18n="Civil List Number label|Label which explains the user to enter Civil List Number">     
+                      
                       Civil List Number
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="civilListNumber" matInput type="text" #civilListNo formControlName="civilListNo"
-                        i18n-placeholder placeholder="Enter Civil List Number" (keypress)="numericOnly($event)" maxlength="25" />
+                        i18n-placeholder placeholder="Enter Civil List Number" (keypress)="numericOnly($event)" onKeyPress="if(this.value.length === 25) return false;" />
                       <mat-error [hidden]="false" i18n="Civil List Number  Error|Explains name is required">
                         Civil List Number is mandatory
                       </mat-error>
@@ -1098,8 +1111,8 @@
                       Employee Code
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <input id="empCode" matInput type="text" #employeeCode formControlName="employeeCode"
-                        i18n-placeholder placeholder="Enter Employee Code" (keypress)="numericOnly($event)" maxlength="25" />
+                      <input id="empCode" matInput type="text" #employeeCode formControlName="employeeCode" 
+                        i18n-placeholder placeholder="Enter Employee Code" (keypress)="numericOnly($event)" onKeyPress="if(this.value.length === 25) return false;" />
                       <mat-error [hidden]="false" i18n="Employee Code  Error|Explains name is required">
                         Employee Code is mandatory
                       </mat-error>
@@ -1132,8 +1145,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="pinCode1" matInput #otherDetailsOfficePinCode type="text"
-                        formControlName="otherDetailsOfficePinCode" i18n-placeholder placeholder="Enter Pin Code" maxlength="6"
-                        (keypress)="numericOnly($event)" />
+                        formControlName="otherDetailsOfficePinCode" (keypress)="numericOnly($event)" i18n-placeholder placeholder="Enter Pin Code" maxlength="6" />
                       <mat-error [hidden]="false" i18n="Pin Code  Error|Explains name is required">
                         Pin Code is mandatory
                       </mat-error>
@@ -1238,7 +1250,7 @@
           <mat-spinner [diameter]="30"></mat-spinner>
         </div>
         <button mat-raised-button type="submit" (click)="onSubmit(createUserForm)"
-          class="text-white btn-success btn-responsive" [disabled]="createUserForm?.invalid">
+          class="text-white btn-success btn-responsive" [disabled]="createUserForm?.invalid || !isMobileVerified">
           <span class="text-white" i18n>
             Save Details
           </span>
