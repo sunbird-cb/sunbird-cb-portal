@@ -29,6 +29,7 @@ const API_END_POINTS = {
   CONTENT_HISTORY: `${PROTECTED_SLAG_V8}/user/history`,
   CONTENT_HISTORYV2: `/apis/proxies/v8/read/content-progres`,
   COURSE_BATCH_LIST: `/apis/proxies/v8/learner/course/v1/batch/list`,
+  COURSE_BATCH: `/apis/proxies/v8/course/v1/batch/read`,
   AUTO_ASSIGN_BATCH: `/apis/protected/v8/cohorts/user/autoenrollment/`,
   USER_CONTINUE_LEARNING: `${PROTECTED_SLAG_V8}/user/history/continue`,
   CONTENT_RATING: `${PROTECTED_SLAG_V8}/user/rating`,
@@ -54,6 +55,8 @@ export class WidgetContentService {
   ) {
   }
 
+  tocConfigData: any = null
+
   isResource(primaryCategory: string) {
     if (primaryCategory) {
       const isResource = (primaryCategory === NsContent.EResourcePrimaryCategories.LEARNING_RESOURCE) ||
@@ -72,6 +75,10 @@ export class WidgetContentService {
     // return this.http.get(url).toPromise()
     if (url) { }
     return of().toPromise()
+  }
+
+  updateTocConfig(data: any) {
+    this.tocConfigData = data
   }
 
   fetchContent(
@@ -137,6 +144,13 @@ export class WidgetContentService {
           (data: any) => data.result.response
         )
       )
+  }
+
+  // fetch individual batch
+  fetchCourseBatch(batchId: string): Observable<NsContent.IContinueLearningData> {
+    return this.http.get<NsContent.IContinueLearningData>(
+      `${API_END_POINTS.COURSE_BATCH}/${batchId}`,
+    )
   }
 
   autoAssignBatchApi(identifier: any): Observable<NsContent.IBatchListResponse> {

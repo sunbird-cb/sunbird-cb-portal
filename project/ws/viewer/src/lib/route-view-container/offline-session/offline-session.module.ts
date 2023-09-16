@@ -33,9 +33,7 @@ import {
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 
 import { RouterModule } from '@angular/router'
-import { OfflineSessionComponent } from './offline-session.component';
-
-
+import { OfflineSessionComponent } from './offline-session.component'
 
 @NgModule({
   declarations: [OfflineSessionComponent],
@@ -64,6 +62,6 @@ import { OfflineSessionComponent } from './offline-session.component';
     BtnContentFeedbackV2Module,
     PlayerBriefModule,
   ],
-  exports: [OfflineSessionComponent]
+  exports: [OfflineSessionComponent],
 })
 export class OfflineSessionModule { }

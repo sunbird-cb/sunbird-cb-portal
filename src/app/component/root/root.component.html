@@ -19,13 +19,14 @@ navBarRequired && (isXSmall$ | async) === false
     'height-on-top':
       (isXSmall$ | async) === false &&
       isShowNavbar &&
-      navBarRequired && 
+      navBarRequired &&
       !isCustomHeight
   }">
   <router-outlet></router-outlet>
 </div>
 <!-- <ws-app-footer class="app-footer" [ngClass]="{ 'padding-bottom: 56px': !isSetupPage}" *ngIf="showNavbar">
 </ws-app-footer> -->
+<ws-app-chatbot></ws-app-chatbot>
 <ws-app-footer class="app-footer" [ngClass]="{ 'padding-bottom: 56px': !isSetupPage}" *ngIf="showNavbar && showFooter">
 </ws-app-footer>
 <ws-app-nav-bar class="bottom-nav-bar" [hidden]="!isShowNavbar" *ngIf="navBarRequired && (isXSmall$ | async) === true"

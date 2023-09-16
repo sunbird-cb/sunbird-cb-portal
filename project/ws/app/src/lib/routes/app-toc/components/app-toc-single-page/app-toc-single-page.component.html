@@ -277,21 +277,21 @@
                                 </ws-widget-avatar-photo>
                                 <div class="margin-left-xl">
                                     <div class="user-name">{{ author.name }}</div>
-                                    <p class="mat-body-2 ws-mat-black60-text">Author</p>
+                                    <p class="mat-body-2  mb-0  ws-mat-black60-text">Author</p>
                                 </div>
                             </div>
                             <!-- curators -->
                             <div *ngFor="let author of parseJsonData(content?.creatorContacts)"
-                            class="unit-cohort sm:pr-8 md:pr-10">
+                            class="unit-cohort user-card sm:pr-8 md:pr-10">
                             <!-- <ws-widget-user-image class="user-image" [imageType]="'user-photo'" [userName]="author.name || ''"
                                 [email]="author.email" [imageUrl]="author.photo || ''"></ws-widget-user-image> -->
                             <ws-widget-avatar-photo class="float-left margin-right-s" [randomColor]="true"
                                 [datalen]="parseJsonData(content?.creatorContacts).length"
                                 [size]="'m'" [photoUrl]="author.photo || ''" [name]="author.name" size="l-xs">
                             </ws-widget-avatar-photo>
-                            <div class="margin-left-xl">
+                            <div class="">
                                 <div class="user-name">{{ author.name }}</div>
-                                <p class="mat-body-2 ws-mat-black60-text">Curator</p>
+                                <p class="mat-body-2 mb-0 ws-mat-black60-text">Curator</p>
                             </div>
                         </div>
                             <!-- <div *ngIf="cohortResults[cohortTypesEnum.AUTHORS]">
@@ -312,6 +312,27 @@
                     </div>
                 </div>
             </section>
+            <!-- <section id="authors" *ngIf="(content?.creatorDetails && content?.creatorDetails.length > 0) || (content?.creatorContacts && content?.creatorContacts.length > 0)  ||
+                (cohortResults[cohortTypesEnum.AUTHORS] && cohortResults[cohortTypesEnum.AUTHORS].length > 0)">
+                <div class="fluid-width contacts-container">
+                    <div class="fixed-width flex flex-col flex-wrap">
+                        <h2 _ngcontent-qml-c28="" class="mat-toolbar contacts-head">Program director & facilitators</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 col-gap-4">
+                            <div *ngFor="let facilitator of selectedBatchData?.batchAttributes?.sessionDetails_v2[0]?.facilatorDetails"
+                                class="unit-cohort sm:pr-8 md:pr-10">
+                                <ws-widget-avatar-photo class="float-left margin-right-s " [randomColor]="true"
+                                    [datalen]="selectedBatchData?.batchAttributes?.sessionDetails_v2[0]?.facilatorDetails.length"
+                                    [size]="'m'" [photoUrl]="facilitator.photo || ''" [name]="facilitator.name" size="l-xs">
+                                </ws-widget-avatar-photo>
+                                <div class="margin-left-xl">
+                                    <div class="user-name">{{ facilitator.name }}</div>
+                                    <p class="mat-body-2  mb-0  ws-mat-black60-text">Facilitator</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section> -->
             <section id="competencies"
                 *ngIf="(content?.competencies_v3 && competencies.length) || (content?.competencies && competencies.length)">
                 <div class="fluid-width contacts-container mb-10">
@@ -429,6 +450,17 @@
                 <div class="fixed-width">
                     <ws-app-app-toc-contents [batchId]="batchId" [content]="content" [forPreview]="forPreview">
                     </ws-app-app-toc-contents>
+                </div>
+            </section>
+        </ng-template>
+    </mat-tab>
+    
+    <mat-tab label="Sessions" *ngIf="content?.children?.length && (content?.primaryCategory === primaryCategory.BLENDED_PROGRAM)">
+        <ng-template matTabContent>
+            <section id="content">
+                <div class="fixed-width">
+                    <ws-app-app-toc-sessions [batchData]="selectedBatchData"  [content]="content" [forPreview]="forPreview" [config]="tocConfig">
+                    </ws-app-app-toc-sessions>
                 </div>
             </section>
         </ng-template>

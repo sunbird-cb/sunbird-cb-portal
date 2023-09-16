@@ -29,6 +29,7 @@
   $colorGreen2: #1d8923;
   $colorRed: #D13924;
   $colorOrange: rgba(246, 153, 83, 1);
+  $colorOrangeLight: rgba(241, 224, 211, 1);
   $footerColor: #373434;
   $footerTextColor: #dedfe0;
   $colorWhite: #ffffff;
@@ -596,6 +597,10 @@
 
     .ws-mat-orange-text {
       color: $colorOrange !important;
+    }
+
+    .ws-mat-orange-light-bg {
+      background-color: $colorOrangeLight !important;
     }
 
     .ws-mat-white-text {

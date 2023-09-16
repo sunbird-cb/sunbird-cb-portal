@@ -385,6 +385,7 @@ export namespace NsContent {
     APPROVED = 'APPROVED',
     REJECTED = 'REJECTED',
     WITHDRAWN = 'WITHDRAWN',
+    REMOVED = 'REMOVED',
   }
 
   export const  WFSTATUS_MSG_MAPPING: any = {
@@ -393,7 +394,8 @@ export namespace NsContent {
     SEND_FOR_PC_APPROVAL:  'BatchEnrollL2Msg',
     APPROVED:  'BatchEnrollApprovedMsg',
     REJECTED:  'BatchEnrollRejectedMsg',
-    WITHDRAWN: '',
+    WITHDRAWN: 'BatchEnrollWithdrawMsg',
+    REMOVED: 'BatchEnrollRemoveMsg',
   }
 
   export enum EResourcePrimaryCategories {
