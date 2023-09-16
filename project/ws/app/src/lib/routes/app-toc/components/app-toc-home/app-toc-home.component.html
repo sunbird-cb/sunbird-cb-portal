@@ -17,7 +17,7 @@ TODO: edit option while preview Mode
   <div class="fixed-width flex flex-wrap">
     <div class="meta-section">
       <ws-app-toc-banner role="banner" [banners]="banners" [userEnrollmentList]="userEnrollmentList" (withdrawOrEnroll)="withdrawOrEnroll($event)" [forPreview]="forPreview" [content]="content"
-        [analytics]="analytics" [resumeData]="resumeData" [batchData]="batchData">
+        [analytics]="analytics" [resumeData]="resumeData" [batchData]="batchData"  [contentReadData]="contentReadData">
       </ws-app-toc-banner>
       <div role="none" class="toc-body margin-top-xl">
         <!-- isBatchInProgress : commented as we seperated the CBP -->
@@ -94,8 +94,9 @@ TODO: edit option while preview Mode
           content?.status !== 'Expired'
         ">
           <div [hidden]="isResource && !content?.artifactUrl?.length" class="text-center">
-            <ng-container *ngIf="content?.primaryCategory !== primaryCategory.PROGRAM && content?.primaryCategory !== primaryCategory.STANDALONE_ASSESSMENT &&
-            content?.primaryCategory !== primaryCategory.BLENDED_PROGRAM">
+            <ng-container *ngIf="content?.primaryCategory !== primaryCategory.PROGRAM 
+            && content?.primaryCategory !== primaryCategory.STANDALONE_ASSESSMENT &&
+            content?.primaryCategory !== primaryCategory.BLENDED_PROGRAM && content?.primaryCategory !== primaryCategory.CURATED_PROGRAM">
               <ng-container *ngIf="
           (actionBtnStatus === 'grant' &&
           !(isMobile && content?.isInIntranet) &&
@@ -211,6 +212,13 @@ TODO: edit option while preview Mode
                 Take test
               </a>
             </ng-container>
+            <ng-container *ngIf="content?.primaryCategory === primaryCategory.CURATED_PROGRAM && !batchData?.enrolled">
+              <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" (click)="autoBatchAssign()">
+                <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
+                  Enroll
+                </ng-container>
+              </a>
+            </ng-container>
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
                 <ng-container *ngIf="batchData?.workFlow?.wfInitiated &&
                 !(batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.APPROVED
@@ -221,7 +229,7 @@ TODO: edit option while preview Mode
                     </p>
                   </div>
                 </ng-container>
-                <ng-container>
+                <!-- <ng-container>
                   <a *ngIf="showStart.show && batchData?.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.APPROVED"
                   [routerLink]="isBatchInProgress? (resumeData && !certData) ? resumeDataLink?.url : firstResourceLink?.url : '' "
                   [queryParams]="isBatchInProgress ? (resumeData && !certData) ? generateQuery('RESUME') : generateQuery('START') : '' "
@@ -236,7 +244,7 @@ TODO: edit option while preview Mode
                     {{resumeData? "Start again" : "Start"}}
                   </ng-container>
                 </a>
-                </ng-container>
+                </ng-container> -->
             </ng-container>
             <ng-container *ngIf="actionBtnStatus == 'reject' && content?.registrationUrl">
               <a [href]="content?.registrationUrl" target="_blank" class="mat-button mat-button-base custom-button"

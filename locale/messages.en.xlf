@@ -10968,7 +10968,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="fc4998256e6dabeb09db02d7f79a3cdf01f6615f" datatype="html">
-        <source>Organisation is mandatory </source>
+        <source>Please enter your organisation name</source>
         <context-group purpose="location">
           <context context-type="sourcefile">project/ws/author/src/lib/routing/modules/editor/shared/components/edit-meta/edit-meta.component.html</context>
           <context context-type="linenumber">1005</context>
@@ -16717,7 +16717,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="2f1948b40bf8f7e56ce3ee565a62be4d28b6d6fc" datatype="html">
-        <source>You must enter value from suggested list only.</source>
+        <source>Please choose a value from the list provided above.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">project/ws/app/src/lib/routes/user-profile/components/user-profile/user-profile.component.html</context>
           <context context-type="linenumber">136</context>
@@ -16998,7 +16998,7 @@
       </trans-unit>
       <trans-unit id="22cd8384bd4ae9d410ad793f5c4455a1683b93ad" datatype="html">
         <source>
-                          Mobile Number is mandatory
+                          Please enter your mobile number
                         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">project/ws/app/src/lib/routes/user-profile/components/user-profile/user-profile.component.html</context>
@@ -17008,7 +17008,7 @@
         <note priority="1" from="meaning">Mobile Number Error</note>
       </trans-unit>
       <trans-unit id="b318df313153d4909de0028ebd656ea1912462b7" datatype="html">
-        <source>Mobile Number is mandatory</source>
+        <source>Please enter your mobile number</source>
         <context-group purpose="location">
           <context context-type="sourcefile">project/ws/app/src/lib/routes/user-profile/components/user-profile/user-profile.component.html</context>
           <context context-type="linenumber">365</context>

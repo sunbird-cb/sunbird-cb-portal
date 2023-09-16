@@ -11,7 +11,7 @@ import {
 } from '@sunbird-cb/utils'
 import { fromEvent, Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
-import { ViewerUtilService } from '../../viewer-util.service'
+// import { ViewerUtilService } from '../../viewer-util.service'
 import { environment } from 'src/environments/environment'
 @Component({
   selector: 'viewer-html',
@@ -47,7 +47,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private contentSvc: WidgetContentService,
-    private viewerSvc: ViewerUtilService,
+    // private viewerSvc: ViewerUtilService,
     private respondSvc: SubapplicationRespondService,
     private eventSvc: EventService,
     private accessControlSvc: AccessControlService,
@@ -95,7 +95,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
               }
               this.subApp = false
             }
-            this.raiseRealTimeProgress()
+            // this.raiseRealTimeProgress()
             if (this.htmlData) {
               this.oldData = this.htmlData
               this.alreadyRaised = true
@@ -184,7 +184,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
           } else {
             this.htmlData = tempHtmlData
           }
-          this.raiseRealTimeProgress()
+          // this.raiseRealTimeProgress()
           if (this.htmlData) {
             this.oldData = this.htmlData
             this.alreadyRaised = true
@@ -371,64 +371,66 @@ export class HtmlComponent implements OnInit, OnDestroy {
     this.eventSvc.dispatchEvent(event)
   }
 
-  private raiseRealTimeProgress() {
-    this.realTimeProgressRequest = {
-      ...this.realTimeProgressRequest,
-      current: ['1'],
-      max_size: 1,
-    }
-    if (this.realTimeProgressTimer) {
-      clearTimeout(this.realTimeProgressTimer)
-    }
-    this.hasFiredRealTimeProgress = false
-    this.realTimeProgressTimer = setTimeout(() => {
-      this.hasFiredRealTimeProgress = true
-      this.fireRealTimeProgress()
-      // tslint:disable-next-line: align
-    }, 6 * 1000)
-  }
 
-  private fireRealTimeProgress() {
-    if (this.htmlData) {
-      if (
-        this.htmlData.primaryCategory === NsContent.EPrimaryCategory.COURSE &&
-        this.htmlData.isExternal
-      ) {
-        return
-      }
-      if (
-        this.htmlData.resourceType &&
-        this.htmlData.resourceType.toLowerCase() === 'certification'
-      ) {
-        return
-      }
-    }
-    if ((this.htmlData || ({} as any)).isIframeSupported &&
-      (this.htmlData || ({} as any)).isIframeSupported.toLowerCase() !== 'yes') {
-      return
-    }
-    if (this.htmlData) {
-      if (this.htmlData.sourceName === 'Cross Knowledge') {
-        return
-      }
-    }
-    if (this.htmlData) {
-      this.realTimeProgressRequest.content_type = this.htmlData.contentType
-      this.realTimeProgressRequest.primaryCategory = this.htmlData.primaryCategory
+  // tslint:disable
+  // private raiseRealTimeProgress() {
+  //   this.realTimeProgressRequest = {
+  //     ...this.realTimeProgressRequest,
+  //     current: ['1'],
+  //     max_size: 1,
+  //   }
+  //   if (this.realTimeProgressTimer) {
+  //     clearTimeout(this.realTimeProgressTimer)
+  //   }
+  //   this.hasFiredRealTimeProgress = false
+  //   this.realTimeProgressTimer = setTimeout(() => {
+  //     this.hasFiredRealTimeProgress = true
+  //     this.fireRealTimeProgress()
+  //     // tslint:disable-next-line: align
+  //   }, 6 * 1000)
+  // }
 
-      const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-        this.activatedRoute.snapshot.queryParams.collectionId : ''
+//   private fireRealTimeProgress() {
+//     if (this.htmlData) {
+//       if (
+//         this.htmlData.primaryCategory === NsContent.EPrimaryCategory.COURSE &&
+//         this.htmlData.isExternal
+//       ) {
+//         return
+//       }
+//       if (
+//         this.htmlData.resourceType &&
+//         this.htmlData.resourceType.toLowerCase() === 'certification'
+//       ) {
+//         return
+//       }
+//     }
+//     if ((this.htmlData || ({} as any)).isIframeSupported &&
+//       (this.htmlData || ({} as any)).isIframeSupported.toLowerCase() !== 'yes') {
+//       return
+//     }
+//     if (this.htmlData) {
+//       if (this.htmlData.sourceName === 'Cross Knowledge') {
+//         return
+//       }
+//     }
+//     if (this.htmlData) {
+//       this.realTimeProgressRequest.content_type = this.htmlData.contentType
+//       this.realTimeProgressRequest.primaryCategory = this.htmlData.primaryCategory
 
-      const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-        this.activatedRoute.snapshot.queryParams.batchId : ''
+//       const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+//         this.activatedRoute.snapshot.queryParams.collectionId : ''
 
-      this.viewerSvc.realTimeProgressUpdate(
-        this.htmlData.identifier,
-        this.realTimeProgressRequest,
-        collectionId,
-        batchId
-      )
-    }
-    return
-  }
+//       const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+//         this.activatedRoute.snapshot.queryParams.batchId : ''
+
+//       this.viewerSvc.realTimeProgressUpdate(
+//         this.htmlData.identifier,
+//         this.realTimeProgressRequest,
+//         collectionId,
+//         batchId
+//       )
+//     }
+//     return
+//   }
 }
