@@ -385,7 +385,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     })
     // conflicts check end
     if (userList && userList.length === 0) {
-      if (this.content) {
+      if (this.content && this.content.wfSurveyLink) {
         const sID = this.content.wfSurveyLink.split('surveys/')
         const surveyId = sID[1]
         const identifierId = this.content.identifier
@@ -415,6 +415,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.openRequestToEnroll(batchData)
           }
         })
+      } else {
+        this.openRequestToEnroll(batchData)
       }
     } else {
       if (userList && userList.length === 1) {
