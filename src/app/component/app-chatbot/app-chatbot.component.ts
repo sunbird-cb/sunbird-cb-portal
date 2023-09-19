@@ -28,6 +28,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
   chatInformation: any = []
   chatIssues: any = []
   displayLoader: boolean = false
+  expanded: boolean = false
   localization: any = {
     'en' : {
       'Hi' : 'Hi',
@@ -137,6 +138,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
   iconClick(type: string) {
     this.showIcon = !this.showIcon
     this.currentFilter = 'information'
+    this.expanded = false
     if (type === 'start'){
       this.raiseChatStartTelemetry()
       // this.toggleFilter(this.currentFilter)
@@ -199,7 +201,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
     let isLogedIn: string = this.userInfo ? 'Logged-In' : 'Not Logged-In'
     this.responseData.recommendationMap.map((question: any) => {
       question.recommendedQues.map((ques:any)=> {
-        if (ques.priority === priority && question.categoryType === isLogedIn) {
+        if (ques.priority === priority && (question.categoryType === isLogedIn || question.categoryType === 'Both')) {
           recommendedQues.push(ques)
         }
       })

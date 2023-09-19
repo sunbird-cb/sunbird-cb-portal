@@ -401,10 +401,10 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
   checkForDateFilters(filters: any) {
     if (filters && filters.hasOwnProperty('batches.endDate')) {
       // tslint:disable-next-line
-      filters['batches.endDate']['>'] = eval(filters['batches.endDate']['>'])
+      filters['batches.endDate']['>='] = eval(filters['batches.endDate']['>='])
     } else if (filters && filters.hasOwnProperty('batches.enrollmentEndDate')) {
       // tslint:disable-next-line
-      filters['batches.enrollmentEndDate']['>'] = eval(filters['batches.enrollmentEndDate']['>'])
+      filters['batches.enrollmentEndDate']['>='] = eval(filters['batches.enrollmentEndDate']['>='])
     }
     return filters
   }
