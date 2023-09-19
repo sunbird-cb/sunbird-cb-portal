@@ -352,9 +352,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
       width: '434px',
       data: {
-        title: 'You’re ocne step away from enrolling!',
+        title: 'You’re one step away from enrolling!',
         // tslint:disable-next-line:max-line-length
-        message: `This batch starting on ${this.datePipe.transform(batchData.startDate, 'dd-MM-yyyy')}  -  ${this.datePipe.transform(batchData.endDate, 'dd-MM-yyyy')}, kindly go through the content and be prepared.`,
+        message: `This batch is active from ${this.datePipe.transform(batchData.startDate, 'dd-MM-yyyy')}  -  ${this.datePipe.transform(batchData.endDate, 'dd-MM-yyyy')}, kindly go through the content and be prepared.`,
         acceptButton: 'Confirm',
         cancelButton: 'Cancel',
       },
@@ -399,13 +399,13 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
         const enrollQuestionnaire = this.dialog.open(EnrollQuestionnaireComponent, {
           width: '920px',
-          // maxHeight: '80vh',
+          maxHeight: '85vh',
           data: {
             surveyId,
             identifierId,
             apiData,
           },
-          disableClose: true,
+          disableClose: false,
           panelClass: ['animate__animated', 'animate__slideInLeft'],
         })
         enrollQuestionnaire.afterClosed().subscribe(result => {

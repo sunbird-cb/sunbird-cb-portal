@@ -17,7 +17,7 @@
             </div>
             <div class="mat-body-2 ws-mat-black60-text">
                 <div class="flex flex-1 flex-row">
-                    <div class="flex margin-right-s">{{session?.sessionType || ''}}</div>
+                    <div class="flex margin-right-s capitalize">{{session?.sessionType || ''}}</div>
                     <div class="flex margin-right-s bullet-span">{{session?.startDate | date: 'dd-MM-yyyy' }}</div>
                     <div class="flex bullet-span">{{session?.sessionDuration || '_'}}, {{session?.startTime || '_' }} -
                       {{session?.endTime || '_'}}
