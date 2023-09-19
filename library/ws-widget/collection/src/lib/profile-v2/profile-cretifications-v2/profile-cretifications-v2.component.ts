@@ -77,15 +77,15 @@ if (data.length > 0) {
         if (value.issuedCertificates[0].identifier === element.identifier) {
           const cet = element.dataUrl
           const course_id = value.courseId
-          if(course_id) {
+          if (course_id) {
           this.tocSvc.fetchGetContentData(course_id).subscribe(res => {
-            if(res.result){
+            if (res.result) {
               const courseData = res.result
               this.dialog.open(ProfileCertificateDialogComponent, {
                 autoFocus: false,
                 data: { cet, value, courseData },
               })
-            } 
+            }
           })
         }
         }
