@@ -89,6 +89,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   disableEnrollBtn = false
   selectedBatch!: any
   helpEmail = ''
+  selectedBatchSubscription: any
+  selectedBatchData: any
 
   // configSvc: any
 
@@ -169,6 +171,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         'showIntranetMessageDesktop',
       )
     }
+    this.selectedBatchSubscription = this.tocSvc.getSelectedBatch.subscribe(batchData => {
+      this.selectedBatchData = batchData
+    })
 
     // if (this.authAccessService.hasAccess(this.content as any) && !this.isInIFrame) {
     //   const status: string = (this.content as any).status
@@ -562,14 +567,24 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       const batchData = {
         content: [event.value],
       }
+      if (this.selectedBatchData && this.selectedBatchData.content) {
+        this.selectedBatchData = {
+          ...this.selectedBatchData,
+          ...batchData
+        }
+      } else {
+        this.selectedBatchData = {
+          ...batchData
+        }
+      }
       if (this.checkRejected(event.value)) {
         this.showRejected = true
         this.setbatchDateToCountDown(event.value.startDate)
-        this.tocSvc.getSelectedBatchData(batchData)
+        this.tocSvc.getSelectedBatchData(this.selectedBatchData)
         return
       }
       this.setbatchDateToCountDown(event.value.startDate)
-      this.tocSvc.getSelectedBatchData(batchData)
+      this.tocSvc.getSelectedBatchData(this.selectedBatchData)
     }
     this.showRejected = false
     return
@@ -603,7 +618,17 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     const batchData = {
       content: [this.batchControl.value],
     }
-    this.tocSvc.getSelectedBatchData(batchData)
+    if (this.selectedBatchData && this.selectedBatchData.content) {
+      this.selectedBatchData = {
+        ...this.selectedBatchData,
+        ...batchData
+      }
+    } else {
+      this.selectedBatchData = {
+        ...batchData
+      }
+    }
+    this.tocSvc.getSelectedBatchData(this.selectedBatchData)
   }
 
   // setting batch start date
@@ -774,6 +799,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
     if (this.batchWFDataSubscription) {
       this.batchWFDataSubscription.unsubscribe()
+    }
+    if (this.selectedBatchSubscription) {
+      this.selectedBatchSubscription.unsubscribe()
     }
   }
 
