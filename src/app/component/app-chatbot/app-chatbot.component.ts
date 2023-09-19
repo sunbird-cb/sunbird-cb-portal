@@ -86,7 +86,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
     localObject = JSON.parse(localStorage.getItem("faq")|| '{}')
     localObject[this.selectedLaguage] = {...localObject[this.selectedLaguage], [this.currentFilter] : data}
     localStorage.setItem("faq", JSON.stringify(localObject))
-    this.currentFilter === 'information' ? this.toggleFilter('information') : this.toggleFilter(this.currentFilter)
+    this.toggleFilter(this.currentFilter === 'information' ? 'information': this.currentFilter)
   }
 
   initData(getData: any){
