@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
 import {
   MatToolbarModule,
   MatIconModule,
@@ -24,9 +24,7 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
 } from '@angular/material'
-import { AttendanceCardComponent } from './attendance-card.component';
-
-
+import { AttendanceCardComponent } from './attendance-card.component'
 
 @NgModule({
   declarations: [AttendanceCardComponent],
@@ -55,6 +53,6 @@ import { AttendanceCardComponent } from './attendance-card.component';
     MatDatepickerModule,
     MatNativeDateModule,
   ],
-  exports: [AttendanceCardComponent]
+  exports: [AttendanceCardComponent],
 })
 export class AttendanceCardModule { }

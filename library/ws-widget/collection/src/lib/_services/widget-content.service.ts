@@ -77,7 +77,7 @@ export class WidgetContentService {
     return of().toPromise()
   }
 
-  updateTocConfig(data: any){
+  updateTocConfig(data: any) {
     this.tocConfigData = data
   }
 

@@ -14,8 +14,6 @@
 
 .competency_main_block {
   width: 100%;
-
-
 }
 .competency_inner {
   @media (max-width:1024px) {
@@ -465,38 +463,29 @@ a:not([href]):not([tabindex]) {
 }
 
 // recommendation_frca_box
-
 .recommendation_frca_box {
   padding: 12px 15px;
   border-radius: 8px 8px;
   background:  rgba(246, 153, 83, 0.2);
 
-
   .post_image_box {
-
     img {
       margin-top: 56px;
       margin-bottom: 24px;
     }
-
   }
 
   .info_icon {
     margin-right: 10px;
     vertical-align: top;
   }
-
-
 }
 
 a.work_order_link {
-  // color: #0074B6;
   text-decoration: underline!important;
 }
 
-
 // recommendation_box notification
-
 .recommendation_box {
   padding: 12px 15px;
   border-radius: 8px 8px;
@@ -535,14 +524,7 @@ a.work_order_link {
   }
 }
 
-
-
-
-
 // competency box with proficiency
-
-
-
 ul.tagIconList {
   padding: 0;
   margin: 0;
@@ -611,22 +593,17 @@ p.proficiency_text {
   letter-spacing: 0.25px;
 }
 
-
 // recommendation_frca_box
-
 .recommendation_frca_box {
   padding: 12px 15px;
   border-radius: 8px 8px;
   background:  rgba(246, 153, 83, 0.2);
 
-
   .post_image_box {
-
     img {
       margin-top: 56px;
       margin-bottom: 24px;
     }
-
   }
 
   .info_icon {
@@ -652,4 +629,8 @@ p.proficiency_text {
 ::ng-deep.desired-card{
   width: 70% !important;
   margin-right: 5%;
+}
+
+::ng-deep.mat-drawer.mat-drawer-side {
+  z-index: 1;
 }

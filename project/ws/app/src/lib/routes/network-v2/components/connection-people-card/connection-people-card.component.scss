@@ -6,7 +6,7 @@
     // height: 231px;
     height: 255px;
     width:  268px;
-    overflow: hidden;
+    // overflow: hidden;
     border: 1px solid rgba(0,0,0,8%);
 }
 
@@ -17,6 +17,11 @@
 
 .name-container{
     padding: $size-m $size-l;
+    height: 75px;;
+}
+.name-container-inner {
+    height: 65px;
+    box-sizing: border-box;
 }
 .name{
     font-size: 16px;

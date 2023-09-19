@@ -16,6 +16,7 @@ export class AttendanceCardComponent implements OnInit {
   @Input() session: NsContent.IContent | null = null
   @Input() status = 0
   @Input() config:any = null
+  @Input() showInfo: boolean = true
 
   constructor(
     // private route: ActivatedRoute,

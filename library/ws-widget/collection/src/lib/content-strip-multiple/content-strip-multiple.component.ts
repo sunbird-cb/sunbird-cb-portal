@@ -401,10 +401,10 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
   checkForDateFilters(filters: any) {
     if (filters && filters.hasOwnProperty('batches.endDate')) {
       // tslint:disable-next-line
-      filters['batches.endDate']['>'] = eval(filters['batches.endDate']['>'])
+      filters['batches.endDate']['>='] = eval(filters['batches.endDate']['>='])
     } else if (filters && filters.hasOwnProperty('batches.enrollmentEndDate')) {
       // tslint:disable-next-line
-      filters['batches.enrollmentEndDate']['>'] = eval(filters['batches.enrollmentEndDate']['>'])
+      filters['batches.enrollmentEndDate']['>='] = eval(filters['batches.enrollmentEndDate']['>='])
     }
     return filters
   }
@@ -642,9 +642,9 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       const searchRequest = strip.request.curatedCollections
       this.contentSvc.searchRelatedCBPV6(searchRequest).subscribe(
         results => {
-          const showViewMore = Boolean(
+          const showViewMore =  results.result.count > 0 ? Boolean(
             results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
-          )
+          ) : false
           const viewMoreUrl = showViewMore
             ? {
               path: '/app/curatedCollections/home',

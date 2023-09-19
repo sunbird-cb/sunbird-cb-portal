@@ -36,13 +36,12 @@
         <!-- {{ defaultThumbnail | json }}//
                 {{ defaultSLogo | json }} // -->
         <div class="sm:ml-5 flex flex-auto" [id]="'m-c-'+ content.identifier">
-
           <div class="sm:ml-5 flex flex-col flex-auto">
-            <h1 class="mat-headline margin-remove-bottom padding-bottom-xs hidden sm:block" [title]="content?.name">
-              {{ content?.name }}
+            <h1 class="mat-headline margin-remove-bottom padding-bottom-xs hidden sm:block" [title]="contentReadData?.name">
+              {{ contentReadData?.name }}
             </h1>
-            <h1 class="mat-headline margin-remove-bottom padding-bottom-xs block sm:hidden" [title]="content?.name">
-              {{ content?.name }}
+            <h1 class="mat-headline margin-remove-bottom padding-bottom-xs block sm:hidden" [title]="contentReadData?.name">
+              {{ contentReadData?.name }}
             </h1>
             <span *ngIf="contentProgress === 1" class="margin-left-s">
               <mat-icon class="ws-mat-accent-text">check_circle</mat-icon>
@@ -206,7 +205,7 @@
           <div class="padding-m batch-container ws-mat-orange-light-bg">
             <form>
               <ng-container *ngIf="batchData && !batchData?.enrolled
-              && (!batchData.workFlow?.wfInitiated || (batchData.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED ||  batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.WITHDRAWN))
+              && (!batchData.workFlow?.wfInitiated || (batchData.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED ||  batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.WITHDRAWN || batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REMOVED))
               && batchData?.content?.length">
                 <div>
                     <mat-form-field appearance="outline" class="w-full">
@@ -221,7 +220,7 @@
                       <mat-error *ngIf="batchControl.hasError('required')">Please choose a batch to start course</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="flex flex-wrap">
+                <div class="flex flex-wrap mt-3">
                   <ng-container *ngIf="!showRejected">
                     <div class="flex-1">
                       <button class="mat-button mat-raised-button resumeButton custom-button width-1-1 text-white" [ngClass]="{ 'disable-btn': disableEnrollBtn || batchControl.hasError('required') }" 
@@ -238,14 +237,14 @@
                   </ng-container>
                   <ng-container *ngIf="showRejected">
                     <h3 class="margin-remove-bottom mat-body-2 ws-default-text" i18n>
-                      Your enrollment request is rejected.
+                      Your enrollment request is {{batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REMOVED ?'removed':'rejected'}}.
                     </h3>
                   </ng-container>
                 </div>
               </ng-container>
             </form>
             <ng-container *ngIf="batchData && !batchData?.enrolled  && batchData?.workFlow?.wfInitiated
-            && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.REJECTED) && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.WITHDRAWN) 
+            && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.REJECTED) && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.REMOVED) && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.WITHDRAWN) 
             && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.APPROVED)
             && batchData?.content?.length">
               <div>
@@ -350,7 +349,7 @@
   </ws-widget-btn-content-like> -->
   <ws-widget-btn-content-share id="prevforshare" [forPreview]="forPreview" [widgetData]="content">
   </ws-widget-btn-content-share>
-  <ws-widget-btn-kb [forPreview]="forPreview" id="prev" [contentId]="content?.identifier" [contentName]="content?.name"
+  <ws-widget-btn-kb [forPreview]="forPreview" id="prev" [contentId]="content?.identifier" [contentName]="contentReadData?.name"
     [contentType]="content?.contentType" [status]="content?.status">
   </ws-widget-btn-kb>
   <ws-widget-btn-goals [forPreview]="forPreview" id="goalsforprev" *ngIf="isGoalsEnabled && btnGoalsConfig"

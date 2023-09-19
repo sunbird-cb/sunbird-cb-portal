@@ -120,6 +120,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 import { AppPublicTocResolverService } from 'src/app/routes/public/public-toc/app-public-toc-resolver.service'
 import { AppTocSessionsComponent } from './components/app-toc-sessions/app-toc-sessions.component'
 import { AppTocSessionCardComponent } from './components/app-toc-session-card/app-toc-session-card.component'
+import { EnrollQuestionnaireComponent } from './components/enroll-questionnaire/enroll-questionnaire.component'
+import { MicroSurveyModule } from '@sunbird-cb/micro-surveys'
 
 @NgModule({
   declarations: [
@@ -148,6 +150,7 @@ import { AppTocSessionCardComponent } from './components/app-toc-session-card/ap
     TagWidgetComponent,
     AppTocSessionsComponent,
     AppTocSessionCardComponent,
+    EnrollQuestionnaireComponent,
   ],
   imports: [
     CommonModule,
@@ -225,6 +228,7 @@ import { AppTocSessionCardComponent } from './components/app-toc-session-card/ap
     InfiniteScrollModule,
     AttendanceHelperModule,
     AttendanceCardModule,
+    MicroSurveyModule,
     NgCircleProgressModule.forRoot({}),
   ],
   providers: [
@@ -249,6 +253,7 @@ import { AppTocSessionCardComponent } from './components/app-toc-session-card/ap
     AppTocSinglePageComponent,
     AppTocSinglePageRootComponent,
     CreateBatchDialogComponent,
+    EnrollQuestionnaireComponent,
   ],
 })
 export class AppTocModule { }

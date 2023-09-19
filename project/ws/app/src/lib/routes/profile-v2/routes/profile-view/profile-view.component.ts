@@ -217,10 +217,13 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.userSvc.fetchUserBatchList(user).subscribe((courses: NsContent.ICourse[]) => {
 
       courses.forEach(items => {
-        if (items.completionPercentage === 100) {
+        // if (items.completionPercentage === 100) {
+        //   this.enrolledCourse.push(items)
+        //   // return items;
+        // }
           this.enrolledCourse.push(items)
           // return items;
-        }
+
       })
       this.downloadAllCertificate(this.enrolledCourse)
     })
