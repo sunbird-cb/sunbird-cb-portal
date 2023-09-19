@@ -176,6 +176,12 @@ export class RootComponent implements OnInit, AfterViewInit {
     this.skipper.nativeElement.focus()
   }
   ngOnInit() {
+    console.log('this.route.snapshot.queryParams ', this.route.snapshot.queryParams); // TODO: log!
+    this.route.queryParams
+      .subscribe(params => {
+        console.log(params); // { orderby: "price" }
+      }
+    );
     if (window.location.pathname.includes('/public/home')) {
       this.customHeight = true
     }

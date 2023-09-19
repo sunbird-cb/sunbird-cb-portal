@@ -33,6 +33,7 @@ import { environment } from 'src/environments/environment'
 import { AppPublicPositionResolverService } from './routes/public/public-signup/position-resolver.service'
 import { PublicRequestComponent } from './routes/public/public-request/public-request.component'
 import { AppPublicGroupResolverService } from './routes/public/public-signup/group-resolver.service'
+import { AppTourComponent } from './component/app-tour/app-tour.component'
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
 // Please declare routes in alphabetical order
@@ -908,6 +909,13 @@ const routes: Routes = [
     },
     loadChildren: () => import('./routes/route-viewer.module').then(u => u.RouteViewerModule),
     canActivate: [GeneralGuard],
+  },
+  {
+    path: 'app/tour',
+    component: AppTourComponent,
+    data: {
+      pageId: 'app-tour',
+    },
   },
   {
     path: '**',

@@ -8,6 +8,7 @@ import { ROOT_WIDGET_CONFIG } from '../collection.config'
 /* tslint:disable*/
 import _ from 'lodash'
 import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
+import { ActivatedRoute, Router } from '@angular/router'
 /* tslint:enable*/
 interface IGroupWithFeatureWidgets extends NsAppsConfig.IGroup {
   featureWidgets: NsWidgetResolver.IRenderConfigWithTypedData<NsPage.INavLink>[]
@@ -49,7 +50,9 @@ export class BtnProfileComponent extends WidgetBaseComponent
   constructor(
     private configSvc: ConfigurationsService,
     private dialog: MatDialog,
-    private accessService: AccessControlService
+    private accessService: AccessControlService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
     super()
     this.btnAppsConfig = { ...this.basicBtnAppsConfig }
@@ -180,5 +183,10 @@ export class BtnProfileComponent extends WidgetBaseComponent
         })
       }
     })
+  }
+
+  redirectToTourPage() {
+    this.router.navigate(['/page/home'], {relativeTo: this.activatedRoute,
+      queryParams: { apptour: 'show' }, queryParamsHandling: 'merge' });
   }
 }
