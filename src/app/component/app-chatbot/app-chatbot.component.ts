@@ -28,6 +28,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
   chatInformation: any = []
   chatIssues: any = []
   displayLoader: boolean = false
+  expanded: boolean = false
   localization: any = {
     'en' : {
       'Hi' : 'Hi',
