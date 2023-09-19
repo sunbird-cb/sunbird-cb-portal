@@ -79,9 +79,11 @@ import { PublicLoginWGComponent } from './routes/public/public-login-wg/public-l
 import { PublicWelcomeModule } from './routes/public/welcome/public-welcome.module'
 import { WelcomeUserResolverService } from './services/welcome-user-resolver.service'
 import { PublicTocModule } from './routes/public/public-toc/public-toc.module'
-import { PublicRequestModule } from './routes/public/public-request/public-request.module';
+import { PublicRequestModule } from './routes/public/public-request/public-request.module'
+import { AppTourComponent } from './component/app-tour/app-tour.component'
+import {GuidedTourModule, GuidedTourService} from 'cb-tour-guide';
 import { AppChatbotComponent } from './component/app-chatbot/app-chatbot.component';
-import { ChatbotService } from './component/app-chatbot/chatbot.service'
+import { ChatbotService } from './component/app-chatbot/chatbot.service';
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -124,6 +126,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PublicLoginWComponent,
     PublicLoginWGComponent,
     AppChatbotComponent,
+    AppTourComponent
   ],
   imports: [
     FormsModule,
@@ -172,6 +175,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PipeSafeSanitizerModule,
     TourModule,
     MatTabsModule,
+    GuidedTourModule,
     DiscussionUiModule.forRoot(ConfigService),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
@@ -219,6 +223,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     { provide: HAMMER_GESTURE_CONFIG, useClass: HammerConfig },
     { provide: ErrorHandler, useClass: GlobalErrorHandlingService },
     ChatbotService,
+    GuidedTourService
   ],
 })
 export class AppModule { }
