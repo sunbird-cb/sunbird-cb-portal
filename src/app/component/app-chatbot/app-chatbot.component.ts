@@ -296,7 +296,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
         eventSubType: WsEvents.EnumTelemetrySubType.Chatbot,
         mode: 'view'
       },
-      pageContext: {pageId: '/chatboat', module: 'Assistant'},
+      pageContext: {pageId: '/chatbot', module: 'Assistant'},
       from: '',
       to: 'Telemetry',
     }
