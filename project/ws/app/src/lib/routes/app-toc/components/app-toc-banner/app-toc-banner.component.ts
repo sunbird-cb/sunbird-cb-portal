@@ -570,11 +570,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       if (this.selectedBatchData && this.selectedBatchData.content) {
         this.selectedBatchData = {
           ...this.selectedBatchData,
-          ...batchData
+          ...batchData,
         }
       } else {
         this.selectedBatchData = {
-          ...batchData
+          ...batchData,
         }
       }
       if (this.checkRejected(event.value)) {
@@ -621,11 +621,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (this.selectedBatchData && this.selectedBatchData.content) {
       this.selectedBatchData = {
         ...this.selectedBatchData,
-        ...batchData
+        ...batchData,
       }
     } else {
       this.selectedBatchData = {
-        ...batchData
+        ...batchData,
       }
     }
     this.tocSvc.getSelectedBatchData(this.selectedBatchData)
