@@ -5,6 +5,7 @@ import { WidgetBaseComponent, NsWidgetResolver } from '@sunbird-cb/resolver'
 import moment from 'moment'
 import { ProfileCertificateDialogComponent } from '../profile-certificate-dialog/profile-certificate-dialog.component'
 import { IProCert } from './profile-cretifications-v2.model'
+import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 
 @Component({
   selector: 'ws-widget-profile-cretifications-v2',
@@ -27,6 +28,7 @@ export class ProfileCretificationsV2Component extends WidgetBaseComponent implem
   constructor(
     private dialog: MatDialog,
     private contentSvc: WidgetContentService,
+    private tocSvc: AppTocService,
   ) {
     super()
   }
@@ -74,10 +76,18 @@ if (data.length > 0) {
       if (value.issuedCertificates.length !== 0) {
         if (value.issuedCertificates[0].identifier === element.identifier) {
           const cet = element.dataUrl
-          this.dialog.open(ProfileCertificateDialogComponent, {
-            autoFocus: false,
-            data: { cet, value },
+          const course_id = value.courseId
+          if(course_id) {
+          this.tocSvc.fetchGetContentData(course_id).subscribe(res => {
+            if(res.result){
+              const courseData = res.result
+              this.dialog.open(ProfileCertificateDialogComponent, {
+                autoFocus: false,
+                data: { cet, value, courseData },
+              })
+            } 
           })
+        }
         }
       }
       // else{

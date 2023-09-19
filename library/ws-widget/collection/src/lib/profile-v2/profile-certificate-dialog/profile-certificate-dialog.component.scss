@@ -95,4 +95,34 @@ a.download_btn {
     margin: 0px 0 2px;
     letter-spacing: 0px;
     color: #00A9F4;
+    vertical-align: middle;
+}
+.retired-cour {
+    display: inline-block;
+    color: #000;
+}
+.info-icon {
+    vertical-align: middle;
+    font-size: 20px;
+}
+
+.retired-box {
+    border: 1px solid #5d5d5d;
+    border-radius: 2px 2px;
+    padding: 4px 8px;
+    width: auto;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+}
+
+.info-box {
+    @include breakpoint-xs {
+        margin-left: 12px;   
+    }
+    @include breakpoint-s {
+        margin-left: 12px;   
+    }
+    @include breakpoint-m {
+        margin-left: 12px;   
+    }
 }

@@ -9,7 +9,7 @@
 
   </mat-card-content>
 
-  <div class="flex flex-col">
+  <div class="flex flex-col info-box">
     <mat-card-title>
       <span i18n>About the course</span>
     </mat-card-title>
@@ -30,9 +30,16 @@
     <div>
       {{ this.data.value.content?.description }}
     </div>
-    <a (click)="navigate(this.data.value.collectionId)" [mat-dialog-close]="true" class="link-course cursor-pointer">
+    <a (click)="navigate(this.data.value.collectionId)" *ngIf="this.courseData?.status !== 'Retired'"  [mat-dialog-close]="true" class="link-course cursor-pointer">
       View Course
     </a>
+    <div *ngIf="this.courseData?.status === 'Retired'" class="retired-box margin-top-s">
+      <!-- <button type="button" mat-icon-button i18n-matTooltip matTooltip="course has been retired" class="margin-left-xs"> -->
+      <p class="link-course retired-cour">This course has been retired.</p>
+      <mat-icon class="mat-icon info-icon margin-left-xs" matTooltipPosition="left" matTooltip="We periodically retire courses to keep the content relevant and in line 
+      with competency standards. The retired courses will no longer be accessible on the platform.">help</mat-icon>
+      <!-- </button> -->
+    </div>
     <div class="flex flex-row gap-3 mtop">
       <!-- <a
         mat-button
