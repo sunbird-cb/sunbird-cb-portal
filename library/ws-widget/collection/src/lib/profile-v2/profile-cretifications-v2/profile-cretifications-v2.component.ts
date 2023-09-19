@@ -76,9 +76,9 @@ if (data.length > 0) {
       if (value.issuedCertificates.length !== 0) {
         if (value.issuedCertificates[0].identifier === element.identifier) {
           const cet = element.dataUrl
-          const course_id = value.courseId
-          if (course_id) {
-          this.tocSvc.fetchGetContentData(course_id).subscribe(res => {
+          const courseDoId = value.courseId
+          if (courseDoId) {
+          this.tocSvc.fetchGetContentData(courseDoId).subscribe(res => {
             if (res.result) {
               const courseData = res.result
               this.dialog.open(ProfileCertificateDialogComponent, {
