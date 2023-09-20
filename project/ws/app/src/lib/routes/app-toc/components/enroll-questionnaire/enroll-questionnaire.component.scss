@@ -1,0 +1,21 @@
+::ng-deep.course-survey .main-container {
+    width: auto !important;
+    overflow-y: auto !important;
+    max-height: auto !important;
+}
+
+::ng-deep.course-survey .main-lib-body {
+    // margin: 10px;
+
+}
+
+::ng-deep.course-survey .lib-container{
+    height: 100% !important;
+}
+
+::ng-deep.course-survey .lib-container-2 {
+    height: auto;
+    min-height: unset !important;
+    padding: 0 !important;
+
+}

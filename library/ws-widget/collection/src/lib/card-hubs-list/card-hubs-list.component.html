@@ -2,7 +2,7 @@
   <mat-card-content>
     <div class="flex flex-1 flex-column" role="presentation">
       <div class="flex flex-1 margin-bottom-xs margin-top-xs" role="menubar">
-        <a class="flex cursor-pointer simple-hubs-link margin-left-0" href="javascript:void(0)" role="menuitem"
+        <a id="menuToggleMobile" class="flex cursor-pointer simple-hubs-link margin-left-0 menuToggleMobile" href="javascript:void(0)" role="menuitem"
           accesskey="H" i18n-aria-label (click)="toggleVisibility()">
 
           <mat-icon class="margin-right-xs ws-mat-default-text">menu</mat-icon>
@@ -11,12 +11,12 @@
         <ng-container *ngIf="!visible && !isMobile" [@enterAnimation]="visible">
           <div *ngFor="let hub of hubsList">
             <ng-container *ngIf="hub.hubname == 'Discuss'">
-              <a class="simple-hubs-link cursor-pointer" i18n-aria-label role="menuitem" (click)="navigate()">
+              <a [id]="hub.hubname" class="simple-hubs-link cursor-pointer" i18n-aria-label role="menuitem" (click)="navigate()">
                 <span class="mat-body-2 margin-0 text-uppercase"> {{hub.hubname}}</span>
               </a>
             </ng-container>
             <ng-container *ngIf="hub.hubname != 'Discuss'">
-              <a class="simple-hubs-link cursor-pointer" i18n-aria-label role="menuitem" [routerLink]="hub.path"
+              <a class="simple-hubs-link cursor-pointer" [id]="hub.hubname" i18n-aria-label role="menuitem" [routerLink]="hub.path"
                 [attr.accesskey]="hub.accessKey">
                 <span class="mat-body-2 margin-0 text-uppercase"> {{hub.hubname}}</span>
               </a>
@@ -24,7 +24,7 @@
             </ng-container>
 
           </div>
-          <a class="flex cursor-pointer simple-hubs-link margin-left-xl" href="javascript:void(0)" role="menuitem"
+          <a id="menuToggle2" class="flex cursor-pointer simple-hubs-link margin-left-xl" href="javascript:void(0)" role="menuitem"
             accesskey="H" i18n-aria-label (click)="toggleVisibility()">
 
             <mat-icon class="margin-right-xs ws-mat-primary-text">more_horiz</mat-icon>
@@ -171,7 +171,7 @@
 
 
   <ng-container *ngIf="hubs.hubname == 'Discuss'">
-    <a class="flex flex-wrap mb-4" (click)="navigate()" role="menuitem" i18n-aria-label>
+    <a [id]="hubs.hubname" class="flex flex-wrap mb-4" (click)="navigate()" role="menuitem" i18n-aria-label>
       <div class="icon ws-mat-primary-tags">
         <!-- {{hubs.icon | json}} -->
         <!-- <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon> -->
@@ -187,7 +187,7 @@
   </ng-container>
 
   <ng-container *ngIf="hubs.hubname != 'Discuss'">
-    <a class="flex flex-wrap mb-4" [routerLink]="(hubs.path)" role="menuitem" i18n-aria-label>
+    <a class="flex flex-wrap mb-4" [id]="hubs.hubname" [routerLink]="(hubs.path)" role="menuitem" i18n-aria-label>
       <div class="icon ws-mat-primary-tags">
         <!-- {{hubs.icon | json}}
         <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon> -->

@@ -20,6 +20,7 @@ export class CardContentComponent extends WidgetBaseComponent
   implements OnInit, OnDestroy, AfterViewInit, NsWidgetResolver.IWidgetData<NsCardContent.ICard> {
   @Input() widgetData!: NsCardContent.ICard
   @HostBinding('id')
+  primaryCategory = NsContent.EPrimaryCategory
   public id = `ws-card_${Math.random()}`
   forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   defaultThumbnail = ''

@@ -45,12 +45,11 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
     private contentSvc: WidgetContentService,
     private eventSvc: EventService,
     private accessControlSvc: AccessControlService,
-    private configSvc:ConfigurationsService
+    private configSvc: ConfigurationsService
   ) { }
 
   ngOnInit() {
     if (this.activatedRoute.snapshot.queryParamMap.get('preview') && !this.accessControlSvc.authoringConfig.newDesign) {
-      
       this.isPreviewMode = true
       this.viewerDataSubscription = this.activatedRoute.data.subscribe(data => {
         if (this.batchData) {
@@ -58,9 +57,9 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
           this.getSessionData(data)
         } else {
           // fetching batch data from api
-          const batchID : any= this.activatedRoute.snapshot.queryParamMap.get('batchId')
+          const batchID: any = this.activatedRoute.snapshot.queryParamMap.get('batchId')
           this.contentSvc.fetchCourseBatch(batchID).subscribe(response => {
-            if(response.result && response.result.response) {
+            if (response.result && response.result.response) {
               this.batchData = response.result.response
             }
             // after getting batch data move to sessionData to form data
@@ -127,9 +126,9 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
 
   // get session  data  from batch api start
   getSessionData(resolveData: any) {
-    let sessionData = this.batchData.batchAttributes.sessionDetails_v2.find((obj: any) => {
+    const sessionData = this.batchData.batchAttributes.sessionDetails_v2.find((obj: any) => {
       return obj.sessionId ===  this.activatedRoute.snapshot.params.resourceId
-      
+
     })
     let userId
     if (this.configSvc.userProfile) {
@@ -139,7 +138,7 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
       request: {
         userId,
         batchId: this.batchId,
-        courseId: this.activatedRoute.snapshot.queryParams.collectionId|| '',
+        courseId: this.activatedRoute.snapshot.queryParams.collectionId || '',
         contentIds: [],
         fields: ['progressdetails'],
       },
@@ -163,7 +162,7 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
   }
   // get session data  from batch api end
 
-  initData(data:any) {
+  initData(data: any) {
     this.offlineSessionData = data.content.data
     if (this.offlineSessionData) {
       this.formDiscussionForumWidget(this.offlineSessionData)
@@ -189,11 +188,10 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
 
       this.widgetResolverOfflineSessionData.widgetData.content = this.offlineSessionData
 
-      
       this.widgetResolverOfflineSessionData.widgetData.sessionData = data.batchData
     }
     this.isFetchingDataComplete = true
-   
+
   }
 
   generateUrl(oldUrl: string) {
