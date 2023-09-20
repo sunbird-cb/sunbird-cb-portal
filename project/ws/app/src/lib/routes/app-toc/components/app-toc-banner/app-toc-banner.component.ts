@@ -425,7 +425,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       }
     } else {
       if (userList && userList.length === 1) {
-        this.openSnackbar(`${userList[0].courseName} ${NsContent.EPrimaryCategory.BLENDED_PROGRAM} is in progress`)
+        this.openSnackbar(`${userList[0].courseName} - ${NsContent.EPrimaryCategory.BLENDED_PROGRAM} is in progress`)
       } else {
         this.openSnackbar(`${NsContent.EPrimaryCategory.BLENDED_PROGRAM} is in progress`)
       }
