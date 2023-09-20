@@ -76,6 +76,7 @@ export class AppTourComponent {
     steps: [
       {
         icon: 'school',
+        isMobile: true,
         connectorDirection: 'top',
         title: 'Learn',
         selector: '#Learn',
@@ -89,6 +90,7 @@ export class AppTourComponent {
       },
       {
         icon: 'forum',
+        isMobile: true,
         connectorDirection: 'top',
         title: 'Discuss',
         selector: '#Discuss',
@@ -102,6 +104,7 @@ export class AppTourComponent {
       },
       {
         icon: 'search',
+        isMobile: true,
         connectorDirection: 'right',
         title: 'Search',
         selector: '#feature_search',
@@ -115,6 +118,7 @@ export class AppTourComponent {
       },
       {
         icon: 'group',
+        isMobile: true,
         connectorDirection: 'bottom',
         title: 'My Profile',
         selector: '#feature_profile',
@@ -130,17 +134,16 @@ export class AppTourComponent {
   };
   showpopup: boolean = true;
   noScroll: boolean = true;
+  closePopupIcon: boolean = true;
   showCompletePopup: boolean = false;
   showVideoTour: boolean = false;
   isMobile: boolean = false;
 
   constructor(private guidedTourService: GuidedTourService, private utilitySvc: UtilityService) {
-    console.log('is mobile ', this.utilitySvc.isMobile); // TODO: log!
     this.isMobile = this.utilitySvc.isMobile;
   }
 
   public startTour(): void {
-    console.log('called tour'); // TODO: log!
     this.showpopup = false;
     this.showVideoTour = false;
     if (this.isMobile) {
@@ -155,12 +158,19 @@ export class AppTourComponent {
   }
 
   public skipTour(): void {
-    console.log('skipped tour'); // TODO: log!
     this.noScroll = false;
     this.showpopup = false;
     this.showVideoTour = false;
     this.showCompletePopup = false;
+    this.closePopupIcon = false;
     this.guidedTourService.skipTour();
+    if (this.isMobile) {
+       // @ts-ignore
+       document.getElementById('menuToggleMobile').click();
+       setTimeout(() => {
+         this.guidedTourService.startTour(this.MOBILE_TOUR);
+       }, 1000);
+    }
   }
 
   completeTour(): void {
