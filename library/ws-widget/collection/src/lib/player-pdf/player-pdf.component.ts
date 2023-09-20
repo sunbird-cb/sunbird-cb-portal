@@ -298,10 +298,23 @@ export class PlayerPdfComponent extends WidgetBaseComponent
         max_size: this.totalPages,
         current: this.current,
       }
-      const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+      let collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
         this.activatedRoute.snapshot.queryParams.collectionId : this.widgetData.identifier
-      const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+      let batchId = this.activatedRoute.snapshot.queryParams.batchId ?
         this.activatedRoute.snapshot.queryParams.batchId : this.widgetData.identifier
+      const tempContentData = this.contentSvc.currentMetaData
+      if (tempContentData.primaryCategory === NsContent.EPrimaryCategory.PROGRAM) {
+        tempContentData.children.forEach((childList: NsContent.IContent) => {
+          if (childList.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
+            if (childList.childNodes && childList.childNodes.indexOf(id) !== -1) {
+              if (childList.batches && childList.batches.length > 0) {
+                batchId = childList.batches[childList.batches.length - 1].batchId
+                collectionId = childList.identifier
+              }
+            }
+          }
+        });
+      }
       this.viewerSvc.realTimeProgressUpdate(id, realTimeProgressRequest, collectionId, batchId)
     }
     return

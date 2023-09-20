@@ -139,6 +139,7 @@ export class ViewerUtilService {
       //   .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
       //   .subscribe(noop, noop)
       // }
+      debugger
       this.http
         .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
         .subscribe(noop, noop)

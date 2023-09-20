@@ -57,6 +57,8 @@ export class WidgetContentService {
 
   tocConfigData: any = null
 
+  currentMetaData!: NsContent.IContent
+
   isResource(primaryCategory: string) {
     if (primaryCategory) {
       const isResource = (primaryCategory === NsContent.EResourcePrimaryCategories.LEARNING_RESOURCE) ||

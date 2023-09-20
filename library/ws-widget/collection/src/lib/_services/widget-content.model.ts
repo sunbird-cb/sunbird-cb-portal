@@ -20,12 +20,14 @@ export namespace NsContent {
     artifactUrl: string
     averageRating?: any
     // this will be used to content form enrollment user list
+    batches?:any
     batch?: any
     body?: string
     certificationList?: IRelatedContentMeta[]
     certificationStatus?: TCertificationStatus
     certificationSubmissionDate?: string
     certificationUrl: string
+    childNodes?: string[]
     children: IContent[]
     childrenClassifiers?: string[]
     clients?: IClient[]
