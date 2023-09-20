@@ -223,7 +223,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   get getBatchDuration() {
     const startDate = dayjs(this.batchControl.value.startDate)
     const endDate = dayjs(this.batchControl.value.endDate)
-    return endDate.diff(startDate, 'days')
+    // adding 1 to include the start date 
+    return (endDate.diff(startDate, 'days') + 1)
   }
 
   get showStart() {
