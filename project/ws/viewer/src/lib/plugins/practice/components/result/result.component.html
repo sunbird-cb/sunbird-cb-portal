@@ -29,7 +29,8 @@
       </ng-container>
       <ng-container *ngIf="quizResponse && quizResponse?.isInProgress">
         <div class="flex flex-row flex-center text-center flex-middle margin-top-xl">
-          <span class="mat-heading" i18n>We are not able to fetch the result</span>
+          <!-- <span class="mat-heading" i18n>We are not able to fetch the result</span> -->
+          <span class="mat-heading" i18n>Assessment has been submitted successfully. Please check back after some time for the result</span>
         </div>
         <div class="flex flex-row flex-center text-center flex-middle margin-top-xl">
           <button mat-button  class="ws-mat-primary-background text-white m-w padding-xs" (click)="retryResult()">

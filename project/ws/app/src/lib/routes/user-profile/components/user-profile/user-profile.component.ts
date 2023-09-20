@@ -103,6 +103,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   public degreeInstitutes = []
   public postDegreeInstitutes = []
   public countryCodes: string[] = []
+  gradePayData!: any
   showDesignationOther!: boolean
   showOrgnameOther!: boolean
   showIndustryOther!: boolean
@@ -282,6 +283,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.govtOrgMeta = data.govtOrg
         this.industriesMeta = data.industries
         this.degreesMeta = data.degrees
+        this.gradePayData = data.designations.gradePay.sort((a: any, b: any) => {
+          return a.name - b.name
+        })
         // this.designationsMeta = data.designations
         this.onChangesDegrees()
         this.onChangesPostDegrees()
@@ -767,7 +771,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         industry: organisation.industry,
         industryOther: organisation.industryOther,
         // tslint:disable-next-line
-        designation: isDesiAvailable ? organisation.designation : 'Other',
+        // designation: isDesiAvailable ? organisation.designation : 'Other',
+        designation: organisation.designation || 'Other',
         designationOther: isDesiAvailable ? '' : organisation.designation || organisation.designationOther,
         location: organisation.location,
         responsibilities: organisation.responsibilities,
@@ -943,6 +948,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
 
+  numericOnly(event: any): boolean {
+    const pattren = /^([0-9])$/
+    const result = pattren.test(event.key)
+    return result
+  }
+
   setProfilePhotoValue(data: any) {
     this.photoUrl = data.photo || undefined
   }
@@ -950,6 +961,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   setDropDownOther(organisation?: any) {
     if (organisation.designation === 'Other') {
       this.showDesignationOther = true
+    } else {
+      this.showDesignationOther = false
     }
     if (organisation.orgName === 'Other') {
       this.showOrgnameOther = true
@@ -1368,7 +1381,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   async onSubmit(form: any) {
     this.uploadSaveData = true
     // DO some customization on the input data
-    form.value.knownLanguages = this.selectedKnowLangs
+    form.controls['knownLanguages'].value = this.selectedKnowLangs
     form.value.interests = this.personalInterests
     form.value.hobbies = this.selectedHobbies
     form.value.dob = changeformat(new Date(`${form.value.dob}`))
@@ -1402,6 +1415,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       },
 
     }
+    reqUpdates.request.profileDetails.personalDetails['knownLanguages']  = this.selectedKnowLangs
     reqUpdates.request.profileDetails.personalDetails['nationality']  = form.value.nationality
 
     this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(
@@ -1709,14 +1723,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
       this.otpService.sendOtp(mob.value).subscribe(() => {
         this.otpSend = true
-        alert('OTP sent to your Mobile Number')
+        alert('An OTP has been sent to your mobile number')
         this.startCountDown()
         // tslint:disable-next-line: align
       }, (error: any) => {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid Mobile No')
+      this.snackBar.open('Please enter a valid mobile number')
     }
   }
   resendOTP() {
@@ -1726,7 +1740,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
           this.disableVerifyBtn = false
-          alert('OTP sent to your Mobile Number')
+          alert('An OTP has been sent to your mobile number')
           this.startCountDown()
         }
         // tslint:disable-next-line: align
@@ -1734,7 +1748,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid Mobile No')
+      this.snackBar.open('Please enter a valid mobile number')
     }
   }
   verifyOtp(otp: any) {
@@ -1812,10 +1826,5 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       WsEvents.EnumInteractSubTypes.PROFILE_EDIT_TAB,
       data,
     )
-  }
-  numericOnly(event: any): boolean {
-    const pattren = /^([0-9])$/
-    const result = pattren.test(event.key)
-    return result
   }
 }

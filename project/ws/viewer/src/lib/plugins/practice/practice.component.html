@@ -209,7 +209,8 @@
                 <mat-icon class="flex margin-top-xs margin-bottom-xs">warning</mat-icon>
                 <span class="flex mat-body-2 padding-xs font-weight-700" i18n>Instructions </span>
                 <span class="flex mat-body-2 font-weight-700" i18n>:</span>
-                <span class="flex mat-body-2 padding-xs" i18n>{{selectedSection.additionalInstructions}}</span>
+                <!-- <span class="flex mat-body-2 padding-xs" i18n>{{selectedSection.additionalInstructions}}</span> -->
+                <span [innerHtml]="formate(selectedSection.additionalInstructions)"></span>
               </div>
               <div class="flex flex-start margin-left-m  cen">
                 <mat-icon class="flex margin-top-xs margin-bottom-xs">info_outline</mat-icon>
@@ -318,7 +319,8 @@
                   <span class="flex mat-body-2">Total questions - <ng-container>{{section?.maxQuestions ||
                       '0'}}
                     </ng-container></span>
-                  <span class="flex mat-body-2 text-justify">{{section.additionalInstructions || 'Description'}}</span>
+                  <!-- <span class="flex mat-body-2 text-justify">{{section.additionalInstructions || 'Description'}}</span> -->
+                  <span [innerHtml]="formate(section.additionalInstructions)"></span>
                 </div>
               </mat-card-content>
             </mat-card>

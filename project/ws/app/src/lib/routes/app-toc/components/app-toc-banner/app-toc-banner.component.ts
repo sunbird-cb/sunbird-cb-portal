@@ -46,6 +46,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   @Input() userEnrollmentList: NsContent.ICourse[] | null = null
   @Output() withdrawOrEnroll = new EventEmitter<string>()
+  @Input() contentReadData: NsContent.IContent | null = null
   batchControl = new FormControl('', Validators.required)
   primaryCategory = NsContent.EPrimaryCategory
   WFBlendedProgramStatus = NsContent.WFBlendedProgramStatus

@@ -186,6 +186,9 @@ export class SCORMAdapterService {
                 "cmi.core.session_time": data["cmi.core.session_time"],
                 "cmi.suspend_data": data["cmi.suspend_data"],
                 Initialized: data["Initialized"],
+                spentTime: data["spentTime"],
+                completionStatus: content.status,
+                completionPercentage: content.completionPercentage
                 // errors: data["errors"]
               }
               this.store.setAll(loadDatas)
@@ -251,6 +254,32 @@ export class SCORMAdapterService {
               status: this.getStatus(postData) || 2,
               lastAccessTime: dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss:SSSZZ'),
               progressdetails: postData
+            },
+          ],
+        },
+      }
+    } else {
+      req = {}
+    }
+    return this.http.patch(`${API_END_POINTS.SCROM_UPDTE_PROGRESS}/${this.contentId}`, req)
+  }
+
+  addDataV3(reqDetails: any) {
+    let req: any
+    if (this.configSvc.userProfile) {
+      req = {
+        request: {
+          userId: this.configSvc.userProfile.userId || '',
+          contents: [
+            {
+              contentId: this.contentId,
+              batchId: this.activatedRoute.snapshot.queryParamMap.get('batchId') || '',
+              courseId: this.activatedRoute.snapshot.queryParams.collectionId || '',
+              status: (reqDetails.status) || 0,
+              lastAccessTime: dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss:SSSZZ'),
+              completionPercentage: reqDetails.completionPercentage,
+              progressdetails: {...reqDetails.progressDetails},
+  
             },
           ],
         },

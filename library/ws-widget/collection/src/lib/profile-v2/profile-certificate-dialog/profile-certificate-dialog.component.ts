@@ -20,6 +20,7 @@ export class ProfileCertificateDialogComponent implements OnInit {
   courseID: any
   author!: string
   userID: any
+  courseData: any
 
   navUrl: any = ''
   shareUrl = 'https://medium.com/@garfunkel61/angular-simplest-solution-for-social-sharing-feature-6f00d5d99c5e'
@@ -38,6 +39,7 @@ export class ProfileCertificateDialogComponent implements OnInit {
     this.courseImg = this.data.value.content.appIcon
     this.courseID = this.data.value.contentId
     this.userID = this.data.value.userId
+    this.courseData = this.data.courseData.content
     this.createNavigationUrl()
 
     // this.downloadCertInLocal(this.url)

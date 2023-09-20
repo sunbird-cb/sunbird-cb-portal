@@ -642,9 +642,9 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       const searchRequest = strip.request.curatedCollections
       this.contentSvc.searchRelatedCBPV6(searchRequest).subscribe(
         results => {
-          const showViewMore = Boolean(
+          const showViewMore =  results.result.count > 0 ? Boolean(
             results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
-          )
+          ) : false
           const viewMoreUrl = showViewMore
             ? {
               path: '/app/curatedCollections/home',

@@ -11,9 +11,9 @@
     <mat-card-header>
       <ws-widget-avatar-photo mat-card-avatar [name]="getUserFullName(user)" [size]="'m'" [photoUrl]="user.photo">
       </ws-widget-avatar-photo>
-      <mat-card-title class="text-capitalize">
+      <mat-card-title class="text-capitalize text-box">
         <a href="javascript:void(0)" role="link" i18n-aria-label>
-          <span class="mat-subheading-2"> {{
+          <span class="mat-subheading-2 user-name"> {{
              { firstName: user.personalDetails.firstname, email: user.personalDetails.primaryEmail} | pipeNameTransform }}
           </span>
           <!-- <ws-widget-connection-name [hoverUser]="usr"></ws-widget-connection-name> -->
