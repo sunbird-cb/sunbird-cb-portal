@@ -229,7 +229,7 @@ TODO: edit option while preview Mode
                     </p>
                   </div>
                 </ng-container>
-                <!-- <ng-container>
+                <ng-container>
                   <a *ngIf="showStart.show && batchData?.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.APPROVED"
                   [routerLink]="isBatchInProgress? (resumeData && !certData) ? resumeDataLink?.url : firstResourceLink?.url : '' "
                   [queryParams]="isBatchInProgress ? (resumeData && !certData) ? generateQuery('RESUME') : generateQuery('START') : '' "
@@ -244,7 +244,7 @@ TODO: edit option while preview Mode
                     {{resumeData? "Start again" : "Start"}}
                   </ng-container>
                 </a>
-                </ng-container> -->
+                </ng-container>
             </ng-container>
             <ng-container *ngIf="actionBtnStatus == 'reject' && content?.registrationUrl">
               <a [href]="content?.registrationUrl" target="_blank" class="mat-button mat-button-base custom-button"
