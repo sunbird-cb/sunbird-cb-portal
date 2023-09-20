@@ -1,5 +1,5 @@
 <div class="skip-tour-modal" *ngIf="closePopupIcon">
-  <mat-icon (click)="skipTour()" class="mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">close</mat-icon>
+  <mat-icon (click)="skipTour('home-skip','home')" class="mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">close</mat-icon>
 </div>
 <div *ngIf="showpopup" class="backdrop bg-zinc-400" [ngClass]="{'requires-no-scroll': noScroll}">
   <div class="app-tour-popup" *ngIf="!isMobile">
@@ -20,7 +20,7 @@
     </div>
     <div class="second-panel">
       <div class="second-action-container">
-        <div class="second-panel-action" (click)="startTour()">
+        <div class="second-panel-action" (click)="startTour('welcome-start', 'welcome')">
           <div class="blk1"><mat-icon class="icon-tour gray-icon">check_circle</mat-icon></div>
           <div class="blk2"><img alt="" src="fusion-assets/images/take-tour.svg"></div>
           <div class="blk3"><span>Take a tour</span></div>
@@ -28,8 +28,8 @@
         </div>
         <div class="second-panel-action second-panel-action-buttons">
           <!-- <span (click)="skipTour()" class="skip-btn">Skip</span> -->
-          <button (click)="skipTour()" class="dialog-btn skip-btn" mat-button>Skip</button>
-          <button (click)="startTour()" class="dialog-btn ws-mat-primary-background-op30 action-orange" mat-button>Get Started</button>
+          <button (click)="skipTour('welcome-skip', 'welcome')" class="dialog-btn skip-btn" mat-button>Skip</button>
+          <button (click)="startTour('welcome-start', 'welcome')" class="dialog-btn ws-mat-primary-background-op30 action-orange" mat-button>Get Started</button>
         </div>
       </div>
     </div>
@@ -62,7 +62,7 @@
     </div>
     <div class="second-panel">
       <div class="second-action-container">
-        <div class="second-panel-action" (click)="startTour()">
+        <div class="second-panel-action" (click)="startTour('welcome-start', 'welcome')">
           <div class="blk1"><mat-icon class="icon-tour gray-icon">check_circle</mat-icon></div>
           <div class="blk2"><img alt="" src="fusion-assets/images/take-tour.svg"></div>
           <div class="blk3"><span>Take a tour</span></div>
@@ -72,8 +72,8 @@
     </div>
     <div class="third-panel">
       <div class="second-panel-action second-panel-action-buttons">
-        <span (click)="skipTour()" class="skip-btn">Skip</span>
-        <button (click)="startTour()" class="dialog-btn ws-mat-primary-background-op30 action-orange" mat-button>Get Started</button>
+        <span (click)="skipTour('welcome-skip', 'welcome')" class="skip-btn">Skip</span>
+        <button (click)="startTour('welcome-start', 'welcome')" class="dialog-btn ws-mat-primary-background-op30 action-orange" mat-button>Get Started</button>
       </div>
     </div>
   </div>
@@ -121,12 +121,12 @@
       </div>
       <div class="video-player-row">
         <video controls="" height="100%" width="100%">
-          <source src="assets/videos/tour_guide_video.mp4" type="video/mp4">
+          <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" autoplay type="video/mp4">
         </video>
       </div>
       <div class="video-footer-row">
-        <button class="skip-btn ws-mat-white-text" (click)="skipTour()" mat-button>Skip</button>
-        <button class="next-btn dialog-btn ws-mat-primary-background-op30 action-orange" (click)="startTour()" mat-button>Next</button>
+        <button class="skip-btn ws-mat-white-text" (click)="skipTour('video-skip', 'skip')" mat-button>Skip</button>
+        <button class="next-btn dialog-btn ws-mat-primary-background-op30 action-orange" (click)="startTour('welcome-start', 'start')" mat-button>Next</button>
       </div>
     </div>
   </div>
@@ -144,8 +144,8 @@
         </div>
       </div>
       <div class="video-footer-row-mobile">
-        <button class="skip-btn ws-mat-white-text" (click)="skipTour()" mat-button>Skip</button>
-        <button class="next-btn dialog-btn ws-mat-primary-background-op30 action-orange" (click)="startTour()" mat-button>Next</button>
+        <button class="skip-btn ws-mat-white-text" (click)="skipTour('video-skip', 'skip')" mat-button>Skip</button>
+        <button class="next-btn dialog-btn ws-mat-primary-background-op30 action-orange" (click)="startTour('welcome-start', 'start')" mat-button>Next</button>
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { ProgressIndicatorLocation, GuidedTour, Orientation, GuidedTourService } from 'cb-tour-guide';
-import { UtilityService } from '@sunbird-cb/utils';
+import { UtilityService, EventService, WsEvents } from '@sunbird-cb/utils';
 
 @Component({
   selector: 'app-tour',
@@ -14,6 +14,8 @@ export class AppTourComponent {
     tourId: 'purchases-tour',
     useOrb: false,
     completeCallback: () => this.completeTour(),
+    nextCallback: (currentStep, stepObject) => this.nextCb(currentStep, stepObject),
+    prevCallback: (currentStep, stepObject) => this.prevCb(currentStep, stepObject),
     steps: [
       {
         icon: 'school',
@@ -139,13 +141,15 @@ export class AppTourComponent {
   showVideoTour: boolean = false;
   isMobile: boolean = false;
 
-  constructor(private guidedTourService: GuidedTourService, private utilitySvc: UtilityService) {
+  constructor(private guidedTourService: GuidedTourService, private utilitySvc: UtilityService, private events: EventService) {
     this.isMobile = this.utilitySvc.isMobile;
+    this.raiseGetStartedStartTelemetry()
   }
 
-  public startTour(): void {
+  public startTour(screen: string, subType: string): void {
     this.showpopup = false;
     this.showVideoTour = false;
+    //this.raiseTemeletyInterat(screen, subType)
     if (this.isMobile) {
       // @ts-ignore
       document.getElementById('menuToggleMobile').click();
@@ -155,14 +159,17 @@ export class AppTourComponent {
     } else {
       this.guidedTourService.startTour(this.TOUR);
     }
+
   }
 
-  public skipTour(): void {
+  public skipTour(screen: string, subType: string): void {
+    this.raiseTemeletyInterat(screen, subType)
+    this.raiseGetStartedEndTelemetry()
     this.noScroll = false;
     this.showpopup = false;
     this.showVideoTour = false;
     this.showCompletePopup = false;
-    this.closePopupIcon = false;
+    this.closePopupIcon = false
     this.guidedTourService.skipTour();
     if (this.isMobile) {
        // @ts-ignore
@@ -176,6 +183,7 @@ export class AppTourComponent {
   completeTour(): void {
     this.showpopup = false;
     this.showCompletePopup = true;
+    this.raiseGetStartedEndTelemetry()
     if (this.isMobile) {
       // @ts-ignore
       document.getElementById('menuToggleMobile').click()
@@ -189,5 +197,73 @@ export class AppTourComponent {
   starVideoPlayer() {
     this.showpopup = false;
     this.showVideoTour = true;
+  }
+
+  nextCb(currentStep: number, stepObject:any) {
+    console.log(stepObject)
+    let currentStepObj: any = this.TOUR.steps[currentStep - 1]
+    this.raiseTemeletyInterat(`${currentStepObj.title.toLowerCase()}-next`, currentStepObj.title.toLowerCase())
+  }
+
+  prevCb(currentStep: number, stepObject:any) {
+    console.log(stepObject)
+    let currentStepObj: any = this.TOUR.steps[currentStep +  1]
+    this.raiseTemeletyInterat(`${currentStepObj.title.toLowerCase()}-previous`, currentStepObj.title.toLowerCase())
+  }
+
+  raiseGetStartedStartTelemetry() {
+    const event = {
+      eventType: WsEvents.WsEventType.Telemetry,
+      eventLogLevel: WsEvents.WsEventLogLevel.Info,
+      data: {
+        edata: { type: '' },
+        object: {},
+        state: WsEvents.EnumTelemetrySubType.Loaded,
+        eventSubType: WsEvents.EnumTelemetrySubType.GetStarted,
+        type: 'get started',
+        mode: 'view',
+      },
+      pageContext: {pageId: "/home", module: WsEvents.EnumTelemetrySubType.GetStarted},
+      from: '',
+      to: 'Telemetry',
+    }
+    this.events.dispatchGetStartedEvent<WsEvents.IWsEventTelemetryInteract>(event)
+  }
+
+  raiseTemeletyInterat(id: string, stype: string) {
+    const event = {
+      eventType: WsEvents.WsEventType.Telemetry,
+      eventLogLevel: WsEvents.WsEventLogLevel.Info,
+      data: {
+        edata: { type: 'click', id: id, subType: stype},
+        object: {},
+        state: WsEvents.EnumTelemetrySubType.Interact,
+        eventSubType: WsEvents.EnumTelemetrySubType.GetStarted,
+        mode: 'view'
+      },
+      pageContext: {pageId: '/home',module: WsEvents.EnumTelemetrySubType.GetStarted},
+      from: '',
+      to: 'Telemetry',
+    }
+    this.events.dispatchGetStartedEvent<WsEvents.IWsEventTelemetryInteract>(event)
+  }
+
+  raiseGetStartedEndTelemetry() {
+    const event = {
+      eventType: WsEvents.WsEventType.Telemetry,
+      eventLogLevel: WsEvents.WsEventLogLevel.Info,
+      data: {
+        edata: { type: '' },
+        object: {},
+        state: WsEvents.EnumTelemetrySubType.Unloaded,
+        eventSubType: WsEvents.EnumTelemetrySubType.GetStarted,
+        type: 'get started',
+        mode: 'view',
+      },
+      pageContext: {pageId: "/home", module: WsEvents.EnumTelemetrySubType.GetStarted},
+      from: '',
+      to: 'Telemetry',
+    }
+    this.events.dispatchGetStartedEvent<WsEvents.IWsEventTelemetryInteract>(event)
   }
 }
