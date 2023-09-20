@@ -1,6 +1,9 @@
 <div class="fixed-width flex flex-wrap">
-  <div class="chatbot-icon" *ngIf="showIcon">
-      <img alt="chatbot-icon" src="/assets/icons/chatbot-launch-icon.svg" (click)="iconClick('start')" />
+  <div class="chatbot-icon" *ngIf="showIcon" (mouseover)="expanded = true" (mouseleave)="expanded = false" (click)="iconClick('start')">
+      <div>
+        <img alt="chatbot-icon" src="/assets/icons/chatbot-launch-icon.svg"/>
+      </div>
+      <div class="expand-text" *ngIf="expanded" >FAQ Chatbot</div>
   </div>
 
   <div class="chatbot" *ngIf="!showIcon">
@@ -9,7 +12,7 @@
             <div class="user-name">{{greetings()}} {{this.userInfo && this.userInfo.firstName || ''}}!</div>
             <div class="">
                 <select class="lang-select" [(ngModel)]="selectedLaguage" name="language" id="language" (change)="selectLaguage($event)">
-                    <option [value]="lang.value" *ngFor="let lang of language">{{lang.value == 'hi' ? 'हिंदी' : lang.viewValue}}</option>
+                    <option [value]="lang.value" *ngFor="let lang of language">{{ lang.viewValue }}</option>
                 </select>
             </div>
           </div>

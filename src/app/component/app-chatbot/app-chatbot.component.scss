@@ -5,6 +5,19 @@
   cursor: pointer;
   z-index: 1000;
   height: 52px;
+  align-items: flex-start;
+  display: flex;
+  justify-content: center;
+}
+
+.expand-text {
+  background-color: #1B4CA1;
+  color: white;
+  font-size: 18px;
+  padding: 16px 14px;
+  margin-top: 12px;
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
 }
 
 .chatbot {
@@ -52,6 +65,9 @@
 .cb-topics {
   padding: 16px 16px 0 16px;
   background-color: #F5F5F5;
+}
+.expand-text {
+
 }
 
 .cb-footer {

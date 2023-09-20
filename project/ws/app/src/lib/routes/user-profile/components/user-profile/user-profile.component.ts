@@ -1281,7 +1281,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           if (item === name) {
 
             switch (name) {
-              
+
               case 'knownLanguages': return personalDetail['knownLanguages'] = form.value.knownLanguages
               case 'dob': return personalDetail['dob'] = form.value.dob
               case 'nationality': return personalDetail['nationality']  = form.value.nationality
@@ -1827,9 +1827,4 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       data,
     )
   }
-  // numericOnly(event:any): boolean {
-  //   const pattren = /^([0-9])$/
-  //   const result = pattren.test(event.key)
-  //   return result
-  // }
 }

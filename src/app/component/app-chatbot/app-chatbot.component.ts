@@ -28,6 +28,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
   chatInformation: any = []
   chatIssues: any = []
   displayLoader: boolean = false
+  expanded: boolean = false
   localization: any = {
     'en' : {
       'Hi' : 'Hi',
@@ -86,7 +87,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
     localObject = JSON.parse(localStorage.getItem("faq")|| '{}')
     localObject[this.selectedLaguage] = {...localObject[this.selectedLaguage], [this.currentFilter] : data}
     localStorage.setItem("faq", JSON.stringify(localObject))
-    this.toggleFilter('information')
+    this.toggleFilter(this.currentFilter === 'information' ? 'information': this.currentFilter)
   }
 
   initData(getData: any){
@@ -137,6 +138,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
   iconClick(type: string) {
     this.showIcon = !this.showIcon
     this.currentFilter = 'information'
+    this.expanded = false
     if (type === 'start'){
       this.raiseChatStartTelemetry()
       // this.toggleFilter(this.currentFilter)
@@ -199,7 +201,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
     let isLogedIn: string = this.userInfo ? 'Logged-In' : 'Not Logged-In'
     this.responseData.recommendationMap.map((question: any) => {
       question.recommendedQues.map((ques:any)=> {
-        if (ques.priority === priority && question.categoryType === isLogedIn) {
+        if (ques.priority === priority && (question.categoryType === isLogedIn || question.categoryType === 'Both')) {
           recommendedQues.push(ques)
         }
       })
@@ -296,7 +298,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
         eventSubType: WsEvents.EnumTelemetrySubType.Chatbot,
         mode: 'view'
       },
-      pageContext: {pageId: '/chatboat', module: 'Assistant'},
+      pageContext: {pageId: '/chatbot', module: 'Assistant'},
       from: '',
       to: 'Telemetry',
     }

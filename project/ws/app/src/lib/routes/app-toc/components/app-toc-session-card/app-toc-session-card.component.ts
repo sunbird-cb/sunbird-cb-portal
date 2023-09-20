@@ -11,7 +11,7 @@ export class AppTocSessionCardComponent implements OnInit {
   @Input() rootId!: string
   @Input() rootContentType!: string
   @Input() forPreview = false
-  @Input() batchData!: string
+  @Input() batchData!: any
   @Input() config!: string
   isEnabled = true
   isAllowed = true

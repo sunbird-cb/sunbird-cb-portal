@@ -220,7 +220,7 @@
                       <mat-error *ngIf="batchControl.hasError('required')">Please choose a batch to start course</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="flex flex-wrap">
+                <div class="flex flex-wrap mt-3">
                   <ng-container *ngIf="!showRejected">
                     <div class="flex-1">
                       <button class="mat-button mat-raised-button resumeButton custom-button width-1-1 text-white" [ngClass]="{ 'disable-btn': disableEnrollBtn || batchControl.hasError('required') }" 
