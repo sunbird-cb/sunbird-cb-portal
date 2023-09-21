@@ -8,9 +8,11 @@
           <div class="text-truncate" [ngClass]="{'cursor-pointer': !isEnabled}" (click)="viewChildren = !viewChildren">
             <div class="flex flex-col sm:flex-row flex-wrap">
               <p class="margin-remove text-truncate mat-subheading-1 flex-auto">
-                {{ content?.name }}
+                {{ content?.name }} 
               </p>
-              
+              <ng-container *ngIf="content.issuedCertificatesSVG">
+                <a class="certificate-txt" (click)="openCertificateDialog(content.issuedCertificatesSVG)">View certificate</a>
+              </ng-container>
               <div class="type-container resource mt-2 sm:mt-0" *ngIf="content?.category === 'Resource'">
                 <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>
                 <span>Resource</span>
