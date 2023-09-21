@@ -394,7 +394,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       if (this.content && this.content.wfSurveyLink) {
         const sID = this.content.wfSurveyLink.split('surveys/')
         const surveyId = sID[1]
-        const identifierId = this.content.identifier
+        const courseId = this.content.identifier
+        const courseName = this.content.name
         const apiData = {
           // tslint:disable-next-line:prefer-template
           getAPI: '/apis/proxies/v8/forms/getFormById?id=' + surveyId,
@@ -408,8 +409,10 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
           maxHeight: '85vh',
           data: {
             surveyId,
-            identifierId,
+            courseId,
+            courseName,
             apiData,
+            
           },
           disableClose: false,
           panelClass: ['animate__animated', 'animate__slideInLeft'],
