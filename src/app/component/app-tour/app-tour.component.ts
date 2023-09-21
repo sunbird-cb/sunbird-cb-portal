@@ -149,7 +149,7 @@ export class AppTourComponent {
   public startTour(screen: string, subType: string): void {
     this.showpopup = false;
     this.showVideoTour = false;
-    //this.raiseTemeletyInterat(screen, subType)
+    this.raiseTemeletyInterat(screen, subType)
     if (this.isMobile) {
       // @ts-ignore
       document.getElementById('menuToggleMobile').click();
@@ -220,7 +220,7 @@ export class AppTourComponent {
         object: {},
         state: WsEvents.EnumTelemetrySubType.Loaded,
         eventSubType: WsEvents.EnumTelemetrySubType.GetStarted,
-        type: 'get started',
+        type: 'Get Started',
         mode: 'view',
       },
       pageContext: {pageId: "/home", module: WsEvents.EnumTelemetrySubType.GetStarted},
@@ -241,7 +241,7 @@ export class AppTourComponent {
         eventSubType: WsEvents.EnumTelemetrySubType.GetStarted,
         mode: 'view'
       },
-      pageContext: {pageId: '/home',module: WsEvents.EnumTelemetrySubType.GetStarted},
+      pageContext: {pageId: '/home', module: WsEvents.EnumTelemetrySubType.GetStarted},
       from: '',
       to: 'Telemetry',
     }
@@ -257,7 +257,7 @@ export class AppTourComponent {
         object: {},
         state: WsEvents.EnumTelemetrySubType.Unloaded,
         eventSubType: WsEvents.EnumTelemetrySubType.GetStarted,
-        type: 'get started',
+        type: 'Get Started',
         mode: 'view',
       },
       pageContext: {pageId: "/home", module: WsEvents.EnumTelemetrySubType.GetStarted},
