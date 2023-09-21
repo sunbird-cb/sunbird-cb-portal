@@ -23,8 +23,7 @@ import {
   MatProgressSpinnerModule,
   MatButtonToggleModule,
   MatTabsModule,
-  MatAutocompleteModule,
-} from '@angular/material'
+  MatAutocompleteModule} from '@angular/material'
 import { UserProfileRoutingModule } from './user-profile-routing.module'
 import { UserProfileComponent } from './components/user-profile/user-profile.component'
 import { TabDirective } from './components/user-profile/tab.directive'

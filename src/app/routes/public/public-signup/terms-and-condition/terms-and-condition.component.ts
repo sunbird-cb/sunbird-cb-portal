@@ -15,7 +15,7 @@ export class TermsAndConditionComponent implements OnInit {
   ngOnInit() {
   }
   closeDialog() {
-    this.dialogRef.close()
+    this.dialogRef.close(true)
   }
 
 }

@@ -42,6 +42,12 @@ export class LogoutComponent implements OnInit {
     }
     // this.authSvc.logout()
     this.authSvc.force_logout()
+    if (localStorage.getItem('faq')) {
+      localStorage.removeItem("faq")
+    }
+    if (localStorage.getItem('faq-languages')) {
+      localStorage.removeItem("faq-languages")
+    }
   }
 
   get isDownloadable() {

@@ -36,13 +36,12 @@
         <!-- {{ defaultThumbnail | json }}//
                 {{ defaultSLogo | json }} // -->
         <div class="sm:ml-5 flex flex-auto" [id]="'m-c-'+ content.identifier">
-
           <div class="sm:ml-5 flex flex-col flex-auto">
-            <h1 class="mat-headline margin-remove-bottom padding-bottom-xs hidden sm:block" [title]="content?.name">
-              {{ content?.name }}
+            <h1 class="mat-headline margin-remove-bottom padding-bottom-xs hidden sm:block" [title]="contentReadData?.name">
+              {{ contentReadData?.name }}
             </h1>
-            <h1 class="mat-headline margin-remove-bottom padding-bottom-xs block sm:hidden" [title]="content?.name">
-              {{ content?.name }}
+            <h1 class="mat-headline margin-remove-bottom padding-bottom-xs block sm:hidden" [title]="contentReadData?.name">
+              {{ contentReadData?.name }}
             </h1>
             <span *ngIf="contentProgress === 1" class="margin-left-s">
               <mat-icon class="ws-mat-accent-text">check_circle</mat-icon>
@@ -221,7 +220,7 @@
                       <mat-error *ngIf="batchControl.hasError('required')">Please choose a batch to start course</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="flex flex-wrap">
+                <div class="flex flex-wrap mt-3">
                   <ng-container *ngIf="!showRejected">
                     <div class="flex-1">
                       <button class="mat-button mat-raised-button resumeButton custom-button width-1-1 text-white" [ngClass]="{ 'disable-btn': disableEnrollBtn || batchControl.hasError('required') }" 
@@ -350,7 +349,7 @@
   </ws-widget-btn-content-like> -->
   <ws-widget-btn-content-share id="prevforshare" [forPreview]="forPreview" [widgetData]="content">
   </ws-widget-btn-content-share>
-  <ws-widget-btn-kb [forPreview]="forPreview" id="prev" [contentId]="content?.identifier" [contentName]="content?.name"
+  <ws-widget-btn-kb [forPreview]="forPreview" id="prev" [contentId]="content?.identifier" [contentName]="contentReadData?.name"
     [contentType]="content?.contentType" [status]="content?.status">
   </ws-widget-btn-kb>
   <ws-widget-btn-goals [forPreview]="forPreview" id="goalsforprev" *ngIf="isGoalsEnabled && btnGoalsConfig"

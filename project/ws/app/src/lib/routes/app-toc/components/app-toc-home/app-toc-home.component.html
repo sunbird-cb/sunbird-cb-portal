@@ -16,8 +16,8 @@ TODO: edit option while preview Mode
 <ng-container>
   <div class="fixed-width flex flex-wrap">
     <div class="meta-section">
-      <ws-app-toc-banner role="banner" [banners]="banners" [userEnrollmentList]="userEnrollmentList" (withdrawOrEnroll)="withdrawOrEnroll($event)" [forPreview]="forPreview" [content]="content"
-        [analytics]="analytics" [resumeData]="resumeData" [batchData]="batchData">
+      <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content" [userEnrollmentList]="userEnrollmentList" (withdrawOrEnroll)="withdrawOrEnroll($event)"
+        [analytics]="analytics" [resumeData]="resumeData" [batchData]="batchData" [contentReadData]="contentReadData">
       </ws-app-toc-banner>
       <div role="none" class="toc-body margin-top-xl">
         <!-- isBatchInProgress : commented as we seperated the CBP -->
@@ -94,8 +94,9 @@ TODO: edit option while preview Mode
           content?.status !== 'Expired'
         ">
           <div [hidden]="isResource && !content?.artifactUrl?.length" class="text-center">
-            <ng-container *ngIf="content?.primaryCategory !== primaryCategory.PROGRAM && content?.primaryCategory !== primaryCategory.STANDALONE_ASSESSMENT &&
-            content?.primaryCategory !== primaryCategory.BLENDED_PROGRAM">
+            <ng-container *ngIf="content?.primaryCategory !== primaryCategory.PROGRAM 
+            && content?.primaryCategory !== primaryCategory.STANDALONE_ASSESSMENT &&
+            content?.primaryCategory !== primaryCategory.BLENDED_PROGRAM && content?.primaryCategory !== primaryCategory.CURATED_PROGRAM">
               <ng-container *ngIf="
           (actionBtnStatus === 'grant' &&
           !(isMobile && content?.isInIntranet) &&
@@ -209,6 +210,13 @@ TODO: edit option while preview Mode
               <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white"
               [routerLink]="firstResourceLink?.url" [queryParams]="(resumeData && !certData) ? generateQuery('RESUME') : generateQuery('START')">
                 Take test
+              </a>
+            </ng-container>
+            <ng-container *ngIf="content?.primaryCategory === primaryCategory.CURATED_PROGRAM && !batchData?.enrolled">
+              <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" (click)="autoBatchAssign()">
+                <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
+                  Enroll
+                </ng-container>
               </a>
             </ng-container>
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
@@ -473,7 +481,7 @@ TODO: edit option while preview Mode
                 {{tocConfig?.atAGlance?.batchDate?.displayName}}
               </h3>
               <h3 class="item-value width-expand">
-                {{ selectedBatchData?.content[0]?.startDate | date: 'dd-MM-yyyy'}} - {{ selectedBatchData?.content[0]?.endDate | date: 'dd-MM-yyyy'}}
+                {{ selectedBatchData?.content[0]?.startDate | date: 'dd-MM-yyyy'}} to {{ selectedBatchData?.content[0]?.endDate | date: 'dd-MM-yyyy'}}
               </h3>
             </div>
             <div class="info-item" *ngIf="tocConfig?.atAGlance?.batchDuration?.enabled && content?.programDuration">
@@ -649,7 +657,7 @@ TODO: edit option while preview Mode
 
           <div class="info-item" *ngIf="tocConfig?.atAGlance?.lastUpdatedOn?.enabled && content?.lastUpdatedOn">
             <p class="mat-body-2 font-bold-imp ws-mat-black60-text">
-              {{tocConfig?.atAGlance?.lastUpdatedOn?.displayName}} {{ content?.lastUpdatedOn | date }}
+              {{tocConfig?.atAGlance?.lastUpdatedOn?.displayName}} {{ content?.lastUpdatedOn |  date: 'dd-MM-yyyy' }}
             </p>
           </div>
         </div>

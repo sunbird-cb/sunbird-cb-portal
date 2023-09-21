@@ -47,6 +47,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   @Input() userEnrollmentList: NsContent.ICourse[] | null = null
   @Output() withdrawOrEnroll = new EventEmitter<string>()
+  @Input() contentReadData: NsContent.IContent | null = null
   batchControl = new FormControl('', Validators.required)
   primaryCategory = NsContent.EPrimaryCategory
   WFBlendedProgramStatus = NsContent.WFBlendedProgramStatus
@@ -88,6 +89,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   disableEnrollBtn = false
   selectedBatch!: any
   helpEmail = ''
+  selectedBatchSubscription: any
+  selectedBatchData: any
 
   // configSvc: any
 
@@ -168,6 +171,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         'showIntranetMessageDesktop',
       )
     }
+    this.selectedBatchSubscription = this.tocSvc.getSelectedBatch.subscribe(batchData => {
+      this.selectedBatchData = batchData
+    })
 
     // if (this.authAccessService.hasAccess(this.content as any) && !this.isInIFrame) {
     //   const status: string = (this.content as any).status
@@ -217,7 +223,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   get getBatchDuration() {
     const startDate = dayjs(this.batchControl.value.startDate)
     const endDate = dayjs(this.batchControl.value.endDate)
-    return endDate.diff(startDate, 'days')
+    // adding 1 to include the start date 
+    return (endDate.diff(startDate, 'days') + 1)
   }
 
   get showStart() {
@@ -351,9 +358,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
       width: '434px',
       data: {
-        title: 'You’re ocne step away from enrolling!',
+        title: 'You’re one step away from enrolling!',
         // tslint:disable-next-line:max-line-length
-        message: `This batch starting on ${this.datePipe.transform(batchData.startDate, 'dd-MM-yyyy')}  -  ${this.datePipe.transform(batchData.endDate, 'dd-MM-yyyy')}, kindly go through the content and be prepared.`,
+        message: `This batch is active from ${this.datePipe.transform(batchData.startDate, 'dd-MM-yyyy')}  -  ${this.datePipe.transform(batchData.endDate, 'dd-MM-yyyy')}, kindly go through the content and be prepared.`,
         acceptButton: 'Confirm',
         cancelButton: 'Cancel',
       },
@@ -384,10 +391,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     })
     // conflicts check end
     if (userList && userList.length === 0) {
-      if (this.content) {
+      if (this.content && this.content.wfSurveyLink) {
         const sID = this.content.wfSurveyLink.split('surveys/')
         const surveyId = sID[1]
-        const identifierId = this.content.identifier
+        const courseId = this.content.identifier
+        const courseName = this.content.name
         const apiData = {
           // tslint:disable-next-line:prefer-template
           getAPI: '/apis/proxies/v8/forms/getFormById?id=' + surveyId,
@@ -398,13 +406,15 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
         const enrollQuestionnaire = this.dialog.open(EnrollQuestionnaireComponent, {
           width: '920px',
-          // maxHeight: '80vh',
+          maxHeight: '85vh',
           data: {
             surveyId,
-            identifierId,
+            courseId,
+            courseName,
             apiData,
+            
           },
-          disableClose: true,
+          disableClose: false,
           panelClass: ['animate__animated', 'animate__slideInLeft'],
         })
         enrollQuestionnaire.afterClosed().subscribe(result => {
@@ -414,10 +424,12 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.openRequestToEnroll(batchData)
           }
         })
+      } else {
+        this.openRequestToEnroll(batchData)
       }
     } else {
       if (userList && userList.length === 1) {
-        this.openSnackbar(`${userList[0].courseName} ${NsContent.EPrimaryCategory.BLENDED_PROGRAM} is in progress`)
+        this.openSnackbar(`${userList[0].courseName} - ${NsContent.EPrimaryCategory.BLENDED_PROGRAM} is in progress`)
       } else {
         this.openSnackbar(`${NsContent.EPrimaryCategory.BLENDED_PROGRAM} is in progress`)
       }
@@ -559,14 +571,24 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       const batchData = {
         content: [event.value],
       }
+      if (this.selectedBatchData && this.selectedBatchData.content) {
+        this.selectedBatchData = {
+          ...this.selectedBatchData,
+          ...batchData,
+        }
+      } else {
+        this.selectedBatchData = {
+          ...batchData,
+        }
+      }
       if (this.checkRejected(event.value)) {
         this.showRejected = true
         this.setbatchDateToCountDown(event.value.startDate)
-        this.tocSvc.getSelectedBatchData(batchData)
+        this.tocSvc.getSelectedBatchData(this.selectedBatchData)
         return
       }
       this.setbatchDateToCountDown(event.value.startDate)
-      this.tocSvc.getSelectedBatchData(batchData)
+      this.tocSvc.getSelectedBatchData(this.selectedBatchData)
     }
     this.showRejected = false
     return
@@ -600,7 +622,17 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     const batchData = {
       content: [this.batchControl.value],
     }
-    this.tocSvc.getSelectedBatchData(batchData)
+    if (this.selectedBatchData && this.selectedBatchData.content) {
+      this.selectedBatchData = {
+        ...this.selectedBatchData,
+        ...batchData,
+      }
+    } else {
+      this.selectedBatchData = {
+        ...batchData,
+      }
+    }
+    this.tocSvc.getSelectedBatchData(this.selectedBatchData)
   }
 
   // setting batch start date
@@ -771,6 +803,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
     if (this.batchWFDataSubscription) {
       this.batchWFDataSubscription.unsubscribe()
+    }
+    if (this.selectedBatchSubscription) {
+      this.selectedBatchSubscription.unsubscribe()
     }
   }
 
