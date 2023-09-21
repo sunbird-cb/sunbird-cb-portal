@@ -96,7 +96,7 @@ TODO: edit option while preview Mode
           <div [hidden]="isResource && !content?.artifactUrl?.length" class="text-center">
             <ng-container *ngIf="content?.primaryCategory !== primaryCategory.PROGRAM 
             && content?.primaryCategory !== primaryCategory.STANDALONE_ASSESSMENT &&
-            content?.primaryCategory !== primaryCategory.BLENDED_PROGRAM && content?.primaryCategory !== primaryCategory.CURATED_PROGRAM">
+            content?.primaryCategory !== primaryCategory.BLENDED_PROGRAM">
               <ng-container *ngIf="
           (actionBtnStatus === 'grant' &&
           !(isMobile && content?.isInIntranet) &&
@@ -104,6 +104,9 @@ TODO: edit option while preview Mode
             content?.primaryCategory === primaryCategory.COURSE &&
             content?.children.length === 0 &&
             !content?.artifactUrl?.length
+          ) &&
+          !(
+            content?.primaryCategory === primaryCategory.CURATED_PROGRAM && !batchData?.enrolled
           ) &&
           !(
             content?.primaryCategory === primaryCategory.COURSE && !batchData?.enrolled
@@ -138,6 +141,9 @@ TODO: edit option while preview Mode
                   content?.primaryCategory === primaryCategory.COURSE &&
                   content?.children.length === 0 &&
                   !content?.artifactUrl?.length
+                ) &&
+                !(
+                  content?.primaryCategory === primaryCategory.CURATED_PROGRAM && batchData?.enrolled
                 ) &&
                 !(
                   content?.primaryCategory === primaryCategory.COURSE && batchData?.enrolled
@@ -210,13 +216,6 @@ TODO: edit option while preview Mode
               <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white"
               [routerLink]="firstResourceLink?.url" [queryParams]="(resumeData && !certData) ? generateQuery('RESUME') : generateQuery('START')">
                 Take test
-              </a>
-            </ng-container>
-            <ng-container *ngIf="content?.primaryCategory === primaryCategory.CURATED_PROGRAM && !batchData?.enrolled">
-              <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" (click)="autoBatchAssign()">
-                <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
-                  Enroll
-                </ng-container>
               </a>
             </ng-container>
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
