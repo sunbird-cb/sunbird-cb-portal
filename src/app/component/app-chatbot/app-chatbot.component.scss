@@ -27,17 +27,15 @@
 
 .expand-text {
   width: 110px;
-  height: 25px;
-  padding: 16px 14px;
-  margin: 2px 0px;
-  align-items: flex-start;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  background-color: #1B4CA1;
-  color: white;
+  background-color: #1b4ca1;
+  color: #fff;
   font-size: 18px;
-  margin-bottom: 1px;
-  border-top: 2px solid white;
-  border-bottom: 2px solid white;
+  border-top: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  vertical-align: middle;
 }
 
 .chatbot {
