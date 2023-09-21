@@ -567,17 +567,17 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   get checkForFacilitators(): any[] {
-    let facilitators: any[] = []
-    if(this.selectedBatchData && 
-      this.selectedBatchData.content[0] && 
-      this.selectedBatchData.content[0].batchAttributes && 
-      this.selectedBatchData.content[0].batchAttributes.sessionDetails_v2 && 
+    const facilitators: any[] = []
+    if (this.selectedBatchData &&
+      this.selectedBatchData.content[0] &&
+      this.selectedBatchData.content[0].batchAttributes &&
+      this.selectedBatchData.content[0].batchAttributes.sessionDetails_v2 &&
       this.selectedBatchData.content[0].batchAttributes.sessionDetails_v2.length) {
         this.selectedBatchData.content[0].batchAttributes.sessionDetails_v2.map((sessionDetails: any) => {
           sessionDetails.facilatorDetails.map((facilitator: any) => [
-            facilitators.push(facilitator)
+            facilitators.push(facilitator),
           ])
-        }) 
+        })
     }
     return facilitators
   }
