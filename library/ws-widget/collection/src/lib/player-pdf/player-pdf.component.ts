@@ -298,23 +298,10 @@ export class PlayerPdfComponent extends WidgetBaseComponent
         max_size: this.totalPages,
         current: this.current,
       }
-      let collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-        this.activatedRoute.snapshot.queryParams.collectionId : this.widgetData.identifier
-      let batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-        this.activatedRoute.snapshot.queryParams.batchId : this.widgetData.identifier
-      const tempContentData = this.contentSvc.currentMetaData
-      if (tempContentData.primaryCategory === NsContent.EPrimaryCategory.PROGRAM) {
-        tempContentData.children.forEach((childList: NsContent.IContent) => {
-          if (childList.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
-            if (childList.childNodes && childList.childNodes.indexOf(id) !== -1) {
-              if (childList.batches && childList.batches.length > 0) {
-                batchId = childList.batches[childList.batches.length - 1].batchId
-                collectionId = childList.identifier
-              }
-            }
-          }
-        });
-      }
+      const resData = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
+                                                           this.activatedRoute.snapshot.queryParams.batchId, id)
+      const collectionId = (resData && resData.courseId) ? resData.courseId : this.widgetData.identifier
+      const batchId = (resData && resData.batchId) ? resData.batchId : this.widgetData.identifier
       this.viewerSvc.realTimeProgressUpdate(id, realTimeProgressRequest, collectionId, batchId)
     }
     return

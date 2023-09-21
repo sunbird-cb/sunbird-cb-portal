@@ -541,10 +541,14 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   updateProgress(status: number) {
     // status = 1 indicates started
     // status = 2 indicates completed
-    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-      this.activatedRoute.snapshot.queryParams.collectionId : ''
-    const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-      this.activatedRoute.snapshot.queryParams.batchId : ''
+    const resData = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
+                                                         this.activatedRoute.snapshot.queryParams.batchId, this.identifier)
+    const collectionId = (resData && resData.courseId) ? resData.courseId : ''
+    const batchId = (resData && resData.batchId) ? resData.batchId : ''
+    // const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+    //   this.activatedRoute.snapshot.queryParams.collectionId : ''
+    // const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+    //   this.activatedRoute.snapshot.queryParams.batchId : ''
     this.viewerSvc.realTimeProgressUpdateQuiz(this.identifier, collectionId, batchId, status)
   }
 

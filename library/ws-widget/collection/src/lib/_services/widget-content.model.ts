@@ -20,7 +20,7 @@ export namespace NsContent {
     artifactUrl: string
     averageRating?: any
     // this will be used to content form enrollment user list
-    batches?:any
+    batches?: any
     batch?: any
     body?: string
     certificationList?: IRelatedContentMeta[]
