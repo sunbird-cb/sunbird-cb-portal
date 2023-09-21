@@ -9,6 +9,7 @@ import { UtilityService, EventService, WsEvents } from '@sunbird-cb/utils';
 })
 export class AppTourComponent {
   progressIndicatorLocation = ProgressIndicatorLocation.TopOfTourBlock;
+  currentWindow: any
 
   private readonly TOUR: GuidedTour = {
     tourId: 'purchases-tour',
@@ -163,7 +164,16 @@ export class AppTourComponent {
   }
 
   public skipTour(screen: string, subType: string): void {
-    this.raiseTemeletyInterat(screen, subType)
+    if (screen.length > 0 && subType.length > 0) {
+      this.raiseTemeletyInterat(screen, subType)
+    } else {
+      if(this.currentWindow) {
+        this.raiseTemeletyInterat(`${this.currentWindow.title.toLowerCase().relace(' ','-')}-skip`, this.currentWindow.title.toLowerCase())
+      } else {
+        this.raiseTemeletyInterat('welcome-skip', 'welcome')
+      }
+    }
+
     this.raiseGetStartedEndTelemetry()
     this.noScroll = false;
     this.showpopup = false;
@@ -200,15 +210,17 @@ export class AppTourComponent {
   }
 
   nextCb(currentStep: number, stepObject:any) {
-    console.log(stepObject)
+    this.currentWindow = stepObject
+    console.log("this.currentWindow ", this.currentWindow)
     let currentStepObj: any = this.TOUR.steps[currentStep - 1]
-    this.raiseTemeletyInterat(`${currentStepObj.title.toLowerCase()}-next`, currentStepObj.title.toLowerCase())
+    this.raiseTemeletyInterat(`${currentStepObj.title.toLowerCase().relace(' ','-')}-next`, currentStepObj.title.toLowerCase())
   }
 
   prevCb(currentStep: number, stepObject:any) {
-    console.log(stepObject)
+    this.currentWindow = stepObject
+    console.log("this.currentWindow ", this.currentWindow)
     let currentStepObj: any = this.TOUR.steps[currentStep +  1]
-    this.raiseTemeletyInterat(`${currentStepObj.title.toLowerCase()}-previous`, currentStepObj.title.toLowerCase())
+    this.raiseTemeletyInterat(`${currentStepObj.title.toLowerCase().relace(' ','-')}-previous`, currentStepObj.title.toLowerCase())
   }
 
   raiseGetStartedStartTelemetry() {
