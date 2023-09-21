@@ -647,6 +647,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             }
           }
         }
+        if (this.content && this.content.cumulativeTracking) {
+          this.tocSvc.mapCompletionPercentageProgram(this.content, this.userEnrollmentList)
+        }
       },
       (error: any) => {
         this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
@@ -769,6 +772,49 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   public autoBatchAssign() {
+    if (this.content && this.content.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM) {
+      this.autoEnrollCuratedProgram()
+    } else {
+      this.autoAssignEnroll()
+    }
+  }
+
+  public autoEnrollCuratedProgram() {
+    if (this.content && this.content.identifier) {
+      let userId = ''
+      if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
+        userId = this.configSvc.userProfile.userId
+      }
+      let req = {
+        "request": {
+          "userId": userId,
+          "programId": this.content.identifier,
+          "batchId": this.content.batches[0].batchId //as of now cureted program only one batch is coming need to check and modify
+        }
+      }
+      this.contentSvc.autoAssignCuratedBatchApi(req).subscribe(
+        (data: NsContent.IBatchListResponse) => {
+          this.batchData = {
+            content: data.content,
+            enrolled: true,
+          }
+          if (this.getBatchId()) {
+            // this.createCertTemplate(this.getBatchId(), this.content.identifier)
+
+            this.router.navigate(
+              [],
+              {
+                relativeTo: this.route,
+                queryParams: { batchId: this.getBatchId() },
+                queryParamsHandling: 'merge',
+              })
+          }
+        }
+      )
+    }
+  }
+
+  public autoAssignEnroll() {
     if (this.content && this.content.identifier) {
       this.contentSvc.autoAssignBatchApi(this.content.identifier).subscribe(
         (data: NsContent.IBatchListResponse) => {
