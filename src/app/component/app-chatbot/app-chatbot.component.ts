@@ -33,12 +33,14 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
     'en' : {
       'Hi' : 'Hi',
       'information': 'Information',
-      'issue': 'Issues'
+      'issue': 'Issues',
+      'categories': 'Show All Categories'
     },
     'hi' : {
       'Hi' : 'नमस्ते',
       'information': 'जानकारी',
-      'issue': 'समस्या'
+      'issue': 'समस्या',
+      'categories': 'सभी कैटेगरी दिखायें'
     }
   }
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef | undefined
@@ -344,7 +346,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
     }
   }
   getCategories() {
-    this.categories = [{ "catId": "all","catName": "Show all category"}]
+    this.categories = [{ "catId": "all","catName": this.localization[this.selectedLaguage]['categories']}]
     this.categories=[...this.categories, ...this.responseData.categoryMap]
   }
 
