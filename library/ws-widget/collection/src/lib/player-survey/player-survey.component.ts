@@ -94,11 +94,13 @@ export class PlayerSurveyComponent extends WidgetBaseComponent
           userId = this.configSvc.userProfile.userId || ''
           this.userid = this.configSvc.userProfile.userId || ''
         }
+        const resData = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
+                                                             this.activatedRoute.snapshot.queryParams.batchId, this.identifierId)
         const req = {
           request: {
             userId,
-            batchId,
-            courseId: identifier || '',
+            batchId: resData.batchId || '',
+            courseId: resData.courseId || '',
             contentIds: [],
             fields: ['progressdetails'],
           },
@@ -141,12 +143,12 @@ export class PlayerSurveyComponent extends WidgetBaseComponent
   }
 
   updateProgress(status: number) {
-    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-      this.activatedRoute.snapshot.queryParams.collectionId : ''
-    const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-      this.activatedRoute.snapshot.queryParams.batchId : ''
-    // tslint:disable-next-line:max-line-length
-    const id = this.activatedRoute.snapshot.data.content ? this.activatedRoute.snapshot.data.content.data.identifier : this.widgetData.identifier
+    const id = this.activatedRoute.snapshot.data.content ?
+    this.activatedRoute.snapshot.data.content.data.identifier : this.widgetData.identifier
+    const resData = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
+                                                         this.activatedRoute.snapshot.queryParams.batchId, id)
+    const collectionId = (resData && resData.courseId) ? resData.courseId : this.widgetData.identifier
+    const batchId = (resData && resData.batchId) ? resData.batchId : this.widgetData.identifier
     this.viewerSvc.realTimeProgressUpdateQuiz(id, collectionId, batchId, status)
   }
 

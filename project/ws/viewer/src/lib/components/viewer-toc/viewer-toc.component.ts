@@ -235,6 +235,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
         : this.contentSvc.fetchContent(collectionId, 'detail', [], _collectionType)
       ).toPromise()
       const contentData = content.result.content
+      this.contentSvc.currentMetaData = contentData
       this.collectionCard = this.createCollectionCard(contentData)
       const viewerTocCardContent = this.convertContentToIViewerTocCard(contentData)
       this.isFetching = false

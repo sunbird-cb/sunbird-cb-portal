@@ -298,10 +298,10 @@ export class PlayerPdfComponent extends WidgetBaseComponent
         max_size: this.totalPages,
         current: this.current,
       }
-      const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-        this.activatedRoute.snapshot.queryParams.collectionId : this.widgetData.identifier
-      const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-        this.activatedRoute.snapshot.queryParams.batchId : this.widgetData.identifier
+      const resData = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
+                                                           this.activatedRoute.snapshot.queryParams.batchId, id)
+      const collectionId = (resData && resData.courseId) ? resData.courseId : this.widgetData.identifier
+      const batchId = (resData && resData.batchId) ? resData.batchId : this.widgetData.identifier
       this.viewerSvc.realTimeProgressUpdate(id, realTimeProgressRequest, collectionId, batchId)
     }
     return
