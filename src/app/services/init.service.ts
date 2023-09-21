@@ -29,6 +29,7 @@ import { v4 as uuid } from 'uuid'
 import { Subscription } from 'rxjs'
 import { NSProfileDataV3 } from '@ws/app/src/lib/routes/profile-v3/models/profile-v3.models'
 import { NPSGridService } from '@sunbird-cb/collection/src/lib/grid-layout/nps-grid.service'
+import moment from 'moment'
 // import { of } from 'rxjs'
 /* tslint:enable */
 // interface IDetailsResponse {
@@ -414,7 +415,17 @@ export class InitService {
         this.configSvc.userRoles = new Set((details.roles || []).map((v: string) => v.toLowerCase()))
         this.configSvc.isActive = details.isActive
         this.configSvc.welcomeTabs = await this.fetchWelcomeConfig()
-        this.npsSvc.updateTelemetryData(true)
+
+        // nps check
+        if (localStorage.getItem('platformratingTime')) {
+          const date = localStorage.getItem('platformratingTime') || ''
+          const isNextDay = moment().subtract(24, 'hours').isBefore(moment(new Date(date)))
+          if (isNextDay) {
+            this.checkUserFeed()
+          }
+        } else {
+          this.checkUserFeed()
+        }
         return details
       } catch (e) {
         this.configSvc.userProfile = null
@@ -725,5 +736,22 @@ export class InitService {
       }
     })
     return returnValue
+  }
+
+  // for NPS user feed check
+  private checkUserFeed() {
+    this.npsSvc.getFeedStatus(this.configSvc.unMappedUser.id).subscribe((res: any) => {
+      if (res.result.response.userFeed && res.result.response.userFeed.length > 0) {
+        const feed = res.result.response.userFeed
+        feed.forEach((item: any) => {
+          if (item.category === 'NPS' && item.data.actionData.formId) {
+              const currentTime = moment()
+              localStorage.platformratingTime = currentTime
+              localStorage.setItem('ratingformID', JSON.stringify(item.data.actionData.formId))
+              localStorage.setItem('ratingfeedID', JSON.stringify(item.id))
+          }
+        })
+      }
+    })
   }
 }
