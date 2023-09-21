@@ -385,7 +385,7 @@
                           <mat-form-field appearance="outline" class="margin-top-xs flex-expand w-minus-w80">
                             <input id="mobileNumber" #mobile type="text" matInput
                               placeholder="Mobile Number" formControlName="mobile" i18n-aria-label
-                              aria-label="Mobile Number input" maxlength="10" (keypress)="numericOnly($event)">
+                              aria-label="Mobile Number input" maxlength="10" (keypress)="numericOnly($event)"  (paste)="numericOnly($event)">
                             <mat-error [hidden]="false" i18n="Mobile Number Error|Explains Mobile no is required"
                               *ngIf="createUserForm?.controls['mobile'].errors?.required" i18n-aria-label
                               aria-label="Please enter your mobile number">

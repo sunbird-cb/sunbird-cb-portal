@@ -706,4 +706,10 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line: max-line-length
     this.router.navigate([url], {  queryParams: { type: param }, state: { userform: formData, isMobileVerified: this.isMobileVerified , isEmailVerified: this.isEmailVerified } })
   }
+
+  numericOnly(event: any): boolean {
+    const pattren = /^([0-9])$/
+    const result = pattren.test(event.key)
+    return result
+  }
 }
