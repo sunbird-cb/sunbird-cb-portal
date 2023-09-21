@@ -92,26 +92,38 @@ export class GridLayoutComponent extends WidgetBaseComponent
       }
     })
 
-    this.updateTelemetryDataSubscription = this.npsService.updateTelemetryDataObservable.subscribe((value: boolean) => {
+    this.updateTelemetryDataSubscription = this.npsService.updateTelemetryDataObservable.subscribe((value: any) => {
       if (value) {
-        this.npsService.getFeedStatus(this.configSvc.unMappedUser.id).subscribe((res: any) => {
-          if (res.result.response.userFeed && res.result.response.userFeed.length > 0) {
-            const feed = res.result.response.userFeed
-            feed.forEach((item: any) => {
-              if (item.category === 'NPS' && item.data.actionData.formId) {
-                this.isNPSOpen = true
-                this.formID = item.data.actionData.formId
-                this.feedID = item.id
+        if (localStorage.getItem('ratingformID')) {
+          this.isNPSOpen = true
+          this.formID = localStorage.getItem('ratingformID')
+          this.npsService.getFormData(this.formID).subscribe((resform: any) => {
+            if (resform) {
+              this.formFields = resform.fields
+            }
+          })
+        }
+        if (localStorage.getItem('ratingfeedID')) {
+          this.feedID = localStorage.getItem('ratingfeedID')
+        }
+        // this.npsService.getFeedStatus(this.configSvc.unMappedUser.id).subscribe((res: any) => {
+        //   if (res.result.response.userFeed && res.result.response.userFeed.length > 0) {
+        //     const feed = res.result.response.userFeed
+        //     feed.forEach((item: any) => {
+        //       if (item.category === 'NPS' && item.data.actionData.formId) {
+        //         this.isNPSOpen = true
+        //         this.formID = item.data.actionData.formId
+        //         this.feedID = item.id
 
-                this.npsService.getFormData(this.formID).subscribe((resform: any) => {
-                  if (resform) {
-                    this.formFields = resform.fields
-                  }
-                })
-              }
-            })
-          }
-        })
+        //         this.npsService.getFormData(this.formID).subscribe((resform: any) => {
+        //           if (resform) {
+        //             this.formFields = resform.fields
+        //           }
+        //         })
+        //       }
+        //     })
+        //   }
+        // })
       }
     })
 
@@ -205,6 +217,12 @@ export class GridLayoutComponent extends WidgetBaseComponent
         this.npsService.deleteFeed(req).subscribe((res: any) => {
           if (res) {
             this.onSuccessRating = true
+            if (localStorage.getItem('ratingformID')) {
+              localStorage.removeItem('ratingformID')
+            }
+            if (localStorage.getItem('ratingfeedID')) {
+              localStorage.removeItem('ratingfeedID')
+            }
           }
         })
       }
@@ -233,12 +251,24 @@ export class GridLayoutComponent extends WidgetBaseComponent
           this.npsService.deleteFeed(req).subscribe((res: any) => {
             if (res) {
               this.isNPSOpen = false
+              if (localStorage.getItem('ratingformID')) {
+                localStorage.removeItem('ratingformID')
+              }
+              if (localStorage.getItem('ratingfeedID')) {
+                localStorage.removeItem('ratingfeedID')
+              }
             }
           })
         }
       })
     } else {
       this.isNPSOpen = false
+      if (localStorage.getItem('ratingformID')) {
+        localStorage.removeItem('ratingformID')
+      }
+      if (localStorage.getItem('ratingfeedID')) {
+        localStorage.removeItem('ratingfeedID')
+      }
     }
   }
 }
