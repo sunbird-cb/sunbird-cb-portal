@@ -312,27 +312,29 @@
                     </div>
                 </div>
             </section>
-            <!-- <section id="authors" *ngIf="(content?.creatorDetails && content?.creatorDetails.length > 0) || (content?.creatorContacts && content?.creatorContacts.length > 0)  ||
-                (cohortResults[cohortTypesEnum.AUTHORS] && cohortResults[cohortTypesEnum.AUTHORS].length > 0)">
+            <section id="director" *ngIf="checkForFacilitators.length">
                 <div class="fluid-width contacts-container">
                     <div class="fixed-width flex flex-col flex-wrap">
                         <h2 _ngcontent-qml-c28="" class="mat-toolbar contacts-head">Program director & facilitators</h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 col-gap-4">
-                            <div *ngFor="let facilitator of selectedBatchData?.batchAttributes?.sessionDetails_v2[0]?.facilatorDetails"
-                                class="unit-cohort sm:pr-8 md:pr-10">
-                                <ws-widget-avatar-photo class="float-left margin-right-s " [randomColor]="true"
-                                    [datalen]="selectedBatchData?.batchAttributes?.sessionDetails_v2[0]?.facilatorDetails.length"
-                                    [size]="'m'" [photoUrl]="facilitator.photo || ''" [name]="facilitator.name" size="l-xs">
-                                </ws-widget-avatar-photo>
-                                <div class="margin-left-xl">
-                                    <div class="user-name">{{ facilitator.name }}</div>
-                                    <p class="mat-body-2  mb-0  ws-mat-black60-text">Facilitator</p>
-                                </div>
-                            </div>
+                            <!-- <ng-container *ngFor="let sessionDetails of selectedBatchData?.content[0]?.batchAttributes?.sessionDetails_v2"> -->
+                                <ng-container *ngFor="let facilitator of checkForFacilitators">
+                                    <div class="unit-cohort sm:pr-8 md:pr-10">
+                                        <ws-widget-avatar-photo class="float-left margin-right-s " [randomColor]="true"
+                                            [datalen]="selectedBatchData?.content[0]?.batchAttributes?.sessionDetails_v2[0]?.facilatorDetails.length"
+                                            [size]="'m'" [photoUrl]="facilitator.photo || ''" [name]="facilitator.name" size="l-xs">
+                                        </ws-widget-avatar-photo>
+                                        <div class="margin-left-xl">
+                                            <div class="user-name">{{ facilitator.name }}</div>
+                                            <p class="mat-body-2  mb-0  ws-mat-black60-text">Facilitator</p>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            <!-- </ng-container> -->
                         </div>
                     </div>
                 </div>
-            </section> -->
+            </section>
             <section id="competencies"
                 *ngIf="(content?.competencies_v3 && competencies.length) || (content?.competencies && competencies.length)">
                 <div class="fluid-width contacts-container mb-10">
