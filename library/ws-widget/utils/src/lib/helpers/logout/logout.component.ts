@@ -33,8 +33,12 @@ export class LogoutComponent implements OnInit {
     this.dialogRef.close()
     // this.authSvc.logout()
     this.authSvc.force_logout()
-    localStorage.removeItem("faq")
-    localStorage.removeItem("faq-languages")
+    if (localStorage.getItem('faq')) {
+      localStorage.removeItem("faq")
+    }
+    if (localStorage.getItem('faq-languages')) {
+      localStorage.removeItem("faq-languages")
+    }
   }
 
   get isDownloadable() {
