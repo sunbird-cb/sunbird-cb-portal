@@ -785,12 +785,12 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
         userId = this.configSvc.userProfile.userId
       }
-      let req = {
-        "request": {
-          "userId": userId,
-          "programId": this.content.identifier,
-          "batchId": this.content.batches[0].batchId //as of now cureted program only one batch is coming need to check and modify
-        }
+      const req = {
+        request: {
+          userId,
+          programId: this.content.identifier,
+          batchId: this.content.batches[0].batchId, // as of now cureted program only one batch is coming need to check and modify
+        },
       }
       this.contentSvc.autoAssignCuratedBatchApi(req).subscribe(
         (data: NsContent.IBatchListResponse) => {

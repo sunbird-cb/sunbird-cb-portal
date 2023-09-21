@@ -466,20 +466,19 @@ export class AppTocService {
     )
   }
 
-  mapCompletionPercentageProgram(content: NsContent.IContent | null,  enrolmentList: any ) {
+  mapCompletionPercentageProgram(content: NsContent.IContent | null,  enrolmentList: any) {
     let totalCount = 0
     let leafnodeCount = 0
     if (content && content.children) {
       leafnodeCount = content.children.length
-      debugger
       content.children.map(async child => {
         const foundContent = enrolmentList.find((el: any) => el.collectionId === child.identifier)
         totalCount = foundContent.completionPercentage ? totalCount + foundContent.completionPercentage : totalCount + 0
         if (foundContent && foundContent.completionPercentage) {
-            if( foundContent.completionPercentage === 100 ) {
+            if (foundContent.completionPercentage === 100) {
               if (foundContent.issuedCertificates.length > 0) {
-                let certId:any = foundContent.issuedCertificates[0].identifier
-                let certData:any = await this.dowonloadCertificate(certId).toPromise().catch(_error=> {})
+                const certId: any = foundContent.issuedCertificates[0].identifier
+                const certData: any = await this.dowonloadCertificate(certId).toPromise().catch(_error => {})
                 child.issuedCertificatesSVG = certData.result.printUri
               }
               // child.issuedCertificates = foundContent.issuedCertificates
@@ -487,32 +486,32 @@ export class AppTocService {
               child.completionStatus = 2
               this.mapCompletionChildPercentageProgram(child)
             } else {
-              let req = {
-                "request": {
-                  "batchId": foundContent.batch.batchId,
-                  "userId": foundContent.userId,
-                  "courseId": foundContent.collectionId,
-                  "contentIds": [],
-                  "fields": [
-                    "progressdetails"
-                  ]
-                }
+              const req = {
+                request: {
+                  batchId: foundContent.batch.batchId,
+                  userId: foundContent.userId,
+                  courseId: foundContent.collectionId,
+                  contentIds: [],
+                  fields: [
+                    'progressdetails',
+                  ],
+                },
               }
-              this.getProgressForCourse(req, child);
+              this.getProgressForCourse(req, child)
             }
         }
-        
+
       })
-      content.completionPercentage = (totalCount/leafnodeCount)
+      content.completionPercentage = (totalCount / leafnodeCount)
     }
   }
 
-  async getProgressForCourse(request:any, content: any ) {
-    let data:any = await this.fetchContentHistoryV2(request).toPromise().catch(_error=> {})
-    if(data.result && data.result.contentList.length> 0) {
-      content.children.map((child1:any) => {
+  async getProgressForCourse(request: any, content: any) {
+    const data: any = await this.fetchContentHistoryV2(request).toPromise().catch(_error => {})
+    if (data.result && data.result.contentList.length > 0) {
+      content.children.map((child1: any) => {
         if (child1 && child1.children && child1.primaryCategory === 'Course Unit') {
-          child1.children.map((child2:any) => {
+          child1.children.map((child2: any) => {
             const foundContent = data.result.contentList.find((el: any) => el.contentId === child2.identifier)
             child2.completionPercentage = foundContent.completionPercentage
             child2.completionStatus = foundContent.status
@@ -533,11 +532,11 @@ export class AppTocService {
     }
   }
 
-  mapCompletionChildPercentageProgram(child:any) {
+  mapCompletionChildPercentageProgram(child: any) {
     if (child && child.children) {
-      child.children.map((child1:any) => {
+      child.children.map((child1: any) => {
           if (child1 && child1.children && child1.primaryCategory === 'Course Unit') {
-            child1.children.map((child2:any) => {
+            child1.children.map((child2: any) => {
               child2.completionPercentage = 100
               child2.completionStatus = 2
             })
@@ -551,12 +550,12 @@ export class AppTocService {
 
   fetchContentHistoryV2(req: NsContent.IContinueLearningDataReq): Observable<NsContent.IContinueLearningData> {
     req.request.fields = ['progressdetails']
-    let reslut: any = this.http.post<NsContent.IContinueLearningData>(
+    const reslut: any = this.http.post<NsContent.IContinueLearningData>(
       `${API_END_POINTS.CONTENT_HISTORYV2}/${req.request.courseId}`, req
     )
     return reslut
   }
-  
+
   dowonloadCertificate(certId: any): Observable<any> {
     return this.http.get<{ result: any }>(
       API_END_POINTS.CERT_DOWNLOAD(certId),

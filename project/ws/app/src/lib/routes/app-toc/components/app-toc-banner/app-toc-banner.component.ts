@@ -223,7 +223,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   get getBatchDuration() {
     const startDate = dayjs(this.batchControl.value.startDate)
     const endDate = dayjs(this.batchControl.value.endDate)
-    // adding 1 to include the start date 
+    // adding 1 to include the start date
     return (endDate.diff(startDate, 'days') + 1)
   }
 
@@ -412,7 +412,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
             courseId,
             courseName,
             apiData,
-            
+
           },
           disableClose: false,
           panelClass: ['animate__animated', 'animate__slideInLeft'],

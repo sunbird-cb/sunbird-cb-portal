@@ -168,7 +168,7 @@ export class WidgetContentService {
   }
 
   autoAssignCuratedBatchApi(request: any): Observable<NsContent.IBatchListResponse> {
-    return this.http.post<NsContent.IBatchListResponse>(`${API_END_POINTS.AUTO_ASSIGN_CURATED_BATCH}`,request)
+    return this.http.post<NsContent.IBatchListResponse>(`${API_END_POINTS.AUTO_ASSIGN_CURATED_BATCH}`, request)
       .pipe(
         retry(1),
         map(
@@ -176,7 +176,6 @@ export class WidgetContentService {
         )
       )
   }
-  
 
   enrollUserToBatch(req: any) {
     return this.http
