@@ -152,13 +152,6 @@
     background-color: transparent !important;
   }
 }
-::ng-deep .mat-form-field-wrapper {
-  padding: 0 !important;
-}
-
-::ng-deep .mat-form-field-infix {
-  border-top: unset !important;
-}
 
 .loader {
   position: absolute;
