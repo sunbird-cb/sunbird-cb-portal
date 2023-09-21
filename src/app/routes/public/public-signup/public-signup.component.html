@@ -261,7 +261,7 @@
                     <!-- <input [readonly]="otpSend && !otpVerified" id="mobileNumber" #mobile type="number" matInput
                       placeholder="Mobile Number" formControlName="mobile" i18n-aria-label
                       aria-label="Mobile Number input" maxlength="12"> -->
-                    <input  id="mobileNumber" #mobile type="number" matInput
+                    <input  id="mobileNumber" #mobile type="number" matInput (keypress)="numericOnly($event)" (paste)="numericOnly($event)"
                       placeholder="Mobile Number" formControlName="mobile" i18n-aria-label
                       aria-label="Mobile Number input">
                     <mat-icon matSuffix class="ws-mat-green-text margin-xs" svgIcon="verified" [hidden]="!isMobileVerified"></mat-icon>
