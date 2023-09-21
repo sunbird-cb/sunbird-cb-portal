@@ -229,7 +229,7 @@ TODO: edit option while preview Mode
                     </p>
                   </div>
                 </ng-container>
-                <!-- <ng-container>
+                <ng-container>
                   <a *ngIf="showStart.show && batchData?.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.APPROVED"
                   [routerLink]="isBatchInProgress? (resumeData && !certData) ? resumeDataLink?.url : firstResourceLink?.url : '' "
                   [queryParams]="isBatchInProgress ? (resumeData && !certData) ? generateQuery('RESUME') : generateQuery('START') : '' "
@@ -244,7 +244,7 @@ TODO: edit option while preview Mode
                     {{resumeData? "Start again" : "Start"}}
                   </ng-container>
                 </a>
-                </ng-container> -->
+                </ng-container>
             </ng-container>
             <ng-container *ngIf="actionBtnStatus == 'reject' && content?.registrationUrl">
               <a [href]="content?.registrationUrl" target="_blank" class="mat-button mat-button-base custom-button"
@@ -481,7 +481,7 @@ TODO: edit option while preview Mode
                 {{tocConfig?.atAGlance?.batchDate?.displayName}}
               </h3>
               <h3 class="item-value width-expand">
-                {{ selectedBatchData?.content[0]?.startDate | date: 'dd-MM-yyyy'}} - {{ selectedBatchData?.content[0]?.endDate | date: 'dd-MM-yyyy'}}
+                {{ selectedBatchData?.content[0]?.startDate | date: 'dd-MM-yyyy'}} to {{ selectedBatchData?.content[0]?.endDate | date: 'dd-MM-yyyy'}}
               </h3>
             </div>
             <div class="info-item" *ngIf="tocConfig?.atAGlance?.batchDuration?.enabled && content?.programDuration">
@@ -657,7 +657,7 @@ TODO: edit option while preview Mode
 
           <div class="info-item" *ngIf="tocConfig?.atAGlance?.lastUpdatedOn?.enabled && content?.lastUpdatedOn">
             <p class="mat-body-2 font-bold-imp ws-mat-black60-text">
-              {{tocConfig?.atAGlance?.lastUpdatedOn?.displayName}} {{ content?.lastUpdatedOn | date }}
+              {{tocConfig?.atAGlance?.lastUpdatedOn?.displayName}} {{ content?.lastUpdatedOn |  date: 'dd-MM-yyyy' }}
             </p>
           </div>
         </div>
