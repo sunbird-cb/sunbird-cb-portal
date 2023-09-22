@@ -428,10 +428,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.openRequestToEnroll(batchData)
       }
     } else {
-      if (userList && userList.length === 1) {
-        this.openSnackbar(`${userList[0].courseName} - ${NsContent.EPrimaryCategory.BLENDED_PROGRAM} is in progress`)
-      } else {
-        this.openSnackbar(`${NsContent.EPrimaryCategory.BLENDED_PROGRAM} is in progress`)
+      if (userList && userList.length > 0) {
+        this.openSnackbar(`You cannot enroll in this blended program because it conflicts with your existing blended program.`)
       }
     }
   }

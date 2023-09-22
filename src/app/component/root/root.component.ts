@@ -74,6 +74,7 @@ export class RootComponent implements OnInit, AfterViewInit {
   isSetupPage = false
   processed: any
   loginToken: any
+  showTour: boolean = false
   currentRouteData: any = []
   loggedinUser = !!(this.configSvc.userProfile && this.configSvc.userProfile.userId)
   constructor(
@@ -177,6 +178,8 @@ export class RootComponent implements OnInit, AfterViewInit {
     this.skipper.nativeElement.focus()
   }
   ngOnInit() {
+    let showTour = localStorage.getItem('tourGuide')? JSON.parse(localStorage.getItem('tourGuide')||''): {}
+    this.showTour = showTour && showTour.disable ? showTour.disable : false
     // console.log('this.route.snapshot.queryParams ', this.route.snapshot.queryParams); // TODO: log!
     console.log('loggedinUser ', this.loggedinUser); // TODO: log!
     this.route.queryParams
