@@ -794,7 +794,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       }
       this.contentSvc.autoAssignCuratedBatchApi(req).subscribe(
         (data: NsContent.IBatchListResponse) => {
-          this.getUserEnrollmentList()
+          if (data) {
+            this.getUserEnrollmentList()
+          }
         }
       )
     }
