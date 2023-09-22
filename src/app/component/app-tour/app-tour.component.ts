@@ -172,6 +172,7 @@ export class AppTourComponent {
   }
 
   public skipTour(screen: string, subType: string): void {
+    localStorage.setItem('tourGuide',JSON.stringify({'disable': true}) )
     if (screen.length > 0 && subType.length > 0) {
       this.raiseTemeletyInterat(screen, subType)
     } else {
@@ -181,7 +182,6 @@ export class AppTourComponent {
         this.raiseTemeletyInterat('welcome-skip', 'welcome')
       }
     }
-
     this.raiseGetStartedEndTelemetry()
     this.noScroll = false;
     this.showpopup = false;
@@ -206,6 +206,7 @@ export class AppTourComponent {
       // @ts-ignore
       document.getElementById('menuToggleMobile').click()
     }
+    localStorage.setItem('tourGuide',JSON.stringify({'disable': true}) )
   }
 
   startApp(): void {
