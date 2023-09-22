@@ -56,13 +56,13 @@ export class AppTourComponent {
       },
       {
         icon: 'group',
-        connectorDirection: 'left',
+        connectorDirection: 'right',
         title: 'My Profile',
         selector: '#user_icon',
         class: 'tour_profile',
         containerClass: 'tour_profile_container',
         content: 'Update your information to get the best-suited courses and programs.',
-        orientation: Orientation.BottomLeft,
+        orientation: Orientation.BottomRight,
         nextBtnClass: 'action-orange mat-button',
         backBtnClass: 'back',
         skipBtnClass: 'skip'
