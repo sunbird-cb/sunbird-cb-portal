@@ -177,7 +177,12 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     // this.fetchDropDownValues('ministry')
     const instanceConfig = this.configSvc.instanceConfig
     this.positionsOriginal = this.activatedRoute.snapshot.data.positions.data || []
-    this.groupsOriginal = this.activatedRoute.snapshot.data.group.data || []
+    if (this.activatedRoute.snapshot.data.group.data) {
+      this.groupsOriginal = this.activatedRoute.snapshot.data.group.data.filter((ele:any) => ele !== 'Others')
+    } else {
+      this.groupsOriginal = []
+    }
+    
     this.OrgsSearchChange()
     // this.onPositionsChange()
     this.onGroupChange()
