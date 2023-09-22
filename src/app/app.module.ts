@@ -84,6 +84,7 @@ import { AppTourComponent } from './component/app-tour/app-tour.component'
 import {GuidedTourModule, GuidedTourService} from 'cb-tour-guide';
 import { AppChatbotComponent } from './component/app-chatbot/app-chatbot.component';
 import { ChatbotService } from './component/app-chatbot/chatbot.service';
+import { AppTourVideoComponent } from './component/app-tour-video/app-tour-video.component';
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -126,7 +127,9 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PublicLoginWComponent,
     PublicLoginWGComponent,
     AppChatbotComponent,
-    AppTourComponent
+    AppTourVideoComponent,
+    AppTourComponent,
+
   ],
   imports: [
     FormsModule,

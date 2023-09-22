@@ -1,9 +1,9 @@
 <div class="fixed-width flex flex-wrap">
-  <div class="chatbot-icon" *ngIf="showIcon" (mouseover)="expanded = true" (mouseleave)="expanded = false" (click)="iconClick('start')">
-      <div>
-        <img alt="chatbot-icon" src="/assets/icons/chatbot-launch-icon.svg"/>
+  <div class="chatbot-icon-container" *ngIf="showIcon" (mouseover)="expanded = true" (mouseleave)="expanded = false" (click)="iconClick('start')">
+      <div class="chatbot-icon flex" [ngClass]="{'chatbot-icon-expanded': expanded}">
+        <img alt="chatbot-icon" src="/assets/icons/launch-icon.svg"/>
+        <div class="expand-text">FAQ Chatbot</div>
       </div>
-      <div class="expand-text" *ngIf="expanded" >FAQ Chatbot</div>
   </div>
 
   <div class="chatbot" *ngIf="!showIcon">

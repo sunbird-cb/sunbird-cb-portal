@@ -223,7 +223,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   get getBatchDuration() {
     const startDate = dayjs(this.batchControl.value.startDate)
     const endDate = dayjs(this.batchControl.value.endDate)
-    return endDate.diff(startDate, 'days')
+    // adding 1 to include the start date
+    return (endDate.diff(startDate, 'days') + 1)
   }
 
   get showStart() {
@@ -393,7 +394,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       if (this.content && this.content.wfSurveyLink) {
         const sID = this.content.wfSurveyLink.split('surveys/')
         const surveyId = sID[1]
-        const identifierId = this.content.identifier
+        const courseId = this.content.identifier
+        const courseName = this.content.name
         const apiData = {
           // tslint:disable-next-line:prefer-template
           getAPI: '/apis/proxies/v8/forms/getFormById?id=' + surveyId,
@@ -407,8 +409,10 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
           maxHeight: '85vh',
           data: {
             surveyId,
-            identifierId,
+            courseId,
+            courseName,
             apiData,
+
           },
           disableClose: false,
           panelClass: ['animate__animated', 'animate__slideInLeft'],
@@ -424,10 +428,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.openRequestToEnroll(batchData)
       }
     } else {
-      if (userList && userList.length === 1) {
-        this.openSnackbar(`${userList[0].courseName} ${NsContent.EPrimaryCategory.BLENDED_PROGRAM} is in progress`)
-      } else {
-        this.openSnackbar(`${NsContent.EPrimaryCategory.BLENDED_PROGRAM} is in progress`)
+      if (userList && userList.length > 0) {
+        this.openSnackbar(`You cannot enroll in this blended program because it conflicts with your existing blended program.`)
       }
     }
   }

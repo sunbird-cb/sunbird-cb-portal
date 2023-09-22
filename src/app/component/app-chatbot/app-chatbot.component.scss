@@ -1,23 +1,41 @@
-.chatbot-icon {
+.chatbot-icon-container {
   position: fixed;
-  bottom: 80px;
+  bottom: 64px;
   right: 0px;
   cursor: pointer;
-  z-index: 1000;
-  height: 52px;
+  z-index: 1005;
+  height: 90px;
   align-items: flex-start;
   display: flex;
   justify-content: center;
+  width: auto;
+}
+
+.chatbot-icon {
+  position: absolute;
+  right: -107px;
+  -moz-animation-delay: 1s;
+  -webkit-animation-delay: 1s;
+  -o-animation-delay: 1s;
+  animation-delay: 1s;
+  transition: 1s ease;
+}
+
+.chatbot-icon-expanded {
+  right: 0px;
 }
 
 .expand-text {
-  background-color: #1B4CA1;
-  color: white;
+  width: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1b4ca1;
+  color: #fff;
   font-size: 18px;
-  padding: 16px 14px;
-  margin-top: 12px;
-  border-top: 2px solid white;
-  border-bottom: 2px solid white;
+  border-top: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  vertical-align: middle;
 }
 
 .chatbot {
@@ -152,13 +170,6 @@
     background-color: transparent !important;
   }
 }
-::ng-deep .mat-form-field-wrapper {
-  padding: 0 !important;
-}
-
-::ng-deep .mat-form-field-infix {
-  border-top: unset !important;
-}
 
 .loader {
   position: absolute;
@@ -282,4 +293,19 @@
 }
 .hint-text {
   color: #1B4CA1;
+}
+
+
+@media only screen and (max-width: 600px) {
+  .chatbot {
+    right: 6px;
+    bottom: 67px
+  }
+}
+
+@media only screen and (max-width: 390px) {
+  .chatbot {
+    right: 6px;
+    bottom: 67px
+  }
 }
