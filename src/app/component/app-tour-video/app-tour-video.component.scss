@@ -1,0 +1,70 @@
+@import '../../../../node_modules/cb-tour-guide/scss/guided-tour-base-theme.scss';
+.video-tour {
+  // height: 50vh;
+  width: 50vw;
+  align-items: center;
+  background-color: white;
+}
+.tour-video-container {
+  flex-direction: column;
+  .skip-btn {
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0, 0.08);
+    opacity: 1;
+  }
+}
+.video-header-row {
+  text-align: center;
+  padding: 1rem;
+  background-color: #1C4CA1;
+}
+.video-player-row {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.video-footer-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #1C4CA1;
+  .next-btn {
+    background: #F3962E;
+  }
+}
+
+.video-tour-mobile {
+  // height: 50vh;
+  width: 90vw;
+  align-items: center;
+  background-color: transparent;
+}
+.video-footer-row-mobile {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  padding-left: 0;
+  padding-right: 0;
+  background-color: transparent;
+  .next-btn {
+    background: #F3962E;
+  }
+}
+.video-header-row-mobile {
+  text-align: center;
+  padding: 5px 5px 1rem 5px;
+  background-color: #1C4CA1;
+  border-radius: 7px;
+}
+
+.backdrop {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  // opacity: 0.9;
+  background: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  z-index: 99999;
+  justify-content: center;
+  align-items: center;
+}

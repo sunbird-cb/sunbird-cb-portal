@@ -483,4 +483,9 @@ export class PublicRequestComponent implements OnInit {
   public goBackUrl() {
     this._location.back()
   }
+  numericOnly(event: any): boolean {
+    const pattren = /^([0-9])$/
+    const result = pattren.test(event.key)
+    return result
+  }
 }
