@@ -114,12 +114,14 @@
 
 
 <div *ngIf="showVideoTour && !isMobile" class="backdrop bg-zinc-400" [ngClass]="{'requires-no-scroll': noScroll}">
-  <div *ngIf="showVideoTour && !isMobile" class="video-tour">
+  <ws-app-tour-video (emitedValue)="emitFromVideo($event)" [showVideoTour]="showVideoTour" [isMobile]="isMobile"></ws-app-tour-video>
+  <!-- <div *ngIf="showVideoTour && !isMobile" class="video-tour">
     <div class="flex tour-video-container">
       <div class="video-header-row">
         <span class="ws-mat-white-text mat-h2">What is iGOT Karmayogi?</span>
       </div>
       <div class="video-player-row">
+        <ws-app-tour-video></ws-app-tour-video>
         <video controls="" height="100%" width="100%">
           <source src="https://portal.karmayogi.nic.in/content-store/Website_Video.mp4" type="video/mp4">
         </video>
@@ -129,13 +131,15 @@
         <button class="next-btn dialog-btn ws-mat-primary-background-op30 action-orange" (click)="startTour('welcome-start', 'start')" mat-button>Next</button>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
 <!-- Mobile video player -->
 <div *ngIf="showVideoTour && isMobile" class="backdrop bg-zinc-400" [ngClass]="{'requires-no-scroll': noScroll}">
-  <div *ngIf="showVideoTour && isMobile" class="video-tour-mobile">
+  <ws-app-tour-video (start)="emitFromVideo($event)" [showVideoTour]="showVideoTour" [isMobile]="isMobile"></ws-app-tour-video>
+  <!-- <div *ngIf="showVideoTour && isMobile" class="video-tour-mobile">
     <div class="flex tour-video-container">
       <div class="video-header-row-mobile">
+        <ws-app-tour-video></ws-app-tour-video>
         <video controls="" height="100%" width="100%">
           <source src="https://portal.karmayogi.nic.in/content-store/Website_Video.mp4" type="video/mp4">
         </video>
@@ -148,6 +152,6 @@
         <button class="next-btn dialog-btn ws-mat-primary-background-op30 action-orange" (click)="startTour('welcome-start', 'start')" mat-button>Next</button>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
 <!-- Mobile video player -->

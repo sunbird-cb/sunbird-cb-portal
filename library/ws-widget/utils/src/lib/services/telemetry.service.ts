@@ -345,7 +345,7 @@ export class TelemetryService {
             type: event.data.type || WsEvents.WsTimeSpentType.Player,
             mode: event.data.mode || WsEvents.WsTimeSpentMode.Play,
           },
-                   {},
+                   event.data.object,
                    event.pageContext
           )
         }

@@ -147,6 +147,14 @@ export class AppTourComponent {
     this.raiseGetStartedStartTelemetry()
   }
 
+  emitFromVideo(event: any){
+    if (event === 'skip'){
+      this.skipTour(`video-${event}`, 'video')
+    } else {
+      this.startTour(`welcome-${event}`, 'welcome')
+    }
+  }
+
   public startTour(screen: string, subType: string): void {
     this.showpopup = false;
     this.showVideoTour = false;
@@ -168,7 +176,7 @@ export class AppTourComponent {
       this.raiseTemeletyInterat(screen, subType)
     } else {
       if(this.currentWindow) {
-        this.raiseTemeletyInterat(`${this.currentWindow.title.toLowerCase().relace(' ','-')}-skip`, this.currentWindow.title.toLowerCase())
+        this.raiseTemeletyInterat(`${this.currentWindow.title.toLowerCase().replace(' ','-')}-skip`, this.currentWindow.title.toLowerCase())
       } else {
         this.raiseTemeletyInterat('welcome-skip', 'welcome')
       }
@@ -211,16 +219,14 @@ export class AppTourComponent {
 
   nextCb(currentStep: number, stepObject:any) {
     this.currentWindow = stepObject
-    console.log("this.currentWindow ", this.currentWindow)
     let currentStepObj: any = this.TOUR.steps[currentStep - 1]
-    this.raiseTemeletyInterat(`${currentStepObj.title.toLowerCase().relace(' ','-')}-next`, currentStepObj.title.toLowerCase())
+    this.raiseTemeletyInterat(`${currentStepObj.title.toLowerCase().replace(' ','-')}-next`, currentStepObj.title.toLowerCase())
   }
 
   prevCb(currentStep: number, stepObject:any) {
     this.currentWindow = stepObject
-    console.log("this.currentWindow ", this.currentWindow)
     let currentStepObj: any = this.TOUR.steps[currentStep +  1]
-    this.raiseTemeletyInterat(`${currentStepObj.title.toLowerCase().relace(' ','-')}-previous`, currentStepObj.title.toLowerCase())
+    this.raiseTemeletyInterat(`${currentStepObj.title.toLowerCase().replace(' ','-')}-previous`, currentStepObj.title.toLowerCase())
   }
 
   raiseGetStartedStartTelemetry() {
