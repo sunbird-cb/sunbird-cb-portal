@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   AfterViewInit,
   ApplicationRef,
   ChangeDetectorRef,
@@ -50,7 +51,7 @@ import { concat, interval, timer } from 'rxjs'
   styleUrls: ['./root.component.scss'],
   providers: [SwUpdate],
 })
-export class RootComponent implements OnInit, AfterViewInit {
+export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
   @ViewChild('previewContainer', { read: ViewContainerRef, static: true })
   // @ViewChild('userIntro', { static: true }) userIntro!: TemplateRef<any>
@@ -375,5 +376,23 @@ export class RootComponent implements OnInit, AfterViewInit {
         })
       }
     }
+  }
+
+  getTourGuide() {
+    let showTour = false
+    this.configSvc.updateTourGuide.subscribe((res:any) => {
+      showTour = res
+    })
+    this.showTour = showTour
+    return showTour
+  }
+
+  ngAfterViewChecked() {
+    let show = this.getTourGuide()
+    if (show != this.showTour) { // check if it change, tell CD update view
+      this.showTour = this.showTour;
+    }
+    this.changeDetector.detectChanges();
+    console.log(this.loggedinUser ,this.showTour)
   }
 }
