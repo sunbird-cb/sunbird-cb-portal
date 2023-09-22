@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { ProgressIndicatorLocation, GuidedTour, Orientation, GuidedTourService } from 'cb-tour-guide';
-import { UtilityService, EventService, WsEvents } from '@sunbird-cb/utils';
+import { UtilityService, EventService, WsEvents, ConfigurationsService } from '@sunbird-cb/utils';
 
 @Component({
   selector: 'app-tour',
@@ -142,7 +142,7 @@ export class AppTourComponent {
   showVideoTour: boolean = false;
   isMobile: boolean = false;
 
-  constructor(private guidedTourService: GuidedTourService, private utilitySvc: UtilityService, private events: EventService) {
+  constructor(private guidedTourService: GuidedTourService, private utilitySvc: UtilityService,private configSvc: ConfigurationsService, private events: EventService) {
     this.isMobile = this.utilitySvc.isMobile;
     this.raiseGetStartedStartTelemetry()
   }
@@ -173,6 +173,7 @@ export class AppTourComponent {
 
   public skipTour(screen: string, subType: string): void {
     localStorage.setItem('tourGuide',JSON.stringify({'disable': true}) )
+    this.configSvc.updateTourGuideMethod(true)
     if (screen.length > 0 && subType.length > 0) {
       this.raiseTemeletyInterat(screen, subType)
     } else {
@@ -206,7 +207,12 @@ export class AppTourComponent {
       // @ts-ignore
       document.getElementById('menuToggleMobile').click()
     }
+  }
+
+  onCongrats(): void {
+    this.showCompletePopup = false;
     localStorage.setItem('tourGuide',JSON.stringify({'disable': true}) )
+    this.configSvc.updateTourGuideMethod(true)
   }
 
   startApp(): void {

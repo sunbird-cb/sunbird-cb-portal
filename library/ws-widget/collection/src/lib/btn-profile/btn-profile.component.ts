@@ -186,7 +186,7 @@ export class BtnProfileComponent extends WidgetBaseComponent
   }
 
   redirectToTourPage() {
-    this.router.navigate(['/page/home'], {relativeTo: this.activatedRoute,
-      queryParams: { apptour: 'show' }, queryParamsHandling: 'merge' })
+    this.router.navigate(['/page/home'], {relativeTo: this.activatedRoute, queryParamsHandling: 'merge' })
+    this.configSvc.updateTourGuideMethod(false)
   }
 }
