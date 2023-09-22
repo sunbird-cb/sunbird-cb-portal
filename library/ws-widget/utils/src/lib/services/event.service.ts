@@ -14,6 +14,9 @@ export class EventService {
   private eventsChatbotSubject = new Subject<WsEvents.IWsEvents<any>>()
   public chatbotEvents$ = this.eventsChatbotSubject.asObservable()
 
+  private eventsGetStartSubject = new Subject<WsEvents.IWsEvents<any>>()
+  public getStartEvents$ = this.eventsGetStartSubject.asObservable()
+
   constructor(
     private utilitySvc: UtilityService,
   ) {
@@ -28,6 +31,11 @@ export class EventService {
   dispatchChatbotEvent<T>(event: WsEvents.IWsEvents<T>) {
     this.eventsChatbotSubject.next(event)
   }
+
+  dispatchGetStartedEvent<T>(event: WsEvents.IWsEvents<T>) {
+    this.eventsGetStartSubject.next(event)
+  }
+
 
   // helper functions
   raiseInteractTelemetry(edata: WsEvents.ITelemetryEdata, object: any, pageContext?: WsEvents.ITelemetryPageContext) {
