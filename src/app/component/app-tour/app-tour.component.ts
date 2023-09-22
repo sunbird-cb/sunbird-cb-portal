@@ -207,6 +207,10 @@ export class AppTourComponent {
       // @ts-ignore
       document.getElementById('menuToggleMobile').click()
     }
+  }
+
+  onCongrats(): void {
+    this.showCompletePopup = false;
     localStorage.setItem('tourGuide',JSON.stringify({'disable': true}) )
     this.configSvc.updateTourGuideMethod(true)
   }

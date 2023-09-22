@@ -181,6 +181,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   ngOnInit() {
     let showTour = localStorage.getItem('tourGuide')? JSON.parse(localStorage.getItem('tourGuide')||''): {}
     this.showTour = showTour && showTour.disable ? showTour.disable : false
+    this.configSvc.updateTourGuideMethod(this.showTour)
     // console.log('this.route.snapshot.queryParams ', this.route.snapshot.queryParams); // TODO: log!
     console.log('loggedinUser ', this.loggedinUser); // TODO: log!
     this.route.queryParams
@@ -393,6 +394,5 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
       this.showTour = this.showTour;
     }
     this.changeDetector.detectChanges();
-    console.log(this.loggedinUser ,this.showTour)
   }
 }

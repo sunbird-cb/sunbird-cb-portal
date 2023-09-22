@@ -83,7 +83,7 @@
 <ngx-guided-tour backText="Previous" doneText="Finish" progressIndicatorLocation="dots"></ngx-guided-tour>
 
 <div *ngIf="showCompletePopup && !isMobile" class="backdrop bg-zinc-400" [ngClass]="{'requires-no-scroll': noScroll}">
-  <div *ngIf="showCompletePopup && !isMobile" (click)="showCompletePopup = false;" class="complete-tour">
+  <div *ngIf="showCompletePopup && !isMobile" (click)="onCongrats()" class="complete-tour">
     <img width="107" height="107" alt="" src="fusion-assets/images/tour-complete.png">
     <span class="ws-mat-default-text mat-h2">Congratulations!</span>
     <br/>
@@ -95,7 +95,7 @@
 </div>
 
 <div *ngIf="showCompletePopup && isMobile" class="backdrop bg-zinc-400" [ngClass]="{'requires-no-scroll': noScroll}">
-  <div *ngIf="showCompletePopup && isMobile" (click)="showCompletePopup = false;" class="complete-tour-mobile-container">
+  <div *ngIf="showCompletePopup && isMobile" (click)="onCongrats()" class="complete-tour-mobile-container">
     <div *ngIf="isMobile" class="mobile-tour-avatar">
       <img alt="" src="fusion-assets/images/KarmaSahayogi.svg">
     </div>

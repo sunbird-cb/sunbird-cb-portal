@@ -68,7 +68,7 @@ export class ConfigurationsService {
   private updateProfile = new BehaviorSubject(false)
   updateProfileObservable = this.updateProfile.asObservable()
 
-  updateTourGuide = new BehaviorSubject(false)
+  updateTourGuide = new BehaviorSubject(true)
   updateTourGuideObservable = this.updateTourGuide.asObservable()
 
   // Preference Related Values
@@ -105,7 +105,6 @@ export class ConfigurationsService {
     this.updateProfile.next(state)
   }
   updateTourGuideMethod(state: boolean) {
-    debugger
     this.updateTourGuide.next(state)
   }
 }
