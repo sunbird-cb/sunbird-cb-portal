@@ -158,6 +158,7 @@ export class AppTourComponent {
   }
 
   public skipTour(): void {
+    localStorage.setItem('tourGuide',JSON.stringify({'disable': true}) )
     this.noScroll = false;
     this.showpopup = false;
     this.showVideoTour = false;
@@ -180,6 +181,7 @@ export class AppTourComponent {
       // @ts-ignore
       document.getElementById('menuToggleMobile').click()
     }
+    localStorage.setItem('tourGuide',JSON.stringify({'disable': true}) )
   }
 
   startApp(): void {
