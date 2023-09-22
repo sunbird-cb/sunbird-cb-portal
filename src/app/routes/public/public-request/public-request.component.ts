@@ -485,4 +485,9 @@ export class PublicRequestComponent implements OnInit {
     this.signupSvc.updateSignUpData({firstname: formData.firstname, mobile: formData.mobile, email: formData.email, isMobileVerified: this.isMobileVerified , isEmailVerified: this.isEmailVerified })
     this._location.back()
   }
+  numericOnly(event: any): boolean {
+    const pattren = /^([0-9])$/
+    const result = pattren.test(event.key)
+    return result
+  }
 }
