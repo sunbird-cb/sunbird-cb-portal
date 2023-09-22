@@ -194,7 +194,7 @@
                 <div class="flex flex-1">
 
                   <mat-form-field appearance="outline" class="margin-top-s" id="email">
-                    <input id="email" name="emailField" autocomplete="off" type="email" maxlength="320" (input)="emailVerification($event.target.value)" matInput placeholder="Enter your email id" #email
+                    <input id="email" name="emailField" autocomplete="off" type="email" maxlength="50" (input)="emailVerification($event.target.value)" matInput placeholder="Enter your email id" #email
                       formControlName="email" i18n-aria-label aria-label="Email input">
                     <!-- <mat-hint>Please enter a government email ID</mat-hint> -->
                   <mat-icon matSuffix class="ws-mat-green-text margin-xs" svgIcon="verified" [hidden]="!isEmailVerified"></mat-icon>
@@ -261,7 +261,7 @@
                     <!-- <input [readonly]="otpSend && !otpVerified" id="mobileNumber" #mobile type="number" matInput
                       placeholder="Mobile Number" formControlName="mobile" i18n-aria-label
                       aria-label="Mobile Number input" maxlength="12"> -->
-                    <input  id="mobileNumber" #mobile type="number" matInput
+                    <input  id="mobileNumber" #mobile matInput type="text" maxlength="10" 
                       placeholder="Mobile Number" formControlName="mobile" i18n-aria-label
                       aria-label="Mobile Number input">
                     <mat-icon matSuffix class="ws-mat-green-text margin-xs" svgIcon="verified" [hidden]="!isMobileVerified"></mat-icon>

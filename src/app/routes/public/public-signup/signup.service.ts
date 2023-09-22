@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Observable } from 'rxjs'
+import { BehaviorSubject, Observable } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 
 const API_END_POINTS = {
@@ -20,6 +20,8 @@ const API_END_POINTS = {
   providedIn: 'root',
 })
 export class SignupService {
+  private signupData = new BehaviorSubject({})
+  updateSignupDataObservable = this.signupData.asObservable()
 
   constructor(private http: HttpClient) { }
 
@@ -92,5 +94,9 @@ export class SignupService {
       },
     }
     return this.http.post(API_END_POINTS.SEARCH_ORG, req)
+  }
+
+  updateSignUpData(state: any) {
+    this.signupData.next(state)
   }
 }
