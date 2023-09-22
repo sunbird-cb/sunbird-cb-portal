@@ -806,6 +806,15 @@ body:has(.requires-no-scroll) {
 }
 
 ngx-guided-tour {
+  .tour_profile_container.right-panel {
+    .arrow {
+      left: -65px !important;
+      top: -25px !important;
+    }
+    .circle-start-dot {
+      margin-left: 35px;
+    }
+  }
   .tour_learn_mobile_container, .tour_discuss_mobile_container {
     // top: 2rem !important;
     // left: 12% !important;
