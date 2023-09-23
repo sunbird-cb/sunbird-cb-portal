@@ -77,7 +77,7 @@ export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn 
         // return new RegExp('^' + op.channel + '$').test(control.channel)
         return op.name === control.value.name
       })
-      return index < 0 ? { forbiddenNames: { value: control.value.name } } : null
+      return index < 0 ? { forbiddenNames: { value: control.value && control.value.name ? control.value.name : null} } : null
     }
   }
 }

@@ -234,13 +234,13 @@
                     Domain
                   </label>
                   <mat-form-field appearance="outline" class="margin-top-s w-full">
-                    <input id="domain" matInput type="text" placeholder="Example: gov.in"
+                    <input id="domain" matInput type="text" placeholder="Example: @gov.in"
                       i18n-placeholder="domain" formControlName="domain" autocomplete="off"
                       i18n-aria-label aria-label="domain" #domain maxlength="63" />
                     <mat-error [hidden]="false" i18n="Domain Error | Explains domain is required"
                       *ngIf="requestForm?.controls['domain'].errors?.required" i18n-aria-label
                       aria-label="domain is mandatory">
-                      Enter your domain (Example: gov.in)
+                      Enter your domain (Example: @gov.in)
                     </mat-error>
                     <mat-error *ngIf="requestForm?.controls['domain'].errors?.pattern" i18n-aria-label
                       aria-label="Please enter a valid domain name">
