@@ -127,6 +127,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   resultFetched = false
   heirarchyObject: any
   hideOrg = false
+  emailPattern = `^[\\w\-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$`
 
   private subscriptionContact: Subscription | null = null
   private recaptchaSubscription!: Subscription
@@ -160,7 +161,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       // tslint:disable-next-line:max-line-length
       group: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterGroup)]),
       // tslint:disable-next-line:max-line-length
-      email: new FormControl(userData && userData.email || '', [Validators.required, Validators.pattern(/^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@((?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?){2,}\.){1,3}(?:\w){2,}$/)]),
+      email: new FormControl(userData && userData.email || '', [Validators.required, Validators.pattern(this.emailPattern)]),
       // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
       mobile: new FormControl(userData && userData.mobile || '', [Validators.required, Validators.pattern(this.phoneNumberPattern), Validators.maxLength(12)]),
       confirmBox: new FormControl(false, [Validators.required]),
