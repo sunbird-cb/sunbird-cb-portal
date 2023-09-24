@@ -145,4 +145,26 @@ th.mat-header-cell , td.mat-cell {
     cursor: auto;
   }
 
+  .timetable-list {
+    flex-wrap: wrap;
+  }
+  .timetable-data-box {
+    width: 32%;
+    height: 140px;
+    border-bottom: 2px solid #ddd;
+  }
+  .timetable-data-box:nth-child(3n - 1) {
+    margin-left:1.5%;
+    margin-right:1.5%;
+  }
+  // .main-heading {
+
+  // }
+  // .institute-name {
+
+  // }
+  // .date-box {
+
+  // }
+
 

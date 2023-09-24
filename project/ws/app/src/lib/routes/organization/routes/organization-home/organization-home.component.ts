@@ -3,14 +3,14 @@ import { ActivatedRoute, Router, Event, NavigationEnd, NavigationError } from '@
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 // import { MatTableDataSource } from '@angular/material/table'
 
-export interface IPeriodicElement {
-  nameOfInstitute: string
-  sNo: number
-  program: string
-  dates: string
-}
+// export interface IPeriodicElement {
+//   nameOfInstitute: string
+//   sNo: number
+//   program: string
+//   dates: string
+// }
 
-const ELEMENT_DATA: IPeriodicElement[] = [
+const ELEMENT_DATA = [
   {
     sNo: 1,
     nameOfInstitute: 'Dr. R.S. Tolia Uttarakhand Academy of Administration, Uttarakhand',
@@ -141,7 +141,7 @@ export class OrganizationHomeComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationError) {
       }
     })
-    this.bannerSubscription = this.route.data.subscribe(data => {
+    this.bannerSubscription = this.route.data.subscribe((data:any) => {
       if (data && data.pageData) {
         this.banner = data.pageData.data.banner || []
       }
