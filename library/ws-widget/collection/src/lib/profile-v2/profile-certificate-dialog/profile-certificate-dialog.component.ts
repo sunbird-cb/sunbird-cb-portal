@@ -20,7 +20,7 @@ export class ProfileCertificateDialogComponent implements OnInit {
   courseID: any
   author!: string
   userID: any
-  // code reverted from 4.8.5 Ticket No:- 100759 
+  // code reverted from 4.8.5 Ticket No:- 100759
   // courseData: any
 
   navUrl: any = ''

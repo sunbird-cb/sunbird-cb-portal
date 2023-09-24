@@ -76,7 +76,7 @@ if (data.length > 0) {
       if (value.issuedCertificates.length !== 0) {
         if (value.issuedCertificates[0].identifier === element.identifier) {
           const cet = element.dataUrl
-         // code reverted from 4.8.5 Ticket No:- 100759 
+         // code reverted from 4.8.5 Ticket No:- 100759
         //   const courseDoId = value.courseId
         //   if (courseDoId) {
         //   this.tocSvc.fetchGetContentData(courseDoId).subscribe(res => {
