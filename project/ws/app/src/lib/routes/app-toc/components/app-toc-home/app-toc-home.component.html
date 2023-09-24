@@ -16,8 +16,9 @@ TODO: edit option while preview Mode
 <ng-container>
   <div class="fixed-width flex flex-wrap">
     <div class="meta-section">
+      <!-- [contentReadData]="contentReadData" -->
       <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content"
-        [analytics]="analytics" [resumeData]="resumeData" [batchData]="batchData" [contentReadData]="contentReadData">
+        [analytics]="analytics" [resumeData]="resumeData" [batchData]="batchData">
       </ws-app-toc-banner>
       <div role="none" class="toc-body margin-top-xl">
         <!-- isBatchInProgress : commented as we seperated the CBP -->
