@@ -59,17 +59,17 @@
     margin: 0 -0.25 * $card-padding;
   }
 
-  .card-main-text-box {
-    overflow: hidden!important;
-  }
-  .card-main-text,  .card-main-text span, .category-text {
-    word-break: break-word;
-    white-space: initial;
-   }
+  // .card-main-text-box {
+  //   overflow: hidden!important;
+  // }
+  // .card-main-text,  .card-main-text span, .category-text {
+  //   word-break: break-word;
+  //   white-space: initial;
+  //  }
 
-   .mat-card-header-text {
-    margin:0 0 0 16px!important;
-   }
+  //  .mat-card-header-text {
+  //   margin:0 0 0 16px!important;
+  //  }
 
   .card-img {
     min-width: 269px;
