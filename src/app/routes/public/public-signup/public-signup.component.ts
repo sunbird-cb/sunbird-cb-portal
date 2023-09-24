@@ -77,7 +77,7 @@ export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn 
         // return new RegExp('^' + op.channel + '$').test(control.channel)
         return op.name === control.value.name
       })
-      return index < 0 ? { forbiddenNames: { value: control.value.name } } : null
+      return index < 0 ? { forbiddenNames: { value: control.value && control.value.name ? control.value.name : null} } : null
     }
   }
 }
@@ -127,9 +127,11 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   resultFetched = false
   heirarchyObject: any
   hideOrg = false
+  emailPattern = `^[\\w\-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$`
 
   private subscriptionContact: Subscription | null = null
   private recaptchaSubscription!: Subscription
+  private userdataSubscription!: Subscription
   searching = false
   groupsOriginal: any = []
 
@@ -145,17 +147,23 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     @Inject(DOCUMENT) private _document: any,
     @Inject(PLATFORM_ID) private _platformId: any,
   ) {
+    let userData : any = {}
+    this.userdataSubscription = this.signupSvc.updateSignupDataObservable.subscribe(res=> {
+      userData = res
+    })
+    this.isMobileVerified = userData && userData.isMobileVerified || false
+    this.isEmailVerified = userData && userData.isEmailVerified || false
     this.registrationForm = new FormGroup({
-      firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
+      firstname: new FormControl( userData && userData.firstname || '', [Validators.required, Validators.pattern(this.namePatern)]),
       // lastname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       // tslint:disable-next-line:max-line-length
       // position: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterPositions)]),
       // tslint:disable-next-line:max-line-length
       group: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterGroup)]),
       // tslint:disable-next-line:max-line-length
-      email: new FormControl('', [Validators.required, Validators.pattern(/^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@((?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?){2,}\.){1,3}(?:\w){2,}$/)]),
+      email: new FormControl(userData && userData.email || '', [Validators.required, Validators.pattern(this.emailPattern)]),
       // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
-      mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern), Validators.maxLength(12)]),
+      mobile: new FormControl(userData && userData.mobile || '', [Validators.required, Validators.pattern(this.phoneNumberPattern), Validators.maxLength(12)]),
       confirmBox: new FormControl(false, [Validators.required]),
       confirmTermsBox: new FormControl(false, [Validators.required]),
       type: new FormControl('ministry', [Validators.required]),
@@ -170,7 +178,12 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     // this.fetchDropDownValues('ministry')
     const instanceConfig = this.configSvc.instanceConfig
     this.positionsOriginal = this.activatedRoute.snapshot.data.positions.data || []
-    this.groupsOriginal = this.activatedRoute.snapshot.data.group.data || []
+    if (this.activatedRoute.snapshot.data.group.data) {
+      this.groupsOriginal = this.activatedRoute.snapshot.data.group.data.filter((ele:any) => ele !== 'Others')
+    } else {
+      this.groupsOriginal = []
+    }
+    
     this.OrgsSearchChange()
     // this.onPositionsChange()
     this.onGroupChange()
@@ -687,6 +700,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this._platformId)) {
       this._document.body.classList.remove('cs-recaptcha')
     }
+    if (this.userdataSubscription) {
+      this.userdataSubscription.unsubscribe()
+    }
   }
 
   // Getters
@@ -705,5 +721,11 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     const url = '/public/request'
     // tslint:disable-next-line: max-line-length
     this.router.navigate([url], {  queryParams: { type: param }, state: { userform: formData, isMobileVerified: this.isMobileVerified , isEmailVerified: this.isEmailVerified } })
+  }
+
+  numericOnly(event: any): boolean {
+    const pattren = /^([0-9])$/
+    const result = pattren.test(event.key)
+    return result
   }
 }
