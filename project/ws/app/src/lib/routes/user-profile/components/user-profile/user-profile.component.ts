@@ -103,7 +103,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   public degreeInstitutes = []
   public postDegreeInstitutes = []
   public countryCodes: string[] = []
-  gradePayData!: any
+  // gradePayData!: any
   showDesignationOther!: boolean
   showOrgnameOther!: boolean
   showIndustryOther!: boolean
@@ -283,9 +283,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.govtOrgMeta = data.govtOrg
         this.industriesMeta = data.industries
         this.degreesMeta = data.degrees
-        this.gradePayData = data.designations.gradePay.sort((a: any, b: any) => {
-          return a.name - b.name
-        })
+        // this.gradePayData = data.designations.gradePay.sort((a: any, b: any) => {
+        //   return a.name - b.name
+        // })
         // this.designationsMeta = data.designations
         this.onChangesDegrees()
         this.onChangesPostDegrees()
