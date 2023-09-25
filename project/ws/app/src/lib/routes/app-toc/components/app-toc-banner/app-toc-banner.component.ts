@@ -40,7 +40,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   @Input() analytics: NsAnalytics.IAnalytics | null = null
   @Input() forPreview = false
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
-  // @Input() contentReadData: NsContent.IContent | null = null
+  contentReadData: NsContent.IContent | null = null
   batchControl = new FormControl('', Validators.required)
   primaryCategory = NsContent.EPrimaryCategory
   WFBlendedProgramStatus = NsContent.WFBlendedProgramStatus
@@ -118,12 +118,16 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
           }
         })
       }
+      if (this.content && this.content.identifier) {
+        this.tocSvc.fetchGetContentData(this.content.identifier).subscribe(res => {
+          this.contentReadData = res.result.content
+        })
+      }
     })
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig && instanceConfig.logos && instanceConfig.logos.defaultSourceLogo) {
       this.defaultSLogo = instanceConfig.logos.defaultSourceLogo
     }
-
     if (this.configSvc.restrictedFeatures) {
       this.isGoalsEnabled = !this.configSvc.restrictedFeatures.has('goals')
     }
