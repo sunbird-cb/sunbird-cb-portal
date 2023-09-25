@@ -118,7 +118,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
           }
         })
       }
-      if (this.content) {
+      if (this.content && this.content.identifier) {
         this.tocSvc.fetchGetContentData(this.content.identifier).subscribe(res => {
           this.contentReadData = res.result.content
         })
@@ -128,7 +128,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     if (instanceConfig && instanceConfig.logos && instanceConfig.logos.defaultSourceLogo) {
       this.defaultSLogo = instanceConfig.logos.defaultSourceLogo
     }
-    
     if (this.configSvc.restrictedFeatures) {
       this.isGoalsEnabled = !this.configSvc.restrictedFeatures.has('goals')
     }
