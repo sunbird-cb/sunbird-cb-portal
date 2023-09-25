@@ -5,8 +5,8 @@
 		<ws-widget-avatar-photo mat-card-avatar [name]="getUserFullName(discuss.user)" [size]="'s'">
 		</ws-widget-avatar-photo>
 
-		<!-- updated code --
-					<mat-card-title class="mat-card-header-margin mat-card-title-height">
+		
+		<mat-card-title class="mat-card-header-margin mat-card-title-height">
 				<a href="javascript:void(0)" role="link" i18n-aria-label>
 				<span class="ws-mat-black60-text mat-body-2"> Asked by
 					{{discuss?.user?.displayname != null ? discuss?.user?.displayname : discuss?.user?.username }}
@@ -14,10 +14,11 @@
 				</span></a>
 				<span class="dot mat-body-2" *ngIf="!(discuss?.user?.username)">{{'Asked by Anonymous'}}</span>
 				<span class="dot ws-mat-black60-text mat-body-2 ng-star-inserted  mar-16" >{{discuss?.timeinfo | pipeRelativeTime}}</span>
-			</mat-card-title> -->
+			</mat-card-title>
+		</mat-card-header>	
 
 		<!-- rever code -->
-		<mat-card-title class="mat-card-header-margin mat-card-title-height">
+		<!-- <mat-card-title class="mat-card-header-margin mat-card-title-height">
 			<a href="javascript:void(0)" role="link" i18n-aria-label>
 				<span class="ws-mat-black60-text mat-body-2"> Asked by
 					{{discuss?.user?.fullname != null ? discuss?.user?.fullname : discuss?.user?.username }}
@@ -25,7 +26,7 @@
 			<span class="dot mat-body-2" *ngIf="!(discuss?.user?.username)">{{'Asked by Anonymous'}}</span>
 			<span class="dot ws-mat-black60-text mat-body-2 ng-star-inserted  mar-16">{{discuss?.timeinfo |
 				pipeRelativeTime}}</span>
-		</mat-card-title>
+		</mat-card-title> -->
 		<!-- </mat-card-header>  -->
 		<!-- </div> -->
 		<!-- <mat-card-title>
@@ -43,23 +44,25 @@
 				<span class="cursor-pointer mat-subheading-1" [innerHTML]="discuss?.title"></span>
 			</a>
 		</mat-card-title> -->
-		<!-- <mat-card-content class="card-main-text-box"> -->
+		<mat-card-content class="card-main-text-box">
 
-		<!-- <p class="responsive card-main-text">
+			<p class="responsive card-main-text">
+				<a href="javascript:void(0)">
+					<span class="cursor-pointer mat-subheading-1" [innerHTML]="discuss?.title"></span>
+				</a>
+			</p>
+		<!-- <mat-card-title class="responsive title-margin">
 			<a href="javascript:void(0)">
 				<span class="cursor-pointer mat-subheading-1" [innerHTML]="discuss?.title"></span>
 			</a>
-		</p> -->
-		<mat-card-title class="responsive title-margin">
-			<a href="javascript:void(0)">
-				<span class="cursor-pointer mat-subheading-1" [innerHTML]="discuss?.title"></span>
-			</a>
-		</mat-card-title>
+		</mat-card-title> -->
 
-		<!-- <mat-card-subtitle class="responsive">
-			<span class="flex ws-mat-default-text mat-body-2 category-text"> -->
-		<mat-card-subtitle class="responsive mat-card-sub-title-marign">
-			<span class="flex ws-mat-default-text mat-body-2">
+		<mat-card-subtitle class="responsive"> 
+			
+		<!-- <mat-card-subtitle class="responsive mat-card-sub-title-marign"> -->
+		
+		<!----<span class="flex ws-mat-default-text mat-body-2">  -->
+			<span class="flex ws-mat-default-text mat-body-2 category-text">
 				<mat-icon svgIcon="category_xs"></mat-icon>&nbsp;{{discuss.category.name}}
 			</span>
 
@@ -69,7 +72,7 @@
 					<ng-container *ngIf="discuss && discuss.tags && discuss.tags.length > 0">
 						<!-- <span *ngFor="let tag of discuss.tags" class="tag post_tag" [ngStyle]="getBgColor(tag.value)">
 						{{tag.value}}
-					  </span> -->
+					  </span> -->	
 						<span *ngFor="let tag of discuss.tags" class="tag post_tag">
 							{{tag.value}}
 						</span>
@@ -77,8 +80,9 @@
 				</div>
 			</mat-card-content>
 		</mat-card-subtitle>
+	</mat-card-content>
 
-	</mat-card-header>
+	<!-- </mat-card-header> -->
 
 	<!-- <mat-card-actions>
 
