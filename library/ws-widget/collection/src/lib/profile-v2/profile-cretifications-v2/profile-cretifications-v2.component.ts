@@ -5,7 +5,7 @@ import { WidgetBaseComponent, NsWidgetResolver } from '@sunbird-cb/resolver'
 import moment from 'moment'
 import { ProfileCertificateDialogComponent } from '../profile-certificate-dialog/profile-certificate-dialog.component'
 import { IProCert } from './profile-cretifications-v2.model'
-// import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
+import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 
 @Component({
   selector: 'ws-widget-profile-cretifications-v2',
@@ -28,7 +28,7 @@ export class ProfileCretificationsV2Component extends WidgetBaseComponent implem
   constructor(
     private dialog: MatDialog,
     private contentSvc: WidgetContentService,
-    // private tocSvc: AppTocService,
+    private tocSvc: AppTocService,
   ) {
     super()
   }
@@ -76,23 +76,18 @@ if (data.length > 0) {
       if (value.issuedCertificates.length !== 0) {
         if (value.issuedCertificates[0].identifier === element.identifier) {
           const cet = element.dataUrl
-         // code reverted from 4.8.5 Ticket No:- 100759
-        //   const courseDoId = value.courseId
-        //   if (courseDoId) {
-        //   this.tocSvc.fetchGetContentData(courseDoId).subscribe(res => {
-        //     if (res.result) {
-        //       const courseData = res.result
-        //       this.dialog.open(ProfileCertificateDialogComponent, {
-        //         autoFocus: false,
-        //         data: { cet, value, courseData },
-        //       })
-        //     }
-        //   })
-        // }
-        this.dialog.open(ProfileCertificateDialogComponent, {
-          autoFocus: false,
-          data: { cet, value },
-        })
+          const courseDoId = value.courseId
+          if (courseDoId) {
+          this.tocSvc.fetchGetContentData(courseDoId).subscribe(res => {
+            if (res.result) {
+              const courseData = res.result
+              this.dialog.open(ProfileCertificateDialogComponent, {
+                autoFocus: false,
+                data: { cet, value, courseData },
+              })
+            }
+          })
+        }
         }
       }
       // else{
