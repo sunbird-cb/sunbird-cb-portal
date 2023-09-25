@@ -34,13 +34,15 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
       'Hi' : 'Hi',
       'information': 'Information',
       'issue': 'Issues',
-      'categories': 'Show All Categories'
+      'categories': 'Show All Categories',
+      'showmore': 'Show More'
     },
     'hi' : {
       'Hi' : 'नमस्ते',
       'information': 'जानकारी',
       'issue': 'समस्या',
-      'categories': 'सभी कैटेगरी दिखायें'
+      'categories': 'सभी कैटेगरी दिखायें',
+      'showmore': 'और दिखाओ'
     }
   }
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef | undefined
@@ -63,6 +65,10 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
 
   getInfoText(label: string){
     return this.localization[this.selectedLaguage][label] || label
+  }
+
+  showMore() {
+    return this.localization[this.selectedLaguage]["showmore"] || 'Show More'
   }
 
   getData(){

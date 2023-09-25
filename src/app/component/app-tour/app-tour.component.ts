@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, HostListener } from '@angular/core'
 import { ProgressIndicatorLocation, GuidedTour, Orientation, GuidedTourService } from 'cb-tour-guide';
 import { UtilityService, EventService, WsEvents, ConfigurationsService } from '@sunbird-cb/utils';
 
@@ -10,6 +10,11 @@ import { UtilityService, EventService, WsEvents, ConfigurationsService } from '@
 export class AppTourComponent {
   progressIndicatorLocation = ProgressIndicatorLocation.TopOfTourBlock;
   currentWindow: any
+  @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    if (event.key === "Escape") {
+      this.skipTour('','')
+    }
+  }
 
   private readonly TOUR: GuidedTour = {
     tourId: 'purchases-tour',
