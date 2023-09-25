@@ -119,7 +119,7 @@ export class TelemetryService {
   }
 
   start(edata: any, data: any, pageContext?: WsEvents.ITelemetryPageContext) {
-    this.triggerNPSUpdate(data)
+    // this.triggerNPSUpdate(data)
     try {
       if (this.telemetryConfig) {
         $t.start(
@@ -160,7 +160,7 @@ export class TelemetryService {
   }
 
   end(edata: any, data: any, pageContext?: WsEvents.ITelemetryPageContext) {
-    this.triggerNPSUpdate(data)
+    // this.triggerNPSUpdate(data)
     try {
       $t.end(
         {
