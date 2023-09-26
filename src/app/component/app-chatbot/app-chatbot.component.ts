@@ -248,6 +248,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
           incomingMsg.recommendedQues = element.recommendedQues
         }
       })
+      this.raiseCategotyTelemetry(catItem.catId)
     }
     let sendMsg = {
       type:'sendMsg',
@@ -255,6 +256,24 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
     }
     this.pushData(sendMsg)
     this.pushData(incomingMsg)
+  }
+
+  raiseCategotyTelemetry(catItem: string){
+    const event = {
+      eventType: WsEvents.WsEventType.Telemetry,
+      eventLogLevel: WsEvents.WsEventLogLevel.Info,
+      data: {
+        edata: { type: 'click', id: catItem},
+        object: {id: catItem, type: "Category"},
+        state: WsEvents.EnumTelemetrySubType.Interact,
+        eventSubType: WsEvents.EnumTelemetrySubType.Chatbot,
+        mode: 'view'
+      },
+      pageContext: {pageId: '/chatbot', module: 'Assistant'},
+      from: '',
+      to: 'Telemetry',
+    }
+    this.eventSvc.dispatchChatbotEvent<WsEvents.IWsEventTelemetryInteract>(event)
   }
 
   raiseChatStartTelemetry() {
