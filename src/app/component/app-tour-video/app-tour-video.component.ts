@@ -10,12 +10,39 @@ export class AppTourVideoComponent implements OnInit, OnDestroy {
 
   @Input() showVideoTour: any
   @Input() isMobile: any
+  @Input() videoProgressTime: number = 0;
   @Output() emitedValue = new EventEmitter<string>()
+  @Output() videoPlayed = new EventEmitter()
+  videoPlayedProgress: boolean = true;
   @ViewChild('tourVideoTag', { static: false }) tourVideoTag!: ElementRef<HTMLVideoElement>
 
   constructor(private eventService: EventService) { }
 
   ngOnInit() {
+    try {
+      if (this.videoProgressTime > 0) {
+        this.videoPlayedProgress = false;
+        setTimeout(() => {
+          // @ts-ignore
+          const aud = document.getElementById('tourVideoTag');
+          let approxTime = 0;
+          // @ts-ignore
+          aud.ontimeupdate = () => {
+            // @ts-ignore
+            const currentTime = Math.floor(aud['currentTime'])
+            if (currentTime !== approxTime) {
+              approxTime = currentTime;
+              if (approxTime === this.videoProgressTime) {
+                this.videoPlayedProgress = true;
+                this.videoPlayed.emit({state: 'played', time: approxTime});
+              }
+            }
+          };
+        }, 2000);
+      }
+    } catch (error) {
+      console.error('Video progress time error')
+    }
     this.raiseVideStartTelemetry()
   }
 
@@ -28,7 +55,6 @@ export class AppTourVideoComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log("time ",this.tourVideoTag.nativeElement.currentTime)
     this.raiseVideEndTelemetry(this.tourVideoTag.nativeElement.currentTime)
   }
 
@@ -70,7 +96,6 @@ export class AppTourVideoComponent implements OnInit, OnDestroy {
       from: '',
       to: 'Telemetry',
     }
-    console.log("event ", event)
     this.eventService.dispatchGetStartedEvent<WsEvents.IWsEventTelemetryInteract>(event)
   }
 
