@@ -214,6 +214,9 @@ export class AppTourComponent {
   completeTour(): void {
     this.showpopup = false;
     this.showCompletePopup = true;
+    setTimeout(() => {
+      this.onCongrats();
+    }, 3000);
     this.raiseGetStartedEndTelemetry()
     if (this.isMobile) {
       // @ts-ignore
