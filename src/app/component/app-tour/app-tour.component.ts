@@ -10,6 +10,7 @@ import { UtilityService, EventService, WsEvents, ConfigurationsService } from '@
 export class AppTourComponent {
   progressIndicatorLocation = ProgressIndicatorLocation.TopOfTourBlock;
   currentWindow: any
+  videoProgressTime: number = 114;
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     if (event.key === "Escape") {
       this.skipTour('','')
@@ -172,6 +173,12 @@ export class AppTourComponent {
       }, 1000);
     } else {
       this.guidedTourService.startTour(this.TOUR);
+      setTimeout(() => {
+        // @ts-ignore
+        const _left = parseFloat(document.getElementsByClassName('tour_learn')[0]['style']['left'].split('px')[0]);
+        // @ts-ignore
+        document.getElementsByClassName('tour_learn')[0]['style']['left'] = (_left - 10) + 'px';
+      }, 100);
     }
 
   }
@@ -295,5 +302,9 @@ export class AppTourComponent {
       to: 'Telemetry',
     }
     this.events.dispatchGetStartedEvent<WsEvents.IWsEventTelemetryInteract>(event)
+  }
+
+  closeModal() {
+    this.skipTour('','');
   }
 }
