@@ -1,7 +1,8 @@
-import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild,   } from '@angular/core'
+import { AfterViewChecked, Component, ElementRef, OnInit, Renderer2, ViewChild,   } from '@angular/core'
 import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
 // import { ChatbotService } from './chatbot.service'
 import { RootService } from './../root/root.service'
+
 
 
 @Component({
@@ -50,12 +51,13 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
   callText = "<a class='hint-text' target='_blank' href='https://bit.ly/44MJlo4'>Teams Call</a>"
   emailText = "<a class='hint-text' target='_blank' href='mailto:mission.karma@gov.in'>mission.karma@gov.in.</a>"
 
-  constructor(private configSvc: ConfigurationsService, private eventSvc: EventService,
+  constructor(private configSvc: ConfigurationsService, private eventSvc: EventService,private renderer: Renderer2,
     private chatbotService: RootService) { }
 
   ngOnInit() {
     this.userInfo = this.configSvc && this.configSvc.userProfile
     this.checkForApiCalls()
+    this.enableScroll()
     this.userIcon = this.userInfo && this.userInfo.profileImage ? this.userInfo.profileImage : "/assets/icons/chatbot-default-user.svg"
   }
 
@@ -148,6 +150,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
     this.currentFilter = 'information'
     this.expanded = false
     if (type === 'start'){
+      this.disableScroll()
       this.raiseChatStartTelemetry()
       // this.toggleFilter(this.currentFilter)
     } else {
@@ -159,6 +162,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
       this.currentFilter = 'information'
       this.checkForApiCalls()
       this.more = false
+      this.enableScroll()
     }
   }
 
@@ -184,6 +188,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
       relatedQes:'above Question',
       tab: this.currentFilter
     }
+    debugger
     this.pushData(sendMsg)
     this.pushData(incomingMsg)
     this.raiseTemeletyInterat(question.quesID)
@@ -237,6 +242,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
       relatedQes:`${catItem.catName}?`,
       tab: this.currentFilter
     }
+    this.more= false
     if (catItem.catId === 'all') {
       incomingMsg.title= '',//'Here is the list of all the topics'
       incomingMsg.relatedQes = ''
@@ -378,5 +384,14 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
       }
     } catch(err) { }
   }
+  clickOutside() {
+    this.iconClick('end')
+  }
+  private disableScroll() {
+    this.renderer.addClass(document.body, 'disable-scroll');
+  }
 
+  private enableScroll() {
+    this.renderer.removeClass(document.body, 'disable-scroll');
+  }
 }

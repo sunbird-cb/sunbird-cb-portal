@@ -1,9 +1,8 @@
 .chatbot-icon-container {
   position: fixed;
-  bottom: 64px;
+  bottom: -3px;
   right: 0px;
   cursor: pointer;
-  z-index: 1005;
   height: 90px;
   align-items: flex-start;
   display: flex;
@@ -40,7 +39,7 @@
 
 .chatbot {
   width: 400px;
-  min-height: 702px;
+  // min-height: 702px;
   position: fixed;
   bottom: 20px;
   right: 25px;
@@ -55,10 +54,13 @@
 }
 
 .cb-header {
-  background-color: white;
-  color: black !important;
-  border-top-left-radius: inherit;
-  border-top-right-radius: inherit;
+  // background-color: white;
+  // color: black !important;
+
+  color: white !important;
+  background-color: rgb(27, 76, 161);
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
   align-items: center;
   justify-content: space-between;
   .user-info-div {
@@ -67,7 +69,9 @@
   }
   .lang-select {
     height: 32px;
-    background-color: rgba(0, 0, 0, 0.04);
+    // background-color: rgba(0, 0, 0, 0.04);
+    // border-color: rgba(0, 0, 0, 0.16)!important;
+    background-color: white;
     border-color: rgba(0, 0, 0, 0.16)!important;
   }
   .user-name {
@@ -75,8 +79,8 @@
   }
 }
 .cb-content {
-  max-height: 500px;
-  min-height: 500px;
+  // max-height: 500px;
+  // min-height: 500px;
   background-color: #F0F3F4;
   overflow: auto;
 }
@@ -89,8 +93,8 @@
 }
 
 .cb-footer {
-  border-bottom-left-radius: inherit;
-  border-bottom-right-radius: inherit;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
   .info {
     width: 50%;
     padding: 5px 0;
@@ -213,6 +217,7 @@
     flex-wrap: wrap;
     width: 65%;
     height: 100%;
+    word-break: break-all;
   }
 }
 .margin-left-17 {
@@ -308,4 +313,68 @@
     right: 6px;
     bottom: 67px
   }
+}
+
+
+.chatbot {
+  height: calc(100vh - 200px);
+}
+.chatbot-wrapper {
+  position: relative;
+  // height: 100%;
+}
+.cb-header {
+  position: absolute;
+  width: 100%;
+  top: 0;
+}
+.cb-content-wrapper {
+  position: absolute;
+  width: 100%;
+  top: 64px;
+  bottom: 130px;
+  max-height: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+  background-color: #F0F3F4;
+}
+.cb-footer {
+  background-color: white;
+}
+.cb-footer-wrapper {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+@media only screen and (max-width: 600px) {
+  .chatbot {
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 100vh;
+    z-index: 1005;
+  }
+  .cb-footer-wrapper {
+    bottom: 12px;
+  }
+  .cb-content-wrapper {
+    bottom: 130px;
+  }
+}
+.my-5px {
+  margin-top: 5px;
+  margin-bottom: 5px
+}
+.mr-5px {
+  margin-right: 5px
+}
+.br-bl {
+  border-bottom-left-radius: 15px;
+}
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+::ng-deep .disable-scroll {
+  overflow-x: hidden !important;
+  overflow: hidden;
 }
