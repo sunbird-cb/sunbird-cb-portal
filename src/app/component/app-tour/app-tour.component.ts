@@ -64,7 +64,7 @@ export class AppTourComponent {
         skipBtnClass: 'skip'
       },
       {
-        icon: 'group',
+        icon: 'person',
         connectorDirection: 'right',
         title: 'My Profile',
         selector: '#user_icon',
@@ -126,7 +126,7 @@ export class AppTourComponent {
         skipBtnClass: 'skip'
       },
       {
-        icon: 'group',
+        icon: 'person',
         isMobile: true,
         connectorDirection: 'bottom',
         title: 'My Profile',
