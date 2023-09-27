@@ -182,13 +182,9 @@ export class AuthKeycloakService {
       await this.http.get('/apis/reset').toPromise()
     }
     try {
-      let tourGuide: any = {}
-      if (localStorage.getItem('tourGuide')) {
-        tourGuide = localStorage.getItem('tourGuide')
-      }
       sessionStorage.clear()
       localStorage.clear()
-      localStorage.setItem('tourGuide', tourGuide)
+      // localStorage.setItem('tourGuide', tourGuide)
     } catch {
 
     }
