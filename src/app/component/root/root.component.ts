@@ -103,7 +103,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
       ) {
       this.customHeight = true
     }
-    if (this.configSvc.unMappedUser.profileDetails.get_started_tour) {
+    if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.profileDetails && this.configSvc.unMappedUser.profileDetails.get_started_tour) {
       this.showTour = this.configSvc.unMappedUser.profileDetails.get_started_tour.skipped || this.configSvc.unMappedUser.profileDetails.get_started_tour.visited
     }
     this.mobileAppsSvc.init()
