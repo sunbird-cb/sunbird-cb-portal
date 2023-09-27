@@ -569,6 +569,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       const batchData = {
         content: [event.value],
       }
+      this.getBatchUserCount(event.value)
       if (this.selectedBatchData && this.selectedBatchData.content) {
         this.selectedBatchData = {
           ...this.selectedBatchData,
@@ -631,6 +632,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       }
     }
     this.tocSvc.getSelectedBatchData(this.selectedBatchData)
+    if (this.batchControl.value) {
+      this.getBatchUserCount(this.batchControl.value)
+    }
   }
 
   // setting batch start date
@@ -805,6 +809,42 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (this.selectedBatchSubscription) {
       this.selectedBatchSubscription.unsubscribe()
     }
+  }
+
+   getBatchUserCount(batchData: any) {
+    const req = {
+      serviceName: 'blendedprogram',
+      applicationStatus: '',
+      applicationIds: [
+          batchData.batchId,
+      ],
+      limit: 100,
+      offset: 0,
+    }
+    const usercount = {
+      enrolled: 0,
+      totalApplied: 0,
+      rejected: 0,
+    }
+    this.contentSvc.fetchBlendedUserCOUNT(req).then((res: any) => {
+      if (res.result && res.result.data) {
+        res.result.data.forEach((ele: any) => {
+          if (ele.currentStatus === 'APPROVED') {
+            usercount.enrolled =  ele.statusCount
+          } else if (ele.currentStatus === 'REJECTED') {
+            usercount.rejected = ele.statusCount
+          }
+          usercount.totalApplied =  usercount.totalApplied + ele.statusCount
+        })
+        if (this.selectedBatchData) {
+          this.selectedBatchData = {
+            ...this.selectedBatchData,
+            userCount: usercount,
+          }
+        }
+        this.tocSvc.getSelectedBatchData(this.selectedBatchData)
+      }
+    })
   }
 
   private getResumeDataFromList(type?: string) {
