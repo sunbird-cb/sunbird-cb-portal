@@ -46,7 +46,9 @@
 
                         <div class="recommended-question my-5px" [ngClass]="{'margin-left-17': chat?.message }">
                           <div class="my-5px mr-2" *ngFor="let question of chat.recommendedQues | slice:0:(more ? undefined : 5)" >
-                            <div class="btn-default" [ngClass]="{'btn-active': question.quesID === chat.selectedValue }" (click)="selectedQuestion(question,chat)">{{questionsAndAns[question.quesID].quesValue}}</div>
+                            <ng-container *ngIf="questionsAndAns[question.quesID].quesValue">
+                              <div class="btn-default" [ngClass]="{'btn-active': question.quesID === chat.selectedValue }" (click)="selectedQuestion(question,chat)">{{questionsAndAns[question.quesID].quesValue}}</div>
+                            </ng-container>
                           </div>
                           <div class="my-5px mr-2 rec-item" *ngIf="chat.recommendedQues.length > 5">
                             <div class="btn-show-more flex" (click)="more = !more" *ngIf="!more">
