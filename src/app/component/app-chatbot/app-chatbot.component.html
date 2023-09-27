@@ -51,7 +51,7 @@
                             </ng-container>
                           </div>
                           <div class="my-5px mr-2 rec-item" *ngIf="chat.recommendedQues.length > 5">
-                            <div class="btn-show-more flex" (click)="more = !more" *ngIf="!more">
+                            <div class="btn-show-more flex" (click)="more = !more; $event.stopPropagation();" *ngIf="!more">
                               <mat-icon class="showmore-icon padding-right-s">add</mat-icon>Show More
                             </div>
                             <!-- <div class="btn-show-more flex" (click)="more = !more">
