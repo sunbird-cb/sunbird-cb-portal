@@ -184,7 +184,6 @@ export class AuthKeycloakService {
     try {
       sessionStorage.clear()
       localStorage.clear()
-      // localStorage.setItem('tourGuide', tourGuide)
     } catch {
 
     }

@@ -79,7 +79,7 @@ export class AppTourComponent {
         skipBtnClass: 'skip'
       },
       {
-        icon: 'group',
+        icon: 'person',
         connectorDirection: 'right',
         title: 'My Profile',
         selector: '#user_icon',
@@ -141,7 +141,7 @@ export class AppTourComponent {
         skipBtnClass: 'skip'
       },
       {
-        icon: 'group',
+        icon: 'person',
         isMobile: true,
         connectorDirection: 'bottom',
         title: 'My Profile',
@@ -162,6 +162,7 @@ export class AppTourComponent {
   showCompletePopup: boolean = false;
   showVideoTour: boolean = false;
   isMobile: boolean = false;
+  hideCloseBtn: boolean = false;
 
   constructor(private guidedTourService: GuidedTourService,
     private utilitySvc: UtilityService,private configSvc: ConfigurationsService,
@@ -262,8 +263,12 @@ export class AppTourComponent {
   }
 
   completeTour(): void {
+    this.hideCloseBtn = false;
     this.showpopup = false;
     this.showCompletePopup = true;
+    setTimeout(() => {
+      this.onCongrats();
+    }, 3000);
     this.raiseGetStartedEndTelemetry()
     if (this.isMobile) {
       // @ts-ignore
@@ -288,12 +293,16 @@ export class AppTourComponent {
   }
 
   nextCb(currentStep: number, stepObject:any) {
+    if (stepObject.title == 'My Profile') {
+      this.hideCloseBtn = true;
+    }
     this.currentWindow = stepObject
     let currentStepObj: any = this.TOUR.steps[currentStep - 1]
     this.raiseTemeletyInterat(`${currentStepObj.title.toLowerCase().replace(' ','-')}-next`, currentStepObj.title.toLowerCase())
   }
 
   prevCb(currentStep: number, stepObject:any) {
+    this.hideCloseBtn = false;
     this.currentWindow = stepObject
     let currentStepObj: any = this.TOUR.steps[currentStep +  1]
     this.raiseTemeletyInterat(`${currentStepObj.title.toLowerCase().replace(' ','-')}-previous`, currentStepObj.title.toLowerCase())

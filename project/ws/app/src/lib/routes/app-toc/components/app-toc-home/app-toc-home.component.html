@@ -500,6 +500,30 @@ TODO: edit option while preview Mode
                 {{ selectedBatchData?.content[0]?.batchAttributes?.currentBatchSize }}
               </h3>
             </div>
+            <div class="info-item"  *ngIf="tocConfig?.atAGlance?.totalApplied?.enabled && selectedBatchData?.userCount">
+              <h3 class="item-heading ws-mat-default-text">
+                {{tocConfig?.atAGlance?.totalApplied?.displayName}}
+              </h3>
+              <h3 class="item-value width-expand">
+                {{ selectedBatchData?.userCount.totalApplied }}
+              </h3>
+            </div>
+            <div class="info-item"  *ngIf="tocConfig?.atAGlance?.enrolled?.enabled && selectedBatchData?.userCount">
+              <h3 class="item-heading ws-mat-default-text">
+                {{tocConfig?.atAGlance?.enrolled?.displayName}}
+              </h3>
+              <h3 class="item-value width-expand">
+                {{ selectedBatchData?.userCount.enrolled }}
+              </h3>
+            </div>
+            <div class="info-item"  *ngIf="tocConfig?.atAGlance?.rejected?.enabled && selectedBatchData?.userCount">
+              <h3 class="item-heading ws-mat-default-text">
+                {{tocConfig?.atAGlance?.rejected?.displayName}}
+              </h3>
+              <h3 class="item-value width-expand">
+                {{ selectedBatchData?.userCount.rejected }}
+              </h3>
+            </div>
             <div class="info-item"  *ngIf="tocConfig?.atAGlance?.contentType?.enabled && content?.primaryCategory">
               <h3 class="item-heading ws-mat-default-text">
                 {{tocConfig?.atAGlance?.contentType?.displayName}}
