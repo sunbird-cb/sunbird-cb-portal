@@ -1,19 +1,7 @@
 import { Component, HostListener } from '@angular/core'
 import { ProgressIndicatorLocation, GuidedTour, Orientation, GuidedTourService } from 'cb-tour-guide';
 import { UtilityService, EventService, WsEvents, ConfigurationsService } from '@sunbird-cb/utils';
-import { Observable } from 'rxjs';
-import { IUserProfileDetailsFromRegistry } from '@ws/app/src/lib/routes/user-profile/models/user-profile.model';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import _ from 'lodash';
 import { UserProfileService } from '@ws/app/src/lib/routes/user-profile/services/user-profile.service';
-
-const API_END_POINTS = {
-  fetchProfileById: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`,
-}
-
-
-
 @Component({
   selector: 'app-tour',
   templateUrl: './app-tour.component.html',
@@ -166,26 +154,11 @@ export class AppTourComponent {
 
   constructor(private guidedTourService: GuidedTourService,
     private utilitySvc: UtilityService,private configSvc: ConfigurationsService,
-    private events: EventService, private http: HttpClient,
-    private userProfileSvc: UserProfileService) {
+    private events: EventService, private userProfileSvc: UserProfileService) {
     this.isMobile = this.utilitySvc.isMobile;
     this.raiseGetStartedStartTelemetry()
-    this.fetchProfileById(this.configSvc.unMappedUser.id).subscribe(x => {
-      this.profileDetails = x.profileDetails
-      if (this.profileDetails.get_started_tour){
-        this.tourStatus.visited = this.profileDetails.get_started_tour.visited
-        this.tourStatus.skipped = this.profileDetails.get_started_tour.skipped
-      }
-    })
+    this.profileDetails = this.configSvc.unMappedUser.profileDetails
   }
-
-  fetchProfileById(id: any): Observable<any> {
-    return this.http.get<[IUserProfileDetailsFromRegistry]>(API_END_POINTS.fetchProfileById(id))
-      .pipe(map((res: any) => {
-        return _.get(res, 'result.response')
-      }))
-  }
-
 
   updateTourstatus(status: any) {
     this.profileDetails.get_started_tour = status
@@ -200,8 +173,6 @@ export class AppTourComponent {
       console.log("re s ", res )
     })
   }
-
-
 
   emitFromVideo(event: any){
     if (event === 'skip'){
@@ -235,7 +206,7 @@ export class AppTourComponent {
 
   public skipTour(screen: string, subType: string): void {
     //localStorage.setItem('tourGuide',JSON.stringify({'disable': true}) )
-    this.updateTourstatus({visited: false, skipped: true})
+    this.updateTourstatus({visited: true, skipped: true})
     this.configSvc.updateTourGuideMethod(true)
     if (screen.length > 0 && subType.length > 0) {
       this.raiseTemeletyInterat(screen, subType)
