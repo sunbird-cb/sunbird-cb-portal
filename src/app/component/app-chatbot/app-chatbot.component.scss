@@ -1,6 +1,6 @@
 .chatbot-icon-container {
   position: fixed;
-  bottom: -3px;
+  bottom: 120px;
   right: 0px;
   cursor: pointer;
   height: 90px;
@@ -359,6 +359,9 @@
   }
   .cb-content-wrapper {
     bottom: 130px;
+  }
+  .chatbot-icon-container {
+    bottom: 190px;
   }
 }
 .my-5px {
