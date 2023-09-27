@@ -179,7 +179,8 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
     this.skipper.nativeElement.focus()
   }
   ngOnInit() {
-    let showTour = JSON.parse(localStorage.getItem('tourGuide')||'')
+    let tourData = localStorage.getItem('tourGuide');
+    let showTour = typeof(tourData) === 'string'? JSON.parse(localStorage.getItem('tourGuide')||'') : tourData
     this.showTour = showTour && showTour.disable ? showTour.disable : false
     this.configSvc.updateTourGuideMethod(this.showTour)
     // console.log('this.route.snapshot.queryParams ', this.route.snapshot.queryParams); // TODO: log!
