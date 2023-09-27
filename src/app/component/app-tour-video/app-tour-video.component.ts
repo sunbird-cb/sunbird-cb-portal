@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { EventService,WsEvents } from '@sunbird-cb/utils/src/public-api';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'ws-app-tour-video',
@@ -14,11 +15,15 @@ export class AppTourVideoComponent implements OnInit, OnDestroy {
   @Output() emitedValue = new EventEmitter<string>()
   @Output() videoPlayed = new EventEmitter()
   videoPlayedProgress: boolean = true;
+  environment: any
+  videoUrl: any
   @ViewChild('tourVideoTag', { static: false }) tourVideoTag!: ElementRef<HTMLVideoElement>
 
   constructor(private eventService: EventService) { }
 
   ngOnInit() {
+    this.environment = environment
+    this.videoUrl = `https://${this.environment.sitePath}/content-store/Website_Video.mp4`
     try {
       if (this.videoProgressTime > 0) {
         this.videoPlayedProgress = false;
