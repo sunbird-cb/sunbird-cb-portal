@@ -1,16 +1,31 @@
 import { Component, HostListener } from '@angular/core'
 import { ProgressIndicatorLocation, GuidedTour, Orientation, GuidedTourService } from 'cb-tour-guide';
 import { UtilityService, EventService, WsEvents, ConfigurationsService } from '@sunbird-cb/utils';
+import { Observable } from 'rxjs';
+import { IUserProfileDetailsFromRegistry } from '@ws/app/src/lib/routes/user-profile/models/user-profile.model';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import _ from 'lodash';
+import { UserProfileService } from '@ws/app/src/lib/routes/user-profile/services/user-profile.service';
+
+const API_END_POINTS = {
+  fetchProfileById: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`,
+}
+
+
 
 @Component({
   selector: 'app-tour',
   templateUrl: './app-tour.component.html',
   styleUrls: ['./app-tour.component.scss'],
+  providers:[UserProfileService]
 })
 export class AppTourComponent {
   progressIndicatorLocation = ProgressIndicatorLocation.TopOfTourBlock;
   currentWindow: any
   videoProgressTime: number = 114;
+  tourStatus: any = {visited: true, skipped: false}
+  profileDetails: any
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     if (event.key === "Escape") {
       this.skipTour('','')
@@ -149,10 +164,44 @@ export class AppTourComponent {
   isMobile: boolean = false;
   hideCloseBtn: boolean = false;
 
-  constructor(private guidedTourService: GuidedTourService, private utilitySvc: UtilityService,private configSvc: ConfigurationsService, private events: EventService) {
+  constructor(private guidedTourService: GuidedTourService,
+    private utilitySvc: UtilityService,private configSvc: ConfigurationsService,
+    private events: EventService, private http: HttpClient,
+    private userProfileSvc: UserProfileService) {
     this.isMobile = this.utilitySvc.isMobile;
     this.raiseGetStartedStartTelemetry()
+    this.fetchProfileById(this.configSvc.unMappedUser.id).subscribe(x => {
+      this.profileDetails = x.profileDetails
+      if (this.profileDetails.get_started_tour){
+        this.tourStatus.visited = this.profileDetails.get_started_tour.visited
+        this.tourStatus.skipped = this.profileDetails.get_started_tour.skipped
+      }
+    })
   }
+
+  fetchProfileById(id: any): Observable<any> {
+    return this.http.get<[IUserProfileDetailsFromRegistry]>(API_END_POINTS.fetchProfileById(id))
+      .pipe(map((res: any) => {
+        return _.get(res, 'result.response')
+      }))
+  }
+
+
+  updateTourstatus(status: any) {
+    this.profileDetails.get_started_tour = status
+    let reqUpdates = {
+      request: {
+        userId: this.configSvc.unMappedUser.id,
+        profileDetails:
+        this.profileDetails
+      }
+    }
+    this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(res => {
+      console.log("re s ", res )
+    })
+  }
+
+
 
   emitFromVideo(event: any){
     if (event === 'skip'){
@@ -185,7 +234,8 @@ export class AppTourComponent {
   }
 
   public skipTour(screen: string, subType: string): void {
-    localStorage.setItem('tourGuide',JSON.stringify({'disable': true}) )
+    //localStorage.setItem('tourGuide',JSON.stringify({'disable': true}) )
+    this.updateTourstatus({visited: false, skipped: true})
     this.configSvc.updateTourGuideMethod(true)
     if (screen.length > 0 && subType.length > 0) {
       this.raiseTemeletyInterat(screen, subType)
@@ -224,11 +274,12 @@ export class AppTourComponent {
       // @ts-ignore
       document.getElementById('menuToggleMobile').click()
     }
+    this.updateTourstatus({visited: true, skipped: false})
   }
 
   onCongrats(): void {
     this.showCompletePopup = false;
-    localStorage.setItem('tourGuide',JSON.stringify({'disable': true}) )
+    //localStorage.setItem('tourGuide',JSON.stringify({'disable': true}) )
     this.configSvc.updateTourGuideMethod(true)
   }
 
