@@ -188,7 +188,6 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
       relatedQes:'above Question',
       tab: this.currentFilter
     }
-    debugger
     this.pushData(sendMsg)
     this.pushData(incomingMsg)
     this.raiseTemeletyInterat(question.quesID)
