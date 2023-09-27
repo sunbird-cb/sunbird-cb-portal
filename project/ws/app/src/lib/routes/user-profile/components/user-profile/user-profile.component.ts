@@ -107,6 +107,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   showDesignationOther!: boolean
   showOrgnameOther!: boolean
   showIndustryOther!: boolean
+  showGraduationDegreeOther!: boolean
+  showPostDegreeOther!: boolean
   photoUrl!: string | ArrayBuffer | null
   isForcedUpdate = false
   userProfileData!: any
@@ -348,6 +350,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       degree: new FormControl('', []),
       instituteName: new FormControl('', []),
       yop: new FormControl('', [Validators.pattern(this.yearPattern)]),
+      graduationOther: new FormControl('', []),
     })
   }
 
@@ -371,6 +374,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       degree: new FormControl(degree.degree, []),
       instituteName: new FormControl(degree.instituteName, []),
       yop: new FormControl(degree.yop, [Validators.pattern(this.yearPattern)]),
+      graduationOther: new FormControl(degree.graduationOther, []),
     })
   }
 
@@ -816,12 +820,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             degree: item.nameOfQualification,
             instituteName: item.nameOfInstitute,
             yop: item.yearOfPassing,
+            graduationOther: item.nameOfOtherQualification,
           })
             break
           case 'POSTGRADUATE': academics.postDegree.push({
             degree: item.nameOfQualification,
             instituteName: item.nameOfInstitute,
             yop: item.yearOfPassing,
+            graduationOther: item.nameOfOtherQualification,
           })
             break
         }
@@ -921,7 +927,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     /* tslint:enable */
     this.cd.detectChanges()
     this.cd.markForCheck()
-    this.setDropDownOther(organisation)
+    this.setDropDownOther(organisation, academics)
     this.setProfilePhotoValue(data)
   }
   onPhoneChange() {
@@ -958,7 +964,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.photoUrl = data.photo || undefined
   }
 
-  setDropDownOther(organisation?: any) {
+  setDropDownOther(organisation?: any, academics?: any) {
     if (organisation.designation === 'Other') {
       this.showDesignationOther = true
     } else {
@@ -967,9 +973,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     if (organisation.orgName === 'Other') {
       this.showOrgnameOther = true
     }
-
     if (organisation.industry === 'Other') {
       this.showIndustryOther = true
+    }
+    if (academics.degree === 'Other') {
+      this.showGraduationDegreeOther = true
+    }
+    if (organisation.postGraduation === 'Other') {
+      this.showPostDegreeOther = true
     }
   }
 
@@ -1220,6 +1231,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         type: degreeType,
         nameOfInstitute: degree.instituteName,
         yearOfPassing: `${degree.yop}`,
+        nameOfOtherQualification: degree.graduationOther,
       })
     })
     return formatedDegrees
@@ -1233,6 +1245,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         type: degreeType,
         nameOfInstitute: degree.instituteName,
         yearOfPassing: `${degree.yop}`,
+        nameOfOtherQualification: degree.graduationOther,
       })
     })
     return formatedDegrees
@@ -1417,7 +1430,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     reqUpdates.request.profileDetails.personalDetails['knownLanguages']  = this.selectedKnowLangs
     reqUpdates.request.profileDetails.personalDetails['nationality']  = form.value.nationality
-
     this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(
       res => {
         this.uploadSaveData = false
@@ -1653,6 +1665,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     if (field === 'designation' && value !== 'Other') {
       this.showDesignationOther = false
       this.createUserForm.controls['designationOther'].setValue('')
+    }
+    if (field === 'graduation' && value !== 'Other') {
+      this.showGraduationDegreeOther = false
+      this.createDegree()
+    }
+    if (field === 'postDegree' && value !== 'Other') {
+      this.showPostDegreeOther = false
+      this.createDegree()
     }
   }
 
