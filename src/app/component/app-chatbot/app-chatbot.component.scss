@@ -77,6 +77,10 @@
   }
   .user-name {
     padding-top: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 74%;
   }
 }
 .cb-content {
@@ -218,7 +222,7 @@
     flex-wrap: wrap;
     width: 65%;
     height: 100%;
-    word-break: break-all;
+    word-break: break-word;
   }
 }
 .margin-left-17 {
@@ -347,29 +351,6 @@
   width: 100%;
   bottom: 0;
 }
-@media only screen and (max-width: 600px) {
-  .chatbot {
-    right: 0px;
-    bottom: 0px;
-    width: 100%;
-    height: 100svh;
-    z-index: 999999999;
-  }
-  .cb-footer-wrapper {
-    bottom: 12px;
-  }
-  .cb-content-wrapper {
-    bottom: 130px;
-  }
-  .chatbot-icon-container {
-    bottom: 190px;
-  }
-  .cb-header {
-    border-top-left-radius: unset;
-    border-top-right-radius: unset;
-  }
-
-}
 .my-5px {
   margin-top: 5px;
   margin-bottom: 5px
@@ -386,4 +367,36 @@
 ::ng-deep .disable-scroll {
   overflow-x: hidden !important;
   overflow: hidden;
+}
+@media only screen and (max-width: 600px) {
+  .chatbot {
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 100svh;
+    z-index: 999999999;
+  }
+  .cb-footer-wrapper {
+    bottom: 0px;
+  }
+  .cb-content-wrapper {
+    bottom: 130px;
+  }
+  .chatbot-icon-container {
+    bottom: 190px;
+  }
+  .cb-header {
+    border-top-left-radius: unset;
+    border-top-right-radius: unset;
+  }
+  .cb-footer {
+    border-bottom-left-radius: unset;
+    border-bottom-right-radius: unset;
+  }
+  .br-br {
+    border-bottom-right-radius: unset;
+  }
+  .br-bl {
+    border-bottom-left-radius: unset;
+  }
 }

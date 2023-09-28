@@ -124,7 +124,7 @@
       <div class="cb-footer-wrapper">
         <div class="flex flex-wrap cb-topics">
             <div class="cat-list">
-                <ng-container *ngFor="let item of categories">
+                <ng-container *ngFor="let item of sortCategory()">
                     <div (click)="showCategory(item)" class="cat-item">{{item.catName}}</div>
                 </ng-container>
             </div>
