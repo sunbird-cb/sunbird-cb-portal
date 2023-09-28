@@ -704,8 +704,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL ||
         status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL ||
         status === this.WFBlendedProgramStatus.WITHDRAWN ||
-        status === this.WFBlendedProgramStatus.REJECTED ||
-        status === this.WFBlendedProgramStatus.REMOVED && this.showRejected) {
+        status === this.WFBlendedProgramStatus.REMOVED || 
+        (status === this.WFBlendedProgramStatus.REJECTED  && this.showRejected)) {
         return true
       }
     }
