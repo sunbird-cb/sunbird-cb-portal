@@ -92,10 +92,9 @@
 .cb-topics {
   padding: 16px 16px 16px 16px;
   background-color: #F5F5F5;
+  overflow: auto;
 }
-.expand-text {
 
-}
 
 .cb-footer {
   border-bottom-left-radius: 15px;
@@ -141,7 +140,6 @@
   padding: 0;
   width: 100%;
   display: flex;
-  overflow: auto;
 }
 .cat-item {
   padding: 10px 16px;
