@@ -199,21 +199,21 @@ export class GridLayoutComponent extends WidgetBaseComponent
       timestamp: currenttimestamp,
       version: 1,
       dataObject: {
-        'Please rate your experience  with the platform': this.ratingGiven.value,
+        'Please rate your experience with the platform': this.ratingGiven.value,
         'Tell us more about your experience': value,
       },
     }
 
     this.npsService.submitPlatformRating(reqbody).subscribe((resp: any) => {
       if (resp) {
-        // this.onSuccessRating = true
-        const req = {
-          request: {
-            userId: this.configSvc.unMappedUser.id,
-            category: 'NPS',
-            feedId: this.feedID,
-          },
-        }
+        const feedIDN = this.feedID.replace(/\"/g, '')
+          const req = {
+            request: {
+              userId: this.configSvc.unMappedUser.id,
+              category: 'NPS',
+              feedId: feedIDN,
+            },
+          }
         this.npsService.deleteFeed(req).subscribe((res: any) => {
           if (res) {
             this.onSuccessRating = true
@@ -241,11 +241,12 @@ export class GridLayoutComponent extends WidgetBaseComponent
       this.npsService.submitPlatformRating(reqbody).subscribe((resp: any) => {
         if (resp) {
           // this.isNPSOpen = false
+          const feedIDN = this.feedID.replace(/\"/g, '')
           const req = {
             request: {
               userId: this.configSvc.unMappedUser.id,
               category: 'NPS',
-              feedId: this.feedID,
+              feedId: feedIDN,
             },
           }
           this.npsService.deleteFeed(req).subscribe((res: any) => {
