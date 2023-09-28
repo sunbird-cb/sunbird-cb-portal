@@ -37,7 +37,7 @@
                 <ng-container *ngIf="chat?.recommendedQues?.length > 0">
                     <ng-container>
                       <div class="flex width-1-1">
-                        <div class="system-icon pr-2" *ngIf="!chat?.message"><img alt="chatbot-icon" src="/assets/icons/chatbot-default.svg"></div>
+                        <div class="system-icon pr-2" *ngIf="!chat?.message"><img class="chat-bot-icon" alt="chatbot-icon" src="/assets/icons/chatbot-default.svg"></div>
                         <ng-container *ngIf="chat?.relatedQes" >
                           <div class="question-hint  padding-top-xs" [ngClass]="{'margin-left-17': chat?.message }" *ngIf="chat.title">
                             {{chat.title}} <span class="highlight-title" >{{chat.relatedQes}}</span>
@@ -52,7 +52,7 @@
                           </div>
                           <div class="my-5px mr-2 rec-item" *ngIf="chat.recommendedQues.length > 5">
                             <div class="btn-show-more flex" (click)="more = !more; $event.stopPropagation();" *ngIf="!more">
-                              <mat-icon class="showmore-icon padding-right-s">add</mat-icon>Show More
+                              <mat-icon class="showmore-icon padding-right-s">add</mat-icon>{{showMore()}}
                             </div>
                             <!-- <div class="btn-show-more flex" (click)="more = !more">
                               <mat-icon class="showmore-icon padding-right-s">{{more? 'remove':'add'}}</mat-icon>show {{more? 'less':'more'}}
@@ -89,7 +89,7 @@
               </ng-container> -->
               <ng-container  *ngIf="chat.type === 'category'">
                 <div class="flex">
-                  <div class="system-icon pr-2"><img alt="chatbot-icon" src="/assets/icons/chatbot-default.svg"></div>
+                  <div class="system-icon pr-2"><img class="chat-bot-icon" alt="chatbot-icon" src="/assets/icons/chatbot-default.svg"></div>
                   <ng-container>
                     <div class="question-hint padding-top-xs">
                       {{chat.title}}
@@ -124,7 +124,7 @@
       <div class="cb-footer-wrapper">
         <div class="flex flex-wrap cb-topics">
             <div class="cat-list">
-                <ng-container *ngFor="let item of categories">
+                <ng-container *ngFor="let item of sortCategory()">
                     <div (click)="showCategory(item)" class="cat-item">{{item.catName}}</div>
                 </ng-container>
             </div>

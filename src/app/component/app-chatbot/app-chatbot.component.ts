@@ -32,7 +32,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
   expanded: boolean = false
   localization: any = {
     'en' : {
-      'Hi' : 'Hi',
+      'Hi' : 'Namaste',
       'information': 'Information',
       'issue': 'Issues',
       'categories': 'Show All Categories',
@@ -42,8 +42,9 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
       'Hi' : 'नमस्ते',
       'information': 'जानकारी',
       'issue': 'समस्या',
-      'categories': 'सभी कैटेगरी दिखायें',
+      'categories': 'सभी कैटगोरी दिखायें',
       'showmore': 'और दिखाओ'
+
     }
   }
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef | undefined
@@ -124,6 +125,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
 
   selectLaguage(event: any) {
     this.selectedLaguage = event.target.value
+    localStorage.setItem('selectedLanguage',event.target.value)
     this.chatInformation=[]
     this.chatIssues = []
     this.checkForApiCalls()
@@ -245,7 +247,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
     if (catItem.catId === 'all') {
       incomingMsg.title= '',//'Here is the list of all the topics'
       incomingMsg.relatedQes = ''
-      incomingMsg.recommendedQues = this.responseData.categoryMap
+      incomingMsg.recommendedQues = this.sortCategory()
     } else {
       this.responseData.recommendationMap.forEach((element: any) => {
         if (catItem.catId === element.catId) {
@@ -337,7 +339,8 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
     this.eventSvc.dispatchChatbotEvent<WsEvents.IWsEventTelemetryInteract>(event)
   }
 
-  checkForApiCalls(){
+  checkForApiCalls() {
+    this.selectedLaguage = localStorage.getItem('selectedLanguage') || 'en'
     let localStg: any = JSON.parse(localStorage.getItem('faq') || '{}')
     let languageStg: any = JSON.parse(localStorage.getItem('faq-languages') || '{}')
     if(languageStg.length > 0) {
@@ -376,9 +379,28 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
     }
   }
   getCategories() {
-    this.categories = [{ "catId": "all","catName": this.localization[this.selectedLaguage]['categories']}]
-    this.categories=[...this.categories, ...this.responseData.categoryMap]
+    this.categories = [{ "catId": "all","catName": this.localization[this.selectedLaguage]['categories'],priority: 0}]
+    let categories: any = []
+    let isLogedIn: string = this.userInfo ? 'Logged-In' : 'Not Logged-In'
+    this.responseData.recommendationMap.map((catandques: any) => {
+      this.responseData.categoryMap.map((cat:any)=> {
+        if (catandques.catId === cat.catId && (catandques.categoryType === isLogedIn || catandques.categoryType === 'Both')) {
+          let category = {
+            catId: cat.catId,
+            catName: cat.catName,
+            priority: catandques.priority,
+            categoryType: catandques.categoryType,
+          }
+          categories.push(category)
+        }
+      })
+    })
+    this.categories=[...this.categories, ...categories]
   }
+  sortCategory(): any {
+    return this.categories.sort((a:any, b:any) => a['priority'] > b['priority'] ? 1 : a['priority'] === b['priority'] ? 0 : -1)
+  }
+  
 
   getLanguages(){
     this.displayLoader = true
@@ -386,6 +408,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
       if(resp.status.code === 200) {
         this.language = resp.payload.languages
         localStorage.setItem('faq-languages',JSON.stringify(resp.payload.languages))
+        localStorage.setItem('selectedLanguage',this.selectedLaguage)
         this.getData()
         this.displayLoader = false
       }
