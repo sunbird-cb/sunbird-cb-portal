@@ -281,7 +281,7 @@ export class TelemetryService {
   }
 
   externalImpression(impressionData: any) {
-    this.triggerNPSUpdate(impressionData)
+    // this.triggerNPSUpdate(impressionData)
     try {
       const page = this.getPageDetails()
       if (this.externalApps[impressionData.subApplicationName]) {
