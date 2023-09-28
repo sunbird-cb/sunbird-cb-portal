@@ -348,7 +348,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     })
     confirmDialog.afterClosed().subscribe(result => {
       if (result) {
-        this.requestAndWithDrawEnroll('SEND_FOR_PC_APPROVAL', 'WITHDRAW', this.batchData.workFlow.wfItem.wfId)
+        this.requestAndWithDrawEnroll(this.batchData.workFlow.wfItem.currentStatus, 'WITHDRAW', this.batchData.workFlow.wfItem.wfId)
         // this.openSnackbar('Withdraw Request sent Successfully!')
       }
     })
@@ -465,7 +465,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         },
       ],
     }
-    this.contentSvc.enrollUserToBatchWF(req).then((data: any) => {
+    this.contentSvc.enrollAndUnenrollUserToBatchWF(req, action).then((data: any) => {
       if (data && data.result && data.result.status === 'OK') {
         // this.batchData = {
         //   content: [batch],
@@ -490,7 +490,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.openSnackbar('Something went wrong, please try again later!')
         this.disableEnrollBtn = false
       }
-    },                                            (error: any) => {
+    },                                                               (error: any) => {
       this.openSnackbar(_.get(error, 'error.params.errmsg') ||
         _.get(error, 'error.result.errmsg') ||
         'Something went wrong, please try again later!')
@@ -607,6 +607,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.batchControl.setValue(batch)
             this.setbatchDateToCountDown(batch.startDate)
           }
+          this.getBatchUserCount(this.batchControl.value)
         } else {
           const batch = this.batchData.content.find((el: any) => {
             if (el.batchId === this.batchData.workFlow.wfItem.applicationId) {
@@ -632,9 +633,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       }
     }
     this.tocSvc.getSelectedBatchData(this.selectedBatchData)
-    if (this.batchControl.value) {
-      this.getBatchUserCount(this.batchControl.value)
-    }
   }
 
   // setting batch start date
