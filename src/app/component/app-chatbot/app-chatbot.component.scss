@@ -43,8 +43,8 @@
   // min-height: 702px;
   position: fixed;
   bottom: 20px;
-  right: 25px;
-  z-index: 999999999;
+  right: 50px;
+  z-index: 9999999999;
   border-radius: 15px;
   background-color: white;
   box-shadow: 0 6px 16px #0000003d;
@@ -90,12 +90,11 @@
   overflow: auto;
 }
 .cb-topics {
-  padding: 16px 16px 0 16px;
+  padding: 16px 16px 16px 16px;
   background-color: #F5F5F5;
+  overflow: auto;
 }
-.expand-text {
 
-}
 
 .cb-footer {
   border-bottom-left-radius: 15px;
@@ -141,7 +140,6 @@
   padding: 0;
   width: 100%;
   display: flex;
-  overflow: auto;
 }
 .cat-item {
   padding: 10px 16px;
@@ -165,11 +163,11 @@
   white-space: nowrap;
 }
 
-::-webkit-scrollbar {
-  width: 0px;
-  padding: 0;
-  background: transparent; /* make scrollbar transparent */
-}
+// ::-webkit-scrollbar {
+//   width: 0px;
+//   padding: 0;
+//   background: transparent; /* make scrollbar transparent */
+// }
 .lang-select {
   width: 70px;
   .mat-form-field-flex {
@@ -205,7 +203,9 @@
     flex-wrap: wrap;
   }
 }
-
+.chat-bot-icon {
+  padding-top: 8px;
+}
 .row-start {
   justify-content: flex-start;
   .system-icon {
@@ -227,7 +227,6 @@
 }
 .margin-left-17 {
   margin-left: 17%;
-
 }
 .question-hint {
   font-weight: bold;
