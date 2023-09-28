@@ -39,6 +39,7 @@ const API_END_POINTS = {
   MARK_AS_COMPLETE_META: (contentId: string) => `${PROTECTED_SLAG_V8}/user/progress/${contentId}`,
   ENROLL_BATCH: `/apis/proxies/v8/learner/course/v1/enrol`,
   ENROLL_BATCH_WF: `/apis/proxies/v8/workflow/blendedprogram/enrol`,
+  WITHDRAW_BATCH_WF: `/apis/proxies/v8/workflow/blendedprogram/unenrol`,
   BLENDED_USER_WF: `/apis/proxies/v8/workflow/blendedprogram/user/search`,
   BLENDED_USER_COUNT: `apis/proxies/v8/workflow/blendedprogram/enrol/status/count`,
   CERT_ADD_TEMPLATE: `${PROTECTED_SLAG_V8}/cohorts/course/batch/cert/template/add`,
@@ -170,9 +171,10 @@ export class WidgetContentService {
       .toPromise()
   }
 
-  enrollUserToBatchWF(req: any) {
+  enrollAndUnenrollUserToBatchWF(req: any, type: any) {
+    const url: any = type === 'WITHDRAW' ? API_END_POINTS.WITHDRAW_BATCH_WF : API_END_POINTS.ENROLL_BATCH_WF
     return this.http
-      .post(API_END_POINTS.ENROLL_BATCH_WF, req)
+      .post(url, req)
       .toPromise()
   }
 
