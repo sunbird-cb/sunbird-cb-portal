@@ -43,8 +43,8 @@
   // min-height: 702px;
   position: fixed;
   bottom: 20px;
-  right: 25px;
-  z-index: 999999999;
+  right: 50px;
+  z-index: 9999999999;
   border-radius: 15px;
   background-color: white;
   box-shadow: 0 6px 16px #0000003d;
@@ -205,7 +205,9 @@
     flex-wrap: wrap;
   }
 }
-
+.chat-bot-icon {
+  padding-top: 8px;
+}
 .row-start {
   justify-content: flex-start;
   .system-icon {
@@ -227,7 +229,6 @@
 }
 .margin-left-17 {
   margin-left: 17%;
-
 }
 .question-hint {
   font-weight: bold;

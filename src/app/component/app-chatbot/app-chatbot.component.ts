@@ -125,6 +125,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
 
   selectLaguage(event: any) {
     this.selectedLaguage = event.target.value
+    localStorage.setItem('selectedLanguage',event.target.value)
     this.chatInformation=[]
     this.chatIssues = []
     this.checkForApiCalls()
@@ -338,7 +339,8 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
     this.eventSvc.dispatchChatbotEvent<WsEvents.IWsEventTelemetryInteract>(event)
   }
 
-  checkForApiCalls(){
+  checkForApiCalls() {
+    this.selectedLaguage = localStorage.getItem('selectedLanguage') || 'en'
     let localStg: any = JSON.parse(localStorage.getItem('faq') || '{}')
     let languageStg: any = JSON.parse(localStorage.getItem('faq-languages') || '{}')
     if(languageStg.length > 0) {
@@ -406,6 +408,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
       if(resp.status.code === 200) {
         this.language = resp.payload.languages
         localStorage.setItem('faq-languages',JSON.stringify(resp.payload.languages))
+        localStorage.setItem('selectedLanguage',this.selectedLaguage)
         this.getData()
         this.displayLoader = false
       }
