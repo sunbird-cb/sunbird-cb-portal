@@ -195,7 +195,7 @@ export class GridLayoutComponent extends WidgetBaseComponent
   submitRating(value: any) {
     const currenttimestamp = new Date().getTime()
     const reqbody = {
-      formId: this.formID,
+      formId: Number(this.formID),
       timestamp: currenttimestamp,
       version: 1,
       dataObject: {
@@ -233,7 +233,7 @@ export class GridLayoutComponent extends WidgetBaseComponent
     if (!this.onSuccessRating) {
       const currenttimestamp = new Date().getTime()
       const reqbody = {
-        formId: this.formID,
+        formId: Number(this.formID),
         timestamp: currenttimestamp,
         version: 1,
         dataObject: {},
