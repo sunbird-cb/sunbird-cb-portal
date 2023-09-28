@@ -165,11 +165,11 @@
   white-space: nowrap;
 }
 
-::-webkit-scrollbar {
-  width: 0px;
-  padding: 0;
-  background: transparent; /* make scrollbar transparent */
-}
+// ::-webkit-scrollbar {
+//   width: 0px;
+//   padding: 0;
+//   background: transparent; /* make scrollbar transparent */
+// }
 .lang-select {
   width: 70px;
   .mat-form-field-flex {
