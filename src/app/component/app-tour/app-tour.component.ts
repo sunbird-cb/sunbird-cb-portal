@@ -26,6 +26,9 @@ export class AppTourComponent {
     completeCallback: () => this.completeTour(),
     nextCallback: (currentStep, stepObject) => this.nextCb(currentStep, stepObject),
     prevCallback: (currentStep, stepObject) => this.prevCb(currentStep, stepObject),
+    closeModalCallback: () => setTimeout(() => {
+      this.closeModal()
+    }, 500),
     steps: [
       {
         icon: 'school',
@@ -80,6 +83,7 @@ export class AppTourComponent {
         skipBtnClass: 'skip'
       },
     ],
+    preventBackdropFromAdvancing: true
   };
   private readonly MOBILE_TOUR: GuidedTour = {
     tourId: 'purchases-tour',
@@ -336,6 +340,7 @@ export class AppTourComponent {
   }
 
   closeModal() {
+    console.log('called'); // TODO: log!
     this.skipTour('','');
   }
 }

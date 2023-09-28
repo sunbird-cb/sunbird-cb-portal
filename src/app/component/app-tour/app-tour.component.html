@@ -113,7 +113,7 @@
 </div>
 
 
-<div *ngIf="showVideoTour && !isMobile" class="backdrop bg-zinc-400" [ngClass]="{'requires-no-scroll': noScroll}">
+<div (click)="closeModal()" *ngIf="showVideoTour && !isMobile" class="backdrop bg-zinc-400" [ngClass]="{'requires-no-scroll': noScroll}">
   <ws-app-tour-video [videoProgressTime]="videoProgressTime" (emitedValue)="emitFromVideo($event)" [showVideoTour]="showVideoTour" [isMobile]="isMobile"></ws-app-tour-video>
   <!-- <div *ngIf="showVideoTour && !isMobile" class="video-tour">
     <div class="flex tour-video-container">
@@ -134,7 +134,7 @@
   </div> -->
 </div>
 <!-- Mobile video player -->
-<div *ngIf="showVideoTour && isMobile" class="backdrop bg-zinc-400" [ngClass]="{'requires-no-scroll': noScroll}">
+<div (click)="closeModal()" *ngIf="showVideoTour && isMobile" class="backdrop bg-zinc-400" [ngClass]="{'requires-no-scroll': noScroll}">
   <ws-app-tour-video [videoProgressTime]="videoProgressTime" (start)="emitFromVideo($event)" [showVideoTour]="showVideoTour" [isMobile]="isMobile"></ws-app-tour-video>
   <!-- <div *ngIf="showVideoTour && isMobile" class="video-tour-mobile">
     <div class="flex tour-video-container">
