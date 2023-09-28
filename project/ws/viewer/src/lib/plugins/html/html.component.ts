@@ -152,7 +152,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     } else {
 
       if (data) {
-        spentTime = (this.ticks * 1000) + (data && data["spentTime"] || 0)
+        spentTime = this.ticks + (data && data["spentTime"] || 0)
         if (this.htmlContent && spentTime) {
           // ~~ will remove decimal after division
           percentage = ~~((spentTime / this.htmlContent.duration) * 100)
