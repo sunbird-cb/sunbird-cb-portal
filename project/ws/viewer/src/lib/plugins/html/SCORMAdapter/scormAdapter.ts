@@ -233,6 +233,9 @@ export class SCORMAdapterService {
       if (postData["cmi.core.lesson_status"] === 'completed') {
         return 2
       }
+      if (postData["cmi.core.lesson_status"] === 'passed') {
+        return 2
+      }
       return 1
     } catch (e) {
       // tslint:disable-next-line: no-console
