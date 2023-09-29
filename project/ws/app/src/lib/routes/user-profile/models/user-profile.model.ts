@@ -95,4 +95,5 @@ export interface IProfileAcademics {
   type: string,
   nameOfInstitute: string,
   yearOfPassing: string,
+  nameOfOtherQualification?: string
 }
