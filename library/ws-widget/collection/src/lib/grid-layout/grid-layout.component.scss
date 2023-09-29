@@ -275,7 +275,11 @@
     }
 }
 
-
+@media only screen and (min-width : 601px) and (max-width : 768px) {
+  .footer, .nps-footer {
+    bottom: 0vh !important;
+  }
+}
 
 /*   tab view css */
 @media only screen and (max-width : 768px) {
@@ -290,9 +294,9 @@
       margin-right: 10px;
       margin-left: 10px;
       color: #FFFFFF;
-      font-size: 12px;
+      font-size: 10px;
       justify-content: center;
-      padding: 12px;
+      padding: 10px 12px !important;
       text-decoration: none;
       border: 0;
       cursor: pointer;
@@ -304,21 +308,18 @@
   }
   .remind-later {
       background-color: #FFFFFF;
-      border: 1px solid #fafcff;
+      border: 1px solid #e0dddd !important;
       border-radius: 0.3rem;
       box-sizing: border-box;
       opacity: 1;
       color: rgba(0,116,182,1);
       font-family: "Lato-Bold";
-      font-size: 14px;
+      font-size: 10px;
       font-weight: 700;
       font-style: normal;
       letter-spacing: 0.5px;
       text-align: center;
-      line-height: 20px;
-      font-size: 12px;
-      line-height: 1.25rem;
-      padding: 8.75px 2rem;
+      padding: 10px 12px !important;
       -webkit-text-decoration: none #D1D5DB solid;
       text-decoration: none #D1D5DB solid;
       text-decoration-thickness: auto;
@@ -342,14 +343,15 @@
     text-align: center;
     z-index: 1000;
     height: 92px !important;
-    font-size: 16px !important;
+    font-size: 14px !important;
   }
   
   span.tooltip-check {
     position: relative;
     display: inline-block;
     padding-left: 6px;
-    font-size: 14px;
+    font-size: 10px;
+    margin-top: 3px !important;
     font-weight: 600;
     color: #187cdc;
     vertical-align: text-bottom;
@@ -368,7 +370,7 @@
     background-color: rgba(255,255,255, 1);
     background: white;
     border-radius: 5px;
-    font-size: 10px;
+    font-size: 9px !important;
     background-color: 1px 1px 1px 1px solid white;
     color: black;
     text-align: justify;
@@ -381,8 +383,7 @@
     background: white;
     z-index: 2000;
     bottom: 104%;
-    left: 0px;
-    margin-left: -83px;
+    right: -12% !important;
   }
 
   span.tooltip-check .tooltiptext-check::after {
@@ -411,11 +412,76 @@
   }
 
   span.inline-info {
-    display: block;
+    display: block !important;
 
     .material-icons {
       font-size: 15px;
       line-height: 0 !important;
+    }
+  }
+
+
+  // for nps 
+  .nps-footer {
+    bottom: 8vh !important;
+
+    .center-box {
+      font-size: 12px !important;
+    }
+
+    .rating-div {
+      .cstext {
+        font: 400 10px/12px Helvetica !important;
+        display: inline-block !important;
+        width: 40px !important;
+        vertical-align: middle !important;
+      }
+    }
+
+    ul {
+      .rating {
+        width: 26px !important;
+        height: 26px !important;
+        line-height: 1.8 !important;
+      }
+      .rating-img {
+        width: 26px !important;
+        height: 26px !important;
+
+        img {
+          width: 28px !important;
+          height: 28px !important;
+        }
+      }
+    }
+
+    .reviewbox {
+      width: 80% !important;
+      font: 400 12px/18px Lato !important;
+    }
+
+    textarea::placeholder {
+      color: rgba(0, 0, 0, 0.4) !important;
+      font: 400 12px/18px Lato !important;
+    }
+
+    .mat-stroked-button.mat-button-base {
+      width: 84% !important;
+    }
+
+    .karmasahayogi {
+      top: -15.8vh !important;
+      width: 80px !important;
+      right: 42% !important;
+    }
+
+    .ratingtitle {
+      font: 400 14px/21px Helvetica !important;
+      padding: 0 18% !important;
+    }
+
+    .thankyou-text {
+      padding: 2% 12% !important;
     }
   }
 }
