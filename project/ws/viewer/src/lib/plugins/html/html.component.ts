@@ -107,13 +107,15 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       current: ['1'],
       max_size: 1,
     }
-    this.fireRealTimeProgress()
+    // this.fireRealTimeProgress()
+    if (!this.store.getItem('Initialized')) {
+      this.fireRealTimeProgress()
+    }
     this.sub.unsubscribe();
   }
 
   private fireRealTimeProgress() {
     if (this.htmlContent) {
-      console.log('this.htmlContent', this.htmlContent, '::', this.ticks)
       this.realTimeProgressRequest.content_type = this.htmlContent.contentType
       this.realTimeProgressRequest.primaryCategory = this.htmlContent.primaryCategory
 
