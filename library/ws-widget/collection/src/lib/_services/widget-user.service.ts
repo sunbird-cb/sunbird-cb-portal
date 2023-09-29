@@ -59,6 +59,7 @@ export class WidgetUserService {
       )
   }
 
+   // tslint:disable-next-line: max-line-length
   fetchProfileUserBatchList(userId: string | undefined, queryParams?: { orgdetails: any, licenseDetails: any, fields: any, batchDetails: any }): Observable<NsContent.ICourse[]> {
     let path = ''
     if (queryParams) {
