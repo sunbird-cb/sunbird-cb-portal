@@ -119,7 +119,6 @@ export class TelemetryService {
   }
 
   start(edata: any, data: any, pageContext?: WsEvents.ITelemetryPageContext) {
-    this.triggerNPSUpdate(data)
     try {
       if (this.telemetryConfig) {
         $t.start(
@@ -160,7 +159,6 @@ export class TelemetryService {
   }
 
   end(edata: any, data: any, pageContext?: WsEvents.ITelemetryPageContext) {
-    this.triggerNPSUpdate(data)
     try {
       $t.end(
         {
@@ -190,7 +188,6 @@ export class TelemetryService {
   }
 
   audit(type: string, props: string, data: any) {
-    this.triggerNPSUpdate(data)
     try {
       $t.audit(
         {
@@ -217,7 +214,6 @@ export class TelemetryService {
   }
 
   heartbeat(type: string, id: string) {
-    this.triggerNPSUpdate(id)
     try {
       $t.heartbeat({
         id,
@@ -285,7 +281,7 @@ export class TelemetryService {
   }
 
   externalImpression(impressionData: any) {
-    this.triggerNPSUpdate(impressionData)
+    // this.triggerNPSUpdate(impressionData)
     try {
       const page = this.getPageDetails()
       if (this.externalApps[impressionData.subApplicationName]) {
@@ -588,6 +584,8 @@ export class TelemetryService {
   }
 
   addInteractListener() {
+    const data = this.getPageDetails()
+    this.triggerNPSUpdate(data.pageid)
     this.eventsSvc.events$
       .pipe(
         filter(

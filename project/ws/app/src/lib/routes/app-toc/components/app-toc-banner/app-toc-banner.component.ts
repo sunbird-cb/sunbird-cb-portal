@@ -139,12 +139,16 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
           }
         })
       }
+      if (this.content && this.content.identifier) {
+        this.tocSvc.fetchGetContentData(this.content.identifier).subscribe(res => {
+          this.contentReadData = res.result.content
+        })
+      }
     })
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig && instanceConfig.logos && instanceConfig.logos.defaultSourceLogo) {
       this.defaultSLogo = instanceConfig.logos.defaultSourceLogo
     }
-
     if (this.configSvc.restrictedFeatures) {
       this.isGoalsEnabled = !this.configSvc.restrictedFeatures.has('goals')
     }
@@ -348,7 +352,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     })
     confirmDialog.afterClosed().subscribe(result => {
       if (result) {
-        this.requestAndWithDrawEnroll('SEND_FOR_PC_APPROVAL', 'WITHDRAW', this.batchData.workFlow.wfItem.wfId)
+        this.requestAndWithDrawEnroll(this.batchData.workFlow.wfItem.currentStatus, 'WITHDRAW', this.batchData.workFlow.wfItem.wfId)
         // this.openSnackbar('Withdraw Request sent Successfully!')
       }
     })
@@ -465,7 +469,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         },
       ],
     }
-    this.contentSvc.enrollUserToBatchWF(req).then((data: any) => {
+    this.contentSvc.enrollAndUnenrollUserToBatchWF(req, action).then((data: any) => {
       if (data && data.result && data.result.status === 'OK') {
         // this.batchData = {
         //   content: [batch],
@@ -490,7 +494,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.openSnackbar('Something went wrong, please try again later!')
         this.disableEnrollBtn = false
       }
-    },                                            (error: any) => {
+    },                                                               (error: any) => {
       this.openSnackbar(_.get(error, 'error.params.errmsg') ||
         _.get(error, 'error.result.errmsg') ||
         'Something went wrong, please try again later!')
@@ -569,6 +573,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       const batchData = {
         content: [event.value],
       }
+      this.getBatchUserCount(event.value)
       if (this.selectedBatchData && this.selectedBatchData.content) {
         this.selectedBatchData = {
           ...this.selectedBatchData,
@@ -606,6 +611,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.batchControl.setValue(batch)
             this.setbatchDateToCountDown(batch.startDate)
           }
+          this.getBatchUserCount(this.batchControl.value)
         } else {
           const batch = this.batchData.content.find((el: any) => {
             if (el.batchId === this.batchData.workFlow.wfItem.applicationId) {
@@ -700,8 +706,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL ||
         status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL ||
         status === this.WFBlendedProgramStatus.WITHDRAWN ||
-        status === this.WFBlendedProgramStatus.REJECTED ||
-        status === this.WFBlendedProgramStatus.REMOVED && this.showRejected) {
+        status === this.WFBlendedProgramStatus.REMOVED || 
+        (status === this.WFBlendedProgramStatus.REJECTED  && this.showRejected)) {
         return true
       }
     }
@@ -805,6 +811,42 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (this.selectedBatchSubscription) {
       this.selectedBatchSubscription.unsubscribe()
     }
+  }
+
+   getBatchUserCount(batchData: any) {
+    const req = {
+      serviceName: 'blendedprogram',
+      applicationStatus: '',
+      applicationIds: [
+          batchData.batchId,
+      ],
+      limit: 100,
+      offset: 0,
+    }
+    const usercount = {
+      enrolled: 0,
+      totalApplied: 0,
+      rejected: 0,
+    }
+    this.contentSvc.fetchBlendedUserCOUNT(req).then((res: any) => {
+      if (res.result && res.result.data) {
+        res.result.data.forEach((ele: any) => {
+          if (ele.currentStatus === 'APPROVED') {
+            usercount.enrolled =  ele.statusCount
+          } else if (ele.currentStatus === 'REJECTED') {
+            usercount.rejected = ele.statusCount
+          }
+          usercount.totalApplied =  usercount.totalApplied + ele.statusCount
+        })
+        if (this.selectedBatchData) {
+          this.selectedBatchData = {
+            ...this.selectedBatchData,
+            userCount: usercount,
+          }
+        }
+        this.tocSvc.getSelectedBatchData(this.selectedBatchData)
+      }
+    })
   }
 
   private getResumeDataFromList(type?: string) {

@@ -187,7 +187,11 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
     ngOnInit() {
         if (this.registrationForm) {
             const instanceConfig = this.configSvc.instanceConfig
-            this.groupsOriginal = this.activatedRoute.snapshot.data.group.data || []
+            if (this.activatedRoute.snapshot.data.group.data) {
+              this.groupsOriginal = this.activatedRoute.snapshot.data.group.data.filter((ele:any) => ele !== 'Others')
+            } else {
+              this.groupsOriginal = []
+            }
             this.OrgsSearchChange()
             this.onGroupChange()
             if (instanceConfig) {

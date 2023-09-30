@@ -103,7 +103,9 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
       ) {
       this.customHeight = true
     }
-
+    if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.profileDetails && this.configSvc.unMappedUser.profileDetails.get_started_tour) {
+      this.showTour = this.configSvc.unMappedUser.profileDetails.get_started_tour.skipped || this.configSvc.unMappedUser.profileDetails.get_started_tour.visited
+    }
     this.mobileAppsSvc.init()
     this.openIntro()
     // if (this.authSvc.token) {
@@ -179,11 +181,9 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
     this.skipper.nativeElement.focus()
   }
   ngOnInit() {
-    let showTour = localStorage.getItem('tourGuide')? JSON.parse(localStorage.getItem('tourGuide')||''): {}
-    this.showTour = showTour && showTour.disable ? showTour.disable : false
+    //let showTour = localStorage.getItem('tourGuide')? JSON.parse(localStorage.getItem('tourGuide')||''): {}
+    //this.showTour = showTour && showTour.disable ? showTour.disable : false
     this.configSvc.updateTourGuideMethod(this.showTour)
-    // console.log('this.route.snapshot.queryParams ', this.route.snapshot.queryParams); // TODO: log!
-    console.log('loggedinUser ', this.loggedinUser); // TODO: log!
     this.route.queryParams
       .subscribe(params => {
         console.log(params); // { orderby: "price" }

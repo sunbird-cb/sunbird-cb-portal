@@ -4,13 +4,13 @@
       <span class="ws-mat-white-text mat-h2">What is iGOT Karmayogi?</span>
     </div>
     <div class="video-player-row">
-      <video controls="" height="100%" width="100%" [autoplay]="true" #tourVideoTag>
-        <source src="https://portal.karmayogi.nic.in/content-store/Website_Video.mp4" type="video/mp4">
+      <video id="tourVideoTag" disablePictureInPicture="true" controls controlsList="nodownload" height="100%" width="100%" [autoplay]="true" #tourVideoTag>
+        <source src="{{videoUrl}}" type="video/mp4">
       </video>
     </div>
     <div class="video-footer-row">
       <button class="skip-btn ws-mat-white-text" (click)="letsSkip()" mat-button>Skip</button>
-      <button class="next-btn dialog-btn ws-mat-primary-background-op30 action-orange" (click)="letsStart()" mat-button>Next</button>
+      <button [ngClass]="{'ripple-btn': videoPlayedProgress}" class="next-btn dialog-btn ws-mat-primary-background-op30 action-orange" (click)="letsStart()" mat-button>Next</button>
     </div>
   </div>
 </div>
@@ -18,8 +18,8 @@
 <div *ngIf="showVideoTour && isMobile" class="video-tour-mobile">
   <div class="flex tour-video-container">
     <div class="video-header-row-mobile">
-      <video controls="" height="100%" width="100%"  [autoplay]="true" #tourVideoTag>
-        <source src="https://portal.karmayogi.nic.in/content-store/Website_Video.mp4" type="video/mp4">
+      <video id="tourVideoTag" disablePictureInPicture="true" controls controlsList="nodownload" height="100%" width="100%"  [autoplay]="true" #tourVideoTag>
+        <source src="{{videoUrl}}" type="video/mp4">
       </video>
       <div class="pt-2">
         <span class="ws-mat-white-text mat-h3">What is iGOT Karmayogi?</span>
@@ -27,6 +27,6 @@
     </div>
     <div class="video-footer-row-mobile">
       <button class="skip-btn ws-mat-white-text" (click)="letsSkip()" mat-button>Skip</button>
-      <button class="next-btn dialog-btn ws-mat-primary-background-op30 action-orange" (click)="letsstart()" mat-button>Next</button>
+      <button [ngClass]="{'ripple-btn': videoPlayedProgress}" class="next-btn dialog-btn ws-mat-primary-background-op30 action-orange" (click)="letsstart()" mat-button>Next</button>
     </div>
   </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { EventService,WsEvents } from '@sunbird-cb/utils/src/public-api';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'ws-app-tour-video',
@@ -10,12 +11,43 @@ export class AppTourVideoComponent implements OnInit, OnDestroy {
 
   @Input() showVideoTour: any
   @Input() isMobile: any
+  @Input() videoProgressTime: number = 0;
   @Output() emitedValue = new EventEmitter<string>()
+  @Output() videoPlayed = new EventEmitter()
+  videoPlayedProgress: boolean = true;
+  environment: any
+  videoUrl: any
   @ViewChild('tourVideoTag', { static: false }) tourVideoTag!: ElementRef<HTMLVideoElement>
 
   constructor(private eventService: EventService) { }
 
   ngOnInit() {
+    this.environment = environment
+    this.videoUrl = `https://${this.environment.sitePath}/content-store/Website_Video.mp4`
+    try {
+      if (this.videoProgressTime > 0) {
+        this.videoPlayedProgress = false;
+        setTimeout(() => {
+          // @ts-ignore
+          const aud = document.getElementById('tourVideoTag');
+          let approxTime = 0;
+          // @ts-ignore
+          aud.ontimeupdate = () => {
+            // @ts-ignore
+            const currentTime = Math.floor(aud['currentTime'])
+            if (currentTime !== approxTime) {
+              approxTime = currentTime;
+              if (approxTime === this.videoProgressTime) {
+                this.videoPlayedProgress = true;
+                this.videoPlayed.emit({state: 'played', time: approxTime});
+              }
+            }
+          };
+        }, 2000);
+      }
+    } catch (error) {
+      console.error('Video progress time error')
+    }
     this.raiseVideStartTelemetry()
   }
 
@@ -28,7 +60,6 @@ export class AppTourVideoComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log("time ",this.tourVideoTag.nativeElement.currentTime)
     this.raiseVideEndTelemetry(this.tourVideoTag.nativeElement.currentTime)
   }
 
@@ -70,7 +101,6 @@ export class AppTourVideoComponent implements OnInit, OnDestroy {
       from: '',
       to: 'Telemetry',
     }
-    console.log("event ", event)
     this.eventService.dispatchGetStartedEvent<WsEvents.IWsEventTelemetryInteract>(event)
   }
 

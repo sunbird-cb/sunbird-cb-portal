@@ -1,15 +1,24 @@
-import { Component } from '@angular/core'
+import { Component, HostListener } from '@angular/core'
 import { ProgressIndicatorLocation, GuidedTour, Orientation, GuidedTourService } from 'cb-tour-guide';
 import { UtilityService, EventService, WsEvents, ConfigurationsService } from '@sunbird-cb/utils';
-
+import { UserProfileService } from '@ws/app/src/lib/routes/user-profile/services/user-profile.service';
 @Component({
   selector: 'app-tour',
   templateUrl: './app-tour.component.html',
   styleUrls: ['./app-tour.component.scss'],
+  providers:[UserProfileService]
 })
 export class AppTourComponent {
   progressIndicatorLocation = ProgressIndicatorLocation.TopOfTourBlock;
   currentWindow: any
+  videoProgressTime: number = 114;
+  tourStatus: any = {visited: true, skipped: false}
+  profileDetails: any
+  @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    if (event.key === "Escape") {
+      this.skipTour('','')
+    }
+  }
 
   private readonly TOUR: GuidedTour = {
     tourId: 'purchases-tour',
@@ -17,6 +26,9 @@ export class AppTourComponent {
     completeCallback: () => this.completeTour(),
     nextCallback: (currentStep, stepObject) => this.nextCb(currentStep, stepObject),
     prevCallback: (currentStep, stepObject) => this.prevCb(currentStep, stepObject),
+    closeModalCallback: () => setTimeout(() => {
+      this.closeModal()
+    }, 500),
     steps: [
       {
         icon: 'school',
@@ -58,19 +70,20 @@ export class AppTourComponent {
         skipBtnClass: 'skip'
       },
       {
-        icon: 'group',
-        connectorDirection: 'left',
+        icon: 'person',
+        connectorDirection: 'right',
         title: 'My Profile',
         selector: '#user_icon',
         class: 'tour_profile',
         containerClass: 'tour_profile_container',
         content: 'Update your information to get the best-suited courses and programs.',
-        orientation: Orientation.BottomLeft,
+        orientation: Orientation.BottomRight,
         nextBtnClass: 'action-orange mat-button',
         backBtnClass: 'back',
         skipBtnClass: 'skip'
       },
     ],
+    preventBackdropFromAdvancing: true
   };
   private readonly MOBILE_TOUR: GuidedTour = {
     tourId: 'purchases-tour',
@@ -120,7 +133,7 @@ export class AppTourComponent {
         skipBtnClass: 'skip'
       },
       {
-        icon: 'group',
+        icon: 'person',
         isMobile: true,
         connectorDirection: 'bottom',
         title: 'My Profile',
@@ -141,10 +154,28 @@ export class AppTourComponent {
   showCompletePopup: boolean = false;
   showVideoTour: boolean = false;
   isMobile: boolean = false;
+  hideCloseBtn: boolean = false;
 
-  constructor(private guidedTourService: GuidedTourService, private utilitySvc: UtilityService,private configSvc: ConfigurationsService, private events: EventService) {
+  constructor(private guidedTourService: GuidedTourService,
+    private utilitySvc: UtilityService,private configSvc: ConfigurationsService,
+    private events: EventService, private userProfileSvc: UserProfileService) {
     this.isMobile = this.utilitySvc.isMobile;
     this.raiseGetStartedStartTelemetry()
+    this.profileDetails = this.configSvc.unMappedUser.profileDetails
+  }
+
+  updateTourstatus(status: any) {
+    this.profileDetails.get_started_tour = status
+    let reqUpdates = {
+      request: {
+        userId: this.configSvc.unMappedUser.id,
+        profileDetails:
+        this.profileDetails
+      }
+    }
+    this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(res => {
+      console.log("re s ", res )
+    })
   }
 
   emitFromVideo(event: any){
@@ -167,12 +198,19 @@ export class AppTourComponent {
       }, 1000);
     } else {
       this.guidedTourService.startTour(this.TOUR);
+      setTimeout(() => {
+        // @ts-ignore
+        const _left = parseFloat(document.getElementsByClassName('tour_learn')[0]['style']['left'].split('px')[0]);
+        // @ts-ignore
+        document.getElementsByClassName('tour_learn')[0]['style']['left'] = (_left - 10) + 'px';
+      }, 100);
     }
 
   }
 
   public skipTour(screen: string, subType: string): void {
-    localStorage.setItem('tourGuide',JSON.stringify({'disable': true}) )
+    //localStorage.setItem('tourGuide',JSON.stringify({'disable': true}) )
+    this.updateTourstatus({visited: true, skipped: true})
     this.configSvc.updateTourGuideMethod(true)
     if (screen.length > 0 && subType.length > 0) {
       this.raiseTemeletyInterat(screen, subType)
@@ -200,18 +238,23 @@ export class AppTourComponent {
   }
 
   completeTour(): void {
+    this.hideCloseBtn = false;
     this.showpopup = false;
     this.showCompletePopup = true;
+    setTimeout(() => {
+      this.onCongrats();
+    }, 3000);
     this.raiseGetStartedEndTelemetry()
     if (this.isMobile) {
       // @ts-ignore
       document.getElementById('menuToggleMobile').click()
     }
+    this.updateTourstatus({visited: true, skipped: false})
   }
 
   onCongrats(): void {
     this.showCompletePopup = false;
-    localStorage.setItem('tourGuide',JSON.stringify({'disable': true}) )
+    //localStorage.setItem('tourGuide',JSON.stringify({'disable': true}) )
     this.configSvc.updateTourGuideMethod(true)
   }
 
@@ -225,12 +268,16 @@ export class AppTourComponent {
   }
 
   nextCb(currentStep: number, stepObject:any) {
+    if (stepObject.title == 'My Profile') {
+      this.hideCloseBtn = true;
+    }
     this.currentWindow = stepObject
     let currentStepObj: any = this.TOUR.steps[currentStep - 1]
     this.raiseTemeletyInterat(`${currentStepObj.title.toLowerCase().replace(' ','-')}-next`, currentStepObj.title.toLowerCase())
   }
 
   prevCb(currentStep: number, stepObject:any) {
+    this.hideCloseBtn = false;
     this.currentWindow = stepObject
     let currentStepObj: any = this.TOUR.steps[currentStep +  1]
     this.raiseTemeletyInterat(`${currentStepObj.title.toLowerCase().replace(' ','-')}-previous`, currentStepObj.title.toLowerCase())
@@ -290,5 +337,10 @@ export class AppTourComponent {
       to: 'Telemetry',
     }
     this.events.dispatchGetStartedEvent<WsEvents.IWsEventTelemetryInteract>(event)
+  }
+
+  closeModal() {
+    console.log('called'); // TODO: log!
+    this.skipTour('','');
   }
 }
