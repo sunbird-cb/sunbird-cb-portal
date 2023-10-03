@@ -101,7 +101,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     window.removeEventListener('onmessage', this.receiveMessage)
     console.log('this.ticks: ', this.ticks)
     this.raiseRealTimeProgress()
-    this.store.clearAll()
+    // this.store.clearAll()
   }
 
   private raiseRealTimeProgress() {
@@ -161,13 +161,13 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       }
     } else {
 
-      if (data) {
+      // if (data) {
         spentTime = this.ticks + (data && data["spentTime"] || 0)
         if (htmlContent && spentTime) {
           // ~~ will remove decimal after division
           percentage = ~~((spentTime / htmlContent.duration) * 100)
         }
-      }
+      // }
 
       if (percentage >= this.getThreshold()) {
         return {
