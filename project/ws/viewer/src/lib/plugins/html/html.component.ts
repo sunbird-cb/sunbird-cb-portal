@@ -101,6 +101,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     window.removeEventListener('onmessage', this.receiveMessage)
     console.log('this.ticks: ', this.ticks)
     this.raiseRealTimeProgress()
+    this.store.clearAll()
   }
 
   private raiseRealTimeProgress() {
@@ -112,7 +113,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     // this.fireRealTimeProgress()
     if (!this.store.getItem('Initialized')) {
       this.fireRealTimeProgress(this.htmlContent)
-      this.store.clearAll()
+      // this.store.clearAll()
     }
     this.sub.unsubscribe();
   }
@@ -136,14 +137,16 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       }
       this.scormAdapterService.addDataV3(req, htmlContent.identifier).subscribe((_res: any) => {
         this.loggerSvc.log('Progress updated successfully')
-        this.store.clearAll()
+        // this.store.clearAll()
+        return
       }, (err) => {
         this.loggerSvc.error('Error calling progress update for scorm content', err)
-        this.store.clearAll()
+        // this.store.clearAll()
+        return
       }
       )
     }
-    return
+    // return
   }
 
   calculateCompletionStatus(htmlContent: any) {
