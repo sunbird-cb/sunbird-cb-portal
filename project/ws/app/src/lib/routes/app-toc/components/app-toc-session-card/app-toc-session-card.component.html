@@ -72,7 +72,7 @@
             <ng-container *ngFor="let handout of session?.sessionHandouts">
                 <div class="">
                     <span class="mr-4">{{handout.title}}</span>
-                    <a class="download-link" target=”_blank” download href="{{handout.file}}">Download</a>
+                    <a class="download-link" target=”_blank” download href="{{handout.url}}">Download</a>
                 </div>
             </ng-container>
         </div>
