@@ -53,6 +53,7 @@ export class WidgetContentService {
     private configSvc: ConfigurationsService,
   ) {
   }
+  tocConfigData: any = null
 
   isResource(primaryCategory: string) {
     if (primaryCategory) {
@@ -72,6 +73,10 @@ export class WidgetContentService {
     // return this.http.get(url).toPromise()
     if (url) { }
     return of().toPromise()
+  }
+
+  updateTocConfig(data: any) {
+    this.tocConfigData = data
   }
 
   fetchContent(
