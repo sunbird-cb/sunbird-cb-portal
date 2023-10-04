@@ -1,6 +1,6 @@
 {
   "/apis/*": {
-    "target": "https://portal.karmayogi.nic.in/",
+    "target": "https://portal.igotkarmayogi.gov.in/",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true,
@@ -8,11 +8,11 @@
       "/apis": "/apis"
     },
     "headers": {
-      "Cookie": "connect.sid=s%3AnLKtkhFIIiM6OMTdMkyajo_-v_jm9eBM.QUNVg8HL%2FKp2AdR2cgr05in4yQqAR21IY6gfML%2Fgi44"
+      "Cookie": "connect.sid=s%3A_hYHjODG0wgMmunY9jisfo-qDjYruw2P.npndoTA0XkEDLXGplqAwAmZUAkYQ5xqZkH8EOG9TPpA; express.sid=s%3AhjAWHlWYYxV0LPckan_ocRJTrCMVfJwN.P9M5IT%2F9o%2BB%2BCHOWRq9LNBZwjP9iveVG701KZyZG7VM; __utma=154743481.318564108.1696311063.1696311063.1696311063.1; __utmc=154743481; __utmz=154743481.1696311063.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmb=154743481.2.10.1696311063"
     }
   },
   "/api/*": {
-    "target": "https://portal.karmayogi.nic.in/",
+    "target": "https://portal.igotkarmayogi.gov.in/",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true,
