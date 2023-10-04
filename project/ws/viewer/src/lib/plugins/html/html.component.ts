@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild, OnDestroy }
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
 import { Router, ActivatedRoute } from '@angular/router'
-import { NsContent } from '@sunbird-cb/collection'
+import { NsContent, WidgetContentService } from '@sunbird-cb/collection'
 import { ConfigurationsService, EventService, LoggerService, TFetchStatus } from '@sunbird-cb/utils'
 import { MobileAppsService } from '../../../../../../../src/app/services/mobile-apps.service'
 import { SCORMAdapterService } from './SCORMAdapter/scormAdapter'
@@ -42,11 +42,13 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     mime_type: NsContent.EMimeTypes.ZIP,
     user_id_type: 'uuid',
   }
+  oldData: any = undefined
 
   ticks = 0
   private timer!: any
   // Subscription object
   private sub!: Subscription
+  tocConfig!: any
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -58,7 +60,8 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     private events: EventService,
     private activatedRoute: ActivatedRoute,
     private store: Storage,
-    private loggerSvc: LoggerService
+    private loggerSvc: LoggerService,
+    private widgetContentSvc: WidgetContentService,
   ) {
     (window as any).API = this.scormAdapterService
     // if (window.addEventListener) {
@@ -98,7 +101,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     window.removeEventListener('onmessage', this.receiveMessage)
     console.log('this.ticks: ', this.ticks)
     this.raiseRealTimeProgress()
-
+    // this.store.clearAll()
   }
 
   private raiseRealTimeProgress() {
@@ -107,39 +110,46 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       current: ['1'],
       max_size: 1,
     }
-    this.fireRealTimeProgress()
+    // this.fireRealTimeProgress()
+    if (!this.store.getItem('Initialized')) {
+      this.fireRealTimeProgress(this.htmlContent)
+      // this.store.clearAll()
+    }
     this.sub.unsubscribe();
   }
 
-  private fireRealTimeProgress() {
-    if (this.htmlContent) {
-      console.log('this.htmlContent', this.htmlContent, '::', this.ticks)
-      this.realTimeProgressRequest.content_type = this.htmlContent.contentType
-      this.realTimeProgressRequest.primaryCategory = this.htmlContent.primaryCategory
+  private fireRealTimeProgress(htmlContent: any) {
+    if (htmlContent) {
+      this.realTimeProgressRequest.content_type = htmlContent.contentType
+      this.realTimeProgressRequest.primaryCategory = htmlContent.primaryCategory
 
       // const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
       //   this.activatedRoute.snapshot.queryParams.collectionId : ''
 
       // const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
       //   this.activatedRoute.snapshot.queryParams.batchId : ''
-      const completionData = this.calculateCompletionStatus()
+      const completionData = this.calculateCompletionStatus(htmlContent)
       const req = {
         ...this.realTimeProgressRequest,
         status: (completionData && completionData.status) || 0,
         completionPercentage: (completionData && completionData.completionPercentage) || 0,
         progressDetails: { spentTime: (completionData && completionData.spentTime) || 0 }
       }
-      this.scormAdapterService.addDataV3(req).subscribe((_res: any) => {
+      this.scormAdapterService.addDataV3(req, htmlContent.identifier).subscribe((_res: any) => {
         this.loggerSvc.log('Progress updated successfully')
+        // this.store.clearAll()
+        return
       }, (err) => {
         this.loggerSvc.error('Error calling progress update for scorm content', err)
+        // this.store.clearAll()
+        return
       }
       )
     }
-    return
+    // return
   }
 
-  calculateCompletionStatus() {
+  calculateCompletionStatus(htmlContent: any) {
     const data = this.store.getAll()
     let spentTime = 0
     let percentage = 0
@@ -151,15 +161,15 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       }
     } else {
 
-      if (data) {
+      // if (data) {
         spentTime = this.ticks + (data && data["spentTime"] || 0)
-        if (this.htmlContent && spentTime) {
+        if (htmlContent && spentTime) {
           // ~~ will remove decimal after division
-          percentage = ~~((spentTime / this.htmlContent.duration) * 100)
+          percentage = ~~((spentTime / htmlContent.duration) * 100)
         }
-      }
+      // }
 
-      if (percentage >= this.progressThreshold) {
+      if (percentage >= this.getThreshold()) {
         return {
           completionPercentage: 100,
           status: 2,
@@ -175,6 +185,13 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  getThreshold() {
+    this.tocConfig = this.widgetContentSvc.tocConfigData
+    if(this.tocConfig) {
+      this.progressThreshold = this.tocConfig.ScormProgressThreshold
+    }
+    return this.progressThreshold
+  }
   ngOnChanges() {
     this.isIntranetUrl = false
     this.progress = 100
@@ -183,8 +200,26 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     this.intranetUrlPatterns = this.configSvc.instanceConfig
       ? this.configSvc.instanceConfig.intranetIframeUrls
       : []
+    // For successive scorm resources, when switched to next content -  start
+    if(!this.oldData) {
+      this.oldData = this.htmlContent
+    } else {
+      if(this.htmlContent && (this.oldData.identifier !== this.htmlContent.identifier)) {
+        if (!this.store.getItem('Initialized')) {
+          this.fireRealTimeProgress(this.oldData)
+        }
+        this.sub.unsubscribe();
+        this.ticks = 0
+        this.timer = timer(1000, 1000)
+        // subscribing to a observable returns a subscription object
+        this.sub = this.timer.subscribe((t: any) => this.tickerFunc(t))
+        this.oldData = this.htmlContent
+        this.scormAdapterService.contentId = this.htmlContent.identifier
+        this.scormAdapterService.loadDataV2()
+      }
+    }
+    // For successive scorm resources, when switched to next content - end
 
-    // //console.log(this.htmlContent)
     let iframeSupport: boolean | string | null =
       this.htmlContent && this.htmlContent.isIframeSupported
     if (this.htmlContent && this.htmlContent.artifactUrl) {
