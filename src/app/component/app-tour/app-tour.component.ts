@@ -340,7 +340,6 @@ export class AppTourComponent {
   }
 
   closeModal() {
-    console.log('called'); // TODO: log!
     this.skipTour('','');
   }
 }
