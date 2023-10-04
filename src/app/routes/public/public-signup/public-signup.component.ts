@@ -481,7 +481,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     if (email && email.value && email.valid) {
       this.signupSvc.sendOtp(email.value, 'email').subscribe(() => {
         this.otpEmailSend = true
-        alert('An OTP has been sent to your registered email address (valid for 15 minutes)')
+        alert('An OTP has been sent to your email (valid for 15 minutes)')
         this.startCountDownEmail()
         // tslint:disable-next-line: align
       }, (error: any) => {
@@ -498,7 +498,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       this.signupSvc.resendOtp(email.value, 'email').subscribe((res: any) => {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpEmailSend = true
-          alert('An OTP has been sent to your registered email address (valid for 15 minutes)')
+          alert('An OTP has been sent to your email (valid for 15 minutes)')
           this.startCountDownEmail()
         }
         // tslint:disable-next-line: align
