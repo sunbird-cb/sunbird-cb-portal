@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable, throwError } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 import { IUserGroupDetails } from './widget-user.model'
@@ -35,8 +35,13 @@ export class WidgetUserService {
   }
 
   fetchUserBatchList(userId: string | undefined): Observable<NsContent.ICourse[]> {
+    let headers = new HttpHeaders({
+      'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      'Pragma': 'no-cache',
+      'Expires': '0'
+    })
     return this.http
-      .get(API_END_POINTS.FETCH_USER_ENROLLMENT_LIST(userId))
+      .get(API_END_POINTS.FETCH_USER_ENROLLMENT_LIST(userId), {headers})
       .pipe(
         catchError(this.handleError),
         map(
