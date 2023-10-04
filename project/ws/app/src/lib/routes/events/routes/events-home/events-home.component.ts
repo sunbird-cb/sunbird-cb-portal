@@ -12,6 +12,7 @@ export class EventsHomeComponent implements OnInit, OnDestroy {
   banner!: NsWidgetResolver.IWidgetData<any>
   currentRoute = 'home'
   private bannerSubscription: any
+  pageLayout: any
   constructor(private route: ActivatedRoute, private router: Router) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
@@ -31,6 +32,7 @@ export class EventsHomeComponent implements OnInit, OnDestroy {
     this.bannerSubscription = this.route.data.subscribe(data => {
       if (data && data.pageData) {
         this.banner = data.pageData.data.banner || []
+        this.pageLayout = data.pageData.data.pageLayout || []
       }
     })
   }

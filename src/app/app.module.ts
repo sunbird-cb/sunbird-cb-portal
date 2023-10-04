@@ -80,6 +80,10 @@ import { PublicWelcomeModule } from './routes/public/welcome/public-welcome.modu
 import { WelcomeUserResolverService } from './services/welcome-user-resolver.service'
 import { PublicTocModule } from './routes/public/public-toc/public-toc.module'
 import { PublicRequestModule } from './routes/public/public-request/public-request.module'
+import { AppTourComponent } from './component/app-tour/app-tour.component'
+import {GuidedTourModule, GuidedTourService} from 'cb-tour-guide'
+import { AppTourVideoComponent } from './component/app-tour-video/app-tour-video.component'
+import { AppChatbotModule } from './component/app-chatbot/app-chatbot.module'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -121,6 +125,9 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PublicContacthomeComponent,
     PublicLoginWComponent,
     PublicLoginWGComponent,
+    AppTourVideoComponent,
+    AppTourComponent,
+
   ],
   imports: [
     FormsModule,
@@ -169,6 +176,8 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PipeSafeSanitizerModule,
     TourModule,
     MatTabsModule,
+    GuidedTourModule,
+    AppChatbotModule,
     DiscussionUiModule.forRoot(ConfigService),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
@@ -215,6 +224,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     { provide: OverlayContainer, useClass: FullscreenOverlayContainer },
     { provide: HAMMER_GESTURE_CONFIG, useClass: HammerConfig },
     { provide: ErrorHandler, useClass: GlobalErrorHandlingService },
+    GuidedTourService
   ],
 })
 export class AppModule { }

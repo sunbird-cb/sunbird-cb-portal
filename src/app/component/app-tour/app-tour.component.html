@@ -1,0 +1,157 @@
+<div class="skip-tour-modal" *ngIf="closePopupIcon">
+  <mat-icon *ngIf="!hideCloseBtn" (click)="skipTour('','')" class="mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">close</mat-icon>
+</div>
+<div (click)="closeModal()" *ngIf="showpopup" class="backdrop bg-zinc-400" [ngClass]="{'requires-no-scroll': noScroll}">
+  <div class="app-tour-popup" *ngIf="!isMobile">
+    <div class="first-panel">
+      <div class="text-center">
+        <span class="ws-mat-default-text mat-h2 tour-panel-title">Get started</span>
+        <br/>
+        <span class="ws-mat-default-text mat-h5 tour-panel-desc">Namaste! Welcome to the journey of anytime anywhere learning.</span>
+      </div>
+      <div class="first-action-container">
+        <div class="first-panel-action" (click)="starVideoPlayer()">
+          <div class="blk1"><mat-icon class="icon-tour gray-icon">check_circle</mat-icon></div>
+          <div class="blk2"><img alt="" src="fusion-assets/images/play-tour.svg"></div>
+          <div class="blk3"><span>What is iGOT Karmayogi?</span></div>
+          <div class="blk4"><mat-icon class="icon-tour blue-icon">navigate_next</mat-icon></div>
+        </div>
+      </div>
+    </div>
+    <div class="second-panel">
+      <div class="second-action-container">
+        <div class="second-panel-action" (click)="startTour('welcome-start', 'welcome')">
+          <div class="blk1"><mat-icon class="icon-tour gray-icon">check_circle</mat-icon></div>
+          <div class="blk2"><img alt="" src="fusion-assets/images/take-tour.svg"></div>
+          <div class="blk3"><span>Take a tour</span></div>
+          <div class="blk4"><mat-icon class="icon-tour blue-icon">navigate_next</mat-icon></div>
+        </div>
+        <div class="second-panel-action second-panel-action-buttons">
+          <!-- <span (click)="skipTour()" class="skip-btn">Skip</span> -->
+          <button (click)="skipTour('welcome-skip', 'welcome')" class="dialog-btn skip-btn" mat-button>Skip</button>
+          <button (click)="starVideoPlayer()" class="dialog-btn ws-mat-primary-background-op30 action-orange" mat-button>Get Started</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!isMobile" class="tour-avatar">
+    <img (click)="startApp()" alt="" src="fusion-assets/images/KarmaSahayogi.svg">
+  </div>
+
+  <!-- Mobile screen -->
+  <div class="app-tour-popup mobile-popup" *ngIf="isMobile">
+    <div *ngIf="isMobile" class="mobile-tour-avatar">
+      <img (click)="startApp()" alt="" src="fusion-assets/images/KarmaSahayogi.svg">
+    </div>
+    <div class="first-panel">
+      <div class="text-center">
+        <span class="ws-mat-white-text mat-h2 header-text">Get started</span>
+        <br/>
+        <span class="ws-mat-white-text mat-h5 header-desc">Namaste! Welcome to the journey of anytime anywhere learning.</span>
+      </div>
+    </div>
+    <div class="second-panel no-border">
+      <div class="second-action-container">
+          <div class="second-panel-action" (click)="starVideoPlayer()">
+            <div class="blk1"><mat-icon class="icon-tour gray-icon">check_circle</mat-icon></div>
+            <div class="blk2"><img alt="" src="fusion-assets/images/play-tour.svg"></div>
+            <div class="blk3"><span>What is iGOT Karmayogi?</span></div>
+            <div class="blk4"><mat-icon class="icon-tour blue-icon">navigate_next</mat-icon></div>
+          </div>
+      </div>
+    </div>
+    <div class="second-panel">
+      <div class="second-action-container">
+        <div class="second-panel-action" (click)="startTour('welcome-start', 'welcome')">
+          <div class="blk1"><mat-icon class="icon-tour gray-icon">check_circle</mat-icon></div>
+          <div class="blk2"><img alt="" src="fusion-assets/images/take-tour.svg"></div>
+          <div class="blk3"><span>Take a tour</span></div>
+          <div class="blk4"><mat-icon class="icon-tour blue-icon">navigate_next</mat-icon></div>
+        </div>
+      </div>
+    </div>
+    <div class="third-panel">
+      <div class="second-panel-action second-panel-action-buttons">
+        <span (click)="skipTour('welcome-skip', 'welcome')" class="skip-btn">Skip</span>
+        <button (click)="starVideoPlayer()" class="dialog-btn ws-mat-primary-background-op30 action-orange" mat-button>Get Started</button>
+      </div>
+    </div>
+  </div>
+  <!-- Mobile screen -->
+</div>
+<!-- <ngx-guided-tour backText="Previous" doneText="Finish" progressIndicatorLocation="inside-next-button"></ngx-guided-tour> -->
+<ngx-guided-tour backText="Previous" doneText="Finish" progressIndicatorLocation="dots"></ngx-guided-tour>
+
+<div *ngIf="showCompletePopup && !isMobile" class="backdrop bg-zinc-400" [ngClass]="{'requires-no-scroll': noScroll}">
+  <div *ngIf="showCompletePopup && !isMobile" (click)="onCongrats()" class="complete-tour">
+    <img width="107" height="107" alt="" src="fusion-assets/images/tour-complete.png">
+    <span class="ws-mat-default-text mat-h2">Congratulations!</span>
+    <br/>
+    <span class="ws-mat-default-text mat-h5">You are all set to start your learning journey.</span>
+  </div>
+  <div class="tour-avatar">
+    <img alt="" src="fusion-assets/images/KarmaSahayogi.svg">
+  </div>
+</div>
+
+<div *ngIf="showCompletePopup && isMobile" class="backdrop bg-zinc-400" [ngClass]="{'requires-no-scroll': noScroll}">
+  <div *ngIf="showCompletePopup && isMobile" (click)="onCongrats()" class="complete-tour-mobile-container">
+    <div *ngIf="isMobile" class="mobile-tour-avatar">
+      <img alt="" src="fusion-assets/images/KarmaSahayogi.svg">
+    </div>
+    <div class="complete-mobile-tour">
+      <div class="complete-mobile-panel1">
+        <img width="107" height="107" alt="" src="fusion-assets/images/tour-complete.png">
+      </div>
+      <div class="complete-mobile-panel2">
+        <span class="title">Congratulations!</span>
+        <br/>
+        <span class="desc">You are all set to start your learning journey.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div (click)="closeModal()" *ngIf="showVideoTour && !isMobile" class="backdrop bg-zinc-400" [ngClass]="{'requires-no-scroll': noScroll}">
+  <ws-app-tour-video [videoProgressTime]="videoProgressTime" (emitedValue)="emitFromVideo($event)" [showVideoTour]="showVideoTour" [isMobile]="isMobile"></ws-app-tour-video>
+  <!-- <div *ngIf="showVideoTour && !isMobile" class="video-tour">
+    <div class="flex tour-video-container">
+      <div class="video-header-row">
+        <span class="ws-mat-white-text mat-h2">What is iGOT Karmayogi?</span>
+      </div>
+      <div class="video-player-row">
+        <ws-app-tour-video></ws-app-tour-video>
+        <video controls="" height="100%" width="100%">
+          <source src="https://portal.karmayogi.nic.in/content-store/Website_Video.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-footer-row">
+        <button class="skip-btn ws-mat-white-text" (click)="skipTour('video-skip', 'skip')" mat-button>Skip</button>
+        <button class="next-btn dialog-btn ws-mat-primary-background-op30 action-orange" (click)="startTour('welcome-start', 'start')" mat-button>Next</button>
+      </div>
+    </div>
+  </div> -->
+</div>
+<!-- Mobile video player -->
+<div (click)="closeModal()" *ngIf="showVideoTour && isMobile" class="backdrop bg-zinc-400" [ngClass]="{'requires-no-scroll': noScroll}">
+  <ws-app-tour-video [videoProgressTime]="videoProgressTime" (emitedValue)="emitFromVideo($event)" [showVideoTour]="showVideoTour" [isMobile]="isMobile"></ws-app-tour-video>
+  <!-- <div *ngIf="showVideoTour && isMobile" class="video-tour-mobile">
+    <div class="flex tour-video-container">
+      <div class="video-header-row-mobile">
+        <ws-app-tour-video></ws-app-tour-video>
+        <video controls="" height="100%" width="100%">
+          <source src="https://portal.karmayogi.nic.in/content-store/Website_Video.mp4" type="video/mp4">
+        </video>
+        <div class="pt-2">
+          <span class="ws-mat-white-text mat-h3">What is iGOT Karmayogi?</span>
+        </div>
+      </div>
+      <div class="video-footer-row-mobile">
+        <button class="skip-btn ws-mat-white-text" (click)="skipTour('video-skip', 'skip')" mat-button>Skip</button>
+        <button class="next-btn dialog-btn ws-mat-primary-background-op30 action-orange" (click)="startTour('welcome-start', 'start')" mat-button>Next</button>
+      </div>
+    </div>
+  </div> -->
+</div>
+<!-- Mobile video player -->
