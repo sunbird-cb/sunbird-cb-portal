@@ -488,6 +488,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
           wfItem: { currentStatus: data.result.data.status },
         }
         this.withdrawOrEnroll.emit(action)
+        this.getBatchUserCount(this.selectedBatch)
         this.openSnackbar('Request sent Successfully!')
         this.disableEnrollBtn = false
       } else {
@@ -706,7 +707,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL ||
         status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL ||
         status === this.WFBlendedProgramStatus.WITHDRAWN ||
-        status === this.WFBlendedProgramStatus.REMOVED || 
+        (status === this.WFBlendedProgramStatus.REMOVED  && this.showRejected) ||
         (status === this.WFBlendedProgramStatus.REJECTED  && this.showRejected)) {
         return true
       }
@@ -836,7 +837,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
           } else if (ele.currentStatus === 'REJECTED') {
             usercount.rejected = ele.statusCount
           }
-          usercount.totalApplied =  usercount.totalApplied + ele.statusCount
+          if (ele.currentStatus !== 'WITHDRAWN') {
+            usercount.totalApplied =  usercount.totalApplied + ele.statusCount
+          }
         })
         if (this.selectedBatchData) {
           this.selectedBatchData = {

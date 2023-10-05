@@ -225,6 +225,10 @@
     word-break: break-word;
   }
 }
+.word-break {
+  word-break: break-all;
+  white-space: unset;
+}
 .margin-left-17 {
   margin-left: 17%;
 }

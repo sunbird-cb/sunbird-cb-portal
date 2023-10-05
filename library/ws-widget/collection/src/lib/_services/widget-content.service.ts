@@ -56,7 +56,6 @@ export class WidgetContentService {
     private configSvc: ConfigurationsService,
   ) {
   }
-
   tocConfigData: any = null
 
   isResource(primaryCategory: string) {

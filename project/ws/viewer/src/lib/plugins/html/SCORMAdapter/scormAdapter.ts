@@ -233,6 +233,9 @@ export class SCORMAdapterService {
       if (postData["cmi.core.lesson_status"] === 'completed') {
         return 2
       }
+      if (postData["cmi.core.lesson_status"] === 'passed') {
+        return 2
+      }
       return 1
     } catch (e) {
       // tslint:disable-next-line: no-console
@@ -264,7 +267,7 @@ export class SCORMAdapterService {
     return this.http.patch(`${API_END_POINTS.SCROM_UPDTE_PROGRESS}/${this.contentId}`, req)
   }
 
-  addDataV3(reqDetails: any) {
+  addDataV3(reqDetails: any, contentId?: string) {
     let req: any
     if (this.configSvc.userProfile) {
       req = {
@@ -272,7 +275,7 @@ export class SCORMAdapterService {
           userId: this.configSvc.userProfile.userId || '',
           contents: [
             {
-              contentId: this.contentId,
+              contentId: contentId ? contentId :  this.contentId,
               batchId: this.activatedRoute.snapshot.queryParamMap.get('batchId') || '',
               courseId: this.activatedRoute.snapshot.queryParams.collectionId || '',
               status: (reqDetails.status) || 0,
