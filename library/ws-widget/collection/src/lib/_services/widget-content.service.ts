@@ -58,8 +58,6 @@ export class WidgetContentService {
   }
   tocConfigData: any = null
 
-  tocConfigData: any = null
-
   isResource(primaryCategory: string) {
     if (primaryCategory) {
       const isResource = (primaryCategory === NsContent.EResourcePrimaryCategories.LEARNING_RESOURCE) ||
