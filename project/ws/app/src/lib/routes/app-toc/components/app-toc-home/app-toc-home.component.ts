@@ -408,7 +408,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     // if (this.content && this.content['batches']) {
     // const batches = this.content['batches'] as NsContent.IBatch
     if (this.currentCourseBatchId) {
-      const now = moment()
+      const now = moment().format('YYYY-MM-DD')
       if (this.batchData && this.batchData.content) {
         const batch = _.first(_.filter(this.batchData.content, { batchId: this.currentCourseBatchId }) || [])
         if (batch) {

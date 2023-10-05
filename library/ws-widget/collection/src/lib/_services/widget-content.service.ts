@@ -57,7 +57,6 @@ export class WidgetContentService {
     private configSvc: ConfigurationsService,
   ) {
   }
-  tocConfigData: any = null
 
   tocConfigData: any = null
 

@@ -475,6 +475,7 @@ export class AppTocService {
         if (child.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
           const foundContent = enrolmentList.find((el: any) => el.collectionId === child.identifier)
           totalCount = foundContent && foundContent.completionPercentage ? totalCount + foundContent.completionPercentage : totalCount + 0
+          content.completionPercentage = (totalCount / leafnodeCount)
           if (foundContent && foundContent.completionPercentage === 100) {
             if (foundContent.issuedCertificates.length > 0) {
               const certId: any = foundContent.issuedCertificates[0].identifier
