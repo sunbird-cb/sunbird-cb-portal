@@ -221,7 +221,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
         //   this.enrolledCourse.push(items)
         //   // return items;
         // }
-        if(items.issuedCertificates && items.issuedCertificates.length > 0 ) {
+        if(items.issuedCertificates && items.issuedCertificates.length > 0) {
           this.enrolledCourse.push(items)
           return items
         }
