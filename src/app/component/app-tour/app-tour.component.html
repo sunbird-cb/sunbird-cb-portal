@@ -2,7 +2,7 @@
   <mat-icon *ngIf="!hideCloseBtn" (click)="skipTour('','')" class="mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">close</mat-icon>
 </div>
 <div (click)="closeModal()" *ngIf="showpopup" class="backdrop bg-zinc-400" [ngClass]="{'requires-no-scroll': noScroll}">
-  <div class="app-tour-popup" *ngIf="!isMobile">
+  <div class="app-tour-popup" *ngIf="!isMobile" (click)="$event.stopPropagation()">
     <div class="first-panel">
       <div class="text-center">
         <span class="ws-mat-default-text mat-h2 tour-panel-title">Get started</span>
@@ -114,7 +114,9 @@
 
 
 <div (click)="closeModal()" *ngIf="showVideoTour && !isMobile" class="backdrop bg-zinc-400" [ngClass]="{'requires-no-scroll': noScroll}">
-  <ws-app-tour-video [videoProgressTime]="videoProgressTime" (emitedValue)="emitFromVideo($event)" [showVideoTour]="showVideoTour" [isMobile]="isMobile"></ws-app-tour-video>
+  <div (click)="$event.stopPropagation()">
+    <ws-app-tour-video [videoProgressTime]="videoProgressTime" (emitedValue)="emitFromVideo($event)" [showVideoTour]="showVideoTour" [isMobile]="isMobile"></ws-app-tour-video>
+  </div>
   <!-- <div *ngIf="showVideoTour && !isMobile" class="video-tour">
     <div class="flex tour-video-container">
       <div class="video-header-row">
