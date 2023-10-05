@@ -271,7 +271,7 @@ export class SCORMAdapterService {
 
   addDataV3(reqDetails: any, contentId?: string) {
     let req: any
-    const resData = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId, 
+    this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId, 
       this.activatedRoute.snapshot.queryParams.batchId, this.contentId)
     if (this.configSvc.userProfile) {
       req = {
