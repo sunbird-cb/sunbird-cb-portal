@@ -655,6 +655,24 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     })
   }
 
+  get disableWithdrawnBtn() {
+    if (
+      this.batchData &&
+      this.batchData.workFlow &&
+      this.batchData.workFlow.wfItem
+    ) {
+      const status = this.batchData.workFlow.wfItem.currentStatus
+      if (NsContent.WFBlendedProgramApprovalTypes.TWO_STEP_MDO_PC === this.batchData.workFlow.wfItem.serviceName && 
+        status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL) {
+        return true
+      } else if (NsContent.WFBlendedProgramApprovalTypes.TWO_STEP_PC_MDO === this.batchData.workFlow.wfItem.serviceName && 
+        status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL) {
+          return true
+      }
+    }
+    return false
+  }
+
   get showInstructorLedMsg() {
     return (
       this.showActionButtons &&
