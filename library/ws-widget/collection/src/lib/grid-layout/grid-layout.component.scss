@@ -495,7 +495,8 @@
   background-color: #fcf9f9;
   z-index: 1000;
   text-align: center;
-  box-shadow: 0 6px 6px 3px;
+  box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.5);
+  border-top: 4px solid #1b4ca1;
 
   .center-box {
     display: flex;
@@ -523,7 +524,7 @@
     }
 
     .rating {
-      border: 1px solid rgba(0, 0, 0, 0.6);
+      border: 1px solid #1b4ca1;
       border-radius: 50%;
       width: 40px;
       height: 40px;
@@ -532,6 +533,7 @@
       text-align: center;
     }
     .rating-img {
+      border: 1px solid #1b4ca1;
       border-radius: 50%;
       width: 40px;
       height: 40px;
@@ -576,6 +578,7 @@
 
   button {
     margin: 0 auto;
+    background-color: #1b4ca1 !important;
   }
 
   textarea::placeholder {

@@ -183,7 +183,7 @@ export class GridLayoutComponent extends WidgetBaseComponent
         if (rating.value < 4) {
           this.phtext = 'How can we make it better for you next time?'
         } else  {
-          this.phtext = 'Inspire Others by sharing your experience'
+          this.phtext = 'Inspire others by sharing your positive experience'
         }
         // console.log('ratingGiven', this.ratingGiven)
       } else {
