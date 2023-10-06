@@ -24,7 +24,7 @@
   <span class="closeicon cursor-pointer" (click)="closeNPS()"><mat-icon>close_small</mat-icon></span>
   <div class="center-box padding-bottom-l padding-top-s" *ngIf="!onSuccessRating">
     <span *ngIf="!ratingGiven" class="ratingtitle">How likely are you to recommend iGOT Karmayogi to your colleagues?</span>
-    <div class="margin-bottom-m margin-top-m rating-div">
+    <div class="margin-bottom-m margin-top-m rating-div flex items-center">
       <span class="cstext mat-body-2">Not likely</span>
       <ul>
         <li *ngFor="let rating of ratingList; let i=index">
