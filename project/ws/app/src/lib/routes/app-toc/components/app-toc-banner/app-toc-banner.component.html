@@ -196,7 +196,6 @@
     </ng-container> -->
 </div>
 <!-- </div> -->
-
 <div class="header-synopsis fixed-width margin-top-l" [ngClass]="{ 'header-synopsis-gradient': bannerUrl }"
   *ngIf="content">
   <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
@@ -255,7 +254,7 @@
 
               <ng-container>
                 <button class="mat-button mat-raised-button withdrawButton  margin-top-s width-1-1 text-white" 
-                  (click)="requestToWithdrawDialog()">
+                  (click)="!disableWithdrawnBtn && requestToWithdrawDialog()" [disabled]="disableWithdrawnBtn" [ngClass]="{ 'disable-btn': disableWithdrawnBtn }" >
                     <ng-container i18n>
                       Withdraw your request
                     </ng-container>

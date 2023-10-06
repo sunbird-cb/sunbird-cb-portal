@@ -57,14 +57,7 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
           this.getSessionData(data)
         } else {
           // fetching batch data from api
-          const batchID: any = this.activatedRoute.snapshot.queryParamMap.get('batchId')
-          this.contentSvc.fetchCourseBatch(batchID).subscribe(response => {
-            if (response.result && response.result.response) {
-              this.batchData = response.result.response
-            }
-            // after getting batch data move to sessionData to form data
-            this.getSessionData(data)
-          })
+          this.fetchProgramBatchData(data)
         }
       })
     } else {
@@ -118,10 +111,26 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
             this.raiseEvent(WsEvents.EnumTelemetrySubType.Loaded, this.offlineSessionData)
           }
           this.isFetchingDataComplete = true
+          if(this.batchData) {
+            this.getSessionData(data)
+          } else {
+            this.fetchProgramBatchData(data)
+          }
         },
         () => { },
       )
     }
+  }
+
+  fetchProgramBatchData(data: any) {
+    const batchID: any = this.activatedRoute.snapshot.queryParamMap.get('batchId')
+    this.contentSvc.fetchCourseBatch(batchID).subscribe(response => {
+      if (response.result && response.result.response) {
+        this.batchData = response.result.response
+      }
+      // after getting batch data move to sessionData to form data
+      this.getSessionData(data)
+    })
   }
 
   // get session  data  from batch api start
