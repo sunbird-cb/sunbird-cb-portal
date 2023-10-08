@@ -17,6 +17,9 @@ export class EventService {
   private eventsGetStartSubject = new Subject<WsEvents.IWsEvents<any>>()
   public getStartEvents$ = this.eventsGetStartSubject.asObservable()
 
+  private eventsPRSubject = new Subject<WsEvents.IWsEvents<any>>()
+  public getPREvents$ = this.eventsPRSubject.asObservable()
+
   constructor(
     private utilitySvc: UtilityService,
   ) {
@@ -34,6 +37,10 @@ export class EventService {
 
   dispatchGetStartedEvent<T>(event: WsEvents.IWsEvents<T>) {
     this.eventsGetStartSubject.next(event)
+  }
+
+  dispatchPlatformRatingEvent<T>(event: WsEvents.IWsEvents<T>) {
+    this.eventsPRSubject.next(event)
   }
 
 
