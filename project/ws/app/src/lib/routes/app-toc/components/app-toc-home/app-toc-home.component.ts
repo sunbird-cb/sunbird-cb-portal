@@ -149,6 +149,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   channelId: any
   selectedBatchData: any
   selectedBatchSubscription: any
+  serverDateSubscription: any
+  serverDate: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -184,8 +186,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   ngOnInit() {
+    this.getServerDateTime()
     this.selectedBatchSubscription = this.tocSvc.getSelectedBatch.subscribe(batchData => {
       this.selectedBatchData = batchData
+    })
+
+    this.serverDateSubscription = this.tocSvc.serverDate.subscribe(serverDate => {
+      this.serverDate = serverDate
     })
     // this.route.fragment.subscribe(fragment => { this.fragment = fragment })
     this.channelId = this.telemertyService.telemetryConfig ? this.telemertyService.telemetryConfig.channel : ''
@@ -408,7 +415,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     // if (this.content && this.content['batches']) {
     // const batches = this.content['batches'] as NsContent.IBatch
     if (this.currentCourseBatchId) {
-      const now = moment().format('YYYY-MM-DD')
+      const now = moment(this.serverDate).format('YYYY-MM-DD')
       if (this.batchData && this.batchData.content) {
         const batch = _.first(_.filter(this.batchData.content, { batchId: this.currentCourseBatchId }) || [])
         if (batch) {
@@ -1337,5 +1344,15 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (data === NsContent.WFBlendedProgramStatus.INITIATE) {
       this.fetchUserWFForBlended()
     }
+  }
+  getServerDateTime() {
+    this.tocSvc.getServerDate().subscribe((response: any) => {
+      if (response && response.systemDate) {
+        this.tocSvc.changeServerDate(response.systemDate)
+        this.serverDate = response.systemDate
+      } else {
+        // this.tocSvc.changeServerDate(new Date().getTime())
+      }
+    })
   }
 }

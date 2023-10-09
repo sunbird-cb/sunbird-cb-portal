@@ -106,6 +106,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   hours: any
   minutes: any
   seconds: any
+  serverDateSubscription: any
+  serverDate: any
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -128,6 +130,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   ngOnInit() {
+    this.serverDateSubscription = this.tocSvc.serverDate.subscribe(serverDate => {
+      this.serverDate = serverDate
+    })
     this.route.data.subscribe(data => {
       this.tocConfig = data.pageData.data
       if (this.content && this.isPostAssessment) {
@@ -1119,10 +1124,15 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
   // ngAfterViewInit
   ngAfterViewInit() {
+    let serverDate = this.serverDate
+   if(this.serverDate) {
     setInterval(() => {
       // this.tickTock();
-      this.date = new Date()
+      serverDate = serverDate  +  1000
+      this.date = new Date(serverDate);
+      console.log(this.date,serverDate,'this.date')
       this.now = this.date.getTime()
+      console.log(this.now, new Date(this.now),'this.now')
       this.difference = this.targetTime - this.now
       this.difference = this.difference / (1000 * 60 * 60 * 24)
 
@@ -1134,5 +1144,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         ? (this.days = Math.floor(this.difference))
         : (this.days = `<img src="https://i.gifer.com/VAyR.gif" />`)
     },          1000)
+   }
   }
 }
