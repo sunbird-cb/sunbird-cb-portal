@@ -423,8 +423,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         })
         enrollQuestionnaire.afterClosed().subscribe(result => {
           if (result) {
-            // this.requestAndWithDrawEnroll('INITIATE', 'INITIATE')
-            // console.log('closed')
             this.openRequestToEnroll(batchData)
           }
         })
@@ -491,6 +489,55 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.getBatchUserCount(this.selectedBatch)
         this.openSnackbar('Request sent Successfully!')
         this.disableEnrollBtn = false
+      } else {
+        this.openSnackbar('Something went wrong, please try again later!')
+        this.disableEnrollBtn = false
+      }
+    },                                                               (error: any) => {
+      this.openSnackbar(_.get(error, 'error.params.errmsg') ||
+        _.get(error, 'error.result.errmsg') ||
+        'Something went wrong, please try again later!')
+    })
+  }
+  public withDrawEnrollIfNotApproved(state: string, action: string, wfIdValue?: string) {
+    let userId = ''
+    let rootOrgId = ''
+    let username = ''
+    let departmentName = ''
+    if (this.configSvc.userProfile) {
+      userId = this.configSvc.userProfile.userId || ''
+      rootOrgId = this.configSvc.userProfile.rootOrgId || ''
+      username = this.configSvc.userProfile.firstName || ''
+      departmentName = this.configSvc.userProfile.departmentName || ''
+    }
+    const req = {
+      rootOrgId,
+      userId,
+      state,
+      action,
+      actorUserId: userId,
+      applicationId: this.selectedBatch.batchId,
+      serviceName: 'blendedprogram',
+      courseId: this.selectedBatch.courseId,
+      deptName: departmentName,
+      ...(wfIdValue ? { wfId: wfIdValue } : null),
+      updateFieldValues: [
+        {
+          toValue: {
+            name: username,
+          },
+        },
+      ],
+    }
+    this.contentSvc.enrollAndUnenrollUserToBatchWF(req, action).then((data: any) => {
+      if (data && data.result && data.result.status === 'OK') {
+        this.batchData.workFlow = {
+        }
+       this.setBatchControl()
+      this.withdrawOrEnroll.emit(action)
+      this.getBatchUserCount(this.selectedBatch)
+      this.openSnackbar('Request sent Successfully!')
+      this.disableEnrollBtn = false
       } else {
         this.openSnackbar('Something went wrong, please try again later!')
         this.disableEnrollBtn = false
@@ -595,7 +642,37 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.tocSvc.getSelectedBatchData(this.selectedBatchData)
     }
     this.showRejected = false
+    this.checkBatchStartDate()
     return
+  }
+  
+  checkBatchStartDate() {
+    debugger
+    console.log(this.selectedBatchData,'this.selectedBatchData')
+    const batchStartDate = this.selectedBatchData && this.selectedBatchData.content && this.selectedBatchData.content[0] && this.selectedBatchData.content[0].startDate
+    // const batchStartDate = this.batchData && this.batchData.workFlow && this.batchData.workFlow.batch && this.batchData.workFlow.batch.startDate
+    const workFlow = this.batchData && this.batchData.workFlow && this.batchData.workFlow.wfItem && this.batchData.workFlow.wfItem.currentStatus
+    const now = dayjs().format('YYYY-MM-DD')
+    const dateExtended = dayjs(now).isAfter(dayjs(batchStartDate))
+    console.log('start', )
+    if (dateExtended  && ( workFlow !== this.WFBlendedProgramStatus.APPROVED ) && workFlow !== this.WFBlendedProgramStatus.WITHDRAWN) {
+      const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
+        width: '434px',
+        data: {
+          title: 'Are you sure you want to withdraw your request?',
+          message: 'You will miss the learning opportunity if you withdraw your enrolment.',
+          acceptButton: 'Withdraw',
+          cancelButton: 'Cancel',
+        },
+        disableClose: true,
+        panelClass: ['animate__animated', 'animate__slideInLeft'],
+      })
+      confirmDialog.afterClosed().subscribe(result => {
+        if (result) {
+          this.withDrawEnrollIfNotApproved(this.batchData.workFlow.wfItem.currentStatus, 'WITHDRAW', this.batchData.workFlow.wfItem.wfId)
+        }
+      })
+    }
   }
 
   public setBatchControl() {
@@ -613,31 +690,32 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.setbatchDateToCountDown(batch.startDate)
           }
           this.getBatchUserCount(this.batchControl.value)
+          const batchData = {
+            content: [this.batchControl.value],
+          }
+          if (this.selectedBatchData && this.selectedBatchData.content) {
+            this.selectedBatchData = {
+              ...this.selectedBatchData,
+              ...batchData,
+            }
+          } else {
+            this.selectedBatchData = {
+              ...batchData,
+            }
+          }
+          this.tocSvc.getSelectedBatchData(this.selectedBatchData)
         } else {
           const batch = this.batchData.content.find((el: any) => {
             if (el.batchId === this.batchData.workFlow.wfItem.applicationId) {
               return el
             }
           })
+          this.selectedBatch = batch
           this.batchControl.patchValue(batch)
           this.batchChange({ value: batch })
         }
       }
     }
-    const batchData = {
-      content: [this.batchControl.value],
-    }
-    if (this.selectedBatchData && this.selectedBatchData.content) {
-      this.selectedBatchData = {
-        ...this.selectedBatchData,
-        ...batchData,
-      }
-    } else {
-      this.selectedBatchData = {
-        ...batchData,
-      }
-    }
-    this.tocSvc.getSelectedBatchData(this.selectedBatchData)
   }
 
   // setting batch start date
