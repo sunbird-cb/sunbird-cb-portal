@@ -16,6 +16,7 @@ import {
 // tslint:disable-next-line
 import _ from 'lodash'
 import { NPSGridService } from './nps-grid.service'
+import { EventService, WsEvents } from '@sunbird-cb/utils/src/public-api'
 
 const API_END_POINTS = {
   fetchProfileById: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`,
@@ -31,6 +32,7 @@ export class GridLayoutComponent extends WidgetBaseComponent
   implements OnInit, OnDestroy, NsWidgetResolver.IWidgetData<IGridLayoutDataMain> {
     constructor(
       private router: Router,
+      private events: EventService,
       private configSvc: ConfigurationsService,
       private http: HttpClient,
       private npsService: NPSGridService,
@@ -102,6 +104,7 @@ export class GridLayoutComponent extends WidgetBaseComponent
               this.formFields = resform.fields
             }
           })
+          this.raisePlatformRatingStartTelemetry()
         }
         if (localStorage.getItem('ratingfeedID')) {
           this.feedID = localStorage.getItem('ratingfeedID')
@@ -183,7 +186,7 @@ export class GridLayoutComponent extends WidgetBaseComponent
         if (rating.value < 4) {
           this.phtext = 'How can we make it better for you next time?'
         } else  {
-          this.phtext = 'Inspire Others by sharing your experience'
+          this.phtext = 'Inspire others by sharing your positive experience'
         }
         // console.log('ratingGiven', this.ratingGiven)
       } else {
@@ -258,6 +261,7 @@ export class GridLayoutComponent extends WidgetBaseComponent
               if (localStorage.getItem('ratingfeedID')) {
                 localStorage.removeItem('ratingfeedID')
               }
+              this.raisePlatformRatingEndTelemetry()
             }
           })
         }
@@ -270,6 +274,45 @@ export class GridLayoutComponent extends WidgetBaseComponent
       if (localStorage.getItem('ratingfeedID')) {
         localStorage.removeItem('ratingfeedID')
       }
+      this.raisePlatformRatingEndTelemetry()
     }
+  }
+
+  raisePlatformRatingStartTelemetry() {
+    const event = {
+      eventType: WsEvents.WsEventType.Telemetry,
+      eventLogLevel: WsEvents.WsEventLogLevel.Info,
+      data: {
+        edata: { type: '' },
+        object: {},
+        state: WsEvents.EnumTelemetrySubType.Loaded,
+        eventSubType: WsEvents.EnumTelemetrySubType.PlatformRating,
+        type: WsEvents.EnumTelemetrySubType.PlatformRating,
+        mode: 'view',
+      },
+      pageContext: { pageId: '/home', module: WsEvents.EnumTelemetrySubType.PlatformRating },
+      from: '',
+      to: 'Telemetry',
+    }
+    this.events.dispatchPlatformRatingEvent<WsEvents.IWsEventTelemetryInteract>(event)
+  }
+
+  raisePlatformRatingEndTelemetry() {
+    const event = {
+      eventType: WsEvents.WsEventType.Telemetry,
+      eventLogLevel: WsEvents.WsEventLogLevel.Info,
+      data: {
+        edata: { type: '' },
+        object: {},
+        state: WsEvents.EnumTelemetrySubType.Unloaded,
+        eventSubType: WsEvents.EnumTelemetrySubType.PlatformRating,
+        type: WsEvents.EnumTelemetrySubType.PlatformRating,
+        mode: 'view',
+      },
+      pageContext: { pageId: '/home', module: WsEvents.EnumTelemetrySubType.PlatformRating },
+      from: '',
+      to: 'Telemetry',
+    }
+    this.events.dispatchPlatformRatingEvent<WsEvents.IWsEventTelemetryInteract>(event)
   }
 }

@@ -24,20 +24,20 @@
   <span class="closeicon cursor-pointer" (click)="closeNPS()"><mat-icon>close_small</mat-icon></span>
   <div class="center-box padding-bottom-l padding-top-s" *ngIf="!onSuccessRating">
     <span *ngIf="!ratingGiven" class="ratingtitle">How likely are you to recommend iGOT Karmayogi to your colleagues?</span>
-    <div class="margin-bottom-m margin-top-m rating-div">
+    <div class="margin-bottom-m margin-top-m rating-div flex items-center">
       <span class="cstext mat-body-2">Not likely</span>
       <ul>
         <li *ngFor="let rating of ratingList; let i=index">
           <div>
-            <span class="rating mat-body-2 cursor-pointer" (click)="toggleImg(rating)" *ngIf="!rating.showImage">{{rating.value}}</span>
-            <span class="rating-img" *ngIf="rating.showImage"><img src="{{rating.image}}" alt="Rating {{i+1}}"></span>
+            <span class="rating mat-body-2 cursor-pointer" (mouseenter)="toggleImg(rating)" *ngIf="!rating.showImage">{{rating.value}}</span>
+            <span class="rating-img cursor-pointer" *ngIf="rating.showImage"><img src="{{rating.image}}" alt="Rating {{i+1}}"></span>
           </div>
         </li>
       </ul>
       <span class="cstext mat-body-2">Extremely likely</span>
     </div>
     <div class="reviewdiv" *ngIf="ratingGiven">
-      <textarea #textArea class="reviewbox display-block" name="review" id="review" cols="30" rows="5" placeholder="{{phtext}}" maxlength="500"></textarea>
+      <textarea #textArea class="reviewbox display-block" name="review" id="review" cols="30" rows="2" placeholder="{{phtext}}" maxlength="500"></textarea>
       <button mat-stroked-button type="submit" class="display-block text-white ws-mat-primary-background margin-top-m"
       (click)="submitRating(textArea.value)"><span class="text-white" i18n>Submit</span>
       </button>

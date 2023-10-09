@@ -390,6 +390,12 @@ export namespace NsContent {
     WITHDRAWN = 'WITHDRAWN',
     REMOVED = 'REMOVED',
   }
+  export enum WFBlendedProgramApprovalTypes {
+    ONE_STEP_PC = 'oneStepPCApproval',
+    ONE_STEP_MDO = 'oneStepMDOApproval',
+    TWO_STEP_MDO_PC = 'twoStepMDOAndPCApproval',
+    TWO_STEP_PC_MDO = 'twoStepPCAndMDOApproval'
+  }
 
   export const  WFSTATUS_MSG_MAPPING: any = {
     INITIATE:  '',

@@ -196,7 +196,6 @@
     </ng-container> -->
 </div>
 <!-- </div> -->
-
 <div class="header-synopsis fixed-width margin-top-l" [ngClass]="{ 'header-synopsis-gradient': bannerUrl }"
   *ngIf="content">
   <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
@@ -223,14 +222,14 @@
                 <div class="flex flex-wrap mt-3">
                   <ng-container *ngIf="!showRejected">
                     <div class="flex-1">
-                      <button class="mat-button mat-raised-button resumeButton custom-button width-1-1 text-white" [ngClass]="{ 'disable-btn': disableEnrollBtn || batchControl.hasError('required') }" 
-                      [disabled]="disableEnrollBtn || batchControl.hasError('required')" (click)="requestToEnrollDialog()">
+                      <button class="mat-button mat-raised-button resumeButton custom-button width-1-1 text-white" [ngClass]="{ 'disable-btn': disableEnrollBtn || batchControl.hasError('required') || !handleEnrollmentEndDate(selectedBatch) }" 
+                      [disabled]="disableEnrollBtn || batchControl.hasError('required')|| !handleEnrollmentEndDate(selectedBatch)" (click)="requestToEnrollDialog()">
                         <ng-container i18n>
                           Request to enroll
                         </ng-container>
                       </button>
                     </div>
-                    <div class="flex-col ml-3" *ngIf="selectedBatch && selectedBatch.enrollmentEndDate">
+                    <div class="flex-col ml-3" *ngIf="selectedBatch && selectedBatch.enrollmentEndDate ">
                       <p class="mat-body-2 margin-remove-bottom">Last enrollment date</p>
                       <p class="mat-body-2 font-bold-imp margin-remove-bottom">{{selectedBatch.enrollmentEndDate | date: 'dd-MM-yyyy'}}</p>
                     </div>
@@ -255,7 +254,7 @@
 
               <ng-container>
                 <button class="mat-button mat-raised-button withdrawButton  margin-top-s width-1-1 text-white" 
-                  (click)="requestToWithdrawDialog()">
+                  (click)="!disableWithdrawnBtn && requestToWithdrawDialog()" [disabled]="disableWithdrawnBtn" [ngClass]="{ 'disable-btn': disableWithdrawnBtn }" >
                     <ng-container i18n>
                       Withdraw your request
                     </ng-container>
@@ -274,7 +273,7 @@
               </h3>
             </ng-container>
           </div>
-          <div class="padding-m batch-timer flex" *ngIf="days >= 0">
+          <div class="padding-m batch-timer flex" *ngIf="days > 0">
             <div class="time-block">
               <p class="timer-title">This batch starts in</p>
               <div class="flex time-wrapper">

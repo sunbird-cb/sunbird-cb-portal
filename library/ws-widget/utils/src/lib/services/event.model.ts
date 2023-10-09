@@ -64,6 +64,7 @@ export namespace WsEvents {
     Impression = 'Impression',
     Chatbot = 'Chatbot',
     GetStarted = 'Get Started',
+    PlatformRating = 'Platform Rating',
   }
 
   export interface ITelemetryPageContext {
