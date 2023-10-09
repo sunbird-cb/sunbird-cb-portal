@@ -222,14 +222,14 @@
                 <div class="flex flex-wrap mt-3">
                   <ng-container *ngIf="!showRejected">
                     <div class="flex-1">
-                      <button class="mat-button mat-raised-button resumeButton custom-button width-1-1 text-white" [ngClass]="{ 'disable-btn': disableEnrollBtn || batchControl.hasError('required') }" 
-                      [disabled]="disableEnrollBtn || batchControl.hasError('required')" (click)="requestToEnrollDialog()">
+                      <button class="mat-button mat-raised-button resumeButton custom-button width-1-1 text-white" [ngClass]="{ 'disable-btn': disableEnrollBtn || batchControl.hasError('required') || !handleEnrollmentEndDate(selectedBatch) }" 
+                      [disabled]="disableEnrollBtn || batchControl.hasError('required')|| !handleEnrollmentEndDate(selectedBatch)" (click)="requestToEnrollDialog()">
                         <ng-container i18n>
                           Request to enroll
                         </ng-container>
                       </button>
                     </div>
-                    <div class="flex-col ml-3" *ngIf="selectedBatch && selectedBatch.enrollmentEndDate">
+                    <div class="flex-col ml-3" *ngIf="selectedBatch && selectedBatch.enrollmentEndDate ">
                       <p class="mat-body-2 margin-remove-bottom">Last enrollment date</p>
                       <p class="mat-body-2 font-bold-imp margin-remove-bottom">{{selectedBatch.enrollmentEndDate | date: 'dd-MM-yyyy'}}</p>
                     </div>

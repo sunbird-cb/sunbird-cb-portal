@@ -29,8 +29,10 @@ import _ from 'lodash'
 import { environment } from 'src/environments/environment'
 import { DatePipe } from '@angular/common'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import { EnrollQuestionnaireComponent } from '../enroll-questionnaire/enroll-questionnaire.component'
 dayjs.extend(isSameOrBefore)
+dayjs.extend(isSameOrAfter)
 
 @Component({
   selector: 'ws-app-toc-banner',
@@ -423,8 +425,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         })
         enrollQuestionnaire.afterClosed().subscribe(result => {
           if (result) {
-            // this.requestAndWithDrawEnroll('INITIATE', 'INITIATE')
-            // console.log('closed')
             this.openRequestToEnroll(batchData)
           }
         })
@@ -595,7 +595,35 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.tocSvc.getSelectedBatchData(this.selectedBatchData)
     }
     this.showRejected = false
+    this.checkBatchStartDate()
     return
+  }
+  
+  checkBatchStartDate() {
+    const batchStartDate = this.selectedBatchData && this.selectedBatchData.content && this.selectedBatchData.content[0] && this.selectedBatchData.content[0].startDate
+    // const batchStartDate = this.batchData && this.batchData.workFlow && this.batchData.workFlow.batch && this.batchData.workFlow.batch.startDate
+    const workFlow = this.batchData && this.batchData.workFlow && this.batchData.workFlow.wfItem && this.batchData.workFlow.wfItem.currentStatus
+    const now = dayjs().format('YYYY-MM-DD')
+    const dateExtended = dayjs(now).isSameOrAfter(dayjs(batchStartDate))
+    console.log('start', )
+    if (dateExtended  && (workFlow && ( workFlow !== this.WFBlendedProgramStatus.APPROVED ) && workFlow !== this.WFBlendedProgramStatus.WITHDRAWN)) {
+      const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
+        width: '434px',
+        data: {
+          title: 'Request not approved',
+          message: "Don't worry; withdraw this and request another batch.",
+          acceptButton: 'Withdraw',
+          cancelButton: 'Cancel',
+        },
+        disableClose: true,
+        panelClass: ['animate__animated', 'animate__slideInLeft'],
+      })
+      confirmDialog.afterClosed().subscribe(result => {
+        if (result) {
+          this.requestAndWithDrawEnroll(this.batchData.workFlow.wfItem.currentStatus, 'WITHDRAW', this.batchData.workFlow.wfItem.wfId)
+        }
+      })
+    }
   }
 
   public setBatchControl() {
@@ -613,31 +641,32 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.setbatchDateToCountDown(batch.startDate)
           }
           this.getBatchUserCount(this.batchControl.value)
+          const batchData = {
+            content: [this.batchControl.value],
+          }
+          if (this.selectedBatchData && this.selectedBatchData.content) {
+            this.selectedBatchData = {
+              ...this.selectedBatchData,
+              ...batchData,
+            }
+          } else {
+            this.selectedBatchData = {
+              ...batchData,
+            }
+          }
+          this.tocSvc.getSelectedBatchData(this.selectedBatchData)
         } else {
           const batch = this.batchData.content.find((el: any) => {
             if (el.batchId === this.batchData.workFlow.wfItem.applicationId) {
               return el
             }
           })
+          this.selectedBatch = batch
           this.batchControl.patchValue(batch)
           this.batchChange({ value: batch })
         }
       }
     }
-    const batchData = {
-      content: [this.batchControl.value],
-    }
-    if (this.selectedBatchData && this.selectedBatchData.content) {
-      this.selectedBatchData = {
-        ...this.selectedBatchData,
-        ...batchData,
-      }
-    } else {
-      this.selectedBatchData = {
-        ...batchData,
-      }
-    }
-    this.tocSvc.getSelectedBatchData(this.selectedBatchData)
   }
 
   // setting batch start date
@@ -1090,11 +1119,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   ngAfterViewInit() {
     setInterval(() => {
       // this.tickTock();
+      this.date = new Date()
+      this.now = this.date.getTime()
       this.difference = this.targetTime - this.now
       this.difference = this.difference / (1000 * 60 * 60 * 24)
 
-      this.date = new Date()
-      this.now = this.date.getTime()
       this.days = Math.floor(this.difference)
       this.hours = 23 - this.date.getHours()
       this.minutes = 60 - this.date.getMinutes()
