@@ -673,7 +673,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   // setting batch start date
   setbatchDateToCountDown(batchStartDate: string) {
     this.targetDate = new Date(batchStartDate)
-    this.targetTime = this.targetDate.getTime()
+    const convertedDate = dayjs(batchStartDate).format('YYYY-MM-DD HH:mm:ss')
+    this.targetTime = new Date(convertedDate).getTime()
     // this.currentTime = `${
     //   this.months[this.targetDate.getMonth()]
     // } ${this.targetDate.getDate()}, ${this.targetDate.getFullYear()}`
