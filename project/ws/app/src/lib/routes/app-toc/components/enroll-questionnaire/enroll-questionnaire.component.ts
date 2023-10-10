@@ -19,8 +19,8 @@ export class EnrollQuestionnaireComponent implements OnInit {
   public checkAfterSubmit(_e: any) {
     // this.renderSubject.next()
     // tslint:disable-next-line:no-console
-    console.log('Survey is submitted successfully')
-    this.openSnackbar('Survey is submitted successfully')
+    console.log('Form is submitted successfully')
+    this.openSnackbar('Form is submitted successfully')
     this.dialogRef.close(true)
   }
 
