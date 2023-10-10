@@ -106,6 +106,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   hours: any
   minutes: any
   seconds: any
+  serverDateSubscription: any
+  serverDate: any
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -128,6 +130,10 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   ngOnInit() {
+    this.serverDateSubscription = this.tocSvc.serverDate.subscribe(serverDate => {
+      this.serverDate = serverDate
+      this.ngAfterViewInit()
+    })
     this.route.data.subscribe(data => {
       this.tocConfig = data.pageData.data
       if (this.content && this.isPostAssessment) {
@@ -544,7 +550,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   public handleEnrollmentEndDate(batch: any) {
     const enrollmentEndDate = dayjs(lodash.get(batch, 'enrollmentEndDate')).format('YYYY-MM-DD')
-    const systemDate = dayjs()
+    const systemDate = dayjs(this.serverDate).format('YYYY-MM-DD')
     // if(enrollmentEndDate === 'Invalid Date'){
     //   console.log('Invalid Date')
     //   return false
@@ -605,7 +611,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     && this.selectedBatchData.content[0] && this.selectedBatchData.content[0].startDate
     const workFlow = this.batchData && this.batchData.workFlow && this.batchData.workFlow.wfItem
     && this.batchData.workFlow.wfItem.currentStatus
-    const now = dayjs().format('YYYY-MM-DD')
+    const now = dayjs(this.serverDate).format('YYYY-MM-DD')
     const dateExtended = dayjs(now).isSameOrAfter(dayjs(batchStartDate))
     if (dateExtended  && (workFlow && (workFlow !== this.WFBlendedProgramStatus.APPROVED)
     && workFlow !== this.WFBlendedProgramStatus.WITHDRAWN)) {
@@ -1121,9 +1127,12 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
   // ngAfterViewInit
   ngAfterViewInit() {
+    let serverDate = this.serverDate
+   if(this.serverDate) {
     setInterval(() => {
       // this.tickTock();
-      this.date = new Date()
+      serverDate = serverDate  +  1000
+      this.date = new Date(serverDate);
       this.now = this.date.getTime()
       this.difference = this.targetTime - this.now
       this.difference = this.difference / (1000 * 60 * 60 * 24)
@@ -1136,5 +1145,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         ? (this.days = Math.floor(this.difference))
         : (this.days = `<img src="https://i.gifer.com/VAyR.gif" />`)
     },          1000)
+   }
   }
 }
