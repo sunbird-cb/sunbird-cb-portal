@@ -30,7 +30,7 @@ const API_END_POINTS = {
     `${PROTECTED_SLAG_V8}/user/evaluate/post-assessment/${contentId}`,
   GET_CONTENT: (contentId: string) =>
     `${PROXY_SLAG_V8}/action/content/v3/read/${contentId}`,
-  SERVER_DATE: 'apis/public/v8/systemDate'
+  SERVER_DATE: 'apis/public/v8/systemDate',
 }
 
 @Injectable()
@@ -49,7 +49,6 @@ export class AppTocService {
 
   private updateReviews = new BehaviorSubject(false)
   updateReviewsObservable = this.updateReviews.asObservable()
-
 
   public serverDate = new BehaviorSubject('')
   currentServerDate = this.serverDate.asObservable()

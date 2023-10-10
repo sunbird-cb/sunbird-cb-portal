@@ -1128,11 +1128,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   // ngAfterViewInit
   ngAfterViewInit() {
     let serverDate = this.serverDate
-   if(this.serverDate) {
+   if (this.serverDate) {
     setInterval(() => {
       // this.tickTock();
       serverDate = serverDate  +  1000
-      this.date = new Date(serverDate);
+      this.date = new Date(serverDate)
       this.now = this.date.getTime()
       this.difference = this.targetTime - this.now
       this.difference = this.difference / (1000 * 60 * 60 * 24)
