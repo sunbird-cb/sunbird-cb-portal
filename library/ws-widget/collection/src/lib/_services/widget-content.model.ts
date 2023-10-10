@@ -387,6 +387,7 @@ export namespace NsContent {
     REJECTED = 'REJECTED',
     WITHDRAWN = 'WITHDRAWN',
     REMOVED = 'REMOVED',
+    WITHDRAW = 'WITHDRAW',
   }
   export enum WFBlendedProgramApprovalTypes {
     ONE_STEP_PC = 'oneStepPCApproval',

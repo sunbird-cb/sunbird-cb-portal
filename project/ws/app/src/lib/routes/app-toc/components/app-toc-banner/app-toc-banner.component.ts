@@ -354,7 +354,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     })
     confirmDialog.afterClosed().subscribe(result => {
       if (result) {
-        this.requestAndWithDrawEnroll(this.batchData.workFlow.wfItem.currentStatus, 'WITHDRAW', this.batchData.workFlow.wfItem.wfId)
+        this.requestAndWithDrawEnroll(this.batchData.workFlow.wfItem.currentStatus, this.WFBlendedProgramStatus.WITHDRAW, this.batchData.workFlow.wfItem.wfId)
         // this.openSnackbar('Withdraw Request sent Successfully!')
       }
     })
@@ -489,13 +489,13 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
         this.withdrawOrEnroll.emit(action)
         this.getBatchUserCount(this.selectedBatch)
-        this.openSnackbar('Request sent Successfully!')
+        this.openSnackbar(`Request ${ action === this.WFBlendedProgramStatus.WITHDRAW? 'withdrawn' : 'sent' } Successfully!`)
         this.disableEnrollBtn = false
       } else {
         this.openSnackbar('Something went wrong, please try again later!')
         this.disableEnrollBtn = false
       }
-    },                                                               (error: any) => {
+    }, (error: any) => {
       this.openSnackbar(_.get(error, 'error.params.errmsg') ||
         _.get(error, 'error.result.errmsg') ||
         'Something went wrong, please try again later!')
@@ -621,7 +621,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       })
       confirmDialog.afterClosed().subscribe(result => {
         if (result) {
-          this.requestAndWithDrawEnroll(this.batchData.workFlow.wfItem.currentStatus, 'WITHDRAW', this.batchData.workFlow.wfItem.wfId)
+          this.requestAndWithDrawEnroll(this.batchData.workFlow.wfItem.currentStatus, this.WFBlendedProgramStatus.WITHDRAW, this.batchData.workFlow.wfItem.wfId)
         }
       })
     }
