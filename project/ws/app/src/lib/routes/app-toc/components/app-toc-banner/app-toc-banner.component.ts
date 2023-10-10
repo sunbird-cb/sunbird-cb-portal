@@ -576,6 +576,22 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     return false
   }
 
+  public checkWithdrawn(batch: any) {
+    if (
+      batch &&
+      this.batchData &&
+      this.batchData.workFlow &&
+      this.batchData.workFlow.wfItem
+    ) {
+      // tslint:disable-next-line:max-line-length
+      if (this.selectedBatch.batchId === this.batchData.workFlow.wfItem.applicationId && (this.batchData.workFlow.wfItem.currentStatus === this.WFBlendedProgramStatus.WITHDRAWN || this.batchData.workFlow.wfItem.currentStatus === this.WFBlendedProgramStatus.WITHDRAWN)) {
+        return true
+      }
+      return false
+    }
+    return false
+  }
+
   public batchChange(event: any) {
     if (event && event.value) {
       const batchData = {
@@ -763,7 +779,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       if (status === this.WFBlendedProgramStatus.APPROVED ||
         status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL ||
         status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL ||
-        status === this.WFBlendedProgramStatus.WITHDRAWN ||
+        (status === this.WFBlendedProgramStatus.WITHDRAWN  && this.checkWithdrawn(this.batchData)) ||
         (status === this.WFBlendedProgramStatus.REMOVED  && this.showRejected) ||
         (status === this.WFBlendedProgramStatus.REJECTED  && this.showRejected)) {
         return true
