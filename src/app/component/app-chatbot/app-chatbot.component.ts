@@ -395,7 +395,7 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
         }
       })
     })
-    if (categories.length < 5){
+    if (categories.length < 6){
       this.categories = categories
     } else {
       this.categories = [...this.categories, ...categories]
