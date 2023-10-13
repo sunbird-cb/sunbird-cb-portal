@@ -672,7 +672,7 @@ TODO: edit option while preview Mode
 
           <div class="info-item" *ngIf="tocConfig?.atAGlance?.lastUpdatedOn?.enabled && content?.lastUpdatedOn">
             <p class="mat-body-2 font-bold-imp ws-mat-black60-text">
-              {{tocConfig?.atAGlance?.lastUpdatedOn?.displayName}} {{ content?.lastUpdatedOn |  date: 'dd-MM-yyyy' }}
+              {{tocConfig?.atAGlance?.lastUpdatedOn?.displayName}} {{ contentReadData?.lastUpdatedOn | date: 'dd-MMM-yyyy' }}
             </p>
           </div>
         </div>

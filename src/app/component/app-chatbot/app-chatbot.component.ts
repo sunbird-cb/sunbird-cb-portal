@@ -395,12 +395,16 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
         }
       })
     })
-    this.categories=[...this.categories, ...categories]
+    if (categories.length < 6){
+      this.categories = categories
+    } else {
+      this.categories = [...this.categories, ...categories]
+    }
   }
   sortCategory(): any {
     return this.categories.sort((a:any, b:any) => a['priority'] > b['priority'] ? 1 : a['priority'] === b['priority'] ? 0 : -1)
   }
-  
+
 
   getLanguages(){
     this.displayLoader = true

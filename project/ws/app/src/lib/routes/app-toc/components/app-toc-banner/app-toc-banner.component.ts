@@ -106,6 +106,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   hours: any
   minutes: any
   seconds: any
+  serverDateSubscription: any
+  serverDate: any
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -128,6 +130,10 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   ngOnInit() {
+    this.serverDateSubscription = this.tocSvc.serverDate.subscribe(serverDate => {
+      this.serverDate = serverDate
+      this.ngAfterViewInit()
+    })
     this.route.data.subscribe(data => {
       this.tocConfig = data.pageData.data
       if (this.content && this.isPostAssessment) {
@@ -354,7 +360,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     })
     confirmDialog.afterClosed().subscribe(result => {
       if (result) {
-        this.requestAndWithDrawEnroll(this.batchData.workFlow.wfItem.currentStatus, 'WITHDRAW', this.batchData.workFlow.wfItem.wfId)
+        this.requestAndWithDrawEnroll(this.batchData.workFlow.wfItem.currentStatus,
+                                      this.WFBlendedProgramStatus.WITHDRAW, this.batchData.workFlow.wfItem.wfId)
         // this.openSnackbar('Withdraw Request sent Successfully!')
       }
     })
@@ -489,7 +496,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
         this.withdrawOrEnroll.emit(action)
         this.getBatchUserCount(this.selectedBatch)
-        this.openSnackbar('Request sent Successfully!')
+        this.openSnackbar(`Request ${ action === this.WFBlendedProgramStatus.WITHDRAW ? 'withdrawn' : 'sent' } Successfully!`)
         this.disableEnrollBtn = false
       } else {
         this.openSnackbar('Something went wrong, please try again later!')
@@ -543,7 +550,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   public handleEnrollmentEndDate(batch: any) {
     const enrollmentEndDate = dayjs(lodash.get(batch, 'enrollmentEndDate')).format('YYYY-MM-DD')
-    const systemDate = dayjs()
+    const systemDate = dayjs(this.serverDate).format('YYYY-MM-DD')
     // if(enrollmentEndDate === 'Invalid Date'){
     //   console.log('Invalid Date')
     //   return false
@@ -562,6 +569,22 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     ) {
       // tslint:disable-next-line:max-line-length
       if (batch.batchId === this.batchData.workFlow.wfItem.applicationId && (this.batchData.workFlow.wfItem.currentStatus === this.WFBlendedProgramStatus.REJECTED || this.batchData.workFlow.wfItem.currentStatus === this.WFBlendedProgramStatus.REMOVED)) {
+        return true
+      }
+      return false
+    }
+    return false
+  }
+
+  public checkWithdrawn(batch: any) {
+    if (
+      batch &&
+      this.batchData &&
+      this.batchData.workFlow &&
+      this.batchData.workFlow.wfItem
+    ) {
+      // tslint:disable-next-line:max-line-length
+      if (this.selectedBatch.batchId === this.batchData.workFlow.wfItem.applicationId && (this.batchData.workFlow.wfItem.currentStatus === this.WFBlendedProgramStatus.WITHDRAWN || this.batchData.workFlow.wfItem.currentStatus === this.WFBlendedProgramStatus.WITHDRAWN)) {
         return true
       }
       return false
@@ -604,7 +627,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     && this.selectedBatchData.content[0] && this.selectedBatchData.content[0].startDate
     const workFlow = this.batchData && this.batchData.workFlow && this.batchData.workFlow.wfItem
     && this.batchData.workFlow.wfItem.currentStatus
-    const now = dayjs().format('YYYY-MM-DD')
+    const now = dayjs(this.serverDate).format('YYYY-MM-DD')
     const dateExtended = dayjs(now).isSameOrAfter(dayjs(batchStartDate))
     if (dateExtended  && (workFlow && (workFlow !== this.WFBlendedProgramStatus.APPROVED)
     && workFlow !== this.WFBlendedProgramStatus.WITHDRAWN)) {
@@ -621,7 +644,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       })
       confirmDialog.afterClosed().subscribe(result => {
         if (result) {
-          this.requestAndWithDrawEnroll(this.batchData.workFlow.wfItem.currentStatus, 'WITHDRAW', this.batchData.workFlow.wfItem.wfId)
+          this.requestAndWithDrawEnroll(this.batchData.workFlow.wfItem.currentStatus,
+                                        this.WFBlendedProgramStatus.WITHDRAW, this.batchData.workFlow.wfItem.wfId)
         }
       })
     }
@@ -755,7 +779,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       if (status === this.WFBlendedProgramStatus.APPROVED ||
         status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL ||
         status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL ||
-        status === this.WFBlendedProgramStatus.WITHDRAWN ||
+        (status === this.WFBlendedProgramStatus.WITHDRAWN  && this.checkWithdrawn(this.batchData)) ||
         (status === this.WFBlendedProgramStatus.REMOVED  && this.showRejected) ||
         (status === this.WFBlendedProgramStatus.REJECTED  && this.showRejected)) {
         return true
@@ -1119,9 +1143,12 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
   // ngAfterViewInit
   ngAfterViewInit() {
+    let serverDate = this.serverDate
+   if (this.serverDate) {
     setInterval(() => {
       // this.tickTock();
-      this.date = new Date()
+      serverDate = serverDate  +  1000
+      this.date = new Date(serverDate)
       this.now = this.date.getTime()
       this.difference = this.targetTime - this.now
       this.difference = this.difference / (1000 * 60 * 60 * 24)
@@ -1134,5 +1161,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         ? (this.days = Math.floor(this.difference))
         : (this.days = `<img src="https://i.gifer.com/VAyR.gif" />`)
     },          1000)
+   }
   }
 }
