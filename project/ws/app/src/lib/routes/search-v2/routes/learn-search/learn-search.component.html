@@ -137,7 +137,7 @@
                                     <!-- <li>Health social science</li> -->
                                     <li *ngIf="content.lastUpdatedOn">
                                         <!-- <img src="/assets/icons/content/separator.svg">   -->
-                                        {{ content.lastUpdatedOn | date: "MMM yyyy" }}
+                                        {{ content.lastUpdatedOn | date: 'dd-MMM-yyyy' }}
                                     </li>
                                     <li *ngIf="content.duration">
                                         <img src="/assets/icons/content/separator.svg"> {{ content.duration |

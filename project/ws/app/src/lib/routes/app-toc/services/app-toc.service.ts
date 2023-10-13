@@ -32,6 +32,7 @@ const API_END_POINTS = {
   GET_CONTENT: (contentId: string) =>
     `${PROXY_SLAG_V8}/action/content/v3/read/${contentId}`,
   CERT_DOWNLOAD: (certId: any) => `${PROTECTED_SLAG_V8}/cohorts/course/batch/cert/download/${certId}`,
+  SERVER_DATE: 'apis/public/v8/systemDate',
 }
 
 @Injectable()
@@ -50,6 +51,9 @@ export class AppTocService {
 
   private updateReviews = new BehaviorSubject(false)
   updateReviewsObservable = this.updateReviews.asObservable()
+
+  public serverDate = new BehaviorSubject('')
+  currentServerDate = this.serverDate.asObservable()
 
   constructor(private http: HttpClient, private configSvc: ConfigurationsService) { }
 
@@ -87,6 +91,10 @@ export class AppTocService {
   }
   getSelectedBatchData(data: any) {
     this.getSelectedBatch.next(data)
+  }
+
+  changeServerDate(state: any) {
+    this.serverDate.next(state)
   }
 
   mapSessionCompletionPercentage(batchData: any) {
@@ -557,5 +565,9 @@ export class AppTocService {
     return this.http.get<{ result: any }>(
       API_END_POINTS.CERT_DOWNLOAD(certId),
     )
+  }
+  getServerDate() {
+    return this.http.get<{ result: NsAppToc.IPostAssessment[] }>(
+      API_END_POINTS.SERVER_DATE)
   }
 }
