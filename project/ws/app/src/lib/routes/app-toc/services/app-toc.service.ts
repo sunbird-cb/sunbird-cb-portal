@@ -190,7 +190,7 @@ export class AppTocService {
       content.children.map(child => {
         const foundContent = dataResult.find((el: any) => el.contentId === child.identifier)
         if (foundContent) {
-          child.completionPercentage = foundContent.completionPercentage
+          child.completionPercentage = foundContent.completionPercentage || foundContent.progress
           child.completionStatus = foundContent.status
         } else {
           this.mapCompletionPercentage(child, dataResult)

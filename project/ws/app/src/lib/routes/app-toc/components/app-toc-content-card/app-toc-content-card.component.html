@@ -11,7 +11,12 @@
                 {{ content?.name }} 
               </p>
               <ng-container *ngIf="content.issuedCertificatesSVG">
-                <a class="certificate-txt" (click)="openCertificateDialog(content.issuedCertificatesSVG)">View certificate</a>
+                <a class="certificate-txt" (click)="openCertificateDialog(content.issuedCertificatesSVG)">
+                  <span class="view-certificate-wrapper">
+                    <img src="fusion-assets/images/certificate-ico.svg" width="24" height="24">
+                    <span>View certificate</span>
+                  </span>
+                </a>
               </ng-container>
               <div class="type-container resource mt-2 sm:mt-0" *ngIf="content?.category === 'Resource'">
                 <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>
@@ -40,7 +45,7 @@
             [matMenuTriggerFor]="buttonMenu">
             <mat-icon>more_vertical</mat-icon>
           </button>
-          <ng-container *ngIf="!forPreview && content?.identifier && content?.completionPercentage">
+          <ng-container *ngIf="!forPreview && content?.identifier && content?.completionPercentage && content.primaryCategory !== 'Course'">
             <ng-container *ngIf="content?.completionStatus == 2">
               <circle-progress class="flex items-center progress" [percent]="100" [radius]="12" [outerStrokeWidth]="3"
                 [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()"
@@ -142,7 +147,7 @@
           </div> -->
           <div class="see-all-container">
             <a href="javascript:void(0)" role="button" (click)="viewChildren = !viewChildren"
-              class="margin-left-m see-all-btn tab customicon" mat-button>
+              class="margin-left-m see-all-btn tab custom-chevron customicon" mat-button>
               <!-- <ng-container *ngIf="!viewChildren" i18n>See All</ng-container>
               <ng-container *ngIf="viewChildren" i18n>See Less</ng-container> -->
               <mat-icon *ngIf="!viewChildren">keyboard_arrow_down</mat-icon>
