@@ -640,6 +640,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                   queryParamsHandling: 'merge',
                 })
             }
+            if (this.content && this.content.cumulativeTracking) {
+              this.tocSvc.mapCompletionPercentageProgram(this.content, this.userEnrollmentList)
+              this.getContinueLearningData(this.content.identifier, enrolledCourse.batchId)
+            }
           } else {
             // It's understood that user is not already enrolled
             // Fetch the available batches and present to user
@@ -655,9 +659,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               this.fetchBatchDetails()
             }
           }
-        }
-        if (this.content && this.content.cumulativeTracking) {
-          this.tocSvc.mapCompletionPercentageProgram(this.content, this.userEnrollmentList)
         }
       },
       (error: any) => {
