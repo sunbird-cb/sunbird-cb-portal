@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   AfterViewInit,
   ApplicationRef,
   ChangeDetectorRef,
@@ -50,7 +51,7 @@ import { concat, interval, timer } from 'rxjs'
   styleUrls: ['./root.component.scss'],
   providers: [SwUpdate],
 })
-export class RootComponent implements OnInit, AfterViewInit {
+export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
   @ViewChild('previewContainer', { read: ViewContainerRef, static: true })
   // @ViewChild('userIntro', { static: true }) userIntro!: TemplateRef<any>
@@ -74,7 +75,9 @@ export class RootComponent implements OnInit, AfterViewInit {
   isSetupPage = false
   processed: any
   loginToken: any
+  showTour: boolean = false
   currentRouteData: any = []
+  loggedinUser = !!(this.configSvc.userProfile && this.configSvc.userProfile.userId)
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -100,7 +103,9 @@ export class RootComponent implements OnInit, AfterViewInit {
       ) {
       this.customHeight = true
     }
-
+    if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.profileDetails && this.configSvc.unMappedUser.profileDetails.get_started_tour) {
+      this.showTour = this.configSvc.unMappedUser.profileDetails.get_started_tour.skipped || this.configSvc.unMappedUser.profileDetails.get_started_tour.visited
+    }
     this.mobileAppsSvc.init()
     this.openIntro()
     // if (this.authSvc.token) {
@@ -176,6 +181,14 @@ export class RootComponent implements OnInit, AfterViewInit {
     this.skipper.nativeElement.focus()
   }
   ngOnInit() {
+    //let showTour = localStorage.getItem('tourGuide')? JSON.parse(localStorage.getItem('tourGuide')||''): {}
+    //this.showTour = showTour && showTour.disable ? showTour.disable : false
+    this.configSvc.updateTourGuideMethod(this.showTour)
+    this.route.queryParams
+      .subscribe(params => {
+        console.log(params); // { orderby: "price" }
+      }
+    );
     if (window.location.pathname.includes('/public/home')) {
       this.customHeight = true
     }
@@ -364,5 +377,22 @@ export class RootComponent implements OnInit, AfterViewInit {
         })
       }
     }
+  }
+
+  getTourGuide() {
+    let showTour = false
+    this.configSvc.updateTourGuide.subscribe((res:any) => {
+      showTour = res
+    })
+    this.showTour = showTour
+    return showTour
+  }
+
+  ngAfterViewChecked() {
+    let show = this.getTourGuide()
+    if (show != this.showTour) { // check if it change, tell CD update view
+      this.showTour = this.showTour;
+    }
+    this.changeDetector.detectChanges();
   }
 }

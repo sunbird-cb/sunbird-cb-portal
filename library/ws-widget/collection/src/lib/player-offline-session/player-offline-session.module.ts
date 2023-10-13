@@ -12,7 +12,7 @@ import {
 import { ReactiveFormsModule } from '@angular/forms'
 import { BtnFullscreenModule } from '../btn-fullscreen/btn-fullscreen.module'
 import { PlayerOfflineSessionComponent } from './player-offline-session.component'
-
+import { AttendanceCardModule } from './../_common/attendance-card/attendance-card.module'
 @NgModule({
   declarations: [PlayerOfflineSessionComponent],
   imports: [
@@ -27,6 +27,7 @@ import { PlayerOfflineSessionComponent } from './player-offline-session.componen
     ReactiveFormsModule,
     BtnFullscreenModule,
     MatInputModule,
+    AttendanceCardModule,
   ],
   exports: [PlayerOfflineSessionComponent],
   entryComponents: [PlayerOfflineSessionComponent],

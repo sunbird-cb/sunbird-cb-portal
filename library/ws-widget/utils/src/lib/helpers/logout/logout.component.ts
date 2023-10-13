@@ -31,8 +31,23 @@ export class LogoutComponent implements OnInit {
   confirmed() {
     this.disabled = true
     this.dialogRef.close()
+    if (localStorage.getItem('ratingformID')) {
+      localStorage.removeItem('ratingformID')
+    }
+    if (localStorage.getItem('ratingfeedID')) {
+      localStorage.removeItem('ratingfeedID')
+    }
+    if (localStorage.getItem('platformratingTime')) {
+      localStorage.removeItem('platformratingTime')
+    }
     // this.authSvc.logout()
     this.authSvc.force_logout()
+    if (localStorage.getItem('faq')) {
+      localStorage.removeItem('faq')
+    }
+    if (localStorage.getItem('faq-languages')) {
+      localStorage.removeItem('faq-languages')
+    }
   }
 
   get isDownloadable() {

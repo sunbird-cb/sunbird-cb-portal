@@ -359,6 +359,7 @@ export namespace NsContent {
     STANDALONE_ASSESSMENT = 'Standalone Assessment',
     BLENDED_PROGRAM = 'Blended Program',
     OFFLINE_SESSION = 'Offline Session',
+    CURATED_PROGRAM = 'Curated Program',
     // following will not be available soon
     /**
      * @deprecated The type should not be used
@@ -385,6 +386,14 @@ export namespace NsContent {
     APPROVED = 'APPROVED',
     REJECTED = 'REJECTED',
     WITHDRAWN = 'WITHDRAWN',
+    REMOVED = 'REMOVED',
+    WITHDRAW = 'WITHDRAW',
+  }
+  export enum WFBlendedProgramApprovalTypes {
+    ONE_STEP_PC = 'oneStepPCApproval',
+    ONE_STEP_MDO = 'oneStepMDOApproval',
+    TWO_STEP_MDO_PC = 'twoStepMDOAndPCApproval',
+    TWO_STEP_PC_MDO = 'twoStepPCAndMDOApproval',
   }
 
   export const  WFSTATUS_MSG_MAPPING: any = {
@@ -393,7 +402,8 @@ export namespace NsContent {
     SEND_FOR_PC_APPROVAL:  'BatchEnrollL2Msg',
     APPROVED:  'BatchEnrollApprovedMsg',
     REJECTED:  'BatchEnrollRejectedMsg',
-    WITHDRAWN: '',
+    WITHDRAWN: 'BatchEnrollWithdrawMsg',
+    REMOVED: 'BatchEnrollRemoveMsg',
   }
 
   export enum EResourcePrimaryCategories {

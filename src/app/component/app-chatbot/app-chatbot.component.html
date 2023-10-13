@@ -1,0 +1,153 @@
+<div  class="fixed-width flex flex-wrap">
+  <div  class="chatbot-icon-container" *ngIf="showIcon" (mouseover)="expanded = true" (mouseleave)="expanded = false" (click)="iconClick('start')">
+      <div  class="chatbot-icon flex" [ngClass]="{'chatbot-icon-expanded': expanded}">
+        <img alt="chatbot-icon" src="/assets/icons/launch-icon.svg"/>
+        <div class="expand-text">FAQ Chatbot</div>
+      </div>
+  </div>
+
+  <div class="chatbot" (clickOutside)="clickOutside()" *ngIf="!showIcon" >
+      <div class="chatbot-wrapper">
+        <div class="flex flex-wrap cb-header padding-m">
+            <div class="flex flex-wrap user-info-div">
+              <div class="user-name">{{greetings()}} {{this.userInfo && this.userInfo.firstName || ''}}!</div>
+              <div class="">
+                  <select class="lang-select" [(ngModel)]="selectedLaguage" name="language" id="language" (change)="selectLaguage($event)">
+                      <option [value]="lang.value" *ngFor="let lang of language">{{ lang.viewValue }}</option>
+                  </select>
+              </div>
+            </div>
+            <div class="">
+                <mat-icon class="cb-close" (click)="iconClick('end')">close</mat-icon>
+            </div>
+        </div>
+      </div>
+      <div class="cb-content-wrapper" #scrollMe >
+        <div class="flex flex-wrap cb-content padding-m" #scrollMe id="chatbot-content">
+          <ng-container *ngIf="!displayLoader" #scroll>
+            <ng-container *ngFor="let chat of userJourney">
+              <ng-container  *ngIf="chat.type === 'incoming'">
+                <ng-container *ngIf="chat?.message">
+                  <div class="flex row-start incoming-msg margin-bottom-s">
+                    <div class="system-icon"><img alt="chatbot-icon" src="/assets/icons/chatbot-default.svg"></div>
+                    <div class="system-msg padding-xs" [innerHTML]="chat.message">
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="chat?.recommendedQues?.length > 0">
+                    <ng-container>
+                      <div class="flex width-1-1">
+                        <div class="system-icon pr-2" *ngIf="!chat?.message"><img class="chat-bot-icon" alt="chatbot-icon" src="/assets/icons/chatbot-default.svg"></div>
+                        <ng-container *ngIf="chat?.relatedQes" >
+                          <div class="question-hint  padding-top-xs" [ngClass]="{'margin-left-17': chat?.message }" *ngIf="chat.title">
+                            {{chat.title}} <span class="highlight-title" >{{chat.relatedQes}}</span>
+                          </div>
+                        </ng-container>
+
+                        <div class="recommended-question my-5px" [ngClass]="{'margin-left-17': chat?.message }">
+                          <div class="my-5px mr-2" *ngFor="let question of chat.recommendedQues | slice:0:(more ? undefined : 5)" >
+                            <ng-container *ngIf="questionsAndAns[question.quesID]?.quesValue">
+                              <div class="btn-default" [ngClass]="{'btn-active': question.quesID === chat.selectedValue }" (click)="selectedQuestion(question,chat)">{{questionsAndAns[question.quesID]?.quesValue}}</div>
+                            </ng-container>
+                          </div>
+                          <div class="my-5px mr-2 rec-item" *ngIf="chat.recommendedQues.length > 5">
+                            <div class="btn-show-more flex" (click)="more = !more; $event.stopPropagation();" *ngIf="!more">
+                              <mat-icon class="showmore-icon padding-right-s">add</mat-icon>{{showMore()}}
+                            </div>
+                            <!-- <div class="btn-show-more flex" (click)="more = !more">
+                              <mat-icon class="showmore-icon padding-right-s">{{more? 'remove':'add'}}</mat-icon>show {{more? 'less':'more'}}
+                            </div> -->
+                          </div>
+                        </div>
+                    </div>
+                    </ng-container>
+                </ng-container>
+                <!-- <ng-container *ngIf="chat.recommendedQues.length === 0">
+                  <div class="padding-top-l padding-bottom-m margin-left-17 my-5px mr-5px" >
+                    <div class="btn-show-more flex" (click)="showMoreQuestion()">
+                      Show more questions
+                    </div>
+                  </div>
+                </ng-container> -->
+              </ng-container>
+              <!-- <ng-container  *ngIf="chat.type === 'recommended'">
+                <div class="flex">
+                  <div class="question-hint padding-top-xs">
+                  {{recomendedQns.title}}
+                  </div>
+                </div>
+                <div class="recommended-question my-5px">
+                  <div class="my-5px" *ngFor="let question of chat.list | slice:0:(more ? undefined : 3)" >
+                    <div class="btn-default" [ngClass]="{'btn-active': question.quesID === chat.selectedValue }" (click)="selectedQuestion(question,chat)">{{questionsAndAns[question.quesID].quesValue}}</div>
+                  </div>
+                  <div class="my-5px mr-5px">
+                    <div class="btn-show-more flex" (click)="more = !more">
+                      <mat-icon class="showmore-icon padding-right-s">{{more? 'remove':'add'}}</mat-icon>show {{more? 'less':'more'}}
+                    </div>
+                  </div>
+                </div>
+              </ng-container> -->
+              <ng-container  *ngIf="chat.type === 'category'">
+                <div class="flex">
+                  <div class="system-icon pr-2"><img class="chat-bot-icon" alt="chatbot-icon" src="/assets/icons/chatbot-default.svg"></div>
+                  <ng-container>
+                    <div class="question-hint padding-top-xs">
+                      {{chat.title}}
+                    </div>
+                  </ng-container>
+                  <div class="recommended-question my-5px" >
+                    <div class="my-5px" *ngFor="let cat of chat.recommendedQues" >
+                      <div (click)="showCategory(cat)" class="word-break cat-item">{{cat.catName}}</div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="chat.type === 'sendMsg'">
+                <div class="flex width-1-1 row-end padding-top-l padding-bottom-m">
+                  <div class="user-seleted-question padding-xs">
+                    {{chat.question}}
+                  </div>
+                  <div class="user-icon">
+                    <img alt="chatbot-icon" src="{{userIcon}}">
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngIf="displayLoader">
+            <div  class="loader">
+              <mat-spinner [diameter]="30"></mat-spinner>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="cb-footer-wrapper">
+        <div class="flex flex-wrap cb-topics">
+            <div class="cat-list">
+                <ng-container *ngFor="let item of sortCategory()">
+                    <div (click)="showCategory(item)" class="cat-item">{{item.catName}}</div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="flex flex-wrap cb-footer">
+            <div class="info br-bl padding-top-xs" [ngClass]="{active: currentFilter === 'information'}" (click)="toggleFilter('information')">
+                <div class="info-icon">
+                    <mat-icon>info</mat-icon>
+                </div>
+                <div class="info-text">
+                    {{getInfoText('information')}}
+                </div>
+            </div>
+            <div class="info br-br padding-top-xs" [ngClass]="{active: currentFilter === 'issue'}" (click)="toggleFilter('issue')">
+                <div class="info-icon">
+                    <mat-icon>warning</mat-icon>
+                </div>
+                <div class="info-text">
+                  {{getInfoText('issue')}}
+                </div>
+            </div>
+        </div>
+      </div>
+  </div>
+</div>
+

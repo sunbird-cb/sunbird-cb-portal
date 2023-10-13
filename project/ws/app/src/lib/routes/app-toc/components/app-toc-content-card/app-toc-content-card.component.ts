@@ -74,7 +74,6 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
         || this.content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
         || this.content.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT
         || this.content.primaryCategory === NsContent.EPrimaryCategory.COMP_ASSESSMENT
-        || this.content.primaryCategory === NsContent.EPrimaryCategory.OFFLINE_SESSION
       )
     }
     return false

@@ -30,6 +30,7 @@ const API_END_POINTS = {
     `${PROTECTED_SLAG_V8}/user/evaluate/post-assessment/${contentId}`,
   GET_CONTENT: (contentId: string) =>
     `${PROXY_SLAG_V8}/action/content/v3/read/${contentId}`,
+  SERVER_DATE: 'apis/public/v8/systemDate',
 }
 
 @Injectable()
@@ -38,6 +39,7 @@ export class AppTocService {
   analyticsFetchStatus: TFetchStatus = 'none'
   batchReplaySubject: Subject<any> = new Subject()
   setBatchDataSubject: Subject<any> = new Subject()
+  getSelectedBatch: Subject<any> = new Subject()
   setWFDataSubject: Subject<any> = new Subject()
   resumeData: Subject<NsContent.IContinueLearningData | null> = new Subject<NsContent.IContinueLearningData | null>()
   private showSubtitleOnBanners = false
@@ -47,6 +49,9 @@ export class AppTocService {
 
   private updateReviews = new BehaviorSubject(false)
   updateReviewsObservable = this.updateReviews.asObservable()
+
+  public serverDate = new BehaviorSubject('')
+  currentServerDate = this.serverDate.asObservable()
 
   constructor(private http: HttpClient, private configSvc: ConfigurationsService) { }
 
@@ -81,6 +86,38 @@ export class AppTocService {
 
   changeUpdateReviews(state: boolean) {
     this.updateReviews.next(state)
+  }
+  getSelectedBatchData(data: any) {
+    this.getSelectedBatch.next(data)
+  }
+
+  changeServerDate(state: any) {
+    this.serverDate.next(state)
+  }
+
+  mapSessionCompletionPercentage(batchData: any) {
+    this.resumeDataSubscription = this.resumeData.subscribe(
+      (dataResult: any) => {
+        if (dataResult && dataResult.length && batchData.content && batchData.content.length) {
+          if (batchData && batchData.content[0] &&
+            batchData.content[0].batchAttributes &&
+            batchData.content[0].batchAttributes.sessionDetails_v2
+          ) {
+            batchData.content[0].batchAttributes.sessionDetails_v2.map((sd: any) => {
+              const foundContent = dataResult.find((el: any) => el.contentId === sd.sessionId)
+              if (foundContent) {
+                sd.completionPercentage = foundContent.completionPercentage
+                sd.completionStatus = foundContent.status
+                sd.lastCompletedTime = foundContent.lastCompletedTime
+              }
+            })
+          }
+        }
+      },
+      () => {
+        // tslint:disable-next-line: no-console
+        console.log('error on resumeDataSubscription')
+      })
   }
 
   showStartButton(content: NsContent.IContent | null): { show: boolean; msg: string } {
@@ -432,6 +469,11 @@ export class AppTocService {
     return this.http.post(
       API_END_POINTS.BATCH_CREATE,
       { request: batchData },
+    )
+  }
+  getServerDate() {
+    return this.http.get<{ result: NsAppToc.IPostAssessment[] }>(
+      API_END_POINTS.SERVER_DATE,
     )
   }
 }

@@ -63,7 +63,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   resumeData: any = null
   batchData: NsContent.IBatchListResponse | null = null
   currentCourseBatchId: string | null = null
-  userEnrollmentList = null
+  userEnrollmentList!: NsContent.ICourse[]
   routeSubscription: Subscription | null = null
   pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
   isCohortsRestricted = false
@@ -147,6 +147,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   cscmsUrl = environment.cscmsUrl
   showBtn = false
   channelId: any
+  selectedBatchData: any
+  selectedBatchSubscription: any
+  serverDateSubscription: any
+  serverDate: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -182,7 +186,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   ngOnInit() {
+    this.getServerDateTime()
+    this.selectedBatchSubscription = this.tocSvc.getSelectedBatch.subscribe(batchData => {
+      this.selectedBatchData = batchData
+    })
 
+    this.serverDateSubscription = this.tocSvc.serverDate.subscribe(serverDate => {
+      this.serverDate = serverDate
+    })
     // this.route.fragment.subscribe(fragment => { this.fragment = fragment })
     this.channelId = this.telemertyService.telemetryConfig ? this.telemertyService.telemetryConfig.channel : ''
     try {
@@ -348,6 +359,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (this.routerParamSubscription) {
       this.routerParamSubscription.unsubscribe()
     }
+    if (this.selectedBatchSubscription) {
+      this.selectedBatchSubscription.unsubscribe()
+    }
   }
 
   ngAfterViewChecked(): void {
@@ -401,14 +415,16 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     // if (this.content && this.content['batches']) {
     // const batches = this.content['batches'] as NsContent.IBatch
     if (this.currentCourseBatchId) {
-      const now = moment()
+      const now = moment(this.serverDate).format('YYYY-MM-DD')
       if (this.batchData && this.batchData.content) {
         const batch = _.first(_.filter(this.batchData.content, { batchId: this.currentCourseBatchId }) || [])
         if (batch) {
+          const startDate = moment(batch.startDate).format('YYYY-MM-DD')
+          const endDate = batch.endDate ? moment(batch.endDate).format('YYYY-MM-DD') : now
           return (
             // batch.status &&
-            moment(batch.startDate).isSameOrBefore(now)
-            && moment(batch.endDate || new Date()).isSameOrAfter(now)
+            moment(startDate).isSameOrBefore(now)
+            && moment(endDate).isSameOrAfter(now)
           )
         }
         return false
@@ -524,6 +540,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               content: [batch],
               enrolled: true,
             }
+            this.tocSvc.getSelectedBatchData(this.batchData)
+            this.tocSvc.mapSessionCompletionPercentage(this.batchData)
             this.router.navigate(
               [],
               {
@@ -569,11 +587,12 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.content.primaryCategory !== this.primaryCategory.PROGRAM &&
       this.content.primaryCategory !== this.primaryCategory.MANDATORY_COURSE_GOAL &&
       this.content.primaryCategory !== this.primaryCategory.STANDALONE_ASSESSMENT &&
-      this.content.primaryCategory !== this.primaryCategory.BLENDED_PROGRAM) {
+      this.content.primaryCategory !== this.primaryCategory.BLENDED_PROGRAM &&
+      this.content.primaryCategory !== this.primaryCategory.CURATED_PROGRAM) {
       // const collectionId = this.isResource ? '' : this.content.identifier
       return this.getContinueLearningData(this.content.identifier)
     }
-    this.userEnrollmentList = null
+    this.userEnrollmentList = []
     let userId
     if (this.configSvc.userProfile) {
       userId = this.configSvc.userProfile.userId || ''
@@ -584,6 +603,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     // )
     this.userSvc.fetchUserBatchList(userId).subscribe(
       (courses: NsContent.ICourse[]) => {
+        this.userEnrollmentList = courses
         let enrolledCourse: NsContent.ICourse | undefined
         if (this.content && this.content.identifier && !this.forPreview) {
           if (courses && courses.length) {
@@ -609,6 +629,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               enrolled: true,
             }
             this.tocSvc.setBatchData(this.batchData)
+            this.tocSvc.getSelectedBatchData(this.batchData)
+            this.tocSvc.mapSessionCompletionPercentage(this.batchData)
             if (this.getBatchId()) {
               this.router.navigate(
                 [],
@@ -1317,5 +1339,22 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   getProgramDuration(pDuration: number) {
     return pDuration === 1 ? `${pDuration} day` : `${pDuration} days`
+  }
+  withdrawOrEnroll(data: string) {
+    if (data === NsContent.WFBlendedProgramStatus.INITIATE) {
+      this.fetchUserWFForBlended()
+    }
+  }
+  getServerDateTime() {
+    this.tocSvc.getServerDate().subscribe((response: any) => {
+      if (response && response.systemDate) {
+        this.tocSvc.changeServerDate(response.systemDate)
+        this.serverDate = response.systemDate
+      } else {
+        this.tocSvc.changeServerDate(new Date().getTime())
+      }
+    },                                    (_err: any) => {
+      this.tocSvc.changeServerDate(new Date().getTime())
+    })
   }
 }

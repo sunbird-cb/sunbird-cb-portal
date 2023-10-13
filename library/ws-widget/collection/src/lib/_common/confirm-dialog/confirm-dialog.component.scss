@@ -1,0 +1,45 @@
+.dialog-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: relative;
+    h1 {
+        opacity: 1;
+        color: rgba(0,0,0,0.87);
+        font-size: 16px;
+        font-weight: 600;
+        font-style: normal;
+        letter-spacing: 0.12px;
+        text-align: left;
+        line-height: 24px;
+    }
+}
+.dialog-header h1{
+    margin-right: 16px;
+}
+.close-icon {
+    font-size: 36px;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: -7px;
+}
+.acceptbtn {
+    background: no-repeat padding-box #0074b6!important;
+    border-radius: 4px;
+    max-width: auto!important;
+    height: 38px!important;
+}
+.btn-wrapper {
+    align-items: center;
+    justify-content: end;
+    gap: 16px;
+}
+@media screen and (max-width: 768px) {
+    ::ng-deep .cdk-overlay-pane{
+        max-width: 100vw !important;
+        pointer-events: auto;
+        position: absolute !important;
+        bottom: 0 !important;
+     }
+}

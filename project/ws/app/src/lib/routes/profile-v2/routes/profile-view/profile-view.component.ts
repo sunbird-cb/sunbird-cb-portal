@@ -216,13 +216,22 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     const user = this.portalProfile.userId || this.portalProfile.id || ''
     this.userSvc.fetchProfileUserBatchList(user).subscribe((courses: NsContent.ICourse[]) => {
 
-      courses.forEach(items => {
+      courses.forEach((items: any) => {
         // if (items.completionPercentage === 100) {
         //   this.enrolledCourse.push(items)
         //   // return items;
         // }
-          this.enrolledCourse.push(items)
+          // this.enrolledCourse.push(items)
           // return items;
+
+          if (items.issuedCertificates && items.issuedCertificates.length > 0) {
+            this.enrolledCourse.push(items)
+            return items
+          }
+           if (items.issuedCertificates && items.issuedCertificates.length === 0 && items.completionPercentage === 100) {
+            this.enrolledCourse.push(items)
+            return items
+          }
 
       })
       this.downloadAllCertificate(this.enrolledCourse)
