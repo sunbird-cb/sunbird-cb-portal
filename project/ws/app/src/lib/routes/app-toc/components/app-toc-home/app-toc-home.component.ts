@@ -412,10 +412,12 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       if (this.batchData && this.batchData.content) {
         const batch = _.first(_.filter(this.batchData.content, { batchId: this.currentCourseBatchId }) || [])
         if (batch) {
+          const startDate = moment(batch.startDate).format('YYYY-MM-DD')
+          const endDate = moment(batch.endDate).format('YYYY-MM-DD')
           return (
             // batch.status &&
-            moment(batch.startDate).isSameOrBefore(now)
-            && moment(batch.endDate || new Date()).isSameOrAfter(now)
+            moment(startDate).isSameOrBefore(now)
+            && moment(endDate).isSameOrAfter(now)
           )
         }
         return false

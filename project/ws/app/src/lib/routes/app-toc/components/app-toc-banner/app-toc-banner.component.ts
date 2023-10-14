@@ -29,8 +29,10 @@ import _ from 'lodash'
 import { environment } from 'src/environments/environment'
 import { DatePipe } from '@angular/common'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import { EnrollQuestionnaireComponent } from '../enroll-questionnaire/enroll-questionnaire.component'
 dayjs.extend(isSameOrBefore)
+dayjs.extend(isSameOrAfter)
 
 @Component({
   selector: 'ws-app-toc-banner',
@@ -499,55 +501,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         'Something went wrong, please try again later!')
     })
   }
-  public withDrawEnrollIfNotApproved(state: string, action: string, wfIdValue?: string) {
-    let userId = ''
-    let rootOrgId = ''
-    let username = ''
-    let departmentName = ''
-    if (this.configSvc.userProfile) {
-      userId = this.configSvc.userProfile.userId || ''
-      rootOrgId = this.configSvc.userProfile.rootOrgId || ''
-      username = this.configSvc.userProfile.firstName || ''
-      departmentName = this.configSvc.userProfile.departmentName || ''
-    }
-    const req = {
-      rootOrgId,
-      userId,
-      state,
-      action,
-      actorUserId: userId,
-      applicationId: this.selectedBatch.batchId,
-      serviceName: 'blendedprogram',
-      courseId: this.selectedBatch.courseId,
-      deptName: departmentName,
-      ...(wfIdValue ? { wfId: wfIdValue } : null),
-      updateFieldValues: [
-        {
-          toValue: {
-            name: username,
-          },
-        },
-      ],
-    }
-    this.contentSvc.enrollAndUnenrollUserToBatchWF(req, action).then((data: any) => {
-      if (data && data.result && data.result.status === 'OK') {
-        this.batchData.workFlow = {
-        }
-       this.setBatchControl()
-      this.withdrawOrEnroll.emit(action)
-      this.getBatchUserCount(this.selectedBatch)
-      this.openSnackbar('Request sent Successfully!')
-      this.disableEnrollBtn = false
-      } else {
-        this.openSnackbar('Something went wrong, please try again later!')
-        this.disableEnrollBtn = false
-      }
-    },                                                               (error: any) => {
-      this.openSnackbar(_.get(error, 'error.params.errmsg') ||
-        _.get(error, 'error.result.errmsg') ||
-        'Something went wrong, please try again later!')
-    })
-  }
 
   getMimeType(content: NsContent.IContent, identifier: string): NsContent.EMimeTypes {
     if (content.identifier === identifier) {
@@ -648,19 +601,18 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   
   checkBatchStartDate() {
     debugger
-    console.log(this.selectedBatchData,'this.selectedBatchData')
     const batchStartDate = this.selectedBatchData && this.selectedBatchData.content && this.selectedBatchData.content[0] && this.selectedBatchData.content[0].startDate
     // const batchStartDate = this.batchData && this.batchData.workFlow && this.batchData.workFlow.batch && this.batchData.workFlow.batch.startDate
     const workFlow = this.batchData && this.batchData.workFlow && this.batchData.workFlow.wfItem && this.batchData.workFlow.wfItem.currentStatus
     const now = dayjs().format('YYYY-MM-DD')
-    const dateExtended = dayjs(now).isAfter(dayjs(batchStartDate))
+    const dateExtended = dayjs(now).isSameOrAfter(dayjs(batchStartDate))
     console.log('start', )
     if (dateExtended  && ( workFlow !== this.WFBlendedProgramStatus.APPROVED ) && workFlow !== this.WFBlendedProgramStatus.WITHDRAWN) {
       const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
         width: '434px',
         data: {
-          title: 'Are you sure you want to withdraw your request?',
-          message: 'You will miss the learning opportunity if you withdraw your enrolment.',
+          title: 'Request not approved',
+          message: "Don't worry; withdraw this and request another batch.",
           acceptButton: 'Withdraw',
           cancelButton: 'Cancel',
         },
@@ -669,7 +621,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       })
       confirmDialog.afterClosed().subscribe(result => {
         if (result) {
-          this.withDrawEnrollIfNotApproved(this.batchData.workFlow.wfItem.currentStatus, 'WITHDRAW', this.batchData.workFlow.wfItem.wfId)
+          this.requestAndWithDrawEnroll(this.batchData.workFlow.wfItem.currentStatus, 'WITHDRAW', this.batchData.workFlow.wfItem.wfId)
         }
       })
     }
@@ -1168,11 +1120,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   ngAfterViewInit() {
     setInterval(() => {
       // this.tickTock();
+      this.date = new Date()
+      this.now = this.date.getTime()
       this.difference = this.targetTime - this.now
       this.difference = this.difference / (1000 * 60 * 60 * 24)
 
-      this.date = new Date()
-      this.now = this.date.getTime()
       this.days = Math.floor(this.difference)
       this.hours = 23 - this.date.getHours()
       this.minutes = 60 - this.date.getMinutes()
