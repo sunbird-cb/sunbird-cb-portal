@@ -5,6 +5,7 @@ import { noop, Observable } from 'rxjs'
 import dayjs from 'dayjs'
 import { NsContent } from '@sunbird-cb/collection/src/lib/_services/widget-content.model'
 import { environment } from 'src/environments/environment'
+import { WidgetContentService } from '@sunbird-cb/collection/src/lib/_services/widget-content.service'
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,10 @@ export class ViewerUtilService {
   }
   downloadRegex = new RegExp(`(/content-store/.*?)(\\\)?\\\\?['"])`, 'gm')
   authoringBase = '/apis/authContent/'
-  constructor(private http: HttpClient, private configservice: ConfigurationsService) { }
+  constructor(
+    private http: HttpClient,
+    private configservice: ConfigurationsService,
+    private contentSvc: WidgetContentService) { }
 
   async fetchManifestFile(url: string) {
     this.setS3Cookie(url)
@@ -147,6 +151,40 @@ export class ViewerUtilService {
       req = {}
       // do nothing
     }
+  }
+
+  getBatchIdAndCourseId(courseId: string, batchId: string, resourceId: string) {
+    const tempData = {
+      courseId,
+      batchId,
+    }
+    const tempContentData = this.contentSvc.currentMetaData
+    const enrollmentList = this.contentSvc.currentBatchEnrollmentList
+    if (tempContentData.cumulativeTracking && (tempContentData.primaryCategory === NsContent.EPrimaryCategory.PROGRAM ||
+      tempContentData.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM ||
+      tempContentData.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM)
+      ) {
+      tempContentData.children.forEach((childList: NsContent.IContent) => {
+        if (childList.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
+          const courseEnrollmentList = enrollmentList.filter((v: NsContent.ICourse) => v.contentId === childList.identifier)
+          if (childList.childNodes && childList.childNodes.indexOf(resourceId) !== -1) {
+            if (courseEnrollmentList.length > 0) {
+              tempData.batchId = courseEnrollmentList[courseEnrollmentList.length - 1].batch.batchId
+              tempData.courseId = childList.identifier
+            }
+          }
+        } else if (tempContentData.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
+          const bPEnrollmentList = enrollmentList.filter((v: NsContent.ICourse) => v.contentId === tempContentData.identifier)
+          if (tempContentData.childNodes && tempContentData.childNodes.indexOf(resourceId) !== -1) {
+            if (bPEnrollmentList.length > 0) {
+              tempData.batchId = bPEnrollmentList[bPEnrollmentList.length - 1].batch.batchId
+              tempData.courseId = tempContentData.identifier
+            }
+          }
+        }
+      })
+    }
+    return tempData
   }
 
   realTimeProgressUpdateQuiz(contentId: string, collectionId?: string, batchId?: string, status?: number) {

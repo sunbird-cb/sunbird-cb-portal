@@ -16,6 +16,7 @@ const API_END_POINTS = {
   BATCH_CREATE: `${PROXY_SLAG_V8}/learner/course/v1/batch/create`,
   CONTENT_PARENTS: `${PROTECTED_SLAG_V8}/content/parents`,
   CONTENT_NEXT: `${PROTECTED_SLAG_V8}/content/next`,
+  CONTENT_HISTORYV2: `/apis/proxies/v8/read/content-progres`,
   CONTENT_PARENT: (contentId: string) => `${PROTECTED_SLAG_V8}/content/${contentId}/parent`,
   CONTENT_AUTH_PARENT: (contentId: string, rootOrg: string, org: string) =>
     `/apis/authApi/action/content/parent/hierarchy/${contentId}?rootOrg=${rootOrg}&org=${org}`,
@@ -30,6 +31,7 @@ const API_END_POINTS = {
     `${PROTECTED_SLAG_V8}/user/evaluate/post-assessment/${contentId}`,
   GET_CONTENT: (contentId: string) =>
     `${PROXY_SLAG_V8}/action/content/v3/read/${contentId}`,
+  CERT_DOWNLOAD: (certId: any) => `${PROTECTED_SLAG_V8}/cohorts/course/batch/cert/download/${certId}`,
   SERVER_DATE: 'apis/public/v8/systemDate',
 }
 
@@ -188,7 +190,7 @@ export class AppTocService {
       content.children.map(child => {
         const foundContent = dataResult.find((el: any) => el.contentId === child.identifier)
         if (foundContent) {
-          child.completionPercentage = foundContent.completionPercentage
+          child.completionPercentage = foundContent.completionPercentage || foundContent.progress
           child.completionStatus = foundContent.status
         } else {
           this.mapCompletionPercentage(child, dataResult)
@@ -471,9 +473,101 @@ export class AppTocService {
       { request: batchData },
     )
   }
+
+  mapCompletionPercentageProgram(content: NsContent.IContent | null,  enrolmentList: any) {
+    let totalCount = 0
+    let leafnodeCount = 0
+    if (content && content.children) {
+      leafnodeCount = content.children.length
+      content.children.map(async child => {
+        if (child.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
+          const foundContent = enrolmentList.find((el: any) => el.collectionId === child.identifier)
+          totalCount = foundContent && foundContent.completionPercentage ? totalCount + foundContent.completionPercentage : totalCount + 0
+          content.completionPercentage = Math.round(totalCount / leafnodeCount)
+          if (foundContent && foundContent.completionPercentage === 100) {
+            if (foundContent.issuedCertificates.length > 0) {
+              const certId: any = foundContent.issuedCertificates[0].identifier
+              const certData: any = await this.dowonloadCertificate(certId).toPromise().catch(_error => {})
+              child.issuedCertificatesSVG = certData.result.printUri
+            }
+            // child.issuedCertificates = foundContent.issuedCertificates
+            child.completionPercentage = 100
+            child.completionStatus = 2
+            this.mapCompletionChildPercentageProgram(child)
+          } else {
+            const req = {
+              request: {
+                batchId: foundContent.batch.batchId,
+                userId: foundContent.userId,
+                courseId: foundContent.collectionId,
+                contentIds: [],
+                fields: [
+                  'progressdetails',
+                ],
+              },
+            }
+            this.getProgressForChildCourse(req, child)
+          }
+        } else {
+          if (content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
+            this.mapCompletionPercentage(content, this.resumeData)
+            // const foundParentContent = enrolmentList.find((el: any) => el.collectionId === content.identifier)
+            // const req = {
+            //   request: {
+            //     batchId: foundParentContent.batch.batchId,
+            //     userId: foundParentContent.userId,
+            //     courseId: foundParentContent.collectionId,
+            //     contentIds: [],
+            //     fields: [
+            //       'progressdetails',
+            //     ],
+            //   },
+            // }
+            // this.getProgressForCourse(req, child)
+          }
+        }
+      })
+    }
+  }
+
+  async getProgressForChildCourse(request: any, content: any) {
+    const data: any = await this.fetchContentHistoryV2(request).toPromise().catch(_error => {})
+    if (data.result && data.result.contentList.length > 0) {
+      this.mapCompletionPercentage(content, data.result.contentList)
+    }
+  }
+
+  mapCompletionChildPercentageProgram(child: any) {
+    if (child && child.children) {
+      child.children.map((child1: any) => {
+          if (child1 && child1.children && child1.primaryCategory === 'Course Unit') {
+            child1.children.map((child2: any) => {
+              child2.completionPercentage = 100
+              child2.completionStatus = 2
+            })
+          } else {
+            child1.completionPercentage = 100
+            child1.completionStatus = 2
+          }
+      })
+    }
+  }
+
+  fetchContentHistoryV2(req: NsContent.IContinueLearningDataReq): Observable<NsContent.IContinueLearningData> {
+    req.request.fields = ['progressdetails']
+    const reslut: any = this.http.post<NsContent.IContinueLearningData>(
+      `${API_END_POINTS.CONTENT_HISTORYV2}/${req.request.courseId}`, req
+    )
+    return reslut
+  }
+
+  dowonloadCertificate(certId: any): Observable<any> {
+    return this.http.get<{ result: any }>(
+      API_END_POINTS.CERT_DOWNLOAD(certId),
+    )
+  }
   getServerDate() {
     return this.http.get<{ result: NsAppToc.IPostAssessment[] }>(
-      API_END_POINTS.SERVER_DATE,
-    )
+      API_END_POINTS.SERVER_DATE)
   }
 }

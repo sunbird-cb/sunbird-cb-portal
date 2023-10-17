@@ -4,7 +4,6 @@
         <div class="flex flex-1">
             <p class="mat-body-2 ws-mat-black60-text">
                 <span class="mdo_name margin-right-s" i18n>{{ resource?.source}}</span>
-                <span class="post_timing" i18n *ngIf="resource.createdDate">{{ getFormathours(resource.createdDate) }}</span>
             </p>
         </div>
 
@@ -32,10 +31,12 @@
     </span>
 
 
-    <span class="attach_links margin-right-m" *ngIf="resource.additionalProperties.URL && resource.additionalProperties.URL.length > 0">
+    <span class="attach_links margin-right-m" *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0">
         <p class="mat-body-2" i18n>  <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>
-            {{ itemCount(resource.additionalProperties.URL) }} URL</p>
-
+            <span *ngFor="let item of resource.additionalProperties.krFiles; index as i">
+                <a [href]="getUrl(item.url)" target="_blank" class="download-link margin-right-m">{{getName(item.name)}}</a>
+            </span>
+        </p>
     </span>
     <span class="attach_links margin-right-m" *ngIf="resource.totalFiles.images>0" >
         <p class="mat-body-2" i18n>  <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">image</mat-icon>

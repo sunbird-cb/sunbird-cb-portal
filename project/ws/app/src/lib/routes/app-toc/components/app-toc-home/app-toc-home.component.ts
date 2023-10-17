@@ -640,6 +640,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                   queryParamsHandling: 'merge',
                 })
             }
+            if (this.content && this.content.cumulativeTracking) {
+              this.tocSvc.mapCompletionPercentageProgram(this.content, this.userEnrollmentList)
+              this.getContinueLearningData(this.content.identifier, enrolledCourse.batchId)
+            }
           } else {
             // It's understood that user is not already enrolled
             // Fetch the available batches and present to user
@@ -778,6 +782,37 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   public autoBatchAssign() {
+    if (this.content && this.content.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM) {
+      this.autoEnrollCuratedProgram()
+    } else {
+      this.autoAssignEnroll()
+    }
+  }
+
+  public autoEnrollCuratedProgram() {
+    if (this.content && this.content.identifier) {
+      let userId = ''
+      if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
+        userId = this.configSvc.userProfile.userId
+      }
+      const req = {
+        request: {
+          userId,
+          programId: this.content.identifier,
+          batchId: this.content.batches[0].batchId, // as of now cureted program only one batch is coming need to check and modify
+        },
+      }
+      this.contentSvc.autoAssignCuratedBatchApi(req).subscribe(
+        (data: NsContent.IBatchListResponse) => {
+          if (data) {
+            this.getUserEnrollmentList()
+          }
+        }
+      )
+    }
+  }
+
+  public autoAssignEnroll() {
     if (this.content && this.content.identifier) {
       this.contentSvc.autoAssignBatchApi(this.content.identifier).subscribe(
         (data: NsContent.IBatchListResponse) => {
@@ -1148,7 +1183,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       } else {
         primaryCategory = firstPlayableContent.primaryCategory || this.content.primaryCategory
       }
-
       this.firstResourceLink = viewerRouteGenerator(
         firstPlayableContent.identifier,
         firstPlayableContent.mimeType,

@@ -4,6 +4,8 @@ import { NsAppToc } from '../../models/app-toc.model'
 import { EventService } from '@sunbird-cb/utils/src/public-api'
 /* tslint:disable*/
 import _ from 'lodash'
+import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
+import { MatDialog } from '@angular/material'
 
 @Component({
   selector: 'ws-app-toc-content-card',
@@ -43,6 +45,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
   viewChildren = false
   constructor(
     private events: EventService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -229,5 +232,15 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
 
   get isEnabled(): boolean {
     return false
+  }
+  openCertificateDialog(certData: any) {
+    debugger
+    const cet = certData
+    this.dialog.open(CertificateDialogComponent, {
+      // height: '400px',
+      width: '1300px',
+      data: { cet },
+      // panelClass: 'custom-dialog-container',
+    })
   }
 }

@@ -3,6 +3,7 @@ import { NSKnowledgeResource } from '../../models/knowledge-resource.models'
 import { ActivatedRoute } from '@angular/router'
 import { KnowledgeResourceService } from '../../services/knowledge-resource.service'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
+import { environment } from 'src/environments/environment'
 
 // tslint:disable
 import _ from 'lodash'
@@ -23,6 +24,7 @@ export class KnowledgeDetailComponent implements OnInit {
   fileType!: string
   acc: any
   obj: any
+  environment: any
 
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +40,7 @@ export class KnowledgeDetailComponent implements OnInit {
       this.type = _.get(params, 'type')
 
     })
+    this.environment = environment
     this.kwResources
     .getResource(this.id, this.type)
     .subscribe((reponse: NSKnowledgeResource.IResourceResponse) => {
@@ -135,5 +138,18 @@ refresh() {
       alert('Not copied!')
     })
   }
+
+  getUrl(url: string) {
+    const path = url.split('/content/frac/')[1]
+    if (path) {
+      return `https://${this.environment.sitePath}/content-store/content/frac/${path}`
+    }
+    return url
+   }
+
+   getName(name: string) {
+    const fName = name.split('content/frac/')[1]
+    return fName ? fName : name
+   }
 
 }
