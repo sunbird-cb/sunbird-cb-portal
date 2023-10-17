@@ -51,7 +51,7 @@ export class AppTocService {
   updateReviewsObservable = this.updateReviews.asObservable()
 
 
-  public serverDate = new BehaviorSubject(new Date().getTime())
+  public serverDate = new BehaviorSubject('')
   currentServerDate = this.serverDate.asObservable()
 
   constructor(private http: HttpClient, private configSvc: ConfigurationsService) { }

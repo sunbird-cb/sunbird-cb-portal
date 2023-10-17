@@ -1351,8 +1351,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.tocSvc.changeServerDate(response.systemDate)
         this.serverDate = response.systemDate
       } else {
-        // this.tocSvc.changeServerDate(new Date().getTime())
+        this.tocSvc.changeServerDate(new Date().getTime())
       }
+    }, (err: any) => {
+      this.tocSvc.changeServerDate(new Date().getTime())
     })
   }
 }
