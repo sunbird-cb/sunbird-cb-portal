@@ -2,6 +2,7 @@ import { AfterViewChecked, Component, ElementRef, OnInit, Renderer2, ViewChild, 
 import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
 // import { ChatbotService } from './chatbot.service'
 import { RootService } from './../root/root.service'
+import { environment } from 'src/environments/environment'
 
 
 
@@ -30,6 +31,8 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
   chatIssues: any = []
   displayLoader: boolean = false
   expanded: boolean = false
+  callText: string = ''
+  emailText: string = ''
   localization: any = {
     'en' : {
       'Hi' : 'Namaste',
@@ -49,8 +52,6 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
   }
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef | undefined
 
-  callText = "<a class='hint-text' target='_blank' href='https://bit.ly/44MJlo4'>Teams Call</a>"
-  emailText = "<a class='hint-text' target='_blank' href='mailto:mission.karma@gov.in'>mission.karma@gov.in.</a>"
 
   constructor(private configSvc: ConfigurationsService, private eventSvc: EventService,private renderer: Renderer2,
     private chatbotService: RootService) { }
@@ -60,6 +61,9 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
     this.checkForApiCalls()
     this.enableScroll()
     this.userIcon = this.userInfo && this.userInfo.profileImage ? this.userInfo.profileImage : "/assets/icons/chatbot-default-user.svg"
+    const email = environment.supportEmail || 'mission.karmayogi@gov.in'
+    this.callText = "<a class='hint-text' target='_blank' href='https://bit.ly/44MJlo4'>Teams Call</a>&nbsp;"
+    this.emailText = `<a class='hint-text' target='_blank' href='mailto:${email}'>${email}.</a>`
   }
 
   greetings(){
