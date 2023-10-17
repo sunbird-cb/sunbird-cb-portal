@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core'
 import { KnowledgeResourceService } from '../../services/knowledge-resource.service'
 import { NSKnowledgeResource } from '../../models/knowledge-resource.models'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'ws-app-knowledge-card',
@@ -10,7 +11,7 @@ import { NSKnowledgeResource } from '../../models/knowledge-resource.models'
   host: { class: 'flex flex-1 knowledge_card_full w-full' },
 })
 export class KnowledgeCardComponent implements OnInit {
-
+  environment: any
   @Input() resource!: any
   @Output() resourceBookmarkEvent = new EventEmitter<NSKnowledgeResource.IResourceData>()
   time: number | undefined
@@ -23,6 +24,7 @@ export class KnowledgeCardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.environment = environment
   }
 
   addBookmark(resource: NSKnowledgeResource.IResourceData) {
@@ -78,5 +80,18 @@ itemCount(items: NSKnowledgeResource.IUrl[]) {
       }
     }
   return occurs
+ }
+
+ getUrl(url: string) {
+  const path = url.split('/content/frac/')[1]
+  if (path) {
+    return `https://${this.environment.sitePath}/content-store/content/frac/${path}`
+  }
+  return url
+ }
+
+ getName(name: string) {
+  const fName = name.split('content/frac/')[1]
+  return fName ? fName : name
  }
 }

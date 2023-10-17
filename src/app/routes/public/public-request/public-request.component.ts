@@ -40,6 +40,7 @@ export class PublicRequestComponent implements OnInit {
   // emailWhitelistPattern = `^[a-zA-Z0-9._-]{3,}\\b@\\b[a-zA-Z0-9]*|\\b(.gov|.nic)\b\\.\\b(in)\\b$`
   phoneNumberPattern = '^((\\+91-?)|0)?[0-9]{10}$'
   customCharsPattern = `^[a-zA-Z0-9 \\w\-\&\(\)]*$`
+  customCharsPatternOrg = `^[a-zA-Z0-9 \\w\-\&,\(\)]*$`
   // domainPattern = `([a-z0-9A-Z]\.)*[a-z0-9-]+\.([a-z0-9]{2,24})+(\.co\.([a-z0-9]{2,24})|\.([a-z0-9]{2,24}))*`
   domainPattern = `^@([a-z0-9\-]+\.){1,2}[a-z]{2,4}`
   confirm = false
@@ -95,7 +96,7 @@ export class PublicRequestComponent implements OnInit {
       position: new FormControl('', this.requestType === 'Position' ? [Validators.pattern(this.customCharsPattern),
         Validators.required, forbiddenNamesValidatorPosition(this.masterPositions)] : []),
       // tslint:disable-next-line:max-line-length
-      organisation: new FormControl('', this.requestType === 'Organisation' ? [Validators.required, Validators.pattern(this.customCharsPattern)] : []),
+      organisation: new FormControl('', this.requestType === 'Organisation' ? [Validators.required, Validators.pattern(this.customCharsPatternOrg)] : []),
       domain: new FormControl('', this.requestType === 'Domain' ? [Validators.required, Validators.pattern(this.domainPattern)] : []),
       addDetails: new FormControl('', []),
       confirmBox: new FormControl(false, [Validators.required]),

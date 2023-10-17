@@ -169,7 +169,8 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       type: new FormControl('ministry', [Validators.required]),
       // ministry: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterMinisteries)]),
       // department: new FormControl('', [forbiddenNamesValidator(this.masterDepartments)]),
-      organisation: new FormControl('', [Validators.required, Validators.pattern(this.customCharsPattern)]),
+      // organisation: new FormControl('', [Validators.required, Validators.pattern(this.customCharsPattern)]),
+      organisation: new FormControl('', [Validators.required]),
       // recaptchaReactive: new FormControl(null, [Validators.required]),
     })
   }
