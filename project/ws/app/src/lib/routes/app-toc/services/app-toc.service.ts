@@ -55,6 +55,8 @@ export class AppTocService {
   public serverDate = new BehaviorSubject('')
   currentServerDate = this.serverDate.asObservable()
 
+  inprogressData: any = []
+
   constructor(private http: HttpClient, private configSvc: ConfigurationsService) { }
 
   get subtitleOnBanners(): boolean {
@@ -197,6 +199,35 @@ export class AppTocService {
         }
       })
     }
+  }
+
+  getMimeType(content: NsContent.IContent, identifier: string): NsContent.EMimeTypes {
+    if (content.identifier === identifier) {
+      return content.mimeType
+    }
+    if (content && content.children) {
+      if (content.children.length === 0) {
+        // if (content.children[0].identifier === identifier) {
+        //   return content.mimeType
+        // }
+        // big blunder in data
+        // this.logger.log(content.identifier, 'Wrong mimetypes for resume')
+        return content.mimeType
+      }
+      const flatList: any[] = []
+      const getAllItemsPerChildren: any = (item: NsContent.IContent) => {
+        flatList.push(item)
+        if (item.children) {
+          return item.children.map((i: NsContent.IContent) => getAllItemsPerChildren(i))
+        }
+        return
+      }
+      getAllItemsPerChildren(content)
+      const chld = _.first(_.filter(flatList, { identifier }))
+      return chld.mimeType
+    }
+    // return chld.mimeType
+    return NsContent.EMimeTypes.UNKNOWN
   }
 
   getTocStructure(
@@ -474,26 +505,28 @@ export class AppTocService {
     )
   }
 
-  mapCompletionPercentageProgram(content: NsContent.IContent | null,  enrolmentList: any) {
+  async mapCompletionPercentageProgram(content: NsContent.IContent | null,  enrolmentList: any) {
     let totalCount = 0
     let leafnodeCount = 0
+    this.inprogressData = []
     if (content && content.children) {
       leafnodeCount = content.children.length
-      content.children.map(async child => {
-        if (child.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
-          const foundContent = enrolmentList.find((el: any) => el.collectionId === child.identifier)
+      for (let i = 0; i < content.children.length; i += 1) {
+      // content.children.forEach(async (parentChild,index) => {
+        const parentChild = content.children[i]
+        if (parentChild.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
+          const foundContent = enrolmentList.find((el: any) => el.collectionId === parentChild.identifier)
           totalCount = foundContent && foundContent.completionPercentage ? totalCount + foundContent.completionPercentage : totalCount + 0
           content.completionPercentage = Math.round(totalCount / leafnodeCount)
           if (foundContent && foundContent.completionPercentage === 100) {
             if (foundContent.issuedCertificates.length > 0) {
               const certId: any = foundContent.issuedCertificates[0].identifier
               const certData: any = await this.dowonloadCertificate(certId).toPromise().catch(_error => {})
-              child.issuedCertificatesSVG = certData.result.printUri
+              parentChild.issuedCertificatesSVG = certData.result.printUri
             }
-            // child.issuedCertificates = foundContent.issuedCertificates
-            child.completionPercentage = 100
-            child.completionStatus = 2
-            this.mapCompletionChildPercentageProgram(child)
+            parentChild.completionPercentage = 100
+            parentChild.completionStatus = 2
+            this.mapCompletionChildPercentageProgram(parentChild)
           } else {
             const req = {
               request: {
@@ -506,7 +539,16 @@ export class AppTocService {
                 ],
               },
             }
-            this.getProgressForChildCourse(req, child)
+            // await this.getProgressForChildCourse(req, parentChild)
+            await this.fetchContentHistoryV2(req).toPromise().then((progressdata: any) => {
+              const data: any  = progressdata
+              if (data.result && data.result.contentList.length > 0) {
+                this.inprogressData = this.inprogressData.length > 0 ? this.inprogressData : data.result.contentList
+                this.mapCompletionPercentage(parentChild, data.result.contentList)
+                this.updateResumaData(this.inprogressData)
+              }
+              return progressdata
+            })
           }
         } else {
           if (content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
@@ -526,28 +568,29 @@ export class AppTocService {
             // this.getProgressForCourse(req, child)
           }
         }
-      })
+      }
+      // })
     }
   }
 
-  async getProgressForChildCourse(request: any, content: any) {
-    const data: any = await this.fetchContentHistoryV2(request).toPromise().catch(_error => {})
-    if (data.result && data.result.contentList.length > 0) {
-      this.mapCompletionPercentage(content, data.result.contentList)
-    }
-  }
+  // async getProgressForChildCourse(request: any, content: any) {
+  //  const data: any =   await this.fetchContentHistoryV2(request).toPromise().catch(_error => {})
+  //   if (data.result && data.result.contentList.length > 0) {
+  //     console.log(data.result.contentList,'data.result.contentList')
+  //     this.inprogressData = this.inprogressData.length > 0 ? this.inprogressData : data.result.contentList
+  //     this.mapCompletionPercentage(content, data.result.contentList)
+  //     this.updateResumaData(this.inprogressData)
+  //   }
+  // }
 
-  mapCompletionChildPercentageProgram(child: any) {
-    if (child && child.children) {
-      child.children.map((child1: any) => {
-          if (child1 && child1.children && child1.primaryCategory === 'Course Unit') {
-            child1.children.map((child2: any) => {
-              child2.completionPercentage = 100
-              child2.completionStatus = 2
-            })
+  mapCompletionChildPercentageProgram(course: any) {
+    if (course && course.children) {
+      course.children.map((courseChild: any) => {
+          if ((courseChild && courseChild.children) || courseChild.primaryCategory === 'Course Unit') {
+            this.mapCompletionChildPercentageProgram(courseChild)
           } else {
-            child1.completionPercentage = 100
-            child1.completionStatus = 2
+            courseChild['completionPercentage'] = 100
+            courseChild['completionStatus'] = 2
           }
       })
     }
