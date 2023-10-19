@@ -125,6 +125,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   degreefilteredOptions: INameField[] | undefined
   postDegreefilteredOptions: INameField[] | undefined
   disableVerifyBtn = false
+  verifiedKarmayogi = false
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -193,6 +194,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       otherDetailsOfficeAddress: new FormControl('', []),
       otherDetailsOfficePinCode: new FormControl('', []),
       departmentName: new FormControl('', []),
+      verifiedKarmayogi: new FormControl(false, []),
     })
 
   }
@@ -517,6 +519,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
 
+  verifiedKarmayogiCheck() {
+    this.verifiedKarmayogi = !this.verifiedKarmayogi
+    this.createUserForm.patchValue({verifiedKarmayogi: this.verifiedKarmayogi})
+  }
+
   private filterNationality(name: string): INation[] {
 
     if (name) {
@@ -765,7 +772,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     if (data && data.professionalDetails && data.professionalDetails.length > 0) {
       // console.log("org", data.professionalDetails[0].industryOther);
-
       const organisation = data.professionalDetails[0]
       const isDesiAvailable = _.findIndex(this.designationsMeta, { name: organisation.designation }) !== -1
       org = {
@@ -920,6 +926,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       otherDetailsOfficePinCode: this.checkvalue(_.get(data, 'employmentDetails.pinCode') || ''),
       skillAquiredDesc: _.get(data, 'skills.additionalSkills') || '',
       certificationDesc: _.get(data, 'skills.certificateDetails') || '',
+      verifiedKarmayogi: data.verifiedKarmayogi,
     },
       {
         emitEvent: true,
@@ -1287,7 +1294,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       }
       if (currentControl.dirty) {
         personalDetailsFields.forEach(item => {
-
           if (item === 'phoneVerified') {
             personalDetail[item] = this.isMobileVerified
           }
@@ -1392,6 +1398,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   async onSubmit(form: any) {
+    console.log("createUserForm ", this.createUserForm.controls)
     this.uploadSaveData = true
     // DO some customization on the input data
     form.controls['knownLanguages'].value = this.selectedKnowLangs
@@ -1430,6 +1437,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     reqUpdates.request.profileDetails.personalDetails['knownLanguages']  = this.selectedKnowLangs
     reqUpdates.request.profileDetails.personalDetails['nationality']  = form.value.nationality
+    reqUpdates.request.profileDetails.verifiedKarmayogi = form.value.verifiedKarmayogi
     this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(
       res => {
         this.uploadSaveData = false
