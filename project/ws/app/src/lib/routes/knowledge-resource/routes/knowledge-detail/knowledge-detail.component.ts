@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core'
 import { NSKnowledgeResource } from '../../models/knowledge-resource.models'
 import { ActivatedRoute } from '@angular/router'
 import { KnowledgeResourceService } from '../../services/knowledge-resource.service'
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { environment } from 'src/environments/environment'
 
 // tslint:disable
@@ -29,7 +28,6 @@ export class KnowledgeDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private kwResources: KnowledgeResourceService,
-    private sanitizer: DomSanitizer
     ) {
       // this.resource = _.get(this.route.snapshot, 'data.resource.data.responseData') || []
    }
@@ -59,13 +57,6 @@ export class KnowledgeDetailComponent implements OnInit {
         this.refresh()
       }
     })
-}
-
-getSafeUrl(url: string): SafeUrl | null {
-  if (url) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url)
-  }
-  return null
 }
 
 addBookmark(resource: NSKnowledgeResource.IResourceData) {

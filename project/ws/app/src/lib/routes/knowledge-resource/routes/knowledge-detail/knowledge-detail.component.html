@@ -116,41 +116,6 @@
             </mat-accordion>
         </ng-container>
     </ng-container>
-
-            <mat-accordion *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0">
-                <mat-expansion-panel  *ngFor="let item of resource.additionalProperties.krFiles | filter : searchText" class="padding-m mat-card margin-bottom-s w-full">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-
-                                <a class="mat-h3 margin-remove-bottom" i18n role="title"  *ngIf="item.url && item.fileType === 'jpg' || item.fileType === 'png' || item.fileType === 'PNG' || item.fileType === 'image/png' || item.fileType === 'JPG' || item.fileType === 'image/jpg'" >
-                                    <mat-icon class="align-bottom ws-mat-default-text margin-right-xs">image</mat-icon>{{ item.name }}
-                                </a>
-                                <a class="mat-h3 margin-remove-bottom" i18n role="title" *ngIf="item.url && item.fileType === 'pdf' || item.fileType === 'PDF' ">
-                                    <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs"> {{ item.name }}
-                                </a>
-                                <a class="mat-h3 margin-remove-bottom" i18n role="title"  *ngIf="item.url && item.fileType === 'doc' || item.fileType === 'DOC'" >
-                                    <mat-icon class="align-bottom ws-mat-default-text margin-right-xs">description</mat-icon>{{ item.name }}
-                                </a>
-                        </mat-panel-title>
-
-                    </mat-expansion-panel-header>
-                    <div class="mat-panel-body">
-                        <div *ngIf="item.url && item.url !== null && item.fileType === 'jpg' || item.fileType === 'png' || item.fileType === 'PNG' || item.fileType === 'image/png' || item.fileType === 'JPG' || item.fileType === 'image/jpg'">
-                            <img [src]="getSafeUrl(item.url)" class="resource_img" alt="{{ item.name }}" />
-                        </div>
-
-                        <div *ngIf="item.url && item.url !== '' && item.fileType === 'pdf'">
-                            <object [data]="getSafeUrl(item.url)" type="application/pdf" class="iframe iframe_box" height="800" width="100%"></object>
-                        </div>
-                        <div *ngIf="item.url && item.url !== '' && item.fileType === 'doc'">
-
-                             <a [href]="getSafeUrl(item.url)" class="mat-button-base blue-border button-outline button_box" download>Download attachment</a>
-
-                        </div>
-                    </div>
-                </mat-expansion-panel>
-            </mat-accordion>
-
         </div>
     </div>
 </div>
