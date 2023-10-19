@@ -200,6 +200,25 @@ export class GridLayoutComponent extends WidgetBaseComponent
     })
   }
 
+  showPRImage(rating: any) {
+    this.ratingList.forEach((r: any) => {
+      if (rating.value === r.value) {
+        r.showImage = true
+      }
+      // if (rating.value !== r.value && this.ratingGiven !== r) {
+      //   r.showImage = false
+      // }
+    })
+  }
+
+  unshowPRImage(rating: any) {
+    this.ratingList.forEach((r: any) => {
+      if (rating.value === r.value && this.ratingGiven !== r) {
+        r.showImage = false
+      }
+    })
+  }
+
   submitRating(value: any) {
     const currenttimestamp = new Date().getTime()
     const reqbody = {

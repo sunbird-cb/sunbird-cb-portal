@@ -28,9 +28,9 @@
       <span class="cstext mat-body-2">Not likely</span>
       <ul>
         <li *ngFor="let rating of ratingList; let i=index">
-          <div>
-            <span class="rating mat-body-2 cursor-pointer" (mouseenter)="toggleImg(rating)" *ngIf="!rating.showImage">{{rating.value}}</span>
-            <span class="rating-img cursor-pointer" *ngIf="rating.showImage"><img src="{{rating.image}}" alt="Rating {{i+1}}"></span>
+          <div (click)="toggleImg(rating)" (mouseout)="unshowPRImage(rating)" >
+            <div class="rating mat-body-2 cursor-pointer" (mouseenter)="showPRImage(rating)" *ngIf="!rating.showImage">{{rating.value}}</div>
+            <div class="rating-img cursor-pointer" *ngIf="rating.showImage"><img src="{{rating.image}}" alt="Rating {{i+1}}"></div>
           </div>
         </li>
       </ul>

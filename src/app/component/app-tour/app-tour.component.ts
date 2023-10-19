@@ -13,7 +13,7 @@ export class AppTourComponent {
   currentWindow: any
   videoProgressTime: number = 114;
   tourStatus: any = {visited: true, skipped: false}
-  profileDetails: any
+  //profileDetails: any
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     if (event.key === "Escape") {
       this.skipTour('','')
@@ -161,16 +161,13 @@ export class AppTourComponent {
     private events: EventService, private userProfileSvc: UserProfileService) {
     this.isMobile = this.utilitySvc.isMobile;
     this.raiseGetStartedStartTelemetry()
-    this.profileDetails = this.configSvc.unMappedUser.profileDetails
   }
 
   updateTourstatus(status: any) {
-    this.profileDetails.get_started_tour = status
     let reqUpdates = {
       request: {
         userId: this.configSvc.unMappedUser.id,
-        profileDetails:
-        this.profileDetails
+        profileDetails: {get_started_tour: status}
       }
     }
     this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(res => {
