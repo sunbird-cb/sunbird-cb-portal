@@ -48,7 +48,7 @@ export class LeftMenuComponent implements OnInit, OnDestroy {
       },
       { },
     )
-    if (tab.name == 'iGOT Karmayogi Tour') {
+    if (tab.name == "'Get Started' tour") {
       this.router.navigate(['/page/home'], { relativeTo: this.activatedRoute, queryParamsHandling: 'merge' })
       this.configSvc.updateTourGuideMethod(false)
     }

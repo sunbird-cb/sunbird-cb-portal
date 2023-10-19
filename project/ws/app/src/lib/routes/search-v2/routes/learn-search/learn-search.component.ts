@@ -199,6 +199,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
                 'Program',
                 'Standalone Assessment',
                 'Blended Program',
+                'Curated Program',
               ],
               status: ['Live'],
             },

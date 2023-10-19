@@ -3,7 +3,7 @@ import { Subscription, Observable, interval } from 'rxjs'
 import { FormGroup, FormControl, Validators, AbstractControl, ValidatorFn } from '@angular/forms'
 import { SignupService } from './signup.service'
 import { LoggerService, ConfigurationsService, NsInstanceConfig } from '@sunbird-cb/utils/src/public-api'
-import { debounceTime, distinctUntilChanged, startWith, map, pairwise } from 'rxjs/operators'
+import { startWith, map, pairwise } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import { MatSnackBar, MatDialog } from '@angular/material'
 import { ReCaptchaV3Service } from 'ng-recaptcha'
@@ -66,21 +66,21 @@ export function forbiddenNamesValidatorNonEmpty(optionsArray: any): ValidatorFn 
   }
 }
 
-export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    if (!optionsArray) {
-      return null
-      // tslint:disable-next-line: no-else-after-return
-    } else {
-      const index = optionsArray.findIndex((op: any) => {
-        // tslint:disable-next-line: prefer-template
-        // return new RegExp('^' + op.channel + '$').test(control.channel)
-        return op.name === control.value.name
-      })
-      return index < 0 ? { forbiddenNames: { value: control.value && control.value.name ? control.value.name : null} } : null
-    }
-  }
-}
+// export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn {
+//   return (control: AbstractControl): { [key: string]: any } | null => {
+//     if (!optionsArray) {
+//       return null
+//       // tslint:disable-next-line: no-else-after-return
+//     } else {
+//       const index = optionsArray.findIndex((op: any) => {
+//         // tslint:disable-next-line: prefer-template
+//         // return new RegExp('^' + op.channel + '$').test(control.channel)
+//         return op.name === control.value.name
+//       })
+//       return index < 0 ? { forbiddenNames: { value: control.value && control.value.name ? control.value.name : null} } : null
+//     }
+//   }
+// }
 
 @Component({
   selector: 'ws-public-signup',
@@ -97,7 +97,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   positionsOriginal!: []
   postions!: any
   // masterPositions!: Observable<any> | undefined
-  masterGroup!: Observable<any> | undefined
+  masterGroup: any
   telemetryConfig: NsInstanceConfig.ITelemetryConfig | null = null
   portalID = ''
   confirm = false
@@ -159,7 +159,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       // tslint:disable-next-line:max-line-length
       // position: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterPositions)]),
       // tslint:disable-next-line:max-line-length
-      group: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterGroup)]),
+      group: new FormControl('', [Validators.required]),
       // tslint:disable-next-line:max-line-length
       email: new FormControl(userData && userData.email || '', [Validators.required, Validators.pattern(this.emailPattern)]),
       // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
@@ -181,13 +181,14 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     this.positionsOriginal = this.activatedRoute.snapshot.data.positions.data || []
     if (this.activatedRoute.snapshot.data.group.data) {
       this.groupsOriginal = this.activatedRoute.snapshot.data.group.data.filter((ele:any) => ele !== 'Others')
+      this.masterGroup = this.groupsOriginal
     } else {
       this.groupsOriginal = []
     }
-    
+
     this.OrgsSearchChange()
     // this.onPositionsChange()
-    this.onGroupChange()
+    //this.onGroupChange()
     this.onPhoneChange()
     this.onEmailChange()
     if (instanceConfig) {
@@ -248,23 +249,23 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   //   })
   // }
 
-  onGroupChange() {
-    // tslint:disable-next-line: no-non-null-assertion
-    this.masterGroup = this.registrationForm.get('group')!.valueChanges
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        startWith(''),
-        map((value: any) => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
-        map((name: any) => name ? this.filterGroups(name) : this.groupsOriginal.slice())
-      )
+  // onGroupChange() {
+  //   // tslint:disable-next-line: no-non-null-assertion
+  //   this.masterGroup = this.registrationForm.get('group')!.valueChanges
+  //     .pipe(
+  //       debounceTime(500),
+  //       distinctUntilChanged(),
+  //       startWith(''),
+  //       map((value: any) => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+  //       map((name: any) => name ? this.filterGroups(name) : this.groupsOriginal.slice())
+  //     )
 
-    this.masterGroup.subscribe((event: any) => {
-      // tslint:disable-next-line: no-non-null-assertion
-      this.registrationForm.get('group')!.setValidators([Validators.required, forbiddenNamesValidatorPosition(event)])
-      this.registrationForm.updateValueAndValidity()
-    })
-  }
+  //   this.masterGroup.subscribe((event: any) => {
+  //     // tslint:disable-next-line: no-non-null-assertion
+  //     this.registrationForm.get('group')!.setValidators([Validators.required])
+  //     this.registrationForm.updateValueAndValidity()
+  //   })
+  // }
 
   filterOrgsSearch(orgname: string = '') {
       const filterValue = orgname.toLowerCase()
@@ -335,13 +336,13 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   //   return this.positionsOriginal
   // }
 
-  private filterGroups(name: string): any {
-    if (name) {
-      const filterValue = name.toLowerCase()
-      return this.groupsOriginal.filter((option: any) => option.toLowerCase().includes(filterValue))
-    }
-    return this.groupsOriginal
-  }
+  // private filterGroups(name: string): any {
+  //   if (name) {
+  //     const filterValue = name.toLowerCase()
+  //     return this.groupsOriginal.filter((option: any) => option.toLowerCase().includes(filterValue))
+  //   }
+  //   return this.groupsOriginal
+  // }
 
   onPhoneChange() {
     const ctrl = this.registrationForm.get('mobile')
@@ -412,7 +413,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   verifyOtp(otp: any) {
     // console.log(otp)
     const mob = this.registrationForm.get('mobile')
-    
+
     if (otp && otp.value) {
       if(otp && otp.value.length < 4) {
         this.snackBar.open('Please enter a valid OTP.')
@@ -482,7 +483,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     if (email && email.value && email.valid) {
       this.signupSvc.sendOtp(email.value, 'email').subscribe(() => {
         this.otpEmailSend = true
-        alert('An OTP has been sent to your email (valid for 15 minutes)')
+        alert('An OTP has been sent to your email address (valid for 15 minutes)')
         this.startCountDownEmail()
         // tslint:disable-next-line: align
       }, (error: any) => {
@@ -499,7 +500,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       this.signupSvc.resendOtp(email.value, 'email').subscribe((res: any) => {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpEmailSend = true
-          alert('An OTP has been sent to your email (valid for 15 minutes)')
+          alert('An OTP has been sent to your email address (valid for 15 minutes)')
           this.startCountDownEmail()
         }
         // tslint:disable-next-line: align

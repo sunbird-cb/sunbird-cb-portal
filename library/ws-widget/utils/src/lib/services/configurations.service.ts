@@ -71,6 +71,10 @@ export class ConfigurationsService {
   updateTourGuide = new BehaviorSubject(true)
   updateTourGuideObservable = this.updateTourGuide.asObservable()
 
+  // platform rating
+  updatePlatformRating = new BehaviorSubject({ bottom: '120px' })
+  updatePlatformRatingObservable$ = this.updatePlatformRating.asObservable()
+
   // Preference Related Values
   activeThemeObject: NsInstanceConfig.ITheme | null = null
   activeFontObject: NsInstanceConfig.IFontSize | null = null
@@ -106,5 +110,9 @@ export class ConfigurationsService {
   }
   updateTourGuideMethod(state: boolean) {
     this.updateTourGuide.next(state)
+  }
+
+  updatePlatformRatingMethod(state: any) {
+    this.updatePlatformRating.next(state)
   }
 }

@@ -98,6 +98,10 @@ export class GridLayoutComponent extends WidgetBaseComponent
       if (value) {
         if (localStorage.getItem('ratingformID')) {
           this.isNPSOpen = true
+
+          if (this.isNPSOpen) {
+            this.configSvc.updatePlatformRatingMethod({ bottom: '190px' })
+          }
           this.formID = localStorage.getItem('ratingformID')
           this.npsService.getFormData(this.formID).subscribe((resform: any) => {
             if (resform) {
@@ -183,6 +187,7 @@ export class GridLayoutComponent extends WidgetBaseComponent
       if (rating.value === r.value) {
         r.showImage = true
         this.ratingGiven = r
+        this.configSvc.updatePlatformRatingMethod({ bottom: '190px' })
         if (rating.value < 4) {
           this.phtext = 'How can we make it better for you next time?'
         } else  {
@@ -190,6 +195,25 @@ export class GridLayoutComponent extends WidgetBaseComponent
         }
         // console.log('ratingGiven', this.ratingGiven)
       } else {
+        r.showImage = false
+      }
+    })
+  }
+
+  showPRImage(rating: any) {
+    this.ratingList.forEach((r: any) => {
+      if (rating.value === r.value) {
+        r.showImage = true
+      }
+      // if (rating.value !== r.value && this.ratingGiven !== r) {
+      //   r.showImage = false
+      // }
+    })
+  }
+
+  unshowPRImage(rating: any) {
+    this.ratingList.forEach((r: any) => {
+      if (rating.value === r.value && this.ratingGiven !== r) {
         r.showImage = false
       }
     })
@@ -255,6 +279,7 @@ export class GridLayoutComponent extends WidgetBaseComponent
           this.npsService.deleteFeed(req).subscribe((res: any) => {
             if (res) {
               this.isNPSOpen = false
+              this.configSvc.updatePlatformRatingMethod({ bottom: '120px' })
               if (localStorage.getItem('ratingformID')) {
                 localStorage.removeItem('ratingformID')
               }
@@ -268,6 +293,7 @@ export class GridLayoutComponent extends WidgetBaseComponent
       })
     } else {
       this.isNPSOpen = false
+      this.configSvc.updatePlatformRatingMethod({ bottom: '120px' })
       if (localStorage.getItem('ratingformID')) {
         localStorage.removeItem('ratingformID')
       }
