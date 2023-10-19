@@ -324,7 +324,7 @@
                               aria-label="Category SC label">{{eCategory.SC}}</label>
 
                             <input type="radio" id="{{eCategory.ST}}" name="category" formControlName="category"
-                              [value]="eCategory.ST" i18n-aria-label ria-label="Category ST input">
+                              [value]="eCategory.ST" i18n-aria-label aria-label="Category ST input">
                             <label for="{{eCategory.ST}}" i18n-aria-label
                               aria-label="Category ST label">{{eCategory.ST}}</label>
                           </div>
@@ -559,7 +559,7 @@
                         aria-label="Get Karmayogi badge checkbox">
                         <label class="margin-left-xs margin-remove-bottom" i18n-aria-label
                           aria-label="Get Karmayogi badge checkbox label"  matTooltipPosition="right"
-                          matTooltip="You are eligible to get the Karmayogi badge after you successfully updated your Organisation, Industry, Designation, Country, Date of joining and Description in Professional details">
+                          matTooltip="After successfully updating your personal information and receiving approval from your MDO for your professional details, including Industry, Designation, Country, Date of Joining, and Description, you will be eligible to receive the Karmayogi badge.">
                           Get Karmayogi badge
                         </label>
                       </mat-checkbox>
@@ -872,7 +872,7 @@
                   <input type="radio" id="nonGovtOrg" name="isGovtOrg" formControlName="isGovtOrg" [value]="false">
                   <label for="nonGovtOrg">Non-Government Organisation</label>
                   <mat-icon class="info-icon" matTooltipPosition="right"
-                  matTooltip="You are eligible to get the Karmayogi badge after you successfully updated your Organisation, Industry, Designation, Country, Date of joining and Description."
+                  matTooltip="After successfully updating your personal information and receiving approval from your MDO for your professional details, including Industry, Designation, Country, Date of Joining, and Description, you will be eligible to receive the Karmayogi badge."
                   aria-label="">info</mat-icon>
                   <br>
                   <span class="txt" *ngIf="!isAllowed('isGovtOrg')">{{inReview}}</span>
@@ -1301,7 +1301,7 @@
           <mat-spinner [diameter]="30"></mat-spinner>
         </div>
         <button mat-raised-button type="submit" (click)="onSubmit(createUserForm)"
-          class="text-white btn-success btn-responsive">
+          class="text-white btn-success btn-responsive" [disabled]="createUserForm?.invalid || !isMobileVerified">
           <span class="text-white" i18n>
             Save Details
           </span>

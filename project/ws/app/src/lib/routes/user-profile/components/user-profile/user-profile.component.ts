@@ -1398,7 +1398,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   async onSubmit(form: any) {
-    console.log("createUserForm ", this.createUserForm.controls)
     this.uploadSaveData = true
     // DO some customization on the input data
     form.controls['knownLanguages'].value = this.selectedKnowLangs
