@@ -205,9 +205,9 @@ export class GridLayoutComponent extends WidgetBaseComponent
       if (rating.value === r.value) {
         r.showImage = true
       }
-      // if (rating.value !== r.value && this.ratingGiven !== r) {
-      //   r.showImage = false
-      // }
+      if (rating.value !== r.value && this.ratingGiven !== r) {
+        r.showImage = false
+      }
     })
   }
 
