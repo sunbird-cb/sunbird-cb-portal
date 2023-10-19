@@ -623,7 +623,38 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             this.content.completionPercentage = enrolledCourse.completionPercentage || 0
             this.content.completionStatus = enrolledCourse.status || 0
             // this.certificateDownloadTrigger(this.content.completionStatus, enrolledCourse.batchId)
-            this.getContinueLearningData(this.content.identifier, enrolledCourse.batchId)
+            if (this.content && this.content.cumulativeTracking) {
+              this.tocSvc.mapCompletionPercentageProgram(this.content, this.userEnrollmentList)
+              this.tocSvc.resumeData.subscribe((res: any) => {
+                this.resumeData = res
+              })
+              if (this.resumeData && this.content) {
+                let resumeDataV2: any
+
+                if (this.content.completionPercentage === 100) {
+                  resumeDataV2 = this.getResumeDataFromList('start')
+                } else {
+                  resumeDataV2 = this.getResumeDataFromList()
+                }
+                if (!resumeDataV2.mimeType) {
+                  resumeDataV2.mimeType = this.tocSvc.getMimeType(this.content, resumeDataV2.identifier)
+                }
+                this.resumeDataLink = viewerRouteGenerator(
+                  resumeDataV2.identifier,
+                  resumeDataV2.mimeType,
+                  this.isResource ? undefined : this.content.identifier,
+                  this.isResource ? undefined : this.content.contentType,
+                  this.forPreview,
+                  // this.content.primaryCategory
+                  'Learning Resource',
+                  this.getBatchId(),
+                  this.content.name,
+                )
+                this.actionSVC.setUpdateCompGroupO = this.resumeDataLink
+              }
+            } else {
+              this.getContinueLearningData(this.content.identifier, enrolledCourse.batchId)
+            }
             this.batchData = {
               content: [enrolledCourse.batch],
               enrolled: true,
@@ -639,10 +670,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                   queryParams: { batchId: this.getBatchId() },
                   queryParamsHandling: 'merge',
                 })
-            }
-            if (this.content && this.content.cumulativeTracking) {
-              this.tocSvc.mapCompletionPercentageProgram(this.content, this.userEnrollmentList)
-              this.getContinueLearningData(this.content.identifier, enrolledCourse.batchId)
             }
           } else {
             // It's understood that user is not already enrolled
@@ -1134,13 +1161,23 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       !(this.content && this.content.contentType === 'Resource' && !this.content.artifactUrl)
     )
   }
-  // private getResumeDataFromList() {
-  //   const lastItem = this.resumeData && this.resumeData.pop()
-  //   return {
-  //     identifier: lastItem.contentId,
-  //     mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,
-  //   }
-  // }
+  private getResumeDataFromList(type?: string) {
+    if (!type) {
+      // const lastItem = this.resumeData && this.resumeData.pop()
+      // tslint:disable-next-line:max-line-length
+      const lastItem = this.resumeData && this.resumeData.sort((a: any, b: any) => new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
+      return {
+        identifier: lastItem.contentId,
+        mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,
+      }
+    }
+    const firstItem = this.resumeData && this.resumeData.length && this.resumeData[0]
+    return {
+      identifier: firstItem.contentId,
+      mimeType: firstItem.progressdetails && firstItem.progressdetails.mimeType,
+    }
+  }
+
   private modifySensibleContentRating() {
     if (
       this.content &&
