@@ -186,11 +186,11 @@ TODO: edit option while preview Mode
                   </ng-container> -->
                   <ng-container *ngIf="!content.completionPercentage || content.completionPercentage < 100">
                     <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
-                      {{resumeData? "Resume" : "Start"}}
+                      {{resumeData || (content.completionPercentage < 100 && content.completionPercentage > 0)? "Resume" : "Start"}}
                     </ng-container>
                   </ng-container>
                   <ng-container *ngIf="content.completionPercentage === 100">
-                    {{resumeData? "Start again" : "Start"}}
+                    {{resumeData || content.completionPercentage === 100? "Start again" : "Start"}}
                   </ng-container>
                 </a>
                 <a *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" [routerLink]="firstResourceLink?.url"
