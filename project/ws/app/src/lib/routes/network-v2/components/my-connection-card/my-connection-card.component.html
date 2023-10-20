@@ -14,7 +14,7 @@
                 {{user?.employmentDetails?.departmentName}}
             </div>
             <div class="designation truncate ws-mat-black60-text" *ngIf="!user?.employmentDetails">
-                {{user?.channel}}
+                {{user?.rootOrg.orgName}}
             </div>
         </div>
     </a>
