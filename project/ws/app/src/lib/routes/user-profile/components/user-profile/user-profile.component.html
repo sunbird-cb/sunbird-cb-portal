@@ -553,16 +553,20 @@
                   </div>
 
                   <div class="input-wrapper margin-top-l">
-                    <div class="flex flex-middle">
+                    <div class="flex flex-1 flex-middle" [ngClass]="{ disable: !isAllowed('verifiedKarmayogi') }">
                       <mat-checkbox aria-label="Get Karmayogi badge" id="kb-badge" formControlName="verifiedKarmayogi" #verifiedKarmayogi
-                        [checked]="verifiedKarmayogi" (change)="verifiedKarmayogiCheck()" i18n-aria-label
+                        [checked]="karmayogiBadge" (change)="verifiedKarmayogiCheck()" i18n-aria-label
                         aria-label="Get Karmayogi badge checkbox">
                         <label class="margin-left-xs margin-remove-bottom" i18n-aria-label
                           aria-label="Get Karmayogi badge checkbox label"  matTooltipPosition="right"
-                          matTooltip="After successfully updating your personal information and receiving approval from your MDO for your professional details, including Industry, Designation, Country, Date of Joining, and Description, you will be eligible to receive the Karmayogi badge.">
-                          Get Karmayogi badge
+                          matTooltip="To earn the Karmayogi Badge, ensure that your professional details are updated. Once this information is verified by the MDO Admin, you will be eligible for the badge.">
+                          Earn your Karmayogi Badge today
                         </label>
                       </mat-checkbox>
+                    </div>
+                  </div>
+                  <div class="input-wrapper margin-top-l">
+                    <div class="flex flex-middle" [ngClass]="{ disable: !isAllowed('verifiedKarmayogi') }">
                       <span class="txt" *ngIf="!isAllowed('verifiedKarmayogi')">{{inReview}}</span>
                     </div>
                   </div>
@@ -871,9 +875,6 @@
                   <label for="govtOrg">Government Organisation</label>
                   <input type="radio" id="nonGovtOrg" name="isGovtOrg" formControlName="isGovtOrg" [value]="false">
                   <label for="nonGovtOrg">Non-Government Organisation</label>
-                  <mat-icon class="info-icon" matTooltipPosition="right"
-                  matTooltip="After successfully updating your personal information and receiving approval from your MDO for your professional details, including Industry, Designation, Country, Date of Joining, and Description, you will be eligible to receive the Karmayogi badge."
-                  aria-label="">info</mat-icon>
                   <br>
                   <span class="txt" *ngIf="!isAllowed('isGovtOrg')">{{inReview}}</span>
                 </div>

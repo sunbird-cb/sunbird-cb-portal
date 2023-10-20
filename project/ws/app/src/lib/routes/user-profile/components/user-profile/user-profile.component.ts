@@ -125,7 +125,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   degreefilteredOptions: INameField[] | undefined
   postDegreefilteredOptions: INameField[] | undefined
   disableVerifyBtn = false
-  verifiedKarmayogi = false
+  karmayogiBadge = false
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -194,7 +194,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       otherDetailsOfficeAddress: new FormControl('', []),
       otherDetailsOfficePinCode: new FormControl('', []),
       departmentName: new FormControl('', []),
-      verifiedKarmayogi: new FormControl(false, []),
+      verifiedKarmayogi: new FormControl(this.karmayogiBadge, []),
     })
 
   }
@@ -361,6 +361,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       if (res && res.result && res.result.data) {
         this.unApprovedField = _.get(res, 'result.data')
         // console.log('unApprovedField ', this.unApprovedField, res)
+        // if (this.unApprovedField.indexOf('verifiedKarmayogi') >= 0) {
+        //   this.karmayogiBadge = true
+        // }
       }
     })
   }
@@ -520,8 +523,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   verifiedKarmayogiCheck() {
-    this.verifiedKarmayogi = !this.verifiedKarmayogi
-    this.createUserForm.patchValue({verifiedKarmayogi: this.verifiedKarmayogi})
+    this.karmayogiBadge = !this.karmayogiBadge
+    this.createUserForm.patchValue({verifiedKarmayogi: this.karmayogiBadge})
   }
 
   private filterNationality(name: string): INation[] {
