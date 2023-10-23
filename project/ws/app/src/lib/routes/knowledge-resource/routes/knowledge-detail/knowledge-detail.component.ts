@@ -141,7 +141,10 @@ refresh() {
 
   getName(name: string) {
     const fName = name.split('content/frac/')[1]
-    return fName ? fName : name
+    if (fName) {
+      return fName.split(/_(.*)/s)[1]
+    }
+    return name
   }
 
   handleNavigate(url: any): void {
