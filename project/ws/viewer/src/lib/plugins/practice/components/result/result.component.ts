@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core'
 import { NsContent } from '@sunbird-cb/utils/src/public-api'
 import { NSPractice } from '../../practice.model'
+import {MatAccordion} from '@angular/material/expansion';
 
 @Component({
   selector: 'viewer-result',
@@ -15,8 +16,10 @@ export class ResultComponent implements OnChanges {
   @Input() quizResponse!: NSPractice.IQuizSubmitResponseV2
   @Output() userSelection = new EventEmitter<string>()
   @Output() fetchResult = new EventEmitter<string>()
+  @ViewChild(MatAccordion,{static: true}) accordion: MatAccordion | undefined;
   staticImage = '/assets/images/exam/practice-result.png'
   questionTYP = NsContent.EPrimaryCategory
+  selectedQuestionData: any
   constructor() {
   }
 
@@ -41,5 +44,9 @@ export class ResultComponent implements OnChanges {
 
   retryResult() {
     this.fetchResult.emit()
+  }
+  getQuestionCount(data: any){
+    debugger
+    this.selectedQuestionData = data
   }
 }

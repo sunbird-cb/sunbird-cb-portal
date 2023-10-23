@@ -20,6 +20,7 @@ import {
   MatButtonModule,
   MatProgressSpinnerModule,
   MatProgressBarModule,
+  MatExpansionModule
 } from '@angular/material'
 
 import {
@@ -56,6 +57,7 @@ import { MatchTheFollowingQuesComponent } from './components/question/mtf/mtf.co
     MatProgressBarModule,
     MatRadioModule,
     MatSidenavModule,
+    MatExpansionModule,
     MatTableModule,
     MatButtonModule,
     BtnFullscreenModule,

@@ -175,3 +175,13 @@
     word-break: break-word;
     white-space: initial;
 }
+.question-section {
+    opacity: 1;
+    color: rgba(0,0,0,0.87);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.12px;
+}
+.bg-gray-accordian {
+    background-color: rgba(0, 0, 0, 0.08) !important;
+}
