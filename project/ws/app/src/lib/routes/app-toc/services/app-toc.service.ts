@@ -576,20 +576,30 @@ export class AppTocService {
           }
         } else {
           if (content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
-            this.mapCompletionPercentage(content, this.resumeData)
-            // const foundParentContent = enrolmentList.find((el: any) => el.collectionId === content.identifier)
-            // const req = {
-            //   request: {
-            //     batchId: foundParentContent.batch.batchId,
-            //     userId: foundParentContent.userId,
-            //     courseId: foundParentContent.collectionId,
-            //     contentIds: [],
-            //     fields: [
-            //       'progressdetails',
-            //     ],
-            //   },
-            // }
-            // this.getProgressForCourse(req, content)
+            // this.mapCompletionPercentage(content, this.resumeData)
+            const foundParentContent = enrolmentList.find((el: any) => el.collectionId === content.identifier)
+            const req = {
+              request: {
+                batchId: foundParentContent.batch.batchId,
+                userId: foundParentContent.userId,
+                courseId: foundParentContent.collectionId,
+                contentIds: [],
+                fields: [
+                  'progressdetails',
+                ],
+              },
+            }
+            await this.fetchContentHistoryV2(req).toPromise().then((progressdata: any) => {
+              const data: any  = progressdata
+              if (data.result && data.result.contentList.length > 0) {
+                const completedCount = data.result.contentList.filter((ele: any) => ele.progress === 100)
+                totalCount = totalCount + completedCount.length
+                inprogressDataCheck = inprogressDataCheck ? inprogressDataCheck :  data.result.contentList
+                this.updateResumaData(inprogressDataCheck)
+                this.mapCompletionPercentage(parentChild, data.result.contentList)
+              }
+              return progressdata
+            })
           }
         }
       }
