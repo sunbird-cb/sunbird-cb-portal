@@ -189,7 +189,7 @@ TODO: edit option while preview Mode
                     </ng-container>
                   </ng-container>
                   <ng-container *ngIf="content.completionPercentage === 100">
-                    {{resumeData && content.completionPercentage === 100? "Start again" : "Start"}}
+                    {{resumeData || content.completionPercentage === 100? "Start again" : "Start"}}
                   </ng-container>
                 </a>
                 <a *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" [routerLink]="firstResourceLink?.url"
@@ -211,7 +211,7 @@ TODO: edit option while preview Mode
                   </ng-container>
                 </ng-container>
                 <ng-container *ngIf="content.completionPercentage === 100">
-                  {{resumeData && content.completionPercentage === 100? "Start again" : "Start"}}
+                  {{resumeData || content.completionPercentage === 100? "Start again" : "Start"}}
                 </ng-container>
               </a>
             </ng-container>
