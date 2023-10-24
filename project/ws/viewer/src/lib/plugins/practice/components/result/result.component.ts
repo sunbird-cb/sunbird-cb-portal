@@ -46,7 +46,6 @@ export class ResultComponent implements OnChanges {
     this.fetchResult.emit()
   }
   getQuestionCount(data: any){
-    debugger
     this.selectedQuestionData = data
   }
 }

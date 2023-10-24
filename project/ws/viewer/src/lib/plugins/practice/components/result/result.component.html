@@ -105,13 +105,18 @@
       <p class="question-section">{{selectedQuestionData.text}} </p>
       <div *ngIf="selectedQuestionData.children">
         <ng-container *ngFor="let question of selectedQuestionData.children;let i = index">
-          <ng-container >
+          <ng-container *ngIf="selectedQuestionData.type === question.result">
             <mat-accordion class="example-headers-align m-3">
-                  <mat-expansion-panel class="bg-gray-accordian">
+                  <mat-expansion-panel class="bg-gray-accordian" hideToggle="true"  #example>
                     <mat-expansion-panel-header>
                       <mat-panel-title>
-                        Question {{i+1}}
+                        <mat-panel-description class="panel-description">
+                          <p>Question {{i+1}}</p>
+                          <mat-icon *ngIf="!example.expanded">add</mat-icon>
+                          <mat-icon *ngIf="example.expanded">remove</mat-icon>
+                        </mat-panel-description>
                       </mat-panel-title>
+                       
                     </mat-expansion-panel-header>
                       <div>
                         <p>{{question.question}}</p>
@@ -126,14 +131,14 @@
   </div>
 </div>
 <ng-template #detail let-data="data" >
-  <mat-card class="flex max-card-w customcard margin-top-xs ws-mat-primary-tags" (click)="getQuestionCount(data)">
+  <mat-card class="flex max-card-w customcard cursor-pointer margin-top-xs ws-mat-primary-tags" (click)="getQuestionCount(data)">
     <mat-icon [style.color]="data.colorClass">{{data.icon}}</mat-icon>
     <span class="mat-body-2 margin-left-xs">{{data.text}}</span>
   </mat-card>
 </ng-template>
 
 <ng-template #testdetail let-data="data" >
-  <mat-card class="flex max-card-w customcard margin-top-xs ws-mat-primary-tags" (click)="getQuestionCount(data)">
+  <mat-card class="flex max-card-w customcard cursor-pointer margin-top-xs ws-mat-primary-tags" (click)="getQuestionCount(data)">
     <mat-icon [style.color]="data.colorClass" *ngIf="!data.isSVG">{{data.icon}}</mat-icon>
     <img *ngIf="data.isSVG" [style.color]="data.colorClass" [src]="data.icon" alt="Assessment" class="margin-right-xs">
     <span class="mat-body-2 margin-left-xs">{{data.text}}</span>
