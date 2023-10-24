@@ -234,7 +234,6 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
     return false
   }
   openCertificateDialog(certData: any) {
-    debugger
     const cet = certData
     this.dialog.open(CertificateDialogComponent, {
       // height: '400px',
