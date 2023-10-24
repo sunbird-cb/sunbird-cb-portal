@@ -2,17 +2,16 @@
 
     <form class="flex-1">
         <mat-form-field appearance="outline" class="autocomplete-form search_faq_form" color="primary" >
-          <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
-          <input  [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" type="search" class="ml-2" i18n-placeholder="search content"
-              [placeholder]="'Search'" i18-aria-label aria-label="Query" matInput />
+            <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+            <input  [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" type="search" class="ml-2" i18n-placeholder="search content" [placeholder]="'Search'" i18-aria-label aria-label="Query" matInput />
         </mat-form-field>
-      </form>
+    </form>
 
     <div *ngIf="resource" class="knowledge_box_full">
         <!-- <ws-app-knowledge-card [resource]="resource"></ws-app-knowledge-card> -->
         <div class="flex flex-col w-full">
             <mat-card  class="padding-m mat-card  margin-bottom-s w-full" role="contentinfo" tabindex="0">
-               <div class="flex flex-row">
+                <div class="flex flex-row">
                     <div class="flex flex-1">
                         <p class="mat-body-2 ws-mat-black60-text">
                             <span class="mdo_name margin-right-s" i18n>{{ resource?.source}}</span>
@@ -20,20 +19,26 @@
                         </p>
                     </div>
 
-                    <div class="flex flex-4 justify-items-end">
+                    <!-- <div class="flex flex-4 justify-items-end">
                         <a *ngIf="resource.bookmark==true; else noBookmarker" class="linkBtn">
-                            <mat-icon class="material-icons-outlined ws-mat-default-text"> bookmark</mat-icon>
+                            <mat-icon class="material-icons-outlined ws-mat-default-text">bookmark</mat-icon>
                         </a>
                         <ng-template #noBookmarker>
                             <a class="linkBtn">
-                                <mat-icon class="material-icons-outlined"> bookmark_border</mat-icon>
+                                <mat-icon class="material-icons-outlined">bookmark_border</mat-icon>
                             </a>
                         </ng-template>
-                    </div>
-               </div>
-                <mat-card-title><a class="mat-h4" i18n role="heading" [routerLink]="['/app/knowledge-resource/all', resource?.id, resource?.type]">{{ resource?.name }}</a></mat-card-title>
+                    </div> -->
+                </div>
 
-                <mat-card-subtitle><p class="mat-body-2 ws-mat-black60-text margin-bottom-s" i18n>{{ resource?.id }}</p></mat-card-subtitle>
+                <mat-card-title>
+                    <a class="mat-h4" i18n role="heading" [routerLink]="['/app/knowledge-resource/all', resource?.id, resource?.type]">{{ resource?.name }}</a>
+                </mat-card-title>
+
+                <mat-card-subtitle>
+                    <p class="mat-body-2 ws-mat-black60-text margin-bottom-s" i18n>{{ resource?.id }}</p>
+                </mat-card-subtitle>
+
                 <p class="mat-body-2 ws-mat-black60-text margin-bottom-s" i18n>
                     {{ resource?.description }}
                 </p>
@@ -46,76 +51,70 @@
                 {{ resource.additionalProperties.totalFiles.images }} //
                 {{ resource.additionalProperties.totalFiles.pdf }} // -->
                 <span class="attach_links margin-right-m" *ngIf="resource.additionalProperties.totalFiles.pdf || resource.additionalProperties.totalFiles.pdf > 0">
-                    <p class="mat-body-2" i18n>  <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs">
+                    <p class="mat-body-2" i18n>
+                        <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs">
                         {{ resource?.additionalProperties?.totalFiles?.pdf }}
-
                     </p>
-
                 </span>
 
                 <span class="attach_links margin-right-s" *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0">
                     <p class="mat-body-2">
-                        <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>
                         <span *ngFor="let item of resource.additionalProperties.krFiles; index as i">
-                            <a [href]="getUrl(item.url)" target="_blank" class="download-link margin-right-m">{{getName(item.name)}}</a>
+                            <div class="flex justify-start">
+                                <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>
+                                <a [href]="getUrl(item.url)" target="_blank" class="download-link margin-right-m">{{getName(item.name)}}</a>
+                            </div>
                         </span>
                     </p>
-
                 </span>
-
 
                 <span class="attach_links margin-right-m" *ngIf="resource.additionalProperties.totalFiles.images || resource.additionalProperties.totalFiles.images>0" >
-                    <p class="mat-body-2" i18n>  <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">image</mat-icon>
+                    <p class="mat-body-2" i18n>
+                        <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">image</mat-icon>
                         {{ resource?.additionalProperties?.totalFiles?.images }}
                     </p>
-
                 </span>
-                <span class="attach_links margin-right-m" *ngIf="resource.additionalProperties.totalFiles.doc || resource.additionalProperties.totalFiles.doc>0">
-                    <p class="mat-body-2" i18n>  <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">description</mat-icon>
 
+                <span class="attach_links margin-right-m" *ngIf="resource.additionalProperties.totalFiles.doc || resource.additionalProperties.totalFiles.doc>0">
+                    <p class="mat-body-2" i18n>
+                        <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">description</mat-icon>
                         {{ resource?.additionalProperties?.totalFiles?.doc }}
                     </p>
-
                 </span>
-
             </mat-card>
 
+            <ng-container *ngIf="resource.additionalProperties.URL && resource.additionalProperties.URL.length > 0 && resource.additionalProperties.URL !== []">
+                <ng-container  *ngFor="let item of resource.additionalProperties.URL | filter : searchText">           <!-- <div *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0"> -->
+                    <mat-accordion *ngIf="item !== '[]'">
+                        <mat-expansion-panel  class="padding-m mat-card margin-bottom-s w-full">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title class="flex justify-start">
+                                    <a class="flex mat-h3 margin-remove-bottom" i18n role="title">
+                                        <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>{{item.name}}
+                                    </a>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
 
-    <ng-container *ngIf="resource.additionalProperties.URL && resource.additionalProperties.URL.length > 0 && resource.additionalProperties.URL !== []">
+                            <div class="mat-panel-body">
+                                <div class="flex flex-row justify-between item_box ">
+                                    <div class="flex w-full">
+                                        <input type="text" readonly [value]="item.value" #userinput class="w-full url_value border-0">
+                                    </div>
+                                    <div class="flex flew-row margin-left-s">
+                                        <a class="flex items-center cursor-pointer" (click)="handleNavigate(item.value)">
+                                            <mat-icon class="align-bottom ws-mat-default-text margin-right-xs">open_in_new</mat-icon>
+                                        </a>
 
-        <ng-container  *ngFor="let item of resource.additionalProperties.URL | filter : searchText">           <!-- <div *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0"> -->
-            <mat-accordion *ngIf="item !== '[]'">
-                <mat-expansion-panel   class="padding-m mat-card margin-bottom-s w-full">
-
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            <a class="mat-h3  margin-remove-bottom" i18n role="title"><mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>{{item.name}} </a>
-
-                        </mat-panel-title>
-
-                    </mat-expansion-panel-header>
-                    <div class="mat-panel-body">
-                        <div class="flex flex-row justify-between item_box ">
-                             <div class="flex w-full">
-                                <input type="text" [value]="item.value" #userinput class="w-full url_value border-0">
-                             </div>
-                             <div class="flex flew-row margin-left-s">
-                                <a href="{{item.value}}" target="_blank" class="share_link">
-                                    <mat-icon class="align-bottom ws-mat-default-text margin-right-xs">open_in_new</mat-icon>
-                                 </a>
-
-                                 <a (click)="copyInputMessage(item.value)" class="share_link">
-                                     <mat-icon class="align-bottom ws-mat-default-text">content_copy</mat-icon>
-                                 </a>
-                             </div>
-
-                        </div>
-
-                    </div>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </ng-container>
-    </ng-container>
+                                        <a class="flex items-center cursor-pointer" (click)="copyInputMessage(item.value)" >
+                                            <mat-icon class="align-bottom ws-mat-default-text">content_copy</mat-icon>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </ng-container>
+            </ng-container>
         </div>
     </div>
 </div>
