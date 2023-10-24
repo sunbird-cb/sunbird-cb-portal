@@ -724,7 +724,6 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     if (section && section.identifier) {
       const secQues = _.filter(req.questions, q => q.section === section.identifier)
       _.each(secQues, sq => {
-        debugger
         switch (_.toLower(sq.questionType || '')) {
           case 'mcq-mca':
             const mcqMca: NSPractice.IMCQ_MCA = {

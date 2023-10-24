@@ -20,7 +20,7 @@ import {
   MatButtonModule,
   MatProgressSpinnerModule,
   MatProgressBarModule,
-  MatExpansionModule
+  MatExpansionModule,
 } from '@angular/material'
 
 import {
