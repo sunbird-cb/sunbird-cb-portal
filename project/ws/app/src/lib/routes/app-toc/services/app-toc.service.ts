@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { Data } from '@angular/router'
 import { Subject, Observable, EMPTY, Subscription, BehaviorSubject } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
-import { NsContent, NsContentConstants } from '@sunbird-cb/collection'
+import { NsContent, NsContentConstants, WidgetContentService } from '@sunbird-cb/collection'
 import { NsAppToc, NsCohorts } from '../models/app-toc.model'
 import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 // tslint:disable-next-line
@@ -55,9 +55,7 @@ export class AppTocService {
   public serverDate = new BehaviorSubject('')
   currentServerDate = this.serverDate.asObservable()
 
-  inprogressData: any = []
-
-  constructor(private http: HttpClient, private configSvc: ConfigurationsService) { }
+  constructor(private http: HttpClient, private configSvc: ConfigurationsService, private widgetSvc: WidgetContentService) { }
 
   get subtitleOnBanners(): boolean {
     return this.showSubtitleOnBanners
@@ -508,17 +506,20 @@ export class AppTocService {
   async mapCompletionPercentageProgram(content: NsContent.IContent | null,  enrolmentList: any) {
     let totalCount = 0
     let leafnodeCount = 0
-    this.inprogressData = []
+    let firstUncompleteCourse: any = ''
+    let inprogressDataCheck: any = ''
     if (content && content.children) {
-      leafnodeCount = content.children.length
+      leafnodeCount = content.leafNodesCount
       for (let i = 0; i < content.children.length; i += 1) {
       // content.children.forEach(async (parentChild,index) => {
         const parentChild = content.children[i]
         if (parentChild.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
           const foundContent = enrolmentList.find((el: any) => el.collectionId === parentChild.identifier)
-          totalCount = foundContent && foundContent.completionPercentage ? totalCount + foundContent.completionPercentage : totalCount + 0
-          content.completionPercentage = Math.round(totalCount / leafnodeCount)
-          if (foundContent && foundContent.completionPercentage === 100) {
+          // tslint:disable-next-line: max-line-length
+          // totalCount = foundContent && foundContent.completionPercentage ? totalCount + foundContent.completionPercentage : totalCount + 0
+          // content.completionPercentage = Math.round(totalCount / leafnodeCount)
+          if (foundContent.completionPercentage === 100) {
+            totalCount = totalCount += parentChild.leafNodesCount
             if (foundContent.issuedCertificates.length > 0) {
               const certId: any = foundContent.issuedCertificates[0].identifier
               const certData: any = await this.dowonloadCertificate(certId).toPromise().catch(_error => {})
@@ -539,13 +540,36 @@ export class AppTocService {
                 ],
               },
             }
-            // await this.getProgressForChildCourse(req, parentChild)
+            firstUncompleteCourse = (parentChild.completionPercentage === 0 || !parentChild.completionPercentage) &&
+            !firstUncompleteCourse ? parentChild : firstUncompleteCourse
+            inprogressDataCheck = inprogressDataCheck
             await this.fetchContentHistoryV2(req).toPromise().then((progressdata: any) => {
               const data: any  = progressdata
               if (data.result && data.result.contentList.length > 0) {
-                this.inprogressData = this.inprogressData.length > 0 ? this.inprogressData : data.result.contentList
+                const completedCount = data.result.contentList.filter((ele: any) => ele.progress === 100)
+                totalCount = totalCount + completedCount.length
+                inprogressDataCheck = inprogressDataCheck ? inprogressDataCheck :  data.result.contentList
+                this.updateResumaData(inprogressDataCheck)
                 this.mapCompletionPercentage(parentChild, data.result.contentList)
-                this.updateResumaData(this.inprogressData)
+              } else {
+                if (firstUncompleteCourse) {
+                  const firstChildData = this.widgetSvc.getFirstChildInHierarchy(firstUncompleteCourse)
+                  const childEnrollmentData = enrolmentList.find((el: any) =>
+                  el.collectionId === firstUncompleteCourse.identifier)
+                  const resumeData = [{
+                    contentId: firstChildData.identifier,
+                    batchId: childEnrollmentData.batchId,
+                    completedCount: 1,
+                    completionPercentage: 0.0,
+                    progress: 0,
+                    viewCount: 1,
+                    courseId: childEnrollmentData.courseId,
+                    collectionId: childEnrollmentData.courseId,
+                    status: 1,
+                  }]
+                  inprogressDataCheck = inprogressDataCheck ? inprogressDataCheck : resumeData
+                  this.updateResumaData(inprogressDataCheck)
+                }
               }
               return progressdata
             })
@@ -565,9 +589,16 @@ export class AppTocService {
             //     ],
             //   },
             // }
-            // this.getProgressForCourse(req, child)
+            // this.getProgressForCourse(req, content)
           }
         }
+      }
+
+      const parentContent = enrolmentList.find((el: any) => el.collectionId === content.identifier)
+      if (!parentContent.completionPercentage) {
+        content.completionPercentage = Math.round((totalCount / leafnodeCount) * 100)
+      } else {
+        content.completionPercentage = parentContent.completionPercentage
       }
       // })
     }
@@ -576,11 +607,8 @@ export class AppTocService {
   // async getProgressForChildCourse(request: any, content: any) {
   //  const data: any =   await this.fetchContentHistoryV2(request).toPromise().catch(_error => {})
   //   if (data.result && data.result.contentList.length > 0) {
-  //     console.log(data.result.contentList,'data.result.contentList')
-  //     this.inprogressData = this.inprogressData.length > 0 ? this.inprogressData : data.result.contentList
   //     this.mapCompletionPercentage(content, data.result.contentList)
-  //     this.updateResumaData(this.inprogressData)
-  //   }
+  // }
   // }
 
   mapCompletionChildPercentageProgram(course: any) {
