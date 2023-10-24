@@ -281,6 +281,78 @@
   }
 }
 
+/*   smaller mobile screen view css */
+@media only screen and (max-width : 419px) {
+ // for nps 
+ .nps-footer {
+  bottom: 8vh !important;
+
+  .center-box {
+    font-size: 12px !important;
+    padding: 0 0 10px 0 !important;
+  }
+
+  .rating-div {
+    .cstext {
+      font: 400 8px/12px Helvetica !important;
+      display: inline-block !important;
+      width: 40px !important;
+      vertical-align: middle !important;
+    }
+  }
+
+  ul {
+    margin: 0 !important;
+    li {
+      margin: 0 5px !important;
+    }
+    .rating {
+      width: 26px !important;
+      height: 26px !important;
+      line-height: 1.8 !important;
+    }
+    .rating-img {
+      width: 26px !important;
+      height: 26px !important;
+
+      img {
+        width: 26px !important;
+        height: 26px !important;
+      }
+    }
+  }
+
+  .reviewbox {
+    width: 80% !important;
+    font: 400 12px/18px Lato !important;
+  }
+
+  textarea::placeholder {
+    color: rgba(0, 0, 0, 0.4) !important;
+    font: 400 12px/18px Lato !important;
+  }
+
+  .mat-stroked-button.mat-button-base {
+    width: 84% !important;
+  }
+
+  .karmasahayogi {
+    top: -15.8vh !important;
+    width: 80px !important;
+    right: 42% !important;
+  }
+
+  .ratingtitle {
+    font: 400 14px/21px Helvetica !important;
+    padding: 0 18% !important;
+  }
+
+  .thankyou-text {
+    padding: 2% 12% !important;
+  }
+}
+}
+
 /*   tab view css */
 @media only screen and (max-width : 768px) {
   .updatetitle {
@@ -419,8 +491,8 @@
       line-height: 0 !important;
     }
   }
-
-
+}
+@media only screen and (min-width : 420px) and (max-width : 768px) {
   // for nps 
   .nps-footer {
     bottom: 8vh !important;
@@ -487,6 +559,14 @@
   }
 }
 
+@media only screen and (min-width : 420px) {
+  .nps-footer {
+    ul {
+       margin: 0 1em !important;
+    }
+  }
+}
+
 .nps-footer {
   min-height: 125px !important;
   position: fixed;
@@ -517,7 +597,6 @@
   ul {
     list-style-type: none;
     display: inline-flex;
-    margin: 0 1em !important;
     padding: 0;
     li {
       display: inline-flex;

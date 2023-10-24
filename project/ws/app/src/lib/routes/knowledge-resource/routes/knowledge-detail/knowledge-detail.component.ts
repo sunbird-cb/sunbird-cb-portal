@@ -15,6 +15,7 @@ import _ from 'lodash'
   // tslint:disable-next-line
   host: { class: 'flex flex-1 overflow-hidden' },
 })
+
 export class KnowledgeDetailComponent implements OnInit {
   resource!: any
   type = 'KNOWLEDGERESOURCE'
@@ -136,11 +137,18 @@ refresh() {
       return `https://${this.environment.sitePath}/content-store/content/frac/${path}`
     }
     return url
-   }
+  }
 
-   getName(name: string) {
+  getName(name: string) {
     const fName = name.split('content/frac/')[1]
-    return fName ? fName : name
-   }
+    if (fName) {
+      return fName.split(/_(.*)/s)[1]
+    }
+    return name
+  }
+
+  handleNavigate(url: any): void {
+    window.open(url, '_blank');
+  }
 
 }
