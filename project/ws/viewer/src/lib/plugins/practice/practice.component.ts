@@ -724,10 +724,12 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     if (section && section.identifier) {
       const secQues = _.filter(req.questions, q => q.section === section.identifier)
       _.each(secQues, sq => {
+        debugger
         switch (_.toLower(sq.questionType || '')) {
           case 'mcq-mca':
             const mcqMca: NSPractice.IMCQ_MCA = {
               identifier: sq.questionId,
+              question: sq.question,
               mimeType: NsContent.EMimeTypes.QUESTION,
               objectType: 'Question',
               primaryCategory: NsContent.EPrimaryCategory.MULTIPLE_CHOICE_QUESTION,
@@ -750,6 +752,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               identifier: sq.questionId,
               mimeType: NsContent.EMimeTypes.QUESTION,
               objectType: 'Question',
+              question: sq.question,
               primaryCategory: NsContent.EPrimaryCategory.SINGLE_CHOICE_QUESTION,
               qType: 'MCQ-SCA',
               editorState: {
@@ -770,6 +773,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               identifier: sq.questionId,
               mimeType: NsContent.EMimeTypes.QUESTION,
               objectType: 'Question',
+              question: sq.question,
               primaryCategory: NsContent.EPrimaryCategory.FTB_QUESTION,
               qType: 'FTB',
               editorState: {
@@ -796,6 +800,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               identifier: sq.questionId,
               mimeType: NsContent.EMimeTypes.QUESTION,
               objectType: 'Question',
+              question: sq.question,
               primaryCategory: NsContent.EPrimaryCategory.MTF_QUESTION,
               qType: 'MTF',
               editorState: {

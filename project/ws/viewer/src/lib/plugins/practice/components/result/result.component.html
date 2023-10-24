@@ -59,25 +59,31 @@
             <mat-card-content class="flex flex-1 flex-column">
               <ng-container *ngFor="let _result of ['correct','inCorrect','incorrect','blank']">
                 <ng-container *ngIf="_parts[_result]">
-                  <ng-container *ngIf="_result == 'correct'" [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{
+                  <ng-container *ngIf="_result == 'correct'" [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{data: {
                 icon: 'done',
                 isSVG: false,
                 colorClass: 'green',
-                text: _parts[_result] +' Correct'
+                text: _parts[_result] +' Correct',
+                type: _result,
+                children:_parts['children']}
               }"></ng-container>
                   <ng-container *ngIf="_result === 'inCorrect' || _result ===  'incorrect'" [ngTemplateOutlet]="detail"
-                    [ngTemplateOutletContext]="{
+                    [ngTemplateOutletContext]="{ data:{
                 icon: 'close',
                 isSVG: false,
                 colorClass: 'red',
-                text: _parts[_result] + ' incorrect'
-              }"></ng-container>
-                  <ng-container *ngIf="_result == 'blank'" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{
+                text: _parts[_result] + ' incorrect',
+                type: _result,
+                children:_parts['children']
+              }}"></ng-container>
+                  <ng-container *ngIf="_result == 'blank'" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{data:{
                 icon: 'close',
                 isSVG: false,
                 colorClass: 'red',
-                text: _parts[_result] + ' not Attempted'
-              }"></ng-container>
+                text: _parts[_result] + ' not Attempted',
+                type: _result,
+                children:_parts['children']
+              }}"></ng-container>
                 </ng-container>
               </ng-container>
             </mat-card-content>
@@ -94,20 +100,48 @@
       </div>
     </ng-container>
   </div>
-  <div class="flex flex-1 blank_box"></div>
+  <div class="flex flex-1 blank_box">
+    <div class="p-4 w-full" *ngIf="selectedQuestionData">
+      <p class="question-section">{{selectedQuestionData.text}} </p>
+      <div *ngIf="selectedQuestionData.children">
+        <ng-container *ngFor="let question of selectedQuestionData.children;let i = index">
+          <ng-container *ngIf="selectedQuestionData.type === question.result">
+            <mat-accordion class="example-headers-align m-3">
+                  <mat-expansion-panel class="bg-gray-accordian" hideToggle="true"  #example>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        <mat-panel-description class="panel-description">
+                          <p>Question {{i+1}}</p>
+                          <mat-icon *ngIf="!example.expanded">add</mat-icon>
+                          <mat-icon *ngIf="example.expanded">remove</mat-icon>
+                        </mat-panel-description>
+                      </mat-panel-title>
+                       
+                    </mat-expansion-panel-header>
+                      <div>
+                        <p>{{question.question}}</p>
+                      </div>
+                  </mat-expansion-panel>
+            </mat-accordion>
+
+        </ng-container>
+      </ng-container>
+      </div>
+    </div>
+  </div>
 </div>
-<ng-template #detail let-icon="icon" let-text="text" let-colorClass='colorClass'>
-  <mat-card class="flex max-card-w customcard margin-top-xs ws-mat-primary-tags">
-    <mat-icon [style.color]="colorClass">{{icon}}</mat-icon>
-    <span class="mat-body-2 margin-left-xs">{{text}}</span>
+<ng-template #detail let-data="data" >
+  <mat-card class="flex max-card-w customcard cursor-pointer margin-top-xs ws-mat-primary-tags" (click)="getQuestionCount(data)">
+    <mat-icon [style.color]="data.colorClass">{{data.icon}}</mat-icon>
+    <span class="mat-body-2 margin-left-xs">{{data.text}}</span>
   </mat-card>
 </ng-template>
 
-<ng-template #testdetail let-icon="icon" let-text="text" let-isSVG="isSVG" let-colorClass='colorClass'>
-  <mat-card class="flex max-card-w customcard margin-top-xs ws-mat-primary-tags">
-    <mat-icon [style.color]="colorClass" *ngIf="!isSVG">{{icon}}</mat-icon>
-    <img *ngIf="isSVG" [style.color]="colorClass" [src]="icon" alt="Assessment" class="margin-right-xs">
-    <span class="mat-body-2 margin-left-xs">{{text}}</span>
+<ng-template #testdetail let-data="data" >
+  <mat-card class="flex max-card-w customcard cursor-pointer margin-top-xs ws-mat-primary-tags" (click)="getQuestionCount(data)">
+    <mat-icon [style.color]="data.colorClass" *ngIf="!data.isSVG">{{data.icon}}</mat-icon>
+    <img *ngIf="data.isSVG" [style.color]="data.colorClass" [src]="data.icon" alt="Assessment" class="margin-right-xs">
+    <span class="mat-body-2 margin-left-xs">{{data.text}}</span>
   </mat-card>
 </ng-template>
 
