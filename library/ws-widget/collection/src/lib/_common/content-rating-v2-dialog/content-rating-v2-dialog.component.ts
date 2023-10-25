@@ -37,6 +37,7 @@ export class ContentRatingV2DialogComponent implements OnInit {
     this.feedbackForm = new FormGroup({
       review: new FormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
       rating: new FormControl(0, []),
+      recommend: new FormControl(false)
     })
   }
 
@@ -94,7 +95,9 @@ export class ContentRatingV2DialogComponent implements OnInit {
         activityType: this.data.content.primaryCategory || '',
         rating: this.userRating || 0,
         ...(feedbackForm.value.review && { review: feedbackForm.value.review }),
-      }
+        recommend: feedbackForm.value.recommend || false,
+      };
+      
       this.ratingSvc.addOrUpdateRating(req).subscribe(
         (_res: any) =>  {
           this.raiseFeedbackTelemetry(feedbackForm)
