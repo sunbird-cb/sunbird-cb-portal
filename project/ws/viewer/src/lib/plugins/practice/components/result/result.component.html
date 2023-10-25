@@ -131,17 +131,23 @@
   </div>
 </div>
 <ng-template #detail let-data="data" >
-  <mat-card class="flex max-card-w customcard cursor-pointer margin-top-xs ws-mat-primary-tags" (click)="getQuestionCount(data)">
-    <mat-icon [style.color]="data.colorClass">{{data.icon}}</mat-icon>
-    <span class="mat-body-2 margin-left-xs">{{data.text}}</span>
+  <mat-card class="flex max-card-w customcard flex-jc-space-between cursor-pointer margin-top-xs ws-mat-primary-tags" (click)="getQuestionCount(data)">
+    <div class="flex">
+      <mat-icon [style.color]="data.colorClass">{{data.icon}}</mat-icon>
+      <span class="mat-body-2 margin-left-xs">{{data.text}}</span>
+    </div>
+    <mat-icon >chevron_right</mat-icon>
   </mat-card>
 </ng-template>
 
 <ng-template #testdetail let-data="data" >
-  <mat-card class="flex max-card-w customcard cursor-pointer margin-top-xs ws-mat-primary-tags" (click)="getQuestionCount(data)">
-    <mat-icon [style.color]="data.colorClass" *ngIf="!data.isSVG">{{data.icon}}</mat-icon>
-    <img *ngIf="data.isSVG" [style.color]="data.colorClass" [src]="data.icon" alt="Assessment" class="margin-right-xs">
-    <span class="mat-body-2 margin-left-xs">{{data.text}}</span>
+  <mat-card class="flex max-card-w customcard flex-jc-space-between cursor-pointer margin-top-xs ws-mat-primary-tags" (click)="getQuestionCount(data)">
+    <div class="flex">
+      <mat-icon [style.color]="data.colorClass" *ngIf="!data.isSVG">{{data.icon}}</mat-icon>
+      <img *ngIf="data.isSVG" [style.color]="data.colorClass" [src]="data.icon" alt="Assessment" class="margin-right-xs">
+      <span class="mat-body-2 margin-left-xs">{{data.text}}</span>
+    </div>
+    <mat-icon >chevron_right</mat-icon>
   </mat-card>
 </ng-template>
 
