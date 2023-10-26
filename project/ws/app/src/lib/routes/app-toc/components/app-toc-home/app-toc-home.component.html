@@ -489,7 +489,7 @@ TODO: edit option while preview Mode
                 {{tocConfig?.atAGlance?.batchDuration?.displayName}}
               </h3>
               <h3 class="item-value width-expand">
-                {{ getProgramDuration(content?.programDuration) }}
+                {{ getProgramDuration(selectedBatchData?.content[0]) }}
               </h3>
             </div>
             <div class="info-item" *ngIf="tocConfig?.atAGlance?.batchSize?.enabled && selectedBatchData?.content[0]?.batchAttributes?.currentBatchSize">
