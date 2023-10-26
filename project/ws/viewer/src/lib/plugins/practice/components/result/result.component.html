@@ -3,16 +3,29 @@
     <div class="flex percent-div">
       <div class="flex flex-1 flex-column flex-center center">
         <ng-container *ngIf="questionTYP.FINAL_ASSESSMENT === quizCategory && quizResponse && !quizResponse?.isInProgress">
-          <mat-icon *ngIf="isPassed" class="ws-mat-green-2-text transform15 margin-top-m">check_circle</mat-icon>
+          <!-- <mat-icon *ngIf="isPassed" class="ws-mat-green-2-text transform15 margin-top-m">check_circle</mat-icon>
           <mat-icon *ngIf="!isPassed" class="ws-mat-red-text transform15 margin-top-m">highlight_off</mat-icon>
           <span *ngIf="isPassed" class="mat-title ws-mat-black60-text margin-top-s">{{levelText || 'Passed'}}</span>
           <span *ngIf="!isPassed" class="mat-title ws-mat-black60-text margin-top-s">{{levelText || 'Failed'}}</span>
           <span class="mat-heading-1 ws-mat-default-text">{{(percentage || 0) | number: '1.2-2'}}%</span>
-          <span class="mat-body-1 ws-mat-black60-text">your score</span>
+          <span class="mat-body-1 ws-mat-black60-text">your score</span> -->
+
+          <div *ngIf="isPassed" class="msg-box">
+            <mat-icon *ngIf="isPassed" class="ws-mat-green-2-text msg-icon transform15 margin-top-m">check_circle</mat-icon>
+            <span class="mat-body-2 padding-s text-block">Hurray!</span>
+            <span class="mat-body-2 ws-mat-black60-text text-block attempt-text">You have aced the assessment, with flying colours.</span>
+          </div>
+          <div *ngIf="!isPassed" class="msg-box">
+            <mat-icon *ngIf="!isPassed" class="ws-mat-red-text msg-icon transform15 margin-top-m">highlight_off</mat-icon>
+            <span class="mat-body-2 padding-s text-block">No worries!</span>
+            <span class="mat-body-2 ws-mat-black60-text text-block attempt-text">Your next try is a chance to do even better.</span>
+          </div>
         </ng-container>
         <ng-container *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory">
           <mat-icon class="ws-mat-green-2-text transform15 margin-top-m">check_box</mat-icon>
-          <span class="mat-title ws-mat-black60-text margin-top-s padding-s attempt-text">{{'Attempted Successfully!!'}}</span>
+          <!-- <span class="mat-title ws-mat-black60-text margin-top-s padding-s attempt-text">{{'Attempted Successfully!!'}}</span> -->
+          <span class="mat-body-2 padding-s attempt-text text-block">{{'Well done!'}}</span>
+          <span class="mat-title mat-body-2 ws-mat-black60-text padding-s attempt-text text-block">{{'You have successfully attempted.'}}</span>
         </ng-container>
 
       </div>
@@ -23,7 +36,7 @@
     <div class="flex flex-1 flex-column flex-wrap margin-top-m">
       <ng-container *ngIf="!(quizResponse)">
         <div class="flex flex-1 flex-center text-center flex-middle">
-          <span class="mat-heading" i18n>We are calculating!! ....</span>
+          <span class="mat-heading" i18n>Be patient please, while we calculate your result!</span>
           <mat-spinner></mat-spinner>
         </div>
       </ng-container>
@@ -53,8 +66,9 @@
           <mat-card *ngIf="_parts" class="ws-mat-accent-border box-c result_box">
             <mat-card-title>
               <span class="mat-subheading-1" *ngIf="!isOnlySection">{{'Section ' + (i+1)}}</span>
-              <span class="mat-subheading-1" *ngIf="isOnlySection">{{'Default Section'}}</span>
-              <span class="mat-subheading-2 block ws-mat-black60-text">{{'Insights'}}</span>
+              <!-- <span class="mat-subheading-1" *ngIf="isOnlySection">{{'Default Section'}}</span> -->
+              <!-- <span class="mat-subheading-2 block ws-mat-black60-text">{{'Insights'}}</span> -->
+              <span class="mat-subheading-1" *ngIf="isOnlySection">{{'Your Performance Summary'}}</span> 
             </mat-card-title>
             <mat-card-content class="flex flex-1 flex-column">
               <ng-container *ngFor="let _result of ['correct','inCorrect','incorrect','blank']">
@@ -70,13 +84,13 @@
                 icon: 'close',
                 isSVG: false,
                 colorClass: 'red',
-                text: _parts[_result] + ' incorrect'
+                text: _parts[_result] + ' Incorrect'
               }"></ng-container>
                   <ng-container *ngIf="_result == 'blank'" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{
                 icon: 'close',
                 isSVG: false,
                 colorClass: 'red',
-                text: _parts[_result] + ' not Attempted'
+                text: _parts[_result] + ' Not Attempted'
               }"></ng-container>
                 </ng-container>
               </ng-container>

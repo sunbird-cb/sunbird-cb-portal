@@ -127,7 +127,7 @@ mat-divider {
 //   padding: 0px !important;
 // }
 .certificate_box {
-  height: 65px;
+  height: 75px;
   border-radius: 4px 4px;
   position: relative;
   width: 100%;
@@ -154,11 +154,12 @@ img.certificate_banner {
 }
 
 p.certificate_text {
-  font-weight: 700!important;
+  font-weight: 600!important;
   z-index: 99;
-  margin-top: -36px;
+  margin-top: -70px;
   color: #fff;
   position: relative;
+  line-height: 1.2;
 }
 
 .blue-border{
@@ -423,4 +424,11 @@ p.certificate_text {
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.5;
+}
+.certificate-text {  
+  font-size: 14px;
+  line-height: 1.6;
+  a {
+    color: #0074b6;
+  }
 }

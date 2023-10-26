@@ -14,6 +14,9 @@
 
 .exam_image {
     width: 100%!important;
+    position: relative;
+    z-index: 1;
+    object-fit: fill;
     @include breakpoint-xs {
        display: none;
     }
@@ -111,5 +114,15 @@
     border-top-color: #000000;
     animation: spinner .8s linear infinite;
   }
+  .banner-text{
+    position: absolute;
+    z-index: 10;
+    width: 16%;
+    top: 40%;
+    left: 6%;
+    margin-top: -15px;
+    font-weight: 600;
+  }
+  
 
 

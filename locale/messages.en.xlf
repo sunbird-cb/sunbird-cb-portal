@@ -11346,7 +11346,7 @@
       </trans-unit>
       <trans-unit id="e6c3b6c8eed3b3b4d08bbcfd3e6c6f8281b85bd7" datatype="html">
         <source>
-    You have not answered all the questions! Do you still want to submit?
+    Oops! It looks like a few questions were missed; are you sure you want to submit?
   </source>
         <context-group purpose="location">
           <context context-type="sourcefile">project/ws/viewer/src/lib/plugins/practice/components/submit-quiz-dialog/submit-quiz-dialog.component.html</context>
@@ -11536,7 +11536,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="625f025063ada70abe9d0c56a6bd9dbe7defa672" datatype="html">
-        <source>We are calculating!! ....</source>
+        <source>Be patient please, while we calculate your result!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">project/ws/viewer/src/lib/plugins/practice/components/result/result.component.html</context>
           <context context-type="linenumber">52</context>

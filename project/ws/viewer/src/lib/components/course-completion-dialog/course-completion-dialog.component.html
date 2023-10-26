@@ -16,17 +16,19 @@
 <mat-card class="no-shadow" *ngIf="!showRating">
 
   <mat-card-title class="px-5 pb-5">
-      <span i18n>Congratulations for completing the {{this.courseName}}</span>
+      <!-- <span i18n>Congratulations for completing the {{this.courseName}}</span> -->
+      <span i18n>Congratulations!</span>
   </mat-card-title>
   <mat-card-content class="px-5">
-    <span>You have completed the course successfully. Please check back in some time to view your
-      certificate of completion.</span>
+    <!-- <span>You have completed the course successfully. Please check back in some time to view your
+      certificate of completion.</span> -->
+    <span>Your certificate of completion will be available in sometime.</span>
   </mat-card-content>
 
   <mat-card-content class="px-5">
-    <span>Please take a moment to <span class="ws-mat-default-text cursor-pointer" (click)="openRatingDialog()" i18n><b>rate this course</b></span> and tell us about your experience.</span>
+    <!-- <span>Please take a moment to <span class="ws-mat-default-text cursor-pointer" (click)="openRatingDialog()" i18n><b>rate this course</b></span> and tell us about your experience.</span> -->
+    <span>Please take a moment to <span class="ws-mat-default-text cursor-pointer" (click)="openRatingDialog()" i18n><b>rate this course</b></span> and tell us about your experience in the &#39;Discussion&#39; section.</span>
   </mat-card-content>
-  
   <mat-divider inset></mat-divider>
   <mat-card-actions class="flex flex-row-reverse">
     <button mat-button  type="button"

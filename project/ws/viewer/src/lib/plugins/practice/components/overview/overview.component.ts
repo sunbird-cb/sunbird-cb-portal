@@ -18,7 +18,8 @@ export class OverviewComponent implements OnInit, OnDestroy {
   @Input() canAttempt!: NSPractice.IRetakeAssessment
   @Output() userSelection = new EventEmitter<NSPractice.TUserSelectionType>()
   questionTYP = NsContent.EPrimaryCategory
-  staticImage = '/assets/images/exam/practice-test.png'
+  // staticImage = '/assets/images/exam/practice-test.png'
+  staticImage = '/assets/images/exam/practice-result.png'
   loading = false
   points = [
     { icon: 'info', text: 'No negative marking' },

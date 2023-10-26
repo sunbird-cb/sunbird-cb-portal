@@ -272,14 +272,22 @@ TODO: edit option while preview Mode
 
         <!-- <div (click)="openCertificateDialog()" *ngIf='content?.completionStatus == 2' class="margin-bottom-xs"> -->
         <div  *ngIf="content?.completionStatus == 2 || certData"  class="margin-bottom-xs">
-          <ng-container *ngIf="!certData">
+          <!-- <ng-container *ngIf="!certData">
             The certificate is not issued by the trusted certificate authority. Once issued you will be able to download it
+          </ng-container> -->
+          <ng-container *ngIf="!certData">
+            <span class="certificate-text block">Certificate will be issued by the trusted certificate authority. Certificate generation can take some time. Once issued you will be able to download it.</span>
+            <span class="certificate-text block">If the issue persists, please mail us at <a>mission[dot]karmayogi[at]gov[dot]in</a></span>
           </ng-container>
           <ng-container *ngIf="certData">
             <a class="certificate_box" (click)="openCertificateDialog()">
                 <img [src]="certData| pipeSafeSanitizer: 'url'" class="certificate_banner" />
                 <div class="certificate_overlay"></div>
-                <p class="certificate_text mat-body-2 font-weight-bold text-center margin-bottom-xs">Completion certificate</p>
+                <!-- <p class="certificate_text mat-body-2 font-weight-bold text-center margin-bottom-xs">Completion certificate</p> -->
+                <p class="certificate_text mat-body-2 font-weight-bold text-center margin-bottom-xs">
+                  <span>Congratulations!</span>
+                  <span class="block">Your certificate of completion is ready for you to download.</span>
+                </p>
             </a>
           </ng-container>
         </div>
