@@ -30,7 +30,7 @@
                         </ng-template>
                     </div> -->
                 </div>
-
+                
                 <mat-card-title>
                     <a class="mat-h4" i18n role="heading" [routerLink]="['/app/knowledge-resource/all', resource?.id, resource?.type]">{{ resource?.name }}</a>
                 </mat-card-title>
@@ -39,7 +39,7 @@
                     <p class="mat-body-2 ws-mat-black60-text margin-bottom-s" i18n>{{ resource?.id }}</p>
                 </mat-card-subtitle>
 
-                <p class="mat-body-2 ws-mat-black60-text margin-bottom-s" i18n>
+                <p class="mat-body-2 ws-mat-black60-text margin-bottom-s whitespace-pre-line" i18n>
                     {{ resource?.description }}
                 </p>
                 <!-- <span class="attach_links margin-right-s" *ngIf="resource?.additionalProperties?.krFiles?.length > 0">

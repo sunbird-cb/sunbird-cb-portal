@@ -1408,8 +1408,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     return this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)
   }
 
-  getProgramDuration(pDuration: number) {
-    return pDuration === 1 ? `${pDuration} day` : `${pDuration} days`
+  getProgramDuration(batchData: any) {
+    if( batchData ) {
+      const startDate = dayjs(batchData.startDate)
+      const endDate = dayjs(batchData.endDate)
+      // adding 1 to include the start date
+      return (endDate.diff(startDate, 'days') + 1)
+    }
+    return ''
   }
   withdrawOrEnroll(data: string) {
     if (data === NsContent.WFBlendedProgramStatus.INITIATE) {
