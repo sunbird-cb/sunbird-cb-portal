@@ -126,6 +126,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   postDegreefilteredOptions: INameField[] | undefined
   disableVerifyBtn = false
   karmayogiBadge = false
+  isVerifiedAlready = false
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -360,10 +361,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.userProfileSvc.listApprovalPendingFields().subscribe(res => {
       if (res && res.result && res.result.data) {
         this.unApprovedField = _.get(res, 'result.data')
-        // console.log('unApprovedField ', this.unApprovedField, res)
-        // if (this.unApprovedField.indexOf('verifiedKarmayogi') >= 0) {
-        //   this.karmayogiBadge = true
-        // }
       }
     })
   }
@@ -934,6 +931,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       {
         emitEvent: true,
       })
+
+    if (data.verifiedKarmayogi) {
+      this.isVerifiedAlready = data.verifiedKarmayogi
+      this.karmayogiBadge = data.verifiedKarmayogi
+      this.createUserForm.patchValue({
+        verifiedKarmayogi: data.verifiedKarmayogi
+      })
+    }
     /* tslint:enable */
     this.cd.detectChanges()
     this.cd.markForCheck()
@@ -1439,7 +1444,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     reqUpdates.request.profileDetails.personalDetails['knownLanguages']  = this.selectedKnowLangs
     reqUpdates.request.profileDetails.personalDetails['nationality']  = form.value.nationality
-    reqUpdates.request.profileDetails.verifiedKarmayogi = form.value.verifiedKarmayogi
+    //if (!this.isVerifiedAlready) {
+      reqUpdates.request.profileDetails.verifiedKarmayogi = form.value.verifiedKarmayogi
+    //}
     this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(
       res => {
         this.uploadSaveData = false
