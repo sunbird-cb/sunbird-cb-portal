@@ -100,8 +100,8 @@
       </div>
     </ng-container>
   </div>
-  <div class="flex flex-1 blank_box">
-    <div class="p-4 w-full" *ngIf="selectedQuestionData">
+  <div class="flex flex-1 ">
+    <div class="p-4 w-full question-list" *ngIf="selectedQuestionData">
       <p class="question-section">{{selectedQuestionData.text}} </p>
       <div *ngIf="selectedQuestionData.children">
         <ng-container *ngFor="let question of selectedQuestionData.children;let i = index">
@@ -113,10 +113,9 @@
                         <mat-panel-description class="panel-description">
                           <p>Question {{i+1}}</p>
                           <mat-icon *ngIf="!example.expanded">add</mat-icon>
-                          <mat-icon *ngIf="example.expanded">remove</mat-icon>
+                          <mat-icon *ngIf="example.expanded">close</mat-icon>
                         </mat-panel-description>
                       </mat-panel-title>
-                       
                     </mat-expansion-panel-header>
                       <div>
                         <p>{{question.question}}</p>
@@ -131,7 +130,7 @@
   </div>
 </div>
 <ng-template #detail let-data="data" >
-  <mat-card class="flex max-card-w customcard flex-jc-space-between cursor-pointer margin-top-xs ws-mat-primary-tags" (click)="getQuestionCount(data)">
+  <mat-card [ngClass]="{'highlight': selectedQuestionData?.type === data.type}" class="flex max-card-w customcard flex-jc-space-between cursor-pointer margin-top-xs bg-gray" (click)="getQuestionCount(data)">
     <div class="flex">
       <mat-icon [style.color]="data.colorClass">{{data.icon}}</mat-icon>
       <span class="mat-body-2 margin-left-xs">{{data.text}}</span>
@@ -141,7 +140,7 @@
 </ng-template>
 
 <ng-template #testdetail let-data="data" >
-  <mat-card class="flex max-card-w customcard flex-jc-space-between cursor-pointer margin-top-xs ws-mat-primary-tags" (click)="getQuestionCount(data)">
+  <mat-card class="flex max-card-w customcard flex-jc-space-between cursor-pointer margin-top-xs bg-gray" [ngClass]="{'highlight': selectedQuestionData?.type === data.type}" (click)="getQuestionCount(data)">
     <div class="flex">
       <mat-icon [style.color]="data.colorClass" *ngIf="!data.isSVG">{{data.icon}}</mat-icon>
       <img *ngIf="data.isSVG" [style.color]="data.colorClass" [src]="data.icon" alt="Assessment" class="margin-right-xs">

@@ -20,6 +20,7 @@ export class ResultComponent implements OnChanges {
   staticImage = '/assets/images/exam/practice-result.png'
   questionTYP = NsContent.EPrimaryCategory
   selectedQuestionData: any
+
   constructor() {
   }
 
