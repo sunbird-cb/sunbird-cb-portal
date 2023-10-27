@@ -6,6 +6,7 @@ import { AccessControlService } from '@ws/author'
 import { NsWidgetResolver } from '@sunbird-cb/resolver/src/public-api'
 import { environment } from 'src/environments/environment'
 import { WsEvents, EventService, ConfigurationsService } from '@sunbird-cb/utils'
+import { ViewerUtilService } from '../../viewer-util.service'
 
 @Component({
   selector: 'viewer-offline-session',
@@ -44,6 +45,7 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private contentSvc: WidgetContentService,
     private eventSvc: EventService,
+    private viewerSvc: ViewerUtilService,
     private accessControlSvc: AccessControlService,
     private configSvc: ConfigurationsService
   ) { }
@@ -143,11 +145,13 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
     if (this.configSvc.userProfile) {
       userId = this.configSvc.userProfile.userId || ''
     }
+    const requestCourse = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
+      this.activatedRoute.snapshot.queryParams.batchId, this.activatedRoute.snapshot.params.resourceId)
     const req: NsContent.IContinueLearningDataReq = {
       request: {
         userId,
-        batchId: this.batchId,
-        courseId: this.activatedRoute.snapshot.queryParams.collectionId || '',
+        batchId: requestCourse.batchId,
+        courseId: requestCourse.courseId || '',
         contentIds: [],
         fields: ['progressdetails'],
       },

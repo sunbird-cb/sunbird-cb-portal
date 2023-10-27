@@ -160,7 +160,7 @@ export class ViewerUtilService {
     }
     const tempContentData = this.contentSvc.currentMetaData
     const enrollmentList = this.contentSvc.currentBatchEnrollmentList
-    if (tempContentData.cumulativeTracking && (tempContentData.primaryCategory === NsContent.EPrimaryCategory.PROGRAM ||
+    if (tempContentData && tempContentData.cumulativeTracking && (tempContentData.primaryCategory === NsContent.EPrimaryCategory.PROGRAM ||
       tempContentData.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM ||
       tempContentData.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM)
       ) {

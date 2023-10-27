@@ -129,11 +129,10 @@ export class VideoComponent implements OnInit, OnDestroy {
           if (this.videoData && this.videoData.identifier) {
             if (this.activatedRoute.snapshot.queryParams.collectionId) {
               await this.fetchContinueLearning(
-                this.activatedRoute.snapshot.queryParams.collectionId,
                 this.videoData.identifier,
               )
             } else {
-              await this.fetchContinueLearning(this.videoData.identifier, this.videoData.identifier)
+              await this.fetchContinueLearning(this.videoData.identifier)
             }
           }
           this.widgetResolverVideoData.widgetData.url = this.videoData
@@ -260,7 +259,7 @@ export class VideoComponent implements OnInit, OnDestroy {
       widgetType: 'discussionForum',
     }
   }
-  async fetchContinueLearning(collectionId: string, videoId: string): Promise<boolean> {
+  async fetchContinueLearning(videoId: string): Promise<boolean> {
     return new Promise(resolve => {
       // this.contentSvc.fetchContentHistory(collectionId).subscribe(
       //   data => {
@@ -284,11 +283,13 @@ export class VideoComponent implements OnInit, OnDestroy {
       if (this.configSvc.userProfile) {
         userId = this.configSvc.userProfile.userId || ''
       }
+      const requestCourse = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
+        this.activatedRoute.snapshot.queryParams.batchId, videoId)
       const req: NsContent.IContinueLearningDataReq = {
         request: {
           userId,
-          batchId: this.batchId,
-          courseId: collectionId || '',
+          batchId: requestCourse.batchId,
+          courseId: requestCourse.courseId || '',
           contentIds: [],
           fields: ['progressdetails'],
         },

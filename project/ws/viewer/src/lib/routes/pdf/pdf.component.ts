@@ -105,14 +105,13 @@ export class PdfComponent implements OnInit, OnDestroy {
             this.widgetResolverPdfData.widgetData.collectionId = ''
           }
           this.widgetResolverPdfData.widgetData.resumePage = 1
-          if (this.pdfData && this.pdfData.identifier) {
+          if ( this.pdfData && this.pdfData.identifier) {
             if (this.activatedRoute.snapshot.queryParams.collectionId) {
               await this.fetchContinueLearning(
-                this.activatedRoute.snapshot.queryParams.collectionId,
                 this.pdfData.identifier,
               )
             } else {
-              await this.fetchContinueLearning(this.pdfData.identifier, this.pdfData.identifier)
+              await this.fetchContinueLearning(this.pdfData.identifier)
             }
           }
           this.widgetResolverPdfData.widgetData.pdfUrl = this.pdfData
@@ -197,7 +196,7 @@ export class PdfComponent implements OnInit, OnDestroy {
     this.eventSvc.dispatchEvent(event)
   }
 
-  async fetchContinueLearning(collectionId: string, pdfId: string): Promise<boolean> {
+  async fetchContinueLearning(pdfId: string): Promise<boolean> {
     return new Promise(resolve => {
       // this.contentSvc.fetchContentHistory(collectionId).subscribe(
       //   data => {
@@ -218,11 +217,13 @@ export class PdfComponent implements OnInit, OnDestroy {
       // this.activatedRoute.data.subscribe(data => {
       //   userId = data.profileData.data.userId
       // })
+      const requestCourse = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
+        this.activatedRoute.snapshot.queryParams.batchId, pdfId)
       const req: NsContent.IContinueLearningDataReq = {
         request: {
           userId,
-          batchId: this.batchId,
-          courseId: collectionId || '',
+          batchId: requestCourse.batchId,
+          courseId: requestCourse.courseId || '',
           contentIds: [],
           fields: ['progressdetails'],
         },
