@@ -15,15 +15,12 @@ export class AppHierarchyResolverService
         private contentSvc:WidgetContentService
     
     ) {
-        debugger
-        console.log(window.location.href)
      }
 
     resolve(
         _route: ActivatedRouteSnapshot,
         _state: RouterStateSnapshot,
     ): Observable<IResolveResponse<any>> {
-        console.log(_route)
         const collectionId = _route.queryParams && _route.queryParams.collectionId || ''
         const collectionType= _route.queryParams && _route.queryParams._collectionType || ''
         return this.contentSvc.fetchContent(collectionId, 'detail', [], collectionType).pipe(
