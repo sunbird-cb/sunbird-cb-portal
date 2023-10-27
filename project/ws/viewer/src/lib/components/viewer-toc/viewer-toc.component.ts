@@ -116,8 +116,8 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.hierarchyData = this.activatedRoute.snapshot.data.hierarchyData.data || ''
-    this.enrollmentList = this.activatedRoute.snapshot.data.enrollmentData.data || ''
+    this.hierarchyData = this.activatedRoute.snapshot.data.hierarchyData && this.activatedRoute.snapshot.data.hierarchyData.data || ''
+    this.enrollmentList = this.activatedRoute.snapshot.data.enrollmentData && this.activatedRoute.snapshot.data.enrollmentData.data || ''
     if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.logos) {
       const logo = this.configSvc.instanceConfig.logos.defaultContent || ''
       this.defaultThumbnail = this.domSanitizer.bypassSecurityTrustResourceUrl(logo)
