@@ -82,7 +82,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   ngOnInit() {
     this.getAuthDataIdentifer()
-    this.getEnrollmentList()
+    // this.getEnrollmentList()
     this.isNotEmbed = !(
       window.location.href.includes('/embed/') ||
       this.activatedRoute.snapshot.queryParams.embed === 'true'
