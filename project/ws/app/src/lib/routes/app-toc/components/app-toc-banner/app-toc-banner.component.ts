@@ -598,20 +598,21 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     this.checkBatchStartDate()
     return
   }
-  
+
   checkBatchStartDate() {
-    const batchStartDate = this.selectedBatchData && this.selectedBatchData.content && this.selectedBatchData.content[0] && this.selectedBatchData.content[0].startDate
-    // const batchStartDate = this.batchData && this.batchData.workFlow && this.batchData.workFlow.batch && this.batchData.workFlow.batch.startDate
-    const workFlow = this.batchData && this.batchData.workFlow && this.batchData.workFlow.wfItem && this.batchData.workFlow.wfItem.currentStatus
+    const batchStartDate = this.selectedBatchData && this.selectedBatchData.content
+    && this.selectedBatchData.content[0] && this.selectedBatchData.content[0].startDate
+    const workFlow = this.batchData && this.batchData.workFlow && this.batchData.workFlow.wfItem
+    && this.batchData.workFlow.wfItem.currentStatus
     const now = dayjs().format('YYYY-MM-DD')
     const dateExtended = dayjs(now).isSameOrAfter(dayjs(batchStartDate))
-    console.log('start', )
-    if (dateExtended  && (workFlow && ( workFlow !== this.WFBlendedProgramStatus.APPROVED ) && workFlow !== this.WFBlendedProgramStatus.WITHDRAWN)) {
+    if (dateExtended  && (workFlow && (workFlow !== this.WFBlendedProgramStatus.APPROVED)
+    && workFlow !== this.WFBlendedProgramStatus.WITHDRAWN)) {
       const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
         width: '434px',
         data: {
           title: 'Request not approved',
-          message: "Don't worry; withdraw this and request another batch.",
+          message: 'Don\'t worry; withdraw this and request another batch.',
           acceptButton: 'Withdraw',
           cancelButton: 'Cancel',
         },
@@ -670,8 +671,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   // setting batch start date
-  setbatchDateToCountDown(baatchStartDate: string) {
-    this.targetDate = new Date(baatchStartDate)
+  setbatchDateToCountDown(batchStartDate: string) {
+    this.targetDate = new Date(batchStartDate)
     this.targetTime = this.targetDate.getTime()
     // this.currentTime = `${
     //   this.months[this.targetDate.getMonth()]
@@ -691,10 +692,10 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.batchData.workFlow.wfItem
     ) {
       const status = this.batchData.workFlow.wfItem.currentStatus
-      if (NsContent.WFBlendedProgramApprovalTypes.TWO_STEP_MDO_PC === this.batchData.workFlow.wfItem.serviceName && 
+      if (NsContent.WFBlendedProgramApprovalTypes.TWO_STEP_MDO_PC === this.batchData.workFlow.wfItem.serviceName &&
         status === this.WFBlendedProgramStatus.SEND_FOR_PC_APPROVAL) {
         return true
-      } else if (NsContent.WFBlendedProgramApprovalTypes.TWO_STEP_PC_MDO === this.batchData.workFlow.wfItem.serviceName && 
+      }  if (NsContent.WFBlendedProgramApprovalTypes.TWO_STEP_PC_MDO === this.batchData.workFlow.wfItem.serviceName &&
         status === this.WFBlendedProgramStatus.SEND_FOR_MDO_APPROVAL) {
           return true
       }
