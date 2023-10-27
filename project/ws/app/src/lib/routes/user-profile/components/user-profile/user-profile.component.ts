@@ -125,6 +125,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   degreefilteredOptions: INameField[] | undefined
   postDegreefilteredOptions: INameField[] | undefined
   disableVerifyBtn = false
+  karmayogiBadge = false
+  isVerifiedAlready = false
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -193,6 +195,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       otherDetailsOfficeAddress: new FormControl('', []),
       otherDetailsOfficePinCode: new FormControl('', []),
       departmentName: new FormControl('', []),
+      verifiedKarmayogi: new FormControl(this.karmayogiBadge, []),
     })
 
   }
@@ -358,7 +361,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.userProfileSvc.listApprovalPendingFields().subscribe(res => {
       if (res && res.result && res.result.data) {
         this.unApprovedField = _.get(res, 'result.data')
-        // console.log('unApprovedField ', this.unApprovedField, res)
       }
     })
   }
@@ -515,6 +517,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         map(name => name ? this.filterPostDegrees(name) : this.degreesMeta.postGraduations.slice()),
       ).subscribe(val => this.postDegreefilteredOptions = val)
     }
+  }
+
+  verifiedKarmayogiCheck() {
+    this.karmayogiBadge = !this.karmayogiBadge
+    this.createUserForm.patchValue({verifiedKarmayogi: this.karmayogiBadge})
   }
 
   private filterNationality(name: string): INation[] {
@@ -765,7 +772,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     if (data && data.professionalDetails && data.professionalDetails.length > 0) {
       // console.log("org", data.professionalDetails[0].industryOther);
-
       const organisation = data.professionalDetails[0]
       const isDesiAvailable = _.findIndex(this.designationsMeta, { name: organisation.designation }) !== -1
       org = {
@@ -920,10 +926,19 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       otherDetailsOfficePinCode: this.checkvalue(_.get(data, 'employmentDetails.pinCode') || ''),
       skillAquiredDesc: _.get(data, 'skills.additionalSkills') || '',
       certificationDesc: _.get(data, 'skills.certificateDetails') || '',
+      verifiedKarmayogi: data.verifiedKarmayogi,
     },
       {
         emitEvent: true,
       })
+
+    if (data.verifiedKarmayogi) {
+      this.isVerifiedAlready = data.verifiedKarmayogi
+      this.karmayogiBadge = data.verifiedKarmayogi
+      this.createUserForm.patchValue({
+        verifiedKarmayogi: data.verifiedKarmayogi
+      })
+    }
     /* tslint:enable */
     this.cd.detectChanges()
     this.cd.markForCheck()
@@ -1287,7 +1302,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       }
       if (currentControl.dirty) {
         personalDetailsFields.forEach(item => {
-
           if (item === 'phoneVerified') {
             personalDetail[item] = this.isMobileVerified
           }
@@ -1430,6 +1444,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     reqUpdates.request.profileDetails.personalDetails['knownLanguages']  = this.selectedKnowLangs
     reqUpdates.request.profileDetails.personalDetails['nationality']  = form.value.nationality
+    if (!this.isVerifiedAlready) {
+      reqUpdates.request.profileDetails.verifiedKarmayogi = form.value.verifiedKarmayogi
+    }
     this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(
       res => {
         this.uploadSaveData = false
