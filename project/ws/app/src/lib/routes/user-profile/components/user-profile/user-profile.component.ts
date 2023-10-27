@@ -521,7 +521,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   verifiedKarmayogiCheck() {
     this.karmayogiBadge = !this.karmayogiBadge
-    this.createUserForm.patchValue({verifiedKarmayogi: this.karmayogiBadge})
+    this.createUserForm.patchValue({ verifiedKarmayogi: this.karmayogiBadge })
   }
 
   private filterNationality(name: string): INation[] {
