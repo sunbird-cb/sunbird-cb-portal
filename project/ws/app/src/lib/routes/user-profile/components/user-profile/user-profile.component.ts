@@ -1444,9 +1444,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     reqUpdates.request.profileDetails.personalDetails['knownLanguages']  = this.selectedKnowLangs
     reqUpdates.request.profileDetails.personalDetails['nationality']  = form.value.nationality
-    //if (!this.isVerifiedAlready) {
+    if (!this.isVerifiedAlready) {
       reqUpdates.request.profileDetails.verifiedKarmayogi = form.value.verifiedKarmayogi
-    //}
+    }
     this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(
       res => {
         this.uploadSaveData = false
