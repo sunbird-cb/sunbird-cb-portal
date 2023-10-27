@@ -37,7 +37,7 @@ export class ContentRatingV2DialogComponent implements OnInit {
     this.feedbackForm = new FormGroup({
       review: new FormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
       rating: new FormControl(0, []),
-      recommend: new FormControl(false)
+      recommend: new FormControl(false),
     })
   }
 
@@ -58,7 +58,7 @@ export class ContentRatingV2DialogComponent implements OnInit {
       this.feedbackForm.patchValue({
         review: this.data.userRating.review,
         rating: this.data.userRating.rating,
-        recommend: this.data.userRating.recommended === 'yes'? true : false
+        recommend: this.data.userRating.recommended === 'yes' ? true : false,
       })
       this.feedbackForm.updateValueAndValidity()
       this.userRating = this.data.userRating.rating
@@ -77,8 +77,8 @@ export class ContentRatingV2DialogComponent implements OnInit {
           // tslint:disable-next-line: no-console
           // console.log('formValue.review :: ', formValue.review)
           if (this.data.userRating) {
-            if (formValue.review !== this.data.userRating.review 
-              || formValue.rating !== this.data.userRating.rating 
+            if (formValue.review !== this.data.userRating.review
+              || formValue.rating !== this.data.userRating.rating
               || formValue.recommend !== this.data.userRating.recommend) {
               this.isEdited = true
             } else {
@@ -98,9 +98,9 @@ export class ContentRatingV2DialogComponent implements OnInit {
         activityType: this.data.content.primaryCategory || '',
         rating: this.userRating || 0,
         ...(feedbackForm.value.review && { review: feedbackForm.value.review }),
-        recommended: feedbackForm.value.recommend ? 'yes': 'no',
-      };
-      
+        recommended: feedbackForm.value.recommend ? 'yes' : 'no',
+      }
+
       this.ratingSvc.addOrUpdateRating(req).subscribe(
         (_res: any) =>  {
           this.raiseFeedbackTelemetry(feedbackForm)

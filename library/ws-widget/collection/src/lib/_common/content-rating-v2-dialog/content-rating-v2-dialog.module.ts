@@ -20,7 +20,7 @@ import { MatButtonModule, MatIconModule, MatTooltipModule, MatDialogModule, MatP
       MatFormFieldModule,
       MatInputModule,
       MatSnackBarModule,
-      MatCheckboxModule
+      MatCheckboxModule,
   ],
   exports: [
     ContentRatingV2DialogComponent,
