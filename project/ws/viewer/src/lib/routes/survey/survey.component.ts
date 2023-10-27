@@ -80,11 +80,10 @@ export class SurveyComponent implements OnInit, OnDestroy {
           if (this.surveyData && this.surveyData.identifier) {
             if (this.activatedRoute.snapshot.queryParams.collectionId) {
               await this.fetchContinueLearning(
-                this.activatedRoute.snapshot.queryParams.collectionId,
                 this.surveyData.identifier,
               )
             } else {
-              await this.fetchContinueLearning(this.surveyData.identifier, this.surveyData.identifier)
+              await this.fetchContinueLearning(this.surveyData.identifier)
             }
           }
           this.widgetResolverSurveyData.widgetData.surveyUrl = this.surveyData
@@ -124,11 +123,10 @@ export class SurveyComponent implements OnInit, OnDestroy {
           if (this.surveyData && this.surveyData.identifier) {
             if (this.activatedRoute.snapshot.queryParams.collectionId) {
               await this.fetchContinueLearning(
-                this.activatedRoute.snapshot.queryParams.collectionId,
                 this.surveyData.identifier,
               )
             } else {
-              await this.fetchContinueLearning(this.surveyData.identifier, this.surveyData.identifier)
+              await this.fetchContinueLearning(this.surveyData.identifier)
             }
           }
           this.widgetResolverSurveyData.widgetData.surveyUrl = this.surveyData
@@ -218,7 +216,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
     this.eventSvc.dispatchEvent(event)
   }
 
-  async fetchContinueLearning(collectionId: string, surveyId: string) {
+  async fetchContinueLearning(surveyId: string) {
     return new Promise(resolve => {
       let userId
       if (this.configSvc.userProfile) {
@@ -228,11 +226,13 @@ export class SurveyComponent implements OnInit, OnDestroy {
       // this.activatedRoute.data.subscribe(data => {
       //   userId = data.profileData.data.userId
       // })
+      const requestCourse = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
+        this.activatedRoute.snapshot.queryParams.batchId, surveyId)
       const req: NsContent.IContinueLearningDataReq = {
         request: {
           userId,
-          batchId: this.batchId,
-          courseId: collectionId || '',
+          batchId: requestCourse.batchId,
+          courseId: requestCourse.courseId || '',
           contentIds: [],
           fields: ['progressdetails'],
         },
