@@ -600,14 +600,13 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
   
   checkBatchStartDate() {
-    debugger
     const batchStartDate = this.selectedBatchData && this.selectedBatchData.content && this.selectedBatchData.content[0] && this.selectedBatchData.content[0].startDate
     // const batchStartDate = this.batchData && this.batchData.workFlow && this.batchData.workFlow.batch && this.batchData.workFlow.batch.startDate
     const workFlow = this.batchData && this.batchData.workFlow && this.batchData.workFlow.wfItem && this.batchData.workFlow.wfItem.currentStatus
     const now = dayjs().format('YYYY-MM-DD')
     const dateExtended = dayjs(now).isSameOrAfter(dayjs(batchStartDate))
     console.log('start', )
-    if (dateExtended  && ( workFlow !== this.WFBlendedProgramStatus.APPROVED ) && workFlow !== this.WFBlendedProgramStatus.WITHDRAWN) {
+    if (dateExtended  && (workFlow && ( workFlow !== this.WFBlendedProgramStatus.APPROVED ) && workFlow !== this.WFBlendedProgramStatus.WITHDRAWN)) {
       const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
         width: '434px',
         data: {
