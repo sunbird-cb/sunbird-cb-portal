@@ -806,10 +806,16 @@ body:has(.requires-no-scroll) {
 }
 
 ngx-guided-tour {
+  .tour_profile_container {
+    margin-left: 0.8rem;
+  }
   .tour_profile_container.right-panel {
     .arrow {
       left: -65px !important;
       top: -25px !important;
+    }
+    .right-connector {
+      margin-top: 0.4rem;
     }
     .circle-start-dot {
       margin-left: 35px;
