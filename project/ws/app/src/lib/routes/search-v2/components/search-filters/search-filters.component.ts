@@ -15,6 +15,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   @Input() newfacets!: any
   @Input() urlparamFilters!: any
   @Output() appliedFilter = new EventEmitter<any>()
+  @Input() karmayogiBadge: any
   filterForm: FormGroup | undefined
   filteroptions: any = []
   userFilters: any = []
