@@ -82,8 +82,8 @@ itemCount(items: NSKnowledgeResource.IUrl[]) {
   return occurs
  }
 
- getUrl(url: string) {
-  const path = url.split('/content/frac/')[1]
+ getUrl(url: string, name: string) {
+  const path = name.split('content/frac/')[1]
   if (path) {
     return `https://${this.environment.sitePath}/content-store/content/frac/${path}`
   }
