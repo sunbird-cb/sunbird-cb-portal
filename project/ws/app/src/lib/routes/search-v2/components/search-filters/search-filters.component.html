@@ -30,9 +30,16 @@
                             <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name === 'application/vnd.ekstep.content-collection'">
                                 <label for="Course">Course</label>
                             </mat-checkbox>
-                            <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name !== 'application/pdf' && options.name !== 'audio/mpeg' && options.name !== 'application/vnd.ekstep.content-collection' && options.name !== 'text/x-url'">
-                                <label for="options.name">{{options.name}}</label>
-                            </mat-checkbox>
+                            <ng-container *ngIf="options.name !== 'moderated courses'">
+                                <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name !== 'application/pdf' && options.name !== 'audio/mpeg' && options.name !== 'application/vnd.ekstep.content-collection' && options.name !== 'text/x-url'">
+                                    <label for="options.name">{{options.name}}</label>
+                                </mat-checkbox>
+                            </ng-container>
+                            <ng-container *ngIf="karmayogiBadge && options.name === 'moderated courses'">
+                                <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name !== 'application/pdf' && options.name !== 'audio/mpeg' && options.name !== 'application/vnd.ekstep.content-collection' && options.name !== 'text/x-url'">
+                                    <label for="options.name">{{options.name}}</label>
+                                </mat-checkbox>
+                            </ng-container>
                         </span>
                         <!-- <span class="sublist-section">
                             <ul class="padding-left-l">
