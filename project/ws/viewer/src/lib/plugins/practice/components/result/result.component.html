@@ -107,9 +107,9 @@
         <ng-container *ngFor="let question of selectedQuestionData.children;let i = index">
           <ng-container *ngIf="selectedQuestionData.type === question.result">
             <mat-accordion class="example-headers-align m-3">
-                  <mat-expansion-panel class="bg-gray-accordian" hideToggle="true"  #example>
-                    <mat-expansion-panel-header>
-                      <mat-panel-title>
+                  <mat-expansion-panel class="questionPanel bg-gray-accordian" hideToggle="true"  #example>
+                    <mat-expansion-panel-header class="question-header">
+                      <mat-panel-title class="mr-0">
                         <mat-panel-description class="panel-description">
                           <p>Question {{i+1}}</p>
                           <mat-icon *ngIf="!example.expanded">add</mat-icon>

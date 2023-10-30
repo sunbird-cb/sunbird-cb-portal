@@ -206,3 +206,13 @@
     height: 600px;
     overflow-x: scroll;
 }
+.question-header {
+    padding: 0 16px;
+}
+.mr-0 {
+    margin-right: 0 !important;
+}
+
+::ng-deep .questionPanel .mat-expansion-panel-body {
+    padding: 0 16px 16px !important;
+}
