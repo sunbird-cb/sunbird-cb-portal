@@ -65,7 +65,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
   } | undefined
   resultFacets: any = []
   facetsData: any = []
-  VeifiedKarmayogi: boolean = false
+  veifiedKarmayogi = false
 
   constructor(
     private searchSrvc: GbSearchService,
@@ -115,7 +115,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.profileDetails) {
-      this.VeifiedKarmayogi = this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi
+      this.veifiedKarmayogi = this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi
     }
     if (changes.param.currentValue !== changes.param.previousValue) {
       this.statedata = { param: this.param, path: 'Search' }
@@ -189,7 +189,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
       let queryparam2
 
       if (this.userValue === 'moderatedCourses') {
-        if (this.VeifiedKarmayogi) {
+        if (this.veifiedKarmayogi) {
           this.searchApiCall(queryparam1)
         }
       } else {
@@ -217,7 +217,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
             fuzzy: false,
           },
         }
-        if (this.VeifiedKarmayogi) {
+        if (this.veifiedKarmayogi) {
           this.searchApiCall(queryparam1)
         }
         this.searchApiCall(queryparam2)
