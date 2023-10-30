@@ -1338,7 +1338,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   getProgramDuration(batchData: any) {
-    if( batchData ) {
+    if (batchData) {
       const startDate = dayjs(batchData.startDate)
       const endDate = dayjs(batchData.endDate)
       // adding 1 to include the start date

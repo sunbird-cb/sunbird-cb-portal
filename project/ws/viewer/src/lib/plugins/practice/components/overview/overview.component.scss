@@ -122,6 +122,16 @@
     left: 6%;
     margin-top: -15px;
     font-weight: 600;
+    @include breakpoint-xs {
+        display: none !important;
+     }
+     @include breakpoint-s {
+        top: 32%;
+        left: 15%;
+     }
+  }
+  .box-height{
+    height: 100vh;
   }
   
 
