@@ -1203,6 +1203,16 @@
                       </mat-error>
                     </mat-form-field>
                   </div>
+
+                  <div class="item1">
+                      <label class="margin-remove-bottom form-label">Tags</label>
+                      <mat-chip-list #chipListTags *ngIf="selectedtags && selectedtags.length">
+                        <mat-chip *ngFor="let tag of selectedtags" [selectable]="true" [removable]="true">
+                          {{ tag }}
+                        </mat-chip>
+                      </mat-chip-list>
+                      <p *ngIf="!selectedtags || !selectedtags.length" class="margin-top-xs mat-body-2">No tags available</p>
+                  </div>
                 </div>
               </div>
               <div class="=w-full profile-cols-fill bg-gray" *ngIf="!isAllowed('name')">
