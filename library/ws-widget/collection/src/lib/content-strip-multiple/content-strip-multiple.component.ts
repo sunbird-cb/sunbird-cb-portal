@@ -68,7 +68,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
   contentAvailable = true
   isFromAuthoring = false
   baseUrl = this.configSvc.sitePath || ''
-  VeifiedKarmayogi = false
+  veifiedKarmayogi = false
 
   changeEventSubscription: Subscription | null = null
   environment!: any
@@ -94,7 +94,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       return url.indexOf(word) > -1
     })
     if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.profileDetails) {
-      this.VeifiedKarmayogi = this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi
+      this.veifiedKarmayogi = this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi
     }
     this.initData()
   }
@@ -253,7 +253,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       this.fetchDAKSHTACourses(strip, calculateParentStatus)
       this.fetchprarambhCourse(strip, calculateParentStatus)
       this.fetchCuratedCollections(strip, calculateParentStatus)
-      if (this.VeifiedKarmayogi) {
+      if (this.veifiedKarmayogi) {
         this.fetchModeratedCourses(strip, calculateParentStatus)
       }
   }
