@@ -63,8 +63,9 @@
                 icon: 'done',
                 isSVG: false,
                 colorClass: 'green',
-                text: _parts[_result] +' Correct',
+                text: _parts[_result] +' correct',
                 type: _result,
+                sectionType: 'Section' + (i)+_result,
                 children:_parts['children']}
               }"></ng-container>
                   <ng-container *ngIf="_result === 'inCorrect' || _result ===  'incorrect'" [ngTemplateOutlet]="detail"
@@ -74,14 +75,16 @@
                 colorClass: 'red',
                 text: _parts[_result] + ' incorrect',
                 type: _result,
+                sectionType: 'Section' + (i)+_result,
                 children:_parts['children']
               }}"></ng-container>
                   <ng-container *ngIf="_result == 'blank'" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{data:{
                 icon: 'close',
                 isSVG: false,
                 colorClass: 'red',
-                text: _parts[_result] + ' not Attempted',
+                text: _parts[_result] + ' not attempted',
                 type: _result,
+                sectionType: 'Section' + (i)+_result,
                 children:_parts['children']
               }}"></ng-container>
                 </ng-container>
@@ -130,7 +133,7 @@
   </div>
 </div>
 <ng-template #detail let-data="data" >
-  <mat-card [ngClass]="{'highlight': selectedQuestionData?.type === data.type}" class="flex max-card-w customcard flex-jc-space-between cursor-pointer margin-top-xs bg-gray" (click)="getQuestionCount(data)">
+  <mat-card [ngClass]="{'highlight': selectedQuestionData?.sectionType === data.sectionType}" class="flex max-card-w customcard flex-jc-space-between cursor-pointer margin-top-xs bg-gray" (click)="getQuestionCount(data)">
     <div class="flex">
       <mat-icon [style.color]="data.colorClass">{{data.icon}}</mat-icon>
       <span class="mat-body-2 margin-left-xs">{{data.text}}</span>
@@ -140,7 +143,7 @@
 </ng-template>
 
 <ng-template #testdetail let-data="data" >
-  <mat-card class="flex max-card-w customcard flex-jc-space-between cursor-pointer margin-top-xs bg-gray" [ngClass]="{'highlight': selectedQuestionData?.type === data.type}" (click)="getQuestionCount(data)">
+  <mat-card class="flex max-card-w customcard flex-jc-space-between cursor-pointer margin-top-xs bg-gray" [ngClass]="{'highlight': selectedQuestionData?.sectionType === data.sectionType}" (click)="getQuestionCount(data)">
     <div class="flex">
       <mat-icon [style.color]="data.colorClass" *ngIf="!data.isSVG">{{data.icon}}</mat-icon>
       <img *ngIf="data.isSVG" [style.color]="data.colorClass" [src]="data.icon" alt="Assessment" class="margin-right-xs">
