@@ -132,6 +132,9 @@
   }
   .box-height{
     height: 100vh;
+    @include breakpoint-xs {
+        height: 100%
+     }
   }
   
 
