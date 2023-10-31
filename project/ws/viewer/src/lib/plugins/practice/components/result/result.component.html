@@ -9,25 +9,34 @@
           <span *ngIf="!isPassed" class="mat-title ws-mat-black60-text margin-top-s">{{levelText || 'Failed'}}</span>
           <span class="mat-heading-1 ws-mat-default-text">{{(percentage || 0) | number: '1.2-2'}}%</span>
           <span class="mat-body-1 ws-mat-black60-text">your score</span> -->
-
-          <div *ngIf="isPassed" class="msg-box">
-            <mat-icon *ngIf="isPassed" class="ws-mat-green-2-text msg-icon transform15 margin-top-m">check_circle</mat-icon>
-            <span class="mat-body-2 padding-s text-block">Hurray!</span>
+          
+          <div *ngIf="isPassed && percentage === 100" class="msg-box">
+            <mat-icon  class="ws-mat-green-2-text transform15 margin-top-m">check_circle</mat-icon>
+            <span class="mat-body-2 padding-xs text-block">Hurray!</span>
+            <span class="mat-body-2 padding-xs ws-mat-default-text">{{(percentage || 0) | number: '1.2-2'}}%</span>
+            <span class="mat-body-2 ws-mat-black60-text"> score</span>
             <span class="mat-body-2 ws-mat-black60-text text-block attempt-text">You have aced the assessment, with flying colours.</span>
+          </div>
+          <div *ngIf="isPassed && percentage < 100" class="msg-box">
+            <mat-icon  class="ws-mat-green-2-text transform15 margin-top-m ">check_circle</mat-icon>
+            <span class="mat-body-2 ws-mat-default-text text-block">{{(percentage || 0) | number: '1.2-2'}}%
+              <span class="mat-body-2 ws-mat-black60-text"> score</span>
+            </span>
+            <span class="mat-body-2 ws-mat-black60-text text-block attempt-text">Congratulations on successfully passing the assessment. Good job!</span>
           </div>
           <div *ngIf="!isPassed" class="msg-box">
             <mat-icon *ngIf="!isPassed" class="ws-mat-red-text msg-icon transform15 margin-top-m">highlight_off</mat-icon>
-            <span class="mat-body-2 padding-s text-block">No worries!</span>
-            <span class="mat-body-2 ws-mat-black60-text text-block attempt-text">Your next try is a chance to do even better.</span>
+            <!-- <span class="mat-body-2 padding-s text-block">No worries!</span>
+            <span class="mat-body-2 ws-mat-black60-text text-block attempt-text">Your next try is a chance to do even better.</span> -->
+            <span class="mat-body-2 ws-mat-default-text">{{(percentage || 0) | number: '1.2-2'}}%</span>
+            <span class="mat-body-2 ws-mat-black60-text"> score</span>
+            <span class="mat-body-2 ws-mat-black60-text text-block attempt-text">You have the opportunity to try again and do better next time. Keep going!</span>
           </div>
         </ng-container>
         <ng-container *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory">
           <mat-icon class="ws-mat-green-2-text transform15 margin-top-m">check_box</mat-icon>
-          <!-- <span class="mat-title ws-mat-black60-text margin-top-s padding-s attempt-text">{{'Attempted Successfully!!'}}</span> -->
-          <span class="mat-body-2 padding-s attempt-text text-block">{{'Well done!'}}</span>
-          <span class="mat-title mat-body-2 ws-mat-black60-text padding-s attempt-text text-block">{{'You have successfully attempted.'}}</span>
+          <span class="ws-mat-black60-text margin-top-s padding-s attempt-text">{{'Well done, Keep learning!'}}</span>
         </ng-container>
-
       </div>
     </div>
     <img class="flex-1 result_image" [src]="staticImage" alt="exam image" />
