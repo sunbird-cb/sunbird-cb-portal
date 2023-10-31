@@ -127,6 +127,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   disableVerifyBtn = false
   karmayogiBadge = false
   isVerifiedAlready = false
+  selectedtags: any[] = []
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -708,6 +709,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             this.constructFormFromRegistry(userData, academics, organisations)
             this.populateChips(userData)
             this.userProfileData = userData
+            if (this.userProfileData && this.userProfileData.additionalProperties) {
+              this.selectedtags = this.userProfileData.additionalProperties.tag || []
+            }
           } else {
             if (this.configSvc.userProfile) {
               this.userProfileData = { ...userData, id: this.configSvc.userProfile.userId, userId: this.configSvc.userProfile.userId }
@@ -716,8 +720,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
                 // surname: this.configSvc.userProfile.lastName,
                 primaryEmail: _.get(this.userProfileData, 'personalDetails.primaryEmail') || this.configSvc.userProfile.email,
                 orgName: this.configSvc.userProfile.rootOrgName,
-
               })
+              if (this.userProfileData && this.userProfileData.additionalProperties) {
+                this.selectedtags = this.userProfileData.additionalProperties.tag || []
+              }
             }
           }
           // this.handleFormData(data[0])
