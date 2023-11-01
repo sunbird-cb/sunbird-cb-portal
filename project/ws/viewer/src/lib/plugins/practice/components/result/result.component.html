@@ -12,20 +12,25 @@
           
           <div *ngIf="isPassed && percentage === 100" class="msg-box">
             <mat-icon  class="ws-mat-green-2-text transform15 margin-top-m">check_circle</mat-icon>
-            <span class="mat-body-2 padding-xs text-block">Hurray!</span>
-            <span class="mat-body-2 padding-xs ws-mat-default-text">{{(percentage || 0) | number: '1.2-2'}}%</span>
+            <span class="mat-body-3 ws-mat-black60-text margin-top-s text-block">{{levelText || 'Passed'}}</span>
+            <span class="mat-body-2 ws-mat-default-text">{{(percentage || 0) | number: '1.2-2'}}%</span>
             <span class="mat-body-2 ws-mat-black60-text"> score</span>
+            <span class="mat-body-2 text-block">Hurray!</span>
             <span class="mat-body-2 ws-mat-black60-text text-block attempt-text">You have aced the assessment, with flying colours.</span>
           </div>
+
           <div *ngIf="isPassed && percentage < 100" class="msg-box">
             <mat-icon  class="ws-mat-green-2-text transform15 margin-top-m ">check_circle</mat-icon>
-            <span class="mat-body-2 ws-mat-default-text text-block">{{(percentage || 0) | number: '1.2-2'}}%
+            <span class="mat-body-3 ws-mat-black60-text margin-top-s text-block">{{levelText || 'Passed'}}</span>
+            <span class="mat-body-2 ws-mat-default-text">{{(percentage || 0) | number: '1.2-2'}}%
               <span class="mat-body-2 ws-mat-black60-text"> score</span>
             </span>
             <span class="mat-body-2 ws-mat-black60-text text-block attempt-text">Congratulations on successfully passing the assessment. Good job!</span>
           </div>
+
           <div *ngIf="!isPassed" class="msg-box">
-            <mat-icon *ngIf="!isPassed" class="ws-mat-red-text msg-icon transform15 margin-top-m">highlight_off</mat-icon>
+            <mat-icon class="ws-mat-red-text msg-icon transform15 margin-top-m">highlight_off</mat-icon>
+            <span class="mat-body-3 ws-mat-black60-text margin-top-s text-block">{{levelText || 'Failed'}}</span>
             <!-- <span class="mat-body-2 padding-s text-block">No worries!</span>
             <span class="mat-body-2 ws-mat-black60-text text-block attempt-text">Your next try is a chance to do even better.</span> -->
             <span class="mat-body-2 ws-mat-default-text">{{(percentage || 0) | number: '1.2-2'}}%</span>
