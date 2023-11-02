@@ -19,6 +19,7 @@ import {
   MatTableModule,
   MatButtonModule,
   MatProgressSpinnerModule,
+  MatTooltipModule,
 } from '@angular/material'
 
 import {
@@ -43,6 +44,7 @@ import {
     MatButtonModule,
     BtnFullscreenModule,
     MatProgressSpinnerModule,
+    MatTooltipModule
   ],
   exports: [
     QuizComponent,

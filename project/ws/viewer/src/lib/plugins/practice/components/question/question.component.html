@@ -26,8 +26,8 @@
       <div class="flex flex-1">
         <span class="spacer"></span>
         <button aria-label="flag" i18n-aria-label mat-icon-button (click)="markQuestion()" class="flag_btn">
-          <mat-icon *ngIf="!isQuestionMarked()">outlined_flag</mat-icon>
-          <mat-icon *ngIf="isQuestionMarked()">flag</mat-icon>
+        <mat-icon *ngIf="!isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">outlined_flag</mat-icon>
+        <mat-icon *ngIf="isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">flag</mat-icon>
         </button>
       </div>
       <div class="flex flex-1 viewer_quest_box">
@@ -77,8 +77,8 @@
   class="flex flex-1 respo-new margin-bottom-m no-shadow flex-column">
   <div class="mtf-flag">
     <button aria-label="flag" i18n-aria-label mat-icon-button (click)="markQuestion()" class="mtf-flag_btn">
-      <mat-icon *ngIf="!isQuestionMarked()">outlined_flag</mat-icon>
-      <mat-icon *ngIf="isQuestionMarked()">flag</mat-icon>
+      <mat-icon *ngIf="!isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">outlined_flag</mat-icon>
+      <mat-icon *ngIf="isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">flag</mat-icon>
     </button>
   </div>
   <div class="respo-new flex flex-1 flex-column padding-top-m">
