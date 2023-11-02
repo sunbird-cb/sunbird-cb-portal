@@ -1159,6 +1159,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.hours = 23 - this.date.getHours()
       this.minutes = 60 - this.date.getMinutes()
       this.seconds = 60 - this.date.getSeconds()
+      Number(this.hours)
       !isNaN(this.days)
         ? (this.days = Math.floor(this.difference))
         : (this.days = `<img src="https://i.gifer.com/VAyR.gif" />`)
