@@ -1342,7 +1342,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       const startDate = dayjs(dayjs(batchData.startDate).format('YYYY-MM-DD'))
       const endDate = dayjs(dayjs(batchData.endDate).format('YYYY-MM-DD'))
       // adding 1 to include the start date
-      return (endDate.diff(startDate, 'days'))
+      return (endDate.diff(startDate, 'days') + 1)
     }
     return ''
   }
