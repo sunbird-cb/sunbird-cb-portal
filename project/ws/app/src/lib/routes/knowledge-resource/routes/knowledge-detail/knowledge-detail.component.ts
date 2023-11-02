@@ -148,7 +148,7 @@ refresh() {
   }
 
   handleNavigate(url: any): void {
-    window.open(url, '_blank');
+    window.open(url, '_blank')
   }
 
 }
