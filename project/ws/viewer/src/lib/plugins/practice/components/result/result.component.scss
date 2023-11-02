@@ -174,4 +174,22 @@
     text-align: center;
     word-break: break-word;
     white-space: initial;
+    padding-bottom: 0 !important;
+}
+
+.msg-box{
+    width: 150px;
+    text-align: center;
+    margin-left: -8px;
+}
+
+.msg-icon {
+    display: block;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 8px;
+}
+
+.text-block {
+    display: block;
 }

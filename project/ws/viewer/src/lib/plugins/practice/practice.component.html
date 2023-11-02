@@ -100,8 +100,9 @@
           *ngIf="fetchingQuestionsStatus === 'done' && viewState !== 'detail' && !(viewState === 'answer') && !isSubmitted">
           <ng-container *ngIf="true">
             <div class="flex flex-1 padding-l card_inner_box flex-row">
+              <!-- {{selectedSection.name}} -->
               <span
-                class="mat-title margin-bottom-remove flex flex-1 practice_card_title">{{selectedSection.name}}</span>
+                class="mat-title margin-bottom-remove flex flex-1 practice_card_title"></span>
               <!-- <span class="spacer"></span> -->
               <ng-container [ngTemplateOutlet]="timer"></ng-container>
               <div class="flex flex-1 flex-row-reverse butto_box end">
