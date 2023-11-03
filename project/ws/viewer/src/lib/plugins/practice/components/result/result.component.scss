@@ -174,6 +174,7 @@
     text-align: center;
     word-break: break-word;
     white-space: initial;
+    padding-bottom: 0 !important;
 }
 .question-section {
     opacity: 1;
@@ -215,4 +216,20 @@
 
 ::ng-deep .questionPanel .mat-expansion-panel-body {
     padding: 0 16px 16px !important;
+}
+.msg-box{
+    width: 150px;
+    text-align: center;
+    margin-left: -8px;
+}
+
+.msg-icon {
+    display: block;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 8px;
+}
+
+.text-block {
+    display: block;
 }
