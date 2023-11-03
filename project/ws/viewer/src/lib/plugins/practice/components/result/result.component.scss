@@ -37,10 +37,16 @@
 }
 .result_image_box {
     overflow: hidden;
-    height: 600px;
+   // height: 600px;
+   @include breakpoint-xs {
+    display: none !important;
+ }
 }
 .result_image {
-    width: 100%;
+    width: 100% !important;
+    position: relative;
+    z-index: 1;
+    object-fit: fill;
 }
 .flex-2 {
     flex: 2;
@@ -157,6 +163,7 @@
 }
 
 .result_main {
+    height: calc(100vh - 56px);;
     @include breakpoint-lt-s {
         flex-direction: column;
     }
@@ -193,3 +200,46 @@
 .text-block {
     display: block;
 }
+
+
+/* 1. scale and layout setting at 100% */
+@media (resolution: 1dppx) {
+    .scale::after {
+      content: '100%';
+    }
+  }
+  
+  
+  /* 2. scale and layout setting at 125% */
+  @media (resolution: 1.25dppx) {
+    .scale::after {
+      content: '125%';
+    }
+    .nonscaling {
+      /* offset the scaling */
+      /* factor = 100/125 percent */
+      transform: scale(0.80);
+    }
+  }
+  
+  
+  /* 3. scale and layout setting at 150% */
+  @media (resolution: 1.5dppx) {
+    .scale::after {
+      content: '150%';
+    }
+    .nonscaling {
+      transform: scale(0.6666);
+    }
+  }
+  
+  
+  /* 4. scale and layout setting at 175% */
+  @media (resolution: 1.75dppx) {
+    .scale::after {
+      content: '175%';
+    }
+    .nonscaling {
+      transform: scale(0.5714);
+    }
+  }
