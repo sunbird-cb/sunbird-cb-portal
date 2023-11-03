@@ -34,6 +34,8 @@ import { AppPublicPositionResolverService } from './routes/public/public-signup/
 import { PublicRequestComponent } from './routes/public/public-request/public-request.component'
 import { AppPublicGroupResolverService } from './routes/public/public-signup/group-resolver.service'
 import { AppTourComponent } from './component/app-tour/app-tour.component'
+import { AppHierarchyResolverService } from './services/app-hierarchy-resolver.service'
+import { AppEnrollmentResolverService } from './services/app-enrollment-resolver.service'
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
 // Please declare routes in alphabetical order
@@ -697,6 +699,20 @@ const routes: Routes = [
     canActivate: [GeneralGuard],
   },
   {
+    path: 'page/home',
+    loadChildren: () => import('./web/web.module').then(m => m.WebModule),
+    data: {
+      pageType: 'page',
+      pageKey: 'id',
+    },
+    resolve: {
+      pageData: PageResolve,
+      module: ModuleNameResolve,
+      pageId: PageNameResolve,
+    },
+    canActivate: [GeneralGuard],
+  },
+  {
     path: 'page/:id',
     component: PageComponent,
     data: {
@@ -893,6 +909,10 @@ const routes: Routes = [
       topBar: ETopBar.NONE,
       module: 'Learn',
       pageId: 'viewer',
+    },
+    resolve: {
+      hierarchyData: AppHierarchyResolverService,
+      enrollmentData: AppEnrollmentResolverService
     },
     loadChildren: () => import('./routes/route-viewer.module').then(u => u.RouteViewerModule),
     canActivate: [GeneralGuard],

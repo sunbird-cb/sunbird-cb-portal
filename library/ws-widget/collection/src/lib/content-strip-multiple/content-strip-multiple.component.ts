@@ -53,6 +53,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
   OnDestroy,
   NsWidgetResolver.IWidgetData<NsContentStripMultiple.IContentStripMultiple> {
   @Input() widgetData!: NsContentStripMultiple.IContentStripMultiple
+  @Input() switchDesign: boolean = false;
   @HostBinding('id')
   public id = `ws-strip-miltiple_${Math.random()}`
   stripsResultDataMap!: { [key: string]: IStripUnitContentData }
@@ -68,6 +69,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
   contentAvailable = true
   isFromAuthoring = false
   baseUrl = this.configSvc.sitePath || ''
+  veifiedKarmayogi = false
 
   changeEventSubscription: Subscription | null = null
   environment!: any
@@ -92,6 +94,9 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     this.isFromAuthoring = this.searchArray.some((word: string) => {
       return url.indexOf(word) > -1
     })
+    if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.profileDetails) {
+      this.veifiedKarmayogi = this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi
+    }
     this.initData()
   }
 
@@ -249,7 +254,9 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       this.fetchDAKSHTACourses(strip, calculateParentStatus)
       this.fetchprarambhCourse(strip, calculateParentStatus)
       this.fetchCuratedCollections(strip, calculateParentStatus)
-      this.fetchModeratedCourses(strip, calculateParentStatus)
+      if (this.veifiedKarmayogi) {
+        this.fetchModeratedCourses(strip, calculateParentStatus)
+      }
   }
 
   fetchModeratedCourses(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
@@ -1111,6 +1118,9 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     } else if (results && results.length > 0) {
       this.contentAvailable = true
     }
+
+    console.log('this.widgetData',this.widgetData);
+    console.log('stripsResultDataMap,', this.stripsResultDataMap);
   }
   private checkParentStatus(fetchStatus: TFetchStatus, stripWidgetsCount: number): void {
     if (fetchStatus === 'done' && !stripWidgetsCount) {

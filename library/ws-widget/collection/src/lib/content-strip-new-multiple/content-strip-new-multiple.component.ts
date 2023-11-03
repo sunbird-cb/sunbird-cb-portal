@@ -86,6 +86,7 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
   }
 
   ngOnInit() {
+    console.log('stripsResultDataMap,', this.stripsResultDataMap);
     const url = window.location.href
     this.isFromAuthoring = this.searchArray.some((word: string) => {
       return url.indexOf(word) > -1
@@ -599,6 +600,9 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
     } else if (results && results.length > 0) {
       this.contentAvailable = true
     }
+
+    console.log('this.widgetData',this.widgetData);
+    console.log('stripsResultDataMap,', this.stripsResultDataMap);
   }
   private checkParentStatus(fetchStatus: TFetchStatus, stripWidgetsCount: number): void {
     if (fetchStatus === 'done' && !stripWidgetsCount) {

@@ -47,6 +47,7 @@ export class NetworkStripMultipleComponent extends WidgetBaseComponent
   OnDestroy,
   NsWidgetResolver.IWidgetData<NsNetworkStripNewMultiple.INetworkStripMultiple> {
   @Input() widgetData!: NsNetworkStripNewMultiple.INetworkStripMultiple
+  @Input() switchDesign: boolean = false;
   @HostBinding('id')
   public id = 'h-n-s-component'
   stripsResultDataMap: { [key: string]: IStripUnitContentData } = {}

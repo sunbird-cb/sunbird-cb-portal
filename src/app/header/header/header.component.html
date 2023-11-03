@@ -1,0 +1,3 @@
+<ws-app-nav-bar class="top-nav-bar" *ngIf="navBarRequired && (isXSmall$ | async) === false" [hidden]="!isShowNavbar" [mode]="'top'"></ws-app-nav-bar>
+<ws-widget-grid-layout [widgetData]="widgetData" [switchDesign]="true">
+</ws-widget-grid-layout>

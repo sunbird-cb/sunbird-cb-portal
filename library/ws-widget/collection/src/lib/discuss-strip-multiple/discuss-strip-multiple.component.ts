@@ -50,6 +50,7 @@ export class DiscussStripMultipleComponent extends WidgetBaseComponent
   OnDestroy,
   NsWidgetResolver.IWidgetData<NsDiscussStripNewMultiple.IDiscussMultiple> {
   @Input() widgetData!: NsDiscussStripNewMultiple.IDiscussMultiple
+  @Input() switchDesign: boolean = false;
   @HostBinding('id')
   public id = `ws-discuss-strip-multiple'_${Math.random()}`
   stripsResultDataMap: { [key: string]: IStripUnitContentData } = {}

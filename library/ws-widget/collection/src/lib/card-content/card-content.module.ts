@@ -20,7 +20,7 @@ import { ProfileImageModule } from '../_common/profile-image/profile-image.modul
 import { UserImageModule } from '../_common/user-image/user-image.module'
 import { CardContentComponent } from './card-content.component'
 import { BtnKbAnalyticsModule } from '../btn-kb-analytics/btn-kb-analytics.module'
-
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 @NgModule({
   declarations: [CardContentComponent],
   imports: [
@@ -56,6 +56,7 @@ import { BtnKbAnalyticsModule } from '../btn-kb-analytics/btn-kb-analytics.modul
     ProfileImageModule,
     BtnContentFeedbackV2Module,
     BtnKbAnalyticsModule,
+    NgxSkeletonLoaderModule
   ],
   entryComponents: [CardContentComponent],
   exports: [CardContentComponent],
