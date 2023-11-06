@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router'
 import { ContentStripMultipleComponent } from './content-strip-multiple.component'
 import { HorizontalScrollerModule } from '@sunbird-cb/utils'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
-import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import {
   MatButtonModule,
   MatIconModule,
@@ -26,8 +25,7 @@ import {
     MatTooltipModule,
     MatProgressSpinnerModule,
     MatChipsModule,
-    MatCardModule,
-    NgxSkeletonLoaderModule
+    MatCardModule
   ],
   entryComponents: [ContentStripMultipleComponent],
   exports: [ContentStripMultipleComponent]

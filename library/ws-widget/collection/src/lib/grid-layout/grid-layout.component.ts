@@ -39,7 +39,6 @@ export class GridLayoutComponent extends WidgetBaseComponent
     ) {
       super()
     }
-  @Input() switchDesign:any;
   @Input() widgetData!: IGridLayoutDataMain
   containerClass = ''
   processed: IGridLayoutProcessedData[][] = []

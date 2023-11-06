@@ -12,7 +12,6 @@ import { EventService, WsEvents } from '@sunbird-cb/utils'
 export class SlidersComponent extends WidgetBaseComponent
   implements OnInit, NsWidgetResolver.IWidgetData<ICarousel[]> {
   @Input() widgetData!: ICarousel[]
-  @Input() switchDesign: boolean = false;
   @HostBinding('id')
   public id = `banner_${Math.random()}`
   currentIndex = 0
@@ -26,7 +25,6 @@ export class SlidersComponent extends WidgetBaseComponent
     this.reInitiateSlideInterval()
   }
   reInitiateSlideInterval() {
-    console.log('widgetData-->',this.widgetData);
     if (this.widgetData.length > 1) {
       try {
         if (this.slideInterval) {

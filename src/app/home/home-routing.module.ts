@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { WebComponent } from './web/web.component'
+import { HomeComponent } from './home/home.component'
 
 const routes: Routes = [
   {
     path: '',
-    component: WebComponent
+    component: HomeComponent
   }
 ]
 @NgModule({
@@ -15,4 +15,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [],
 })
-export class WebRoutingModule { }
+export class HomeRoutingModule { }

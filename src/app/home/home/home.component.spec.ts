@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WebComponent } from './web.component';
+import { WebComponent } from './home.component';
 
 describe('WebComponent', () => {
   let component: WebComponent;

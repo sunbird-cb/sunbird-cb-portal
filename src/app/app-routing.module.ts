@@ -700,7 +700,7 @@ const routes: Routes = [
   },
   {
     path: 'page/home',
-    loadChildren: () => import('./web/web.module').then(m => m.WebModule),
+    loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
     data: {
       pageType: 'page',
       pageKey: 'id',

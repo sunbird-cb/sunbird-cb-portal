@@ -53,7 +53,6 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
   OnDestroy,
   NsWidgetResolver.IWidgetData<NsContentStripMultiple.IContentStripMultiple> {
   @Input() widgetData!: NsContentStripMultiple.IContentStripMultiple
-  @Input() switchDesign: boolean = false;
   @HostBinding('id')
   public id = `ws-strip-miltiple_${Math.random()}`
   stripsResultDataMap!: { [key: string]: IStripUnitContentData }
@@ -1118,9 +1117,6 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     } else if (results && results.length > 0) {
       this.contentAvailable = true
     }
-
-    console.log('this.widgetData',this.widgetData);
-    console.log('stripsResultDataMap,', this.stripsResultDataMap);
   }
   private checkParentStatus(fetchStatus: TFetchStatus, stripWidgetsCount: number): void {
     if (fetchStatus === 'done' && !stripWidgetsCount) {

@@ -37,8 +37,7 @@
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "src/styles",
-                "src/themes"
+                "src/styles"
               ]
             },
             "styles": [
@@ -51,8 +50,8 @@
               "src/styles/styles.scss",
               "node_modules/shepherd.js/dist/css/shepherd.css",
               {
-                "input": "src/themes/theme-igot.scss",
-                "bundleName": "theme-igot",
+                "input": "src/themes/theme-igot-new.scss",
+                "bundleName": "theme-igot-new",
                 "lazy": true
               },
               "node_modules/pdfjs-dist/web/pdf_viewer.css",
@@ -533,4 +532,5 @@
   "cli": {
     "analytics": "0960077c-cd40-4a38-a76c-e63878df5326"
   }
+  
 }

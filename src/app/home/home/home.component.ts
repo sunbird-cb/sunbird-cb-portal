@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'ws-web',
-  templateUrl: './web.component.html',
-  styleUrls: ['./web.component.scss']
+  selector: 'ws-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
-export class WebComponent implements OnInit {
+export class HomeComponent implements OnInit {
   widgetData = {};
   sliderData = {};
   contentStripData = {};

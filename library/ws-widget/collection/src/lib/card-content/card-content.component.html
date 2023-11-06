@@ -1,5 +1,4 @@
 <!--  -->
-
 <ng-container *ngIf="widgetData && (((widgetData?.deletedMode || 'none') === 'hide' && !!!isLiveOrMarkForDeletion)
 ? false
 : !((widgetData?.intranetMode || 'none') === 'hide' && !!showIntranetContent))"
@@ -349,8 +348,7 @@
           [progressType]="'percentage'">
         </ws-widget-content-progress>
         </ng-container> -->
-        <mat-card-content>
-          
+        <mat-card-content>          
           <a (click)="raiseTelemetry(); $event.stopPropagation()" [routerLink]="(widgetData.content | pipeContentRoute).url"
             [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" aria-label="Content"
             i18n-aria-label>
@@ -829,26 +827,20 @@
           aria-label="Content" i18n-aria-label="Content | Click to view"> -->
         <div style="position: relative; z-index: 1;">
           <ng-container *ngIf="widgetData.content.posterImage">
-            <!-- <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" loading="lazy" style="position: absolute; z-index: 2;"
+            <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" loading="lazy" style="position: absolute; z-index: 2;"
             class="card-img ws-mat-primary-lite-background"
-            [alt]="widgetData.content.name" /> -->
-            <ngx-skeleton-loader count="2" appearance="circle" animation="pulse">
-            </ngx-skeleton-loader>
+            [alt]="widgetData.content.name" />
           </ng-container>
           <ng-container *ngIf="!widgetData.content.posterImage">
             <ng-container *ngIf="widgetData.content.appIcon; else defaultImg">
-              <!-- <img mat-card-image [src]="widgetData.content.appIcon | pipePublicURL" loading="lazy" style="position: absolute; z-index: 2;"
+              <img mat-card-image [src]="widgetData.content.appIcon | pipePublicURL" loading="lazy" style="position: absolute; z-index: 2;"
               class="card-img ws-mat-primary-lite-background"  [wsUtilsDefaultThumbnail]="defaultThumbnail"
-              [alt]="widgetData.content.name" /> -->
-              <ngx-skeleton-loader count="2" appearance="circle" animation="pulse">
-              </ngx-skeleton-loader>
+              [alt]="widgetData.content.name" />
             </ng-container>
             <ng-template #defaultImg>
-              <!-- <img mat-card-image [src]="defaultThumbnail" loading="lazy" style="position: absolute; z-index: 2;"
+              <img mat-card-image [src]="defaultThumbnail" loading="lazy" style="position: absolute; z-index: 2;"
               class="card-img ws-mat-primary-lite-background"
-              [alt]="widgetData.content.name" /> -->
-              <ngx-skeleton-loader count="2" appearance="circle" animation="pulse">
-              </ngx-skeleton-loader>
+              [alt]="widgetData.content.name" />
             </ng-template>
           </ng-container>
 
