@@ -54,7 +54,7 @@ import { BtnKbAnalyticsModule } from '../btn-kb-analytics/btn-kb-analytics.modul
     BtnChannelAnalyticsModule,
     ProfileImageModule,
     BtnContentFeedbackV2Module,
-    BtnKbAnalyticsModule
+    BtnKbAnalyticsModule,
   ],
   entryComponents: [CardContentComponent],
   exports: [CardContentComponent],

@@ -25,7 +25,7 @@ import {
     MatTooltipModule,
     MatProgressSpinnerModule,
     MatChipsModule,
-    MatCardModule
+    MatCardModule,
   ],
   entryComponents: [ContentStripMultipleComponent],
   exports: [ContentStripMultipleComponent]

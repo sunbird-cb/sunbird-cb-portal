@@ -39,6 +39,7 @@ export class GridLayoutComponent extends WidgetBaseComponent
     ) {
       super()
     }
+    
   @Input() widgetData!: IGridLayoutDataMain
   containerClass = ''
   processed: IGridLayoutProcessedData[][] = []

@@ -348,7 +348,7 @@
           [progressType]="'percentage'">
         </ws-widget-content-progress>
         </ng-container> -->
-        <mat-card-content>          
+        <mat-card-content>
           <a (click)="raiseTelemetry(); $event.stopPropagation()" [routerLink]="(widgetData.content | pipeContentRoute).url"
             [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" aria-label="Content"
             i18n-aria-label>
