@@ -1,6 +1,6 @@
 import { FullscreenOverlayContainer, OverlayContainer } from '@angular/cdk/overlay'
 import { APP_BASE_HREF, PlatformLocation } from '@angular/common'
-import { HttpClientJsonpModule, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
+import { HttpClient, HttpClientJsonpModule, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { APP_INITIALIZER, Injectable, NgModule, ErrorHandler } from '@angular/core'
 import {
   GestureConfig,
@@ -81,11 +81,13 @@ import { WelcomeUserResolverService } from './services/welcome-user-resolver.ser
 import { PublicTocModule } from './routes/public/public-toc/public-toc.module'
 import { PublicRequestModule } from './routes/public/public-request/public-request.module'
 import { AppTourComponent } from './component/app-tour/app-tour.component'
-import {GuidedTourModule, GuidedTourService} from 'cb-tour-guide'
+import { GuidedTourModule, GuidedTourService } from 'cb-tour-guide'
 import { AppTourVideoComponent } from './component/app-tour-video/app-tour-video.component'
 import { AppChatbotModule } from './component/app-chatbot/app-chatbot.module'
 import { AppHierarchyResolverService } from './services/app-hierarchy-resolver.service'
 import { AppEnrollmentResolverService } from './services/app-enrollment-resolver.service'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -105,6 +107,11 @@ const appInitializer = (initSvc: InitService, logger: LoggerService) => async ()
 
 const getBaseHref = (platformLocation: PlatformLocation): string => {
   return platformLocation.getBaseHrefFromDOM()
+}
+
+// tslint:disable-next-line:function-name
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http)
 }
 
 // tslint:disable-next-line: max-classes-per-file
@@ -129,7 +136,6 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PublicLoginWGComponent,
     AppTourVideoComponent,
     AppTourComponent,
-
   ],
   imports: [
     FormsModule,
@@ -182,6 +188,13 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     AppChatbotModule,
     DiscussionUiModule.forRoot(ConfigService),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+    },
+  }),
   ],
   exports: [
     TncComponent,
@@ -228,7 +241,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     { provide: OverlayContainer, useClass: FullscreenOverlayContainer },
     { provide: HAMMER_GESTURE_CONFIG, useClass: HammerConfig },
     { provide: ErrorHandler, useClass: GlobalErrorHandlingService },
-    GuidedTourService
+    GuidedTourService,
   ],
 })
 export class AppModule { }

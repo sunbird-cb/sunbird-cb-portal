@@ -60,6 +60,7 @@ import { ShowHideToolTipDirective } from './directives/show-hide-tool-tip.direct
 import { StatusTrackComponent } from './components/status-track/status-track.component'
 import { FeedbackFormComponent } from './components/feedback-form/feedback-form.component'
 import { StatusContentDisplayComponent } from './components/status-content-display/status-content-display.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [
@@ -173,6 +174,7 @@ import { StatusContentDisplayComponent } from './components/status-content-displ
     StatusTrackComponent,
     FeedbackFormComponent,
     StatusContentDisplayComponent,
+    TranslateModule,
   ],
   providers: [
     ApiService,

@@ -2,6 +2,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Component, OnInit } from '@angular/core'
 import { NavigationEnd, Router } from '@angular/router'
+import { TranslateService } from '@ngx-translate/core'
 import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 // tslint:disable-next-line
@@ -28,7 +29,10 @@ export class AppFooterComponent implements OnInit {
     private discussUtilitySvc: DiscussUtilsService,
     private router: Router,
     private http: HttpClient,
+    private translate: TranslateService,
   ) {
+    this.translate.setDefaultLang('en')
+    this.translate.use('hi')
     this.environment = environment
     if (this.configSvc.restrictedFeatures) {
       if (this.configSvc.restrictedFeatures.has('termsOfUser')) {
