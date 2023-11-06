@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment: IEnvironment = {
-  name: (window as { [key: string]: any })['env']['name'],
+  name: (window as { [key: string]: any })['env']['name'] || '',
   production: false,
   sitePath: (window as { [key: string]: any })['env']['sitePath'] || '',
   organisation: (window as { [key: string]: any })['env']['organisation'] || '',

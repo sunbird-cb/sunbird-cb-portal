@@ -45,7 +45,7 @@ import { AppTocResolverService } from '@ws/app/src/lib/routes/app-toc/resolvers/
 import { RootComponent } from './component/root/root.component'
 import { LoginComponent } from './component/login/login.component'
 import { AppFooterComponent } from './component/app-footer/app-footer.component'
-import { AppNavBarComponent } from './component/app-nav-bar/app-nav-bar.component'
+// import { AppNavBarComponent } from './component/app-nav-bar/app-nav-bar.component'
 import { AppPublicNavBarComponent } from './component/app-public-nav-bar/app-public-nav-bar.component'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
@@ -88,7 +88,7 @@ import { AppHierarchyResolverService } from './services/app-hierarchy-resolver.s
 import { AppEnrollmentResolverService } from './services/app-enrollment-resolver.service'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
-
+import { HeaderModule } from './header/header.module';
 @Injectable()
 export class HammerConfig extends GestureConfig {
   buildHammer(element: HTMLElement) {
@@ -112,7 +112,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
   declarations: [
     RootComponent,
     LoginComponent,
-    AppNavBarComponent,
+    // AppNavBarComponent,
     AppPublicNavBarComponent,
     TncComponent,
     AppIntroComponent,
@@ -128,8 +128,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PublicLoginWComponent,
     PublicLoginWGComponent,
     AppTourVideoComponent,
-    AppTourComponent,
-
+    AppTourComponent
   ],
   imports: [
     FormsModule,
@@ -182,9 +181,11 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     AppChatbotModule,
     DiscussionUiModule.forRoot(ConfigService),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    HeaderModule
   ],
   exports: [
     TncComponent,
+    HeaderModule
   ],
   bootstrap: [RootComponent],
   entryComponents: [

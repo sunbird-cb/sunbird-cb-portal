@@ -1,0 +1,31 @@
+.fix-ww {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1202px;
+    clear: both;
+}
+
+.left {
+    width: 40%;
+    float: left;
+    min-height: 200px;
+}
+
+.right {
+    width: 60%;
+    float: right;
+    min-height: 200px;
+}
+
+.flex-align {
+    display: flex;
+}
+
+.bg-info {
+    width: 40%;
+}
+
+.bg-primary {
+    width: 60%;
+}
+
