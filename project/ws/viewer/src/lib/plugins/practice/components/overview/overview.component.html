@@ -40,7 +40,7 @@
   </mat-card>
 </div> -->
 <div class="flex auto-w ws-mat-primary-lite-background-important box-height">
-  <div class="flex flex-1 max-w">
+  <div class="flex flex-1 max-w small-screen">
       <div class="flex flex-1 flex-column flex-center center banner-text">
           <span class="mat-title mat-body-2 ws-mat-black60-text padding-s attempt-text text-block">Now, it’s time for a quick assessment.</span>
       </div>
@@ -48,7 +48,7 @@
   </div>
   <div class="flex flex-1 flex-column margin-left-xl ws-mat-accent-border border-custom assessment_summary_box">
     <div class="flex flex-1 flex-column">
-      <span class="mat-headline text-justify margin-bottom-xl">{{learningObjective | pipeLimitTo: 300 }}</span>
+      <span class="mat-headline margin-bottom-xl">{{learningObjective | pipeLimitTo: 300 }}</span>
       <a *ngIf="canAttempt?.attemptsMade < canAttempt?.attemptsAllowed" mat-button (click)="overviewed('start')"
         [class.spinner]="loading" [disabled]="loading" class="ws-mat-primary-background text-white m-w padding-xs">
         <span class="padding-xs" i18n>Start assessment now</span>
