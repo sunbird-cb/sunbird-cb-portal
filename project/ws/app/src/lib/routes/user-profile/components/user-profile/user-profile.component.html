@@ -137,10 +137,10 @@
                         </mat-form-field>
                         <!-- <mat-form-field appearance="outline" class="margin-top-xs w-full">
                           <input id="country" matInput tab-directive type="text" placeholder="Nationality"
-                            i18n-placeholder="Nationality" formControlName="nationality" 
+                            i18n-placeholder="Nationality" formControlName="nationality"
                             [matAutocomplete]="nationalityAutocomplete" i18n-aria-label aria-label="Nationality"
                             #nationality i18n-aria-label aria-label="Nationality Field input" maxlength="30" />
-                            
+
                           <mat-error [hidden]="false" i18n="Nationality Error|Explains Nationality is required"
                             *ngIf="createUserForm?.controls['nationality'].errors?.required" i18n-aria-label
                             aria-label="Nationality is mandatory">
@@ -153,11 +153,11 @@
                         </mat-form-field> -->
                         <!-- <mat-autocomplete #nationalityAutocomplete="matAutocomplete" autoActiveFirstOption="true"
                           i18n-aria-label aria-label="Nationality list autocomplete"> -->
-                        <!-- <mat-option [value]="Indian" 
+                        <!-- <mat-option [value]="Indian"
                           i18n-aria-label aria-label="Nationality list autocomplete option">
                           Indian
                         </mat-option> -->
-                        <!-- <mat-option *ngFor="let option of masterNationality | async" [value]="option.name" 
+                        <!-- <mat-option *ngFor="let option of masterNationality | async" [value]="option.name"
                             i18n-aria-label aria-label="Nationality list autocomplete option">
                             {{ option.name }}
                           </mat-option>
@@ -550,6 +550,25 @@
                         Please enter a valid 6 digit pincode
                       </mat-error>
                     </mat-form-field>
+                  </div>
+
+                  <div class="input-wrapper margin-top-l">
+                    <div class="flex flex-1 flex-middle" [ngClass]="{ disable: !isAllowed('verifiedKarmayogi') }">
+                      <mat-checkbox aria-label="Get Karmayogi badge" id="kb-badge" formControlName="verifiedKarmayogi" #verifiedKarmayogi
+                        [checked]="karmayogiBadge" (change)="verifiedKarmayogiCheck()" i18n-aria-label
+                        aria-label="Get Karmayogi badge checkbox">
+                        <label class="margin-left-xs margin-remove-bottom" i18n-aria-label
+                          aria-label="Get Karmayogi badge checkbox label"  matTooltipPosition="right"
+                          matTooltip="To earn the Karmayogi Badge, ensure that your professional details are updated. Once this information is verified by the MDO Admin, you will be eligible for the badge.">
+                          Earn your Karmayogi Badge today
+                        </label>
+                      </mat-checkbox>
+                    </div>
+                  </div>
+                  <div class="input-wrapper margin-top-l">
+                    <div class="flex flex-middle" [ngClass]="{ disable: !isAllowed('verifiedKarmayogi') }">
+                      <span class="txt" *ngIf="!isAllowed('verifiedKarmayogi')">{{inReview}}</span>
+                    </div>
                   </div>
                   <!-- <div class="input-wrapper margin-top-s">
                     <mat-checkbox [checked]="tncAccepted" (change)="tncCheck()"></mat-checkbox>
@@ -1183,6 +1202,16 @@
                         Pin Code is mandatory
                       </mat-error>
                     </mat-form-field>
+                  </div>
+
+                  <div class="item1">
+                      <label class="margin-remove-bottom form-label">Tags</label>
+                      <mat-chip-list #chipListTags *ngIf="selectedtags && selectedtags.length">
+                        <mat-chip *ngFor="let tag of selectedtags" [selectable]="true" [removable]="true">
+                          {{ tag }}
+                        </mat-chip>
+                      </mat-chip-list>
+                      <p *ngIf="!selectedtags || !selectedtags.length" class="margin-top-xs mat-body-2">No tags available</p>
                   </div>
                 </div>
               </div>

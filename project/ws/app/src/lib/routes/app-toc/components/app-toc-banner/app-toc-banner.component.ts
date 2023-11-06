@@ -233,8 +233,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   get getBatchDuration() {
-    const startDate = dayjs(this.batchControl.value.startDate)
-    const endDate = dayjs(this.batchControl.value.endDate)
+    const startDate = dayjs(dayjs(this.batchControl.value.startDate).format('YYYY-MM-DD'))
+    const endDate = dayjs(dayjs(this.batchControl.value.endDate).format('YYYY-MM-DD'))
     // adding 1 to include the start date
     return (endDate.diff(startDate, 'days') + 1)
   }
@@ -274,7 +274,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.getLearningUrls()
       this.setBatchControl()
     }
-    if (this.resumeData && this.content) {
+    if (this.resumeData && this.resumeData.length > 0 && this.content) {
       let resumeDataV2: any
 
       if (this.content.completionPercentage === 100) {
@@ -888,41 +888,43 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
    getBatchUserCount(batchData: any) {
-    const req = {
-      serviceName: 'blendedprogram',
-      applicationStatus: '',
-      applicationIds: [
-          batchData.batchId,
-      ],
-      limit: 100,
-      offset: 0,
-    }
-    const usercount = {
-      enrolled: 0,
-      totalApplied: 0,
-      rejected: 0,
-    }
-    this.contentSvc.fetchBlendedUserCOUNT(req).then((res: any) => {
-      if (res.result && res.result.data) {
-        res.result.data.forEach((ele: any) => {
-          if (ele.currentStatus === 'APPROVED') {
-            usercount.enrolled =  ele.statusCount
-          } else if (ele.currentStatus === 'REJECTED') {
-            usercount.rejected = ele.statusCount
-          }
-          if (ele.currentStatus !== 'WITHDRAWN') {
-            usercount.totalApplied =  usercount.totalApplied + ele.statusCount
-          }
-        })
-        if (this.selectedBatchData) {
-          this.selectedBatchData = {
-            ...this.selectedBatchData,
-            userCount: usercount,
-          }
-        }
-        this.tocSvc.getSelectedBatchData(this.selectedBatchData)
+    if (batchData && batchData.batchId) {
+      const req = {
+        serviceName: 'blendedprogram',
+        applicationStatus: '',
+        applicationIds: [
+            batchData.batchId,
+        ],
+        limit: 100,
+        offset: 0,
       }
-    })
+      const usercount = {
+        enrolled: 0,
+        totalApplied: 0,
+        rejected: 0,
+      }
+      this.contentSvc.fetchBlendedUserCOUNT(req).then((res: any) => {
+        if (res.result && res.result.data) {
+          res.result.data.forEach((ele: any) => {
+            if (ele.currentStatus === 'APPROVED') {
+              usercount.enrolled =  ele.statusCount
+            } else if (ele.currentStatus === 'REJECTED') {
+              usercount.rejected = ele.statusCount
+            }
+            if (ele.currentStatus !== 'WITHDRAWN') {
+              usercount.totalApplied =  usercount.totalApplied + ele.statusCount
+            }
+          })
+          if (this.selectedBatchData) {
+            this.selectedBatchData = {
+              ...this.selectedBatchData,
+              userCount: usercount,
+            }
+          }
+          this.tocSvc.getSelectedBatchData(this.selectedBatchData)
+        }
+      })
+    }
   }
 
   private getResumeDataFromList(type?: string) {

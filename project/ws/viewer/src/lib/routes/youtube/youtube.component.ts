@@ -10,6 +10,7 @@ import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, ValueService } from '@sunbird-cb/utils'
 import { ActivatedRoute } from '@angular/router'
 import { Platform } from '@angular/cdk/platform'
+import { ViewerUtilService } from '../../viewer-util.service'
 
 @Component({
   selector: 'viewer-youtube',
@@ -36,6 +37,7 @@ export class YoutubeComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private valueSvc: ValueService,
+    private viewerSvc: ViewerUtilService,
     private contentSvc: WidgetContentService,
     private platform: Platform,
     private configSvc: ConfigurationsService
@@ -58,12 +60,11 @@ export class YoutubeComponent implements OnInit, OnDestroy {
         if (this.youtubeData && this.youtubeData.identifier) {
           if (!this.forPreview && this.activatedRoute.snapshot.queryParams.collectionId) {
             await this.fetchContinueLearning(
-              this.activatedRoute.snapshot.queryParams.collectionId,
               this.youtubeData.identifier,
             )
           } else {
             if (!this.forPreview) {
-              await this.fetchContinueLearning(this.youtubeData.identifier, this.youtubeData.identifier)
+              await this.fetchContinueLearning( this.youtubeData.identifier)
             }
           }
         }
@@ -119,7 +120,7 @@ export class YoutubeComponent implements OnInit, OnDestroy {
     }
   }
 
-  async fetchContinueLearning(collectionId: string, videoId: string): Promise<boolean> {
+  async fetchContinueLearning(videoId: string): Promise<boolean> {
     return new Promise(resolve => {
       // this.contentSvc.fetchContentHistory(collectionId).subscribe(
       //   data => {
@@ -143,11 +144,13 @@ export class YoutubeComponent implements OnInit, OnDestroy {
       if (this.configSvc.userProfile) {
         userId = this.configSvc.userProfile.userId || ''
       }
+      const requestCourse = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
+        this.activatedRoute.snapshot.queryParams.batchId, videoId)
       const req: NsContent.IContinueLearningDataReq = {
         request: {
           userId,
-          batchId: this.batchId,
-          courseId: collectionId || '',
+          batchId: requestCourse.batchId,
+          courseId: requestCourse.courseId || '',
           contentIds: [],
           fields: ['progressdetails'],
         },

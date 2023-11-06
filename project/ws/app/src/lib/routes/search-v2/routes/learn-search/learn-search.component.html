@@ -137,7 +137,7 @@
                                     <!-- <li>Health social science</li> -->
                                     <li *ngIf="content.lastUpdatedOn">
                                         <!-- <img src="/assets/icons/content/separator.svg">   -->
-                                        {{ content.lastUpdatedOn | date: "MMM yyyy" }}
+                                        {{ content.lastUpdatedOn | date: 'dd-MMM-yyyy' }}
                                     </li>
                                     <li *ngIf="content.duration">
                                         <img src="/assets/icons/content/separator.svg"> {{ content.duration |
@@ -183,7 +183,7 @@
             <ng-container>
                 <div>
                     <ws-app-search-filters *ngIf="facets && facets.length > 0" [urlparamFilters]="paramFilters"
-                        [newfacets]="facets" (appliedFilter)="applyFilter($event)"></ws-app-search-filters>
+                        [newfacets]="facets" (appliedFilter)="applyFilter($event)" [karmayogiBadge]="VeifiedKarmayogi"></ws-app-search-filters>
                 </div>
             </ng-container>
             <!-- </div>

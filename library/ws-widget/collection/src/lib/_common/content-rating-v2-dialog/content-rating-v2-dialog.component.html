@@ -52,6 +52,11 @@
                     </mat-form-field>
                 </div>
             </section>
+
+            <section class="w-full mb-5" *ngIf="!formDisabled">
+                <mat-checkbox [color]="primary" class="profane-radio-button mat-body-2" formControlName="recommend" i18n>Recommend this course to your friends</mat-checkbox>
+            </section>
+
             <mat-dialog-actions class="custom margin-remove-bottom no-padding" align="end">
                 <!-- <button mat-stroked-button color="accent" type="button" [mat-dialog-close]="true"
                     class="ws-mat-accent-border flex-auto-display margin-right-xs">

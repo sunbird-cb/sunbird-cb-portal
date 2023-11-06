@@ -68,11 +68,11 @@
                   <!-- <mat-hint>Please enter a government email ID</mat-hint> -->
                   <mat-error [hidden]="false" *ngIf="requestForm?.controls['email'].errors?.required"
                     i18n="Email Error|Explains name is required">
-                    Please enter your email ID
+                    Please enter your email address
                   </mat-error>
                   <mat-error [hidden]="false" *ngIf="requestForm?.controls['email'].errors?.pattern"
-                    i18n-aria-label aria-label="Please enter a valid email ID">
-                    Please enter a valid email ID
+                    i18n-aria-label aria-label="Please enter a valid email address">
+                    Please enter a valid email address
                   </mat-error>
                   <div *ngIf="emailLengthVal" class="email-error"
                     i18n="Email Error|Explains character validation">
@@ -86,7 +86,7 @@
                     <span class="ws-mat-black60-text">Please enter a valid email ID  </span>
                   </div>
                 </div>
-                
+
                 <div *ngIf="!isEmailVerified" class="flex flex-1 margin-top-s justify-end">
                   <button *ngIf="!otpEmailSend" mat-raised-button type="button" (click)="sendOtpEmail()"
                     class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text btn-responsive" [disabled]="requestForm?.email?.invalid">
@@ -96,7 +96,7 @@
                   </button>
                   <div *ngIf="otpEmailSend" class="flex flex-1 flex-column">
                       <mat-form-field appearance="outline" class="margin-top-xs w-full">
-                        <input  id="emailOTP" #emailotp type="password"
+                        <input  id="emailOTP" #emailotp type="password" minlength="4" maxlength="6"
                           matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input" onKeyPress="if(this.value.length === 8) return false;" autocomplete="new-password">
                         <mat-hint *ngIf="timeLeftforOTPEmail > 0 ">
                           <span>Resend OTP after {{timeLeftforOTPEmail | pipeDurationTransform: 'hms2M'}}</span>
@@ -117,7 +117,7 @@
                       </div>
                   </div>
                 </div>
-                
+
               </div>
 
               <div class="input-wrapper mobile-wrapper margin-top-l">
@@ -186,7 +186,7 @@
                   </label>
                   <mat-form-field appearance="outline" class="margin-top-s w-full">
                     <input id="position" matInput type="text" placeholder="Enter your position"
-                      i18n-placeholder="position" formControlName="position" autocomplete="off" 
+                      i18n-placeholder="position" formControlName="position" autocomplete="off"
                       i18n-aria-label aria-label="Position" #position maxlength="150" />
                     <mat-error [hidden]="false" i18n="Position Error | Explains position is required"
                       *ngIf="requestForm?.controls['position'].errors?.required" i18n-aria-label

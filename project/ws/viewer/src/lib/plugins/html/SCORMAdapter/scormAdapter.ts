@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api';
 import { NsContent } from '@sunbird-cb/collection'
 import * as dayjs from 'dayjs'
+import { ViewerUtilService } from '../../../viewer-util.service'
 const API_END_POINTS = {
   SCROM_ADD_UPDTE: '/apis/protected/v8/scrom/add',
   SCROM_FETCH: '/apis/protected/v8/scrom/get',
@@ -24,7 +25,8 @@ export class SCORMAdapterService {
     private http: HttpClient,
     handler: HttpBackend,
     private activatedRoute: ActivatedRoute,
-    private configSvc: ConfigurationsService
+    private configSvc: ConfigurationsService,
+    private viewerSvc: ViewerUtilService
   ) {
     this.http = new HttpClient(handler)
   }
@@ -269,6 +271,8 @@ export class SCORMAdapterService {
 
   addDataV3(reqDetails: any, contentId?: string) {
     let req: any
+    this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId, 
+      this.activatedRoute.snapshot.queryParams.batchId, this.contentId)
     if (this.configSvc.userProfile) {
       req = {
         request: {
@@ -282,7 +286,6 @@ export class SCORMAdapterService {
               lastAccessTime: dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss:SSSZZ'),
               completionPercentage: reqDetails.completionPercentage,
               progressdetails: {...reqDetails.progressDetails},
-  
             },
           ],
         },

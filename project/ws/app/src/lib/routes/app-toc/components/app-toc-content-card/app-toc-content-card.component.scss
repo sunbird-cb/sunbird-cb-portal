@@ -59,6 +59,9 @@ span.optional-span {
 .tab:focus {
   outline: 1px solid !important;
 }
+.custom-chevron:focus {
+  outline: 0px solid !important;
+}
 
 .resource-container {
   display: flex;
@@ -294,9 +297,23 @@ span.optional-span {
   }
 }
 
+.certificate-txt {
+  padding: 0 20px;
+  color: #0273b6;
+  font-weight: 700;
+}
+
 
 // @media only screen and (max-width:469px) {
 // .children-container {
 // margin: $size-s 0 $size-m $size-s;
 // }
 // }
+
+.view-certificate-wrapper {
+  display: flex;
+  border-radius: 4px;
+  border: 1.5px solid rgba(0,116,182, 1);
+  opacity: 1;
+  padding: 8px;
+}
