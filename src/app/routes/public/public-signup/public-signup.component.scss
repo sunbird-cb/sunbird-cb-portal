@@ -62,7 +62,7 @@
       }
     }
 
-    
+
 
     .left_container {
       padding: 5rem 6rem;
@@ -119,7 +119,9 @@
   //   padding-top: 0!important;
   // }
 
-
+  ::ng-deep.theme-igot.day-mode .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+    background-color: #0074b6!important;
+  }
 
 
 .slideshow-container {
@@ -830,7 +832,7 @@
   display: inline-block;
   padding-top: 18%;
   margin-left: 10px;
- 
+
 }
 
 .tooltip .tooltiptext {
@@ -842,7 +844,7 @@
   border-radius: 6px;
   padding: 5px 0;
   right: 0%;
-  
+
   /* Position the tooltip */
   position: absolute;
   z-index: 1;
