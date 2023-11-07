@@ -107,7 +107,7 @@ export class PublicRequestComponent implements OnInit {
         email: this.userform.email ? this.userform.email : '',
         mobile: this.userform.mobile ? this.userform.mobile : '',
         organisation: this.userform.organisation ? this.userform.organisation : '',
-        domain: this.userform.domain ? this.userform.domain : '',
+        domain: this.userform.domain ? this.modifyDomain(this.userform.domain) : '',
         addDetails: this.userform.addDetails ? this.userform.addDetails : '',
         confirmBox: this.userform.confirmBox ? this.userform.confirmBox : '',
       })
@@ -123,6 +123,13 @@ export class PublicRequestComponent implements OnInit {
 
     this.onPhoneChange()
     this.onEmailChange()
+  }
+
+  modifyDomain(domainName: string) {
+    if (domainName.includes("@")) {
+      return domainName.replace("@", '')
+    }
+    return domainName
   }
 
   emailVerification(emailId: string) {
@@ -428,7 +435,7 @@ export class PublicRequestComponent implements OnInit {
     } else if (this.requestType === 'Domain') {
       this.formobj = {
         toValue: {
-          domain: this.requestForm.value.domain,
+          domain: this.modifyDomain(this.requestForm.value.domain),
         },
         fieldKey: reqType,
         description: this.requestForm.value.addDetails || '',
