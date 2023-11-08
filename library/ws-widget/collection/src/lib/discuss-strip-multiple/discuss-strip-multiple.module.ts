@@ -28,6 +28,6 @@ import {
     MatCardModule,
   ],
   entryComponents: [DiscussStripMultipleComponent],
-  exports: [DiscussStripMultipleComponent]
+  exports: [DiscussStripMultipleComponent],
 })
 export class DiscussStripMultipleModule { }
