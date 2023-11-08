@@ -49,6 +49,7 @@ export class KnowledgeDetailComponent implements OnInit {
         this.resource = []
       }
     })
+
   }
 
   updateResource(resource: NSKnowledgeResource.IResourceData) {

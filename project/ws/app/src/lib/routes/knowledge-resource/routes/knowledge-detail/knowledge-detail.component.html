@@ -1,16 +1,17 @@
 <div class="container-balanced knowledge_box_full margin-top-xl">
 
     <form class="flex-1">
-        <mat-form-field appearance="outline" class="autocomplete-form search_faq_form" color="primary" >
+        <mat-form-field appearance="outline" class="autocomplete-form search_faq_form" color="primary">
             <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
-            <input  [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" type="search" class="ml-2" i18n-placeholder="search content" [placeholder]="'Search'" i18-aria-label aria-label="Query" matInput />
+            <input [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" type="search" class="ml-2"
+                i18n-placeholder="search content" [placeholder]="'Search'" i18-aria-label aria-label="Query" matInput />
         </mat-form-field>
     </form>
 
     <div *ngIf="resource" class="knowledge_box_full">
         <!-- <ws-app-knowledge-card [resource]="resource"></ws-app-knowledge-card> -->
         <div class="flex flex-col w-full">
-            <mat-card  class="padding-m mat-card  margin-bottom-s w-full" role="contentinfo" tabindex="0">
+            <mat-card class="padding-m mat-card  margin-bottom-s w-full" role="contentinfo" tabindex="0">
                 <div class="flex flex-row">
                     <div class="flex flex-1">
                         <p class="mat-body-2 ws-mat-black60-text">
@@ -30,9 +31,11 @@
                         </ng-template>
                     </div> -->
                 </div>
-                
+
                 <mat-card-title>
-                    <a class="mat-h4" i18n role="heading" [routerLink]="['/app/knowledge-resource/all', resource?.id, resource?.type]">{{ resource?.name }}</a>
+                    <a class="mat-h4" i18n role="heading"
+                        [routerLink]="['/app/knowledge-resource/all', resource?.id, resource?.type]">{{ resource?.name
+                        }}</a>
                 </mat-card-title>
 
                 <mat-card-subtitle>
@@ -50,47 +53,85 @@
                 <!-- {{ resource.additionalProperties.totalFiles.length }} //
                 {{ resource.additionalProperties.totalFiles.images }} //
                 {{ resource.additionalProperties.totalFiles.pdf }} // -->
-                <span class="attach_links margin-right-m" *ngIf="resource.additionalProperties.totalFiles.pdf || resource.additionalProperties.totalFiles.pdf > 0">
+
+                <!-- <span class="attach_links margin-right-m"
+                    *ngIf="resource.additionalProperties.totalFiles.pdf && resource.additionalProperties.totalFiles.pdf > 0">
                     <p class="mat-body-2" i18n>
                         <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs">
                         {{ resource?.additionalProperties?.totalFiles?.pdf }}
                     </p>
-                </span>
+                </span> -->
 
-                <span class="attach_links margin-right-s" *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0">
+                <span class="attach_links margin-right-s"
+                    *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0">
                     <p class="mat-body-2">
                         <span *ngFor="let item of resource.additionalProperties.krFiles; index as i">
                             <div class="flex justify-start">
-                                <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>
-                                <a [href]="getUrl(item.url, item.name)" target="_blank" class="download-link margin-right-m">{{getName(item.name)}}</a>
+                                <mat-icon
+                                    class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>
+                                <a [href]="getUrl(item.url, item.name)" target="_blank"
+                                    class="download-link margin-right-m">{{getName(item.name)}}</a>
                             </div>
                         </span>
                     </p>
                 </span>
 
-                <span class="attach_links margin-right-m" *ngIf="resource.additionalProperties.totalFiles.images || resource.additionalProperties.totalFiles.images>0" >
+                <!-- <span class="attach_links margin-right-m"
+                    *ngIf="resource.additionalProperties.totalFiles.images && resource.additionalProperties.totalFiles.images>0">
                     <p class="mat-body-2" i18n>
-                        <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">image</mat-icon>
+                        <mat-icon
+                            class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">image</mat-icon>
                         {{ resource?.additionalProperties?.totalFiles?.images }}
                     </p>
-                </span>
+                </span> -->
 
-                <span class="attach_links margin-right-m" *ngIf="resource.additionalProperties.totalFiles.doc || resource.additionalProperties.totalFiles.doc>0">
+                <!-- <span class="attach_links margin-right-m"
+                    *ngIf="resource.additionalProperties.totalFiles.doc && resource.additionalProperties.totalFiles.doc>0">
                     <p class="mat-body-2" i18n>
-                        <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">description</mat-icon>
+                        <mat-icon
+                            class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">description</mat-icon>
                         {{ resource?.additionalProperties?.totalFiles?.doc }}
                     </p>
-                </span>
+                </span> -->
             </mat-card>
 
-            <ng-container *ngIf="resource.additionalProperties.URL && resource.additionalProperties.URL.length > 0 && resource.additionalProperties.URL !== []">
-                <ng-container  *ngFor="let item of resource.additionalProperties.URL | filter : searchText">           <!-- <div *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0"> -->
-                    <mat-accordion *ngIf="item !== '[]'">
-                        <mat-expansion-panel  class="padding-m mat-card margin-bottom-s w-full">
+            <ng-container
+                *ngIf="resource.additionalProperties.URL && resource.additionalProperties.URL.length > 0 && resource.additionalProperties.URL !== []">
+                <ng-container *ngFor="let item of resource.additionalProperties.URL | filter : searchText">
+                    <!-- <div *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0"> -->
+                    <mat-card *ngIf="item !== '[]'">
+                        <div class="flex flex-row">
+                            <div class="flex margin-right-s">
+                                <a class="flex mat-h3 margin-remove-bottom" i18n role="title">
+                                    <mat-icon
+                                        class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>{{item.name}}
+                                </a>
+                            </div>
+                            <div class="flex flex-row justify-between item_box flex-1">
+                                <div class="flex w-full">
+                                    <input type="text" readonly [value]="item.value" #userinput
+                                        class="w-full url_value border-0">
+                                </div>
+                                <div class="flex flew-row margin-left-s">
+                                    <a class="flex items-center cursor-pointer" (click)="handleNavigate(item.value)">
+                                        <mat-icon
+                                            class="align-bottom ws-mat-default-text margin-right-xs">open_in_new</mat-icon>
+                                    </a>
+
+                                    <a class="flex items-center cursor-pointer" (click)="copyInputMessage(item.value)">
+                                        <mat-icon class="align-bottom ws-mat-default-text">content_copy</mat-icon>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card>
+                    <!-- <mat-accordion *ngIf="item !== '[]'">
+                        <mat-expansion-panel class="padding-m mat-card margin-bottom-s w-full">
                             <mat-expansion-panel-header>
                                 <mat-panel-title class="flex justify-start">
                                     <a class="flex mat-h3 margin-remove-bottom" i18n role="title">
-                                        <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>{{item.name}}
+                                        <mat-icon
+                                            class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>{{item.name}}
                                     </a>
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
@@ -98,21 +139,25 @@
                             <div class="mat-panel-body">
                                 <div class="flex flex-row justify-between item_box ">
                                     <div class="flex w-full">
-                                        <input type="text" readonly [value]="item.value" #userinput class="w-full url_value border-0">
+                                        <input type="text" readonly [value]="item.value" #userinput
+                                            class="w-full url_value border-0">
                                     </div>
                                     <div class="flex flew-row margin-left-s">
-                                        <a class="flex items-center cursor-pointer" (click)="handleNavigate(item.value)">
-                                            <mat-icon class="align-bottom ws-mat-default-text margin-right-xs">open_in_new</mat-icon>
+                                        <a class="flex items-center cursor-pointer"
+                                            (click)="handleNavigate(item.value)">
+                                            <mat-icon
+                                                class="align-bottom ws-mat-default-text margin-right-xs">open_in_new</mat-icon>
                                         </a>
 
-                                        <a class="flex items-center cursor-pointer" (click)="copyInputMessage(item.value)" >
+                                        <a class="flex items-center cursor-pointer"
+                                            (click)="copyInputMessage(item.value)">
                                             <mat-icon class="align-bottom ws-mat-default-text">content_copy</mat-icon>
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         </mat-expansion-panel>
-                    </mat-accordion>
+                    </mat-accordion> -->
                 </ng-container>
             </ng-container>
         </div>
