@@ -133,9 +133,62 @@
   </mat-toolbar>
 </ng-container>
 <ng-template #navbarSide let-item="item">
-  <ng-container *ngIf="item.type === 'widgetButton'" [wsResolverWidget]="item.config"></ng-container>
-  <ws-widget-btn-feature *ngIf="item.type === 'featureButton'" [id]="item.config.actionBtnId" [widgetData]="item.config"
-    [showFixedLength]="true"></ws-widget-btn-feature>
+    <ul class="right-side-nav-items">
+      <li class="download-app-chip" *ngIf="item.type === 'downloadButton'">Download App
+        
+      </li>
+      <!-- <li class="font-icon" *ngIf="item.type === 'fontButton'" (click)="fontContainerFlag=!fontContainerFlag">
+        <img src="/assets/icons/top-nav/Accessibility_icon.svg">
+       <div class="font-container" *ngIf="fontContainerFlag">
+        <span class="smaller-size">A</span>
+        <mat-slider min="1" max="5" step="1" value="1.5">
+          <input matSliderThumb>
+        </mat-slider>
+        <span class="larger-size">A</span>
+       </div>
+      </li> -->
+      <li class="font-icon" *ngIf="item.type === 'fontButton'">
+        <mat-menu #appMenu="matMenu">
+            <span class="smaller-size">A</span>
+            <mat-slider min="1" max="5" step="1" value="1.5">
+              <input matSliderThumb>
+            </mat-slider>
+            <span class="larger-size">A</span>
+        </mat-menu>
+        
+        <div [matMenuTriggerFor]="appMenu">
+          <img src="/assets/icons/top-nav/Accessibility_icon.svg">
+        </div>
+      </li>
+      <li class="help-icon" *ngIf="item.type === 'helpButton'">?</li>
+      <li><ng-container *ngIf="item.type === 'widgetButton'" [wsResolverWidget]="item.config"></ng-container>
+        <!-- <ws-widget-btn-feature *ngIf="item.type === 'featureButton'" [id]="item.config.actionBtnId" [widgetData]="item.config"
+        [showFixedLength]="true"></ws-widget-btn-feature> --></li>
+    </ul>
+  
+    <!-- <div class="download-app-popup" *ngIf="item.type === 'downloadButton'">
+        <div class="left-side">
+          <h2>Download</h2>
+          <h1>iGOT Karmayogi mobile app</h1>
+          <p>Continue your lifelong learning experience anywhere anytime.</p>
+          <div class="app-store-button">
+              <div class="play-store">
+                  <p>Scan to Download</p>
+              </div>
+              <div class="app-store">
+                <p>Scan to Download</p>
+              </div>
+          </div>
+          
+        </div>
+        <div class="right-side">
+            <div class="circle">
+                <div class="vertical-image">
+                  
+                </div>
+            </div>
+        </div>
+    </div> -->
 </ng-template>
 
 <mat-menu #helpMenu="matMenu">

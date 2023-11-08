@@ -3,8 +3,10 @@ import { CommonModule } from '@angular/common';
 import {
   MatIconModule,
   MatToolbarModule,
-  MatMenuModule
+  MatMenuModule,
+  MatSliderModule
 } from '@angular/material'
+import { MatDialogModule} from '@angular/material';
 import { HeaderComponent } from './header/header.component';
 import { AppNavBarComponent } from '../component/app-nav-bar/app-nav-bar.component';
 import { RouterModule } from '@angular/router';
@@ -25,6 +27,8 @@ import { SearchModule } from '@ws/app/src/public-api'
     MatToolbarModule,
     MatIconModule,
     MatMenuModule,
+    MatSliderModule,
+    MatDialogModule,
     BtnFeatureModule,
     ErrorResolverModule,
     TourModule,

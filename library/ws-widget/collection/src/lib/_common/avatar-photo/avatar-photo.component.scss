@@ -26,7 +26,7 @@
 }
 
 .circle-m {
-  border-radius: 10%;
+  border-radius: 50%;
   width: 40px !important;
   height: 40px !important;
   display: flex;
@@ -113,9 +113,9 @@
   }
 }
 .circle-l-xs{
-  border-radius: 4px;
-  width: 24px;
-  height: 24px;
+  border-radius: 50%;
+  width: 29px;
+  height: 29px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -197,4 +197,21 @@
     line-height: $size-xxl;
     letter-spacing: 0.2625px;
   }
+}
+
+.success-checkmark:after {
+  content: "✔";
+  position: absolute;
+  left: 25px;
+  top: 20px;
+  width: 11px;
+  height: 11px;
+  text-align: center;
+  border: 1px solid #1D8923;
+  background: #1D8923;
+  border-radius: 50%;
+  color: #fff;
+  line-height: 11px;
+  text-align: center;
+  font-size: 9px;
 }

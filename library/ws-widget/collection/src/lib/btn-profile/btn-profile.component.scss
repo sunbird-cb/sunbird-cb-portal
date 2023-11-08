@@ -47,7 +47,7 @@ section {
 
     .mat-menu-item {
         line-height: 30px;
-        height: 38px;
+        height: 44px;
         padding: 0 6px;
         font: 400 14px/21px Lato !important
     }
@@ -71,4 +71,9 @@ img.profile-badge {
     /* padding-left: 7px; */
     position: relative;
     float: right;
+}
+
+.font-14-bold {
+    font-size: 14px;
+    font-weight: 700;
 }

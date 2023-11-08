@@ -10,7 +10,7 @@
   </div>
   <div class="w-full search">
     <form (submit)="updateQuery(queryControl.value)">
-      <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'">
+      <mat-form-field class="autocomplete-form" color="primary" [floatLabel]="'never'">
         <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
         <!-- <mat-label>Search</mat-label> -->
         <input type="text" role="combobox" accesskey="S" #searchInput [attr.title]="placeHolder"

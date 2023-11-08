@@ -41,6 +41,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   isPublicHomePage = window.location.href.includes('/public/home')
   isSetUpPage = false
   isLoggedIn = false
+  fontContainerFlag = false;
   constructor(
     private domSanitizer: DomSanitizer,
     private configSvc: ConfigurationsService,

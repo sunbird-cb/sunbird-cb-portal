@@ -36,6 +36,12 @@
   color: #347bb6 !important;
 }
 
+.mat-icon-disable {
+  filter: grayscale(1) !important;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
 .icon {
   width: 71px;
   height: 64px;
@@ -116,11 +122,19 @@ mat-grid-list {
 }
 
 .flex {
-  display: flex;
+  display: flex;  
+}
+
+.secondary-nav {
+  margin-left: 150px;
 }
 
 .margin-0 {
   margin: 0 !important;
+}
+
+.margin-8 {
+  margin-left: 8px !important;
 }
 
 .mat-accordion .mat-expansion-panel:last-of-type {
@@ -140,4 +154,25 @@ mat-grid-list {
   text-align: center;
   // color: #187bcd;
   padding-top: $size-s;
+}
+
+.new-more {
+  background: rgb(216, 216, 216);
+    border-radius: 63px;
+    width: 100px;
+    color: rgb(0,0,0,0.6);
+    height: 32px;
+}
+
+.more-drop-down:after {
+  content: "▼";
+  text-align: center;
+  color: rgb(0,0,0,0.6);
+}
+
+.text-gray {
+  color: rgb(0,0,0,0.6);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
 }

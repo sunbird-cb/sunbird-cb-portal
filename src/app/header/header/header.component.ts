@@ -22,18 +22,7 @@ export class HeaderComponent implements OnInit {
     })
 
     this.widgetData = {
-      "widgets": [
-        [
-          {
-            "dimensions": {},
-            "className": "",
-            "widget": {
-              "widgetType": "card",
-              "widgetSubType": "cardHomeNotify",
-              "widgetData": {}
-            }
-          }
-        ],
+      "widgets": [        
         [
           {
             "dimensions": {},
@@ -44,7 +33,7 @@ export class HeaderComponent implements OnInit {
               "widgetData": {}
             }
           }
-        ],             
+        ],    
         [
           {
             "dimensions": {
