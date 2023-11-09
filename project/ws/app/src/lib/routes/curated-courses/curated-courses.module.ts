@@ -30,6 +30,7 @@ import { CuratedCollectionCardComponent } from './components/curated-collection-
 import { CuratedPopularCardComponent } from './components/curated-popular-card/curated-popular-card.component'
 import { CuratedCollectionService } from './services/curated-collection.service'
 import { LeftMenuComponent } from './components/left-menu/left-menu.component'
+import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.module'
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { LeftMenuComponent } from './components/left-menu/left-menu.component'
     BtnPageBackModule,
     WidgetResolverModule,
     CardContentModule,
+    CardContentV2Module,
     PipeFilterV3Module,
   ],
   providers: [

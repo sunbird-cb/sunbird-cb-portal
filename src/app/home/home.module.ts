@@ -11,23 +11,27 @@ import { InsightSideBarComponent } from '../component/in-sight-side-bar/in-sight
 import { DiscussionInfoComponent } from '../component/discussion-info/discussion-info.component';
 import { PageContainerComponent } from '../component/page-container/page-container.component';
 import {
-  GridLayoutModule,  SlidersModule, ContentStripNewMultipleModule, DiscussStripMultipleModule, NetworkStripMultipleModule
+  GridLayoutModule,  SlidersModule, DiscussStripMultipleModule, NetworkStripMultipleModule, ContentStripWithTabsModule
 } from '@sunbird-cb/collection';
 import { FeedListComponent } from './home/feed-list/feed-list.component';
+import { SkeletonLoaderComponent } from '../component/skeleton-loader/skeleton-loader.component';
+import { ProfileCardStatsModule } from '@sunbird-cb/collection/src/lib/_common/profile-card-stats/profile-card-stats.module'
 import { SharedModule } from '../shared/shared.module';
 @NgModule({
-  declarations: [HomeComponent, FeedListComponent, InsightSideBarComponent, PageContainerComponent, DiscussionInfoComponent],
+  declarations: [HomeComponent, FeedListComponent, InsightSideBarComponent, PageContainerComponent, DiscussionInfoComponent, SkeletonLoaderComponent],
   imports: [
     CommonModule,    
     HomeRoutingModule,
     GridLayoutModule,
     SlidersModule,
-    ContentStripNewMultipleModule, 
     DiscussStripMultipleModule, 
     NetworkStripMultipleModule,
+    ContentStripWithTabsModule,
     MatCardModule,
     MatIconModule,
-    SharedModule
+    SharedModule,
+    ProfileCardStatsModule,
+    MatIconModule
   ],
   exports: [
     HeaderModule,
