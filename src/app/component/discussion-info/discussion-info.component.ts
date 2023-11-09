@@ -11,5 +11,5 @@ export class DiscussionInfoComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  
 }

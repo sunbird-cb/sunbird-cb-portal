@@ -14,9 +14,10 @@ import {
   GridLayoutModule,  SlidersModule, DiscussStripMultipleModule, NetworkStripMultipleModule, ContentStripWithTabsModule
 } from '@sunbird-cb/collection';
 import { FeedListComponent } from './home/feed-list/feed-list.component';
+import { SkeletonLoaderComponent } from '../component/skeleton-loader/skeleton-loader.component';
 
 @NgModule({
-  declarations: [HomeComponent, FeedListComponent, InsightSideBarComponent, PageContainerComponent, DiscussionInfoComponent],
+  declarations: [HomeComponent, FeedListComponent, InsightSideBarComponent, PageContainerComponent, DiscussionInfoComponent, SkeletonLoaderComponent],
   imports: [
     CommonModule,    
     HomeRoutingModule,

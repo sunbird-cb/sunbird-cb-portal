@@ -1006,6 +1006,7 @@ ngx-guided-tour {
   text-align: center;
   line-height: 20px;
 }
+
 .skeleton-box {
   display: inline-block;
   height: 1em;
@@ -1027,7 +1028,7 @@ ngx-guided-tour {
       rgba(#fff, 0.5) 60%,
       rgba(#fff, 0)
     );
-    animation: shimmer 3s infinite;
+    animation: shimmer 1s infinite;
     content: '';
   }
 
