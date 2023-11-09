@@ -122,6 +122,7 @@ import { AppTocSessionsComponent } from './components/app-toc-sessions/app-toc-s
 import { AppTocSessionCardComponent } from './components/app-toc-session-card/app-toc-session-card.component'
 import { EnrollQuestionnaireComponent } from './components/enroll-questionnaire/enroll-questionnaire.component'
 import { MicroSurveyModule } from '@sunbird-cb/micro-surveys'
+import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.module'
 
 @NgModule({
   declarations: [
@@ -219,6 +220,7 @@ import { MicroSurveyModule } from '@sunbird-cb/micro-surveys'
     PlayerBriefModule,
     MatProgressSpinnerModule,
     CardContentModule,
+    CardContentV2Module,
     BtnContentShareModule,
     UserAutocompleteModule,
     AvatarPhotoModule,
