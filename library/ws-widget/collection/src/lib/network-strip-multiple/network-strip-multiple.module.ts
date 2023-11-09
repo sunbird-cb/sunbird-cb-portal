@@ -28,6 +28,6 @@ import {
     MatCardModule,
   ],
   entryComponents: [NetworkStripMultipleComponent],
-  exports: [NetworkStripMultipleComponent]
+  exports: [NetworkStripMultipleComponent],
 })
 export class NetworkStripMultipleModule { }

@@ -1,12 +1,15 @@
-<div class="fix-ww">
-    
-    <div class="d-inline-flex p-3 bg-secondary flex-align">
-        <div class="p-2 bg-info"><ws-ingsight-side-bar></ws-ingsight-side-bar></div>
-        <div class="p-2 bg-primary">
+<div class="home-container m-auto flex flex-row gap-4">
+    <div class="left bg-info">
+        <ws-in-sight-side-bar></ws-in-sight-side-bar>
+    </div>
+    <div class="right bg-primary">
+        <div class="flex flex-col gap-4">
             <ws-feed-list></ws-feed-list>
             <ws-feed-list></ws-feed-list>
         </div>
     </div>
+</div>
+<div class="flex flex-col gap-4">
     <ws-widget-discuss-strip-multiple [widgetData]="discussStripData"></ws-widget-discuss-strip-multiple>
     <ws-widget-network-strip-multiple [widgetData]="networkStripData"></ws-widget-network-strip-multiple>
     <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
@@ -14,7 +17,7 @@
 <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
 <div class="fix-ww">
     <div class="d-inline-flex p-3 bg-secondary flex-align">
-        <div class="p-2 bg-info"><ws-ingsight-side-bar></ws-ingsight-side-bar></div>
+        <div class="p-2 bg-info"><ws-in-sight-side-bar></ws-in-sight-side-bar></div>
         <div class="p-2 bg-primary">
             <ws-feed-list></ws-feed-list>
         </div>
