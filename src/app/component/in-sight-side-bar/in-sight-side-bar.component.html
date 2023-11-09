@@ -4,9 +4,20 @@
             chevron_right
         </mat-icon>
     </div>
+    
     <div class="flex flex-col">
-        <ws-discussion-info></ws-discussion-info>
-        <hr class="w-full bg-gray-200 border-b-1 opacity-50 m-0">
-        <ws-discussion-info></ws-discussion-info>
+        <ng-container *ngIf="!enableDiscussion">
+            <div class="flex flex-col items-center gap-4 p-10">
+                <img src="./../../../fusion-assets/images/new-home/chat.svg" alt="chat img" />
+                <div class="text-sm text-center">Do you have any questions, suggestions or, ideas in your mind? Post it.</div>
+                <button class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide" (click)="handleButtonClick()">Start discussion</button>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="enableDiscussion">
+            <ws-discussion-info></ws-discussion-info>
+            <hr class="w-full bg-gray-200 border-b-1 opacity-50 m-0">
+            <ws-discussion-info></ws-discussion-info>
+        </ng-container>
     </div>
 </div>

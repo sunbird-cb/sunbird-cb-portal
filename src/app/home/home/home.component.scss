@@ -11,25 +11,19 @@
 
 .left {
     width: 32%;
-    // float: left;
-    // min-height: 200px;
 }
 
 .right {
     width: 68%;
-    // float: right;
-    // min-height: 200px;
 }
 
-// .flex-align {
-//     display: flex;
-// }
+.discussion-card {
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 1);
 
-// .bg-info {
-//     width: 40%;
-// }
-
-// .bg-primary {
-//     width: 60%;
-// }
-
+    .mat-subheading-1 {
+        margin: 0px !important;
+    }
+}
