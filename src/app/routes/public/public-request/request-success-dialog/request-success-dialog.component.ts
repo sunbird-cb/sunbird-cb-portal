@@ -25,7 +25,7 @@ export class RequestSuccessDialogComponent implements OnInit {
     this.body =  this.body + "Resume self-registration process to see if you have all the other required details for the registration process."
     if (this.data.apiResponse && this.data.apiResponse.result && !this.data.apiResponse.result.data) {
       this.headerMessage = `This domain is already approved`
-      this.body = "The domain you are requesting approval for, is already approve. Please Resume Registration."
+      this.body = "The domain you are requesting approval for, is already approved. Please Resume Registration."
     }
   }
 
