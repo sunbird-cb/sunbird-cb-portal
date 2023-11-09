@@ -1,0 +1,28 @@
+<section class="horizontal-scroll-container h-full">
+    <ng-container *ngIf="sliderConfig?.showNavs">
+        <button i18n-aria-label aria-label="back" name="content-backward-button" mat-mini-fab color="primary" 
+            (click)="showPrev()" class="prevBtn hidden-touch" [hidden]="!enablePrev"
+            [ngClass]="{'prevBtnHover': onHover}">
+            <mat-icon>navigate_before</mat-icon>
+        </button>
+    </ng-container>
+    <div name="horizontal-scroll-content-strip" class="horizontal-scroll-content" #horizontalScrollElem>
+        <ng-content></ng-content>
+    </div>
+    <ng-container *ngIf="sliderConfig?.showNavs">
+        <button i18n-aria-label aria-label="next" name="content-forward-button" mat-mini-fab (click)="showNext()"
+            color="primary" class="nextBtn hidden-touch" [ngClass]="{'nextBtnHover': onHover}"
+            [hidden]="!enableNext || loadStatus === 'fetching'">
+            <mat-icon>navigate_next</mat-icon>
+        </button>
+    </ng-container>
+    <div class="nextLoading" *ngIf="loadStatus === 'fetching'">
+        <mat-spinner></mat-spinner>
+    </div>
+    <div class="mt-4 dots-container" *ngIf="sliderConfig?.showDots">
+        <!-- <span class="dot" [ngClass]="{ active: j === currentIndex }" -->
+        <span class="dot" [ngClass]="{ active: j === 2 }"
+          *ngFor="let slide of [1,2,3,4,5,6]; let j = index"
+          (click)="slideTo(j)"></span>
+      </div>
+</section>
