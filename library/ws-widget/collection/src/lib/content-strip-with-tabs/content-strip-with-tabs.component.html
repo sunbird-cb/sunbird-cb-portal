@@ -74,17 +74,18 @@
                 [selectedIndex]="selectedIndex" (selectedTabChange)="selectedIndex = $event.index; tabClicked($event)">
                 <mat-tab *ngFor="let tab of stripsResultDataMap[key].tabs; let last = last;">
                   <ng-template mat-tab-label>
-                    <span>{{tab.label}} &nbsp;</span> <span>({{stripsResultDataMap[key]?.widgets?.length}})</span>
+                    <span>{{tab?.label}} &nbsp;</span> <span>({{tab?.widgets?.length}})</span>
                   </ng-template>
                   <div>
                     <!-- <ng-container *ngIf="key === 'continueLearning'"> -->
                     <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
                       *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
                       [loadStatus]="'done'">
-                      <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets; trackBy: tracker">
+                      <ng-container *ngFor="let widget of tab.widgets; trackBy: tracker">
                         <!-- <ng-container *ngIf="widget.widgetData.context.pageSection === 'continueLearning' "> -->
-                        <ng-container *ngIf="widget.widgetData.content.completionPercentage !== 100"
-                          [wsResolverWidget]="widget"></ng-container>
+                        <!-- <ng-container *ngIf="widget.widgetData.content.completionPercentage !== 100"
+                          [wsResolverWidget]="widget"></ng-container> -->
+                          <ng-container [wsResolverWidget]="widget"></ng-container>
                         <!-- </ng-container> -->
                       </ng-container>
                     </ws-utils-horizontal-scroller-v2>

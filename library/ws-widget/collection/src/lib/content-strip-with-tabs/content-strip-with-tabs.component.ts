@@ -10,6 +10,7 @@ import {
   EventService,
   ConfigurationsService,
   UtilityService,
+  WsEvents,
 } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
@@ -17,6 +18,7 @@ import { WidgetUserService } from '../_services/widget-user.service'
 import { environment } from 'src/environments/environment'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { MatTabChangeEvent } from '@angular/material'
 
 interface IStripUnitContentData {
   key: string
@@ -29,11 +31,11 @@ interface IStripUnitContentData {
     link: string,
     icon: string
   },
-  sliderConfig: {
+  sliderConfig?: {
     showNavs : boolean,
     showDots: boolean
   },
-  tabs: any[],
+  tabs?: any[],
   stripName?: string
   stripLogo?: string
   description?: string
@@ -255,6 +257,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       let userId = ''
       let content: NsContent.IContent[]
       let contentNew: NsContent.IContent[]
+      const tabResults: any[] = []
       const queryParams = _.get(strip.request.enrollmentList, 'queryParams')
       if (this.configSvc.userProfile) {
         userId = this.configSvc.userProfile.userId
@@ -309,12 +312,30 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
             const dateB: any = new Date(b.lastContentAccessTime || 0)
             return dateB - dateA
           })
+
+          const splitData = this.getInprogressAndCompleted(
+            contentNew,
+            (e: any)=> e.completionStatus === 1 || e.completionPercentage < 100,
+            strip,
+          );
+          
+          if(strip.tabs && strip.tabs.length) {
+            for(let i=0; i<strip.tabs.length; i++) {
+              tabResults.push({
+               ...strip.tabs[i], 
+               ...(splitData.find((itmInner) => itmInner.value === strip.tabs[i].value))}
+              );
+            }
+            
+            console.log('tabResults --  ', tabResults)
+          }
           this.processStrip(
             strip,
             this.transformContentsToWidgets(contentNew, strip),
             'done',
             calculateParentStatus,
             viewMoreUrl,
+            tabResults
           )
         },
         () => {
@@ -322,6 +343,14 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         }
       )
     }
+  }
+
+  getInprogressAndCompleted(array: NsContent.IContent[], filter: any, strip: NsContentStripWithTabs.IContentStripUnit) {
+    let inprogress: any[] = [], completed: any[]= [];
+    array.forEach((e: any, idx:number, arr:any[]) => (filter(e, idx, arr) ? inprogress : completed).push(e));
+    return [
+      {value: 'inprogress', widgets: this.transformContentsToWidgets(inprogress, strip)},
+      {value: 'completed', widgets: this.transformContentsToWidgets(completed, strip)}];
   }
 
   fetchFromSearchV6(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
@@ -423,12 +452,14 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       },
     }))
   }
+
   private async processStrip(
     strip: NsContentStripWithTabs.IContentStripUnit,
     results: NsWidgetResolver.IRenderConfigWithAnyData[] = [],
     fetchStatus: TFetchStatus,
     calculateParentStatus = true,
     viewMoreUrl: any,
+    tabsResults?: any,
     // calculateParentStatus is used so that parents' status is not re-calculated if the API is called again coz of filters, etc.
   ) {
     const stripData = {
@@ -442,7 +473,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       stripTitle: strip.title,
       stripTitleLink: strip.stripTitleLink,
       sliderConfig: strip.sliderConfig,
-      tabs: strip.tabs,
+      tabs: tabsResults? tabsResults: strip.tabs,
       stripName: strip.name,
       mode: strip.mode,
       stripBackground: strip.stripBackground,
@@ -468,7 +499,11 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       showOnLoader: Boolean(strip.loader && fetchStatus === 'fetching'),
       showOnError: Boolean(strip.errorWidget && fetchStatus === 'error'),
     }
-    console.log('stripDatastripDatastripData', stripData)
+    console.log('strip.preWidgets',strip.preWidgets)
+    console.log('strip.postWidgets',strip.postWidgets)
+    console.log('results',results)
+    console.log('stripDatastripDatastripData::', strip.key, '::', stripData)
+
     // const stripData = this.stripsResultDataMap[strip.key]
     this.stripsResultDataMap = {
       ...this.stripsResultDataMap,
@@ -521,5 +556,17 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       return true
     }
     return false
+  }
+
+  public tabClicked(tabEvent: MatTabChangeEvent) {
+    const data: WsEvents.ITelemetryTabData = {
+      label: `${tabEvent.tab.textLabel}`,
+      index: tabEvent.index,
+    }
+    this.eventSvc.handleTabTelemetry(
+      WsEvents.EnumInteractSubTypes.HOME_PAGE_STRIP_TABS,
+      data,
+    )
+    console.log('tabClicked tabEvent', tabEvent)
   }
 }
