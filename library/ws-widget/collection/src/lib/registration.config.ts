@@ -44,8 +44,8 @@ import { CardBreadcrumbComponent } from './card-breadcrumb/card-breadcrumb.compo
 import { CardBreadcrumbModule } from './card-breadcrumb/card-breadcrumb.module'
 import { CardChannelComponent } from './card-channel/card-channel.component'
 import { CardChannelModule } from './card-channel/card-channel.module'
-import { CardContentComponent } from './card-content/card-content.component'
-import { CardContentModule } from './card-content/card-content.module'
+// import { CardContentComponent } from './card-content/card-content.component'
+// import { CardContentModule } from './card-content/card-content.module'
 import { CardLearnComponent } from './card-learn/card-learn.component'
 import { CardLearnModule } from './card-learn/card-learn.module'
 import { CardWelcomeComponent } from './card-welcome/card-welcome.component'
@@ -171,6 +171,8 @@ import { BreadcrumbsOrgModule } from './breadcrumbs-org/breadcrumbs-org.module'
 import { CardNotifyComponent } from './card-notify/card-notify.component'
 import { PlayerSurveyComponent } from './player-survey/player-survey.component'
 import { PlayerSurveyModule } from './player-survey/player-survey.module'
+import { CardContentV2Component } from './card-content-v2/card-content-v2.component'
+import { CardContentV2Module } from './card-content-v2/card-content-v2.module'
 import { ContentStripWithTabsComponent } from './content-strip-with-tabs/content-strip-with-tabs.component'
 
 export const WIDGET_REGISTERED_MODULES = [
@@ -194,7 +196,8 @@ export const WIDGET_REGISTERED_MODULES = [
   BtnProfileModule,
   BtnSettingsModule,
   CardBreadcrumbModule,
-  CardContentModule,
+  // CardContentModule,
+  CardContentV2Module,
   CardChannelModule,
   CardLearnModule,
   CardWelcomeModule,
@@ -358,10 +361,15 @@ export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] 
     widgetSubType: ROOT_WIDGET_CONFIG.card.channel,
     component: CardChannelComponent,
   },
+  // {
+  //   widgetType: ROOT_WIDGET_CONFIG.card._type,
+  //   widgetSubType: ROOT_WIDGET_CONFIG.card.content,
+  //   component: CardContentComponent,
+  // },
   {
     widgetType: ROOT_WIDGET_CONFIG.card._type,
     widgetSubType: ROOT_WIDGET_CONFIG.card.content,
-    component: CardContentComponent,
+    component: CardContentV2Component,
   },
   {
     widgetType: ROOT_WIDGET_CONFIG.card._type,

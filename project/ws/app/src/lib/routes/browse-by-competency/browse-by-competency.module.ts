@@ -45,6 +45,7 @@ import { CompetencyFiltersComponent } from './components/competency-filters/comp
 import { CompetencyCardComponent } from './components/competency-card/competency-card.component'
 import { PopularCompetencyCardComponent } from './components/popular-competency-card/popular-competency-card.component'
 import { LocalDataService } from './services/localService'
+import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.module'
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { LocalDataService } from './services/localService'
     BtnPageBackModule,
     WidgetResolverModule,
     CardContentModule,
+    CardContentV2Module
   ],
   exports: [CompetencyFiltersComponent],
   providers: [
