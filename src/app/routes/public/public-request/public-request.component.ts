@@ -387,7 +387,7 @@ export class PublicRequestComponent implements OnInit {
 
       this.requestSvc.createPosition(this.requestObj).subscribe(
         (_res: any) => {
-          this.openDialog(this.requestType)
+          this.openDialog(this.requestType, _res)
           this.disableBtn = false
           this.isMobileVerified = true
           this.clearForm()
@@ -418,7 +418,7 @@ export class PublicRequestComponent implements OnInit {
 
       this.requestSvc.createOrg(this.requestObj).subscribe(
         (_res: any) => {
-          this.openDialog(this.requestType)
+          this.openDialog(this.requestType, _res)
           this.disableBtn = false
           this.isMobileVerified = true
           this.clearForm()
@@ -448,7 +448,7 @@ export class PublicRequestComponent implements OnInit {
 
       this.requestSvc.createDomain(this.requestObj).subscribe(
         (_res: any) => {
-          this.openDialog(this.requestType)
+          this.openDialog(this.requestType, _res)
           this.disableBtn = false
           this.isMobileVerified = true
           this.clearForm()
@@ -472,11 +472,11 @@ export class PublicRequestComponent implements OnInit {
     })
   }
 
-  openDialog(type: any): void {
+  openDialog(type: any, res: any): void {
     const dialogRef = this.dialog.open(RequestSuccessDialogComponent, {
       // height: '400px',
       width: '500px',
-      data:  { requestType: type },
+      data:  { requestType: type, apiResponse: res },
       // data: { content, userId: this.userId, userRating: this.userRating },
     })
     dialogRef.afterClosed().subscribe((_result: any) => {
