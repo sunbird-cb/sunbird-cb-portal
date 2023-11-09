@@ -103,7 +103,9 @@ export class CardLearnComponent extends WidgetBaseComponent
       //   this.snackBar.open('Failed to load activities', 'X')
       // })
     }
-    if (this.configSvc && this.configSvc.unMappedUser && this.configSvc.unMappedUser.profileDetails && this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi) {
+    if (this.configSvc && this.configSvc.unMappedUser &&
+        this.configSvc.unMappedUser.profileDetails &&
+        this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi) {
       this.callModeratedFunc()
     }
 
