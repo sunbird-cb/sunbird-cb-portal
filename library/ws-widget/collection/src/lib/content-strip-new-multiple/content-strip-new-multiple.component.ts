@@ -359,6 +359,7 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
       // tslint:disable-next-line: deprecation
       this.userSvc.fetchUserBatchList(userId, queryParams).subscribe(
         courses => {
+          localStorage.setItem('enrollList', JSON.stringify(courses))
           const showViewMore = Boolean(
             courses.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
           )

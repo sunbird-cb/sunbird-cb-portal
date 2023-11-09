@@ -703,7 +703,7 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
     data: {
       pageType: 'page',
-      pageKey: 'id',
+      pageKey: 'home',
     },
     resolve: {
       pageData: PageResolve,
