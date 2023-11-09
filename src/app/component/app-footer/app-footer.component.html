@@ -1,15 +1,24 @@
 <div class="top_footer_box" *ngIf="!needToHide">
-  <div class="top_footer_inner flex flex-row justify-between">
-    <div class="flex flex-col justify-start">
-      <p class="footer_heading mat-subheading-1 margin-bottom-m">Hubs</p>
-      <ng-container *ngFor="let hub of (hubsList || [])">
-        <ng-container *ngIf="hub.hubname == 'Discuss'">
-          <a class="footer_sub_text mat-body cursor-pointer" (click)="navigate()">{{hub.hubname}}</a>
+  <div class="footer_logo">
+  <img alt="igot-logo" src="/assets/instances/eagle/app_logos/KarmayogiBharat_Logo_Horizontal.svg"
+  class=" margin-top-xl">
+  </div>
+  <div class="top_footer_inner flex flex-row justify-between nav-footer">   
+    <div class="flex flex-col justify-start nav-footer-item nav col-sm-3" (click)="onClick($event)">
+      <h4 class="footer_heading mat-subheading-1 margin-bottom-m">Hubs</h4>
+      <ul>
+
+        <ng-container *ngFor="let hub of (hubsList || [])">
+          <li>
+            <ng-container *ngIf="hub.hubname == 'Discuss'">
+              <a class="footer_sub_text mat-body cursor-pointer" (click)="navigate()">{{hub.hubname}}</a>
+            </ng-container>
+            <ng-container *ngIf="hub.hubname != 'Discuss'">
+              <a class="footer_sub_text mat-body cursor-pointer" [routerLink]="hub.path">{{hub.hubname}}</a>
+            </ng-container>
+          </li>
         </ng-container>
-        <ng-container *ngIf="hub.hubname != 'Discuss'">
-          <a class="footer_sub_text mat-body cursor-pointer" [routerLink]="hub.path">{{hub.hubname}}</a>
-        </ng-container>
-      </ng-container>
+      </ul>
       <!-- <a class="footer_sub_text mat-body" href="/page/learn"  [routerLink]="hub.path">Learn</a>
         <a class="footer_sub_text mat-body" href="/app/network-v2"  [routerLink]="hub.path">Network</a>
         <a class="footer_sub_text mat-body" (click)="navigate()">Discuss</a>
@@ -18,50 +27,47 @@
         <a  class="footer_sub_text mat-body" href="/app/event-hub"  [routerLink]="hub.path">Events</a> -->
     </div>
 
-    <div class="flex flex-col justify-start">
-      <p class="footer_heading mat-subheading-1 margin-bottom-m">Related links</p>
-      <ng-container *ngFor="let portal of environment.portals | orderBy: 'sr'">
+    <div class="flex flex-col justify-start nav-footer-item nav col-sm-3">
+      <h4 class="footer_heading mat-subheading-1 margin-bottom-m">Related links</h4>
+      <ul>
+      <ng-container *ngFor="let portal of environment.portals | orderBy: 'sr'">        
         <ng-container *ngIf="portal.isPublic || isAllowed(portal.id)">
-          <a class="footer_sub_text mat-body" [attr.href]="portal.uriPath" target="_blank">{{portal.name}}</a>
+          <li><a class="footer_sub_text mat-body" [attr.href]="portal.uriPath" target="_blank">{{portal.name}}</a></li>
         </ng-container>
       </ng-container>
+    </ul>
       <!-- <a class="footer_sub_text mat-body" [attr.href]="environment.mdoPortal" target="_blank">MDO portal</a>
         <a class="footer_sub_text mat-body" [attr.href]="environment.cbpPortal" target="_blank">CBP portal</a>
         <a class="footer_sub_text mat-body" [attr.href]="environment.fracPortal" target="_blank">FRAC dictionaries</a> -->
       <!-- <a class="footer_sub_text mat-body">Mobile application</a> -->
     </div>
 
-    <div class="flex flex-col justify-start">
-      <p class="footer_heading mat-subheading-1 margin-bottom-m">Support</p>
-      <a class="footer_sub_text mat-body" routerLink="/public/faq"> Frequently asked questions</a>
-      <a class="footer_sub_text mat-body" routerLink="/public/contact"> Contact Us</a>
+    <div class="flex flex-col justify-start nav-footer-item nav col-sm-3">
+      <h4 class="footer_heading mat-subheading-1 margin-bottom-m">Support</h4>
+      <ul>
+      <li><a class="footer_sub_text mat-body" routerLink="/public/faq"> Frequently asked questions</a></li>
+      <li><a class="footer_sub_text mat-body" routerLink="/public/contact"> Contact Us</a></li>
+    </ul>
       <!-- <a class="footer_sub_text mat-body" routerLink="/app/info/feedback">Feedback and suggestions</a>
       <a class="footer_sub_text mat-body" routerLink="/app/info/report-problem">Report a problem</a> -->
 
     </div>
 
-    <div class="flex flex-col justify-start">
-      <p class="footer_heading mat-subheading-1 margin-bottom-m">About us</p>
-      <a class="footer_sub_text mat-body" rel="noreferrer" href="https://karmayogibharat.gov.in/" target="_blank">
-        Karmayogi Bharat</a>
-      <div class="social-icons">
-        <ul>
-          <li><a href="https://www.linkedin.com/company/karmayogi-bharat/" target="_blank"><img alt="Linkedin" class="app-logo"
-            src="/assets/icons/social-links/linkedin.svg"></a></li>
-
-          <li><a href="https://x.com/iGOTKarmayogi?t=OUEVuskmXbrTNdPuIBaHuw&s=09" target="_blank"><img alt="Twitter" class="app-logo"
-            src="/assets/icons/social-links/Combined Shape.svg"></a></li>
-
-          <li><a href="https://instagram.com/karmayogibharat?igshid=MzRlODBiNWFlZA==" target="_blank"><img alt="Instagram" class="app-logo"
-            src="/assets/icons/social-links/instagram.svg"></a></li>
-
-          <li><a href="https://www.facebook.com/profile.php?id=100089782863897&mibextid=ZbWKwL" target="_blank"><img alt="Application Logo" class="Facebook"
-            src="/assets/icons/social-links/facebook.svg"></a></li>
-
-          <li><a href="https://youtube.com/@karmayogibharat?feature=shared" target="_blank"><img alt="Application Logo" class="Youtube"
-              src="/assets/icons/social-links/youtube.svg"></a></li>
-        </ul>
-      </div>
+    <div class="flex flex-col justify-start nav-footer-item nav col-sm-3">
+      <h4 class="footer_heading mat-subheading-1 margin-bottom-m">About us</h4>
+      <ul>
+      <li><a class="footer_sub_text mat-body" rel="noreferrer" href="https://karmayogibharat.gov.in/" target="_blank">
+        Karmayogi Bharat</a></li>
+      </ul>
+      <ws-social-link></ws-social-link>
+      <div class="app-store-button">
+        <div class="play-store">
+          <div><img src="/assets/icons/footer-nav/gplay badge@2x.svg"/></div>
+        </div>
+        <div class="app-store">
+          <div><img src="/assets/icons/footer-nav/appStore.svg"/></div>
+        </div>
+    </div>
       <!-- <a class="footer_sub_text mat-body" href="" target="_blank"> Karmayogi Bharat</a>
       <a class="footer_sub_text mat-body">Capacity building commission</a> -->
 

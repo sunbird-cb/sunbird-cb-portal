@@ -96,3 +96,9 @@ ws-app-nav-bar {
 .height-48 {
     height:48px;
 }
+
+@media (max-width : 768px) {    
+  .height-on-top {
+    margin-top: 120px;
+  }
+}

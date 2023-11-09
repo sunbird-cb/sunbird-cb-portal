@@ -4,7 +4,9 @@ import { IBtnAppsConfig, CustomTourService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, NsInstanceConfig, NsPage } from '@sunbird-cb/utils'
 import { Router, NavigationStart, NavigationEnd } from '@angular/router'
-
+import { MatDialog } from '@angular/material';
+import { DialogBoxComponent } from './../dialog-box/dialog-box.component';
+import { BtnSettingsService } from '@sunbird-cb/collection'
 @Component({
   selector: 'ws-app-nav-bar',
   templateUrl: './app-nav-bar.component.html',
@@ -47,6 +49,8 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     private configSvc: ConfigurationsService,
     private tourService: CustomTourService,
     private router: Router,
+    public dialog: MatDialog,
+    public btnSettingsSvc: BtnSettingsService
   ) {
     this.btnAppsConfig = { ...this.basicBtnAppsConfig }
     if (this.configSvc.restrictedFeatures) {
@@ -207,5 +211,47 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       this.isSetUpPage = false
     }
     return this.isSetUpPage
+  }
+
+  openDialog(): void { 
+    let dialogRef = this.dialog.open(DialogBoxComponent, { 
+      width: '1000px', 
+    }); 
+  
+    dialogRef.afterClosed().subscribe(() => { 
+    }); 
+  } 
+
+  changeFont(fontSize:any) {
+    console.log('fontSize',fontSize.value)
+    let fontClass = 'small-typography';
+    switch(fontSize.value) {
+      case 10:
+        fontClass = 'x-small-typography';
+        localStorage.setItem('setting' , fontClass)
+        this.btnSettingsSvc.changeFont(fontClass) 
+        break;
+      case 12:
+        fontClass = 'small-typography';
+        localStorage.setItem('setting' , fontClass)
+        this.btnSettingsSvc.changeFont(fontClass) 
+        break;
+      case 14:
+        fontClass = 'normal-typography';
+        localStorage.setItem('setting' , fontClass)
+        this.btnSettingsSvc.changeFont(fontClass) 
+        break;
+      case 16:
+        fontClass = 'large-typographt';
+        localStorage.setItem('setting' , fontClass)
+        this.btnSettingsSvc.changeFont(fontClass) 
+        break;
+      case 18:
+        fontClass = 'x-large-typography';
+        localStorage.setItem('setting' , fontClass)
+        this.btnSettingsSvc.changeFont(fontClass) 
+        break
+    }
+    
   }
 }

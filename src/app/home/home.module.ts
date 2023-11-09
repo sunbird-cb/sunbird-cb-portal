@@ -14,7 +14,7 @@ import {
   GridLayoutModule,  SlidersModule, ContentStripNewMultipleModule, DiscussStripMultipleModule, NetworkStripMultipleModule
 } from '@sunbird-cb/collection';
 import { FeedListComponent } from './home/feed-list/feed-list.component';
-
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [HomeComponent, FeedListComponent, InsightSideBarComponent, PageContainerComponent, DiscussionInfoComponent],
   imports: [
@@ -26,11 +26,13 @@ import { FeedListComponent } from './home/feed-list/feed-list.component';
     DiscussStripMultipleModule, 
     NetworkStripMultipleModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    SharedModule
   ],
   exports: [
     HeaderModule,
-    MatCardModule  
+    MatCardModule,
+    SharedModule
   ]
 })
 export class HomeModule { }

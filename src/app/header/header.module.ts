@@ -19,7 +19,7 @@ import {
 } from '@sunbird-cb/collection'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { SearchModule } from '@ws/app/src/public-api'
-
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [HeaderComponent, AppNavBarComponent],
   imports: [
@@ -36,11 +36,13 @@ import { SearchModule } from '@ws/app/src/public-api'
     StickyHeaderModule,
     SearchModule,
     RouterModule,
-    GridLayoutModule 
+    GridLayoutModule,
+    SharedModule
   ],
   exports: [
     HeaderComponent,
-    AppNavBarComponent
+    AppNavBarComponent,
+    SharedModule
   ],
   providers: [
     

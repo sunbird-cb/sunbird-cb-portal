@@ -8,19 +8,19 @@
           <mat-icon class="margin-right-xs ws-mat-default-text">menu</mat-icon>
           <span class="margin-auto ws-mat-default-text mat-subheading-2">EXPLORE</span>
         </a> -->
-        <ng-container *ngIf="!visible && !isMobile" [@enterAnimation]="visible">
+        <ng-container [@enterAnimation]="visible">
           <div *ngFor="let hub of hubsList">
             <ng-container *ngIf="hub.hubname == 'Discuss'">
               <a [id]="hub.hubname" class="simple-hubs-link cursor-pointer" i18n-aria-label role="menuitem" (click)="navigate()">
-                <img class="mat-icon-disable" src="/assets/icons/hubs/{{hub?.icon}}.svg" id="draft" alt="draft" title="draft" />
-                <span class="margin-0 text-gray"> {{hub.hubname}}</span>
+                <img  [ngClass]="activeRoute === hub.hubname ? 'active-icon': 'mat-icon-disable'" src="/assets/icons/hubs/{{hub?.icon}}.svg" id="draft" alt="draft" title="draft" />
+                <span [ngClass]="activeRoute === hub.hubname ? 'active-text margin-8 text-gray': 'margin-8 text-gray'"> {{hub.hubname}}</span>
               </a>
             </ng-container>
             <ng-container *ngIf="hub.hubname != 'Discuss'">
               <a class="simple-hubs-link cursor-pointer" [id]="hub.hubname" i18n-aria-label role="menuitem" [routerLink]="hub.path"
                 [attr.accesskey]="hub.accessKey">
-                <img class="mat-icon-disable" src="/assets/icons/hubs/{{hub?.icon}}.svg" id="draft" alt="draft" title="draft" /> 
-                <span class="margin-8 text-gray">  {{hub.hubname}}</span>
+                <img [ngClass]="activeRoute === hub.hubname ? 'active-icon': 'mat-icon-disable'" src="/assets/icons/hubs/{{hub?.icon}}.svg" id="draft" alt="draft" title="draft" /> 
+                <span [ngClass]="activeRoute === hub.hubname ? 'active-text margin-8 text-gray': 'margin-8 text-gray'">  {{hub.hubname}}</span>
               </a>
 
             </ng-container>
@@ -30,7 +30,7 @@
             accesskey="H" i18n-aria-label (click)="toggleVisibility()">
 
             <!-- <mat-icon class="margin-right-xs ws-mat-primary-text">more_horiz</mat-icon> -->
-            <span class="margin-auto ws-mat-primary-text mat-subheading-2">More
+            <span class="margin-auto ws-mat-primary-text">More
               <span class="more-drop-down"></span>   
             </span>
             

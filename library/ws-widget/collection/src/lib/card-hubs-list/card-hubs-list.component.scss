@@ -148,6 +148,7 @@ mat-grid-list {
 
 .simple-hubs-link {
   margin: auto $size-s;
+  display: flex;
 }
 
 .center {
@@ -159,7 +160,7 @@ mat-grid-list {
 .new-more {
   background: rgb(216, 216, 216);
     border-radius: 63px;
-    width: 100px;
+    min-width: 100px;
     color: rgb(0,0,0,0.6);
     height: 32px;
 }
@@ -172,7 +173,35 @@ mat-grid-list {
 
 .text-gray {
   color: rgb(0,0,0,0.6);
-  font-size: 14px;
   font-weight: 700;
   line-height: 20px;
+}
+
+.active-text{
+color:rgb(27, 76, 161)
+}
+
+.active-icon{
+  vertical-align: middle;
+  color:rgb(27, 76, 161)
+
+}
+
+.new-box-hubs {
+  height: 550px !important;
+}
+
+@media (max-width : 768px) {    
+.secondary-nav {
+  margin-left: 0;
+  margin-right:0;
+  
+  overflow-x: scroll;
+  margin-top:60px;
+}
+
+.secondary-nav  ::-webkit-scrollbar {
+  display: none;
+}
+
 }

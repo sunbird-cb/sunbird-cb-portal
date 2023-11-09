@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { delay } from 'rxjs/operators'
 import { HeaderService } from './header.service';
+
 import {
   ValueService,
 } from '@sunbird-cb/utils'
@@ -20,6 +21,7 @@ export class HeaderComponent implements OnInit {
     this.headerService.showNavbarDisplay$.pipe(delay(500)).subscribe(display => {
       this.showNavbar = display
     })
+    
 
     this.widgetData = {
       "widgets": [        
