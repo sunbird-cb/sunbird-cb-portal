@@ -6,7 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { IngsightSideBarComponent } from '../component/ingsight-side-bar/ingsight-side-bar.component';
 import { PageContainerComponent } from '../component/page-container/page-container.component';
 import {
-  GridLayoutModule,  SlidersModule, ContentStripNewMultipleModule, DiscussStripMultipleModule, NetworkStripMultipleModule
+  GridLayoutModule,  SlidersModule, DiscussStripMultipleModule, NetworkStripMultipleModule, ContentStripWithTabsModule
 } from '@sunbird-cb/collection';
 import { FeedListComponent } from './home/feed-list/feed-list.component';
 
@@ -17,9 +17,9 @@ import { FeedListComponent } from './home/feed-list/feed-list.component';
     HomeRoutingModule,
     GridLayoutModule,
     SlidersModule,
-    ContentStripNewMultipleModule, 
     DiscussStripMultipleModule, 
-    NetworkStripMultipleModule
+    NetworkStripMultipleModule,
+    ContentStripWithTabsModule,
   ],
   exports: [
     HeaderModule   
