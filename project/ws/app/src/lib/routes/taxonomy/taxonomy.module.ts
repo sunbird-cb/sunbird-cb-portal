@@ -33,6 +33,7 @@ import { LoaderService } from '@ws/author/src/lib/services/loader.service'
 
 import { TaxonomyExplorerComponent } from './routes/taxonomy-explorer/explorer.component'
 import { BreadcrumbsOrgModule } from './components/breadcrumbs/breadcrumbs-org.module'
+import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.module'
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { BreadcrumbsOrgModule } from './components/breadcrumbs/breadcrumbs-org.m
     BtnPageBackModule,
     WidgetResolverModule,
     CardContentModule,
+    CardContentV2Module,
     BreadcrumbsOrgModule,
    ],
   providers: [

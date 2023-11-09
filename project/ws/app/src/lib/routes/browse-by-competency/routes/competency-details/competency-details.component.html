@@ -48,12 +48,12 @@
 
                 <ng-container *ngIf="courses && courses.length; else noData">
                     <ng-container *ngFor="let c of courses">
-                        <ws-widget-card-content [widgetData]="{
+                        <ws-widget-card-content-v2 [widgetData]="{
                             content: c,
                             stateData: stateData,
                             cardSubType: 'card-wide'
                           }">
-                        </ws-widget-card-content>
+                        </ws-widget-card-content-v2>
                     </ng-container>
                 </ng-container>
                 <ng-template #noData>

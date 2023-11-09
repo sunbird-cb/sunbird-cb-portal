@@ -5,6 +5,7 @@ import { ChannelsRoutingModule } from './channels-routing.module'
 import { ChannelsHomeComponent } from './routes/channels-home/channels-home.component'
 import { CardChannelModule, CardChannelModuleV2, CardContentModule, BtnPageBackModule } from '@sunbird-cb/collection'
 import { MatToolbarModule, MatExpansionModule, MatProgressSpinnerModule } from '@angular/material'
+import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.module'
 @NgModule({
   declarations: [ChannelsHomeComponent],
   imports: [
@@ -17,6 +18,7 @@ import { MatToolbarModule, MatExpansionModule, MatProgressSpinnerModule } from '
     MatProgressSpinnerModule,
     CardChannelModuleV2,
     CardContentModule,
+    CardContentV2Module
   ],
 })
 export class ChannelsModule { }
