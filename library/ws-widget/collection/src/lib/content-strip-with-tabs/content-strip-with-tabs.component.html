@@ -34,45 +34,45 @@
                   class="margin-left-xs">
                   <mat-icon>{{ stripsResultDataMap[key]?.stripInfo?.icon.icon }}</mat-icon>
                 </button>
-                <a mat-icon-button *ngIf="stripsResultDataMap[key]?.stripTitleLink"
+                <a *ngIf="stripsResultDataMap[key]?.stripTitleLink?.link"
                   [routerLink]="stripsResultDataMap[key]?.stripTitleLink?.link"
                   [queryParams]="stripsResultDataMap[key]?.stripTitleLink?.link?.queryParams">
                   <mat-icon class="ws-mat-primary-default-text" [color]="accent">{{
                     stripsResultDataMap[key]?.stripTitleLink?.icon }}</mat-icon>
                 </a>
                 <span class="spacer"></span>
+                <!-- viewAll start-->
+                  <div *ngIf="checkCondition(widgetData , stripsResultDataMap[key])"
+                  class="ml-4 view-more ws-mat-default-text">
+                  <a mat-flat-button class="flex ws-mat-default-text" [routerLink]="widgetData.strips[0]?.viewMoreUrl?.path"
+                    [queryParams]="widgetData.strips[0]?.viewMoreUrl?.queryParams">
+                    <span i18n class="ws-mat-default-text">{{widgetData.strips[0].viewMoreUrl.viewMoreText || 'See all'}}</span>
+                    <mat-icon class="" color="accent">navigate_next</mat-icon>
+                  </a>
+                </div>
+                <!-- viewAll end-->
               </div>
+              
               <button mat-icon-button (click)="setHiddenForStrip(key)" *ngIf="stripsResultDataMap[key]?.canHideStrip">
                 <mat-icon>close</mat-icon>
               </button>
               <mat-icon class="cursor-pointer" *ngIf="stripsResultDataMap[key]?.mode === 'accordion' && isMobile"
                 (click)="showAccordionData = !showAccordionData">{{ showAccordionData ? 'expand_less' : 'expand_more' }}
               </mat-icon>
+              
             </div>
             <div class="mb-4" *ngIf="checkVisible(stripsResultDataMap[key])">
               <ng-container [wsResolverWidget]="getdata(stripsResultDataMap[key])">
               </ng-container>
             </div>
-            <div *ngIf="stripsResultDataMap[key]?.showOnLoader" class="text-center my-2">
-              <mat-spinner [diameter]="40" [strokeWidth]="3"></mat-spinner>
-            </div>
             <ng-container *ngIf="stripsResultDataMap[key]?.showOnNoData"
               [wsResolverWidget]="stripsResultDataMap[key]?.noDataWidget"></ng-container>
             <ng-container *ngIf="stripsResultDataMap[key]?.showOnError"
               [wsResolverWidget]="stripsResultDataMap[key]?.errorWidget"></ng-container>
-            <ng-container *ngIf="widgetData.strips[0].tabs && widgetData.strips[0].tabs.length">
-              <!-- viewAll start-->
-              <!-- <div *ngIf="checkCondition(widgetData , stripsResultDataMap[key])"
-                class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all">
-                <a mat-button [routerLink]="widgetData.strips[0]?.viewMoreUrl?.path"
-                  [queryParams]="widgetData.strips[0]?.viewMoreUrl?.queryParams">
-                  <span i18n>{{widgetData.strips[0].viewMoreUrl.viewMoreText || 'See all'}}</span>
-                </a>
-              </div> -->
-              <!-- viewAll end-->
+            <ng-container *ngIf="stripsResultDataMap[key].tabs && stripsResultDataMap[key].tabs.length">
               <mat-tab-group animationDuration="0ms" class="mat-tab-labels w-full" dynamicHeight
                 [selectedIndex]="selectedIndex" (selectedTabChange)="selectedIndex = $event.index; tabClicked($event)">
-                <mat-tab *ngFor="let tab of widgetData.strips[0].tabs; let last = last;">
+                <mat-tab *ngFor="let tab of stripsResultDataMap[key].tabs; let last = last;">
                   <ng-template mat-tab-label>
                     <span>{{tab.label}} &nbsp;</span> <span>({{stripsResultDataMap[key]?.widgets?.length}})</span>
                   </ng-template>
@@ -93,17 +93,20 @@
                 </mat-tab>
               </mat-tab-group>
             </ng-container>
-            <ng-container *ngIf="!widgetData.strips[0].tabs || !widgetData.strips[0].tabs.length">
-              <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
-              *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
-              [loadStatus]="'done'">
-              <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets; trackBy: tracker">
-                <!-- <ng-container *ngIf="widget.widgetData.context.pageSection === 'continueLearning' "> -->
-                <ng-container *ngIf="widget.widgetData.content.completionPercentage !== 100"
-                  [wsResolverWidget]="widget"></ng-container>
-                <!-- </ng-container> -->
-              </ng-container>
-            </ws-utils-horizontal-scroller-v2>
+            <ng-container *ngIf="!stripsResultDataMap[key].tabs || !stripsResultDataMap[key].tabs.length">
+              <div class="mt-2">
+
+                  <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
+                  *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
+                  [loadStatus]="'done'">
+                  <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets; trackBy: tracker">
+                    <!-- <ng-container *ngIf="widget.widgetData.context.pageSection === 'continueLearning' "> -->
+                    <ng-container *ngIf="widget.widgetData.content.completionPercentage !== 100"
+                      [wsResolverWidget]="widget"></ng-container>
+                    <!-- </ng-container> -->
+                  </ng-container>
+                </ws-utils-horizontal-scroller-v2>
+              </div>
             </ng-container>
           </div>
         </div>
@@ -112,3 +115,9 @@
     </ng-container>
   </ng-container>
 </ng-template>
+
+
+<div *ngIf="stripsResultDataMap[key]?.showOnLoader" class="text-center my-2">
+  <h1> LOADING .. . . </h1>
+  <mat-spinner [diameter]="40" [strokeWidth]="3"></mat-spinner>
+</div>

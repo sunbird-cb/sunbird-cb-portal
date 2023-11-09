@@ -21,7 +21,8 @@ export namespace NsContentStripWithTabs {
     sliderConfig?: {
       showNavs : boolean,
       showDots: boolean
-    }
+    },
+    tabs: any[],
     titleDescription?: string
     name?: string
     mode?: 'accordion'
