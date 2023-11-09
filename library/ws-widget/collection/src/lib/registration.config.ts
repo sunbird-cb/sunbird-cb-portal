@@ -171,6 +171,7 @@ import { BreadcrumbsOrgModule } from './breadcrumbs-org/breadcrumbs-org.module'
 import { CardNotifyComponent } from './card-notify/card-notify.component'
 import { PlayerSurveyComponent } from './player-survey/player-survey.component'
 import { PlayerSurveyModule } from './player-survey/player-survey.module'
+import { ContentStripWithTabsComponent } from './content-strip-with-tabs/content-strip-with-tabs.component'
 
 export const WIDGET_REGISTERED_MODULES = [
   AvatarPhotoModule,
@@ -411,6 +412,11 @@ export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] 
     widgetType: ROOT_WIDGET_CONFIG.contentStrip._type,
     widgetSubType: ROOT_WIDGET_CONFIG.contentStrip.multiStripNew,
     component: ContentStripNewMultipleComponent,
+  },
+  {
+    widgetType: ROOT_WIDGET_CONFIG.contentStrip._type,
+    widgetSubType: ROOT_WIDGET_CONFIG.contentStrip.stripWithTabs,
+    component: ContentStripWithTabsComponent,
   },
   // {
   //   widgetType: ROOT_WIDGET_CONFIG.contentStrip._type,

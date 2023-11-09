@@ -11,7 +11,7 @@ import { InsightSideBarComponent } from '../component/in-sight-side-bar/in-sight
 import { DiscussionInfoComponent } from '../component/discussion-info/discussion-info.component';
 import { PageContainerComponent } from '../component/page-container/page-container.component';
 import {
-  GridLayoutModule,  SlidersModule, ContentStripNewMultipleModule, DiscussStripMultipleModule, NetworkStripMultipleModule
+  GridLayoutModule,  SlidersModule, DiscussStripMultipleModule, NetworkStripMultipleModule, ContentStripWithTabsModule
 } from '@sunbird-cb/collection';
 import { FeedListComponent } from './home/feed-list/feed-list.component';
 
@@ -22,9 +22,9 @@ import { FeedListComponent } from './home/feed-list/feed-list.component';
     HomeRoutingModule,
     GridLayoutModule,
     SlidersModule,
-    ContentStripNewMultipleModule, 
     DiscussStripMultipleModule, 
     NetworkStripMultipleModule,
+    ContentStripWithTabsModule,
     MatCardModule,
     MatIconModule
   ],
