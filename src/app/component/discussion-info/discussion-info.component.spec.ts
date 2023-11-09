@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IngsightSideBarComponent } from './ingsight-side-bar.component';
+import { DiscussionInfoComponent } from './discussion-info.component';
 
-describe('IngsightSideBarComponent', () => {
-  let component: IngsightSideBarComponent;
-  let fixture: ComponentFixture<IngsightSideBarComponent>;
+describe('DiscussionInfoComponent', () => {
+  let component: DiscussionInfoComponent;
+  let fixture: ComponentFixture<DiscussionInfoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IngsightSideBarComponent ]
+      declarations: [ DiscussionInfoComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IngsightSideBarComponent);
+    fixture = TestBed.createComponent(DiscussionInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
