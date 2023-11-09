@@ -33,6 +33,7 @@ interface IStripUnitContentData {
     showNavs : boolean,
     showDots: boolean
   },
+  tabs: any[],
   stripName?: string
   stripLogo?: string
   description?: string
@@ -75,6 +76,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   baseUrl = this.configSvc.sitePath || ''
   veifiedKarmayogi = false
   environment!: any
+  changeEventSubscription: Subscription | null = null
 
   constructor(
     // private contentStripSvc: ContentStripNewMultipleService,
@@ -97,9 +99,9 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   ngOnDestroy() {
-    // if (this.changeEventSubscription) {
-    //   this.changeEventSubscription.unsubscribe()
-    // }
+    if (this.changeEventSubscription) {
+      this.changeEventSubscription.unsubscribe()
+    }
   }
 
   showAccordion(key: string) {
@@ -141,14 +143,14 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       }))
       .filter(({ key, type, from }) => key && type && from)
     const eventTypeSet = new Set(keyAndEvent.map(e => e.type))
-    // this.changeEventSubscription = this.eventSvc.events$
-    //   .pipe(filter(event => eventTypeSet.has(event.eventType)))
-    //   .subscribe(event => {
-    //     keyAndEvent
-    //       .filter(e => e.type === event.eventType && e.from === event.from)
-    //       .map(e => e.key)
-    //       .forEach(k => this.fetchStripFromKey(k, false))
-    //   })
+    this.changeEventSubscription = this.eventSvc.events$
+      .pipe(filter(event => eventTypeSet.has(event.eventType)))
+      .subscribe(event => {
+        keyAndEvent
+          .filter(e => e.type === event.eventType && e.from === event.from)
+          .map(e => e.key)
+          .forEach(k => this.fetchStripFromKey(k, false))
+      })
   }
 
   private fetchStripFromKey(key: string, calculateParentStatus = true) {
@@ -201,6 +203,43 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     return data.widgets ? data.widgets.length : 0
   }
 
+  private getFiltersFromArray(v6filters: any) {
+    const filters: any = {}
+    if (v6filters.constructor === Array) {
+      v6filters.forEach(((f: any) => {
+        Object.keys(f).forEach(key => {
+          filters[key] = f[key]
+        })
+      }))
+      return filters
+    }
+    return v6filters
+  }
+
+  private transformSearchV6FiltersV2(v6filters: any) {
+    const filters: any = {}
+    if (v6filters.constructor === Array) {
+      v6filters.forEach(((f: any) => {
+        Object.keys(f).forEach(key => {
+          filters[key] = f[key]
+        })
+      }))
+      return filters
+    }
+    return v6filters
+  }
+
+  checkForDateFilters(filters: any) {
+    if (filters && filters.hasOwnProperty('batches.endDate')) {
+      // tslint:disable-next-line
+      filters['batches.endDate']['>='] = eval(filters['batches.endDate']['>='])
+    } else if (filters && filters.hasOwnProperty('batches.enrollmentEndDate')) {
+      // tslint:disable-next-line
+      filters['batches.enrollmentEndDate']['>='] = eval(filters['batches.enrollmentEndDate']['>='])
+    }
+    return filters
+  }
+
   private fetchStripFromRequestData(
     strip: NsContentStripWithTabs.IContentStripUnit,
     calculateParentStatus = true,
@@ -208,6 +247,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       // setting initial values
       this.processStrip(strip, [], 'fetching', false, null)
       this.fetchFromEnrollmentList(strip, calculateParentStatus)
+      this.fetchFromSearchV6(strip, calculateParentStatus)
   }
 
   fetchFromEnrollmentList(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
@@ -284,6 +324,70 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     }
   }
 
+  fetchFromSearchV6(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
+    if (strip.request && strip.request.searchV6 && Object.keys(strip.request.searchV6).length) {
+      // if (!(strip.request.searchV6.locale && strip.request.searchV6.locale.length > 0)) {
+      //   if (this.configSvc.activeLocale) {
+      //     strip.request.searchV6.locale = [this.configSvc.activeLocale.locals[0]]
+      //   } else {
+      //     strip.request.searchV6.locale = ['en']
+      //   }
+      // }
+      let originalFilters: any = []
+      if (strip.request &&
+        strip.request.searchV6 &&
+        strip.request.searchV6.request &&
+        strip.request.searchV6.request.filters) {
+        originalFilters = strip.request.searchV6.request.filters
+
+        strip.request.searchV6.request.filters = this.checkForDateFilters(strip.request.searchV6.request.filters)
+        strip.request.searchV6.request.filters = this.getFiltersFromArray(
+          strip.request.searchV6.request.filters,
+          )
+      }
+      this.contentSvc.searchV6(strip.request.searchV6).subscribe(
+        results => {
+          const showViewMore = Boolean(
+            results.result.content && results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
+          )
+          const viewMoreUrl = showViewMore
+            ? {
+              path: '/app/globalsearch',
+              queryParams: {
+                tab: 'Learn',
+                q: strip.request && strip.request.searchV6 && strip.request.searchV6.request,
+                f:
+                  strip.request &&
+                    strip.request.searchV6 &&
+                    strip.request.searchV6.request &&
+                    strip.request.searchV6.request.filters
+                    ? JSON.stringify(
+                      this.transformSearchV6FiltersV2(
+                        originalFilters,
+                      )
+                    )
+                    : {},
+              },
+            }
+            : null
+          // if (viewMoreUrl && viewMoreUrl.queryParams) {
+          //   viewMoreUrl.queryParams = viewMoreUrl.queryParams
+          // }
+          this.processStrip(
+            strip,
+            this.transformContentsToWidgets(results.result.content, strip),
+            'done',
+            calculateParentStatus,
+            viewMoreUrl,
+          )
+        },
+        () => {
+          this.processStrip(strip, [], 'error', calculateParentStatus, null)
+        },
+      )
+    }
+  }
+
   toggleInfo(data: IStripUnitContentData) {
     const stripInfo = this.stripsResultDataMap[data.key].stripInfo
     if (stripInfo) {
@@ -338,6 +442,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       stripTitle: strip.title,
       stripTitleLink: strip.stripTitleLink,
       sliderConfig: strip.sliderConfig,
+      tabs: strip.tabs,
       stripName: strip.name,
       mode: strip.mode,
       stripBackground: strip.stripBackground,
@@ -363,6 +468,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       showOnLoader: Boolean(strip.loader && fetchStatus === 'fetching'),
       showOnError: Boolean(strip.errorWidget && fetchStatus === 'error'),
     }
+    console.log('stripDatastripDatastripData', stripData)
     // const stripData = this.stripsResultDataMap[strip.key]
     this.stripsResultDataMap = {
       ...this.stripsResultDataMap,
@@ -416,5 +522,4 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     }
     return false
   }
-
 }
