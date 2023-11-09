@@ -6,15 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./in-sight-side-bar.component.scss']
 })
 export class InsightSideBarComponent implements OnInit {
-
+  profileDataLoading: boolean = false
   enableDiscussion: boolean = false;
   constructor() { }
 
   ngOnInit() {
+    this.profileDataLoading = true;
   }
 
   handleButtonClick(): void {
     this.enableDiscussion = true;
+    
   }
 
 }

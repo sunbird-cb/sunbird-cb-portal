@@ -14,6 +14,7 @@ import {
   GridLayoutModule,  SlidersModule, DiscussStripMultipleModule, NetworkStripMultipleModule, ContentStripWithTabsModule
 } from '@sunbird-cb/collection';
 import { FeedListComponent } from './home/feed-list/feed-list.component';
+import { ProfileCardStatsModule } from '@sunbird-cb/collection/src/lib/_common/profile-card-stats/profile-card-stats.module'
 
 @NgModule({
   declarations: [HomeComponent, FeedListComponent, InsightSideBarComponent, PageContainerComponent, DiscussionInfoComponent],
@@ -26,6 +27,7 @@ import { FeedListComponent } from './home/feed-list/feed-list.component';
     NetworkStripMultipleModule,
     ContentStripWithTabsModule,
     MatCardModule,
+    ProfileCardStatsModule,
     MatIconModule
   ],
   exports: [

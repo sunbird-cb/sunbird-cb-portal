@@ -198,3 +198,25 @@
     letter-spacing: 0.2625px;
   }
 }
+
+.circle-r-m  {
+  border-radius: 50%;
+  width: 54px;
+  height: 54px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    border-radius: 4px;
+    width: 276px;
+    height: 208px;
+  }
+
+  .initials {
+    color: #ffffff;
+    font-size: $size-m;
+    line-height: $size-xxl;
+    letter-spacing: 0.2625px;
+  }
+}
