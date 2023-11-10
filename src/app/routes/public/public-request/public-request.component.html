@@ -62,7 +62,7 @@
                 </label>
                 <div class="flex flex-1">
                   <mat-form-field appearance="outline" class="margin-top-s">
-                  <input id="email" name="emailField" autocomplete="off" type="email" maxlength="320"  (input)="emailVerification($event.target.value)" matInput placeholder="Enter your email id" #email
+                  <input id="email" name="emailField" autocomplete="off" type="email" maxlength="320"  (input)="emailVerification($event.target.value)" matInput placeholder="Enter your email address" #email
                     formControlName="email" i18n-aria-label aria-label="Email input">
                   <mat-icon matSuffix class="ws-mat-green-text margin-xs" svgIcon="verified" [hidden]="!isEmailVerified"></mat-icon>
                   <!-- <mat-hint>Please enter a government email ID</mat-hint> -->
