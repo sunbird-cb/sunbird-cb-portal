@@ -82,17 +82,25 @@ export class GridLayoutComponent extends WidgetBaseComponent
       showImage: false,
     },
   ]
-
+  fullMenuHeight = false;
   ngOnInit() {
-    this.fetchProfileById(this.configSvc.unMappedUser.id).subscribe(x => {
-      // console.log(x.profileDetails, "x.profileDetails====")
-      // if (x.profileDetails.mandatoryFieldsExists) {
-      //   this.isNudgeOpen = false
-      // }
-      if (x && x.profileDetails && x.profileDetails.personalDetails && x.profileDetails.personalDetails.phoneVerified) {
-        this.isNudgeOpen = false
-      }
+
+    this.configSvc.changeNavBarFullView.subscribe((data:any) => {
+      console.log('data-->',data);
+      this.fullMenuHeight = data;
     })
+    if(this.configSvc.unMappedUser && this.configSvc.unMappedUser.id) {
+      this.fetchProfileById(this.configSvc.unMappedUser.id).subscribe(x => {
+        // console.log(x.profileDetails, "x.profileDetails====")
+        // if (x.profileDetails.mandatoryFieldsExists) {
+        //   this.isNudgeOpen = false
+        // }
+        if (x && x.profileDetails && x.profileDetails.personalDetails && x.profileDetails.personalDetails.phoneVerified) {
+          this.isNudgeOpen = false
+        }
+      })
+    }
+    
 
     this.updateTelemetryDataSubscription = this.npsService.updateTelemetryDataObservable.subscribe((value: any) => {
       if (value) {

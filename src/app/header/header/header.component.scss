@@ -1,0 +1,104 @@
+@import 'ws-vars';
+@import 'ws-mixins';
+
+ws-app-nav-bar {
+  z-index: 1000;
+}
+
+.route-change {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10000;
+}
+
+.height-on-bottom {
+  overflow: auto;
+  // padding-bottom: 56px;
+  box-sizing: border-box;
+}
+
+.height-on-top {
+  margin-top: 56px;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+
+}
+
+.top-nav-bar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+
+.bottom-nav-bar {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+.height-adjust {
+  min-height: calc(100vh - (56px + 52px));
+
+  @include breakpoint-xs {
+    min-height: calc(100vh - (60px + 77px));
+  }
+}
+
+.new-width {
+  margin-left: auto;
+  margin-right: auto;
+  // max-width: 1267px;
+  // display: flex;
+  flex: 1;
+}
+
+.app-footer {
+  display: block;
+  padding-bottom: 56px;
+
+  @include breakpoint-gt-xs {
+    padding: 0;
+  }
+}
+
+
+.skipnav a {
+  width: 12em;
+  display: block;
+  color: #fff;
+  background: #333;
+  text-decoration: none;
+  padding: 15px;
+  position: absolute;
+  left: -1000em;
+  top: 0;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+.skipnav a:visited {
+  color: #fff;
+}
+
+.skipnav a:focus,
+.skipnav a:active {
+  z-index: 9999;
+  top: 0rem;
+  left: 1rem;
+  border: solid #777 2px;
+  color: #fff;
+  background: #333 !important;
+}
+
+.height-48 {
+    height:48px;
+}
+
+@media (max-width : 768px) {    
+  .height-on-top {
+    margin-top: 120px;
+  }
+}

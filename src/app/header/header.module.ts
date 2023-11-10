@@ -3,8 +3,10 @@ import { CommonModule } from '@angular/common';
 import {
   MatIconModule,
   MatToolbarModule,
-  MatMenuModule
+  MatMenuModule,
+  MatSliderModule
 } from '@angular/material'
+import { MatDialogModule} from '@angular/material';
 import { HeaderComponent } from './header/header.component';
 import { AppNavBarComponent } from '../component/app-nav-bar/app-nav-bar.component';
 import { RouterModule } from '@angular/router';
@@ -17,7 +19,7 @@ import {
 } from '@sunbird-cb/collection'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { SearchModule } from '@ws/app/src/public-api'
-
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [HeaderComponent, AppNavBarComponent],
   imports: [
@@ -25,6 +27,8 @@ import { SearchModule } from '@ws/app/src/public-api'
     MatToolbarModule,
     MatIconModule,
     MatMenuModule,
+    MatSliderModule,
+    MatDialogModule,
     BtnFeatureModule,
     ErrorResolverModule,
     TourModule,
@@ -32,11 +36,13 @@ import { SearchModule } from '@ws/app/src/public-api'
     StickyHeaderModule,
     SearchModule,
     RouterModule,
-    GridLayoutModule 
+    GridLayoutModule,
+    SharedModule
   ],
   exports: [
     HeaderComponent,
-    AppNavBarComponent
+    AppNavBarComponent,
+    SharedModule
   ],
   providers: [
     
