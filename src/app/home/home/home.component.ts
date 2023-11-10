@@ -5,13 +5,13 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
-  widgetData = {};
-  sliderData = {};
+export class HomeComponent implements OnInit { 
+  widgetData = {};  
+  sliderData = {}; 
   contentStripData = {};
   discussStripData = {};
   networkStripData = {};
-  carrierStripData = {};
+  carrierStripData = {}; 
  
   constructor() { }
 
