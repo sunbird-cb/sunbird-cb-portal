@@ -22,7 +22,7 @@ export namespace NsContentStripWithTabs {
       showNavs : boolean,
       showDots: boolean
     },
-    tabs: any[],
+    tabs?: NsContentStripWithTabs.IcontentStripTab[] | undefined,
     titleDescription?: string
     name?: string
     mode?: 'accordion'
@@ -103,5 +103,16 @@ export namespace NsContentStripWithTabs {
     hasMore?: boolean
     pageState?: string
     totalHits?: number
+  }
+
+  export interface IcontentStripTab {
+    label: string,
+    value: string,
+    showTabDataCount: boolean,
+    requestRequired?: boolean,
+    computeDataOnClick?: boolean
+    computeDataOnClickKey?: string
+    request?: any,
+    widgets?: NsWidgetResolver.IRenderConfigWithAnyData[]
   }
 }
