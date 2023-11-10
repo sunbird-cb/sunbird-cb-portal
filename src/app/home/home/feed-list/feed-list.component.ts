@@ -18,6 +18,7 @@ export class FeedListComponent implements OnInit {
           "key": "continueLearning",
           "logo": "school",
           "title": "Go to Learn hub",
+
           "stripTitleLink": {
             "link": "/page/learn",
             "icon": "navigate_next"
@@ -41,11 +42,15 @@ export class FeedListComponent implements OnInit {
             {
               "label": "In progress",
               "value": "inprogress",
+              "computeDataOnClick": false,
+              "showTabDataCount": true,
               "requestRequired": false
             },
             {
               "label": "Completed",
               "value": "completed",
+              "computeDataOnClick": false,
+              "showTabDataCount": true,
               "requestRequired": false
             },
           ],
@@ -88,7 +93,10 @@ export class FeedListComponent implements OnInit {
             {
               "label": "Courses",
               "value": "courses",
+              "computeDataOnClick": false,
+              "computeDataOnClickKey": '',
               "requestRequired": true,
+              "showTabDataCount": false,
               "request": {
                 "searchV6": {
                   "request": {
@@ -141,16 +149,19 @@ export class FeedListComponent implements OnInit {
             {
               "label": "Programs",
               "value": "programs",
+              "computeDataOnClick": false,
+              "computeDataOnClickKey": '',
               "requestRequired": true,
+              "showTabDataCount": false,
               "request": {
                 "searchV6": {
                   "request": {
                     "filters": {
                       "primaryCategory": [
-                        "Program"
+                        "program"
                       ],
                       "contentType": [
-                        "Program"
+                        
                       ]
                     },
                     "offset": 0,
@@ -194,13 +205,51 @@ export class FeedListComponent implements OnInit {
           ],
           "filters": [],
           "request": {
-            "enrollmentList": {
-              "path": "/apis/proxies/v8/learner/course/v1/user/enrollment/list/<id>",
-              "queryParams": {
-                "orgdetails": "orgName,email",
-                "licenseDetails": "name,description,url",
-                "fields": "contentType,name,channel,mimeType,appIcon,resourceType,identifier,trackable,objectType,organisation,pkgVersion,version,trackable,primaryCategory,posterImage,duration,creatorLogo,license,programDuration",
-                "batchDetails": "name,endDate,startDate,status,enrollmentType,createdBy,certificates"
+            "searchV6": {
+              "request": {
+                "filters": {
+                  "primaryCategory": [
+                    "Blended Program"
+                  ],
+                  "contentType": [
+                    "Course"
+                  ],
+                  "batches.endDate": { ">=": "new Date().toISOString().substring(0,10)" }
+                },
+                "offset": 0,
+                "limit": 20,
+                "query": "",
+                "sort_by": {
+                  "lastUpdatedOn": "desc"
+                },
+                "fields": [
+                  "name",
+                  "appIcon",
+                  "instructions",
+                  "description",
+                  "purpose",
+                  "mimeType",
+                  "gradeLevel",
+                  "identifier",
+                  "medium",
+                  "pkgVersion",
+                  "board",
+                  "subject",
+                  "resourceType",
+                  "primaryCategory",
+                  "contentType",
+                  "channel",
+                  "organisation",
+                  "trackable",
+                  "license",
+                  "posterImage",
+                  "idealScreenSize",
+                  "learningMode",
+                  "creatorLogo",
+                  "duration",
+                  "version",
+                  "programDuration"
+                ]
               }
             }
           }
@@ -228,6 +277,97 @@ export class FeedListComponent implements OnInit {
             "queryParams": {}
           },
           "tabs": [],
+          "filters": [],
+          "request": {
+            "searchV6": {
+              "request": {
+                "filters": {
+                  "primaryCategory": [
+                    "Blended Program"
+                  ],
+                  "contentType": [
+                    "Course"
+                  ],
+                  "batches.endDate": { ">=": "new Date().toISOString().substring(0,10)" }
+                },
+                "offset": 0,
+                "limit": 20,
+                "query": "",
+                "sort_by": {
+                  "lastUpdatedOn": "desc"
+                },
+                "fields": [
+                  "name",
+                  "appIcon",
+                  "instructions",
+                  "description",
+                  "purpose",
+                  "mimeType",
+                  "gradeLevel",
+                  "identifier",
+                  "medium",
+                  "pkgVersion",
+                  "board",
+                  "subject",
+                  "resourceType",
+                  "primaryCategory",
+                  "contentType",
+                  "channel",
+                  "organisation",
+                  "trackable",
+                  "license",
+                  "posterImage",
+                  "idealScreenSize",
+                  "learningMode",
+                  "creatorLogo",
+                  "duration",
+                  "version",
+                  "programDuration"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "key": "trendingAcrossDepartment",
+          "logo": "school",
+          "title": "Trending across department",
+          "stripTitleLink": {
+            "link": "",
+            "icon": ""
+          },
+          "sliderConfig": {
+            "showNavs" : true,
+            "showDots": true
+          },
+          "stripBackground": "",
+          "titleDescription": "Trending across department",
+          "stripConfig": {
+            "cardSubType": "standard"
+          },
+          "viewMoreUrl": {
+            "path": "/page/learn",
+            "viewMoreText": "Show all",
+            "queryParams": {}
+          },
+          "tabs": [
+            {
+              "label": "Courses",
+              "value": "courses",
+              "computeDataOnClick": false,
+              "computeDataOnClickKey": 'trendingAcrossDepartmentTabData',
+              "requestRequired": true,
+              "showTabDataCount": false,
+            },
+            {
+              "label": "Programs",
+              "value": "programs",
+              "computeDataOnClick": false,
+              "computeDataOnClickKey": 'trendingAcrossDepartmentTabData',
+              "requestRequired": true,
+              "showTabDataCount": false,
+            },
+          ],
           "filters": [],
           "request": {
             "searchV6": {
