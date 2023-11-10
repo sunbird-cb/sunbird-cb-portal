@@ -10,7 +10,7 @@
     </div>
     
     <div class="flex flex-col">
-        <ng-container *ngIf="!enableDiscussion">
+        <ng-container *ngIf="!loadSkeleton && !enableDiscussion">
             <div class="flex flex-col items-center gap-4 p-10">
                 <img src="./../../../fusion-assets/images/new-home/chat.svg" alt="chat img" />
                 <div class="text-sm text-center">Do you have any questions, suggestions or, ideas in your mind? Post it.</div>
@@ -18,7 +18,29 @@
             </div>
         </ng-container>
 
-        <ng-container *ngIf="enableDiscussion">
+        <ng-container *ngIf="loadSkeleton">
+            <div class="flex flex-col gap-3 p-5">
+                <ws-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-skeleton-loader>
+                <ws-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-skeleton-loader>
+                <div class="flex flex-row gap-5">
+                    <ws-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-skeleton-loader>
+                    <ws-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-skeleton-loader>
+                    <ws-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-skeleton-loader>
+                </div>
+            </div>
+            <hr class="w-full bg-gray-200 border-b-1 opacity-50 m-0">
+            <div class="flex flex-col gap-3 p-5">
+                <ws-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-skeleton-loader>
+                <ws-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-skeleton-loader>
+                <div class="flex flex-row gap-5">
+                    <ws-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-skeleton-loader>
+                    <ws-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-skeleton-loader>
+                    <ws-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-skeleton-loader>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="!loadSkeleton && enableDiscussion">
             <ws-discussion-info></ws-discussion-info>
             <hr class="w-full bg-gray-200 border-b-1 opacity-50 m-0">
             <ws-discussion-info></ws-discussion-info>
