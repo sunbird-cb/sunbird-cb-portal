@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class InsightSideBarComponent implements OnInit {
   profileDataLoading: boolean = false
   enableDiscussion: boolean = false;
+  loadSkeleton: boolean = false;
   constructor() { }
 
   ngOnInit() {
@@ -15,7 +16,11 @@ export class InsightSideBarComponent implements OnInit {
   }
 
   handleButtonClick(): void {
-    this.enableDiscussion = true;
+    this.loadSkeleton = true;
+    setTimeout(() => {
+      this.loadSkeleton = false;
+      this.enableDiscussion = true;
+    }, 1500)
     
   }
 
