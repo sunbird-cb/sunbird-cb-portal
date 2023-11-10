@@ -215,5 +215,6 @@ export namespace WsEvents {
     DISCUSS_TAB = 'discuss-tab',
     EVENTS_TAB = 'events-tab',
     SIDE_MENU = 'side-menu',
+    HOME_PAGE_STRIP_TABS = 'home-page-strip-tabs',
   }
 }
