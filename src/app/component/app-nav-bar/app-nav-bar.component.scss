@@ -1,8 +1,6 @@
 @import 'ws-mixins';
 
-.mobile-download-app-top-header {
-  display: none;
-}
+
 .tourGuideBtn {
   padding: 10px 16px;
   display: flex;
@@ -24,7 +22,7 @@
 // height: 72px;
 // }
 
-.mat-toolbar-row, .mat-toolbar-single-row {
+.mobile {
   height: 56px !important;
   border-bottom: 1px solid #ccc;
   box-shadow: none !important;
@@ -199,11 +197,11 @@
   // >>>>>>>hubs
 }
 
-.mobile {
-  @include breakpoint-xs {
-    padding: $size-xs;
-  }
-}
+// .mobile {
+//   @include breakpoint-xs {
+//     padding: $size-xs;
+//   }
+// }
 
 
 
@@ -251,20 +249,7 @@
     flex: 1;
     height: 56px;
   }
-  .mobile {
-    margin-top:60px;
-  }
-  .mobile-download-app-top-header  {
-    position: fixed;
-    display: flex;
-    flex-direction: row;
-    height: 32px;
-    background-color: #fff;
-    width: 100%;
-    padding: 16px;
-    border-bottom: 1px solid #ccc;
-
-  }
+ 
 
   .kb-symbol {
     background: rgba(239, 149, 30, 0.24);
@@ -313,6 +298,59 @@
     padding: 6px 16px;
     list-style: none;
   }
+  .mobile-footer-fixed-nav {
+    height: 64px;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+  }
+  .mobile-footer-fixed-nav-list-item-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height:64px;
+    padding:0;
+    margin:0;
+    justify-content: center;
+  }
+  .mobile-footer-fixed-nav-list-item {
+    min-width: 100px;    
+    list-style: none;
+    text-align: center;    
+  }
+  .mobile-footer-fixed-nav-list-item .active {
+    border-top: 1px solid rgb(27, 76, 161);
+    background-color: rgba(27, 76, 161, 0.16);
+  }
+
+  .icon-container {
+    display: flex;
+    flex-direction: column;
+    height: 64px;
+    margin-top: 12px;
+    margin-bottom: 28px;
+    margin-right: 35px;
+    /* text-align: center; */
+    margin-left: 35px;
+    align-items: center;
+  }
+
+  .icon-container img {
+    height: 24px;
+    width: 24px;
+  }
+
+  .icon-container span {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  
+  .mobile-footer-fixed-nav-list-item span {
+    line-height: 16px;
+  }
+
+ 
+  
 }
 
 // @media

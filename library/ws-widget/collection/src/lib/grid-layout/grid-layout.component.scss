@@ -15,6 +15,7 @@
 .new-box-hubs {
   margin: 0 0 $size-s 0;
   height:48px;
+  background-color: #fff;
 }
 
 .new-box-left {
@@ -406,7 +407,7 @@
     font-family: system-ui;
     font-weight: 500;
     left: 0;
-    bottom: 8vh;
+    bottom: 7.6vh;
     padding-top: 12px;
     padding-bottom: 15px;
     padding-left: 6px;
@@ -678,5 +679,8 @@
   .fix-w {
     margin-left: 0 !important;
     margin-right: 0 !important;
+    border-top: 1px solid #ccc;
+    background-color: #fff;
   }
+
 }
