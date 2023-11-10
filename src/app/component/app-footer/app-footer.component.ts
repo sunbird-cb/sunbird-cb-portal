@@ -7,7 +7,6 @@ import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/dis
 // tslint:disable-next-line
 import _ from 'lodash'
 import { environment } from 'src/environments/environment'
-
 @Component({
   selector: 'ws-app-footer',
   templateUrl: './app-footer.component.html',
@@ -55,7 +54,7 @@ export class AppFooterComponent implements OnInit {
     } else {
       const newInstance = await this.readAgain()
       this.hubsList = (newInstance.hubs || []).filter(i => i.active)
-    }
+    }   
 
   }
   async readAgain() {
@@ -130,5 +129,9 @@ export class AppFooterComponent implements OnInit {
   }
   get needToHide(): boolean {
     return this.currentRoute.includes('all/assessment/')
+  }
+
+  onClick(event:any) {
+    console.log(event.target);
   }
 }

@@ -29,7 +29,7 @@ navBarRequired && (isXSmall$ | async) === false
 <!-- <ws-app-footer class="app-footer" [ngClass]="{ 'padding-bottom: 56px': !isSetupPage}" *ngIf="showNavbar">
 </ws-app-footer> -->
 <ws-app-chatbot></ws-app-chatbot>
-<ws-app-footer class="app-footer" [ngClass]="{ 'padding-bottom: 56px': !isSetupPage}" *ngIf="showNavbar && showFooter">
+<ws-app-footer class="app-footer" *ngIf="showNavbar && showFooter">
 </ws-app-footer>
 <ws-app-nav-bar class="bottom-nav-bar" [hidden]="!isShowNavbar" *ngIf="navBarRequired && (isXSmall$ | async) === true"
   [mode]="'bottom'">

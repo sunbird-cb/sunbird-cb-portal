@@ -3,7 +3,7 @@
 @import 'ws-common';
 
 ws-app-search-input-home .autocomplete-form {
-  width: 100%;
+  width: 486px;
   font-size: 0.75em;
   display: block;
   margin: auto;
@@ -17,7 +17,10 @@ ws-app-search-input-home .autocomplete-form {
   // background: #00A9F4 0% 0% no-repeat padding-box;
   border-radius: 0px 4px 4px 0px;
   padding: $size-xs 0 $size-s $size-xs;
+  margin-left: 16px;
+  margin-top: 8px;
 }
+
 
 ws-app-search-input-home input {
   padding-left: .5rem !important;
@@ -35,7 +38,7 @@ ws-app-search-input-home .search .mat-form-field-wrapper {
 }
 
 ws-app-search-input-home .search-border {
-  border-radius: 4px;
+  border-radius: 16px;
   // <<<<<<< HEAD
   // /*.75rem;*/
   // border: 1px solid #DEDFE0;
@@ -44,10 +47,10 @@ ws-app-search-input-home .search-border {
   // /* border-color: #cecece;*/
   // =======
   // border: 1px solid #DEDFE0;
-  border: none;
+  border: 1px solid rgba(0, 0, 0, 0.16);
   flex: 1;
-  max-width: 690px;
-  height: 36px;
+  max-width: 486px;
+  height: 32px;
   margin-top: auto;
   margin-bottom: auto;
 }
@@ -126,3 +129,17 @@ ws-app-search-input-home .feature-group {
 
 // 821
 @media only screen and (max-width:821px) {}
+
+.mat-form-field-underline {
+  display: none;
+}
+
+
+// .mat-form-field-label-wrapper {
+//   top:-12px !important;
+//   left:16px !important;
+// }
+
+// .mat-input-element {
+//   margin: 6px !important;
+// }

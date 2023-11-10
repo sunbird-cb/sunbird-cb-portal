@@ -1,8 +1,31 @@
 <ng-container *ngIf="fullMenuDispaly">
+  <div class="mobile-download-app-top-header">
+    <ng-container *ngIf="mode === 'top'">
+      <div class="cross-mobile-download-app">
+        <span>X</span>
+      </div>
+      <div class="kb-symbol">
+        <img src="/assets/icons/top-nav/KB-Symbol_icon.svg">
+      </div>
+      <div class="mobile-download-app-desc">
+        <p class="mobile-download-app-desc-heading">iGot Karmayogi</p>
+        <p class="mobile-download-app-desc-sub-heading">Download the mobile app</p>
+      </div>
+      <div>
+        <li class="download-app-chip-top-header">
+          <span>Download App</span>                
+        </li>
+      </div>
+    </ng-container>
+  </div>
   <mat-toolbar *ngIf="sShowAppNavBar && !needToHide"
     [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
     class="mat-elevation-z3 custom mobile">
+    
+     
+    
     <div class="fix-ww" id="root-tool-bar" title="toolbar" i18n-aria-label role="toolbar">
+     
       <ng-container *ngIf="mode === 'top'">
         <a [routerLink]="!isforPreview ? '/page/home' : '/static-home'" class="logo-dim" role="link" title="Home"
           i18n-aria-title i18n-aria-label>
@@ -133,9 +156,44 @@
   </mat-toolbar>
 </ng-container>
 <ng-template #navbarSide let-item="item">
-  <ng-container *ngIf="item.type === 'widgetButton'" [wsResolverWidget]="item.config"></ng-container>
-  <ws-widget-btn-feature *ngIf="item.type === 'featureButton'" [id]="item.config.actionBtnId" [widgetData]="item.config"
-    [showFixedLength]="true"></ws-widget-btn-feature>
+    <ul class="right-side-nav-items">
+      <li class="download-app-chip" *ngIf="item.type === 'downloadButton'" (click)="openDialog()">
+        <span>Download App</span>
+        
+      </li>
+      <!-- <li class="font-icon" *ngIf="item.type === 'fontButton'" (click)="fontContainerFlag=!fontContainerFlag">
+        <img src="/assets/icons/top-nav/Accessibility_icon.svg">
+       <div class="font-container" *ngIf="fontContainerFlag">
+        <span class="smaller-size">A</span>
+        <mat-slider min="1" max="5" step="1" value="1.5">
+          <input matSliderThumb>
+        </mat-slider>
+        <span class="larger-size">A</span>
+       </div>
+      </li> -->
+      <li class="font-icon" *ngIf="item.type === 'fontButton'">
+        <mat-menu #appMenu="matMenu">
+            <span class="smaller-size">A</span>
+            <mat-slider min="10" max="18" step="2" value="12" (input)="changeFont($event)">
+              <input matSliderThumb>
+            </mat-slider>
+            <span class="larger-size">A</span>
+        </mat-menu>
+        
+        <div [matMenuTriggerFor]="appMenu">
+          <img src="/assets/icons/top-nav/Accessibility_icon.svg">
+        </div>
+      </li>
+      <li class="help-icon" *ngIf="item.type === 'helpButton'">
+        <!-- <img src="/assets/icons/top-nav/help_icon.svg"> -->
+        <span>?</span>
+      </li>
+      <li><ng-container *ngIf="item.type === 'widgetButton'" [wsResolverWidget]="item.config"></ng-container>
+        <!-- <ws-widget-btn-feature *ngIf="item.type === 'featureButton'" [id]="item.config.actionBtnId" [widgetData]="item.config"
+        [showFixedLength]="true"></ws-widget-btn-feature> --></li>
+    </ul>
+  
+    
 </ng-template>
 
 <mat-menu #helpMenu="matMenu">
