@@ -19,6 +19,11 @@ body {
   // word-spacing: $word-spacing;
 }
 
+:host {
+  width: 100%;
+  height: 100%;
+}
+
 ::selection {
   background-color: #e0f2f1;
 }
@@ -1009,7 +1014,7 @@ ngx-guided-tour {
 
 .skeleton-box {
   display: inline-block;
-  height: 1em;
+  min-height: 1rem;
   position: relative;
   overflow: hidden;
   background-color: #DDDBDD;
