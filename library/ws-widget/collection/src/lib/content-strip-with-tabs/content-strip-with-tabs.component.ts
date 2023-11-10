@@ -96,7 +96,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
 
   ngOnInit() {
     this.environment = environment
-    const url = window.location.href
+    // const url = window.location.href
     this.initData()
   }
 
@@ -257,7 +257,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       let userId = ''
       let content: NsContent.IContent[]
       let contentNew: NsContent.IContent[]
-      const tabResults: any[] = []
+      let tabResults: any[] = []
       const queryParams = _.get(strip.request.enrollmentList, 'queryParams')
       if (this.configSvc.userProfile) {
         userId = this.configSvc.userProfile.userId
@@ -313,22 +313,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
             return dateB - dateA
           })
 
-          const splitData = this.getInprogressAndCompleted(
-            contentNew,
-            (e: any)=> e.completionStatus === 1 || e.completionPercentage < 100,
-            strip,
-          );
-          
-          if(strip.tabs && strip.tabs.length) {
-            for(let i=0; i<strip.tabs.length; i++) {
-              tabResults.push({
-               ...strip.tabs[i], 
-               ...(splitData.find((itmInner) => itmInner.value === strip.tabs[i].value))}
-              );
-            }
-            
-            console.log('tabResults --  ', tabResults)
-          }
+          tabResults = this.splitEnrollmentTabsData(contentNew, strip)
+
           this.processStrip(
             strip,
             this.transformContentsToWidgets(contentNew, strip),
@@ -345,6 +331,25 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     }
   }
 
+  splitEnrollmentTabsData(contentNew: NsContent.IContent[], strip: NsContentStripWithTabs.IContentStripUnit) {
+    const tabResults: any[] = []
+    const splitData = this.getInprogressAndCompleted(
+      contentNew,
+      (e: any)=> e.completionStatus === 1 || e.completionPercentage < 100,
+      strip,
+    );
+    
+    if(strip.tabs && strip.tabs.length) {
+      for(let i=0; i<strip.tabs.length; i++) {
+        tabResults.push({
+         ...strip.tabs[i], 
+         ...(splitData.find((itmInner) => itmInner.value === strip.tabs[i].value))}
+        );
+      }
+    }
+    return tabResults
+  }
+
   getInprogressAndCompleted(array: NsContent.IContent[], filter: any, strip: NsContentStripWithTabs.IContentStripUnit) {
     let inprogress: any[] = [], completed: any[]= [];
     array.forEach((e: any, idx:number, arr:any[]) => (filter(e, idx, arr) ? inprogress : completed).push(e));
@@ -353,7 +358,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       {value: 'completed', widgets: this.transformContentsToWidgets(completed, strip)}];
   }
 
-  fetchFromSearchV6(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
+  async fetchFromSearchV6(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.searchV6 && Object.keys(strip.request.searchV6).length) {
       // if (!(strip.request.searchV6.locale && strip.request.searchV6.locale.length > 0)) {
       //   if (this.configSvc.activeLocale) {
@@ -368,14 +373,44 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         strip.request.searchV6.request &&
         strip.request.searchV6.request.filters) {
         originalFilters = strip.request.searchV6.request.filters
-
         strip.request.searchV6.request.filters = this.checkForDateFilters(strip.request.searchV6.request.filters)
         strip.request.searchV6.request.filters = this.getFiltersFromArray(
           strip.request.searchV6.request.filters,
           )
       }
-      this.contentSvc.searchV6(strip.request.searchV6).subscribe(
-        results => {
+      // if(strip.tabs && strip.tabs.length) {
+      //   strip.tabs.map(tab => {
+      //     if(tab.requestRequired){
+      //       // call API and assign it to first Tab
+      //       this.searchV6Request(strip, strip.request, calculateParentStatus)
+      //     }
+      //   })
+      // } else {
+        console.log('calling  before-- ')
+        const response = await this.searchV6Request(strip, strip.request, calculateParentStatus)
+        console.log('calling  after-- ')
+        if(response && response.results && response.viewMoreUrl) {
+          this.processStrip(
+            strip,
+            this.transformContentsToWidgets(response.results.result.content, strip),
+            'done',
+            calculateParentStatus,
+            response.viewMoreUrl,
+          )
+        }
+      // }
+    }
+  }
+
+  async searchV6Request(strip: NsContentStripWithTabs.IContentStripUnit,
+    request: NsContentStripWithTabs.IContentStripUnit['request'],
+    calculateParentStatus: boolean
+  ): Promise<any> {
+    let originalFilters: any = []
+    if(request && request.searchV6) {
+      console.log('calling -- ')
+      await this.contentSvc.searchV6(request.searchV6).subscribe(
+        async (results) => {
           const showViewMore = Boolean(
             results.result.content && results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
           )
@@ -384,12 +419,12 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
               path: '/app/globalsearch',
               queryParams: {
                 tab: 'Learn',
-                q: strip.request && strip.request.searchV6 && strip.request.searchV6.request,
+                q: request && request.searchV6 && request.searchV6.request,
                 f:
-                  strip.request &&
-                    strip.request.searchV6 &&
-                    strip.request.searchV6.request &&
-                    strip.request.searchV6.request.filters
+                  request &&
+                    request.searchV6 &&
+                    request.searchV6.request &&
+                    request.searchV6.request.filters
                     ? JSON.stringify(
                       this.transformSearchV6FiltersV2(
                         originalFilters,
@@ -402,19 +437,15 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
           // if (viewMoreUrl && viewMoreUrl.queryParams) {
           //   viewMoreUrl.queryParams = viewMoreUrl.queryParams
           // }
-          this.processStrip(
-            strip,
-            this.transformContentsToWidgets(results.result.content, strip),
-            'done',
-            calculateParentStatus,
-            viewMoreUrl,
-          )
+          console.log('returned results')
+          return {results, viewMoreUrl }
         },
         () => {
           this.processStrip(strip, [], 'error', calculateParentStatus, null)
+          return
         },
       )
-    }
+    } 
   }
 
   toggleInfo(data: IStripUnitContentData) {

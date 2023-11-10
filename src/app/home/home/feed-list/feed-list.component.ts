@@ -90,13 +90,50 @@ export class FeedListComponent implements OnInit {
               "value": "courses",
               "requestRequired": true,
               "request": {
-                "enrollmentList": {
-                  "path": "/apis/proxies/v8/learner/course/v1/user/enrollment/list/<id>",
-                  "queryParams": {
-                    "orgdetails": "orgName,email",
-                    "licenseDetails": "name,description,url",
-                    "fields": "contentType,name,channel,mimeType,appIcon,resourceType,identifier,trackable,objectType,organisation,pkgVersion,version,trackable,primaryCategory,posterImage,duration,creatorLogo,license,programDuration",
-                    "batchDetails": "name,endDate,startDate,status,enrollmentType,createdBy,certificates"
+                "searchV6": {
+                  "request": {
+                    "filters": {
+                      "primaryCategory": [
+                        "Course"
+                      ],
+                      "contentType": [
+                        "Course"
+                      ]
+                    },
+                    "offset": 0,
+                    "limit": 20,
+                    "query": "",
+                    "sort_by": {
+                      "lastUpdatedOn": "desc"
+                    },
+                    "fields": [
+                      "name",
+                      "appIcon",
+                      "instructions",
+                      "description",
+                      "purpose",
+                      "mimeType",
+                      "gradeLevel",
+                      "identifier",
+                      "medium",
+                      "pkgVersion",
+                      "board",
+                      "subject",
+                      "resourceType",
+                      "primaryCategory",
+                      "contentType",
+                      "channel",
+                      "organisation",
+                      "trackable",
+                      "license",
+                      "posterImage",
+                      "idealScreenSize",
+                      "learningMode",
+                      "creatorLogo",
+                      "duration",
+                      "version",
+                      "programDuration"
+                    ]
                   }
                 }
               }
@@ -106,13 +143,50 @@ export class FeedListComponent implements OnInit {
               "value": "programs",
               "requestRequired": true,
               "request": {
-                "enrollmentList": {
-                  "path": "/apis/proxies/v8/learner/course/v1/user/enrollment/list/<id>",
-                  "queryParams": {
-                    "orgdetails": "orgName,email",
-                    "licenseDetails": "name,description,url",
-                    "fields": "contentType,name,channel,mimeType,appIcon,resourceType,identifier,trackable,objectType,organisation,pkgVersion,version,trackable,primaryCategory,posterImage,duration,creatorLogo,license,programDuration",
-                    "batchDetails": "name,endDate,startDate,status,enrollmentType,createdBy,certificates"
+                "searchV6": {
+                  "request": {
+                    "filters": {
+                      "primaryCategory": [
+                        "Program"
+                      ],
+                      "contentType": [
+                        "Program"
+                      ]
+                    },
+                    "offset": 0,
+                    "limit": 20,
+                    "query": "",
+                    "sort_by": {
+                      "lastUpdatedOn": "desc"
+                    },
+                    "fields": [
+                      "name",
+                      "appIcon",
+                      "instructions",
+                      "description",
+                      "purpose",
+                      "mimeType",
+                      "gradeLevel",
+                      "identifier",
+                      "medium",
+                      "pkgVersion",
+                      "board",
+                      "subject",
+                      "resourceType",
+                      "primaryCategory",
+                      "contentType",
+                      "channel",
+                      "organisation",
+                      "trackable",
+                      "license",
+                      "posterImage",
+                      "idealScreenSize",
+                      "learningMode",
+                      "creatorLogo",
+                      "duration",
+                      "version",
+                      "programDuration"
+                    ]
                   }
                 }
               }
