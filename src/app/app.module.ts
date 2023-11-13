@@ -88,7 +88,8 @@ import { AppHierarchyResolverService } from './services/app-hierarchy-resolver.s
 import { AppEnrollmentResolverService } from './services/app-enrollment-resolver.service'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
-import { HeaderModule } from './header/header.module';
+import { HeaderModule } from './header/header.module'
+
 @Injectable()
 export class HammerConfig extends GestureConfig {
   buildHammer(element: HTMLElement) {
@@ -128,7 +129,8 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PublicLoginWComponent,
     PublicLoginWGComponent,
     AppTourVideoComponent,
-    AppTourComponent
+    AppTourComponent,
+  
   ],
   imports: [
     FormsModule,

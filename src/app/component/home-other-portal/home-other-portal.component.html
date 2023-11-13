@@ -1,0 +1,32 @@
+<mat-card class="mat-card pad-4 other-portal-box" *ngIf="portalLinks && portalLinks.length">
+    <p class="mat-subheading-1">Other portals you have access to</p>
+    <div class="flex flex-row items-center content-center portal-box" *ngFor="let wdata of portalLinks">
+        <a class="flex flex-row items-center content-center" target="_blank" href="{{wdata.widgetData.actionBtn.url}}">
+            <div class="icon-box margin-right-s flex items-center justify-center">
+                <img src="{{wdata.widgetData.actionBtn.icon}}">
+            </div>
+            <div class="flex flex-col card-text-box">
+                <p class="mat-subheading-2 margin-remove-bottom" [attr.id]="wdata.widgetData.actionBtn.icon">
+                    {{ wdata.widgetData.actionBtn.name }}
+                </p>
+                <p class="small-font margin-remove-bottom">
+                    Create and manage CBPs here.
+                </p>
+            </div>
+        </a>
+    </div>
+
+    <!-- <div class="flex flex-row items-center content-centerportal-box">
+        <div class="icon-box margin-right-s flex items-center justify-center">
+            <img src="/assets/icons/MDO_portal.svg">
+        </div>
+        <div class="flex flex-col card-text-box">
+            <p class="mat-subheading-2 margin-remove-bottom">
+                MDO Portal
+            </p>
+            <p class="small-font margin-remove-bottom">
+                Manage MDO user access, work orders and events.
+            </p>
+        </div>
+    </div> -->
+</mat-card>

@@ -8,10 +8,17 @@ import { PageContainerComponent } from '../component/page-container/page-contain
 import {
   GridLayoutModule,  SlidersModule, ContentStripNewMultipleModule, DiscussStripMultipleModule, NetworkStripMultipleModule
 } from '@sunbird-cb/collection';
-import { FeedListComponent } from './home/feed-list/feed-list.component';
+import { FeedListComponent } from './home/feed-list/feed-list.component'
+import { HomeOtherPortalComponent } from '../component/home-other-portal/home-other-portal.component'
+import { MatCardModule } from '@angular/material'
+import { NoDataComponent } from '../component/no-data/no-data.component'
+import { ClientSliderComponent } from '../component/client-slider/client-slider.component';
+
 
 @NgModule({
-  declarations: [HomeComponent, FeedListComponent, IngsightSideBarComponent, PageContainerComponent],
+  declarations: [HomeComponent, FeedListComponent, IngsightSideBarComponent, 
+    PageContainerComponent, HomeOtherPortalComponent, NoDataComponent,
+    ClientSliderComponent],
   imports: [
     CommonModule,    
     HomeRoutingModule,
@@ -19,7 +26,8 @@ import { FeedListComponent } from './home/feed-list/feed-list.component';
     SlidersModule,
     ContentStripNewMultipleModule, 
     DiscussStripMultipleModule, 
-    NetworkStripMultipleModule
+    NetworkStripMultipleModule,
+    MatCardModule,
   ],
   exports: [
     HeaderModule   

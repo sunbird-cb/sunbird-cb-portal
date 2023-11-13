@@ -1,0 +1,12 @@
+<div class="client-box" *ngIf="clients && clients.length">
+    <h2 class="text-center margin-bottom-l">Top providers powering your learning</h2>
+     <div class="customer-logos flex flex-1 flex-row slider" >
+        <div class="flex slider-item" *ngFor="let item of clients">
+            <a href="{{ item.clientUrl }}" target="_blank" class="client-link">
+                <img src="{{ item.clientImageUrl }}" class="client-img">
+                <p>{{ item.clientName }}</p>
+            </a>
+        </div>
+        
+     </div>
+</div>
