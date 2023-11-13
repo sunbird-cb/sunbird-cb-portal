@@ -2,6 +2,14 @@ import { AUTO_STYLE, animate, state, transition, trigger,style } from '@angular/
 import { Component, OnInit } from '@angular/core';
 
 const DEFAULT_DURATION = 500;
+
+const noData = {
+  "desc" : "Do you have any questions, suggestions or, ideas in your mind? Post it.",
+  "linkUrl" : "https://portal.karmayogibm.nic.in/page/learn",
+  "linkText" : "Start discussion",
+  "iconImg" : "/assets/icons/edit.svg",
+}
+
 @Component({
   selector: 'ws-in-sight-side-bar',
   templateUrl: './in-sight-side-bar.component.html',
@@ -17,28 +25,28 @@ const DEFAULT_DURATION = 500;
 })
 export class InsightSideBarComponent implements OnInit {
   profileDataLoading: boolean = false
-  clapsDataLoading: boolean = false
   enableDiscussion: boolean = false
   loadSkeleton: boolean = false
+  noDataValue : {} | undefined
+  clapsDataLoading: boolean = false
   collapsed = false
   constructor() { }
 
   ngOnInit() {
-    setTimeout(()=>{
-      this.profileDataLoading = true
-      this.clapsDataLoading = true
-    },1000)
+    this.profileDataLoading = true
+    this.clapsDataLoading = true
+    this.noDataValue = noData
   }
 
   handleButtonClick(): void {
-    this.loadSkeleton = true;
+    this.loadSkeleton = true
     setTimeout(() => {
-      this.loadSkeleton = false;
-      this.enableDiscussion = true;
+      this.loadSkeleton = false
+      this.enableDiscussion = true
     }, 1500)
     
   }
   expandCollapse(event:any) {
-    this.collapsed = event;
+    this.collapsed = event
   }
 }
