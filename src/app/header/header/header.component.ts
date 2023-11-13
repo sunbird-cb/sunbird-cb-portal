@@ -35,13 +35,13 @@ export class HeaderComponent implements OnInit {
               "widgetData": {}
             }
           }
-        ]
+        ] 
       ]
     };
   }
 
   get navBarRequired(): boolean {
-    return this.isNavBarRequired
+    return this.isNavBarRequired 
   }
   get isShowNavbar(): boolean {
     return this.showNavbar

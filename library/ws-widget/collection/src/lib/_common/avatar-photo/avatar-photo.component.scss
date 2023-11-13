@@ -2,7 +2,22 @@
 @import '~@sunbird-cb/design-system/src/styles/ws-vars';
 @import '~@sunbird-cb/design-system/src/styles/ws-mixins';
 
-
+.success-checkmark::after {
+  content: "✔";
+  position: absolute;
+  left: 25px;
+  top: 20px;
+  width: 11px;
+  height: 11px;
+  text-align: center;
+  border: 1px solid #1D8923;
+  background: #1D8923;
+  border-radius: 50%;
+  color: #fff;
+  line-height: 11px;
+  text-align: center;
+  font-size: 9px;
+}
 .circle-s {
   border-radius: 10%;
   width: 24px;
@@ -220,20 +235,5 @@
     letter-spacing: 0.2625px;
   }
 
-  .success-checkmark:after {
-    content: "✔";
-    position: absolute;
-    left: 25px;
-    top: 20px;
-    width: 11px;
-    height: 11px;
-    text-align: center;
-    border: 1px solid #1D8923;
-    background: #1D8923;
-    border-radius: 50%;
-    color: #fff;
-    line-height: 11px;
-    text-align: center;
-    font-size: 9px;
-  }
+
 }

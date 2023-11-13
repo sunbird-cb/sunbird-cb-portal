@@ -50,8 +50,8 @@
               "src/styles/styles.scss",
               "node_modules/shepherd.js/dist/css/shepherd.css",
               {
-                "input": "src/themes/theme-igot-new.scss",
-                "bundleName": "theme-igot-new",
+                "input": "src/themes/theme-igot.scss",
+                "bundleName": "theme-igot",
                 "lazy": true
               },
               "node_modules/pdfjs-dist/web/pdf_viewer.css",

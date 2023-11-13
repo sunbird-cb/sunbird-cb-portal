@@ -50,8 +50,39 @@
     }
 }
 
+.download-section {
+    margin-top: 113px;
+}
+
 @media only screen and (max-width: 768px) {
     .home-container {
         margin-top: 192px;
+        flex-direction: column;
+    }
+
+    .updates-on-posts{
+        flex-direction: column;
+    }
+
+    .trending-discussion{
+        flex-direction: column;
+    }
+
+    .network-requests {
+        flex-direction: column;
+    }
+
+    .network-suggestion {
+        flex-direction: column;
+    }
+
+    .left {
+        width: 92%;
+        padding: 0 16px;
+    }
+    
+    .right {
+        width: 92%;
+        padding: 0 16px;
     }
 }

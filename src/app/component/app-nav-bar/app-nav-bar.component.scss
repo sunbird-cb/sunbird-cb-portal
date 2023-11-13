@@ -48,40 +48,6 @@
   margin-right: 2rem;
 }
 
-.right-side-nav-items {
-  display: inline;
-  margin: 12px  0;
-}
-
-.right-side-nav-items li {
-  display: inline-block;
-}
-
-.download-app-chip {
-  border-radius: 63px;
-    background: #F3962F;
-    color: #fff;
-    min-width: 129px;
-    text-align: center;
-    padding: 6px 16px;
-}
-
-.font-icon img{
-  vertical-align: middle;
-  height: 29px;
-  width: 29px;
-}
-
-.help-icon {
-  background-color: #1B2133;
-    height: 29px;
-    width: 29px;
-    vertical-align: middle;
-    color: white;
-    font-size: 20px;
-    border-radius: 50%;
-    text-align: center;
-}
 
 .app-logo {
   max-width: 100px;
@@ -228,11 +194,6 @@
 
   }
 
-  .font-icon img{
-    height: 20px;
-    width: 20px;
-  }
-
   .help-icon {
     height: 20px;
     width: 20px;
@@ -366,53 +327,3 @@
     width: 100%;
   }
 }
-
-.font-container {
-  background: #fff;
-    border: 1px solid #ccc;
-    position: absolute;
-    border-radius: 8px;
-    width:174px;
-    height: 50px;
-    margin-top: 10px;
-    margin-left: -174px;
-    display: flex;
-}
-
-.smaller-size {
-  margin-left: 16px;
-  font-size: 14px;
-  text-align: center;
-  color: rgba(0, 0, 0, 0.6);
-}
-
-.larger-size {
-  margin: 0 16px;
-  font-size: 24px;
-  text-align: center;
-  vertical-align: middle;
-  color: rgba(0, 0, 0, 0.6);
-}
-
-.mat-slider-horizontal {
-  min-width: 106px !important;
-}
-
-::ng-deep .mat-slider-thumb {
-  bottom: -6px !important;
-  height:12px !important;
-  width: 12px !important;
-  background-color:#1B4CA1 !important; 
-}
-
-::ng-deep .mat-slider-thumb-label {
-  background-color:#1B4CA1 !important; 
-}
-
-::ng-deep .mat-menu-panel {
-  max-width: 174px !important;
-  border-radius: 8px !important;
-  min-height: 0 !important;
-  margin-left: -200px !important
-}
-

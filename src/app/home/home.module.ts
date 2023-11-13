@@ -16,13 +16,13 @@ import {
 import { FeedListComponent } from './home/feed-list/feed-list.component';
 import { SkeletonLoaderComponent } from '../component/skeleton-loader/skeleton-loader.component';
 import { ProfileCardStatsModule } from '@sunbird-cb/collection/src/lib/_common/profile-card-stats/profile-card-stats.module'
+import { ClientSliderComponent } from '../component/client-slider/client-slider.component';
+import { HomeOtherPortalComponent } from '../component/home-other-portal/home-other-portal.component';
+import { NoDataComponent } from '../component/no-data/no-data.component';
 import { SharedModule } from '../shared/shared.module';
 import { WeeklyClapsModule } from '@sunbird-cb/collection/src/lib/_common/weekly-claps/weekly-claps.module';
-import { ClientSliderComponent } from '../component/client-slider/client-slider.component';
-import { NoDataComponent } from '../component/no-data/no-data.component';
-import { HomeOtherPortalComponent } from '../component/home-other-portal/home-other-portal.component';
 @NgModule({
-  declarations: [HomeComponent, FeedListComponent, NoDataComponent, InsightSideBarComponent, HomeOtherPortalComponent, ClientSliderComponent,  PageContainerComponent, DiscussionInfoComponent, SkeletonLoaderComponent],
+  declarations: [HomeComponent, FeedListComponent, InsightSideBarComponent, PageContainerComponent, DiscussionInfoComponent, SkeletonLoaderComponent, ClientSliderComponent, HomeOtherPortalComponent, NoDataComponent],
   imports: [
     CommonModule,    
     HomeRoutingModule,
