@@ -1,0 +1,142 @@
+.download-app {
+    display: flex; 
+    flex-direction: row; 
+    width:1200px;
+    height:489px;
+    margin:0 auto;
+}
+
+.download-app-popup {
+    display: flex; 
+    flex-direction: row; 
+    height:489px;
+    margin:0 auto;
+}
+
+.app-store-button {
+    display: flex; 
+    flex-direction: row; 
+    margin-top: 50px;
+}
+
+.left-side {
+    margin:64px 0;
+}
+.right-side {
+    margin-left: 170px;
+}
+
+.circle {
+    background-color: rgb(27, 76, 161);
+    width: 308px;
+    height: 308px;
+    border-radius: 50%;
+    margin-top: 64px;
+}
+
+
+.vertical-image {
+    position: absolute;
+    margin-left: 3%;
+    margin-top:-8%;
+}
+
+.play-store {
+    text-align: center;
+    width: 135px;
+    border-right: 1px solid #ccc;
+    padding-right: 40px;
+}
+
+.app-store {
+    text-align: center;
+    width: 135px;
+    margin-left: 40px;
+}
+
+.main-heading {
+    color: rgb(27, 76, 161);
+    font-size: 36px;
+    font-family: 'Montserrat';
+    font-weight: 600;
+}
+
+.sub-heading {
+    color:rgb(239, 149, 30); font-size: 36px;
+      font-family: 'Montserrat';
+      font-weight: 600;
+}
+
+.description {
+    margin-top: 8px;;
+}
+
+.description p {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+::ng-deep .mat-dialog-container {
+    border-radius: 8px !important;
+}
+
+@media (max-width : 768px) {    
+    .download-app {
+        height:529px;
+        width: 100%;
+        
+    }
+
+    .mobile-download {
+        padding:16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .main-heading {
+        color: rgb(27, 76, 161);
+        font-size: 24px;
+        font-family: 'Montserrat';
+        font-weight: 600;
+    }
+    
+    .sub-heading {
+        color:rgb(239, 149, 30); 
+        font-size: 24px;
+          font-family: 'Montserrat';
+          font-weight: 600;
+    }
+    
+    .description p {
+        font-size: 14px;
+        font-weight: 400;
+        width: 375px;
+    }
+
+    .right-side {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        margin-left: 25%;
+    }
+    
+    .circle {
+        background-color: rgb(27, 76, 161);
+        width: 152px;
+        height: 152px;
+        border-radius: 50%;
+        margin-top: 64px;
+    }
+    
+    
+    .vertical-image {
+        position: relative;
+        margin-top: -40%;
+        margin-left: 6%;
+    }
+    .vertical-image img{
+        height: 241px;
+    }
+}

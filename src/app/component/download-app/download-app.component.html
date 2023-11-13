@@ -1,0 +1,69 @@
+<div style="width:100%;background-color: #fff;">
+    <div [ngClass]="popupClass === 'download-app-popup' ? 'download-app-popup' : 'download-app'" *ngIf="!isMobile">
+        <ng-container>
+            <div class="left-side">
+                <h2>Download</h2>
+                <div>
+                    <p class="main-heading">iGOT Karmayogi <span class="sub-heading">mobile app</span></p>
+                </div>
+                <div class="description">
+                    <p>Continue your lifelong learning experience anywhere anytime.</p>
+                </div>
+                <div class="app-store-button">
+                    <div class="play-store">
+                        <div><img src="/assets/icons/footer-nav/gplay badge@2x.svg" /></div>
+                        <div><img src="/assets/icons/footer-nav/qrcode@2x.svg" /></div>
+                        <p>Scan to Download</p>
+                    </div>
+                    <div class="app-store">
+                        <div><img src="/assets/icons/footer-nav/appStore.svg" /></div>
+                        <div><img src="/assets/icons/footer-nav/Group 2@2x.svg" /></div>
+                        <p>Scan to Download</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="right-side">
+                <div class="circle">
+                    <div class="vertical-image">
+                        <img src="/assets/icons/footer-nav/mockup@2x.svg" />
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class='mobile-download' *ngIf="isMobile">
+        <div class="right-side">
+            <div class="circle">
+                <div class="vertical-image">
+                    <img src="/assets/icons/footer-nav/mockup@2x.svg" />
+                </div>
+            </div>
+        </div>
+        <ng-container>
+            <div class="left-side">
+                <h2>Download</h2>
+                <div>
+                    <p class="main-heading">iGOT Karmayogi <span class="sub-heading">mobile app</span></p>
+                </div>
+                <div class="description">
+                    <p>Continue your lifelong learning experience anywhere anytime.</p>
+                </div>
+                <div class="app-store-button">
+                    <div class="play-store">
+                        <div><img src="/assets/icons/footer-nav/gplay badge@2x.svg" /></div>
+                        <div><img src="/assets/icons/footer-nav/qrcode@2x.svg" /></div>
+                        <p>Scan to Download</p>
+                    </div>
+                    <div class="app-store">
+                        <div><img src="/assets/icons/footer-nav/appStore.svg" /></div>
+                        <div><img src="/assets/icons/footer-nav/Group 2@2x.svg" /></div>
+                        <p>Scan to Download</p>
+                    </div>
+                </div>
+
+            </div>
+            
+        </ng-container>
+    </div>
+<div>

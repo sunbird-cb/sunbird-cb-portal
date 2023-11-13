@@ -1,7 +1,11 @@
 <ng-container *ngIf="fullMenuDispaly">
-  <mat-toolbar *ngIf="sShowAppNavBar && !needToHide"
+  
+  <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode == 'top'"
     [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
     class="mat-elevation-z3 custom mobile">
+    
+     
+    
     <div class="fix-ww" id="root-tool-bar" title="toolbar" i18n-aria-label role="toolbar">
       <ng-container *ngIf="mode === 'top'">
         <a [routerLink]="!isforPreview ? '/page/home' : '/static-home'" class="logo-dim" role="link" title="Home"
@@ -52,52 +56,7 @@
         </ng-container>
 
       </ng-container>
-      <div class="flex justify-between items-center w-full" *ngIf="mode === 'bottom'">
-        <ng-container *ngIf="primaryNavbarConfig?.smallScreen && isLoggedIn">
-          <div class="flex justify-between items-center w-full">
-            <!-- <ng-container *ngIf="primaryNavbarConfig?.smallScreen"> -->
-              <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: item }"
-                *ngFor="let item of primaryNavbarConfig?.smallScreen?.left">
-              </ng-container>
-            <!-- </ng-container> -->
-            <a role="button" matRipple class="flex items-center flex-col px-2 box-sizing-box" routerLink="/page/home" active
-              routerLinkActive="ws-mat-accent-text">
-              <ng-container *ngIf="!appBottomIcon">
-                <mat-icon>home</mat-icon>
-
-                <span [ngClass]="instanceVal === 'Ford' ? 'title font-sans' : 'mat-caption'">Home</span>
-              </ng-container>
-              <ng-container *ngIf="appBottomIcon">
-                <img width="40px" height="40px" [src]="appBottomIcon" i18n-alt alt="Home" />
-              </ng-container>
-            </a>
-            <!-- <ng-container *ngIf="primaryNavbarConfig?.smallScreen"> -->
-              <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: item }"
-                *ngFor="let item of primaryNavbarConfig?.smallScreen?.right">
-              </ng-container>
-            <!-- </ng-container> -->
-            <ng-container [wsResolverWidget]="btnAppsConfig"></ng-container>
-          </div>
-        </ng-container>
-
-        <ng-container *ngIf="primaryNavbarConfig?.smallScreen && !isLoggedIn">
-
-          <div class="flex justify-center items-center w-full">
-            <a role="button" matRipple class="flex items-center flex-col px-2 box-sizing-box" routerLink="/page/home" active
-            routerLinkActive="ws-mat-accent-text">
-              <ng-container *ngIf="!appBottomIcon">
-                <mat-icon>home</mat-icon>
-                <span [ngClass]="instanceVal === 'Ford' ? 'title font-sans' : 'mat-caption'">Home</span>
-              </ng-container>
-
-              <ng-container *ngIf="appBottomIcon">
-                <img width="40px" height="40px" [src]="appBottomIcon" i18n-alt alt="Home" />
-              </ng-container>
-            </a>
-          </div>
-        </ng-container>
-
-      </div>
+      
       <!-- <div class="flex justify-between items-center w-full" *ngIf="mode === 'bottom' && !isLoggedIn">
 
       </div> -->
@@ -108,6 +67,63 @@
       widgetData: {}}">
     </ng-container>
   </div> -->
+  </mat-toolbar>
+  <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode === 'bottom'" 
+  [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
+  class="mat-elevation-z3 custom mobile-footer-fixed-nav"
+  >
+      <!-- <ng-container *ngIf="primaryNavbarConfig?.smallScreen && isLoggedIn">
+        <div class="flex justify-between items-center w-full">
+            <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: item }"
+              *ngFor="let item of primaryNavbarConfig?.smallScreen?.left">
+            </ng-container>
+          <a role="button" matRipple class="flex items-center flex-col px-2 box-sizing-box" routerLink="/page/home" active
+            routerLinkActive="ws-mat-accent-text">
+            <ng-container *ngIf="!appBottomIcon">
+              <mat-icon>home</mat-icon>
+
+              <span [ngClass]="instanceVal === 'Ford' ? 'title font-sans' : 'mat-caption'">Home</span>
+            </ng-container>
+            <ng-container *ngIf="appBottomIcon">
+              <img width="40px" height="40px" [src]="appBottomIcon" i18n-alt alt="Home" />
+            </ng-container>
+          </a>
+            <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: item }"
+              *ngFor="let item of primaryNavbarConfig?.smallScreen?.right">
+            </ng-container>
+          <ng-container [wsResolverWidget]="btnAppsConfig"></ng-container>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="primaryNavbarConfig?.smallScreen && !isLoggedIn">
+
+        <div class="flex justify-center items-center w-full">
+          <a role="button" matRipple class="flex items-center flex-col px-2 box-sizing-box" routerLink="/page/home" active
+          routerLinkActive="ws-mat-accent-text">
+            <ng-container *ngIf="!appBottomIcon">
+              <mat-icon>home</mat-icon>
+              <span [ngClass]="instanceVal === 'Ford' ? 'title font-sans' : 'mat-caption'">Home</span>
+            </ng-container>
+
+            <ng-container *ngIf="appBottomIcon">
+              <img width="40px" height="40px" [src]="appBottomIcon" i18n-alt alt="Home" />
+            </ng-container>
+          </a>
+        </div>
+      </ng-container> -->
+
+      <ng-container *ngIf="primaryNavbarConfig?.smallScreen && isLoggedIn">
+        <ul class="mobile-footer-fixed-nav-list-item-container">
+        <ng-container *ngFor="let item of primaryNavbarConfig?.smallScreen?.all">
+          <li class="mobile-footer-fixed-nav-list-item" [routerLink]="item?.config?.path">
+            <div class="icon-container">
+              <img  [ngClass]="activeRoute === item.label ? 'active-icon': 'mat-icon-disable'" src="/assets/icons/footer-nav/{{item?.config?.icon}}.svg" id="draft" alt="draft" title="draft" />
+              <span>{{item?.config?.label | titlecase}}</span>
+            </div>
+          </li>
+        </ng-container>
+        </ul>
+      </ng-container>
   </mat-toolbar>
   <mat-toolbar *ngIf="!sShowAppNavBar">
     <div class="fix-ww flex flex-row mt-3" id="root-tool-bar" title="toolbar" i18n-aria-label role="toolbar">
@@ -133,9 +149,44 @@
   </mat-toolbar>
 </ng-container>
 <ng-template #navbarSide let-item="item">
-  <ng-container *ngIf="item.type === 'widgetButton'" [wsResolverWidget]="item.config"></ng-container>
-  <ws-widget-btn-feature *ngIf="item.type === 'featureButton'" [id]="item.config.actionBtnId" [widgetData]="item.config"
-    [showFixedLength]="true"></ws-widget-btn-feature>
+    <ul class="right-side-nav-items">
+      <li class="download-app-chip" *ngIf="item.type === 'downloadButton'" (click)="openDialog()">
+        <span>Download App</span>
+        
+      </li>
+      <!-- <li class="font-icon" *ngIf="item.type === 'fontButton'" (click)="fontContainerFlag=!fontContainerFlag">
+        <img src="/assets/icons/top-nav/Accessibility_icon.svg">
+       <div class="font-container" *ngIf="fontContainerFlag">
+        <span class="smaller-size">A</span>
+        <mat-slider min="1" max="5" step="1" value="1.5">
+          <input matSliderThumb>
+        </mat-slider>
+        <span class="larger-size">A</span>
+       </div>
+      </li> -->
+      <li class="font-icon" *ngIf="item.type === 'fontButton'">
+        <mat-menu #appMenu="matMenu">
+            <span class="smaller-size">A</span>
+            <mat-slider min="10" max="18" step="2" value="12" (input)="changeFont($event)">
+              <input matSliderThumb>
+            </mat-slider>
+            <span class="larger-size">A</span>
+        </mat-menu>
+        
+        <div [matMenuTriggerFor]="appMenu">
+          <img src="/assets/icons/top-nav/Accessibility_icon.svg">
+        </div>
+      </li>
+      <li class="help-icon" *ngIf="item.type === 'helpButton'">
+        <!-- <img src="/assets/icons/top-nav/help_icon.svg"> -->
+        <span>?</span>
+      </li>
+      <li><ng-container *ngIf="item.type === 'widgetButton'" [wsResolverWidget]="item.config"></ng-container>
+        <!-- <ws-widget-btn-feature *ngIf="item.type === 'featureButton'" [id]="item.config.actionBtnId" [widgetData]="item.config"
+        [showFixedLength]="true"></ws-widget-btn-feature> --></li>
+    </ul>
+  
+    
 </ng-template>
 
 <mat-menu #helpMenu="matMenu">

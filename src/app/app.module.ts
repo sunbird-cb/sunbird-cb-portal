@@ -24,7 +24,7 @@ import {
   MatTabsModule,
   MatSelectModule,
   MatTableModule,
-  MatProgressSpinnerModule,
+  MatProgressSpinnerModule
 } from '@angular/material'
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -88,8 +88,9 @@ import { AppHierarchyResolverService } from './services/app-hierarchy-resolver.s
 import { AppEnrollmentResolverService } from './services/app-enrollment-resolver.service'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
-import { HeaderModule } from './header/header.module'
-
+import { HeaderModule } from './header/header.module';
+import { DialogBoxComponent } from './component/dialog-box/dialog-box.component';
+import { SocialLinkComponent } from './component/social-link/social-link.component';
 @Injectable()
 export class HammerConfig extends GestureConfig {
   buildHammer(element: HTMLElement) {
@@ -130,7 +131,8 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PublicLoginWGComponent,
     AppTourVideoComponent,
     AppTourComponent,
-  
+    DialogBoxComponent,
+    SocialLinkComponent
   ],
   imports: [
     FormsModule,
@@ -194,6 +196,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     DialogConfirmComponent,
     LoginComponent,
     AppIntroComponent,
+    DialogBoxComponent
   ],
   providers: [
     {

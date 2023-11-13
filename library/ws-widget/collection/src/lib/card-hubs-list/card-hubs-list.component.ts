@@ -1,6 +1,6 @@
 import { trigger, transition, style, animate } from '@angular/animations'
 import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core'
-import { Router } from '@angular/router'
+import { Router,NavigationEnd } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
@@ -53,6 +53,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
   environment!: any
   @HostBinding('id')
   public id = `hub_${Math.random()}`
+  public activeRoute = '';
 
   // private readonly featuresConfig: IGroupWithFeatureWidgets[] = []
 
@@ -69,6 +70,29 @@ export class CardHubsListComponent extends WidgetBaseComponent
   hubsList!: NsInstanceConfig.IHubs[]
 
   ngOnInit() {
+    this.router.events.subscribe((event: any) => {
+
+      if (event instanceof NavigationEnd) {
+          // Hide loading indicator
+          console.log('event', event);
+          if(event.url.includes('/page/learn')) {
+            this.activeRoute = 'Learn';
+          } else if(event.url.includes('/app/discussion-forum')){
+            this.activeRoute = 'Discuss';
+          } else if(event.url.includes('app/network-v2')) {
+            this.activeRoute = 'Network'; 
+          } else if(event.url.includes('app/careers')) {
+            this.activeRoute = 'Career'; 
+          } else if(event.url.includes('app/competencies')) {
+            this.activeRoute = 'Competencies'; 
+          } else if(event.url.includes('app/event-hub')) {
+            this.activeRoute = 'Events'; 
+          }
+
+          
+          
+      }
+  });
     this.environment = environment
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
@@ -156,7 +180,17 @@ export class CardHubsListComponent extends WidgetBaseComponent
 
   }
   toggleVisibility() {
-    this.visible = !this.visible
+    if(!this.visible) {
+      this.visible = !this.visible;      
+      this.configSvc.changeNavBarFullView.next(this.visible );
+    } else {
+      this.visible = !this.visible
+      setTimeout(()=>{
+        this.configSvc.changeNavBarFullView.next(this.visible );
+      },200)
+    }
+   
+    
   }
 
   hasRole(role: string[]): boolean {

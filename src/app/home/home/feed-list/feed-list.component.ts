@@ -6,11 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./feed-list.component.scss']
 })
 export class FeedListComponent implements OnInit {
-  sliderData = {};
   contentStripData = {};
-  discussStripData = {};
-  networkStripData = {};
-  carrierStripData = {};
+
   constructor() { }
 
   ngOnInit() {
@@ -20,17 +17,43 @@ export class FeedListComponent implements OnInit {
         {
           "key": "continueLearning",
           "logo": "school",
-          "title": "Learn1",
-          "stripBackground": "assets/instances/eagle/background/learn.svg",
+          "title": "Go to Learn hub",
+
+          "stripTitleLink": {
+            "link": "/page/learn",
+            "icon": "navigate_next"
+          },
+          "loader": true,
+          "sliderConfig": {
+            "showNavs" : false,
+            "showDots": false
+          },
+          "stripBackground": "",
           "titleDescription": "Continue learning1",
           "stripConfig": {
             "cardSubType": "standard"
           },
           "viewMoreUrl": {
             "path": "/page/learn",
-            "viewMoreText": "Learn",
+            "viewMoreText": "Show all",
             "queryParams": {}
           },
+          "tabs": [
+            {
+              "label": "In progress",
+              "value": "inprogress",
+              "computeDataOnClick": false,
+              "showTabDataCount": true,
+              "requestRequired": false
+            },
+            {
+              "label": "Completed",
+              "value": "completed",
+              "computeDataOnClick": false,
+              "showTabDataCount": true,
+              "requestRequired": false
+            },
+          ],
           "filters": [],
           "request": {
             "enrollmentList": {
@@ -43,142 +66,360 @@ export class FeedListComponent implements OnInit {
               }
             }
           }
-        }
-      ]
-    };
-
-    this.discussStripData = {
-      "strips": [
+        },
         {
-          "key": "discuss",
-          "logo": "forum",
-          "title": "discuss",
-          "stripBackground": "assets/instances/eagle/background/discuss.svg",
-          "titleDescription": "Trending discussions",
+          "key": "trendingInDepartment",
+          "logo": "school",
+          "title": "Trending in your department",
+          "stripTitleLink": {
+            "link": "",
+            "icon": ""
+          },
+          "sliderConfig": {
+            "showNavs" : true,
+            "showDots": true
+          },
+          "stripBackground": "",
+          "titleDescription": "Trending in your department",
           "stripConfig": {
-            "cardSubType": "cardHomeDiscuss"
+            "cardSubType": "standard"
           },
           "viewMoreUrl": {
-            "path": "/app/discuss/home",
-            "viewMoreText": "Discuss",
+            "path": "/page/learn",
+            "viewMoreText": "Show all",
             "queryParams": {}
           },
-          "filters": [],
-          "request": {
-            "api": {
-              "path": "/apis/proxies/v8/discussion/recent",
-              "queryParams": {}
-            }
-          }
-        }
-      ]
-    };
-
-    this.networkStripData = {
-      "strips": [
-        {
-          "key": "network",
-          "logo": "group",
-          "title": "network",
-          "stripBackground": "assets/instances/eagle/background/network.svg",
-          "titleDescription": "Connect with people you may know",
-          "stripConfig": {
-            "cardSubType": "cardHomeNetwork"
-          },
-          "viewMoreUrl": {
-            "path": "/app/network-v2",
-            "viewMoreText": "Network",
-            "queryParams": {}
-          },
-          "filters": [],
-          "request": {
-            "api": {
-              "path": "/apis/protected/v8/connections/v2/connections/recommended/userDepartment",
-              "queryParams": ""
-            }
-          }
-        }
-      ]
-    };
-
-    this.carrierStripData = {
-      "widgets": 
-      [
-        {
-          "dimensions": {},
-          "className": "",
-          "widget": {
-            "widgetType": "carrierStrip",
-            "widgetSubType": "CarrierStripMultiple",
-            "widgetData": {
-              "strips": [
-                {
-                  "key": "Career",
-                  "logo": "work",
-                  "title": "Careers",
-                  "stripBackground": "assets/instances/eagle/background/careers.svg",
-                  "titleDescription": "Latest openings",
-                  "stripConfig": {
-                    "cardSubType": "cardHomeCarrier"
-                  },
-                  "viewMoreUrl": {
-                    "path": "/app/careers/home",
-                    "viewMoreText": "Career",
-                    "queryParams": {}
-                  },
-                  "filters": [],
+          "tabs": [
+            {
+              "label": "Courses",
+              "value": "courses",
+              "computeDataOnClick": false,
+              "computeDataOnClickKey": '',
+              "requestRequired": true,
+              "showTabDataCount": false,
+              "request": {
+                "searchV6": {
                   "request": {
-                    "api": {
-                      "path": "/apis/protected/v8/discussionHub/categories/1",
-                      "queryParams": {}
-                    }
+                    "filters": {
+                      "primaryCategory": [
+                        "Course"
+                      ],
+                      "contentType": [
+                        "Course"
+                      ]
+                    },
+                    "offset": 0,
+                    "limit": 20,
+                    "query": "",
+                    "sort_by": {
+                      "lastUpdatedOn": "desc"
+                    },
+                    "fields": [
+                      "name",
+                      "appIcon",
+                      "instructions",
+                      "description",
+                      "purpose",
+                      "mimeType",
+                      "gradeLevel",
+                      "identifier",
+                      "medium",
+                      "pkgVersion",
+                      "board",
+                      "subject",
+                      "resourceType",
+                      "primaryCategory",
+                      "contentType",
+                      "channel",
+                      "organisation",
+                      "trackable",
+                      "license",
+                      "posterImage",
+                      "idealScreenSize",
+                      "learningMode",
+                      "creatorLogo",
+                      "duration",
+                      "version",
+                      "programDuration"
+                    ]
                   }
                 }
-              ]
+              }
+            },
+            {
+              "label": "Programs",
+              "value": "programs",
+              "computeDataOnClick": false,
+              "computeDataOnClickKey": '',
+              "requestRequired": true,
+              "showTabDataCount": false,
+              "request": {
+                "searchV6": {
+                  "request": {
+                    "filters": {
+                      "primaryCategory": [
+                        "program"
+                      ],
+                      "contentType": [
+                        
+                      ]
+                    },
+                    "offset": 0,
+                    "limit": 20,
+                    "query": "",
+                    "sort_by": {
+                      "lastUpdatedOn": "desc"
+                    },
+                    "fields": [
+                      "name",
+                      "appIcon",
+                      "instructions",
+                      "description",
+                      "purpose",
+                      "mimeType",
+                      "gradeLevel",
+                      "identifier",
+                      "medium",
+                      "pkgVersion",
+                      "board",
+                      "subject",
+                      "resourceType",
+                      "primaryCategory",
+                      "contentType",
+                      "channel",
+                      "organisation",
+                      "trackable",
+                      "license",
+                      "posterImage",
+                      "idealScreenSize",
+                      "learningMode",
+                      "creatorLogo",
+                      "duration",
+                      "version",
+                      "programDuration"
+                    ]
+                  }
+                }
+              }
+            },
+          ],
+          "filters": [],
+          "request": {
+            "searchV6": {
+              "request": {
+                "filters": {
+                  "primaryCategory": [
+                    "Blended Program"
+                  ],
+                  "contentType": [
+                    "Course"
+                  ],
+                  "batches.endDate": { ">=": "new Date().toISOString().substring(0,10)" }
+                },
+                "offset": 0,
+                "limit": 20,
+                "query": "",
+                "sort_by": {
+                  "lastUpdatedOn": "desc"
+                },
+                "fields": [
+                  "name",
+                  "appIcon",
+                  "instructions",
+                  "description",
+                  "purpose",
+                  "mimeType",
+                  "gradeLevel",
+                  "identifier",
+                  "medium",
+                  "pkgVersion",
+                  "board",
+                  "subject",
+                  "resourceType",
+                  "primaryCategory",
+                  "contentType",
+                  "channel",
+                  "organisation",
+                  "trackable",
+                  "license",
+                  "posterImage",
+                  "idealScreenSize",
+                  "learningMode",
+                  "creatorLogo",
+                  "duration",
+                  "version",
+                  "programDuration"
+                ]
+              }
             }
           }
-        }
-      ],
-    };
-
-    this.sliderData = [
-      {
-        "banners": {
-          "l": "assets/instances/eagle/banners/home/1/l.jpg",
-          "m": "assets/instances/eagle/banners/home/1/m.jpg",
-          "s": "assets/instances/eagle/banners/home/1/s.jpg",
-          "xl": "assets/instances/eagle/banners/home/1/xl.jpg",
-          "xs": "assets/instances/eagle/banners/home/1/xs.jpg",
-          "xxl": "assets/instances/eagle/banners/home/1/xxl.jpg"
         },
-        "redirectUrl": "/app/globalsearch",
-        "queryParams": {
-          "tab": "Learn",
-          "q": "Salesforce",
-          "lang": "en",
-          "f": "{}"
+        {
+          "key": "blendedPrograms",
+          "logo": "school",
+          "title": "Blended Program",
+          "stripTitleLink": {
+            "link": "",
+            "icon": ""
+          },
+          "sliderConfig": {
+            "showNavs" : true,
+            "showDots": true
+          },
+          "stripBackground": "",
+          "titleDescription": "Blended Program",
+          "stripConfig": {
+            "cardSubType": "standard"
+          },
+          "viewMoreUrl": {
+            "path": "/page/learn",
+            "viewMoreText": "Show all",
+            "queryParams": {}
+          },
+          "tabs": [],
+          "filters": [],
+          "request": {
+            "searchV6": {
+              "request": {
+                "filters": {
+                  "primaryCategory": [
+                    "Blended Program"
+                  ],
+                  "contentType": [
+                    "Course"
+                  ],
+                  "batches.endDate": { ">=": "new Date().toISOString().substring(0,10)" }
+                },
+                "offset": 0,
+                "limit": 20,
+                "query": "",
+                "sort_by": {
+                  "lastUpdatedOn": "desc"
+                },
+                "fields": [
+                  "name",
+                  "appIcon",
+                  "instructions",
+                  "description",
+                  "purpose",
+                  "mimeType",
+                  "gradeLevel",
+                  "identifier",
+                  "medium",
+                  "pkgVersion",
+                  "board",
+                  "subject",
+                  "resourceType",
+                  "primaryCategory",
+                  "contentType",
+                  "channel",
+                  "organisation",
+                  "trackable",
+                  "license",
+                  "posterImage",
+                  "idealScreenSize",
+                  "learningMode",
+                  "creatorLogo",
+                  "duration",
+                  "version",
+                  "programDuration"
+                ]
+              }
+            }
+          }
         },
-        "title": ""
-      },
-      {
-        "banners": {
-          "l": "assets/instances/eagle/banners/orgs/l.png",
-          "m": "assets/instances/eagle/banners/orgs/m.png",
-          "s": "assets/instances/eagle/banners/orgs/s.png",
-          "xl": "assets/instances/eagle/banners/orgs/xl.png",
-          "xs": "assets/instances/eagle/banners/orgs/xs.png",
-          "xxl": "assets/instances/eagle/banners/orgs/xxl.png"
+        {
+          "key": "trendingAcrossDepartment",
+          "logo": "school",
+          "title": "Trending across department",
+          "stripTitleLink": {
+            "link": "",
+            "icon": ""
+          },
+          "sliderConfig": {
+            "showNavs" : true,
+            "showDots": true
+          },
+          "stripBackground": "",
+          "titleDescription": "Trending across department",
+          "stripConfig": {
+            "cardSubType": "standard"
+          },
+          "viewMoreUrl": {
+            "path": "/page/learn",
+            "viewMoreText": "Show all",
+            "queryParams": {}
+          },
+          "tabs": [
+            {
+              "label": "Courses",
+              "value": "courses",
+              "computeDataOnClick": false,
+              "computeDataOnClickKey": 'trendingAcrossDepartmentTabData',
+              "requestRequired": true,
+              "showTabDataCount": false,
+            },
+            {
+              "label": "Programs",
+              "value": "programs",
+              "computeDataOnClick": false,
+              "computeDataOnClickKey": 'trendingAcrossDepartmentTabData',
+              "requestRequired": true,
+              "showTabDataCount": false,
+            },
+          ],
+          "filters": [],
+          "request": {
+            "searchV6": {
+              "request": {
+                "filters": {
+                  "primaryCategory": [
+                    "Blended Program"
+                  ],
+                  "contentType": [
+                    "Course"
+                  ],
+                  "batches.endDate": { ">=": "new Date().toISOString().substring(0,10)" }
+                },
+                "offset": 0,
+                "limit": 20,
+                "query": "",
+                "sort_by": {
+                  "lastUpdatedOn": "desc"
+                },
+                "fields": [
+                  "name",
+                  "appIcon",
+                  "instructions",
+                  "description",
+                  "purpose",
+                  "mimeType",
+                  "gradeLevel",
+                  "identifier",
+                  "medium",
+                  "pkgVersion",
+                  "board",
+                  "subject",
+                  "resourceType",
+                  "primaryCategory",
+                  "contentType",
+                  "channel",
+                  "organisation",
+                  "trackable",
+                  "license",
+                  "posterImage",
+                  "idealScreenSize",
+                  "learningMode",
+                  "creatorLogo",
+                  "duration",
+                  "version",
+                  "programDuration"
+                ]
+              }
+            }
+          }
         },
-        "redirectUrl": "/app/organisation/dopt",
-        "queryParams": {
-          "tab": "Learn",
-          "q": "Salesforce",
-          "lang": "en",
-          "f": "{}"
-        },
-        "title": ""
-      }
-    ]
+      ]
+    }
   }
-
 }

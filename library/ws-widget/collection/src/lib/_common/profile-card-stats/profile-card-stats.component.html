@@ -1,0 +1,73 @@
+<div class="profile-wrapper" *ngIf="isLoading">
+    <div class="expand-icon">
+        <mat-icon class="ws-mat-green-2-text">expand_less</mat-icon>
+    </div>
+    <div class="profile-user-details flex flex-middle">
+        <div class="progress-bar">
+            <div class="parent-progress">
+                <div class="progress" style="--i: 60; --clr: rgb(73, 201, 81)">
+                </div>
+                <div class="user-img">
+                  <ws-widget-avatar-photo [name]="userInfo.firstName" [photoUrl]="''" size="round-m">
+                  </ws-widget-avatar-photo>
+                  <span class="percentage-block ">60%</span>
+                </div>
+            </div>
+        </div>
+        <div class="user-name flex margin-left-l">
+            <p class="margin-remove " (click)="gotoUserProfile()">{{userInfo.firstName}}</p>
+            <mat-icon class="ws-mat-green-2-text mr-3" (click)="gotoUserProfile()">chevron_right</mat-icon>
+        </div>
+    </div>
+    <hr class="divider">
+    <div class="profile-user-stats">
+        <div class="user-data-list flex flex-middle flex-between ">
+          <ng-container *ngFor = "let stats of statsData">
+            <div class="stats-data margin-bottom-m">
+              <img class="stats-icon" width="20" height="20" [src]="stats.icon">
+              <div class="stats-title">{{stats.label}}</div>
+              <div class="stats-count">{{countdata[stats.key] ||'0'}}</div>
+          </div>
+          </ng-container>
+        </div>
+        <div class="user-insights">
+            <ws-widget-sliders-dynamic [widgetData]="sliderData"></ws-widget-sliders-dynamic>
+        </div>
+        
+    </div>
+</div>
+
+<div class="profile-wrapper" *ngIf="!isLoading">
+  <div class="profile-user-details flex flex-middle">
+      <div class="progress-bar">
+        <span class="skeleton-box" style="width:64px;height:64px;border-radius: 50%"></span>
+        </div>
+        <div class="user-name flex">
+          <span class="skeleton-box" style="margin-left:16px;width:122px;height:16px"></span>
+        </div>
+  </div>
+  <hr class="divider">
+  <div class="profile-user-stats">
+      <div class="user-data-list flex flex-middle flex-between ">
+          <div>
+            <div class="skeleton-box" style="width:20px;height:16px"></div><br>
+            <div class="skeleton-box" style="width:46px;height:12px"></div><br>
+            <div class="skeleton-box" style="width:46px;height:12px"></div>
+          </div>
+          <div>
+            <div class="skeleton-box" style="width:20px;height:16px"></div><br>
+            <div class="skeleton-box" style="width:46px;height:12px"></div><br>
+            <div class="skeleton-box" style="width:46px;height:12px"></div>
+          </div>
+          <div>
+            <div class="skeleton-box" style="width:20px;height:16px"></div><br>
+            <div class="skeleton-box" style="width:46px;height:12px"></div><br>
+            <div class="skeleton-box" style="width:46px;height:12px"></div>
+          </div>
+      </div>
+      <div class="user-insights padding-top-l">
+        <span class="skeleton-box" style="width:100%;height:84px;border-radius:12px"></span>
+      </div>
+      
+  </div>
+</div>

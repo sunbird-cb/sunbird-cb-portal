@@ -1,4 +1,4 @@
-<div class="flex flex-wrap fix-w" *ngFor="let row of processed; trackBy:tracker" role="none"
+<div class="flex flex-wrap fix-w" [ngClass]="fullMenuHeight ? 'full-height' : ''" *ngFor="let row of processed; trackBy:tracker" role="none"
   [ngClass]="{'px-6 pb-12 sm:px-8 md:px-10': widgetData.fromBasicEditor}" [ngClass]="containerClass">
   <div class="box" *ngFor="let col of row; trackBy:tracker2" [ngClass]="col.className" [ngStyle]="col?.styles"
     role="none">

@@ -19,6 +19,11 @@ body {
   // word-spacing: $word-spacing;
 }
 
+:host {
+  width: 100%;
+  height: 100%;
+}
+
 ::selection {
   background-color: #e0f2f1;
 }
@@ -1006,9 +1011,10 @@ ngx-guided-tour {
   text-align: center;
   line-height: 20px;
 }
+
 .skeleton-box {
   display: inline-block;
-  height: 1em;
+  min-height: 1rem;
   position: relative;
   overflow: hidden;
   background-color: #DDDBDD;
@@ -1027,7 +1033,7 @@ ngx-guided-tour {
       rgba(#fff, 0.5) 60%,
       rgba(#fff, 0)
     );
-    animation: shimmer 3s infinite;
+    animation: shimmer 1s infinite;
     content: '';
   }
 

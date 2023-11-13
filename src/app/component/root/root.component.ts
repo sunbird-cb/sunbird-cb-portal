@@ -94,7 +94,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
     private rootSvc: RootService,
     private btnBackSvc: BtnPageBackService,
     private changeDetector: ChangeDetectorRef,
-    private utilitySvc: UtilityService,
+    private utilitySvc: UtilityService
     // private dialogRef: MatDialogRef<any>,
   ) {
     if (window.location.pathname.includes('/public/home')
@@ -204,7 +204,9 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
     // }
     this.router.events.subscribe((event: any) => {
+      
       if (event instanceof NavigationEnd) {
+        
         if (event.url.includes('/setup/')) {
           this.isSetupPage = true
         }

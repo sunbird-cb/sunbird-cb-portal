@@ -1,3 +1,22 @@
-<ws-app-nav-bar class="top-nav-bar" *ngIf="navBarRequired && (isXSmall$ | async) === false" [hidden]="!isShowNavbar" [mode]="'top'"></ws-app-nav-bar>
-<ws-widget-grid-layout [widgetData]="widgetData">
-</ws-widget-grid-layout>
+<div class="mobile-download-app-top-header">
+        <div class="cross-mobile-download-app">
+            <span>X</span>
+        </div>
+        <div class="kb-symbol">
+            <img src="/assets/icons/top-nav/KB-Symbol_icon.svg">
+        </div>
+        <div class="mobile-download-app-desc">
+            <p class="mobile-download-app-desc-heading">iGot Karmayogi</p>
+            <p class="mobile-download-app-desc-sub-heading">Download the mobile app</p>
+        </div>
+        <div>
+            <li class="download-app-chip-top-header">
+                <span>Download App</span>
+            </li>
+        </div>
+</div>
+<ws-app-nav-bar class="top-nav-bar" [mode]="'top'"></ws-app-nav-bar>
+<div class="height-on-top">
+    <ws-widget-grid-layout [widgetData]="widgetData">
+    </ws-widget-grid-layout>
+</div>

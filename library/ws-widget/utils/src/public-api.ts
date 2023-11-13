@@ -14,6 +14,7 @@ export * from './lib/directives/permission/permission.module'
 export * from './lib/helpers/functions/getStringifiedQueryParams'
 // helpers
 export * from './lib/helpers/horizontal-scroller/horizontal-scroller.module'
+export * from './lib/helpers/horizontal-scroller-v2/horizontal-scroller-v2.module'
 export * from './lib/helpers/logout/logout.component'
 export * from './lib/helpers/logout/logout.module'
 export * from './lib/pipes/pipe-concise-date-range/pipe-concise-date-range.module'

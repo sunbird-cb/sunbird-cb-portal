@@ -38,7 +38,7 @@ export class PageResolve implements Resolve<IResolveResponse<NsPage.IPage>> {
     if (
       route.data.pageType === 'page' &&
       route.data.pageKey &&
-      route.data.pageKey === 'toc'
+      (route.data.pageKey === 'toc' || route.data.pageKey === 'home')
     ) {
       return this.getData(`${this.baseUrl}/page/${route.data.pageKey}`)
     }

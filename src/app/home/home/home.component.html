@@ -1,23 +1,152 @@
-<div class="fix-ww">
-    
-    <div class="d-inline-flex p-3 bg-secondary flex-align">
-        <div class="p-2 bg-info"><ws-ingsight-side-bar></ws-ingsight-side-bar></div>
-        <div class="p-2 bg-primary">
+<div class="home-container m-auto flex flex-row gap-4">
+    <div class="left bg-info">
+        <ws-in-sight-side-bar></ws-in-sight-side-bar>
+    </div>
+    <div class="right bg-primary">
+        <div class="flex flex-col gap-4">
             <ws-feed-list></ws-feed-list>
-            <ws-feed-list></ws-feed-list>
+
+            <!-- Discussion section starts here -->
+            <div class="flex flex-row gap-2 mat-subheading-1 items-center">
+                <div>Go to discuss hub</div>
+                <mat-icon>
+                    chevron_right
+                </mat-icon>
+            </div>
+            <div class="flex flex-row gap-6">
+                <div class="discussion-card flex-1">
+                    <div class="flex flex-col p-5 gap-4">
+                        <div class="flex flex-row gap-3 items-center mat-subheading-1">
+                            <div class="flex flex-grow">Updates on your posts</div>
+                            <div class="text-2xl text-blue-500">
+                                <mat-icon class="cursor-pointer font-bold">add</mat-icon>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-col discussion-card gap-2 p-5">
+                            <div class="text-blue-500 font-semibold">2 Upvote on your port</div>
+                            <div class="">What are some merits and demerits of the Dicey’s Rule of law?</div>
+                        </div>
+                        <div class="flex flex-col discussion-card gap-2 p-5">
+                            <div class="text-blue-500 font-semibold">Alex replied to your post</div>
+                            <div class="">I think the solution to such a problem would be to extensively.</div>
+                        </div>
+                        <div class="flex flex-col discussion-card gap-2 p-5">
+                            <div class="text-blue-500 font-semibold">1 Downvote on your post</div>
+                            <div class="">What are some merits and demerits of the Dicey’s Rule of law?</div>
+                        </div>
+                        <div class="flex flex-row gap-2 p-4 text-blue-500 justify-center">
+                            <div class="font-semibold">Show all</div>
+                            <mat-icon>
+                                chevron_right
+                            </mat-icon>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="discussion-card flex-1">
+                    <div class="flex-1">
+                        <div class="flex flex-col p-5 gap-4">
+                            <div class="flex flex-row gap-3 mat-subheading-1">
+                                <div class="flex flex-grow">Trending discussions</div>
+                            </div>
+                            <div class="discussion-card p-1">
+                                <ws-discussion-info></ws-discussion-info>
+                            </div>
+                            <div class="discussion-card p-1">
+                                <ws-discussion-info class="border border-black-500"></ws-discussion-info>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-row gap-2 p-4 text-blue-500 justify-center">
+                        <div class="font-semibold">Show all</div>
+                        <mat-icon>
+                            chevron_right
+                        </mat-icon>
+                    </div>
+                </div>
+            </div>
+            <!-- Discussion section ends here -->
+
+            <!-- Go to Network hub starts here -->
+            <div class="flex flex-col gap-2">
+                <div class="flex flex-row gap-2 mat-subheading-1">
+                    <div>Go to Network hub</div>
+                    <mat-icon>
+                        chevron_right
+                    </mat-icon>
+                </div>
+
+                <div class="flex flex-row gap-6">
+                    <div class="discussion-card flex-1">
+                        <div class="flex flex-col gap-4 p-4">
+                            <div class="mat-subheading-1">Recent requests</div>
+                            <div class="flex flex-col gap-4 items-center p-8">
+                                <img src="./../../../fusion-assets/images/new-home/chat.svg" alt="chat img" />
+                                <div class="text-center">Built your connections within your department and other departments.</div>
+                                <button
+                                    class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide"
+                                (click)="handleButtonClick()">Find Connections</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="discussion-card flex-1">
+                        <div class="flex flex-col gap-6 p-4">
+                            <div class="mat-subheading-1">Suggested for you</div>
+                            <div class="flex flex-row gap-4">
+                                <div class="card p-4 flex flex-col items-center rounded-xl gap-3">
+                                    <div class="flex justify-center items-center initial-circle bg-blue-700 text-xl">VS</div>
+                                    <div class="flex flex-col gap-1">
+                                        <div class="font-semibold text-center">Vinod Kumar Shyave</div>
+                                        <div class="text-center">Senior technical lead at Tarento</div>
+                                        <div class="flex flex-row gap-2 text-blue-500 font-semibold px-8 py-2 rounded-full connect-button cursor-pointer text-lg mt-2">
+                                            <mat-icon>person_add</mat-icon>
+                                            Connect
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card p-4 flex flex-col items-center rounded-xl gap-3">
+                                    <div class="flex justify-center items-center initial-circle bg-blue-700 text-xl">MM</div>
+                                    <div class="flex flex-col gap-1">
+                                        <div class="font-semibold text-center">Mahesh Maney</div>
+                                        <div class="text-center">Technical Architect at Tarento</div>
+                                        <div
+                                            class="flex flex-row gap-2 text-blue-500 font-semibold px-8 py-2 rounded-full connect-button cursor-pointer text-lg mt-2">
+                                            <mat-icon>person_add</mat-icon>
+                                            Connect
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-row gap-2 p-4 text-blue-500 justify-center">
+                            <div class="font-semibold">Show all</div>
+                            <mat-icon>
+                                chevron_right
+                            </mat-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Go to Network hub end here -->
         </div>
     </div>
+</div>
+<div class="flex flex-col gap-4">
     <ws-widget-discuss-strip-multiple [widgetData]="discussStripData"></ws-widget-discuss-strip-multiple>
     <ws-widget-network-strip-multiple [widgetData]="networkStripData"></ws-widget-network-strip-multiple>
-    <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
+    
 </div>
 <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
 <div class="fix-ww">
     <div class="d-inline-flex p-3 bg-secondary flex-align">
-        <div class="p-2 bg-info"><ws-ingsight-side-bar></ws-ingsight-side-bar></div>
+        <div class="p-2 bg-info"><ws-in-sight-side-bar></ws-in-sight-side-bar></div>
         <div class="p-2 bg-primary">
             <ws-feed-list></ws-feed-list>
         </div>
     </div>
 </div>
 <ws-client-slider [clientList]="clientList"></ws-client-slider>
+<ws-download-app></ws-download-app>

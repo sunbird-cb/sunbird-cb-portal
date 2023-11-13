@@ -39,6 +39,7 @@ import { ProviderLeftMenuComponent } from './components/left-menu/left-menu.comp
 import { BrowseProviderService } from './services/browse-provider.service'
 import { PopularProviderCardComponent } from './components/popular-provider-card/popular-provider-card.component'
 import { ProviderCardComponent } from './components/provider-card/provider-card.component'
+import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.module'
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { ProviderCardComponent } from './components/provider-card/provider-card.
     BtnPageBackModule,
     WidgetResolverModule,
     CardContentModule,
+    CardContentV2Module
   ],
   providers: [BrowseProviderService],
 })
