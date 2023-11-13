@@ -556,7 +556,7 @@
                     <div class="flex flex-1 flex-middle" [ngClass]="{ disable: !isAllowed('verifiedKarmayogi') }">
                       <mat-checkbox aria-label="Get Karmayogi badge" id="kb-badge" formControlName="verifiedKarmayogi" #verifiedKarmayogi
                         [checked]="karmayogiBadge" (change)="verifiedKarmayogiCheck()" i18n-aria-label
-                        aria-label="Get Karmayogi badge checkbox">
+                        aria-label="Get Karmayogi badge checkbox" [disabled]="karmayogiBadge">
                         <label class="margin-left-xs margin-remove-bottom" i18n-aria-label
                           aria-label="Get Karmayogi badge checkbox label"  matTooltipPosition="right"
                           matTooltip="To earn the Karmayogi Badge, ensure that your professional details are updated. Once this information is verified by the MDO Admin, you will be eligible for the badge.">
