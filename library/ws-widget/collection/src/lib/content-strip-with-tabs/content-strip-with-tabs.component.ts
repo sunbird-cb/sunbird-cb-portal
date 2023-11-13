@@ -35,7 +35,7 @@ interface IStripUnitContentData {
     showNavs: boolean,
     showDots: boolean
   },
-  tabs?: NsContentStripWithTabs.IcontentStripTab[] | undefined,
+  tabs?: NsContentStripWithTabs.IContentStripTab[] | undefined,
   stripName?: string
   stripLogo?: string
   description?: string
@@ -129,7 +129,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     }
     // Fetch the data
     for (const strip of this.widgetData.strips) {
-      console.log('strip', strip)
+      // console.log('strip', strip)
       if (this.checkForEmptyWidget(strip)) {
         this.fetchStripFromRequestData(strip)
       } else {
@@ -314,7 +314,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
           })
 
           tabResults = this.splitEnrollmentTabsData(contentNew, strip)
-          console.log('tabResults', tabResults)
+          // console.log('tabResults', tabResults)
           this.processStrip(
             strip,
             this.transformContentsToWidgets(contentNew, strip),
@@ -337,20 +337,20 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       contentNew,
       (e: any) => e.completionStatus === 1 || e.completionPercentage < 100,
       strip,
-    );
+    )
 
     if (strip.tabs && strip.tabs.length) {
-      for (let i = 0; i < strip.tabs.length; i++) {
+      for (let i = 0; i < strip.tabs.length; i += 1) {
         if (strip.tabs[i]) {
           tabResults.push(
             {
               ...strip.tabs[i],
-              ...(splitData.find((itmInner) => {
+              ...(splitData.find(itmInner => {
                 if (strip.tabs && strip.tabs[i] && itmInner.value === strip.tabs[i].value) {
                   return itmInner
                 }
                 return undefined
-              }))
+              })),
             }
           )
         }
@@ -359,12 +359,15 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     return tabResults
   }
 
-  getInprogressAndCompleted(array: NsContent.IContent[], filter: any, strip: NsContentStripWithTabs.IContentStripUnit) {
-    let inprogress: any[] = [], completed: any[] = [];
-    array.forEach((e: any, idx: number, arr: any[]) => (filter(e, idx, arr) ? inprogress : completed).push(e));
+  getInprogressAndCompleted(array: NsContent.IContent[],
+                            filterr: any,
+                            strip: NsContentStripWithTabs.IContentStripUnit) {
+    const inprogress: any[] = []
+    const completed: any[] = []
+    array.forEach((e: any, idx: number, arr: any[]) => (filterr(e, idx, arr) ? inprogress : completed).push(e))
     return [
       { value: 'inprogress', widgets: this.transformContentsToWidgets(inprogress, strip) },
-      { value: 'completed', widgets: this.transformContentsToWidgets(completed, strip) }];
+      { value: 'completed', widgets: this.transformContentsToWidgets(completed, strip) }]
   }
 
   async fetchFromSearchV6(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
@@ -377,6 +380,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       //   }
       // }
       let originalFilters: any = []
+      // tslint:disable:no-console
+      console.log(originalFilters)
       if (strip.request &&
         strip.request.searchV6 &&
         strip.request.searchV6.request &&
@@ -391,10 +396,10 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         // TODO: Have to extract requestRequired to outer level of tabs config
         const firstTab = strip.tabs[0]
         if (firstTab.requestRequired) {
-          console.log('inside erquest required')
+          // console.log('inside erquest required')
           if (this.stripsResultDataMap[strip.key] && this.stripsResultDataMap[strip.key].tabs) {
             const allTabs = this.stripsResultDataMap[strip.key].tabs
-            const currentTabFromMap = (allTabs && allTabs.length && allTabs[0]) as NsContentStripWithTabs.IcontentStripTab
+            const currentTabFromMap = (allTabs && allTabs.length && allTabs[0]) as NsContentStripWithTabs.IContentStripTab
 
             this.getTabDataByNewReq(strip, 0, currentTabFromMap, calculateParentStatus)
           }
@@ -403,9 +408,9 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       } else {
         try {
           const response = await this.searchV6Request(strip, strip.request, calculateParentStatus)
-          console.log('calling  after - response, ', response)
+          // console.log('calling  after - response, ', response)
           if (response && response.results) {
-            console.log('calling  after-- ')
+            // console.log('calling  after-- ')
             this.processStrip(
               strip,
               this.transformContentsToWidgets(response.results.result.content, strip),
@@ -418,22 +423,21 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
           }
         } catch (error) {
           // Handle errors
-          console.error('Error:', error);
+          // console.error('Error:', error);
         }
       }
     }
   }
 
   async searchV6Request(strip: NsContentStripWithTabs.IContentStripUnit,
-    request: NsContentStripWithTabs.IContentStripUnit['request'],
-    calculateParentStatus: boolean
+                        request: NsContentStripWithTabs.IContentStripUnit['request'],
+                        calculateParentStatus: boolean
   ): Promise<any> {
-    let originalFilters: any = []
-    console.log('calling -- ')
+    const originalFilters: any = []
+    // console.log('calling -- ')
     return new Promise<any>((resolve, reject) => {
       if (request && request.searchV6) {
-        this.contentSvc.searchV6(request.searchV6).subscribe(
-          (results) => {
+        this.contentSvc.searchV6(request.searchV6).subscribe(results => {
             const showViewMore = Boolean(
               results.result.content && results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
             )
@@ -460,12 +464,11 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
             // if (viewMoreUrl && viewMoreUrl.queryParams) {
             //   viewMoreUrl.queryParams = viewMoreUrl.queryParams
             // }
-            console.log('returned results')
+            // console.log('returned results')
             resolve({ results, viewMoreUrl })
-          },
-          (error) => {
+          },                                                 (error: any) => {
             this.processStrip(strip, [], 'error', calculateParentStatus, null)
-            reject(error);
+            reject(error)
           },
         )
       }
@@ -627,35 +630,35 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         this.getTabDataByfilter(currentStrip, currentTabFromMap, true)
       }
     }
-    console.log('-----------------------------tabClicked tabEvent', tabEvent, stripMap.tabs)
+    // console.log('-----------------------------tabClicked tabEvent', tabEvent, stripMap.tabs)
   }
 
   async getTabDataByNewReq(
     strip: NsContentStripWithTabs.IContentStripUnit,
     tabIndex: number,
-    currentTab: NsContentStripWithTabs.IcontentStripTab,
+    currentTab: NsContentStripWithTabs.IContentStripTab,
     calculateParentStatus: boolean
   ) {
-    console.log('currentTab ---', currentTab)
+    // console.log('currentTab ---', currentTab)
     try {
       const response = await this.searchV6Request(strip, currentTab.request, calculateParentStatus)
-      console.log('currentTab ---response', response)
+      // console.log('currentTab ---response', response)
       if (response && response.results) {
         const widgets = this.transformContentsToWidgets(response.results.result.content, strip)
-        console.log('currentTab --- widgets', widgets)
+        // console.log('currentTab --- widgets', widgets)
         let tabResults: any[] = []
         if (this.stripsResultDataMap[strip.key] && this.stripsResultDataMap[strip.key].tabs) {
           const allTabs = this.stripsResultDataMap[strip.key].tabs
           if (allTabs && allTabs.length && allTabs[tabIndex]) {
             allTabs[tabIndex] = {
               ...allTabs[tabIndex],
-              widgets: widgets,
+              widgets,
             }
             tabResults = allTabs
           }
         }
-        console.log('tabResults -++++***--', tabResults)
-        console.log('calling  after-- ')
+        // console.log('tabResults -++++***--', tabResults)
+        // console.log('calling  after-- ')
         this.processStrip(
           strip,
           widgets,
@@ -669,19 +672,22 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       }
     } catch (error) {
       // Handle errors
-      console.error('Error:', error);
+      // console.error('Error:', error);
     }
   }
 
   getTabDataByfilter(
     strip: NsContentStripWithTabs.IContentStripUnit,
-    currentTab: NsContentStripWithTabs.IcontentStripTab,
+    currentTab: NsContentStripWithTabs.IContentStripTab,
     calculateParentStatus: boolean
   ) {
+    // tslint:disable:no-console
     console.log('strip -- ', strip)
+    // tslint:disable:no-console
     console.log('currentTab -- ', currentTab)
+    // tslint:disable:no-console
     console.log('calculateParentStatus-- ', calculateParentStatus)
-    // TODO: Write logic for individual filter if passed in config 
+    // TODO: Write logic for individual filter if passed in config
     // add switch case based on config key passed
   }
 }

@@ -22,7 +22,7 @@ export namespace NsContentStripWithTabs {
       showNavs: boolean,
       showDots: boolean
     },
-    tabs?: NsContentStripWithTabs.IcontentStripTab[] | undefined,
+    tabs?: NsContentStripWithTabs.IContentStripTab[] | undefined,
     titleDescription?: string
     name?: string
     mode?: 'accordion'
@@ -105,7 +105,7 @@ export namespace NsContentStripWithTabs {
     totalHits?: number
   }
 
-  export interface IcontentStripTab {
+  export interface IContentStripTab {
     label: string,
     value: string,
     showTabDataCount: boolean,
