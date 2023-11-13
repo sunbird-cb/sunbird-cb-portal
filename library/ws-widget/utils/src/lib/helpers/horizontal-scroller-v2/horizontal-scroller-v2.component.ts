@@ -20,7 +20,7 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
   onHover = false
   @Input() sliderConfig = {
     showNavs: true,
-    showDots:true,
+    showDots: true,
   }
   @Output()
   loadNext = new EventEmitter()

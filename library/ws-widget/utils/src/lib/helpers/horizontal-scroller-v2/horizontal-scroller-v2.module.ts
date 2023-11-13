@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common'
 import { HorizontalScrollerV2Component } from './horizontal-scroller-v2.component'
 import { MatButtonModule, MatIconModule, MatProgressSpinnerModule } from '@angular/material'
 
-
-
 @NgModule({
   declarations: [HorizontalScrollerV2Component],
   imports: [
@@ -13,6 +11,6 @@ import { MatButtonModule, MatIconModule, MatProgressSpinnerModule } from '@angul
     MatIconModule,
     MatProgressSpinnerModule,
   ],
-  exports: [HorizontalScrollerV2Component]
+  exports: [HorizontalScrollerV2Component],
 })
 export class HorizontalScrollerV2Module { }
