@@ -9,8 +9,9 @@
 .download-app-popup {
     display: flex; 
     flex-direction: row; 
-    height:489px;
-    margin:0 auto;
+    height:344px;
+   padding-left: 48px;
+   padding-top: 24px;
 }
 
 .app-store-button {
@@ -19,14 +20,22 @@
     margin-top: 50px;
 }
 
-.left-side {
+.download-app .left-side {
     margin:64px 0;
 }
-.right-side {
+.download-app .right-side {
     margin-left: 170px;
 }
 
-.circle {
+.download-app-popup .left-side {
+    width: 540px;
+}
+
+.download-app-popup .right-side {
+    margin-left: 15px;
+}
+
+.download-app .circle {
     background-color: rgb(27, 76, 161);
     width: 308px;
     height: 308px;
@@ -34,6 +43,13 @@
     margin-top: 64px;
 }
 
+.download-app-popup .circle {
+    background-color: rgb(27, 76, 161);
+    width: 308px;
+    height: 308px;
+    border-radius: 50%;
+    margin-top: 0;
+}
 
 .vertical-image {
     position: absolute;

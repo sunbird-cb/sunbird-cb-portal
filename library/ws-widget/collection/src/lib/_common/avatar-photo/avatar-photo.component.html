@@ -11,7 +11,7 @@
   <img *ngIf="!showInitials" src="{{photoUrl}}" [alt]="photoUrl? '' :(name || userInitials || size || random)">
 
   <div *ngIf="showInitials" class="initials" i18n-aria-label>
-    {{ userInitials }}
+    {{ userInitials }} 
   </div>
   <div *ngIf="showBadge" class="success-checkmark"></div>
 

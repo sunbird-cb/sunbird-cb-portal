@@ -8,17 +8,16 @@ ws-app-search-input-home .autocomplete-form {
   display: block;
   margin: auto;
 }
-::ng-deep .mat-form-field-placeholder{
 
-  color:red;
-}
+
+
 .search-home {
   // background: #00A9F4 0% 0% no-repeat padding-box;
   // background: #00A9F4 0% 0% no-repeat padding-box;
   border-radius: 0px 4px 4px 0px;
-  padding: $size-xs 0 $size-s $size-xs;
+  padding: 8px;
   margin-left: 16px;
-  margin-top: 8px;
+  margin-top: 20px;
 }
 
 
@@ -31,8 +30,8 @@ ws-app-search-input-home .search .mat-form-field-wrapper {
 
   .mat-form-field-infix {
     border-top-width: 5px !important;
-    padding: 0px;
-    padding-bottom: 5px;
+    margin-left: 8px;
+    vertical-align: middle;
   }
 
 }

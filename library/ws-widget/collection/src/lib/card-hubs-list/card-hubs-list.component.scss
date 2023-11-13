@@ -174,7 +174,7 @@ mat-grid-list {
 .text-gray {
   color: rgb(0,0,0,0.6);
   font-weight: 700;
-  line-height: 20px;
+  line-height: 28px;
 }
 
 .active-text{
@@ -196,9 +196,11 @@ color:rgb(27, 76, 161)
   margin-left: 0;
   margin-right:0;
   
-  overflow-x: scroll;
+  overflow-x: auto;
   margin-top:60px;
 }
+
+.secondary-nav::-webkit-scrollbar{ width :6px; } 
 
 .secondary-nav  ::-webkit-scrollbar {
   display: none;

@@ -1,0 +1,13 @@
+<ul class="right-side-nav-items">
+    <li class="download-app-chip" *ngIf="item.type === 'downloadButton'" (click)="openDialog()">
+        <span>Download App</span>
+    </li>
+    <li *ngIf="item.type === 'fontButton'">
+        <ws-font-setting></ws-font-setting>
+    </li>
+    <li class="help-icon" *ngIf="item.type === 'helpButton'">
+        <img src="/assets/icons/top-nav/help_icon.svg">
+    </li>
+    <li><ng-container *ngIf="item.type === 'widgetButton'" [wsResolverWidget]="item.config"></ng-container>
+    </li>
+</ul>
