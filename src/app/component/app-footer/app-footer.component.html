@@ -27,7 +27,7 @@
         <a  class="footer_sub_text mat-body" href="/app/event-hub"  [routerLink]="hub.path">Events</a> -->
     </div>
 
-    <div class="flex flex-col justify-start nav-footer-item nav col-sm-3">
+    <div class="flex flex-col justify-start nav-footer-item nav col-sm-3" (click)="onClick($event)">
       <h4 class="footer_heading mat-subheading-1 margin-bottom-m">Related links</h4>
       <ul>
       <ng-container *ngFor="let portal of environment.portals | orderBy: 'sr'">        
@@ -42,7 +42,7 @@
       <!-- <a class="footer_sub_text mat-body">Mobile application</a> -->
     </div>
 
-    <div class="flex flex-col justify-start nav-footer-item nav col-sm-3">
+    <div class="flex flex-col justify-start nav-footer-item nav col-sm-3" (click)="onClick($event)">
       <h4 class="footer_heading mat-subheading-1 margin-bottom-m">Support</h4>
       <ul>
       <li><a class="footer_sub_text mat-body" routerLink="/public/faq"> Frequently asked questions</a></li>
@@ -53,7 +53,7 @@
 
     </div>
 
-    <div class="flex flex-col justify-start nav-footer-item nav col-sm-3">
+    <div class="flex flex-col justify-start nav-footer-item nav col-sm-3" (click)="onClick($event)">
       <h4 class="footer_heading mat-subheading-1 margin-bottom-m">About us</h4>
       <ul>
       <li><a class="footer_sub_text mat-body" rel="noreferrer" href="https://karmayogibharat.gov.in/" target="_blank">

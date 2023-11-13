@@ -20,8 +20,10 @@ import {
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { SearchModule } from '@ws/app/src/public-api'
 import { SharedModule } from '../shared/shared.module';
+import { FontSettingComponent } from './../component/font-setting/font-setting.component';
+import { TopRightNavBarComponent } from './../component/top-right-nav-bar/top-right-nav-bar.component';
 @NgModule({
-  declarations: [HeaderComponent, AppNavBarComponent],
+  declarations: [HeaderComponent, AppNavBarComponent, FontSettingComponent, TopRightNavBarComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -42,6 +44,8 @@ import { SharedModule } from '../shared/shared.module';
   exports: [
     HeaderComponent,
     AppNavBarComponent,
+    FontSettingComponent,
+    TopRightNavBarComponent,
     SharedModule
   ],
   providers: [

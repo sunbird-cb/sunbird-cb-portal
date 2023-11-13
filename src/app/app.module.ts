@@ -91,6 +91,8 @@ import { AppEnrollmentResolverService } from './services/app-enrollment-resolver
 import { HeaderModule } from './header/header.module';
 import { DialogBoxComponent } from './component/dialog-box/dialog-box.component';
 import { SocialLinkComponent } from './component/social-link/social-link.component';
+
+
 @Injectable()
 export class HammerConfig extends GestureConfig {
   buildHammer(element: HTMLElement) {
@@ -132,7 +134,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     AppTourVideoComponent,
     AppTourComponent,
     DialogBoxComponent,
-    SocialLinkComponent
+    SocialLinkComponent 
   ],
   imports: [
     FormsModule,

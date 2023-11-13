@@ -16,3 +16,9 @@
 .collapsible {
     overflow: hidden;
 }
+
+@media (max-width : 768px) {    
+    .discussion-card {
+        width: 100%;
+    }
+}
