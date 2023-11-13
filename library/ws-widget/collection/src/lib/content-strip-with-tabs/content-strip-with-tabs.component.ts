@@ -55,7 +55,7 @@ interface IStripUnitContentData {
 @Component({
   selector: 'ws-widget-content-strip-with-tabs',
   templateUrl: './content-strip-with-tabs.component.html',
-  styleUrls: ['./content-strip-with-tabs.component.scss']
+  styleUrls: ['./content-strip-with-tabs.component.scss'],
 })
 export class ContentStripWithTabsComponent extends WidgetBaseComponent
   implements

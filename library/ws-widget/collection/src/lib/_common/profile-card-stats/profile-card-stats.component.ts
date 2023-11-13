@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-widget-profile-card-stats',
@@ -9,6 +9,9 @@ import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils
 })
 export class ProfileCardStatsComponent implements OnInit {
   @Input() isLoading = false
+
+  @Output() expandCollapse = new EventEmitter<any>()
+  collapsed = false;
   userInfo: any
   countdata: any
   statsData: any
@@ -98,5 +101,9 @@ export class ProfileCardStatsComponent implements OnInit {
   }
   gotoUserProfile(){
     this.router.navigate(['app/user-profile/details'])
+  }
+  toggle() {
+    this.collapsed = !this.collapsed;
+    this.expandCollapse.emit(this.collapsed)
   }
 }

@@ -106,7 +106,7 @@ export class ConfigurationsService {
   // variable setting for csJwtToken
   cstoken = ''
 
-  changeNavBarFullView = new Subject();
+  changeNavBarFullView = new Subject()
   updateGlobalProfile(state: boolean) {
     this.updateProfile.next(state)
   }

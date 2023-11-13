@@ -66,7 +66,7 @@ export namespace NsContent {
     isInIntranet?: boolean
     keywords?: string[]
     kArtifacts?: IRelatedContentMeta[]
-    lastContentAccessTime?: string        
+    lastContentAccessTime?: string
     lastUpdatedOn: string
     learningMode?: TLearningMode
     learningObjective: string

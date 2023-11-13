@@ -27,9 +27,7 @@ import {
   MatButtonToggleModule,
   MatTabsModule,
   MatAutocompleteModule} from '@angular/material'
-import { ContentStripWithTabsComponent } from './content-strip-with-tabs.component';
-
-
+import { ContentStripWithTabsComponent } from './content-strip-with-tabs.component'
 
 @NgModule({
   declarations: [ContentStripWithTabsComponent],
@@ -64,6 +62,6 @@ import { ContentStripWithTabsComponent } from './content-strip-with-tabs.compone
     MatAutocompleteModule,
   ],
   entryComponents: [ContentStripWithTabsComponent],
-  exports: [ContentStripWithTabsComponent]
+  exports: [ContentStripWithTabsComponent],
 })
 export class ContentStripWithTabsModule { }

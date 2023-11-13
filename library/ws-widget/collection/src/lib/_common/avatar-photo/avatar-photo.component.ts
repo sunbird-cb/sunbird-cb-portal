@@ -16,7 +16,7 @@ export class AvatarPhotoComponent implements OnInit, OnChanges {
   @Input() public size = ''
   @Input() randomColor = false
   @Input() initials?: string
-  @Input() showBadge = false;
+  @Input() showBadge = false
   public showInitials = false
   public circleColor!: string
   random = Math.random().toString(36).slice(2)
