@@ -41,6 +41,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   isSetUpPage = false
   isLoggedIn = false
   fontContainerFlag = false;
+  activeRoute = '';
   constructor(
     private domSanitizer: DomSanitizer,
     private configSvc: ConfigurationsService,
@@ -64,6 +65,26 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    this.router.events.subscribe((event: any) => {
+
+      if (event instanceof NavigationEnd) {
+          // Hide loading indicator
+          console.log('event', event)
+          if (event.url.includes('/page/home')) {
+            this.activeRoute = 'home'
+          } else if (event.url.includes('/page/explore')) {
+            this.activeRoute = 'explorer'
+          } else if (event.url.includes('app/globalsearch')) {
+            this.activeRoute = 'search'
+          } else if (event.url.includes('app/careers')) {
+            this.activeRoute = 'Career'
+          } else if (event.url.includes('app/my-learning')) {
+            this.activeRoute = 'my learnings'
+          } 
+
+      }
+    })
+
     if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
         this.isLoggedIn = true
     }
