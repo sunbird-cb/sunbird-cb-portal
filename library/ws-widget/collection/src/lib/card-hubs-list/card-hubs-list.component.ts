@@ -74,7 +74,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
 
       if (event instanceof NavigationEnd) {
           // Hide loading indicator
-          console.log('event', event)
+          // console.log('event', event)
           if (event.url.includes('/page/learn')) {
             this.activeRoute = 'Learn'
           } else if (event.url.includes('/app/discussion-forum')) {
