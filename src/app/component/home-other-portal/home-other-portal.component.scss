@@ -1,0 +1,29 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+
+.other-portal-box {
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+}
+.icon-box {
+    height: 64px;
+    width: 72px;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.small-font {
+    font: 400 12px/16px Lato;
+    color: rgba(0, 0, 0, 0.6);
+}
+.card-text-box {
+    vertical-align: middle;
+}
+.portal-box {
+    margin-bottom: 16px;
+}
+.portal-box:last-child {
+    margin-bottom: 0;
+}

@@ -1,21 +1,65 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
 
+const clientItem = [
+  {
+    "clientImageUrl": "assets/icons/attendance_qr.svg",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/attendance_qr.svg",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/attendance_qr.svg",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/attendance_qr.svg",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/attendance_qr.svg",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/attendance_qr.svg",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/attendance_qr.svg",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/attendance_qr.svg",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+]
 @Component({
   selector: 'ws-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit { 
-  widgetData = {};  
-  sliderData = {}; 
+export class HomeComponent implements OnInit {
+  widgetData = {};
+  sliderData = {};
   contentStripData = {};
   discussStripData = {};
   networkStripData = {};
-  carrierStripData = {}; 
- 
+  carrierStripData = {};
+  clientList: {} | undefined
+
   constructor() { }
 
   ngOnInit() {
+    this.clientList = clientItem
     this.widgetData = {
       "widgets": [
         [
@@ -39,7 +83,7 @@ export class HomeComponent implements OnInit {
               "widgetData": {}
             }
           }
-        ],             
+        ],
         [
           {
             "dimensions": {
@@ -182,43 +226,43 @@ export class HomeComponent implements OnInit {
     };
 
     this.carrierStripData = {
-      "widgets": 
-      [
-        {
-          "dimensions": {},
-          "className": "",
-          "widget": {
-            "widgetType": "carrierStrip",
-            "widgetSubType": "CarrierStripMultiple",
-            "widgetData": {
-              "strips": [
-                {
-                  "key": "Career",
-                  "logo": "work",
-                  "title": "Careers",
-                  "stripBackground": "assets/instances/eagle/background/careers.svg",
-                  "titleDescription": "Latest openings",
-                  "stripConfig": {
-                    "cardSubType": "cardHomeCarrier"
-                  },
-                  "viewMoreUrl": {
-                    "path": "/app/careers/home",
-                    "viewMoreText": "Career",
-                    "queryParams": {}
-                  },
-                  "filters": [],
-                  "request": {
-                    "api": {
-                      "path": "/apis/protected/v8/discussionHub/categories/1",
+      "widgets":
+        [
+          {
+            "dimensions": {},
+            "className": "",
+            "widget": {
+              "widgetType": "carrierStrip",
+              "widgetSubType": "CarrierStripMultiple",
+              "widgetData": {
+                "strips": [
+                  {
+                    "key": "Career",
+                    "logo": "work",
+                    "title": "Careers",
+                    "stripBackground": "assets/instances/eagle/background/careers.svg",
+                    "titleDescription": "Latest openings",
+                    "stripConfig": {
+                      "cardSubType": "cardHomeCarrier"
+                    },
+                    "viewMoreUrl": {
+                      "path": "/app/careers/home",
+                      "viewMoreText": "Career",
                       "queryParams": {}
+                    },
+                    "filters": [],
+                    "request": {
+                      "api": {
+                        "path": "/apis/protected/v8/discussionHub/categories/1",
+                        "queryParams": {}
+                      }
                     }
                   }
-                }
-              ]
+                ]
+              }
             }
           }
-        }
-      ],
+        ],
     };
 
     this.sliderData = [
@@ -258,12 +302,12 @@ export class HomeComponent implements OnInit {
         },
         "title": ""
       }
-    ]  
+    ]
   }
 
   handleButtonClick(): void {
     console.log("Working!!!");
-     
-  } 
+
+  }
 
 }
