@@ -19,7 +19,7 @@ export namespace NsContentStripWithTabs {
         icon: string
     }
     sliderConfig?: {
-      showNavs : boolean,
+      showNavs: boolean,
       showDots: boolean
     },
     tabs?: NsContentStripWithTabs.IcontentStripTab[] | undefined,

@@ -17,6 +17,7 @@ import { FeedListComponent } from './home/feed-list/feed-list.component';
 import { SkeletonLoaderComponent } from '../component/skeleton-loader/skeleton-loader.component';
 import { ProfileCardStatsModule } from '@sunbird-cb/collection/src/lib/_common/profile-card-stats/profile-card-stats.module'
 import { SharedModule } from '../shared/shared.module';
+import { WeeklyClapsModule } from '@sunbird-cb/collection/src/lib/_common/weekly-claps/weekly-claps.module';
 @NgModule({
   declarations: [HomeComponent, FeedListComponent, InsightSideBarComponent, PageContainerComponent, DiscussionInfoComponent, SkeletonLoaderComponent],
   imports: [
@@ -31,7 +32,8 @@ import { SharedModule } from '../shared/shared.module';
     MatIconModule,
     SharedModule,
     ProfileCardStatsModule,
-    MatIconModule
+    MatIconModule,
+    WeeklyClapsModule
   ],
   exports: [
     HeaderModule,

@@ -83,7 +83,7 @@ import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content
     BtnPageBackModule,
     WidgetResolverModule,
     CardContentModule,
-    CardContentV2Module
+    CardContentV2Module,
   ],
   providers: [BrowseProviderService],
 })
