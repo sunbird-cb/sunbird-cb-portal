@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
         ] 
       ]
     };
-  } 
+  }
 
   get navBarRequired(): boolean {
     return this.isNavBarRequired 
