@@ -115,9 +115,9 @@
       <ng-container *ngIf="primaryNavbarConfig?.smallScreen && isLoggedIn">
         <ul class="mobile-footer-fixed-nav-list-item-container">
         <ng-container *ngFor="let item of primaryNavbarConfig?.smallScreen?.all">
-          <li class="mobile-footer-fixed-nav-list-item" [routerLink]="item?.config?.path">
+          <li [ngClass]="activeRoute === item?.config?.label ? 'active-icon': ''" class="mobile-footer-fixed-nav-list-item" [routerLink]="item?.config?.path">
             <div class="icon-container">
-              <img  [ngClass]="activeRoute === item.label ? 'active-icon': 'mat-icon-disable'" src="/assets/icons/footer-nav/{{item?.config?.icon}}.svg" id="draft" alt="draft" title="draft" />
+              <img   src="/assets/icons/footer-nav/{{item?.config?.icon}}.svg" id="draft" alt="draft" title="draft" />
               <span>{{item?.config?.label | titlecase}}</span>
             </div>
           </li>

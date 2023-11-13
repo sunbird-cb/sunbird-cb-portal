@@ -327,3 +327,12 @@
     width: 100%;
   }
 }
+
+.active-icon {
+  border-top: 2px solid rgb(27, 76, 161);
+  background-color: rgba(27, 76, 161, 0.16);
+}
+
+.active-icon span {
+  color: rgba(27, 76, 161);
+}
