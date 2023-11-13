@@ -4,20 +4,19 @@
       <div class="flex flex-1 margin-bottom-xs margin-top-xs secondary-nav" role="menubar">
         <!-- <a id="menuToggleMobile" class="flex cursor-pointer simple-hubs-link margin-left-0 menuToggleMobile" href="javascript:void(0)" role="menuitem"
           accesskey="H" i18n-aria-label (click)="toggleVisibility()">
-
           <mat-icon class="margin-right-xs ws-mat-default-text">menu</mat-icon>
           <span class="margin-auto ws-mat-default-text mat-subheading-2">EXPLORE</span>
         </a> -->
         <ng-container [@enterAnimation]="visible">
-          <div *ngFor="let hub of hubsList">
+          <div *ngFor="let hub of hubsList" class="flex justify-center items-center">
             <ng-container *ngIf="hub.hubname == 'Discuss'">
-              <a [id]="hub.hubname" class="simple-hubs-link cursor-pointer" i18n-aria-label role="menuitem" (click)="navigate()">
-                <img  [ngClass]="activeRoute === hub.hubname ? 'active-icon': 'mat-icon-disable'" src="/assets/icons/hubs/{{hub?.icon}}.svg" id="draft" alt="draft" title="draft" />
+              <a [id]="hub.hubname" class="flex justify-center items-center simple-hubs-link cursor-pointer" i18n-aria-label role="menuitem" (click)="navigate()">
+                <img [ngClass]="activeRoute === hub.hubname ? 'active-icon': 'mat-icon-disable'" src="/assets/icons/hubs/{{hub?.icon}}.svg" id="draft" alt="draft" title="draft" />
                 <span [ngClass]="activeRoute === hub.hubname ? 'active-text margin-8 text-gray': 'margin-8 text-gray'"> {{hub.hubname}}</span>
               </a>
             </ng-container>
             <ng-container *ngIf="hub.hubname != 'Discuss'">
-              <a class="simple-hubs-link cursor-pointer" [id]="hub.hubname" i18n-aria-label role="menuitem" [routerLink]="hub.path"
+              <a class="flex justify-center items-center simple-hubs-link cursor-pointer" [id]="hub.hubname" i18n-aria-label role="menuitem" [routerLink]="hub.path"
                 [attr.accesskey]="hub.accessKey">
                 <img [ngClass]="activeRoute === hub.hubname ? 'active-icon': 'mat-icon-disable'" src="/assets/icons/hubs/{{hub?.icon}}.svg" id="draft" alt="draft" title="draft" /> 
                 <span [ngClass]="activeRoute === hub.hubname ? 'active-text margin-8 text-gray': 'margin-8 text-gray'">  {{hub.hubname}}</span>
@@ -26,14 +25,10 @@
             </ng-container>
 
           </div>
-          <a id="menuToggle2" class="new-more flex cursor-pointer simple-hubs-link margin-left-xl" href="javascript:void(0)" role="menuitem"
-            accesskey="H" i18n-aria-label (click)="toggleVisibility()">
-
-            <!-- <mat-icon class="margin-right-xs ws-mat-primary-text">more_horiz</mat-icon> -->
+          <a id="menuToggle2" class="new-more flex cursor-pointer simple-hubs-link margin-left-xl" href="javascript:void(0)" role="menuitem" accesskey="H" i18n-aria-label (click)="toggleVisibility()">
             <span class="margin-auto ws-mat-primary-text">More
-              <span class="more-drop-down"></span>   
+              <span class="more-drop-down text-xs"></span>   
             </span>
-            
           </a>
         </ng-container>
       </div>
@@ -50,9 +45,7 @@
           <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2" role="menubar">
             <ng-container *ngFor="let hubsObj of hubsList" [ngTemplateOutlet]="userIndividualNew"
               [ngTemplateOutletContext]="{ hubs: hubsObj }">
-
             </ng-container>
-
           </div>
         </div>
 

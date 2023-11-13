@@ -557,9 +557,14 @@ h3.shepherd-title {
 
 // top right menu
 .profile-link {
-  padding-left: $size-xs;
-  padding-right: 0;
-  padding-top: $size-xs;
+  // padding-left: $size-xs;
+  // padding-right: 0;
+  // padding-top: $size-xs;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: inherit;
 }
 
 // used at discussion start component

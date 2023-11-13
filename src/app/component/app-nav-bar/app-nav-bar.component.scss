@@ -9,18 +9,11 @@
 }
 
 .fix-ww {
-  margin-left: auto;
-  margin-right: auto;
-  // max-width: $max-width;
   max-width: $max-screen;
-  display: flex;
-  flex: 1;
+  margin: auto;
   height: 56px;
+  width: $max-screen;
 }
-
-// .custom {
-// height: 72px;
-// }
 
 .mobile {
   height: 56px !important;
@@ -35,41 +28,39 @@
 
 .tourGuideBtn mat-icon {
   width: 28%;
-  // color: rgba(0, 0, 0, 0.54);
 }
 
 .logo-dim {
-  min-width: 70px;
-  max-width: 174px;
-  /* margin-right: 10rem; */
-  margin-top: auto;
-  margin-bottom: auto;
-  width: 324px;
-  margin-right: 2rem;
+  min-width: 120px;
+  max-width: 148px;
+  height: inherit;
 }
 
 .right-side-nav-items {
-  display: inline;
-  margin: 12px  0;
+  // display: inline;
+  // margin: 12px  0;
 }
 
 .right-side-nav-items li {
-  display: inline-block;
+  list-style-type: none;
+  margin: 0px;
 }
 
 .download-app-chip {
-  border-radius: 63px;
-    background: #F3962F;
-    color: #fff;
-    min-width: 129px;
-    text-align: center;
-    padding: 6px 16px;
+  background: #F3962F;
+  color: #fff;
+  min-width: 128px;
+  text-align: center;
 }
 
-.font-icon img{
-  vertical-align: middle;
-  height: 29px;
-  width: 29px;
+.font-icon {
+  height: inherit;
+
+  img {
+    vertical-align: middle;
+    height: 28px;
+    width: 28px;
+  }
 }
 
 .help-icon {
@@ -84,17 +75,16 @@
 }
 
 .app-logo {
-  max-width: 100px;
-  max-height: 30px;
-  min-width: 30px;
-  padding: 8px 0 0 0;
+  // max-width: 100px;
+  // max-height: 30px;
+  // min-width: 30px;
+  // padding: 8px 0 0 0;
+  padding-right: 8px;
 
   @include breakpoint-xs {
-    max-width: 80px;
+    max-width: 100px;
   }
 }
-
-
 
 .title {
   font-size: 12px !important;
@@ -186,23 +176,43 @@
 
 .my-search {
   display: flex;
-  margin-left: 0;
+  // margin-left: 0;
   /* margin-right: 0; */
-  text-align: center;
+  // text-align: center;
   // <<<<<<< HEAD flex: 3;
   // max-width: 500px;
-  flex: 10;
-  max-width: 486px;
-  margin-right: 4.88rem;
+  // flex: 10;
+  // max-width: 486px;
+  // margin-right: 4.88rem;
   // >>>>>>>hubs
 }
 
 // .mobile {
 //   @include breakpoint-xs {
-//     padding: $size-xs;
+//     padding: $size-xs; 
 //   }
 // }
 
+.icon-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  background-color: #000;
+  border-radius: 50%;
+  cursor: pointer;
+
+  img {
+    width: 16px;
+    height: 16px;
+  }
+
+  .question-mark {
+    color: #fff;
+    font-size: 14px;
+  }
+}
 
 
 @media only screen and (max-width: 768px) {
@@ -242,11 +252,12 @@
   }
 
   .fix-ww {
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
+    // margin-left: auto;
+    // margin-right: auto;
     max-width: 100%;
     display: flex;
-    flex: 1;
+    // flex: 1;
     height: 56px;
   }
  
