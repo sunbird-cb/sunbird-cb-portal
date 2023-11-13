@@ -46,7 +46,7 @@ export const ROOT_WIDGET_CONFIG = {
     singleStrip: 'contentStripSingle',
     multiStripNew: 'contentStripMultipleNew',
     verticalStrip: 'contentStripVertical',
-    stripWithTabs: 'contentStripWithTabs'
+    stripWithTabs: 'contentStripWithTabs',
   },
   networkStrip: {
     _type: 'networkStrip',

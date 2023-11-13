@@ -1,54 +1,57 @@
 <div class="margin-bottom-m">
-    <ws-widget-profile-card-stats [isLoading]="profileDataLoading"></ws-widget-profile-card-stats>
+    <ws-widget-profile-card-stats (expandCollapse)="expandCollapse($event)" [isLoading]="profileDataLoading"></ws-widget-profile-card-stats>
 </div>
-
-
-
-<div class="flex flex-col discussion-card">
-    <div class="flex gap-1 mat-subheading-1 p-4">My Discussions
-        <mat-icon>
-            chevron_right
-        </mat-icon>
+<section class="collapsible" [@collapse]="collapsed">
+    <div class="margin-bottom-m" >
+        <ws-widget-weekly-claps [isLoading]="clapsDataLoading"></ws-widget-weekly-claps>
     </div>
-    
-    <div class="flex flex-col">
-        <ng-container *ngIf="!loadSkeleton && !enableDiscussion">
-            <div class="flex flex-col items-center gap-4 p-10">
-                <img src="./../../../fusion-assets/images/new-home/chat.svg" alt="chat img" />
-                <div class="text-sm text-center">Do you have any questions, suggestions or, ideas in your mind? Post it.</div>
-                <button class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide" (click)="handleButtonClick()">Start discussion</button>
-            </div>
-        </ng-container>
-
-        <ng-container *ngIf="loadSkeleton">
-            <div class="flex flex-col gap-3 p-5">
-                <ws-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-skeleton-loader>
-                <ws-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-skeleton-loader>
-                <div class="flex flex-row gap-5">
-                    <ws-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-skeleton-loader>
-                    <ws-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-skeleton-loader>
-                    <ws-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-skeleton-loader>
+    <div class="flex flex-col discussion-card margin-bottom-m">
+        <div class="flex gap-1 mat-subheading-1 p-4">My Discussions
+            <mat-icon>
+                chevron_right
+            </mat-icon>
+        </div>
+        
+        <div class="flex flex-col">
+            <ng-container *ngIf="!loadSkeleton && !enableDiscussion">
+                <div class="flex flex-col items-center gap-4 p-10">
+                    <img src="./../../../fusion-assets/images/new-home/chat.svg" alt="chat img" />
+                    <div class="text-sm text-center">Do you have any questions, suggestions or, ideas in your mind? Post it.</div>
+                    <button class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide" (click)="handleButtonClick()">Start discussion</button>
                 </div>
-            </div>
-            <hr class="w-full bg-gray-200 border-b-1 opacity-50 m-0">
-            <div class="flex flex-col gap-3 p-5">
-                <ws-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-skeleton-loader>
-                <ws-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-skeleton-loader>
-                <div class="flex flex-row gap-5">
-                    <ws-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-skeleton-loader>
-                    <ws-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-skeleton-loader>
-                    <ws-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-skeleton-loader>
-                </div>
-            </div>
-        </ng-container>
+            </ng-container>
 
-        <ng-container *ngIf="!loadSkeleton && enableDiscussion">
-            <ws-discussion-info></ws-discussion-info>
-            <hr class="w-full bg-gray-200 border-b-1 opacity-50 m-0">
-            <ws-discussion-info></ws-discussion-info>
-        </ng-container>
+            <ng-container *ngIf="loadSkeleton">
+                <div class="flex flex-col gap-3 p-5">
+                    <ws-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-skeleton-loader>
+                    <ws-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-skeleton-loader>
+                    <div class="flex flex-row gap-5">
+                        <ws-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-skeleton-loader>
+                        <ws-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-skeleton-loader>
+                        <ws-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-skeleton-loader>
+                    </div>
+                </div>
+                <hr class="w-full bg-gray-200 border-b-1 opacity-50 m-0">
+                <div class="flex flex-col gap-3 p-5">
+                    <ws-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-skeleton-loader>
+                    <ws-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-skeleton-loader>
+                    <div class="flex flex-row gap-5">
+                        <ws-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-skeleton-loader>
+                        <ws-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-skeleton-loader>
+                        <ws-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-skeleton-loader>
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="!loadSkeleton && enableDiscussion">
+                <ws-discussion-info></ws-discussion-info>
+                <hr class="w-full bg-gray-200 border-b-1 opacity-50 m-0">
+                <ws-discussion-info></ws-discussion-info>
+            </ng-container>
+        </div>
     </div>
-</div>
 
-<ws-no-data [noDataValue]="noDataValue"></ws-no-data>
+    <ws-no-data [noDataValue]="noDataValue"></ws-no-data>
+</section>
+
 <ws-home-other-portal></ws-home-other-portal>
