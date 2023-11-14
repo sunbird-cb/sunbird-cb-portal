@@ -126,7 +126,8 @@ mat-grid-list {
 }
 
 .secondary-nav {
-  margin-left: 150px;
+  // margin-left: 150px;
+  justify-content: center;
 }
 
 .margin-0 {
@@ -198,6 +199,7 @@ color:rgb(27, 76, 161)
   
   overflow-x: auto;
   margin-top:60px;
+  justify-content: left;
 }
 
 .secondary-nav::-webkit-scrollbar{ width :6px; } 

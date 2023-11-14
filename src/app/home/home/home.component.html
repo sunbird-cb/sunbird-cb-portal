@@ -1,8 +1,12 @@
 <div class="home-container m-auto flex flex-row gap-4">
-    <div class="left bg-info">
+    <div class="bg-info" [ngClass]="
+    homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'left' : 
+    (homeConfig?.leftSection?.active &&  !homeConfig?.rightSection?.active) ? 'full' : ''" *ngIf="homeConfig?.leftSection?.active">
         <ws-in-sight-side-bar></ws-in-sight-side-bar>
     </div>
-    <div class="right bg-primary">
+    <div class="bg-primary" [ngClass]="
+    homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'right' : 
+    (!homeConfig?.rightSection?.active && !homeConfig?.leftSection?.active) ? 'full' : ''" *ngIf="homeConfig?.rightSection?.active">
         <div class="flex flex-col gap-4">
             <ws-feed-list></ws-feed-list>
             <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>

@@ -41,7 +41,7 @@ const clientItem = [
     "clientName": "LBSNAA",
     "clientUrl": ""
   },
-]
+];
 @Component({
   selector: 'ws-home',
   templateUrl: './home.component.html',
@@ -55,7 +55,14 @@ export class HomeComponent implements OnInit {
   networkStripData = {};
   carrierStripData = {};
   clientList: {} | undefined
-
+  homeConfig = {
+    "leftSection" : {
+      "active":  true
+    },
+    "rightSection": {
+      "active":  true
+    }
+  }
   constructor() { }
 
   ngOnInit() {

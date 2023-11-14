@@ -10,8 +10,39 @@ export class FooterSectionComponent implements OnInit {
   @Input() environment:any;
   @Input() hubsList:any;
   constructor(private configSvc: ConfigurationsService,) { }
+  footerSectionConfig = [
+    {
+      "id":1,
+      "order":1,
+      "sectionHeading": "Hubs",
+      "active": true,
+      "slug": "hub"
+    },
+    {
+      "id":2,
+      "order":2,
+      "sectionHeading": "Related Links",
+      "active": true,
+      "slug": "link"
+    },
+    {
+      "id":3,
+      "order":3,
+      "sectionHeading": "Support",
+      "active": true,
+      "slug": "support"
+    },
+    {
+      "id":4,
+      "order":4,
+      "sectionHeading": "About us",
+      "active": true,
+      "slug": "about"
+    }
+  ];
 
   ngOnInit() {
+    this.footerSectionConfig = (this.footerSectionConfig).sort((a,b)=>a.order - b.order);
   }
 
   isAllowed(portalName: string) {

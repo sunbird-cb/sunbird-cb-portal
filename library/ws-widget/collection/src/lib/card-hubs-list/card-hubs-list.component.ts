@@ -68,7 +68,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
   }
 
   hubsList!: NsInstanceConfig.IHubs[]
-
+  inactiveHubList!:NsInstanceConfig.IHubs[]
   ngOnInit() {
     this.router.events.subscribe((event: any) => {
 
@@ -98,7 +98,8 @@ export class CardHubsListComponent extends WidgetBaseComponent
     this.environment = environment
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.hubsList = (instanceConfig.hubs || []).filter(i => i.active)
+      this.hubsList = (instanceConfig.hubs || []).sort((a,b)=>a.order - b.order);
+      this.inactiveHubList = (instanceConfig.hubs || []).filter(i => !(i.active))
     }
     this.defaultMenuSubscribe = this.isLtMedium$.subscribe((isLtMedium: boolean) => {
       this.isMobile = isLtMedium
