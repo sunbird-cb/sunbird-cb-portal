@@ -34,4 +34,9 @@ export class FooterSectionComponent implements OnInit {
     return returnValue
   }
 
+  onClick(event:any) {
+    console.log(event.target.parentElement);
+    event.target.parentElement.classList.toggle('open');
+  }
+
 }

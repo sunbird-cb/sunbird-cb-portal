@@ -75,7 +75,9 @@ export class CardHubsListComponent extends WidgetBaseComponent
       if (event instanceof NavigationEnd) {
           // Hide loading indicator
           // console.log('event', event)
-          if (event.url.includes('/page/learn')) {
+          if (event.url === '/' || event.url.includes('/page/home')) {
+            this.activeRoute = 'Home'
+          } else if (event.url.includes('/page/learn')) {
             this.activeRoute = 'Learn'
           } else if (event.url.includes('/app/discussion-forum')) {
             this.activeRoute = 'Discuss'
@@ -88,6 +90,8 @@ export class CardHubsListComponent extends WidgetBaseComponent
           } else if (event.url.includes('app/event-hub')) {
             this.activeRoute = 'Events'
           }
+
+          localStorage.setItem("activeRoute", this.activeRoute);
 
       }
   })
