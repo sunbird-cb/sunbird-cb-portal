@@ -1,6 +1,6 @@
 // import { environment } from './../../../environments/environment'
 import { HttpClient } from '@angular/common/http'
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewEncapsulation } from '@angular/core'
 import { NavigationEnd, Router } from '@angular/router'
 import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment'
   selector: 'ws-app-footer',
   templateUrl: './app-footer.component.html',
   styleUrls: ['./app-footer.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AppFooterComponent implements OnInit {
 

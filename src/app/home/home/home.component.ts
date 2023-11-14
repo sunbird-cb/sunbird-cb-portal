@@ -307,7 +307,7 @@ export class HomeComponent implements OnInit {
 
   handleButtonClick(): void {
     console.log("Working!!!");
- 
+  
   }
 
 }
