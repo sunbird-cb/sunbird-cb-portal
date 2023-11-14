@@ -56,6 +56,9 @@ export class HomeComponent implements OnInit {
   carrierStripData = {};
   clientList: {} | undefined
   homeConfig = {
+    "insightOnRight": {
+      "active" : false
+    },
     "leftSection" : {
       "active":  true
     },
