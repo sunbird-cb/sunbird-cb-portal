@@ -9,6 +9,10 @@ ws-app-search-input-home .autocomplete-form {
   margin: auto;
 }
 
+.mat-form-field-suffix {
+  margin-right:10px;
+}
+
 .x-small-typography .mat-form-field-prefix  {
   .mat-icon, .x-small-typography .mat-form-field-suffix .mat-icon {
     font-size: 120%;
@@ -49,22 +53,21 @@ ws-app-search-input-home .autocomplete-form {
     border-radius: 0px 4px 4px 0px;
     padding: 8px;
     margin-left: 16px;
-    margin-top: 35px;
+    margin-top: 38px;
   }
 }
 
-.mat-form-field-prefix  {
-.mat-form-field-suffix .mat-icon {
-font-size: 120%;
+.mat-form-field-prefix .mat-icon, .mat-form-field-suffix .mat-icon {
+  font-size: 120%;
 }
-  
+.mat-form-field-prefix  {  
   .search-home {
     // background: #00A9F4 0% 0% no-repeat padding-box;
     // background: #00A9F4 0% 0% no-repeat padding-box;
     border-radius: 0px 4px 4px 0px;
     padding: 8px;
     margin-left: 16px;
-    margin-top: 20px;
+    margin-top: 27px;
   }
   
 }
