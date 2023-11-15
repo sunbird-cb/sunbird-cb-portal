@@ -181,7 +181,6 @@ export class CardHubsListComponent extends WidgetBaseComponent
     } else {
       this.searchSpinner = true
       this.enableFeature = false
-
     }
 
   }
