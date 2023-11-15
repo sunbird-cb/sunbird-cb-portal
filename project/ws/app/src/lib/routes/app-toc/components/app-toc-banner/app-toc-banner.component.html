@@ -62,7 +62,8 @@
               <div class="banner-overview-container" [hidden]="!content?.purpose && showSubtitleOnBanner"
                 *ngSwitchCase="'overview'">
                 <h3 class="overview-description mat-body-1" *ngIf="showSubtitleOnBanner" i18n-title title="Subtitle">
-                  {{ content?.purpose | pipeLimitTo: 250 }}
+                  <!-- {{ content?.purpose | pipeLimitTo: 250 }} -->
+                  {{ content?.source | pipeLimitTo: 250 }}
                 </h3>
                 <p class="overview-description mat-body-1" *ngIf="!showSubtitleOnBanner" i18n-title title="Description">
                   {{ content?.instructions | pipeLimitTo: 450 }}
