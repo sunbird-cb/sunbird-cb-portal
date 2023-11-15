@@ -20,7 +20,8 @@ export namespace NsContentStripWithTabs {
     }
     sliderConfig?: {
       showNavs: boolean,
-      showDots: boolean
+      showDots: boolean,
+      maxWidgets?: number
     },
     tabs?: NsContentStripWithTabs.IContentStripTab[] | undefined,
     titleDescription?: string
@@ -114,5 +115,6 @@ export namespace NsContentStripWithTabs {
     computeDataOnClickKey?: string
     request?: any,
     widgets?: NsWidgetResolver.IRenderConfigWithAnyData[]
+    maxWidgets?: number
   }
 }
