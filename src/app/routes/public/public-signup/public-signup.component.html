@@ -223,7 +223,7 @@
                     <!-- <mat-hint class="pos-hint">Do not have a government email id?</mat-hint> -->
                   </mat-form-field>
                 </div>
-                <a class="pos-hint help-request ws-mat-black60-text" id="org-field">Do not have a government email id?<span class="float-right ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo('Domain')">Request for help</span></a>
+                <a class="pos-hint help-request ws-mat-black60-text" id="org-field">Do not have a government email address?<span class="float-right ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo('Domain')">Request for help</span></a>
 
                 <div *ngIf="!isEmailVerified" class="flex flex-1 margin-top-s justify-end">
                   <button *ngIf="!otpEmailSend" mat-raised-button type="button" (click)="sendOtpEmail()"
