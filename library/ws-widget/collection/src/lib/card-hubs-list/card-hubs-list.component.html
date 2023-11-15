@@ -30,8 +30,9 @@
             accesskey="H" i18n-aria-label (click)="toggleVisibility()">
 
             <!-- <mat-icon class="margin-right-xs ws-mat-primary-text">more_horiz</mat-icon> -->
-            <span class="margin-auto ws-mat-primary-text">More
-              <span class="more-drop-down"></span>   
+            <span class="margin-auto ws-mat-primary-text flex">More
+              <img class="more-drop-down" *ngIf="!visible" src="assets/icons/top-nav/expand.svg"/> 
+              <img class="more-drop-down" *ngIf="visible" src="assets/icons/top-nav/collapse.svg"/> 
             </span>
             
           </a>
@@ -95,7 +96,7 @@
                 <div class="mat-caption cohorts-desc ws-mat-black60-text">Manage all your preferences here</div>
               </div>
             </a>
-            <a class="flex flex-wrap mb-4" role="menuitem" (click)="toggleVisibility()" [routerLink]="['/app/setup']">
+            <!-- <a class="flex flex-wrap mb-4" role="menuitem" (click)="toggleVisibility()" [routerLink]="['/app/setup']">
               <div class="icon ws-mat-primary-tags">
                 <mat-icon class=" m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
                   aria-hidden="true">thumb_up</mat-icon>
@@ -104,7 +105,7 @@
                 <div class="margin-0 mat-subheading-2"> Interests </div>
                 <div class="mat-caption cohorts-desc ws-mat-black60-text">Manage topics of your interest and personalize your experience</div>
               </div>
-            </a>
+            </a> -->
           </div>
         </div>
 
