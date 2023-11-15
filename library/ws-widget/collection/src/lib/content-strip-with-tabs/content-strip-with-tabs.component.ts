@@ -360,11 +360,11 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   getInprogressAndCompleted(array: NsContent.IContent[],
-                            filterr: any,
+                            customFilter: any,
                             strip: NsContentStripWithTabs.IContentStripUnit) {
     const inprogress: any[] = []
     const completed: any[] = []
-    array.forEach((e: any, idx: number, arr: any[]) => (filterr(e, idx, arr) ? inprogress : completed).push(e))
+    array.forEach((e: any, idx: number, arr: any[]) => (customFilter(e, idx, arr) ? inprogress : completed).push(e))
     return [
       { value: 'inprogress', widgets: this.transformContentsToWidgets(inprogress, strip) },
       { value: 'completed', widgets: this.transformContentsToWidgets(completed, strip) }]

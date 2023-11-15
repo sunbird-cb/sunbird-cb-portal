@@ -21,6 +21,7 @@ import { HomeOtherPortalComponent } from '../component/home-other-portal/home-ot
 import { NoDataComponent } from '../component/no-data/no-data.component';
 import { SharedModule } from '../shared/shared.module';
 import { WeeklyClapsModule } from '@sunbird-cb/collection/src/lib/_common/weekly-claps/weekly-claps.module';
+import { HomePageService } from '../services/home-page.service';
 @NgModule({
   declarations: [HomeComponent, FeedListComponent, InsightSideBarComponent, PageContainerComponent, DiscussionInfoComponent, SkeletonLoaderComponent, ClientSliderComponent, HomeOtherPortalComponent, NoDataComponent],
   imports: [
@@ -42,6 +43,9 @@ import { WeeklyClapsModule } from '@sunbird-cb/collection/src/lib/_common/weekly
     HeaderModule,
     MatCardModule,
     SharedModule
+  ],
+  providers: [
+    HomePageService
   ]
 })
 export class HomeModule { }
