@@ -95,7 +95,8 @@ export class CardHubsListComponent extends WidgetBaseComponent
 
       }
   })
-    this.environment = environment
+    this.environment = environment;
+    this.environment.portals = this.environment.portals.filter( (obj:any)=>((obj.name !== 'Frac Dictionary') && (obj.isPublic || this.isAllowed(obj.id))));
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
       this.hubsList = (instanceConfig.hubs || []).sort((a,b)=>a.order - b.order);

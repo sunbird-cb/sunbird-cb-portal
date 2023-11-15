@@ -2,45 +2,125 @@ import { Component, OnInit } from '@angular/core'
 
 const clientItem = [
   {
-    "clientImageUrl": "assets/icons/attendance_qr.svg",
+    "clientImageUrl": "assets/icons/top-providers/0d400bdf-4ad8-45bf-914c-be44018c2d07.png",
     "clientName": "LBSNAA",
     "clientUrl": ""
   },
   {
-    "clientImageUrl": "assets/icons/attendance_qr.svg",
+    "clientImageUrl": "assets/icons/top-providers/1becfffa-956e-48ba-8ffd-77c19cd720c8.jpeg",
     "clientName": "LBSNAA",
     "clientUrl": ""
   },
   {
-    "clientImageUrl": "assets/icons/attendance_qr.svg",
+    "clientImageUrl": "assets/icons/top-providers/1d76c041-a7c9-437c-94d9-36d997f3804c.jpeg",
     "clientName": "LBSNAA",
     "clientUrl": ""
   },
   {
-    "clientImageUrl": "assets/icons/attendance_qr.svg",
+    "clientImageUrl": "assets/icons/top-providers/1fb72c3f-1c96-4600-8e22-09871a85e6c4.jpeg",
     "clientName": "LBSNAA",
     "clientUrl": ""
   },
   {
-    "clientImageUrl": "assets/icons/attendance_qr.svg",
+    "clientImageUrl": "assets/icons/top-providers/6f046f76-b778-476a-987b-8669e106b44c.jpeg",
     "clientName": "LBSNAA",
     "clientUrl": ""
   },
   {
-    "clientImageUrl": "assets/icons/attendance_qr.svg",
+    "clientImageUrl": "assets/icons/top-providers/7f6df809-6930-44f4-abcf-c8297363d3e0.png",
     "clientName": "LBSNAA",
     "clientUrl": ""
   },
   {
-    "clientImageUrl": "assets/icons/attendance_qr.svg",
+    "clientImageUrl": "assets/icons/top-providers/7f8cab8e-9d22-44ba-a41e-83b907e5a5f0.jpeg",
     "clientName": "LBSNAA",
     "clientUrl": ""
   },
   {
-    "clientImageUrl": "assets/icons/attendance_qr.svg",
+    "clientImageUrl": "assets/icons/top-providers/33e9c66f-312f-4244-901e-7d7525ae8847.jpeg",
     "clientName": "LBSNAA",
     "clientUrl": ""
   },
+  {
+    "clientImageUrl": "assets/icons/top-providers/36d93700-c43f-499e-ab3c-68ea76388a2a.png",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/top-providers/385ff4a0-41af-4114-8015-10d26c1e8af4.jpeg",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/top-providers/778b56bf-8946-45fe-87d3-358203f2faf4.png",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/top-providers/2862d2e5-473e-4c55-abaa-8a2f86e5eee4.jpeg",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/top-providers/53407dd6-d22c-4dba-a394-015fae667636.png",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/top-providers/869960d7-2dc7-4205-8c4b-11321d901060.jpeg",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/top-providers/4183673f-9063-4fa9-bf84-1e8856c8e531.jpeg",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/top-providers/a976f025-e990-49b0-a52a-9bd0a8e43584.jpeg",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/top-providers/abbb8f64-84db-4a92-85c9-1b394ffab71c.jpeg",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/top-providers/b6bf0be6-7e29-4187-a29d-da6db1db7c69.jpeg",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/top-providers/cf567f4c-d0fa-447f-aba4-cb378ea3c90d.png",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/top-providers/ef8a88cf-33cc-42de-bdc3-7deed1ab2418.png",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/top-providers/f445c11b-ff73-4ca4-9dea-8d8945d92a4a.png",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/top-providers/fc67226a-4bbc-449a-8c5c-e1b338716545.png",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/top-providers/fccdb487-a389-48d9-bce0-c4d64315b546.png",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  },
+  {
+    "clientImageUrl": "assets/icons/top-providers/fcde4c60-7ccd-456e-a5df-260dcfa2d3ee.png",
+    "clientName": "LBSNAA",
+    "clientUrl": ""
+  }
 ];
 @Component({
   selector: 'ws-home',
@@ -57,7 +137,7 @@ export class HomeComponent implements OnInit {
   clientList: {} | undefined
   homeConfig = {
     "insightOnRight": {
-      "active" : false
+      "active" : true
     },
     "leftSection" : {
       "active":  true

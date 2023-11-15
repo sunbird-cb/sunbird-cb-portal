@@ -4,7 +4,7 @@
 
 
 .other-portal-box {
-    background-color: rgba(0, 0, 0, 0.08);
+    background-color: #DCE0E5 !important;
     border-radius: 12px;
 }
 .icon-box {
@@ -26,4 +26,10 @@
 }
 .portal-box:last-child {
     margin-bottom: 0;
+}
+
+.mat-subheading-2 {
+    color: rgba(0, 0, 0, 0.87);
+    font-weight: 700;
+
 }
