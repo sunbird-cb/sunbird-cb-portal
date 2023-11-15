@@ -69,7 +69,13 @@ export class AppNavBarComponent implements OnInit, OnChanges {
 
       if (event instanceof NavigationEnd) {
           // Hide loading indicator
-          console.log('event', event)
+          console.log('event', event.url)
+          console.log("activeRoute",localStorage.getItem("activeRoute"));
+          if(localStorage.getItem("activeRoute")) {
+            let route = localStorage.getItem("activeRoute");
+            this.activeRoute = route ? route.toLowerCase().toString() : '';
+          }
+          
           if (event.url.includes('/page/home')) {
             this.activeRoute = 'home'
           } else if (event.url.includes('/page/explore')) {

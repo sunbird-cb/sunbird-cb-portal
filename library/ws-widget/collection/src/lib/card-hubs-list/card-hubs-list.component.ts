@@ -68,14 +68,16 @@ export class CardHubsListComponent extends WidgetBaseComponent
   }
 
   hubsList!: NsInstanceConfig.IHubs[]
-
+  inactiveHubList!:NsInstanceConfig.IHubs[]
   ngOnInit() {
     this.router.events.subscribe((event: any) => {
 
       if (event instanceof NavigationEnd) {
           // Hide loading indicator
           // console.log('event', event)
-          if (event.url.includes('/page/learn')) {
+          if (event.url === '/' || event.url.includes('/page/home')) {
+            this.activeRoute = 'Home'
+          } else if (event.url.includes('/page/learn')) {
             this.activeRoute = 'Learn'
           } else if (event.url.includes('/app/discussion-forum')) {
             this.activeRoute = 'Discuss'
@@ -89,12 +91,16 @@ export class CardHubsListComponent extends WidgetBaseComponent
             this.activeRoute = 'Events'
           }
 
+          localStorage.setItem("activeRoute", this.activeRoute);
+
       }
   })
-    this.environment = environment
+    this.environment = environment;
+    this.environment.portals = this.environment.portals.filter( (obj:any)=>((obj.name !== 'Frac Dictionary') && (obj.isPublic || this.isAllowed(obj.id))));
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.hubsList = (instanceConfig.hubs || []).filter(i => i.active)
+      this.hubsList = (instanceConfig.hubs || []).sort((a,b)=>a.order - b.order);
+      this.inactiveHubList = (instanceConfig.hubs || []).filter(i => !(i.active))
     }
     this.defaultMenuSubscribe = this.isLtMedium$.subscribe((isLtMedium: boolean) => {
       this.isMobile = isLtMedium

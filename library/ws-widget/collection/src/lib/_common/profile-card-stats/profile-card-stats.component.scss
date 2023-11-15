@@ -148,3 +148,47 @@
     cursor: pointer;
 }
 
+
+
+.progress-wrapper { 
+  position: relative;
+  path {
+    stroke-linecap: round;
+    stroke-width: 6;
+  }
+  .grey {
+    stroke: #e5e5e5;
+  }
+  .progress-clr {
+    stroke: rgb(73, 201, 81);
+    stroke-dasharray: 248;
+    stroke-dashoffset: calc(247 - ((247 * var(--i))/100));
+  }
+  .user-img{
+    position: absolute;
+      top: 12px;
+      left: 7px;
+      span {
+        border-radius: 8px;
+        opacity: 1;
+        background-color: white;
+        width: fit-content;
+        position: absolute;
+        top: 76%;
+        left: 13%;
+        z-index: 9;
+        padding: 2px 8px;
+        height: fit-content;
+        opacity: 1;
+        color: rgba(0, 0, 0, 0.87);
+        font-family: "Lato-Regular";
+        font-size: 0.63rem;
+        font-weight: 400;
+        font-style: normal;
+        letter-spacing: 0.5px;
+        text-align: center;
+        line-height: 12px;
+      }
+  }
+}
+

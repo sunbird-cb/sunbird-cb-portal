@@ -91,6 +91,8 @@ import { AppEnrollmentResolverService } from './services/app-enrollment-resolver
 import { HeaderModule } from './header/header.module';
 import { DialogBoxComponent } from './component/dialog-box/dialog-box.component';
 import { SocialLinkComponent } from './component/social-link/social-link.component';
+import { FooterSectionComponent } from './component/app-footer/footer-section/footer-section.component';
+import { AppLogoComponent } from './component/app-logo/app-logo.component';
 
 
 @Injectable()
@@ -134,7 +136,9 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     AppTourVideoComponent,
     AppTourComponent,
     DialogBoxComponent,
-    SocialLinkComponent 
+    SocialLinkComponent,
+    FooterSectionComponent,
+    AppLogoComponent 
   ],
   imports: [
     FormsModule,

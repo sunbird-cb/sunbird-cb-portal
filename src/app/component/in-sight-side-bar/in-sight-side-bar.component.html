@@ -1,5 +1,5 @@
 <div class="margin-bottom-m">
-    <ws-widget-profile-card-stats (expandCollapse)="expandCollapse($event)" [isLoading]="profileDataLoading"></ws-widget-profile-card-stats>
+    <ws-widget-profile-card-stats (expandCollapse)="expandCollapse($event)" [insightsData]="insightsData" [isLoading]="profileDataLoading"></ws-widget-profile-card-stats>
 </div>
 <section class="collapsible" [@collapse]="collapsed">
     <div class="margin-bottom-m" >
@@ -48,6 +48,27 @@
                 <hr class="w-full bg-gray-200 border-b-1 opacity-50 m-0">
                 <ws-discussion-info></ws-discussion-info>
             </ng-container>
+        </div>
+    </div>
+
+    <div class="flex flex-col discussion-card margin-bottom-m">
+        <div class="network-pending-requests-container">
+            <span class="pending-dot">
+
+            </span>
+            <div class="pending-request-heading">
+                See all pending requests <span class="arrow"> <img src="assets/icons/home/forward_arrow.svg"></span>
+            </div>
+            <div class="pending-request-thumbnails">
+                <ul>
+                    <li>RN</li>
+                    <li>KR</li>
+                    <li>DN</li>
+                </ul>
+            </div>
+            <div class="pending-request-counts">
+                + 41
+            </div>
         </div>
     </div>
 

@@ -1,5 +1,7 @@
 import { AUTO_STYLE, animate, state, transition, trigger,style } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { HomePageService } from 'src/app/services/home-page.service';
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 const DEFAULT_DURATION = 500;
 
@@ -30,12 +32,65 @@ export class InsightSideBarComponent implements OnInit {
   noDataValue : {} | undefined
   clapsDataLoading: boolean = false
   collapsed = false
-  constructor() { }
+  userData: any
+  insightsData: any
+  constructor(private homePageSvc:HomePageService, private configSvc:ConfigurationsService) { }
 
   ngOnInit() {
-    this.profileDataLoading = true
+    this.userData = this.configSvc && this.configSvc.userProfile
+    console.log(this.userData,'userData')
+    console.log(this.configSvc.org,'orgData')
+    this.getInsights()
     this.clapsDataLoading = true
     this.noDataValue = noData
+  }
+  getInsights() {
+    this.profileDataLoading = false
+    // const organisation = this.userData.
+    const request = {
+      "request": {
+          "filters": {
+              "primaryCategory": "programs",
+              "organisations": [
+                  "across",
+                  this.userData.rootOrgId
+              ]
+          }
+      }
+  }
+    this.homePageSvc.getInsightsData(request).subscribe((res: any) => {
+      if(res && res.result && res.result.response) {
+        this.insightsData = res.result.response
+        this.constructNudgeData()
+        this.profileDataLoading = true
+      }
+    })
+  } 
+  constructNudgeData() {
+    let nudgeData: any = {
+      type:'data',
+      iconsDisplay: false,
+      cardClass:'slider-container',
+      height:'auto',
+      width:'',
+      sliderData: [],
+      "dot-default":"dot-grey",
+      "dot-active":"dot-active"
+    }
+    let sliderData: { title: any; icon: string; data: string; colorData: string; }[] = []
+    this.insightsData.nudges.forEach((ele: any)=>{
+      if(ele) {
+        let data = {
+          "title": ele.label,
+          "icon": ele.growth === 'positive' ?  "arrow_upward" :"arrow_downward",
+          "data": `${ele.growth === 'positive' ?  "+" : "-"}${Math.round(ele.progress)}%`,
+          "colorData": ele.growth === 'positive' ? 'color-green' : 'color-red',
+        }
+        sliderData.push(data)
+      }
+    })
+    nudgeData.sliderData = sliderData
+    this.insightsData['sliderData']= nudgeData
   }
 
   handleButtonClick(): void {

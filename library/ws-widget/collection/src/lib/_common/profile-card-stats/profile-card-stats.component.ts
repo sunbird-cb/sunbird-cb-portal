@@ -9,65 +9,15 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 })
 export class ProfileCardStatsComponent implements OnInit {
   @Input() isLoading = false
+  @Input() insightsData : any
+  @Input() nudgeData: any
 
   @Output() expandCollapse = new EventEmitter<any>()
+  profileProgress : any = 50;
   collapsed = false;
   userInfo: any
   countdata: any
   statsData: any
-  sliderData = {
-    type:'data',
-    iconsDisplay: false,
-    cardClass:'slider-container',
-    height:'auto',
-    width:'',
-    "dot-default":"dot-grey",
-    "dot-active":"dot-active",
-    sliderData: [
-      {
-        "banners": {
-          "l": "assets/instances/eagle/banners/home/1/l.jpg",
-          "m": "assets/instances/eagle/banners/home/1/m.jpg",
-          "s": "assets/instances/eagle/banners/home/1/s.jpg",
-          "xl": "assets/instances/eagle/banners/home/1/xl.jpg",
-          "xs": "assets/instances/eagle/banners/home/1/xs.jpg",
-          "xxl": "assets/instances/eagle/banners/home/1/xxl.jpg"
-        },
-        "redirectUrl": "/app/globalsearch",
-        "queryParams": {
-          "tab": "Learn",
-          "q": "Salesforce",
-          "lang": "en",
-          "f": "{}"
-        },
-        "title": "100 Certificates acquired by leaners in the last 24 hours",
-        "icon":"arrow_downward",
-        "data":'-6.89%',
-        "colorData":'color-red',
-      },
-      {
-        "banners": {
-          "l": "assets/instances/eagle/banners/orgs/l.png",
-          "m": "assets/instances/eagle/banners/orgs/m.png",
-          "s": "assets/instances/eagle/banners/orgs/s.png",
-          "xl": "assets/instances/eagle/banners/orgs/xl.png",
-          "xs": "assets/instances/eagle/banners/orgs/xs.png",
-          "xxl": "assets/instances/eagle/banners/orgs/xxl.png"
-        },
-        "redirectUrl": "/app/organisation/dopt",
-        "queryParams": {
-          "tab": "Learn",
-          "q": "Salesforce",
-          "lang": "en",
-          "f": "{}"
-        },
-        "title": "100 Certificates acquired by leaners in the last 24 hours",
-        "icon":"arrow_upward",
-        "data":'+6.09%',
-        "colorData":'color-green'
-      }
-    ]
-  }
   constructor(private configSvc:ConfigurationsService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
@@ -77,6 +27,7 @@ export class ProfileCardStatsComponent implements OnInit {
     }
     this.userInfo =  this.configSvc && this.configSvc.userProfile
     this.getCounts();
+    document.documentElement.style.setProperty('--i', this.profileProgress);
   }
   getCounts() {
     let enrollList

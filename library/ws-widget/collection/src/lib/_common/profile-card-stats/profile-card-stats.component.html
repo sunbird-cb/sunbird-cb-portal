@@ -3,7 +3,7 @@
         <mat-icon (click)="toggle()" class="">{{ collapsed ?'expand_more': 'expand_less'}}</mat-icon>
     </div>
     <div class="profile-user-details flex flex-middle">
-        <div class="progress-bar">
+        <!-- <div class="progress-bar">
             <div class="parent-progress">
                 <div class="progress" style="--i: 60; --clr: rgb(73, 201, 81)">
                 </div>
@@ -13,8 +13,24 @@
                   <span class="percentage-block ">60%</span>
                 </div>
             </div>
+        </div> -->
+        <div class="progress-wrapper">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="64" height="64">
+              <path class="grey" d="M55,90
+                       A55,55 0 1,1 140,90"
+                    style="fill:none;"/>
+              <path class="progress-clr" d="M55,90
+                       A55,55 0 1,1 140,90"
+                    style="fill:none;"
+                    />
+          </svg>
+          <div class="user-img">
+            <ws-widget-avatar-photo [name]="userInfo.firstName" [photoUrl]="''" size="round-m">
+            </ws-widget-avatar-photo>
+            <span class="percentage-block ">{{profileProgress}}%</span>
+          </div>
         </div>
-        <div class="user-name flex margin-left-l">
+        <div class="user-name flex margin-left-m">
             <p class="margin-remove " (click)="gotoUserProfile()">{{userInfo.firstName}}</p>
             <mat-icon class=" mr-3" (click)="gotoUserProfile()">chevron_right</mat-icon>
         </div>
@@ -33,7 +49,7 @@
           </ng-container>
         </div>
         <div class="user-insights">
-            <ws-widget-sliders-dynamic [widgetData]="sliderData"></ws-widget-sliders-dynamic>
+            <ws-widget-sliders-dynamic [widgetData]="insightsData.sliderData"></ws-widget-sliders-dynamic>
         </div>
         
     </div>

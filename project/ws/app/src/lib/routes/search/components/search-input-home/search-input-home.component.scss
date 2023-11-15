@@ -9,24 +9,93 @@ ws-app-search-input-home .autocomplete-form {
   margin: auto;
 }
 
+.mat-form-field-suffix {
+  margin-right:10px;
+}
 
+.x-small-typography .mat-form-field-prefix  {
+  .mat-icon, .x-small-typography .mat-form-field-suffix .mat-icon {
+    font-size: 120%;
+  }
 
-.search-home {
-  // background: #00A9F4 0% 0% no-repeat padding-box;
-  // background: #00A9F4 0% 0% no-repeat padding-box;
-  border-radius: 0px 4px 4px 0px;
-  padding: 8px;
-  margin-left: 16px;
-  margin-top: 20px;
+  .search-home {
+    // background: #00A9F4 0% 0% no-repeat padding-box;
+    // background: #00A9F4 0% 0% no-repeat padding-box;
+    border-radius: 0px 4px 4px 0px;
+    padding: 8px;
+    margin-left: 16px;
+    margin-top: 15px;
+  }
+}
+
+.small-typography .mat-form-field-prefix  {
+  .mat-icon, .small-typography .mat-form-field-suffix .mat-icon {
+    font-size: 120%;
+  }
+
+  .search-home {
+    // background: #00A9F4 0% 0% no-repeat padding-box;
+    // background: #00A9F4 0% 0% no-repeat padding-box;
+    border-radius: 0px 4px 4px 0px;
+    padding: 8px;
+    margin-left: 16px;
+    margin-top: 20px;
+  }
+}
+
+.large-typography .mat-form-field-prefix  {
+  .mat-icon, .large-typography .mat-form-field-suffix .mat-icon {
+    font-size: 120%;  }
+  
+  .search-home {
+    // background: #00A9F4 0% 0% no-repeat padding-box;
+    // background: #00A9F4 0% 0% no-repeat padding-box;
+    border-radius: 0px 4px 4px 0px;
+    padding: 8px;
+    margin-left: 16px;
+    margin-top: 38px;
+  }
+}
+
+.mat-form-field-prefix .mat-icon, .mat-form-field-suffix .mat-icon {
+  font-size: 120%;
+}
+.mat-form-field-prefix  {  
+  .search-home {
+    // background: #00A9F4 0% 0% no-repeat padding-box;
+    // background: #00A9F4 0% 0% no-repeat padding-box;
+    border-radius: 0px 4px 4px 0px;
+    padding: 8px;
+    margin-left: 16px;
+    margin-top: 27px;
+  }
+  
+}
+
+.x-large-typography .mat-form-field-prefix .mat-icon, .x-large-typography .mat-form-field-suffix .mat-icon {
+  font-size: 98%;
+}
+.x-large-typography .mat-form-field-prefix  {
+  .search-home {
+    // background: #00A9F4 0% 0% no-repeat padding-box;
+    // background: #00A9F4 0% 0% no-repeat padding-box;
+    border-radius: 0px 4px 4px 0px;
+    padding: 8px;
+    margin-left: 16px;
+    margin-top: 50px;
+  }
 }
 
 
-ws-app-search-input-home input {
-  padding-left: .5rem !important;
-}
+
+
+
+// ws-app-search-input-home input {
+//   padding-left: .5rem !important;
+// }
 
 ws-app-search-input-home .search .mat-form-field-wrapper {
-  padding-bottom: 0px;
+  padding-bottom: 1.85em;
 
   .mat-form-field-infix {
     border-top-width: 5px !important;
