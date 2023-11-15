@@ -118,12 +118,10 @@
 <script>
   setTimeout(()=>{
     document.getElementById("feedbacklabelspan").style.display = 'none';
-    if (document.getElementById("help-icon")) {
       document.getElementById("help-icon").addEventListener('click',function() {
-        zsLoadAutoSuggestions();
-      })
-    }    
-  },5000)
+      zsLoadAutoSuggestions();
+    })
+  },10000)
   
 </script>
 </html>
