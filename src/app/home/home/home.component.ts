@@ -137,7 +137,7 @@ export class HomeComponent implements OnInit {
   clientList: {} | undefined
   homeConfig = {
     "insightOnRight": {
-      "active" : true
+      "active" : false
     },
     "leftSection" : {
       "active":  true
