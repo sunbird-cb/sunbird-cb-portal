@@ -22,8 +22,9 @@ import { NoDataComponent } from '../component/no-data/no-data.component';
 import { SharedModule } from '../shared/shared.module';
 import { WeeklyClapsModule } from '@sunbird-cb/collection/src/lib/_common/weekly-claps/weekly-claps.module';
 import { HomePageService } from '../services/home-page.service';
+import { HomeContainerComponent } from '../component/home-container/home-container.component';
 @NgModule({
-  declarations: [HomeComponent, FeedListComponent, InsightSideBarComponent, PageContainerComponent, DiscussionInfoComponent, SkeletonLoaderComponent, ClientSliderComponent, HomeOtherPortalComponent, NoDataComponent],
+  declarations: [HomeComponent, FeedListComponent, InsightSideBarComponent, PageContainerComponent, DiscussionInfoComponent, SkeletonLoaderComponent, ClientSliderComponent, HomeOtherPortalComponent, NoDataComponent, HomeContainerComponent],
   imports: [
     CommonModule,    
     HomeRoutingModule,

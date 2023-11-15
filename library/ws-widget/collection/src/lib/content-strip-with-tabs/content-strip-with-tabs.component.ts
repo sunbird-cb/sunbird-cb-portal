@@ -33,7 +33,8 @@ interface IStripUnitContentData {
   },
   sliderConfig?: {
     showNavs: boolean,
-    showDots: boolean
+    showDots: boolean,
+    maxWidgets?: number
   },
   tabs?: NsContentStripWithTabs.IContentStripTab[] | undefined,
   stripName?: string
@@ -79,6 +80,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   veifiedKarmayogi = false
   environment!: any
   changeEventSubscription: Subscription | null = null
+  defaultMaxWidgets = 12
 
   constructor(
     // private contentStripSvc: ContentStripNewMultipleService,
@@ -129,7 +131,6 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     }
     // Fetch the data
     for (const strip of this.widgetData.strips) {
-      // console.log('strip', strip)
       if (this.checkForEmptyWidget(strip)) {
         this.fetchStripFromRequestData(strip)
       } else {
@@ -270,9 +271,9 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
           )
           const viewMoreUrl = showViewMore
             ? {
-              path: '/app/search/learning',
+              path: (strip.viewMoreUrl && strip.viewMoreUrl.path) || '',
               queryParams: {
-                q: strip.request && strip.request.searchV6 && strip.request.searchV6.query,
+                q: strip.viewMoreUrl && strip.viewMoreUrl.queryParams,
                 f:
                   strip.request && strip.request.searchV6 && strip.request.searchV6.filters
                     ? JSON.stringify(
@@ -396,7 +397,6 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         // TODO: Have to extract requestRequired to outer level of tabs config
         const firstTab = strip.tabs[0]
         if (firstTab.requestRequired) {
-          // console.log('inside erquest required')
           if (this.stripsResultDataMap[strip.key] && this.stripsResultDataMap[strip.key].tabs) {
             const allTabs = this.stripsResultDataMap[strip.key].tabs
             const currentTabFromMap = (allTabs && allTabs.length && allTabs[0]) as NsContentStripWithTabs.IContentStripTab
@@ -443,10 +443,10 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
             )
             const viewMoreUrl = showViewMore
               ? {
-                path: '/app/globalsearch',
+                path: strip.viewMoreUrl && strip.viewMoreUrl.path || '',
                 queryParams: {
                   tab: 'Learn',
-                  q: request && request.searchV6 && request.searchV6.request,
+                  q: strip.viewMoreUrl && strip.viewMoreUrl.queryParams,
                   f:
                     request &&
                       request.searchV6 &&
@@ -517,7 +517,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     fetchStatus: TFetchStatus,
     calculateParentStatus = true,
     viewMoreUrl: any,
-    tabsResults?: any,
+    tabsResults?: NsContentStripWithTabs.IContentStripTab[] | undefined,
     // calculateParentStatus is used so that parents' status is not re-calculated if the API is called again coz of filters, etc.
   ) {
     const stripData = {

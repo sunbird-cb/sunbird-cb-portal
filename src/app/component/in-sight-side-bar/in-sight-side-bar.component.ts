@@ -41,7 +41,6 @@ export class InsightSideBarComponent implements OnInit {
     console.log(this.userData,'userData')
     console.log(this.configSvc.org,'orgData')
     this.getInsights()
-    this.clapsDataLoading = true
     this.noDataValue = noData
   }
   getInsights() {
@@ -62,10 +61,12 @@ export class InsightSideBarComponent implements OnInit {
       if(res && res.result && res.result.response) {
         this.insightsData = res.result.response
         this.constructNudgeData()
+        this.constructWeeklyData()
         this.profileDataLoading = true
       }
     })
-  } 
+  }
+
   constructNudgeData() {
     let nudgeData: any = {
       type:'data',
@@ -91,6 +92,23 @@ export class InsightSideBarComponent implements OnInit {
     })
     nudgeData.sliderData = sliderData
     this.insightsData['sliderData']= nudgeData
+  }
+
+  constructWeeklyData() {
+    if(this.insightsData && this.insightsData['weekly-claps']) {
+      let weeklyCount = 0
+      this.insightsData['weekly-claps'].forEach((ele: any) => {
+        if(ele.achieved === 1) {
+          weeklyCount = weeklyCount + 1
+        }
+      })
+      this.insightsData['weeklyClaps'] = {
+        weeklyCount: weeklyCount,
+        weekData: this.insightsData['weekly-claps']
+      }
+    }
+
+    this.clapsDataLoading = true
   }
 
   handleButtonClick(): void {

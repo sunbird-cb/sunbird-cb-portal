@@ -26,7 +26,8 @@ export class FeedListComponent implements OnInit {
           "loader": true,
           "sliderConfig": {
             "showNavs" : false,
-            "showDots": false
+            "showDots": false,
+            "maxWidgets": 2,
           },
           "stripBackground": "",
           "titleDescription": "Continue learning1",
@@ -44,14 +45,16 @@ export class FeedListComponent implements OnInit {
               "value": "inprogress",
               "computeDataOnClick": false,
               "showTabDataCount": true,
-              "requestRequired": false
+              "requestRequired": false,
+              "maxWidgets": 2,
             },
             {
               "label": "Completed",
               "value": "completed",
               "computeDataOnClick": false,
               "showTabDataCount": true,
-              "requestRequired": false
+              "requestRequired": false,
+              "maxWidgets": 2,
             },
           ],
           "filters": [],
@@ -77,7 +80,8 @@ export class FeedListComponent implements OnInit {
           },
           "sliderConfig": {
             "showNavs" : true,
-            "showDots": true
+            "showDots": true,
+            "maxWidgets": 12,
           },
           "stripBackground": "",
           "titleDescription": "Trending in your department",
@@ -97,6 +101,7 @@ export class FeedListComponent implements OnInit {
               "computeDataOnClickKey": '',
               "requestRequired": true,
               "showTabDataCount": false,
+              "maxWidgets": 12,
               "request": {
                 "searchV6": {
                   "request": {
@@ -153,6 +158,7 @@ export class FeedListComponent implements OnInit {
               "computeDataOnClickKey": '',
               "requestRequired": true,
               "showTabDataCount": false,
+              "maxWidgets": 12,
               "request": {
                 "searchV6": {
                   "request": {
@@ -264,7 +270,8 @@ export class FeedListComponent implements OnInit {
           },
           "sliderConfig": {
             "showNavs" : true,
-            "showDots": true
+            "showDots": true,
+            "maxWidgets": 12,
           },
           "stripBackground": "",
           "titleDescription": "Blended Program",
@@ -338,7 +345,8 @@ export class FeedListComponent implements OnInit {
           },
           "sliderConfig": {
             "showNavs" : true,
-            "showDots": true
+            "showDots": true,
+            "maxWidgets": 12,
           },
           "stripBackground": "",
           "titleDescription": "Trending across department",
@@ -355,17 +363,115 @@ export class FeedListComponent implements OnInit {
               "label": "Courses",
               "value": "courses",
               "computeDataOnClick": false,
-              "computeDataOnClickKey": 'trendingAcrossDepartmentTabData',
+              "computeDataOnClickKey": '',
               "requestRequired": true,
               "showTabDataCount": false,
+              "maxWidgets": 12,
+              "request": {
+                "searchV6": {
+                  "request": {
+                    "filters": {
+                      "primaryCategory": [
+                        "Course"
+                      ],
+                      "contentType": [
+                        "Course"
+                      ]
+                    },
+                    "offset": 0,
+                    "limit": 20,
+                    "query": "",
+                    "sort_by": {
+                      "lastUpdatedOn": "desc"
+                    },
+                    "fields": [
+                      "name",
+                      "appIcon",
+                      "instructions",
+                      "description",
+                      "purpose",
+                      "mimeType",
+                      "gradeLevel",
+                      "identifier",
+                      "medium",
+                      "pkgVersion",
+                      "board",
+                      "subject",
+                      "resourceType",
+                      "primaryCategory",
+                      "contentType",
+                      "channel",
+                      "organisation",
+                      "trackable",
+                      "license",
+                      "posterImage",
+                      "idealScreenSize",
+                      "learningMode",
+                      "creatorLogo",
+                      "duration",
+                      "version",
+                      "programDuration"
+                    ]
+                  }
+                }
+              }
             },
             {
               "label": "Programs",
               "value": "programs",
               "computeDataOnClick": false,
-              "computeDataOnClickKey": 'trendingAcrossDepartmentTabData',
+              "computeDataOnClickKey": '',
               "requestRequired": true,
               "showTabDataCount": false,
+              "maxWidgets": 12,
+              "request": {
+                "searchV6": {
+                  "request": {
+                    "filters": {
+                      "primaryCategory": [
+                        "program"
+                      ],
+                      "contentType": [
+                        
+                      ]
+                    },
+                    "offset": 0,
+                    "limit": 20,
+                    "query": "",
+                    "sort_by": {
+                      "lastUpdatedOn": "desc"
+                    },
+                    "fields": [
+                      "name",
+                      "appIcon",
+                      "instructions",
+                      "description",
+                      "purpose",
+                      "mimeType",
+                      "gradeLevel",
+                      "identifier",
+                      "medium",
+                      "pkgVersion",
+                      "board",
+                      "subject",
+                      "resourceType",
+                      "primaryCategory",
+                      "contentType",
+                      "channel",
+                      "organisation",
+                      "trackable",
+                      "license",
+                      "posterImage",
+                      "idealScreenSize",
+                      "learningMode",
+                      "creatorLogo",
+                      "duration",
+                      "version",
+                      "programDuration"
+                    ]
+                  }
+                }
+              }
             },
           ],
           "filters": [],

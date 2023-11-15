@@ -83,7 +83,7 @@
                     <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
                       *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
                       [loadStatus]="'done'">
-                      <ng-container *ngFor="let widget of tab.widgets; trackBy: tracker">
+                      <ng-container *ngFor="let widget of tab.widgets| slice:0:(tab.maxWidgets || stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets); trackBy: tracker">
                         <!-- <ng-container *ngIf="widget.widgetData.context.pageSection === 'continueLearning' "> -->
                         <!-- <ng-container *ngIf="widget.widgetData.content.completionPercentage !== 100"
                           [wsResolverWidget]="widget"></ng-container> -->
@@ -102,7 +102,7 @@
                   <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
                   *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
                   [loadStatus]="'done'">
-                  <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets; trackBy: tracker">
+                  <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets| slice:0:(stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets); trackBy: tracker">
                     <!-- <ng-container *ngIf="widget.widgetData.context.pageSection === 'continueLearning' "> -->
                     <ng-container *ngIf="widget.widgetData.content.completionPercentage !== 100"
                       [wsResolverWidget]="widget"></ng-container>
