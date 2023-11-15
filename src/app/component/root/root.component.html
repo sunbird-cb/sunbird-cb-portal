@@ -14,7 +14,7 @@ navBarRequired && (isXSmall$ | async) === false
   " [hidden]="!isShowNavbar" [mode]="'top'"></ws-app-nav-bar> -->
 <ws-header></ws-header>
 <!-- </ws-widget-sticky-header> -->
-<div class="height-adjustx" [ngClass]="{
+<div class="height-adjust" [ngClass]="{
     'height-on-bottom custom-scroll':
       (isXSmall$ | async) === true &&  true && isShowNavbar,
       'height-adjust-setup' : isSetupPage,

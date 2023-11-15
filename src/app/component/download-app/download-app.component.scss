@@ -137,19 +137,23 @@
         text-align: center;
         margin-left: 25%;
     }
+
+    .left-side {
+        margin-top:26px;
+    }
     
     .circle {
         background-color: rgb(27, 76, 161);
         width: 152px;
         height: 152px;
         border-radius: 50%;
-        margin-top: 64px;
+        margin-top: 10px;
     }
     
     
     .vertical-image {
         position: relative;
-        margin-top: -40%;
+        margin-top: -48%;
         margin-left: 6%;
     }
     .vertical-image img{

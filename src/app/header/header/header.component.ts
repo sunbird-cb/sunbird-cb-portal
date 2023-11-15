@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.headerService.showNavbarDisplay$.pipe(delay(500)).subscribe(display => {
       this.showNavbar = display
-    }) 
+    })
     
 
     this.widgetData = { 
