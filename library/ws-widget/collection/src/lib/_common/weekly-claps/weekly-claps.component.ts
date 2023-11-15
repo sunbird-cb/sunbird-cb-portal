@@ -8,7 +8,8 @@ import { InfoDialogComponent } from '../info-dialog/info-dialog.component';
   styleUrls: ['./weekly-claps.component.scss']
 })
 export class WeeklyClapsComponent implements OnInit {
-  @Input('isLoading') isLoading: any = '';
+  @Input('isLoading') isLoading: any = ''
+  @Input('insightsData') insightsData: any = ''
 
   constructor(private dialog: MatDialog) { }
 
