@@ -38,8 +38,6 @@ export class InsightSideBarComponent implements OnInit {
 
   ngOnInit() {
     this.userData = this.configSvc && this.configSvc.userProfile
-    console.log(this.userData,'userData')
-    console.log(this.configSvc.org,'orgData')
     this.getInsights()
     this.noDataValue = noData
   }
