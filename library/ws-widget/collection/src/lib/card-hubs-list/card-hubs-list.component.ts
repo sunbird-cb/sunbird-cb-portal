@@ -192,7 +192,9 @@ export class CardHubsListComponent extends WidgetBaseComponent
       setTimeout(() => {
         this.configSvc.changeNavBarFullView.next(this.visible)
       },         200)
+      this.activeRoute = '';
     }
+
 
   }
 
