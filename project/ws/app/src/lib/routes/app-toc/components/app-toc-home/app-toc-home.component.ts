@@ -1337,8 +1337,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     return this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)
   }
 
-  getProgramDuration(pDuration: number) {
-    return pDuration === 1 ? `${pDuration} day` : `${pDuration} days`
+  getProgramDuration(batchData: any) {
+    if (batchData) {
+      const startDate = dayjs(dayjs(batchData.startDate).format('YYYY-MM-DD'))
+      const endDate = dayjs(dayjs(batchData.endDate).format('YYYY-MM-DD'))
+      // adding 1 to include the start date
+      return (endDate.diff(startDate, 'days') + 1)
+    }
+    return ''
   }
   withdrawOrEnroll(data: string) {
     if (data === NsContent.WFBlendedProgramStatus.INITIATE) {
@@ -1348,8 +1354,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   getServerDateTime() {
     this.tocSvc.getServerDate().subscribe((response: any) => {
       if (response && response.systemDate) {
-        this.tocSvc.changeServerDate(response.systemDate)
-        this.serverDate = response.systemDate
+        // this.tocSvc.changeServerDate(response.systemDate)
+        this.tocSvc.changeServerDate(new Date().getTime())
+        this.serverDate = new Date().getTime()
       } else {
         this.tocSvc.changeServerDate(new Date().getTime())
       }

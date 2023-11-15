@@ -284,12 +284,12 @@
                 </div>
                 <span>:</span>
                 <div >
-                  <p class="count">{{hours}}</p>
+                  <p class="count">{{ minutes === 60? hours + 1 : hours}}</p>
                   <p class="time-label">HOURS</p>
                 </div>
                 <span>:</span>
                 <div>
-                  <p class="count">{{minutes}}</p>
+                  <p class="count">{{minutes === 60? 00 : minutes }}</p>
                   <p class="time-label">MINUTES</p>
                 </div>
                 <!-- <span>:</span>
