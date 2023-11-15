@@ -8,6 +8,7 @@ import {
   NsContent,
   VIEWER_ROUTE_FROM_MIME,
   WidgetContentService,
+  WidgetUserService,
 } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import {
@@ -73,6 +74,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
     private viewSvc: ViewerUtilService,
     private configSvc: ConfigurationsService,
     private contentProgressSvc: ContentProgressService,
+    private userSvc: WidgetUserService,
   ) {
     this.nestedTreeControl = new NestedTreeControl<IViewerTocCard>(this._getChildren)
     this.nestedDataSource = new MatTreeNestedDataSource()
@@ -104,6 +106,8 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
   isErrorOccurred = false
   private paramSubscription: Subscription | null = null
   private viewerDataServiceSubscription: Subscription | null = null
+  hierarchyData: any
+  enrollmentList: any
   // tslint:disable-next-line
   hasNestedChild = (_: number, nodeData: IViewerTocCard) =>
     nodeData && nodeData.children && nodeData.children.length
@@ -112,10 +116,14 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.hierarchyData = this.activatedRoute.snapshot.data.hierarchyData && this.activatedRoute.snapshot.data.hierarchyData.data || ''
+    this.enrollmentList = this.activatedRoute.snapshot.data.enrollmentData && this.activatedRoute.snapshot.data.enrollmentData.data || ''
     if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.logos) {
       const logo = this.configSvc.instanceConfig.logos.defaultContent || ''
       this.defaultThumbnail = this.domSanitizer.bypassSecurityTrustResourceUrl(logo)
     }
+
+    this.getEnrollmentList()
     this.paramSubscription = this.activatedRoute.queryParamMap.subscribe(async params => {
       this.collectionId = params.get('collectionId')
       this.collectionType = params.get('collectionType') || 'course'
@@ -139,6 +147,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
           this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.MODULE.toLowerCase() ||
           this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.COURSE.toLowerCase() ||
           this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.PROGRAM.toLowerCase() ||
+          this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.CURATED_PROGRAM.toLowerCase() ||
           this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.STANDALONE_ASSESSMENT.toLowerCase() ||
           this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.BLENDED_PROGRAM.toLowerCase()
         ) {
@@ -230,11 +239,17 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
     _collectionType: string,
   ): Promise<IViewerTocCard | null> {
     try {
-      const content: NsContent.IContentResponse | NsContent.IContent = await (this.forPreview
-        ? this.contentSvc.fetchAuthoringContent(collectionId)
-        : this.contentSvc.fetchContent(collectionId, 'detail', [], _collectionType)
-      ).toPromise()
+      let  content: NsContent.IContentResponse | NsContent.IContent
+      if (this.hierarchyData) {
+        content =  this.hierarchyData
+      } else {
+        content = await (this.forPreview
+                ? this.contentSvc.fetchAuthoringContent(collectionId)
+                : this.contentSvc.fetchContent(collectionId, 'detail', [], _collectionType)
+              ).toPromise()
+      }
       const contentData = content.result.content
+      this.contentSvc.currentMetaData = contentData
       this.collectionCard = this.createCollectionCard(contentData)
       const viewerTocCardContent = this.convertContentToIViewerTocCard(contentData)
       this.isFetching = false
@@ -264,6 +279,21 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       }
       this.isFetching = false
       return null
+    }
+  }
+
+  getEnrollmentList() {
+    if (this.enrollmentList) {
+      this.contentSvc.currentBatchEnrollmentList = this.enrollmentList
+    } else {
+      let userId
+      if (this.configSvc.userProfile) {
+        userId = this.configSvc.userProfile.userId || ''
+      }
+      this.userSvc.fetchUserBatchList(userId).subscribe(
+        (courses: NsContent.ICourse[]) => {
+          this.contentSvc.currentBatchEnrollmentList = courses
+        })
     }
   }
 

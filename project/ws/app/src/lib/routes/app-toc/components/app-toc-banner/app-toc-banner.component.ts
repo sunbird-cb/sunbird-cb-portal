@@ -274,7 +274,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.getLearningUrls()
       this.setBatchControl()
     }
-    if (this.resumeData && this.content) {
+    if (this.resumeData && this.resumeData.length > 0 && this.content) {
       let resumeDataV2: any
 
       if (this.content.completionPercentage === 100) {

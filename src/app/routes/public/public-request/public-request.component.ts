@@ -107,7 +107,7 @@ export class PublicRequestComponent implements OnInit {
         email: this.userform.email ? this.userform.email : '',
         mobile: this.userform.mobile ? this.userform.mobile : '',
         organisation: this.userform.organisation ? this.userform.organisation : '',
-        domain: this.userform.domain ? this.userform.domain : '',
+        domain: this.userform.domain ? this.modifyDomain(this.userform.domain) : '',
         addDetails: this.userform.addDetails ? this.userform.addDetails : '',
         confirmBox: this.userform.confirmBox ? this.userform.confirmBox : '',
       })
@@ -123,6 +123,13 @@ export class PublicRequestComponent implements OnInit {
 
     this.onPhoneChange()
     this.onEmailChange()
+  }
+
+  modifyDomain(domainName: string) {
+    if (domainName.includes("@")) {
+      return domainName.replace("@", '')
+    }
+    return domainName
   }
 
   emailVerification(emailId: string) {
@@ -193,7 +200,7 @@ export class PublicRequestComponent implements OnInit {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
           this.disableVerifyBtn = false
-       
+
           alert('An OTP has been sent to your mobile number (valid for 15 minutes)')
           this.startCountDown()
         }
@@ -285,7 +292,7 @@ export class PublicRequestComponent implements OnInit {
     if (email && email.value && email.valid) {
       this.signupSvc.sendOtp(email.value, 'email').subscribe(() => {
         this.otpEmailSend = true
-        alert('An OTP has been sent to your email (valid for 15 minutes)')
+        alert('An OTP has been sent to your email address (valid for 15 minutes)')
         this.startCountDownEmail()
         // tslint:disable-next-line: align
       }, (error: any) => {
@@ -303,7 +310,7 @@ export class PublicRequestComponent implements OnInit {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpEmailSend = true
           this.disableEmailVerifyBtn = false
-          alert('An OTP has been sent to your email (valid for 15 minutes)')
+          alert('An OTP has been sent to your email address (valid for 15 minutes)')
           this.startCountDownEmail()
         }
         // tslint:disable-next-line: align
@@ -380,7 +387,7 @@ export class PublicRequestComponent implements OnInit {
 
       this.requestSvc.createPosition(this.requestObj).subscribe(
         (_res: any) => {
-          this.openDialog(this.requestType)
+          this.openDialog(this.requestType, _res)
           this.disableBtn = false
           this.isMobileVerified = true
           this.clearForm()
@@ -411,7 +418,7 @@ export class PublicRequestComponent implements OnInit {
 
       this.requestSvc.createOrg(this.requestObj).subscribe(
         (_res: any) => {
-          this.openDialog(this.requestType)
+          this.openDialog(this.requestType, _res)
           this.disableBtn = false
           this.isMobileVerified = true
           this.clearForm()
@@ -428,7 +435,7 @@ export class PublicRequestComponent implements OnInit {
     } else if (this.requestType === 'Domain') {
       this.formobj = {
         toValue: {
-          domain: this.requestForm.value.domain,
+          domain: this.modifyDomain(this.requestForm.value.domain),
         },
         fieldKey: reqType,
         description: this.requestForm.value.addDetails || '',
@@ -441,7 +448,7 @@ export class PublicRequestComponent implements OnInit {
 
       this.requestSvc.createDomain(this.requestObj).subscribe(
         (_res: any) => {
-          this.openDialog(this.requestType)
+          this.openDialog(this.requestType, _res)
           this.disableBtn = false
           this.isMobileVerified = true
           this.clearForm()
@@ -465,11 +472,11 @@ export class PublicRequestComponent implements OnInit {
     })
   }
 
-  openDialog(type: any): void {
+  openDialog(type: any, res: any): void {
     const dialogRef = this.dialog.open(RequestSuccessDialogComponent, {
       // height: '400px',
       width: '500px',
-      data:  { requestType: type },
+      data:  { requestType: type, apiResponse: res },
       // data: { content, userId: this.userId, userRating: this.userRating },
     })
     dialogRef.afterClosed().subscribe((_result: any) => {

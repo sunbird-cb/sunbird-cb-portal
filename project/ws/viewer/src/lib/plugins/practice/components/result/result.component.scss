@@ -183,7 +183,47 @@
     white-space: initial;
     padding-bottom: 0 !important;
 }
+.question-section {
+    opacity: 1;
+    color: rgba(0,0,0,0.87);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.12px;
+}
+.bg-gray-accordian {
+    background-color: rgba(0, 0, 0, 0.08) !important;
+}
+.panel-description {
+    justify-content: space-between;
+    margin: 0;
+    p {
+        margin: 0;
+    }
+}
+.flex-jc-space-between {
+    justify-content: space-between;
+}
 
+.bg-gray {
+    background-color: #f5f5f5 !important;
+}
+.highlight {
+    background-color: #cce2f1 !important;
+}
+.question-list {
+    height: 600px;
+    overflow-x: scroll;
+}
+.question-header {
+    padding: 0 16px;
+}
+.mr-0 {
+    margin-right: 0 !important;
+}
+
+::ng-deep .questionPanel .mat-expansion-panel-body {
+    padding: 0 16px 16px !important;
+}
 .msg-box{
     width: 150px;
     text-align: center;
