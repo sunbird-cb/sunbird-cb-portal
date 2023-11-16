@@ -82,7 +82,7 @@ const clientItem = [
     "clientUrl": ""
   },
   {
-    "clientImageUrl": "assets/icons/top-providers/abbb8f64-84db-4a92-85c9-1b394ffab71c.jpeg",
+    "clientImageUrl": "assets/icons/top-providers/abbb8f64-84db-4a92-85c9-1b394ffab71c.png",
     "clientName": "The Art of Living",
     "clientUrl": ""
   },

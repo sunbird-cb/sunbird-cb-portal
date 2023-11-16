@@ -1,9 +1,9 @@
-<div class="margin-bottom-m">
+<div class="margin-bottom-m margin-top-m">
     <ws-widget-profile-card-stats (expandCollapse)="expandCollapse($event)" [insightsData]="insightsData" [isLoading]="profileDataLoading"></ws-widget-profile-card-stats>
 </div>
 <section class="collapsible" [@collapse]="collapsed">
     <div class="margin-bottom-m" >
-        <ws-widget-weekly-claps [isLoading]="clapsDataLoading"></ws-widget-weekly-claps>
+        <ws-widget-weekly-claps [insightsData]="insightsData" [isLoading]="clapsDataLoading"></ws-widget-weekly-claps>
     </div>
     <div class="flex flex-col discussion-card margin-bottom-m">
         <div class="flex gap-1 mat-subheading-1 p-4">My Discussions
@@ -51,7 +51,41 @@
         </div>
     </div>
 
+    <div class="flex flex-col discussion-card margin-bottom-m">
+        <div class="network-pending-requests-container">
+            <span class="pending-dot">
+
+            </span>
+            <div class="pending-request-heading">
+                See all pending requests <span class="arrow"> <img src="assets/icons/home/forward_arrow.svg"></span>
+            </div>
+            <div class="pending-request-thumbnails">
+                <ul>
+                    <li>RN</li>
+                    <li>KR</li>
+                    <li>DN</li>
+                </ul>
+            </div>
+            <div class="pending-request-counts">
+                + 41
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col discussion-card margin-bottom-m">
+        <div class="network-pending-requests-container flex justify-between">
+            
+            <div class="pending-request-heading">
+                <ws-widget-skeleton-loader [width]="'190px'" [height]="'16px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+            </div>
+           
+            <div class="pending-request-counts">
+                <ws-widget-skeleton-loader [width]="'75px'" [height]="'16px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+            </div>
+        </div>
+    </div>
+</section>
 <!-- <ws-no-data [noDataValue]="noDataValue"></ws-no-data> -->
-<div class="flex flex-col discussion-card">
+<div class="flex flex-col">
     <ws-home-other-portal></ws-home-other-portal>
 </div>

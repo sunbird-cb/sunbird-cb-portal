@@ -68,7 +68,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
   }
 
   hubsList!: NsInstanceConfig.IHubs[]
-  inactiveHubList!:NsInstanceConfig.IHubs[]
+  inactiveHubList!: NsInstanceConfig.IHubs[]
   ngOnInit() {
     this.router.events.subscribe((event: any) => {
 
@@ -77,7 +77,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
           // console.log('event', event)
           if (event.url === '/' || event.url.includes('/page/home')) {
             this.activeRoute = 'Home'
-          } else if (event.url.includes('/page/learn')) {
+          } else if (event.url.includes('/page/learn') || event.url.includes('/app/toc')) {
             this.activeRoute = 'Learn'
           } else if (event.url.includes('/app/discussion-forum')) {
             this.activeRoute = 'Discuss'
@@ -91,15 +91,17 @@ export class CardHubsListComponent extends WidgetBaseComponent
             this.activeRoute = 'Events'
           }
 
-          localStorage.setItem("activeRoute", this.activeRoute);
+          localStorage.setItem('activeRoute', this.activeRoute)
 
       }
   })
-    this.environment = environment;
-    this.environment.portals = this.environment.portals.filter( (obj:any)=>((obj.name !== 'Frac Dictionary') && (obj.isPublic || this.isAllowed(obj.id))));
+    this.environment = environment
+    this.environment.portals = this.environment.portals.filter(
+      (obj: any) => ((obj.name !== 'Frac Dictionary') &&
+       (obj.isPublic || this.isAllowed(obj.id))))
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.hubsList = (instanceConfig.hubs || []).sort((a,b)=>a.order - b.order);
+      this.hubsList = (instanceConfig.hubs || []).sort((a, b) => a.order - b.order)
       this.inactiveHubList = (instanceConfig.hubs || []).filter(i => !(i.active))
     }
     this.defaultMenuSubscribe = this.isLtMedium$.subscribe((isLtMedium: boolean) => {
@@ -179,7 +181,6 @@ export class CardHubsListComponent extends WidgetBaseComponent
     } else {
       this.searchSpinner = true
       this.enableFeature = false
-
     }
 
   }
@@ -192,6 +193,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
       setTimeout(() => {
         this.configSvc.changeNavBarFullView.next(this.visible)
       },         200)
+      this.activeRoute = ''
     }
 
   }

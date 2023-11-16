@@ -522,7 +522,7 @@
   </mat-card>
 </ng-template>
 <ng-template #cardBasicDetails>
-  <mat-card [attr.name]="'widget-card-content ' + widgetData.content.name" class="card-standard-container mr-6"
+  <mat-card [attr.name]="'widget-card-content ' + widgetData.content.name" class="card-standard-container mr-5"
     [ngClass]="{
       greyOut:
         widgetData.deletedMode === 'greyOut' && !isLiveOrMarkForDeletion
@@ -652,7 +652,7 @@
 
 
 <ng-template #cardStandard>
-  <mat-card class="card-standard-container mr-6 padding-remove" [ngClass]="{
+  <mat-card class="card-standard-container mr-5 padding-remove" [ngClass]="{
       greyOut:
         widgetData.deletedMode === 'greyOut' && !isLiveOrMarkForDeletion
           ? true
@@ -751,7 +751,7 @@
 </ng-template>
 
 <ng-template #cardStandardGoals>
-  <mat-card class="card-standard-container goals mr-6" [ngClass]="{
+  <mat-card class="card-standard-container goals mr-5" [ngClass]="{
       greyOut:
         widgetData.deletedMode === 'greyOut' && !isLiveOrMarkForDeletion
           ? true
@@ -960,7 +960,7 @@
 
 <!-- curated collection cards -->
 <ng-template #cardCurated>
-  <mat-card class="card-standard-container mr-6 curated" [ngClass]="{
+  <mat-card class="card-standard-container mr-5 curated" [ngClass]="{
       greyOut:
         widgetData.deletedMode === 'greyOut' && !isLiveOrMarkForDeletion
           ? true

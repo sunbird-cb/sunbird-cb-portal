@@ -26,11 +26,11 @@ const noData = {
   ]
 })
 export class InsightSideBarComponent implements OnInit {
-  profileDataLoading: boolean = false
+  profileDataLoading: boolean = true
   enableDiscussion: boolean = false
   loadSkeleton: boolean = false
   noDataValue : {} | undefined
-  clapsDataLoading: boolean = false
+  clapsDataLoading: boolean = true
   collapsed = false
   userData: any
   insightsData: any
@@ -38,14 +38,11 @@ export class InsightSideBarComponent implements OnInit {
 
   ngOnInit() {
     this.userData = this.configSvc && this.configSvc.userProfile
-    console.log(this.userData,'userData')
-    console.log(this.configSvc.org,'orgData')
     this.getInsights()
-    this.clapsDataLoading = true
     this.noDataValue = noData
   }
   getInsights() {
-    this.profileDataLoading = false
+    this.profileDataLoading = true
     // const organisation = this.userData.
     const request = {
       "request": {
@@ -62,10 +59,18 @@ export class InsightSideBarComponent implements OnInit {
       if(res && res.result && res.result.response) {
         this.insightsData = res.result.response
         this.constructNudgeData()
-        this.profileDataLoading = true
+        this.constructWeeklyData()
+        this.profileDataLoading = false
       }
+    }, (error: any) => {
+      // tslint:disable:no-console
+      console.log(error)
+      this.insightsData = []
+      this.profileDataLoading = false
+      this.clapsDataLoading = false
     })
-  } 
+  }
+
   constructNudgeData() {
     let nudgeData: any = {
       type:'data',
@@ -91,6 +96,24 @@ export class InsightSideBarComponent implements OnInit {
     })
     nudgeData.sliderData = sliderData
     this.insightsData['sliderData']= nudgeData
+    this.profileDataLoading = false
+  }
+
+  constructWeeklyData() {
+    if(this.insightsData && this.insightsData['weekly-claps']) {
+      let weeklyCount = 0
+      this.insightsData['weekly-claps'].forEach((ele: any) => {
+        if(ele.achieved === 1) {
+          weeklyCount = weeklyCount + 1
+        }
+      })
+      this.insightsData['weeklyClaps'] = {
+        weeklyCount: weeklyCount,
+        weekData: this.insightsData['weekly-claps']
+      }
+    }
+
+    this.clapsDataLoading = false
   }
 
   handleButtonClick(): void {
