@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ConfigurationsService } from '@sunbird-cb/utils';
+import { Router } from '@angular/router'
+import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service';
 import _ from 'lodash'
 @Component({
   selector: 'ws-footer-section',
@@ -9,7 +11,7 @@ import _ from 'lodash'
 export class FooterSectionComponent implements OnInit {
   @Input() environment:any;
   @Input() hubsList:any;
-  constructor(private configSvc: ConfigurationsService,) { }
+  constructor(private configSvc: ConfigurationsService,private discussUtilitySvc: DiscussUtilsService, private router: Router) { }
   footerSectionConfig = [
     {
       "id":1,
@@ -49,6 +51,44 @@ export class FooterSectionComponent implements OnInit {
     if(!this.environment.portals.length) {
       this.footerSectionConfig = this.footerSectionConfig.filter((obj:any)=> obj.sectionHeading !== 'Related Links')
     }
+  }
+
+  navigate() {
+    const config = {
+      menuOptions: [
+        {
+          route: 'all-discussions',
+          label: 'All discussions',
+          enable: true,
+        },
+        {
+          route: 'categories',
+          label: 'Categories',
+          enable: true,
+        },
+        {
+          route: 'tags',
+          label: 'Tags',
+          enable: true,
+        },
+        {
+          route: 'my-discussion',
+          label: 'Your discussion',
+          enable: true,
+        },
+      ],
+      userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
+      context: {
+        id: 1,
+      },
+      categories: { result: [] },
+      routerSlug: '/app',
+      headerOptions: false,
+      bannerOption: true,
+    }
+    this.discussUtilitySvc.setDiscussionConfig(config)
+    localStorage.setItem('home', JSON.stringify(config))
+    this.router.navigate(['/app/discussion-forum'], { queryParams: { page: 'home' }, queryParamsHandling: 'merge' })
   }
 
   isAllowed(portalName: string) {

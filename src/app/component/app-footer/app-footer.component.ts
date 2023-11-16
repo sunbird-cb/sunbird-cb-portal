@@ -72,43 +72,7 @@ export class AppFooterComponent implements OnInit {
       }
     }
   }
-  navigate() {
-    const config = {
-      menuOptions: [
-        {
-          route: 'all-discussions',
-          label: 'All discussions',
-          enable: true,
-        },
-        {
-          route: 'categories',
-          label: 'Categories',
-          enable: true,
-        },
-        {
-          route: 'tags',
-          label: 'Tags',
-          enable: true,
-        },
-        {
-          route: 'my-discussion',
-          label: 'Your discussion',
-          enable: true,
-        },
-      ],
-      userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
-      context: {
-        id: 1,
-      },
-      categories: { result: [] },
-      routerSlug: '/app',
-      headerOptions: false,
-      bannerOption: true,
-    }
-    this.discussUtilitySvc.setDiscussionConfig(config)
-    localStorage.setItem('home', JSON.stringify(config))
-    this.router.navigate(['/app/discussion-forum'], { queryParams: { page: 'home' }, queryParamsHandling: 'merge' })
-  }
+  
   hasRole(role: string[]): boolean {
     let returnValue = false
     role.forEach(v => {
