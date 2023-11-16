@@ -24,6 +24,7 @@ const API_END_POINTS = {
   MULTIPLE_CONTENT: `${PROTECTED_SLAG_V8}/content/multiple`,
   CONTENT_SEARCH_V5: `${PROTECTED_SLAG_V8}/content/searchV5`,
   CONTENT_SEARCH_V6: `/apis/proxies/v8/sunbirdigot/read`,
+  TRENDING_CONTENT_SEARCH: `apis/proxies/v8/trending/content/search`,
   CONTENT_SEARCH_RELATED_CBP_V6: `/apis/proxies/v8/sunbirdigot/search`,
   CONTENT_SEARCH_REGION_RECOMMENDATION: `${PROTECTED_SLAG_V8}/content/searchRegionRecommendation`,
   CONTENT_HISTORY: `${PROTECTED_SLAG_V8}/user/history`,
@@ -386,6 +387,11 @@ export class WidgetContentService {
   }
   downloadCert(certId: any) {
     return this.http.get<any>(`${API_END_POINTS.CERT_DOWNLOAD(certId)}`)
+  }
+
+  trendingContentSearch(req: any): Observable<NsContent.IContent> {
+    req.query = req.query || ''
+    return this.http.post<NsContent.IContent>(API_END_POINTS.TRENDING_CONTENT_SEARCH, req)
   }
 
 }

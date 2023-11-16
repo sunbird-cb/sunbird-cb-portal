@@ -1,11 +1,15 @@
 <ng-container *ngIf="!contentAvailable; else otherTemplate"></ng-container>
 <ng-template #otherTemplate>
-  <div *ngIf="showParentLoader" class="text-center my-2">
+  <!-- <div *ngIf="showParentLoader" class="text-center my-2">
     <mat-spinner class="inline-block"></mat-spinner>
-  </div>
+  </div> -->
   <ng-container *ngIf="showParentError" [wsResolverWidget]="widgetData.errorWidget"></ng-container>
   <ng-container *ngIf="showParentNoData" [wsResolverWidget]="widgetData.noDataWidget"></ng-container>
   <ng-container *ngFor="let key of stripsKeyOrder; let i = index; trackBy: identify">
+    <div *ngIf="stripsResultDataMap && stripsResultDataMap[key]?.showOnLoader" class="text-center my-2">
+      <h1> LOADING .. . . </h1>
+      <mat-spinner [diameter]="40" [strokeWidth]="3"></mat-spinner>
+    </div>
     <ng-container *ngIf="isStripShowing(stripsResultDataMap[key])">
       <a name="{{stripsResultDataMap[key]?.stripTitle}}">
         <div *ngIf="stripsResultDataMap && (getLength(stripsResultDataMap[key]) ||
@@ -37,7 +41,7 @@
                 <a *ngIf="stripsResultDataMap[key]?.stripTitleLink?.link"
                   [routerLink]="stripsResultDataMap[key]?.stripTitleLink?.link"
                   [queryParams]="stripsResultDataMap[key]?.stripTitleLink?.link?.queryParams">
-                  <mat-icon class="ws-mat-primary-default-text" [color]="accent">{{
+                  <mat-icon class="ws-mat-primary-primary-text" [color]="accent">{{
                     stripsResultDataMap[key]?.stripTitleLink?.icon }}</mat-icon>
                 </a>
                 <span class="spacer"></span>
@@ -118,9 +122,3 @@
     </ng-container>
   </ng-container>
 </ng-template>
-
-
-<!-- <div *ngIf="stripsResultDataMap && stripsResultDataMap[key]?.showOnLoader" class="text-center my-2">
-  <h1> LOADING .. . . </h1>
-  <mat-spinner [diameter]="40" [strokeWidth]="3"></mat-spinner>
-</div> -->
