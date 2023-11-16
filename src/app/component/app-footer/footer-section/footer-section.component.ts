@@ -43,6 +43,12 @@ export class FooterSectionComponent implements OnInit {
 
   ngOnInit() {
     this.footerSectionConfig = (this.footerSectionConfig).sort((a,b)=>a.order - b.order);
+    this.environment.portals = this.environment.portals.filter(
+      (obj: any) => ((obj.name !== 'Frac Dictionary') &&
+       (obj.isPublic || this.isAllowed(obj.id))))
+    if(!this.environment.portals.length) {
+      this.footerSectionConfig = this.footerSectionConfig.filter((obj:any)=> obj.sectionHeading !== 'Related Links')
+    }
   }
 
   isAllowed(portalName: string) {
