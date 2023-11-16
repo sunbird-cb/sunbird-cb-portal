@@ -140,7 +140,7 @@ export class SearchInputHomeComponent implements OnInit, OnChanges {
     return null
   }
 
-  updateQuery(query: string) {
+  updateQuery(query: string) {    
     if (this.searchInputElem && this.searchInputElem.nativeElement) {
       this.searchInputElem.nativeElement.blur()
     }
@@ -157,6 +157,7 @@ export class SearchInputHomeComponent implements OnInit, OnChanges {
         queryParamsHandling: 'merge',
       })
     }
+    localStorage.removeItem('activeRoute');
   }
 
   clearSearchText() {

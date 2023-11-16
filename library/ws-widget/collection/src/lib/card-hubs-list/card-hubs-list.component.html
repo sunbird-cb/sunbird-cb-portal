@@ -30,8 +30,9 @@
             accesskey="H" i18n-aria-label (click)="toggleVisibility()">
 
             <!-- <mat-icon class="margin-right-xs ws-mat-primary-text">more_horiz</mat-icon> -->
-            <span class="margin-auto ws-mat-primary-text">More
-              <span class="more-drop-down"></span>   
+            <span class="margin-auto ws-mat-primary-text flex">More
+              <img class="more-drop-down" *ngIf="!visible" src="assets/icons/top-nav/expand.svg"/> 
+              <img class="more-drop-down" *ngIf="visible" src="assets/icons/top-nav/collapse.svg"/> 
             </span>
             
           </a>
@@ -61,7 +62,7 @@
         </div>
         <div class="flex flex-1">
           <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">
-            <a class="flex flex-wrap mb-4" role="menuitem" [routerLink]="['/app/knowledge-resource/all']">
+            <a class="flex flex-wrap mb-4" role="menuitem" (click)="toggleVisibility()" [routerLink]="['/app/knowledge-resource/all']">
               <div class="icon ws-mat-primary-tags">
                 <mat-icon class=" m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
                   aria-hidden="true">menu_book</mat-icon>
@@ -73,7 +74,7 @@
               </div>
             </a>
 
-            <a class="flex flex-wrap mb-4" role="menuitem" [routerLink]="['/app/my-dashboard']">
+            <a class="flex flex-wrap mb-4" role="menuitem" (click)="toggleVisibility()" [routerLink]="['/app/my-dashboard']">
               <div class="icon ws-mat-primary-tags">
                 <mat-icon aria-hidden="false" class="mat-icon notranslate material-icons mat-icon-no-color" role="img"
                   aria-label="bar_chart" aria-labelledby="bar_chart"> bar_chart </mat-icon>
@@ -85,7 +86,7 @@
               </div>
             </a>
 
-            <a class="flex flex-wrap mb-4" role="menuitem" [routerLink]="['/app/profile/settings']">
+            <a class="flex flex-wrap mb-4" role="menuitem" (click)="toggleVisibility()" [routerLink]="['/app/profile/settings']">
               <div class="icon ws-mat-primary-tags">
                 <mat-icon class=" m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
                   aria-hidden="true">settings</mat-icon>
@@ -95,7 +96,7 @@
                 <div class="mat-caption cohorts-desc ws-mat-black60-text">Manage all your preferences here</div>
               </div>
             </a>
-            <a class="flex flex-wrap mb-4" role="menuitem" [routerLink]="['/app/setup']">
+            <!-- <a class="flex flex-wrap mb-4" role="menuitem" (click)="toggleVisibility()" [routerLink]="['/app/setup']">
               <div class="icon ws-mat-primary-tags">
                 <mat-icon class=" m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
                   aria-hidden="true">thumb_up</mat-icon>
@@ -104,7 +105,7 @@
                 <div class="margin-0 mat-subheading-2"> Interests </div>
                 <div class="mat-caption cohorts-desc ws-mat-black60-text">Manage topics of your interest and personalize your experience</div>
               </div>
-            </a>
+            </a> -->
           </div>
         </div>
 
@@ -115,7 +116,7 @@
           <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">
             <ng-container *ngFor="let portal of environment.portals | orderBy: 'sr'">
               <ng-container *ngIf="(portal.isPublic || isAllowed(portal.id)) && portal.name !== 'Frac Dictionary'">
-                <a class="flex flex-wrap mb-4" role="menuitem" [attr.href]="portal.uriPath" target="_blank">
+                <a class="flex flex-wrap mb-4" role="menuitem" (click)="toggleVisibility()" [attr.href]="portal.uriPath" target="_blank">
                   <div class="icon ws-mat-primary-tags">
                     <mat-icon class="m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
                       aria-hidden="true">{{portal.icon || 'info'}}</mat-icon>
@@ -174,7 +175,7 @@
 
 <ng-template #userIndividualNew let-hubs="hubs">
   <ng-container *ngIf="hubs.hubname == 'Discuss' && !hubs.active">
-    <a [id]="hubs.hubname" class="flex flex-wrap mb-4" (click)="navigate()" role="menuitem" i18n-aria-label>
+    <a [id]="hubs.hubname" class="flex flex-wrap mb-4" (click)="toggleVisibility(); navigate()" role="menuitem" i18n-aria-label>
       <div class="icon ws-mat-primary-tags">
         <!-- {{hubs.icon | json}} -->
         <!-- <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon> -->
@@ -190,7 +191,7 @@
   </ng-container>
 
   <ng-container *ngIf="hubs.hubname != 'Discuss' && !hubs.active">
-    <a class="flex flex-wrap mb-4" [id]="hubs.hubname" [routerLink]="(hubs.path)" role="menuitem" i18n-aria-label>
+    <a class="flex flex-wrap mb-4" [id]="hubs.hubname" (click)="toggleVisibility();" [routerLink]="(hubs.path)" role="menuitem" i18n-aria-label>
       <div class="icon ws-mat-primary-tags">
         <!-- {{hubs.icon | json}}
         <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon> -->
