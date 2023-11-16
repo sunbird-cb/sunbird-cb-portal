@@ -45,6 +45,7 @@ export namespace NsContentStripWithTabs {
       ids?: string[]
       recommendedCourses?: any,
       masterCompetency?: any
+      trendingSearch?: any
     }
     searchV6Type?: 'KB' | 'Collections' | 'searchQuery' | null
     stripBackground?: string

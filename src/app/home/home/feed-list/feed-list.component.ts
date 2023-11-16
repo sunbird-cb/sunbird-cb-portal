@@ -93,6 +93,21 @@ export class FeedListComponent implements OnInit {
             "viewMoreText": "Show all",
             "queryParams": {}
           },
+          "noDataWidget": {
+            "widgetData": {
+              "errorType": "contentUnavailable"
+            },
+            "widgetSubType": "errorResolver",
+            "widgetType": "errorResolver"
+          },
+          "loader": true,
+          "errorWidget": {
+            "widgetData": {
+              "errorType": "internalServer"
+            },
+            "widgetSubType": "errorResolver",
+            "widgetType": "errorResolver"
+          },
           "tabs": [
             {
               "label": "Courses",
@@ -103,50 +118,15 @@ export class FeedListComponent implements OnInit {
               "showTabDataCount": false,
               "maxWidgets": 12,
               "request": {
-                "searchV6": {
+                "trendingSearch": {
                   "request": {
-                    "filters": {
-                      "primaryCategory": [
-                        "Course"
-                      ],
-                      "contentType": [
-                        "Course"
-                      ]
-                    },
-                    "offset": 0,
-                    "limit": 20,
-                    "query": "",
-                    "sort_by": {
-                      "lastUpdatedOn": "desc"
-                    },
-                    "fields": [
-                      "name",
-                      "appIcon",
-                      "instructions",
-                      "description",
-                      "purpose",
-                      "mimeType",
-                      "gradeLevel",
-                      "identifier",
-                      "medium",
-                      "pkgVersion",
-                      "board",
-                      "subject",
-                      "resourceType",
-                      "primaryCategory",
-                      "contentType",
-                      "channel",
-                      "organisation",
-                      "trackable",
-                      "license",
-                      "posterImage",
-                      "idealScreenSize",
-                      "learningMode",
-                      "creatorLogo",
-                      "duration",
-                      "version",
-                      "programDuration"
-                    ]
+                      "filters": {
+                        "primaryCategory": [
+                            "courses",
+                        ],
+                        "organisation": "<orgID>"
+                      },
+                      "limit": 15
                   }
                 }
               }
@@ -160,50 +140,15 @@ export class FeedListComponent implements OnInit {
               "showTabDataCount": false,
               "maxWidgets": 12,
               "request": {
-                "searchV6": {
+                "trendingSearch": {
                   "request": {
-                    "filters": {
-                      "primaryCategory": [
-                        "program"
-                      ],
-                      "contentType": [
-                        
-                      ]
-                    },
-                    "offset": 0,
-                    "limit": 20,
-                    "query": "",
-                    "sort_by": {
-                      "lastUpdatedOn": "desc"
-                    },
-                    "fields": [
-                      "name",
-                      "appIcon",
-                      "instructions",
-                      "description",
-                      "purpose",
-                      "mimeType",
-                      "gradeLevel",
-                      "identifier",
-                      "medium",
-                      "pkgVersion",
-                      "board",
-                      "subject",
-                      "resourceType",
-                      "primaryCategory",
-                      "contentType",
-                      "channel",
-                      "organisation",
-                      "trackable",
-                      "license",
-                      "posterImage",
-                      "idealScreenSize",
-                      "learningMode",
-                      "creatorLogo",
-                      "duration",
-                      "version",
-                      "programDuration"
-                    ]
+                      "filters": {
+                        "primaryCategory": [
+                            "programs",
+                        ],
+                        "organisation": "<orgID>"
+                      },
+                      "limit": 15
                   }
                 }
               }
@@ -211,51 +156,16 @@ export class FeedListComponent implements OnInit {
           ],
           "filters": [],
           "request": {
-            "searchV6": {
+            "trendingSearch": {
               "request": {
-                "filters": {
-                  "primaryCategory": [
-                    "Blended Program"
-                  ],
-                  "contentType": [
-                    "Course"
-                  ],
-                  "batches.endDate": { ">=": "new Date().toISOString().substring(0,10)" }
-                },
-                "offset": 0,
-                "limit": 20,
-                "query": "",
-                "sort_by": {
-                  "lastUpdatedOn": "desc"
-                },
-                "fields": [
-                  "name",
-                  "appIcon",
-                  "instructions",
-                  "description",
-                  "purpose",
-                  "mimeType",
-                  "gradeLevel",
-                  "identifier",
-                  "medium",
-                  "pkgVersion",
-                  "board",
-                  "subject",
-                  "resourceType",
-                  "primaryCategory",
-                  "contentType",
-                  "channel",
-                  "organisation",
-                  "trackable",
-                  "license",
-                  "posterImage",
-                  "idealScreenSize",
-                  "learningMode",
-                  "creatorLogo",
-                  "duration",
-                  "version",
-                  "programDuration"
-                ]
+                    "filters": {
+                      "primaryCategory": [
+                          "programs",
+                          "courses",
+                      ],
+                      "organisation": "across"
+                  },
+                  "limit": 15
               }
             }
           }
@@ -273,6 +183,7 @@ export class FeedListComponent implements OnInit {
             "showDots": true,
             "maxWidgets": 12,
           },
+          "loader": true,
           "stripBackground": "",
           "titleDescription": "Blended Program",
           "stripConfig": {
@@ -358,6 +269,21 @@ export class FeedListComponent implements OnInit {
             "viewMoreText": "Show all",
             "queryParams": {}
           },
+          "noDataWidget": {
+            "widgetData": {
+              "errorType": "contentUnavailable"
+            },
+            "widgetSubType": "errorResolver",
+            "widgetType": "errorResolver"
+          },
+          "loader": true,
+          "errorWidget": {
+            "widgetData": {
+              "errorType": "internalServer"
+            },
+            "widgetSubType": "errorResolver",
+            "widgetType": "errorResolver"
+          },
           "tabs": [
             {
               "label": "Courses",
@@ -368,50 +294,15 @@ export class FeedListComponent implements OnInit {
               "showTabDataCount": false,
               "maxWidgets": 12,
               "request": {
-                "searchV6": {
+                "trendingSearch": {
                   "request": {
-                    "filters": {
-                      "primaryCategory": [
-                        "Course"
-                      ],
-                      "contentType": [
-                        "Course"
-                      ]
-                    },
-                    "offset": 0,
-                    "limit": 20,
-                    "query": "",
-                    "sort_by": {
-                      "lastUpdatedOn": "desc"
-                    },
-                    "fields": [
-                      "name",
-                      "appIcon",
-                      "instructions",
-                      "description",
-                      "purpose",
-                      "mimeType",
-                      "gradeLevel",
-                      "identifier",
-                      "medium",
-                      "pkgVersion",
-                      "board",
-                      "subject",
-                      "resourceType",
-                      "primaryCategory",
-                      "contentType",
-                      "channel",
-                      "organisation",
-                      "trackable",
-                      "license",
-                      "posterImage",
-                      "idealScreenSize",
-                      "learningMode",
-                      "creatorLogo",
-                      "duration",
-                      "version",
-                      "programDuration"
-                    ]
+                      "filters": {
+                        "primaryCategory": [
+                            "courses",
+                        ],
+                        "organisation": "across"
+                      },
+                      "limit": 15
                   }
                 }
               }
@@ -425,50 +316,15 @@ export class FeedListComponent implements OnInit {
               "showTabDataCount": false,
               "maxWidgets": 12,
               "request": {
-                "searchV6": {
+                "trendingSearch": {
                   "request": {
-                    "filters": {
-                      "primaryCategory": [
-                        "program"
-                      ],
-                      "contentType": [
-                        
-                      ]
-                    },
-                    "offset": 0,
-                    "limit": 20,
-                    "query": "",
-                    "sort_by": {
-                      "lastUpdatedOn": "desc"
-                    },
-                    "fields": [
-                      "name",
-                      "appIcon",
-                      "instructions",
-                      "description",
-                      "purpose",
-                      "mimeType",
-                      "gradeLevel",
-                      "identifier",
-                      "medium",
-                      "pkgVersion",
-                      "board",
-                      "subject",
-                      "resourceType",
-                      "primaryCategory",
-                      "contentType",
-                      "channel",
-                      "organisation",
-                      "trackable",
-                      "license",
-                      "posterImage",
-                      "idealScreenSize",
-                      "learningMode",
-                      "creatorLogo",
-                      "duration",
-                      "version",
-                      "programDuration"
-                    ]
+                      "filters": {
+                        "primaryCategory": [
+                            "programs",
+                        ],
+                        "organisation": "across"
+                      },
+                      "limit": 15
                   }
                 }
               }
@@ -476,19 +332,58 @@ export class FeedListComponent implements OnInit {
           ],
           "filters": [],
           "request": {
+            "trendingSearch": {
+              "request": {
+                    "filters": {
+                      "primaryCategory": [
+                          "programs",
+                          "courses",
+                      ],
+                      "organisation": "across"
+                  },
+                  "limit": 15
+              }
+            }
+          }
+        },
+        {
+          "key": "learnUnder30Min",
+          "logo": "school",
+          "title": "Learning under 30 min",
+          "stripTitleLink": {
+            "link": "",
+            "icon": ""
+          },
+          "sliderConfig": {
+            "showNavs" : true,
+            "showDots": true,
+            "maxWidgets": 12,
+          },
+          "loader": true,
+          "stripBackground": "",
+          "titleDescription": "Learning under 30 min",
+          "stripConfig": {
+            "cardSubType": "standard"
+          },
+          "viewMoreUrl": {
+            "path": "/page/learn",
+            "viewMoreText": "Show all",
+            "queryParams": {}
+          },
+          "tabs": [],
+          "filters": [],
+          "request": {
             "searchV6": {
               "request": {
                 "filters": {
                   "primaryCategory": [
-                    "Blended Program"
+                    "Course",
+                    "Program"
                   ],
-                  "contentType": [
-                    "Course"
-                  ],
-                  "batches.endDate": { ">=": "new Date().toISOString().substring(0,10)" }
+                  "duration":{"<=":"1800000"},
                 },
                 "offset": 0,
-                "limit": 20,
+                "limit": 15,
                 "query": "",
                 "sort_by": {
                   "lastUpdatedOn": "desc"
@@ -522,6 +417,47 @@ export class FeedListComponent implements OnInit {
                   "programDuration"
                 ]
               }
+            }
+          }
+        },
+        {
+          "key": "certificationsOfWeek",
+          "logo": "school",
+          "title": "Certifications of the week",
+          "stripTitleLink": {
+            "link": "",
+            "icon": ""
+          },
+          "sliderConfig": {
+            "showNavs" : true,
+            "showDots": true,
+            "maxWidgets": 12,
+          },
+          "loader": true,
+          "stripBackground": "",
+          "titleDescription": "Certifications of the week",
+          "stripConfig": {
+            "cardSubType": "card-wide"
+          },
+          "viewMoreUrl": {
+            "path": "/page/learn",
+            "viewMoreText": "Show all",
+            "queryParams": {}
+          },
+          "tabs": [],
+          "filters": [],
+          "request": {
+            "trendingSearch": {
+              "request": {
+                    "filters": {
+                      "primaryCategory": [
+                          "certifications",
+                      ],
+                      "organisation": "across"
+                  },
+                  "limit": 15
+              },
+              "responseKey": "certifications"
             }
           }
         },
