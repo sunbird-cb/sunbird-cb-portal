@@ -582,6 +582,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   private getUserEnrollmentList() {
+    this.userSvc.resetTime('enrollmentService')
     // tslint:disable-next-line
     if (this.content && this.content.identifier && this.content.primaryCategory !== this.primaryCategory.COURSE &&
       this.content.primaryCategory !== this.primaryCategory.PROGRAM &&
@@ -809,6 +810,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   public autoBatchAssign() {
+    this.userSvc.resetTime('enrollmentService')
     if (this.content && this.content.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM) {
       this.autoEnrollCuratedProgram()
     } else {

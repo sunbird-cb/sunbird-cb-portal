@@ -1,4 +1,4 @@
-<div class="weekly-wrapper" *ngIf="isLoading">
+<div class="weekly-wrapper" *ngIf="!isLoading">
     <div>
         <div class="flex flex-between">
             <p class="flex-align-start weekly-title flex flex-middle margin-remove">Weekly claps
@@ -41,7 +41,7 @@
     </div>
 </div>
 
-<div class="weekly-wrapper" *ngIf="!isLoading">
+<div class="weekly-wrapper" *ngIf="isLoading">
     <div>
         <div class="flex flex-between">
             <p class="flex-align-start weekly-title flex flex-middle margin-remove">
