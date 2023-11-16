@@ -23,7 +23,7 @@ const API_END_POINTS = {
   FETCH_WEB_MODULE_FILES: `${PROTECTED_SLAG_V8}/content/getWebModuleFiles`,
   MULTIPLE_CONTENT: `${PROTECTED_SLAG_V8}/content/multiple`,
   CONTENT_SEARCH_V5: `${PROTECTED_SLAG_V8}/content/searchV5`,
-  CONTENT_SEARCH_V6: `/apis/proxies/v8/sunbirdigot/read`,
+  CONTENT_SEARCH_V6: `/apis/proxies/v8/sunbirdigot/search`,
   TRENDING_CONTENT_SEARCH: `apis/proxies/v8/trending/content/search`,
   CONTENT_SEARCH_RELATED_CBP_V6: `/apis/proxies/v8/sunbirdigot/search`,
   CONTENT_SEARCH_REGION_RECOMMENDATION: `${PROTECTED_SLAG_V8}/content/searchRegionRecommendation`,

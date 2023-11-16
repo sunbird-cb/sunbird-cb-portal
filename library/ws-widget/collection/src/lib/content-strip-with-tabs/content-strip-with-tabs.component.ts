@@ -517,10 +517,11 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
           const response = await this.trendingSearchRequest(strip, strip.request, calculateParentStatus)
           console.log('calling  after - response, ', response)
           if (response && response.results) {
+              const content = response.results.result[strip.request.trendingSearch.responseKey] || []
             // console.log('calling  after-- ')
             this.processStrip(
               strip,
-              this.transformContentsToWidgets(response.results.result.content, strip),
+              this.transformContentsToWidgets(content, strip),
               'done',
               calculateParentStatus,
               response.viewMoreUrl,
@@ -809,7 +810,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       const response = await this.trendingSearchRequest(strip, currentTab.request, calculateParentStatus)
       console.log('currentTab ---response', response)
       if (response && response.results) {
-        const widgets = this.transformContentsToWidgets(response.results.result.courses, strip)
+        const content = response.results.result[currentTab.value] || []
+        const widgets = this.transformContentsToWidgets(content, strip)
         // console.log('currentTab --- widgets', widgets)
         let tabResults: any[] = []
         if (this.stripsResultDataMap[strip.key] && this.stripsResultDataMap[strip.key].tabs) {
