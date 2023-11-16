@@ -83,6 +83,8 @@
                     <span *ngIf="tab?.showTabDataCount">({{tab?.widgets?.length}})</span>
                   </ng-template>
                   <div>
+                    <ng-container [ngTemplateOutlet]="loader" *ngIf="stripsResultDataMap[key]?.showOnLoader">
+                    </ng-container>
                     <!-- <ng-container *ngIf="key === 'continueLearning'"> -->
                     <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
                       *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
@@ -121,4 +123,11 @@
 
     </ng-container>
   </ng-container>
+</ng-template>
+
+<ng-template #loader>
+  <div  class="text-center my-2">
+    <h1> LOADING .. . . </h1>
+    <mat-spinner [diameter]="40" [strokeWidth]="3"></mat-spinner>
+  </div>
 </ng-template>
