@@ -1,5 +1,5 @@
-<div class="profile-wrapper" *ngIf="isLoading">
-    <div class="expand-icon">
+<div class="profile-wrapper" *ngIf="!isLoading">
+    <div class="expand-icon invisible md:visible">
         <mat-icon (click)="toggle()" class="">{{ collapsed ?'expand_more': 'expand_less'}}</mat-icon>
     </div>
     <div class="profile-user-details flex flex-middle">
@@ -25,7 +25,7 @@
                     />
           </svg>
           <div class="user-img">
-            <ws-widget-avatar-photo [name]="userInfo.firstName" [photoUrl]="''" size="round-m">
+            <ws-widget-avatar-photo [name]="userInfo.firstName" [randomColor]="false" [photoUrl]="''" size="round-m">
             </ws-widget-avatar-photo>
             <span class="percentage-block ">{{profileProgress}}%</span>
           </div>
@@ -55,7 +55,7 @@
     </div>
 </div>
 
-<div class="profile-wrapper" *ngIf="!isLoading">
+<div class="profile-wrapper" *ngIf="isLoading">
   <div class="profile-user-details flex flex-middle">
       <div class="progress-bar">
         <span class="skeleton-box" style="width:64px;height:64px;border-radius: 50%"></span>

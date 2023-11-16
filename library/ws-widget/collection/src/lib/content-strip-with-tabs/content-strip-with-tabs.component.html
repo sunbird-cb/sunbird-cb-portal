@@ -1,11 +1,15 @@
 <ng-container *ngIf="!contentAvailable; else otherTemplate"></ng-container>
 <ng-template #otherTemplate>
-  <div *ngIf="showParentLoader" class="text-center my-2">
+  <!-- <div *ngIf="showParentLoader" class="text-center my-2">
     <mat-spinner class="inline-block"></mat-spinner>
-  </div>
+  </div> -->
   <ng-container *ngIf="showParentError" [wsResolverWidget]="widgetData.errorWidget"></ng-container>
   <ng-container *ngIf="showParentNoData" [wsResolverWidget]="widgetData.noDataWidget"></ng-container>
   <ng-container *ngFor="let key of stripsKeyOrder; let i = index; trackBy: identify">
+    <div *ngIf="stripsResultDataMap && stripsResultDataMap[key]?.showOnLoader" class="text-center my-2">
+      <h1> LOADING .. . . </h1>
+      <mat-spinner [diameter]="40" [strokeWidth]="3"></mat-spinner>
+    </div>
     <ng-container *ngIf="isStripShowing(stripsResultDataMap[key])">
       <a name="{{stripsResultDataMap[key]?.stripTitle}}">
         <div *ngIf="stripsResultDataMap && (getLength(stripsResultDataMap[key]) ||
@@ -13,13 +17,13 @@
                     stripsResultDataMap[key]?.showOnLoader ||
                     stripsResultDataMap[key]?.showOnError)
                   " [ngClass]="
-                    !widgetData.isChannelStrip ? 'xs:px-8 sx:px-10ss py-2 my-1' : i > 0 ? 'mt-12' : ''
+                    !widgetData.isChannelStrip ? 'xs:px-8 sx:px-10ss py-2 my-2' : i > 0 ? 'mt-12' : ''
                   " [id]="key" [ngClass]="!widgetData.isChannelStrip ? margin-bottom-custom : margin-bottom-xs">
           <div [ngClass]="{ pad: stripsResultDataMap[key]?.stripBackground }"
             [ngStyle]="{ 'background-color': stripsResultDataMap[key]?.stripBackground }">
             <div class="flex items-center justify-between" [ngClass]="
                         !widgetData.isChannelStrip
-                          ? 'mb-2'
+                          ? 'mb-3'
                           : stripsResultDataMap[key]?.stripTitle
                           ? 'mb-8'
                           : ''
@@ -37,14 +41,14 @@
                 <a *ngIf="stripsResultDataMap[key]?.stripTitleLink?.link"
                   [routerLink]="stripsResultDataMap[key]?.stripTitleLink?.link"
                   [queryParams]="stripsResultDataMap[key]?.stripTitleLink?.link?.queryParams">
-                  <mat-icon class="ws-mat-primary-default-text" [color]="accent">{{
+                  <mat-icon class="ws-mat-primary-primary-text" [color]="accent">{{
                     stripsResultDataMap[key]?.stripTitleLink?.icon }}</mat-icon>
                 </a>
                 <span class="spacer"></span>
                 <!-- viewAll start-->
                   <div *ngIf="checkCondition(widgetData , stripsResultDataMap[key])"
                   class="ml-4 view-more ws-mat-default-text">
-                  <a mat-flat-button class="flex ws-mat-default-text" [routerLink]="widgetData.strips[0]?.viewMoreUrl?.path"
+                  <a class="flex ws-mat-default-text  items-center justify-center mat-body-1" [routerLink]="widgetData.strips[0]?.viewMoreUrl?.path"
                     [queryParams]="widgetData.strips[0]?.viewMoreUrl?.queryParams">
                     <span i18n class="ws-mat-default-text">{{widgetData.strips[0].viewMoreUrl.viewMoreText || 'See all'}}</span>
                     <mat-icon class="" color="accent">navigate_next</mat-icon>
@@ -69,47 +73,52 @@
               [wsResolverWidget]="stripsResultDataMap[key]?.noDataWidget"></ng-container>
             <ng-container *ngIf="stripsResultDataMap[key]?.showOnError"
               [wsResolverWidget]="stripsResultDataMap[key]?.errorWidget"></ng-container>
-            <ng-container *ngIf="stripsResultDataMap[key].tabs && stripsResultDataMap[key].tabs.length">
-              <mat-tab-group animationDuration="0ms" 
-              class="mat-tab-labels w-full" dynamicHeight
-                 (selectedTabChange)="tabClicked($event, stripsResultDataMap[key], key)">
-                <mat-tab *ngFor="let tab of stripsResultDataMap[key].tabs; let last = last;">
-                  <ng-template mat-tab-label>
-                    <span>{{tab?.label}} &nbsp;</span> 
-                    <span *ngIf="tab?.showTabDataCount">({{tab?.widgets?.length}})</span>
-                  </ng-template>
-                  <div>
-                    <!-- <ng-container *ngIf="key === 'continueLearning'"> -->
-                    <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
+            <!-- IF no errors then proceed to show tabs or non tabs strip -->
+            <ng-container *ngIf="!stripsResultDataMap[key]?.showOnNoData && !stripsResultDataMap[key]?.showOnError">
+                <ng-container *ngIf="stripsResultDataMap[key].tabs && stripsResultDataMap[key].tabs.length">
+                  <mat-tab-group animationDuration="0ms" 
+                  class="mat-tab-labels w-full strips-tabgroup" dynamicHeight
+                    (selectedTabChange)="tabClicked($event, stripsResultDataMap[key], key)">
+                    <mat-tab *ngFor="let tab of stripsResultDataMap[key].tabs; let last = last;">
+                      <ng-template mat-tab-label>
+                        <span>{{tab?.label}} &nbsp;</span> 
+                        <span *ngIf="tab?.showTabDataCount">({{tab?.widgets?.length}})</span>
+                      </ng-template>
+                      <div>
+                        <ng-container [ngTemplateOutlet]="loader" *ngIf="stripsResultDataMap[key]?.showOnLoader">
+                        </ng-container>
+                        <!-- <ng-container *ngIf="key === 'continueLearning'"> -->
+                        <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
+                          *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
+                          [loadStatus]="'done'">
+                          <ng-container *ngFor="let widget of tab.widgets| slice:0:(tab.maxWidgets || stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets); trackBy: tracker">
+                            <!-- <ng-container *ngIf="widget.widgetData.context.pageSection === 'continueLearning' "> -->
+                            <!-- <ng-container *ngIf="widget.widgetData.content.completionPercentage !== 100"
+                              [wsResolverWidget]="widget"></ng-container> -->
+                              <ng-container [wsResolverWidget]="widget"></ng-container>
+                            <!-- </ng-container> -->
+                          </ng-container>
+                        </ws-utils-horizontal-scroller-v2>
+                        <!-- </ng-container> -->
+                      </div>
+                    </mat-tab>
+                  </mat-tab-group>
+                </ng-container>
+                <ng-container *ngIf="!stripsResultDataMap[key].tabs || !stripsResultDataMap[key].tabs.length">
+                  <div class="mt-6">
+    
+                      <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
                       *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
                       [loadStatus]="'done'">
-                      <ng-container *ngFor="let widget of tab.widgets| slice:0:(tab.maxWidgets || stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets); trackBy: tracker">
+                      <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets| slice:0:(stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets); trackBy: tracker">
                         <!-- <ng-container *ngIf="widget.widgetData.context.pageSection === 'continueLearning' "> -->
-                        <!-- <ng-container *ngIf="widget.widgetData.content.completionPercentage !== 100"
-                          [wsResolverWidget]="widget"></ng-container> -->
-                          <ng-container [wsResolverWidget]="widget"></ng-container>
+                        <ng-container *ngIf="widget.widgetData.content.completionPercentage !== 100"
+                          [wsResolverWidget]="widget"></ng-container>
                         <!-- </ng-container> -->
                       </ng-container>
                     </ws-utils-horizontal-scroller-v2>
-                    <!-- </ng-container> -->
                   </div>
-                </mat-tab>
-              </mat-tab-group>
-            </ng-container>
-            <ng-container *ngIf="!stripsResultDataMap[key].tabs || !stripsResultDataMap[key].tabs.length">
-              <div class="mt-2">
-
-                  <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
-                  *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
-                  [loadStatus]="'done'">
-                  <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets| slice:0:(stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets); trackBy: tracker">
-                    <!-- <ng-container *ngIf="widget.widgetData.context.pageSection === 'continueLearning' "> -->
-                    <ng-container *ngIf="widget.widgetData.content.completionPercentage !== 100"
-                      [wsResolverWidget]="widget"></ng-container>
-                    <!-- </ng-container> -->
-                  </ng-container>
-                </ws-utils-horizontal-scroller-v2>
-              </div>
+                </ng-container>
             </ng-container>
           </div>
         </div>
@@ -119,8 +128,9 @@
   </ng-container>
 </ng-template>
 
-
-<!-- <div *ngIf="stripsResultDataMap && stripsResultDataMap[key]?.showOnLoader" class="text-center my-2">
-  <h1> LOADING .. . . </h1>
-  <mat-spinner [diameter]="40" [strokeWidth]="3"></mat-spinner>
-</div> -->
+<ng-template #loader>
+  <div  class="text-center my-2">
+    <h1> LOADING .. . . </h1>
+    <mat-spinner [diameter]="40" [strokeWidth]="3"></mat-spinner>
+  </div>
+</ng-template>

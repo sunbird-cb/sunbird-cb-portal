@@ -13,7 +13,6 @@ export class SkeletonLoaderComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    
   }
 
 }

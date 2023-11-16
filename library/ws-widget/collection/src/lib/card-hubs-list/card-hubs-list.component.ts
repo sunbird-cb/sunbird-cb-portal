@@ -77,7 +77,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
           // console.log('event', event)
           if (event.url === '/' || event.url.includes('/page/home')) {
             this.activeRoute = 'Home'
-          } else if (event.url.includes('/page/learn')) {
+          } else if (event.url.includes('/page/learn') || event.url.includes('/app/toc')) {
             this.activeRoute = 'Learn'
           } else if (event.url.includes('/app/discussion-forum')) {
             this.activeRoute = 'Discuss'
@@ -181,7 +181,6 @@ export class CardHubsListComponent extends WidgetBaseComponent
     } else {
       this.searchSpinner = true
       this.enableFeature = false
-
     }
 
   }
@@ -194,6 +193,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
       setTimeout(() => {
         this.configSvc.changeNavBarFullView.next(this.visible)
       },         200)
+      this.activeRoute = ''
     }
 
   }

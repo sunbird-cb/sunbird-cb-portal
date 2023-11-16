@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { delay } from 'rxjs/operators'
 import { HeaderService } from './header.service';
 
@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   isNavBarRequired = true
   showNavbar = true
   widgetData = {};
+  @Input() headerFooterConfigData:any;
   constructor(private valueSvc: ValueService,public headerService: HeaderService) { }
 
   ngOnInit() {
@@ -39,6 +40,10 @@ export class HeaderComponent implements OnInit {
       ]
     };
   } 
+
+  ngOnChanges() {
+    console.log('headerFooterConfigData', this.headerFooterConfigData);
+  }
 
   get navBarRequired(): boolean {
     return this.isNavBarRequired 

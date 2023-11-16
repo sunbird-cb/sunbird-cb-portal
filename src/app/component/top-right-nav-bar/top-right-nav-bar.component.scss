@@ -11,10 +11,14 @@
     border-radius: 63px;
     background: #F3962F;
     color: #fff;
-    min-width: 129px;
+    min-width: 99px;
     text-align: center;
-    padding: 0px 16px;
-    font-size: 16px;
+    font-size: 14px;
+    height: 32px;
+}
+
+.download-app-chip span {
+    padding: 8px 16px;
 }
 
 .help-icon img{
