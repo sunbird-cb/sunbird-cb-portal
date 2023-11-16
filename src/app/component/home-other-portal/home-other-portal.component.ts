@@ -21,6 +21,7 @@ export class HomeOtherPortalComponent implements OnInit {
 
   private readonly featuresConfig: IGroupWithFeatureWidgets[] = []
   portalLinks: any[] = []
+  noPortal = [1,2,3]
   
 
   constructor(

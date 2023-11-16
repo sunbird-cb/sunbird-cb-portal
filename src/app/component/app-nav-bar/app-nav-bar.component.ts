@@ -11,6 +11,7 @@ import { Router, NavigationStart, NavigationEnd } from '@angular/router'
 })
 export class AppNavBarComponent implements OnInit, OnChanges {
   @Input() mode: 'top' | 'bottom' = 'top'
+  @Input() headerFooterConfigData:any;
   // @Input()
   // @HostBinding('id')
   // public id!: string
@@ -65,6 +66,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    console.log('headerFooterConfigData',this.headerFooterConfigData)
     this.router.events.subscribe((event: any) => {
 
       if (event instanceof NavigationEnd) {

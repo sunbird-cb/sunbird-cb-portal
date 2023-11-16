@@ -10,6 +10,7 @@ import { Component, Input, OnInit } from '@angular/core'
 export class ClientSliderComponent implements OnInit {
   @Input() clientList: any 
   clients : any
+  noClients = [1,2,3,4,5,6,7,8,9,10]
   constructor() { }
 
   ngOnInit() {

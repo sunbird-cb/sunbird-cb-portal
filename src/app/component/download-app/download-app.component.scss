@@ -1,3 +1,8 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+
 .download-app {
     display: flex; 
     flex-direction: row; 
@@ -98,7 +103,7 @@
 
 @media (max-width : 768px) {    
     .download-app {
-        height:529px;
+        height:529px!important;
         width: 100%;
         
     }
@@ -135,19 +140,20 @@
         flex-direction: column;
         justify-content: center;
         text-align: center;
-        margin-left: 25%;
+        margin-left: 50%!important;
     }
 
     .left-side {
-        margin-top:26px;
+        margin-top:26px!important;
     }
     
     .circle {
         background-color: rgb(27, 76, 161);
-        width: 152px;
-        height: 152px;
+        width: 152px!important;
+        height: 152px!important;
         border-radius: 50%;
         margin-top: 10px;
+        margin-left: -76px;
     }
     
     

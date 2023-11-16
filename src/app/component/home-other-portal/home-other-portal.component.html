@@ -1,6 +1,6 @@
 
 
-<mat-card class="mat-card pad-4 other-portal-box" *ngIf="portalLinks && portalLinks.length">
+<mat-card class="mat-card pad-4 other-portal-box" *ngIf="portalLinks && portalLinks.length; else noPortalData">
     <p class="mat-subheading-1">Other portals you have access to</p>
     <div class="flex flex-row items-center content-center portal-box" *ngFor="let wdata of portalLinks">
         <a class="flex flex-row items-center content-center" target="_blank" href="{{wdata.widgetData.actionBtn.url}}">
@@ -21,10 +21,12 @@
 
 
 
+<ng-template #noPortalData>
 
-<mat-card class="mat-card pad-4 other-portal-box margin-top-m" *ngIf="portalLinks && portalLinks.length">
+
+<mat-card class="mat-card pad-4 other-portal-box margin-top-m" >
     <p class="mat-subheading-1 margin-bottom-m flex"><ws-widget-skeleton-loader [width]="'150px'" [height]="'16px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader></p>
-    <div class="flex flex-row items-center content-center portal-box" *ngFor="let wdata of portalLinks">
+    <div class="flex flex-row items-center content-center portal-box" *ngFor="let wdata of noPortal">
         <a class="flex flex-row items-center content-center" target="_blank">
             <div class="icon-box margin-right-s flex items-center justify-center">
                 <ws-widget-skeleton-loader [width]="'75px'" [height]="'70px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
@@ -40,3 +42,4 @@
         </a>
     </div>
 </mat-card>
+</ng-template>

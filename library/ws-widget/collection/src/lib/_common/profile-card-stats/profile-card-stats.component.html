@@ -32,7 +32,7 @@
         </div>
         <div class="user-name flex margin-left-m">
             <p class="margin-remove " (click)="gotoUserProfile()">{{userInfo.firstName}}</p>
-            <mat-icon class=" mr-3" (click)="gotoUserProfile()">chevron_right</mat-icon>
+            <mat-icon class="text-blue-500 mr-3" (click)="gotoUserProfile()">chevron_right</mat-icon>
         </div>
     </div>
     <hr class="divider">
@@ -43,7 +43,7 @@
               <div class="stats-data margin-bottom-m">
                 <img class="stats-icon" width="20" height="20" [src]="stats.icon">
                 <div class="stats-title">{{stats.label}}</div>
-                <div class="stats-count">{{countdata[stats.key] ||'0'}}</div>
+                <div class="stats-count ws-mat-default-text">{{countdata[stats.key] ||'0'}}</div>
               </div>
             </ng-container>
           </ng-container>
