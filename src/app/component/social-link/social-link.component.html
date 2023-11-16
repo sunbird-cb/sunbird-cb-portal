@@ -16,10 +16,9 @@
           src="/assets/icons/social-links/youtube.svg"></a></li>
     </ul>
   </div> -->
-
   <div class="social-icons">
     <ul>
-      <li *ngFor="let item of socialLinks">
+      <li *ngFor="let item of socialLinks?.socialLinks">
         <a [href]="item?.url" target="_blank">
           <img [alt]="item?.alt" class="app-logo" src="/assets/icons/social-links/{{item?.icon}}.svg">
         </a>

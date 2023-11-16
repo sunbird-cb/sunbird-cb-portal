@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-
+import { ActivatedRoute } from '@angular/router';
 const clientItem = [
   {
     "clientImageUrl": "assets/icons/top-providers/0d400bdf-4ad8-45bf-914c-be44018c2d07.png",
@@ -135,20 +135,15 @@ export class HomeComponent implements OnInit {
   networkStripData = {};
   carrierStripData = {};
   clientList: {} | undefined
-  homeConfig = {
-    "insightOnRight": {
-      "active" : false
-    },
-    "leftSection" : {
-      "active":  true
-    },
-    "rightSection": {
-      "active":  true
-    }
-  }
-  constructor() { }
+  homeConfig = {};
+  constructor(private activatedRoute:ActivatedRoute) { }
 
   ngOnInit() {
+    if(this.activatedRoute.snapshot.data.pageData) {
+      console.log('homaPageJsonData',this.activatedRoute.snapshot.data.pageData);
+      this.homeConfig = this.activatedRoute.snapshot.data.pageData.data.homeConfig;
+    }
+
     this.clientList = clientItem
     this.widgetData = {
       "widgets": [

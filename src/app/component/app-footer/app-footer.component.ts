@@ -1,6 +1,6 @@
 // import { environment } from './../../../environments/environment'
 import { HttpClient } from '@angular/common/http'
-import { Component, OnInit, ViewEncapsulation } from '@angular/core'
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core'
 import { NavigationEnd, Router } from '@angular/router'
 import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
 
@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment'
   encapsulation: ViewEncapsulation.None
 })
 export class AppFooterComponent implements OnInit {
-
+  @Input() headerFooterConfigData:any;
   isXSmall = false
   termsOfUser = true
   environment!: any

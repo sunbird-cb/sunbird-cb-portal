@@ -11,6 +11,7 @@ import _ from 'lodash'
 export class FooterSectionComponent implements OnInit {
   @Input() environment:any;
   @Input() hubsList:any;
+  @Input() headerFooterConfigData:any;
   constructor(private configSvc: ConfigurationsService,private discussUtilitySvc: DiscussUtilsService, private router: Router) { }
   footerSectionConfig = [
     {
@@ -44,12 +45,18 @@ export class FooterSectionComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.footerSectionConfig = (this.footerSectionConfig).sort((a,b)=>a.order - b.order);
+    console.log('this.headerFooterConfigData',this.headerFooterConfigData)
+    this.footerSectionConfig = this.headerFooterConfigData.footerSectionConfig;
+    if(this.footerSectionConfig) {
+      this.footerSectionConfig = (this.footerSectionConfig).sort((a,b)=>a.order - b.order);
+    }    
     this.environment.portals = this.environment.portals.filter(
       (obj: any) => ((obj.name !== 'Frac Dictionary') &&
        (obj.isPublic || this.isAllowed(obj.id))))
     if(!this.environment.portals.length) {
-      this.footerSectionConfig = this.footerSectionConfig.filter((obj:any)=> obj.sectionHeading !== 'Related Links')
+      if(this.footerSectionConfig) {
+        this.footerSectionConfig = this.footerSectionConfig.filter((obj:any)=> obj.sectionHeading !== 'Related Links')
+      }
     }
   }
 
