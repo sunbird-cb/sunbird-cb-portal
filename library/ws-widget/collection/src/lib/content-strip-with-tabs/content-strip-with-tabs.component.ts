@@ -251,6 +251,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     this.processStrip(strip, [], 'fetching', false, null)
     this.fetchFromEnrollmentList(strip, calculateParentStatus)
     this.fetchFromSearchV6(strip, calculateParentStatus)
+    this.fetchFromTrendingContent(strip, calculateParentStatus)
   }
 
   fetchFromEnrollmentList(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
@@ -361,8 +362,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   getInprogressAndCompleted(array: NsContent.IContent[],
-                            customFilter: any,
-                            strip: NsContentStripWithTabs.IContentStripUnit) {
+    customFilter: any,
+    strip: NsContentStripWithTabs.IContentStripUnit) {
     const inprogress: any[] = []
     const completed: any[] = []
     array.forEach((e: any, idx: number, arr: any[]) => (customFilter(e, idx, arr) ? inprogress : completed).push(e))
@@ -401,7 +402,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
             const allTabs = this.stripsResultDataMap[strip.key].tabs
             const currentTabFromMap = (allTabs && allTabs.length && allTabs[0]) as NsContentStripWithTabs.IContentStripTab
 
-            this.getTabDataByNewReq(strip, 0, currentTabFromMap, calculateParentStatus)
+            this.getTabDataByNewReqSearchV6(strip, 0, currentTabFromMap, calculateParentStatus)
           }
         }
 
@@ -430,46 +431,165 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   async searchV6Request(strip: NsContentStripWithTabs.IContentStripUnit,
-                        request: NsContentStripWithTabs.IContentStripUnit['request'],
-                        calculateParentStatus: boolean
+    request: NsContentStripWithTabs.IContentStripUnit['request'],
+    calculateParentStatus: boolean
   ): Promise<any> {
     const originalFilters: any = []
     // console.log('calling -- ')
     return new Promise<any>((resolve, reject) => {
       if (request && request.searchV6) {
         this.contentSvc.searchV6(request.searchV6).subscribe(results => {
-            const showViewMore = Boolean(
-              results.result.content && results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
-            )
-            const viewMoreUrl = showViewMore
-              ? {
-                path: strip.viewMoreUrl && strip.viewMoreUrl.path || '',
-                queryParams: {
-                  tab: 'Learn',
-                  q: strip.viewMoreUrl && strip.viewMoreUrl.queryParams,
-                  f:
-                    request &&
-                      request.searchV6 &&
-                      request.searchV6.request &&
-                      request.searchV6.request.filters
-                      ? JSON.stringify(
-                        this.transformSearchV6FiltersV2(
-                          originalFilters,
-                        )
+          const showViewMore = Boolean(
+            results.result.content && results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
+          )
+          const viewMoreUrl = showViewMore
+            ? {
+              path: strip.viewMoreUrl && strip.viewMoreUrl.path || '',
+              queryParams: {
+                tab: 'Learn',
+                q: strip.viewMoreUrl && strip.viewMoreUrl.queryParams,
+                f:
+                  request &&
+                    request.searchV6 &&
+                    request.searchV6.request &&
+                    request.searchV6.request.filters
+                    ? JSON.stringify(
+                      this.transformSearchV6FiltersV2(
+                        originalFilters,
                       )
-                      : {},
-                },
-              }
-              : null
-            // if (viewMoreUrl && viewMoreUrl.queryParams) {
-            //   viewMoreUrl.queryParams = viewMoreUrl.queryParams
-            // }
-            // console.log('returned results')
-            resolve({ results, viewMoreUrl })
-          },                                                 (error: any) => {
-            this.processStrip(strip, [], 'error', calculateParentStatus, null)
-            reject(error)
-          },
+                    )
+                    : {},
+              },
+            }
+            : null
+          // if (viewMoreUrl && viewMoreUrl.queryParams) {
+          //   viewMoreUrl.queryParams = viewMoreUrl.queryParams
+          // }
+          // console.log('returned results')
+          resolve({ results, viewMoreUrl })
+        }, (error: any) => {
+          this.processStrip(strip, [], 'error', calculateParentStatus, null)
+          reject(error)
+        },
+        )
+      }
+    })
+  }
+
+  async fetchFromTrendingContent(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
+    console.log('inside fetchFromTrendingContent')
+    if (strip.request && strip.request.trendingSearch && Object.keys(strip.request.trendingSearch).length) {
+      // if (!(strip.request.searchV6.locale && strip.request.searchV6.locale.length > 0)) {
+      //   if (this.configSvc.activeLocale) {
+      //     strip.request.searchV6.locale = [this.configSvc.activeLocale.locals[0]]
+      //   } else {
+      //     strip.request.searchV6.locale = ['en']
+      //   }
+      // }
+      console.log('inside fetchFromTrendingContent if inside')
+      let originalFilters: any = []
+      // tslint:disable:no-console
+      console.log(originalFilters)
+      if (strip.request &&
+        strip.request.trendingSearch &&
+        strip.request.trendingSearch.request &&
+        strip.request.trendingSearch.request.filters) {
+        originalFilters = strip.request.trendingSearch.request.filters
+        strip.request.trendingSearch.request.filters = this.checkForDateFilters(strip.request.trendingSearch.request.filters)
+        strip.request.trendingSearch.request.filters = this.getFiltersFromArray(
+          strip.request.trendingSearch.request.filters,
+        )
+      }
+      if (strip.tabs && strip.tabs.length) {
+        // TODO: Have to extract requestRequired to outer level of tabs config
+        const firstTab = strip.tabs[0]
+        if (firstTab.requestRequired) {
+          if (this.stripsResultDataMap[strip.key] && this.stripsResultDataMap[strip.key].tabs) {
+            const allTabs = this.stripsResultDataMap[strip.key].tabs
+            const currentTabFromMap = (allTabs && allTabs.length && allTabs[0]) as NsContentStripWithTabs.IContentStripTab
+
+            this.getTabDataByNewReqTrending(strip, 0, currentTabFromMap, calculateParentStatus)
+          }
+        }
+
+      } else {
+        try {
+          const response = await this.trendingSearchRequest(strip, strip.request, calculateParentStatus)
+          console.log('calling  after - response, ', response)
+          if (response && response.results) {
+              const content = response.results.result[strip.request.trendingSearch.responseKey] || []
+            // console.log('calling  after-- ')
+            this.processStrip(
+              strip,
+              this.transformContentsToWidgets(content, strip),
+              'done',
+              calculateParentStatus,
+              response.viewMoreUrl,
+            )
+          } else {
+            this.processStrip(strip, [], 'done', calculateParentStatus, null)
+          }
+        } catch (error) {
+          // Handle errors
+          this.processStrip(strip, [], 'error', calculateParentStatus, null)
+        }
+      }
+    }
+  }
+
+  async trendingSearchRequest(strip: NsContentStripWithTabs.IContentStripUnit,
+    request: NsContentStripWithTabs.IContentStripUnit['request'],
+    calculateParentStatus: boolean
+  ): Promise<any> {
+    const originalFilters: any = []
+    console.log('calling --  trendingSearchRequest')
+    return new Promise<any>((resolve, reject) => {
+      if (request && request.trendingSearch) {
+        // check for the request if it has dynamic values
+        console.log("request.trendingSearch.organisation.indexOf('<orgID>')", request.trendingSearch.request.filters. organisation.indexOf('<orgID>'))
+        if(request.trendingSearch.request.filters.organisation &&
+          request.trendingSearch.request.filters.organisation.indexOf('<orgID>') >= 0
+        ) 
+        {
+          let userRootOrgId
+          if (this.configSvc.userProfile) {
+            userRootOrgId = this.configSvc.userProfile.rootOrgId
+          }
+          request.trendingSearch.request.filters.organisation = userRootOrgId
+        }
+        this.contentSvc.trendingContentSearch(request.trendingSearch).subscribe(results => {
+          console.log('trendingSearchRequest :: ' , results)
+          const showViewMore = Boolean(
+            results.result.courses && results.result.courses.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
+          )
+          const viewMoreUrl = showViewMore
+            ? {
+              path: strip.viewMoreUrl && strip.viewMoreUrl.path || '',
+              queryParams: {
+                tab: 'Learn',
+                q: strip.viewMoreUrl && strip.viewMoreUrl.queryParams,
+                f:
+                  request &&
+                    request.trendingSearch &&
+                    request.trendingSearch.request &&
+                    request.trendingSearch.request.filters
+                    ? JSON.stringify(
+                      this.transformSearchV6FiltersV2(
+                        originalFilters,
+                      )
+                    )
+                    : {},
+              },
+            }
+            : null
+          resolve({ results, viewMoreUrl })
+        }, (error: any) => {
+          if(error.error && error.error.status === 400){
+            this.processStrip(strip, [], 'done', calculateParentStatus, null)
+          }
+          // this.processStrip(strip, [], 'done', calculateParentStatus, null)
+          reject(error)
+        },
         )
       }
     })
@@ -601,9 +721,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         (strip.request.searchRegionRecommendation &&
           Object.keys(strip.request.searchRegionRecommendation).length) ||
         (strip.request.searchV6 && Object.keys(strip.request.searchV6).length) ||
-        (strip.request.ids && Object.keys(strip.request.ids).length) ||
         (strip.request.enrollmentList && Object.keys(strip.request.enrollmentList).length) ||
-        (strip.request.recommendedCourses && Object.keys(strip.request.recommendedCourses).length)
+        (strip.request.trendingSearch && Object.keys(strip.request.trendingSearch).length)
       )
     ) {
       return true
@@ -625,7 +744,11 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     if (currentStrip && currentTabFromMap && !currentTabFromMap.computeDataOnClick) {
       if (currentTabFromMap.requestRequired && currentTabFromMap.request) {
         // call API to get tab data and process
-        this.getTabDataByNewReq(currentStrip, tabEvent.index, currentTabFromMap, true)
+        if(currentTabFromMap.request.searchV6) {
+          this.getTabDataByNewReqSearchV6(currentStrip, tabEvent.index, currentTabFromMap, true)
+        } else if(currentTabFromMap.request.trendingSearch) {
+          this.getTabDataByNewReqTrending(currentStrip, tabEvent.index, currentTabFromMap, true)
+        }
       } else {
         this.getTabDataByfilter(currentStrip, currentTabFromMap, true)
       }
@@ -633,7 +756,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     // console.log('-----------------------------tabClicked tabEvent', tabEvent, stripMap.tabs)
   }
 
-  async getTabDataByNewReq(
+  async getTabDataByNewReqSearchV6(
     strip: NsContentStripWithTabs.IContentStripUnit,
     tabIndex: number,
     currentTab: NsContentStripWithTabs.IContentStripTab,
@@ -673,6 +796,50 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     } catch (error) {
       // Handle errors
       // console.error('Error:', error);
+    }
+  }
+
+  async getTabDataByNewReqTrending(
+    strip: NsContentStripWithTabs.IContentStripUnit,
+    tabIndex: number,
+    currentTab: NsContentStripWithTabs.IContentStripTab,
+    calculateParentStatus: boolean
+  ) {
+    console.log('getTabDataByNewReqTrending currentTab ---', currentTab)
+    try {
+      const response = await this.trendingSearchRequest(strip, currentTab.request, calculateParentStatus)
+      console.log('currentTab ---response', response)
+      if (response && response.results) {
+        const content = response.results.result[currentTab.value] || []
+        const widgets = this.transformContentsToWidgets(content, strip)
+        // console.log('currentTab --- widgets', widgets)
+        let tabResults: any[] = []
+        if (this.stripsResultDataMap[strip.key] && this.stripsResultDataMap[strip.key].tabs) {
+          const allTabs = this.stripsResultDataMap[strip.key].tabs
+          if (allTabs && allTabs.length && allTabs[tabIndex]) {
+            allTabs[tabIndex] = {
+              ...allTabs[tabIndex],
+              widgets,
+            }
+            tabResults = allTabs
+          }
+        }
+        // console.log('tabResults -++++***--', tabResults)
+        // console.log('calling  after-- ')
+        this.processStrip(
+          strip,
+          widgets,
+          'done',
+          calculateParentStatus,
+          response.viewMoreUrl,
+          tabResults // tabResults as widgets
+        )
+      } else {
+        this.processStrip(strip, [], 'done', calculateParentStatus, null)
+      }
+    } catch (error) {
+      // Handle errors
+      this.processStrip(strip, [], 'error', calculateParentStatus, null)
     }
   }
 
