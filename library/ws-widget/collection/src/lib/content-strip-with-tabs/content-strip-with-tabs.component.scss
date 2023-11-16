@@ -23,3 +23,50 @@
 .pad {
   padding: $size-l 0 $size-l $size-l;
 }
+
+::ng-deep.strips-tabgroup .mat-tab-header {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+}
+::ng-deep.strips-tabgroup .mat-tab-body {
+  padding: 20px 0 20px 0 !important;
+  box-sizing: border-box;
+  overflow-y: initial!important;
+
+
+  // .mat-tab-body-active {
+  //   overflow-x: initial !important;
+  //   overflow-y: initial !important;
+  // }
+
+}
+::ng-deep.strips-tabgroup .mat-tab-body.mat-tab-body-active {
+
+  // @include breakpoint-s {
+
+  // }
+
+  @media(min-width: 767px) and (max-width:1050px) {
+    overflow-x: initial !important;
+  }
+
+}
+
+::ng-deep.strips-tabgroup .mat-tab-body-wrapper {
+    overflow: inherit!important;
+}
+
+
+::ng-deep.strips-tabgroup .mat-tab-label {
+  border-bottom: 0px solid rgba(0, 0, 0, 0.1);
+  margin-right: 0;
+  opacity: 1;
+  .mat-tab-label-content {
+    text-transform: inherit;
+    font: 400 14px/20px Lato;
+  }
+}
+::ng-deep.strips-tabgroup .mat-tab-label-active {
+  .mat-tab-label-content {
+    font-weight: 700 !important;
+  }
+}

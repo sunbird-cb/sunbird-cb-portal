@@ -17,13 +17,13 @@
                     stripsResultDataMap[key]?.showOnLoader ||
                     stripsResultDataMap[key]?.showOnError)
                   " [ngClass]="
-                    !widgetData.isChannelStrip ? 'xs:px-8 sx:px-10ss py-2 my-1' : i > 0 ? 'mt-12' : ''
+                    !widgetData.isChannelStrip ? 'xs:px-8 sx:px-10ss py-2 my-2' : i > 0 ? 'mt-12' : ''
                   " [id]="key" [ngClass]="!widgetData.isChannelStrip ? margin-bottom-custom : margin-bottom-xs">
           <div [ngClass]="{ pad: stripsResultDataMap[key]?.stripBackground }"
             [ngStyle]="{ 'background-color': stripsResultDataMap[key]?.stripBackground }">
             <div class="flex items-center justify-between" [ngClass]="
                         !widgetData.isChannelStrip
-                          ? 'mb-2'
+                          ? 'mb-3'
                           : stripsResultDataMap[key]?.stripTitle
                           ? 'mb-8'
                           : ''
@@ -48,7 +48,7 @@
                 <!-- viewAll start-->
                   <div *ngIf="checkCondition(widgetData , stripsResultDataMap[key])"
                   class="ml-4 view-more ws-mat-default-text">
-                  <a mat-flat-button class="flex ws-mat-default-text" [routerLink]="widgetData.strips[0]?.viewMoreUrl?.path"
+                  <a class="flex ws-mat-default-text  items-center justify-center mat-body-1" [routerLink]="widgetData.strips[0]?.viewMoreUrl?.path"
                     [queryParams]="widgetData.strips[0]?.viewMoreUrl?.queryParams">
                     <span i18n class="ws-mat-default-text">{{widgetData.strips[0].viewMoreUrl.viewMoreText || 'See all'}}</span>
                     <mat-icon class="" color="accent">navigate_next</mat-icon>
@@ -77,7 +77,7 @@
             <ng-container *ngIf="!stripsResultDataMap[key]?.showOnNoData && !stripsResultDataMap[key]?.showOnError">
                 <ng-container *ngIf="stripsResultDataMap[key].tabs && stripsResultDataMap[key].tabs.length">
                   <mat-tab-group animationDuration="0ms" 
-                  class="mat-tab-labels w-full" dynamicHeight
+                  class="mat-tab-labels w-full strips-tabgroup" dynamicHeight
                     (selectedTabChange)="tabClicked($event, stripsResultDataMap[key], key)">
                     <mat-tab *ngFor="let tab of stripsResultDataMap[key].tabs; let last = last;">
                       <ng-template mat-tab-label>
@@ -105,7 +105,7 @@
                   </mat-tab-group>
                 </ng-container>
                 <ng-container *ngIf="!stripsResultDataMap[key].tabs || !stripsResultDataMap[key].tabs.length">
-                  <div class="mt-2">
+                  <div class="mt-6">
     
                       <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
                       *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
