@@ -4,6 +4,8 @@ import { Observable, throwError } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 import { IUserGroupDetails } from './widget-user.model'
 import { NsContent } from './widget-content.model'
+import 'rxjs/add/observable/of'
+import dayjs from 'dayjs'
 
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'
 const API_END_POINTS = {
@@ -54,14 +56,19 @@ export class WidgetUserService {
       Pragma: 'no-cache',
       Expires: '0',
     })
-    return this.http
-      .get(path, { headers })
-      .pipe(
-        catchError(this.handleError),
-        map(
-          (data: any) => data.result.courses
+    if (this.checkStorageData('enrollmentService')) {
+      const result: any =  this.http.get(path, { headers }).pipe(catchError(this.handleError), map(
+          (data: any) => {
+            localStorage.setItem('enrollmentData', JSON.stringify(data.result.courses))
+            return data.result.courses
+          }
         )
       )
+      this.setTime('enrollmentService')
+      return result
+    }
+      return this.getData('enrollmentData')
+
   }
 
    // tslint:disable-next-line: max-line-length
@@ -86,5 +93,50 @@ export class WidgetUserService {
           (data: any) => data.result.courses
         )
       )
+  }
+
+  checkStorageData(key: any) {
+    const checkTime = localStorage.getItem('timeCheck')
+    if (checkTime) {
+      const parsedData = JSON.parse(checkTime)
+      if (parsedData[key]) {
+        const date = dayjs()
+        const diffMin = date.diff(parsedData[key], 'minute')
+        if (diffMin >= 5) {
+          return true
+        }
+          return false
+      }
+        return true
+
+    }
+      return true
+
+  }
+
+  getData(key: any): Observable<any> {
+    return Observable.of(JSON.parse(localStorage.getItem(key) || ''))
+  }
+
+  setTime(key: any) {
+    const checkTime = localStorage.getItem('timeCheck')
+    if (checkTime) {
+      const parsedData = JSON.parse(checkTime)
+      parsedData[key] = new Date().getTime()
+      localStorage.setItem('timeCheck', JSON.stringify(parsedData))
+    } else {
+      localStorage.setItem('timeCheck', JSON.stringify({ key: new Date().getTime() }))
+    }
+  }
+
+  resetTime(key: any) {
+    const checkTime = localStorage.getItem('timeCheck')
+    if (checkTime) {
+      const parsedData = JSON.parse(checkTime)
+      if (parsedData[key]) {
+       delete parsedData[key]
+       localStorage.setItem('timeCheck', JSON.stringify(parsedData))
+      }
+    }
   }
 }

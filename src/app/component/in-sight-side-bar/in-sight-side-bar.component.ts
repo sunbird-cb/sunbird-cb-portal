@@ -26,11 +26,11 @@ const noData = {
   ]
 })
 export class InsightSideBarComponent implements OnInit {
-  profileDataLoading: boolean = false
+  profileDataLoading: boolean = true
   enableDiscussion: boolean = false
   loadSkeleton: boolean = false
   noDataValue : {} | undefined
-  clapsDataLoading: boolean = false
+  clapsDataLoading: boolean = true
   collapsed = false
   userData: any
   insightsData: any
@@ -42,7 +42,7 @@ export class InsightSideBarComponent implements OnInit {
     this.noDataValue = noData
   }
   getInsights() {
-    this.profileDataLoading = false
+    this.profileDataLoading = true
     // const organisation = this.userData.
     const request = {
       "request": {
@@ -60,8 +60,14 @@ export class InsightSideBarComponent implements OnInit {
         this.insightsData = res.result.response
         this.constructNudgeData()
         this.constructWeeklyData()
-        this.profileDataLoading = true
+        this.profileDataLoading = false
       }
+    }, (error: any) => {
+      // tslint:disable:no-console
+      console.log(error)
+      this.insightsData = []
+      this.profileDataLoading = false
+      this.clapsDataLoading = false
     })
   }
 
@@ -90,6 +96,7 @@ export class InsightSideBarComponent implements OnInit {
     })
     nudgeData.sliderData = sliderData
     this.insightsData['sliderData']= nudgeData
+    this.profileDataLoading = false
   }
 
   constructWeeklyData() {
@@ -106,7 +113,7 @@ export class InsightSideBarComponent implements OnInit {
       }
     }
 
-    this.clapsDataLoading = true
+    this.clapsDataLoading = false
   }
 
   handleButtonClick(): void {
