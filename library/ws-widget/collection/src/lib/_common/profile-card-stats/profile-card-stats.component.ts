@@ -31,8 +31,8 @@ export class ProfileCardStatsComponent implements OnInit {
   }
   getCounts() {
     let enrollList
-    if (localStorage.getItem('enrollList')) {
-      enrollList = JSON.parse(localStorage.getItem('enrollList')|| '')
+    if (localStorage.getItem('enrollmentData')) {
+      enrollList = JSON.parse(localStorage.getItem('enrollmentData')|| '')
     }
     this.countdata = {
       certificate: 0,
