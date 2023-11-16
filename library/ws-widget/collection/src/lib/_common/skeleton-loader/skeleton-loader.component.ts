@@ -13,7 +13,7 @@ export class SkeletonLoaderComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log("bindingClass - ", this.bindingClass); 
+    
   }
 
 }

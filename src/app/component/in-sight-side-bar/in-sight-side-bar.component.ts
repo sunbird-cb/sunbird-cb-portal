@@ -40,7 +40,9 @@ export class InsightSideBarComponent implements OnInit {
     this.userData = this.configSvc && this.configSvc.userProfile
     this.getInsights()
     this.noDataValue = noData
+    this.getDiscussionsData();
   }
+
   getInsights() {
     this.profileDataLoading = false
     // const organisation = this.userData.
@@ -54,7 +56,8 @@ export class InsightSideBarComponent implements OnInit {
               ]
           }
       }
-  }
+    }
+
     this.homePageSvc.getInsightsData(request).subscribe((res: any) => {
       if(res && res.result && res.result.response) {
         this.insightsData = res.result.response
@@ -110,13 +113,22 @@ export class InsightSideBarComponent implements OnInit {
   }
 
   handleButtonClick(): void {
-    this.loadSkeleton = true
+    this.loadSkeleton = true;
     setTimeout(() => {
       this.loadSkeleton = false
       this.enableDiscussion = true
-    }, 1500)
-    
+    }, 1500)  
   }
+
+  getDiscussionsData(): void {
+    this.loadSkeleton = true;
+    this.homePageSvc.getDiscussionsData().subscribe((res: any) => {
+      this.loadSkeleton = false;
+      this.enableDiscussion = true;
+      console.log("discussion res - ", res);
+    });
+  }
+
   expandCollapse(event:any) {
     this.collapsed = event
   }
