@@ -23,6 +23,7 @@ import { SharedModule } from '../shared/shared.module';
 import { WeeklyClapsModule } from '@sunbird-cb/collection/src/lib/_common/weekly-claps/weekly-claps.module';
 import { HomePageService } from '../services/home-page.service';
 import { HomeContainerComponent } from '../component/home-container/home-container.component';
+import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module';
 @NgModule({
   declarations: [HomeComponent, FeedListComponent, InsightSideBarComponent, PageContainerComponent, DiscussionInfoComponent, SkeletonLoaderComponent, ClientSliderComponent, HomeOtherPortalComponent, NoDataComponent, HomeContainerComponent],
   imports: [
@@ -38,7 +39,8 @@ import { HomeContainerComponent } from '../component/home-container/home-contain
     SharedModule,
     ProfileCardStatsModule,
     MatIconModule,
-    WeeklyClapsModule
+    WeeklyClapsModule,
+    SkeletonLoaderModule
   ],
   exports: [
     HeaderModule,

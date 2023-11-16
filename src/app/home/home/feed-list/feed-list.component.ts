@@ -18,6 +18,7 @@ export class FeedListComponent implements OnInit {
           "key": "continueLearning",
           "logo": "school",
           "title": "Go to Learn hub",
+          "subtitle": "My learning",
 
           "stripTitleLink": {
             "link": "/page/learn",
@@ -38,6 +39,15 @@ export class FeedListComponent implements OnInit {
             "viewMoreText": "Show all",
             "queryParams": {}
           },
+          "secondaryHeading" : {
+            "title": "My learning",
+            "viewMoreUrl": {
+              "path": "/page/learn",
+              "viewMoreText": "Show all",
+              "queryParams": {}
+            },
+          },
+
           "tabs": [
             {
               "label": "In progress",

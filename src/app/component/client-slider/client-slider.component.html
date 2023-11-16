@@ -2,9 +2,22 @@
     <h2 class="text-center margin-bottom-l">Top providers powering your learning</h2>
      <div class="customer-logos flex flex-1 flex-row slider" >
         <div class="flex slider-item" *ngFor="let item of clients">
-            <a href="{{ item.clientUrl }}" target="_blank" class="client-link">
-                <img src="{{ item.clientImageUrl }}" class="client-img">
-                <p>{{ item.clientName }}</p>
+            <a href="{{ item.clientUrl }}" target="_blank" class="client-link flex flex-col items-center justify-center">
+                <img src="{{ item.clientImageUrl }}" class="client-img flex">
+                <p class="mat-body-2 flex">{{ item.clientName }}</p>
+            </a>
+        </div>
+        
+     </div>
+</div>
+
+<div class="client-box" *ngIf="clients && clients.length">
+    <h2 class="text-center margin-bottom-l">Top providers powering your learning</h2>
+     <div class="customer-logos flex flex-1 flex-row slider" >
+        <div class="flex slider-item" *ngFor="let item of clients">
+            <a target="_blank" class="client-link flex flex-col items-center justify-center">
+                <ws-widget-skeleton-loader [width]="'75px'" [height]="'75px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'100px'" [height]="'16px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
             </a>
         </div>
         

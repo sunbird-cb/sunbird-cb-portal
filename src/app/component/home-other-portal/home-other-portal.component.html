@@ -12,23 +12,31 @@
                     {{ wdata.widgetData.actionBtn.name }}
                 </p>
                 <p class="small-font margin-remove-bottom">
-                    Create and manage CBPs here.
+                    {{ wdata.widgetData.actionBtn.desc }}
                 </p>
             </div>
         </a>
     </div>
+</mat-card>
 
-    <!-- <div class="flex flex-row items-center content-centerportal-box">
-        <div class="icon-box margin-right-s flex items-center justify-center">
-            <img src="/assets/icons/MDO_portal.svg">
-        </div>
-        <div class="flex flex-col card-text-box">
-            <p class="mat-subheading-2 margin-remove-bottom">
-                MDO Portal
-            </p>
-            <p class="small-font margin-remove-bottom">
-                Manage MDO user access, work orders and events.
-            </p>
-        </div>
-    </div> -->
+
+
+
+<mat-card class="mat-card pad-4 other-portal-box" *ngIf="portalLinks && portalLinks.length">
+    <p class="mat-subheading-1"></p>
+    <div class="flex flex-row items-center content-center portal-box" *ngFor="let wdata of portalLinks">
+        <a class="flex flex-row items-center content-center" target="_blank">
+            <div class="icon-box margin-right-s flex items-center justify-center">
+                <ws-widget-skeleton-loader [width]="'75px'" [height]="'70px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+            </div>
+            <div class="flex flex-col card-text-box">
+                <p class="mat-subheading-2 margin-remove-bottom">
+                    <ws-widget-skeleton-loader [width]="'100px'" [height]="'16px'" [bindingClass]="'flex rounded h-16 margin-bottom-xs'"></ws-widget-skeleton-loader>
+                </p>
+                <p class="small-font margin-remove-bottom">
+                    <ws-widget-skeleton-loader [width]="'100px'" [height]="'16px'" [bindingClass]="'flex rounded h-16 margin-bottom-xs'"></ws-widget-skeleton-loader>
+                </p>
+            </div>
+        </a>
+    </div>
 </mat-card>

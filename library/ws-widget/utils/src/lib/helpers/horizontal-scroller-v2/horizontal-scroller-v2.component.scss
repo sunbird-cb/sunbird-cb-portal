@@ -11,6 +11,11 @@ $spaceFromEnd: 0;
   width: inherit;
   min-height: 100px;
   padding: 0 20px;
+  margin-top: 24px;
+
+  @include breakpoint-xs {
+    padding: 0;
+  }
 }
 
 %btn {

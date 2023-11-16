@@ -52,6 +52,7 @@ export namespace NsContentStripWithTabs {
     errorWidget?: NsWidgetResolver.IRenderConfigWithAnyData
     refreshEvent?: Record<'eventType' | 'from', string>
     fetchLikes?: boolean
+    secondaryHeading?: any
     viewMoreUrl?: {
       queryParams: string
       viewMoreText: string
