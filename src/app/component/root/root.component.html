@@ -12,7 +12,7 @@
 <!-- <ws-app-nav-bar class="top-nav-bar" *ngIf="
 navBarRequired && (isXSmall$ | async) === false
   " [hidden]="!isShowNavbar" [mode]="'top'"></ws-app-nav-bar> -->
-<ws-header></ws-header>
+<ws-header  [headerFooterConfigData]="headerFooterConfigData"></ws-header>
 <!-- </ws-widget-sticky-header> -->
 <div class="height-adjust" [ngClass]="{
     'height-on-bottom custom-scroll':
@@ -31,7 +31,7 @@ navBarRequired && (isXSmall$ | async) === false
 <!-- <ws-app-footer class="app-footer" [ngClass]="{ 'padding-bottom: 56px': !isSetupPage}" *ngIf="showNavbar">
 </ws-app-footer> -->
 <ws-app-chatbot></ws-app-chatbot>
-<ws-app-footer class="app-footer" *ngIf="showNavbar && showFooter">
+<ws-app-footer class="app-footer" *ngIf="showNavbar && showFooter && headerFooterConfigData" [headerFooterConfigData]="headerFooterConfigData">
 </ws-app-footer>
 <ws-app-nav-bar class="bottom-nav-bar" [hidden]="!isShowNavbar" *ngIf="navBarRequired && (isXSmall$ | async) === true"
   [mode]="'bottom'">
