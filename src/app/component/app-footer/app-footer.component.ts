@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { Component, OnInit, ViewEncapsulation } from '@angular/core'
 import { NavigationEnd, Router } from '@angular/router'
 import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
-import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+
 // tslint:disable-next-line
 import _ from 'lodash'
 import { environment } from 'src/environments/environment'
@@ -24,8 +24,7 @@ export class AppFooterComponent implements OnInit {
   private baseUrl = this.configSvc.baseUrl
   constructor(
     private configSvc: ConfigurationsService,
-    private valueSvc: ValueService,
-    private discussUtilitySvc: DiscussUtilsService,
+    private valueSvc: ValueService,    
     private router: Router,
     private http: HttpClient,
   ) {
