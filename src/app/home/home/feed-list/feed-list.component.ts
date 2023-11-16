@@ -17,8 +17,7 @@ export class FeedListComponent implements OnInit {
         {
           "key": "continueLearning",
           "logo": "school",
-          "title": "Go to Learn hub",
-
+          "title": "My Learning",
           "stripTitleLink": {
             "link": "/page/learn",
             "icon": "navigate_next"
@@ -30,7 +29,7 @@ export class FeedListComponent implements OnInit {
             "maxWidgets": 2,
           },
           "stripBackground": "",
-          "titleDescription": "Continue learning1",
+          "titleDescription": "My Learning",
           "stripConfig": {
             "cardSubType": "standard"
           },
