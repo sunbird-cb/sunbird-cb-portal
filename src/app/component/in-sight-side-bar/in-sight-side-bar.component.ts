@@ -36,7 +36,6 @@ export class InsightSideBarComponent implements OnInit {
   userData: any
   insightsData: any
   discussion = {
-    enableDiscussion: false,
     discussionData: undefined,
     loadSkeleton: false,
     data: undefined,
@@ -132,8 +131,7 @@ export class InsightSideBarComponent implements OnInit {
     this.discussion.loadSkeleton = true;
     this.homePageSvc.getDiscussionsData(this.userData.userName).subscribe(
       (res: any) => {
-        this.discussion.loadSkeleton = true;
-        this.discussion.enableDiscussion = true;
+        this.discussion.loadSkeleton = false;
         this.discussion.data = res;
         console.log("discussion res - ", res);
       },
