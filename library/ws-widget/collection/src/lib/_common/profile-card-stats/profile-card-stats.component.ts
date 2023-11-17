@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigurationsService } from '@sunbird-cb/utils'
+import { PipeDurationTransformPipe } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
   selector: 'ws-widget-profile-card-stats',
   templateUrl: './profile-card-stats.component.html',
-  styleUrls: ['./profile-card-stats.component.scss']
+  styleUrls: ['./profile-card-stats.component.scss'],
+  providers: [ PipeDurationTransformPipe ]
 })
 export class ProfileCardStatsComponent implements OnInit {
   @Input() isLoading = false
@@ -18,12 +20,14 @@ export class ProfileCardStatsComponent implements OnInit {
   userInfo: any
   countdata: any
   statsData: any
-  constructor(private configSvc:ConfigurationsService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private configSvc:ConfigurationsService,
+    private router: Router, 
+    private activatedRoute: ActivatedRoute,
+    private pipDuration: PipeDurationTransformPipe) { }
 
   ngOnInit() {
     if(this.activatedRoute.snapshot.data.pageData) {
       this.statsData = this.activatedRoute.snapshot.data.pageData.data && this.activatedRoute.snapshot.data.pageData.data.profileStats || []
-      // console.log(this.activatedRoute.snapshot.data.pageData.data,'lllllllllllll')
     }
     this.userInfo =  this.configSvc && this.configSvc.userProfile
     this.getCounts();
@@ -39,15 +43,12 @@ export class ProfileCardStatsComponent implements OnInit {
       inProgress: 0,
       learningHours: 0
     }
-    if(enrollList){
-      enrollList.forEach((ele:any)=> {
-        if(ele.issuedCertificates.length > 0){
-          this.countdata.certificate = this.countdata.certificate + 1
-        }
-        if(ele.completionPercentage < 100){
-          this.countdata.inProgress = this.countdata.inProgress + 1
-        }
-      })
+    if(enrollList && enrollList.userCourseEnrolmentInfo){
+      this.countdata = {
+        certificate: enrollList.userCourseEnrolmentInfo.certificatesIssued,
+        inProgress: enrollList.userCourseEnrolmentInfo.coursesInProgress,
+        learningHours: this.pipDuration.transform(enrollList.userCourseEnrolmentInfo.timeSpentOnCompletedCourses,'hms')
+      }
     }
   }
   gotoUserProfile(){

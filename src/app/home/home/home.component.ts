@@ -136,13 +136,13 @@ export class HomeComponent implements OnInit {
   networkStripData = {};
   carrierStripData = {};
   clientList: {} | undefined
-  homeConfig = {};
+  homeConfig: any = {}; 
   constructor(private activatedRoute:ActivatedRoute) { }
 
-  ngOnInit() {
+  ngOnInit() { 
     if(this.activatedRoute.snapshot.data.pageData) {
       console.log('homaPageJsonData',this.activatedRoute.snapshot.data.pageData);
-      this.homeConfig = this.activatedRoute.snapshot.data.pageData.data.homeConfig;
+      this.homeConfig = this.activatedRoute.snapshot.data.pageData.data.homeConfig; 
     }
 
     this.clientList = clientItem

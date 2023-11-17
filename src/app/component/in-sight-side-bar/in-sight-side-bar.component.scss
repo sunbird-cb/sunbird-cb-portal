@@ -40,6 +40,7 @@
     color: rgba(0, 0, 0, 0.87);
     font-weight: 700;
     font-size: 14px;
+    cursor: pointer;
 }
 
 .arrow img{
@@ -53,9 +54,7 @@
 
 .pending-request-thumbnails ul li{
     list-style: none;
-    border: 1px solid rgb(209, 57, 36);
     border-radius: 50%;
-    background: rgb(209, 57, 36);
     color: #fff;
     font-size: 10px;
     font-weight: 400;
@@ -63,6 +62,7 @@
     width: 24px;
     text-align: center;
     margin-left: -10px;
+    cursor: pointer;
 }
 
 .pending-request-counts {

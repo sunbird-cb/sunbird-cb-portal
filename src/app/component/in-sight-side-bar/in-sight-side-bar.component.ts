@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { HomePageService } from 'src/app/services/home-page.service';
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router'
 
 const DEFAULT_DURATION = 500;
 
@@ -26,6 +27,7 @@ const noData = {
     ])
   ]
 })
+
 export class InsightSideBarComponent implements OnInit {
   profileDataLoading: boolean = true
   
@@ -35,24 +37,27 @@ export class InsightSideBarComponent implements OnInit {
   userData: any
   insightsData: any
   discussion = {
-    enableDiscussion: false,
     discussionData: undefined,
     loadSkeleton: false,
+    data: undefined,
     error: false
   };
+  pendingRequestData:any = []
+  pendingRequestSkeleton = true;
   
-  constructor(private homePageSvc:HomePageService, private configSvc:ConfigurationsService) { }
+  constructor(private homePageSvc:HomePageService, private configSvc:ConfigurationsService, private router: Router) { }
 
   ngOnInit() {
     this.userData = this.configSvc && this.configSvc.userProfile
+    
     this.getInsights()
+    this.getPendingRequestData();
     this.noDataValue = noData
     this.getDiscussionsData();
   }
 
   getInsights() {
     this.profileDataLoading = true
-    // const organisation = this.userData.
     const request = {
       "request": {
           "filters": {
@@ -128,10 +133,10 @@ export class InsightSideBarComponent implements OnInit {
 
   getDiscussionsData(): void {
     this.discussion.loadSkeleton = true;
-    this.homePageSvc.getDiscussionsData().subscribe(
+    this.homePageSvc.getDiscussionsData(this.userData.userName).subscribe(
       (res: any) => {
         this.discussion.loadSkeleton = false;
-        this.discussion.enableDiscussion = true;
+        this.discussion.data = res;
         console.log("discussion res - ", res);
       },
       (error: HttpErrorResponse) => {
@@ -141,6 +146,34 @@ export class InsightSideBarComponent implements OnInit {
         }
       }
     );
+  }
+
+  getPendingRequestData() {
+    this.pendingRequestData =  {
+      'result': {
+          "data": [
+              {
+                  "id": "9029b54d-c167-4d88-a1fe-0c31b940c07f",
+                  "fullName": "Karthik Test",
+                  "departmentName": "RKCbp",
+                  "updatedAt": null
+              }
+          ],
+          "message": "Successful",
+          "status": "OK"
+      }
+    };
+    setTimeout(()=>{
+      this.pendingRequestSkeleton = false;
+    })
+  }
+
+  navigateTo() {
+    this.router.navigateByUrl('app/network-v2/connection-requests');
+  }
+
+  moveToUserProile(id:string) {
+    this.router.navigateByUrl('app/person-profile/'+id+'#profileInfo');
   }
 
   expandCollapse(event:any) {

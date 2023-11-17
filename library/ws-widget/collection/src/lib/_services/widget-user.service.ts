@@ -6,6 +6,7 @@ import { IUserGroupDetails } from './widget-user.model'
 import { NsContent } from './widget-content.model'
 import 'rxjs/add/observable/of'
 import dayjs from 'dayjs'
+import { environment } from 'src/environments/environment'
 
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'
 const API_END_POINTS = {
@@ -59,15 +60,15 @@ export class WidgetUserService {
     if (this.checkStorageData('enrollmentService')) {
       const result: any =  this.http.get(path, { headers }).pipe(catchError(this.handleError), map(
           (data: any) => {
-            localStorage.setItem('enrollmentData', JSON.stringify(data.result.courses))
-            return data.result.courses
+            localStorage.setItem('enrollmentData', JSON.stringify(data.result))
+            return data.result
           }
         )
       )
       this.setTime('enrollmentService')
       return result
     }
-      return this.getData('enrollmentData')
+    return this.getData('enrollmentData')
 
   }
 
@@ -90,7 +91,7 @@ export class WidgetUserService {
       .pipe(
         catchError(this.handleError),
         map(
-          (data: any) => data.result.courses
+          (data: any) => data.result
         )
       )
   }
@@ -102,16 +103,15 @@ export class WidgetUserService {
       if (parsedData[key]) {
         const date = dayjs()
         const diffMin = date.diff(parsedData[key], 'minute')
-        if (diffMin >= 5) {
+        const timeCheck = environment.apiCache || 0
+        if (diffMin >= timeCheck) {
           return true
         }
-          return false
+        return localStorage.getItem('enrollmentData') ? false : true
       }
-        return true
-
-    }
       return true
-
+    }
+    return true
   }
 
   getData(key: any): Observable<any> {
@@ -125,7 +125,9 @@ export class WidgetUserService {
       parsedData[key] = new Date().getTime()
       localStorage.setItem('timeCheck', JSON.stringify(parsedData))
     } else {
-      localStorage.setItem('timeCheck', JSON.stringify({ key: new Date().getTime() }))
+      const data: any = {}
+      data[key] = new Date().getTime()
+      localStorage.setItem('timeCheck', JSON.stringify(data))
     }
   }
 

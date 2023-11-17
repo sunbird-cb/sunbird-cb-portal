@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="user-name flex margin-left-m">
-            <p class="margin-remove " (click)="gotoUserProfile()">{{userInfo.firstName}}</p>
+            <p class="margin-remove text-ellipses"  (click)="gotoUserProfile()">{{userInfo.firstName}} {{userInfo.lastName}}</p>
             <mat-icon class="ws-mat-default-text mr-3" (click)="gotoUserProfile()">chevron_right</mat-icon>
         </div>
     </div>
@@ -43,7 +43,7 @@
               <div class="stats-data margin-bottom-m">
                 <img class="stats-icon" width="20" height="20" [src]="stats.icon">
                 <div class="stats-title">{{stats.label}}</div>
-                <div class="stats-count ws-mat-default-text">{{countdata[stats.key] ||'0'}}</div>
+                <div class="stats-count ws-mat-default-text" >{{ countdata[stats.key]}}</div>
               </div>
             </ng-container>
           </ng-container>

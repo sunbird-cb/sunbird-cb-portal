@@ -81,16 +81,16 @@ export class NetworkHubComponent implements OnInit {
     console.log("payload - ", payload);
     obj.connecting = true;
     this.homePageService.connectToNetwork(payload).subscribe(
-      (res: any) => {
-        console.log(res)
+      (_res: any) => {
         this.fetchNetworkRecommendations();
         obj.connecting = false;
         this.matSnackBar.open("Connection request sent successfully!");
       },
       (error: HttpErrorResponse) => {
-        console.log(error)
-        obj.connecting = true;
-        this.matSnackBar.open("Unable to connect due to some error!");
+        if (!error.ok) {
+          obj.connecting = true;
+          this.matSnackBar.open("Unable to connect due to some error!");
+        }
       }
     );
   }

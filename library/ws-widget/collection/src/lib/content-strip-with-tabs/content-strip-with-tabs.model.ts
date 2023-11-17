@@ -51,6 +51,7 @@ export namespace NsContentStripWithTabs {
     stripBackground?: string
     noDataWidget?: NsWidgetResolver.IRenderConfigWithAnyData
     loader?: boolean
+    loaderWidgets?: any
     errorWidget?: NsWidgetResolver.IRenderConfigWithAnyData
     refreshEvent?: Record<'eventType' | 'from', string>
     fetchLikes?: boolean

@@ -603,7 +603,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     //   }
     // )
     this.userSvc.fetchUserBatchList(userId).subscribe(
-      (courses: NsContent.ICourse[]) => {
+      (result: any) => {
+        const courses: NsContent.ICourse[] = result && result.courses
         this.userEnrollmentList = courses
         let enrolledCourse: NsContent.ICourse | undefined
         if (this.content && this.content.identifier && !this.forPreview) {
@@ -828,7 +829,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         request: {
           userId,
           programId: this.content.identifier,
-          batchId: this.content.batches[0].batchId, // as of now cureted program only one batch is coming need to check and modify
+          // as of now cureted program only one batch is coming need to check and modify
+          batchId: this.contentReadData && this.contentReadData.batches[0].batchId, 
         },
       }
       this.contentSvc.autoAssignCuratedBatchApi(req).subscribe(

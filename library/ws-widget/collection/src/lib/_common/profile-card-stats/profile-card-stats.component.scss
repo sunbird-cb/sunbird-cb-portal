@@ -88,6 +88,7 @@
         }
     }
     .user-name {
+        width: 250px;
         opacity: 1;
         font-family: "Montserrat-SemiBold";
         font-size: 1rem;
@@ -96,10 +97,15 @@
         letter-spacing: 0.12px;
         line-height: 24px;
         cursor: pointer;
-
-    }
-    mat-icon {
-      cursor: pointer;
+        p {
+          white-space:nowrap;
+          overflow:hidden;
+          text-overflow:ellipsis;
+        }
+        mat-icon {
+          cursor: pointer;
+          float:right;
+        }
     }
 
 }
@@ -193,3 +199,9 @@
   }
 }
 
+.text-ellipses {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px; 
+}

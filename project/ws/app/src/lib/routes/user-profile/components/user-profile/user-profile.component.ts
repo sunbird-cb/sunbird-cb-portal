@@ -1450,7 +1450,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     reqUpdates.request.profileDetails.personalDetails['knownLanguages']  = this.selectedKnowLangs
     reqUpdates.request.profileDetails.personalDetails['nationality']  = form.value.nationality
-    if (!this.isVerifiedAlready) {
+    if (!this.isVerifiedAlready && form.value.verifiedKarmayogi === true) {
       reqUpdates.request.profileDetails.verifiedKarmayogi = form.value.verifiedKarmayogi
     }
     this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(
@@ -1458,6 +1458,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.uploadSaveData = false
         if (res.params.status === 'success') {
           this.openSnackbar(this.toastSuccess.nativeElement.value)
+          this.router.navigate(['/app/person-profile/me'])
           if ('professionalDetails' in reqUpdates.request.profileDetails) {
             if ('personalDetails' in reqUpdates.request.profileDetails ||
               'employmentDetails' in reqUpdates.request.profileDetails ||
@@ -1467,14 +1468,15 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               if (res.result && res.result.personalDetails && res.result.personalDetails.status === 'success'
                 && res.result.transitionDetails.status === 'success') {
                 this.openSnackbar(this.toastSuccess.nativeElement.value)
-                this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+                // this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+                this.router.navigate(['/app/person-profile/me'])
               }
             } else {
               if (res.result && res.result.transitionDetails && res.result.transitionDetails.status === 'success') {
                 this.openSnackbar(this.toastSuccess.nativeElement.value)
-                this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+                // this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+                this.router.navigate(['/app/person-profile/me'])
               }
-
             }
           } else {
             if ('personalDetails' in reqUpdates.request.profileDetails ||
@@ -1484,7 +1486,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               'skills' in reqUpdates.request.profileDetails) {
               if (res.result && res.result.personalDetails && res.result.personalDetails.status === 'success') {
                 this.openSnackbar(this.toastSuccess.nativeElement.value)
-                this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+                // this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+                this.router.navigate(['/app/person-profile/me'])
               }
             } else {
               // this.uploadSaveData = false
