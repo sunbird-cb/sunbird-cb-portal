@@ -204,7 +204,7 @@
                 <div class="flex flex-1">
 
                   <mat-form-field appearance="outline" class="margin-top-s" id="email">
-                    <input id="email" name="emailField" autocomplete="off" type="email" maxlength="320"  (input)="emailVerification($event.target.value)" matInput placeholder="Enter your email id" #email
+                    <input id="email" name="emailField" autocomplete="off" type="email" maxlength="320"  (input)="emailVerification($event.target.value)" matInput placeholder="Enter your email address" #email
                       formControlName="email" i18n-aria-label aria-label="Email input">
                     <!-- <mat-hint>Please enter a government email ID</mat-hint> -->
                   <mat-icon matSuffix class="ws-mat-green-text margin-xs" svgIcon="verified" [hidden]="!isEmailVerified"></mat-icon>
@@ -223,7 +223,7 @@
                     <!-- <mat-hint class="pos-hint">Do not have a government email id?</mat-hint> -->
                   </mat-form-field>
                 </div>
-                <a class="pos-hint help-request ws-mat-black60-text" id="org-field">Do not have a government email id?<span class="float-right ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo('Domain')">Request for help</span></a>
+                <a class="pos-hint help-request ws-mat-black60-text" id="org-field">Do not have a government email address?<span class="float-right ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo('Domain')">Request for help</span></a>
 
                 <div *ngIf="!isEmailVerified" class="flex flex-1 margin-top-s justify-end">
                   <button *ngIf="!otpEmailSend" mat-raised-button type="button" (click)="sendOtpEmail()"

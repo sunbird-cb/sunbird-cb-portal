@@ -166,9 +166,9 @@ TODO: edit option while preview Mode
               <ng-container *ngIf="!isBatchInProgress && currentCourseBatchId && getStartDate !== 'NA'">
                 <span class="mat-subheading-1" i18n> Batch will start {{getStartDate}}!!.</span>
               </ng-container>
-              <ng-container *ngIf="!this.content['batches'] || this.content['batches']?.length <= 0">
+              <!-- <ng-container *ngIf="!this.content['batches'] || this.content['batches']?.length <= 0">
                 <span class="mat-subheading-1" i18n> No Active Batches!.</span>
-              </ng-container>
+              </ng-container> -->
               <ng-container *ngIf="
               isBatchInProgress &&
               (actionBtnStatus === 'grant' &&
