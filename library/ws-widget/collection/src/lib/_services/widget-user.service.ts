@@ -97,7 +97,6 @@ export class WidgetUserService {
   }
 
   checkStorageData(key: any) {
-    debugger
     const checkTime = localStorage.getItem('timeCheck')
     if (checkTime) {
       const parsedData = JSON.parse(checkTime)

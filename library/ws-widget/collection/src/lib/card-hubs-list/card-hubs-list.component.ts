@@ -80,9 +80,8 @@ export class CardHubsListComponent extends WidgetBaseComponent
           } else if (event.url.includes('/page/learn') || event.url.includes('/app/toc')) {
             this.activeRoute = 'Learn'
           } else if (event.url.includes('/app/discussion-forum')) {
-            alert()
             this.activeRoute = 'Discuss'
-          } else if (event.url.includes('app/network-v2')) {
+          } else if (event.url.includes('app/network-v2') || event.url.includes('app/person-profile') || event.url.includes('app/user-profile')) {
             this.activeRoute = 'Network'
           } else if (event.url.includes('app/careers')) {
             this.activeRoute = 'Career'

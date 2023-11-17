@@ -761,6 +761,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     if (currentStrip && currentTabFromMap && !currentTabFromMap.computeDataOnClick) {
       if (currentTabFromMap.requestRequired && currentTabFromMap.request) {
         // call API to get tab data and process
+        // this.processStrip(currentStrip, [], 'fetching', true, null)
         if (currentTabFromMap.request.searchV6) {
           this.getTabDataByNewReqSearchV6(currentStrip, tabEvent.index, currentTabFromMap, true)
         } else if (currentTabFromMap.request.trendingSearch) {
