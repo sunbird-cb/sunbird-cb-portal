@@ -1,6 +1,12 @@
 .home-container {
     max-width: 1200px;
 }
+.font-semibold {
+    font-weight: 600!important;
+}
+.network-inner {
+    overflow: hidden;
+}
 
 .fix-ww {
     margin-left: auto;
@@ -46,14 +52,16 @@
     .network-suggestion {
         flex-direction: column;
     }
-
+    
     .left {
-        width: 92%;
+        width: 100%;
         padding: 0 16px;
+        box-sizing: border-box;
     }
     
     .right {
-        width: 92%;
+        width: 100%;
         padding: 0 16px;
+        box-sizing: border-box;
     }
 }

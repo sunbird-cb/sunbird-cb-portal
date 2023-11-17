@@ -47,6 +47,7 @@ interface IStripUnitContentData {
   showOnLoader: boolean
   showOnError: boolean
   stripBackground?: string
+  secondaryHeading?: any
   viewMoreUrl: {
     path: string
     queryParams: any
@@ -655,6 +656,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       stripName: strip.name,
       mode: strip.mode,
       stripBackground: strip.stripBackground,
+      secondaryHeading: strip.secondaryHeading,
       widgets:
         fetchStatus === 'done'
           ? [

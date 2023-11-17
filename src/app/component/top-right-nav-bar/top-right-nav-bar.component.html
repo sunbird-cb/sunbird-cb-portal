@@ -15,7 +15,7 @@
 <ul class="right-side-nav-items">
     <ng-container *ngFor="let rnc of rightNavConfig?.topRightNavConfig">
         <li *ngIf="rnc.section === 'download' && rnc.active && item.type === 'downloadButton'" class="download-app-chip" (click)="openDialog()">
-            <span>Download App</span>
+            <span class="mat-body-2">Download App</span>
         </li>
         <li *ngIf="item.type === 'fontButton' && rnc.section === 'font-setting' && rnc.active">
             <ws-font-setting></ws-font-setting>

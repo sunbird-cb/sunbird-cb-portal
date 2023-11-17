@@ -24,7 +24,8 @@ import { NoDataComponent } from '../component/no-data/no-data.component';
 import { SharedModule } from '../shared/shared.module';
 import { WeeklyClapsModule } from '@sunbird-cb/collection/src/lib/_common/weekly-claps/weekly-claps.module';
 import { HomePageService } from '../services/home-page.service';
-import { HomeContainerComponent } from '../component/home-container/home-container.component.ts';
+import { HomeContainerComponent } from '../component/home-container/home-container.component';
+
 import { DiscussHubComponent } from './home/discuss-hub/discuss-hub.component';
 import { NetworkHubComponent } from './home/network-hub/network-hub.component';
 
