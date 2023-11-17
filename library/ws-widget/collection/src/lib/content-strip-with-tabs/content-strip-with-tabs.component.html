@@ -117,8 +117,9 @@
                       <div>
                         <!-- <ng-container [ngTemplateOutlet]="loader" *ngIf="stripsResultDataMap[key]?.showOnLoader">
                         </ng-container> -->
-                        <div *ngIf="stripsResultDataMap && stripsResultDataMap[key]?.showOnLoader" class="text-center my-2">
-                              <h1> LOAING -- {{key}} </h1>
+                        <div *ngIf="stripsResultDataMap && stripsResultDataMap[key]?.showOnLoader ||
+                        !tab?.widgets || !tab?.widgets?.length" 
+                        class="text-center my-2">
                               <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
                                       [loadStatus]="'fetching'">
                                 <ng-container *ngFor="let widget of stripsResultDataMap[key]?.loaderWidgets; trackBy: tracker">
@@ -126,26 +127,20 @@
                                 </ng-container>
                               </ws-utils-horizontal-scroller-v2>
                         </div>
-                        <!-- <ng-container *ngIf="key === 'continueLearning'"> -->
                         <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
                           *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
                           [loadStatus]="'done'">
-                          <ng-container *ngFor="let widget of tab.widgets| slice:0:(tab.maxWidgets || stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets); trackBy: tracker">
-                            <!-- <ng-container *ngIf="widget.widgetData.context.pageSection === 'continueLearning' "> -->
-                            <!-- <ng-container *ngIf="widget.widgetData.content.completionPercentage !== 100"
-                              [wsResolverWidget]="widget"></ng-container> -->
+                          <ng-container *ngFor="let widget of tab.widgets| slice:0:(tab.maxWidgets ||
+                          stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets); trackBy: tracker">
                               <ng-container [wsResolverWidget]="widget"></ng-container>
-                            <!-- </ng-container> -->
                           </ng-container>
                         </ws-utils-horizontal-scroller-v2>
-                        <!-- </ng-container> -->
                       </div>
                     </mat-tab>
                   </mat-tab-group>
                 </ng-container>
                 <ng-container *ngIf="!stripsResultDataMap[key].tabs || !stripsResultDataMap[key].tabs.length">
                   <div *ngIf="stripsResultDataMap && stripsResultDataMap[key]?.showOnLoader" class="text-center my-2">
-                        <h1> LOAING -- {{key}} </h1>
                         <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
                                 [loadStatus]="'fetching'">
                           <ng-container *ngFor="let widget of stripsResultDataMap[key]?.loaderWidgets; trackBy: tracker">
