@@ -47,6 +47,7 @@ interface IStripUnitContentData {
   showOnLoader: boolean
   showOnError: boolean
   stripBackground?: string
+  secondaryHeading?: any
   viewMoreUrl: {
     path: string
     queryParams: any
@@ -266,7 +267,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       }
       // tslint:disable-next-line: deprecation
       this.userSvc.fetchUserBatchList(userId, queryParams).subscribe(
-        courses => {
+        (result: any) => {
+          let courses = result && result.courses
           const showViewMore = Boolean(
             courses.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
           )
@@ -655,6 +657,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       stripName: strip.name,
       mode: strip.mode,
       stripBackground: strip.stripBackground,
+      secondaryHeading: strip.secondaryHeading,
       widgets:
         fetchStatus === 'done'
           ? [

@@ -23,7 +23,6 @@ export class ProfileCardStatsComponent implements OnInit {
   ngOnInit() {
     if(this.activatedRoute.snapshot.data.pageData) {
       this.statsData = this.activatedRoute.snapshot.data.pageData.data && this.activatedRoute.snapshot.data.pageData.data.profileStats || []
-      // console.log(this.activatedRoute.snapshot.data.pageData.data,'lllllllllllll')
     }
     this.userInfo =  this.configSvc && this.configSvc.userProfile
     this.getCounts();
@@ -39,15 +38,12 @@ export class ProfileCardStatsComponent implements OnInit {
       inProgress: 0,
       learningHours: 0
     }
-    if(enrollList){
-      enrollList.forEach((ele:any)=> {
-        if(ele.issuedCertificates.length > 0){
-          this.countdata.certificate = this.countdata.certificate + 1
-        }
-        if(ele.completionPercentage < 100){
-          this.countdata.inProgress = this.countdata.inProgress + 1
-        }
-      })
+    if(enrollList.userCourseEnrolmentInfo){
+      this.countdata = {
+        certificate: enrollList.userCourseEnrolmentInfo.certificatesIssued,
+        inProgress: enrollList.userCourseEnrolmentInfo.coursesInProgress,
+        learningHours: enrollList.userCourseEnrolmentInfo.timeSpentOnCompletedCourses
+      }
     }
   }
   gotoUserProfile(){

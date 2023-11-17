@@ -12,6 +12,7 @@ export const environment: IEnvironment = {
   azureHost: (window as { [key: string]: any })['env']['azureHost'] || '',
   contentHost: (window as { [key: string]: any })['env']['contentHost'] || '',
   azureBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
+  apiCache: (window as { [key: string]: any })['env']['apiCache'] || 0,
   portals: (window as { [key: string]: any })['env']['portals'] || [],
   // mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
   // spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',
@@ -74,7 +75,8 @@ interface IEnvironment {
   helpEmail: string,
   cdnContentHost: string,
   cdnContentBucket: string,
-  supportEmail: string
+  supportEmail: string,
+  apiCache: number
 }
 
 // import { AnyCnameRecord } from 'dns'
