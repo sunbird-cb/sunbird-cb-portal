@@ -13,14 +13,6 @@
         </div>
         
         <div class="flex flex-col">
-            <ng-container *ngIf="!loadSkeleton && !enableDiscussion">
-                <div class="flex flex-col items-center gap-4 p-10">
-                    <img src="./../../../fusion-assets/images/new-home/chat.svg" alt="chat img" />
-                    <div class="text-sm text-center">Do you have any questions, suggestions or, ideas in your mind? Post it.</div>
-                    <button class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide" (click)="handleButtonClick()">Start discussion</button>
-                </div>
-            </ng-container>
-
             <ng-container *ngIf="loadSkeleton">
                 <div class="flex flex-col gap-3 p-5">
                     <ws-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-skeleton-loader>
@@ -43,10 +35,28 @@
                 </div>
             </ng-container>
 
-            <ng-container *ngIf="!loadSkeleton && enableDiscussion">
-                <ws-discussion-info></ws-discussion-info>
-                <hr class="w-full bg-gray-200 border-b-1 opacity-50 m-0">
-                <ws-discussion-info></ws-discussion-info>
+            <ng-container *ngIf="!discussion.loadSkeleton">
+                <ng-container *ngIf="!discussion.enableDiscussion && !discussion.error">
+                    <div class="flex flex-col items-center gap-4 p-10">
+                        <img src="./../../../fusion-assets/images/new-home/chat.svg" alt="chat img" />
+                        <div class="text-sm text-center">Do you have any questions, suggestions or, ideas in your mind? Post it.</div>
+                        <button class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}">Start discussion</button>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="discussion.enableDiscussion">
+                    <ws-discussion-info></ws-discussion-info>
+                    <hr class="w-full bg-gray-200 border-b-1 opacity-50 m-0">
+                    <ws-discussion-info></ws-discussion-info>
+                </ng-container>
+                
+                <ng-container *ngIf="discussion.error">
+                    <div class="flex flex-col items-center gap-3 p-10">
+                        <mat-icon class="text-2xl text-red-600 error-icon">error</mat-icon>
+                        <div class="text-xl font-medium">No data found!</div>
+                        <div class="text-sm text-center">Unable to fetch discussion info due to some error.</div>
+                    </div>
+                </ng-container>
             </ng-container>
         </div>
     </div>

@@ -2,6 +2,7 @@ import { AUTO_STYLE, animate, state, transition, trigger,style } from '@angular/
 import { Component, OnInit } from '@angular/core';
 import { HomePageService } from 'src/app/services/home-page.service';
 import { ConfigurationsService } from '@sunbird-cb/utils'
+import { HttpErrorResponse } from '@angular/common/http';
 
 const DEFAULT_DURATION = 500;
 
@@ -27,20 +28,28 @@ const noData = {
 })
 export class InsightSideBarComponent implements OnInit {
   profileDataLoading: boolean = true
-  enableDiscussion: boolean = false
-  loadSkeleton: boolean = false
+  
   noDataValue : {} | undefined
   clapsDataLoading: boolean = true
   collapsed = false
   userData: any
   insightsData: any
+  discussion = {
+    enableDiscussion: false,
+    discussionData: undefined,
+    loadSkeleton: false,
+    error: false
+  };
+  
   constructor(private homePageSvc:HomePageService, private configSvc:ConfigurationsService) { }
 
   ngOnInit() {
     this.userData = this.configSvc && this.configSvc.userProfile
     this.getInsights()
     this.noDataValue = noData
+    this.getDiscussionsData();
   }
+
   getInsights() {
     this.profileDataLoading = true
     // const organisation = this.userData.
@@ -54,7 +63,8 @@ export class InsightSideBarComponent implements OnInit {
               ]
           }
       }
-  }
+    }
+
     this.homePageSvc.getInsightsData(request).subscribe((res: any) => {
       if(res && res.result && res.result.response) {
         this.insightsData = res.result.response
@@ -116,14 +126,23 @@ export class InsightSideBarComponent implements OnInit {
     this.clapsDataLoading = false
   }
 
-  handleButtonClick(): void {
-    this.loadSkeleton = true
-    setTimeout(() => {
-      this.loadSkeleton = false
-      this.enableDiscussion = true
-    }, 1500)
-    
+  getDiscussionsData(): void {
+    this.discussion.loadSkeleton = true;
+    this.homePageSvc.getDiscussionsData().subscribe(
+      (res: any) => {
+        this.discussion.loadSkeleton = false;
+        this.discussion.enableDiscussion = true;
+        console.log("discussion res - ", res);
+      },
+      (error: HttpErrorResponse) => {
+        if (!error.ok) {
+          this.discussion.loadSkeleton = false;
+          this.discussion.error = true;
+        }
+      }
+    );
   }
+
   expandCollapse(event:any) {
     this.collapsed = event
   }
