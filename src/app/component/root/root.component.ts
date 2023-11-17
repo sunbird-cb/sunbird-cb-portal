@@ -22,6 +22,7 @@ import {
 } from '@angular/router'
 // import { interval, concat, timer } from 'rxjs'
 import { BtnPageBackService } from '@sunbird-cb/collection'
+import { HttpClient } from '@angular/common/http'
 import {
   // AuthKeycloakService,
   ConfigurationsService,
@@ -43,6 +44,8 @@ import { environment } from '../../../environments/environment'
 import { MatDialog } from '@angular/material'
 import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component'
 import { concat, interval, timer } from 'rxjs'
+import { of } from 'rxjs'
+import { catchError, map } from 'rxjs/operators'
 // import { AppIntroComponent } from '../app-intro/app-intro.component'
 
 @Component({
@@ -66,7 +69,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   isXSmall$ = this.valueSvc.isXSmall$
   routeChangeInProgress = false
   showNavbar = true
-  showFooter = true
+  showFooter = false
   currentUrl!: string
   customHeight = false
   isNavBarRequired = true
@@ -78,6 +81,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   showTour: boolean = false
   currentRouteData: any = []
   loggedinUser = !!(this.configSvc.userProfile && this.configSvc.userProfile.userId)
+  headerFooterConfigData:any = {};
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -85,6 +89,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
     private logger: LoggerService,
     private swUpdate: SwUpdate,
     private dialog: MatDialog,
+    private http: HttpClient,
     // public authSvc: AuthKeycloakService,
     public configSvc: ConfigurationsService,
     private valueSvc: ValueService,
@@ -94,9 +99,14 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
     private rootSvc: RootService,
     private btnBackSvc: BtnPageBackService,
     private changeDetector: ChangeDetectorRef,
-    private utilitySvc: UtilityService,
+    private utilitySvc: UtilityService
     // private dialogRef: MatDialogRef<any>,
   ) {
+    this.getHeaderFooterConfiguration().subscribe((sectionData)=>{
+      console.log('headerFooterConfigData',sectionData)
+      this.headerFooterConfigData =  sectionData.data;
+      this.showFooter = true;
+    })
     if (window.location.pathname.includes('/public/home')
       || window.location.pathname.includes('/public/toc/')
       || window.location.pathname.includes('/viewer/')
@@ -204,7 +214,9 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
     // }
     this.router.events.subscribe((event: any) => {
+      
       if (event instanceof NavigationEnd) {
+        
         if (event.url.includes('/setup/')) {
           this.isSetupPage = true
         }
@@ -229,6 +241,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
         this.currentUrl = event.url
         if (this.currentUrl.includes('/public/home')) {
           this.customHeight = true
+          
         } else {
           this.customHeight = false
         }
@@ -275,13 +288,14 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
         // if (this.appStartRaised) {
         //   this.telemetrySvc.audit(WsEvents.WsAuditTypes.Created, 'Login', {})
         //   this.appStartRaised = false
-        // }
+        // }        
         this.openIntro()
       }
     })
     this.rootSvc.showNavbarDisplay$.pipe(delay(500)).subscribe(display => {
       this.showNavbar = display
     })
+    
   }
 
   raiseAppStartTelemetry() {
@@ -386,6 +400,15 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
     })
     this.showTour = showTour
     return showTour
+  }
+
+  getHeaderFooterConfiguration() {
+    let baseUrl = this.configSvc.sitePath;
+    console.log('baseUrl', baseUrl+'/page/home.json');
+    return this.http.get(baseUrl+'/page/home.json').pipe(
+      map(data => ({ data, error: null })),
+      catchError(err => of({ data: null, error: err })),
+    )
   }
 
   ngAfterViewChecked() {

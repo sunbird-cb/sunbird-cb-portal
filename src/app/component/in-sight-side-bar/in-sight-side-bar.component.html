@@ -1,0 +1,105 @@
+<div class="margin-bottom-m margin-top-m">
+    <ws-widget-profile-card-stats (expandCollapse)="expandCollapse($event)" [insightsData]="insightsData" [isLoading]="profileDataLoading"></ws-widget-profile-card-stats>
+</div>
+<section class="hidden md:block">
+    <section class="collapsible" [@collapse]="collapsed">
+        <div class="margin-bottom-m" >
+            <ws-widget-weekly-claps [insightsData]="insightsData" [isLoading]="clapsDataLoading"></ws-widget-weekly-claps>
+        </div>
+        <div class="flex flex-col discussion-card margin-bottom-m">
+            <div class="flex gap-1 mat-subheading-1 p-4">My Discussions
+                <mat-icon class="ws-mat-default-text">
+                    chevron_right
+                </mat-icon>
+            </div>
+            
+            <div class="flex flex-col">
+                <ng-container *ngIf="discussion.loadSkeleton">
+                    <div class="flex flex-col gap-3 p-5">
+                        <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-widget-skeleton-loader>
+                        <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-widget-skeleton-loader>
+                        <div class="flex flex-row gap-5">
+                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                        </div>
+                    </div>
+                    <hr class="w-full bg-gray-200 border-b-1 opacity-50 m-0">
+                    <div class="flex flex-col gap-3 p-5">
+                        <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-widget-skeleton-loader>
+                        <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-widget-skeleton-loader>
+                        <div class="flex flex-row gap-5">
+                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="!discussion.loadSkeleton">
+                    <ng-container *ngIf="(!discussion.data || !discussion?.data?.latestPosts.length) && !discussion.error">
+                        <div class="flex flex-col items-center gap-4 p-10">
+                            <img src="./../../../fusion-assets/images/new-home/chat.svg" alt="chat img" />
+                            <div class="text-sm text-center">Do you have any questions, suggestions or, ideas in your mind? Post it.</div>
+                            <button class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}">Start discussion</button>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="discussion?.data?.latestPosts">
+                        <ws-discussion-info [dataToBind]="discussion?.data?.latestPosts[0]"></ws-discussion-info>
+                        <hr class="w-full bg-gray-200 border-b-1 opacity-50 m-0">
+                        <ws-discussion-info [dataToBind]="discussion?.data?.latestPosts[1]"></ws-discussion-info>
+                    </ng-container>
+                    
+                    <ng-container *ngIf="discussion.error">
+                        <div class="flex flex-col items-center gap-3 p-10">
+                            <mat-icon class="text-2xl text-red-600 error-icon">error</mat-icon>
+                            <div class="text-xl font-medium">No data found!</div>
+                            <div class="text-sm text-center">Unable to fetch discussion info due to some error.</div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+
+        <div class="flex flex-col discussion-card margin-bottom-m" *ngIf="pendingRequestData?.result?.data?.length">
+            <div class="network-pending-requests-container">
+                <span class="pending-dot">
+
+                </span>
+                <div class="pending-request-heading" (click)="navigateTo()">
+                    See all pending requests <span class="arrow"> <img src="assets/icons/home/forward_arrow.svg"></span>
+                </div>
+                <div class="pending-request-thumbnails">
+                    <ul>
+                        <li *ngFor="let item of pendingRequestData.result.data" (click)="moveToUserProile(item?.id)">
+                            <ws-widget-avatar-photo [name]="item?.fullName" [photoUrl]="item?.photo" size="s">
+                            </ws-widget-avatar-photo>
+                        </li>
+                    </ul>
+                </div>
+                <div class="pending-request-counts">
+                    <span *ngIf="pendingRequestData?.result?.data?.length > 3">{{ (pendingRequestData.result.data.length - 3) }}</span>
+                    <span *ngIf="!(pendingRequestData?.result?.data?.length > 3)">{{pendingRequestData.result.data.length}} Request</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col discussion-card margin-bottom-m" *ngIf="pendingRequestSkeleton">
+            <div class="network-pending-requests-container flex justify-between">
+                
+                <div class="pending-request-heading">
+                    <ws-widget-skeleton-loader [width]="'190px'" [height]="'16px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+                </div>
+            
+                <div class="pending-request-counts">
+                    <ws-widget-skeleton-loader [width]="'75px'" [height]="'16px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- <ws-no-data [noDataValue]="noDataValue"></ws-no-data> -->
+    <div class="flex flex-col">
+        <ws-home-other-portal></ws-home-other-portal>
+    </div>
+</section>

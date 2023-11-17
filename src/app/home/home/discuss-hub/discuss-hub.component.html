@@ -1,0 +1,96 @@
+<div class="flex flex-row gap-2 mat-subheading-1 items-center">
+    <div>Go to discuss hub</div>
+    <mat-icon>
+        chevron_right
+    </mat-icon>
+</div>
+<div class="flex  gap-6 updates-on-posts">
+    <div class="discussion-card flex-1">
+        <div class="flex flex-col p-5 gap-4">
+            <div class="flex flex-row gap-3 items-center mat-subheading-1">
+                <div class="flex flex-grow">Updates on your posts</div>
+                <div class="text-2xl ws-mat-default-text">
+                    <mat-icon class="cursor-pointer font-bold">add</mat-icon>
+                </div>
+            </div>
+
+            <div class="flex flex-col discussion-card gap-2 p-5">
+                <div class="ws-mat-default-text font-semibold">2 Upvote on your port</div>
+                <div class="">What are some merits and demerits of the Dicey’s Rule of law?</div>
+            </div>
+            <div class="flex flex-col discussion-card gap-2 p-5">
+                <div class="ws-mat-default-text font-semibold">Alex replied to your post</div>
+                <div class="">I think the solution to such a problem would be to extensively.</div>
+            </div>
+            <div class="flex flex-col discussion-card gap-2 p-5">
+                <div class="ws-mat-default-text font-semibold">1 Downvote on your post</div>
+                <div class="">What are some merits and demerits of the Dicey’s Rule of law?</div>
+            </div>
+            <div class="flex flex-row gap-2 p-4 ws-mat-default-text justify-center">
+                <div class="font-semibold">Show all</div>
+                <mat-icon>
+                    chevron_right
+                </mat-icon>
+            </div>
+        </div>
+    </div>
+
+    <div class="discussion-card flex-1">
+        <div class="flex-1">
+
+            <div class="flex flex-col p-5 gap-4 trending-discussion">
+                <div class="flex flex-row gap-3 mat-subheading-1">
+                    <div class="flex flex-grow">Trending discussions</div>
+                </div>
+
+                <ng-container *ngIf="discussion.loadSkeleton">
+                    <div class="flex flex-col gap-2">
+                        <div class="flex flex-col gap-3 p-5" *ngFor="let item of [1, 2, 3]">
+                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-widget-skeleton-loader>
+                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-widget-skeleton-loader>
+                            <div class="flex flex-row gap-5">
+                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                
+                <ng-container *ngIf="!discussion.loadSkeleton">
+                    <ng-container *ngIf="!discussion.data && !discussion.error">
+                        <div class="flex flex-col items-center gap-4 p-10">
+                            <img src="./../../../fusion-assets/images/new-home/chat.svg" alt="chat img" />
+                            <div class="text-sm text-center">Do you have any questions, suggestions or, ideas in your mind? Post it.
+                            </div>
+                            <button
+                                class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide"
+                                [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}">Start discussion</button>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="discussion.data">
+                        <div class="discussion-card" *ngFor="let data of this.discussion.data | slice:0:3">
+                            <ws-discussion-info [dataToBind]="data"></ws-discussion-info>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="discussion.error">
+                        <div class="flex flex-col items-center gap-3 p-10">
+                            <mat-icon class="text-2xl text-red-600 error-icon">error</mat-icon>
+                            <div class="text-xl font-medium">No data found!</div>
+                            <div class="text-sm text-center">Unable to fetch discussion info due to some error.</div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+        <div class="flex flex-row gap-2 p-4 ws-mat-default-text justify-center" *ngIf="!discussion.loadSkeleton || !discussion.error">
+            <div class="font-semibold cursor-pointer" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >Show all</div>
+            <mat-icon>
+                chevron_right
+            </mat-icon>
+        </div>
+    </div>
+</div>

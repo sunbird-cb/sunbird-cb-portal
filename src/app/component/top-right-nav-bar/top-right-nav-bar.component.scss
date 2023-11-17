@@ -1,0 +1,53 @@
+.right-side-nav-items {
+    display: inline-block;
+    margin: 12px 0;
+}
+
+.right-side-nav-items li {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.download-app-chip {
+    border-radius: 63px;
+    background: #F3962F;
+    color: #fff;
+    min-width: 99px;
+    text-align: center;
+    font-size: 14px;
+    height: 32px;
+}
+
+.download-app-chip span {
+    padding: 8px 16px;
+}
+
+.help-icon img{
+    vertical-align: middle;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .help-icon {
+      height: 20px;
+      width: 20px;
+    }
+    .download-app-chip {
+      display: none !important;
+    }
+    .download-app-chip-top-header {
+      border-radius: 63px;
+      background: #F3962F;
+      color: #fff;
+      min-width: 129px;
+      text-align: center;
+      padding: 6px 16px;
+      list-style: none;
+    }
+
+    .right-side-nav-items {
+        display: inline-block;
+        margin: 12px -3px;
+    }
+    
+  }

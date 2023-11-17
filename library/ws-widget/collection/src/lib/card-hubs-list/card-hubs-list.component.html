@@ -1,40 +1,46 @@
 <mat-card class="base-layout container-balanced" role="navigation">
   <mat-card-content>
     <div class="flex flex-1 flex-column" role="presentation">
-      <div class="flex flex-1 margin-bottom-xs margin-top-xs" role="menubar">
-        <a id="menuToggleMobile" class="flex cursor-pointer simple-hubs-link margin-left-0 menuToggleMobile" href="javascript:void(0)" role="menuitem"
+      <div class="flex flex-1 margin-bottom-xs margin-top-xs secondary-nav" role="menubar">
+        <!-- <a id="menuToggleMobile" class="flex cursor-pointer simple-hubs-link margin-left-0 menuToggleMobile" href="javascript:void(0)" role="menuitem"
           accesskey="H" i18n-aria-label (click)="toggleVisibility()">
 
           <mat-icon class="margin-right-xs ws-mat-default-text">menu</mat-icon>
           <span class="margin-auto ws-mat-default-text mat-subheading-2">EXPLORE</span>
-        </a>
-        <ng-container *ngIf="!visible && !isMobile" [@enterAnimation]="visible">
+        </a> -->
+        <ng-container [@enterAnimation]="visible">
           <div *ngFor="let hub of hubsList">
-            <ng-container *ngIf="hub.hubname == 'Discuss'">
+            <ng-container *ngIf="(hub.hubname == 'Discuss' && hub.active)">
               <a [id]="hub.hubname" class="simple-hubs-link cursor-pointer" i18n-aria-label role="menuitem" (click)="navigate()">
-                <span class="mat-body-2 margin-0 text-uppercase"> {{hub.hubname}}</span>
+                <img  [ngClass]="activeRoute === hub.hubname ? 'active-icon': 'mat-icon-disable'" src="/assets/icons/hubs/{{hub?.icon}}.svg" id="draft" alt="draft" title="draft" />
+                <span [ngClass]="activeRoute === hub.hubname ? 'active-text margin-8 text-gray': 'margin-8 text-gray'"> {{hub.hubname}} </span>
               </a>
             </ng-container>
-            <ng-container *ngIf="hub.hubname != 'Discuss'">
+            <ng-container *ngIf="hub.hubname != 'Discuss' && hub.active">
               <a class="simple-hubs-link cursor-pointer" [id]="hub.hubname" i18n-aria-label role="menuitem" [routerLink]="hub.path"
                 [attr.accesskey]="hub.accessKey">
-                <span class="mat-body-2 margin-0 text-uppercase"> {{hub.hubname}}</span>
+                <img [ngClass]="activeRoute === hub.hubname ? 'active-icon': 'mat-icon-disable'" src="/assets/icons/hubs/{{hub?.icon}}.svg" id="draft" alt="draft" title="draft" /> 
+                <span [ngClass]="activeRoute === hub.hubname ? 'active-text margin-8 text-gray': 'margin-8 text-gray'">  {{hub.hubname}}</span>
               </a>
 
             </ng-container>
 
           </div>
-          <a id="menuToggle2" class="flex cursor-pointer simple-hubs-link margin-left-xl" href="javascript:void(0)" role="menuitem"
+          <a id="menuToggle2" class="new-more flex cursor-pointer simple-hubs-link margin-left-xl" href="javascript:void(0)" role="menuitem"
             accesskey="H" i18n-aria-label (click)="toggleVisibility()">
 
-            <mat-icon class="margin-right-xs ws-mat-primary-text">more_horiz</mat-icon>
-            <span class="margin-auto ws-mat-primary-text mat-subheading-2">More</span>
+            <!-- <mat-icon class="margin-right-xs ws-mat-primary-text">more_horiz</mat-icon> -->
+            <span class="margin-auto ws-mat-primary-text flex">More
+              <img class="more-drop-down" *ngIf="!visible" src="assets/icons/top-nav/expand.svg"/> 
+              <img class="more-drop-down" *ngIf="visible" src="assets/icons/top-nav/collapse.svg"/> 
+            </span>
+            
           </a>
         </ng-container>
       </div>
 
       <div class="flex flex-col" *ngIf="visible" [@enterAnimation]="visible">
-        <div class="flex flex-1 margin-xs">
+        <div class="flex flex-1 margin-xs" *ngIf="inactiveHubList.length">
           <h4 class="mat-h4 nav_sub_heading">Hubs</h4>
         </div>
         <!-- <div class="flex"> -->
@@ -56,7 +62,7 @@
         </div>
         <div class="flex flex-1">
           <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">
-            <a class="flex flex-wrap mb-4" role="menuitem" [routerLink]="['/app/knowledge-resource/all']">
+            <a class="flex flex-wrap mb-4" role="menuitem" (click)="toggleVisibility()" [routerLink]="['/app/knowledge-resource/all']">
               <div class="icon ws-mat-primary-tags">
                 <mat-icon class=" m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
                   aria-hidden="true">menu_book</mat-icon>
@@ -68,7 +74,7 @@
               </div>
             </a>
 
-            <a class="flex flex-wrap mb-4" role="menuitem" [routerLink]="['/app/my-dashboard']">
+            <a class="flex flex-wrap mb-4" role="menuitem" (click)="toggleVisibility()" [routerLink]="['/app/my-dashboard']">
               <div class="icon ws-mat-primary-tags">
                 <mat-icon aria-hidden="false" class="mat-icon notranslate material-icons mat-icon-no-color" role="img"
                   aria-label="bar_chart" aria-labelledby="bar_chart"> bar_chart </mat-icon>
@@ -80,7 +86,7 @@
               </div>
             </a>
 
-            <a class="flex flex-wrap mb-4" role="menuitem" [routerLink]="['/app/profile/settings']">
+            <a class="flex flex-wrap mb-4" role="menuitem" (click)="toggleVisibility()" [routerLink]="['/app/profile/settings']">
               <div class="icon ws-mat-primary-tags">
                 <mat-icon class=" m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
                   aria-hidden="true">settings</mat-icon>
@@ -90,7 +96,7 @@
                 <div class="mat-caption cohorts-desc ws-mat-black60-text">Manage all your preferences here</div>
               </div>
             </a>
-            <a class="flex flex-wrap mb-4" role="menuitem" [routerLink]="['/app/setup']">
+            <!-- <a class="flex flex-wrap mb-4" role="menuitem" (click)="toggleVisibility()" [routerLink]="['/app/setup']">
               <div class="icon ws-mat-primary-tags">
                 <mat-icon class=" m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
                   aria-hidden="true">thumb_up</mat-icon>
@@ -99,18 +105,18 @@
                 <div class="margin-0 mat-subheading-2"> Interests </div>
                 <div class="mat-caption cohorts-desc ws-mat-black60-text">Manage topics of your interest and personalize your experience</div>
               </div>
-            </a>
+            </a> -->
           </div>
         </div>
 
-        <div class="flex flex-1 margin-xs">
+        <div class="flex flex-1 margin-xs" *ngIf="environment.portals.length">
           <h4 class="mat-h4 margin-bottom-remove nav_sub_heading">Quick links</h4>
         </div>
         <div class="flex flex-1">
           <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">
             <ng-container *ngFor="let portal of environment.portals | orderBy: 'sr'">
-              <ng-container *ngIf="portal.isPublic || isAllowed(portal.id)">
-                <a class="flex flex-wrap mb-4" role="menuitem" [attr.href]="portal.uriPath" target="_blank">
+              <ng-container *ngIf="(portal.isPublic || isAllowed(portal.id)) && portal.name !== 'Frac Dictionary'">
+                <a class="flex flex-wrap mb-4" role="menuitem" (click)="toggleVisibility()" [attr.href]="portal.uriPath" target="_blank">
                   <div class="icon ws-mat-primary-tags">
                     <mat-icon class="m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
                       aria-hidden="true">{{portal.icon || 'info'}}</mat-icon>
@@ -168,10 +174,8 @@
 </mat-card>
 
 <ng-template #userIndividualNew let-hubs="hubs">
-
-
-  <ng-container *ngIf="hubs.hubname == 'Discuss'">
-    <a [id]="hubs.hubname" class="flex flex-wrap mb-4" (click)="navigate()" role="menuitem" i18n-aria-label>
+  <ng-container *ngIf="hubs.hubname == 'Discuss' && !hubs.active">
+    <a [id]="hubs.hubname" class="flex flex-wrap mb-4" (click)="toggleVisibility(); navigate()" role="menuitem" i18n-aria-label>
       <div class="icon ws-mat-primary-tags">
         <!-- {{hubs.icon | json}} -->
         <!-- <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon> -->
@@ -186,8 +190,8 @@
     </a>
   </ng-container>
 
-  <ng-container *ngIf="hubs.hubname != 'Discuss'">
-    <a class="flex flex-wrap mb-4" [id]="hubs.hubname" [routerLink]="(hubs.path)" role="menuitem" i18n-aria-label>
+  <ng-container *ngIf="hubs.hubname != 'Discuss' && !hubs.active">
+    <a class="flex flex-wrap mb-4" [id]="hubs.hubname" (click)="toggleVisibility();" [routerLink]="(hubs.path)" role="menuitem" i18n-aria-label>
       <div class="icon ws-mat-primary-tags">
         <!-- {{hubs.icon | json}}
         <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon> -->

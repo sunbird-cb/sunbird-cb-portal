@@ -1,0 +1,14 @@
+.error-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 36px;
+}
+.updates-on-posts {
+    flex-direction: row;
+}
+
+@media only screen and (max-width: 768px) {
+    .updates-on-posts {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,35 @@
+
+.client-box {
+    width: 100%;
+    margin-top: 154px;
+}
+.customer-logos {
+    padding:20px 40px;
+    overflow: hidden;
+    background-color: #fff;
+}
+.client-img {
+    height: 48px;
+    margin-bottom: 8px;
+}
+.client-link {
+    text-decoration: none;
+    padding: 0px 15px;
+    border-right: 1px solid rgba(0, 0, 0, 0.16);
+    color: rgba(0, 0, 0, 0.87)!important;
+    width: 200px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+}
+// .client-link:last-child {
+//     border-right: none;
+// }
+.slider-item {
+    animation: animate 40s linear infinite;
+
+}
+@keyframes animate {
+	0% {transform: translateX(0);}
+  100% {transform: translatex(-3500px)}
+}

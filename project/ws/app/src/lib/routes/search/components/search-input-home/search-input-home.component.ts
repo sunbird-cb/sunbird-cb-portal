@@ -157,6 +157,7 @@ export class SearchInputHomeComponent implements OnInit, OnChanges {
         queryParamsHandling: 'merge',
       })
     }
+    localStorage.removeItem('activeRoute')
   }
 
   clearSearchText() {

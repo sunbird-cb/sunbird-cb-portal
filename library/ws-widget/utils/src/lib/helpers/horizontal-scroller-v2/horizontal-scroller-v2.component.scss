@@ -1,0 +1,119 @@
+@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
+
+$size-m: 16px;
+$size-xs: 8px;
+$spaceFromEnd: -$size-m;
+$spaceFromEnd: 0;
+
+.horizontal-scroll-container {
+  position: relative;
+  width: 100%;
+  width: inherit;
+  min-height: 100px;
+  // padding: 0 20px;
+  // margin-top: 24px;
+
+  @include breakpoint-xs {
+    padding: 0;
+  }
+}
+
+%btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 999;
+  height: 32px !important;
+  width:32px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+%navBtnRounded {
+  border-radius: 50%;
+  background-color: #1B2133 !important;
+  color: #fff !important;
+}
+
+.border-radius-xs {
+  border-radius: $size-xs !important;
+}
+
+.prevBtn {
+  @extend %btn;
+  @extend %navBtnRounded;
+  left: $spaceFromEnd;
+}
+
+.nextBtn {
+  @extend %btn;
+  @extend %navBtnRounded;
+  right: $spaceFromEnd;
+}
+
+.nextLoading {
+  @extend %btn;
+  padding: 0;
+  right: $spaceFromEnd;
+}
+
+// Changing scrollbar
+.horizontal-scroll-content {
+  // overflow-x: hidden;
+  overflow-y: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
+  flex-wrap: nowrap;
+  display: flex;
+  align-items: stretch;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    $scroll-size: 0px;
+    width: $scroll-size;
+    height: $scroll-size;
+  }
+}
+
+.dots-container {
+  padding: $size-xs;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include breakpoint-xs {
+    display: none;
+  }
+
+  .dot {
+    cursor: pointer;
+    height: 6px;
+    width: 6px;
+    margin: 0 4px;
+    background-color: rgba(0, 0, 0, 0.4);
+  //   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.5s ease !important;
+
+    @include breakpoint-xs {
+      height: 6px;
+      width: 6px;
+      margin: 0 4px;
+      display: none;
+    }
+  }
+
+  .dot.active {
+    border-radius: 4px;
+    background-color: #F3962F;
+    width: 16px;
+
+    @include breakpoint-xs {
+      height: 6px;
+      width: 6px;
+      display: none;
+    }
+  }
+}

@@ -2,14 +2,30 @@
 @import '~@sunbird-cb/design-system/src/styles/ws-vars';
 @import '~@sunbird-cb/design-system/src/styles/ws-mixins';
 
-
+.success-checkmark::after {
+  content: "✔";
+  position: absolute;
+  left: 25px;
+  top: 20px;
+  width: 11px;
+  height: 11px;
+  text-align: center;
+  border: 1px solid #1D8923;
+  background: #1D8923;
+  border-radius: 50%;
+  color: #fff;
+  line-height: 11px;
+  text-align: center;
+  font-size: 9px;
+}
 .circle-s {
-  border-radius: 10%;
-  width: 24px;
-  height: 24px;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top:-24px;
 
   img {
     border-radius: 10%;
@@ -26,12 +42,13 @@
 }
 
 .circle-m {
-  border-radius: 10%;
-  width: 40px !important;
-  height: 40px !important;
+  border-radius: 50%;
+  width: 72px !important;
+  height: 72px !important;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: -36px;
 
   img {
     border-radius: 10%;
@@ -48,7 +65,7 @@
 }
 
 .circle-l {
-  border-radius: 10%;
+  border-radius: 50%;
   width: 80px;
   height: 80px;
   display: flex;
@@ -70,7 +87,7 @@
 }
 
 .circle-xl {
-  border-radius: 10%;
+  border-radius: 50%;
   width: 105px;
   height: 105px;
   display: flex;
@@ -92,7 +109,7 @@
 }
 
 .circle-xxl {
-  border-radius: 10%;
+  border-radius: 50%;
   width: 145px;
   height: 145px;
   display: flex;
@@ -113,9 +130,9 @@
   }
 }
 .circle-l-xs{
-  border-radius: 4px;
-  width: 24px;
-  height: 24px;
+  border-radius: 50%;
+  width: 29px;
+  height: 29px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -134,7 +151,7 @@
   }
 }
 .circle-l-s {
-  border-radius: 4px;
+  border-radius: 50%;
   width: 80px;
   height: 80px;
   display: flex;
@@ -156,8 +173,8 @@
 }
 
 .circle-xl-s {
-  border-radius: 4px;
-  width: 152px;
+  border-radius: 50%;
+  width: 125px;
   height: 125px;
   display: flex;
   justify-content: center;
@@ -178,8 +195,8 @@
 }
 
 .circle-xxl-s {
-  border-radius: 4px;
-  width: 276px;
+  border-radius: 50%;
+  width: 208px;
   height: 208px;
   display: flex;
   justify-content: center;
@@ -197,4 +214,28 @@
     line-height: $size-xxl;
     letter-spacing: 0.2625px;
   }
+}
+
+.circle-r-m  {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    border-radius: 4px;
+    width: 276px;
+    height: 208px;
+  }
+
+  .initials {
+    color: #ffffff;
+    font-size: $size-m;
+    line-height: $size-xxl;
+    letter-spacing: 0.2625px;
+  }
+
+
 }

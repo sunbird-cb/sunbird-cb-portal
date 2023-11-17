@@ -284,14 +284,15 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
 
   getEnrollmentList() {
     if (this.enrollmentList) {
-      this.contentSvc.currentBatchEnrollmentList = this.enrollmentList
+      this.contentSvc.currentBatchEnrollmentList = this.enrollmentList.courses
     } else {
       let userId
       if (this.configSvc.userProfile) {
         userId = this.configSvc.userProfile.userId || ''
       }
       this.userSvc.fetchUserBatchList(userId).subscribe(
-        (courses: NsContent.ICourse[]) => {
+        (result: any) => {
+          const courses: NsContent.ICourse[] = result && result.courses
           this.contentSvc.currentBatchEnrollmentList = courses
         })
     }

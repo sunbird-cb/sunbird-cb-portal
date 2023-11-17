@@ -6,10 +6,11 @@ $banner-min-height: 243px;
 .banner-container {
   // max-height: 442px;
   min-height: $banner-min-height;
-  overflow: hidden;
+  // overflow-y: hidden;
   position: relative;
   margin: auto;
   border-radius: 12px;
+  padding-bottom: 40px;
 }
 
 
@@ -54,7 +55,7 @@ $banner-min-height: 243px;
   z-index: 2;
   padding: $size-xs $size-s;
   position: absolute;
-  bottom: 0;
+  bottom: 0px;
   left: 50%;
   border-radius: 12px;
   transform: translateX(-50%);
@@ -78,12 +79,15 @@ $banner-min-height: 243px;
 
     .dot {
       cursor: pointer;
-      height: $size-xs;
-      width: $size-xs;
-      margin: 0 6px;
+      // height: $size-xs;
+      // width: $size-xs;
+      // margin: 0 6px;
+      height: 6px;
+      width: 6px;
+      margin: 0 4px;
       // background-color: rgba(120, 120, 120, 0.75);
-      background-color: #d3d3d3;
-      box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+      background-color: rgba(0, 0, 0, 0.4);
+      // box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
       border-radius: 50%;
       display: inline-block;
       transition: background-color 0.5s ease !important;
@@ -96,13 +100,16 @@ $banner-min-height: 243px;
     }
 
     .dot.active {
-      background-color: #f0f0f0;
-      height: $size-xs + ($size-xs / 4);
-      width: $size-xs + ($size-xs / 4);
+      // background-color: #f0f0f0;
+      // height: $size-xs + ($size-xs / 4);
+      // width: $size-xs + ($size-xs / 4);
+      border-radius: 4px;
+      background-color: #F3962F;
+      width: 16px;
 
       @include breakpoint-xs {
-        height: $size-xs + ($size-xs / 4);
-        width: $size-xs + ($size-xs / 4);
+        // height: $size-xs + ($size-xs / 4);
+        // width: $size-xs + ($size-xs / 4);
       }
     }
   }
@@ -134,17 +141,28 @@ $banner-min-height: 243px;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  padding: $size-m;
   color: white;
   font-weight: bold;
-  font-size: $size-l;
-  z-index: 2;
-  border-radius: 0 3px 3px 0;
+  background-color: #1B2133 !important;
+  border-radius: 50%;
+  z-index: 999;
+  height: 32px !important;
+  width: 32px !important;
+  display: flex;
+  align-items: center;
+  margin-top: -16px;
+  justify-content: center;
+}
+
+.prev {
+  left: 0;
+  margin-left: -16px;
 }
 
 .next {
   right: 0;
-  border-radius: 3px 0 0 3px;
+  margin-right: -16px;
+ 
 }
 
 
