@@ -636,7 +636,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   private transformSkeletonToWidgets(
     strip: any
   ) {
-    return [1,2,3,4,5,6,7,7,8,9,10].map((_content) => ({
+    return [1, 2, 3, 4, 5, 6, 7, 7, 8, 9, 10].map(_content => ({
       widgetType: 'card',
       widgetSubType: 'cardContent',
       widgetHostClass: 'mb-2',

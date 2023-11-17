@@ -1,7 +1,7 @@
 <div class="margin-bottom-m margin-top-m">
     <ws-widget-profile-card-stats (expandCollapse)="expandCollapse($event)" [insightsData]="insightsData" [isLoading]="profileDataLoading"></ws-widget-profile-card-stats>
 </div>
-<section class="invisible md:visible">
+<section class="hidden md:block">
     <section class="collapsible" [@collapse]="collapsed">
         <div class="margin-bottom-m" >
             <ws-widget-weekly-claps [insightsData]="insightsData" [isLoading]="clapsDataLoading"></ws-widget-weekly-claps>

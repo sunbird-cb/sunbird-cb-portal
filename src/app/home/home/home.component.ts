@@ -136,7 +136,7 @@ export class HomeComponent implements OnInit {
   networkStripData = {};
   carrierStripData = {};
   clientList: {} | undefined
-  homeConfig = {}; 
+  homeConfig: any = {}; 
   constructor(private activatedRoute:ActivatedRoute) { }
 
   ngOnInit() { 
