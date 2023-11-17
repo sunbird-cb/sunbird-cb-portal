@@ -6,10 +6,6 @@
   <ng-container *ngIf="showParentError" [wsResolverWidget]="widgetData.errorWidget"></ng-container>
   <ng-container *ngIf="showParentNoData" [wsResolverWidget]="widgetData.noDataWidget"></ng-container>
   <ng-container *ngFor="let key of stripsKeyOrder; let i = index; trackBy: identify">
-    <div *ngIf="stripsResultDataMap && stripsResultDataMap[key]?.showOnLoader" class="text-center my-2">
-      <h1> LOADING .. . . </h1>
-      <mat-spinner [diameter]="40" [strokeWidth]="3"></mat-spinner>
-    </div>
     <ng-container *ngIf="isStripShowing(stripsResultDataMap[key])">
       <a name="{{stripsResultDataMap[key]?.stripTitle}}">
         <div *ngIf="stripsResultDataMap && (getLength(stripsResultDataMap[key]) ||
@@ -119,8 +115,17 @@
                         <span *ngIf="tab?.showTabDataCount">({{tab?.widgets?.length}})</span>
                       </ng-template>
                       <div>
-                        <ng-container [ngTemplateOutlet]="loader" *ngIf="stripsResultDataMap[key]?.showOnLoader">
-                        </ng-container>
+                        <!-- <ng-container [ngTemplateOutlet]="loader" *ngIf="stripsResultDataMap[key]?.showOnLoader">
+                        </ng-container> -->
+                        <div *ngIf="stripsResultDataMap && stripsResultDataMap[key]?.showOnLoader" class="text-center my-2">
+                              <h1> LOAING -- {{key}} </h1>
+                              <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
+                                      [loadStatus]="'fetching'">
+                                <ng-container *ngFor="let widget of stripsResultDataMap[key]?.loaderWidgets; trackBy: tracker">
+                                  <ng-container [wsResolverWidget]="widget"></ng-container>
+                                </ng-container>
+                              </ws-utils-horizontal-scroller-v2>
+                        </div>
                         <!-- <ng-container *ngIf="key === 'continueLearning'"> -->
                         <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
                           *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
@@ -139,8 +144,16 @@
                   </mat-tab-group>
                 </ng-container>
                 <ng-container *ngIf="!stripsResultDataMap[key].tabs || !stripsResultDataMap[key].tabs.length">
+                  <div *ngIf="stripsResultDataMap && stripsResultDataMap[key]?.showOnLoader" class="text-center my-2">
+                        <h1> LOAING -- {{key}} </h1>
+                        <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
+                                [loadStatus]="'fetching'">
+                          <ng-container *ngFor="let widget of stripsResultDataMap[key]?.loaderWidgets; trackBy: tracker">
+                            <ng-container [wsResolverWidget]="widget"></ng-container>
+                          </ng-container>
+                        </ws-utils-horizontal-scroller-v2>
+                  </div>
                   <div class="mt-6">
-    
                       <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
                       *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
                       [loadStatus]="'done'">
@@ -160,11 +173,4 @@
 
     </ng-container>
   </ng-container>
-</ng-template>
-
-<ng-template #loader>
-  <div  class="text-center my-2">
-    <h1> LOADING .. . . </h1>
-    <mat-spinner [diameter]="40" [strokeWidth]="3"></mat-spinner>
-  </div>
 </ng-template>
