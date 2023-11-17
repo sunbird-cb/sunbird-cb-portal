@@ -13,7 +13,7 @@
 </ul> -->
 
 <ul class="right-side-nav-items">
-    <ng-container *ngFor="let rnc of rightNavConfig?.topRightNavConfig">
+    <ng-container *ngFor="let rnc of rightNavConfig">
         <li *ngIf="rnc.section === 'download' && rnc.active && item.type === 'downloadButton'" class="download-app-chip" (click)="openDialog()">
             <span class="mat-body-2">Download App</span>
         </li>
