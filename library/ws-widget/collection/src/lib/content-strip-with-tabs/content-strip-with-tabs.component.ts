@@ -46,6 +46,7 @@ interface IStripUnitContentData {
   showOnNoData: boolean
   showOnLoader: boolean
   showOnError: boolean
+  loaderWidgets?: any
   stripBackground?: string
   secondaryHeading?: any
   viewMoreUrl: {
@@ -249,6 +250,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     calculateParentStatus = true,
   ) {
     // setting initial values
+    strip.loaderWidgets = this.transformSkeletonToWidgets(strip)
     this.processStrip(strip, [], 'fetching', false, null)
     this.fetchFromEnrollmentList(strip, calculateParentStatus)
     this.fetchFromSearchV6(strip, calculateParentStatus)
@@ -631,6 +633,19 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     }))
   }
 
+  private transformSkeletonToWidgets(
+    strip: any
+  ) {
+    return [1,2,3,4,5,6,7,7,8,9,10].map((_content) => ({
+      widgetType: 'card',
+      widgetSubType: 'cardContent',
+      widgetHostClass: 'mb-2',
+      widgetData: {
+        cardSubType: strip.loaderConfig && strip.loaderConfig.cardSubType || 'card-standard-skeleton',
+      },
+    }))
+  }
+
   private async processStrip(
     strip: NsContentStripWithTabs.IContentStripUnit,
     results: NsWidgetResolver.IRenderConfigWithAnyData[] = [],
@@ -656,6 +671,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       mode: strip.mode,
       stripBackground: strip.stripBackground,
       secondaryHeading: strip.secondaryHeading,
+      loaderWidgets: strip.loaderWidgets || [],
       widgets:
         fetchStatus === 'done'
           ? [
