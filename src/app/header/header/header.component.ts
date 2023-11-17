@@ -45,6 +45,24 @@ export class HeaderComponent implements OnInit {
     console.log('headerFooterConfigData', this.headerFooterConfigData);
   }
 
+  downloadApp() : void{
+    var userAgent = navigator.userAgent;
+
+    // Windows Phone must come first because its UA also contains "Android"
+    if (/windows phone/i.test(userAgent)) {
+      window.open('https://play.google.com/store/apps/details?id=com.igot.karmayogibharat&hl=en&gl=US','_blank');
+    }
+
+    if (/android/i.test(userAgent)) {
+        window.open('https://play.google.com/store/apps/details?id=com.igot.karmayogibharat&hl=en&gl=US','_blank');
+    }
+
+    // iOS detection from: http://stackoverflow.com/a/9039885/177710
+    if (/iPad|iPhone|iPod/.test(userAgent)) {
+        window.open('https://apps.apple.com/in/app/igot-karmayogi/id6443949491', '_blank');
+    }
+  }
+
   get navBarRequired(): boolean {
     return this.isNavBarRequired 
   }
