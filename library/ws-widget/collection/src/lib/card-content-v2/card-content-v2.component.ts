@@ -64,32 +64,37 @@ export class CardContentV2Component extends WidgetBaseComponent
       if (this.widgetData.context && this.widgetData.context.pageSection === 'curatedCollections') {
         this.widgetData.content.linkUrl = '/app/curatedCollections/'+ this.widgetData.content.identifier
       }
-      this.btnPlaylistConfig = {
-        contentId: this.widgetData.content.identifier,
-        contentName: this.widgetData.content.name,
-        contentType: this.widgetData.content.contentType,
-        primaryCategory: this.widgetData.content.primaryCategory,
-        mode: 'dialog',
-      }
-      this.btnGoalsConfig = {
-        contentId: this.widgetData.content.identifier,
-        contentName: this.widgetData.content.name,
-        contentType: this.widgetData.content.contentType,
-        primaryCategory: this.widgetData.content.primaryCategory,
-
+      if(this.widgetData.content) {
+        this.btnPlaylistConfig = {
+          contentId: this.widgetData.content.identifier,
+          contentName: this.widgetData.content.name,
+          contentType: this.widgetData.content.contentType,
+          primaryCategory: this.widgetData.content.primaryCategory,
+          mode: 'dialog',
+        }
+        this.btnGoalsConfig = {
+          contentId: this.widgetData.content.identifier,
+          contentName: this.widgetData.content.name,
+          contentType: this.widgetData.content.contentType,
+          primaryCategory: this.widgetData.content.primaryCategory,
+  
+        }
       }
       this.modifySensibleContentRating()
     }
 
-    // required for knowledge board
-    // TODO: make it more generic
-    this.showFlip = Boolean(this.widgetData.content.reason)
-    if (this.widgetData.content.mode) {
-      this.showIsMode = this.isLatest(this.convertToISODate(this.widgetData.content.addedOn))
-    }
-    if (this.widgetData.contentTags) {
-      this.showContentTag =
-        this.checkCriteria() && this.checkContentTypeCriteria() && this.checkMimeTypeCriteria()
+    if(this.widgetData.content) {
+
+      // required for knowledge board
+      // TODO: make it more generic
+      this.showFlip = Boolean(this.widgetData.content.reason)
+      if (this.widgetData.content.mode) {
+        this.showIsMode = this.isLatest(this.convertToISODate(this.widgetData.content.addedOn))
+      }
+      if (this.widgetData.contentTags) {
+        this.showContentTag =
+          this.checkCriteria() && this.checkContentTypeCriteria() && this.checkMimeTypeCriteria()
+      }
     }
   }
 
@@ -212,18 +217,16 @@ export class CardContentV2Component extends WidgetBaseComponent
   }
 
   private modifySensibleContentRating() {
-    if (
-      this.widgetData.content &&
-      this.widgetData.content.averageRating &&
-      typeof this.widgetData.content.averageRating !== 'number'
-    ) {
+    if (this.widgetData.content) 
+    if(this.widgetData.content.averageRating &&
+      typeof this.widgetData.content.averageRating !== 'number'){
       // tslint:disable-next-line: ter-computed-property-spacing
       this.widgetData.content.averageRating = (this.widgetData.content.averageRating as any)[
         this.configSvc.rootOrg || ''
         // tslint:disable-next-line: ter-computed-property-spacing
       ]
+      this.widgetData.content.averageRating = this.widgetData.content.averageRating || 0
     }
-    this.widgetData.content.averageRating = this.widgetData.content.averageRating || 0
   }
 
   // private assignThumbnail() {
