@@ -829,7 +829,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         request: {
           userId,
           programId: this.content.identifier,
-          batchId: this.content.batches[0].batchId, // as of now cureted program only one batch is coming need to check and modify
+          // as of now cureted program only one batch is coming need to check and modify
+          batchId: this.contentReadData && this.contentReadData.batches[0].batchId, 
         },
       }
       this.contentSvc.autoAssignCuratedBatchApi(req).subscribe(
