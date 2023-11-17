@@ -30,3 +30,13 @@
     max-width: 160px;
     box-sizing: border-box;
 }
+
+.network-requests {
+    flex-direction: row;
+}
+
+@media only screen and (max-width: 768px) {
+    .network-requests {
+        flex-direction: column;
+    }   
+}

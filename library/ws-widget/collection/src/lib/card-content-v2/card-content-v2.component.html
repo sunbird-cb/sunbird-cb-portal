@@ -1037,7 +1037,7 @@
           <div class="progress-btn">
             <button class="resume-btn flex flex-middle flex-between " [routerLink]="['/app/toc/',widgetData.content.identifier,'overview']"
             [queryParams]="{primaryCategory: widgetData.content.primaryCategory}" [state]="widgetData?.stateData">
-              <span class="margin-right-s">Start again</span> 
+              <span class="margin-right-s">Download Certificate</span> 
               <img class="stats-icon" height="20" width="20" src="/assets/icons/home/play.svg">
             </button>
           </div>
@@ -1062,7 +1062,7 @@
       </div>
       
       <div class="bottomsection">
-        <p class="mat-body-2 ws-mat-black-text margin-bottom-xxs" *ngIf="widgetData.content.creator">
+        <p class="mat-body-2 ws-mat-black-text margin-bottom-xxs" *ngIf="widgetData?.content?.creator">
           <ws-widget-skeleton-loader [width]="'210px'" [height]="'16px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
         </p>
         <div class="contentdata margin-bottom-xm">
@@ -1082,9 +1082,9 @@
           <div>
             <ws-widget-skeleton-loader [width]="'75px'" [height]="'75px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
           </div>
-          <div class="tags" *ngIf="widgetData.content.keywords && widgetData.content.keywords.length > 0">
+          <div class="tags" *ngIf="widgetData?.content?.keywords && widgetData?.content?.keywords?.length > 0">
             <ul class="mat-caption margin-remove-top padding-remove tag_list">
-              <li *ngFor="let tag of widgetData.content.keywords">
+              <li *ngFor="let tag of widgetData?.content?.keywords">
                 <ws-widget-skeleton-loader [width]="'75px'" [height]="'75px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
               </li>
             </ul>
