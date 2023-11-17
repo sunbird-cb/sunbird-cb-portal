@@ -45,12 +45,12 @@ export class HeaderComponent implements OnInit {
     console.log('headerFooterConfigData', this.headerFooterConfigData);
   }
 
-  downloadApp() {
+  downloadApp() : void{
     var userAgent = navigator.userAgent;
 
     // Windows Phone must come first because its UA also contains "Android"
     if (/windows phone/i.test(userAgent)) {
-        return "Windows Phone";
+      window.open('https://play.google.com/store/apps/details?id=com.igot.karmayogibharat&hl=en&gl=US','_blank');
     }
 
     if (/android/i.test(userAgent)) {
