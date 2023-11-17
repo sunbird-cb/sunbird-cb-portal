@@ -126,7 +126,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   private initData() {
-    this.stripsKeyOrder = this.widgetData.strips.map(strip => strip.key) || []
+    this.stripsKeyOrder = this.widgetData && this.widgetData.strips && this.widgetData.strips.map(strip => strip.key) || []
     if (this.widgetData.loader && this.widgetData.strips.length) {
       this.showParentLoader = true
     }
