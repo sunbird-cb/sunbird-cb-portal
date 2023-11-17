@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class DiscussionInfoComponent implements OnInit {
 
-  @Input('dataToBind') dataToBind: any;
+  @Input() dataToBind: any;
   constructor() { }
 
   ngOnInit() {

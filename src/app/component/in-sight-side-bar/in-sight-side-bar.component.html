@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <div class="flex flex-col discussion-card margin-bottom-m" *ngIf="pendingRequestData.result.data.length">
+        <div class="flex flex-col discussion-card margin-bottom-m" *ngIf="pendingRequestData?.result?.data?.length">
             <div class="network-pending-requests-container">
                 <span class="pending-dot">
 
@@ -79,8 +79,8 @@
                     </ul>
                 </div>
                 <div class="pending-request-counts">
-                    <span *ngIf="pendingRequestData.result.data.length > 3">{{ (pendingRequestData.result.data.length - 3) }}</span>
-                    <span *ngIf="!(pendingRequestData.result.data.length > 3)">{{pendingRequestData.result.data.length}} Request</span>
+                    <span *ngIf="pendingRequestData?.result?.data?.length > 3">{{ (pendingRequestData.result.data.length - 3) }}</span>
+                    <span *ngIf="!(pendingRequestData?.result?.data?.length > 3)">{{pendingRequestData.result.data.length}} Request</span>
                 </div>
             </div>
         </div>
