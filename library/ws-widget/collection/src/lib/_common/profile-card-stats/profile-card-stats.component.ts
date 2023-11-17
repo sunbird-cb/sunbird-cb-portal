@@ -38,7 +38,7 @@ export class ProfileCardStatsComponent implements OnInit {
       inProgress: 0,
       learningHours: 0
     }
-    if(enrollList.userCourseEnrolmentInfo){
+    if(enrollList && enrollList.userCourseEnrolmentInfo){
       this.countdata = {
         certificate: enrollList.userCourseEnrolmentInfo.certificatesIssued,
         inProgress: enrollList.userCourseEnrolmentInfo.coursesInProgress,
