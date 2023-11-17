@@ -97,7 +97,6 @@ export class WidgetUserService {
   }
 
   checkStorageData(key: any) {
-    console.log(environment.apiCache,'environment')
     const checkTime = localStorage.getItem('timeCheck')
     if (checkTime) {
       const parsedData = JSON.parse(checkTime)
