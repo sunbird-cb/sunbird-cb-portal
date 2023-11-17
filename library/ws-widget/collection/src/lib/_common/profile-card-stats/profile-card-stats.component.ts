@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigurationsService } from '@sunbird-cb/utils'
+import { PipeDurationTransformPipe } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
   selector: 'ws-widget-profile-card-stats',
   templateUrl: './profile-card-stats.component.html',
-  styleUrls: ['./profile-card-stats.component.scss']
+  styleUrls: ['./profile-card-stats.component.scss'],
+  providers: [ PipeDurationTransformPipe ]
 })
 export class ProfileCardStatsComponent implements OnInit {
   @Input() isLoading = false
@@ -18,7 +20,10 @@ export class ProfileCardStatsComponent implements OnInit {
   userInfo: any
   countdata: any
   statsData: any
-  constructor(private configSvc:ConfigurationsService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private configSvc:ConfigurationsService,
+    private router: Router, 
+    private activatedRoute: ActivatedRoute,
+    private pipDuration: PipeDurationTransformPipe) { }
 
   ngOnInit() {
     if(this.activatedRoute.snapshot.data.pageData) {
@@ -42,7 +47,7 @@ export class ProfileCardStatsComponent implements OnInit {
       this.countdata = {
         certificate: enrollList.userCourseEnrolmentInfo.certificatesIssued,
         inProgress: enrollList.userCourseEnrolmentInfo.coursesInProgress,
-        learningHours: enrollList.userCourseEnrolmentInfo.timeSpentOnCompletedCourses
+        learningHours: this.pipDuration.transform(enrollList.userCourseEnrolmentInfo.timeSpentOnCompletedCourses,'hms')
       }
     }
   }

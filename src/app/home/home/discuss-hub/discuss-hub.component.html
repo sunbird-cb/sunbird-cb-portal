@@ -43,45 +43,51 @@
                     <div class="flex flex-grow">Trending discussions</div>
                 </div>
 
-                <div class="flex h-64 items-center">
-                    <ng-container *ngIf="!discussion.loadSkeleton">
-                        <ng-container *ngIf="!discussion.enableDiscussion && !discussion.error">
-                            <div class="flex flex-col items-center gap-4 p-10">
-                                <img src="./../../../fusion-assets/images/new-home/chat.svg" alt="chat img" />
-                                <div class="text-sm text-center">Do you have any questions, suggestions or, ideas in your mind? Post it.
-                                </div>
-                                <button
-                                    class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide"
-                                    [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}">Start discussion</button>
+                <ng-container *ngIf="discussion.loadSkeleton">
+                    <div class="flex flex-col gap-2">
+                        <div class="flex flex-col gap-3 p-5" *ngFor="let item of [1, 2, 3]">
+                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-widget-skeleton-loader>
+                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-widget-skeleton-loader>
+                            <div class="flex flex-row gap-5">
+                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
                             </div>
-                        </ng-container>
-    
-                        <ng-container *ngIf="discussion.enableDiscussion">
-                            <ws-discussion-info></ws-discussion-info>
-                            <hr class="w-full bg-gray-200 border-b-1 opacity-50 m-0">
-                            <ws-discussion-info></ws-discussion-info>
-                        </ng-container>
-    
-                        <ng-container *ngIf="discussion.error">
-                            <div class="flex flex-col items-center gap-3 p-10">
-                                <mat-icon class="text-2xl text-red-600 error-icon">error</mat-icon>
-                                <div class="text-xl font-medium">No data found!</div>
-                                <div class="text-sm text-center">Unable to fetch discussion info due to some error.</div>
-                            </div>
-                        </ng-container>
-                    </ng-container>
-                </div>
+                        </div>
+                    </div>
+                </ng-container>
 
-                <!-- <div class="discussion-card p-1">
-                    <ws-discussion-info></ws-discussion-info>
-                </div>
-                <div class="discussion-card p-1">
-                    <ws-discussion-info class="border border-black-500"></ws-discussion-info>
-                </div> -->
+                
+                <ng-container *ngIf="!discussion.loadSkeleton">
+                    <ng-container *ngIf="!discussion.data && !discussion.error">
+                        <div class="flex flex-col items-center gap-4 p-10">
+                            <img src="./../../../fusion-assets/images/new-home/chat.svg" alt="chat img" />
+                            <div class="text-sm text-center">Do you have any questions, suggestions or, ideas in your mind? Post it.
+                            </div>
+                            <button
+                                class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide"
+                                [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}">Start discussion</button>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="discussion.data">
+                        <div class="discussion-card" *ngFor="let data of this.discussion.data | slice:0:3">
+                            <ws-discussion-info [dataToBind]="data"></ws-discussion-info>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="discussion.error">
+                        <div class="flex flex-col items-center gap-3 p-10">
+                            <mat-icon class="text-2xl text-red-600 error-icon">error</mat-icon>
+                            <div class="text-xl font-medium">No data found!</div>
+                            <div class="text-sm text-center">Unable to fetch discussion info due to some error.</div>
+                        </div>
+                    </ng-container>
+                </ng-container>
             </div>
         </div>
-        <div class="flex flex-row gap-2 p-4 text-blue-500 justify-center" *ngIf="!discussion.loadSkeleton && !discussion.enableDiscussion && !discussion.error">
-            <div class="font-semibold">Show all</div>
+        <div class="flex flex-row gap-2 p-4 text-blue-500 justify-center" *ngIf="!discussion.loadSkeleton || !discussion.error">
+            <div class="font-semibold cursor-pointer" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >Show all</div>
             <mat-icon>
                 chevron_right
             </mat-icon>

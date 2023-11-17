@@ -268,7 +268,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       // tslint:disable-next-line: deprecation
       this.userSvc.fetchUserBatchList(userId, queryParams).subscribe(
         (result: any) => {
-          let courses = result && result.courses
+          const courses = result && result.courses
           const showViewMore = Boolean(
             courses.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
           )
@@ -289,7 +289,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
             }
             : null
           if (courses && courses.length) {
-            content = courses.map(c => {
+            content = courses.map((c: any) => {
               const contentTemp: NsContent.IContent = c.content
               contentTemp.completionPercentage = c.completionPercentage || c.progress || 0
               contentTemp.completionStatus = c.completionStatus || c.status || 0
@@ -364,8 +364,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   getInprogressAndCompleted(array: NsContent.IContent[],
-    customFilter: any,
-    strip: NsContentStripWithTabs.IContentStripUnit) {
+                            customFilter: any,
+                            strip: NsContentStripWithTabs.IContentStripUnit) {
     const inprogress: any[] = []
     const completed: any[] = []
     array.forEach((e: any, idx: number, arr: any[]) => (customFilter(e, idx, arr) ? inprogress : completed).push(e))
@@ -433,8 +433,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   async searchV6Request(strip: NsContentStripWithTabs.IContentStripUnit,
-    request: NsContentStripWithTabs.IContentStripUnit['request'],
-    calculateParentStatus: boolean
+                        request: NsContentStripWithTabs.IContentStripUnit['request'],
+                        calculateParentStatus: boolean
   ): Promise<any> {
     const originalFilters: any = []
     // console.log('calling -- ')
@@ -469,7 +469,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
           // }
           // console.log('returned results')
           resolve({ results, viewMoreUrl })
-        }, (error: any) => {
+        },                                                   (error: any) => {
           this.processStrip(strip, [], 'error', calculateParentStatus, null)
           reject(error)
         },
@@ -540,19 +540,17 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   async trendingSearchRequest(strip: NsContentStripWithTabs.IContentStripUnit,
-    request: NsContentStripWithTabs.IContentStripUnit['request'],
-    calculateParentStatus: boolean
+                              request: NsContentStripWithTabs.IContentStripUnit['request'],
+                              calculateParentStatus: boolean
   ): Promise<any> {
     const originalFilters: any = []
     console.log('calling --  trendingSearchRequest')
     return new Promise<any>((resolve, reject) => {
       if (request && request.trendingSearch) {
-        // check for the request if it has dynamic values
-        console.log("request.trendingSearch.organisation.indexOf('<orgID>')", request.trendingSearch.request.filters. organisation.indexOf('<orgID>'))
-        if(request.trendingSearch.request.filters.organisation &&
+        // check for the request if it has dynamic values]
+        if (request.trendingSearch.request.filters.organisation &&
           request.trendingSearch.request.filters.organisation.indexOf('<orgID>') >= 0
-        ) 
-        {
+        ) {
           let userRootOrgId
           if (this.configSvc.userProfile) {
             userRootOrgId = this.configSvc.userProfile.rootOrgId
@@ -585,8 +583,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
             }
             : null
           resolve({ results, viewMoreUrl })
-        }, (error: any) => {
-          if(error.error && error.error.status === 400){
+        },                                                                      (error: any) => {
+          if (error.error && error.error.status === 400) {
             this.processStrip(strip, [], 'done', calculateParentStatus, null)
           }
           // this.processStrip(strip, [], 'done', calculateParentStatus, null)
@@ -747,9 +745,9 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     if (currentStrip && currentTabFromMap && !currentTabFromMap.computeDataOnClick) {
       if (currentTabFromMap.requestRequired && currentTabFromMap.request) {
         // call API to get tab data and process
-        if(currentTabFromMap.request.searchV6) {
+        if (currentTabFromMap.request.searchV6) {
           this.getTabDataByNewReqSearchV6(currentStrip, tabEvent.index, currentTabFromMap, true)
-        } else if(currentTabFromMap.request.trendingSearch) {
+        } else if (currentTabFromMap.request.trendingSearch) {
           this.getTabDataByNewReqTrending(currentStrip, tabEvent.index, currentTabFromMap, true)
         }
       } else {

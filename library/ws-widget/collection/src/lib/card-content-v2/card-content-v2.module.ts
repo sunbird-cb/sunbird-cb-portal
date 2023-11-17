@@ -56,7 +56,7 @@ import { SkeletonLoaderModule } from '../_common/skeleton-loader/skeleton-loader
     ProfileImageModule,
     BtnContentFeedbackV2Module,
     BtnKbAnalyticsModule,
-    SkeletonLoaderModule
+    SkeletonLoaderModule,
   ],
   entryComponents: [CardContentV2Component],
   exports: [CardContentV2Component],

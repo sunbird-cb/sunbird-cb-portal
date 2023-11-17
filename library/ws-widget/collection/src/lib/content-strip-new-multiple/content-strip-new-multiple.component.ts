@@ -359,7 +359,7 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
       // tslint:disable-next-line: deprecation
       this.userSvc.fetchUserBatchList(userId, queryParams).subscribe(
         (result: any) => {
-          let courses = result && result.courses
+          const courses = result && result.courses
           const showViewMore = Boolean(
             courses.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
           )
@@ -380,7 +380,7 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
             }
             : null
           if (courses && courses.length) {
-            content = courses.map(c => {
+            content = courses.map((c: any) => {
               const contentTemp: NsContent.IContent = c.content
               contentTemp.completionPercentage = c.completionPercentage || c.progress || 0
               contentTemp.completionStatus = c.completionStatus || c.status || 0
