@@ -78,3 +78,10 @@ img.profile-badge {
     font-size: 14px;
     font-weight: 700;
 }
+
+.text-ellipses {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 90px;
+}
