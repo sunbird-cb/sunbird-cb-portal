@@ -106,8 +106,9 @@ export class WidgetUserService {
         const timeCheck = environment.apiCache || 0
         if (diffMin >= timeCheck) {
           return true
+        } else {
+          return localStorage.getItem('enrollmentData') ? false : true
         }
-          return false
       }
         return true
 
@@ -127,7 +128,9 @@ export class WidgetUserService {
       parsedData[key] = new Date().getTime()
       localStorage.setItem('timeCheck', JSON.stringify(parsedData))
     } else {
-      localStorage.setItem('timeCheck', JSON.stringify({ key: new Date().getTime() }))
+      let data : any ={}
+      data[key] = new Date().getTime()
+      localStorage.setItem('timeCheck', JSON.stringify(data))
     }
   }
 
