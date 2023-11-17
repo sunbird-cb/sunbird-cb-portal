@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'ws-discussion-info',
@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DiscussionInfoComponent implements OnInit {
 
+  @Input('dataToBind') dataToBind: any;
   constructor() { }
 
   ngOnInit() {
+  }
+
+  getBackgroundColor() {
+    
   }
   
 }

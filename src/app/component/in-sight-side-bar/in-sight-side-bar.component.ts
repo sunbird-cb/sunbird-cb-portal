@@ -26,6 +26,7 @@ const noData = {
     ])
   ]
 })
+
 export class InsightSideBarComponent implements OnInit {
   profileDataLoading: boolean = true
   
@@ -38,6 +39,7 @@ export class InsightSideBarComponent implements OnInit {
     enableDiscussion: false,
     discussionData: undefined,
     loadSkeleton: false,
+    data: undefined,
     error: false
   };
   
@@ -45,6 +47,7 @@ export class InsightSideBarComponent implements OnInit {
 
   ngOnInit() {
     this.userData = this.configSvc && this.configSvc.userProfile
+    
     this.getInsights()
     this.noDataValue = noData
     this.getDiscussionsData();
@@ -52,7 +55,6 @@ export class InsightSideBarComponent implements OnInit {
 
   getInsights() {
     this.profileDataLoading = true
-    // const organisation = this.userData.
     const request = {
       "request": {
           "filters": {
@@ -128,10 +130,11 @@ export class InsightSideBarComponent implements OnInit {
 
   getDiscussionsData(): void {
     this.discussion.loadSkeleton = true;
-    this.homePageSvc.getDiscussionsData().subscribe(
+    this.homePageSvc.getDiscussionsData(this.userData.userName).subscribe(
       (res: any) => {
-        this.discussion.loadSkeleton = false;
+        this.discussion.loadSkeleton = true;
         this.discussion.enableDiscussion = true;
+        this.discussion.data = res;
         console.log("discussion res - ", res);
       },
       (error: HttpErrorResponse) => {
