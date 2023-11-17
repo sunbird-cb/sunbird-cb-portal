@@ -11,6 +11,7 @@
   <ng-container *ngSwitchCase="'basic-details'" [ngTemplateOutlet]="cardBasicDetails"></ng-container>
   <ng-container *ngSwitchCase="'card-discussion'" [ngTemplateOutlet]="cardDiscussion"></ng-container>
   <ng-container *ngSwitchCase="'card-wide'" [ngTemplateOutlet]="cardWide"></ng-container>
+  <ng-container *ngSwitchCase="'card-wide-skelton'" [ngTemplateOutlet]="wideCardSkelton"></ng-container>
   <ng-container *ngSwitchDefault [ngTemplateOutlet]="cardStandard"></ng-container>
   <ng-container *ngSwitchCase="'cardCurated'" [ngTemplateOutlet]="cardCurated"></ng-container>
   <ng-container *ngSwitchCase="'card-portrait-skeleton'" [ngTemplateOutlet]="cardPortraitSkeleton"></ng-container> 
@@ -1043,6 +1044,55 @@
         </div>  
       </ng-container>
     </mat-card>
+</ng-template>
+
+<ng-template #wideCardSkelton>
+  <mat-card class="card-wide margin-bottom-m padding-remove position-relative flex">
+    <div class="imageholder ">
+      <ws-widget-skeleton-loader [width]="'310px'" [height]="'170px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+    </div>
+    <mat-card-content class="mat-text-box">
+      <p class="flex items-center mat-caption margin-bottom-xxs text-uppercase">
+        <ws-widget-skeleton-loader [width]="'65px'" [height]="'16px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+      </p>
+      <div class="flex main_title_box">
+        <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title">
+          <ws-widget-skeleton-loader [width]="'415px'" [height]="'16px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+      </p>
+      </div>
+      
+      <div class="bottomsection">
+        <p class="mat-body-2 ws-mat-black-text margin-bottom-xxs" *ngIf="widgetData.content.creator">
+          <ws-widget-skeleton-loader [width]="'210px'" [height]="'16px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+        </p>
+        <div class="contentdata margin-bottom-xm">
+          <ul
+            class="mat-body-2 margin-remove-top margin-bottom-xs padding-remove ws-mat-black60-text highlighting_list">
+            
+            <li>
+              
+              <ws-widget-skeleton-loader [width]="'75px'" [height]="'75px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+            </li>
+            <li >
+              <ws-widget-skeleton-loader [width]="'75px'" [height]="'75px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+            </li>
+           
+          </ul>
+        </div>
+          <div>
+            <ws-widget-skeleton-loader [width]="'75px'" [height]="'75px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+          </div>
+          <div class="tags" *ngIf="widgetData.content.keywords && widgetData.content.keywords.length > 0">
+            <ul class="mat-caption margin-remove-top padding-remove tag_list">
+              <li *ngFor="let tag of widgetData.content.keywords">
+                <ws-widget-skeleton-loader [width]="'75px'" [height]="'75px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+              </li>
+            </ul>
+          </div>
+
+      </div>
+    </mat-card-content>
+  </mat-card>
 </ng-template>
 
 <ng-template #cardPortraitSkeleton>

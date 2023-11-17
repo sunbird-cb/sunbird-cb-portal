@@ -81,8 +81,7 @@ export class NetworkHubComponent implements OnInit {
     console.log("payload - ", payload);
     obj.connecting = true;
     this.homePageService.connectToNetwork(payload).subscribe(
-      (res: any) => {
-        console.log('res - ', res)
+      (_res: any) => {
         this.fetchNetworkRecommendations();
         obj.connecting = false;
         this.matSnackBar.open("Connection request sent successfully!");

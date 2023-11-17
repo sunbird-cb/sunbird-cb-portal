@@ -20,11 +20,12 @@
 }
 .circle-s {
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
+  width: 48px;
+  height: 48px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top:-24px;
 
   img {
     border-radius: 10%;
@@ -42,11 +43,12 @@
 
 .circle-m {
   border-radius: 50%;
-  width: 40px !important;
-  height: 40px !important;
+  width: 72px !important;
+  height: 72px !important;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: -36px;
 
   img {
     border-radius: 10%;

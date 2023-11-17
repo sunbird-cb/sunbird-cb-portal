@@ -9,24 +9,24 @@
         <div class="flex flex-col p-5 gap-4">
             <div class="flex flex-row gap-3 items-center mat-subheading-1">
                 <div class="flex flex-grow">Updates on your posts</div>
-                <div class="text-2xl text-blue-500">
+                <div class="text-2xl ws-mat-default-text">
                     <mat-icon class="cursor-pointer font-bold">add</mat-icon>
                 </div>
             </div>
 
             <div class="flex flex-col discussion-card gap-2 p-5">
-                <div class="text-blue-500 font-semibold">2 Upvote on your port</div>
+                <div class="ws-mat-default-text font-semibold">2 Upvote on your port</div>
                 <div class="">What are some merits and demerits of the Dicey’s Rule of law?</div>
             </div>
             <div class="flex flex-col discussion-card gap-2 p-5">
-                <div class="text-blue-500 font-semibold">Alex replied to your post</div>
+                <div class="ws-mat-default-text font-semibold">Alex replied to your post</div>
                 <div class="">I think the solution to such a problem would be to extensively.</div>
             </div>
             <div class="flex flex-col discussion-card gap-2 p-5">
-                <div class="text-blue-500 font-semibold">1 Downvote on your post</div>
+                <div class="ws-mat-default-text font-semibold">1 Downvote on your post</div>
                 <div class="">What are some merits and demerits of the Dicey’s Rule of law?</div>
             </div>
-            <div class="flex flex-row gap-2 p-4 text-blue-500 justify-center">
+            <div class="flex flex-row gap-2 p-4 ws-mat-default-text justify-center">
                 <div class="font-semibold">Show all</div>
                 <mat-icon>
                     chevron_right
@@ -86,7 +86,7 @@
                 </ng-container>
             </div>
         </div>
-        <div class="flex flex-row gap-2 p-4 text-blue-500 justify-center" *ngIf="!discussion.loadSkeleton || !discussion.error">
+        <div class="flex flex-row gap-2 p-4 ws-mat-default-text justify-center" *ngIf="!discussion.loadSkeleton || !discussion.error">
             <div class="font-semibold cursor-pointer" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >Show all</div>
             <mat-icon>
                 chevron_right
