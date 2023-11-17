@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-2">
     <div class="flex flex-row gap-2 mat-subheading-1">
         <div>Go to Network hub</div>
-        <mat-icon>
+        <mat-icon class="ws-mat-default-text">
             chevron_right
         </mat-icon>
     </div>
@@ -40,17 +40,17 @@
 
                     <ng-container *ngIf="!suggestionsLoader">
                         <div *ngFor="let recommend of networkRecommended">
-                            <div class="card p-4 flex flex-col items-center rounded-xl gap-3">
+                            <div class="card p-4 flex flex-col items-center rounded-xl gap-3 netword-card">
                                 <div class="flex justify-center items-center initial-circle bg-blue-700 text-xl">VS</div>
                                 <div class="flex flex-col gap-1">
-                                    <div class="font-semibold text-center">{{ recommend?.personalDetails?.firstname }}</div>
-                                    <div class="text-center">{{ recommend?.employmentDetails?.departmentName }}</div>
+                                    <div class="font-semibold text-center mat-body-2">{{ recommend?.personalDetails?.firstname }}</div>
+                                    <div class="text-center dept-name">{{ recommend?.employmentDetails?.departmentName }}</div>
                                     <div
-                                        class="flex flex-row gap-2 text-blue-500 font-semibold px-8 py-2 rounded-full connect-button cursor-pointer text-lg mt-2" (click)="handleConnect(recommend)" *ngIf="!recommend.connecting">
-                                        <mat-icon>person_add</mat-icon>
+                                        class="flex flex-row gap-2 ws-mat-default-text font-semibold px-8 py-2 rounded-full mat-body-2 connect-button cursor-pointer text-lg mt-2" (click)="handleConnect(recommend)" *ngIf="!recommend.connecting">
+                                        <mat-icon class="ws-mat-default-text">person_add</mat-icon>
                                         Connect
                                     </div>
-                                    <div class="flex flex-row gap-2 text-blue-500 font-semibold px-8 py-2 rounded-full connect-button cursor-pointer text-lg mt-2" *ngIf="recommend.connecting">
+                                    <div class="flex flex-row gap-2 ws-mat-default-text font-semibold px-8 py-2 rounded-full connect-button cursor-pointer text-lg mt-2 mat-body-2" *ngIf="recommend.connecting">
                                         Connecting...
                                     </div>
                                 </div>
@@ -59,9 +59,9 @@
                     </ng-container>
                 </div>
             </div>
-            <div class="flex flex-row gap-2 p-4 text-blue-500 justify-center">
+            <div class="flex flex-row gap-2 p-4 ws-mat-default-text ws-widget-sliders justify-center">
                 <div class="font-semibold cursor-pointer" [routerLink]="['/app/network-v2']" >Show all</div>
-                <mat-icon>
+                <mat-icon class="ws-mat-default-text">
                     chevron_right
                 </mat-icon>
             </div>
