@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { HomeRoutingModule } from './home-routing.module';
 
 import { MatCardModule } from '@angular/material/card';
@@ -13,6 +14,7 @@ import { PageContainerComponent } from '../component/page-container/page-contain
 import {
   GridLayoutModule,  SlidersModule, DiscussStripMultipleModule, NetworkStripMultipleModule, ContentStripWithTabsModule
 } from '@sunbird-cb/collection';
+import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module';
 import { FeedListComponent } from './home/feed-list/feed-list.component';
 import { SkeletonLoaderComponent } from '../component/skeleton-loader/skeleton-loader.component';
 import { ProfileCardStatsModule } from '@sunbird-cb/collection/src/lib/_common/profile-card-stats/profile-card-stats.module'
@@ -23,11 +25,15 @@ import { SharedModule } from '../shared/shared.module';
 import { WeeklyClapsModule } from '@sunbird-cb/collection/src/lib/_common/weekly-claps/weekly-claps.module';
 import { HomePageService } from '../services/home-page.service';
 import { HomeContainerComponent } from '../component/home-container/home-container.component';
-import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module';
+
+import { DiscussHubComponent } from './home/discuss-hub/discuss-hub.component';
+import { NetworkHubComponent } from './home/network-hub/network-hub.component';
+
 @NgModule({
-  declarations: [HomeComponent, FeedListComponent, InsightSideBarComponent, PageContainerComponent, DiscussionInfoComponent, SkeletonLoaderComponent, ClientSliderComponent, HomeOtherPortalComponent, NoDataComponent, HomeContainerComponent],
+  declarations: [HomeComponent, FeedListComponent, InsightSideBarComponent, PageContainerComponent, DiscussionInfoComponent, SkeletonLoaderComponent, ClientSliderComponent, HomeOtherPortalComponent, NoDataComponent, HomeContainerComponent, DiscussHubComponent, NetworkHubComponent],
   imports: [
-    CommonModule,    
+    CommonModule,
+    RouterModule,
     HomeRoutingModule,
     GridLayoutModule,
     SlidersModule,
