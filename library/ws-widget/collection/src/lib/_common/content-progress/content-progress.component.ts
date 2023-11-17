@@ -34,7 +34,7 @@ export class ContentProgressComponent implements OnChanges {
   @Input()
   className = ''
   @Input()
-  customClassName:any= 'accent-progress'
+  customClassName: any = 'accent-progress'
 
   rendom = Math.random()
   @HostBinding('id')
