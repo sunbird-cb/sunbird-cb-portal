@@ -823,10 +823,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     currentTab: NsContentStripWithTabs.IContentStripTab,
     calculateParentStatus: boolean
   ) {
-    console.log('getTabDataByNewReqTrending currentTab ---', currentTab)
     try {
       const response = await this.trendingSearchRequest(strip, currentTab.request, calculateParentStatus)
-      console.log('currentTab ---response', response)
       if (response && response.results) {
         const content = response.results.result[currentTab.value] || []
         const widgets = this.transformContentsToWidgets(content, strip)
