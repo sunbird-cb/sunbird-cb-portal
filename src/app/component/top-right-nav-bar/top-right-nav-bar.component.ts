@@ -1,28 +1,28 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DialogBoxComponent } from './../dialog-box/dialog-box.component';
-// const rightNavConfig = [
-//   {
-//     "id":1,
-//     "section":"download",
-//     "active": true
-//   },
-//   {
-//     "id":2,
-//     "section":"font-setting",
-//     "active": true
-//   },
-//   {
-//     "id":3,
-//     "section":"help",
-//     "active": true
-//   },
-//   {
-//     "id":4,
-//     "section":"profile",
-//     "active": true
-//   }
-// ]
+const rightNavConfig = [
+  {
+    "id":1,
+    "section":"download",
+    "active": true
+  },
+  {
+    "id":2,
+    "section":"font-setting",
+    "active": true
+  },
+  {
+    "id":3,
+    "section":"help",
+    "active": true
+  },
+  {
+    "id":4,
+    "section":"profile",
+    "active": true
+  }
+]
 @Component({
   selector: 'ws-top-right-nav-bar',
   templateUrl: './top-right-nav-bar.component.html',
@@ -34,8 +34,8 @@ export class TopRightNavBarComponent implements OnInit {
   constructor(public dialog: MatDialog    ) { }
 
   ngOnInit() {
-    // this.rightNavConfig = rightNavConfig;
-    console.log('rightNavConfig',this.rightNavConfig)
+    this.rightNavConfig = rightNavConfig;
+    // console.log('rightNavConfig',this.rightNavConfig)
   }
 
   openDialog(): void { 
