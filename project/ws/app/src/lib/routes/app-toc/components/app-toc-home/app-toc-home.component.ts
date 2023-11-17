@@ -603,7 +603,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     //   }
     // )
     this.userSvc.fetchUserBatchList(userId).subscribe(
-      (courses: NsContent.ICourse[]) => {
+      (result: any) => {
+        let courses: NsContent.ICourse[] = result && result.courses
         this.userEnrollmentList = courses
         let enrolledCourse: NsContent.ICourse | undefined
         if (this.content && this.content.identifier && !this.forPreview) {
