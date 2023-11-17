@@ -43,50 +43,16 @@
                 </a>
                 <span class="spacer"></span>
                 <!-- viewAll start-->
-                  <!-- <div *ngIf="checkCondition(widgetData , stripsResultDataMap[key])"
+                  <div *ngIf="checkCondition(widgetData , stripsResultDataMap[key])"
                   class="ml-4 view-more ws-mat-default-text">
                   <a class="flex ws-mat-default-text  items-center justify-center mat-body-1" [routerLink]="widgetData.strips[0]?.viewMoreUrl?.path"
                     [queryParams]="widgetData.strips[0]?.viewMoreUrl?.queryParams">
                     <span i18n class="ws-mat-default-text">{{widgetData.strips[0].viewMoreUrl.viewMoreText || 'See all'}}</span>
                     <mat-icon class="" color="accent">navigate_next</mat-icon>
                   </a>
-                </div> -->
-                <!-- viewAll end-->
-              </div>
-              <ng-container *ngIf="stripsResultDataMap[key].secondaryHeading">
-                
-                <div class="flex items-center flex-1">
-                  <p class="mat-subheading-1 margin-remove inline-block" *ngIf="stripsResultDataMap[key]?.stripTitle">
-                    {{ stripsResultDataMap[key]?.secondaryHeading.title }}
-                  </p>
-        
-  
-                  <!-- <button *ngIf="stripsResultDataMap[key]?.stripInfo?.icon" type="button" mat-icon-button
-                    (click)="toggleInfo(stripsResultDataMap[key])" i18n-matTooltip matTooltip="info"
-                    class="margin-left-xs">
-                    <mat-icon>{{ stripsResultDataMap[key]?.stripInfo?.icon.icon }}</mat-icon>
-                  </button> -->
-                  <!-- <a *ngIf="stripsResultDataMap[key]?.stripTitleLink?.link"
-                    [routerLink]="stripsResultDataMap[key]?.stripTitleLink?.link"
-                    [queryParams]="stripsResultDataMap[key]?.stripTitleLink?.link?.queryParams">
-                    <mat-icon class="ws-mat-primary-default-text ws-mat-default-text" [color]="accent">{{
-                      stripsResultDataMap[key]?.stripTitleLink?.icon }}</mat-icon>
-                  </a> -->
-                  <span class="spacer"></span>
-                  <!-- viewAll start-->
-                    <div *ngIf="checkCondition(widgetData , stripsResultDataMap[key])"
-                    class="ml-4 view-more">
-                    <a mat-flat-button class="flex ws-mat-default-text" [routerLink]="widgetData.strips[0]?.viewMoreUrl?.path"
-                      [queryParams]="widgetData.strips[0]?.viewMoreUrl?.queryParams">
-                      <span i18n class="ws-mat-default-text">{{widgetData.strips[0].viewMoreUrl.viewMoreText || 'See all'}}</span>
-                      <mat-icon class="ws-mat-default-text" color="accent">navigate_next</mat-icon>
-                    </a>
-                  </div>
-                  <!-- viewAll end-->
                 </div>
-              </ng-container>
-              
-              
+                <!-- viewAll end-->
+              </div>              
               <button mat-icon-button (click)="setHiddenForStrip(key)" *ngIf="stripsResultDataMap[key]?.canHideStrip">
                 <mat-icon>close</mat-icon>
               </button>
