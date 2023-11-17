@@ -17,11 +17,13 @@
     </ul>
   </div> -->
   <div class="social-icons">
-    <ul>
-      <li *ngFor="let item of socialLinks?.socialLinks">
+    <ul> 
+      <ng-container *ngFor="let item of socialLinks?.socialLinks">
+      <li *ngIf="item?.active">
         <a [href]="item?.url" target="_blank">
           <img [alt]="item?.alt" class="app-logo" src="/assets/icons/social-links/{{item?.icon}}.svg">
         </a>
       </li>
+    </ng-container>
     </ul>
   </div> 

@@ -22,7 +22,7 @@ export class HomeOtherPortalComponent implements OnInit {
   private readonly featuresConfig: IGroupWithFeatureWidgets[] = []
   portalLinks: any[] = []
   noPortal = [1,2,3]
-  
+  showSkeleton = true;
 
   constructor(
     private configSvc: ConfigurationsService,
@@ -74,11 +74,12 @@ export class HomeOtherPortalComponent implements OnInit {
 
   getPortalLinks() {
     this.featuresConfig.forEach((feature: any) => {
-      if (feature.id === 'portal_admin' && feature.featureWidgets.length > 0) {
+      if (feature.id === 'portal_admin' && feature.featureWidgets.length > 0) {        
         feature.featureWidgets.forEach((fw: any) => {
           this.portalLinks.push(fw)
         })
       }
+      this.showSkeleton = false;
     })
   }
 
