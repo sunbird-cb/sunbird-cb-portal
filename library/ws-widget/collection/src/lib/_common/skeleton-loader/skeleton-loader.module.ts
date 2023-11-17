@@ -11,7 +11,7 @@ import { MatDialogModule, MatIconModule } from '@angular/material'
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
-    MatIconModule
+    MatIconModule,
   ],
   exports: [
     SkeletonLoaderComponent,

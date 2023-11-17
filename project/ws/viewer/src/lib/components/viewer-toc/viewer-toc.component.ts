@@ -292,7 +292,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       }
       this.userSvc.fetchUserBatchList(userId).subscribe(
         (result: any) => {
-          let courses: NsContent.ICourse[] = result && result.courses
+          const courses: NsContent.ICourse[] = result && result.courses
           this.contentSvc.currentBatchEnrollmentList = courses
         })
     }
