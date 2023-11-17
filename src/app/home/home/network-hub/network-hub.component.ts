@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ConfigurationsService } from '@sunbird-cb/utils'
+import { MatSnackBar } from '@angular/material';
+
 import { HomePageService } from 'src/app/services/home-page.service';
 
 @Component({
@@ -17,7 +19,8 @@ export class NetworkHubComponent implements OnInit {
 
   constructor(
     private configService: ConfigurationsService,
-    private homePageService: HomePageService
+    private homePageService: HomePageService,
+    private matSnackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -81,6 +84,11 @@ export class NetworkHubComponent implements OnInit {
       (res: any) => {
         this.fetchNetworkRecommendations();
         obj.connecting = false;
+        this.matSnackBar.open("Connection request sent successfully!");
+      },
+      (error: HttpErrorResponse) => {
+        obj.connecting = true;
+        this.matSnackBar.open("Unable to connect due to some error!");
       }
     );
   }

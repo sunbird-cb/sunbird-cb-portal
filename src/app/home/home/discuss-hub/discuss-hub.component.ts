@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HomePageService } from 'src/app/services/home-page.service';
 
 @Component({
   selector: 'ws-discuss-hub',
@@ -8,14 +9,36 @@ import { Component, OnInit } from '@angular/core';
 
 export class DiscussHubComponent implements OnInit {
 
-  constructor() { }
+  discussion = {
+    enableDiscussion: false,
+    discussionData: undefined,
+    loadSkeleton: false,
+    error: false
+  };
+
+  constructor(
+    private homePageService: HomePageService,
+  ) { }
 
   ngOnInit() {
     this.fetchDiscussions();
   }
 
   fetchDiscussions(): void {
-    console.log("Fetching discussions!");
+    this.discussion.loadSkeleton = true;
+    this.homePageService.getDiscussionsData().subscribe(
+      (res: any) => {
+        this.discussion.loadSkeleton = false;
+        this.discussion.enableDiscussion = true;
+        console.log("discussion res - ", res);
+      },
+      (error: HttpErrorResponse) => {
+        if (!error.ok) {
+          this.discussion.loadSkeleton = false;
+          this.discussion.error = true;
+        }
+      }
+    );
   }
 
 }

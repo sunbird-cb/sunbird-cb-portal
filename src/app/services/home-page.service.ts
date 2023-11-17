@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http'
 
 const API_END_POINTS = {
   INSIGHTS: `apis/proxies/v8/read/user/insights`,
-  DISCUSSIONS: `apis/proxies/v8/discussion/recent`,
+  DISCUSSIONS: `apis/proxies/v8/discussion/user/karmayogibharat_pabn`,
   NETWORK: `apis/protected/v8/connections/v2/connections/recommended`,
   CONNECT: `apis/protected/v8/connections/v2/add/connection`,
   CONN_REQUESTED: `apis/protected/v8/connections/v2/connections/requests/received`
