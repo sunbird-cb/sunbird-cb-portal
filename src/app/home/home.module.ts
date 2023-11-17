@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { HeaderModule } from '../header/header.module';
 import {
-  GridLayoutModule,  SlidersModule, DiscussStripMultipleModule, NetworkStripMultipleModule, ContentStripWithTabsModule
+  GridLayoutModule,  SlidersModule, DiscussStripMultipleModule, NetworkStripMultipleModule, ContentStripWithTabsModule, AvatarPhotoModule
 } from '@sunbird-cb/collection';
 import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module';
 import { ProfileCardStatsModule } from '@sunbird-cb/collection/src/lib/_common/profile-card-stats/profile-card-stats.module';
@@ -27,7 +27,6 @@ import { NoDataComponent } from '../component/no-data/no-data.component';
 import { HomeContainerComponent } from '../component/home-container/home-container.component';
 import { DiscussHubComponent } from './home/discuss-hub/discuss-hub.component';
 import { NetworkHubComponent } from './home/network-hub/network-hub.component';
-
 import { HomePageService } from '../services/home-page.service';
 
 @NgModule({
@@ -48,7 +47,8 @@ import { HomePageService } from '../services/home-page.service';
     MatIconModule,
     WeeklyClapsModule,
     SkeletonLoaderModule,
-    PipeRelativeTimeModule
+    PipeRelativeTimeModule,
+    AvatarPhotoModule
   ],
   exports: [
     HeaderModule,
