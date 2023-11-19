@@ -7,22 +7,22 @@
         </div>
         <div class="name-container flex flex-col width-expand">
             <a href="javascript:void(0)" class="" i18n-aria-label role="link" (click)="goToUserProfile(user)">
-                <div class="name ws-mat-black-text cursor-pointer" *ngIf="user && user?.personalDetails?.firstname">
+                <div class="name text-center ws-mat-black-text cursor-pointer" *ngIf="user && user?.personalDetails?.firstname">
                     {{user?.personalDetails?.firstname}} 
                     <span class="profile-badge" *ngIf="user && user?.verifiedKarmayogi">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
                     </span>
                 </div>
                 
-                <div class="name ws-mat-black-text cursor-pointer" *ngIf="user && user?.personalDetails?.firstName">
+                <div class="name  text-center ws-mat-black-text cursor-pointer" *ngIf="user && user?.personalDetails?.firstName">
                     {{user?.personalDetails?.firstName}} {{user?.personalDetails?.middlename}}
                 </div>
-                <div class="name ws-mat-black-text cursor-pointer" *ngIf="user && !user?.personalDetails">
+                <div class="name text-center ws-mat-black-text cursor-pointer" *ngIf="user && !user?.personalDetails">
                     {{user?.firstName}}
                 </div>
-                <div class="designation ws-mat-black60-text" *ngIf="user?.employmentDetails">
+                <div class="designation text-center ws-mat-black60-text" *ngIf="user?.employmentDetails">
                     {{user?.employmentDetails?.departmentName}}
                 </div>
-                <div class="designation ws-mat-black60-text" *ngIf="!user?.employmentDetails">
+                <div class="designation text-center ws-mat-black60-text" *ngIf="!user?.employmentDetails">
                     {{user?.rootOrg.orgName}}
                 </div>
             </a>
@@ -30,7 +30,7 @@
         <div class="action-container flex items-center justify-center">
             <button mat-stroked-button color="accent" type="button" class="connect_btn mat-accent-border flex-auto-display"
                 (click)="connetToUser()">
-                <span class="" i18n>Connect</span>
+                <span class="ws-mat-default-text" i18n><img class="connect-icon" src="assets/icons/Connect_icon.svg"/>Connect</span>
             </button>
         </div>
     </div>
