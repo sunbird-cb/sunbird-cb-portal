@@ -669,6 +669,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       tabs: tabsResults ? tabsResults : strip.tabs,
       stripName: strip.name,
       mode: strip.mode,
+      stripConfig: strip.stripConfig,
       stripBackground: strip.stripBackground,
       secondaryHeading: strip.secondaryHeading,
       loaderWidgets: strip.loaderWidgets || [],
