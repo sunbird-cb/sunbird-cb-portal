@@ -21,6 +21,7 @@ import { UserImageModule } from '../_common/user-image/user-image.module'
 import { BtnKbAnalyticsModule } from '../btn-kb-analytics/btn-kb-analytics.module'
 import { CardContentV2Component } from './card-content-v2.component'
 import { SkeletonLoaderModule } from '../_common/skeleton-loader/skeleton-loader.module'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 @NgModule({
   declarations: [CardContentV2Component],
   imports: [
@@ -57,6 +58,7 @@ import { SkeletonLoaderModule } from '../_common/skeleton-loader/skeleton-loader
     BtnContentFeedbackV2Module,
     BtnKbAnalyticsModule,
     SkeletonLoaderModule,
+    MatProgressSpinnerModule,
   ],
   entryComponents: [CardContentV2Component],
   exports: [CardContentV2Component],

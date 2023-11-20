@@ -116,16 +116,7 @@ export class InsightSideBarComponent implements OnInit {
 
   constructWeeklyData() {
     if(this.insightsData && this.insightsData['weekly-claps']) {
-      let weeklyCount = 0
-      this.insightsData['weekly-claps'].forEach((ele: any) => {
-        if(ele.achieved === 1) {
-          weeklyCount = weeklyCount + 1
-        }
-      })
-      this.insightsData['weeklyClaps'] = {
-        weeklyCount: weeklyCount,
-        weekData: this.insightsData['weekly-claps']
-      }
+      this.insightsData['weeklyClaps'] = this.insightsData['weekly-claps']
     }
 
     this.clapsDataLoading = false

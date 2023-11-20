@@ -1044,3 +1044,6 @@ ngx-guided-tour {
   }
 }
 
+.white-spinner .mat-progress-spinner circle, .theme-igot.day-mode .mat-spinner circle{
+  stroke:white !important;
+}
