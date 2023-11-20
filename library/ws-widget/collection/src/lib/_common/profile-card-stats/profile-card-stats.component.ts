@@ -15,7 +15,6 @@ export class ProfileCardStatsComponent implements OnInit {
   @Input() nudgeData: any
 
   @Output() expandCollapse = new EventEmitter<any>()
-  profileProgress : any = 50;
   collapsed = false;
   userInfo: any
   countdata: any
@@ -31,7 +30,7 @@ export class ProfileCardStatsComponent implements OnInit {
     }
     this.userInfo =  this.configSvc && this.configSvc.userProfile
     this.getCounts();
-    document.documentElement.style.setProperty('--i', this.profileProgress);
+    document.documentElement.style.setProperty('--i', this.userInfo.profileUpdateCompletion);
   }
   getCounts() {
     let enrollList

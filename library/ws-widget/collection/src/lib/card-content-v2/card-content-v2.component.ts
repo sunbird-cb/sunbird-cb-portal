@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core'
-import { MatSnackBar } from '@angular/material'
+import { MatDialog, MatSnackBar } from '@angular/material'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ConfigurationsService, EventService, UtilityService, NsInstanceConfig } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
@@ -7,8 +7,11 @@ import { NsGoal } from '../btn-goals/btn-goals.model'
 import { NsPlaylist } from '../btn-playlist/btn-playlist.model'
 import { NsContent } from '../_services/widget-content.model'
 import { NsCardContent } from './card-content-v2.model'
+
 /* tslint:disable*/
 import _ from 'lodash'
+import { CertificateService } from '@ws/app/src/lib/routes/certificate/services/certificate.service'
+import { CertificateDialogComponent } from '../_common/certificate-dialog/certificate-dialog.component'
 // import { Router } from '@angular/router'
 
 @Component({
@@ -29,6 +32,7 @@ export class CardContentV2Component extends WidgetBaseComponent
   isCardFlipped = false
   showIsMode = false
   showContentTag = false
+  downloadCertificateLoading: boolean = false
 
   btnPlaylistConfig: NsPlaylist.IBtnPlaylist | null = null
   btnGoalsConfig: NsGoal.IBtnGoal | null = null
@@ -37,10 +41,12 @@ export class CardContentV2Component extends WidgetBaseComponent
 
   isIntranetAllowedSettings = false
   constructor(
+    private dialog: MatDialog,
     private events: EventService,
     private configSvc: ConfigurationsService,
     private utilitySvc: UtilityService,
     private snackBar: MatSnackBar,
+    private certificateService: CertificateService
 
   ) {
     super()
@@ -343,4 +349,20 @@ export class CardContentV2Component extends WidgetBaseComponent
   }
 
   openComment() { }
+  downloadCertificate(certificateData: any) {
+    this.downloadCertificateLoading = true
+    let certData: any = certificateData.issuedCertificates[0]
+    this.certificateService.downloadCertificate_v2(certData.identifier).subscribe((res: any)=>{
+    this.downloadCertificateLoading = false
+    const cet = res.result.printUri
+    this.dialog.open(CertificateDialogComponent, {
+      // height: '400px',
+      width: '1300px',
+      data: { cet },
+      // panelClass: 'custom-dialog-container',
+    })
+      console.log(res,'certificateData')
+    })
+
+  }
 }

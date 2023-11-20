@@ -11,6 +11,7 @@ const urls = {
   PROXIES_PREFIX: '/apis/proxies/v8/',
   VALIDATE_CERTIFICATE: 'certreg/v1/certs/validate',
   DOWNLOAD_CERTIFICATE: (id: string) => `certreg/v2/certs/download/${id}`,
+  DOWNLOAD_CERTIFICATE_v2: (id: string) => `apis/protected/v8/cohorts/course/batch/cert/download/${id}`,
   SEARCH_CERTIFICATE: 'certreg/v1/certs/search',
 }
 
@@ -33,6 +34,15 @@ export class CertificateService {
   downloadCertificate(id: string): Observable<ServerResponse> {
     const option = {
       url: `${urls.LEARNER_PREFIX}${urls.DOWNLOAD_CERTIFICATE(id)}`,
+    }
+    return this.apiService.get(option.url)
+    // sample response
+    //  {"id":"api.certs.registry.download","ver":"v2","ts":"1615529580406","params":null,"responseCode":"OK",
+    // "result":{"printUri":"data:image/svg+xml
+  }
+  downloadCertificate_v2(id: string): Observable<ServerResponse> {
+    const option = {
+      url: `${urls.DOWNLOAD_CERTIFICATE_v2(id)}`,
     }
     return this.apiService.get(option.url)
     // sample response

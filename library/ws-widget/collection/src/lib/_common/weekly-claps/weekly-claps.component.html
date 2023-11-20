@@ -1,4 +1,4 @@
-<div class="weekly-wrapper" *ngIf="!isLoading">
+<div class="weekly-wrapper" *ngIf="!isLoading && weeklyData.enableClaps">
     <div>
         <div class="flex flex-between">
             <p class="flex-align-start weekly-title flex flex-middle margin-remove">Weekly claps
@@ -6,7 +6,7 @@
             </p>
             <p class="flex weeks-count  flex-middle  margin-remove">
                 <img class="margin-right-s cursor-pointer" width="34" height="34" src="assets/icons/home/clap_icon.svg" >
-                {{insightsData?.weeklyClaps?.weeklyCount || 0}} weeks
+                {{insightsData?.weeklyClaps?.total_claps || 0}} weeks
             </p>
         </div>
         <p class="period-count">Fri, 1 Sep - Sat, 30 Sep</p>
@@ -14,34 +14,23 @@
     <div>
         <div class="flex ">
             <ng-container *ngIf="insightsData && insightsData.weeklyClaps">
-            <ng-container *ngFor="let week of insightsData.weeklyClaps.weekData;let i = index">
-                <div class="flex flex-middle margin-right-m">
-                    <p class="margin-remove  margin-right-xs week-name">W{{i+1}} </p>
-                    <img width="24" height="24" src="{{week.achieved === 1 ? 'assets/icons/home/check_icon.svg' : 'assets/icons/home/disable_icon.svg'}}" alt="">
-                </div>
+                <ng-container *ngFor="let week of weeklyData.weekList;let i = index">
+                    <div class="flex flex-middle margin-right-m">
+                        <p class="margin-remove  margin-right-xs week-name">{{week.label}} </p>
+                        <ng-container>
+                            <img width="24" height="24" src="{{insightsData.weeklyClaps[week.key]?.timespent > 60 ? 'assets/icons/home/check_icon.svg' : 'assets/icons/home/disable_icon.svg'}}" alt="">
+                        </ng-container>
+                        <ng-container *ngIf="week.activeWeek  && insightsData.weeklyClaps[week.key]?.timespent">
+                            <img width="24" height="24" src="{{insightsData.weeklyClaps[week.key].timespent > 60 ? 'assets/icons/home/highlight.svg' : 'assets/icons/home/disable_icon.svg'}}" alt="">
+                        </ng-container>
+                    </div>
+                </ng-container>
             </ng-container>
-        </ng-container>
-            <!-- <div class="flex flex-middle margin-right-m">
-                <p class="margin-remove  margin-right-xs week-name">W1 </p>
-                <img width="24" height="24" src="assets/icons/home/check_icon.svg" alt="">
-            </div>
-            <div class="flex flex-middle margin-right-m">
-                <p class="margin-remove  margin-right-xs week-name">W2 </p>
-                <img width="24" height="24" src="assets/icons/home/disable_icon.svg" alt="">
-            </div>
-            <div class="flex flex-middle margin-right-m">
-                <p class="margin-remove  margin-right-xs week-name">W3 </p>
-                <img width="24" height="24" src="assets/icons/home/check_icon.svg" alt="">
-            </div>
-            <div class="flex flex-middle margin-right-m">
-                <p class="margin-remove  margin-right-xs week-name">W4 </p>
-                <img width="24" height="24" src="assets/icons/home/check_icon.svg" alt="">
-            </div> -->
         </div>
     </div>
 </div>
 
-<div class="weekly-wrapper" *ngIf="isLoading">
+<div class="weekly-wrapper" *ngIf="isLoading && weeklyData.enableClaps">
     <div>
         <div class="flex flex-between">
             <p class="flex-align-start weekly-title flex flex-middle margin-remove">
