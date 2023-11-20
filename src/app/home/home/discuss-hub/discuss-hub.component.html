@@ -10,28 +10,40 @@
             <div class="flex flex-row gap-3 items-center mat-subheading-1">
                 <div class="flex flex-grow">Updates on your posts</div>
                 <div class="text-2xl ws-mat-default-text">
-                    <mat-icon class="cursor-pointer font-bold">add</mat-icon>
+                    <mat-icon class="cursor-pointer font-bold" *ngIf="!updates_posts.loadSkeleton">add</mat-icon>
                 </div>
             </div>
 
-            <div class="flex flex-col discussion-card gap-2 p-5">
-                <div class="ws-mat-default-text font-semibold">2 Upvote on your port</div>
-                <div class="">What are some merits and demerits of the Dicey’s Rule of law?</div>
-            </div>
-            <div class="flex flex-col discussion-card gap-2 p-5">
-                <div class="ws-mat-default-text font-semibold">Alex replied to your post</div>
-                <div class="">I think the solution to such a problem would be to extensively.</div>
-            </div>
-            <div class="flex flex-col discussion-card gap-2 p-5">
-                <div class="ws-mat-default-text font-semibold">1 Downvote on your post</div>
-                <div class="">What are some merits and demerits of the Dicey’s Rule of law?</div>
-            </div>
-            <div class="flex flex-row gap-2 p-4 ws-mat-default-text justify-center">
-                <div class="font-semibold">Show all</div>
-                <mat-icon>
-                    chevron_right
-                </mat-icon>
-            </div>
+            <ng-container *ngIf="updates_posts.loadSkeleton">
+                <div class="flex flex-col discussion-card gap-3 p-5" *ngFor="let i of [1, 2, 3]">
+                    <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-widget-skeleton-loader>
+                    <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-12'"></ws-widget-skeleton-loader>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="!updates_posts.loadSkeleton">
+                <div class="flex flex-col discussion-card gap-2 p-5">
+                    <div class="ws-mat-default-text font-semibold">2 Upvote on your port</div>
+                    <div class="">What are some merits and demerits of the Dicey’s Rule of law?</div>
+                </div>
+                <div class="flex flex-col discussion-card gap-2 p-5">
+                    <div class="ws-mat-default-text font-semibold">Alex replied to your post</div>
+                    <div class="">I think the solution to such a problem would be to extensively.</div>
+                </div>
+                <div class="flex flex-col discussion-card gap-2 p-5">
+                    <div class="ws-mat-default-text font-semibold">1 Downvote on your post</div>
+                    <div class="">What are some merits and demerits of the Dicey’s Rule of law?</div>
+                </div>
+
+                <div class="flex flex-row gap-2 p-4 justify-center" *ngIf="!discussion.loadSkeleton || !discussion.error">
+                    <div class="flex gap-1 font-semibold cursor-pointer ws-mat-default-text">
+                        <div>Show all</div>
+                        <mat-icon>
+                            chevron_right
+                        </mat-icon>
+                    </div>
+                </div>
+            </ng-container>
         </div>
     </div>
 
@@ -61,7 +73,7 @@
                 <ng-container *ngIf="!discussion.loadSkeleton">
                     <ng-container *ngIf="!discussion.data && !discussion.error">
                         <div class="flex flex-col items-center gap-4 p-10">
-                            <img src="./../../../fusion-assets/images/new-home/chat.svg" alt="chat img" />
+                            <img src="assets/icons/home/chat.svg" alt="chat img" />
                             <div class="text-sm text-center">Do you have any questions, suggestions or, ideas in your mind? Post it.
                             </div>
                             <button
@@ -86,11 +98,13 @@
                 </ng-container>
             </div>
         </div>
-        <div class="flex flex-row gap-2 p-4 ws-mat-default-text justify-center" *ngIf="!discussion.loadSkeleton || !discussion.error">
-            <div class="font-semibold cursor-pointer" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >Show all</div>
-            <mat-icon>
-                chevron_right
-            </mat-icon>
+        <div class="flex justify-center items-center p-4" *ngIf="!discussion.loadSkeleton || !discussion.error">
+            <div class="flex gap-1 font-semibold cursor-pointer ws-mat-default-text" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >
+                <div>Show all</div>
+                <mat-icon>
+                    chevron_right
+                </mat-icon>
+            </div>
         </div>
     </div>
 </div>
