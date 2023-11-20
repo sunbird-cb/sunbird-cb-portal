@@ -13,11 +13,16 @@ export class DiscussHubComponent implements OnInit {
 
   userData: any;
   discussion = {
-    discussionData: undefined,
-    loadSkeleton: false,
+    data: undefined,
     error: false,
-    data: undefined
+    loadSkeleton: false,
   };
+
+  updates_posts = {
+    data: undefined,
+    error: false,
+    loadSkeleton: false,
+  }
 
   constructor(
     private homePageService: HomePageService,
