@@ -18,16 +18,14 @@
 
 
 .desktop-cross {
-  margin-top: 16px;
-  margin-left: 16px;
-  color: rgb(216, 216, 216);
-  height: 24px;
-  width: 24px;
+  margin-top: 15px;
+  color: #d8d8d8;
   text-align: center;
   display: inline-block;
-  margin-top: 42px;
-  margin-left: 200px;
   cursor: pointer;
+  font-size: 14px;
+  position: absolute;
+  right: 15px;
 }
 
 
@@ -99,7 +97,6 @@
       font-weight: 600;
       left: 0;
       bottom: 0;
-      padding-top: 12px;
       width: 100%;
       background-color: #FEFAF6;
       color: black;
@@ -114,9 +111,18 @@
       justify-content: center;
     }
 
+    .update-mobile-number-flex img.hand-icon {
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
     .update-mobile-number-flex .updatetitle {
       margin-top: 42px;
       margin-left: 16px;
+      font-size: 16px;
+      line-height: 1.5;
+      font-weight: 600;
+      font-family: 'Montserrat';
     }
     .update-mobile-number-flex .update-now {
       margin-top: 42px;
@@ -764,6 +770,10 @@
     margin-right: 0 !important;
     border-top: 1px solid #ccc;
     background-color: #fff;
+  }
+
+  .mob-16 {
+    padding: 0 16px;
   }
 
 }

@@ -190,8 +190,14 @@
   }
 
   .logo-dim img {
-    height:44px;
+    // height:44px;
 
+  }
+
+  .app-logo {  
+    @include breakpoint-xs {
+      max-width: 100%;
+    }
   }
 
   .help-icon {

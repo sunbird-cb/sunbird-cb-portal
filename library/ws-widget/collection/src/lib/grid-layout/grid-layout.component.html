@@ -1,4 +1,4 @@
-<div class="flex flex-wrap fix-w" [ngClass]="fullMenuHeight ? 'full-height' : ''" *ngFor="let row of processed; trackBy:tracker" role="none"
+<div class="flex flex-wrap fix-w mob-16" [ngClass]="fullMenuHeight ? 'full-height' : ''" *ngFor="let row of processed; trackBy:tracker" role="none"
   [ngClass]="{'px-6 pb-12 sm:px-8 md:px-10': widgetData.fromBasicEditor}" [ngClass]="containerClass">
   <div class="box" *ngFor="let col of row; trackBy:tracker2" [ngClass]="col.className" [ngStyle]="col?.styles"
     role="none">
@@ -7,10 +7,11 @@
 </div>
 
 <div id="grid-container" class="footer footer-update-mobile-number" *ngIf="isNudgeOpen">
+  <div (click)="remindlater()" class="desktop-cross">X</div>
   <div class="update-mobile-number-flex">
     <span (click)="remindlater()" class="mobile-cross">X</span>
-    <img src="assets/icons/footer-nav/update-mobile-number.svg"/>
-    <span class="updatetitle">Update your mobile number </span>
+    <img class="hand-icon" src="assets/icons/footer-nav/update-mobile-number.svg"/>
+    <p class="updatetitle">Update your mobile number </p>
     <button class="ui fluid-button update-now" (click)="fetchProfile()" role="button">Update</button>
     <!-- <button class="remind-later" (click)="remindlater()" role="button">Remind Later</button> -->
     <button class="update-profile" (click)="fetchProfile()" role="button">Update</button>
@@ -20,7 +21,7 @@
         <span class="tooltiptext-check">Update your mobile number. This will enable you to login with your mobile number easily and receive important alerts on your mobile.</span>
       </span>
       </span>
-      <div (click)="remindlater()" class="desktop-cross">X</div>
+      
       
   </div>
   

@@ -36,7 +36,7 @@
         <div class="action-container flex items-center justify-center">
             <button mat-stroked-button color="accent" type="button" class="connect_btn mat-accent-border flex-auto-display"
                 (click)="connetToUser()" *ngIf="!user?.requestSent">
-                <span class="" i18n>Connect</span>
+                <span class="ws-mat-default-text" i18n><img class="connect-icon" src="assets/icons/Connect_icon.svg"/>Connect</span>
             </button>
             <button mat-stroked-button color="accent" type="button" class=" mat-accent-border flex-auto-display minwid"
                 disabled *ngIf="user?.requestSent">

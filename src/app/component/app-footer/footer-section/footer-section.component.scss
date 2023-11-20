@@ -123,6 +123,14 @@
   display: none;
 }
 
+.mobile-social {
+  display:none;
+}
+
+.desktop-social {
+  display: inline-block;
+}
+
 @media (max-width : 768px) {
 .app-store {
   margin-left: 30px;
@@ -171,4 +179,14 @@
   .nav-footer .nav.open ul { 
   height:auto;  
   transition: max-height 1s ease-in !important; }
+
+  .mobile-social {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .desktop-social {
+    display: none;
+  }
 }
