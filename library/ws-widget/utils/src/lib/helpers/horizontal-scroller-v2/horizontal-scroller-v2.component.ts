@@ -53,7 +53,7 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
             .nativeElement as HTMLElement)
         })
         
-        this.getBottomDotsArray();
+       // this.getBottomDotsArray();
     }
   }
   ngOnChanges() {

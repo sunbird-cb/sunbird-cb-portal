@@ -5,6 +5,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router'
 
+
 const DEFAULT_DURATION = 500;
 
 const noData = {
@@ -149,23 +150,38 @@ export class InsightSideBarComponent implements OnInit {
   }
 
   getPendingRequestData() {
-    this.pendingRequestData =  {
-      'result': {
-          "data": [
-              {
-                  "id": "9029b54d-c167-4d88-a1fe-0c31b940c07f",
-                  "fullName": "Karthik Test",
-                  "departmentName": "RKCbp",
-                  "updatedAt": null
-              }
-          ],
-          "message": "Successful",
-          "status": "OK"
+    // this.pendingRequestData =  {
+    //   'result': {
+    //       "data": [
+    //           {
+    //               "id": "9029b54d-c167-4d88-a1fe-0c31b940c07f",
+    //               "fullName": "Karthik Test",
+    //               "departmentName": "RKCbp",
+    //               "updatedAt": null
+    //           }
+    //       ],
+    //       "message": "Successful",
+    //       "status": "OK"
+    //   }
+    // };
+    // setTimeout(()=>{
+    //   this.pendingRequestSkeleton = false;
+    // })
+    this.homePageSvc.getRecentRequests().subscribe(
+      (res: any) => {
+        
+        this.pendingRequestSkeleton = false;
+        this.pendingRequestData = res.result.data && res.result.data.map((elem: any) => {
+          elem.fullName = elem.fullName.charAt(0).toUpperCase() + elem.fullName.slice(1)
+          return elem;
+        });
+        console.log("pending res - ", this.pendingRequestData);
+      }, (error: HttpErrorResponse) => {
+        if (!error.ok) {
+          this.pendingRequestSkeleton = false;
+        }
       }
-    };
-    setTimeout(()=>{
-      this.pendingRequestSkeleton = false;
-    })
+    );
   }
 
   navigateTo() {

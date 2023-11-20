@@ -26,6 +26,6 @@
 <div class="mt-4 dots-container" *ngIf="sliderConfig?.showDots">
     <!-- <span class="dot" [ngClass]="{ active: j === currentIndex }" -->
     <span class="dot" [ngClass]="{ active: j === activeNav }"
-      *ngFor="let slide of bottomDotsArray; let j = index"
+      *ngFor="let slide of [1,2,3,4]; let j = index"
       (click)="slideTo(j)"></span>
   </div>
