@@ -6,9 +6,10 @@ const API_END_POINTS = {
   INSIGHTS: `apis/proxies/v8/read/user/insights`,
   DISCUSSIONS: `apis/proxies/v8/discussion/user/`,
   NETWORK: `apis/protected/v8/connections/v2/connections/recommended`,
-  CONNECT: `apis/protected/v8/connections/v2/add/connection`,
+  ADD_CONNECTION: `apis/protected/v8/connections/v2/add/connection`,
+  UPDATE_CONNECTION: `apis/protected/v8/connections/v2/update/connection`,
   CONN_REQUESTED: `apis/protected/v8/connections/v2/connections/requests/received`,
-  TRENDING_DISCUSSION: `apis/proxies/v8/discussion/popular`
+  TRENDING_DISCUSSION: `apis/proxies/v8/discussion/popular`,  
 }
 
 @Injectable({
@@ -33,7 +34,11 @@ export class HomePageService {
   }
 
   connectToNetwork(payload: any): Observable<any> {
-    return this.http.post(API_END_POINTS.CONNECT, payload);
+    return this.http.post(API_END_POINTS.ADD_CONNECTION, payload);
+  }
+
+  updateConnection(payload: any): Observable<any> {
+    return this.http.post(API_END_POINTS.UPDATE_CONNECTION, payload);
   }
 
   getRecentRequests(): Observable<any> {

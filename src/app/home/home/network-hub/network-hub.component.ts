@@ -16,6 +16,11 @@ export class NetworkHubComponent implements OnInit {
   networkRecommended: any[] = [];
   userInfo: any;
   suggestionsLoader: any;
+  recentRequests = {
+    data: undefined,
+    error: false,
+    loadSkeleton: false,
+  }
 
   constructor(
     private configService: ConfigurationsService,
@@ -25,12 +30,9 @@ export class NetworkHubComponent implements OnInit {
 
   ngOnInit() {
     this.userInfo =  this.configService && this.configService.userProfile;
+    console.log("this.userInfo - ", this.userInfo);
     this.fetchNetworkRecommendations();
     this.fetchRecentRequests();
-  }
-
-  handleButtonClick(): void {
-    
   }
 
   fetchNetworkRecommendations(): void {
@@ -40,7 +42,7 @@ export class NetworkHubComponent implements OnInit {
       "search":[
         {
           "field": "employmentDetails.departmentName",
-          "values": ["Karmayogi Bharat"]
+          "values": [this.userInfo.departmentName]
         }
       ]
     };
@@ -60,11 +62,53 @@ export class NetworkHubComponent implements OnInit {
   }
 
   fetchRecentRequests(): void {
+    this.recentRequests.loadSkeleton = true;
     this.homePageService.getRecentRequests().subscribe(
       (res: any) => {
         console.log("res - ", res);
+        this.recentRequests.loadSkeleton = false;
+        this.recentRequests.data = res.result.data && res.result.data.map((elem: any) => {
+          elem.fullName = elem.fullName.charAt(0).toUpperCase() + elem.fullName.slice(1)
+          elem.connecting = false;
+          return elem;
+        });
+      }, (error: HttpErrorResponse) => {
+        if (!error.ok) {
+          this.recentRequests.loadSkeleton = false;
+        }
       }
     );
+  }
+
+  handleRequest(reqObject: any, action: string): void {
+    const payload = {
+      "userIdFrom": this.userInfo.userId,
+      "userNameFrom": this.userInfo.userId,
+      "userDepartmentFrom": this.userInfo.departmentName,
+      "userIdTo": reqObject.id,
+      "userNameTo": reqObject.id,
+      "userDepartmentTo": reqObject.departmentName,
+      "status": action
+    };
+
+    reqObject.connecting = true;
+
+    this.homePageService.updateConnection(payload).subscribe(
+      (_res: any) => {
+        if (action === 'Approved') {
+          this.matSnackBar.open("Request accepted successfully");
+        } else {
+          this.matSnackBar.open("Rejected the request");
+        }
+        reqObject.connecting = false;
+        this.fetchRecentRequests();
+      }, (error: HttpErrorResponse) => {
+        if (!error.ok) {
+          this.matSnackBar.open("Unable to update connection, due to some error!");
+        }
+        reqObject.connecting = false;
+      }
+    )
   }
 
   handleConnect(obj: any): void {
@@ -72,7 +116,7 @@ export class NetworkHubComponent implements OnInit {
       "connectionId": obj.userId,
       "userIdFrom": this.userInfo.userId,
       "userNameFrom": this.userInfo.userId,
-      "userDepartmentFrom": obj.employmentDetails.departmentName,
+      "userDepartmentFrom": this.userInfo.departmentName,
       "userIdTo": obj.userId,
       "userNameTo": obj.userId,
       "userDepartmentTo": obj.employmentDetails.departmentName

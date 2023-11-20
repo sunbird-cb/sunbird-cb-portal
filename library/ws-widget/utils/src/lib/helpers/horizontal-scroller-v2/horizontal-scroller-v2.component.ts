@@ -29,6 +29,7 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
 
   enablePrev = false
   enableNext = false
+  activeNav = 0;
   private scrollObserver: Subscription | null = null
 
   constructor() { }
@@ -61,7 +62,6 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
     }
   }
   showPrev() {
-    if (this.horizontalScrollElem) {
       // const elem = this.horizontalScrollElem.nativeElement
       // elem.scrollLeft -= 0.20 * elem.clientWidth
       if (this.horizontalScrollElem) {
@@ -71,11 +71,11 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
           left: this.horizontalScrollElem.nativeElement.scrollLeft - clientWidth,
           behavior: 'smooth',
         })
+
+        this.activeNav--;
       }
-    }
   }
   showNext() {
-    if (this.horizontalScrollElem) {
       // const elem = this.horizontalScrollElem.nativeElement
       // elem.scrollLeft += 0.20 * elem.clientWidth
       if (this.horizontalScrollElem) {
@@ -85,8 +85,8 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
           left: this.horizontalScrollElem.nativeElement.scrollLeft + clientWidth,
           behavior: 'smooth',
         })
+        this.activeNav++;
       }
-    }
   }
   private updateNavigationBtnStatus(elem: HTMLElement) {
     this.enablePrev = true
@@ -101,6 +101,29 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
         this.enableNext = false
       }
     }
+  }
+
+  slideTo(ele:any) {
+    if(ele > this.activeNav && ele != this.activeNav) {
+      if (this.horizontalScrollElem) {
+        const clientWidth = (this.horizontalScrollElem.nativeElement.clientWidth)
+        this.horizontalScrollElem.nativeElement.scrollTo({
+          left: this.horizontalScrollElem.nativeElement.scrollLeft + clientWidth,
+          behavior: 'smooth',
+        })
+      }
+      this.activeNav = ele;
+    } else {
+      if (this.horizontalScrollElem && ele >= 0 && ele != this.activeNav) {
+        const clientWidth = (this.horizontalScrollElem.nativeElement.clientWidth)
+        this.horizontalScrollElem.nativeElement.scrollTo({
+          left: this.horizontalScrollElem.nativeElement.scrollLeft - clientWidth,
+          behavior: 'smooth',
+        })
+      }
+      this.activeNav = ele;
+    }
+    
   }
 
 }

@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-2">
+<div class="flex flex-col mt-4">
     <div class="flex flex-row gap-2 mat-subheading-1">
         <div>Go to Network hub</div>
         <mat-icon class="ws-mat-default-text">
@@ -10,12 +10,78 @@
         <div class="discussion-card flex-1">
             <div class="flex flex-col gap-4 p-4">
                 <div class="mat-subheading-1">Recent requests</div>
-                <div class="flex flex-col gap-4 items-center p-8">
-                    <img src="./../../../fusion-assets/images/new-home/chat.svg" alt="chat img" />
-                    <div class="text-center">Built your connections within your department and other departments.</div>
-                    <button
-                        class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide" [routerLink]="['/app/network-v2']">Find Connections</button>
-                </div>
+
+                <ng-container *ngIf="recentRequests.loadSkeleton">
+                    <div class="flex flex-col gap-3">
+                        <div class="flex flex-row gap-2 discussion-card p-3" *ngFor="let i of [1, 2, 3]">
+                            <div class="flex justify-center">
+                                <ws-widget-skeleton-loader [width]="'40px'" [height]="'40px'"
+                                    [bindingClass]="'rounded-full'"></ws-widget-skeleton-loader>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex flex-col gap-2">
+                                    <ws-widget-skeleton-loader [width]="'100%'"
+                                        [bindingClass]="'flex rounded-sm h-2'"></ws-widget-skeleton-loader>
+                                    <ws-widget-skeleton-loader [width]="'100%'"
+                                        [bindingClass]="'flex rounded-sm h-2'"></ws-widget-skeleton-loader>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="!recentRequests.loadSkeleton">
+                    <ng-container *ngIf="!recentRequests.data || !recentRequests.data.length">
+                        <div class="flex flex-col gap-4 items-center p-8">
+                            <img src="assets/icons/home/chat.svg" alt="chat img" />
+                            <div class="text-center">Built your connections within your department and other departments.</div>
+                            <button
+                                class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide" [routerLink]="['/app/network-v2']">Find Connections</button>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="recentRequests.data.length">
+                        <div class="flex-1 flex-col">
+                            <div class="flex flex-row gap-2 items-center py-2 recent-div " *ngFor="let reqData of recentRequests.data | slice:0:3">
+                                <!-- <div class="flex justify-center items-center rounded-full border-none bg-black-500 text-white initial-circle">
+                                    VS
+                                </div> -->
+                                <ws-widget-avatar-photo [name]="reqData?.fullName" [photoUrl]="''" size="round-m"></ws-widget-avatar-photo>
+                                <div class="flex-1 flex-col">
+                                    <div class="mat-subheading-1">{{ reqData?.fullName }}</div>
+                                    <div class="text-sm">{{ reqData?.departmentName }}</div>
+                                </div>
+                                <div class="flex flex-row gap-2 justify-center items-center">
+                                    <ng-container *ngIf="reqData.connecting">
+                                        <div class="flex justify-center items-center">
+                                            <mat-icon class="pending">cached</mat-icon>
+                                        </div>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="!reqData.connecting">
+                                        <div class="flex justify-center items-center" (click)="handleRequest(reqData, 'Rejected')">
+                                            <mat-icon class="cancel">cancel</mat-icon>
+                                        </div>
+                                        <div class="flex justify-center items-center" (click)="handleRequest(reqData, 'Approved')">
+                                            <mat-icon class="approve">check_circle</mat-icon>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-center items-center">
+                            <div class="flex gap-1 font-semibold cursor-pointer ws-mat-default-text" [routerLink]="['/app/network-v2/home']">
+                                <div>Show all</div>
+                                <mat-icon>
+                                    chevron_right
+                                </mat-icon>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+
+
             </div>
         </div>
 
@@ -39,31 +105,45 @@
                     <!-- loader code -->
 
                     <ng-container *ngIf="!suggestionsLoader">
-                        <div *ngFor="let recommend of networkRecommended">
-                            <div class="card p-4 flex flex-col items-center rounded-xl gap-3 netword-card">
-                                <div class="flex justify-center items-center initial-circle bg-blue-700 text-xl">VS</div>
-                                <div class="flex flex-col gap-1">
-                                    <div class="font-semibold text-center mat-body-2">{{ recommend?.personalDetails?.firstname }}</div>
-                                    <div class="text-center dept-name">{{ recommend?.employmentDetails?.departmentName }}</div>
-                                    <div
-                                        class="flex flex-row gap-2 ws-mat-default-text font-semibold px-8 py-2 rounded-full mat-body-2 connect-button cursor-pointer text-lg mt-2" (click)="handleConnect(recommend)" *ngIf="!recommend.connecting">
-                                        <mat-icon class="ws-mat-default-text">person_add</mat-icon>
-                                        Connect
-                                    </div>
-                                    <div class="flex flex-row gap-2 ws-mat-default-text font-semibold px-8 py-2 rounded-full connect-button cursor-pointer text-lg mt-2 mat-body-2" *ngIf="recommend.connecting">
-                                        Connecting...
+                        <ng-container *ngIf="networkRecommended.length">
+                            <div *ngFor="let recommend of networkRecommended">
+                                <div class="card p-4 flex flex-col items-center rounded-xl gap-3 netword-card">
+                                    <div class="flex justify-center items-center initial-circle bg-blue-700 text-xl">VS</div>
+                                    <div class="flex flex-col gap-1">
+                                        <div class="font-semibold text-center mat-body-2">{{ recommend?.personalDetails?.firstname }}</div>
+                                        <div class="text-center dept-name">{{ recommend?.employmentDetails?.departmentName }}</div>
+                                        <div
+                                            class="flex flex-row gap-2 ws-mat-default-text font-semibold px-8 py-2 rounded-full mat-body-2 connect-button cursor-pointer text-lg mt-2" (click)="handleConnect(recommend)" *ngIf="!recommend.connecting">
+                                            <mat-icon class="ws-mat-default-text">person_add</mat-icon>
+                                            Connect
+                                        </div>
+                                        <div class="flex flex-row gap-2 ws-mat-default-text font-semibold px-8 py-2 rounded-full connect-button cursor-pointer text-lg mt-2 mat-body-2" *ngIf="recommend.connecting">
+                                            Connecting...
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="!networkRecommended || !networkRecommended.length">
+                            <div class="p-4 flex flex-col items-center rounded-xl gap-3">
+                                <mat-icon class="no-data-found">report_off</mat-icon>
+                                <div class="mat-subheading-1">No data found!</div>
+                                <div class="text-center">As of now there are no recommendations found for you.</div>
+                            </div>
+                        </ng-container>
                     </ng-container>
                 </div>
             </div>
-            <div class="flex flex-row gap-2 p-4 ws-mat-default-text ws-widget-sliders justify-center">
-                <div class="font-semibold cursor-pointer" [routerLink]="['/app/network-v2']" >Show all</div>
-                <mat-icon class="ws-mat-default-text">
-                    chevron_right
-                </mat-icon>
+            <div class="flex flex-row gap-2 p-4 ws-mat-default-text ws-widget-sliders justify-center" *ngIf="networkRecommended && networkRecommended.length">
+                <div class="flex justify-center items-center">
+                    <div class="flex gap-1 font-semibold cursor-pointer ws-mat-default-text" [routerLink]="['/app/network-v2/home']">
+                        <div>Show all</div>
+                        <mat-icon>
+                            chevron_right
+                        </mat-icon>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

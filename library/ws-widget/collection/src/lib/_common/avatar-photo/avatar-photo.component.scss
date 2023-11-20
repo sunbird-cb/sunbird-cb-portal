@@ -263,3 +263,25 @@
 
 
 }
+
+.circle-m-side {
+  border-radius: 50%;
+  width: 72px !important;
+  height: 72px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    border-radius: 10%;
+    width: 40px;
+    height: 40px;
+  }
+
+  .initials {
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 19px;
+    letter-spacing: 0.2625px;
+  }
+}
