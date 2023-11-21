@@ -22,6 +22,7 @@ import { LiveHtmlEditorComponent } from './components/live-html-editor/live-html
 import { OptionsComponent } from './components/options/options.component'
 import { FormsModule } from '@angular/forms'
 import { CompetencyAddPopUpComponent } from './components/competency-add-popup/competency-add-popup'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { CompetencyAddPopUpComponent } from './components/competency-add-popup/c
     LiveHtmlEditorComponent,
     OptionsComponent,
     CompetencyAddPopUpComponent,
+    TranslateModule,
   ],
   entryComponents: [AuthPickerComponent, CompetencyAddPopUpComponent],
   providers: [UploadService],
