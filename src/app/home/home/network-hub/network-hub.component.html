@@ -1,5 +1,5 @@
 <div class="flex flex-col mt-4">
-    <div class="flex flex-row gap-2 mat-subheading-1">
+    <div class="flex flex-row gap-2 mat-subheading-1 cursor-pointer" [routerLink]="['/app/network-v2/home']">
         <div>Go to Network hub</div>
         <mat-icon class="ws-mat-default-text">
             chevron_right
@@ -20,11 +20,15 @@
                             </div>
                             <div class="flex-1">
                                 <div class="flex flex-col gap-2">
-                                    <ws-widget-skeleton-loader [width]="'100%'"
+                                    <ws-widget-skeleton-loader [width]="'50%'"
                                         [bindingClass]="'flex rounded-sm h-2'"></ws-widget-skeleton-loader>
-                                    <ws-widget-skeleton-loader [width]="'100%'"
+                                    <ws-widget-skeleton-loader [width]="'75%'"
                                         [bindingClass]="'flex rounded-sm h-2'"></ws-widget-skeleton-loader>
                                 </div>
+                            </div>
+                            <div class="flex flex-row gap-2 items-center">
+                                <ws-widget-skeleton-loader [width]="'24px'" [height]="'24px'" [bindingClass]="'rounded-full'"></ws-widget-skeleton-loader>
+                                <ws-widget-skeleton-loader [width]="'24px'" [height]="'24px'" [bindingClass]="'rounded-full'"></ws-widget-skeleton-loader>
                             </div>
                         </div>
                     </div>
@@ -42,10 +46,7 @@
 
                     <ng-container *ngIf="recentRequests.data.length">
                         <div class="flex-1 flex-col">
-                            <div class="flex flex-row gap-2 items-center py-2 recent-div " *ngFor="let reqData of recentRequests.data | slice:0:3">
-                                <!-- <div class="flex justify-center items-center rounded-full border-none bg-black-500 text-white initial-circle">
-                                    VS
-                                </div> -->
+                            <div class="flex flex-row gap-2 items-center py-3 recent-div" *ngFor="let reqData of recentRequests.data | slice:0:3">
                                 <ws-widget-avatar-photo [name]="reqData?.fullName" [photoUrl]="''" size="round-m"></ws-widget-avatar-photo>
                                 <div class="flex-1 flex-col">
                                     <div class="mat-subheading-1">{{ reqData?.fullName }}</div>
@@ -70,7 +71,7 @@
                             </div>
                         </div>
 
-                        <div class="flex justify-center items-center">
+                        <div class="flex justify-center items-center p-3">
                             <div class="flex gap-1 font-semibold cursor-pointer ws-mat-default-text" [routerLink]="['/app/network-v2/home']">
                                 <div>Show all</div>
                                 <mat-icon>
