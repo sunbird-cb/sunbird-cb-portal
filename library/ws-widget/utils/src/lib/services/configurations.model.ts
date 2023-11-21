@@ -273,6 +273,7 @@ export namespace NsUser {
     desiredTopics?: any
     desiredCompetencies?: any
     userRoles?: any
+    profileUpdateCompletion?: number
   }
 
   export interface INodebbUserProfile {

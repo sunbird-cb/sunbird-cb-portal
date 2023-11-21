@@ -297,6 +297,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
               contentTemp.completionStatus = c.completionStatus || c.status || 0
               contentTemp.enrolledDate = c.enrolledDate || ''
               contentTemp.lastContentAccessTime = c.lastContentAccessTime || ''
+              contentTemp.issuedCertificates = c.issuedCertificates || []
               return contentTemp
             })
           }
@@ -669,6 +670,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       tabs: tabsResults ? tabsResults : strip.tabs,
       stripName: strip.name,
       mode: strip.mode,
+      stripConfig: strip.stripConfig,
       stripBackground: strip.stripBackground,
       secondaryHeading: strip.secondaryHeading,
       loaderWidgets: strip.loaderWidgets || [],
