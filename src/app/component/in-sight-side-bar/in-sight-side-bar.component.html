@@ -54,7 +54,7 @@
             </div>
         </div>
 
-        <div class="flex flex-col discussion-card margin-bottom-m" *ngIf="pendingRequestData?.result?.data?.length">
+        <div class="flex flex-col discussion-card margin-bottom-m" *ngIf="pendingRequestData?.length">
             <div class="network-pending-requests-container">
                 <span class="pending-dot">
 
@@ -64,15 +64,15 @@
                 </div>
                 <div class="pending-request-thumbnails">
                     <ul>
-                        <li *ngFor="let item of pendingRequestData.result.data" (click)="moveToUserProile(item?.id)">
+                        <li *ngFor="let item of pendingRequestData" (click)="moveToUserProile(item?.id)">
                             <ws-widget-avatar-photo [name]="item?.fullName" [photoUrl]="item?.photo" size="s">
                             </ws-widget-avatar-photo>
                         </li>
                     </ul>
                 </div>
                 <div class="pending-request-counts">
-                    <span *ngIf="pendingRequestData?.result?.data?.length > 3">{{ (pendingRequestData.result.data.length - 3) }}</span>
-                    <span *ngIf="!(pendingRequestData?.result?.data?.length > 3)">{{pendingRequestData.result.data.length}} Request</span>
+                    <span *ngIf="pendingRequestData?.length > 3">{{ (pendingRequestData.length - 3) }}</span>
+                    <span *ngIf="!(pendingRequestData?.length > 3)">{{pendingRequestData.length}} Request</span>
                 </div>
             </div>
         </div>

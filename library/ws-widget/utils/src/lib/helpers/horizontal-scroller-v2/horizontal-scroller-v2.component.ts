@@ -24,17 +24,23 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
   }
   @Output()
   loadNext = new EventEmitter()
+  @Input() widgetsLength:any;
+  @Input() defaultMaxWidgets:any;
+  @Input() stripConfig:any;
   @ViewChild('horizontalScrollElem', { static: true })
   horizontalScrollElem: ElementRef | null = null
 
   enablePrev = false
   enableNext = false
   activeNav = 0;
+  cardSubType = 'standard';
+  bottomDotsArray:any = [];
   private scrollObserver: Subscription | null = null
 
   constructor() { }
 
   ngOnInit() {
+    this.cardSubType = this.stripConfig && this.stripConfig.cardSubType ? this.stripConfig.cardSubType : 'standard';    
     if (this.horizontalScrollElem) {
       const horizontalScrollElem = this.horizontalScrollElem
       this.scrollObserver = fromEvent(
@@ -46,6 +52,8 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
           this.updateNavigationBtnStatus(horizontalScrollElem
             .nativeElement as HTMLElement)
         })
+        
+       // this.getBottomDotsArray();
     }
   }
   ngOnChanges() {
@@ -56,6 +64,7 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
       }
     })
   }
+
   ngOnDestroy() {
     if (this.scrollObserver) {
       this.scrollObserver.unsubscribe()
@@ -124,6 +133,29 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
       this.activeNav = ele;
     }
     
+  }
+
+  getBottomDotsArray() {
+    
+    if(this.horizontalScrollElem) {   
+      this.bottomDotsArray = [];   
+        let cardWidth = this.cardSubType === 'standard' ? 245 : 
+        ( (document.getElementsByClassName(this.cardSubType) && document.getElementsByClassName(this.cardSubType)[0] !== undefined) 
+        ? document.getElementsByClassName(this.cardSubType)[0].clientWidth : 245);
+        if( document.getElementsByClassName('horizontal-scroll-container') &&  document.getElementsByClassName('horizontal-scroll-container')[0]) {
+          let scrollerWidth = document.getElementsByClassName('horizontal-scroll-container')[0].clientWidth;
+        let arrLength = (scrollerWidth/cardWidth);
+        if(this.defaultMaxWidgets) {
+          arrLength = this.defaultMaxWidgets/arrLength;
+        }        
+        
+        for(let i=0; i<arrLength;i++) {
+          this.bottomDotsArray.push(i);
+        }
+        console.log('this.cardSubType', this.cardSubType, arrLength, this.widgetsLength , this.defaultMaxWidgets,scrollerWidth, this.bottomDotsArray);
+        }
+    }
+   
   }
 
 }

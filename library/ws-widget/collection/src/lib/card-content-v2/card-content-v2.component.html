@@ -1,4 +1,5 @@
 <!--  -->
+<div class="widget-card-content-new">
 <ng-container *ngIf="widgetData && (((widgetData?.deletedMode || 'none') === 'hide' && !!!isLiveOrMarkForDeletion)
 ? false
 : !((widgetData?.intranetMode || 'none') === 'hide' && !!showIntranetContent))"
@@ -20,7 +21,7 @@
   <!-- cardPortraitSkeleton -->
   <ng-container *ngSwitchCase="'cardCuratedCollection'" [ngTemplateOutlet]="cardCuratedCollection"></ng-container>
 </ng-container>
-
+</div>
 <ng-template #cardMinimal>
   <div [attr.name]="'widget-card-content ' + widgetData.content.name" class="card-minimal-container mr-6" [ngClass]="{
       greyOut:
