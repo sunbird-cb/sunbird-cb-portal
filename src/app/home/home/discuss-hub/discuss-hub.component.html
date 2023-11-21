@@ -1,8 +1,10 @@
-<div class="flex flex-row gap-2 mat-subheading-1 items-center">
-    <div>Go to discuss hub</div>
-    <mat-icon>
-        chevron_right
-    </mat-icon>
+<div class="flex mat-subheading-1 items-center">
+    <div class="cursor-pointer flex flex-row gap-2" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}">
+        <div>Go to discuss hub</div>
+        <mat-icon>
+            chevron_right
+        </mat-icon>
+    </div>
 </div>
 <div class="flex  gap-6 updates-on-posts">
     <div class="discussion-card flex-1">
@@ -56,14 +58,14 @@
                 </div>
 
                 <ng-container *ngIf="discussion.loadSkeleton">
-                    <div class="flex flex-col gap-2">
-                        <div class="flex flex-col gap-3 p-5" *ngFor="let item of [1, 2, 3]">
+                    <div class="flex flex-col gap-4">
+                        <div class="flex flex-col gap-3 discussion-card p-3" *ngFor="let item of [1, 2, 3]">
                             <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-widget-skeleton-loader>
                             <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-widget-skeleton-loader>
-                            <div class="flex flex-row gap-5">
-                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
-                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
-                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                            <div class="flex flex-row gap-5 justify-around">
+                                <ws-widget-skeleton-loader [width]="'64px'" [height]="'48px'" [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                                <ws-widget-skeleton-loader [width]="'64px'" [height]="'48px'" [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                                <ws-widget-skeleton-loader [width]="'64px'" [height]="'48px'" [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
                             </div>
                         </div>
                     </div>
@@ -90,15 +92,16 @@
 
                     <ng-container *ngIf="discussion.error">
                         <div class="flex flex-col items-center gap-3 p-10">
-                            <mat-icon class="text-2xl text-red-600 error-icon">error</mat-icon>
-                            <div class="text-xl font-medium">No data found!</div>
-                            <div class="text-sm text-center">Unable to fetch discussion info due to some error.</div>
+                            <mat-icon class="no-data-found">report_off</mat-icon>
+                            <div class="mat-subheading-1">No data found!</div>
+                            <div class="text-center">Unable to fetch discussion info due to some error.</div>
                         </div>
                     </ng-container>
                 </ng-container>
             </div>
         </div>
-        <div class="flex justify-center items-center p-4" *ngIf="!discussion.loadSkeleton || !discussion.error">
+
+        <div class="flex justify-center items-center p-4" *ngIf="!discussion.loadSkeleton && (!discussion.error || discussion.data)">
             <div class="flex gap-1 font-semibold cursor-pointer ws-mat-default-text" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >
                 <div>Show all</div>
                 <mat-icon>

@@ -302,3 +302,16 @@ ws-app-events-card:nth-child(2n) {
   box-shadow:none !important;
   // height:249px;
 }
+
+.events-box {
+  width: 47%;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  border-radius: 4px;
+  height: 148px;
+  background: #ffffff;
+}
+
+.scrollcss {
+  overflow-x: auto;
+  height: 220px;
+}
