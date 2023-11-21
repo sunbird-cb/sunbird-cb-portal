@@ -26,6 +26,10 @@ ws-app-search-input-home .autocomplete-form {
     margin-left: 16px;
     margin-top: 15px;
   }
+
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 1.35em !important;
+  }
 }
 
 .small-typography .mat-form-field-prefix  {
@@ -41,6 +45,9 @@ ws-app-search-input-home .autocomplete-form {
     margin-left: 16px;
     margin-top: 20px;
   }
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 1.85em !important;
+  }
 }
 
 .large-typography .mat-form-field-prefix  {
@@ -54,6 +61,10 @@ ws-app-search-input-home .autocomplete-form {
     padding: 8px;
     margin-left: 16px;
     margin-top: 38px;
+  }
+
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 1.85em !important;
   }
 }
 
@@ -69,6 +80,10 @@ ws-app-search-input-home .autocomplete-form {
     margin-left: 16px;
     margin-top: 27px;
   }
+
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 1.85em !important;
+  }
   
 }
 
@@ -83,6 +98,10 @@ ws-app-search-input-home .autocomplete-form {
     padding: 8px;
     margin-left: 16px;
     margin-top: 50px;
+  }
+
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 1.85em !important;
   }
 }
 
@@ -200,6 +219,36 @@ ws-app-search-input-home .feature-group {
 
 .mat-form-field-underline {
   display: none;
+}
+
+.x-small-typography {
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 1.35em !important;
+  }
+}
+
+.small-typography {
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 1.35em !important;
+  }
+}
+
+.normal-typography {
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 1.35em !important;
+  }
+}
+
+.large-typography {
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 1.35em !important;
+  }
+}
+
+.x-large-typography {
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 1.35em !important;
+  }
 }
 
 
