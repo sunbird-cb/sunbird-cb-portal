@@ -6,10 +6,10 @@
   flex: 1;
   // height: calc(100% - 2rem);
   &.mat-card{
-    flex-direction: column;
+    // flex-direction: column;
     display: flex;
-    width: 212px;
-    height: 85px;
+    width: 91%;
+    height: 112px;
   }
   .mat-card-footer{
     justify-self: flex-end;
@@ -21,7 +21,6 @@
 }
  
 .custom-title {
-  color: white;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -38,17 +37,14 @@
 .light-font {
   color: #fff;
 }
+// .dot:before {
+//   content: '•';
+//   margin: 1rem;
 
-
-
-.dot:before {
-  content: '•';
-  margin: 1rem;
-
-  @include breakpoint-xs {
-    margin: 0.65rem;
-  }
-}
+//   @include breakpoint-xs {
+//     margin: 0.65rem;
+//   }
+// }
 
 .mobile {
   @include breakpoint-xs {
@@ -128,4 +124,75 @@
 
 ::ng-deep.today-event-card .mat-card-header-text {
   margin: 0 !important;
+}
+
+.imgbox {
+  width: 147px;
+  height: 116px;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid #fcf8f8;
+  img {
+    max-height: 116px;
+  }
+}
+.databox {
+  width: 55%;
+}
+.event-type {
+  border: 1px solid #ef951e;
+  background: rgba(239, 149, 30, 0.05);
+  border-radius: 16px;
+  font: 400 10px/12px Lato;
+  display: inline;
+  padding: 3% 2%;
+
+  mat-icon {
+    color: #ef951e;
+    margin: 0% 2%;
+    font-size: 16px;
+    vertical-align: middle;
+    width: 14px;
+    height: 18px;
+  }
+}
+
+.livecss {
+  background: #d13924;
+  padding: 0px 4% 1% 18%;
+  text-transform: uppercase;
+  border-radius: 16px;
+  width: 50px;
+  display: inline-block;
+  font-size: 12px;
+
+  .dot {
+    background: #ffffff;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    margin: -4px 2px 0px 0px;
+  }
+}
+
+button.ws-mat-primary-background {
+  color: white !important;
+  border-radius: 18px !important;
+  line-height: 26px !important;
+}
+
+::ng-deep.theme-igot.day-mode .ws-mat-primary-background {
+  background-color: #1b4ca1 !important;
+}
+
+.recordicon {
+  margin-right: 6px;
+    height: 20px;
+    width: 20px;
+    vertical-align: sub;
+}
+::ng-deep.mat-raised-button {
+  font-weight: 500 !important;
 }
