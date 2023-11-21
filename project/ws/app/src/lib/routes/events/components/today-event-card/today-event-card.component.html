@@ -17,7 +17,7 @@
                 <span class="mat-body-2">{{eventData?.eventStartTime}} - {{eventData?.eventEndTime}}</span>
             </mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content *ngIf="isLive">
+        <mat-card-content *ngIf="isLive && !isRecording">
             <div class="float-left">
                 <span class="light-font livecss"><span class="dot"></span> {{eventData?.event.status}} </span>
             </div>
@@ -25,8 +25,8 @@
                 <button mat-raised-button type="button" class="ws-mat-primary-background">Join event</button>
             </div>
         </mat-card-content>
-        <mat-card-content *ngIf="!isLive">
-            <button mat-raised-button type="button" class="ws-mat-primary-background"><img class="recordicon" src="/assets/icons/recording@2x.svg" alt="">View recording</button>
+        <mat-card-content *ngIf="!isLive && isRecording">
+            <button mat-raised-button type="button" class="ws-mat-primary-background"><img class="recordicon" src="/assets/icons/recording@2x.png" alt="Recording">View recording</button>
         </mat-card-content>
     </div>
 </mat-card>

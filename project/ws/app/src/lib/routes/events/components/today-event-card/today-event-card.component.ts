@@ -10,6 +10,7 @@ import moment from 'moment'
 export class TodayEventCardComponent implements OnInit {
   @Input() eventData: any
   isLive = true
+  isRecording = false
 
   constructor(private router: Router) { }
 
@@ -21,7 +22,10 @@ export class TodayEventCardComponent implements OnInit {
       const today = moment(now).format('YYYY-MM-DD HH:mm')
 
       if (eventDate < today && eventendDate < today) {
-        this.isLive = false
+        if (this.eventData.event.recordedLinks && this.eventData.event.recordedLinks.length > 0){
+          this.isRecording = true
+          this.isLive = false
+        }
       }
     }
   }
