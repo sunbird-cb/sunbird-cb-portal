@@ -12,6 +12,14 @@
             <div class="flex mobile-margin text-capitalize mat-h1 margin-bottom-xs">
               {{eventData?.name}}
             </div>
+            <div class="margin-top-xs margin-bottom-xs" *ngIf="eventData?.resourceType === 'Karmayogi Talks'">
+              <img src="/assets/icons/karmayogi_TalksLogo.png" alt="Karmayogi Talks" width="153px">
+            </div>
+            <div class="margin-bottom-xs" *ngIf="eventData?.resourceType === 'Webinar' && pastEvent && (eventData?.recordedLinks && eventData?.recordedLinks.length > 0)">
+              <a class="flex-1" href="{{eventData?.recordedLinks[0]}}" target="_blank">
+              <button mat-raised-button type="button" class="ws-mat-primary-background"><mat-icon>play_circle_filled</mat-icon> Webinar</button>
+              </a>
+            </div>
             <div class="flex flex-col flex-auto mat-body-1">
               <p class="flex margin-bottom-m word-break" role="link" tabindex="0" i18n-aria-label>
                 {{eventData?.instructions}}
