@@ -15,8 +15,8 @@ export class TodayEventCardComponent implements OnInit {
 
   ngOnInit() {
     if(this.eventData) {
-      const eventDate = this.customDateFormat(this.eventData.startDate, this.eventData.startTime)
-      const eventendDate = this.customDateFormat(this.eventData.endDate, this.eventData.endTime)
+      const eventDate = this.customDateFormat(this.eventData.event.startDate, this.eventData.event.startTime)
+      const eventendDate = this.customDateFormat(this.eventData.event.endDate, this.eventData.event.endTime)
       const now = new Date()
       const today = moment(now).format('YYYY-MM-DD HH:mm')
 
