@@ -17,8 +17,8 @@
                 <span class="mat-body-2">{{eventData?.eventStartTime}} - {{eventData?.eventEndTime}}</span>
             </mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content>
-            <div class="float-left" *ngIf="isLive">
+        <mat-card-content *ngIf="isLive">
+            <div class="float-left">
                 <span class="light-font livecss"><span class="dot"></span> {{eventData?.event.status}} </span>
             </div>
             <div class="float-right">
