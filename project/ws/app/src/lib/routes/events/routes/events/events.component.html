@@ -1,7 +1,7 @@
 <div class="banner w-full">
 </div>
 
-<div class="px-10 py-10 event_outer_box">
+<div class="py-10 event_outer_box">
     <div class="flex flex-4 flex-column">
         <div class="flex custom event_main_box">
             <div class="event_image_box">
@@ -16,9 +16,12 @@
                     <span class="spacer"></span>
                   </mat-card-header>
                   <mat-card-content class="mb-0-imp flex flex-wrap margin-left-m">
-                    <ng-container *ngFor="let tevent of todaysEvents | orderBy:'eventStartTime':'asc'">
-                      <ws-app-today-event-card class="mr-4 mb-5" [eventData]="tevent"></ws-app-today-event-card>
-                    </ng-container>
+                    <!-- <ws-utils-horizontal-scroller-v2 [sliderConfig]="sliderConfig" [loadStatus]="'fetching'"> -->
+                        <ng-container *ngFor="let tevent of todaysEvents | orderBy:'eventStartTime':'asc'">
+                            <ws-app-today-event-card class="mr-4 mb-5 events-box" [eventData]="tevent"></ws-app-today-event-card>
+                        </ng-container>
+                    <!-- </ws-utils-horizontal-scroller-v2> -->
+                   
                     <ng-container *ngIf="todaysEvents && todaysEvents.length === 0">
                         <h4 class="w-full ws-mat-black60-text">No events</h4>
                     </ng-container>
@@ -62,7 +65,7 @@
     </div>
 </div> -->
 
-<div class="w-full padding-top-xs px-10 event_card_main_box">
+<div class="w-full padding-top-xs event_card_main_box">
     <div class="flex flex-1 flex-column margin-fix mb-2">
         <span class="f-medium mat-title">All events </span>
     </div>
@@ -102,11 +105,23 @@
                 </section>
             </ng-template>
         </mat-tab>
-        <mat-tab label="Hosted by my MDO" *ngIf="featuredEvents?.length">
+        <mat-tab label="Events in your MDO" *ngIf="featuredEvents?.length">
             <ng-template matTabContent>
                 <section id="content">
                     <div class="w-full margin-top-xl margin-bottom-m">
                         <ng-container *ngFor="let event of featuredEvents |  pipeFilterV2:'eventName': searchInput.value">
+                            <ws-app-events-card class="w-fix" [eventData]="event" *ngIf="event !== -1"></ws-app-events-card>
+                            <h4 class="w-full text-center ws-mat-black60-text" *ngIf="event === -1">No search results found!</h4>
+                        </ng-container>
+                    </div>
+                </section>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Curated events" *ngIf="curatedEvents?.length">
+            <ng-template matTabContent>
+                <section id="content">
+                    <div class="w-full margin-top-xl margin-bottom-m">
+                        <ng-container *ngFor="let event of curatedEvents | pipeFilterV2:'eventName': searchInput.value">
                             <ws-app-events-card class="w-fix" [eventData]="event" *ngIf="event !== -1"></ws-app-events-card>
                             <h4 class="w-full text-center ws-mat-black60-text" *ngIf="event === -1">No search results found!</h4>
                         </ng-container>
