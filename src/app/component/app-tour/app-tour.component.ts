@@ -8,12 +8,13 @@ import { UserProfileService } from '@ws/app/src/lib/routes/user-profile/services
   styleUrls: ['./app-tour.component.scss'],
   providers:[UserProfileService]
 })
+
 export class AppTourComponent {
   progressIndicatorLocation = ProgressIndicatorLocation.TopOfTourBlock;
   currentWindow: any
   videoProgressTime: number = 114;
   tourStatus: any = {visited: true, skipped: false}
-  //profileDetails: any
+  
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     if (event.key === "Escape") {
       this.skipTour('','')
@@ -85,6 +86,7 @@ export class AppTourComponent {
     ],
     preventBackdropFromAdvancing: true
   };
+  
   private readonly MOBILE_TOUR: GuidedTour = {
     tourId: 'purchases-tour',
     useOrb: false,
