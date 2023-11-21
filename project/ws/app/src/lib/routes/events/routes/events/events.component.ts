@@ -6,6 +6,7 @@ import { EventService } from '../../services/events.service'
 import * as moment from 'moment'
 import { ConfigurationsService, WsEvents, EventService as EventServiceGlobal } from '@sunbird-cb/utils'
 import { MatTabChangeEvent } from '@angular/material'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'ws-app-events',
@@ -24,9 +25,16 @@ export class EventsComponent implements OnInit {
   allEvents: any = []
   todaysEvents: any = []
   featuredEvents: any = []
+  curatedEvents: any = []
   alltypeEvents: any = []
   currentFilterSort = 'desc'
   departmentID: any
+  spvOrgId: any
+  sliderConfig = {
+    showNavs: true,
+    showDots: true,
+    maxWidgets: 2,
+  }
 
   constructor(
     private route: ActivatedRoute,
@@ -121,10 +129,11 @@ export class EventsComponent implements OnInit {
         this.allEvents['all'] = []
         this.allEvents['todayEvents'] = []
         this.allEvents['featuredEvents'] = []
+        this.allEvents['curatedEvents'] = []
         Object.keys(data).forEach((index: any) => {
             const obj = data[index]
             const expiryStartTimeFormat = this.customDateFormat(obj.startDate, obj.startTime)
-            const expiryEndTimeFormat = this.customDateFormat(obj.startDate, obj.endTime)
+            // const expiryEndTimeFormat = this.customDateFormat(obj.startDate, obj.endTime)
             const floor = Math.floor
             const hours = floor(obj.duration / 60)
             const minutes = obj.duration % 60
@@ -160,12 +169,16 @@ export class EventsComponent implements OnInit {
                 pastevent: false,
             }
             this.allEvents['all'].push(eventDataObj)
-            const isToday = this.compareDate(expiryStartTimeFormat, obj.startDate, expiryEndTimeFormat)
+            const isToday = this.compareDate(obj.startDate)
             if (isToday) {
               this.allEvents['todayEvents'].push(eventDataObj)
             }
             if (obj.createdFor && obj.createdFor[0] === this.departmentID) {
               this.allEvents['featuredEvents'].push(eventDataObj)
+            }
+            this.spvOrgId = environment.spvorgID
+            if (obj.createdFor && obj.createdFor[0] === this.spvOrgId) {
+              this.allEvents['curatedEvents'].push(eventDataObj)
             }
 
             const now = new Date()
@@ -179,6 +192,7 @@ export class EventsComponent implements OnInit {
         this.filter('all')
         this.filter('todayEvents')
         this.filter('featuredEvents')
+        this.filter('curatedEvents')
     }
   }
 
@@ -193,6 +207,7 @@ export class EventsComponent implements OnInit {
       const todayEvents: any[] = []
       const all: any[] = []
       const featuredEvents: any[] = []
+      const curatedEvents: any[] = []
       if (this.allEvents['all'] && this.allEvents['all'].length > 0) {
           this.allEvents['all'].forEach((event: any) => {
               all.push(event)
@@ -209,27 +224,35 @@ export class EventsComponent implements OnInit {
         this.allEvents['featuredEvents'].forEach((event: any) => {
           featuredEvents.push(event)
         })
-    }
+      }
+      if (this.allEvents['curatedEvents'] && this.allEvents['curatedEvents'].length > 0) {
+        this.allEvents['curatedEvents'].forEach((event: any) => {
+          curatedEvents.push(event)
+        })
+      }
 
       if (key) {
           this.currentFilter = key
           switch (key) {
-              case 'all':
-                  this.alltypeEvents = all
-                  break
-              case 'todayEvents':
-                  this.todaysEvents = todayEvents
-                  break
-              case 'featuredEvents':
-                  this.featuredEvents = featuredEvents
-                  break
+            case 'all':
+                this.alltypeEvents = all
+                break
+            case 'todayEvents':
+                this.todaysEvents = todayEvents
+                break
+            case 'featuredEvents':
+                this.featuredEvents = featuredEvents
+                break
+            case 'curatedEvents':
+                this.curatedEvents = curatedEvents
+                break
           }
       }
   }
 
-  compareDate(startime: any, startDate: any, endtime: any) {
+  compareDate(startDate: any) {
     const now = new Date()
-    const today = moment(now).format('YYYY-MM-DD HH:mm')
+    // const today = moment(now).format('YYYY-MM-DD HH:mm')
 
     // tslint:disable-next-line:prefer-template
     const day =  ('0' + (new Date().getDate())).slice(-2)
@@ -238,10 +261,13 @@ export class EventsComponent implements OnInit {
     const month = ('0' + (now.getMonth() + 1)).slice(-2)
     const todaysdate = `${year}-${month}-${day}`
     // return (startDate === todaysdate && (startime >= today || endtime <= today)) ? true : false
-    if (startDate === todaysdate && startime > today)  {
-      return true
-    }
-    if (startDate === todaysdate && (today >= startime && today <= endtime))  {
+    // if (startDate === todaysdate && startime > today)  {
+    //   return true
+    // }
+    // if (startDate === todaysdate && (today >= startime && today <= endtime))  {
+    //   return true
+    // }
+    if (startDate === todaysdate)  {
       return true
     }
     return false
