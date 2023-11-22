@@ -84,7 +84,6 @@ export class GridLayoutComponent extends WidgetBaseComponent
   ]
   fullMenuHeight = false
   ngOnInit() {
-
     this.configSvc.changeNavBarFullView.subscribe((data: any) => {
       // console.log('data-->', data)
       this.fullMenuHeight = data

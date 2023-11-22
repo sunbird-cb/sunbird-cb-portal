@@ -8,12 +8,30 @@ import { BtnSettingsService } from '@sunbird-cb/collection'
 export class FontSettingComponent implements OnInit {
 
   constructor(public btnSettingsSvc: BtnSettingsService) { }
-
+  fontValue =14;
   ngOnInit() {
+    console.log(localStorage.getItem('setting'));
+    let fontClass = localStorage.getItem('setting');
+    switch(fontClass) {
+      case 'x-small-typography':
+      this.fontValue = 10;
+      break;
+      case 'small-typography':
+      this.fontValue = 12;
+      break;
+      case 'normal-typography':
+      this.fontValue = 14;
+      break;
+      case 'large-typography':
+      this.fontValue = 16;
+      break;
+      case 'x-large-typography':
+        this.fontValue = 18;
+      break;
+    }
   }
 
   changeFont(fontSize:any) {
-    console.log('fontSize',fontSize.value)
     let fontClass = 'small-typography';
     switch(fontSize.value) {
       case 10:

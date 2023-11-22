@@ -82,6 +82,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   currentRouteData: any = []
   loggedinUser = !!(this.configSvc.userProfile && this.configSvc.userProfile.userId)
   headerFooterConfigData:any = {};
+  activeMenu:any = '';
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -288,8 +289,10 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
         // if (this.appStartRaised) {
         //   this.telemetrySvc.audit(WsEvents.WsAuditTypes.Created, 'Login', {})
         //   this.appStartRaised = false
-        // }        
+        // }     
+        this.activeMenu = localStorage.getItem('activeMenu');   
         this.openIntro()
+        
       }
     })
     this.rootSvc.showNavbarDisplay$.pipe(delay(500)).subscribe(display => {
