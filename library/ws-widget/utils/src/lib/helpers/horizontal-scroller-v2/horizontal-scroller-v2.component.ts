@@ -53,7 +53,7 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
             .nativeElement as HTMLElement)
         })
 
-       this.getBottomDotsArray();
+       this.getBottomDotsArray()
     }
   }
   ngOnChanges() {
@@ -63,7 +63,7 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
           .nativeElement as HTMLElement)
       }
     })
-    this.getBottomDotsArray();
+    this.getBottomDotsArray()
   }
 
   ngOnDestroy() {
@@ -102,27 +102,26 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
     this.enablePrev = true
     this.enableNext = true
     if (elem.scrollLeft === 0) {
-      this.enablePrev = false;
-      this.activeNav = 0;
+      this.enablePrev = false
+      this.activeNav = 0
     }
     if (elem.scrollWidth === elem.clientWidth + elem.scrollLeft) {
       if (this.loadStatus === 'hasMore') {
         this.loadNext.emit()
       } else {
         this.enableNext = false
-        if(this.bottomDotsArray.length) {
-          this.activeNav = this.bottomDotsArray.length - 1;
-        }        
+        if (this.bottomDotsArray.length) {
+          this.activeNav = this.bottomDotsArray.length - 1
+        }
       }
-    } 
-    if(elem.scrollLeft !== 0 && (elem.scrollWidth !== elem.clientWidth + elem.scrollLeft)) {
-      this.activeNav = Math.ceil(elem.scrollLeft/elem.clientWidth);
+    }
+    if (elem.scrollLeft !== 0 && (elem.scrollWidth !== elem.clientWidth + elem.scrollLeft)) {
+      this.activeNav = Math.ceil(elem.scrollLeft / elem.clientWidth)
     }
   }
 
   slideTo(ele: any) {
-    console.log(this.activeNav, ele);
-    let diff=ele-this.activeNav
+    const diff = ele - this.activeNav
     // if (ele > this.activeNav && ele !== this.activeNav) {
     //   if (this.horizontalScrollElem) {
     //     const clientWidth = (this.horizontalScrollElem.nativeElement.clientWidth)
@@ -141,34 +140,34 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
     //     })
     //   }
     //   this.activeNav = ele
-    // }  
+    // }
     if (this.horizontalScrollElem) {
       const clientWidth = (this.horizontalScrollElem.nativeElement.clientWidth)
       this.horizontalScrollElem.nativeElement.scrollTo({
-        left: this.horizontalScrollElem.nativeElement.scrollLeft + (clientWidth*diff),
+        left: this.horizontalScrollElem.nativeElement.scrollLeft + (clientWidth * diff),
         behavior: 'smooth',
       })
     }
-    this.activeNav = ele  
+    this.activeNav = ele
 
   }
 
   getBottomDotsArray() {
     if (this.horizontalScrollElem) {
-      this.bottomDotsArray = [];
-      let cardWidth;
-      let arrLength;
+      this.bottomDotsArray = []
+      let cardWidth
+      let arrLength
       // console.log('this.cardSubType-->',this.cardSubType)
-      if(this.cardSubType !== 'card-wide-v2') {
+      if (this.cardSubType !== 'card-wide-v2') {
         cardWidth = this.cardSubType === 'standard' ? 245 :
         ((document.getElementsByClassName(this.cardSubType) &&
          document.getElementsByClassName(this.cardSubType)[0] !== undefined)
-        ? document.getElementsByClassName(this.cardSubType)[0].clientWidth : 245);
+        ? document.getElementsByClassName(this.cardSubType)[0].clientWidth : 245)
         if (document.getElementsByClassName('horizontal-scroll-container') &&
         document.getElementsByClassName('horizontal-scroll-container')[0]) {
         const scrollerWidth = document.getElementsByClassName('horizontal-scroll-container')[0].clientWidth
           arrLength = (scrollerWidth / cardWidth)
-          arrLength = this.defaultMaxWidgets / arrLength;
+          arrLength = this.defaultMaxWidgets / arrLength
           // console.log(scrollerWidth, cardWidth)
           for (let i = 0; i < arrLength; i += 1) {
             this.bottomDotsArray.push(i)
@@ -177,17 +176,14 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
           // this.defaultMaxWidgets, scrollerWidth, this.bottomDotsArray)
           }
       } else {
-          setTimeout(()=>{
-            arrLength = document.getElementsByClassName(this.cardSubType).length;
+          setTimeout(() => {
+            arrLength = document.getElementsByClassName(this.cardSubType).length
             for (let i = 0; i < arrLength; i += 1) {
               this.bottomDotsArray.push(i)
             }
-          },1000)          
+          },         1000)
       }
-        
 
-
-       
     }
 
   }
