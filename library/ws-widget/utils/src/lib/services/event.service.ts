@@ -11,6 +11,15 @@ export class EventService {
   private eventsSubject = new Subject<WsEvents.IWsEvents<any>>()
   public events$ = this.eventsSubject.asObservable()
 
+  private eventsChatbotSubject = new Subject<WsEvents.IWsEvents<any>>()
+  public chatbotEvents$ = this.eventsChatbotSubject.asObservable()
+
+  private eventsGetStartSubject = new Subject<WsEvents.IWsEvents<any>>()
+  public getStartEvents$ = this.eventsGetStartSubject.asObservable()
+
+  private eventsPRSubject = new Subject<WsEvents.IWsEvents<any>>()
+  public getPREvents$ = this.eventsPRSubject.asObservable()
+
   constructor(
     private utilitySvc: UtilityService,
   ) {
@@ -21,6 +30,19 @@ export class EventService {
     event.pageContext = this.getContext(event.pageContext)
     this.eventsSubject.next(event)
   }
+
+  dispatchChatbotEvent<T>(event: WsEvents.IWsEvents<T>) {
+    this.eventsChatbotSubject.next(event)
+  }
+
+  dispatchGetStartedEvent<T>(event: WsEvents.IWsEvents<T>) {
+    this.eventsGetStartSubject.next(event)
+  }
+
+  dispatchPlatformRatingEvent<T>(event: WsEvents.IWsEvents<T>) {
+    this.eventsPRSubject.next(event)
+  }
+
 
   // helper functions
   raiseInteractTelemetry(edata: WsEvents.ITelemetryEdata, object: any, pageContext?: WsEvents.ITelemetryPageContext) {

@@ -68,6 +68,13 @@ export class ConfigurationsService {
   private updateProfile = new BehaviorSubject(false)
   updateProfileObservable = this.updateProfile.asObservable()
 
+  updateTourGuide = new BehaviorSubject(true)
+  updateTourGuideObservable = this.updateTourGuide.asObservable()
+
+  // platform rating
+  updatePlatformRating = new BehaviorSubject({ bottom: '120px' })
+  updatePlatformRatingObservable$ = this.updatePlatformRating.asObservable()
+
   // Preference Related Values
   activeThemeObject: NsInstanceConfig.ITheme | null = null
   activeFontObject: NsInstanceConfig.IFontSize | null = null
@@ -100,5 +107,12 @@ export class ConfigurationsService {
   cstoken = ''
   updateGlobalProfile(state: boolean) {
     this.updateProfile.next(state)
+  }
+  updateTourGuideMethod(state: boolean) {
+    this.updateTourGuide.next(state)
+  }
+
+  updatePlatformRatingMethod(state: any) {
+    this.updatePlatformRating.next(state)
   }
 }

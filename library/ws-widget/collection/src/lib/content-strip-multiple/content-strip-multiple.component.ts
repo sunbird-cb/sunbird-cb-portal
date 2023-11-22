@@ -68,6 +68,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
   contentAvailable = true
   isFromAuthoring = false
   baseUrl = this.configSvc.sitePath || ''
+  veifiedKarmayogi = false
 
   changeEventSubscription: Subscription | null = null
   environment!: any
@@ -92,6 +93,9 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     this.isFromAuthoring = this.searchArray.some((word: string) => {
       return url.indexOf(word) > -1
     })
+    if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.profileDetails) {
+      this.veifiedKarmayogi = this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi
+    }
     this.initData()
   }
 
@@ -249,7 +253,9 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       this.fetchDAKSHTACourses(strip, calculateParentStatus)
       this.fetchprarambhCourse(strip, calculateParentStatus)
       this.fetchCuratedCollections(strip, calculateParentStatus)
-      this.fetchModeratedCourses(strip, calculateParentStatus)
+      if (this.veifiedKarmayogi) {
+        this.fetchModeratedCourses(strip, calculateParentStatus)
+      }
   }
 
   fetchModeratedCourses(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
@@ -401,10 +407,10 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
   checkForDateFilters(filters: any) {
     if (filters && filters.hasOwnProperty('batches.endDate')) {
       // tslint:disable-next-line
-      filters['batches.endDate']['>'] = eval(filters['batches.endDate']['>'])
+      filters['batches.endDate']['>='] = eval(filters['batches.endDate']['>='])
     } else if (filters && filters.hasOwnProperty('batches.enrollmentEndDate')) {
       // tslint:disable-next-line
-      filters['batches.enrollmentEndDate']['>'] = eval(filters['batches.enrollmentEndDate']['>'])
+      filters['batches.enrollmentEndDate']['>='] = eval(filters['batches.enrollmentEndDate']['>='])
     }
     return filters
   }

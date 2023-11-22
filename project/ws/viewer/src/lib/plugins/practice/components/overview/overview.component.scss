@@ -13,9 +13,12 @@
 }
 
 .exam_image {
-    width: 100%!important;
+    width: 100% !important;
+    position: relative;
+    z-index: 1;
+    object-fit: fill;
     @include breakpoint-xs {
-       display: none;
+        display: none;
     }
 }
 
@@ -23,7 +26,7 @@
     padding: $size-xl;
     box-sizing: border-box;
     @include breakpoint-lt-s {
-        padding:  $size-m 0px;
+        padding: $size-m 0px;
     }
     @include breakpoint-lt-m {
         padding: $size-xl 0px;
@@ -33,7 +36,7 @@
 .blank_box {
     @include breakpoint-lt-m {
         // flex-basis: 0;
-        display: none!important;
+        display: none !important;
     }
 }
 
@@ -111,5 +114,29 @@
     border-top-color: #000000;
     animation: spinner .8s linear infinite;
   }
+  .banner-text{
+    position: absolute;
+    z-index: 10;
+    width: 16%;
+    top: 40%;
+    left: 7%;
+    margin-top: -15px;
+    font-weight: 600;
+    @include breakpoint-xs {
+        display: none !important;
+    }
+    @include breakpoint-s {
+        top: 32%;
+        left: 15%;
+    }
+}
 
-
+.box-height {
+    min-height: 100%;
+    box-sizing: border-box;
+    .small-screen {
+    @include breakpoint-xs {
+        display: none !important;
+    } 
+    }
+}

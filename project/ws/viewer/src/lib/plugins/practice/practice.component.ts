@@ -541,10 +541,14 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   updateProgress(status: number) {
     // status = 1 indicates started
     // status = 2 indicates completed
-    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-      this.activatedRoute.snapshot.queryParams.collectionId : ''
-    const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-      this.activatedRoute.snapshot.queryParams.batchId : ''
+    const resData = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
+                                                         this.activatedRoute.snapshot.queryParams.batchId, this.identifier)
+    const collectionId = (resData && resData.courseId) ? resData.courseId : ''
+    const batchId = (resData && resData.batchId) ? resData.batchId : ''
+    // const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+    //   this.activatedRoute.snapshot.queryParams.collectionId : ''
+    // const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+    //   this.activatedRoute.snapshot.queryParams.batchId : ''
     this.viewerSvc.realTimeProgressUpdateQuiz(this.identifier, collectionId, batchId, status)
   }
 
@@ -724,6 +728,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
           case 'mcq-mca':
             const mcqMca: NSPractice.IMCQ_MCA = {
               identifier: sq.questionId,
+              question: sq.question,
               mimeType: NsContent.EMimeTypes.QUESTION,
               objectType: 'Question',
               primaryCategory: NsContent.EPrimaryCategory.MULTIPLE_CHOICE_QUESTION,
@@ -746,6 +751,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               identifier: sq.questionId,
               mimeType: NsContent.EMimeTypes.QUESTION,
               objectType: 'Question',
+              question: sq.question,
               primaryCategory: NsContent.EPrimaryCategory.SINGLE_CHOICE_QUESTION,
               qType: 'MCQ-SCA',
               editorState: {
@@ -766,6 +772,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               identifier: sq.questionId,
               mimeType: NsContent.EMimeTypes.QUESTION,
               objectType: 'Question',
+              question: sq.question,
               primaryCategory: NsContent.EPrimaryCategory.FTB_QUESTION,
               qType: 'FTB',
               editorState: {
@@ -792,6 +799,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
               identifier: sq.questionId,
               mimeType: NsContent.EMimeTypes.QUESTION,
               objectType: 'Question',
+              question: sq.question,
               primaryCategory: NsContent.EPrimaryCategory.MTF_QUESTION,
               qType: 'MTF',
               editorState: {

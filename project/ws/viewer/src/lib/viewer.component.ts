@@ -6,6 +6,7 @@ import { ConfigurationsService, UtilityService, ValueService } from '@sunbird-cb
 import { Subscription } from 'rxjs'
 import { RootService } from '../../../../../src/app/component/root/root.service'
 import { TStatus, ViewerDataService } from './viewer-data.service'
+import { WidgetUserService } from '@sunbird-cb/collection/src/lib/_services/widget-user.service copy'
 
 export enum ErrorType {
   accessForbidden = 'accessForbidden',
@@ -57,6 +58,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     private changeDetector: ChangeDetectorRef,
     private widgetServ: WidgetContentService,
     private configSvc: ConfigurationsService,
+    private userSvc: WidgetUserService,
   ) {
     this.rootSvc.showNavbarDisplay$.next(false)
   }
@@ -80,6 +82,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   ngOnInit() {
     this.getAuthDataIdentifer()
+    // this.getEnrollmentList()
     this.isNotEmbed = !(
       window.location.href.includes('/embed/') ||
       this.activatedRoute.snapshot.queryParams.embed === 'true'
@@ -152,6 +155,17 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   toggleSideBar() {
     this.sideNavBarOpened = !this.sideNavBarOpened
+  }
+
+  getEnrollmentList() {
+    let userId
+    if (this.configSvc.userProfile) {
+      userId = this.configSvc.userProfile.userId || ''
+    }
+    this.userSvc.fetchUserBatchList(userId).subscribe(
+      (courses: NsContent.ICourse[]) => {
+        this.widgetServ.currentBatchEnrollmentList = courses 
+      })
   }
 
   minimizeBar() {

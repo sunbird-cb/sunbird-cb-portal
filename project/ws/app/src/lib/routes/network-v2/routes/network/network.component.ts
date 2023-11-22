@@ -30,6 +30,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
   tabs: any
   tabsData: NSNetworkDataV2.IProfileTab[]
   private defaultSideNavBarOpenedSubscription: any
+  pageLayout: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -51,6 +52,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
     this.bannerSubscription = this.route.data.subscribe(data => {
       if (data && data.pageData) {
         this.banner = data.pageData.data.banner || []
+        this.pageLayout = data.pageData.data.pageLayout || []
       }
     })
     this.router.events.subscribe((event: Event) => {

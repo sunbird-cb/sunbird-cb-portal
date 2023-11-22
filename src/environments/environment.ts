@@ -39,6 +39,7 @@ export const environment: IEnvironment = {
   meetingLinkDetail: (window as { [key: string]: any })['env']['meetingLinkDetail'] || '',
   karmayogiBharatLink: (window as { [key: string]: any })['env']['karmayogiBharatLink'] || '',
   helpEmail: (window as { [key: string]: any })['env']['helpEmail'] || '',
+  supportEmail: (window as { [key: string]: any })['env']['supportEmail'] || '',
 }
 interface IEnvironment {
   name: string,
@@ -72,7 +73,8 @@ interface IEnvironment {
   karmayogiBharatLink: string,
   helpEmail: string,
   cdnContentHost: string,
-  cdnContentBucket: string
+  cdnContentBucket: string,
+  supportEmail: string
 }
 
 // import { AnyCnameRecord } from 'dns'

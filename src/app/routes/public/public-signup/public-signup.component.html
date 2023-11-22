@@ -111,7 +111,7 @@
                 <mat-form-field appearance="outline" class="margin-top-s w-full" id="position">
                   <input id="position" matInput tab-directive type="text" placeholder="Select your position"
                     i18n-placeholder="position" formControlName="position" [matAutocomplete]="positionAutocomplete"
-                    i18n-aria-label aria-label="Position" #position i18n-aria-label aria-label="Position Field input" maxlength="50" />                 
+                    i18n-aria-label aria-label="Position" #position i18n-aria-label aria-label="Position Field input" maxlength="50" />
                   <mat-error i18n="Position Error|Explains Position is required"
                     *ngIf="registrationForm.controls['position'].touched && registrationForm?.controls['position'].errors?.required " i18n-aria-label
                     aria-label="Position is mandatory">
@@ -155,6 +155,16 @@
                   Group
                 </label>
                 <mat-form-field appearance="outline" class="margin-top-s w-full" id="group">
+                  <mat-select placeholder="Select your group" id="group" #group i18n-placeholder="group" formControlName="group" >
+                    <mat-option *ngFor="let option of masterGroup" [value]="option">{{option}}</mat-option>
+                  </mat-select>
+                  <mat-error [hidden]="false" i18n="Group Error | Explains Group is required"
+                    *ngIf="registrationForm?.controls['group'].errors?.required" i18n-aria-label
+                    aria-label="Group is mandatory">
+                    Group is mandatory
+                  </mat-error>
+                </mat-form-field>
+                <!-- <mat-form-field appearance="outline" class="margin-top-s w-full" id="group">
                   <input id="group" matInput tab-directive type="text" placeholder="Select your group"
                     i18n-placeholder="group" formControlName="group" [matAutocomplete]="groupAutocomplete"
                     i18n-aria-label aria-label="Group" #group i18n-aria-label aria-label="Group Field input" maxlength="50" />
@@ -170,7 +180,7 @@
                   <mat-error *ngIf="registrationForm?.controls['group'].errors?.pattern" i18n-aria-label
                     aria-label="You must enter value from suggested list only.">
                     Only alphabets, numbers, space and & - () are allowed.
-                  </mat-error> 
+                  </mat-error>
                 </mat-form-field>
                 <mat-autocomplete #groupAutocomplete="matAutocomplete" autoActiveFirstOption="true" i18n-aria-label
                   aria-label="Group list masterGroup" [displayWith]="displayFnGroup">
@@ -183,7 +193,7 @@
                     <ng-container [ngTemplateOutlet]="onlynoResult" [ngTemplateOutletContext]="{type: 'Group'}">
                     </ng-container>
                   </mat-option>
-                </mat-autocomplete>
+                </mat-autocomplete> -->
               </div>
               <div class="input-wrapper  mobile-wrapper margin-top-l">
                 <label for="email" class=" margin-remove-bottom form-label required"
@@ -194,17 +204,17 @@
                 <div class="flex flex-1">
 
                   <mat-form-field appearance="outline" class="margin-top-s" id="email">
-                    <input id="email" name="emailField" autocomplete="off" type="email" maxlength="320" (input)="emailVerification($event.target.value)" matInput placeholder="Enter your email id" #email
+                    <input id="email" name="emailField" autocomplete="off" type="email" maxlength="320"  (input)="emailVerification($event.target.value)" matInput placeholder="Enter your email address" #email
                       formControlName="email" i18n-aria-label aria-label="Email input">
                     <!-- <mat-hint>Please enter a government email ID</mat-hint> -->
                   <mat-icon matSuffix class="ws-mat-green-text margin-xs" svgIcon="verified" [hidden]="!isEmailVerified"></mat-icon>
                     <mat-error [hidden]="false" *ngIf="registrationForm?.controls['email'].errors?.required"
                     i18n="Email Error|Explains name is required">
-                    Please enter your email ID
+                    Please enter your email address
                   </mat-error>
                   <mat-error [hidden]="false"  *ngIf="registrationForm.controls['email'].touched && registrationForm?.controls['email'].errors?.pattern"
-                    i18n-aria-label aria-label="Please enter a valid email ID">
-                    Please enter a valid email ID
+                    i18n-aria-label aria-label="Please enter a valid email address">
+                    Please enter a valid email address
                   </mat-error>
                   <div *ngIf="registrationForm.controls['email'].touched && emailLengthVal" class="email-error"
                     i18n="Email Error|Explains character validation">
@@ -213,8 +223,8 @@
                     <!-- <mat-hint class="pos-hint">Do not have a government email id?</mat-hint> -->
                   </mat-form-field>
                 </div>
-                <a class="pos-hint help-request ws-mat-black60-text" id="org-field">Do not have a government email id?<span class="float-right ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo('Domain')">Request for help</span></a>
-                
+                <a class="pos-hint help-request ws-mat-black60-text" id="org-field">Do not have a government email address?<span class="float-right ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo('Domain')">Request for help</span></a>
+
                 <div *ngIf="!isEmailVerified" class="flex flex-1 margin-top-s justify-end">
                   <button *ngIf="!otpEmailSend" mat-raised-button type="button" (click)="sendOtpEmail()"
                     class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text btn-responsive" [disabled]="registrationForm?.email?.invalid">
@@ -247,7 +257,7 @@
                     <!-- </div> -->
                   </div>
                 </div>
-                
+
               </div>
               <div class="input-wrapper mobile-wrapper margin-top-l">
                 <label for="mobileNumber" class=" margin-remove-bottom form-label required"
@@ -261,7 +271,7 @@
                     <!-- <input [readonly]="otpSend && !otpVerified" id="mobileNumber" #mobile type="number" matInput
                       placeholder="Mobile Number" formControlName="mobile" i18n-aria-label
                       aria-label="Mobile Number input" maxlength="12"> -->
-                    <input  id="mobileNumber" #mobile type="number" matInput (keypress)="numericOnly($event)" (paste)="numericOnly($event)"
+                    <input  id="mobileNumber" #mobile matInput type="text" maxlength="10"  (keypress)="numericOnly($event)" (paste)="numericOnly($event)"
                       placeholder="Mobile Number" formControlName="mobile" i18n-aria-label
                       aria-label="Mobile Number input">
                     <mat-icon matSuffix class="ws-mat-green-text margin-xs" svgIcon="verified" [hidden]="!isMobileVerified"></mat-icon>
@@ -342,20 +352,20 @@
                     <input matInput onfocus="this.select()" aria-label="organisation" [matAutocomplete]="auto" #organisation
                       name="organisation" formControlName="organisation" i18n-placeholder placeholder="Search organisation" i18n-aria-label
                       aria-label="Type here" required (keydown.enter)="searchOrgs($event.target.value)">
-                    <span matSuffix class="ws-mat-accent-text margin-xs cursor-pointer" (click)="searchOrgs(organisation.value)" >Search</span>                  
-                  
+                    <span matSuffix class="ws-mat-accent-text margin-xs cursor-pointer" (click)="searchOrgs(organisation.value)" >Search</span>
+
                   <mat-error [hidden]="false" i18n="Organisation name Error|Explains organisation name is required"
                     *ngIf="registrationForm?.controls['organisation'].errors?.required" i18n-aria-label
                     aria-label="Please enter your organisation name">
                     Please enter your organisation name
                   </mat-error>
 
-                  <mat-error *ngIf="registrationForm?.controls['organisation'].errors?.pattern" i18n-aria-label
+                  <!-- <mat-error *ngIf="registrationForm?.controls['organisation'].errors?.pattern" i18n-aria-label
                     aria-label="Only alphabets, numbers, space, &, -, and  () are allowed.">
                     Only alphabets, numbers, space, &, -, and  () are allowed.
-                  </mat-error>
+                  </mat-error> -->
                   </mat-form-field>
-                  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="orgClicked($event)"  
+                  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="orgClicked($event)"
                       autoActiveFirstOption="true" >
                       <ng-container *ngIf="searching">
                         <mat-option [value] = "" class="custom">
@@ -445,7 +455,7 @@
                   <mat-checkbox aria-label="I agree to the IGOT karmayogi's Terms of Service." id="confirmTerms"
                     [checked]="confirmTerms" (change)="confirmTermsChange()" i18n-aria-label
                     aria-label="I agree to the IGOT karmayogi's Terms of Service. checkbox" required>
-                   
+
                   </mat-checkbox>
                   <label class="margin-remove-bottom mat-body-2 ws-mat-black60-text ml-3" i18n-aria-label
                   aria-label="I agree to the IGOT karmayogi's Terms of Service. checkbox label">

@@ -946,9 +946,18 @@
             </ws-widget-display-content-type> -->
 
             <div class="flex flex-row justify-between w-full">
-              <div *ngIf="widgetData.content.duration" class="duration flex ">
+              <div *ngIf="widgetData.content.duration && !(widgetData.content.primaryCategory ===this.primaryCategory.BLENDED_PROGRAM)" class="duration flex ">
                 <!-- <mat-icon>access_time</mat-icon> -->
                 <span class="time-text ws-mat-black60-text">{{ widgetData.content.duration | pipeDurationTransform: 'hms' }}</span>
+              </div>
+
+              <div *ngIf="widgetData.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM" class="duration flex ">
+                <span class="time-text ws-mat-black60-text" *ngIf="widgetData?.content?.programDuration ===1">
+                  {{ widgetData?.content?.programDuration}} day
+                </span>
+                <span class="time-text ws-mat-black60-text" *ngIf="widgetData?.content?.programDuration > 1">
+                  {{ widgetData?.content?.programDuration}} days
+                </span>
               </div>
 
               <div *ngIf="widgetData.content?.completionStatus == 2" class="flex">

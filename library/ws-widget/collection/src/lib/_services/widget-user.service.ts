@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable, throwError } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 import { IUserGroupDetails } from './widget-user.model'
@@ -11,7 +11,10 @@ const API_END_POINTS = {
     `${PROTECTED_SLAG_V8}/user/group/fetchUserGroup?userId=${userId}`,
   FETCH_USER_ENROLLMENT_LIST: (userId: string | undefined) =>
     // tslint:disable-next-line: max-line-length
-    `/apis/proxies/v8/learner/course/v1/user/enrollment/list/${userId}?orgdetails=orgName,email&licenseDetails=name,description,url&fields=contentType,primaryCategory,topic,name,channel,mimeType,appIcon,gradeLevel,resourceType,identifier,medium,pkgVersion,board,subject,trackable,posterImage,duration,creatorLogo,license,version,versionKey&batchDetails=name,endDate,startDate,status,enrollmentType,createdBy,certificates&retiredCoursesEnabled=true`,
+    `/apis/proxies/v8/learner/course/v1/user/enrollment/list/${userId}?orgdetails=orgName,email&licenseDetails=name,description,url&fields=contentType,primaryCategory,topic,name,channel,mimeType,appIcon,gradeLevel,resourceType,identifier,medium,pkgVersion,board,subject,trackable,posterImage,duration,creatorLogo,license,version,versionKey&batchDetails=name,endDate,startDate,status,enrollmentType,createdBy,certificates,batchAttributes`,
+  FETCH_USER_ENROLLMENT_LIST_PROFILE: (userId: string | undefined) =>
+    // tslint:disable-next-line: max-line-length
+    `/apis/proxies/v8/learner/course/v1/user/enrollment/list/${userId}?orgdetails=orgName,email&licenseDetails=name,description,url&fields=contentType,primaryCategory,topic,name,channel,mimeType,appIcon,gradeLevel,resourceType,identifier,medium,pkgVersion,board,subject,trackable,posterImage,duration,creatorLogo,license,version,versionKey&batchDetails=name,endDate,startDate,status,enrollmentType,createdBy,certificates,batchAttributes&retiredCoursesEnabled=true`,
   // tslint:disable-next-line: max-line-length
   FETCH_USER_ENROLLMENT_LIST_V2: (userId: string | undefined, orgdetails: string, licenseDetails: string, fields: string, batchDetails: string) =>
     // tslint:disable-next-line: max-line-length
@@ -46,8 +49,37 @@ export class WidgetUserService {
     } else {
       path = API_END_POINTS.FETCH_USER_ENROLLMENT_LIST(userId)
     }
+    const headers = new HttpHeaders({
+      'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      Pragma: 'no-cache',
+      Expires: '0',
+    })
     return this.http
-      .get(path)
+      .get(path, { headers })
+      .pipe(
+        catchError(this.handleError),
+        map(
+          (data: any) => data.result.courses
+        )
+      )
+  }
+
+   // tslint:disable-next-line: max-line-length
+  fetchProfileUserBatchList(userId: string | undefined, queryParams?: { orgdetails: any, licenseDetails: any, fields: any, batchDetails: any }): Observable<NsContent.ICourse[]> {
+    let path = ''
+    if (queryParams) {
+       // tslint:disable-next-line: max-line-length
+      path = API_END_POINTS.FETCH_USER_ENROLLMENT_LIST_V2(userId, queryParams.orgdetails, queryParams.licenseDetails, queryParams.fields, queryParams.batchDetails)
+    } else {
+      path = API_END_POINTS.FETCH_USER_ENROLLMENT_LIST_PROFILE(userId)
+    }
+    const headers = new HttpHeaders({
+      'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      Pragma: 'no-cache',
+      Expires: '0',
+    })
+    return this.http
+      .get(path, { headers })
       .pipe(
         catchError(this.handleError),
         map(

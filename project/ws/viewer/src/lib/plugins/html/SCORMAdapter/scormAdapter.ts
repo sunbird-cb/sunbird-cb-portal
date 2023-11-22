@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api';
 import { NsContent } from '@sunbird-cb/collection'
 import * as dayjs from 'dayjs'
+import { ViewerUtilService } from '../../../viewer-util.service'
 const API_END_POINTS = {
   SCROM_ADD_UPDTE: '/apis/protected/v8/scrom/add',
   SCROM_FETCH: '/apis/protected/v8/scrom/get',
@@ -24,7 +25,8 @@ export class SCORMAdapterService {
     private http: HttpClient,
     handler: HttpBackend,
     private activatedRoute: ActivatedRoute,
-    private configSvc: ConfigurationsService
+    private configSvc: ConfigurationsService,
+    private viewerSvc: ViewerUtilService
   ) {
     this.http = new HttpClient(handler)
   }
@@ -233,6 +235,9 @@ export class SCORMAdapterService {
       if (postData["cmi.core.lesson_status"] === 'completed') {
         return 2
       }
+      if (postData["cmi.core.lesson_status"] === 'passed') {
+        return 2
+      }
       return 1
     } catch (e) {
       // tslint:disable-next-line: no-console
@@ -264,22 +269,23 @@ export class SCORMAdapterService {
     return this.http.patch(`${API_END_POINTS.SCROM_UPDTE_PROGRESS}/${this.contentId}`, req)
   }
 
-  addDataV3(reqDetails: any) {
+  addDataV3(reqDetails: any, contentId?: string) {
     let req: any
+    this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId, 
+      this.activatedRoute.snapshot.queryParams.batchId, this.contentId)
     if (this.configSvc.userProfile) {
       req = {
         request: {
           userId: this.configSvc.userProfile.userId || '',
           contents: [
             {
-              contentId: this.contentId,
+              contentId: contentId ? contentId :  this.contentId,
               batchId: this.activatedRoute.snapshot.queryParamMap.get('batchId') || '',
               courseId: this.activatedRoute.snapshot.queryParams.collectionId || '',
               status: (reqDetails.status) || 0,
               lastAccessTime: dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss:SSSZZ'),
               completionPercentage: reqDetails.completionPercentage,
               progressdetails: {...reqDetails.progressDetails},
-  
             },
           ],
         },

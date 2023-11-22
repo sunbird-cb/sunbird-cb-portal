@@ -107,6 +107,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   showDesignationOther!: boolean
   showOrgnameOther!: boolean
   showIndustryOther!: boolean
+  showGraduationDegreeOther!: boolean
+  showPostDegreeOther!: boolean
   photoUrl!: string | ArrayBuffer | null
   isForcedUpdate = false
   userProfileData!: any
@@ -123,6 +125,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   degreefilteredOptions: INameField[] | undefined
   postDegreefilteredOptions: INameField[] | undefined
   disableVerifyBtn = false
+  karmayogiBadge = false
+  isVerifiedAlready = false
+  selectedtags: any[] = []
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -191,6 +196,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       otherDetailsOfficeAddress: new FormControl('', []),
       otherDetailsOfficePinCode: new FormControl('', []),
       departmentName: new FormControl('', []),
+      verifiedKarmayogi: new FormControl(this.karmayogiBadge, []),
     })
 
   }
@@ -348,6 +354,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       degree: new FormControl('', []),
       instituteName: new FormControl('', []),
       yop: new FormControl('', [Validators.pattern(this.yearPattern)]),
+      graduationOther: new FormControl('', []),
     })
   }
 
@@ -355,7 +362,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.userProfileSvc.listApprovalPendingFields().subscribe(res => {
       if (res && res.result && res.result.data) {
         this.unApprovedField = _.get(res, 'result.data')
-        // console.log('unApprovedField ', this.unApprovedField, res)
       }
     })
   }
@@ -371,6 +377,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       degree: new FormControl(degree.degree, []),
       instituteName: new FormControl(degree.instituteName, []),
       yop: new FormControl(degree.yop, [Validators.pattern(this.yearPattern)]),
+      graduationOther: new FormControl(degree.graduationOther, []),
     })
   }
 
@@ -511,6 +518,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         map(name => name ? this.filterPostDegrees(name) : this.degreesMeta.postGraduations.slice()),
       ).subscribe(val => this.postDegreefilteredOptions = val)
     }
+  }
+
+  verifiedKarmayogiCheck() {
+    this.karmayogiBadge = !this.karmayogiBadge
+    this.createUserForm.patchValue({ verifiedKarmayogi: this.karmayogiBadge })
   }
 
   private filterNationality(name: string): INation[] {
@@ -697,6 +709,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             this.constructFormFromRegistry(userData, academics, organisations)
             this.populateChips(userData)
             this.userProfileData = userData
+            if (this.userProfileData && this.userProfileData.additionalProperties) {
+              this.selectedtags = this.userProfileData.additionalProperties.tag || []
+            }
           } else {
             if (this.configSvc.userProfile) {
               this.userProfileData = { ...userData, id: this.configSvc.userProfile.userId, userId: this.configSvc.userProfile.userId }
@@ -705,8 +720,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
                 // surname: this.configSvc.userProfile.lastName,
                 primaryEmail: _.get(this.userProfileData, 'personalDetails.primaryEmail') || this.configSvc.userProfile.email,
                 orgName: this.configSvc.userProfile.rootOrgName,
-
               })
+              if (this.userProfileData && this.userProfileData.additionalProperties) {
+                this.selectedtags = this.userProfileData.additionalProperties.tag || []
+              }
             }
           }
           // this.handleFormData(data[0])
@@ -761,7 +778,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     if (data && data.professionalDetails && data.professionalDetails.length > 0) {
       // console.log("org", data.professionalDetails[0].industryOther);
-
       const organisation = data.professionalDetails[0]
       const isDesiAvailable = _.findIndex(this.designationsMeta, { name: organisation.designation }) !== -1
       org = {
@@ -816,12 +832,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             degree: item.nameOfQualification,
             instituteName: item.nameOfInstitute,
             yop: item.yearOfPassing,
+            graduationOther: item.nameOfOtherQualification,
           })
             break
           case 'POSTGRADUATE': academics.postDegree.push({
             degree: item.nameOfQualification,
             instituteName: item.nameOfInstitute,
             yop: item.yearOfPassing,
+            graduationOther: item.nameOfOtherQualification,
           })
             break
         }
@@ -914,14 +932,23 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       otherDetailsOfficePinCode: this.checkvalue(_.get(data, 'employmentDetails.pinCode') || ''),
       skillAquiredDesc: _.get(data, 'skills.additionalSkills') || '',
       certificationDesc: _.get(data, 'skills.certificateDetails') || '',
+      verifiedKarmayogi: data.verifiedKarmayogi,
     },
       {
         emitEvent: true,
       })
+
+    if (data.verifiedKarmayogi) {
+      this.isVerifiedAlready = data.verifiedKarmayogi
+      this.karmayogiBadge = data.verifiedKarmayogi
+      this.createUserForm.patchValue({
+        verifiedKarmayogi: data.verifiedKarmayogi
+      })
+    }
     /* tslint:enable */
     this.cd.detectChanges()
     this.cd.markForCheck()
-    this.setDropDownOther(organisation)
+    this.setDropDownOther(organisation, academics)
     this.setProfilePhotoValue(data)
   }
   onPhoneChange() {
@@ -958,7 +985,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.photoUrl = data.photo || undefined
   }
 
-  setDropDownOther(organisation?: any) {
+  setDropDownOther(organisation?: any, academics?: any) {
     if (organisation.designation === 'Other') {
       this.showDesignationOther = true
     } else {
@@ -967,9 +994,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     if (organisation.orgName === 'Other') {
       this.showOrgnameOther = true
     }
-
     if (organisation.industry === 'Other') {
       this.showIndustryOther = true
+    }
+    if (academics.degree === 'Other') {
+      this.showGraduationDegreeOther = true
+    }
+    if (organisation.postGraduation === 'Other') {
+      this.showPostDegreeOther = true
     }
   }
 
@@ -1220,6 +1252,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         type: degreeType,
         nameOfInstitute: degree.instituteName,
         yearOfPassing: `${degree.yop}`,
+        nameOfOtherQualification: degree.graduationOther,
       })
     })
     return formatedDegrees
@@ -1233,6 +1266,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         type: degreeType,
         nameOfInstitute: degree.instituteName,
         yearOfPassing: `${degree.yop}`,
+        nameOfOtherQualification: degree.graduationOther,
       })
     })
     return formatedDegrees
@@ -1274,7 +1308,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       }
       if (currentControl.dirty) {
         personalDetailsFields.forEach(item => {
-
           if (item === 'phoneVerified') {
             personalDetail[item] = this.isMobileVerified
           }
@@ -1417,12 +1450,15 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     reqUpdates.request.profileDetails.personalDetails['knownLanguages']  = this.selectedKnowLangs
     reqUpdates.request.profileDetails.personalDetails['nationality']  = form.value.nationality
-
+    if (!this.isVerifiedAlready && form.value.verifiedKarmayogi === true) {
+      reqUpdates.request.profileDetails.verifiedKarmayogi = form.value.verifiedKarmayogi
+    }
     this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(
       res => {
         this.uploadSaveData = false
         if (res.params.status === 'success') {
           this.openSnackbar(this.toastSuccess.nativeElement.value)
+          this.router.navigate(['/app/person-profile/me'])
           if ('professionalDetails' in reqUpdates.request.profileDetails) {
             if ('personalDetails' in reqUpdates.request.profileDetails ||
               'employmentDetails' in reqUpdates.request.profileDetails ||
@@ -1432,14 +1468,15 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               if (res.result && res.result.personalDetails && res.result.personalDetails.status === 'success'
                 && res.result.transitionDetails.status === 'success') {
                 this.openSnackbar(this.toastSuccess.nativeElement.value)
-                this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+                // this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+                this.router.navigate(['/app/person-profile/me'])
               }
             } else {
               if (res.result && res.result.transitionDetails && res.result.transitionDetails.status === 'success') {
                 this.openSnackbar(this.toastSuccess.nativeElement.value)
-                this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+                // this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+                this.router.navigate(['/app/person-profile/me'])
               }
-
             }
           } else {
             if ('personalDetails' in reqUpdates.request.profileDetails ||
@@ -1449,7 +1486,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               'skills' in reqUpdates.request.profileDetails) {
               if (res.result && res.result.personalDetails && res.result.personalDetails.status === 'success') {
                 this.openSnackbar(this.toastSuccess.nativeElement.value)
-                this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+                // this.router.navigate(['/app/person-profile', (this.userProfileData.userId || this.userProfileData.id)])
+                this.router.navigate(['/app/person-profile/me'])
               }
             } else {
               // this.uploadSaveData = false
@@ -1654,6 +1692,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.showDesignationOther = false
       this.createUserForm.controls['designationOther'].setValue('')
     }
+    if (field === 'graduation' && value !== 'Other') {
+      this.showGraduationDegreeOther = false
+      this.createDegree()
+    }
+    if (field === 'postDegree' && value !== 'Other') {
+      this.showPostDegreeOther = false
+      this.createDegree()
+    }
   }
 
   uploadProfileImg(file: File) {
@@ -1827,9 +1873,4 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       data,
     )
   }
-  // numericOnly(event:any): boolean {
-  //   const pattren = /^([0-9])$/
-  //   const result = pattren.test(event.key)
-  //   return result
-  // }
 }

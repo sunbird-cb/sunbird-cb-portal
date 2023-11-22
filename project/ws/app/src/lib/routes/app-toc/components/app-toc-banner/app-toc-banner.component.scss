@@ -10,6 +10,7 @@
 .app-icon {
     height: 180px;
     width: 280px;
+    border-radius: 4px;
 }
 
 .banner-container {
@@ -50,14 +51,27 @@
     @extend %container-padding;
     box-sizing: border-box;
     .apIcon {
-        min-width: 86px;
+        background-color: #fff;
+        margin-right: 16px;
+        padding: 4px 8px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
         img {
-            height: 32px;
-            width: 86px;
-            background-color: #fff;
-            padding: 4px;
-            border-radius: 12px;
+            height: 15px;
             object-fit: contain;
+            margin-right: 8px;
+        }
+        span {
+            opacity: 1;
+            color: rgba(0,0,0,0.6);
+            font-size: 12px;
+            font-weight: 400;
+            font-style: normal;
+            letter-spacing: 0.25px;
+            text-align: left;
+            line-height: 16px;
         }
     }
     .header-title {
@@ -139,6 +153,14 @@
         min-width: 1px;
         margin-right: $size-l;
         margin-bottom: $size-s;
+        opacity: 1;
+        color: rgba(0,0,0,0.87);
+        font-size: 16px;
+        font-weight: 400;
+        font-style: normal;
+        letter-spacing: 0.25px;
+        text-align: left;
+        line-height: 24px;
         @include breakpoint-xs {
             margin-right: 0;
         }
@@ -236,7 +258,7 @@
         // border-radius: 20px 5px 5px 20px;
         display: inline-block;
         border-radius: 100px 4px 4px 100px;
-        padding: 4px 12px;
+        padding: 1px 12px;
         width: auto;
         justify-content: space-between;
         margin: 0 8px 8px 0;
@@ -247,9 +269,10 @@
 }
 
 .batch-container {
-    background-color: #f1e0d3;
+    // background-color: #f1e0d3;
     max-width: 435px;
     border-radius: 4px;
+    width: 40%;
 }
 
 .custom-button{
@@ -270,5 +293,125 @@
     }
     .overview-description {
         font: normal normal 300 14px/21px;
+    }
+}
+.batch-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+    width: 100%;
+}
+.batch-timer {
+    width: 60%;
+    background-color: white;
+    align-items: center;
+    .timer-title {
+        opacity: 1;
+        color: rgba(0,0,0,0.4);
+        font-size: 14px;
+        font-weight: 700;
+        font-style: normal;
+        letter-spacing: 0.25px;
+        text-align: left;
+        line-height: 20px;
+    }
+    .time-wrapper {
+        div{
+            p.count{
+                border-radius: 4px;
+                opacity: 1;
+                background-color: rgba(0,0,0, 0.87);
+                opacity: 1;
+                color: rgba(255,255,255,1);
+                font-size: 36px;
+                font-weight: 600;
+                font-style: normal;
+                letter-spacing: -0.2px;
+                text-align: center;
+                line-height: 48px;
+                width: 67px;
+                height: 47px;
+                margin-bottom: 4px;
+            }
+            p.time-label {
+                opacity: 1;
+                color: rgba(0,0,0,0.87);
+                font-size: 10px;
+                font-weight: 400;
+                font-style: normal;
+                letter-spacing: 0.5px;
+                text-align: center;
+                line-height: 12px;
+            }
+        }
+    
+        span {
+            padding: 8px;
+            font-size: 36px;
+        }
+    }
+    .help {
+        width: 100%;
+        .batch-duration-wrap {
+            padding: 0 24px;
+            .duration-days {
+                opacity: 1;
+                color: rgba(0,0,0,0.87);
+                font-family: "Montserrat-SemiBold";
+                font-size: 36px;
+                font-weight: 600;
+                font-style: normal;
+                letter-spacing: -0.2px;
+                text-align: left;
+                line-height: 48px;
+                padding-bottom: 16px;
+            }
+        }
+    }
+}
+
+.withdrawButton {
+    height: 52px;
+    min-width: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent !important;
+    box-shadow: none !important;
+    width: fit-content !important;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: #0074B6 !important;
+    ::ng-deep.mat-button-wrapper {
+        letter-spacing: 0px;
+        color: #FFFFFF;
+        text-transform: capitalize;
+    }
+}
+.batch-info {
+    opacity: 1;
+    color: rgba(0,0,0,0.87);
+    font-size: 14px;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0.25px;
+    text-align: left;
+    line-height: 20px;
+    padding: 26px;
+}
+.disable-btn {
+    opacity: 0.5;
+}
+
+@media (max-width:768px) {
+    .batch-wrapper {
+        flex-wrap: wrap;
+    }
+    .batch-timer {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .batch-container {
+        width: 100%;
     }
 }
