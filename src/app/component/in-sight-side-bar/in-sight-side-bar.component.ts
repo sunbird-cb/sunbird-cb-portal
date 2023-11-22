@@ -186,4 +186,8 @@ export class InsightSideBarComponent implements OnInit {
   expandCollapse(event:any) {
     this.collapsed = event
   }
+
+  goToMyDiscussion() {
+    this.router.navigateByUrl('app/discussion-forum?page=home');
+  }
 }
