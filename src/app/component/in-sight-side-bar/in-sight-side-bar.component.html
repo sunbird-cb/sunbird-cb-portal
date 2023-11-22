@@ -1,10 +1,12 @@
 <div class="margin-bottom-m margin-top-m">
-    <ws-widget-profile-card-stats (expandCollapse)="expandCollapse($event)" [insightsData]="insightsData" [isLoading]="profileDataLoading"></ws-widget-profile-card-stats>
+    <ws-widget-profile-card-stats (expandCollapse)="expandCollapse($event)"
+    (activity)="goToActivity($event)" [profileData]="homePageData.profileCard"
+     [insightsData]="insightsData" [isLoading]="profileDataLoading"></ws-widget-profile-card-stats>
 </div>
 <section class="hidden md:block">
     <section class="collapsible" [@collapse]="collapsed">
         <div class="margin-bottom-m" >
-            <ws-widget-weekly-claps [insightsData]="insightsData" [isLoading]="clapsDataLoading"></ws-widget-weekly-claps>
+            <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="homePageData.weeklyClaps" [isLoading]="clapsDataLoading"></ws-widget-weekly-claps>
         </div>
         <div class="flex flex-col discussion-card margin-bottom-m">
             <div class="flex gap-1 mat-subheading-1 p-4">My Discussions

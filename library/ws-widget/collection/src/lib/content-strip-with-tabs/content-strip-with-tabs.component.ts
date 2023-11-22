@@ -482,7 +482,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   async fetchFromTrendingContent(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
-    console.log('inside fetchFromTrendingContent')
+    // console.log('inside fetchFromTrendingContent')
     if (strip.request && strip.request.trendingSearch && Object.keys(strip.request.trendingSearch).length) {
       // if (!(strip.request.searchV6.locale && strip.request.searchV6.locale.length > 0)) {
       //   if (this.configSvc.activeLocale) {
@@ -491,7 +491,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       //     strip.request.searchV6.locale = ['en']
       //   }
       // }
-      console.log('inside fetchFromTrendingContent if inside')
+      // console.log('inside fetchFromTrendingContent if inside')
       let originalFilters: any = []
       // tslint:disable:no-console
       console.log(originalFilters)
@@ -520,7 +520,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       } else {
         try {
           const response = await this.trendingSearchRequest(strip, strip.request, calculateParentStatus)
-          console.log('calling  after - response, ', response)
+          // console.log('calling  after - response, ', response)
           if (response && response.results) {
               const content = response.results.result[strip.request.trendingSearch.responseKey] || []
             // console.log('calling  after-- ')
@@ -547,7 +547,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
                               calculateParentStatus: boolean
   ): Promise<any> {
     const originalFilters: any = []
-    console.log('calling --  trendingSearchRequest')
+    // console.log('calling --  trendingSearchRequest')
     return new Promise<any>((resolve, reject) => {
       if (request && request.trendingSearch) {
         // check for the request if it has dynamic values]
@@ -561,7 +561,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
           request.trendingSearch.request.filters.organisation = userRootOrgId
         }
         this.contentSvc.trendingContentSearch(request.trendingSearch).subscribe(results => {
-          console.log('trendingSearchRequest :: ' , results)
+          // console.log('trendingSearchRequest :: ' , results)
           const showViewMore = Boolean(
             results.result.courses && results.result.courses.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
           )
