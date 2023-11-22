@@ -776,9 +776,9 @@ body:has(.requires-no-scroll) {
   }
 }
 .arrow {
-  transform: rotate(352deg);
-  left: -65px !important;
-  top: -6px !important;
+  transform: rotate(340deg);
+  left: -86px !important;
+  top: 18px !important;
 
   .circle {
     border: 3px dashed #F3962E;
@@ -793,17 +793,19 @@ body:has(.requires-no-scroll) {
 
 .tour_learn,
 .tour_discuss {
-  transform: scale(1.5);
+  transform: scale(1.8);
   border-radius: 50%;
-  height: 55px !important;
-  width: 55px !important;
+  height: 80px !important;
+  width: 80px !important;
 }
+
 .tour_learn_mobile, .tour_discuss_mobile {
   transform: scale(1.5);
   border-radius: 50%;
   height: 55px !important;
   width: 55px !important;
 }
+
 .tour_search_mobile_container {
   top: 2rem !important;
   left: 12% !important;

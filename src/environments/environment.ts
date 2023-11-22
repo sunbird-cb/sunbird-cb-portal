@@ -41,6 +41,7 @@ export const environment: IEnvironment = {
   karmayogiBharatLink: (window as { [key: string]: any })['env']['karmayogiBharatLink'] || '',
   helpEmail: (window as { [key: string]: any })['env']['helpEmail'] || '',
   supportEmail: (window as { [key: string]: any })['env']['supportEmail'] || '',
+  spvorgID: (window as { [key: string]: any })['env']['spvorgID'] || '',
 }
 interface IEnvironment {
   name: string,
@@ -76,7 +77,8 @@ interface IEnvironment {
   cdnContentHost: string,
   cdnContentBucket: string,
   supportEmail: string,
-  apiCache: number
+  apiCache: number,
+  spvorgID: number
 }
 
 // import { AnyCnameRecord } from 'dns'
