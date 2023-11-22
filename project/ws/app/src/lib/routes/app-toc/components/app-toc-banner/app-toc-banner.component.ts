@@ -1166,4 +1166,26 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     },          1000)
    }
   }
+
+  get showDisableMsg() {
+    const allBatches = this.batchData.content
+    const status: any = []
+    if (allBatches) {
+      allBatches.forEach((ele: any) => {
+        if (!this.handleEnrollmentEndDate(ele) || this.disableEnrollBtn) {
+          status.push(ele)
+        }
+      })
+      return status.length === allBatches.length
+    }
+    return false
+  }
+
+  get findMessage() {
+    if (this.showDisableMsg) {
+      const msg = this.WFSTATUS_MSG_MAPPING.EXPIRED
+      return this.tocConfig[msg]
+    }
+    return ''
+  }
 }

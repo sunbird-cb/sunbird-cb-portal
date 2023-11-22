@@ -88,20 +88,21 @@
 
         <div class="discussion-card flex-1 network-suggestion">
             <div class="flex flex-col gap-6 p-4">
-                <div class="mat-subheading-1">Suggested for you</div>
+                <div class="mat-subheading-1" *ngIf="suggestionsLoader"> <ws-widget-skeleton-loader [width]="'163px'" [height]="'16px'"
+                    [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader></div>
+                <div class="mat-subheading-1" *ngIf="!suggestionsLoader">Suggested for you</div>
                 <div class="flex flex-row gap-4 justify-center">
                     <!-- loader code -->
-                    <ng-container *ngIf="suggestionsLoader">
-                        <div class="card p-4 flex flex-col items-center rounded-xl gap-3" *ngFor="let item of [1, 2]">
+                    <ng-container  *ngIf="suggestionsLoader">
+                        <div class="card p-4 flex flex-col items-center rounded-xl gap-3 skeleton-background" *ngFor="let item of [1, 2]">
                             <ws-widget-skeleton-loader [width]="'64px'" [height]="'64px'"
-                                [bindingClass]="'flex rounded-full h-16'"></ws-widget-skeleton-loader>
-                            <ws-widget-skeleton-loader [width]="'120px'" [height]="'20px'"
+                                [bindingClass]="'flex rounded-full h-16 cutting-edge'"></ws-widget-skeleton-loader>
+                            <!-- <ws-widget-skeleton-loader [width]="'120px'" [height]="'20px'"
                                 [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
                             <ws-widget-skeleton-loader [width]="'120px'" [height]="'20px'"
-                                [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
-                            <ws-widget-skeleton-loader [width]="'48px'" [height]="'24px'"
-                                [bindingClass]="'flex rounded-full px-8 py-2'"></ws-widget-skeleton-loader>
+                                [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>                             -->
                         </div>
+                        
                     </ng-container>
                     <!-- loader code -->
 
@@ -109,7 +110,7 @@
                         <ng-container *ngIf="networkRecommended.length">
                             <div *ngFor="let recommend of networkRecommended">
                                 <div class="card p-4 flex flex-col items-center rounded-xl gap-3 netword-card">
-                                    <div class="flex justify-center items-center initial-circle bg-blue-700 text-xl">VS</div>
+                                    <div class="flex justify-center items-center initial-circle bg-blue-700 text-xl">{{ recommend?.fullName }}</div>
                                     <div class="flex flex-col gap-1">
                                         <div class="font-semibold text-center mat-body-2">{{ recommend?.personalDetails?.firstname }}</div>
                                         <div class="text-center dept-name">{{ recommend?.employmentDetails?.departmentName }}</div>
@@ -139,11 +140,14 @@
             <div class="flex flex-row gap-2 p-4 ws-mat-default-text ws-widget-sliders justify-center" *ngIf="networkRecommended && networkRecommended.length">
                 <div class="flex justify-center items-center">
                     <div class="flex gap-1 font-semibold cursor-pointer ws-mat-default-text" [routerLink]="['/app/network-v2/home']">
-                        <div>Show all</div>
+                        <div *ngIf="!suggestionsLoader">Show all</div>
+                        <div *ngIf="suggestionsLoader"><ws-widget-skeleton-loader [width]="'163px'" [height]="'16px'"
+                            [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader></div>
                         <mat-icon>
                             chevron_right
                         </mat-icon>
                     </div>
+                    
                 </div>
             </div>
         </div>

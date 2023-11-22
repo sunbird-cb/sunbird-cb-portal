@@ -1,19 +1,9 @@
-<div class="profile-wrapper" *ngIf="!isLoading">
+<div *ngIf="!profileData.displayOnlyStats">
+  <div class="profile-wrapper" *ngIf="!isLoading">
     <div class="expand-icon invisible md:visible">
         <mat-icon (click)="toggle()" class="">{{ collapsed ?'expand_more': 'expand_less'}}</mat-icon>
     </div>
     <div class="profile-user-details flex flex-middle">
-        <!-- <div class="progress-bar">
-            <div class="parent-progress">
-                <div class="progress" style="--i: 60; --clr: rgb(73, 201, 81)">
-                </div>
-                <div class="user-img">
-                  <ws-widget-avatar-photo [name]="userInfo.firstName" [photoUrl]="''" size="round-m">
-                  </ws-widget-avatar-photo>
-                  <span class="percentage-block ">60%</span>
-                </div>
-            </div>
-        </div> -->
         <div class="progress-wrapper">
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="64" height="64">
               <path class="grey" d="M55,90
@@ -25,7 +15,7 @@
                     />
           </svg>
           <div class="user-img">
-            <ws-widget-avatar-photo [name]="userInfo.firstName" [randomColor]="false" [photoUrl]="''" size="round-m">
+            <ws-widget-avatar-photo [name]="userInfo.firstName" [datalen]="" [randomColor]="false" [photoUrl]="''" size="round-m">
             </ws-widget-avatar-photo>
             <span class="percentage-block ">{{userInfo.profileUpdateCompletion}}%</span>
           </div>
@@ -37,22 +27,20 @@
     </div>
     <hr class="divider">
     <div class="profile-user-stats">
-        <div class="user-data-list flex flex-middle flex-between ">
-          <ng-container *ngFor = "let stats of statsData">
-            <ng-container *ngIf="stats.enable">
-              <div class="stats-data margin-bottom-m">
-                <img class="stats-icon" width="20" height="20" [src]="stats.icon">
-                <div class="stats-title">{{stats.label}}</div>
-                <div class="stats-count ws-mat-default-text" >{{ countdata[stats.key]}}</div>
-              </div>
-            </ng-container>
-          </ng-container>
-        </div>
-        <div class="user-insights">
+        <ng-container [ngTemplateOutlet]="statsDetails"></ng-container>
+        <div class="user-insights" *ngIf="insightsData.sliderData">
             <ws-widget-sliders-dynamic [widgetData]="insightsData.sliderData"></ws-widget-sliders-dynamic>
         </div>
-        
     </div>
+  </div>
+  <div class="stats-container block md:hidden">
+    <div class="flex flex-middle flex-between">
+      <div class="flex flex-middle">
+        <img class="stats-icon margin-right-s" width="20" height="20" src="/assets/icons/home/dashboard.svg">
+        Show my activities</div>
+      <div class="flex" (click)="myActivity()"><img class="stats-icon" width="20" height="20" src="/assets/icons/home/right_arrow.svg"></div>
+    </div>
+  </div>
 </div>
 
 <div class="profile-wrapper" *ngIf="isLoading">
@@ -89,3 +77,20 @@
       
   </div>
 </div>
+<div class="profile-user-stats" *ngIf="profileData.displayOnlyStats">
+  <ng-container [ngTemplateOutlet]="statsDetails"></ng-container>
+</div>
+
+<ng-template #statsDetails>
+  <div class="user-data-list flex flex-middle flex-between ">
+    <ng-container *ngFor = "let stats of profileData.profileStats">
+      <ng-container *ngIf="stats.enable">
+        <div class="stats-data margin-bottom-m">
+          <img class="stats-icon" width="20" height="20" [src]="stats.icon">
+          <div class="stats-title">{{stats.label}}</div>
+          <div class="stats-count ws-mat-default-text" >{{ countdata[stats.key] || 0}}</div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-template>

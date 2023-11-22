@@ -15,14 +15,14 @@ export class TodayEventCardComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    if(this.eventData) {
+    if (this.eventData) {
       const eventDate = this.customDateFormat(this.eventData.event.startDate, this.eventData.event.startTime)
       const eventendDate = this.customDateFormat(this.eventData.event.endDate, this.eventData.event.endTime)
       const now = new Date()
       const today = moment(now).format('YYYY-MM-DD HH:mm')
 
       if (eventDate < today && eventendDate < today) {
-        if (this.eventData.event.recordedLinks && this.eventData.event.recordedLinks.length > 0){
+        if (this.eventData.event.recordedLinks && this.eventData.event.recordedLinks.length > 0) {
           this.isRecording = true
           this.isLive = false
         }

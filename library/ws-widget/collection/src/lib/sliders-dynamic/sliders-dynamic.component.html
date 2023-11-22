@@ -14,10 +14,10 @@
       <div class="banner-data flex margin-right-m ">
         {{widgetData.sliderData[currentIndex].title}}
       </div>
-        <div class="flex data-analysis flex-baseline" [ngClass]="widgetData.sliderData[currentIndex].colorData">
-        <mat-icon class="icon-stats">{{widgetData.sliderData[currentIndex].icon}}</mat-icon>
-        <p>{{widgetData.sliderData[currentIndex].data}}</p>
-      </div>
+        <div class="flex data-analysis flex-baseline" [ngClass]="widgetData.sliderData[currentIndex].colorData" *ngIf="widgetData.sliderData[currentIndex].data">
+            <mat-icon class="icon-stats">{{widgetData.sliderData[currentIndex].icon}}</mat-icon>
+            <p>{{widgetData.sliderData[currentIndex].data}}</p>
+        </div>
     </div>
   </ng-container>
   <ng-container>

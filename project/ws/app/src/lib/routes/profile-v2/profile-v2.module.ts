@@ -20,6 +20,7 @@ import {
   MatChipsModule,
   MatProgressSpinnerModule,
   MatProgressBarModule,
+  MatTabsModule,
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
@@ -35,6 +36,9 @@ import { ProfileComponent } from './routes/profile/profile.component'
 import { ProfileViewComponent } from './routes/profile-view/profile-view.component'
 import { DiscussModule } from '../discuss/discuss.module'
 import { ProfileCertificateDialogModule } from './components/profile-certificate-dialog/profile-certificate-dialog.module'
+import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
+import { ProfileCardStatsModule } from '@sunbird-cb/collection/src/lib/_common/profile-card-stats/profile-card-stats.module'
+import { WeeklyClapsModule } from '@sunbird-cb/collection/src/lib/_common/weekly-claps/weekly-claps.module'
 // import { ShareModule } from 'ngx-sharebuttons';
 
 @NgModule({
@@ -79,6 +83,10 @@ import { ProfileCertificateDialogModule } from './components/profile-certificate
     BtnPageBackModule,
     WidgetResolverModule,
     ProfileCertificateDialogModule,
+    MatTabsModule,
+    SkeletonLoaderModule,
+    ProfileCardStatsModule,
+    WeeklyClapsModule,
     // ShareModule
   ],
   entryComponents: [
