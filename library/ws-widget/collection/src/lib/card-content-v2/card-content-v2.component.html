@@ -1125,49 +1125,36 @@
 </ng-template>
 
 <ng-template #cardWideV2Skelton>
-  <mat-card class="card-wide margin-bottom-m padding-remove position-relative flex">
-    <div class="imageholder ">
-      <ws-widget-skeleton-loader [width]="'310px'" [height]="'170px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+  <mat-card class="card-wide-v2 padding-remove position-relative flex">
+    <div class="">
+      <ws-widget-skeleton-loader [width]="'310px'" [height]="'100%'" class="h-full" [bindingClass]="'flex rounded h-full'"></ws-widget-skeleton-loader>
     </div>
     <mat-card-content class="mat-text-box">
-      <p class="flex items-center mat-caption margin-bottom-xxs text-uppercase">
-        <ws-widget-skeleton-loader [width]="'65px'" [height]="'16px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
-      </p>
+      <div class="course_widget flex margin-remove">
+        <div class="flex flex-end ">
+          <ws-widget-skeleton-loader [width]="'100px'" [height]="'21px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
+        </div>
+      </div>
+      
       <div class="flex main_title_box">
-        <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title">
-          <ws-widget-skeleton-loader [width]="'415px'" [height]="'16px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
-      </p>
+        <!-- <p class="mat-subheading-1 title-text font-bold-imp cursor-pointer content-title"> -->
+          <ws-widget-skeleton-loader [width]="'100%'" [height]="'21px'" class="w-full h-full mt-2" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
+      <!-- </p> -->
       </div>
       
       <div class="bottomsection">
-        <p class="mat-body-2 ws-mat-black-text margin-bottom-xxs" *ngIf="widgetData?.content?.creator">
-          <ws-widget-skeleton-loader [width]="'210px'" [height]="'16px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
-        </p>
-        <div class="contentdata margin-bottom-xm">
-          <ul
-            class="mat-body-2 margin-remove-top margin-bottom-xs padding-remove ws-mat-black60-text highlighting_list">
-            
-            <li>
-              
-              <ws-widget-skeleton-loader [width]="'75px'" [height]="'75px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
-            </li>
-            <li >
-              <ws-widget-skeleton-loader [width]="'75px'" [height]="'75px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
-            </li>
-           
-          </ul>
+        <div class="flex w-full flex-wrap flex-middle">
+          <div class="course_logo_box mr-2">
+            <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
+          </div>
+          <ws-widget-skeleton-loader [width]="'100px'" [height]="'16px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
         </div>
-          <div>
-            <ws-widget-skeleton-loader [width]="'75px'" [height]="'75px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+        <div class="flex flex-middle rating-session margin-top-xs">
+          <div class="flex flex-middle mr-2">
+            <ws-widget-skeleton-loader [width]="'50px'" [height]="'16px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
           </div>
-          <div class="tags" *ngIf="widgetData?.content?.keywords && widgetData?.content?.keywords?.length > 0">
-            <ul class="mat-caption margin-remove-top padding-remove tag_list">
-              <li *ngFor="let tag of widgetData?.content?.keywords">
-                <ws-widget-skeleton-loader [width]="'75px'" [height]="'75px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
-              </li>
-            </ul>
-          </div>
-
+          <ws-widget-skeleton-loader [width]="'80px'" [height]="'16px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
+        </div>
       </div>
     </mat-card-content>
   </mat-card>
