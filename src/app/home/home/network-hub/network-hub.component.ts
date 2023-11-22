@@ -13,9 +13,13 @@ import { HomePageService } from 'src/app/services/home-page.service';
 
 export class NetworkHubComponent implements OnInit {
 
-  networkRecommended: any[] = [];
   userInfo: any;
-  suggestionsLoader: any;
+  network = {
+    networkRecommended: <any>[],
+    suggestionsLoader: false,
+    error: false
+  }
+  
   recentRequests = {
     data: undefined,
     error: false,
@@ -47,15 +51,19 @@ export class NetworkHubComponent implements OnInit {
       ]
     };
 
-    this.suggestionsLoader = true;
+    this.network.suggestionsLoader = true;
     this.homePageService.getNetworkRecommendations(payload).subscribe(
       (res: any) => {
-        this.suggestionsLoader = false;
-        this.networkRecommended = res.result.data[0].results;
-        if (this.networkRecommended.length) {
-          this.networkRecommended = this.networkRecommended.map((obj: any) => {
+        this.network.suggestionsLoader = false;
+        this.network.networkRecommended = res.result.data[0].results;
+        if (this.network.networkRecommended.length) {
+          this.network.networkRecommended = this.network.networkRecommended.map((obj: any) => {
             return { ...obj, connecting: false}
           });
+        }
+      }, (error: HttpErrorResponse) => {
+        if (!error.ok) {
+          this.network.suggestionsLoader = false;
         }
       }
     );

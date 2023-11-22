@@ -24,6 +24,11 @@
     }
 }
 
+.loader-wrapper {
+    position: relative;
+    top: -32px;
+}
+
 @keyframes rotation {
     from {
         transform: rotate(360deg);
