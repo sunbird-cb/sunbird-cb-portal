@@ -194,4 +194,8 @@ export class InsightSideBarComponent implements OnInit {
   goToActivity(_e: any) {
     this.router.navigateByUrl('app/person-profile/me');
   }
+
+  goToMyDiscussion() {
+    this.router.navigateByUrl('app/discussion-forum?page=home');
+  }
 }
