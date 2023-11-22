@@ -74,6 +74,7 @@ export class BtnFeatureComponent extends WidgetBaseComponent
   }
 
   ngOnInit() {
+    // console.log('widgetData', this.widgetData)
     this.instanceVal = this.configSvc.rootOrg || ''
     if (this.configSvc.restrictedFeatures) {
       this.isPinFeatureAvailable = !this.configSvc.restrictedFeatures.has('pinFeatures')

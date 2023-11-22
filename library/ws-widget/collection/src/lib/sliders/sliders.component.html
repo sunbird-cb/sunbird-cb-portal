@@ -20,7 +20,7 @@
   <a *ngIf="widgetData?.length > 1" role="button" class="prev" (click)="slideTo(currentIndex - 1)">&#10094;</a>
   <a *ngIf="widgetData?.length > 1" role="button" class="next" (click)="slideTo(currentIndex + 1)">&#10095;</a>
 </div>
-<div class="banner-container-solo" *ngIf="widgetData?.length == 1">
+<div class="banner-container-solo margin-top-s" *ngIf="widgetData?.length == 1">
   <img i18n-alt alt="Page Banner" width="100%" height="100%" [src]="widgetData[0].banners" wsUtilsImageResponsive class="banner-image-solo" />
 </div>
 <!-- <div class="banner-container" (swipeleft)="slideTo(currentIndex + 1)" (swiperight)="slideTo(currentIndex - 1)"

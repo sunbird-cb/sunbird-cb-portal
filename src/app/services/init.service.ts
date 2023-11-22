@@ -366,6 +366,7 @@ export class InitService {
             departmentName: userPidProfile.channel,
             dealerCode: null,
             isManager: false,
+            profileUpdateCompletion: _.get(userPidProfile, 'profileUpdateCompletion') || 0,
           }
 
           this.configSvc.userProfileV2 = {
@@ -489,6 +490,7 @@ export class InitService {
             departmentName: userPidProfile.channel,
             dealerCode: null,
             isManager: false,
+            profileUpdateCompletion: _.get(userPidProfile, 'profileUpdateCompletion') || 0,
           }
           this.configSvc.userProfileV2 = {
             userId: _.get(profileV2, 'userId') || userPidProfile.userId,

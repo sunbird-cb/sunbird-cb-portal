@@ -1,4 +1,4 @@
-<div class="flex flex-col item-center">
+<div class="flex flex-col item-center mt-8">
     <div class="flex flex-col card-container">
         <div class="photo-container flex items-center justify-center cursor-pointer" (click)="goToUserProfile(user)">
             <!-- <a *ngIf="user?.photo" href="javascript:void(0)" class="" i18n-aria-label role="link" -->
@@ -12,7 +12,7 @@
                 </ws-widget-avatar-photo>
             </a> -->
         </div>
-        <div class="name-container flex flex-col width-expand">
+        <div class="name-container text-center flex flex-col width-expand">
             <div class="" i18n-aria-label role="link" tabindex="0" (click)="goToUserProfile(user)">
                 <!-- <div class="name ws-mat-black-text cursor-pointer" *ngIf="user && user?.personalDetails">
                     {{user?.personalDetails?.firstname}} {{user?.personalDetails?.middlename}}
@@ -36,7 +36,7 @@
         <div class="action-container flex items-center justify-center">
             <button mat-stroked-button color="accent" type="button" class="connect_btn mat-accent-border flex-auto-display"
                 (click)="connetToUser()" *ngIf="!user?.requestSent">
-                <span class="" i18n>Connect</span>
+                <span class="ws-mat-default-text" i18n><img class="connect-icon" src="assets/icons/Connect_icon.svg"/>Connect</span>
             </button>
             <button mat-stroked-button color="accent" type="button" class=" mat-accent-border flex-auto-display minwid"
                 disabled *ngIf="user?.requestSent">

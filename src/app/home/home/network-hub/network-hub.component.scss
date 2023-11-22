@@ -1,0 +1,86 @@
+.recent-div {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+    
+    .initial-circle {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+        background-color: #000;
+    }
+
+    .cancel {
+        color: rgba($color: #000000, $alpha: 0.4);
+        cursor: pointer;
+    }
+
+    .approve {
+        color: #1D8923;
+        cursor: pointer;
+    }
+
+    .pending {
+        color: orange;
+        animation: rotation infinite 2s linear;
+    }
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(360deg);
+    }
+
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+.card {
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.08),
+        0 0px 4px rgba(0, 0, 0, 0.08),
+        0 1px 5px rgba(0, 0, 0, 0.08);
+
+    .initial-circle {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        text-transform: capitalize;
+        font-weight: bold;
+        color: white;
+        letter-spacing: 0.025rem;
+        border: none;
+    }
+
+    .connect-button {
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        opacity: 1;
+    }
+}
+
+.font-semibold {
+    font-weight: 600!important;
+}
+
+.dept-name {
+    font: 400 12px/16px 'Lato';
+}
+
+.no-data-found {
+    width: 36px;
+    height: 36px;
+    font-size: 36px;
+}
+
+.netword-card {
+    max-width: 160px;
+    box-sizing: border-box;
+}
+
+.network-requests {
+    flex-direction: row;
+}
+
+@media only screen and (max-width: 768px) {
+    .network-requests {
+        flex-direction: column;
+    }   
+}

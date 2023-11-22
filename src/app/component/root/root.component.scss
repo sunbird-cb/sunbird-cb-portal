@@ -1,6 +1,9 @@
 @import 'ws-vars';
 @import 'ws-mixins';
 
+::ng-deep .mat-app-background {
+  background-color: rgb(239, 243, 249);
+}
 ws-app-nav-bar {
   z-index: 1000;
 }
@@ -20,7 +23,7 @@ ws-app-nav-bar {
 }
 
 .height-on-top {
-  padding-top: 56px;
+  padding-top: 105px;
 }
 
 .top-nav-bar {
@@ -87,4 +90,10 @@ ws-app-nav-bar {
   border: solid #777 2px;
   color: #fff;
   background: #333 !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .container-margin {
+      margin-top: 192px;
+  }
 }

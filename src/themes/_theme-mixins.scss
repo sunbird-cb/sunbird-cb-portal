@@ -40,7 +40,7 @@
   $colorBlack040: rgba(0, 0, 0, 0.04);
   $colorLighterGrey: #bbbcbc;
   $colorLightBlue: #cbe2f0;
-
+  $linkColour: rgb(27, 76, 161);
   outline-color: mat-color($accent, lighter);
 
   .icon-svg {
@@ -577,7 +577,7 @@
     }
 
     .ws-mat-default-text {
-      color: $colorAccent;
+      color: $linkColour !important;
     }
 
     .ws-mat-warn-text {

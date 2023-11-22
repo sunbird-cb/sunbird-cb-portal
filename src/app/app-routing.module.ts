@@ -699,6 +699,20 @@ const routes: Routes = [
     canActivate: [GeneralGuard],
   },
   {
+    path: 'page/home',
+    loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+    data: {
+      pageType: 'page',
+      pageKey: 'home',
+    },
+    resolve: {
+      pageData: PageResolve,
+      module: ModuleNameResolve,
+      pageId: PageNameResolve,
+    },
+    canActivate: [GeneralGuard],
+  },
+  {
     path: 'page/:id',
     component: PageComponent,
     data: {

@@ -13,7 +13,7 @@
 <a href="javascript:void(0)" mat-icon-button i18n-aria-label title="option" class="new-margin"
   #rootTrigger="matMenuTrigger" [matMenuTriggerFor]="settingsMenu" role="link">
   <span class="flex flex-column flex-middle">
-    <ws-widget-avatar-photo class="margin-top-xs" [photoUrl]="profileImage" [name]="getGivenName" size="l-xs">
+    <ws-widget-avatar-photo class="widgetData?.removeClass ? '' : 'margin-top-xs'" [photoUrl]="profileImage" [name]="getGivenName" size="l-xs" [showBadge]="verifiedBadge ? true : false">
     </ws-widget-avatar-photo>
   </span>
 </a>
@@ -46,21 +46,22 @@
   <section class="padding-s border-bottom">
     <a role="link" routerLink="/app/person-profile/me" fragment="profileInfo" class="all-features" id="viewprofile">
       <div class="float-left">
-        <ws-widget-avatar-photo [name]="getGivenName" [size]="'m'" [photoUrl]="profileImage"></ws-widget-avatar-photo>
-      
+        <ws-widget-avatar-photo [name]="getGivenName" [size]="'profile-round-m'" [photoUrl]="profileImage"></ws-widget-avatar-photo>
+        
       </div>
+      
       <div class="inline-block margin-left-s pfname">
-        <p class="mat-subheading-2 text-capitalize">{{ getGivenName }}
+        <p class="mat-subheading-2 text-capitalize text-ellipses">{{ getGivenName }}
           <span *ngIf="verifiedBadge" class="profile-badge">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
           </span>
           </p>
-        <p i18n role="link" class="ws-mat-default-text mat-body-2 font-medium">View Profile</p>
+        <p i18n role="link" class="ws-mat-default-text mat-body-2 font-medium font-14-bold">View Profile</p>
       </div>
     </a>
   </section>
 
   <!-- portal links section-->
-  <section *ngIf="portalLinks && portalLinks.length"
+  <!-- <section *ngIf="portalLinks && portalLinks.length"
     class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s border-bottom">
     <div class="margin-top-s margin-bottom-s" *ngFor="let wdata of portalLinks">
       <div class="box-sizing-box" id="wdata.widgetData.actionBtn.id">
@@ -73,24 +74,29 @@
         </a>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <section class="padding-xs">
-    <a mat-menu-item role="link" routerLink="/app/profile/settings" class="all-features">
+    <a mat-menu-item role="link" (click)="redirectToTourPage()" class="app-tour flex items-center">
+      <!-- <mat-icon>settings</mat-icon> -->
+      <span i18n>iGot Karmayogi Tour</span>
+    </a>
+    <a mat-menu-item role="link" routerLink="/app/profile/my-learning" class="app-features flex items-center">
+      <!-- <mat-icon>settings</mat-icon> -->
+      <span i18n>My Learning</span>
+    </a>
+    <a mat-menu-item role="link" routerLink="/app/profile/settings" class="all-features flex items-center">
       <!-- <mat-icon>settings</mat-icon> -->
       <span i18n>Settings</span>
     </a>
-    <a mat-menu-item role="link" (click)="redirectToTourPage()" class="app-tour">
-      <!-- <mat-icon>settings</mat-icon> -->
-      <span i18n>'Get Started' tour</span>
-    </a>
+    
 
     <!-- <a mat-menu-item role="link" routerLink="/app/features" class="all-features flex-wrap">
       <mat-icon>apps</mat-icon>
       <span i18n>Explore all features</span>
     </a> -->
 
-    <a href="javascript:void(0)" mat-menu-item role="link" (click)="logout()" class="log-o">
+    <a href="javascript:void(0)" mat-menu-item role="link" (click)="logout()" class="log-o flex items-center">
       <!-- <mat-icon>power_settings_new</mat-icon>&nbsp; -->
       <span i18n>Sign-out</span>
     </a>
