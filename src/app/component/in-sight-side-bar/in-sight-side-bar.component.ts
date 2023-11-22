@@ -111,9 +111,7 @@ export class InsightSideBarComponent implements OnInit {
           "data": `${ele.growth === 'positive' && ele.progress > 1?  '+' + Math.round(ele.progress)+'%': ""}`,
           "colorData": ele.growth === 'positive' ? 'color-green' : 'color-red',
         }
-        if( i === 1) {
-          sliderData.push(data)
-        }
+        sliderData.push(data)
       }
     })
     nudgeData.sliderData = sliderData
