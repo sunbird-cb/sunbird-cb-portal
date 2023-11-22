@@ -1,4 +1,4 @@
-<div *ngIf="!profileData.displayOnlyStats">
+<div *ngIf="!profileData?.displayOnlyStats">
   <div class="profile-wrapper" *ngIf="!isLoading">
     <div class="expand-icon invisible md:visible">
         <mat-icon (click)="toggle()" class="">{{ collapsed ?'expand_more': 'expand_less'}}</mat-icon>
@@ -77,13 +77,13 @@
       
   </div>
 </div>
-<div class="profile-user-stats" *ngIf="profileData.displayOnlyStats">
+<div class="profile-user-stats" *ngIf="profileData?.displayOnlyStats">
   <ng-container [ngTemplateOutlet]="statsDetails"></ng-container>
 </div>
 
 <ng-template #statsDetails>
   <div class="user-data-list flex flex-middle flex-between ">
-    <ng-container *ngFor = "let stats of profileData.profileStats">
+    <ng-container *ngFor = "let stats of profileData?.profileStats">
       <ng-container *ngIf="stats.enable">
         <div class="stats-data margin-bottom-m">
           <img class="stats-icon" width="20" height="20" [src]="stats.icon">

@@ -103,7 +103,7 @@ export class InsightSideBarComponent implements OnInit {
       "dot-active":"dot-active"
     }
     let sliderData: { title: any; icon: string; data: string; colorData: string; }[] = []
-    this.insightsData.nudges.forEach((ele: any, i: any)=>{
+    this.insightsData.nudges.forEach((ele: any)=>{
       if(ele) {
         let data = {
           "title": ele.label,
