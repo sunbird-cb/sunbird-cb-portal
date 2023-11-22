@@ -19,6 +19,11 @@ body {
   // word-spacing: $word-spacing;
 }
 
+:host {
+  width: 100%;
+  height: 100%;
+}
+
 ::selection {
   background-color: #e0f2f1;
 }
@@ -771,9 +776,9 @@ body:has(.requires-no-scroll) {
   }
 }
 .arrow {
-  transform: rotate(352deg);
-  left: -65px !important;
-  top: -6px !important;
+  transform: rotate(340deg);
+  left: -86px !important;
+  top: 18px !important;
 
   .circle {
     border: 3px dashed #F3962E;
@@ -788,17 +793,19 @@ body:has(.requires-no-scroll) {
 
 .tour_learn,
 .tour_discuss {
-  transform: scale(1.5);
+  transform: scale(1.8);
   border-radius: 50%;
-  height: 55px !important;
-  width: 55px !important;
+  height: 80px !important;
+  width: 80px !important;
 }
+
 .tour_learn_mobile, .tour_discuss_mobile {
   transform: scale(1.5);
   border-radius: 50%;
   height: 55px !important;
   width: 55px !important;
 }
+
 .tour_search_mobile_container {
   top: 2rem !important;
   left: 12% !important;
@@ -1005,4 +1012,40 @@ ngx-guided-tour {
   letter-spacing: 0.25px;
   text-align: center;
   line-height: 20px;
+}
+
+.skeleton-box {
+  display: inline-block;
+  min-height: 1rem;
+  position: relative;
+  overflow: hidden;
+  background-color: #DDDBDD;
+
+  &::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+      90deg,
+      rgba(#fff, 0) 0,
+      rgba(#fff, 0.2) 20%,
+      rgba(#fff, 0.5) 60%,
+      rgba(#fff, 0)
+    );
+    animation: shimmer 1s infinite;
+    content: '';
+  }
+
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+}
+
+.white-spinner .mat-progress-spinner circle, .theme-igot.day-mode .mat-spinner circle{
+  stroke:white !important;
 }

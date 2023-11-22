@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment: IEnvironment = {
-  name: (window as { [key: string]: any })['env']['name'],
+  name: (window as { [key: string]: any })['env']['name'] || '',
   production: false,
   sitePath: (window as { [key: string]: any })['env']['sitePath'] || '',
   organisation: (window as { [key: string]: any })['env']['organisation'] || '',
@@ -12,6 +12,7 @@ export const environment: IEnvironment = {
   azureHost: (window as { [key: string]: any })['env']['azureHost'] || '',
   contentHost: (window as { [key: string]: any })['env']['contentHost'] || '',
   azureBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
+  apiCache: (window as { [key: string]: any })['env']['apiCache'] || 0,
   portals: (window as { [key: string]: any })['env']['portals'] || [],
   // mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
   // spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',
@@ -40,6 +41,7 @@ export const environment: IEnvironment = {
   karmayogiBharatLink: (window as { [key: string]: any })['env']['karmayogiBharatLink'] || '',
   helpEmail: (window as { [key: string]: any })['env']['helpEmail'] || '',
   supportEmail: (window as { [key: string]: any })['env']['supportEmail'] || '',
+  spvorgID: (window as { [key: string]: any })['env']['spvorgID'] || '',
 }
 interface IEnvironment {
   name: string,
@@ -74,7 +76,9 @@ interface IEnvironment {
   helpEmail: string,
   cdnContentHost: string,
   cdnContentBucket: string,
-  supportEmail: string
+  supportEmail: string,
+  apiCache: number,
+  spvorgID: number
 }
 
 // import { AnyCnameRecord } from 'dns'

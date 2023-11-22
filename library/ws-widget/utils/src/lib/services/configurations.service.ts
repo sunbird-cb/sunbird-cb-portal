@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { NSProfileDataV3 } from '@ws/app/src/lib/routes/profile-v3/models/profile-v3.models'
-import { BehaviorSubject, ReplaySubject } from 'rxjs'
+import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs'
 // import { environment } from '../../../../../../src/environments/environment'
 import { NsPage } from '../resolvers/page.model'
 import { NsAppsConfig, NsInstanceConfig, NsUser } from './configurations.model'
@@ -105,6 +105,8 @@ export class ConfigurationsService {
 
   // variable setting for csJwtToken
   cstoken = ''
+
+  changeNavBarFullView = new Subject()
   updateGlobalProfile(state: boolean) {
     this.updateProfile.next(state)
   }

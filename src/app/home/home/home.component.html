@@ -1,0 +1,88 @@
+<div class="home-container m-auto flex flex-row gap-4">
+    <ng-container *ngIf="!homeConfig?.insightOnRight?.active">
+        <div class="bg-info" [ngClass]="
+        homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'left' : 
+        (homeConfig?.leftSection?.active &&  !homeConfig?.rightSection?.active) ? 'full' : ''" *ngIf="homeConfig?.leftSection?.active">
+            <ws-in-sight-side-bar></ws-in-sight-side-bar>
+        </div>
+
+        <div class="bg-primary" [ngClass]="
+        homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'right' : 
+        (!homeConfig?.rightSection?.active && !homeConfig?.leftSection?.active) ? 'full' : ''" *ngIf="homeConfig?.rightSection?.active">
+            <div class="flex flex-col gap-4">
+                <ws-feed-list></ws-feed-list>
+                <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
+                <!-- Discussion section starts here -->
+                <ws-discuss-hub></ws-discuss-hub>
+                <!-- Discussion section ends here -->
+
+                <!-- Go to Network hub starts here -->
+                <ws-network-hub></ws-network-hub>
+                <!-- Go to Network hub end here -->
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="homeConfig?.insightOnRight?.active">
+         <div class="bg-primary" [ngClass]="
+        homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'right' : 
+        (!homeConfig?.rightSection?.active && !homeConfig?.leftSection?.active) ? 'full' : ''" *ngIf="homeConfig?.rightSection?.active">
+            <div class="flex flex-col gap-4">
+                <ws-feed-list></ws-feed-list>
+                <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
+                
+                <!-- Discussion section starts here -->
+                <ws-discuss-hub></ws-discuss-hub>
+                <!-- Discussion section ends here -->
+
+                <!-- Go to Network hub starts here -->
+                <ws-network-hub></ws-network-hub>
+                <!-- Go to Network hub end here -->
+            </div>
+        </div>
+        <div class="bg-info" [ngClass]="
+        homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'left' : 
+        (homeConfig?.leftSection?.active &&  !homeConfig?.rightSection?.active) ? 'full' : ''" *ngIf="homeConfig?.leftSection?.active">
+            <ws-in-sight-side-bar></ws-in-sight-side-bar>
+        </div>
+       
+    </ng-container>
+</div>
+
+<!-- <div class="flex flex-col gap-4">
+    <ws-widget-discuss-strip-multiple [widgetData]="discussStripData"></ws-widget-discuss-strip-multiple>
+    <ws-widget-network-strip-multiple [widgetData]="networkStripData"></ws-widget-network-strip-multiple>
+    
+</div> -->
+
+<!-- <div class="fix-ww">
+    <div class="d-inline-flex p-3 bg-secondary flex-align">
+        <div class="p-2 bg-info"><ws-in-sight-side-bar></ws-in-sight-side-bar></div>
+        <div class="p-2 bg-primary">
+            <ws-feed-list></ws-feed-list>
+        </div>
+    </div>
+</div>-->
+
+<ws-client-slider [clientList]="clientList"></ws-client-slider>
+<div class="download-section">
+    <ws-download-app></ws-download-app>
+</div>
+
+<div class="footer footer-update-mobile-number" *ngIf="isNudgeOpen">
+      <div (click)="remindlater()" class="desktop-cross">X</div>
+      <div class="update-mobile-number-flex">
+        <span (click)="remindlater()" class="mobile-cross">X</span>
+        <img class="hand-icon" src="assets/icons/footer-nav/update-mobile-number.svg"/>
+        <p class="updatetitle">Update your mobile number {{activeRoute}}</p>
+        <button class="ui fluid-button update-now" (click)="fetchProfile()" role="button">Update</button>
+        <!-- <button class="remind-later" (click)="remindlater()" role="button">Remind Later</button> -->
+        <button class="update-profile" (click)="fetchProfile()" role="button">Update</button>
+        <span class="inline-info">
+          <span class='tool material-icons tooltips' matTooltip="My tooltip">error_outline</span>
+          <span class="tooltip-check ws-mat-default-text">Why it is important ?
+            <span class="tooltiptext-check">Update your mobile number. This will enable you to login with your mobile number easily and receive important alerts on your mobile.</span>
+          </span>
+          </span>
+    </div>
+</div>

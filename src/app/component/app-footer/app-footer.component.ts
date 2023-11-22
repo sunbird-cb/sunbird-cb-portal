@@ -1,20 +1,20 @@
 // import { environment } from './../../../environments/environment'
 import { HttpClient } from '@angular/common/http'
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core'
 import { NavigationEnd, Router } from '@angular/router'
 import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
-import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+
 // tslint:disable-next-line
 import _ from 'lodash'
 import { environment } from 'src/environments/environment'
-
 @Component({
   selector: 'ws-app-footer',
   templateUrl: './app-footer.component.html',
   styleUrls: ['./app-footer.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AppFooterComponent implements OnInit {
-
+  @Input() headerFooterConfigData:any;
   isXSmall = false
   termsOfUser = true
   environment!: any
@@ -24,8 +24,7 @@ export class AppFooterComponent implements OnInit {
   private baseUrl = this.configSvc.baseUrl
   constructor(
     private configSvc: ConfigurationsService,
-    private valueSvc: ValueService,
-    private discussUtilitySvc: DiscussUtilsService,
+    private valueSvc: ValueService,    
     private router: Router,
     private http: HttpClient,
   ) {
@@ -55,7 +54,7 @@ export class AppFooterComponent implements OnInit {
     } else {
       const newInstance = await this.readAgain()
       this.hubsList = (newInstance.hubs || []).filter(i => i.active)
-    }
+    }   
 
   }
   async readAgain() {
@@ -72,43 +71,7 @@ export class AppFooterComponent implements OnInit {
       }
     }
   }
-  navigate() {
-    const config = {
-      menuOptions: [
-        {
-          route: 'all-discussions',
-          label: 'All discussions',
-          enable: true,
-        },
-        {
-          route: 'categories',
-          label: 'Categories',
-          enable: true,
-        },
-        {
-          route: 'tags',
-          label: 'Tags',
-          enable: true,
-        },
-        {
-          route: 'my-discussion',
-          label: 'Your discussion',
-          enable: true,
-        },
-      ],
-      userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
-      context: {
-        id: 1,
-      },
-      categories: { result: [] },
-      routerSlug: '/app',
-      headerOptions: false,
-      bannerOption: true,
-    }
-    this.discussUtilitySvc.setDiscussionConfig(config)
-    localStorage.setItem('home', JSON.stringify(config))
-    this.router.navigate(['/app/discussion-forum'], { queryParams: { page: 'home' }, queryParamsHandling: 'merge' })
-  }
+  
   hasRole(role: string[]): boolean {
     let returnValue = false
     role.forEach(v => {
@@ -130,5 +93,10 @@ export class AppFooterComponent implements OnInit {
   }
   get needToHide(): boolean {
     return this.currentRoute.includes('all/assessment/')
+  }
+
+  onClick(event:any) {
+    console.log(event.target.parentElement);
+    event.target.parentElement.classList.toggle('open');
   }
 }

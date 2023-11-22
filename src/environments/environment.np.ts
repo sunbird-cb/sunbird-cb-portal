@@ -31,6 +31,8 @@ export const environment = {
   karmayogiBharatLink: (window as { [key: string]: any })['env']['karmayogiBharatLink'] || '',
   helpEmail: (window as { [key: string]: any })['env']['helpEmail'] || '',
   supportEmail: (window as { [key: string]: any })['env']['supportEmail'] || '',
+  apiCache: (window as { [key: string]: any })['env']['apiCache'] || 0,
+  spvorgID: (window as { [key: string]: any })['env']['spvorgID'] || '',
   // mdoPortal: (window as { [key: string]: any })['env']['mdoPath'] || '',
   // spvPortal: (window as { [key: string]: any })['env']['spvPath'] || '',
   // cbcPortal: (window as { [key: string]: any })['env']['cbcPath'] || '',

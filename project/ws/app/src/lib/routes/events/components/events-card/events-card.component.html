@@ -1,12 +1,17 @@
 <mat-card class="events-card position-relative cursor-pointer padding-remove margin-bottom-l" (click)="getEventDetails(eventData?.event.identifier)">
-    <div>
+    <div class="imgboxdiv">
         <img class="event-card-image image-border" src="{{eventData?.eventThumbnail}}" alt="Karmayogi Bharat" />
     </div>
     <mat-card-header>
-        <mat-card-subtitle class="responsive margin-top-s margin-bottom-xs">
-            <span class="mat-body-2 textoverflow-title">{{eventData?.event?.owner || 'IGOT'}}</span>
+        <mat-card-subtitle class="margin-top-s margin-bottom-xs">
+            <div class="event-type mat-body-2">
+                <mat-icon>event</mat-icon> {{eventData?.event?.resourceType}}
+            </div>
         </mat-card-subtitle>
-        <mat-card-title class="textoverflow-title">
+        <mat-card-subtitle class="responsive margin-top-s margin-bottom-xs">
+            <div class="mat-caption textoverflow-title">{{eventData?.event?.owner || 'IGOT'}}</div>
+        </mat-card-subtitle>
+        <mat-card-title class="textoverflow-title ws-mat-black60-text margin-bottom-xs">
             <a href="javascript:void(0)" class="" i18n-aria-label role="link">
                 <span role="link" i18n-aria-label tabindex="0" class="cursor-pointer mat-subheading-1">
                    {{eventData?.eventName}}
@@ -15,22 +20,20 @@
         </mat-card-title>
     </mat-card-header>
     <mat-card-content class="flex flex-1 margin-left-m margin-right-m">
-        <div class="mat-body-2">
+        <div class="mat-caption">
             <span class="event_date ws-mat-default-text">{{eventData?.event.startDate | date }} {{eventData?.eventStartTime}}</span>
-            <p class="textoverflow margin-top-s">{{eventData?.event.instructions}}</p>
+            <p class="textoverflow margin-top-xs">{{eventData?.event.instructions}}</p>
         </div>
     </mat-card-content>
-    <mat-card-footer class="w-full margin-remove">
+    <!-- <mat-card-footer class="w-full margin-remove">
         <div class="margin-right-m margin-left-m">
             <span class="mobile" *ngIf="!eventData.pastevent">
                 <button mat-stroked-button color="accent" type="button" class=" mat-accent-border flex-auto-display">
                     <span i18n>Join</span>
                 </button>
             </span>
-        <!-- </div>
-        <div class="flex flex-1" class="cursor-pointer text-right mobile2"> -->
             <span class="ws-mat-default-text mat-subheading-2 float-right margin-top-xs" *ngIf="eventData?.eventjoined > 0">+ {{eventData?.eventjoined}}</span>
             <span class="ws-mat-default-text mat-subheading-2 float-right margin-top-xs" *ngIf="eventData?.eventjoined === 0">0</span>
         </div>
-    </mat-card-footer>
+    </mat-card-footer> -->
 </mat-card>

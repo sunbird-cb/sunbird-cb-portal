@@ -508,7 +508,8 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       }
       // tslint:disable-next-line: deprecation
       this.userSvc.fetchUserBatchList(userId, queryParams).subscribe(
-        courses => {
+        (result: any) => {
+          const courses = result && result.courses
           const showViewMore = Boolean(
             courses.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
           )
@@ -529,7 +530,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
             }
             : null
           if (courses && courses.length) {
-            content = courses.map(c => {
+            content = courses.map((c: any) => {
               const contentTemp: NsContent.IContent = c.content
               contentTemp.completionPercentage = c.completionPercentage || c.progress || 0
               contentTemp.completionStatus = c.completionStatus || c.status || 0
@@ -755,7 +756,8 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       )
 
       this.userSvc.fetchUserBatchList(userId, queryParams).subscribe(
-        (courses: any) => {
+        (result: any) => {
+          const courses = result && result.courses
           const goals = courses.reduce((acc: any[], cur: any) => {
             if (cur && cur.content && cur.content.primaryCategory === NsContent.EPrimaryCategory.MANDATORY_COURSE_GOAL) {
               acc.push(cur)
