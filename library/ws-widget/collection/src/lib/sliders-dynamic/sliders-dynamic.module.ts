@@ -23,7 +23,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     RouterModule,
     NavigationModule,
     ImageResponsiveModule,
-    MatIconModule
+    MatIconModule,
   ],
   exports: [SlidersDynamicComponent],
   entryComponents: [SlidersDynamicComponent],

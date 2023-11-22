@@ -66,13 +66,13 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    console.log('headerFooterConfigData',this.headerFooterConfigData)
+    // console.log('headerFooterConfigData',this.headerFooterConfigData)
     this.router.events.subscribe((event: any) => {
 
       if (event instanceof NavigationEnd) {
           // Hide loading indicator
-          console.log('event', event.url)
-          console.log("activeRoute",localStorage.getItem("activeRoute"));
+          // console.log('event', event.url)
+          // console.log("activeRoute",localStorage.getItem("activeRoute"));
           if(localStorage.getItem("activeRoute")) {
             let route = localStorage.getItem("activeRoute");
             this.activeRoute = route ? route.toLowerCase().toString() : '';

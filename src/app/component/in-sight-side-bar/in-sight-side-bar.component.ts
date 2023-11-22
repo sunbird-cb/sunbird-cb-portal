@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { HomePageService } from 'src/app/services/home-page.service';
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 
 
 const DEFAULT_DURATION = 500;
@@ -31,7 +31,7 @@ const noData = {
 
 export class InsightSideBarComponent implements OnInit {
   profileDataLoading: boolean = true
-  
+  homePageData: any
   noDataValue : {} | undefined
   clapsDataLoading: boolean = true
   collapsed = false
@@ -46,11 +46,16 @@ export class InsightSideBarComponent implements OnInit {
   pendingRequestData:any = []
   pendingRequestSkeleton = true;
   
-  constructor(private homePageSvc:HomePageService, private configSvc:ConfigurationsService, private router: Router) { }
+  constructor(private homePageSvc:HomePageService,
+     private configSvc:ConfigurationsService,
+     private activatedRoute: ActivatedRoute,
+      private router: Router) { }
 
   ngOnInit() {
     this.userData = this.configSvc && this.configSvc.userProfile
-    
+    if (this.activatedRoute.snapshot.data.pageData && this.activatedRoute.snapshot.data.pageData.data) {
+      this.homePageData = this.activatedRoute.snapshot.data.pageData.data
+    }
     this.getInsights()
     this.getPendingRequestData();
     this.noDataValue = noData
@@ -78,9 +83,7 @@ export class InsightSideBarComponent implements OnInit {
         this.constructWeeklyData()
         this.profileDataLoading = false
       }
-    }, (error: any) => {
-      // tslint:disable:no-console
-      console.log(error)
+    }, (_error: any) => {
       this.insightsData = []
       this.profileDataLoading = false
       this.clapsDataLoading = false
@@ -95,19 +98,22 @@ export class InsightSideBarComponent implements OnInit {
       height:'auto',
       width:'',
       sliderData: [],
+      negativeDisplay:false,
       "dot-default":"dot-grey",
       "dot-active":"dot-active"
     }
     let sliderData: { title: any; icon: string; data: string; colorData: string; }[] = []
-    this.insightsData.nudges.forEach((ele: any)=>{
+    this.insightsData.nudges.forEach((ele: any, i: any)=>{
       if(ele) {
         let data = {
           "title": ele.label,
           "icon": ele.growth === 'positive' ?  "arrow_upward" :"arrow_downward",
-          "data": `${ele.growth === 'positive' ?  "+" : "-"}${Math.round(ele.progress)}%`,
+          "data": `${ele.growth === 'positive' && ele.progress > 1?  '+' + Math.round(ele.progress)+'%': ""}`,
           "colorData": ele.growth === 'positive' ? 'color-green' : 'color-red',
         }
-        sliderData.push(data)
+        if( i === 1) {
+          sliderData.push(data)
+        }
       }
     })
     nudgeData.sliderData = sliderData
@@ -166,7 +172,6 @@ export class InsightSideBarComponent implements OnInit {
           elem.fullName = elem.fullName.charAt(0).toUpperCase() + elem.fullName.slice(1)
           return elem;
         });
-        console.log("pending res - ", this.pendingRequestData);
       }, (error: HttpErrorResponse) => {
         if (!error.ok) {
           this.pendingRequestSkeleton = false;
@@ -185,6 +190,9 @@ export class InsightSideBarComponent implements OnInit {
 
   expandCollapse(event:any) {
     this.collapsed = event
+  }
+  goToActivity(_e: any) {
+    this.router.navigateByUrl('app/person-profile/me');
   }
 
   goToMyDiscussion() {
