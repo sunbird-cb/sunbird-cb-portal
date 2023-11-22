@@ -9,7 +9,7 @@ import moment from 'moment'
 })
 export class TodayEventCardComponent implements OnInit {
   @Input() eventData: any
-  isLive = true
+  isLive = false
   isRecording = false
 
   constructor(private router: Router) { }
@@ -26,6 +26,9 @@ export class TodayEventCardComponent implements OnInit {
           this.isRecording = true
           this.isLive = false
         }
+        this.isLive = false
+      } else {
+        this.isLive = true
       }
     }
   }
