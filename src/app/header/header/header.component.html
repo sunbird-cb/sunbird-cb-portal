@@ -11,11 +11,11 @@
         </div>
         <div>
             <li class="download-app-chip-top-header" (click)="downloadApp()">
-                <span>Download App</span>
+                <span>Download App </span>
             </li>
         </div>
 </div>
-<ws-app-nav-bar class="top-nav-bar" [mode]="'top'" [headerFooterConfigData]="headerFooterConfigData"></ws-app-nav-bar>
+<ws-app-nav-bar *ngIf="isNavBarRequired" class="top-nav-bar" [mode]="mode" [headerFooterConfigData]="headerFooterConfigData"></ws-app-nav-bar>
 <div class="height-on-top">
     <ws-widget-grid-layout [widgetData]="widgetData">
     </ws-widget-grid-layout>

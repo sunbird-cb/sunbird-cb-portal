@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   isNavBarRequired = true
   showNavbar = true
   widgetData = {};
+  @Input() mode:any;
   @Input() headerFooterConfigData:any;
   constructor(private valueSvc: ValueService,public headerService: HeaderService) { }
 
@@ -22,7 +23,6 @@ export class HeaderComponent implements OnInit {
     this.headerService.showNavbarDisplay$.pipe(delay(500)).subscribe(display => {
       this.showNavbar = display
     })
-    
 
     this.widgetData = { 
       "widgets": [        
@@ -40,10 +40,6 @@ export class HeaderComponent implements OnInit {
       ]
     };
   } 
-
-  ngOnChanges() {
-    console.log('headerFooterConfigData', this.headerFooterConfigData);
-  }
 
   downloadApp() : void{
     var userAgent = navigator.userAgent;
