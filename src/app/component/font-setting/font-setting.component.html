@@ -2,7 +2,7 @@
     <div class="font-container">
     <div class="font-slider">
     <span class="smaller-size">A</span>
-    <mat-slider min="10" max="18" step="2" value="14" (input)="changeFont($event)">
+    <mat-slider min="10" max="18" step="2" [value]="fontValue" (input)="changeFont($event)">
       <input matSliderThumb>
     </mat-slider>
     
