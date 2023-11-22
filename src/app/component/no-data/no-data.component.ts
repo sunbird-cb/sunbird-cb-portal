@@ -14,7 +14,6 @@ export class NoDataComponent implements OnInit {
   ngOnInit() {
     this.noData = this.noDataValue
 
-    console.log(this.noData, "this.noData==")
   }
 
 }

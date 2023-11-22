@@ -9,43 +9,43 @@ const API_END_POINTS = {
   ADD_CONNECTION: `apis/protected/v8/connections/v2/add/connection`,
   UPDATE_CONNECTION: `apis/protected/v8/connections/v2/update/connection`,
   CONN_REQUESTED: `apis/protected/v8/connections/v2/connections/requests/received`,
-  TRENDING_DISCUSSION: `apis/proxies/v8/discussion/popular`,  
+  TRENDING_DISCUSSION: `apis/proxies/v8/discussion/popular`,
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 
 export class HomePageService {
-  
+
   constructor(private http: HttpClient) { }
 
-  getInsightsData(payload:any){
+  getInsightsData(payload: any) {
     const result = this.http.post(API_END_POINTS.INSIGHTS, payload)
     return result
   }
 
   getDiscussionsData(username: string): Observable<any> {
-    return this.http.get(API_END_POINTS.DISCUSSIONS+username);
+    return this.http.get(API_END_POINTS.DISCUSSIONS + username)
   }
 
   getNetworkRecommendations(payload: any): Observable<any> {
-    return this.http.post(API_END_POINTS.NETWORK, payload);
+    return this.http.post(API_END_POINTS.NETWORK, payload)
   }
 
   connectToNetwork(payload: any): Observable<any> {
-    return this.http.post(API_END_POINTS.ADD_CONNECTION, payload);
+    return this.http.post(API_END_POINTS.ADD_CONNECTION, payload)
   }
 
   updateConnection(payload: any): Observable<any> {
-    return this.http.post(API_END_POINTS.UPDATE_CONNECTION, payload);
+    return this.http.post(API_END_POINTS.UPDATE_CONNECTION, payload)
   }
 
   getRecentRequests(): Observable<any> {
-    return this.http.get(API_END_POINTS.CONN_REQUESTED);
+    return this.http.get(API_END_POINTS.CONN_REQUESTED)
   }
 
   getTrendingDiscussions(): Observable<any> {
-    return this.http.get(API_END_POINTS.TRENDING_DISCUSSION);
+    return this.http.get(API_END_POINTS.TRENDING_DISCUSSION)
   }
 }
