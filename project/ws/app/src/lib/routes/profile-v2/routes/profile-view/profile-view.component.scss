@@ -397,3 +397,13 @@ span.profile-badge {
     padding-left: 5px;
     padding-top: 5px;
 }
+::ng-deep .profile-tabs .mat-tab-header{
+  background-color: white;
+}
+.profile-section{
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0, 0.08);
+  opacity: 1;
+  background-color: rgba(255,255,255, 1);
+  padding: 16px 16px 0px 16px;
+}

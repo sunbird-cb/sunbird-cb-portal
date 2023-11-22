@@ -20,21 +20,38 @@ export class PresenterCardComponent implements OnInit {
 
   private createInititals(): void {
     let initials = ''
-    const array = `${this.userData.name} `.toString().split(' ')
+    const array = `${this.userData.name || this.userData.firstname} `.toString().split(' ')
     if (array[0] !== 'undefined' && typeof array[1] !== 'undefined') {
       initials += array[0].charAt(0)
       initials += array[1].charAt(0)
     } else {
-      for (let i = 0; i < this.userData.name.length; i += 1) {
-        if (this.userData.name.charAt(i) === ' ') {
-          continue
+      if (this.userData.name) {
+        for (let i = 0; i < this.userData.name.length; i += 1) {
+          if (this.userData.name.charAt(i) === ' ') {
+            continue
+          }
+
+          if (this.userData.name.charAt(i) === this.userData.name.charAt(i)) {
+            initials += this.userData.name.charAt(i)
+
+            if (initials.length === 2) {
+              break
+            }
+          }
         }
+      }
+      if (this.userData.firstname) {
+        for (let i = 0; i < this.userData.firstname.length; i += 1) {
+          if (this.userData.firstname.charAt(i) === ' ') {
+            continue
+          }
 
-        if (this.userData.name.charAt(i) === this.userData.name.charAt(i)) {
-          initials += this.userData.name.charAt(i)
+          if (this.userData.firstname.charAt(i) === this.userData.firstname.charAt(i)) {
+            initials += this.userData.firstname.charAt(i)
 
-          if (initials.length === 2) {
-            break
+            if (initials.length === 2) {
+              break
+            }
           }
         }
       }

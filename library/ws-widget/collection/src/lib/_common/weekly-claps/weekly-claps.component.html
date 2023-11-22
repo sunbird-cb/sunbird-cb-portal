@@ -1,4 +1,4 @@
-<div class="weekly-wrapper" *ngIf="!isLoading && weeklyData.enableClaps">
+<div class="weekly-wrapper" *ngIf="!isLoading && weeklyData.enableCard">
     <div>
         <div class="flex flex-between">
             <p class="flex-align-start weekly-title flex flex-middle margin-remove">Weekly claps
@@ -9,10 +9,10 @@
                 {{insightsData?.weeklyClaps?.total_claps || 0}} weeks
             </p>
         </div>
-        <p class="period-count">Fri, 1 Sep - Sat, 30 Sep</p>
+        <p class="period-count" *ngIf="insightsData?.weeklyClaps">{{insightsData?.weeklyClaps?.startDate | date: 'EE, d MMM'}}  - {{insightsData?.weeklyClaps?.endDate | date: 'EE, d MMM'}}</p>
     </div>
     <div>
-        <div class="flex ">
+        <div class="flex flex-between">
             <ng-container *ngIf="insightsData && insightsData.weeklyClaps">
                 <ng-container *ngFor="let week of weeklyData.weekList;let i = index">
                     <div class="flex flex-middle margin-right-m">
@@ -30,7 +30,7 @@
     </div>
 </div>
 
-<div class="weekly-wrapper" *ngIf="isLoading && weeklyData.enableClaps">
+<div class="weekly-wrapper" *ngIf="isLoading && weeklyData.enableCard">
     <div>
         <div class="flex flex-between">
             <p class="flex-align-start weekly-title flex flex-middle margin-remove">

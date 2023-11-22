@@ -25,6 +25,7 @@ export class EventDetailComponent implements OnInit {
   fetchSingleCategoryLoader = false
   eventData: any
   currentEvent = false
+  pastEvent = false
   // fetchNewData = false
 
   constructor(
@@ -53,6 +54,12 @@ export class EventDetailComponent implements OnInit {
       const isToday = this.compareDate(eventDate, eventendDate, this.eventData)
       if (isToday) {
         this.currentEvent = true
+      }
+      const now = new Date()
+      const today = moment(now).format('YYYY-MM-DD HH:mm')
+
+      if (eventDate < today && eventendDate < today) {
+        this.pastEvent = true
       }
     })
   }

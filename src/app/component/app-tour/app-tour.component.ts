@@ -172,8 +172,8 @@ export class AppTourComponent {
         profileDetails: {get_started_tour: status}
       }
     }
-    this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(res => {
-      console.log("re s ", res )
+    this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(_res => {
+      // console.log("re s ", res )
     })
   }
 

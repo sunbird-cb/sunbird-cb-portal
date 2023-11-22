@@ -6,7 +6,7 @@
     
      
     
-    <div class="fix-ww" id="root-tool-bar" title="toolbar" i18n-aria-label role="toolbar">
+    <div class="fix-ww" id="root-tool-bar">
       <ng-container *ngIf="mode === 'top'">
         <a [routerLink]="!isforPreview ? '/page/home' : '/static-home'" class="logo-dim" role="link" title="Home"
           i18n-aria-title i18n-aria-label>
@@ -18,7 +18,7 @@
             *ngFor="let item of primaryNavbarConfig?.mediumScreen?.left">
           </ng-container>
           <ng-container *ngIf="!isforPreview">
-            <ws-app-search-input-home placeHolder="Search for learning contents" class="my-search flex-1"
+            <ws-app-search-input-home placeHolder="Search for learning content" class="my-search flex-1"
               [ref]="'home'">
             </ws-app-search-input-home>
           </ng-container>

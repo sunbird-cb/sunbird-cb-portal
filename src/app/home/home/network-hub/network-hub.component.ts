@@ -67,6 +67,7 @@ export class NetworkHubComponent implements OnInit {
         }
       }
     );
+    
   }
 
   fetchRecentRequests(): void {
@@ -145,6 +146,30 @@ export class NetworkHubComponent implements OnInit {
         }
       }
     );
+  }
+
+  createInititals(fname:string): string {
+    let initials = ''
+    const array = `${fname} `.toString().split(' ')
+    if (array[0] !== 'undefined' && typeof array[1] !== 'undefined') {
+      initials += array[0].charAt(0) 
+      initials += array[1].charAt(0)
+    } else {
+      for (let i = 0; i < fname.length; i += 1) {
+        if (fname.charAt(i) === ' ') {
+          continue
+        }
+
+        if (fname.charAt(i) === fname.charAt(i)) {
+          initials += fname.charAt(i)
+
+          if (initials.length === 2) {
+            break
+          }
+        }
+      }
+    }
+    return initials.toUpperCase()
   }
 
 }

@@ -12,7 +12,8 @@
   <ng-container *ngSwitchCase="'basic-details'" [ngTemplateOutlet]="cardBasicDetails"></ng-container>
   <ng-container *ngSwitchCase="'card-discussion'" [ngTemplateOutlet]="cardDiscussion"></ng-container>
   <ng-container *ngSwitchCase="'card-wide'" [ngTemplateOutlet]="cardWide"></ng-container>
-  <ng-container *ngSwitchCase="'card-wide-skelton'" [ngTemplateOutlet]="wideCardSkelton"></ng-container>
+  <ng-container *ngSwitchCase="'card-wide-v2'" [ngTemplateOutlet]="cardWideV2"></ng-container>
+  <ng-container *ngSwitchCase="'card-wide-v2-skelton'" [ngTemplateOutlet]="cardWideV2Skelton"></ng-container>
   <ng-container *ngSwitchDefault [ngTemplateOutlet]="cardStandard"></ng-container>
   <ng-container *ngSwitchCase="'cardCurated'" [ngTemplateOutlet]="cardCurated"></ng-container>
   <ng-container *ngSwitchCase="'card-portrait-skeleton'" [ngTemplateOutlet]="cardPortraitSkeleton"></ng-container> 
@@ -670,8 +671,9 @@
             ? true
             : widgetData?.intranetMode === 'greyOut' && showIntranetContent
       }">
-      <a (click)="raiseTelemetry(); $event.stopPropagation()" [routerLink]="(widgetData.content | pipeContentRoute: forPreview ).url"
-            [queryParams]="(widgetData.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData"
+      <ng-container *ngIf="widgetData.content">
+        <a (click)="raiseTelemetry(); $event.stopPropagation()" [routerLink]="(widgetData?.content | pipeContentRoute: forPreview ).url"
+            [queryParams]="(widgetData?.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData"
             role="link" i18n-aria-label>
       <ng-container *ngIf="!isCardFlipped">
         <div class="status-danger" role="note" i18n-aria-label aria-label="Content expired or deleted" i18n-matTooltip
@@ -712,7 +714,7 @@
               <div class="flex flex-end course_v2">
                 <mat-icon class="mat-icon main_icon  ws-mat-default-text margin-right-xs">video_library</mat-icon>
                 <ws-widget-display-content-type i18n-title title="Content Type" *ngIf="widgetData.content?.primaryCategory"
-                  class="ws-mat-black60-text font-normal mat-caption text-uppercase" [displayContentType]="widgetData.content?.primaryCategory==='Course Unit'
+                  class="ws-mat-black60-text font-normal mat-caption " [displayContentType]="widgetData.content?.primaryCategory==='Course Unit'
                   ?'Module'
                   :widgetData.content?.primaryCategory">
   
@@ -751,7 +753,8 @@
           {{ widgetData.content.reason }}
         </p>
       </ng-container>
-      </a>
+        </a>
+      </ng-container>
     </div>
   </mat-card>
 </ng-template>
@@ -962,6 +965,80 @@
     </mat-card-content>
   </mat-card>
 </ng-template>
+
+<ng-template #cardWideV2>
+  <mat-card class="card-wide-v2 padding-remove position-relative flex">
+    <div class="imageholder ">
+      <img mat-card-image class="margin-remove"
+      [src]="widgetData.content.posterImage || widgetData.content.appIcon  | pipePublicURL" [wsUtilsDefaultThumbnail]="defaultThumbnail"
+      [alt]="widgetData.content.name">
+      <div class="source-div" [hidden]="true">
+        <img [src]="widgetData.content.creatorLogo" class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
+          [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
+      </div>
+    </div>
+    <mat-card-content class="mat-text-box">
+      <div class="course_widget flex margin-remove">
+        <div class="flex flex-end course_v2">
+          <ng-container *ngIf="widgetData.content.contentType === 'Resource' || widgetData.content.contentType === 'Course' || widgetData.content.contentType === 'Module'">
+            <mat-icon  class="mat-icon ws-mat-default-text margin-right-xs" alt="Audio" *ngIf="widgetData.content.mimeType === 'audio/mpeg'">
+              mic</mat-icon>
+    
+            <mat-icon  class="mat-icon ws-mat-default-text margin-right-xs" alt="Assessment" *ngIf="widgetData.content.mimeType === 'application/json' || widgetData.content.mimeType === 'application/quiz'">
+              assessment</mat-icon>
+    
+            <mat-icon  class="mat-icon ws-mat-default-text margin-right-xs" alt="PDF" *ngIf="widgetData.content.mimeType === 'application/pdf'">
+              picture_as_pdf</mat-icon>
+    
+            <mat-icon  class="mat-icon ws-mat-default-text margin-right-xs" alt="Video" *ngIf="widgetData.content.mimeType === 'video/mp4' || widgetData.content.mimeType === 'video/x-youtube' || widgetData.content.mimeType === 'application/x-mpegURL'">
+              videocam</mat-icon>
+            
+            <mat-icon class="mat-icon main_icon ws-mat-default-text margin-right-xs" alt="Course"  *ngIf="widgetData.content.mimeType === 'application/vnd.ekstep.content-collection'">
+              video_library
+            </mat-icon>
+    
+            <mat-icon class="mat-icon main_icon ws-mat-default-text margin-right-xs" alt="HTML"  *ngIf="widgetData.content.mimeType === 'application/vnd.ekstep.html-archive' || widgetData.content.mimeType === 'application/vnd.ekstep.ecml-archive' || widgetData.content.mimeType === 'text/x-url' || widgetData.content.mimeType === 'application/survey'">
+              attachment
+            </mat-icon>
+            
+            <mat-icon class="mat-icon main_icon ws-mat-default-text margin-right-xs" alt="Module"  *ngIf="widgetData.content.mimeType === 'image/jpeg' || widgetData.content.mimeType === 'image/png'">
+              image
+            </mat-icon>
+            <span class="ws-mat-black60-text font-normal mat-caption ">
+              {{widgetData.content.primaryCategory || widgetData.content.contentType}}
+            </span>
+          </ng-container>
+        </div>
+      </div>
+      
+      <div class="flex main_title_box">
+        <p class="mat-subheading-1 title-text font-bold-imp cursor-pointer content-title">
+          <a [routerLink]="['/app/toc/',widgetData.content.identifier,'overview']"
+            [queryParams]="{primaryCategory: widgetData.content.primaryCategory}" [state]="widgetData?.stateData">
+            {{widgetData.content.name}}
+          </a>
+      </p>
+      </div>
+      
+      <div class="bottomsection">
+        <div class="flex w-full flex-wrap flex-middle">
+          <div class="course_logo_box">
+            <img [src]="widgetData.content.creatorLogo | pipePublicURL " class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
+            [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
+          </div>
+          <span class="org-text">By {{widgetData.content.creator}}</span>
+        </div>
+        <div class="flex flex-middle rating-session margin-top-xs">
+          <div class="flex flex-middle">
+            <mat-icon>star</mat-icon>
+            <span class="rating-number">4.5</span>
+          </div>
+          <span class="most-enrolled-text margin-left-m">Most enrolled</span>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</ng-template>
 <ng-template #cardPortrait>
     <mat-card class="card-portrait mr-8">
       <div class="flex">
@@ -1049,50 +1126,37 @@
     </mat-card>
 </ng-template>
 
-<ng-template #wideCardSkelton>
-  <mat-card class="card-wide margin-bottom-m padding-remove position-relative flex">
-    <div class="imageholder ">
-      <ws-widget-skeleton-loader [width]="'310px'" [height]="'170px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+<ng-template #cardWideV2Skelton>
+  <mat-card class="card-wide-v2 padding-remove position-relative flex">
+    <div class="">
+      <ws-widget-skeleton-loader [width]="'310px'" [height]="'100%'" class="h-full" [bindingClass]="'flex rounded h-full'"></ws-widget-skeleton-loader>
     </div>
     <mat-card-content class="mat-text-box">
-      <p class="flex items-center mat-caption margin-bottom-xxs text-uppercase">
-        <ws-widget-skeleton-loader [width]="'65px'" [height]="'16px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
-      </p>
+      <div class="course_widget flex margin-remove">
+        <div class="flex flex-end ">
+          <ws-widget-skeleton-loader [width]="'100px'" [height]="'21px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
+        </div>
+      </div>
+      
       <div class="flex main_title_box">
-        <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title">
-          <ws-widget-skeleton-loader [width]="'415px'" [height]="'16px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
-      </p>
+        <!-- <p class="mat-subheading-1 title-text font-bold-imp cursor-pointer content-title"> -->
+          <ws-widget-skeleton-loader [width]="'100%'" [height]="'21px'" class="w-full h-full mt-2" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
+      <!-- </p> -->
       </div>
       
       <div class="bottomsection">
-        <p class="mat-body-2 ws-mat-black-text margin-bottom-xxs" *ngIf="widgetData?.content?.creator">
-          <ws-widget-skeleton-loader [width]="'210px'" [height]="'16px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
-        </p>
-        <div class="contentdata margin-bottom-xm">
-          <ul
-            class="mat-body-2 margin-remove-top margin-bottom-xs padding-remove ws-mat-black60-text highlighting_list">
-            
-            <li>
-              
-              <ws-widget-skeleton-loader [width]="'75px'" [height]="'75px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
-            </li>
-            <li >
-              <ws-widget-skeleton-loader [width]="'75px'" [height]="'75px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
-            </li>
-           
-          </ul>
+        <div class="flex w-full flex-wrap flex-middle">
+          <div class="course_logo_box mr-2">
+            <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
+          </div>
+          <ws-widget-skeleton-loader [width]="'100px'" [height]="'16px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
         </div>
-          <div>
-            <ws-widget-skeleton-loader [width]="'75px'" [height]="'75px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+        <div class="flex flex-middle rating-session margin-top-xs">
+          <div class="flex flex-middle mr-2">
+            <ws-widget-skeleton-loader [width]="'50px'" [height]="'16px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
           </div>
-          <div class="tags" *ngIf="widgetData?.content?.keywords && widgetData?.content?.keywords?.length > 0">
-            <ul class="mat-caption margin-remove-top padding-remove tag_list">
-              <li *ngFor="let tag of widgetData?.content?.keywords">
-                <ws-widget-skeleton-loader [width]="'75px'" [height]="'75px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
-              </li>
-            </ul>
-          </div>
-
+          <ws-widget-skeleton-loader [width]="'80px'" [height]="'16px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
+        </div>
       </div>
     </mat-card-content>
   </mat-card>

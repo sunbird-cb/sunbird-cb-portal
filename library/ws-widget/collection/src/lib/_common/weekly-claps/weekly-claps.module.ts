@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common'
 import { WeeklyClapsComponent } from './weekly-claps.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatDialogModule, MatIconModule } from '@angular/material'
-import {InfoDialogModule} from './../info-dialog/info-dialog.module'
-import {SkeletonLoaderModule} from './../skeleton-loader/skeleton-loader.module'
+import { InfoDialogModule } from './../info-dialog/info-dialog.module'
+import { SkeletonLoaderModule } from './../skeleton-loader/skeleton-loader.module'
 
 @NgModule({
   declarations: [WeeklyClapsComponent],
@@ -15,7 +15,7 @@ import {SkeletonLoaderModule} from './../skeleton-loader/skeleton-loader.module'
     MatDialogModule,
     MatIconModule,
     InfoDialogModule,
-    SkeletonLoaderModule
+    SkeletonLoaderModule,
   ],
   exports: [
     WeeklyClapsComponent,
