@@ -9,7 +9,7 @@
             <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="homePageData.weeklyClaps" [isLoading]="clapsDataLoading"></ws-widget-weekly-claps>
         </div>
         <div class="flex flex-col discussion-card margin-bottom-m">
-            <div class="flex gap-1 mat-subheading-1 p-4">My Discussions
+            <div class="flex gap-1 mat-subheading-1 p-4 cursor-pointer" (click)="goToMyDiscussion()">My Discussions
                 <mat-icon class="ws-mat-default-text">
                     chevron_right
                 </mat-icon>
@@ -66,14 +66,14 @@
                 </div>
                 <div class="pending-request-thumbnails">
                     <ul>
-                        <li *ngFor="let item of pendingRequestData" (click)="moveToUserProile(item?.id)">
+                        <li *ngFor="let item of pendingRequestData | slice : 0 : 3" (click)="moveToUserProile(item?.id)">
                             <ws-widget-avatar-photo [name]="item?.fullName" [photoUrl]="item?.photo" size="s">
                             </ws-widget-avatar-photo>
                         </li>
                     </ul>
                 </div>
                 <div class="pending-request-counts">
-                    <span *ngIf="pendingRequestData?.length > 3">{{ (pendingRequestData.length - 3) }}</span>
+                    <span *ngIf="pendingRequestData?.length > 3">+{{ (pendingRequestData.length - 3) }}</span>
                 </div>
             </div>
         </div>
