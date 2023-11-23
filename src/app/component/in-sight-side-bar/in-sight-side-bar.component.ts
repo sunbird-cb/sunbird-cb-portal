@@ -38,7 +38,6 @@ export class InsightSideBarComponent implements OnInit {
   userData: any
   insightsData: any
   discussion = {
-    discussionData: undefined,
     loadSkeleton: false,
     data: undefined,
     error: false
@@ -46,10 +45,11 @@ export class InsightSideBarComponent implements OnInit {
   pendingRequestData:any = []
   pendingRequestSkeleton = true;
   
-  constructor(private homePageSvc:HomePageService,
-     private configSvc:ConfigurationsService,
-     private activatedRoute: ActivatedRoute,
-      private router: Router) { }
+  constructor(
+    private homePageSvc:HomePageService,
+    private configSvc:ConfigurationsService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
     this.userData = this.configSvc && this.configSvc.userProfile
@@ -132,8 +132,7 @@ export class InsightSideBarComponent implements OnInit {
     this.homePageSvc.getDiscussionsData(this.userData.userName).subscribe(
       (res: any) => {
         this.discussion.loadSkeleton = false;
-        this.discussion.data = res;
-        console.log("discussion res - ", res);
+        this.discussion.data = res && res.latestPosts;
       },
       (error: HttpErrorResponse) => {
         if (!error.ok) {

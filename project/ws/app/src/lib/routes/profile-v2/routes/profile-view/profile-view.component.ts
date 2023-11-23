@@ -1,5 +1,5 @@
-
-import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core'
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { NSProfileDataV2 } from '../../models/profile-v2.model'
 import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
@@ -44,7 +44,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   location!: string | null
   tabs: any
   tabsData: NSProfileDataV2.IProfileTab[]
-  currentUser!: string | null
+  currentUser: any;
   connectionRequests!: NSNetworkDataV2.INetworkUser[]
   currentUsername: any
   enrolledCourse: any = []
@@ -56,7 +56,12 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   public screenSizeIsLtMedium = false
   isLtMedium$ = this.valueSvc.isLtMedium$
   insightsData: any
-  mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
+  mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')));
+  discussion = {
+    loadSkeleton: false,
+    data: undefined,
+    error: false
+  };
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -82,7 +87,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {
     this.Math = Math
     this.pageData = this.route.parent && this.route.parent.snapshot.data.pageData.data
-    this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
+    this.currentUser = this.configSvc && this.configSvc.userProfile;
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     this.tabs = this.route.data.subscribe(data => {
       if (data.profile.data.profileDetails.verifiedKarmayogi === true) {
@@ -106,7 +111,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       /** // for loged in user only */
-      if (user === this.currentUser) {
+      if (user === this.currentUser.userId) {
         this.currentUsername = this.configSvc.userProfile && this.configSvc.userProfile.userName
       } else {
         this.currentUsername = this.portalProfile.personalDetails && this.portalProfile.personalDetails !== null
@@ -114,7 +119,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
           : this.portalProfile.userName
       }
 
-      if (!this.portalProfile.personalDetails && user === this.currentUser) {
+      if (!this.portalProfile.personalDetails && user === this.currentUser.userId) {
         _.set(this.portalProfile, 'personalDetails.firstname', _.get(this.configSvc, 'userProfile.firstName'))
         // _.set(this.portalProfile, 'personalDetails.surname', _.get(this.configSvc, 'userProfile.lastName'))
       }
@@ -122,9 +127,10 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       this.decideAPICall()
       this.getInsightsData()
     })
+    this.fetchDiscussionsData();
     this.fetchUserBatchList()
-
   }
+
   decideAPICall() {
     const user = this.portalProfile.userId || this.portalProfile.id || ''
     if (this.portalProfile && user) {
@@ -141,6 +147,23 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
     }
+  }
+
+  fetchDiscussionsData(): void {
+    this.discussion.loadSkeleton = true;
+    this.homeSvc.getDiscussionsData(this.currentUser.userName).subscribe(
+      (res: any) => {
+        this.discussion.loadSkeleton = false;
+        this.discussion.data = res && res.latestPosts;
+        
+      },
+      (error: HttpErrorResponse) => {
+        if (!error.ok) {
+          this.discussion.loadSkeleton = false;
+          this.discussion.error = true;
+        }
+      }
+    );
   }
 
   ngOnInit() {

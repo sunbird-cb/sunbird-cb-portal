@@ -39,7 +39,8 @@ import { ProfileCertificateDialogModule } from './components/profile-certificate
 import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
 import { ProfileCardStatsModule } from '@sunbird-cb/collection/src/lib/_common/profile-card-stats/profile-card-stats.module'
 import { WeeklyClapsModule } from '@sunbird-cb/collection/src/lib/_common/weekly-claps/weekly-claps.module';
-import { UpdatePostsModule } from '@sunbird-cb/collection/src/lib/_common/update-posts/update-posts.module'
+import { UpdatePostsModule } from '@sunbird-cb/collection/src/lib/_common/update-posts/update-posts.module';
+import { DiscussionsModule } from '@sunbird-cb/collection/src/lib/_common/discussions/discussions.module'
 // import { ShareModule } from 'ngx-sharebuttons';
 
 @NgModule({
@@ -89,6 +90,7 @@ import { UpdatePostsModule } from '@sunbird-cb/collection/src/lib/_common/update
     ProfileCardStatsModule,
     WeeklyClapsModule,
     UpdatePostsModule,
+    DiscussionsModule
     // ShareModule
   ],
   entryComponents: [

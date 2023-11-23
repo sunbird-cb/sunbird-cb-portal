@@ -31,9 +31,7 @@ export class DiscussHubComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userData = this.configService && this.configService.userProfile
-    console.log("discussConfig - ", this.discussConfig);
-    
+    this.userData = this.configService && this.configService.userProfile 
     if (this.discussConfig.trendingDiscussions.active) {
       this.fetchTrendingDiscussions();
     }

@@ -15,6 +15,7 @@ import { ProfileCardStatsModule } from '@sunbird-cb/collection/src/lib/_common/p
 import { PipeRelativeTimeModule } from '@sunbird-cb/utils';
 import { WeeklyClapsModule } from '@sunbird-cb/collection/src/lib/_common/weekly-claps/weekly-claps.module';
 import { UpdatePostsModule } from '@sunbird-cb/collection/src/lib/_common/update-posts/update-posts.module';
+import { DiscussionsModule } from '@sunbird-cb/collection/src/lib/_common/discussions/discussions.module';
 import { SharedModule } from '../shared/shared.module';
 
 import { HomeComponent } from './home/home.component';
@@ -48,6 +49,7 @@ import { HomePageService } from '../services/home-page.service';
     MatIconModule,
     WeeklyClapsModule,
     UpdatePostsModule,
+    DiscussionsModule,
     SkeletonLoaderModule,
     PipeRelativeTimeModule,
     AvatarPhotoModule

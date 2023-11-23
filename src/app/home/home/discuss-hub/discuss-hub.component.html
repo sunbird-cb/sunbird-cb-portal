@@ -19,7 +19,9 @@
                     <div class="flex flex-grow">Trending discussions</div>
                 </div>
 
-                <ng-container *ngIf="discussion.loadSkeleton">
+                <ws-discussions [discussionObj]="discussion" [count]="3"></ws-discussions>
+
+                <!-- <ng-container *ngIf="discussion.loadSkeleton">
                     <div class="flex flex-col gap-4">
                         <div class="flex flex-col gap-3 discussion-card p-3" *ngFor="let item of [1, 2, 3]">
                             <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-widget-skeleton-loader>
@@ -59,7 +61,7 @@
                             <div class="text-center">Unable to fetch discussion info due to some error.</div>
                         </div>
                     </ng-container>
-                </ng-container>
+                </ng-container> -->
             </div>
         </div>
 
