@@ -57,6 +57,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   isLtMedium$ = this.valueSvc.isLtMedium$
   insightsData: any
   mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
+  orgId: any
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -87,6 +88,9 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.tabs = this.route.data.subscribe(data => {
       if (data.profile.data.profileDetails.verifiedKarmayogi === true) {
         this.verifiedBadge = true
+      }
+      if (data.profile.data) {
+        this.orgId = data.profile.data.rootOrgId
       }
       if (data.profile.data.profileDetails) {
         this.portalProfile = data.profile.data.profileDetails
@@ -268,7 +272,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
               primaryCategory: 'programs',
               organisations: [
                   'across',
-                  this.portalProfile.professionalDetails[0].osid,
+                  this.orgId
               ],
           },
       },

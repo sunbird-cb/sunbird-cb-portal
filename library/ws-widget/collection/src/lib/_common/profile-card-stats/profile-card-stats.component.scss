@@ -186,7 +186,7 @@
     stroke-dashoffset: var(--i);
   }
   .user-img{
-    position: absolute;
+      position: absolute;
       top: 12px;
       left: 7px;
       span {
@@ -211,6 +211,11 @@
         line-height: 12px;
       }
   }
+}
+.user-img-completion {
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
 }
 
 .text-ellipses {

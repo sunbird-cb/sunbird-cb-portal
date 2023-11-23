@@ -6,6 +6,8 @@ import { MatDialogModule, MatIconModule } from '@angular/material'
 import { AvatarPhotoModule } from './../avatar-photo/avatar-photo.module'
 import { SlidersDynamicModule } from './../../sliders-dynamic/sliders-dynamic.module'
 import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
+import { WeeklyClapsModule } from '../weekly-claps/weekly-claps.module'
+
 @NgModule({
   declarations: [ProfileCardStatsComponent],
   imports: [
@@ -17,6 +19,7 @@ import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
     AvatarPhotoModule,
     SlidersDynamicModule,
     PipeDurationTransformModule,
+    WeeklyClapsModule
   ],
   exports: [
     ProfileCardStatsComponent,
