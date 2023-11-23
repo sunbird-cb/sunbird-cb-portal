@@ -17,6 +17,9 @@ export class PipeFilterSearchPipe implements PipeTransform {
          if (it.personalDetails) {
           return it['personalDetails'][keys[0]].toLowerCase().includes(searchTextLowerCase)
          }
+         if (it.fullName) {
+          return it.fullName.toLowerCase().includes(searchTextLowerCase)
+         }
         // keys.map((key: any) => {
         //   console.log('key:', key)
         //   console.log(`it['personalDetails'][key]`, it['personalDetails'][key])

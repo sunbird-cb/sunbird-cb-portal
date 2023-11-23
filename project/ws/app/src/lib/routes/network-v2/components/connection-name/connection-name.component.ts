@@ -43,6 +43,8 @@ export class ConnectionNameComponent implements OnInit, AfterViewInit {
         } else  {
           name = `${this.hoverUser.firstName}`
         }
+      } else if (this.hoverUser.fullName) {
+        name = `${this.hoverUser.fullName}`
       } else {
         name = `${this.hoverUser.name}`
       }
