@@ -272,7 +272,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
               primaryCategory: 'programs',
               organisations: [
                   'across',
-                  this.orgId
+                  this.orgId,
               ],
           },
       },

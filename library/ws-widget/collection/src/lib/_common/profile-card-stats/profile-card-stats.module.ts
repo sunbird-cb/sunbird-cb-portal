@@ -19,7 +19,7 @@ import { WeeklyClapsModule } from '../weekly-claps/weekly-claps.module'
     AvatarPhotoModule,
     SlidersDynamicModule,
     PipeDurationTransformModule,
-    WeeklyClapsModule
+    WeeklyClapsModule,
   ],
   exports: [
     ProfileCardStatsComponent,
