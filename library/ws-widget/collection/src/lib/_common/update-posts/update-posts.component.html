@@ -1,0 +1,46 @@
+<div class="flex flex-col gap-4">
+    <div class="flex flex-row gap-3 items-center mat-subheading-1 mb-0">
+        <div class="flex flex-grow">Updates on your posts</div>
+        <div class="text-2xl ws-mat-default-text">
+            <ng-container *ngIf="isMobile">
+                <div class="text-sm" >Show all</div>
+            </ng-container>
+            <ng-container *ngIf="!isMobile">
+                <mat-icon class="cursor-pointer font-bold" *ngIf="!updates_posts.loadSkeleton">add</mat-icon>
+            </ng-container>
+        </div>
+    </div>
+
+    <ng-container *ngIf="updates_posts.loadSkeleton">
+        <div class="flex flex-col discussion-card gap-3" *ngFor="let i of [1, 2, 3]">
+            <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-widget-skeleton-loader>
+            <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-12'"></ws-widget-skeleton-loader>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="!updates_posts.loadSkeleton">
+        <div class="flex flex-col discussion-card gap-2 p-5">
+            <div class="ws-mat-default-text font-semibold">2 Upvote on your port</div>
+            <div class="">What are some merits and demerits of the Dicey’s Rule of law?</div>
+        </div>
+        <div class="flex flex-col discussion-card gap-2 p-5">
+            <div class="ws-mat-default-text font-semibold">Alex replied to your post</div>
+            <div class="">I think the solution to such a problem would be to extensively.</div>
+        </div>
+        <div class="flex flex-col discussion-card gap-2 p-5">
+            <div class="ws-mat-default-text font-semibold">1 Downvote on your post</div>
+            <div class="">What are some merits and demerits of the Dicey’s Rule of law?</div>
+        </div>
+
+        <ng-container *ngIf="!isMobile">
+            <div class="flex flex-row gap-2 p-4 justify-center" *ngIf="!updates_posts.loadSkeleton || !updates_posts.error">
+                <div class="flex gap-1 font-semibold cursor-pointer ws-mat-default-text">
+                    <div>Show all</div>
+                    <mat-icon>
+                        chevron_right
+                    </mat-icon>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+</div>

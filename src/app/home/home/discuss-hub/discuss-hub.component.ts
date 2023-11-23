@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ConfigurationsService } from '@sunbird-cb/utils';
 import { HomePageService } from 'src/app/services/home-page.service';
@@ -11,6 +11,7 @@ import { HomePageService } from 'src/app/services/home-page.service';
 
 export class DiscussHubComponent implements OnInit {
 
+  @Input("discussConfig") discussConfig: any;
   userData: any;
   discussion = {
     data: undefined,
@@ -30,8 +31,10 @@ export class DiscussHubComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userData = this.configService && this.configService.userProfile
-    this.fetchTrendingDiscussions();
+    this.userData = this.configService && this.configService.userProfile 
+    if (this.discussConfig.trendingDiscussions.active) {
+      this.fetchTrendingDiscussions();
+    }
   }
 
   fetchTrendingDiscussions(): void {

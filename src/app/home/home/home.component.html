@@ -12,12 +12,17 @@
             <div class="flex flex-col gap-4">
                 <ws-feed-list></ws-feed-list>
                 <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
+
                 <!-- Discussion section starts here -->
-                <ws-discuss-hub></ws-discuss-hub>
+                <ng-container *ngIf="homeConfig?.discussHub?.active">
+                    <ws-discuss-hub [discussConfig]="homeConfig?.discussHub"></ws-discuss-hub>
+                </ng-container>
                 <!-- Discussion section ends here -->
 
                 <!-- Go to Network hub starts here -->
-                <ws-network-hub></ws-network-hub>
+                <ng-container *ngIf="homeConfig?.networkHub?.active">
+                    <ws-network-hub [networkConfig]="homeConfig?.networkHub"></ws-network-hub>
+                </ng-container>
                 <!-- Go to Network hub end here -->
             </div>
         </div>
@@ -32,11 +37,15 @@
                 <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
                 
                 <!-- Discussion section starts here -->
-                <ws-discuss-hub></ws-discuss-hub>
+                <ng-container *ngIf="homeConfig?.discussHub?.active">
+                    <ws-discuss-hub [discussConfig]="homeConfig?.discussHub"></ws-discuss-hub>
+                </ng-container>
                 <!-- Discussion section ends here -->
 
                 <!-- Go to Network hub starts here -->
-                <ws-network-hub></ws-network-hub>
+                <ng-container *ngIf="homeConfig?.networkHub?.active">
+                    <ws-network-hub [networkConfig]="homeConfig?.networkHub"></ws-network-hub>
+                </ng-container>
                 <!-- Go to Network hub end here -->
             </div>
         </div>
