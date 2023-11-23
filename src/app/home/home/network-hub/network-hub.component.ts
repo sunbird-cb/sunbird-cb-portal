@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { MatSnackBar } from '@angular/material';
@@ -13,6 +13,7 @@ import { HomePageService } from 'src/app/services/home-page.service';
 
 export class NetworkHubComponent implements OnInit {
 
+  @Input("networkConfig") networkConfig: any;
   userInfo: any;
   network = {
     networkRecommended: <any>[],
@@ -34,9 +35,14 @@ export class NetworkHubComponent implements OnInit {
 
   ngOnInit() {
     this.userInfo =  this.configService && this.configService.userProfile;
-    console.log("this.userInfo - ", this.userInfo);
-    this.fetchNetworkRecommendations();
-    this.fetchRecentRequests();
+    if (this.networkConfig.recentRequests.active) {
+      this.fetchRecentRequests();
+    }
+
+    if (this.networkConfig.networkSuggestions.active) {
+      this.fetchNetworkRecommendations();
+    }
+
   }
 
   fetchNetworkRecommendations(): void {
@@ -74,7 +80,6 @@ export class NetworkHubComponent implements OnInit {
     this.recentRequests.loadSkeleton = true;
     this.homePageService.getRecentRequests().subscribe(
       (res: any) => {
-        console.log("res - ", res);
         this.recentRequests.loadSkeleton = false;
         this.recentRequests.data = res.result.data && res.result.data.map((elem: any) => {
           elem.fullName = elem.fullName.charAt(0).toUpperCase() + elem.fullName.slice(1)
