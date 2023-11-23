@@ -1,14 +1,6 @@
-<div class="weekly-wrapper" *ngIf="!isLoading && weeklyData.enableCard">
+<div class="weekly-wrapper" *ngIf="!isLoading && weeklyData.enableCard && !weeklyData.displayOnlyHeader">
     <div>
-        <div class="flex flex-between">
-            <p class="flex-align-start weekly-title flex flex-middle margin-remove">Weekly claps
-                <img class="margin-left-s cursor-pointer" (click)="openInfo(myDialog)" width="20px" height="20px" src="assets/icons/home/help_icon.svg" >
-            </p>
-            <p class="flex weeks-count  flex-middle  margin-remove">
-                <img class="margin-right-s cursor-pointer" width="34" height="34" src="assets/icons/home/clap_icon.svg" >
-                {{insightsData?.weeklyClaps?.total_claps || 0}} weeks
-            </p>
-        </div>
+        <ng-container [ngTemplateOutlet]="headder"></ng-container>
         <p class="period-count" *ngIf="insightsData?.weeklyClaps">{{insightsData?.weeklyClaps?.startDate | date: 'EE, d MMM'}}  - {{insightsData?.weeklyClaps?.endDate | date: 'EE, d MMM'}}</p>
     </div>
     <div>
@@ -16,12 +8,13 @@
             <ng-container *ngIf="insightsData && insightsData.weeklyClaps">
                 <ng-container *ngFor="let week of weeklyData.weekList;let i = index">
                     <div class="flex flex-middle margin-right-m">
-                        <p class="margin-remove  margin-right-xs week-name">{{week.label}} </p>
                         <ng-container>
-                            <img width="24" height="24" src="{{insightsData.weeklyClaps[week.key]?.timespent > 60 ? 'assets/icons/home/check_icon.svg' : 'assets/icons/home/disable_icon.svg'}}" alt="">
+                            <p class="margin-remove  margin-right-xs week-name">{{week.label}} </p>
+                            <img width="24" height="24" src="{{insightsData.weeklyClaps[week.key]?.timespent > 60 ? 'assets/icons/home/check_icon.svg' : 'assets/icons/home/decline_icon.svg'}}" alt="">
                         </ng-container>
                         <ng-container *ngIf="week.activeWeek  && insightsData.weeklyClaps[week.key]?.timespent">
-                            <img width="24" height="24" src="{{insightsData.weeklyClaps[week.key].timespent > 60 ? 'assets/icons/home/highlight.svg' : 'assets/icons/home/disable_icon.svg'}}" alt="">
+                            <p class="margin-remove active-week margin-right-xs week-name">{{week.label}} </p>
+                            <img width="24" height="24" src="{{insightsData.weeklyClaps[week.key].timespent > 60 ? 'assets/icons/home/highlight.svg' : 'assets/icons/home/decline_icon.svg'}}" alt="">
                         </ng-container>
                     </div>
                 </ng-container>
@@ -29,6 +22,9 @@
         </div>
     </div>
 </div>
+<ng-container *ngIf="weeklyData.displayOnlyHeader">
+    <ng-container [ngTemplateOutlet]="headder"></ng-container>
+</ng-container>
 
 <div class="weekly-wrapper" *ngIf="isLoading && weeklyData?.enableCard">
     <div>
@@ -91,4 +87,16 @@
         </div>
     </div>
    
+</ng-template>
+
+<ng-template #headder>
+    <div class="flex flex-between flex-middle">
+        <p class="flex-align-start weekly-title flex flex-middle margin-remove">Weekly claps
+            <img class="margin-left-s cursor-pointer" (click)="openInfo(myDialog)" width="20px" height="20px" src="assets/icons/home/help_icon.svg" >
+        </p>
+        <p class="flex weeks-count  flex-middle  margin-remove">
+            <img class="margin-right-s cursor-pointer" width="34" height="34" src="assets/icons/home/clap_icon.svg" >
+            {{insightsData?.weeklyClaps?.total_claps || 0}} weeks
+        </p>
+    </div>
 </ng-template>

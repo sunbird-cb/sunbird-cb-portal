@@ -5,7 +5,7 @@
     </div>
     <div class="profile-user-details flex flex-middle">
         <div class="progress-wrapper">
-          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="64" height="64">
+          <svg xmlns="http://www.w3.org/2000/svg" *ngIf="userInfo.profileUpdateCompletion < 100" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="64" height="64">
               <path class="grey" d="M55,90
                        A55,55 0 1,1 140,90"
                     style="fill:none;"/>
@@ -14,7 +14,7 @@
                     style="fill:none;"
                     />
           </svg>
-          <div class="user-img">
+          <div class="user-img" [ngClass]="{'user-img-completion': userInfo.profileUpdateCompletion === 100}">
             <ws-widget-avatar-photo [name]="userInfo.firstName" [datalen]="" [randomColor]="false" [photoUrl]="''" size="round-m">
             </ws-widget-avatar-photo>
             <span class="percentage-block ">{{userInfo.profileUpdateCompletion}}%</span>
@@ -28,8 +28,12 @@
     <hr class="divider">
     <div class="profile-user-stats">
         <ng-container [ngTemplateOutlet]="statsDetails"></ng-container>
-        <div class="user-insights" *ngIf="insightsData.sliderData">
+        <div class="user-insights hidden md:block" *ngIf="insightsData.sliderData">
             <ws-widget-sliders-dynamic [widgetData]="insightsData.sliderData"></ws-widget-sliders-dynamic>
+        </div>
+        <hr class="divider margin-remove-top">
+        <div class="user-insights block md:hidden" *ngIf="insightsData.sliderData">
+          <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="profileData.weeklyClaps" [isLoading]="false"></ws-widget-weekly-claps>
         </div>
     </div>
   </div>
@@ -37,7 +41,8 @@
     <div class="flex flex-middle flex-between">
       <div class="flex flex-middle">
         <img class="stats-icon margin-right-s" width="20" height="20" src="/assets/icons/home/dashboard.svg">
-        Show my activities</div>
+        <span class="activites">Show my activities</span>
+      </div>
       <div class="flex" (click)="myActivity()"><img class="stats-icon" width="20" height="20" src="/assets/icons/home/right_arrow.svg"></div>
     </div>
   </div>
