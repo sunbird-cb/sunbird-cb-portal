@@ -1,4 +1,4 @@
-<div class="weekly-wrapper" *ngIf="!isLoading && weeklyData.enableCard && !weeklyData.displayOnlyHeader">
+<div class="weekly-wrapper" *ngIf="!isLoading && weeklyData?.enableCard && !weeklyData?.displayOnlyHeader">
     <div>
         <ng-container [ngTemplateOutlet]="headder"></ng-container>
         <p class="period-count" *ngIf="insightsData?.weeklyClaps">{{insightsData?.weeklyClaps?.startDate | date: 'EE, d MMM'}}  - {{insightsData?.weeklyClaps?.endDate | date: 'EE, d MMM'}}</p>
