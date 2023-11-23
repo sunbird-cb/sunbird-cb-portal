@@ -708,6 +708,10 @@
               <img [src]="widgetData.content.creatorLogo" class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
                 [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
             </div>
+            <div class="duration-box right-corner" *ngIf="widgetData?.content?.duration > 0">
+              <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
+              <span class=" ws-mat-white-text duration"> {{ (widgetData?.content?.duration || 120)| pipeDurationTransform: 'hms' }}</span>
+            </div>
           </div>
           <div class="padding-m">
             <div class="course_widget flex margin-remove">
@@ -733,9 +737,9 @@
               <span class="org-text">By {{ (widgetData.content.organisation && widgetData.content.organisation[0]) ? widgetData.content.organisation[0] : 'Karmayogi Bharat' }}</span>
             </div>
             <div class="flex flex-middle rating-session margin-top-m">
-              <div class="flex flex-middle">
-                <mat-icon>star</mat-icon>
-                <span>4.5</span>
+              <div class="flex flex-middle" *ngIf="widgetData?.content?.avgRating">
+                <mat-icon class="mr-1">star</mat-icon>
+                <span>{{widgetData.content.avgRating}}</span>
               </div>
               <span class="most-enrolled-text margin-left-m">Most enrolled</span>
             </div>
@@ -976,6 +980,10 @@
         <img [src]="widgetData.content.creatorLogo" class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
           [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
       </div>
+      <div class="duration-box right-corner" *ngIf="widgetData?.content?.duration > 0">
+        <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
+        <span class=" ws-mat-white-text duration"> {{ (widgetData?.content?.duration || 120)| pipeDurationTransform: 'hms' }}</span>
+      </div>
     </div>
     <mat-card-content class="mat-text-box">
       <div class="course_widget flex margin-remove">
@@ -1021,7 +1029,7 @@
       </div>
       
       <div class="bottomsection">
-        <div class="flex w-full flex-wrap flex-middle">
+        <div class="flex w-full flex-wrap flex-middle provider">
           <div class="course_logo_box">
             <img [src]="widgetData.content.creatorLogo | pipePublicURL " class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
             [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
@@ -1029,9 +1037,9 @@
           <span class="org-text">By {{widgetData.content.creator}}</span>
         </div>
         <div class="flex flex-middle rating-session margin-top-xs">
-          <div class="flex flex-middle">
+          <div class="flex flex-middle" *ngIf="widgetData?.content?.avgRating">
             <mat-icon>star</mat-icon>
-            <span class="rating-number">4.5</span>
+            <span class="rating-number">{{widgetData?.content?.avgRating}}</span>
           </div>
           <span class="most-enrolled-text margin-left-m">Most enrolled</span>
         </div>
@@ -1129,7 +1137,7 @@
 <ng-template #cardWideV2Skelton>
   <mat-card class="card-wide-v2 padding-remove position-relative flex">
     <div class="">
-      <ws-widget-skeleton-loader [width]="'310px'" [height]="'100%'" class="h-full" [bindingClass]="'flex rounded h-full'"></ws-widget-skeleton-loader>
+      <ws-widget-skeleton-loader [width]="'100%'" [height]="'100%'" class="h-full" [bindingClass]="'flex rounded h-full min-height-width'"></ws-widget-skeleton-loader>
     </div>
     <mat-card-content class="mat-text-box">
       <div class="course_widget flex margin-remove">
