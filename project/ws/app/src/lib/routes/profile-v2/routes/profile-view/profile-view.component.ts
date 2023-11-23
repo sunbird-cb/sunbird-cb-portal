@@ -7,6 +7,7 @@ import { DiscussService } from '../../../discuss/services/discuss.service'
 // import { ProfileV2Service } from '../../services/profile-v2.servive'
 /* tslint:disable */
 import _ from 'lodash'
+import { MatTabChangeEvent } from '@angular/material'
 import { NetworkV2Service } from '../../../network-v2/services/network-v2.service'
 import { NSNetworkDataV2 } from '../../../network-v2/models/network-v2.model'
 import { ConfigurationsService, ValueService } from '@sunbird-cb/utils';
@@ -16,6 +17,7 @@ import {
   NsContent,
   WidgetContentService,
 } from '@sunbird-cb/collection'
+import { HomePageService } from 'src/app/services/home-page.service'
 /* tslint:enable */
 // import {  } from '@sunbird-cb/utils'
 
@@ -47,13 +49,15 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   currentUsername: any
   enrolledCourse: any = []
   allCertificate: any = []
-
+  pageData: any
   sideNavBarOpened = true
   verifiedBadge = false
   private defaultSideNavBarOpenedSubscription: any
   public screenSizeIsLtMedium = false
   isLtMedium$ = this.valueSvc.isLtMedium$
+  insightsData: any
   mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
+  orgId: any
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -75,13 +79,18 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     private valueSvc: ValueService,
     private userSvc: WidgetUserService,
     private contentSvc: WidgetContentService,
+    private homeSvc: HomePageService
   ) {
     this.Math = Math
+    this.pageData = this.route.parent && this.route.parent.snapshot.data.pageData.data
     this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     this.tabs = this.route.data.subscribe(data => {
       if (data.profile.data.profileDetails.verifiedKarmayogi === true) {
         this.verifiedBadge = true
+      }
+      if (data.profile.data) {
+        this.orgId = data.profile.data.rootOrgId
       }
       if (data.profile.data.profileDetails) {
         this.portalProfile = data.profile.data.profileDetails
@@ -115,6 +124,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       /** // for loged in user only */
       this.decideAPICall()
+      this.getInsightsData()
     })
     this.fetchUserBatchList()
 
@@ -156,7 +166,9 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
+    if (this.menuElement) {
+      this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
+    }
   }
   fetchUserDetails(name: string) {
     if (name) {
@@ -244,10 +256,34 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
         const certId = item.issuedCertificates[0].identifier
         this.contentSvc.downloadCert(certId).subscribe(response => {
 
-          this.allCertificate.push({ identifier: item.issuedCertificates[0].identifier, dataUrl: response.result.printUri })
-
+          this.allCertificate.push({ identifier:
+            item.issuedCertificates[0].identifier, dataUrl: response.result.printUri })
         })
       }
     })
+  }
+  public tabClicked(_tabEvent: MatTabChangeEvent) {
+
+  }
+  getInsightsData() {
+    const request = {
+      request: {
+          filters: {
+              primaryCategory: 'programs',
+              organisations: [
+                  'across',
+                  this.orgId,
+              ],
+          },
+      },
+    }
+   this.homeSvc.getInsightsData(request).subscribe((res: any) => {
+    if (res.result.response) {
+      this.insightsData = res.result.response
+      if (this.insightsData && this.insightsData['weekly-claps']) {
+        this.insightsData['weeklyClaps'] = this.insightsData['weekly-claps']
+      }
+    }
+   })
   }
 }

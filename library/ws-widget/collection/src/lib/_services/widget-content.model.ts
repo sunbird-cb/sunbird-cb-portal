@@ -408,6 +408,7 @@ export namespace NsContent {
     REJECTED:  'BatchEnrollRejectedMsg',
     WITHDRAWN: 'BatchEnrollWithdrawMsg',
     REMOVED: 'BatchEnrollRemoveMsg',
+    EXPIRED: 'BatchListExpiredMsg',
   }
 
   export enum EResourcePrimaryCategories {

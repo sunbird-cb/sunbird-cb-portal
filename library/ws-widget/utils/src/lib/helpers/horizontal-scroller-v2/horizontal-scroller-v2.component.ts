@@ -53,7 +53,7 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
             .nativeElement as HTMLElement)
         })
 
-       // this.getBottomDotsArray();
+       this.getBottomDotsArray()
     }
   }
   ngOnChanges() {
@@ -63,6 +63,7 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
           .nativeElement as HTMLElement)
       }
     })
+    this.getBottomDotsArray()
   }
 
   ngOnDestroy() {
@@ -102,61 +103,87 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
     this.enableNext = true
     if (elem.scrollLeft === 0) {
       this.enablePrev = false
+      this.activeNav = 0
     }
     if (elem.scrollWidth === elem.clientWidth + elem.scrollLeft) {
       if (this.loadStatus === 'hasMore') {
         this.loadNext.emit()
       } else {
         this.enableNext = false
+        if (this.bottomDotsArray.length) {
+          this.activeNav = this.bottomDotsArray.length - 1
+        }
       }
+    }
+    if (elem.scrollLeft !== 0 && (elem.scrollWidth !== elem.clientWidth + elem.scrollLeft)) {
+      this.activeNav = Math.ceil(elem.scrollLeft / elem.clientWidth)
     }
   }
 
   slideTo(ele: any) {
-    if (ele > this.activeNav && ele !== this.activeNav) {
-      if (this.horizontalScrollElem) {
-        const clientWidth = (this.horizontalScrollElem.nativeElement.clientWidth)
-        this.horizontalScrollElem.nativeElement.scrollTo({
-          left: this.horizontalScrollElem.nativeElement.scrollLeft + clientWidth,
-          behavior: 'smooth',
-        })
-      }
-      this.activeNav = ele
-    } else {
-      if (this.horizontalScrollElem && ele >= 0 && ele !== this.activeNav) {
-        const clientWidth = (this.horizontalScrollElem.nativeElement.clientWidth)
-        this.horizontalScrollElem.nativeElement.scrollTo({
-          left: this.horizontalScrollElem.nativeElement.scrollLeft - clientWidth,
-          behavior: 'smooth',
-        })
-      }
-      this.activeNav = ele
+    const diff = ele - this.activeNav
+    // if (ele > this.activeNav && ele !== this.activeNav) {
+    //   if (this.horizontalScrollElem) {
+    //     const clientWidth = (this.horizontalScrollElem.nativeElement.clientWidth)
+    //     this.horizontalScrollElem.nativeElement.scrollTo({
+    //       left: this.horizontalScrollElem.nativeElement.scrollLeft + (clientWidth*diff),
+    //       behavior: 'smooth',
+    //     })
+    //   }
+    //   this.activeNav = ele
+    // } else {
+    //   if (this.horizontalScrollElem && ele >= 0 && ele !== this.activeNav) {
+    //     const clientWidth = (this.horizontalScrollElem.nativeElement.clientWidth)
+    //     this.horizontalScrollElem.nativeElement.scrollTo({
+    //       left: this.horizontalScrollElem.nativeElement.scrollLeft - (clientWidth*diff),
+    //       behavior: 'smooth',
+    //     })
+    //   }
+    //   this.activeNav = ele
+    // }
+    if (this.horizontalScrollElem) {
+      const clientWidth = (this.horizontalScrollElem.nativeElement.clientWidth)
+      this.horizontalScrollElem.nativeElement.scrollTo({
+        left: this.horizontalScrollElem.nativeElement.scrollLeft + (clientWidth * diff),
+        behavior: 'smooth',
+      })
     }
+    this.activeNav = ele
 
   }
 
   getBottomDotsArray() {
-
     if (this.horizontalScrollElem) {
       this.bottomDotsArray = []
-        const cardWidth = this.cardSubType === 'standard' ? 245 :
+      let cardWidth
+      let arrLength
+      // console.log('this.cardSubType-->',this.cardSubType)
+      if (this.cardSubType !== 'card-wide-v2') {
+        cardWidth = this.cardSubType === 'standard' ? 245 :
         ((document.getElementsByClassName(this.cardSubType) &&
          document.getElementsByClassName(this.cardSubType)[0] !== undefined)
         ? document.getElementsByClassName(this.cardSubType)[0].clientWidth : 245)
         if (document.getElementsByClassName('horizontal-scroll-container') &&
-          document.getElementsByClassName('horizontal-scroll-container')[0]) {
-          const scrollerWidth = document.getElementsByClassName('horizontal-scroll-container')[0].clientWidth
-        let arrLength = (scrollerWidth / cardWidth)
-        if (this.defaultMaxWidgets) {
+        document.getElementsByClassName('horizontal-scroll-container')[0]) {
+        const scrollerWidth = document.getElementsByClassName('horizontal-scroll-container')[0].clientWidth
+          arrLength = (scrollerWidth / cardWidth)
           arrLength = this.defaultMaxWidgets / arrLength
-        }
+          // console.log(scrollerWidth, cardWidth)
+          for (let i = 0; i < arrLength; i += 1) {
+            this.bottomDotsArray.push(i)
+          }
+          // console.log('this.cardSubType', this.cardSubType, arrLength, this.widgetsLength ,
+          // this.defaultMaxWidgets, scrollerWidth, this.bottomDotsArray)
+          }
+      } else {
+          setTimeout(() => {
+            arrLength = document.getElementsByClassName(this.cardSubType).length
+            for (let i = 0; i < arrLength; i += 1) {
+              this.bottomDotsArray.push(i)
+            }
+          },         1000)
+      }
 
-        for (let i = 0; i < arrLength; i += 1) {
-          this.bottomDotsArray.push(i)
-        }
-        // console.log('this.cardSubType', this.cardSubType, arrLength, this.widgetsLength ,
-        // this.defaultMaxWidgets, scrollerWidth, this.bottomDotsArray)
-        }
     }
 
   }

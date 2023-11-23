@@ -55,14 +55,16 @@ export class SlidersDynamicComponent extends WidgetBaseComponent
 
   get isOpenInNewTab() {
     const currentData = this.widgetData.sliderData[this.currentIndex]
-    if (currentData.redirectUrl && currentData.redirectUrl.includes('mailto') || this.widgetData.sliderData[this.currentIndex].openInNewTab) {
+    if (currentData.redirectUrl && currentData.redirectUrl.includes('mailto') ||
+     this.widgetData.sliderData[this.currentIndex].openInNewTab) {
       return true
     } return false
   }
 
   openInNewTab() {
     const currentData = this.widgetData.sliderData[this.currentIndex]
-    if (currentData.redirectUrl && currentData.redirectUrl.includes('mailto') || this.widgetData.sliderData[this.currentIndex].openInNewTab) {
+    if (currentData.redirectUrl && currentData.redirectUrl.includes('mailto') ||
+     this.widgetData.sliderData[this.currentIndex].openInNewTab) {
       window.open(currentData.redirectUrl)
     }
   }

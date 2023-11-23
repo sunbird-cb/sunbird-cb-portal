@@ -156,7 +156,7 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
       .searchCompetency(req)
       .subscribe((response: NSBrowseCompetency.ICompetencieResponse) => {
         if (response.statusInfo && response.statusInfo.statusCode === 200) {
-          console.log('response.responseData :: ', response.responseData)
+          // console.log('response.responseData :: ', response.responseData)
           if (response.responseData && response.responseData.length) {
             this.competencyData = response.responseData[0]
           }
@@ -175,7 +175,7 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
     this.browseCompServ
       .searchCompetency(req)
       .subscribe((response: any) => {
-          console.log('response :: ', response)
+          // console.log('response :: ', response)
             if (response) {
               this.competencyData = _.first(_.filter(response, { 'name': this.competencyName }))
             }

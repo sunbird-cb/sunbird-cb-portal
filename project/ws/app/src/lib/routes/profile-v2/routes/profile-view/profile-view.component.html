@@ -101,10 +101,36 @@
       </div>
     </mat-card-header>
   </mat-card>
+  <div class=" hidden md:block">
+    <ng-container [ngTemplateOutlet]="profileSection"></ng-container>
+  </div>
+  <div class=" block md:hidden">
+    <div class="flex flex-custom ">
+      <mat-tab-group class="profile-tabs" (selectedTabChange)="tabClicked($event)">
+        <mat-tab label="Profile">
+          <ng-template matTabContent>
+              <ng-container [ngTemplateOutlet]="profileSection"></ng-container>
+          </ng-template>
+        </mat-tab>
+        <mat-tab label="Activity">
+          <ng-template matTabContent>
+            <div class="margin-bottom-m margin-top-m">
+              <div class="profile-section">
+                <ws-widget-profile-card-stats (expandCollapse)="expandCollapse($event)" [profileData]="pageData.profileCard" [isLoading]="false"></ws-widget-profile-card-stats>
+              </div>
+          </div>
+          <div class="margin-bottom-m" >
+            <ws-widget-weekly-claps [weeklyData]="pageData.weeklyClaps" [insightsData]="insightsData" [isLoading]="insightsData ? false: true"></ws-widget-weekly-claps>
+        </div>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
 
-  <!-- <div class="flex flex-1 custom"> -->
-  <!-- <div class="container-balanced"> -->
 
+<ng-template #profileSection>
   <mat-sidenav-container name="discuss-menu" class="min-height margin-top-m">
     <!-- <div class="flex-1" style="position: relative;"> -->
     <!-- <mat-sidenav  [(opened)]="sideNavBarOpened" class="border-0">
@@ -256,4 +282,4 @@
 
     <!-- </div> -->
   </mat-sidenav-container>
-</div>
+</ng-template>

@@ -1,13 +1,15 @@
 <div class="margin-bottom-m margin-top-m">
-    <ws-widget-profile-card-stats (expandCollapse)="expandCollapse($event)" [insightsData]="insightsData" [isLoading]="profileDataLoading"></ws-widget-profile-card-stats>
+    <ws-widget-profile-card-stats (expandCollapse)="expandCollapse($event)"
+    (activity)="goToActivity($event)" [profileData]="homePageData.profileCard"
+     [insightsData]="insightsData" [isLoading]="profileDataLoading"></ws-widget-profile-card-stats>
 </div>
 <section class="hidden md:block">
     <section class="collapsible" [@collapse]="collapsed">
         <div class="margin-bottom-m" >
-            <ws-widget-weekly-claps [insightsData]="insightsData" [isLoading]="clapsDataLoading"></ws-widget-weekly-claps>
+            <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="homePageData.weeklyClaps" [isLoading]="clapsDataLoading"></ws-widget-weekly-claps>
         </div>
         <div class="flex flex-col discussion-card margin-bottom-m">
-            <div class="flex gap-1 mat-subheading-1 p-4">My Discussions
+            <div class="flex gap-1 mat-subheading-1 p-4 cursor-pointer" (click)="goToMyDiscussion()">My Discussions
                 <mat-icon class="ws-mat-default-text">
                     chevron_right
                 </mat-icon>
@@ -18,20 +20,26 @@
                     <div class="flex flex-col gap-3 p-5">
                         <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-widget-skeleton-loader>
                         <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-widget-skeleton-loader>
-                        <div class="flex flex-row gap-5">
-                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
-                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
-                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                        <div class="flex flex-row gap-5 justify-around">
+                            <ws-widget-skeleton-loader [width]="'64px'" [height]="'48px'"
+                                [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                            <ws-widget-skeleton-loader [width]="'64px'" [height]="'48px'"
+                                [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                            <ws-widget-skeleton-loader [width]="'64px'" [height]="'48px'"
+                                [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
                         </div>
                     </div>
                     <hr class="w-full bg-gray-200 border-b-1 opacity-50 m-0">
                     <div class="flex flex-col gap-3 p-5">
                         <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-widget-skeleton-loader>
                         <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-widget-skeleton-loader>
-                        <div class="flex flex-row gap-5">
-                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
-                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
-                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                        <div class="flex flex-row gap-5 justify-around">
+                            <ws-widget-skeleton-loader [width]="'64px'" [height]="'48px'"
+                                [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                            <ws-widget-skeleton-loader [width]="'64px'" [height]="'48px'"
+                                [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                            <ws-widget-skeleton-loader [width]="'64px'" [height]="'48px'"
+                                [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
                         </div>
                     </div>
                 </ng-container>
@@ -64,14 +72,14 @@
                 </div>
                 <div class="pending-request-thumbnails">
                     <ul>
-                        <li *ngFor="let item of pendingRequestData" (click)="moveToUserProile(item?.id)">
+                        <li *ngFor="let item of pendingRequestData | slice : 0 : 3" (click)="moveToUserProile(item?.id)">
                             <ws-widget-avatar-photo [name]="item?.fullName" [photoUrl]="item?.photo" size="s">
                             </ws-widget-avatar-photo>
                         </li>
                     </ul>
                 </div>
                 <div class="pending-request-counts">
-                    <span *ngIf="pendingRequestData?.length > 3">{{ (pendingRequestData.length - 3) }}</span>
+                    <span *ngIf="pendingRequestData?.length > 3">+{{ (pendingRequestData.length - 3) }}</span>
                 </div>
             </div>
         </div>
