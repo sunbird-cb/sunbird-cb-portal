@@ -145,7 +145,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DialogBoxComponent,
     SocialLinkComponent,
     FooterSectionComponent,
-    AppLogoComponent 
+    AppLogoComponent,
   ],
   imports: [
     FormsModule,
