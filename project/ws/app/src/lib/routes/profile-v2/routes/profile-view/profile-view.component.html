@@ -119,10 +119,13 @@
               <div class="profile-section">
                 <ws-widget-profile-card-stats (expandCollapse)="expandCollapse($event)" [profileData]="pageData.profileCard" [isLoading]="false"></ws-widget-profile-card-stats>
               </div>
-          </div>
-          <div class="margin-bottom-m" >
-            <ws-widget-weekly-claps [weeklyData]="pageData.weeklyClaps" [insightsData]="insightsData" [isLoading]="insightsData ? false: true"></ws-widget-weekly-claps>
-        </div>
+            </div>
+            <div class="margin-bottom-m">
+              <ws-widget-weekly-claps [weeklyData]="pageData.weeklyClaps" [insightsData]="insightsData" [isLoading]="insightsData ? false: true"></ws-widget-weekly-claps>
+            </div>
+            <div class="margin-bottom-m">
+              <ws-update-posts [isMobile]="true"></ws-update-posts>
+            </div>
           </ng-template>
         </mat-tab>
       </mat-tab-group>
