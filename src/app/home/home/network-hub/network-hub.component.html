@@ -7,7 +7,7 @@
     </div>
 
     <div class="flex gap-6 network-requests">
-        <div class="discussion-card flex-1">
+        <div class="discussion-card flex-1" *ngIf="networkConfig?.recentRequests?.active" >
             <div class="flex flex-col gap-4 p-4">
                 <div class="mat-subheading-1">Recent requests</div>
 
@@ -86,7 +86,7 @@
             </div>
         </div>
 
-        <div class="discussion-card flex-1 network-suggestion">
+        <div class="discussion-card flex-1 network-suggestion" *ngIf="networkConfig?.networkSuggestions?.active">
             <div class="flex flex-col gap-6 p-4">
                 <div class="mat-subheading-1" *ngIf="network.suggestionsLoader"> <ws-widget-skeleton-loader [width]="'163px'" [height]="'16px'"
                     [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader></div>
