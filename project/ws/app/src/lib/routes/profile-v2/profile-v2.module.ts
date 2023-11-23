@@ -40,7 +40,8 @@ import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/ske
 import { ProfileCardStatsModule } from '@sunbird-cb/collection/src/lib/_common/profile-card-stats/profile-card-stats.module'
 import { WeeklyClapsModule } from '@sunbird-cb/collection/src/lib/_common/weekly-claps/weekly-claps.module';
 import { UpdatePostsModule } from '@sunbird-cb/collection/src/lib/_common/update-posts/update-posts.module';
-import { DiscussionsModule } from '@sunbird-cb/collection/src/lib/_common/discussions/discussions.module'
+import { DiscussionsModule } from '@sunbird-cb/collection/src/lib/_common/discussions/discussions.module';
+import { RecentRequestsModule } from '@sunbird-cb/collection/src/lib/_common/recent-requests/recent-requests.module';
 // import { ShareModule } from 'ngx-sharebuttons';
 
 @NgModule({
@@ -90,7 +91,8 @@ import { DiscussionsModule } from '@sunbird-cb/collection/src/lib/_common/discus
     ProfileCardStatsModule,
     WeeklyClapsModule,
     UpdatePostsModule,
-    DiscussionsModule
+    DiscussionsModule,
+    RecentRequestsModule
     // ShareModule
   ],
   entryComponents: [

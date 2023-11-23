@@ -18,8 +18,6 @@ export class DiscussionsComponent implements OnInit{
 
   ngOnInit() {
     this.countArr =  this.count === 2 ? [1, 2] : [1, 2, 3]; 
-    console.log("discussion - ", this.discussion);
-    
   }
 
 }

@@ -57,12 +57,18 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   isLtMedium$ = this.valueSvc.isLtMedium$
   insightsData: any
   mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')));
-  orgId: any
+  orgId: any;
+
   discussion = {
     loadSkeleton: false,
     data: undefined,
     error: false
   };
+  recentRequests = {
+    data: undefined,
+    error: false,
+    loadSkeleton: false,
+  }
   
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -132,7 +138,8 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       this.getInsightsData()
     })
     this.fetchDiscussionsData();
-    this.fetchUserBatchList()
+    this.fetchUserBatchList();
+    this.fetchRecentRequests();
   }
 
   decideAPICall() {
@@ -165,6 +172,24 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!error.ok) {
           this.discussion.loadSkeleton = false;
           this.discussion.error = true;
+        }
+      }
+    );
+  }
+
+  fetchRecentRequests(): void {
+    this.recentRequests.loadSkeleton = true;
+    this.homeSvc.getRecentRequests().subscribe(
+      (res: any) => {
+        this.recentRequests.loadSkeleton = false;
+        this.recentRequests.data = res.result.data && res.result.data.map((elem: any) => {
+          elem.fullName = elem.fullName.charAt(0).toUpperCase() + elem.fullName.slice(1)
+          elem.connecting = false;
+          return elem;
+        });
+      }, (error: HttpErrorResponse) => {
+        if (!error.ok) {
+          this.recentRequests.loadSkeleton = false;
         }
       }
     );
