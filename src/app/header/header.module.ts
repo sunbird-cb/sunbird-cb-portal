@@ -4,7 +4,8 @@ import {
   MatIconModule,
   MatToolbarModule,
   MatMenuModule,
-  MatSliderModule
+  MatSliderModule,
+  MatSelectModule
 } from '@angular/material'
 import { MatDialogModule} from '@angular/material';
 import { HeaderComponent } from './header/header.component';
@@ -22,6 +23,7 @@ import { SearchModule } from '@ws/app/src/public-api'
 import { SharedModule } from '../shared/shared.module';
 import { FontSettingComponent } from './../component/font-setting/font-setting.component';
 import { TopRightNavBarComponent } from './../component/top-right-nav-bar/top-right-nav-bar.component';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [HeaderComponent, AppNavBarComponent, FontSettingComponent, TopRightNavBarComponent],
   imports: [
@@ -39,7 +41,9 @@ import { TopRightNavBarComponent } from './../component/top-right-nav-bar/top-ri
     SearchModule,
     RouterModule,
     GridLayoutModule,
-    SharedModule
+    SharedModule,
+    FormsModule,
+    MatSelectModule,
   ],
   exports: [
     HeaderComponent,

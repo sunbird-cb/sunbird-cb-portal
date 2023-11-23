@@ -22,10 +22,16 @@
     padding: 8px 16px;
 }
 
-.help-icon img{
+.help-icon img {
     vertical-align: middle;
 }
-
+.custom-lang {
+  font: 400 14px/21px Lato;
+  width: 64px;
+}
+.custom-lang.mat-form-field-appearance-legacy .mat-form-field-infix .mat-form-field-infix{
+  padding: 0 !important;
+}
 
 @media only screen and (max-width: 768px) {
     .help-icon {

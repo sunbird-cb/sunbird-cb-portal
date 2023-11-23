@@ -31,7 +31,22 @@ const rightNavConfig = [
 export class TopRightNavBarComponent implements OnInit {
   @Input() item:any;
   @Input() rightNavConfig:any;
-  constructor(public dialog: MatDialog    ) { }
+  selectedLanguage = 'en'
+  multiLang = [
+    {
+      value: 'English',
+      key: 'en',
+    },
+    {
+      value: 'Hindi',
+      key: 'hi',
+    },
+    {
+      value: 'Tamil',
+      key: 'ta',
+    },
+  ]
+  constructor(public dialog: MatDialog   ) { }
 
   ngOnInit() {
     this.rightNavConfig = this.rightNavConfig.topRightNavConfig ? this.rightNavConfig.topRightNavConfig : rightNavConfig;
@@ -50,5 +65,9 @@ export class TopRightNavBarComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => { 
     }); 
   } 
- 
+  
+  selectLanguage(event: any) {
+    this.selectedLanguage = event
+    localStorage.setItem('websiteLanguage', this.selectedLanguage)
+  }
 }

@@ -30,8 +30,11 @@ export class AppFooterComponent implements OnInit {
     private http: HttpClient,
     private translate: TranslateService,
   ) {
-    this.translate.setDefaultLang('en')
-    this.translate.use('hi')
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = JSON.parse(localStorage.getItem('websiteLanguage')!)
+      this.translate.use(lang)
+    }
     this.environment = environment
     if (this.configSvc.restrictedFeatures) {
       if (this.configSvc.restrictedFeatures.has('termsOfUser')) {
