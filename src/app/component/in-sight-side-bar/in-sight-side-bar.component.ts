@@ -189,11 +189,8 @@ export class InsightSideBarComponent implements OnInit {
   expandCollapse(event:any) {
     this.collapsed = event
   }
+  
   goToActivity(_e: any) {
     this.router.navigateByUrl('app/person-profile/me');
-  }
-
-  goToMyDiscussion() {
-    this.router.navigateByUrl('app/discussion-forum?page=home');
   }
 }
