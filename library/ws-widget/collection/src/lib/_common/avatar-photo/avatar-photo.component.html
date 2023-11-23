@@ -15,7 +15,9 @@
   <div *ngIf="showInitials" class="initials" i18n-aria-label>
     {{ userInitials }} 
   </div>
-  <div *ngIf="showBadge" class="success-checkmark"></div>
+  <div *ngIf="showBadge"><span class="profile-badge">  
+    <img src="fusion-assets/images/profile-badge.png">
+  </span></div>
 
   <!-- <div *ngIf="imageType === 'user-photo'">
     <img *ngIf="imageUrl" [src]="imageUrl" alt="user-image" class="user-image" [ngClass]="{'user-image-small': imageSize === 'small'}">
