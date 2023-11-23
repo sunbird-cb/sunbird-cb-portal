@@ -134,7 +134,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     // Fetch the data
     for (const strip of this.widgetData.strips) {
       if (this.checkForEmptyWidget(strip)) {
-        this.fetchStripFromRequestData(strip)
+        this.fetchStripFromRequestData(strip, false)
       } else {
         this.processStrip(strip, [], 'done', true, null)
       }
@@ -321,7 +321,6 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
           })
 
           tabResults = this.splitEnrollmentTabsData(contentNew, strip)
-          // console.log('tabResults', tabResults)
           this.processStrip(
             strip,
             this.transformContentsToWidgets(contentNew, strip),
@@ -440,7 +439,6 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
                         calculateParentStatus: boolean
   ): Promise<any> {
     const originalFilters: any = []
-    // console.log('calling -- ')
     return new Promise<any>((resolve, reject) => {
       if (request && request.searchV6) {
         this.contentSvc.searchV6(request.searchV6).subscribe(results => {
@@ -470,7 +468,6 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
           // if (viewMoreUrl && viewMoreUrl.queryParams) {
           //   viewMoreUrl.queryParams = viewMoreUrl.queryParams
           // }
-          // console.log('returned results')
           resolve({ results, viewMoreUrl })
         },                                                   (error: any) => {
           this.processStrip(strip, [], 'error', calculateParentStatus, null)
@@ -482,7 +479,6 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   async fetchFromTrendingContent(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
-    // console.log('inside fetchFromTrendingContent')
     if (strip.request && strip.request.trendingSearch && Object.keys(strip.request.trendingSearch).length) {
       // if (!(strip.request.searchV6.locale && strip.request.searchV6.locale.length > 0)) {
       //   if (this.configSvc.activeLocale) {
@@ -491,7 +487,6 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       //     strip.request.searchV6.locale = ['en']
       //   }
       // }
-      // console.log('inside fetchFromTrendingContent if inside')
       let originalFilters: any = []
       // tslint:disable:no-console
       console.log(originalFilters)
@@ -520,16 +515,14 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       } else {
         try {
           const response = await this.trendingSearchRequest(strip, strip.request, calculateParentStatus)
-          // console.log('calling  after - response, ', response)
-          if (response && response.results) {
-              const content = response.results.result[strip.request.trendingSearch.responseKey] || []
-            // console.log('calling  after-- ')
+          if (response && response.results && response.results.response) {
+              const content = response.results.response[strip.request.trendingSearch.responseKey] || []
             this.processStrip(
               strip,
               this.transformContentsToWidgets(content, strip),
               'done',
               calculateParentStatus,
-              response.viewMoreUrl,
+              response.viewMoreUrl || '',
             )
           } else {
             this.processStrip(strip, [], 'done', calculateParentStatus, null)
@@ -547,7 +540,6 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
                               calculateParentStatus: boolean
   ): Promise<any> {
     const originalFilters: any = []
-    // console.log('calling --  trendingSearchRequest')
     return new Promise<any>((resolve, reject) => {
       if (request && request.trendingSearch) {
         // check for the request if it has dynamic values]
@@ -561,9 +553,12 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
           request.trendingSearch.request.filters.organisation = userRootOrgId
         }
         this.contentSvc.trendingContentSearch(request.trendingSearch).subscribe(results => {
-          // console.log('trendingSearchRequest :: ' , results)
           const showViewMore = Boolean(
-            results.result.courses && results.result.courses.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
+            results.result && 
+            strip.request && 
+            results.result[strip.request.trendingSearch.responseKey] &&
+            results.result[strip.request.trendingSearch.responseKey].length > 5 &&
+            strip.stripConfig && strip.stripConfig.postCardForSearch,
           )
           const viewMoreUrl = showViewMore
             ? {
@@ -773,7 +768,6 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         this.getTabDataByfilter(currentStrip, currentTabFromMap, true)
       }
     }
-    // console.log('-----------------------------tabClicked tabEvent', tabEvent, stripMap.tabs)
   }
 
   async getTabDataByNewReqSearchV6(
@@ -782,13 +776,10 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     currentTab: NsContentStripWithTabs.IContentStripTab,
     calculateParentStatus: boolean
   ) {
-    // console.log('currentTab ---', currentTab)
     try {
       const response = await this.searchV6Request(strip, currentTab.request, calculateParentStatus)
-      // console.log('currentTab ---response', response)
       if (response && response.results) {
         const widgets = this.transformContentsToWidgets(response.results.result.content, strip)
-        // console.log('currentTab --- widgets', widgets)
         let tabResults: any[] = []
         if (this.stripsResultDataMap[strip.key] && this.stripsResultDataMap[strip.key].tabs) {
           const allTabs = this.stripsResultDataMap[strip.key].tabs
@@ -800,8 +791,6 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
             tabResults = allTabs
           }
         }
-        // console.log('tabResults -++++***--', tabResults)
-        // console.log('calling  after-- ')
         this.processStrip(
           strip,
           widgets,
@@ -827,8 +816,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   ) {
     try {
       const response = await this.trendingSearchRequest(strip, currentTab.request, calculateParentStatus)
-      if (response && response.results) {
-        const content = response.results.result[currentTab.value] || []
+      if (response && response.results && response.results.response) {
+        const content = response.results.response[currentTab.value] || []
         const widgets = this.transformContentsToWidgets(content, strip)
         // console.log('currentTab --- widgets', widgets)
         let tabResults: any[] = []

@@ -31,8 +31,9 @@
         <div class="user-insights hidden md:block" *ngIf="insightsData.sliderData">
             <ws-widget-sliders-dynamic [widgetData]="insightsData.sliderData"></ws-widget-sliders-dynamic>
         </div>
-        <hr class="divider margin-remove-top">
         <div class="user-insights block md:hidden" *ngIf="insightsData.sliderData">
+
+        <hr class="divider margin-remove-top">
           <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="profileData.weeklyClaps" [isLoading]="false"></ws-widget-weekly-claps>
         </div>
     </div>
