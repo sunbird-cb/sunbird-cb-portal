@@ -4,12 +4,13 @@
       <p class="footer_heading mat-subheading-1 margin-bottom-m">{{ 'common.hubs' | translate }}</p>
       <ng-container *ngFor="let hub of (hubsList || [])">
         <ng-container *ngIf="hub.hubname == 'Discuss'">
-          <a class="footer_sub_text mat-body cursor-pointer" (click)="navigate()">{{hub.hubname}}</a>
+          <a class="footer_sub_text mat-body cursor-pointer" (click)="navigate()">{{ translateHub(hub.hubname) }}</a>
         </ng-container>
         <ng-container *ngIf="hub.hubname != 'Discuss'">
-          <a class="footer_sub_text mat-body cursor-pointer" [routerLink]="hub.path">{{hub.hubname}}</a>
+          <a class="footer_sub_text mat-body cursor-pointer" [routerLink]="hub.path">{{ translateHub(hub.hubname) }}</a>
         </ng-container>
       </ng-container>
+      
       <!-- <a class="footer_sub_text mat-body" href="/page/learn"  [routerLink]="hub.path">Learn</a>
         <a class="footer_sub_text mat-body" href="/app/network-v2"  [routerLink]="hub.path">Network</a>
         <a class="footer_sub_text mat-body" (click)="navigate()">Discuss</a>

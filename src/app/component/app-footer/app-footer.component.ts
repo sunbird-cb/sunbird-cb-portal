@@ -132,6 +132,14 @@ export class AppFooterComponent implements OnInit {
     const value = this.hasRole(roles)
     return value
   }
+
+  translateHub(hubName: string): string {
+    const translationKey = 'common.' + hubName;
+    return this.translate.instant(translationKey);
+  }
+
+
+  
   get needToHide(): boolean {
     return this.currentRoute.includes('all/assessment/')
   }
