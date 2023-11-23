@@ -8,7 +8,7 @@
 
     <div class="flex gap-6 network-requests">
         <div class="discussion-card flex-1" *ngIf="networkConfig?.recentRequests?.active">
-            <ws-recent-requests [recentRequests]="recentRequests"></ws-recent-requests>
+            <ws-widget-recent-requests [recentRequests]="recentRequests"></ws-widget-recent-requests>
         </div>
 
         <div class="discussion-card flex-1 network-suggestion" *ngIf="networkConfig?.networkSuggestions?.active">

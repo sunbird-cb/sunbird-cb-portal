@@ -9,7 +9,7 @@
 
 <div class="flex gap-6 updates-on-posts">
     <div class="discussion-card flex-1 p-5" *ngIf="discussConfig?.updatePosts?.active">
-        <ws-update-posts [updateConfig]="discussConfig?.updatePosts"></ws-update-posts>
+        <ws-widget-update-posts [updateConfig]="discussConfig?.updatePosts"></ws-widget-update-posts>
     </div>
 
     <div class="discussion-card flex-1" *ngIf="discussConfig?.trendingDiscussions?.active">
@@ -19,7 +19,7 @@
                     <div class="flex flex-grow">Trending discussions</div>
                 </div>
 
-                <ws-discussions [discussionObj]="discussion" [count]="3" [trend]="true"></ws-discussions>
+                <ws-widget-discussions [discussion]="discussion" [count]="3" [trend]="true"></ws-widget-discussions>
             </div>
         </div>
 

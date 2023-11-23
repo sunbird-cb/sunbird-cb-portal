@@ -1,15 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { MatIconModule } from '@angular/material';
-import { AvatarPhotoModule } from '../avatar-photo/avatar-photo.module';
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { RouterModule } from '@angular/router'
+import { MatIconModule } from '@angular/material'
+import { AvatarPhotoModule } from '../avatar-photo/avatar-photo.module'
 
-import { SkeletonLoaderModule } from '../skeleton-loader/skeleton-loader.module';
+import { SkeletonLoaderModule } from '../skeleton-loader/skeleton-loader.module'
 
-
-import { RecentRequestsComponent } from './recent-requests.component';
-
-
+import { RecentRequestsComponent } from './recent-requests.component'
 
 @NgModule({
   declarations: [RecentRequestsComponent],
@@ -18,13 +15,13 @@ import { RecentRequestsComponent } from './recent-requests.component';
     RouterModule,
     SkeletonLoaderModule,
     MatIconModule,
-    AvatarPhotoModule
+    AvatarPhotoModule,
   ],
   exports: [
-    RecentRequestsComponent
+    RecentRequestsComponent,
   ],
   entryComponents: [
-    RecentRequestsComponent
-  ]
+    RecentRequestsComponent,
+  ],
 })
 export class RecentRequestsModule { }

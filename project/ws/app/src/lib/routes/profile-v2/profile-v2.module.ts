@@ -32,16 +32,16 @@ import { InitResolver } from './resolvers/init-resolve.service'
 // import { CKEditorService } from 'library/ws-widget/collection/src/lib/_common/ck-editor/ck-editor.service'
 import { RouterModule } from '@angular/router'
 import { ProfileV2RoutingModule } from './profile-v2.rounting.module'
-import { ProfileComponent } from './routes/profile/profile.component';
+import { ProfileComponent } from './routes/profile/profile.component'
 import { ProfileViewComponent } from './routes/profile-view/profile-view.component'
 import { DiscussModule } from '../discuss/discuss.module'
 import { ProfileCertificateDialogModule } from './components/profile-certificate-dialog/profile-certificate-dialog.module'
 import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
 import { ProfileCardStatsModule } from '@sunbird-cb/collection/src/lib/_common/profile-card-stats/profile-card-stats.module'
-import { WeeklyClapsModule } from '@sunbird-cb/collection/src/lib/_common/weekly-claps/weekly-claps.module';
-import { UpdatePostsModule } from '@sunbird-cb/collection/src/lib/_common/update-posts/update-posts.module';
-import { DiscussionsModule } from '@sunbird-cb/collection/src/lib/_common/discussions/discussions.module';
-import { RecentRequestsModule } from '@sunbird-cb/collection/src/lib/_common/recent-requests/recent-requests.module';
+import { WeeklyClapsModule } from '@sunbird-cb/collection/src/lib/_common/weekly-claps/weekly-claps.module'
+import { UpdatePostsModule } from '@sunbird-cb/collection/src/lib/_common/update-posts/update-posts.module'
+import { DiscussionsModule } from '@sunbird-cb/collection/src/lib/_common/discussions/discussions.module'
+import { RecentRequestsModule } from '@sunbird-cb/collection/src/lib/_common/recent-requests/recent-requests.module'
 // import { ShareModule } from 'ngx-sharebuttons';
 
 @NgModule({
@@ -49,7 +49,7 @@ import { RecentRequestsModule } from '@sunbird-cb/collection/src/lib/_common/rec
     ProfileComponent,
     ProfileViewComponent,
     LeftMenuComponent,
-    RightMenuComponent
+    RightMenuComponent,
   ],
   imports: [
     CommonModule,
@@ -92,7 +92,7 @@ import { RecentRequestsModule } from '@sunbird-cb/collection/src/lib/_common/rec
     WeeklyClapsModule,
     UpdatePostsModule,
     DiscussionsModule,
-    RecentRequestsModule
+    RecentRequestsModule,
     // ShareModule
   ],
   entryComponents: [

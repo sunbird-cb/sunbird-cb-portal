@@ -128,15 +128,15 @@
                 <div class="flex flex-grow mat-subheading-1">My Discussions</div>
                 <div class="flex text-sm ws-mat-default-text" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}">Show all</div>
               </div>
-              <ws-discussions [discussionObj]="discussion" [count]="2"></ws-discussions>
+              <ws-widget-discussions [discussion]="discussion" [count]="2"></ws-widget-discussions>
             </div>
 
             <div class="margin-bottom-m mt-4">
-              <ws-update-posts [isMobile]="true"></ws-update-posts>
+              <ws-widget-update-posts [isMobile]="true"></ws-widget-update-posts>
             </div>
 
             <div class="margin-bottom-m mt-4 discussion-card">
-              <ws-recent-requests [recentRequests]="recentRequests"></ws-recent-requests>
+              <ws-widget-recent-requests [recentRequests]="recentRequests"></ws-widget-recent-requests>
             </div>
 
           </ng-template>
