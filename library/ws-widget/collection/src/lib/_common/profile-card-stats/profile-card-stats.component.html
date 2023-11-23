@@ -15,14 +15,14 @@
                     />
           </svg>
           <div class="user-img" [ngClass]="{'user-img-completion': userInfo.profileUpdateCompletion === 100}">
-            <ws-widget-avatar-photo [name]="userInfo.firstName" [datalen]="" [randomColor]="false" [photoUrl]="''" size="round-m">
+            <ws-widget-avatar-photo [datalen]="1" [name]="userInfo.firstName" [datalen]="" [randomColor]="true" [photoUrl]="''" size="round-m">
             </ws-widget-avatar-photo>
             <span class="percentage-block ">{{userInfo.profileUpdateCompletion}}%</span>
           </div>
         </div>
         <div class="user-name flex margin-left-m">
-            <p class="margin-remove text-ellipses"  (click)="gotoUserProfile()">{{userInfo.firstName}} {{userInfo.lastName}}</p>
-            <mat-icon class="ws-mat-default-text mr-3" (click)="gotoUserProfile()">chevron_right</mat-icon>
+            <p class="margin-remove text-ellipses"  (click)="userInfo.profileUpdateCompletion < 100 && gotoUserProfile()">{{userInfo.firstName}} {{userInfo.lastName}}</p>
+            <mat-icon *ngIf="userInfo.profileUpdateCompletion < 100" class="ws-mat-default-text mr-3" (click)="gotoUserProfile()">chevron_right</mat-icon>
         </div>
     </div>
     <hr class="divider">
