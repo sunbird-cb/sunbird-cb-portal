@@ -27,6 +27,42 @@ $secondary-color: #EF951E;
   }
 }
 
+.min-height-width{
+  min-height: 140px;
+  min-width: 341px;
+}
+
+.duration-box {
+  background: #000;
+  position: absolute;
+  // height: auto;
+  // min-height: 24px;
+  // min-width: 60px;
+  border: none;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  border-radius: 4px;
+
+  &.right-corner {
+    right: 4px;
+    bottom: 4px;
+  }
+  .mat-icon {
+    vertical-align: middle;
+    color: #fff !important;
+    height: 14px !important;
+    width: 14px !important;
+    font-size: 14px;
+  }
+  .duration{
+    font: 700 12px/16px Lato;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+  }
+}
+
 .card-minimal-container {
   position: relative;
   width: 265px;
@@ -384,7 +420,7 @@ $secondary-color: #EF951E;
   }
 
   mat-card-content {
-    margin: 0 -0.25 * $card-padding;
+    // margin: 0 -0.25 * $card-padding;
     background: #fff;
   }
 
@@ -880,13 +916,8 @@ $title-line-count: 2;
   border-radius: 12px 12px;
   max-width: 100%;
   min-width: 784px;
-  // max-height: 172px;k
-  @include breakpoint-s {
-    min-width: auto;
-  }
-  @include breakpoint-xs {
-    min-width: auto;
-  }
+  display: flex;
+  // max-height: 172px;
 
   $title-line-count: 2;
   $title-line-height: 20px;
@@ -1088,6 +1119,37 @@ $title-line-count: 2;
      width: 16px;
      max-height: 16px;
  }
+
+ @include breakpoint-s {
+    min-width: auto;
+    display: flex;
+    flex-direction: column;
+    min-width: calc(100vw - 32px);
+    .imageholder{
+      width: 100%;
+    }
+    .mat-text-box{
+      width: 100%;
+    }
+    .provider{
+      flex-wrap: nowrap;
+    }
+  }
+  @include breakpoint-xs {
+    min-width: auto;
+    display: flex;
+    flex-direction: column;
+    min-width: calc(100vw - 32px);
+    .imageholder{
+      width: 100%;
+    }
+    .mat-text-box{
+      width: 100%;
+    }
+    .provider{
+      flex-wrap: nowrap;
+    }
+  }
 }
 
 .rating-session {
