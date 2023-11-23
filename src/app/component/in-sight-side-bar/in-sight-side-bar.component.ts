@@ -103,7 +103,7 @@ export class InsightSideBarComponent implements OnInit {
       "dot-active":"dot-active"
     }
     let sliderData: { title: any; icon: string; data: string; colorData: string; }[] = []
-    this.insightsData.nudges.forEach((ele: any, i: any)=>{
+    this.insightsData.nudges.forEach((ele: any)=>{
       if(ele) {
         let data = {
           "title": ele.label,
@@ -111,9 +111,7 @@ export class InsightSideBarComponent implements OnInit {
           "data": `${ele.growth === 'positive' && ele.progress > 1?  '+' + Math.round(ele.progress)+'%': ""}`,
           "colorData": ele.growth === 'positive' ? 'color-green' : 'color-red',
         }
-        if( i === 1) {
-          sliderData.push(data)
-        }
+        sliderData.push(data)
       }
     })
     nudgeData.sliderData = sliderData
