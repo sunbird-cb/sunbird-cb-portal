@@ -1,6 +1,6 @@
 // import { environment } from './../../../environments/environment'
 import { HttpClient } from '@angular/common/http'
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core'
+import { ChangeDetectorRef, Component, Input, NgZone, OnInit, ViewEncapsulation } from '@angular/core'
 import { NavigationEnd, Router } from '@angular/router'
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
 import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
@@ -29,11 +29,24 @@ export class AppFooterComponent implements OnInit {
     private router: Router,
     private http: HttpClient,
     private translate: TranslateService,
+    private cdRef: ChangeDetectorRef, 
+    private ngZone: NgZone,
   ) {
     console.log("---------------------------------------------------------------")
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--")
     const lang = localStorage.getItem('websiteLanguage')
-    
+    // window.addEventListener('storage', (event) => {
+    //   console.log("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111")
+    //   if (event.key === 'websiteLanguage') {
+    //     alert("Entered event")
+    //     this.ngZone.run(() => {
+    //       alert("Entered event")
+    //       const lang = localStorage.getItem('websiteLanguage') || 'en';
+    //       this.translate.use(lang);
+    //       this.cdRef.detectChanges();
+    //     });
+    //   }
+    // });
     console.log("---------------------------------------------------------------", lang)
     
     if (localStorage.getItem('websiteLanguage')) {
@@ -69,6 +82,21 @@ export class AppFooterComponent implements OnInit {
     })
   }
 
+  ngAfterViewInit() {
+    // Listen for changes in localStorage after the view has been initialized
+    console.log("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111")
+    window.addEventListener('storage', (event) => {
+      console.log("222222222222222222222222222222222222222222222222222222222222222222222222222")
+      if (event.key === 'websiteLanguage') {
+        this.ngZone.run(() => {
+          const lang = localStorage.getItem('websiteLanguage') || 'en';
+          this.translate.use(lang);
+          this.cdRef.detectChanges();
+        });
+      }
+    });
+  }
+  
   async ngOnInit() {
     const instanceConfig = this.configSvc.instanceConfig
     if (this.configSvc.portalUrls) {
@@ -82,6 +110,7 @@ export class AppFooterComponent implements OnInit {
     }   
 
   }
+  
   async readAgain() {
     const publicConfig: NsInstanceConfig.IConfig = await this.http
       .get<NsInstanceConfig.IConfig>(`${this.baseUrl}/site.config.json`)
