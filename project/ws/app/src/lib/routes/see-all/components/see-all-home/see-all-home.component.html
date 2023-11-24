@@ -1,0 +1,13 @@
+<div class="seeAll-home-container m-auto gap-4">
+    <ng-container>
+        <div class="flex flex-row page-header margin-top-l margin-bottom-l">
+            {{(seeAllPageConfig && seeAllPageConfig.title) ? seeAllPageConfig.title : ''}} </div>
+        <div class="flex flex-row flex-wrap content-container" infinite-scroll
+        [infiniteScrollDistance]="scrollDistance" [infiniteScrollThrottle]="throttle"
+        (scrolled)="onScrollEnd()">
+            <div class="mr-2 mb-5" *ngFor="let c of contentDataList">
+                <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
+            </div>
+        </div>
+    </ng-container>
+</div>

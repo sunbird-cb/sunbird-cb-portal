@@ -49,10 +49,7 @@ interface IStripUnitContentData {
   loaderWidgets?: any
   stripBackground?: string
   secondaryHeading?: any
-  viewMoreUrl: {
-    path: string
-    queryParams: any
-  } | null
+  viewMoreUrl: any
 }
 
 @Component({
@@ -647,12 +644,12 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     results: NsWidgetResolver.IRenderConfigWithAnyData[] = [],
     fetchStatus: TFetchStatus,
     calculateParentStatus = true,
-    viewMoreUrl: any,
+    _viewMoreUrl: any,
     tabsResults?: NsContentStripWithTabs.IContentStripTab[] | undefined,
     // calculateParentStatus is used so that parents' status is not re-calculated if the API is called again coz of filters, etc.
   ) {
     const stripData = {
-      viewMoreUrl,
+      viewMoreUrl: strip.viewMoreUrl,
       key: strip.key,
       canHideStrip: Boolean(strip.canHideStrip),
       showStrip: this.getIfStripHidden(strip.key),
