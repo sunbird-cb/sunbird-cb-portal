@@ -1215,17 +1215,21 @@ $title-line-count: 2;
       border-radius: 4px 4px;
       box-sizing: border-box;
     }
-    span {
-      opacity: 1;
-      color: rgba(0,0,0,0.87);
-      font-family: "Lato-Regular";
-      font-size: 12px;
-      font-weight: 400;
-      font-style: normal;
-      letter-spacing: 0.25px;
-      text-align: left;
-      line-height: 16px;
-    }
+  }
+  span.portrait-org-name {
+    opacity: 1;
+    color: rgba(0,0,0,0.87);
+    font-family: "Lato-Regular";
+    font-size: 12px;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0.25px;
+    text-align: left;
+    line-height: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 150px;
   }
   .portrait_widget {
     align-items: center;
