@@ -321,15 +321,25 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
             return dateB - dateA
           })
 
-          tabResults = this.splitEnrollmentTabsData(contentNew, strip)
-          this.processStrip(
-            strip,
-            this.transformContentsToWidgets(contentNew, strip),
-            'done',
-            calculateParentStatus,
-            viewMoreUrl,
-            tabResults
-          )
+          if (strip.tabs && strip.tabs.length) {
+            tabResults = this.splitEnrollmentTabsData(contentNew, strip)
+            this.processStrip(
+              strip,
+              this.transformContentsToWidgets(contentNew, strip),
+              'done',
+              calculateParentStatus,
+              viewMoreUrl,
+              tabResults
+            )
+          } else {
+            this.processStrip(
+              strip,
+              this.transformContentsToWidgets(contentNew, strip),
+              'done',
+              calculateParentStatus,
+              viewMoreUrl,
+            )
+          }
         },
         () => {
           this.processStrip(strip, [], 'error', calculateParentStatus, null)
