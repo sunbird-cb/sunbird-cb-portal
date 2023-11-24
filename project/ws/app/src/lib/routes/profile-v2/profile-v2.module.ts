@@ -94,7 +94,7 @@ import { PendingRequestModule } from '@sunbird-cb/collection/src/lib/_common/pen
     UpdatePostsModule,
     DiscussionsModule,
     RecentRequestsModule,
-    PendingRequestModule
+    PendingRequestModule,
     // ShareModule
   ],
   entryComponents: [

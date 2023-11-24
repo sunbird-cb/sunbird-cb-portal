@@ -31,7 +31,7 @@ declare var window: IWindowMobileAppModified
   providedIn: 'root',
 })
 export class MobileAppsService {
-  mobileTopHeaderVisibilityStatus = new Subject();
+  mobileTopHeaderVisibilityStatus = new Subject()
   constructor(
     // private authSvc: AuthKeycloakService,
     private navigateSvc: NavigationExternalService,

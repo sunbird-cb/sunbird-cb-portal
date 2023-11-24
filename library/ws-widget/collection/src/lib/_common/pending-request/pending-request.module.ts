@@ -15,7 +15,7 @@ import { SkeletonLoaderModule } from '../skeleton-loader/skeleton-loader.module'
     MatDialogModule,
     MatIconModule,
     AvatarPhotoModule,
-    SkeletonLoaderModule
+    SkeletonLoaderModule,
   ],
   exports: [
     PendingRequestComponent,
