@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
-//import { ConnectionHoverService } from '../../components/connection-name/connection-hover.servive'
+// import { ConnectionHoverService } from '../../components/connection-name/connection-hover.servive'
 import { WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
@@ -21,7 +21,7 @@ export class NetworkMyConnectionComponent implements OnInit {
   data: any[] = []
   constructor(
     private route: ActivatedRoute,
-    //private connectionHoverService: ConnectionHoverService,
+    // private connectionHoverService: ConnectionHoverService,
     private eventSvc: EventService,
   ) {
     // this.data = this.route.snapshot.data.myConnectionList.data.result.data
@@ -79,6 +79,16 @@ export class NetworkMyConnectionComponent implements OnInit {
     if (key) {
       this.currentFilter = key
       this.currentFilterSort = order
+      if (this.currentFilter === 'timestamp') {
+        this.data = this.datalist
+        this.data.sort((a: any, b: any) => {
+          return a.id.toLowerCase().localeCompare(b.id.toLowerCase())
+        })
+      } else {
+        this.data.sort((a: any, b: any) => {
+          return a.fullName.toLowerCase().localeCompare(b.fullName.toLowerCase())
+        })
+      }
     }
   }
 

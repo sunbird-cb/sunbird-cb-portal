@@ -33,8 +33,6 @@ export class ConnectionPeopleCardComponent implements OnInit {
     }
   }
 
-
-
   ngOnInit() {
     // const userId = this.user.id || this.user.identifier
     this.howerUser = this.user
