@@ -44,9 +44,15 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this.activated.queryParams.subscribe((res: any) => this.keyData = (res.key) ? res.key : '')
     const configData = await this.seeAllSvc.getSeeAllConfigJson().catch(_error => {})
-    this.seeAllPageConfig = _.filter(configData.strips, {
-      key: this.keyData
-    })[0]
+    configData.homeStrips.forEach((ele: any) => {
+      if (ele && ele.strips.length > 0) {
+        ele.strips.forEach((subEle:any) => {
+          if (subEle.key === this.keyData) {
+            this.seeAllPageConfig = subEle
+          }
+        });
+      }
+    })
     this.contentDataList = this.transformSkeletonToWidgets(this.seeAllPageConfig)
     if (this.seeAllPageConfig.request && this.seeAllPageConfig.request.searchV6) {
       this.fetchFromSearchV6(this.seeAllPageConfig)
