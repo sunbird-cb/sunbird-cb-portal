@@ -18,11 +18,13 @@ export class NetworkConnectionRequestsComponent implements OnInit {
   queryControl = new FormControl('')
   currentFilter = 'timestamp'
   currentFilterSort = 'desc'
+  datalist: any[] = []
   constructor(
     private route: ActivatedRoute,
     private networkV2Service: NetworkV2Service,
     private eventSvc: EventService,
   ) {
+    this.datalist = this.route.snapshot.data.connectionRequests.data.result.data
     this.data = this.route.snapshot.data.connectionRequests.data.result.data
     this.data = this.data.map((v: NSNetworkDataV2.INetworkUser) => {
       if (v && v.personalDetails && v.personalDetails.firstname) {
@@ -33,6 +35,9 @@ export class NetworkConnectionRequestsComponent implements OnInit {
    }
 
   ngOnInit() {
+    if (this.datalist && this.datalist.length > 0) {
+      this.filter('timestamp', 'desc')
+    }
   }
 
   updateQuery(key: string) {
@@ -45,6 +50,16 @@ export class NetworkConnectionRequestsComponent implements OnInit {
     if (key) {
       this.currentFilter = key
       this.currentFilterSort = order
+      if (this.currentFilter === 'timestamp') {
+        this.data = this.datalist
+        this.data.sort((a: any, b: any) => {
+          return a.id.toLowerCase().localeCompare(b.id.toLowerCase())
+        })
+      } else {
+        this.data.sort((a: any, b: any) => {
+          return a.fullName.toLowerCase().localeCompare(b.fullName.toLowerCase())
+        })
+      }
     }
   }
 
