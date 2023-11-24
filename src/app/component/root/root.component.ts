@@ -82,6 +82,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   currentRouteData: any = []
   loggedinUser = !!(this.configSvc.userProfile && this.configSvc.userProfile.userId)
   headerFooterConfigData:any = {};
+  mobileTopHeaderVisibilityStatus = true;
   activeMenu:any = '';
   constructor(
     private router: Router,
@@ -194,6 +195,10 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   ngOnInit() {
     //let showTour = localStorage.getItem('tourGuide')? JSON.parse(localStorage.getItem('tourGuide')||''): {}
     //this.showTour = showTour && showTour.disable ? showTour.disable : false
+
+    this.mobileAppsSvc.mobileTopHeaderVisibilityStatus.subscribe((status:any)=> {
+        this.mobileTopHeaderVisibilityStatus = status;
+    })
     this.configSvc.updateTourGuideMethod(this.showTour)
     this.route.queryParams
       .subscribe(params => {

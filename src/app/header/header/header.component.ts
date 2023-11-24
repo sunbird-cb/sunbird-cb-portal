@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { delay } from 'rxjs/operators'
 import { HeaderService } from './header.service';
-
+import { MobileAppsService } from '../../services/mobile-apps.service';
 import {
   ValueService,
 } from '@sunbird-cb/utils'
@@ -12,12 +12,13 @@ import {
 })
 export class HeaderComponent implements OnInit {
   isXSmall$ = this.valueSvc.isXSmall$
-  isNavBarRequired = true
+  isNavBarRequired = true;
   showNavbar = true
   widgetData = {};
+  mobileTopHeaderVisibilityStatus = true;
   @Input() mode:any;
   @Input() headerFooterConfigData:any;
-  constructor(private valueSvc: ValueService,public headerService: HeaderService) { }
+  constructor(private valueSvc: ValueService,public headerService: HeaderService, public mobileAppsService: MobileAppsService) { }
 
   ngOnInit() {
     this.headerService.showNavbarDisplay$.pipe(delay(500)).subscribe(display => {
@@ -64,6 +65,12 @@ export class HeaderComponent implements OnInit {
   }
   get isShowNavbar(): boolean {
     return this.showNavbar
+  }
+
+  hideMobileTopHeader() {
+    this.mobileTopHeaderVisibilityStatus = false;
+    this.mobileAppsService.mobileTopHeaderVisibilityStatus.next(this.mobileTopHeaderVisibilityStatus);
+
   }
 
 }

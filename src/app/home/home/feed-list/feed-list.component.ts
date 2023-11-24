@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class FeedListComponent implements OnInit {
   contentStripData = {};
-
+  @Input() widgetData:any;
   constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
