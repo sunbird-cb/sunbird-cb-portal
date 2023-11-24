@@ -121,7 +121,9 @@
                       [loadStatus]="'done'" [defaultMaxWidgets]="stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets" [stripConfig]="stripsResultDataMap[key]?.stripConfig">
                       <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets| slice:0:(stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets); trackBy: tracker">
                         <!-- <ng-container *ngIf="widget.widgetData.context.pageSection === 'continueLearning' "> -->
-                        <ng-container *ngIf="widget.widgetData.content.completionPercentage !== 100"
+                        <!-- <ng-container *ngIf="widget.widgetData.content.completionPercentage !== 100"
+                          [wsResolverWidget]="widget"></ng-container> -->
+                          <ng-container 
                           [wsResolverWidget]="widget"></ng-container>
                         <!-- </ng-container> -->
                       </ng-container>
