@@ -1,13 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core'
 
 @Component({
   selector: 'ws-widget-pending-request',
   templateUrl: './pending-request.component.html',
-  styleUrls: ['./pending-request.component.scss']
+  styleUrls: ['./pending-request.component.scss'],
 })
 export class PendingRequestComponent implements OnInit {
   @Input() pendingRequestData: any
-  @Input() isLoading: boolean = true
+  @Input() isLoading = true
   constructor() { }
 
   ngOnInit() {

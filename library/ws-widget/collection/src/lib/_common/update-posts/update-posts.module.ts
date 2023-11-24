@@ -13,7 +13,7 @@ import { UpdatePostsComponent } from './update-posts.component'
     CommonModule,
     SkeletonLoaderModule,
     MatIconModule,
-    RouterModule
+    RouterModule,
   ],
   exports: [
     UpdatePostsComponent,

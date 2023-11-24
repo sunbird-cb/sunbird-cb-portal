@@ -393,7 +393,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       //     strip.request.searchV6.locale = ['en']
       //   }
       // }
-      var originalFilters: any = []
+      let originalFilters: any = []
       // tslint:disable:no-console
       console.log(originalFilters)
       if (strip.request &&
@@ -495,7 +495,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       //     strip.request.searchV6.locale = ['en']
       //   }
       // }
-      var originalFilters: any = []
+      let originalFilters: any = []
       // tslint:disable:no-console
       console.log(originalFilters)
       if (strip.request &&

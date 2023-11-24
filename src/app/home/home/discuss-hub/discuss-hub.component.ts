@@ -19,7 +19,7 @@ export class DiscussHubComponent implements OnInit {
     loadSkeleton: false,
   };
 
-  updates_posts = {
+  updatesPosts = {
     data: undefined,
     error: false,
     loadSkeleton: false,
@@ -62,18 +62,18 @@ export class DiscussHubComponent implements OnInit {
   }
 
   fetchUpdatesOnPosts(): void {
-    this.updates_posts.loadSkeleton = true;
+    this.updatesPosts.loadSkeleton = true;
     this.homePageService.getDiscussionsData(this.userData.userName).subscribe(
       (res: any) => {
-        this.updates_posts.loadSkeleton = false;
-        this.updates_posts.data = res && res.latestPosts && res.latestPosts.sort((x: any, y: any) => {
+        this.updatesPosts.loadSkeleton = false;
+        this.updatesPosts.data = res && res.latestPosts && res.latestPosts.sort((x: any, y: any) => {
           return y.timestamp - x.timestamp;
         });
       }
     ), (error: HttpErrorResponse) => {
       if(!error.ok) {
-        this.updates_posts.loadSkeleton = false;
-        this.updates_posts.error = true;
+        this.updatesPosts.loadSkeleton = false;
+        this.updatesPosts.error = true;
       }
     }
   }

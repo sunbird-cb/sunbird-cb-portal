@@ -72,12 +72,11 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     error: false,
     loadSkeleton: false,
   }
-  updates_posts = {
+  updatesPosts = {
     data: undefined,
     error: false,
     loadSkeleton: false,
   }
-
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -173,19 +172,19 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.discussion.loadSkeleton = true
     this.homeSvc.getDiscussionsData(this.currentUser.userName).subscribe(
       (res: any) => {
-        this.discussion.loadSkeleton = false;
-        this.updates_posts.loadSkeleton = false;
+        this.discussion.loadSkeleton = false
+        this.updatesPosts.loadSkeleton = false
         this.discussion.data = res && res.latestPosts
-        this.updates_posts.data = res && res.latestPosts && res.latestPosts.sort((x: any, y: any) => {
-          return y.timestamp - x.timestamp;
-        });
+        this.updatesPosts.data = res && res.latestPosts && res.latestPosts.sort((x: any, y: any) => {
+          return y.timestamp - x.timestamp
+        })
       },
       (error: HttpErrorResponse) => {
         if (!error.ok) {
-          this.discussion.loadSkeleton = false;
-          this.updates_posts.loadSkeleton = false;
-          this.discussion.error = true;
-          this.updates_posts.error = true;
+          this.discussion.loadSkeleton = false
+          this.updatesPosts.loadSkeleton = false
+          this.discussion.error = true
+          this.updatesPosts.error = true
         }
       }
     )

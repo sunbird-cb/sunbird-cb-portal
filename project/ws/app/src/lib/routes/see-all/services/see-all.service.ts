@@ -62,5 +62,5 @@ export class SeeAllService {
     }
     return this.http.post<NSSearch.ISearchV6ApiResultV2>(API_END_POINTS.SEARCH_V6, req)
   }
-  
+
 }

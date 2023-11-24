@@ -8,8 +8,8 @@ import { Component, OnInit, Input } from '@angular/core'
 
 export class UpdatePostsComponent implements OnInit {
 
-    @Input() updateConfig: any;
-    @Input() updatesPosts: any;
+    @Input() updateConfig: any
+    @Input() updatesPosts: any
     @Input() isMobile = false
 
     constructor() {}
