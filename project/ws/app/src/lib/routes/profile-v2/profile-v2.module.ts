@@ -42,6 +42,7 @@ import { WeeklyClapsModule } from '@sunbird-cb/collection/src/lib/_common/weekly
 import { UpdatePostsModule } from '@sunbird-cb/collection/src/lib/_common/update-posts/update-posts.module'
 import { DiscussionsModule } from '@sunbird-cb/collection/src/lib/_common/discussions/discussions.module'
 import { RecentRequestsModule } from '@sunbird-cb/collection/src/lib/_common/recent-requests/recent-requests.module'
+import { PendingRequestModule } from '@sunbird-cb/collection/src/lib/_common/pending-request/pending-request.module'
 // import { ShareModule } from 'ngx-sharebuttons';
 
 @NgModule({
@@ -93,6 +94,7 @@ import { RecentRequestsModule } from '@sunbird-cb/collection/src/lib/_common/rec
     UpdatePostsModule,
     DiscussionsModule,
     RecentRequestsModule,
+    PendingRequestModule
     // ShareModule
   ],
   entryComponents: [
