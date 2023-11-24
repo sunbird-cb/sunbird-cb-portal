@@ -2,7 +2,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core'
 import { NavigationEnd, Router } from '@angular/router'
-import { TranslateService } from '@ngx-translate/core'
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
 import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
 
 // tslint:disable-next-line
@@ -30,11 +30,29 @@ export class AppFooterComponent implements OnInit {
     private http: HttpClient,
     private translate: TranslateService,
   ) {
+    console.log("---------------------------------------------------------------")
+    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--")
+    const lang = localStorage.getItem('websiteLanguage')
+    
+    console.log("---------------------------------------------------------------", lang)
+    
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      const lang = JSON.parse(localStorage.getItem('websiteLanguage')!)
+      let lang = localStorage.getItem('websiteLanguage')!
+     
       this.translate.use(lang)
+      console.log('current lang ------', this.translate.getBrowserLang())
+      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        console.log('onLangChange', event);
+      });
     }
+
+
+    // if (localStorage.getItem('websiteLanguage')) {
+    //   this.translate.setDefaultLang('en')
+    //   const lang = localStorage.getItem('websiteLanguage')!
+    //   this.translate.use(lang)
+    // }
     this.environment = environment
     if (this.configSvc.restrictedFeatures) {
       if (this.configSvc.restrictedFeatures.has('termsOfUser')) {
@@ -99,10 +117,10 @@ export class AppFooterComponent implements OnInit {
     return value
   }
 
-  translateHub(hubName: string): string {
-    const translationKey = 'common.' + hubName;
-    return this.translate.instant(translationKey);
-  }
+  // translateHub(hubName: string): string {
+  //   const translationKey = 'common.' + hubName;
+  //   return this.translate.instant(translationKey);
+  // }
 
 
   
@@ -114,4 +132,10 @@ export class AppFooterComponent implements OnInit {
     console.log(event.target.parentElement);
     event.target.parentElement.classList.toggle('open');
   }
+
+  translateHub(hubName: string): string {
+    const translationKey =  hubName;
+    return this.translate.instant(translationKey);
+  }
+  
 }

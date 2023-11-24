@@ -4,14 +4,24 @@
   <div class="top_footer_inner flex flex-row justify-between">
     <div class="flex flex-col justify-start">
       <p class="footer_heading mat-subheading-1 margin-bottom-m">{{ 'common.hubs' | translate }}</p>
-      <ng-container *ngFor="let hub of (hubsList || [])">
+      <!-- <ng-container *ngFor="let hub of (hubsList || [])">
         <ng-container *ngIf="hub.hubname == 'Discuss'">
           <a class="footer_sub_text mat-body cursor-pointer" (click)="navigate()">{{ translateHub(hub.hubname) }}</a>
         </ng-container>
         <ng-container *ngIf="hub.hubname != 'Discuss'">
           <a class="footer_sub_text mat-body cursor-pointer" [routerLink]="hub.path">{{ translateHub(hub.hubname) }}</a>
         </ng-container>
+      </ng-container> -->
+
+      <ng-container *ngFor="let hub of (hubsList || [])">
+        <ng-container *ngIf="hub.hubname == 'Discuss'">
+          <a class="footer_sub_text mat-body cursor-pointer" (click)="navigate()">{{ translateHub('common.Discuss') }}</a>
+        </ng-container>
+        <ng-container *ngIf="hub.hubname != 'Discuss'">
+          <a class="footer_sub_text mat-body cursor-pointer" [routerLink]="hub.path">{{ translateHub('common.' + hub.hubname) }}</a>
+        </ng-container>
       </ng-container>
+      
       
       <!-- <a class="footer_sub_text mat-body" href="/page/learn"  [routerLink]="hub.path">Learn</a>
         <a class="footer_sub_text mat-body" href="/app/network-v2"  [routerLink]="hub.path">Network</a>
@@ -23,11 +33,11 @@
 
     <div class="flex flex-col justify-start">
       <p class="footer_heading mat-subheading-1 margin-bottom-m">Related links</p>
-      <ng-container *ngFor="let portal of environment.portals | orderBy: 'sr'">
-        <ng-container *ngIf="portal.isPublic || isAllowed(portal.id)">
-          <a class="footer_sub_text mat-body" [attr.href]="portal.uriPath" target="_blank">{{portal.name}}</a>
+        <ng-container *ngFor="let portal of environment.portals | orderBy: 'sr'">
+          <ng-container *ngIf="portal.isPublic || isAllowed(portal.id)">
+            <a class="footer_sub_text mat-body" [attr.href]="portal.uriPath" target="_blank">{{portal.name}}</a>
+          </ng-container>
         </ng-container>
-      </ng-container>
       <!-- <a class="footer_sub_text mat-body" [attr.href]="environment.mdoPortal" target="_blank">MDO portal</a>
         <a class="footer_sub_text mat-body" [attr.href]="environment.cbpPortal" target="_blank">CBP portal</a>
         <a class="footer_sub_text mat-body" [attr.href]="environment.fracPortal" target="_blank">FRAC dictionaries</a> -->
