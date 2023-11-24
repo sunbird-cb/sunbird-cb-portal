@@ -19,12 +19,14 @@
                         </p>
                     </div>                    
                 </div>
-                <div *ngFor="let item of contentStripData?.homeStrips">
-                    <ws-feed-list [widgetData]="item"></ws-feed-list>
+                <div *ngFor="let item of contentStripData">
+                    <ng-container *ngIf="item?.strips[0]?.active">
+                        <ws-feed-list [widgetData]="item"></ws-feed-list>
+                    </ng-container>
                 </div>
-
-                <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
-
+                <ng-container *ngIf="sliderData && sliderData[0]?.active">
+                    <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
+                </ng-container>
                 <!-- Discussion section starts here -->
                 <ng-container *ngIf="homeConfig?.discussHub?.active">
                     <ws-discuss-hub [discussConfig]="homeConfig?.discussHub"></ws-discuss-hub>

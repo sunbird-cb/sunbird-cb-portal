@@ -19,7 +19,7 @@ const API_END_POINTS = {
 export class HomeComponent implements OnInit {
   widgetData = {};
   sliderData = {};
-  contentStripData = {};
+  contentStripData:any = {};
   discussStripData = {};
   networkStripData = {};
   carrierStripData = {};
@@ -31,9 +31,9 @@ export class HomeComponent implements OnInit {
   constructor(private activatedRoute:ActivatedRoute,  private configSvc: ConfigurationsService, public btnSettingsSvc: BtnSettingsService, 
     private http: HttpClient, public mobileAppsService: MobileAppsService) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.mobileAppsService.mobileTopHeaderVisibilityStatus.subscribe((status:any)=> {
-      this.mobileTopHeaderVisibilityStatus = status;
+      this.mobileTopHeaderVisibilityStatus = status; 
     })
     if(this.activatedRoute.snapshot.data.pageData) {
       console.log('homaPageJsonData',this.activatedRoute.snapshot.data.pageData);
@@ -41,6 +41,7 @@ export class HomeComponent implements OnInit {
     }
     if(this.activatedRoute.snapshot.data.pageData && this.activatedRoute.snapshot.data.pageData.data) {
       this.contentStripData = this.activatedRoute.snapshot.data.pageData.data || []
+      this.contentStripData = (this.contentStripData.homeStrips || []).sort((a:any, b:any) => a.order - b.order)
       console.log('contentStripData',this.contentStripData);
     }
 
