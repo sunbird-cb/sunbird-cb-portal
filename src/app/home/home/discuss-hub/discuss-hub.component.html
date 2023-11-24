@@ -9,7 +9,7 @@
 
 <div class="flex gap-6 updates-on-posts">
     <div class="discussion-card flex-1 p-5" *ngIf="discussConfig?.updatePosts?.active">
-        <ws-widget-update-posts [updateConfig]="discussConfig?.updatePosts"></ws-widget-update-posts>
+        <ws-widget-update-posts [updateConfig]="discussConfig?.updatePosts" [updatesPosts]="updates_posts" ></ws-widget-update-posts>
     </div>
 
     <div class="discussion-card flex-1" *ngIf="discussConfig?.trendingDiscussions?.active">
