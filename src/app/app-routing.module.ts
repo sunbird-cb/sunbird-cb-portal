@@ -514,6 +514,17 @@ const routes: Routes = [
     },
   },
   {
+    path: 'app/seeAll',
+    loadChildren: () =>
+      import('./routes/route-see-all-app.module').then(u => u.RouteSeeAllAppModule),
+    data: {
+      pageType: 'feature',
+      pageKey: 'seeAll',
+      pageId: 'app/seeAll',
+      module: 'Home',
+    },
+  },
+  {
     path: 'app/social',
     data: {
       pageId: 'app/social',
