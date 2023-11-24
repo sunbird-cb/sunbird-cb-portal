@@ -47,7 +47,6 @@ export class AvatarPhotoComponent implements OnInit, OnChanges {
       if (!this.initials) {
         this.createInititals()
       }
-      debugger
       if (this.datalen === 1) {
         this.randomcolors = [
           '#006400', // green
