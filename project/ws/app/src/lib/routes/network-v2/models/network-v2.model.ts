@@ -74,6 +74,7 @@ export namespace NSNetworkDataV2 {
         lastName: string,
         channel: string,
         requestSent: boolean
+        fullName: string
     }
 
     export interface IAutocompleteUser {

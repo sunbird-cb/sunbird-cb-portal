@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import _ from 'lodash';
 import { BtnSettingsService } from '@sunbird-cb/collection';
+import { MobileAppsService } from '../../services/mobile-apps.service';
 const API_END_POINTS = {
   fetchProfileById: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`,
 }
@@ -18,20 +19,30 @@ const API_END_POINTS = {
 export class HomeComponent implements OnInit {
   widgetData = {};
   sliderData = {};
-  contentStripData = {};
+  contentStripData:any = {};
   discussStripData = {};
   networkStripData = {};
   carrierStripData = {};
   clientList: {} | undefined
   homeConfig: any = {}; 
-  isNudgeOpen = true
+  isNudgeOpen = true;
+  currentPosition: any;
+  mobileTopHeaderVisibilityStatus: any = true;
   constructor(private activatedRoute:ActivatedRoute,  private configSvc: ConfigurationsService, public btnSettingsSvc: BtnSettingsService, 
-    private http: HttpClient) { }
+    private http: HttpClient, public mobileAppsService: MobileAppsService) { }
 
-  ngOnInit() { 
+  ngOnInit() {
+    this.mobileAppsService.mobileTopHeaderVisibilityStatus.subscribe((status:any)=> {
+      this.mobileTopHeaderVisibilityStatus = status; 
+    })
     if(this.activatedRoute.snapshot.data.pageData) {
       console.log('homaPageJsonData',this.activatedRoute.snapshot.data.pageData);
       this.homeConfig = this.activatedRoute.snapshot.data.pageData.data.homeConfig; 
+    }
+    if(this.activatedRoute.snapshot.data.pageData && this.activatedRoute.snapshot.data.pageData.data) {
+      this.contentStripData = this.activatedRoute.snapshot.data.pageData.data || []
+      this.contentStripData = (this.contentStripData.homeStrips || []).sort((a:any, b:any) => a.order - b.order)
+      console.log('contentStripData',this.contentStripData);
     }
 
     this.clientList = this.activatedRoute.snapshot.data.pageData.data.clientList;
@@ -169,6 +180,34 @@ export class HomeComponent implements OnInit {
     this.btnSettingsSvc.changeFont(fontClass);
   }
 
+  // @HostListener('window:scroll', ['$event'])
+  // scrollHandler(e: any) {
+  //   let scroll = e.scrollTop;
+  //   console.log('scroll');
+  //   if (scroll > this.currentPosition) {
+  //     console.log("scrollDown");
+  //   } else {
+  //     console.log("scrollUp");
+  //   }
+  //   this.currentPosition = scroll;
+  //   // var insightsResults = document.getElementsByClassName(
+  //   //   'insights-results'
+  //   // )[0];
+  //   // var childInsights = insightsResults?.scrollHeight;
+  //   // var windowScroll = window.scrollY;
+  //   // if (Math.floor(windowScroll) >= Math.floor(childInsights)) {
+  //   //     this.loadMore();
+  //   // }
+  // }
+  
+  
+  //  loadMore(): void {
+  //   this.page++;
+  // }
+  
+  remindlater() {
+    this.isNudgeOpen = false
+  }
   
 
 }

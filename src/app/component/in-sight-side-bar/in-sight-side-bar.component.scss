@@ -1,75 +1,7 @@
-.error-icon {
-    width: 36px;
-    height: 36px;
-    font-size: 36px;
-}
-
 .margin-top-m {
     margin-top:32px;
 }
 
 .collapsible {
     overflow: hidden;
-}
-
-.network-pending-requests-container {
-    background-color: #DEE6F2;
-    padding: 16px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: row;
-    position: relative;
-}
-
-.pending-request-heading {
-    color: rgba(0, 0, 0, 0.87);
-    font-weight: 700;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.arrow img{
-    vertical-align: middle;
-}
-
-.pending-request-thumbnails ul {
-    display: flex;
-    margin: 0;
-}
-
-.pending-request-thumbnails ul li{
-    list-style: none;
-    border-radius: 50%;
-    color: #fff;
-    font-size: 10px;
-    font-weight: 400;
-    height: 24px;
-    width: 24px;
-    text-align: center;
-    margin-left: -10px;
-    cursor: pointer;
-}
-
-.pending-request-counts {
-    margin-left: 32px;
-    font-size: 14px;
-    color: rgb(27, 76, 161);
-    font-weight: 700;
-}
-
-.pending-dot {
-    background-color: rgb(209, 57, 36);
-    height: 8px;
-    width: 8px;
-    border-radius: 50%;
-    position: absolute;
-    top:-3px;
-    right:-1px;
-
-}
-
-@media (max-width : 768px) {    
-    .discussion-card {
-        width: 100%;
-    }
 }

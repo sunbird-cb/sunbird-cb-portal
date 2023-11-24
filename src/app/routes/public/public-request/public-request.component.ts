@@ -290,7 +290,7 @@ export class PublicRequestComponent implements OnInit {
   sendOtpEmail() {
     const email = this.requestForm.get('email')
     if (email && email.value && email.valid) {
-      this.signupSvc.sendOtp(email.value, 'email').subscribe(() => {
+      this.requestSvc.sendOtp(email.value, 'email').subscribe(() => {
         this.otpEmailSend = true
         alert('An OTP has been sent to your email address (valid for 15 minutes)')
         this.startCountDownEmail()
@@ -306,7 +306,7 @@ export class PublicRequestComponent implements OnInit {
   resendOTPEmail() {
     const email = this.requestForm.get('email')
     if (email && email.value && email.valid) {
-      this.signupSvc.resendOtp(email.value, 'email').subscribe((res: any) => {
+      this.requestSvc.resendOtp(email.value, 'email').subscribe((res: any) => {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpEmailSend = true
           this.disableEmailVerifyBtn = false

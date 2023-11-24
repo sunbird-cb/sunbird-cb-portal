@@ -177,6 +177,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         data.showStrip = false
       }
     }
+    // console.log('data.key', data, data.key, data.widgets);
     return data.showStrip
   }
 
@@ -382,7 +383,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       //     strip.request.searchV6.locale = ['en']
       //   }
       // }
-      let originalFilters: any = []
+      var originalFilters: any = []
       // tslint:disable:no-console
       console.log(originalFilters)
       if (strip.request &&
@@ -484,7 +485,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       //     strip.request.searchV6.locale = ['en']
       //   }
       // }
-      let originalFilters: any = []
+      var originalFilters: any = []
       // tslint:disable:no-console
       console.log(originalFilters)
       if (strip.request &&

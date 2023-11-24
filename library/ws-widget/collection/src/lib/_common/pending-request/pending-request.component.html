@@ -1,0 +1,33 @@
+<div class="flex flex-col discussion-card margin-bottom-m" *ngIf="pendingRequestData?.length">
+    <div class="network-pending-requests-container">
+        <span class="pending-dot">
+
+        </span>
+        <div class="pending-request-heading" (click)="navigateTo()">
+            See all pending requests <span class="arrow"> <img src="assets/icons/home/forward_arrow.svg"></span>
+        </div>
+        <div class="pending-request-thumbnails">
+            <ul>
+                <li *ngFor="let item of pendingRequestData | slice : 0 : 3" (click)="moveToUserProile(item?.id)">
+                    <ws-widget-avatar-photo [name]="item?.fullName" [photoUrl]="item?.photo" size="s">
+                    </ws-widget-avatar-photo>
+                </li>
+            </ul>
+        </div>
+        <div class="pending-request-counts">
+            <span *ngIf="pendingRequestData?.length > 3">+{{ (pendingRequestData.length - 3) }}</span>
+        </div>
+    </div>
+</div>
+<div class="flex flex-col discussion-card margin-bottom-m" *ngIf="isLoading">
+    <div class="network-pending-requests-container flex justify-between">
+        
+        <div class="pending-request-heading">
+            <ws-widget-skeleton-loader [width]="'190px'" [height]="'16px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+        </div>
+    
+        <div class="pending-request-counts">
+            <ws-widget-skeleton-loader [width]="'75px'" [height]="'16px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+        </div>
+    </div>
+</div>

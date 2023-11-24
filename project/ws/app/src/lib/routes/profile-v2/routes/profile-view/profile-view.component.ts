@@ -59,6 +59,9 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
   orgId: any
 
+  pendingRequestData: any = []
+  pendingRequestSkeleton = true
+
   discussion = {
     loadSkeleton: false,
     data: undefined,
@@ -69,6 +72,12 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     error: false,
     loadSkeleton: false,
   }
+  updates_posts = {
+    data: undefined,
+    error: false,
+    loadSkeleton: false,
+  }
+
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -164,14 +173,19 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.discussion.loadSkeleton = true
     this.homeSvc.getDiscussionsData(this.currentUser.userName).subscribe(
       (res: any) => {
-        this.discussion.loadSkeleton = false
+        this.discussion.loadSkeleton = false;
+        this.updates_posts.loadSkeleton = false;
         this.discussion.data = res && res.latestPosts
-
+        this.updates_posts.data = res && res.latestPosts && res.latestPosts.sort((x: any, y: any) => {
+          return y.timestamp - x.timestamp;
+        });
       },
       (error: HttpErrorResponse) => {
         if (!error.ok) {
-          this.discussion.loadSkeleton = false
-          this.discussion.error = true
+          this.discussion.loadSkeleton = false;
+          this.updates_posts.loadSkeleton = false;
+          this.discussion.error = true;
+          this.updates_posts.error = true;
         }
       }
     )
@@ -202,6 +216,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
       this.sideNavBarOpened = !isLtMedium
     })
+    this.getPendingRequestData()
   }
 
   ngOnDestroy() {
@@ -334,5 +349,21 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
    })
+  }
+  getPendingRequestData() {
+    this.homeSvc.getRecentRequests().subscribe(
+      (res: any) => {
+        this.pendingRequestSkeleton = false
+        this.pendingRequestData = res.result.data && res.result.data.map((elem: any) => {
+          elem.fullName = elem.fullName.charAt(0).toUpperCase() + elem.fullName.slice(1)
+          return elem
+        })
+      },
+      (error: HttpErrorResponse) => {
+        if (!error.ok) {
+          this.pendingRequestSkeleton = false
+        }
+      }
+    )
   }
 }

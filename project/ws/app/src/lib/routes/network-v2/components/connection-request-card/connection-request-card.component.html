@@ -5,12 +5,12 @@
             </ws-widget-avatar-photo>
         </div> -->
         <div class="mr-3 cursor-pointer circle-m" (click)="goToUserProfile(user)">
-            <div class="initials" *ngIf="user && user?.personalDetails">
-                {{user?.personalDetails?.firstname.charAt(0).toUpperCase()}}
+            <div class="initials" *ngIf="user && user.fullName">
+                {{user?.fullName.charAt(0).toUpperCase()}}
             </div>
-            <div class="initials" *ngIf="user && !user?.personalDetails && user.profileDetails === null">
+            <!-- <div class="initials" *ngIf="user && !user?.personalDetails && user.profileDetails === null">
                 {{user?.firstName.charAt(0).toUpperCase()}}
-            </div>
+            </div> -->
         </div>
         <div class="flex flex-col flex-1 cursor-pointer" (click)="goToUserProfile(user)">
             <!-- <a href="javascript:void(0)" class="" i18n-aria-label role="link"> -->
@@ -18,12 +18,12 @@
                 {{user?.name}}
             </div> -->
             <ws-app-connection-name [hoverUser]="usr"></ws-app-connection-name>
-            <div class="designation truncate ws-mat-black60-text" *ngIf="user?.employmentDetails">
-                {{user?.employmentDetails?.departmentName}}
+            <div class="designation truncate ws-mat-black60-text" *ngIf="user?.departmentName">
+                {{user?.departmentName}}
             </div>
-            <div class="designation truncate ws-mat-black60-text" *ngIf="!user?.employmentDetails">
+            <!-- <div class="designation truncate ws-mat-black60-text" *ngIf="!user?.employmentDetails">
                 {{user?.rootOrg?.orgName}}
-            </div>
+            </div> -->
             <!-- </a> -->
         </div>
     </a>

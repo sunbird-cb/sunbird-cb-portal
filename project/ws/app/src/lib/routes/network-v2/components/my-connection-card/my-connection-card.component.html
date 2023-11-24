@@ -10,12 +10,12 @@
                 {{user?.name}}
             </div> -->
             <ws-app-connection-name [hoverUser]="usr"></ws-app-connection-name>
-            <div class="designation truncate ws-mat-black60-text" *ngIf="user?.employmentDetails">
-                {{user?.employmentDetails?.departmentName}}
+            <div class="designation truncate ws-mat-black60-text" *ngIf="user?.departmentName">
+                {{user?.departmentName}}
             </div>
-            <div class="designation truncate ws-mat-black60-text" *ngIf="!user?.employmentDetails">
+            <!-- <div class="designation truncate ws-mat-black60-text" *ngIf="!user?.employmentDetails">
                 {{user?.rootOrg.orgName}}
-            </div>
+            </div> -->
         </div>
     </a>
 </div>
