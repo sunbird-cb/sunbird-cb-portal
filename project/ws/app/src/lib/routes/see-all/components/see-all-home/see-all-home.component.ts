@@ -191,7 +191,7 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
   ): Promise < any > {
     const originalFilters: any = []
     // console.log('calling -- ')
-    return new Promise <any> ((resolve, reject) => {
+    return new Promise <any>((resolve, reject) => {
       if (request && request.searchV6) {
         this.seeAllSvc.searchV6(request.searchV6).subscribe(results => {
           const showViewMore = Boolean(
@@ -297,7 +297,7 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
                               _calculateParentStatus: boolean
   ): Promise < any > {
     const originalFilters: any = []
-    return new Promise <any> ((resolve, reject) => {
+    return new Promise <any>((resolve, reject) => {
       if (request && request.trendingSearch) {
         // check for the request if it has dynamic values]
         if (request.trendingSearch.request.filters.organisation &&
