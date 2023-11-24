@@ -2,7 +2,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core'
 import { NavigationEnd, Router } from '@angular/router'
-import { TranslateService } from '@ngx-translate/core'
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
 import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
 
 // tslint:disable-next-line
@@ -32,9 +32,18 @@ export class AppFooterComponent implements OnInit {
   ) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      const lang = JSON.parse(localStorage.getItem('websiteLanguage')!)
+      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+      lang = lang.replace(/\"/g, "")
+      console.log('footer ------------', lang)
       this.translate.use(lang)
+      console.log('current lang ------', this.translate.getBrowserLang())
+      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        console.log('onLangChange', event);
+      });
     }
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      console.log('onLangChange', event);
+    });
     this.environment = environment
     if (this.configSvc.restrictedFeatures) {
       if (this.configSvc.restrictedFeatures.has('termsOfUser')) {
@@ -104,8 +113,6 @@ export class AppFooterComponent implements OnInit {
     return this.translate.instant(translationKey);
   }
 
-
-  
   get needToHide(): boolean {
     return this.currentRoute.includes('all/assessment/')
   }

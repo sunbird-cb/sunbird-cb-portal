@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DialogBoxComponent } from './../dialog-box/dialog-box.component';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 const rightNavConfig = [
   {
     "id":1,
@@ -31,7 +32,7 @@ const rightNavConfig = [
 export class TopRightNavBarComponent implements OnInit {
   @Input() item:any;
   @Input() rightNavConfig:any;
-  selectedLanguage = 'en'
+  selectedLanguage: any
   multiLang = [
     {
       value: 'English',
@@ -46,7 +47,17 @@ export class TopRightNavBarComponent implements OnInit {
       key: 'ta',
     },
   ]
-  constructor(public dialog: MatDialog   ) { }
+  constructor(public dialog: MatDialog, private translate: TranslateService) { 
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+      lang = lang.replace(/\"/g, "")
+      console.log(lang)
+      this.selectedLanguage = lang
+      this.translate.use(lang)
+    }
+
+  }
 
   ngOnInit() {
     this.rightNavConfig = this.rightNavConfig.topRightNavConfig ? this.rightNavConfig.topRightNavConfig : rightNavConfig;
@@ -67,7 +78,11 @@ export class TopRightNavBarComponent implements OnInit {
   } 
   
   selectLanguage(event: any) {
-    this.selectedLanguage = event
+    this.selectedLanguage = event.target.value
+    console.log('selectedLanguage', this.selectedLanguage)
     localStorage.setItem('websiteLanguage', this.selectedLanguage)
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      console.log('onLangChange', event);
+    });
   }
 }

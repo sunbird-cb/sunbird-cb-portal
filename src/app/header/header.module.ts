@@ -5,7 +5,9 @@ import {
   MatToolbarModule,
   MatMenuModule,
   MatSliderModule,
-  MatSelectModule
+  MatSelectModule,
+  MatFormFieldModule,
+  MatInputModule
 } from '@angular/material'
 import { MatDialogModule} from '@angular/material';
 import { HeaderComponent } from './header/header.component';
@@ -44,18 +46,16 @@ import { FormsModule } from '@angular/forms';
     SharedModule,
     FormsModule,
     MatSelectModule,
+    MatFormFieldModule, 
+    MatInputModule,
   ],
   exports: [
     HeaderComponent,
     AppNavBarComponent,
     FontSettingComponent,
     TopRightNavBarComponent,
-    SharedModule
+    SharedModule,
   ],
-  providers: [
-    
-    
-    
-  ]
+  providers: []
 })
 export class HeaderModule { }

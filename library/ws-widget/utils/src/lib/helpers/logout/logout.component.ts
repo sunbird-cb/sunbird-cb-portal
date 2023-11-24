@@ -40,6 +40,9 @@ export class LogoutComponent implements OnInit {
     if (localStorage.getItem('platformratingTime')) {
       localStorage.removeItem('platformratingTime')
     }
+    if (localStorage.getItem('websiteLanguage')) {
+      localStorage.removeItem('websiteLanguage')
+    }
     // this.authSvc.logout()
     this.authSvc.force_logout()
     if (localStorage.getItem('faq')) {
