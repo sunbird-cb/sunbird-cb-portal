@@ -2,24 +2,26 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
 import { MatIconModule } from '@angular/material'
-import { SkeletonLoaderModule } from '../skeleton-loader/skeleton-loader.module'
-import { PipeRelativeTimeModule } from '@sunbird-cb/utils'
+import { AvatarPhotoModule } from '../avatar-photo/avatar-photo.module'
 
-import { DiscussionsComponent } from './discussions.component'
+import { SkeletonLoaderModule } from '../skeleton-loader/skeleton-loader.module'
+
+import { RecentRequestsComponent } from './recent-requests.component'
 
 @NgModule({
-  declarations: [DiscussionsComponent],
+  declarations: [RecentRequestsComponent],
   imports: [
     CommonModule,
     RouterModule,
-    MatIconModule,
     SkeletonLoaderModule,
-    PipeRelativeTimeModule,
+    MatIconModule,
+    AvatarPhotoModule,
   ],
   exports: [
-    DiscussionsComponent,
+    RecentRequestsComponent,
   ],
-  entryComponents: [DiscussionsComponent],
+  entryComponents: [
+    RecentRequestsComponent,
+  ],
 })
-
-export class DiscussionsModule { }
+export class RecentRequestsModule { }
