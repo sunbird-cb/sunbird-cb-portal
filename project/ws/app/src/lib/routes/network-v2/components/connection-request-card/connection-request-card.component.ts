@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { NetworkV2Service } from '../../services/network-v2.service'
 import { MatSnackBar } from '@angular/material'
 import { NsUser } from '@sunbird-cb/utils'
-import { ConnectionHoverService } from '../connection-name/connection-hover.servive'
+// import { ConnectionHoverService } from '../connection-name/connection-hover.servive'
 
 @Component({
   selector: 'ws-app-connection-request-card',
@@ -26,7 +26,7 @@ export class ConnectionRequestCardComponent implements OnInit {
     // private configSvc: ConfigurationsService,
     private snackBar: MatSnackBar,
     private activeRoute: ActivatedRoute,
-    private connectionHoverService: ConnectionHoverService,
+    // private connectionHoverService: ConnectionHoverService,
   ) {
     if (this.activeRoute.parent) {
       this.me = this.activeRoute.parent.snapshot.data.me
@@ -34,18 +34,20 @@ export class ConnectionRequestCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    const userId = this.user.id || this.user.identifier
-    this.connectionHoverService.fetchProfile(userId).subscribe((res: any) => {
-      if (res.profileDetails !== null) {
-        this.unmappedHowerUser = res
-        this.howerUser = res.profileDetails
-      } else {
-        this.unmappedHowerUser = res
-        this.howerUser = res || {}
-      }
-      this.user = this.howerUser
-      return this.howerUser
-    })
+    this.unmappedHowerUser = this.user
+    this.howerUser = this.user
+    // const userId = this.user.id || this.user.identifier
+    // this.connectionHoverService.fetchProfile(userId).subscribe((res: any) => {
+    //   if (res.profileDetails !== null) {
+    //     this.unmappedHowerUser = res
+    //     this.howerUser = res.profileDetails
+    //   } else {
+    //     this.unmappedHowerUser = res
+    //     this.howerUser = res || {}
+    //   }
+    //   this.user = this.howerUser
+    //   return this.howerUser
+    // })
   }
 
   acceptConnection() {
@@ -67,9 +69,9 @@ export class ConnectionRequestCardComponent implements OnInit {
       userIdFrom: this.me ? this.me.userId : '',
       userNameFrom: this.me ? this.me.userId : '',
       userDepartmentFrom: this.me && this.me.departmentName ? this.me.departmentName : '',
-      userIdTo: this.unmappedHowerUser.userId,
-      userNameTo: this.unmappedHowerUser.userId,
-      userDepartmentTo: this.unmappedHowerUser.rootOrg.channel,
+      userIdTo: this.unmappedHowerUser.id,
+      userNameTo: this.unmappedHowerUser.fullName,
+      userDepartmentTo: this.unmappedHowerUser.departmentName,
       status: action,
     }
 

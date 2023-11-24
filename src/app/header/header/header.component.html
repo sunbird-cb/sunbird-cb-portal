@@ -1,5 +1,6 @@
-<div class="mobile-download-app-top-header">
-        <div class="cross-mobile-download-app">
+<div [ngClass]="mobileTopHeaderVisibilityStatus ? 'mobile-download-app-top-header' : 'mobile-download-app-without-top-header'" *ngIf="mobileTopHeaderVisibilityStatus">
+        <ng-container>
+        <div class="cross-mobile-download-app" (click)="hideMobileTopHeader()">
             <span>X</span>
         </div>
         <div class="kb-symbol">
@@ -14,9 +15,10 @@
                 <span>Download App </span>
             </li>
         </div>
+    </ng-container>
 </div>
-<ws-app-nav-bar *ngIf="isNavBarRequired" class="top-nav-bar" [mode]="mode" [headerFooterConfigData]="headerFooterConfigData"></ws-app-nav-bar>
-<div class="height-on-top">
+<ws-app-nav-bar *ngIf="isNavBarRequired" [ngClass]="mobileTopHeaderVisibilityStatus ? 'top-nav-bar':'top-nav-bar-without-mobile-header'" [mode]="mode" [headerFooterConfigData]="headerFooterConfigData"></ws-app-nav-bar>
+<div [ngClass]="mobileTopHeaderVisibilityStatus ? 'height-on-top':'height-on-top-without-mobile-header'">
     <ws-widget-grid-layout [widgetData]="widgetData">
     </ws-widget-grid-layout>
 </div>

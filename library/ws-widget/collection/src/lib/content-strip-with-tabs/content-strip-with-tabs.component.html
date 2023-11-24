@@ -7,18 +7,18 @@
   <ng-container *ngIf="showParentNoData" [wsResolverWidget]="widgetData.noDataWidget"></ng-container>
   <ng-container *ngFor="let key of stripsKeyOrder; let i = index; trackBy: identify">
     <ng-container *ngIf="isStripShowing(stripsResultDataMap[key])">
-      <a name="{{stripsResultDataMap[key]?.stripTitle}}">
+      <a name="{{stripsResultDataMap[key]?.stripTitle}}" [class]="key">
         <div *ngIf="stripsResultDataMap && (getLength(stripsResultDataMap[key]) ||
                     stripsResultDataMap[key]?.showOnNoData ||
                     stripsResultDataMap[key]?.showOnLoader ||
                     stripsResultDataMap[key]?.showOnError)
                   " [ngClass]="
-                    !widgetData.isChannelStrip ? 'xs:px-8 sx:px-10ss py-2 my-2' : i > 0 ? 'mt-12' : ''
-                  " [id]="key" [ngClass]="!widgetData.isChannelStrip ? margin-bottom-custom : margin-bottom-xs">
+                    !widgetData?.isChannelStrip ? 'xs:px-8 sx:px-10ss py-2 my-2' : i > 0 ? 'mt-12' : ''
+                  " [id]="key" [ngClass]="!widgetData?.isChannelStrip ? margin-bottom-custom : margin-bottom-xs">
           <div [ngClass]="{ pad: stripsResultDataMap[key]?.stripBackground }"
             [ngStyle]="{ 'background-color': stripsResultDataMap[key]?.stripBackground }">
             <div class="flex flex-col" [ngClass]="
-                        !widgetData.isChannelStrip
+                        !widgetData?.isChannelStrip
                           ? 'mb-3'
                           : stripsResultDataMap[key]?.stripTitle
                           ? 'mb-8'
@@ -121,7 +121,9 @@
                       [loadStatus]="'done'" [defaultMaxWidgets]="stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets" [stripConfig]="stripsResultDataMap[key]?.stripConfig">
                       <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets| slice:0:(stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets); trackBy: tracker">
                         <!-- <ng-container *ngIf="widget.widgetData.context.pageSection === 'continueLearning' "> -->
-                        <ng-container *ngIf="widget.widgetData.content.completionPercentage !== 100"
+                        <!-- <ng-container *ngIf="widget.widgetData.content.completionPercentage !== 100"
+                          [wsResolverWidget]="widget"></ng-container> -->
+                          <ng-container 
                           [wsResolverWidget]="widget"></ng-container>
                         <!-- </ng-container> -->
                       </ng-container>

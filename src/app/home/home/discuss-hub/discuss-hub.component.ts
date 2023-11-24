@@ -35,6 +35,10 @@ export class DiscussHubComponent implements OnInit {
     if (this.discussConfig.trendingDiscussions.active) {
       this.fetchTrendingDiscussions();
     }
+
+    if (this.discussConfig.updatePosts.active) {
+      this.fetchUpdatesOnPosts();
+    }
   }
 
   fetchTrendingDiscussions(): void {
@@ -55,6 +59,23 @@ export class DiscussHubComponent implements OnInit {
         }
       }
     );
+  }
+
+  fetchUpdatesOnPosts(): void {
+    this.updates_posts.loadSkeleton = true;
+    this.homePageService.getDiscussionsData(this.userData.userName).subscribe(
+      (res: any) => {
+        this.updates_posts.loadSkeleton = false;
+        this.updates_posts.data = res && res.latestPosts && res.latestPosts.sort((x: any, y: any) => {
+          return y.timestamp - x.timestamp;
+        });
+      }
+    ), (error: HttpErrorResponse) => {
+      if(!error.ok) {
+        this.updates_posts.loadSkeleton = false;
+        this.updates_posts.error = true;
+      }
+    }
   }
 
 }
