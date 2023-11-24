@@ -342,13 +342,13 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   getPendingRequestData() {
     this.homeSvc.getRecentRequests().subscribe(
       (res: any) => {
-
         this.pendingRequestSkeleton = false
         this.pendingRequestData = res.result.data && res.result.data.map((elem: any) => {
           elem.fullName = elem.fullName.charAt(0).toUpperCase() + elem.fullName.slice(1)
           return elem
         })
-      }, (error: HttpErrorResponse) => {
+      },
+      (error: HttpErrorResponse) => {
         if (!error.ok) {
           this.pendingRequestSkeleton = false
         }
