@@ -128,9 +128,9 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
 
   private initData() {
     this.stripsKeyOrder = this.widgetData && this.widgetData.strips && this.widgetData.strips.map(strip => strip.key) || []
-    if (this.widgetData.loader && this.widgetData.strips.length) {
-      this.showParentLoader = true
-    }
+    // if (this.widgetData.loader && this.widgetData.strips.length) {
+    //   this.showParentLoader = true
+    // }
     // Fetch the data
     for (const strip of this.widgetData.strips) {
       if (this.checkForEmptyWidget(strip)) {
@@ -180,6 +180,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         data.showStrip = false
       }
     }
+    // console.log('data.key', data, data.key, data.widgets);
     return data.showStrip
   }
 
@@ -387,7 +388,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       // }
       let originalFilters: any = []
       // tslint:disable:no-console
-      console.log(originalFilters)
+      // console.log(originalFilters)
       if (strip.request &&
         strip.request.searchV6 &&
         strip.request.searchV6.request &&
@@ -489,7 +490,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       // }
       let originalFilters: any = []
       // tslint:disable:no-console
-      console.log(originalFilters)
+      // console.log(originalFilters)
       if (strip.request &&
         strip.request.trendingSearch &&
         strip.request.trendingSearch.request &&
