@@ -348,7 +348,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
           elem.fullName = elem.fullName.charAt(0).toUpperCase() + elem.fullName.slice(1)
           return elem
         })
-      }, (error: any) => {
+      }, (error: HttpErrorResponse) => {
         if (!error.ok) {
           this.pendingRequestSkeleton = false
         }
