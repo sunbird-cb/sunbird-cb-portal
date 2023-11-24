@@ -554,8 +554,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         }
         this.contentSvc.trendingContentSearch(request.trendingSearch).subscribe(results => {
           const showViewMore = Boolean(
-            results.result && 
-            strip.request && 
+            results.result &&
+            strip.request &&
             results.result[strip.request.trendingSearch.responseKey] &&
             results.result[strip.request.trendingSearch.responseKey].length > 5 &&
             strip.stripConfig && strip.stripConfig.postCardForSearch,
