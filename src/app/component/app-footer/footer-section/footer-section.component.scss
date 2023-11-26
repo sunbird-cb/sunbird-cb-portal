@@ -115,6 +115,13 @@
   list-style: none;
 }
 
+.top_footer_box {
+  a.footer_sub_text:hover {
+    text-decoration: underline !important;
+    color: orange !important;
+  }
+}
+
 .app-store-button {
   display: none;
 }

@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
   isNudgeOpen = true;
   currentPosition: any;
   mobileTopHeaderVisibilityStatus: any = true;
+  sectionList:any = [];
   constructor(private activatedRoute:ActivatedRoute,  private configSvc: ConfigurationsService, public btnSettingsSvc: BtnSettingsService, 
     private http: HttpClient, public mobileAppsService: MobileAppsService) { }
 
@@ -43,6 +44,17 @@ export class HomeComponent implements OnInit {
       this.contentStripData = this.activatedRoute.snapshot.data.pageData.data || []
       this.contentStripData = (this.contentStripData.homeStrips || []).sort((a:any, b:any) => a.order - b.order)
       console.log('contentStripData',this.contentStripData);
+      for(var i=0; i<this.contentStripData.length;i++) {
+        if(this.contentStripData[i] && 
+          this.contentStripData[i]['strips'] && 
+          this.contentStripData[i]['strips'][0] && 
+          this.contentStripData[i]['strips'][0]['active']) {
+            let obj:any = {};
+            obj['section'] = 'section_'+i;
+            obj['isVisible'] = false;
+            this.sectionList.push(obj);
+        }
+      }
     }
 
     this.clientList = this.activatedRoute.snapshot.data.pageData.data.clientList;
@@ -144,6 +156,10 @@ export class HomeComponent implements OnInit {
 
     this.sliderData = this.activatedRoute.snapshot.data.pageData.data.sliderData;
 
+    this.sectionList.push({'section':'slider', 'isVisible': false});
+    this.sectionList.push({'section':'discuss', 'isVisible': false});
+    this.sectionList.push({'section':'network', 'isVisible': false});
+
     this.handleUpdateMobileNudge();
 
     this.handleDefaultFontSetting();
@@ -181,23 +197,60 @@ export class HomeComponent implements OnInit {
   }
 
   // @HostListener('window:scroll', ['$event'])
-  // scrollHandler(e: any) {
-  //   let scroll = e.scrollTop;
-  //   console.log('scroll');
-  //   if (scroll > this.currentPosition) {
-  //     console.log("scrollDown");
-  //   } else {
-  //     console.log("scrollUp");
+  // scrollHandler() {
+  //   console.log('in scroll', this.sectionList);
+  //   for(let i=0; i<this.sectionList.length;i++) {
+  //     if(this.sectionList[i]['section'] !== 'section_0' && this.sectionList[i]['section'] !== 'section_1') {
+  //       this.checkSectionVisibility(this.sectionList[i]['section']);
+  //     }
   //   }
-  //   this.currentPosition = scroll;
-  //   // var insightsResults = document.getElementsByClassName(
-  //   //   'insights-results'
-  //   // )[0];
-  //   // var childInsights = insightsResults?.scrollHeight;
-  //   // var windowScroll = window.scrollY;
-  //   // if (Math.floor(windowScroll) >= Math.floor(childInsights)) {
-  //   //     this.loadMore();
+    
+  //   // let scroll = e.scrollTop;
+  //   // console.log('scroll');
+  //   // if (scroll > this.currentPosition) {
+  //   //   console.log("scrollDown");
+  //   // } else {
+  //   //   console.log("scrollUp");
   //   // }
+  //   // this.currentPosition = scroll;
+  //   // // var insightsResults = document.getElementsByClassName(
+  //   // //   'insights-results'
+  //   // // )[0];
+  //   // // var childInsights = insightsResults?.scrollHeight;
+  //   // // var windowScroll = window.scrollY;
+  //   // // if (Math.floor(windowScroll) >= Math.floor(childInsights)) {
+  //   // //     this.loadMore();
+  //   // // }
+  // }
+
+  // checkSectionVisibility(className:string): boolean {
+  //   var isVisible = false;
+  //   if(className === 'section_0' || className === 'section_1') {
+  //     isVisible = true;
+     
+  //   } 
+  //   // else {
+  //   //   for(var i=0; i<this.sectionList.length;i++) {
+      
+  //   //     if(this.sectionList[i]['section'] === className) {
+  //   //       if(document.getElementsByClassName(this.sectionList[i]['section']) 
+  //   //       && document.getElementsByClassName(this.sectionList[i]['section'])[0] 
+  //   //       && !this.sectionList[i]['isVisible']) {
+  //   //         var tect = document.getElementsByClassName(this.sectionList[i]['section'])[0].getBoundingClientRect()
+  //   //       var eleTop = tect.top
+  //   //       var eleBottom = tect.bottom
+  //   //       isVisible = (eleTop >= 0 ) && (eleBottom <= window.innerHeight)
+  //   //       this.sectionList[i]['isVisible'] = isVisible;
+  //   //       console.log(isVisible)
+  //   //       break;
+  //   //     }
+          
+  //   //     }
+       
+  //   //   }
+  //   // }
+    
+  //   return isVisible;
   // }
   
   
