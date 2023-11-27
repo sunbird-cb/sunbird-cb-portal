@@ -21,6 +21,7 @@ import { HttpClient } from '@angular/common/http'
 import { environment } from 'src/environments/environment'
 import { NSSearch } from '@sunbird-cb/collection'
 import { SearchApiService } from '../_services/search-api.service'
+import { TranslateService } from '@ngx-translate/core'
 
 interface IStripUnitContentData {
   key: string
@@ -83,6 +84,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     private userSvc: WidgetUserService,
     private http: HttpClient,
     private searchApiService: SearchApiService,
+    private translate: TranslateService,
   ) {
     super()
   }
@@ -1196,5 +1198,11 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       })
       .catch(_err => { })
       .finally(() => Promise.resolve())
+  }
+
+  translateLabels(label: string) {
+    label = label.replace(/\s/g, "")
+    const translationKey = 'contentstripmultiple.'+  label;
+    return this.translate.instant(translationKey);
   }
 }
