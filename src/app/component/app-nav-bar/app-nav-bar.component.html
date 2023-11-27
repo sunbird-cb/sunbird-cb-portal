@@ -8,7 +8,7 @@
     
     <div class="fix-ww" id="root-tool-bar">
       <ng-container *ngIf="mode === 'top'">
-        <a [routerLink]="!isforPreview ? '/page/home' : '/static-home'" class="logo-dim" role="link" title="Home"
+        <a [routerLink]="!isforPreview ? '/page/home' : '/static-home'" class="logo-dim flex items-center" role="link" title="Home"
           i18n-aria-title i18n-aria-label>
           <img [src]="appIcon" alt="Application Logo" class="app-logo" />
         </a>
