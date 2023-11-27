@@ -49,10 +49,7 @@ interface IStripUnitContentData {
   loaderWidgets?: any
   stripBackground?: string
   secondaryHeading?: any
-  viewMoreUrl: {
-    path: string
-    queryParams: any
-  } | null
+  viewMoreUrl: any
 }
 
 @Component({
@@ -180,6 +177,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         data.showStrip = false
       }
     }
+    // console.log('data.key', data, data.key, data.widgets);
     return data.showStrip
   }
 
@@ -320,15 +318,25 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
             return dateB - dateA
           })
 
-          tabResults = this.splitEnrollmentTabsData(contentNew, strip)
-          this.processStrip(
-            strip,
-            this.transformContentsToWidgets(contentNew, strip),
-            'done',
-            calculateParentStatus,
-            viewMoreUrl,
-            tabResults
-          )
+          if (strip.tabs && strip.tabs.length) {
+            tabResults = this.splitEnrollmentTabsData(contentNew, strip)
+            this.processStrip(
+              strip,
+              this.transformContentsToWidgets(contentNew, strip),
+              'done',
+              calculateParentStatus,
+              viewMoreUrl,
+              tabResults
+            )
+          } else {
+            this.processStrip(
+              strip,
+              this.transformContentsToWidgets(contentNew, strip),
+              'done',
+              calculateParentStatus,
+              viewMoreUrl,
+            )
+          }
         },
         () => {
           this.processStrip(strip, [], 'error', calculateParentStatus, null)
@@ -554,8 +562,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         }
         this.contentSvc.trendingContentSearch(request.trendingSearch).subscribe(results => {
           const showViewMore = Boolean(
-            results.result && 
-            strip.request && 
+            results.result &&
+            strip.request &&
             results.result[strip.request.trendingSearch.responseKey] &&
             results.result[strip.request.trendingSearch.responseKey].length > 5 &&
             strip.stripConfig && strip.stripConfig.postCardForSearch,
@@ -647,12 +655,12 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     results: NsWidgetResolver.IRenderConfigWithAnyData[] = [],
     fetchStatus: TFetchStatus,
     calculateParentStatus = true,
-    viewMoreUrl: any,
+    _viewMoreUrl: any,
     tabsResults?: NsContentStripWithTabs.IContentStripTab[] | undefined,
     // calculateParentStatus is used so that parents' status is not re-calculated if the API is called again coz of filters, etc.
   ) {
     const stripData = {
-      viewMoreUrl,
+      viewMoreUrl: strip.viewMoreUrl,
       key: strip.key,
       canHideStrip: Boolean(strip.canHideStrip),
       showStrip: this.getIfStripHidden(strip.key),

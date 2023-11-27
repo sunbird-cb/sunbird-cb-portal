@@ -19,7 +19,7 @@ export class DiscussHubComponent implements OnInit {
     loadSkeleton: false,
   };
 
-  updates_posts = {
+  updatesPosts = {
     data: undefined,
     error: false,
     loadSkeleton: false,
@@ -34,6 +34,10 @@ export class DiscussHubComponent implements OnInit {
     this.userData = this.configService && this.configService.userProfile 
     if (this.discussConfig.trendingDiscussions.active) {
       this.fetchTrendingDiscussions();
+    }
+
+    if (this.discussConfig.updatePosts.active) {
+      this.fetchUpdatesOnPosts();
     }
   }
 
@@ -55,6 +59,23 @@ export class DiscussHubComponent implements OnInit {
         }
       }
     );
+  }
+
+  fetchUpdatesOnPosts(): void {
+    this.updatesPosts.loadSkeleton = true;
+    this.homePageService.getDiscussionsData(this.userData.userName).subscribe(
+      (res: any) => {
+        this.updatesPosts.loadSkeleton = false;
+        this.updatesPosts.data = res && res.latestPosts && res.latestPosts.sort((x: any, y: any) => {
+          return y.timestamp - x.timestamp;
+        });
+      }
+    ), (error: HttpErrorResponse) => {
+      if(!error.ok) {
+        this.updatesPosts.loadSkeleton = false;
+        this.updatesPosts.error = true;
+      }
+    }
   }
 
 }

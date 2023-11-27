@@ -1,26 +1,18 @@
 import { Component, OnInit, Input } from '@angular/core'
 
 @Component({
-  selector: 'ws-update-posts',
+  selector: 'ws-widget-update-posts',
   templateUrl: './update-posts.component.html',
   styleUrls: ['./update-posts.component.scss'],
 })
 
 export class UpdatePostsComponent implements OnInit {
 
-    @Input("updateConfig") updateConfig: any;
-    @Input("isMobile") isMobile: boolean = false;
-
-    updates_posts = {
-      data: undefined,
-      error: false,
-      loadSkeleton: false,
-    }
+    @Input() updateConfig: any
+    @Input() updatesPosts: any
+    @Input() isMobile = false
 
     constructor() {}
 
-    ngOnInit() {
-      console.log("isMobile - ", this.isMobile);
-      
-    }
+    ngOnInit() { }
 }

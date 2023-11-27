@@ -24,7 +24,7 @@ navBarRequired && (isXSmall$ | async) === false
       navBarRequired &&
       !isCustomHeight
   }">
-  <div class="container-margin">
+  <div [ngClass]="mobileTopHeaderVisibilityStatus ? 'container-margin' : ''">
     <router-outlet></router-outlet>
   </div>
 </div>

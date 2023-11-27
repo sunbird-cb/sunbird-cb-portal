@@ -64,7 +64,9 @@ export class NetworkHubComponent implements OnInit {
         this.network.networkRecommended = res.result.data[0].results;
         if (this.network.networkRecommended.length) {
           this.network.networkRecommended = this.network.networkRecommended.map((obj: any) => {
-            return { ...obj, connecting: false}
+            obj.fullName = this.createInitials(obj.personalDetails.firstname);
+            obj.connecting = false;
+            return obj;
           });
         }
       }, (error: HttpErrorResponse) => {
@@ -72,8 +74,7 @@ export class NetworkHubComponent implements OnInit {
           this.network.suggestionsLoader = false;
         }
       }
-    );
-    
+    );    
   }
 
   fetchRecentRequests(): void {
@@ -153,7 +154,7 @@ export class NetworkHubComponent implements OnInit {
     );
   }
 
-  createInititals(fname:string): string {
+  createInitials(fname:string): string {
     let initials = ''
     const array = `${fname} `.toString().split(' ')
     if (array[0] !== 'undefined' && typeof array[1] !== 'undefined') {

@@ -24,12 +24,14 @@ interface IWindowMobileAppModified extends Window {
   isAuthenticated?: any
   dispatchEventFlag?: any
 }
+import { Subject } from 'rxjs'
 declare var window: IWindowMobileAppModified
 
 @Injectable({
   providedIn: 'root',
 })
 export class MobileAppsService {
+  mobileTopHeaderVisibilityStatus = new Subject()
   constructor(
     // private authSvc: AuthKeycloakService,
     private navigateSvc: NavigationExternalService,

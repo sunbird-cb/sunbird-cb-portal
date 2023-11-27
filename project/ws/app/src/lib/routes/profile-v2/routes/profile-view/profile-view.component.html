@@ -114,6 +114,7 @@
         </mat-tab>
         <mat-tab label="Activity">
           <ng-template matTabContent>
+            <p class="margin-top-s tab-heading">Your stats</p>
             <div class="margin-bottom-m margin-top-m">
               <div class="profile-section">
                 <ws-widget-profile-card-stats (expandCollapse)="expandCollapse($event)" [profileData]="pageData.profileCard" [isLoading]="false"></ws-widget-profile-card-stats>
@@ -126,13 +127,20 @@
             <div class="flex flex-col margin-bottom-m mt-3 gap-3 discussion-card ">
               <div class="flex flex-row">
                 <div class="flex flex-grow mat-subheading-1">My Discussions</div>
-                <div class="flex text-sm ws-mat-default-text">Show all</div>
+                <div class="flex text-sm font-weight-400 ws-mat-default-text" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}">Show all</div>
               </div>
-              <ws-discussions [discussionObj]="discussion" [count]="2"></ws-discussions>
+              <ws-widget-discussions [discussion]="discussion" [count]="2"></ws-widget-discussions>
             </div>
 
-            <div class="margin-bottom-m mt-3">
-              <ws-update-posts [isMobile]="true"></ws-update-posts>
+            <div class="margin-bottom-m mt-4">
+              <ws-widget-update-posts [isMobile]="true" [updatesPosts]="updatesPosts"></ws-widget-update-posts>
+            </div>
+
+            <div class="margin-bottom-m mt-4 discussion-card">
+              <ws-widget-recent-requests [recentRequests]="recentRequests"></ws-widget-recent-requests>
+            </div>
+            <div class="mt-4">
+              <ws-widget-pending-request [pendingRequestData]="pendingRequestData" [isLoading]="pendingRequestSkeleton"></ws-widget-pending-request>
             </div>
 
           </ng-template>

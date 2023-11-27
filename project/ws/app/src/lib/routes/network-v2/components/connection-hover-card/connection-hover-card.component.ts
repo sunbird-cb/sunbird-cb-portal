@@ -47,6 +47,8 @@ export class ConnectionHoverCardComponent implements OnInit, AfterViewInit {
         name = `${this.hoverUser.firstName} ${this.hoverUser.lastName}`
       } else if (this.hoverUser.firstName && !this.hoverUser.lastName) {
         name = `${this.hoverUser.firstName}`
+      } else if (this.hoverUser.fullName) {
+        name = `${this.hoverUser.fullName}`
       } else {
         name = `${this.hoverUser.name}`
       }
@@ -80,6 +82,8 @@ export class ConnectionHoverCardComponent implements OnInit, AfterViewInit {
         } else  {
           name = `${this.hoverUser.firstName}`
         }
+      } else if (this.hoverUser.fullName) {
+        name = `${this.hoverUser.fullName}`
       } else {
         name = `${this.hoverUser.name}`
       }

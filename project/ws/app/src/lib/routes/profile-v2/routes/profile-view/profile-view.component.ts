@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core'
+import { HttpErrorResponse } from '@angular/common/http'
 import { NSProfileDataV2 } from '../../models/profile-v2.model'
 import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
@@ -44,7 +44,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   location!: string | null
   tabs: any
   tabsData: NSProfileDataV2.IProfileTab[]
-  currentUser: any;
+  currentUser: any
   connectionRequests!: NSNetworkDataV2.INetworkUser[]
   currentUsername: any
   enrolledCourse: any = []
@@ -56,14 +56,28 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   public screenSizeIsLtMedium = false
   isLtMedium$ = this.valueSvc.isLtMedium$
   insightsData: any
-  mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')));
+  mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
   orgId: any
+
+  pendingRequestData: any = []
+  pendingRequestSkeleton = true
+
   discussion = {
     loadSkeleton: false,
     data: undefined,
-    error: false
-  };
-  
+    error: false,
+  }
+  recentRequests = {
+    data: undefined,
+    error: false,
+    loadSkeleton: false,
+  }
+  updatesPosts = {
+    data: undefined,
+    error: false,
+    loadSkeleton: false,
+  }
+
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -88,7 +102,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {
     this.Math = Math
     this.pageData = this.route.parent && this.route.parent.snapshot.data.pageData.data
-    this.currentUser = this.configSvc && this.configSvc.userProfile;
+    this.currentUser = this.configSvc && this.configSvc.userProfile
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     this.tabs = this.route.data.subscribe(data => {
       if (data.profile.data.profileDetails.verifiedKarmayogi === true) {
@@ -131,8 +145,9 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       this.decideAPICall()
       this.getInsightsData()
     })
-    this.fetchDiscussionsData();
+    this.fetchDiscussionsData()
     this.fetchUserBatchList()
+    this.fetchRecentRequests()
   }
 
   decideAPICall() {
@@ -154,20 +169,44 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   fetchDiscussionsData(): void {
-    this.discussion.loadSkeleton = true;
+    this.discussion.loadSkeleton = true
     this.homeSvc.getDiscussionsData(this.currentUser.userName).subscribe(
       (res: any) => {
-        this.discussion.loadSkeleton = false;
-        this.discussion.data = res && res.latestPosts;
-        
+        this.discussion.loadSkeleton = false
+        this.updatesPosts.loadSkeleton = false
+        this.discussion.data = res && res.latestPosts
+        this.updatesPosts.data = res && res.latestPosts && res.latestPosts.sort((x: any, y: any) => {
+          return y.timestamp - x.timestamp
+        })
       },
       (error: HttpErrorResponse) => {
         if (!error.ok) {
-          this.discussion.loadSkeleton = false;
-          this.discussion.error = true;
+          this.discussion.loadSkeleton = false
+          this.updatesPosts.loadSkeleton = false
+          this.discussion.error = true
+          this.updatesPosts.error = true
         }
       }
-    );
+    )
+  }
+
+  fetchRecentRequests(): void {
+    this.recentRequests.loadSkeleton = true
+    this.homeSvc.getRecentRequests().subscribe(
+      (res: any) => {
+        this.recentRequests.loadSkeleton = false
+        this.recentRequests.data = res.result.data && res.result.data.map((elem: any) => {
+          elem.fullName = elem.fullName.charAt(0).toUpperCase() + elem.fullName.slice(1)
+          elem.connecting = false
+          return elem
+        })
+      },
+      (error: HttpErrorResponse) => {
+        if (!error.ok) {
+          this.recentRequests.loadSkeleton = false
+        }
+      }
+    )
   }
 
   ngOnInit() {
@@ -176,6 +215,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
       this.sideNavBarOpened = !isLtMedium
     })
+    this.getPendingRequestData()
   }
 
   ngOnDestroy() {
@@ -308,5 +348,21 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
    })
+  }
+  getPendingRequestData() {
+    this.homeSvc.getRecentRequests().subscribe(
+      (res: any) => {
+        this.pendingRequestSkeleton = false
+        this.pendingRequestData = res.result.data && res.result.data.map((elem: any) => {
+          elem.fullName = elem.fullName.charAt(0).toUpperCase() + elem.fullName.slice(1)
+          return elem
+        })
+      },
+      (error: HttpErrorResponse) => {
+        if (!error.ok) {
+          this.pendingRequestSkeleton = false
+        }
+      }
+    )
   }
 }

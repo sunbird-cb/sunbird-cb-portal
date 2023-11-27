@@ -1,0 +1,25 @@
+.recent-div {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+
+    .initial-circle {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+        background-color: #000;
+    }
+
+    .cancel {
+        color: rgba($color: #000000, $alpha: 0.4);
+        cursor: pointer;
+    }
+
+    .approve {
+        color: #1D8923;
+        cursor: pointer;
+    }
+
+    .pending {
+        color: orange;
+        animation: rotation infinite 2s linear;
+    }
+}

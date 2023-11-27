@@ -7,18 +7,18 @@
   <ng-container *ngIf="showParentNoData" [wsResolverWidget]="widgetData.noDataWidget"></ng-container>
   <ng-container *ngFor="let key of stripsKeyOrder; let i = index; trackBy: identify">
     <ng-container *ngIf="isStripShowing(stripsResultDataMap[key])">
-      <a name="{{stripsResultDataMap[key]?.stripTitle}}">
+      <a name="{{stripsResultDataMap[key]?.stripTitle}}" [class]="key">
         <div *ngIf="stripsResultDataMap && (getLength(stripsResultDataMap[key]) ||
                     stripsResultDataMap[key]?.showOnNoData ||
                     stripsResultDataMap[key]?.showOnLoader ||
                     stripsResultDataMap[key]?.showOnError)
                   " [ngClass]="
-                    !widgetData.isChannelStrip ? 'xs:px-8 sx:px-10ss py-2 my-2' : i > 0 ? 'mt-12' : ''
-                  " [id]="key" [ngClass]="!widgetData.isChannelStrip ? margin-bottom-custom : margin-bottom-xs">
+                    !widgetData?.isChannelStrip ? 'xs:px-8 sx:px-10ss py-2 my-2' : i > 0 ? 'mt-12' : ''
+                  " [id]="key" [ngClass]="!widgetData?.isChannelStrip ? margin-bottom-custom : margin-bottom-xs">
           <div [ngClass]="{ pad: stripsResultDataMap[key]?.stripBackground }"
             [ngStyle]="{ 'background-color': stripsResultDataMap[key]?.stripBackground }">
             <div class="flex flex-col" [ngClass]="
-                        !widgetData.isChannelStrip
+                        !widgetData?.isChannelStrip
                           ? 'mb-3'
                           : stripsResultDataMap[key]?.stripTitle
                           ? 'mb-8'
@@ -45,8 +45,8 @@
                 <!-- viewAll start-->
                   <div *ngIf="checkCondition(widgetData , stripsResultDataMap[key])"
                   class="ml-4 view-more ws-mat-default-text">
-                  <a class="flex ws-mat-default-text  items-center justify-center mat-body-1" [routerLink]="widgetData.strips[0]?.viewMoreUrl?.path"
-                    [queryParams]="widgetData.strips[0]?.viewMoreUrl?.queryParams">
+                  <a class="flex ws-mat-default-text  items-center justify-center mat-body-1" [routerLink]="stripsResultDataMap[key]?.viewMoreUrl?.path"
+                    [queryParams]="stripsResultDataMap[key]?.viewMoreUrl?.queryParams">
                     <span i18n class="ws-mat-default-text">{{widgetData.strips[0].viewMoreUrl.viewMoreText || 'See all'}}</span>
                     <mat-icon class="ws-mat-default-text mr-3 mat-icon notranslate material-icons mat-icon-no-color" color="accent">navigate_next</mat-icon>
                   </a>
@@ -121,7 +121,9 @@
                       [loadStatus]="'done'" [defaultMaxWidgets]="stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets" [stripConfig]="stripsResultDataMap[key]?.stripConfig">
                       <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets| slice:0:(stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets); trackBy: tracker">
                         <!-- <ng-container *ngIf="widget.widgetData.context.pageSection === 'continueLearning' "> -->
-                        <ng-container *ngIf="widget.widgetData.content.completionPercentage !== 100"
+                        <!-- <ng-container *ngIf="widget.widgetData.content.completionPercentage !== 100"
+                          [wsResolverWidget]="widget"></ng-container> -->
+                          <ng-container 
                           [wsResolverWidget]="widget"></ng-container>
                         <!-- </ng-container> -->
                       </ng-container>

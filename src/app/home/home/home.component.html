@@ -1,4 +1,4 @@
-<div class="home-container m-auto flex flex-row gap-4">
+<div class="home-container m-auto flex flex-row gap-4" [ngClass]="mobileTopHeaderVisibilityStatus ? 'home-container':'home-container-without-mobile-header'">
     <ng-container *ngIf="!homeConfig?.insightOnRight?.active">
         <div class="bg-info" [ngClass]="
         homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'left' : 
@@ -10,19 +10,33 @@
         homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'right' : 
         (!homeConfig?.rightSection?.active && !homeConfig?.leftSection?.active) ? 'full' : ''" *ngIf="homeConfig?.rightSection?.active">
             <div class="flex flex-col gap-4">
-                <ws-feed-list></ws-feed-list>
-                <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
-
+                <div class="home-container mt-8">
+                    <div class="flex flex-1 cursor-pointer" [routerLink]="'/page/learn'">
+                        <p class="mat-subheading-1 margin-remove inline-block flex gap-2 items-center">
+                            Go to learn hub 
+                            <mat-icon class="ws-mat-default-text mr-3 mat-icon notranslate material-icons mat-icon-no-color" [color]="'accent'">navigate_next
+                                </mat-icon>
+                        </p>
+                    </div>                    
+                </div>
+                <div *ngFor="let item of contentStripData">
+                    <ng-container *ngIf="item?.strips[0]?.active">
+                        <ws-feed-list [widgetData]="item"></ws-feed-list>
+                    </ng-container>
+                </div>
+                <div *ngIf="sliderData && sliderData[0]?.active">
+                    <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
+                </div>
                 <!-- Discussion section starts here -->
-                <ng-container *ngIf="homeConfig?.discussHub?.active">
+                <div *ngIf="homeConfig?.discussHub?.active">
                     <ws-discuss-hub [discussConfig]="homeConfig?.discussHub"></ws-discuss-hub>
-                </ng-container>
+                </div>
                 <!-- Discussion section ends here -->
 
                 <!-- Go to Network hub starts here -->
-                <ng-container *ngIf="homeConfig?.networkHub?.active">
+                <div *ngIf="homeConfig?.networkHub?.active">
                     <ws-network-hub [networkConfig]="homeConfig?.networkHub"></ws-network-hub>
-                </ng-container>
+                </div>
                 <!-- Go to Network hub end here -->
             </div>
         </div>
@@ -33,20 +47,33 @@
         homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'right' : 
         (!homeConfig?.rightSection?.active && !homeConfig?.leftSection?.active) ? 'full' : ''" *ngIf="homeConfig?.rightSection?.active">
             <div class="flex flex-col gap-4">
-                <ws-feed-list></ws-feed-list>
-                <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
-                
+                <div class="home-container mt-8">
+                    <div class="flex flex-1 cursor-pointer" [routerLink]="'/page/learn'">
+                        <p class="mat-subheading-1 margin-remove inline-block flex gap-2 items-center">
+                            Go to learn hub 
+                            <mat-icon class="ws-mat-default-text mr-3 mat-icon notranslate material-icons mat-icon-no-color" [color]="'accent'">navigate_next
+                                </mat-icon>
+                        </p>
+                    </div>                    
+                </div>
+                <div *ngFor="let item of contentStripData">
+                    <ng-container *ngIf="item?.strips[0]?.active">
+                        <ws-feed-list [widgetData]="item"></ws-feed-list>
+                    </ng-container>
+                </div>
+                <div *ngIf="sliderData && sliderData[0]?.active">
+                    <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
+                </div>
                 <!-- Discussion section starts here -->
-                <ng-container *ngIf="homeConfig?.discussHub?.active">
+                <div *ngIf="homeConfig?.discussHub?.active">
                     <ws-discuss-hub [discussConfig]="homeConfig?.discussHub"></ws-discuss-hub>
-                </ng-container>
+                </div>
                 <!-- Discussion section ends here -->
 
                 <!-- Go to Network hub starts here -->
-                <ng-container *ngIf="homeConfig?.networkHub?.active">
+                <div *ngIf="homeConfig?.networkHub?.active">
                     <ws-network-hub [networkConfig]="homeConfig?.networkHub"></ws-network-hub>
-                </ng-container>
-                <!-- Go to Network hub end here -->
+                </div>
             </div>
         </div>
         <div class="bg-info" [ngClass]="

@@ -16,6 +16,7 @@ import { PipeRelativeTimeModule } from '@sunbird-cb/utils';
 import { WeeklyClapsModule } from '@sunbird-cb/collection/src/lib/_common/weekly-claps/weekly-claps.module';
 import { UpdatePostsModule } from '@sunbird-cb/collection/src/lib/_common/update-posts/update-posts.module';
 import { DiscussionsModule } from '@sunbird-cb/collection/src/lib/_common/discussions/discussions.module';
+import { RecentRequestsModule } from '@sunbird-cb/collection/src/lib/_common/recent-requests/recent-requests.module';
 import { SharedModule } from '../shared/shared.module';
 
 import { HomeComponent } from './home/home.component';
@@ -30,6 +31,7 @@ import { HomeContainerComponent } from '../component/home-container/home-contain
 import { DiscussHubComponent } from './home/discuss-hub/discuss-hub.component';
 import { NetworkHubComponent } from './home/network-hub/network-hub.component';
 import { HomePageService } from '../services/home-page.service';
+import { PendingRequestModule } from '@sunbird-cb/collection/src/lib/_common/pending-request/pending-request.module';
 
 @NgModule({
   declarations: [HomeComponent, FeedListComponent, InsightSideBarComponent, PageContainerComponent, DiscussionInfoComponent, ClientSliderComponent, HomeOtherPortalComponent, NoDataComponent, HomeContainerComponent, DiscussHubComponent, NetworkHubComponent],
@@ -50,9 +52,11 @@ import { HomePageService } from '../services/home-page.service';
     WeeklyClapsModule,
     UpdatePostsModule,
     DiscussionsModule,
+    RecentRequestsModule,
     SkeletonLoaderModule,
     PipeRelativeTimeModule,
-    AvatarPhotoModule
+    AvatarPhotoModule,
+    PendingRequestModule
   ],
   exports: [
     HeaderModule,
