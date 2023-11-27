@@ -58,6 +58,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   insightsData: any
   mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
   orgId: any
+  selectedTabIndex: any
 
   pendingRequestData: any = []
   pendingRequestSkeleton = true
@@ -104,6 +105,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.pageData = this.route.parent && this.route.parent.snapshot.data.pageData.data
     this.currentUser = this.configSvc && this.configSvc.userProfile
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
+    this.selectedTabIndex = this.route.snapshot.queryParams && this.route.snapshot.queryParams.tab || 0
     this.tabs = this.route.data.subscribe(data => {
       if (data.profile.data.profileDetails.verifiedKarmayogi === true) {
         this.verifiedBadge = true
