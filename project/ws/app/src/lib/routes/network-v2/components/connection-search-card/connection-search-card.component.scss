@@ -16,19 +16,37 @@
 .name-container{
     padding: $size-m $size-l;
 }
+
 .name{
     font-size: 16px;
     line-height: 24px;
     text-transform: capitalize;
 }
+
 .designation{
     height: 60px;
     overflow: hidden;
     line-height: 21px;
 }
+
 .action-container{
     padding: $size-m 0;
 }
+
 .minwid{
     min-width: 230px;
+}
+
+$title-line-count: 1;
+
+.text-ellipsis {
+    word-break: break-all;
+    white-space: initial;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $title-line-count;
+    -webkit-box-orient: vertical;
+    min-height: $title-line-count * 24px;
 }
