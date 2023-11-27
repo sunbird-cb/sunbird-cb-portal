@@ -13,9 +13,7 @@
     }
 }
 
-// .text-ellipsis {
-$title-line-count: 2;
-$title-line-height: 16px;
+$title-line-count: 1;
 
 .text-ellipsis {
     word-break: break-all;
@@ -26,9 +24,20 @@ $title-line-height: 16px;
     display: -webkit-box;
     -webkit-line-clamp: $title-line-count;
     -webkit-box-orient: vertical;
-    min-height: $title-line-count * $title-line-height;
 }
-// }
+
+.text-name {
+    @extend .text-ellipsis;
+    min-height: $title-line-count * 22px;
+}
+
+.text-desc {
+    @extend .text-ellipsis;
+        min-height: $title-line-count * 16px;
+}
+
+
+
 
 .card {
     box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.08),

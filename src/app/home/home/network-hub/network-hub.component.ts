@@ -16,23 +16,7 @@ export class NetworkHubComponent implements OnInit {
   @Input("networkConfig") networkConfig: any;
   userInfo: any;
   network = {
-    networkRecommended: <any>[{
-      fullName: 'Vinod',
-      personalDetails: {
-        firstname: 'Vinod',
-      },
-      employmentDetails: {
-        departmentName: 'Engineering'
-      }
-    }, {
-      fullName: 'Vinod',
-      personalDetails: {
-        firstname: 'Vinod',
-      },
-      employmentDetails: {
-        departmentName: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Labore, iusto!'
-      }
-    }],
+    networkRecommended: <any>[],
     suggestionsLoader: false,
     error: false
   }
@@ -73,24 +57,24 @@ export class NetworkHubComponent implements OnInit {
       ]
     };
 
-    // this.network.suggestionsLoader = true;
-    // this.homePageService.getNetworkRecommendations(payload).subscribe(
-    //   (res: any) => {
-    //     this.network.suggestionsLoader = false;
-    //     this.network.networkRecommended = res.result.data[0].results;
-    //     if (this.network.networkRecommended.length) {
-    //       this.network.networkRecommended = this.network.networkRecommended.map((obj: any) => {
-    //         obj.fullName = this.createInitials(obj.personalDetails.firstname);
-    //         obj.connecting = false;
-    //         return obj;
-    //       });
-    //     }
-    //   }, (error: HttpErrorResponse) => {
-    //     if (!error.ok) {
-    //       this.network.suggestionsLoader = false;
-    //     }
-    //   }
-    // );    
+    this.network.suggestionsLoader = true;
+    this.homePageService.getNetworkRecommendations(payload).subscribe(
+      (res: any) => {
+        this.network.suggestionsLoader = false;
+        this.network.networkRecommended = res.result.data[0].results;
+        if (this.network.networkRecommended.length) {
+          this.network.networkRecommended = this.network.networkRecommended.map((obj: any) => {
+            obj.fullName = this.createInitials(obj.personalDetails.firstname);
+            obj.connecting = false;
+            return obj;
+          });
+        }
+      }, (error: HttpErrorResponse) => {
+        if (!error.ok) {
+          this.network.suggestionsLoader = false;
+        }
+      }
+    );    
   }
 
   fetchRecentRequests(): void {
