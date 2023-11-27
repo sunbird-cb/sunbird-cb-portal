@@ -272,8 +272,8 @@
                                 <!-- <ws-widget-user-image class="user-image" [imageType]="'user-photo'" [userName]="author.name || ''"
                                     [email]="author.email" [imageUrl]="author.photo || ''"></ws-widget-user-image> -->
                                 <ws-widget-avatar-photo class="float-left margin-right-s " [randomColor]="true"
-                                    [datalen]="parseJsonData(content?.creatorDetails).length"
-                                    [size]="'m'" [photoUrl]="author.photo || ''" [name]="author.name" size="l-xs">
+                                    [datalen]="1"
+                                    [size]="'round-m'" [photoUrl]="author.photo || ''" [name]="author.name" >
                                 </ws-widget-avatar-photo>
                                 <div class="margin-left-xl">
                                     <div class="user-name">{{ author.name }}</div>
@@ -286,8 +286,8 @@
                             <!-- <ws-widget-user-image class="user-image" [imageType]="'user-photo'" [userName]="author.name || ''"
                                 [email]="author.email" [imageUrl]="author.photo || ''"></ws-widget-user-image> -->
                             <ws-widget-avatar-photo class="float-left margin-right-s" [randomColor]="true"
-                                [datalen]="parseJsonData(content?.creatorContacts).length"
-                                [size]="'m'" [photoUrl]="author.photo || ''" [name]="author.name" size="l-xs">
+                            [datalen]="1" 
+                                [size]="'round-m'" [photoUrl]="author.photo || ''" [name]="author.name" >
                             </ws-widget-avatar-photo>
                             <div class="">
                                 <div class="user-name">{{ author.name }}</div>
@@ -321,8 +321,8 @@
                                 <ng-container *ngFor="let facilitator of checkForFacilitators">
                                     <div class="unit-cohort sm:pr-8 md:pr-10">
                                         <ws-widget-avatar-photo class="float-left margin-right-s " [randomColor]="true"
-                                            [datalen]="selectedBatchData?.content[0]?.batchAttributes?.sessionDetails_v2[0]?.facilatorDetails.length"
-                                            [size]="'m'" [photoUrl]="facilitator.photo || ''" [name]="facilitator.name" size="l-xs">
+                                        [datalen]="1" 
+                                        [size]="'round-m'" [photoUrl]="facilitator.photo || ''" [name]="facilitator.name">
                                         </ws-widget-avatar-photo>
                                         <div class="margin-left-xl">
                                             <div class="user-name">{{ facilitator.name }}</div>
@@ -490,8 +490,8 @@
 
 <ng-template #unitCohortNew1 let-user="user">
     <div class="unit-cohort sm:pr-8 md:pr-10">
-        <ws-widget-avatar-photo class="float-left margin-right-s" [size]="'m'" [photoUrl]="user.photo || ''"
-            [name]="getUserFullName(user)" size="l-xs">
+        <ws-widget-avatar-photo class="float-left margin-right-s" [size]="'round-m'" [photoUrl]="user.photo || ''"
+            [name]="getUserFullName(user)">
         </ws-widget-avatar-photo>
         <div class="margin-left-l">
             <div (click)="goToUserProfile(user)" [ngClass]="{'cursor-pointer': enablePeopleSearch}"
@@ -511,8 +511,8 @@
     <div class="unit-cohort sm:pr-8 md:pr-10">
         <!-- <ws-widget-user-image class="user-image" [imageType]="'user-photo'" [userName]="getUserFullName(user)"
         [imageSize]="'small'" [email]="user.email" [imageUrl]="user.photo || ''"></ws-widget-user-image> -->
-        <ws-widget-avatar-photo class="float-left margin-right-s" [size]="'m'" [photoUrl]="user.photo || ''"
-            [name]="getUserFullName(user)" size="l-xs">
+        <ws-widget-avatar-photo class="float-left margin-right-s" [size]="'round-m'" [photoUrl]="user.photo || ''"
+            [name]="getUserFullName(user)">
         </ws-widget-avatar-photo>
         <div class="margin-left-l">
             <div (click)="goToUserProfile(user)" [ngClass]="{'cursor-pointer': enablePeopleSearch}"
