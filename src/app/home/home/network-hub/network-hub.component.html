@@ -36,13 +36,13 @@
                     <ng-container *ngIf="!network.suggestionsLoader">
                         <ng-container *ngIf="network.networkRecommended.length">
                             <div *ngFor="let recommend of network.networkRecommended">
-                                <div class="card p-4 flex flex-col items-center rounded-xl gap-3 netword-card">
-                                    <div class="flex justify-center items-center initial-circle bg-blue-700 text-xl">{{ recommend?.fullName }}</div>
+                                <div class="card p-4 rounded-xl netword-card">
+                                    <div class="flex justify-center items-center initial-circle bg-blue-700 text-xl m-auto mb-3">{{ recommend?.fullName }}</div>
                                     <div class="flex flex-col gap-1">
-                                        <div class="font-semibold text-center mat-body-2">{{ recommend?.personalDetails?.firstname }}</div>
-                                        <div class="text-center dept-name">{{ recommend?.employmentDetails?.departmentName }}</div>
+                                        <div class="font-semibold text-center mat-body-2 text-name" [title]="recommend?.personalDetails?.firstname" >{{ recommend?.personalDetails?.firstname }}</div>
+                                        <div class="text-center dept-name text-desc" [title]="recommend?.employmentDetails?.departmentName" >{{ recommend?.employmentDetails?.departmentName }}</div>
                                         <div
-                                            class="flex flex-row gap-2 ws-mat-default-text font-semibold px-8 py-2 rounded-full mat-body-2 connect-button cursor-pointer text-lg mt-2" (click)="handleConnect(recommend)" *ngIf="!recommend.connecting">
+                                            class="flex flex-row gap-2 ws-mat-default-text font-semibold px-4 py-2 rounded-full mat-body-2 connect-button cursor-pointer text-lg mt-2 items-center" (click)="handleConnect(recommend)" *ngIf="!recommend.connecting">
                                             <mat-icon class="ws-mat-default-text">person_add</mat-icon>
                                             Connect
                                         </div>
