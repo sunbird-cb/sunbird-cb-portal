@@ -44,12 +44,13 @@ section {
 }
 ::ng-deep.mat-menu-content {
     padding-bottom: 0 !important;
-
+    background-color: #fff;
     .mat-menu-item {
         line-height: 30px;
-        height: 38px;
+        height: 44px;
         padding: 0 6px;
         font: 400 14px/21px Lato !important
+        
     }
 }
 ::ng-deep.circle-m {
@@ -67,8 +68,21 @@ section {
 }
 
 img.profile-badge {
-    left: 4px;
+    // left: 4px;
     /* padding-left: 7px; */
     position: relative;
     float: right;
+    margin-top: -10px;
+}
+
+.font-14-bold {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.text-ellipses {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 90px;
 }

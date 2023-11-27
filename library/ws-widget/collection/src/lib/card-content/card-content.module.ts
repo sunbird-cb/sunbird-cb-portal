@@ -20,7 +20,6 @@ import { ProfileImageModule } from '../_common/profile-image/profile-image.modul
 import { UserImageModule } from '../_common/user-image/user-image.module'
 import { CardContentComponent } from './card-content.component'
 import { BtnKbAnalyticsModule } from '../btn-kb-analytics/btn-kb-analytics.module'
-
 @NgModule({
   declarations: [CardContentComponent],
   imports: [

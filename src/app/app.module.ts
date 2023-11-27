@@ -24,7 +24,7 @@ import {
   MatTabsModule,
   MatSelectModule,
   MatTableModule,
-  MatProgressSpinnerModule,
+  MatProgressSpinnerModule
 } from '@angular/material'
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -45,7 +45,7 @@ import { AppTocResolverService } from '@ws/app/src/lib/routes/app-toc/resolvers/
 import { RootComponent } from './component/root/root.component'
 import { LoginComponent } from './component/login/login.component'
 import { AppFooterComponent } from './component/app-footer/app-footer.component'
-import { AppNavBarComponent } from './component/app-nav-bar/app-nav-bar.component'
+// import { AppNavBarComponent } from './component/app-nav-bar/app-nav-bar.component'
 import { AppPublicNavBarComponent } from './component/app-public-nav-bar/app-public-nav-bar.component'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
@@ -90,6 +90,12 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
+import { HeaderModule } from './header/header.module';
+import { DialogBoxComponent } from './component/dialog-box/dialog-box.component';
+import { SocialLinkComponent } from './component/social-link/social-link.component';
+import { FooterSectionComponent } from './component/app-footer/footer-section/footer-section.component';
+import { AppLogoComponent } from './component/app-logo/app-logo.component';
+
 
 @Injectable()
 export class HammerConfig extends GestureConfig {
@@ -119,7 +125,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     RootComponent,
     LoginComponent,
-    AppNavBarComponent,
+    // AppNavBarComponent,
     AppPublicNavBarComponent,
     TncComponent,
     AppIntroComponent,
@@ -136,6 +142,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     PublicLoginWGComponent,
     AppTourVideoComponent,
     AppTourComponent,
+    DialogBoxComponent,
+    SocialLinkComponent,
+    FooterSectionComponent,
+    AppLogoComponent,
   ],
   imports: [
     FormsModule,
@@ -188,22 +198,25 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppChatbotModule,
     DiscussionUiModule.forRoot(ConfigService),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    HeaderModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient],
-    },
-  }),
+      },
+    }),
   ],
   exports: [
     TncComponent,
+    HeaderModule
   ],
   bootstrap: [RootComponent],
   entryComponents: [
     DialogConfirmComponent,
     LoginComponent,
     AppIntroComponent,
+    DialogBoxComponent
   ],
   providers: [
     {
@@ -233,6 +246,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppTocResolverService,
     AppHierarchyResolverService,
     AppEnrollmentResolverService,
+    HttpClient,
     {
       provide: APP_BASE_HREF,
       useFactory: getBaseHref,

@@ -10,10 +10,12 @@
     width: min-content;
     padding: 16px;
     min-width: 8em !important;
+    background-color: #fff;
   }
   ::ng-deep .mat-menu-content:not(:empty) {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
+    background-color: #fff;
   }
   .p-0 {
     padding: 0;

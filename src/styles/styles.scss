@@ -19,6 +19,11 @@ body {
   // word-spacing: $word-spacing;
 }
 
+:host {
+  width: 100%;
+  height: 100%;
+}
+
 ::selection {
   background-color: #e0f2f1;
 }
@@ -595,12 +600,27 @@ h3.shepherd-title {
     width: auto!important;
     margin:0px auto!important;
 }
-ngx-guided-tour {
 
-  // z-index: 999999999 !important;
-  // position: absolute !important;
+ngx-guided-tour {
   .tour-arrow {
     display: none !important;
+  }
+
+  .tour-step {
+    .tour-block {
+      display: flex;
+      flex-direction: column;
+      padding: 28px !important;
+      margin-top: 24px !important;
+      text-align: center;
+      min-height: 60px !important;
+    }
+
+    .tour-content {
+      padding-bottom: 0px !important;
+      font-size: 16px !important;
+      min-height: 60px !important;
+    }
   }
 
   .tour-title {
@@ -614,15 +634,10 @@ ngx-guided-tour {
     background-color: #1C4CA1 !important;
     color: white !important;
     box-shadow: 0px 8px 24px rgba(0,0,0, 0.24) !important;
-    margin-top: 15px !important;
+    // margin-top: 15px !important;
   }
 
   .tour-buttons {
-
-    //   display: flex;
-    //   /* align-items: end; */
-    //   flex-direction: row-reverse;
-    //   justify-content: space-between;
     .back-button {
       border-radius: 4px !important;
       border: 1px solid rgba(0,0,0, 0.08) !important;
@@ -652,6 +667,7 @@ ngx-guided-tour {
       font-size: 14px;
       font-weight: 700;
     }
+
     .next-button {
       background-color: #F3962E !important;
       color: #373434 !important;
@@ -682,8 +698,6 @@ ngx-guided-tour {
     }
 
     .skip-button {
-      // display: none !important;
-      // background-color: #F3962E !important;
       color: #373434 !important;
       box-sizing: border-box;
       position: relative;
@@ -724,6 +738,7 @@ body:has(.requires-no-scroll) {
 .tour-block {
   border-radius: 8px;
   padding-left: 40px !important;
+  width: 480px;
 }
 
 .tour-step.left-panel:after {
@@ -742,13 +757,13 @@ body:has(.requires-no-scroll) {
 
 .tour-step.left-panel:after {
   background-color: #F3962E !important;
-  top: 15px !important;
+  top: 24px !important;
 }
 
 .tour-step.right-panel:after {
   background-color: #F3962E !important;
-  top: 15px !important;
-  right: 0px !important;
+  // top: 15px !important;
+  // right: 0px !important;
 }
 .tour-step.top-panel:after {
   background-color: #F3962E !important;
@@ -766,39 +781,141 @@ body:has(.requires-no-scroll) {
 }
 .tour-image {
   mat-icon {
-    height: auto !important;
-    width: auto !important;
+    height: 36px !important;
+    width: 36px !important;
+    font-size: 36px;
   }
 }
+
 .arrow {
-  transform: rotate(352deg);
-  left: -65px !important;
-  top: -6px !important;
+  transform: rotate(340deg);
+  left: -90px !important;
+  top: 22px !important;
 
   .circle {
     border: 3px dashed #F3962E;
+    height: 128px !important;
+    width: 88px !important;
+    margin-top: 12px !important;
+  }
+
+  .circle-start-dot {
+    margin-top: 132px !important;
+    margin-left: 32px !important;
   }
 
   .triangle {
     background: #F3962E;
-    transform: rotate(97deg) !important;
+    transform: rotate(96deg) !important;
+    margin-top: 4px;
+    margin-left: 36px;
   }
+}
+
+.tour_discuss_container {
+  .arrow {
+    .circle {
+      margin-top: 10px !important;
+      transform: rotate(8deg);
+    }
+
+    .triangle {
+      margin-top: 2px !important;
+      margin-left: 46px !important;
+    }
+
+    .circle-start-dot {
+      margin-top: 130px !important;
+      margin-left: 36px !important;
+    }
+
+  }
+}
+
+.tour_search_container {
+  &::after {
+    top: 10px !important;
+    margin-left: 20px !important;
+  }
+
+  .tour-block {
+    margin-top: 10px !important;
+    margin-left: 20px;
+  }
+
+  .arrow {
+    .circle {
+      width: 88px !important;
+      height: 132px !important;
+      margin-top: -4px !important;
+      margin-left: 16px !important;
+      transform: rotate(8deg);
+    }
+
+    .circle-start-dot {
+      margin-top: 118px !important;
+      margin-left: 40px !important;
+    }
+
+    .triangle {
+      margin-top: -12px !important;
+      margin-left: 68px !important;
+      transform: rotate(80deg) !important;
+    }
+  }
+}
+
+.tour_profile_container {
+  &::after {
+    top: 24px !important;
+    right: 58px !important;
+  }
+
+  .tour-block {
+    margin-left: -100% !important;
+    width: 480px !important;
+  }
+
+  .arrow {
+    .circle {
+      width: 92px !important;
+      height: 124px !important;
+      margin-top: 20px !important;
+      margin-left: -36px !important;
+      transform: rotate(-18deg) !important;
+    }
+
+    .circle-start-dot {
+      margin-top: 132px !important;
+      margin-left: -46% !important;
+    }
+
+    .triangle {
+      transform: rotate(44deg) !important;
+      margin-top: 16px !important;
+      margin-left: -18px;
+    }
+  }
+
+
 }
 
 
 .tour_learn,
 .tour_discuss {
-  transform: scale(1.5);
+  transform: scale(1.8);
   border-radius: 50%;
-  height: 55px !important;
-  width: 55px !important;
+  height: 80px !important;
+  width: 80px !important;
 }
+
 .tour_learn_mobile, .tour_discuss_mobile {
   transform: scale(1.5);
   border-radius: 50%;
   height: 55px !important;
   width: 55px !important;
 }
+
 .tour_search_mobile_container {
   top: 2rem !important;
   left: 12% !important;
@@ -809,6 +926,7 @@ ngx-guided-tour {
   .tour_profile_container {
     margin-left: 0.8rem;
   }
+
   .tour_profile_container.right-panel {
     .arrow {
       left: -65px !important;
@@ -821,17 +939,15 @@ ngx-guided-tour {
       margin-left: 35px;
     }
   }
-  .tour_learn_mobile_container, .tour_discuss_mobile_container {
-    // top: 2rem !important;
-    // left: 12% !important;
-    // width: 75% !important;
 
+  .tour_learn_mobile_container, .tour_discuss_mobile_container {
     .tour-button-container {
       display: flex;
       justify-content: space-between;
       width: 100%;
       margin-top: 1rem;
     }
+
     .back-button {
       color: rgba(255,255,255,1) !important;
       font-family: "Lato-Bold" !important;
@@ -844,21 +960,20 @@ ngx-guided-tour {
       border: 1px solid rgba(255,255,255, 0.4) !important;
       opacity: 1 !important;
     }
+
     .next-button {
       border-radius: 4px !important;
     }
   }
 }
+
 .tour_learn_mobile_container.top-panel:after, .tour_discuss_mobile_container.top-panel:after {
   height: 98% !important;
   top: -134px !important;
 }
+
 ngx-guided-tour {
   .tour_search_mobile_container {
-    // top: 2rem !important;
-    // left: 12% !important;
-    // width: 75% !important;
-
     .tour-button-container {
       position: absolute;
       display: flex;
@@ -917,13 +1032,15 @@ ngx-guided-tour {
   transform: scale(1.6);
   border-radius: 50%;
 }
+
 .tour_search {
-  border-radius: 50%;
-  height: 30rem !important;
-  top: -21rem !important;
-  width: 68rem !important;
-  left: 11vw !important;
+  border-radius: 60%;
+  height: 40rem !important;
+  top: -30rem !important;
+  width: 40rem !important;
+  left: 15.5vw !important;
 }
+
 .tour_profile {
   transform: scale(2);
   border-radius: 50%;
@@ -1005,4 +1122,40 @@ ngx-guided-tour {
   letter-spacing: 0.25px;
   text-align: center;
   line-height: 20px;
+}
+
+.skeleton-box {
+  display: inline-block;
+  min-height: 1rem;
+  position: relative;
+  overflow: hidden;
+  background-color: #DDDBDD;
+
+  &::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+      90deg,
+      rgba(#fff, 0) 0,
+      rgba(#fff, 0.2) 20%,
+      rgba(#fff, 0.5) 60%,
+      rgba(#fff, 0)
+    );
+    animation: shimmer 1s infinite;
+    content: '';
+  }
+
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+}
+
+.white-spinner .mat-progress-spinner circle, .theme-igot.day-mode .mat-spinner circle{
+  stroke:white !important;
 }

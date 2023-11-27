@@ -143,7 +143,6 @@
     .filter {
       width: 480px;
     }
-
   }
 }
 
@@ -397,3 +396,28 @@ span.profile-badge {
     padding-left: 5px;
     padding-top: 5px;
 }
+::ng-deep .profile-tabs .mat-tab-header{
+  background-color: white;
+}
+.profile-section{
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0, 0.08);
+  opacity: 1;
+  background-color: rgba(255,255,255, 1);
+  padding: 16px 16px 0px 16px;
+}
+.tab-heading {
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.87);
+  letter-spacing: 0.12;
+  line-height: 24px;
+}
+.font-weight-400 {
+  font-weight: 400 !important;
+}
+
+::ng-deep .mat-tab-label-active {
+  color: #000000 !important;
+  font-weight: 700 !important;
+} 

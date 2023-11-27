@@ -41,6 +41,9 @@ export class NetworkHomeComponent implements OnInit {
     if (this.route.snapshot.data.recommendedUsers && this.route.snapshot.data.recommendedUsers.data.result) {
       this.recommendedUsers = this.route.snapshot.data.recommendedUsers.data.result.data.
       find((item: any) => item.field === 'employmentDetails.departmentName').results
+      this.recommendedUsers.sort((a: any, b: any) => {
+        return a.personalDetails.firstname.toLowerCase().localeCompare(b.personalDetails.firstname.toLowerCase())
+      })
     }
     this.establishedConnections = this.route.snapshot.data.myConnectionList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
       if (v && v.personalDetails && v.personalDetails.firstname) {

@@ -6,12 +6,18 @@
 'circle-l-xs' : size=== 'l-xs',
 'circle-l-s' : size=== 'l-s',
 'circle-xl-s' : size=== 'xl-s',
+'circle-r-m': size=== 'round-m',
+'circle-r-p-m': size=== 'profile-round-m',
+'circle-m-side': size=== 'm-side',
 'circle-xxl-s': size=== 'xxl-s'}" [ngStyle]="{'background-color':  circleColor }">
   <img *ngIf="!showInitials" src="{{photoUrl}}" [alt]="photoUrl? '' :(name || userInitials || size || random)">
 
   <div *ngIf="showInitials" class="initials" i18n-aria-label>
-    {{ userInitials }}
+    {{ userInitials }} 
   </div>
+  <div *ngIf="showBadge"><span class="profile-badge">  
+    <img src="fusion-assets/images/profile-badge.png">
+  </span></div>
 
   <!-- <div *ngIf="imageType === 'user-photo'">
     <img *ngIf="imageUrl" [src]="imageUrl" alt="user-image" class="user-image" [ngClass]="{'user-image-small': imageSize === 'small'}">

@@ -1159,10 +1159,33 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.hours = 23 - this.date.getHours()
       this.minutes = 60 - this.date.getMinutes()
       this.seconds = 60 - this.date.getSeconds()
+      Number(this.hours)
       !isNaN(this.days)
         ? (this.days = Math.floor(this.difference))
         : (this.days = `<img src="https://i.gifer.com/VAyR.gif" />`)
     },          1000)
    }
+  }
+
+  get showDisableMsg() {
+    const allBatches = this.batchData.content
+    const status: any = []
+    if (allBatches) {
+      allBatches.forEach((ele: any) => {
+        if (!this.handleEnrollmentEndDate(ele) || this.disableEnrollBtn) {
+          status.push(ele)
+        }
+      })
+      return status.length === allBatches.length
+    }
+    return false
+  }
+
+  get findMessage() {
+    if (this.showDisableMsg) {
+      const msg = this.WFSTATUS_MSG_MAPPING.EXPIRED
+      return this.tocConfig[msg]
+    }
+    return ''
   }
 }

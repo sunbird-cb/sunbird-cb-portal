@@ -1,0 +1,239 @@
+
+@import 'ws-mixins';
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  background-color: #ffffff!important;
+  @include breakpoint-xs {
+    flex-direction: column;
+  }
+}
+
+.font-12 {
+  font-size: 12px !important;
+}
+
+.font-14 {
+  font-family: lato;
+  font-size: 14px !important;
+  color: #000000;
+}
+
+.logo-dim img{
+  height: 32px;
+}
+
+.copyright-content {
+  display: inline-block;
+  margin: 26px 0 16px 0;
+}
+
+.copyright-logo {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.copyright {
+  display: inline-block;
+  margin-left: 40px;
+
+}
+
+.top_footer_box {
+  padding: 45px 0;
+  background: #1B2133;
+
+   .top_footer_inner {
+      max-width: 1202px;
+      margin-left: auto!important;
+      margin-right: auto!important;
+
+      img.footer_logo {
+        // height: 32px;
+        width: 120px;
+        background: #fff;
+        border-radius: 2px 2px;
+        padding: 6px 12px;
+      }
+  }
+
+
+
+  .footer_heading {
+    color: rgba(255, 255, 255, 0.95);
+  }
+  .footer_sub_text {
+    color: rgba(255, 255, 255, 0.7);
+    background-color: transparent;
+    // margin-bottom: 12px;
+  }
+  a.feedback_link {
+    color: #68BDFF;
+    text-decoration: underline!important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+
+  .top_footer_box {
+    padding: 45px 8px!important;
+
+
+    .top_footer_inner  {
+      flex-direction: column!important;
+      div {
+        margin-bottom: 16px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+
+  .top_footer_box {
+    padding: 45px 16px!important;
+
+
+
+    .top_footer_inner  {
+      width: 100%;
+      max-width: 100%;
+      // div {
+      //   margin-bottom: 16px;
+      // }
+    }
+  }
+}
+
+.nav-footer ul  {
+  padding:0;
+  margin:0;
+}
+.nav-footer ul li {
+  list-style: none;
+  height: 36px;
+}
+.footer_sub_text:hover {
+  display: inline-block;
+  color: #F1921D !important;
+  text-decoration: none;
+}
+
+.footer_sub_text::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #F1921D !important;
+  transition: width .3s ease;
+}
+
+.footer_sub_text:hover::after {
+  width: 100%;
+  //transition: width .3s;
+}
+
+// .top_footer_box {
+//   a.footer_sub_text:hover {
+//     text-decoration: underline !important;
+//     color: #F1921D !important;
+//   }
+// }
+
+.app-store-button {
+  display: none;
+}
+
+.footer_logo {
+  display: none;
+}
+
+.mobile-social {
+  display:none;
+}
+
+.desktop-social {
+  display: inline-block;
+}
+
+@media (max-width : 768px) {
+.app-store {
+  margin-left: 30px;
+}
+.footer_logo {
+  display: block;
+}
+.footer_logo img {
+  
+  width: 134px;
+  height: 44px;
+  margin-bottom: 12px;
+  background: #fff;
+  padding: 4px;
+  border-radius: 2px;
+}
+.app-store-button {
+  display: flex; 
+  flex-direction: row; 
+  justify-content: center;
+}
+.nav-footer .nav h4 { 
+  cursor: pointer; 
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(255,255,255,0.16);
+  padding-bottom: 8px;
+  }
+.nav-footer ul { 
+  height: 0; 
+  overflow:hidden; 
+  transition: max-height 1s ease-out; }
+
+  .nav-footer .nav h4:after { 
+    content: url("/assets/icons/footer-nav/arrow.svg");
+    width: 25px;
+    float: right;
+    color: rgba(255,255,255,0.7); 
+  }
+ 
+.nav-footer .nav.open h4:after { 
+  content: url("/assets/icons/footer-nav/arrow.svg");
+   width: 25px;
+  }
+
+  .nav-footer .nav.open ul { 
+  height:auto;  
+  transition: max-height 1s ease-in !important; }
+
+  .mobile-social {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .desktop-social {
+    display: none;
+  }
+
+
+.footer_sub_text:hover {
+  display: inline-block;
+  color: #F1921D !important;
+  text-decoration: none;
+}
+
+.footer_sub_text::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #F1921D !important;
+  transition: width .3s ease;
+}
+
+.footer_sub_text:hover::after {
+  width: 100%;
+  //transition: width .3s;
+}
+}

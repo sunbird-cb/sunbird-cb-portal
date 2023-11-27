@@ -514,6 +514,17 @@ const routes: Routes = [
     },
   },
   {
+    path: 'app/seeAll',
+    loadChildren: () =>
+      import('./routes/route-see-all-app.module').then(u => u.RouteSeeAllAppModule),
+    data: {
+      pageType: 'feature',
+      pageKey: 'seeAll',
+      pageId: 'app/seeAll',
+      module: 'Home',
+    },
+  },
+  {
     path: 'app/social',
     data: {
       pageId: 'app/social',
@@ -696,6 +707,20 @@ const routes: Routes = [
     },
     runGuardsAndResolvers: 'paramsChange',
     component: PageComponent,
+    canActivate: [GeneralGuard],
+  },
+  {
+    path: 'page/home',
+    loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+    data: {
+      pageType: 'page',
+      pageKey: 'home',
+    },
+    resolve: {
+      pageData: PageResolve,
+      module: ModuleNameResolve,
+      pageId: PageNameResolve,
+    },
     canActivate: [GeneralGuard],
   },
   {

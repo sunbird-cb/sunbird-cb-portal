@@ -66,6 +66,7 @@ export namespace NsContent {
     isInIntranet?: boolean
     keywords?: string[]
     kArtifacts?: IRelatedContentMeta[]
+    lastContentAccessTime?: string
     lastUpdatedOn: string
     learningMode?: TLearningMode
     learningObjective: string
@@ -208,6 +209,7 @@ export namespace NsContent {
     description: string
     enrolledDate: string
     issuedCertificates: []
+    lastContentAccessTime?: string
     lastReadContentId: string | null
     lastReadContentStatus: string | null
     leafNodesCount: number
@@ -406,6 +408,7 @@ export namespace NsContent {
     REJECTED:  'BatchEnrollRejectedMsg',
     WITHDRAWN: 'BatchEnrollWithdrawMsg',
     REMOVED: 'BatchEnrollRemoveMsg',
+    EXPIRED: 'BatchListExpiredMsg',
   }
 
   export enum EResourcePrimaryCategories {

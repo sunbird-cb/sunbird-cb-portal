@@ -12,8 +12,27 @@
   margin: 0 auto;
 }
 
+.mobile-cross {
+  display: none;
+}
+
+
+.desktop-cross {
+  margin-top: 15px;
+  color: #d8d8d8;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 14px;
+  position: absolute;
+  right: 15px;
+}
+
+
 .new-box-hubs {
   margin: 0 0 $size-s 0;
+  height:48px;
+  background-color: #fff;
 }
 
 .new-box-left {
@@ -75,18 +94,49 @@
     .footer{
       position: fixed;
       font-family: system-ui;
-      font-weight: 500;
+      font-weight: 600;
       left: 0;
       bottom: 0;
-      padding-top: 12px;
       width: 100%;
-      background-color: #fcf9f9;
+      background-color: #FEFAF6;
       color: black;
       text-align: center;
       z-index: 1000;
-      height: 73px !important;
-        font-size: 16px !important;
+      height: 108px !important;
+      font-size: 16px !important;
     }
+
+    .update-mobile-number-flex {
+      display: flex;
+      justify-content: center;
+    }
+
+    .update-mobile-number-flex img.hand-icon {
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .update-mobile-number-flex .updatetitle {
+      margin-top: 42px;
+      margin-left: 16px;
+      font-size: 16px;
+      line-height: 1.5;
+      font-weight: 600;
+      font-family: 'Montserrat';
+    }
+    .update-mobile-number-flex .update-now {
+      margin-top: 42px;
+      margin-left: 20px;
+    }
+    .update-mobile-number-flex .inline-info{
+      margin-top: 42px;
+    }
+
+    .update-mobile-number-flex .update-profile{
+      margin-top: 42px;
+      margin-left: 20px;
+    }
+
 
     button.nextBtn.hidden-touch.border-radius-xs.mat-mini-fab.mat-button-base.mat-primary {
       z-index: auto !important;
@@ -131,19 +181,26 @@
 
     /* CSS */
     .update-now{
-      background: #0074B6 0% 0% no-repeat padding-box !important;
+      background: rgb(27, 76, 161) !important;
       border-radius: 0.3rem;
       margin-top: 10px;
       margin-right: 10px;
-      margin-left: 10px;
+      margin-left: 20px;
       color: #FFFFFF;
-      font-size: 12px;
+      font-size: 14px;
+      font-weight: 700;
       justify-content: center;
-      padding: 12px;
       text-decoration: none;
       border: 0;
       cursor: pointer;
       user-select: none;
+      border-radius: 63px;
+      height: 32px;
+      min-width: 87px;      
+    }
+
+    .footer-update-mobile-number {
+      border: 1px solid rgb(239, 149, 30);
     }
 
     .update-now:hover {
@@ -151,16 +208,15 @@
     }
 
     @media (min-width: 768px) {
-      .update-now {
-        padding: 0.8rem 2rem;
-      }
+      // .update-now {
+      //   padding: 0.8rem 2rem;
+      // }
     }
 
     span.tooltips {
       margin-left: 23px;
-      padding-top: 13px;
+      padding-top: 3px;
       position: absolute;
-      margin-top: 6px;
       font-size: 21px;
     }
 
@@ -209,6 +265,7 @@
       font-size: 14px;
         font-weight: 600;
         color: #187cdc;
+        vertical-align: middle;
     }
     span.tooltip-check .tooltiptext-check {
       visibility: hidden; 
@@ -357,22 +414,54 @@
 @media only screen and (max-width : 768px) {
   .updatetitle {
     display: block;
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 14px;
+    font-weight: 400;
+    text-align: left;
+    margin-left: 22px;
+  }
+
+  .mobile-cross {
+    margin-top: 16px;
+    margin-left: 16px;
+    color: rgb(216, 216, 216);
+    height: 24px;
+    width: 24px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .desktop-cross {
+    display: none;
+  }
+
+  .update-mobile-number-flex {
+    display: flex;
+    margin-top: -10px;
+  }
+
+  .update-mobile-number-flex img{
+    height: 68px;
+    margin-left: 10px;
   }
   .update-profile {
       visibility: visible;
-      background: #0074B6 0% 0% no-repeat padding-box !important;
-      border-radius: 0.3rem;
-      margin-top: 10px;
+      background: rgb(27, 76, 161) !important;
       margin-right: 10px;
       margin-left: 10px;
       color: #FFFFFF;
       font-size: 10px;
       justify-content: center;
-      padding: 10px 12px !important;
+      padding: 0px 20px !important;
       text-decoration: none;
       border: 0;
       cursor: pointer;
       user-select: none;
+      border-radius: 63px;
+      height: 32px;
+      font-size: 14px;
+      margin-top: 10px;
   }
 
   .update-now {
@@ -405,17 +494,19 @@
     font-family: system-ui;
     font-weight: 500;
     left: 0;
-    bottom: 8vh;
-    padding-top: 12px;
+    bottom: 9.6vh;
     padding-bottom: 15px;
-    padding-left: 6px;
-    width: 100%;
     background-color: #fcf9f9;
     color: black;
     text-align: center;
     z-index: 1000;
-    height: 92px !important;
+    height: 30px !important;
     font-size: 14px !important;
+    border: 1px solid rgb(239, 149, 30);
+    border-radius: 4px;
+    margin: 17px 16px;
+    padding: 17px 0;
+    overflow: hidden;
   }
   
   span.tooltip-check {
@@ -484,7 +575,7 @@
   }
 
   span.inline-info {
-    display: block !important;
+    display: none !important;
 
     .material-icons {
       font-size: 15px;
@@ -666,4 +757,24 @@
     color: rgba(0, 0, 0, 0.4) !important;
     font: 400 14px/20px Lato !important;
   } 
+}
+
+.full-height > .new-box-hubs{
+  height: auto;
+  overflow-y: auto;
+  box-shadow: 0 5px 5px -6px #222;
+}
+
+@media only screen and (max-width : 768px) {
+  .fix-w {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    border-top: 1px solid #ccc;
+    background-color: #fff;
+  }
+
+  .mob-16 {
+    padding: 0 16px;
+  }
+
 }

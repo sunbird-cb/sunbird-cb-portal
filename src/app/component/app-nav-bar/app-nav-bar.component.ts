@@ -4,7 +4,6 @@ import { IBtnAppsConfig, CustomTourService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, NsInstanceConfig, NsPage } from '@sunbird-cb/utils'
 import { Router, NavigationStart, NavigationEnd } from '@angular/router'
-
 @Component({
   selector: 'ws-app-nav-bar',
   templateUrl: './app-nav-bar.component.html',
@@ -12,6 +11,7 @@ import { Router, NavigationStart, NavigationEnd } from '@angular/router'
 })
 export class AppNavBarComponent implements OnInit, OnChanges {
   @Input() mode: 'top' | 'bottom' = 'top'
+  @Input() headerFooterConfigData:any;
   // @Input()
   // @HostBinding('id')
   // public id!: string
@@ -41,11 +41,14 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   isPublicHomePage = window.location.href.includes('/public/home')
   isSetUpPage = false
   isLoggedIn = false
+  fontContainerFlag = false;
+  activeRoute = '';
   constructor(
     private domSanitizer: DomSanitizer,
     private configSvc: ConfigurationsService,
     private tourService: CustomTourService,
-    private router: Router,
+    private router: Router
+    
   ) {
     this.btnAppsConfig = { ...this.basicBtnAppsConfig }
     if (this.configSvc.restrictedFeatures) {
@@ -63,6 +66,33 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    // console.log('headerFooterConfigData',this.headerFooterConfigData)
+    this.router.events.subscribe((event: any) => {
+
+      if (event instanceof NavigationEnd) {
+          // Hide loading indicator
+          // console.log('event', event.url)
+          // console.log("activeRoute",localStorage.getItem("activeRoute"));
+          if(localStorage.getItem("activeRoute")) {
+            let route = localStorage.getItem("activeRoute");
+            this.activeRoute = route ? route.toLowerCase().toString() : '';
+          }
+          
+          if (event.url.includes('/page/home')) {
+            this.activeRoute = 'home'
+          } else if (event.url.includes('/page/explore')) {
+            this.activeRoute = 'explorer'
+          } else if (event.url.includes('app/globalsearch')) {
+            this.activeRoute = 'search'
+          } else if (event.url.includes('app/careers')) {
+            this.activeRoute = 'Career'
+          } else if (event.url.includes('app/my-learning')) {
+            this.activeRoute = 'my learnings'
+          } 
+
+      }
+    })
+
     if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
         this.isLoggedIn = true
     }
@@ -207,4 +237,8 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     }
     return this.isSetUpPage
   }
+
+
+
+ 
 }

@@ -90,7 +90,8 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
         })
       }
     })
-    this.filteroptions = this.newfacets
+    // this.filteroptions = this.newfacets
+    this.filteroptions.push(this.newfacets[0])
     this.activated.queryParamMap.subscribe(queryParams => {
       this.queryParams = queryParams
       if (queryParams.has('f')) {

@@ -1,17 +1,32 @@
-<mat-card class="today-event-card no-box-shadow cursor-pointer" (click)="getEventDetails(eventData?.event.identifier)"
- [ngClass]="(isLive)?'bg-black':''">
-    <mat-card-header>
-        <mat-card-title class="margin-bottom-xs custom-title">
-            <span role="link" i18n-aria-label tabindex="0"
-                class="cursor-pointer mat-subheading-1" [ngClass]="(isLive)?'light-font':''">{{eventData?.eventName}}</span>
-        </mat-card-title>
-        <mat-card-subtitle class="responsive  margin-bottom-xs">
-            <span class="mat-body-2" [ngClass]="(isLive)?'light-font':''">{{eventData?.eventStartTime}} - {{eventData?.eventEndTime}}</span>
-        </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content class="flex flex-2" *ngIf="isLive">
-        <ng-container>
-            <span class="light-font mat-error"> {{eventData?.event.status}} </span>
-        </ng-container>
-    </mat-card-content>
+<mat-card class="today-event-card no-box-shadow cursor-pointer" (click)="getEventDetails(eventData?.event.identifier)">
+    <div class="imgbox">
+        <img class="event-card-image image-border" src="{{eventData?.eventThumbnail}}" alt="Karmayogi Bharat" />
+    </div>
+    <div class="databox margin-left-m">
+        <mat-card-header>
+            <mat-card-subtitle class="margin-bottom-xs">
+                <div class="event-type mat-body-2">
+                    <mat-icon>event</mat-icon> {{eventData?.event?.resourceType}}
+                </div>
+            </mat-card-subtitle>
+            <mat-card-title class="margin-bottom-xs custom-title">
+                <span role="link" i18n-aria-label tabindex="0"
+                    class="cursor-pointer mat-subheading-1">{{eventData?.eventName}}</span>
+            </mat-card-title>
+            <mat-card-subtitle class="responsive  margin-bottom-xs">
+                <span class="mat-body-2">{{eventData?.eventStartTime}} - {{eventData?.eventEndTime}}</span>
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content *ngIf="isLive && !isRecording">
+            <div class="float-left">
+                <span class="light-font livecss"><span class="dot"></span> {{eventData?.event.status}} </span>
+            </div>
+            <div class="float-right">
+                <button mat-raised-button type="button" class="ws-mat-primary-background">Join event</button>
+            </div>
+        </mat-card-content>
+        <mat-card-content *ngIf="!isLive && isRecording">
+            <button mat-raised-button type="button" class="ws-mat-primary-background"><img class="recordicon" src="/assets/icons/recording@2x.png" alt="Recording">View recording</button>
+        </mat-card-content>
+    </div>
 </mat-card>

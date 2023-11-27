@@ -1,0 +1,38 @@
+<div class="flex items-center mt-4">
+    <div class="flex flex-row gap-2 cursor-pointer mat-subheading-1" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}">
+        <div>Go to discuss hub</div>
+        <mat-icon>
+            chevron_right
+        </mat-icon>
+    </div>
+</div>
+
+<div class="flex gap-6 updates-on-posts">
+    <div class="discussion-card flex-1" *ngIf="discussConfig?.updatePosts?.active">
+        <div class="p-5">
+            <ws-widget-update-posts [updateConfig]="discussConfig?.updatePosts" [updatesPosts]="updatesPosts" ></ws-widget-update-posts>
+        </div>
+    </div>
+
+    <div class="discussion-card flex-1" *ngIf="discussConfig?.trendingDiscussions?.active">
+        <div class="flex-1">
+            <div class="flex flex-col p-5 gap-4 trending-discussion">
+                <div class="flex flex-row gap-3 mat-subheading-1">
+                    <div class="flex flex-grow">Trending discussions</div>
+                </div>
+
+                <ws-widget-discussions [discussion]="discussion" [count]="3" [trend]="true"></ws-widget-discussions>
+            </div>
+        </div>
+
+        <div class="flex justify-center items-center p-4" *ngIf="!discussion.loadSkeleton && (!discussion.error || discussion.data)">
+            <div class="flex gap-1 font-semibold cursor-pointer ws-mat-default-text" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >
+                <div>Show all</div>
+                <mat-icon>
+                    chevron_right
+                </mat-icon>
+            </div>
+        </div>
+    </div>
+
+</div>

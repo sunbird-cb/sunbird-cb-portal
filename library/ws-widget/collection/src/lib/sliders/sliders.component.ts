@@ -25,7 +25,7 @@ export class SlidersComponent extends WidgetBaseComponent
     this.reInitiateSlideInterval()
   }
   reInitiateSlideInterval() {
-    if (this.widgetData.length > 1) {
+    if (this.widgetData && this.widgetData.length > 1) {
       try {
         if (this.slideInterval) {
           this.slideInterval.unsubscribe()

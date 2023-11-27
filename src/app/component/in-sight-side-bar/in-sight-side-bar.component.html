@@ -1,0 +1,30 @@
+<div class="margin-bottom-m margin-top-m">
+    <ws-widget-profile-card-stats (expandCollapse)="expandCollapse($event)"
+    (activity)="goToActivity($event)" [profileData]="homePageData.profileCard"
+     [insightsData]="insightsData" [isLoading]="profileDataLoading"></ws-widget-profile-card-stats>
+</div>
+<section class="hidden md:block">
+    <section class="collapsible" [@collapse]="collapsed">
+        <div class="margin-bottom-m" >
+            <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="homePageData.weeklyClaps" [isLoading]="clapsDataLoading"></ws-widget-weekly-claps>
+        </div>
+
+        <div class="flex flex-col discussion-card margin-bottom-m">
+            <div class="flex mat-subheading-1 p-4">
+                <div class="flex gap-1 cursor-pointer" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}">
+                    My Discussions
+                    <mat-icon class="ws-mat-default-text">
+                        chevron_right
+                    </mat-icon>
+                </div>
+            </div>
+            <ws-widget-discussions [discussion]="discussion" [count]="2" ></ws-widget-discussions>
+        </div>
+        
+        <ws-widget-pending-request [pendingRequestData]="pendingRequestData" [isLoading]="pendingRequestSkeleton"></ws-widget-pending-request>
+    </section>
+    <!-- <ws-no-data [noDataValue]="noDataValue"></ws-no-data> -->
+    <div class="flex flex-col">
+        <ws-home-other-portal></ws-home-other-portal>
+    </div>
+</section>

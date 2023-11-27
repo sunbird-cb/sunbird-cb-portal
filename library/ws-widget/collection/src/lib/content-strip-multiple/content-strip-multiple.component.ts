@@ -21,6 +21,7 @@ import { HttpClient } from '@angular/common/http'
 import { environment } from 'src/environments/environment'
 import { NSSearch } from '@sunbird-cb/collection'
 import { SearchApiService } from '../_services/search-api.service'
+import { TranslateService } from '@ngx-translate/core'
 
 interface IStripUnitContentData {
   key: string
@@ -83,6 +84,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     private userSvc: WidgetUserService,
     private http: HttpClient,
     private searchApiService: SearchApiService,
+    private translate: TranslateService,
   ) {
     super()
   }
@@ -508,7 +510,8 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       }
       // tslint:disable-next-line: deprecation
       this.userSvc.fetchUserBatchList(userId, queryParams).subscribe(
-        courses => {
+        (result: any) => {
+          const courses = result && result.courses
           const showViewMore = Boolean(
             courses.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
           )
@@ -529,7 +532,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
             }
             : null
           if (courses && courses.length) {
-            content = courses.map(c => {
+            content = courses.map((c: any) => {
               const contentTemp: NsContent.IContent = c.content
               contentTemp.completionPercentage = c.completionPercentage || c.progress || 0
               contentTemp.completionStatus = c.completionStatus || c.status || 0
@@ -755,7 +758,8 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       )
 
       this.userSvc.fetchUserBatchList(userId, queryParams).subscribe(
-        (courses: any) => {
+        (result: any) => {
+          const courses = result && result.courses
           const goals = courses.reduce((acc: any[], cur: any) => {
             if (cur && cur.content && cur.content.primaryCategory === NsContent.EPrimaryCategory.MANDATORY_COURSE_GOAL) {
               acc.push(cur)
@@ -1194,5 +1198,11 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       })
       .catch(_err => { })
       .finally(() => Promise.resolve())
+  }
+
+  translateLabels(label: string) {
+    label = label.replace(/\s/g, "")
+    const translationKey = 'contentstripmultiple.'+  label;
+    return this.translate.instant(translationKey);
   }
 }

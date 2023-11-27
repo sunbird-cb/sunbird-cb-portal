@@ -12,6 +12,9 @@ import {
   MatChipsModule,
   MatCardModule,
 } from '@angular/material'
+import { HttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
+import { HttpLoaderFactory } from 'src/app/app.module'
 
 @NgModule({
   declarations: [ContentStripMultipleComponent],
@@ -26,7 +29,15 @@ import {
     MatProgressSpinnerModule,
     MatChipsModule,
     MatCardModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   entryComponents: [ContentStripMultipleComponent],
+  exports: [ContentStripMultipleComponent],
 })
 export class ContentStripMultipleModule {}

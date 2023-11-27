@@ -1,0 +1,82 @@
+<div class="flex flex-col mt-4">
+    <div class="flex flex-row gap-2 mat-subheading-1 cursor-pointer" [routerLink]="['/app/network-v2/home']">
+        <div>Go to Network hub</div>
+        <mat-icon class="ws-mat-default-text">
+            chevron_right
+        </mat-icon>
+    </div>
+
+    <div class="flex gap-6 network-requests">
+        <div class="discussion-card flex-1" *ngIf="networkConfig?.recentRequests?.active">
+            <ws-widget-recent-requests [recentRequests]="recentRequests"></ws-widget-recent-requests>
+        </div>
+
+        <div class="discussion-card flex-1 network-suggestion" *ngIf="networkConfig?.networkSuggestions?.active">
+            <div class="flex flex-col gap-6 p-4">
+                <div class="mat-subheading-1" *ngIf="network.suggestionsLoader"> <ws-widget-skeleton-loader [width]="'163px'" [height]="'16px'"
+                    [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader></div>
+                <div class="mat-subheading-1" *ngIf="!network.suggestionsLoader">Suggested for you</div>
+                <div class="flex flex-row gap-4 justify-center">
+                    <!-- loader code -->
+                    <ng-container *ngIf="network.suggestionsLoader">
+                        <div class="card p-4 flex flex-col items-center rounded-xl" *ngFor="let item of [1, 2]">
+                            <ws-widget-skeleton-loader [width]="'64px'" [height]="'64px'"
+                                [bindingClass]="'flex rounded-full h-16'"></ws-widget-skeleton-loader>
+                            <div class="loader-wrapper">
+                                <ws-widget-skeleton-loader [width]="'120px'" [height]="'120px'"
+                                    [bindingClass]="'flex rounded'">
+                                </ws-widget-skeleton-loader>
+                            </div>
+                            <ws-widget-skeleton-loader [width]="'24px'" [height]="'12px'"
+                                [bindingClass]="'flex rounded-full px-8 py-2'"></ws-widget-skeleton-loader>
+                        </div>
+                    </ng-container>
+                    <!-- loader code -->
+
+                    <ng-container *ngIf="!network.suggestionsLoader">
+                        <ng-container *ngIf="network.networkRecommended.length">
+                            <div *ngFor="let recommend of network.networkRecommended">
+                                <div class="card p-4 flex flex-col items-center rounded-xl gap-3 netword-card">
+                                    <div class="flex justify-center items-center initial-circle bg-blue-700 text-xl">{{ recommend?.fullName }}</div>
+                                    <div class="flex flex-col gap-1">
+                                        <div class="font-semibold text-center mat-body-2">{{ recommend?.personalDetails?.firstname }}</div>
+                                        <div class="text-center dept-name">{{ recommend?.employmentDetails?.departmentName }}</div>
+                                        <div
+                                            class="flex flex-row gap-2 ws-mat-default-text font-semibold px-8 py-2 rounded-full mat-body-2 connect-button cursor-pointer text-lg mt-2" (click)="handleConnect(recommend)" *ngIf="!recommend.connecting">
+                                            <mat-icon class="ws-mat-default-text">person_add</mat-icon>
+                                            Connect
+                                        </div>
+                                        <div class="flex flex-row gap-2 ws-mat-default-text font-semibold px-8 py-2 rounded-full connect-button cursor-pointer text-lg mt-2 mat-body-2" *ngIf="recommend.connecting">
+                                            Connecting...
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="!network.networkRecommended || !network.networkRecommended.length">
+                            <div class="p-4 flex flex-col items-center rounded-xl gap-3">
+                                <mat-icon class="no-data-found">report_off</mat-icon>
+                                <div class="mat-subheading-1">No data found!</div>
+                                <div class="text-center">As of now there are no recommendations found for you.</div>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="flex flex-row gap-2 p-4 ws-mat-default-text ws-widget-sliders justify-center" *ngIf="network.networkRecommended && network.networkRecommended.length">
+                <div class="flex justify-center items-center">
+                    <div class="flex gap-1 font-semibold cursor-pointer ws-mat-default-text" [routerLink]="['/app/network-v2/home']">
+                        <div *ngIf="!suggestionsLoader">Show all</div>
+                        <div *ngIf="suggestionsLoader"><ws-widget-skeleton-loader [width]="'163px'" [height]="'16px'"
+                            [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader></div>
+                        <mat-icon>
+                            chevron_right
+                        </mat-icon>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -3,13 +3,18 @@
     <mat-card-content role="link" tabindex="0">
       <ng-container>
         <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all" *ngIf="pastEvent">
-          <p mat-button class="flex-1 margin-top-xs margin-bottom-xs">
+          <p mat-button class="flex-1 margin-top-xs margin-bottom-xs" *ngIf="!eventData?.recordedLinks">
             <span i18n>Event is completed</span>
           </p>
+          <p mat-button class="flex-1 margin-top-xs margin-bottom-xs" *ngIf="eventData?.recordedLinks && eventData?.recordedLinks.length > 0">
+            <a class="flex-1" href="{{eventData?.recordedLinks[0]}}" target="_blank">
+              <span i18n>View recording</span>
+            </a>
+          </p>
         </div>
-        <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all ws-mat-accent-background" *ngIf="currentEvent">
+        <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all" *ngIf="currentEvent">
           <a mat-button class="flex-1" href="{{eventData?.registrationLink}}" target="_blank">
-            <span class="text-white" i18n>Attend Live Event</span>
+            <span i18n>Join event</span>
           </a>
         </div>
         <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all" *ngIf="futureEvent">
@@ -44,11 +49,11 @@
             </span>
         </div>
       </div>
-      <div class="margin-top-m">
+      <!-- <div class="margin-top-m">
         <span class="mat-subheading-2 ws-mat-black60-text" role="link" tabindex="0">
         Last updated on {{eventData?.lastUpdatedOn | date}}
         </span>
-      </div>
+      </div> -->
     </mat-card-content>
     <!-- <mat-card-content>
       <span role="link" tabindex="0" class="mat-subheading-2">Recently Earned</span>

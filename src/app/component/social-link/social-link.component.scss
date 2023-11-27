@@ -1,0 +1,28 @@
+.social-icons {
+  
+}
+
+.social-icons ul {
+  display: inline-block;
+  padding: 0;
+}
+
+.social-icons ul li:first-child {
+  display: inline-block;
+  margin-left: 0;
+} 
+
+.social-icons ul li {
+  display: inline-block;
+  margin-left: 16px;
+}
+
+.social-icons li:hover {
+  filter: invert(55%) sepia(61%) saturate(653%) hue-rotate(352deg) brightness(106%) contrast(97%);
+}
+
+@media (max-width : 768px) {    
+    .social-icons {
+      text-align: center;
+    }
+}

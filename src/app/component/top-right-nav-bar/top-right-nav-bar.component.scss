@@ -1,0 +1,96 @@
+.right-side-nav-items {
+    display: inline-block;
+    margin: 12px 0;
+}
+
+::ng-deep .right-nav-tooltip {
+  background-color: #000 !important;
+  color: #fff !important;
+  // height: 32px;
+  border-radius: 4px;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.right-side-nav-items li {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.download-app-chip {
+    border-radius: 63px;
+    background: #F3962F;
+    color: #fff;
+    min-width: 99px;
+    text-align: center;
+    font-size: 14px;
+    height: 32px;
+}
+
+.download-app-chip span {
+    padding: 8px 16px;
+}
+
+
+.download-app-chip:hover {
+  background-color: #C37024;
+}
+.help-icon img{
+    vertical-align: middle;
+}
+.custom-lang {
+  font: 400 14px/21px Lato;
+  width: 64px;
+}
+.custom-lang.mat-form-field-appearance-legacy .mat-form-field-infix .mat-form-field-infix{
+  padding: 0 !important;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .help-icon {
+      height: 20px;
+      width: 20px;
+    }
+    .download-app-chip {
+      display: none !important;
+    }
+    .download-app-chip-top-header {
+      border-radius: 63px;
+      background: #F3962F;
+      color: #fff;
+      min-width: 129px;
+      text-align: center;
+      padding: 6px 16px;
+      list-style: none;
+    }
+
+    .right-side-nav-items {
+        display: inline-block;
+        margin: 12px -3px;
+    }
+    
+  }

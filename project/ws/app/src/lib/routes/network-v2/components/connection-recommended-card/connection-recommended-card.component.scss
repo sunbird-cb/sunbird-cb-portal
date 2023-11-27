@@ -3,9 +3,13 @@
 @import 'ws-mixins';
 
 .card-container {
-    height: 231px;
+    // height: 231px;
+    height: 215px;
     width:  268px;
+    // overflow: hidden;
     border: 1px solid rgba(0,0,0,8%);
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0,0,0,.08);
 }
 
 .photo-container{
@@ -35,6 +39,7 @@
 }
 .connect_btn {
     width:230px;
+    border-radius: 20px;
 }
 span.profile-badge {
     position: absolute;

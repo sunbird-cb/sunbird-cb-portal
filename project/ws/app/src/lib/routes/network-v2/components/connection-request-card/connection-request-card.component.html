@@ -1,16 +1,16 @@
-<div class="flex flex-1 items-center card-container ws-mat-primary-tags">
+<div class="flex flex-1 items-center card-container">
     <a href="javascript:void(0)" class="flex flex-1" i18n-aria-label role="link">
         <!-- <div class="mr-3 cursor-pointer" (click)="goToUserProfile(user)">
             <ws-widget-avatar-photo [name]="getUseravatarName()" [photoUrl]="user?.photo" size="m">
             </ws-widget-avatar-photo>
         </div> -->
         <div class="mr-3 cursor-pointer circle-m" (click)="goToUserProfile(user)">
-            <div class="initials" *ngIf="user && user?.personalDetails">
-                {{user?.personalDetails?.firstname.charAt(0).toUpperCase()}}
+            <div class="initials" *ngIf="user && user.fullName">
+                {{user?.fullName.charAt(0).toUpperCase()}}
             </div>
-            <div class="initials" *ngIf="user && !user?.personalDetails && user.profileDetails === null">
+            <!-- <div class="initials" *ngIf="user && !user?.personalDetails && user.profileDetails === null">
                 {{user?.firstName.charAt(0).toUpperCase()}}
-            </div>
+            </div> -->
         </div>
         <div class="flex flex-col flex-1 cursor-pointer" (click)="goToUserProfile(user)">
             <!-- <a href="javascript:void(0)" class="" i18n-aria-label role="link"> -->
@@ -18,28 +18,28 @@
                 {{user?.name}}
             </div> -->
             <ws-app-connection-name [hoverUser]="usr"></ws-app-connection-name>
-            <div class="designation truncate ws-mat-black60-text" *ngIf="user?.employmentDetails">
-                {{user?.employmentDetails?.departmentName}}
+            <div class="designation truncate ws-mat-black60-text" *ngIf="user?.departmentName">
+                {{user?.departmentName}}
             </div>
-            <div class="designation truncate ws-mat-black60-text" *ngIf="!user?.employmentDetails">
-                {{user?.rootOrg.orgName}}
-            </div>
+            <!-- <div class="designation truncate ws-mat-black60-text" *ngIf="!user?.employmentDetails">
+                {{user?.rootOrg?.orgName}}
+            </div> -->
             <!-- </a> -->
         </div>
     </a>
 
-    <div class="text-right">
-        <button mat-button color="default" type="button" class="flex-auto-display margin-right-m"
-            (click)="rejectConnection()">
-            <span class="ws-mat-black60-text" i18n>Reject</span>
-        </button>
+    <div class="text-right flex items-center">
+        <a color="default" class="flex-auto-display margin-right-m" (click)="rejectConnection()">
+            <img src="/assets/icons/Decline_icon.png" class="request-img">
+            <!-- <span class="ws-mat-black60-text" i18n>Reject</span> -->
+        </a>
         <!-- <span *ngIf="uploadSaveData" class="px-4 flex items-center justify-center">
             <mat-spinner [diameter]="30"></mat-spinner>
           </span> -->
-        <button mat-stroked-button color="accent" type="button" class=" mat-accent-border flex-auto-display"
-            (click)="acceptConnection()">
-            <span class="" i18n>Accept</span>
-        </button>
+        <a class=" flex-auto-display" (click)="acceptConnection()">
+            <!-- <span class="" i18n>Accept</span> -->
+            <img src="/assets/icons/Accept_icon.png" class="request-img">
+        </a>
     </div>
 </div>
 

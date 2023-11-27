@@ -1,6 +1,6 @@
 import { trigger, transition, style, animate } from '@angular/animations'
 import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core'
-import { Router } from '@angular/router'
+import { Router, NavigationEnd } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
@@ -53,6 +53,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
   environment!: any
   @HostBinding('id')
   public id = `hub_${Math.random()}`
+  public activeRoute = ''
 
   // private readonly featuresConfig: IGroupWithFeatureWidgets[] = []
 
@@ -67,12 +68,42 @@ export class CardHubsListComponent extends WidgetBaseComponent
   }
 
   hubsList!: NsInstanceConfig.IHubs[]
-
+  inactiveHubList!: NsInstanceConfig.IHubs[]
   ngOnInit() {
+    this.router.events.subscribe((event: any) => {
+
+      if (event instanceof NavigationEnd) {
+          // Hide loading indicator
+          // console.log('event', event)
+          if (event.url === '/' || event.url.includes('/page/home')) {
+            this.activeRoute = 'Home'
+          } else if (event.url.includes('/page/learn') || event.url.includes('/app/toc')) {
+            this.activeRoute = 'Learn'
+          } else if (event.url.includes('/app/discussion-forum')) {
+            this.activeRoute = 'Discuss'
+          } else if (event.url.includes('app/network-v2')
+          || event.url.includes('app/person-profile') || event.url.includes('app/user-profile')) {
+            this.activeRoute = 'Network'
+          } else if (event.url.includes('app/careers')) {
+            this.activeRoute = 'Career'
+          } else if (event.url.includes('app/competencies')) {
+            this.activeRoute = 'Competencies'
+          } else if (event.url.includes('app/event-hub')) {
+            this.activeRoute = 'Events'
+          }
+
+          localStorage.setItem('activeRoute', this.activeRoute)
+
+      }
+  })
     this.environment = environment
+    this.environment.portals = this.environment.portals.filter(
+      (obj: any) => ((obj.name !== 'Frac Dictionary') &&
+       (obj.isPublic || this.isAllowed(obj.id))))
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.hubsList = (instanceConfig.hubs || []).filter(i => i.active)
+      this.hubsList = (instanceConfig.hubs || []).sort((a, b) => a.order - b.order)
+      this.inactiveHubList = (instanceConfig.hubs || []).filter(i => !(i.active))
     }
     this.defaultMenuSubscribe = this.isLtMedium$.subscribe((isLtMedium: boolean) => {
       this.isMobile = isLtMedium
@@ -151,12 +182,21 @@ export class CardHubsListComponent extends WidgetBaseComponent
     } else {
       this.searchSpinner = true
       this.enableFeature = false
-
     }
 
   }
   toggleVisibility() {
-    this.visible = !this.visible
+    if (!this.visible) {
+      this.visible = !this.visible
+      this.configSvc.changeNavBarFullView.next(this.visible)
+    } else {
+      this.visible = !this.visible
+      setTimeout(() => {
+        this.configSvc.changeNavBarFullView.next(this.visible)
+      },         200)
+      this.activeRoute = ''
+    }
+
   }
 
   hasRole(role: string[]): boolean {

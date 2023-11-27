@@ -30,6 +30,7 @@ import { Subscription } from 'rxjs'
 import { NSProfileDataV3 } from '@ws/app/src/lib/routes/profile-v3/models/profile-v3.models'
 import { NPSGridService } from '@sunbird-cb/collection/src/lib/grid-layout/nps-grid.service'
 import moment from 'moment'
+import { TranslateService } from '@ngx-translate/core'
 // import { of } from 'rxjs'
 /* tslint:enable */
 // interface IDetailsResponse {
@@ -79,6 +80,7 @@ export class InitService {
     private userPreference: UserPreferenceService,
     private http: HttpClient,
     private npsSvc: NPSGridService,
+    private translate: TranslateService,
     // private widgetContentSvc: WidgetContentService,
 
     @Inject(APP_BASE_HREF) private baseHref: string,
@@ -139,6 +141,20 @@ export class InitService {
     //   'cbp',
     //   domSanitizer.bypassSecurityTrustResourceUrl('fusion-assets/icons/hubs.svg'),
     // )
+    // setLang
+    this.translate.addLangs(['en', 'hi', 'ta'])
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+      lang = lang.replace(/\"/g, "")
+      console.log(lang)
+      this.translate.use(lang)
+      if (lang == 'en') {
+      }
+    } else {
+      this.translate.setDefaultLang('en')
+      localStorage.setItem('websiteLanguage', 'en')
+    }
   }
 
   get isAnonymousTelemetryRequired(): boolean {
@@ -366,6 +382,7 @@ export class InitService {
             departmentName: userPidProfile.channel,
             dealerCode: null,
             isManager: false,
+            profileUpdateCompletion: _.get(userPidProfile, 'profileUpdateCompletion') || 0,
           }
 
           this.configSvc.userProfileV2 = {
@@ -489,6 +506,7 @@ export class InitService {
             departmentName: userPidProfile.channel,
             dealerCode: null,
             isManager: false,
+            profileUpdateCompletion: _.get(userPidProfile, 'profileUpdateCompletion') || 0,
           }
           this.configSvc.userProfileV2 = {
             userId: _.get(profileV2, 'userId') || userPidProfile.userId,

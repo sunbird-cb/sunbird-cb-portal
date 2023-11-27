@@ -1,0 +1,102 @@
+<div class="weekly-wrapper" *ngIf="!isLoading && weeklyData?.enableCard && !weeklyData?.displayOnlyHeader">
+    <div>
+        <ng-container [ngTemplateOutlet]="headder"></ng-container>
+        <p class="period-count" *ngIf="insightsData?.weeklyClaps">{{insightsData?.weeklyClaps?.startDate | date: 'EE, d MMM'}}  - {{insightsData?.weeklyClaps?.endDate | date: 'EE, d MMM'}}</p>
+    </div>
+    <div>
+        <div class="flex flex-between">
+            <ng-container *ngIf="insightsData && insightsData?.weeklyClaps">
+                <ng-container *ngFor="let week of weeklyData?.weekList;let i = index">
+                    <div class="flex flex-middle margin-right-m">
+                        <ng-container *ngIf="!week?.activeWeek" >
+                            <p class="margin-remove  margin-right-xs week-name">{{week.label}} </p>
+                            <img width="24" height="24" src="{{insightsData.weeklyClaps[week.key]?.timespent > 60 ? 'assets/icons/home/check_icon.svg' : 'assets/icons/home/decline_icon.svg'}}" alt="">
+                        </ng-container>
+                        <ng-container *ngIf="week?.activeWeek">
+                            <p class="margin-remove active-week margin-right-xs week-name">{{week.label}} </p>
+                            <img width="24" height="24" src="{{insightsData.weeklyClaps[week.key]?.timespent > 60 ? 'assets/icons/home/highlight.svg' : 'assets/icons/home/decline_icon.svg'}}" alt="">
+                        </ng-container>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="weeklyData?.displayOnlyHeader">
+    <ng-container [ngTemplateOutlet]="headder"></ng-container>
+</ng-container>
+
+<div class="weekly-wrapper" *ngIf="isLoading && weeklyData?.enableCard">
+    <div>
+        <div class="flex flex-between">
+            <p class="flex-align-start weekly-title flex flex-middle margin-remove">
+                <ws-widget-skeleton-loader [width]="'100px'" [height]="'16px'" [bindingClass]="'flex rounded h-16 margin-bottom-xs'"></ws-widget-skeleton-loader>
+            </p>
+            <p class="flex weeks-count  flex-middle  margin-remove">
+                <ws-widget-skeleton-loader [width]="'24px'" [height]="'24px'" [bindingClass]="'flex rounded h-16 margin-right-xs'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'100px'" [height]="'16px'" [bindingClass]="'flex rounded h-16 '"></ws-widget-skeleton-loader>
+            </p>
+        </div>
+        <p class="period-count">
+            <ws-widget-skeleton-loader [width]="'80px'" [height]="'16px'" [bindingClass]="'flex rounded h-16 '"></ws-widget-skeleton-loader>
+        </p>
+    </div>
+    <div>
+        <div class="flex ">
+            <div class="flex flex-middle margin-right-m">
+                <ws-widget-skeleton-loader [width]="'52px'" [height]="'24px'" [bindingClass]="'flex rounded h-16 '"></ws-widget-skeleton-loader>
+            </div>
+            <div class="flex flex-middle margin-right-m">
+                <ws-widget-skeleton-loader [width]="'52px'" [height]="'24px'" [bindingClass]="'flex rounded h-16 '"></ws-widget-skeleton-loader>
+            </div>
+            <div class="flex flex-middle margin-right-m">
+                <ws-widget-skeleton-loader [width]="'52px'" [height]="'24px'" [bindingClass]="'flex rounded h-16 '"></ws-widget-skeleton-loader>
+            </div>
+            <div class="flex flex-middle margin-right-m">
+                <ws-widget-skeleton-loader [width]="'52px'" [height]="'24px'" [bindingClass]="'flex rounded h-16 '"></ws-widget-skeleton-loader>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #myDialog>
+    <div class="clap-info-wrapper">
+        <div class="clap-info-center flex-wrapped flex flex-middle flex-center">
+            <img class="" src="assets/icons/home/clap_icon.svg" width="42" height="42" alt="">
+            <p class="w-full clap-ques">What is weekly claps?</p>
+            <p class="w-full clap-ans">Weekly Claps are a fun way to track your engagement on the platform. They reflect your commitment and activity levels.</p>
+        </div>
+        <div class="clap-info-qus-list flex flex-middle">
+            <div>
+                <img class="" src="assets/icons/home/clap_icon.svg" alt="">
+            </div>
+            <div class="clap-qus-ans">
+                <p class="clap-qus">What should I do to maintain the claps?</p>
+                <p class="clap-ans">Spend at least <span class="clap-highlight"><b>60 minutes</b></span> engaging with the platform every week to maintain your claps.</p>
+            </div>
+        </div>
+        <div class="clap-info-qus-list flex flex-middle">
+            <div>
+                <img class="" src="assets/icons/home/clap_icon.svg" alt="">
+            </div>
+            <div class="clap-qus-ans">
+                <p class="clap-qus">Why did I lose my claps?</p>
+                <p class="clap-ans">If you fall short of the <span class="clap-highlight"><b>60 minutes</b></span> engagement requirement in a week, your claps count resets to zero.</p>
+                
+            </div>
+        </div>
+    </div>
+   
+</ng-template>
+
+<ng-template #headder>
+    <div class="flex flex-between flex-middle">
+        <p class="flex-align-start weekly-title flex flex-middle margin-remove">Weekly claps
+            <img class="margin-left-s cursor-pointer" (click)="openInfo(myDialog)" width="20px" height="20px" src="assets/icons/home/help_icon.svg" >
+        </p>
+        <p class="flex weeks-count  flex-middle  margin-remove">
+            <img class="margin-right-s cursor-pointer" width="34" height="34" src="assets/icons/home/clap_icon.svg" >
+            {{insightsData?.weeklyClaps?.total_claps || 0}} weeks
+        </p>
+    </div>
+</ng-template>

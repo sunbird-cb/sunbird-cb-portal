@@ -1,0 +1,177 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+
+.download-app {
+    display: flex; 
+    flex-direction: row; 
+    width:1200px;
+    height:489px;
+    margin:0 auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.download-app-popup {
+    display: flex; 
+    flex-direction: row; 
+    height:344px;
+   padding-left: 48px;
+   padding-top: 24px;
+}
+
+.app-store-button {
+    display: flex; 
+    flex-direction: row; 
+    margin-top: 50px;
+}
+
+.download-app .left-side {
+    margin:64px 0;
+}
+.download-app .right-side {
+    margin-left: 170px;
+}
+
+.download-app-popup .left-side {
+    width: 540px;
+}
+
+.download-app-popup .right-side {
+    margin-left: 15px;
+}
+
+.download-app .circle {
+    background-color: rgb(27, 76, 161);
+    width: 308px;
+    height: 308px;
+    border-radius: 50%;
+    margin-top: 64px;
+}
+
+.download-app-popup .circle {
+    background-color: rgb(27, 76, 161);
+    width: 308px;
+    height: 308px;
+    border-radius: 50%;
+    margin-top: 0;
+}
+
+.vertical-image {
+    position: absolute;
+    // margin-left: 3%;
+    margin-top:-5%;
+}
+
+.play-store {
+    text-align: center;
+    width: 135px;
+    border-right: 1px solid #ccc;
+    padding-right: 40px;
+}
+
+.app-store {
+    text-align: center;
+    width: 135px;
+    margin-left: 40px;
+}
+
+.main-heading {
+    color: rgb(27, 76, 161);
+    font-size: 36px;
+    font-family: 'Montserrat';
+    font-weight: 600;
+}
+
+.sub-heading {
+    color:rgb(239, 149, 30); font-size: 36px;
+      font-family: 'Montserrat';
+      font-weight: 600;
+}
+
+.description {
+    margin-top: 8px;;
+}
+
+.description p {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+::ng-deep .mat-dialog-container {
+    border-radius: 8px !important;
+}
+
+.dialog-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+@media (max-width : 768px) {    
+    .download-app {
+        height:529px!important;
+        width: 100%;
+        
+    }
+
+    .mobile-download {
+        padding:16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .main-heading {
+        color: rgb(27, 76, 161);
+        font-size: 24px;
+        font-family: 'Montserrat';
+        font-weight: 600;
+    }
+    
+    .sub-heading {
+        color:rgb(239, 149, 30); 
+        font-size: 24px;
+          font-family: 'Montserrat';
+          font-weight: 600;
+    }
+    
+    .description p {
+        font-size: 14px;
+        font-weight: 400;
+        width: 375px;
+    }
+
+    .right-side {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        margin-left: 50%!important;
+    }
+
+    .left-side {
+        margin-top:26px!important;
+    }
+    
+    .circle {
+        background-color: rgb(27, 76, 161);
+        width: 152px!important;
+        height: 152px!important;
+        border-radius: 50%;
+        margin-top: 10px;
+        margin-left: -76px;
+    }
+    
+    
+    .vertical-image {
+        position: relative;
+        margin-top: -48%;
+        // margin-left: 6%;
+    }
+    .vertical-image img{
+        height: 241px;
+    }
+}

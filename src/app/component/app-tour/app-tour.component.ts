@@ -8,12 +8,13 @@ import { UserProfileService } from '@ws/app/src/lib/routes/user-profile/services
   styleUrls: ['./app-tour.component.scss'],
   providers:[UserProfileService]
 })
+
 export class AppTourComponent {
   progressIndicatorLocation = ProgressIndicatorLocation.TopOfTourBlock;
   currentWindow: any
   videoProgressTime: number = 114;
   tourStatus: any = {visited: true, skipped: false}
-  //profileDetails: any
+  
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     if (event.key === "Escape") {
       this.skipTour('','')
@@ -85,6 +86,7 @@ export class AppTourComponent {
     ],
     preventBackdropFromAdvancing: true
   };
+  
   private readonly MOBILE_TOUR: GuidedTour = {
     tourId: 'purchases-tour',
     useOrb: false,
@@ -118,26 +120,26 @@ export class AppTourComponent {
         backBtnClass: 'back',
         skipBtnClass: 'skip'
       },
-      {
-        icon: 'search',
-        isMobile: true,
-        connectorDirection: 'right',
-        title: 'Search',
-        selector: '#feature_search',
-        class: 'tour_search_mobile',
-        containerClass: 'tour_search_mobile_container',
-        content: 'Find the perfect course and program tailor-made for you.',
-        orientation: Orientation.BottomLeft,
-        nextBtnClass: 'action-orange mat-button',
-        backBtnClass: 'back',
-        skipBtnClass: 'skip'
-      },
+      // {
+      //   icon: 'search',
+      //   isMobile: true,
+      //   connectorDirection: 'right',
+      //   title: 'Search',
+      //   selector: '#feature_search',
+      //   class: 'tour_search_mobile',
+      //   containerClass: 'tour_search_mobile_container',
+      //   content: 'Find the perfect course and program tailor-made for you.',
+      //   orientation: Orientation.BottomLeft,
+      //   nextBtnClass: 'action-orange mat-button',
+      //   backBtnClass: 'back',
+      //   skipBtnClass: 'skip'
+      // },
       {
         icon: 'person',
         isMobile: true,
         connectorDirection: 'bottom',
         title: 'My Profile',
-        selector: '#feature_profile',
+        selector: '#user_icon',
         class: 'tour_profile_mobile',
         containerClass: 'tour_profile_mobile_container',
         content: 'Update your information to get the best-suited courses and programs.',
@@ -170,8 +172,8 @@ export class AppTourComponent {
         profileDetails: {get_started_tour: status}
       }
     }
-    this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(res => {
-      console.log("re s ", res )
+    this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(_res => {
+      // console.log("re s ", res )
     })
   }
 
@@ -189,10 +191,9 @@ export class AppTourComponent {
     this.raiseTemeletyInterat(screen, subType)
     if (this.isMobile) {
       // @ts-ignore
-      document.getElementById('menuToggleMobile').click();
       setTimeout(() => {
         this.guidedTourService.startTour(this.MOBILE_TOUR);
-      }, 1000);
+      }, 2000);
     } else {
       this.guidedTourService.startTour(this.TOUR);
       setTimeout(() => {
@@ -223,14 +224,15 @@ export class AppTourComponent {
     this.showpopup = false;
     this.showVideoTour = false;
     this.showCompletePopup = false;
-    this.closePopupIcon = false
-    this.guidedTourService.skipTour();
+    this.closePopupIcon = false;
+    setTimeout(() => {
+      this.guidedTourService && this.guidedTourService.skipTour();
+    }, 2000);
     if (this.isMobile) {
        // @ts-ignore
-       document.getElementById('menuToggleMobile').click();
        setTimeout(() => {
          this.guidedTourService.startTour(this.MOBILE_TOUR);
-       }, 1000);
+       }, 2000);
     }
   }
 
@@ -242,10 +244,6 @@ export class AppTourComponent {
       this.onCongrats();
     }, 3000);
     this.raiseGetStartedEndTelemetry()
-    if (this.isMobile) {
-      // @ts-ignore
-      document.getElementById('menuToggleMobile').click()
-    }
     this.updateTourstatus({visited: true, skipped: false})
   }
 

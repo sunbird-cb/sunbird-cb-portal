@@ -1,0 +1,240 @@
+.profile-wrapper {
+    background-color: #ffff;
+    // height: 200px;
+    border-radius: 12px;
+    padding: 16px;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    margin-top: 32px;
+    z-index: 11;
+}
+.stats-container {
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0, 0.08);
+    opacity: 1;
+    background: #dce0e4;
+    padding: 24px 16px 8px 16px;
+    position: relative;
+    top: -20px;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.profile-user-details {
+    .progress-bar {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        .parent-progress {
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .user-img {
+            position: absolute;
+          }
+          .progress {
+             position: relative;
+             width: 64px;
+             height: 64px;
+             border-radius: 50%;
+             color: #fff;
+             background: #444 linear-gradient(to right, transparent 50%, var(--clr) 0);
+             transform: rotate(180deg)
+           }
+        }
+        .parent-progress .progress ws-widget-avatar-photo {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 1.5rem;
+          z-index: 1;
+          font-weight: 500;
+          margin: 0;
+        }
+        .parent-progress .progress::before {
+          content: '';
+          display: block;
+          height: 100%;
+          margin-left: 50%;
+          transform-origin: left;
+          border-radius: 0 100% 100% 0/50%;
+        }
+        .parent-progress .progress::after {
+          content: '';
+          position: absolute;
+          background: #222;
+          inset: 5px;
+          border-radius: 50%;
+        }
+        .parent-progress .progress::before {
+          background: var(--clr);
+          transform: rotate(calc(((var(--i) - 50) * 0.01turn)));
+        }
+        .parent-progress .progress.less::before {
+          background: #444;
+          transform: rotate(calc(((var(--i) - 0) * 0.01turn)));
+        }
+        
+        .percentage-block {
+          border-radius: 8px;
+          opacity: 1;
+          background-color: rgba(255,255,255, 1);
+          width: fit-content;
+          position: absolute;
+          top: 83%;
+          left: 20%;
+          z-index: 9;
+          padding: 2px 8px;
+          height: fit-content;
+          opacity: 1;
+          color: rgba(0,0,0,0.87);
+          font-family: "Lato-Regular";
+          font-size: 0.63rem;
+          font-weight: 400;
+          font-style: normal;
+          letter-spacing: 0.5px;
+          text-align: center;
+          line-height: 12px;
+        }
+    }
+    .user-name {
+        width: 250px;
+        opacity: 1;
+        font-family: "Montserrat-SemiBold";
+        font-size: 1rem;
+        font-weight: 600;
+        font-style: normal;
+        letter-spacing: 0.12px;
+        line-height: 24px;
+        cursor: pointer;
+        p {
+          white-space:nowrap;
+          overflow:hidden;
+          text-overflow:ellipsis;
+        }
+        mat-icon {
+          cursor: pointer;
+          float:right;
+        }
+    }
+
+}
+
+.divider {
+    margin-top: 16px;
+    border: 1px solid rgba(0,0,0, 0.08);
+}
+
+.profile-user-stats {
+    .user-data-list {
+        padding: 8px;
+        flex-wrap: wrap;
+        .stats-data {
+          width: 33%;
+        }
+        .stats-title {
+            opacity: 1;
+            color: rgba(0,0,0,0.6);
+            font-family: "Lato-Regular";
+            font-size: 0.75rem;
+            font-weight: 400;
+            font-style: normal;
+            letter-spacing: 0.25px;
+            line-height: 16px;
+        }
+        .stats-count {
+            
+        }
+    }
+    .user-insights {
+        // height: 84px;
+    }
+}
+.expand-icon {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    background: black;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 50%;
+    right: 50%;
+    top: -16px;
+    cursor: pointer;
+}
+
+
+
+.progress-wrapper { 
+  position: relative;
+  path {
+    stroke-linecap: round;
+    stroke-width: 6;
+  }
+  .grey {
+    stroke: #e5e5e5;
+  }
+  .progress-clr {
+    stroke: rgb(73, 201, 81);
+    stroke-dasharray: 248;
+    // stroke-dashoffset: calc(247 - ((247 * var(--i))/100));
+    stroke-dashoffset: var(--i);
+  }
+  .user-img{
+      position: absolute;
+      top: 12px;
+      left: 7px;
+      span {
+        border-radius: 8px;
+        opacity: 1;
+        background-color: white;
+        width: fit-content;
+        position: absolute;
+        top: 76%;
+        left: 13%;
+        z-index: 9;
+        padding: 2px 8px;
+        height: fit-content;
+        opacity: 1;
+        color: rgba(0, 0, 0, 0.87);
+        font-family: "Lato-Regular";
+        font-size: 0.63rem;
+        font-weight: 400;
+        font-style: normal;
+        letter-spacing: 0.5px;
+        text-align: center;
+        line-height: 12px;
+      }
+  }
+}
+.user-img-completion {
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+  span {
+    left: 8% !important;
+  }
+}
+
+.text-ellipses {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px; 
+}
+.activites {
+  opacity: 1;
+  color: rgba(27,76,161,1);
+  font-family: "Lato-Regular";
+  font-size: 0.825rem;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0.25px;
+  text-align: center;
+  line-height: 20px;
+}

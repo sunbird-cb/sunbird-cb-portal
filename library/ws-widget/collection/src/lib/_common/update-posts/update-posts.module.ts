@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { SkeletonLoaderModule } from './../skeleton-loader/skeleton-loader.module';
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { RouterModule } from '@angular/router'
+import { MatIconModule } from '@angular/material/icon'
+import { SkeletonLoaderModule } from './../skeleton-loader/skeleton-loader.module'
 
-import { UpdatePostsComponent } from './update-posts.component';
+import { UpdatePostsComponent } from './update-posts.component'
 
 @NgModule({
   declarations: [UpdatePostsComponent],
@@ -11,7 +12,8 @@ import { UpdatePostsComponent } from './update-posts.component';
   imports: [
     CommonModule,
     SkeletonLoaderModule,
-    MatIconModule
+    MatIconModule,
+    RouterModule,
   ],
   exports: [
     UpdatePostsComponent,

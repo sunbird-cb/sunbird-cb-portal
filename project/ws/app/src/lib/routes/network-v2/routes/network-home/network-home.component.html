@@ -1,7 +1,7 @@
 <div class="flex width-expand flex-column">
   <div class="flex flex-1 mb-4 search">
     <mat-form-field appearance="outline" class="autocomplete-form mat-body-2" color="primary" [floatLabel]="'never'">
-      <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+      <mat-icon matPrefix class="ml-5 flex items-center justify-center">search</mat-icon>
       <!-- <mat-placeholder>Search user</mat-placeholder> -->
       <!-- <input [(ngModel)]="nameFilter" (ngModelChange)="searchUser()" matInput type="search"> -->
       <mat-label class="mat-body-2">Search user</mat-label>
@@ -63,8 +63,10 @@
         <!-- <ng-container *ngFor="let post of data.posts | pipeFilter:'index': '0'"> -->
         <ng-container *ngIf="connectionRequests && connectionRequests.length">
           <ng-container *ngFor="let user of connectionRequests | slice: 0: 3">
-            <ws-app-connection-request-card [user]="user" (connection)="connectionUpdate($event)">
+            <div class="mb-5">
+            <ws-app-connection-request-card [user]="user" (connection)="connectionUpdate($event)" class="mb-5">
             </ws-app-connection-request-card>
+            </div>
           </ng-container>
         </ng-container>
         <h4 *ngIf="connectionRequests && connectionRequests.length <=0" class="w-full text-center ws-mat-black60-text">
@@ -90,7 +92,8 @@
         </mat-card-title>
         <span class="spacer"></span>
         <button mat-button color="default" type="button" class=" flex-auto-display see_all_btn" (click)="goToMyMdo()">
-          <span class="ws-mat-default-text" i18n>SEE ALL</span>
+          <span class="ws-mat-default-text" i18n>Show All </span>
+          <mat-icon  class="ws-mat-default-text mr-3 mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">navigate_next </mat-icon>
         </button>
       </mat-card-header>
       <mat-card-content class="margin-left-m mb-0-imp flex flex-wrap">

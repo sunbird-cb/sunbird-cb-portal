@@ -351,10 +351,10 @@ mat-divider {
     }
   }
 }
-::ng-deep.mat-tab-header {
+::ng-deep.custom-tabgroup .mat-tab-header {
   border: 0 !important;
 }
-::ng-deep.mat-tab-body {
+::ng-deep.custom-tabgroup .mat-tab-body {
   padding: 15px 0 220px 0!important;
   box-sizing: border-box;
   overflow-y: initial!important;
@@ -366,7 +366,7 @@ mat-divider {
   // }
 
 }
-::ng-deep.mat-tab-body.mat-tab-body-active {
+::ng-deep.custom-tabgroup .mat-tab-body.mat-tab-body-active {
 
   // @include breakpoint-s {
 
@@ -378,19 +378,19 @@ mat-divider {
 
 }
 
-::ng-deep.mat-tab-body-wrapper {
+::ng-deep.custom-tabgroup .mat-tab-body-wrapper {
     overflow: inherit!important;
 }
 
 
-::ng-deep.mat-tab-label {
+::ng-deep.custom-tabgroup .mat-tab-label {
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   margin-right: 3%;
   .mat-tab-label-content {
     text-transform: uppercase;
   }
 }
-::ng-deep.mat-tab-label-active {
+::ng-deep.custom-tabgroup .mat-tab-label-active {
   .mat-tab-label-content {
     font-weight: 700 !important;
   }

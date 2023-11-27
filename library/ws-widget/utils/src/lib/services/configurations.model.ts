@@ -90,7 +90,8 @@ export namespace NsInstanceConfig {
     desc: string
     hubname: string
     icon: string
-    path: string
+    path: string,
+    order: number
   }
   export interface IIndexHtmlMeta {
     description?: string
@@ -272,6 +273,7 @@ export namespace NsUser {
     desiredTopics?: any
     desiredCompetencies?: any
     userRoles?: any
+    profileUpdateCompletion?: number
   }
 
   export interface INodebbUserProfile {
