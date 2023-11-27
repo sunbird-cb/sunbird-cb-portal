@@ -7,12 +7,14 @@ import {
   MatSliderModule,
   MatSelectModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatTooltipModule,
 } from '@angular/material'
 import { MatDialogModule} from '@angular/material';
 import { HeaderComponent } from './header/header.component';
 import { AppNavBarComponent } from '../component/app-nav-bar/app-nav-bar.component';
 import { RouterModule } from '@angular/router';
+
 import {
   GridLayoutModule
 } from '@sunbird-cb/collection';
@@ -48,6 +50,7 @@ import { FormsModule } from '@angular/forms';
     MatSelectModule,
     MatFormFieldModule, 
     MatInputModule,
+    MatTooltipModule,
   ],
   exports: [
     HeaderComponent,

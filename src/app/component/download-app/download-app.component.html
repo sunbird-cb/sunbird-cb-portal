@@ -1,4 +1,5 @@
 <div style="width:100%;background-color: #fff;">
+    <div class="dialog-close" *ngIf="!isMobile" (click)="closePopup()"><img alt="" src="assets/icons/home/decline_icon.svg" type="button"></div>
     <div [ngClass]="popupClass === 'download-app-popup' ? 'download-app-popup' : 'download-app'" *ngIf="!isMobile">
         <ng-container>
             <div class="left-side">

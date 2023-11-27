@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { Observable } from 'rxjs'
+import { Observable, Subject } from 'rxjs'
 
 const API_END_POINTS = {
   INSIGHTS: `apis/proxies/v8/read/user/insights`,
@@ -17,7 +17,7 @@ const API_END_POINTS = {
 })
 
 export class HomePageService {
-
+  closeDialogPop = new Subject()
   constructor(private http: HttpClient) { }
 
   getInsightsData(payload: any) {

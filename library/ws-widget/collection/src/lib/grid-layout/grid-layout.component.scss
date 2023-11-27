@@ -762,6 +762,7 @@
 .full-height > .new-box-hubs{
   height: auto;
   overflow-y: auto;
+  box-shadow: 0 5px 5px -6px #222;
 }
 
 @media only screen and (max-width : 768px) {

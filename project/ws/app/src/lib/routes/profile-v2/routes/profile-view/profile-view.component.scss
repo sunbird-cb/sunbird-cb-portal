@@ -143,7 +143,6 @@
     .filter {
       width: 480px;
     }
-
   }
 }
 
@@ -417,3 +416,8 @@ span.profile-badge {
 .font-weight-400 {
   font-weight: 400 !important;
 }
+
+::ng-deep .mat-tab-label-active {
+  color: #000000 !important;
+  font-weight: 700 !important;
+} 

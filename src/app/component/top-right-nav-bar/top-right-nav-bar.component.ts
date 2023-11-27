@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DialogBoxComponent } from './../dialog-box/dialog-box.component';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { HomePageService } from '../../services/home-page.service';
 const rightNavConfig = [
   {
     "id":1,
@@ -47,7 +48,7 @@ export class TopRightNavBarComponent implements OnInit {
       key: 'ta',
     },
   ]
-  constructor(public dialog: MatDialog, private translate: TranslateService) { 
+  constructor(public dialog: MatDialog, public homePageService: HomePageService, private translate: TranslateService) { 
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
       let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
@@ -58,10 +59,17 @@ export class TopRightNavBarComponent implements OnInit {
     }
 
   }
+  dialogRef:any;
 
   ngOnInit() {
     this.rightNavConfig = this.rightNavConfig.topRightNavConfig ? this.rightNavConfig.topRightNavConfig : rightNavConfig;
     // console.log('rightNavConfig',this.rightNavConfig)
+    this.homePageService.closeDialogPop.subscribe((data:any)=>{
+      if(data) {
+        this.dialogRef.close();
+      }
+      
+    })
   }
 
   ngOnChanges() {
@@ -69,11 +77,11 @@ export class TopRightNavBarComponent implements OnInit {
   }
 
   openDialog(): void { 
-    let dialogRef = this.dialog.open(DialogBoxComponent, { 
+    this.dialogRef = this.dialog.open(DialogBoxComponent, { 
       width: '1000px', 
     }); 
   
-    dialogRef.afterClosed().subscribe(() => { 
+    this.dialogRef.afterClosed().subscribe(() => { 
     }); 
   } 
   
