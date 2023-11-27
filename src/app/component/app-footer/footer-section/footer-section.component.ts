@@ -16,15 +16,8 @@ export class FooterSectionComponent implements OnInit {
   constructor(private configSvc: ConfigurationsService,
     private discussUtilitySvc: DiscussUtilsService,
     private router: Router,
-    private translate: TranslateService) {
-    if (localStorage.getItem('websiteLanguage')) {
-      this.translate.setDefaultLang('en')
-      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
-      lang = lang.replace(/\"/g, "")
-      console.log('footer ------------', lang)
-      this.translate.use(lang)
-    }
-  }
+    private translate: TranslateService) {}
+
   footerSectionConfig = [
     {
       "id":1,

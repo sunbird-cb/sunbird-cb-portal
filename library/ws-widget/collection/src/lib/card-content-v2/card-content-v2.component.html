@@ -193,7 +193,8 @@
         [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" class="flex flex-middle">
         <mat-icon>toc</mat-icon>
         <h3 class="margin-remove" i18n>
-          View details
+          <!-- View details -->
+          {{ 'cardcontentv2.viewdetails' | translate }}
         </h3>
       </a>
 
@@ -741,7 +742,7 @@
                 <mat-icon class="mr-1">star</mat-icon>
                 <span>{{widgetData.content.avgRating}}</span>
               </div>
-              <span class="most-enrolled-text margin-left-m">Most enrolled</span>
+              <span class="most-enrolled-text margin-left-m">{{ 'cardcontentv2.mostenrolled' | translate }}</span>
             </div>
           </div>
         </mat-card-content>
@@ -1041,7 +1042,7 @@
             <mat-icon>star</mat-icon>
             <span class="rating-number">{{widgetData?.content?.avgRating}}</span>
           </div>
-          <span class="most-enrolled-text margin-left-m">Most enrolled</span>
+          <span class="most-enrolled-text margin-left-m">{{ 'cardcontentv2.mostenrolled' | translate }}</span>
         </div>
       </div>
     </mat-card-content>
