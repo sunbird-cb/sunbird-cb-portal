@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog'
 // import { DiscussService } from '../../../discuss/services/discuss.service'
 /* tslint:disable */
 import _ from 'lodash'
-import * as moment from 'moment'
+import moment from 'moment'
 import { EventService } from '../../services/events.service'
 /* tslint:enable */
 
