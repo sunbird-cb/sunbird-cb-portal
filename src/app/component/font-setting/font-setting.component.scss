@@ -94,3 +94,9 @@
     min-height: 0 !important;
     margin-left: -200px !important
 }
+
+@media only screen and (min-width: 1980px)  {
+    .mat-slider-horizontal {
+        min-width: 96px !important;
+    }
+}

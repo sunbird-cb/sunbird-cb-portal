@@ -12,29 +12,29 @@
             <div class="flex flex-col gap-4">
                 <div class="home-container mt-8">
                     <div class="flex flex-1 cursor-pointer" [routerLink]="'/page/learn'">
-                        <p class="mat-subheading-1 margin-remove inline-block flex gap-2 items-center">
+                        <p class="mat-subheading-1 margin-remove inline-block flex gap-2 items-center feed-title">
                             Go to learn hub 
-                            <mat-icon class="ws-mat-default-text mr-3 mat-icon notranslate material-icons mat-icon-no-color" [color]="'accent'">navigate_next
+                            <mat-icon class="ws-mat-default-text mr-3 mat-icon notranslate material-icons mat-icon-no-color feed-title-icon" [color]="'accent'">navigate_next
                                 </mat-icon>
                         </p>
                     </div>                    
                 </div>
-                <div *ngFor="let item of contentStripData">
-                    <ng-container *ngIf="item?.strips[0]?.active">
+                <ng-container *ngFor="let item of contentStripData; let i=index; trackBy i">                    
+                <div class="section_{{i}}" *ngIf="item?.strips[0]?.active">
                         <ws-feed-list [widgetData]="item"></ws-feed-list>
-                    </ng-container>
                 </div>
-                <div *ngIf="sliderData && sliderData[0]?.active">
+                </ng-container>
+                <div class="slider" *ngIf="sliderData && sliderData[0]?.active">
                     <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
                 </div>
                 <!-- Discussion section starts here -->
-                <div *ngIf="homeConfig?.discussHub?.active">
+                <div class="discuss" *ngIf="homeConfig?.discussHub?.active">
                     <ws-discuss-hub [discussConfig]="homeConfig?.discussHub"></ws-discuss-hub>
                 </div>
                 <!-- Discussion section ends here -->
 
                 <!-- Go to Network hub starts here -->
-                <div *ngIf="homeConfig?.networkHub?.active">
+                <div class="network" *ngIf="homeConfig?.networkHub?.active">
                     <ws-network-hub [networkConfig]="homeConfig?.networkHub"></ws-network-hub>
                 </div>
                 <!-- Go to Network hub end here -->

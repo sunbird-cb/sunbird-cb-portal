@@ -3,6 +3,15 @@
     margin: 12px 0;
 }
 
+::ng-deep .right-nav-tooltip {
+  background-color: #000 !important;
+  color: #fff !important;
+  // height: 32px;
+  border-radius: 4px;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
 .right-side-nav-items li {
     display: inline-block;
     cursor: pointer;
@@ -22,6 +31,10 @@
     padding: 8px 16px;
 }
 
+
+.download-app-chip:hover {
+  background-color: #C37024;
+}
 .help-icon img{
     vertical-align: middle;
 }
