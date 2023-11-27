@@ -18,7 +18,7 @@ import {
   NsContent,
 } from '@sunbird-cb/collection/src/lib/_services/widget-content.model'
 import {
-  ConfigurationsService, EventService, WsEvents
+  ConfigurationsService, EventService, WsEvents,
 } from '@sunbird-cb/utils'
 import { WidgetUserService } from '@sunbird-cb/collection/src/lib/_services/widget-user.service'
 import { MatTabChangeEvent } from '@angular/material'
@@ -39,6 +39,7 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
   totalCount = 0
   page = 1
   totalPages = 0
+  tabResults: any[] = []
 
   constructor(
     private activated: ActivatedRoute,
@@ -64,10 +65,12 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
     this.contentDataList = this.transformSkeletonToWidgets(this.seeAllPageConfig)
     if (this.seeAllPageConfig.request && this.seeAllPageConfig.request.searchV6) {
       this.fetchFromSearchV6(this.seeAllPageConfig)
-      this.seeAllPageConfig.request.searchV6.request.filters = 
+      this.seeAllPageConfig.request.searchV6.request.filters =
       this.checkForDateFilters(this.seeAllPageConfig.request.searchV6.request.filters)
     } else if (this.seeAllPageConfig.request && this.seeAllPageConfig.request.trendingSearch) {
       this.fetchFromTrendingContent(this.seeAllPageConfig)
+    } else if (this.seeAllPageConfig.request && this.seeAllPageConfig.request.enrollmentList) {
+      this.fetchFromEnrollmentList(this.seeAllPageConfig)
     }
   }
 
@@ -147,8 +150,8 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
   }
 
   getInprogressAndCompleted(array: NsContent.IContent[],
-    customFilter: any,
-    strip: NsContentStripWithTabs.IContentStripUnit) {
+                            customFilter: any,
+                            strip: NsContentStripWithTabs.IContentStripUnit) {
     const inprogress: any[] = []
     const completed: any[] = []
     array.forEach((e: any, idx: number, arr: any[]) => (customFilter(e, idx, arr) ? inprogress : completed).push(e))
@@ -185,7 +188,7 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
     return tabResults
   }
 
-  public tabClicked(tabEvent: MatTabChangeEvent, stripMap: any, stripKey: string) {
+  public tabClicked(tabEvent: MatTabChangeEvent, stripMap: any) {
     const data: WsEvents.ITelemetryTabData = {
       label: `${tabEvent.tab.textLabel}`,
       index: tabEvent.index,
@@ -195,11 +198,10 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
       data,
     )
     const currentTabFromMap = stripMap.tabs && stripMap.tabs[tabEvent.index]
-    const currentStrip = this.widgetData.strips.find(s => s.key === stripKey)
+    const currentStrip = stripMap
     if (currentStrip && currentTabFromMap && !currentTabFromMap.computeDataOnClick) {
       if (currentTabFromMap.requestRequired && currentTabFromMap.request) {
         // call API to get tab data and process
-        // this.processStrip(currentStrip, [], 'fetching', true, null)
         if (currentTabFromMap.request.searchV6) {
           this.getTabDataByNewReqSearchV6(currentStrip, tabEvent.index, currentTabFromMap, true)
         } else if (currentTabFromMap.request.trendingSearch) {
@@ -214,7 +216,7 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
       let userId = ''
       let content: NsContent.IContent[]
       let contentNew: NsContent.IContent[]
-      let tabResults: any[] = []
+      this.tabResults = []
       const queryParams = _.get(strip.request.enrollmentList, 'queryParams')
       if (this.configSvc.userProfile) {
         userId = this.configSvc.userProfile.userId
@@ -243,27 +245,11 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
           })
 
           if (strip.tabs && strip.tabs.length) {
-            tabResults = this.splitEnrollmentTabsData(contentNew, strip)
-            // this.processStrip(
-            //   strip,
-            //   this.transformContentsToWidgets(contentNew, strip),
-            //   'done',
-            //   calculateParentStatus,
-            //   viewMoreUrl,
-            //   tabResults
-            // )
+            this.tabResults = this.splitEnrollmentTabsData(contentNew, strip)
           } else {
-            // this.processStrip(
-            //   strip,
-            //   this.transformContentsToWidgets(contentNew, strip),
-            //   'done',
-            //   calculateParentStatus,
-            //   viewMoreUrl,
-            // )
           }
         },
         () => {
-          // this.processStrip(strip, [], 'error', calculateParentStatus, null)
         }
       )
     }
@@ -283,13 +269,11 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
         )
         strip.request.searchV6.request.offset = this.offsetForPage
       }
-      debugger
       if (strip.tabs && strip.tabs.length) {
-        // TODO: Have to extract requestRequired to outer level of tabs config
         const firstTab = strip.tabs[0]
         if (firstTab.requestRequired) {
-          if (this.stripsResultDataMap[strip.key] && this.stripsResultDataMap[strip.key].tabs) {
-            const allTabs = this.stripsResultDataMap[strip.key].tabs
+          if (this.seeAllPageConfig.tabs) {
+            const allTabs = this.seeAllPageConfig.tabs
             const currentTabFromMap = (allTabs && allTabs.length && allTabs[0]) as NsContentStripWithTabs.IContentStripTab
 
             this.getTabDataByNewReqSearchV6(strip, 0, currentTabFromMap, calculateParentStatus)
@@ -301,9 +285,9 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
         const response = await this.searchV6Request(strip, strip.request, calculateParentStatus)
         if (response && response.results) {
           if (this.contentDataList[0].widgetData.content) {
-            this.contentDataList = 
+            this.contentDataList =
             _.concat(this.contentDataList, this.transformContentsToWidgets(response.results.result.content, strip))
-          }else {
+          } else {
             this.contentDataList = this.transformContentsToWidgets(response.results.result.content, strip)
           }
           this.totalCount = response.results.result.count
@@ -317,7 +301,7 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
   async searchV6Request(strip: NsContentStripWithTabs.IContentStripUnit,
                         request: NsContentStripWithTabs.IContentStripUnit['request'],
                         _calculateParentStatus: boolean
-  ): Promise < any > {
+  ): Promise <any> {
     const originalFilters: any = []
     // console.log('calling -- ')
     return new Promise <any>((resolve, reject) => {
@@ -345,16 +329,11 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
               },
             } :
             null
-          // if (viewMoreUrl && viewMoreUrl.queryParams) {
-          //   viewMoreUrl.queryParams = viewMoreUrl.queryParams
-          // }
-          // console.log('returned results')
           resolve({
             results,
             viewMoreUrl,
           })
         },                                                  (error: any) => {
-          // this.processStrip(strip, [], 'error', calculateParentStatus, null)
           reject(error)
         })
       }
@@ -363,7 +342,6 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
 
   async fetchFromTrendingContent(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.trendingSearch && Object.keys(strip.request.trendingSearch).length) {
-      console.log('inside fetchFromTrendingContent if inside')
       // let originalFilters: any = []
       if (strip.request &&
         strip.request.trendingSearch &&
@@ -390,20 +368,18 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
       } else {
       try {
         const response = await this.trendingSearchRequest(strip, strip.request, calculateParentStatus)
-        console.log('calling  after - response, ', response)
         if (response && response.results && response.results.response) {
           // if (this.contentDataList[0].widgetData.content) {
-          //   this.contentDataList = 
+          //   this.contentDataList =
           //   _.concat(this.contentDataList, this.transformContentsToWidgets(response.results.result.content, strip))
           // }else {
           //   this.contentDataList = this.transformContentsToWidgets(response.results.result.content, strip)
           // }
           // this.totalCount = response.results.result.count
           // this.totalPages = Math.ceil(response.results.result.count / this.pagelimit)
-          debugger
           const content = response.results.response[strip.request.trendingSearch.responseKey] || []
           this.contentDataList = this.transformContentsToWidgets(content, strip)
-        } 
+        }
       } catch (error) {}
       }
     }
@@ -412,7 +388,7 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
   async trendingSearchRequest(strip: NsContentStripWithTabs.IContentStripUnit,
                               request: NsContentStripWithTabs.IContentStripUnit['request'],
                               _calculateParentStatus: boolean
-  ): Promise < any > {
+  ): Promise <any> {
     const originalFilters: any = []
     return new Promise <any>((resolve, reject) => {
       if (request && request.trendingSearch) {
@@ -459,9 +435,7 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
           })
         },                                                                     (error: any) => {
           if (error.error && error.error.status === 400) {
-            // this.processStrip(strip, [], 'done', calculateParentStatus, null)
           }
-          // this.processStrip(strip, [], 'done', calculateParentStatus, null)
           reject(error)
         })
       }
@@ -478,31 +452,20 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
       const response = await this.searchV6Request(strip, currentTab.request, calculateParentStatus)
       if (response && response.results) {
         const widgets = this.transformContentsToWidgets(response.results.result.content, strip)
-        let tabResults: any[] = []
-        if (this.stripsResultDataMap[strip.key] && this.stripsResultDataMap[strip.key].tabs) {
-          const allTabs = this.stripsResultDataMap[strip.key].tabs
+        this.tabResults = []
+        if (this.seeAllPageConfig.tabs) {
+          const allTabs = this.seeAllPageConfig.tabs
           if (allTabs && allTabs.length && allTabs[tabIndex]) {
             allTabs[tabIndex] = {
               ...allTabs[tabIndex],
               widgets,
             }
-            tabResults = allTabs
+            this.tabResults = allTabs
           }
         }
-        // this.processStrip(
-        //   strip,
-        //   widgets,
-        //   'done',
-        //   calculateParentStatus,
-        //   response.viewMoreUrl,
-        //   tabResults // tabResults as widgets
-        // )
       } else {
-        // this.processStrip(strip, [], 'error', calculateParentStatus, null)
       }
     } catch (error) {
-      // Handle errors
-      // console.error('Error:', error);
     }
   }
 
@@ -517,35 +480,19 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
       if (response && response.results && response.results.response) {
         const content = response.results.response[currentTab.value] || []
         const widgets = this.transformContentsToWidgets(content, strip)
-        // console.log('currentTab --- widgets', widgets)
-        let tabResults: any[] = []
+        this.tabResults = []
         if (this.seeAllPageConfig.tabs) {
-          const allTabs = this.seeAllPageConfig[strip.key].tabs
+          const allTabs = this.seeAllPageConfig.tabs
           if (allTabs && allTabs.length && allTabs[tabIndex]) {
             allTabs[tabIndex] = {
               ...allTabs[tabIndex],
               widgets,
             }
-            tabResults = allTabs
+            this.tabResults = allTabs
           }
         }
-        debugger
-        // console.log('tabResults -++++***--', tabResults)
-        // console.log('calling  after-- ')
-        // this.processStrip(
-        //   strip,
-        //   widgets,
-        //   'done',
-        //   calculateParentStatus,
-        //   response.viewMoreUrl,
-        //   tabResults // tabResults as widgets
-        // )
-      } else {
-        // this.processStrip(strip, [], 'done', calculateParentStatus, null)
       }
     } catch (error) {
-      // Handle errors
-      // this.processStrip(strip, [], 'error', calculateParentStatus, null)
     }
   }
 
