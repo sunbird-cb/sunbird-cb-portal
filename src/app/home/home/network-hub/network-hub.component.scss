@@ -13,6 +13,23 @@
     }
 }
 
+// .text-ellipsis {
+$title-line-count: 2;
+$title-line-height: 16px;
+
+.text-ellipsis {
+    word-break: break-all;
+    white-space: initial;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $title-line-count;
+    -webkit-box-orient: vertical;
+    min-height: $title-line-count * $title-line-height;
+}
+// }
+
 .card {
     box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.08),
         0 0px 4px rgba(0, 0, 0, 0.08),
