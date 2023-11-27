@@ -20,7 +20,7 @@
 
 
             <a *ngFor="let resource of allResources | filter : searchText">
-    
+
                 <ws-app-knowledge-card [resource]="resource" (resourceBookmarkEvent)="refresh()" >
 
                 </ws-app-knowledge-card>
@@ -29,7 +29,7 @@
 
         <ng-template #nodata>
           <img src="assets/common/error-pages/empty_search.svg" class="empty_search">
-          <h2 class="mat-h2 text-center margin-top-m">No results found</h2>
+          <h2 class="mat-h2 text-center margin-top-m">{{ 'knowledgeall.noresultfound' | translate }}</h2>
         </ng-template>
       </div>
 
