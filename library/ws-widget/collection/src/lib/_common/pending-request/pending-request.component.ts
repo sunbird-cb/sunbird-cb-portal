@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
 @Component({
   selector: 'ws-widget-pending-request',
   templateUrl: './pending-request.component.html',
@@ -15,7 +15,7 @@ export class PendingRequestComponent implements OnInit {
   }
 
   navigateTo() {
-    this.router.navigateByUrl('app/network-v2/connection-requests');
+    this.router.navigateByUrl('app/network-v2/connection-requests')
   }
 
 }
