@@ -15,8 +15,8 @@
 <ul class="right-side-nav-items">
     <ng-container *ngFor="let rnc of rightNavConfig">
         <li *ngIf="rnc.section === 'download' && rnc.active && item.type === 'downloadButton'" class="download-app-chip" (click)="openDialog()">
-            <!-- <span class="mat-body-2">Download App</span> -->
-            <span class="mat-body-2">{{ 'header.download_app' | translate }}</span>
+            <span class="mat-body-2">Download App</span>
+            <!-- <span class="mat-body-2">{{ 'header.download_app' | translate }}</span> -->
         </li>
         <li *ngIf="item.type === 'fontButton' && rnc.section === 'font-setting' && rnc.active">
             <ws-font-setting></ws-font-setting>
@@ -28,7 +28,7 @@
                     {{lang.value}}
                   </mat-option>
                 </mat-select> -->
-                <select matNativeControl class="custom-lang" (change)="selectLanguage($event)">
+                <select matNativeControl class="custom-lang" value="selectedLanguage" (change)="selectLanguage($event)">
                     <option *ngFor="let lang of multiLang" [value]="lang.key">
                         {{lang.value}}
                     </option>
