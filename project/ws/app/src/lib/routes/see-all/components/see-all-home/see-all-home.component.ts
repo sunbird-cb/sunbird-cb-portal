@@ -1,21 +1,21 @@
 import {
   Component,
   OnInit,
-  OnDestroy
+  OnDestroy,
 } from '@angular/core'
 import {
-  ActivatedRoute
+  ActivatedRoute,
 } from '@angular/router'
 // tslint:disable-next-line
 import _ from 'lodash'
 import {
-  SeeAllService
+  SeeAllService,
 } from '../../services/see-all.service'
 import {
-  NsContentStripWithTabs
+  NsContentStripWithTabs,
 } from '@sunbird-cb/collection/src/lib/content-strip-with-tabs/content-strip-with-tabs.model'
 import {
-  NsContent
+  NsContent,
 } from '@sunbird-cb/collection/src/lib/_services/widget-content.model'
 import {
   ConfigurationsService, EventService, WsEvents
@@ -54,11 +54,11 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
     const configData = await this.seeAllSvc.getSeeAllConfigJson().catch(_error => {})
     configData.homeStrips.forEach((ele: any) => {
       if (ele && ele.strips.length > 0) {
-        ele.strips.forEach((subEle:any) => {
+        ele.strips.forEach((subEle: any) => {
           if (subEle.key === this.keyData) {
             this.seeAllPageConfig = subEle
           }
-        });
+        })
       }
     })
     this.contentDataList = this.transformSkeletonToWidgets(this.seeAllPageConfig)
@@ -119,12 +119,12 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
       widgetData: {
         content,
         ...(content.batch && {
-          batch: content.batch
+          batch: content.batch,
         }),
         cardSubType: strip.stripConfig && strip.stripConfig.cardSubType,
         context: {
           pageSection: strip.key,
-          position: idx
+          position: idx,
         },
         intranetMode: strip.stripConfig && strip.stripConfig.intranetMode,
         deletedMode: strip.stripConfig && strip.stripConfig.deletedMode,
@@ -315,12 +315,12 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
   }
 
   async searchV6Request(strip: NsContentStripWithTabs.IContentStripUnit,
-    request: NsContentStripWithTabs.IContentStripUnit['request'],
-    _calculateParentStatus: boolean
+                        request: NsContentStripWithTabs.IContentStripUnit['request'],
+                        _calculateParentStatus: boolean
   ): Promise < any > {
     const originalFilters: any = []
     // console.log('calling -- ')
-    return new Promise < any > ((resolve, reject) => {
+    return new Promise <any>((resolve, reject) => {
       if (request && request.searchV6) {
         this.seeAllSvc.searchV6(request.searchV6).subscribe(results => {
           const showViewMore = Boolean(
@@ -351,18 +351,17 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
           // console.log('returned results')
           resolve({
             results,
-            viewMoreUrl
+            viewMoreUrl,
           })
-        }, (error: any) => {
+        },                                                  (error: any) => {
           // this.processStrip(strip, [], 'error', calculateParentStatus, null)
           reject(error)
-        }, )
+        })
       }
     })
   }
 
   async fetchFromTrendingContent(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
-    console.log('inside fetchFromTrendingContent')
     if (strip.request && strip.request.trendingSearch && Object.keys(strip.request.trendingSearch).length) {
       console.log('inside fetchFromTrendingContent if inside')
       // let originalFilters: any = []
@@ -411,11 +410,11 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
   }
 
   async trendingSearchRequest(strip: NsContentStripWithTabs.IContentStripUnit,
-    request: NsContentStripWithTabs.IContentStripUnit['request'],
-    _calculateParentStatus: boolean
+                              request: NsContentStripWithTabs.IContentStripUnit['request'],
+                              _calculateParentStatus: boolean
   ): Promise < any > {
     const originalFilters: any = []
-    return new Promise < any > ((resolve, reject) => {
+    return new Promise <any>((resolve, reject) => {
       if (request && request.trendingSearch) {
         // check for the request if it has dynamic values]
         if (request.trendingSearch.request.filters.organisation &&
@@ -456,15 +455,15 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
             null
           resolve({
             results,
-            viewMoreUrl
+            viewMoreUrl,
           })
-        }, (error: any) => {
+        },                                                                     (error: any) => {
           if (error.error && error.error.status === 400) {
             // this.processStrip(strip, [], 'done', calculateParentStatus, null)
           }
           // this.processStrip(strip, [], 'done', calculateParentStatus, null)
           reject(error)
-        }, )
+        })
       }
     })
   }

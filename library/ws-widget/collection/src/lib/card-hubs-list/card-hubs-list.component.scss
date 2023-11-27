@@ -210,3 +210,14 @@ color:rgb(27, 76, 161)
 }
 
 }
+
+.simple-hubs-link:hover  {
+  // filter: invert(34%) sepia(88%) saturate(50) hue-rotate(193deg) brightness(60%) contrast(97%) !important;
+  .text-gray {
+    color: #1B4CA1 !important;
+  }
+ 
+  .mat-icon-disable {
+    filter: none !important;
+  }
+}

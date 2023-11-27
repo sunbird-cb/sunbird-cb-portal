@@ -48,7 +48,7 @@ import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content
 
 @NgModule({
   declarations: [
-    SeeAllHomeComponent
+    SeeAllHomeComponent,
   ],
   imports: [
     CommonModule,
@@ -101,6 +101,6 @@ import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content
   ],
   exports: [SeeAllHomeComponent],
   providers: [],
-  entryComponents:[SeeAllHomeComponent]
+  entryComponents: [SeeAllHomeComponent],
 })
 export class SeeAllModule { }

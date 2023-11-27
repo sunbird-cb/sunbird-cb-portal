@@ -4,12 +4,14 @@ import {
   MatIconModule,
   MatToolbarModule,
   MatMenuModule,
-  MatSliderModule
+  MatSliderModule,
+  MatTooltipModule
 } from '@angular/material'
 import { MatDialogModule} from '@angular/material';
 import { HeaderComponent } from './header/header.component';
 import { AppNavBarComponent } from '../component/app-nav-bar/app-nav-bar.component';
 import { RouterModule } from '@angular/router';
+
 import {
   GridLayoutModule
 } from '@sunbird-cb/collection';
@@ -39,7 +41,8 @@ import { TopRightNavBarComponent } from './../component/top-right-nav-bar/top-ri
     SearchModule,
     RouterModule,
     GridLayoutModule,
-    SharedModule
+    SharedModule,
+    MatTooltipModule
   ],
   exports: [
     HeaderComponent,

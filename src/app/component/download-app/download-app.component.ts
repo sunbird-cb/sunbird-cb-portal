@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-
+import { HomePageService } from '../../services/home-page.service';
 @Component({
   selector: 'ws-download-app',
   templateUrl: './download-app.component.html',
@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class DownloadAppComponent implements OnInit {
   @Input() popupClass:string = '';
   public isMobile = false;
-  constructor() { }
+  constructor(public homePageService: HomePageService) { }
 
   ngOnInit() {
     // console.log('popupClass',this.popupClass,window.innerWidth);
@@ -17,6 +17,10 @@ export class DownloadAppComponent implements OnInit {
     } else {
       this.isMobile = false;
     }
+  }
+
+  closePopup() {
+    this.homePageService.closeDialogPop.next(true);
   }
 
 }

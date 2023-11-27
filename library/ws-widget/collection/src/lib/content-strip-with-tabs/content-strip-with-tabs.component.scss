@@ -4,6 +4,9 @@
   display: flex;
   align-items: center;
   text-align: center;
+  height: 40px;
+  width:120px;
+  justify-content: center;
   .icon {
     $icon-size: 24px;
     font-size: $icon-size;
@@ -18,6 +21,11 @@
 
 .margin-bottom-custom {
   margin-bottom: 60px;
+}
+
+.view-more:hover {
+  background-color: #DCDFE5;
+ 
 }
 
 .pad {
