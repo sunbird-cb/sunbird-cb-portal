@@ -22,7 +22,9 @@ import { LiveHtmlEditorComponent } from './components/live-html-editor/live-html
 import { OptionsComponent } from './components/options/options.component'
 import { FormsModule } from '@angular/forms'
 import { CompetencyAddPopUpComponent } from './components/competency-add-popup/competency-add-popup'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+import { HttpLoaderFactory } from 'src/app/app.module'
+import { HttpClient } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -51,6 +53,13 @@ import { TranslateModule } from '@ngx-translate/core'
     SharedModule,
     AceEditorModule,
     CatalogSelectModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   exports: [
     MatQuillComponent,

@@ -16,7 +16,7 @@ export class FooterSectionComponent implements OnInit {
   constructor(private configSvc: ConfigurationsService,
     private discussUtilitySvc: DiscussUtilsService,
     private router: Router,
-    private translate: TranslateService,) {
+    private translate: TranslateService) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
       let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))

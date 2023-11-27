@@ -4,6 +4,7 @@ import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { NSSearch } from '@sunbird-cb/collection'
 import { SearchApiService } from '../_services/search-api.service'
+import { TranslateService } from '@ngx-translate/core'
 
 // import { ActivitiesService } from '@ws/app/src/lib/routes/activities/services/activities.service'
 // import { IActivity, IActivityCard, IChallenges } from '@ws/app/src/lib/routes/activities/interfaces/activities.model'
@@ -37,6 +38,7 @@ export class CardLearnComponent extends WidgetBaseComponent
     private router: Router,
     private activateroute: ActivatedRoute,
     private searchApiService: SearchApiService,
+    private translate: TranslateService
     // private activitiesSvc: ActivitiesService,
     // private snackBar: MatSnackBar,
   ) {
@@ -141,6 +143,12 @@ export class CardLearnComponent extends WidgetBaseComponent
 
   allActivities() {
     this.router.navigate(['app', 'activities'])
+  }
+
+  translateLabels(label: string, type: any, subtype: any) {
+    label = label.replace(/\s/g, "")
+    const translationKey = type + '.' + subtype +  label;
+    return this.translate.instant(translationKey);
   }
 
 }
