@@ -142,6 +142,7 @@ export class InitService {
     //   domSanitizer.bypassSecurityTrustResourceUrl('fusion-assets/icons/hubs.svg'),
     // )
     // setLang
+    this.translate.addLangs(['en', 'hi', 'ta'])
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
       let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))

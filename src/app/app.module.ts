@@ -204,8 +204,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient],
-    },
-  }),
+      },
+    }),
   ],
   exports: [
     TncComponent,
@@ -246,6 +246,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppTocResolverService,
     AppHierarchyResolverService,
     AppEnrollmentResolverService,
+    HttpClient,
     {
       provide: APP_BASE_HREF,
       useFactory: getBaseHref,

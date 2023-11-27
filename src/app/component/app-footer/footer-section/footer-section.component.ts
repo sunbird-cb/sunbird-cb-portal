@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ConfigurationsService } from '@sunbird-cb/utils';
+import { Component, Input, OnInit } from '@angular/core'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Router } from '@angular/router'
-import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service';
+import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 import _ from 'lodash'
+import { TranslateService } from '@ngx-translate/core'
 @Component({
   selector: 'ws-footer-section',
   templateUrl: './footer-section.component.html',
@@ -12,7 +13,18 @@ export class FooterSectionComponent implements OnInit {
   @Input() environment:any;
   @Input() hubsList:any;
   @Input() headerFooterConfigData:any;
-  constructor(private configSvc: ConfigurationsService,private discussUtilitySvc: DiscussUtilsService, private router: Router) { }
+  constructor(private configSvc: ConfigurationsService,
+    private discussUtilitySvc: DiscussUtilsService,
+    private router: Router,
+    private translate: TranslateService,) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+      lang = lang.replace(/\"/g, "")
+      console.log('footer ------------', lang)
+      this.translate.use(lang)
+    }
+  }
   footerSectionConfig = [
     {
       "id":1,
@@ -123,4 +135,9 @@ export class FooterSectionComponent implements OnInit {
     event.target.parentElement.classList.toggle('open');
   }
 
+  translateLabels(label: string, type: any) {
+    label = label.replace(/\s/g, "")
+    const translationKey = type + '.' +  label;
+    return this.translate.instant(translationKey);
+  }
 }
