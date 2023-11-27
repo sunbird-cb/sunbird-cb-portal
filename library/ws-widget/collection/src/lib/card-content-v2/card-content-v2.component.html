@@ -690,7 +690,7 @@
           <div style="position: relative; z-index: 1;">
             <ng-container *ngIf="widgetData.content.posterImage">
               <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" loading="lazy"
-              class="card-img ws-mat-primary-lite-background margin-remove"
+              class="card-img ws-mat-primary-lite-background margin-remove" [wsUtilsDefaultThumbnail]="defaultThumbnail"
               [alt]="widgetData.content.name" />
             </ng-container>
             <ng-container *ngIf="!widgetData.content.posterImage">

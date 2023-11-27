@@ -177,10 +177,6 @@ export class InsightSideBarComponent implements OnInit {
     );
   }
 
-  navigateTo() {
-    this.router.navigateByUrl('app/network-v2/connection-requests');
-  }
-
   moveToUserProile(id:string) {
     this.router.navigateByUrl('app/person-profile/'+id+'#profileInfo');
   }
@@ -190,6 +186,6 @@ export class InsightSideBarComponent implements OnInit {
   }
   
   goToActivity(_e: any) {
-    this.router.navigateByUrl('app/person-profile/me');
+    this.router.navigateByUrl(`app/person-profile/me?tab=1`);
   }
 }
