@@ -4,11 +4,11 @@
       [routerLink]="tab.routerLink" (click)="menuClick(tab)">
       <!--  -->
       <!-- <mat-icon>account_circle</mat-icon> -->
-      <span class="padding-left-xs">{{tab?.name}}</span>
+      <span class="padding-left-xs">{{translateLetMenuName(tab?.name)}}</span>
     </a>
     <a mat-list-item *ngIf="tab?.enabled && !tab?.routerLink" matRipple (click)="tourClick(tab)">
       <img class="tabIcon" [src]="tab.icon" alt="">
-      <span class="padding-left-xs">{{tab?.name}}</span>
+      <span class="padding-left-xs">{{translateLetMenuName(tab?.name)}}</span>
     </a>
   </ng-container>
 </mat-nav-list>
