@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, 
 import { HttpErrorResponse } from '@angular/common/http'
 import { NSProfileDataV2 } from '../../models/profile-v2.model'
 import { MatDialog } from '@angular/material/dialog'
+import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router'
 import { DiscussService } from '../../../discuss/services/discuss.service'
 // import { ProfileV2Service } from '../../services/profile-v2.servive'
@@ -99,7 +100,8 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     private valueSvc: ValueService,
     private userSvc: WidgetUserService,
     private contentSvc: WidgetContentService,
-    private homeSvc: HomePageService
+    private homeSvc: HomePageService,
+    private matSnackBar: MatSnackBar
   ) {
     this.Math = Math
     this.pageData = this.route.parent && this.route.parent.snapshot.data.pageData.data
@@ -150,6 +152,19 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fetchDiscussionsData()
     this.fetchUserBatchList()
     this.fetchRecentRequests()
+  }
+
+  ngOnInit() {
+    this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
+      this.sideNavBarOpened = !isLtMedium
+    })
+    this.getPendingRequestData()
+  }
+
+  ngAfterViewInit() {
+    if (this.menuElement) {
+      this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
+    }
   }
 
   decideAPICall() {
@@ -211,30 +226,25 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     )
   }
 
-  ngOnInit() {
-    // int left blank
-
-    this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
-      this.sideNavBarOpened = !isLtMedium
-    })
-    this.getPendingRequestData()
+  handleUpdateRequest(event: any): void {
+    this.homeSvc.updateConnection(event.payload).subscribe(
+      (_res: any) => {
+        if (event.action === 'Approved') {
+          this.matSnackBar.open("Request accepted successfully");
+        } else {
+          this.matSnackBar.open("Rejected the request");
+        }
+        event.reqObject.connecting = false;
+        this.fetchRecentRequests();
+      }, (error: HttpErrorResponse) => {
+        if (!error.ok) {
+          this.matSnackBar.open("Unable to update connection, due to some error!");
+        }
+        event.reqObject.connecting = false;
+      }
+    );
   }
 
-  ngOnDestroy() {
-    if (this.tabs) {
-      this.tabs.unsubscribe()
-    }
-
-    if (this.defaultSideNavBarOpenedSubscription) {
-      this.defaultSideNavBarOpenedSubscription.unsubscribe()
-    }
-  }
-
-  ngAfterViewInit() {
-    if (this.menuElement) {
-      this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
-    }
-  }
   fetchUserDetails(name: string) {
     if (name) {
       this.discussService.fetchProfileInfo(name).subscribe((response: any) => {
@@ -245,6 +255,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       })
     }
   }
+
   fetchConnectionDetails(wid: string) {
     this.networkV2Service.fetchAllConnectionEstablishedById(wid).subscribe(
       (data: any) => {
@@ -263,10 +274,12 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
           // this.discussionList = _.uniqBy(_.filter(this.discussProfileData.posts, p => _.get(p, 'isMainPost') === true), 'tid')
           this.discussionList = this.discussProfileData.posts.filter((p: any) => (p.isMainPost === true))
           break
+
         case 'best':
           // this.discussionList = _.uniqBy(this.discussProfileData.bestPosts, 'tid')
           this.discussionList = this.discussProfileData.bestPosts
           break
+
         case 'saved':
           this.discussService.fetchSaved(this.currentUsername).subscribe((response: any) => {
             if (response) {
@@ -281,6 +294,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
               this.discussionList = []
             })
           break
+
         default:
           // this.discussionList = _.uniqBy(this.discussProfileData.latestPosts, 'tid')
           this.discussionList = this.discussProfileData.latestPosts
@@ -327,9 +341,9 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     })
   }
-  public tabClicked(_tabEvent: MatTabChangeEvent) {
 
-  }
+  public tabClicked(_tabEvent: MatTabChangeEvent) {}
+
   getInsightsData() {
     const request = {
       request: {
@@ -342,15 +356,16 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
           },
       },
     }
-   this.homeSvc.getInsightsData(request).subscribe((res: any) => {
-    if (res.result.response) {
-      this.insightsData = res.result.response
-      if (this.insightsData && this.insightsData['weekly-claps']) {
-        this.insightsData['weeklyClaps'] = this.insightsData['weekly-claps']
+    this.homeSvc.getInsightsData(request).subscribe((res: any) => {
+      if (res.result.response) {
+        this.insightsData = res.result.response
+        if (this.insightsData && this.insightsData['weekly-claps']) {
+          this.insightsData['weeklyClaps'] = this.insightsData['weekly-claps']
+        }
       }
-    }
-   })
+    })
   }
+
   getPendingRequestData() {
     this.homeSvc.getRecentRequests().subscribe(
       (res: any) => {
@@ -366,5 +381,15 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
     )
+  }
+
+  ngOnDestroy() {
+    if (this.tabs) {
+      this.tabs.unsubscribe()
+    }
+
+    if (this.defaultSideNavBarOpenedSubscription) {
+      this.defaultSideNavBarOpenedSubscription.unsubscribe()
+    }
   }
 }

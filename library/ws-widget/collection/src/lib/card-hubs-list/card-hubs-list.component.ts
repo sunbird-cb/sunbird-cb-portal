@@ -8,6 +8,7 @@ import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/dis
 import { environment } from 'src/environments/environment'
 // tslint:disable
 import _ from 'lodash'
+import { TranslateService } from '@ngx-translate/core'
 // tslint:enable
 // import { AccessControlService } from '@ws/author/src/public-api'
 
@@ -62,6 +63,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
     private discussUtilitySvc: DiscussUtilsService,
     private router: Router,
     private valueSvc: ValueService,
+    private translate: TranslateService
     // private accessService: AccessControlService
   ) {
     super()
@@ -219,4 +221,13 @@ export class CardHubsListComponent extends WidgetBaseComponent
     return value
   }
 
+  translateLabels(label: string, type: any, subtype: any) {
+    label = label.replace(/\s/g, "")
+    if(subtype) {
+      const translationKey = type + '.' +  label + subtype
+      return this.translate.instant(translationKey);
+    }
+    const translationKey = type + '.' +  label
+    return this.translate.instant(translationKey);
+  }
 }

@@ -3,9 +3,6 @@
   <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode == 'top'"
     [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
     class="mat-elevation-z3 custom mobile">
-    
-     
-    
     <div class="fix-ww" id="root-tool-bar">
       <ng-container *ngIf="mode === 'top'">
         <a [routerLink]="!isforPreview ? '/page/home' : '/static-home'" class="logo-dim flex items-center" role="link" title="Home"
@@ -18,7 +15,7 @@
             *ngFor="let item of primaryNavbarConfig?.mediumScreen?.left">
           </ng-container>
           <ng-container *ngIf="!isforPreview">
-            <ws-app-search-input-home placeHolder="Search for learning content" class="my-search flex-1"
+            <ws-app-search-input-home placeHolder="{{ 'appnavbar.Searchforlearningcontents' | translate}}" class="my-search flex-1"
               [ref]="'home'">
             </ws-app-search-input-home>
           </ng-container>
@@ -115,7 +112,8 @@
       <ng-container *ngIf="primaryNavbarConfig?.smallScreen && isLoggedIn">
         <ul class="mobile-footer-fixed-nav-list-item-container">
         <ng-container *ngFor="let item of primaryNavbarConfig?.smallScreen?.all">
-          <li [ngClass]="activeRoute === item?.config?.label ? 'active-icon': ''" class="mobile-footer-fixed-nav-list-item" [routerLink]="item?.config?.path">
+          <!-- item?.config?.path -->
+          <li [ngClass]="activeRoute === item?.config?.label ? 'active-icon': ''" class="mobile-footer-fixed-nav-list-item" (click)="redirectToPath(item?.config)">
             <div class="icon-container">
               <img   src="/assets/icons/footer-nav/{{item?.config?.icon}}.svg" id="draft" alt="draft" title="draft" />
               <span>{{item?.config?.label | titlecase}}</span>

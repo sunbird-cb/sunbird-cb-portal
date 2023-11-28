@@ -55,6 +55,14 @@ export class EventDetailComponent implements OnInit {
       if (isToday) {
         this.currentEvent = true
       }
+      const sDate = this.customDateFormat(this.eventData.startDate, this.eventData.startTime)
+      const eDate = this.customDateFormat(this.eventData.endDate, this.eventData.endTime)
+      const msDate = Math.floor(moment(sDate).valueOf() / 1000)
+      const meDate = Math.floor(moment(eDate).valueOf() / 1000)
+      const cDate = Math.floor(moment(new Date()).valueOf() / 1000)
+      if (cDate >= msDate && cDate <= meDate) {
+        this.currentEvent = true
+      }
       const now = new Date()
       const today = moment(now).format('YYYY-MM-DD HH:mm')
 

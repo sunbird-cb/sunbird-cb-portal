@@ -72,7 +72,6 @@ export class DiscussHubComponent implements OnInit {
         });
       },
       (error: HttpErrorResponse) => {
-        console.log("updates error - ", error);
         if(!error.ok) {
           this.updatesPosts.loadSkeleton = false;
           this.updatesPosts.error = true;

@@ -189,4 +189,9 @@ export class BtnProfileComponent extends WidgetBaseComponent
     this.router.navigate(['/page/home'], { relativeTo: this.activatedRoute, queryParamsHandling: 'merge' })
     this.configSvc.updateTourGuideMethod(false)
   }
+
+  redirectToMyLearning() {
+    // /app/seeAll?key=continueLearning
+    this.router.navigate(['/app/seeAll'], { queryParams: { key: 'continueLearning' } } );
+  }
 }

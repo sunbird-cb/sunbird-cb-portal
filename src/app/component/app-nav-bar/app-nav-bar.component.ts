@@ -4,6 +4,7 @@ import { IBtnAppsConfig, CustomTourService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, NsInstanceConfig, NsPage } from '@sunbird-cb/utils'
 import { Router, NavigationStart, NavigationEnd } from '@angular/router'
+import { TranslateService } from '@ngx-translate/core'
 @Component({
   selector: 'ws-app-nav-bar',
   templateUrl: './app-nav-bar.component.html',
@@ -47,8 +48,8 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     private domSanitizer: DomSanitizer,
     private configSvc: ConfigurationsService,
     private tourService: CustomTourService,
-    private router: Router
-    
+    private router: Router,
+    private translate: TranslateService
   ) {
     this.btnAppsConfig = { ...this.basicBtnAppsConfig }
     if (this.configSvc.restrictedFeatures) {
@@ -238,7 +239,16 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     return this.isSetUpPage
   }
 
-
-
- 
+  translateLabels(label: string, type: any) {
+    label = label.replace(/\s/g, "")
+    const translationKey = type + '.' +  label;
+    return this.translate.instant(translationKey);
+  } 
+  redirectToPath(pathConfig:any) {
+    if(pathConfig && pathConfig.key) {
+      this.router.navigate([pathConfig.path], { queryParams: { key: pathConfig.key } } );
+    } else {
+      this.router.navigate([pathConfig.path]);
+    } 
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DialogBoxComponent } from './../dialog-box/dialog-box.component';
 import { TranslateService } from '@ngx-translate/core';
@@ -83,6 +83,12 @@ export class TopRightNavBarComponent implements OnInit {
     this.dialogRef.afterClosed().subscribe(() => { 
     }); 
   } 
+
+  translateLabels(label: string, type: any) {
+    label = label.replace(/\s/g, "")
+    const translationKey = type + '.' +  label;
+    return this.translate.instant(translationKey);
+  }
   
   selectLanguage(event: any) {
     this.selectedLanguage = event.target.value
