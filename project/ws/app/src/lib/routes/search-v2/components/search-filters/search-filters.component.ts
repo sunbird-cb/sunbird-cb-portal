@@ -215,7 +215,8 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
       this.filteroptions.forEach((fas: any) => {
         if (fas.name === mainparentType) {
           fas.values.forEach((fasv: any) => {
-            if (fasv.name === fil.name) {
+            let name = fasv.name.toLowerCase()
+            if (name === fil.name) {
               fasv.ischecked = false
             }
 
@@ -241,7 +242,8 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
       this.filteroptions.forEach((fas: any) => {
         if (fas.name === mainparentType) {
           fas.values.forEach((fasv: any) => {
-            if (fasv.name === fil.name) {
+            let name = fasv.name.toLowerCase()
+            if (name.toLowerCase() === fil.name) {
               fasv.ischecked = true
             }
           })

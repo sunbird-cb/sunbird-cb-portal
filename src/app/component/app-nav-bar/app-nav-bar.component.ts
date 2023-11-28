@@ -244,4 +244,11 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     const translationKey = type + '.' +  label;
     return this.translate.instant(translationKey);
   } 
+  redirectToPath(pathConfig:any) {
+    if(pathConfig && pathConfig.key) {
+      this.router.navigate([pathConfig.path], { queryParams: { key: pathConfig.key } } );
+    } else {
+      this.router.navigate([pathConfig.path]);
+    } 
+  }
 }
