@@ -94,36 +94,24 @@ export class NetworkHubComponent implements OnInit {
       }
     );
   }
-
-  handleRequest(reqObject: any, action: string): void {
-    const payload = {
-      "userIdFrom": this.userInfo.userId,
-      "userNameFrom": this.userInfo.userId,
-      "userDepartmentFrom": this.userInfo.departmentName,
-      "userIdTo": reqObject.id,
-      "userNameTo": reqObject.id,
-      "userDepartmentTo": reqObject.departmentName,
-      "status": action
-    };
-
-    reqObject.connecting = true;
-
-    this.homePageService.updateConnection(payload).subscribe(
+  
+  handleUpdateRequest(event: any): void {
+    this.homePageService.updateConnection(event.payload).subscribe(
       (_res: any) => {
-        if (action === 'Approved') {
+        if (event.action === 'Approved') {
           this.matSnackBar.open("Request accepted successfully");
         } else {
           this.matSnackBar.open("Rejected the request");
         }
-        reqObject.connecting = false;
+        event.reqObject.connecting = false;
         this.fetchRecentRequests();
       }, (error: HttpErrorResponse) => {
         if (!error.ok) {
           this.matSnackBar.open("Unable to update connection, due to some error!");
         }
-        reqObject.connecting = false;
+        event.reqObject.connecting = false;
       }
-    )
+    );
   }
 
   handleConnect(obj: any): void {
