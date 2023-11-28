@@ -315,3 +315,55 @@ ws-app-events-card:nth-child(2n) {
   overflow-x: auto;
   height: 220px;
 }
+
+@media screen and (max-width: 768px) {
+
+      .events-box {
+        width: 94%!important;
+      }
+
+      .items-baseline {
+        margin: 0!important;
+      }
+      .no-box-shadow {
+        width: 91%!important;
+        padding: 5px!important;
+        //background: none!important;
+      }
+
+      .event_image_box {
+        display: none!important;
+      }
+
+      .event_outer_box {
+        padding-bottom: 0.5rem!important;
+      }
+
+      .m-today-events-block {
+        margin: 0 0 10px
+      }
+      .m-today-events-title {
+        font: 600 20px/30px Montserrat;
+      }
+      .margin-fix {
+        margin: 0 0 0 5px
+      }
+      .search {
+        max-width: 100%!important;
+        height: 65px!important;
+      }
+      .mat-title {
+        margin: 0 0 5px 0!important;
+      }
+      ::ng-deeep .banner-image-solo {
+        border-radius: 0!important;
+      }
+      ::ng-deeep .banner-container-solo {
+        border-radius: 0!important;
+      }
+      .event_card_main_box {
+        margin-top: 15px!important;
+      }
+    }
+
+
