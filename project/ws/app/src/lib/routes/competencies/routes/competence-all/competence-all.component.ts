@@ -10,6 +10,7 @@ import { CompetenceViewComponent } from '../../components/competencies-view/comp
 import { MatSnackBar } from '@angular/material';
 import { ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
 import {ThemePalette} from '@angular/material/core'
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
 @Component({
   selector: 'app-competence-all',
   templateUrl: './competence-all.component.html',
@@ -54,11 +55,23 @@ export class CompetenceAllComponent implements OnInit {
     private snackBar: MatSnackBar,
     private configSvc: ConfigurationsService,
     private eventSvc: EventService,
+    private translate: TranslateService,
   ) {
     this.searchJson = [
       { type: 'COMPETENCY', field: 'name', keyword: '' },
       { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
     ]
+
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+     
+      this.translate.use(lang)
+      console.log('current lang ------', this.translate.getBrowserLang())
+      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        console.log('onLangChange', event);
+      });
+    }
 
     const searchObj = {
       searches: this.searchJson,
@@ -136,6 +149,11 @@ export class CompetenceAllComponent implements OnInit {
     }
   }
   ngOnInit() { }
+
+  translateHub(hubName: string): string {
+    const translationKey =  hubName;
+    return this.translate.instant(translationKey);
+  }
 
   getProfile() {
     this.competencySvc.fetchProfileById(this.configSvc.unMappedUser.id).subscribe(response => {

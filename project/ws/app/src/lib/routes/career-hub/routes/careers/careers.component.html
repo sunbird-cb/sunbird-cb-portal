@@ -5,14 +5,14 @@
 
 <div class="w-full pt-10  px-2">
     <div class="flex flex-1 flex-column margin-fix mb-2">
-        <h2 class="f-medium">{{ 'career.labelAllOpenings' | translate }} </h2>
+        <h2 class="f-medium">{{ 'career.labelAllOpenings' | translate }}</h2>
     </div>
     <div class="flex flex-1 flex-column margin-fix search">
         <form (submit)="updateQuery(queryControl.value)">
             <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'">
                 <mat-icon matPrefix class="ml-5 flex items-center justify-center py-5">search</mat-icon>
                 <input type="search" #searchInput class="ml-2" i18n-placeholder="search content"
-                    [placeholder]="'Search'" i18-aria-label aria-label="Query" matInput [formControl]="queryControl"
+                    [placeholder]="'common.search' | translate" i18-aria-label aria-label="Query" matInput [formControl]="queryControl"
                     accesskey="F" maxlength="50" />
             </mat-form-field>
         </form>

@@ -5,7 +5,7 @@
                 <mat-icon matPrefix class="ml-5 flex items-center justify-center">search</mat-icon>
                 <mat-label>{{ 'network.searchUser' | translate }}</mat-label>
                 <input type="search" #searchInput class="ml-2" i18n-placeholder="search content"
-                    [placeholder]="'Search'" i18-aria-label aria-label="Query" matInput [formControl]="queryControl"
+                    [placeholder]="'common.search' | translate" i18-aria-label aria-label="Query" matInput [formControl]="queryControl"
                     accesskey="F" maxlength="50" />
             </mat-form-field>
         </form>
@@ -15,11 +15,11 @@
             <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'timestamp',
                             'ws-mat-accent-border':currentFilter !== 'timestamp'}" mat-button
                 (click)="filter('timestamp', 'desc'); tabTelemetry('Last added', 0)">
-                {{ 'msg.lastAdded' | translate }} </a>
+                {{ 'common.lastAdded' | translate }} </a>
             <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'personalDetails.firstname',
                             'ws-mat-accent-border':currentFilter !== 'personalDetails.firstname'}" mat-button
                 (click)="filter('personalDetails.firstname', 'asc'); tabTelemetry('Sort by name', 1)">
-                {{ 'msg.sortByName' | translate }} </a>
+                {{ 'common.sortByName' | translate }} </a>
         </div>
     </div>
     <div class="flex flex-1 mb-4">
