@@ -3,9 +3,6 @@
   <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode == 'top'"
     [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
     class="mat-elevation-z3 custom mobile">
-    
-     
-    
     <div class="fix-ww" id="root-tool-bar">
       <ng-container *ngIf="mode === 'top'">
         <a [routerLink]="!isforPreview ? '/page/home' : '/static-home'" class="logo-dim flex items-center" role="link" title="Home"
@@ -18,7 +15,7 @@
             *ngFor="let item of primaryNavbarConfig?.mediumScreen?.left">
           </ng-container>
           <ng-container *ngIf="!isforPreview">
-            <ws-app-search-input-home placeHolder="Search for learning content" class="my-search flex-1"
+            <ws-app-search-input-home placeHolder="{{ 'appnavbar.Searchforlearningcontents' | translate}}" class="my-search flex-1"
               [ref]="'home'">
             </ws-app-search-input-home>
           </ng-container>

@@ -28,6 +28,9 @@ import { SharedModule } from '../shared/shared.module';
 import { FontSettingComponent } from './../component/font-setting/font-setting.component';
 import { TopRightNavBarComponent } from './../component/top-right-nav-bar/top-right-nav-bar.component';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { HttpLoaderFactory } from '../app.module';
 @NgModule({
   declarations: [HeaderComponent, AppNavBarComponent, FontSettingComponent, TopRightNavBarComponent],
   imports: [
@@ -51,6 +54,13 @@ import { FormsModule } from '@angular/forms';
     MatFormFieldModule, 
     MatInputModule,
     MatTooltipModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   exports: [
     HeaderComponent,
