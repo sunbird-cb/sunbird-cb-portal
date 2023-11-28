@@ -3,18 +3,7 @@
     top: -32px;
 }
 
-@keyframes rotation {
-    from {
-        transform: rotate(360deg);
-    }
-
-    to {
-        transform: rotate(0deg);
-    }
-}
-
 $title-line-count: 1;
-
 .text-ellipsis {
     word-break: break-all;
     white-space: initial;
@@ -35,9 +24,6 @@ $title-line-count: 1;
     @extend .text-ellipsis;
         min-height: $title-line-count * 16px;
 }
-
-
-
 
 .card {
     box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.08),
