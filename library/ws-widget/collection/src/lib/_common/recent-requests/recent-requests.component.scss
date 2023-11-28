@@ -23,3 +23,13 @@
         animation: rotation infinite 2s linear;
     }
 }
+
+@keyframes rotation {
+    from {
+        transform: rotate(360deg);
+    }
+
+    to {
+        transform: rotate(0deg);
+    }
+}
