@@ -38,7 +38,7 @@
         </div>
     </div>
   </div>
-  <div class="stats-container block md:hidden">
+  <div class="stats-container block md:hidden"  *ngIf="!isLoading">
     <div class="flex flex-middle flex-between" (click)="myActivity()">
       <div class="flex flex-middle">
         <img class="stats-icon margin-right-s" width="20" height="20" src="/assets/icons/home/dashboard.svg">
@@ -94,7 +94,8 @@
         <div class="stats-data margin-bottom-m">
           <img class="stats-icon" width="20" height="20" [src]="stats.icon">
           <div class="stats-title">{{stats.label}}</div>
-          <div class="stats-count ws-mat-default-text" >{{ countdata[stats.key] || 0}}</div>
+          <div class="stats-count ws-mat-default-text" *ngIf="countdata;else other_content">{{ countdata[stats.key] || 0}}</div>
+          <ng-template #other_content> <div class="skeleton-box" style="width:46px;height:12px"></div></ng-template>
         </div>
       </ng-container>
     </ng-container>

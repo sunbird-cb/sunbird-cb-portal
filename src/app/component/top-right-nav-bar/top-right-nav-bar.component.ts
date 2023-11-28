@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DialogBoxComponent } from './../dialog-box/dialog-box.component';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { HomePageService } from '../../services/home-page.service';
+import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api';
 const rightNavConfig = [
   {
     "id":1,
@@ -33,6 +34,7 @@ const rightNavConfig = [
 export class TopRightNavBarComponent implements OnInit {
   @Input() item:any;
   @Input() rightNavConfig:any;
+  dialogRef:any;
   selectedLanguage: any
   multiLang = [
     {
@@ -48,18 +50,17 @@ export class TopRightNavBarComponent implements OnInit {
       key: 'ta',
     },
   ]
-  constructor(public dialog: MatDialog, public homePageService: HomePageService, private translate: TranslateService) { 
-    if (localStorage.getItem('websiteLanguage')) {
-      this.translate.setDefaultLang('en')
-      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
-      lang = lang.replace(/\"/g, "")
-      console.log(lang)
-      this.selectedLanguage = lang
-      this.translate.use(lang)
-    }
-
+  constructor(public dialog: MatDialog, public homePageService: HomePageService, 
+    private configSvc: ConfigurationsService, private translate: TranslateService) { 
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+        lang = lang.replace(/\"/g, "")
+        this.selectedLanguage = lang
+        this.translate.use(lang)
+        console.log(' this.selectedLanguage',  this.selectedLanguage)
+      }
   }
-  dialogRef:any;
 
   ngOnInit() {
     this.rightNavConfig = this.rightNavConfig.topRightNavConfig ? this.rightNavConfig.topRightNavConfig : rightNavConfig;
@@ -68,12 +69,10 @@ export class TopRightNavBarComponent implements OnInit {
       if(data) {
         this.dialogRef.close();
       }
-      
     })
   }
 
   ngOnChanges() {
-
   }
 
   openDialog(): void { 
@@ -89,8 +88,10 @@ export class TopRightNavBarComponent implements OnInit {
     this.selectedLanguage = event.target.value
     console.log('selectedLanguage', this.selectedLanguage)
     localStorage.setItem('websiteLanguage', this.selectedLanguage)
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      console.log('onLangChange', event);
-    });
+    this.configSvc.updatelanguageSelected(true)
+
+    // this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+    //   console.log('onLangChange', event);
+    // });
   }
 }

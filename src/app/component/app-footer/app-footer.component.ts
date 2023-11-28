@@ -2,7 +2,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core'
 import { NavigationEnd, Router } from '@angular/router'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
 import 'rxjs/add/operator/toPromise'
 
@@ -35,16 +35,8 @@ export class AppFooterComponent implements OnInit {
       this.translate.setDefaultLang('en')
       let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
       lang = lang.replace(/\"/g, "")
-      console.log('footer ------------', lang)
       this.translate.use(lang)
-      console.log('current lang ------', this.translate.getBrowserLang())
     }
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      console.log('onLangChange', event);
-    });
-    console.log('current lang ------', this.translate.getBrowserLang())
-    const lang = this.translate.getDefaultLang()
-    console.log('lang ---********---', lang)
 
     this.environment = environment
     if (this.configSvc.restrictedFeatures) {
@@ -73,15 +65,6 @@ export class AppFooterComponent implements OnInit {
       const newInstance = await this.readAgain()
       this.hubsList = (newInstance.hubs || []).filter(i => i.active)
     }   
-    
-    console.log('current lang ------', this.translate.getBrowserLang())
-    const lang = this.translate.getDefaultLang()
-    console.log('lang ---********---', lang)
-    // const browserLang = this.translate.getBrowserLang();
-    //   this.translate.getDefaultLang()
-    //   .toPromise().then((res: any) => (res.lang !== null) ? this.translate.use(res.lang) : this.translate.use(browserLang))
-    //   .catch((error: any) => console.log(error));
-    
   }
   async readAgain() {
     const publicConfig: NsInstanceConfig.IConfig = await this.http

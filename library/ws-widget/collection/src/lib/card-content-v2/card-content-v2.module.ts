@@ -22,6 +22,9 @@ import { BtnKbAnalyticsModule } from '../btn-kb-analytics/btn-kb-analytics.modul
 import { CardContentV2Component } from './card-content-v2.component'
 import { SkeletonLoaderModule } from '../_common/skeleton-loader/skeleton-loader.module'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { HttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
+import { HttpLoaderFactory } from 'src/app/app.module'
 @NgModule({
   declarations: [CardContentV2Component],
   imports: [
@@ -59,6 +62,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
     BtnKbAnalyticsModule,
     SkeletonLoaderModule,
     MatProgressSpinnerModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   entryComponents: [CardContentV2Component],
   exports: [CardContentV2Component],

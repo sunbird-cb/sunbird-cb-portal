@@ -21,21 +21,27 @@ export class ProfileCardStatsComponent implements OnInit {
   collapsed = false
   userInfo: any
   countdata: any
+  enrollInterval: any
   constructor(private configSvc: ConfigurationsService,
               private router: Router,
               private pipDuration: PipeDurationTransformPipe) { }
 
   ngOnInit() {
     this.userInfo =  this.configSvc && this.configSvc.userProfile
-    this.getCounts()
+    this.enrollInterval = setInterval(() => {
+      this.getCounts()
+    },                                1000)
+    // this.getCounts()
     const progress = (247 - ((247 * this.userInfo.profileUpdateCompletion) / 100))
     document.documentElement.style.setProperty('--i', String(progress))
   }
   getCounts() {
-    let enrollList
+    let enrollList: any
     if (localStorage.getItem('enrollmentData')) {
       enrollList = JSON.parse(localStorage.getItem('enrollmentData') || '')
+      clearInterval(this.enrollInterval)
     }
+
     this.countdata = {
       certificate: 0,
       inProgress: 0,
@@ -48,6 +54,7 @@ export class ProfileCardStatsComponent implements OnInit {
         learningHours: this.pipDuration.transform(enrollList.userCourseEnrolmentInfo.timeSpentOnCompletedCourses, 'hms'),
       }
     }
+
   }
   gotoUserProfile() {
     this.router.navigate(['app/user-profile/details'])

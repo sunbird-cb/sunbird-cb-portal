@@ -10,6 +10,7 @@ import { NsCardContent } from './card-content-v2.model'
 
 /* tslint:disable*/
 import _ from 'lodash'
+import { TranslateService } from '@ngx-translate/core'
 // import { CertificateService } from '@ws/app/src/lib/routes/certificate/services/certificate.service'
 // import { CertificateDialogComponent } from '../_common/certificate-dialog/certificate-dialog.component'
 // import { Router } from '@angular/router'
@@ -46,6 +47,7 @@ export class CardContentV2Component extends WidgetBaseComponent
     private configSvc: ConfigurationsService,
     private utilitySvc: UtilityService,
     private snackBar: MatSnackBar,
+    private translate: TranslateService,
     // private certificateService: CertificateService
 
   ) {
@@ -364,5 +366,11 @@ export class CardContentV2Component extends WidgetBaseComponent
     //   console.log(res,'certificateData')
     // })
 
+  }
+
+  translateLabels(label: string, type: any, subtype: any) {
+    label = label.replace(/\s/g, "")
+    const translationKey = type + '.' + subtype +  label;
+    return this.translate.instant(translationKey);
   }
 }

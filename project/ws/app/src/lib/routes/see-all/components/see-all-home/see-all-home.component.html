@@ -1,13 +1,32 @@
 <div class="seeAll-home-container m-auto gap-4">
     <ng-container>
         <div class="flex flex-row page-header margin-top-l margin-bottom-l">
-            {{(seeAllPageConfig && seeAllPageConfig.title) ? seeAllPageConfig.title : ''}} </div>
-        <div class="flex flex-row flex-wrap content-container" infinite-scroll
-        [infiniteScrollDistance]="scrollDistance" [infiniteScrollThrottle]="throttle"
-        (scrolled)="onScrollEnd()">
+            {{(seeAllPageConfig && seeAllPageConfig.title) ? seeAllPageConfig.title : ''}}
+        </div>
+        <div class="flex flex-row flex-wrap content-container" infinite-scroll [infiniteScrollDistance]="scrollDistance"
+            [infiniteScrollThrottle]="throttle" (scrolled)="onScrollEnd()"
+            *ngIf="tabResults.length === 0">
             <div class="mr-2 mb-5" *ngFor="let c of contentDataList">
                 <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
             </div>
+        </div>
+        <div class="flex flex-row flex-wrap content-container"
+            *ngIf="tabResults.length > 0">
+            <mat-tab-group animationDuration="0ms" 
+                  class="mat-tab-labels w-full strips-tabgroup" dynamicHeight
+                  (selectedTabChange)="tabClicked($event, seeAllPageConfig, seeAllPageConfig.key)">
+            <mat-tab *ngFor="let tab of tabResults; let last = last;" [label]="tab?.label">
+                <ng-template mat-tab-label>
+                    <span>{{tab?.label}} &nbsp;</span>
+                    <span *ngIf="tab?.showTabDataCount">({{tab?.widgets?.length}})</span>
+                </ng-template>
+                <div class="flex flex-row flex-wrap content-container mt-10 mb-10">
+                    <div class="mr-2 mb-5" *ngFor="let c of tab?.widgets">
+                        <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
         </div>
     </ng-container>
 </div>

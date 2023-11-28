@@ -45,11 +45,10 @@
             </span>
            
           </div>
-          
           <div class="flex flex-1 flex-row-reverse">
             <div *ngIf="
-                portalProfile.id === currentUser ||
-                portalProfile.userId === currentUser
+                portalProfile.id === currentUser?.userId ||
+                portalProfile.userId === currentUser?.userId
               " class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all ws-mat-primary-lite-background-important">
               <a mat-button [routerLink]="'/app/user-profile/details'">
                 <mat-icon class="margin-right-xs">edit</mat-icon>
@@ -106,13 +105,16 @@
   </div>
   <div class=" block md:hidden">
     <div class="flex flex-custom ">
-      <mat-tab-group class="profile-tabs" (selectedTabChange)="tabClicked($event)" [selectedIndex]="1">
+      <mat-tab-group class="profile-tabs" (selectedTabChange)="tabClicked($event)" [selectedIndex]="selectedTabIndex">
         <mat-tab label="Profile">
           <ng-template matTabContent>
               <ng-container [ngTemplateOutlet]="profileSection"></ng-container>
           </ng-template>
         </mat-tab>
-        <mat-tab label="My activities">
+        <mat-tab label="My activities" *ngIf="
+        portalProfile.id === currentUser?.userId ||
+        portalProfile.userId === currentUser?.userId
+      ">
           <ng-template matTabContent>
             <p class="margin-top-s tab-heading">Your stats</p>
             <div class="margin-bottom-m margin-top-m">
@@ -187,8 +189,8 @@
           <!-- <ws-widget-profile-v2-academics *ngIf="pdfData" [widgetData]="tab"></ws-widget-profile-v2-academics> -->
           <ng-container *ngIf="tab && tab.render && tab.enabled">
             <ng-container *ngIf="
-            portalProfile.id === currentUser ||
-            portalProfile.userId === currentUser
+            portalProfile.id === currentUser?.userId ||
+            portalProfile.userId === currentUser?.userId
           ">
               <ng-container *ngIf="tab.key === 'certifications'" [wsResolverWidget]="{
                 widgetType: tab.widget.widgetType,
@@ -261,8 +263,8 @@
                         'ws-mat-accent-border font-medium':
                           currentFilter !== 'saved'
                       }" mat-button (click)="filter('saved')" *ngIf="
-                        portalProfile.id === currentUser ||
-                        portalProfile.userId === currentUser
+                        portalProfile.id === currentUser?.userId ||
+                        portalProfile.userId === currentUser?.userId
                       ">
                       Saved posts
                     </a>

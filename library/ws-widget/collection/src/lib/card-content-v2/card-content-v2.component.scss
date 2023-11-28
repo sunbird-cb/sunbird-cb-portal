@@ -317,7 +317,7 @@ $secondary-color: #EF951E;
   box-shadow: 0px 10px 30px #99999933;
   overflow: hidden;
   height: 346px;
-
+  margin: 20px 8px;
   .progress-bar {
     // display: block;
     // width: calc(100% + #{2 * $card-padding - 2});
@@ -509,6 +509,9 @@ $secondary-color: #EF951E;
   }
 }
 
+.card-standard-container:hover {
+  transform: scale(1.02);
+}
 .card-discussions-container {
   $card-padding: $size-m;
   $action-btn-size: 2.5 * $size-m;
@@ -1108,7 +1111,7 @@ $title-line-count: 2;
        }
    }
    .main_title_box {
-       height: 60px;
+       height: 65px;
    }
    p.actionbtns {
        margin-bottom: 0;
