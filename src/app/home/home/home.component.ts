@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import _ from 'lodash';
 import { BtnSettingsService } from '@sunbird-cb/collection';
 import { MobileAppsService } from '../../services/mobile-apps.service';
+import { Router } from '@angular/router'
 const API_END_POINTS = {
   fetchProfileById: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`,
 }
@@ -30,7 +31,7 @@ export class HomeComponent implements OnInit {
   mobileTopHeaderVisibilityStatus: any = true;
   sectionList:any = [];
   constructor(private activatedRoute:ActivatedRoute,  private configSvc: ConfigurationsService, public btnSettingsSvc: BtnSettingsService, 
-    private http: HttpClient, public mobileAppsService: MobileAppsService) { }
+    private http: HttpClient, public mobileAppsService: MobileAppsService, private router: Router) { }
 
   ngOnInit() {
     this.mobileAppsService.mobileTopHeaderVisibilityStatus.subscribe((status:any)=> {
@@ -262,5 +263,8 @@ export class HomeComponent implements OnInit {
     this.isNudgeOpen = false
   }
   
+  fetchProfile() {
+    this.router.navigate(['/app/user-profile/details'])
+  }
 
 }
