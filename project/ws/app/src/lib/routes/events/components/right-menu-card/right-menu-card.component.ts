@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core'
 import moment from 'moment'
-import { EventService, NsContent, WsEvents } from '@sunbird-cb/utils'
-import lodash from 'lodash'
+import { EventService, WsEvents } from '@sunbird-cb/utils'
 // import { ActivatedRoute } from '@angular/router'
 // import { ConfigurationsService } from '@ws-widget/utils'
 // import { NSProfileDataV2 } from '../../models/profile-v2.model'
