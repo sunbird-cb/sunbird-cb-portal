@@ -238,7 +238,14 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     return this.isSetUpPage
   }
 
-
+  redirectToPath(pathConfig:any) {
+    if(pathConfig && pathConfig.key) {
+      this.router.navigate([pathConfig.path], { queryParams: { key: pathConfig.key } } );
+    } else {
+      this.router.navigate([pathConfig.path]);
+    }
+    
+  }
 
  
 }
