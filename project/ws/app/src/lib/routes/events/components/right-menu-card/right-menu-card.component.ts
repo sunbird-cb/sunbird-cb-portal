@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core'
 import moment from 'moment'
-import { EventService, WsEvents } from '@sunbird-cb/utils'
-import _ from 'lodash'
+import { EventService, NsContent, WsEvents } from '@sunbird-cb/utils'
+import lodash from 'lodash'
 // import { ActivatedRoute } from '@angular/router'
 // import { ConfigurationsService } from '@ws-widget/utils'
 // import { NSProfileDataV2 } from '../../models/profile-v2.model'
@@ -146,14 +146,15 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
     this.events.raiseInteractTelemetry(
       {
         type: 'click',
-        subType: `btn-${_.camelCase(name.toLowerCase())}`,
-        id:  this.eventData.identifier,
-      },
-      {
+        subType: `btn-${name}`,
         id: this.eventData.identifier,
       },
       {
-        pageIdExt: 'events-page',
+        id: this.eventData.identifier,
+        type: 'event',
+      },
+      {
+        pageIdExt: 'event',
         module: WsEvents.EnumTelemetrymodules.EVENTS,
     })
   }
