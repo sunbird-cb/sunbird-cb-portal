@@ -10,6 +10,8 @@ const API_END_POINTS = {
   GET_ORGS_OF_DEPT: '/apis/public/v8/org/v1/list',
   sendOtp: '/api/otp/v1/generate',
   ReSendOtp: '/api/otp/v1/generate',
+  sendOtpExt: '/api/otp/ext/v1/generate',
+  ReSendOtpExt: '/api/otp/ext/v1/generate',
   VerifyOtp: '/api/otp/v1/verify',
   GET_POSITIONS: '/api/user/v1/positions',
   GET_GROUPS: '/api/user/v1/groups',
@@ -59,7 +61,7 @@ export class SignupService {
         key: `${value}`,
       },
     }
-    return this.http.post(API_END_POINTS.sendOtp, reqObj)
+    return this.http.post(API_END_POINTS.sendOtpExt, reqObj)
   }
   resendOtp(value: any, type: string) {
     const reqObj = {
@@ -68,7 +70,7 @@ export class SignupService {
         key: `${value}`,
       },
     }
-    return this.http.post(API_END_POINTS.ReSendOtp, reqObj)
+    return this.http.post(API_END_POINTS.ReSendOtpExt, reqObj)
 
   }
   verifyOTP(otp: number, value: any, type: string) {
