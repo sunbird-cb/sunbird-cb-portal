@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core'
 import moment from 'moment'
+import { EventService, NsContent, WsEvents } from '@sunbird-cb/utils'
+import lodash from 'lodash'
 // import { ActivatedRoute } from '@angular/router'
 // import { ConfigurationsService } from '@ws-widget/utils'
 // import { NSProfileDataV2 } from '../../models/profile-v2.model'
@@ -28,6 +30,7 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
   constructor(
     // private route: ActivatedRoute,
     // configSvc: ConfigurationsService,
+    private events: EventService
   ) {
     // this.currentEvent = configSvc.userProfile && configSvc.userProfile.eventId
     // this.badgesSubscription = this.route.data.subscribe(response => {
@@ -137,5 +140,22 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
     // if (this.badgesSubscription) {
     //   this.badgesSubscription.unsubscribe()
     // }
+  }
+
+  raiseTelemetry(name: string) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType: `btn-${name}`,
+        id: this.eventData.identifier,
+      },
+      {
+        id: this.eventData.identifier,
+        type: 'event',
+      },
+      {
+        pageIdExt: 'event',
+        module: WsEvents.EnumTelemetrymodules.EVENTS,
+    })
   }
 }
