@@ -44,7 +44,7 @@
             </div>
         </ng-container>
         
-        <ng-container *ngIf="!isMobile">
+        <ng-container *ngIf="updatePosts?.error && !isMobile">
             <div class="flex flex-row gap-2 p-4 justify-center" *ngIf="!updatesPosts.loadSkeleton || !updatesPosts.error">
                 <div class="flex gap-1 font-semibold cursor-pointer ws-mat-default-text" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >
                     <div>Show all</div>
