@@ -4,7 +4,8 @@
       <mat-icon matPrefix class="ml-5 flex items-center justify-center">search</mat-icon>
       <!-- <mat-placeholder>Search user</mat-placeholder> -->
       <!-- <input [(ngModel)]="nameFilter" (ngModelChange)="searchUser()" matInput type="search"> -->
-      <mat-label class="mat-body-2">Search user</mat-label>
+      <mat-label class="mat-body-2">{{ 'network.searchUser' | translate }}</mat-label>
+      
       <input type="search" #searchInput class="ml-2" [(ngModel)]="nameFilter" (ngModelChange)="searchUser()" matInput
         type="search" [placeholder]="'Search user'" maxlength="50" />
     </mat-form-field>
@@ -19,7 +20,7 @@
         <div>
           <h4 class="w-full text-center ws-mat-black60-text"
             *ngIf="searchResultUserArray.length === 0 && !this.searchSpinner" i18n>
-            No search results found!
+            {{ translateHub( 'msg.no_search_res_found ' ) }}
           </h4>
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 col-gap-4">
             <ng-container *ngFor="let user of searchResultUserArray">
@@ -55,8 +56,8 @@
     <mat-card class="flex-1 remove-botton-radius">
       <mat-card-header>
         <mat-card-title class="margin-l-0 f-medium">
-          <span class="mat-subheading-1" *ngIf="connectionRequests && connectionRequests.length > 1 ">Connection requests</span>
-          <span class="mat-subheading-1" *ngIf="connectionRequests && connectionRequests.length === 1 ">Connection request</span>
+          <span class="mat-subheading-1" *ngIf="connectionRequests && connectionRequests.length > 1 ">{{ 'network.tabConnectionRequests' | translate }}</span>
+          <span class="mat-subheading-1" *ngIf="connectionRequests && connectionRequests.length === 1 ">{{ 'network.tabConnectionRequests' | translate }}</span>
         </mat-card-title>
       </mat-card-header>
       <mat-card-content class="margin-left-m mb-0-imp">
@@ -70,13 +71,13 @@
           </ng-container>
         </ng-container>
         <h4 *ngIf="connectionRequests && connectionRequests.length <=0" class="w-full text-center ws-mat-black60-text">
-          No connection requests!
+         {{ 'network.no_connection_requests' | translate }}
         </h4>
         <!-- </ng-container> -->
       </mat-card-content>
       <mat-card-actions align="center" *ngIf="connectionRequests && connectionRequests.length > 3">
         <button mat-button color="default" type="button" class=" flex-auto-display" (click)="goToConnectionRequests()">
-          <span class="ws-mat-default-text" i18n>SEE MORE</span>
+          <span class="ws-mat-default-text" i18n>{{ 'msg.see_more' | translate }}</span>
         </button>
       </mat-card-actions>
 
@@ -87,12 +88,12 @@
       <mat-card-header class="flex items-baseline margin-fix">
         <mat-card-title class="margin-l-0 f-medium  flex-1">
           <span class="width-expand">
-            <span class="mat-subheading-1">People you may know</span>
+            <span class="mat-subheading-1">{{ 'msg.people_you_may_know' | translate }}</span>
           </span>
         </mat-card-title>
         <span class="spacer"></span>
         <button mat-button color="default" type="button" class=" flex-auto-display see_all_btn" (click)="goToMyMdo()">
-          <span class="ws-mat-default-text" i18n>Show All </span>
+          <span class="ws-mat-default-text" i18n>{{ 'msg.show_all' | translate }} </span>
           <mat-icon  class="ws-mat-default-text mr-3 mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">navigate_next </mat-icon>
         </button>
       </mat-card-header>
@@ -101,7 +102,7 @@
           <ws-app-connection-people-card class="mr-4 mb-5" [user]="user"
             (connection)="connectionUpdatePeopleCard($event)"></ws-app-connection-people-card>
         </ng-container>
-        <h4 class="ws-mat-black60-text" *ngIf="!recommendedUsers">No users found!</h4>
+        <h4 class="ws-mat-black60-text" *ngIf="!recommendedUsers">{{ 'msg.no_usr_found' | translate }}</h4>
       </mat-card-content>
       <mat-card-actions align="end">
       </mat-card-actions>

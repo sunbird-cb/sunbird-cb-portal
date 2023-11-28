@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 // import { ConnectionHoverService } from '../../components/connection-name/connection-hover.servive'
 import { WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-network-my-connection',
@@ -23,6 +24,7 @@ export class NetworkMyConnectionComponent implements OnInit {
     private route: ActivatedRoute,
     // private connectionHoverService: ConnectionHoverService,
     private eventSvc: EventService,
+    private translate: TranslateService,
   ) {
     // this.data = this.route.snapshot.data.myConnectionList.data.result.data
     // this.data = this.route.snapshot.data.myConnectionList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
@@ -31,6 +33,16 @@ export class NetworkMyConnectionComponent implements OnInit {
     //   }
     //   return v
     // })
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+     
+      this.translate.use(lang)
+      console.log('current lang ------', this.translate.getBrowserLang())
+      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        console.log('onLangChange', event);
+      });
+    }
     this.datalist = this.route.snapshot.data.myConnectionList.data.result.data
   }
 
@@ -47,6 +59,11 @@ export class NetworkMyConnectionComponent implements OnInit {
       this.filter('timestamp', 'desc')
       this.getFullUserData()
     }
+  }
+
+  translateHub(hubName: string): string {
+    const translationKey =  hubName;
+    return this.translate.instant(translationKey);
   }
 
   getFullUserData() {

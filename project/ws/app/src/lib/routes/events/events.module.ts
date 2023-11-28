@@ -38,6 +38,9 @@ import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { RightMenuCardComponent } from './components/right-menu-card/right-menu-card.component'
 import { PresenterCardComponent } from './components/presenter-card/presenter-card.component'
 import { EventService } from './services/events.service'
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+import { HttpLoaderFactory } from 'src/app/app.module'
+import { HttpClient } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -80,6 +83,13 @@ import { EventService } from './services/events.service'
     BtnPageBackModule,
     WidgetResolverModule,
     MatTabsModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [
     LoaderService,
