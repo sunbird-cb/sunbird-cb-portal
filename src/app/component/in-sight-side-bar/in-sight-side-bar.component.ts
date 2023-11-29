@@ -56,7 +56,7 @@ export class InsightSideBarComponent implements OnInit {
   insightsData: any
   discussion = {
     loadSkeleton: false,
-    data: undefined,
+    data: [],
     error: false
   };
   pendingRequestData:any = []

@@ -118,6 +118,8 @@ export namespace NsContentStripWithTabs {
     computeDataOnClickKey?: string
     request?: any,
     widgets?: NsWidgetResolver.IRenderConfigWithAnyData[]
-    maxWidgets?: number
+    maxWidgets?: number,
+    fetchTabStatus?: string
+    nodataMsg?: string
   }
 }

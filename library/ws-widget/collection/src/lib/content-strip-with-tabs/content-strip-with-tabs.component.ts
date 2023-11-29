@@ -359,6 +359,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
           tabResults.push(
             {
               ...strip.tabs[i],
+              fetchTabStatus: 'done',
               ...(splitData.find(itmInner => {
                 if (strip.tabs && strip.tabs[i] && itmInner.value === strip.tabs[i].value) {
                   return itmInner
@@ -795,6 +796,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
             allTabs[tabIndex] = {
               ...allTabs[tabIndex],
               widgets,
+              fetchTabStatus: 'done',
             }
             tabResults = allTabs
           }
@@ -835,6 +837,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
             allTabs[tabIndex] = {
               ...allTabs[tabIndex],
               widgets,
+              fetchTabStatus: 'done',
             }
             tabResults = allTabs
           }
