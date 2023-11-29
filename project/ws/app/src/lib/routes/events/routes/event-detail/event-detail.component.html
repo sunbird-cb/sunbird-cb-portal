@@ -55,8 +55,8 @@
     </div>
     <div class="flex flex-wrap margn-bottom-l">
       <ng-container>
-        <div class="flex" *ngFor="let user of eventData?.creatorDetails">
-          <app-presenter-card [userData]="user" class="flex presenter_main_box margin-right-l"></app-presenter-card>
+        <div class="flex mobile-width" *ngFor="let user of eventData?.creatorDetails">
+          <app-presenter-card [userData]="user" class="flex presenter_main_box margin-right-l no-right-marging"></app-presenter-card>
         </div>
       </ng-container>
     </div>

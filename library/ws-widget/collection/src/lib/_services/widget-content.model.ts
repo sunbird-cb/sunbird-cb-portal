@@ -143,6 +143,8 @@ export namespace NsContent {
     resumePage?: number // For player WebModule in UI
     [key: string]: any
     optionalReading: boolean
+    mostEnrolled?: boolean
+    mostTrending?: boolean
   }
 
   export interface IContentResponse {

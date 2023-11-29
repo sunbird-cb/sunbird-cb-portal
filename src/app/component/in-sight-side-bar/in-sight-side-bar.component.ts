@@ -6,7 +6,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router'
 
 
-const DEFAULT_DURATION = 500;
+const DEFAULT_WEEKLY_DURATION = 300;
+const DEFAULT_DISCUSS_DURATION = 600;
+const DEFAULT_DURATION = 100;
 
 const noData = {
   "desc" : "Do you have any questions, suggestions or, ideas in your mind? Post it.",
@@ -22,9 +24,24 @@ const noData = {
   animations: [
     trigger('collapse', [
       state('false', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
-      state('true', style({ height: '0', visibility: 'hidden' })),
+      state('true', style({  height: '0', visibility: 'hidden'  })),
       transition('false => true', animate(DEFAULT_DURATION + 'ms ease-in')),
       transition('true => false', animate(DEFAULT_DURATION + 'ms ease-out'))
+    ]),
+    trigger('collapseWeekly', [
+      state('false', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
+      state('true', style({  height: '0', visibility: 'hidden'  })),
+      // state('true', style({  position: 'absolute', width: '90%',marginRight: '16px', marginLeft:'16px',top: '-118%', zIndex: '9' })),
+      transition('false => true', animate(DEFAULT_WEEKLY_DURATION + 'ms ease-in')),
+      transition('true => false', animate(DEFAULT_WEEKLY_DURATION + 'ms ease-out'))
+    ]),
+
+    trigger('collapsDiscuss', [
+      state('false', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
+      state('true', style({  height: '0', visibility: 'hidden'  })),
+      // state('true', style({  position: 'absolute', width: '80%', transform: 'scaleY(0.7)',marginRight: '32px', marginLeft:'32px',top: '-300%', zIndex: '6' })),
+      transition('false => true', animate(DEFAULT_DISCUSS_DURATION + 'ms ease-in')),
+      transition('true => false', animate(DEFAULT_DISCUSS_DURATION + 'ms ease-out'))
     ])
   ]
 })
@@ -84,7 +101,7 @@ export class InsightSideBarComponent implements OnInit {
         this.profileDataLoading = false
       }
     }, (_error: any) => {
-      this.insightsData = []
+      this.insightsData = ''
       this.profileDataLoading = false
       this.clapsDataLoading = false
     })
@@ -179,6 +196,10 @@ export class InsightSideBarComponent implements OnInit {
     );
   }
 
+  navigateTo() {
+    this.router.navigateByUrl('app/network-v2/connection-requests');
+  }
+
   moveToUserProile(id:string) {
     this.router.navigateByUrl('app/person-profile/'+id+'#profileInfo');
   }
@@ -191,3 +212,5 @@ export class InsightSideBarComponent implements OnInit {
     this.router.navigateByUrl(`app/person-profile/me?tab=1`);
   }
 }
+
+
