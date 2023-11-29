@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import * as _ from 'lodash'
-import * as moment from 'moment'
+import moment from 'moment'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
  import { ConfigurationsService } from '@sunbird-cb/utils'

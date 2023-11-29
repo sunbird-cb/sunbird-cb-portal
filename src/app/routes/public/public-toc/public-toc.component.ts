@@ -17,7 +17,7 @@ import { AccessControlService } from '@ws/author/src/public-api'
 // import { FormControl, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
