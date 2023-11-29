@@ -4,7 +4,7 @@ import { HomePageService } from 'src/app/services/home-page.service';
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router'
-
+import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 
 const DEFAULT_WEEKLY_DURATION = 300;
 const DEFAULT_DISCUSS_DURATION = 600;
@@ -66,6 +66,7 @@ export class InsightSideBarComponent implements OnInit {
     private homePageSvc:HomePageService,
     private configSvc:ConfigurationsService,
     private activatedRoute: ActivatedRoute,
+    private discussUtilitySvc: DiscussUtilsService,
     private router: Router) { }
 
   ngOnInit() {
@@ -148,6 +149,7 @@ export class InsightSideBarComponent implements OnInit {
     this.discussion.loadSkeleton = true;
     this.homePageSvc.getDiscussionsData(this.userData.userName).subscribe(
       (res: any) => {
+        console.log("this.discussion",this.discussion.data);
         this.discussion.loadSkeleton = false;
         this.discussion.data = res && res.latestPosts;
       },
@@ -155,6 +157,7 @@ export class InsightSideBarComponent implements OnInit {
         if (!error.ok) {
           this.discussion.loadSkeleton = false;
           this.discussion.error = true;
+          console.log("error", error);
         }
       }
     );
@@ -208,6 +211,50 @@ export class InsightSideBarComponent implements OnInit {
   
   goToActivity(_e: any) {
     this.router.navigateByUrl(`app/person-profile/me?tab=1`);
+  }
+
+  navigate() {
+    const config = {
+      menuOptions: [
+        {
+          route: 'all-discussions',
+          label: 'All discussions',
+          enable: true,
+        },
+        {
+          route: 'categories',
+          label: 'Categories',
+          enable: true,
+        },
+        {
+          route: 'tags',
+          label: 'Tags',
+          enable: true,
+        },
+        {
+          route: 'my-discussion',
+          label: 'Your discussion',
+          enable: true,
+        },
+        // {
+        //   route: 'leaderboard',
+        //   label: 'Leader Board',
+        //   enable: true,
+        // },
+
+      ],
+      userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
+      context: {
+        id: 1,
+      },
+      categories: { result: [] },
+      routerSlug: '/app',
+      headerOptions: false,
+      bannerOption: true,
+    }
+    this.discussUtilitySvc.setDiscussionConfig(config)
+    localStorage.setItem('home', JSON.stringify(config))
+    this.router.navigate(['/app/discussion-forum'], { queryParams: { page: 'home' }, queryParamsHandling: 'merge' })
   }
 }
 

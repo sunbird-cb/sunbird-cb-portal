@@ -72,7 +72,7 @@
               </div>
             </a>
 
-            <a class="flex flex-wrap mb-4" role="menuitem" (click)="toggleVisibility()" [routerLink]="['/app/my-dashboard']">
+            <a   *ngIf="showDashboardIcon" class="flex flex-wrap mb-4" role="menuitem" (click)="toggleVisibility()" [routerLink]="['/app/my-dashboard']">
               <div class="icon ws-mat-primary-tags">
                 <mat-icon aria-hidden="false" class="mat-icon notranslate material-icons mat-icon-no-color" role="img"
                   aria-label="bar_chart" aria-labelledby="bar_chart"> bar_chart </mat-icon>

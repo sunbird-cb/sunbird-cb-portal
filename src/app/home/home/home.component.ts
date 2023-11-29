@@ -259,7 +259,7 @@ export class HomeComponent implements OnInit {
   //   this.page++;
   // }
   
-  remindlater() {
+  remindlater() { 
     this.isNudgeOpen = false
   }
   
