@@ -665,3 +665,7 @@ input.mat-input-element {
 .info-icon {
   float: right;
 }
+
+::ng-deep .mobile-country-code .mat-select-value {
+  text-overflow: inherit !important;
+}
