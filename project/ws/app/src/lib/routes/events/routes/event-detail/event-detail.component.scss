@@ -215,3 +215,17 @@ button.ws-mat-primary-background {
     margin-top: -3px;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .event-card-image {
+    width: 100%;
+    height: 266px;
+    border-radius: 4px 4px;
+  }
+  .mobile-width {
+    width: 100%;
+  }
+  .no-right-marging {
+    margin-right: 0!important;
+  }
+}
