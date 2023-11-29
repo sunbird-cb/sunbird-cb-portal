@@ -6,6 +6,7 @@ import { Subject, Observable } from 'rxjs'
 // tslint:disable
 import _ from 'lodash'
 import { LocalDataService } from '../../../browse-by-competency/services/localService';
+import { TranslateService } from '@ngx-translate/core'
 // tslint:enable
 
 @Component({
@@ -46,7 +47,15 @@ export class AllProvidersComponent implements OnInit {
   constructor(
     private browseProviderSvc: BrowseProviderService,
     private localService: LocalDataService,
-  ) { }
+    private translate: TranslateService
+  ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+      lang = lang.replace(/\"/g, "")
+      this.translate.use(lang)
+    }
+   }
 
   ngOnInit() {
     this.searchForm = new FormGroup({
@@ -57,7 +66,7 @@ export class AllProvidersComponent implements OnInit {
     this.searchForm.valueChanges
       .pipe(
         debounceTime(500),
-        switchMap(async formValue => {
+        switchMap(async (formValue: any) => {
           this.sortBy = formValue.sortByControl
           this.updateQuery(formValue.searchKey)
         }),

@@ -123,6 +123,9 @@ import { AppTocSessionCardComponent } from './components/app-toc-session-card/ap
 import { EnrollQuestionnaireComponent } from './components/enroll-questionnaire/enroll-questionnaire.component'
 import { MicroSurveyModule } from '@sunbird-cb/micro-surveys'
 import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.module'
+import { HttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
+import { HttpLoaderFactory } from '../knowledge-resource/knowledge-resource.module'
 
 @NgModule({
   declarations: [
@@ -232,6 +235,13 @@ import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content
     AttendanceCardModule,
     MicroSurveyModule,
     NgCircleProgressModule.forRoot({}),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [
     AppTocResolverService,

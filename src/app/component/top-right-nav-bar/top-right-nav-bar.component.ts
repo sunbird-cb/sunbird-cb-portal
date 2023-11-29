@@ -58,7 +58,6 @@ export class TopRightNavBarComponent implements OnInit {
         lang = lang.replace(/\"/g, "")
         this.selectedLanguage = lang
         this.translate.use(lang)
-        console.log(' this.selectedLanguage',  this.selectedLanguage)
       }
   }
 
@@ -92,7 +91,6 @@ export class TopRightNavBarComponent implements OnInit {
   
   selectLanguage(event: any) {
     this.selectedLanguage = event.target.value
-    console.log('selectedLanguage', this.selectedLanguage)
     localStorage.setItem('websiteLanguage', this.selectedLanguage)
     this.configSvc.updatelanguageSelected(true)
 
