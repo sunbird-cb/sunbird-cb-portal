@@ -55,7 +55,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
   @HostBinding('id')
   public id = `hub_${Math.random()}`
   public activeRoute = ''
-
+  public showDashboardIcon = true;
   // private readonly featuresConfig: IGroupWithFeatureWidgets[] = []
 
   constructor(
@@ -102,7 +102,18 @@ export class CardHubsListComponent extends WidgetBaseComponent
     this.environment.portals = this.environment.portals.filter(
       (obj: any) => ((obj.name !== 'Frac Dictionary') &&
        (obj.isPublic || this.isAllowed(obj.id))))
-    const instanceConfig = this.configSvc.instanceConfig
+    const instanceConfig = this.configSvc.instanceConfig;
+    const userRoles:any  = this.configSvc.userRoles;
+    // console.log('this.configService.userRoles', userRoles.size, userRoles.has('1public'))
+
+    if(userRoles !== null) {
+      if(userRoles.size === 1 && userRoles.has('public')) {
+         // console.log(true);
+        this.showDashboardIcon = false;
+      }
+     
+    }
+    
     if (instanceConfig) {
       this.hubsList = (instanceConfig.hubs || []).sort((a, b) => a.order - b.order)
       this.inactiveHubList = (instanceConfig.hubs || []).filter(i => !(i.active))

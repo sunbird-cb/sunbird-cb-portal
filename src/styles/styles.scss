@@ -1065,6 +1065,10 @@ ngx-guided-tour {
   }
 }
 
+#advwebForm .zstitlemini  {
+  white-space: nowrap;
+}
+
 .top-connector {
   left: -40px !important;
 }
@@ -1158,4 +1162,41 @@ ngx-guided-tour {
 
 .white-spinner .mat-progress-spinner circle, .theme-igot.day-mode .mat-spinner circle{
   stroke:white !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .tour_learn_mobile_container .tour-block {
+    width:83%;
+  }
+
+  .circle, .circle-start-dot, .triangle, .top-connector .circle-start-dot, .bottom-connector .circle-start-dot {
+    display: none;
+  }
+
+  .tour_learn_mobile_container.top-panel:after, .tour_discuss_mobile_container.top-panel:after {
+    // top:0 !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .tour_discuss_mobile_container .tour-block {
+    width:100%;
+  }
+
+  .tour_discuss_mobile_container {
+    left:15% !important
+  }
+  .tour_profile_mobile_container {
+    top:460px !important;
+    left:140px !important;
+  }
+  .tour_profile_mobile_container .tour-block {
+    width: 100%;
+    right:48%;
+
+  }
+  .tour_profile_mobile_container {
+  .tour-step.bottom-panel:after {
+    right:178px !important;
+  }}
 }

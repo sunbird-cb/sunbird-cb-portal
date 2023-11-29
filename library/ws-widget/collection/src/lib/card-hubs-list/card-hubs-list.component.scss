@@ -167,6 +167,14 @@ mat-grid-list {
     height: 32px;
 }
 
+.new-more-active {
+  background: rgb(27, 76, 161,0.2);
+    border-radius: 63px;
+    min-width: 100px;
+    color: rgb(0,0,0,0.6);
+    height: 32px;
+}
+
 .more-drop-down:after {
   content: "▼";
   text-align: center;

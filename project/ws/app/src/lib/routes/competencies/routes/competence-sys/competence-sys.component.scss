@@ -363,3 +363,7 @@ a.disableTagIcon, a.disableLevelIcon {
     width: 25%;
   }
 }
+
+::ng-deep .mat-form-field-prefix {
+  top:0 !important
+}

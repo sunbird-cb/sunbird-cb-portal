@@ -1,27 +1,30 @@
-<div class="weekly-wrapper" *ngIf="!isLoading && weeklyData?.enableCard && !weeklyData?.displayOnlyHeader">
-    <div>
-        <ng-container [ngTemplateOutlet]="headder"></ng-container>
-        <p class="period-count" *ngIf="insightsData?.weeklyClaps">{{insightsData?.weeklyClaps?.startDate | date: 'EE, d MMM'}}  - {{insightsData?.weeklyClaps?.endDate | date: 'EE, d MMM'}}</p>
-    </div>
-    <div>
-        <div class="flex flex-between">
-            <ng-container *ngIf="insightsData && insightsData?.weeklyClaps">
-                <ng-container *ngFor="let week of weeklyData?.weekList;let i = index">
-                    <div class="flex flex-middle margin-right-m">
-                        <ng-container *ngIf="!week?.activeWeek" >
-                            <p class="margin-remove  margin-right-xs week-name">{{week.label}} </p>
-                            <img width="24" height="24" src="{{insightsData.weeklyClaps[week.key]?.timespent > 60 ? 'assets/icons/home/check_icon.svg' : 'assets/icons/home/decline_icon.svg'}}" alt="">
-                        </ng-container>
-                        <ng-container *ngIf="week?.activeWeek">
-                            <p class="margin-remove active-week margin-right-xs week-name">{{week.label}} </p>
-                            <img width="24" height="24" src="{{insightsData.weeklyClaps[week.key]?.timespent > 60 ? 'assets/icons/home/highlight.svg' : 'assets/icons/home/decline_icon.svg'}}" alt="">
-                        </ng-container>
-                    </div>
+<ng-container *ngIf="insightsData">
+    <div class="weekly-wrapper" *ngIf="!isLoading && weeklyData?.enableCard && !weeklyData?.displayOnlyHeader">
+        <div>
+            <ng-container [ngTemplateOutlet]="headder"></ng-container>
+            <p class="period-count" *ngIf="insightsData?.weeklyClaps">{{insightsData?.weeklyClaps?.startDate | date: 'EE, d MMM'}}  - {{insightsData?.weeklyClaps?.endDate | date: 'EE, d MMM'}}</p>
+        </div>
+        <div>
+            <div class="flex flex-between">
+                <ng-container *ngIf="insightsData && insightsData?.weeklyClaps">
+                    <ng-container *ngFor="let week of weeklyData?.weekList;let i = index">
+                        <div class="flex flex-middle margin-right-m">
+                            <ng-container *ngIf="!week?.activeWeek" >
+                                <p class="margin-remove  margin-right-xs week-name">{{week.label}} </p>
+                                <img width="24" height="24" src="{{insightsData.weeklyClaps[week.key]?.timespent > 60 ? 'assets/icons/home/check_icon.svg' : 'assets/icons/home/decline_icon.svg'}}" alt="">
+                            </ng-container>
+                            <ng-container *ngIf="week?.activeWeek">
+                                <p class="margin-remove active-week margin-right-xs week-name">{{week.label}} </p>
+                                <img width="24" height="24" src="{{insightsData.weeklyClaps[week.key]?.timespent > 60 ? 'assets/icons/home/highlight.svg' : 'assets/icons/home/decline_icon.svg'}}" alt="">
+                            </ng-container>
+                        </div>
+                    </ng-container>
                 </ng-container>
-            </ng-container>
+            </div>
         </div>
     </div>
-</div>
+</ng-container>
+
 <ng-container *ngIf="weeklyData?.displayOnlyHeader">
     <ng-container [ngTemplateOutlet]="headder"></ng-container>
 </ng-container>

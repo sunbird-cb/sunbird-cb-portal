@@ -15,7 +15,7 @@ export class PendingRequestComponent implements OnInit {
   }
 
   navigateTo() {
-    this.router.navigateByUrl('app/network-v2/connection-requests')
+    this.router.navigateByUrl('app/network-v2/connection-requests?page=people_connection_request');
   }
 
 }
