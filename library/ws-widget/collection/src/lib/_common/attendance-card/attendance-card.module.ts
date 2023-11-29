@@ -25,6 +25,9 @@ import {
   MatNativeDateModule,
 } from '@angular/material'
 import { AttendanceCardComponent } from './attendance-card.component'
+import { HttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
+import { HttpLoaderFactory } from 'src/app/app.module'
 
 @NgModule({
   declarations: [AttendanceCardComponent],
@@ -52,6 +55,14 @@ import { AttendanceCardComponent } from './attendance-card.component'
     MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
+
   ],
   exports: [AttendanceCardComponent],
 })

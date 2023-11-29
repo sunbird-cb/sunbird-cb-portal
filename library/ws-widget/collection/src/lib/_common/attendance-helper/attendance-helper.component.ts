@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-widget-attendance-helper',
@@ -10,6 +11,7 @@ export class AttendanceHelperComponent implements OnInit {
   helperConfig: any
 
   constructor(
+    private translate: TranslateService,
     public dialogRef: MatDialogRef<AttendanceHelperComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
@@ -18,4 +20,9 @@ export class AttendanceHelperComponent implements OnInit {
     this.helperConfig = this.data.helperConfig
   }
 
+  translateLabels(label: string, type: any) {
+    label = label.replace(/\s/g, "")
+    const translationKey = type + '.' +  label;
+    return this.translate.instant(translationKey);
+  }
 }

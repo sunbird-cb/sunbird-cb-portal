@@ -6,6 +6,9 @@ import { EditorQuillModule } from '../../discussion-forum/editor-quill/editor-qu
 import { MatButtonModule, MatIconModule, MatTooltipModule, MatDialogModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatCardModule, MatMenuModule } from '@angular/material'
 import { PipeSafeSanitizerModule } from '@sunbird-cb/utils/src/public-api'
 import { SvgToPdfComponent } from './svg-to-pdf.component'
+import { HttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
+import { HttpLoaderFactory } from 'src/app/app.module'
 @NgModule({
   declarations: [CertificateDialogComponent, SvgToPdfComponent],
   imports: [
@@ -24,6 +27,14 @@ import { SvgToPdfComponent } from './svg-to-pdf.component'
     MatSnackBarModule,
     MatMenuModule,
     PipeSafeSanitizerModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
+
   ],
   exports: [
     CertificateDialogComponent,
