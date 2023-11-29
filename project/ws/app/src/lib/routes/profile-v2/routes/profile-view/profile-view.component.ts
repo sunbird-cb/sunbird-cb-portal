@@ -13,6 +13,7 @@ import { NetworkV2Service } from '../../../network-v2/services/network-v2.servic
 import { NSNetworkDataV2 } from '../../../network-v2/models/network-v2.model'
 import { ConfigurationsService, ValueService } from '@sunbird-cb/utils';
 import { map } from 'rxjs/operators'
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
 import {
   WidgetUserService,
   NsContent,
@@ -102,12 +103,14 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     private userSvc: WidgetUserService,
     private contentSvc: WidgetContentService,
     private homeSvc: HomePageService,
-    private matSnackBar: MatSnackBar
+    private matSnackBar: MatSnackBar,
+    private translate: TranslateService,
   ) {
     this.Math = Math
     this.pageData = this.route.parent && this.route.parent.snapshot.data.pageData.data
     this.currentUser = this.configSvc && this.configSvc.userProfile
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
+    console.log("tabsData ", this.tabsData)
     this.selectedTabIndex = this.route.snapshot.queryParams && this.route.snapshot.queryParams.tab || 0
     this.tabs = this.route.data.subscribe(data => {
       if (data.profile.data.profileDetails.verifiedKarmayogi === true) {
@@ -153,6 +156,16 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fetchDiscussionsData()
     this.fetchUserBatchList()
     this.fetchRecentRequests()
+
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+
+      this.translate.use(lang)
+      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        console.log('onLangChange', event);
+      });
+    }
   }
 
   ngOnInit() {
