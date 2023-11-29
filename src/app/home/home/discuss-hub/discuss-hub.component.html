@@ -1,5 +1,5 @@
 <div class="flex items-center mt-4">
-    <div class="flex flex-row gap-2 cursor-pointer mat-subheading-1" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}">
+    <div class="flex flex-row gap-2 cursor-pointer mat-subheading-1" (click)="navigate()">
         <div>Go to discuss hub</div>
         <mat-icon>
             chevron_right
@@ -26,7 +26,7 @@
         </div>
 
         <div class="flex justify-center items-center p-4" *ngIf="!discussion.loadSkeleton && (!discussion.error || discussion.data)">
-            <div class="flex gap-1 font-semibold cursor-pointer ws-mat-default-text" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >
+            <div class="flex gap-1 font-semibold cursor-pointer ws-mat-default-text" (click)="navigate()" >
                 <div>Show all</div>
                 <mat-icon>
                     chevron_right

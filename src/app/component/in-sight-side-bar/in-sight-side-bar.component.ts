@@ -4,9 +4,11 @@ import { HomePageService } from 'src/app/services/home-page.service';
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router'
+import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 
-
-const DEFAULT_DURATION = 500;
+const DEFAULT_WEEKLY_DURATION = 300;
+const DEFAULT_DISCUSS_DURATION = 600;
+const DEFAULT_DURATION = 100;
 
 const noData = {
   "desc" : "Do you have any questions, suggestions or, ideas in your mind? Post it.",
@@ -22,9 +24,24 @@ const noData = {
   animations: [
     trigger('collapse', [
       state('false', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
-      state('true', style({ height: '0', visibility: 'hidden' })),
+      state('true', style({  height: '0', visibility: 'hidden'  })),
       transition('false => true', animate(DEFAULT_DURATION + 'ms ease-in')),
       transition('true => false', animate(DEFAULT_DURATION + 'ms ease-out'))
+    ]),
+    trigger('collapseWeekly', [
+      state('false', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
+      state('true', style({  height: '0', visibility: 'hidden'  })),
+      // state('true', style({  position: 'absolute', width: '90%',marginRight: '16px', marginLeft:'16px',top: '-118%', zIndex: '9' })),
+      transition('false => true', animate(DEFAULT_WEEKLY_DURATION + 'ms ease-in')),
+      transition('true => false', animate(DEFAULT_WEEKLY_DURATION + 'ms ease-out'))
+    ]),
+
+    trigger('collapsDiscuss', [
+      state('false', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
+      state('true', style({  height: '0', visibility: 'hidden'  })),
+      // state('true', style({  position: 'absolute', width: '80%', transform: 'scaleY(0.7)',marginRight: '32px', marginLeft:'32px',top: '-300%', zIndex: '6' })),
+      transition('false => true', animate(DEFAULT_DISCUSS_DURATION + 'ms ease-in')),
+      transition('true => false', animate(DEFAULT_DISCUSS_DURATION + 'ms ease-out'))
     ])
   ]
 })
@@ -49,6 +66,7 @@ export class InsightSideBarComponent implements OnInit {
     private homePageSvc:HomePageService,
     private configSvc:ConfigurationsService,
     private activatedRoute: ActivatedRoute,
+    private discussUtilitySvc: DiscussUtilsService,
     private router: Router) { }
 
   ngOnInit() {
@@ -84,7 +102,7 @@ export class InsightSideBarComponent implements OnInit {
         this.profileDataLoading = false
       }
     }, (_error: any) => {
-      this.insightsData = []
+      this.insightsData = ''
       this.profileDataLoading = false
       this.clapsDataLoading = false
     })
@@ -131,6 +149,7 @@ export class InsightSideBarComponent implements OnInit {
     this.discussion.loadSkeleton = true;
     this.homePageSvc.getDiscussionsData(this.userData.userName).subscribe(
       (res: any) => {
+        console.log("this.discussion",this.discussion.data);
         this.discussion.loadSkeleton = false;
         this.discussion.data = res && res.latestPosts;
       },
@@ -138,6 +157,7 @@ export class InsightSideBarComponent implements OnInit {
         if (!error.ok) {
           this.discussion.loadSkeleton = false;
           this.discussion.error = true;
+          console.log("error", error);
         }
       }
     );
@@ -177,6 +197,10 @@ export class InsightSideBarComponent implements OnInit {
     );
   }
 
+  navigateTo() {
+    this.router.navigateByUrl('app/network-v2/connection-requests');
+  }
+
   moveToUserProile(id:string) {
     this.router.navigateByUrl('app/person-profile/'+id+'#profileInfo');
   }
@@ -188,4 +212,50 @@ export class InsightSideBarComponent implements OnInit {
   goToActivity(_e: any) {
     this.router.navigateByUrl(`app/person-profile/me?tab=1`);
   }
+
+  navigate() {
+    const config = {
+      menuOptions: [
+        {
+          route: 'all-discussions',
+          label: 'All discussions',
+          enable: true,
+        },
+        {
+          route: 'categories',
+          label: 'Categories',
+          enable: true,
+        },
+        {
+          route: 'tags',
+          label: 'Tags',
+          enable: true,
+        },
+        {
+          route: 'my-discussion',
+          label: 'Your discussion',
+          enable: true,
+        },
+        // {
+        //   route: 'leaderboard',
+        //   label: 'Leader Board',
+        //   enable: true,
+        // },
+
+      ],
+      userName: (this.configSvc.nodebbUserProfile && this.configSvc.nodebbUserProfile.username) || '',
+      context: {
+        id: 1,
+      },
+      categories: { result: [] },
+      routerSlug: '/app',
+      headerOptions: false,
+      bannerOption: true,
+    }
+    this.discussUtilitySvc.setDiscussionConfig(config)
+    localStorage.setItem('home', JSON.stringify(config))
+    this.router.navigate(['/app/discussion-forum'], { queryParams: { page: 'home' }, queryParamsHandling: 'merge' })
+  }
 }
+
+

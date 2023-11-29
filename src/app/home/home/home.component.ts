@@ -259,12 +259,12 @@ export class HomeComponent implements OnInit {
   //   this.page++;
   // }
   
-  remindlater() {
+  remindlater() { 
     this.isNudgeOpen = false
   }
   
   fetchProfile() {
-    this.router.navigate(['/app/user-profile/details'])
+    this.router.navigate(['/app/user-profile/details']);
   }
 
 }

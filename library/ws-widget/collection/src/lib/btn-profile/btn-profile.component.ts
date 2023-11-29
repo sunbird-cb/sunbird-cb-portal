@@ -192,6 +192,6 @@ export class BtnProfileComponent extends WidgetBaseComponent
 
   redirectToMyLearning() {
     // /app/seeAll?key=continueLearning
-    this.router.navigate(['/app/seeAll'], { queryParams: { key: 'continueLearning' } } );
+    this.router.navigate(['/app/seeAll'], { queryParams: { key: 'continueLearning' } })
   }
 }

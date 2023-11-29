@@ -2,7 +2,7 @@
 @import 'ws-vars';
 @import 'ws-mixins';
 
-.today-event-card {  
+.today-event-card {
   flex: 1;
   // height: calc(100% - 2rem);
   &.mat-card{
@@ -19,7 +19,7 @@
     display: block !important;
   }
 }
- 
+
 .custom-title {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -197,3 +197,15 @@ button.ws-mat-primary-background {
 ::ng-deep.mat-raised-button {
   font-weight: 500 !important;
 }
+
+@media screen and (max-width: 768px) {
+  .today-event-card {
+    &.mat-card{
+      width: auto!important;
+    }
+  }
+  .imgbox {
+    width: 115px
+  }
+}
+

@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, 
 import { HttpErrorResponse } from '@angular/common/http'
 import { NSProfileDataV2 } from '../../models/profile-v2.model'
 import { MatDialog } from '@angular/material/dialog'
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
 import { DiscussService } from '../../../discuss/services/discuss.service'
 // import { ProfileV2Service } from '../../services/profile-v2.servive'
@@ -63,6 +63,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   pendingRequestData: any = []
   pendingRequestSkeleton = true
+  insightsDataLoading = true
 
   discussion = {
     loadSkeleton: false,
@@ -230,19 +231,20 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.homeSvc.updateConnection(event.payload).subscribe(
       (_res: any) => {
         if (event.action === 'Approved') {
-          this.matSnackBar.open("Request accepted successfully");
+          this.matSnackBar.open('Request accepted successfully')
         } else {
-          this.matSnackBar.open("Rejected the request");
+          this.matSnackBar.open('Rejected the request')
         }
-        event.reqObject.connecting = false;
-        this.fetchRecentRequests();
-      }, (error: HttpErrorResponse) => {
+        event.reqObject.connecting = false
+        this.fetchRecentRequests()
+      },
+      (error: HttpErrorResponse) => {
         if (!error.ok) {
-          this.matSnackBar.open("Unable to update connection, due to some error!");
+          this.matSnackBar.open('Unable to update connection, due to some error!')
         }
-        event.reqObject.connecting = false;
+        event.reqObject.connecting = false
       }
-    );
+    )
   }
 
   fetchUserDetails(name: string) {
@@ -345,6 +347,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   public tabClicked(_tabEvent: MatTabChangeEvent) {}
 
   getInsightsData() {
+    this.insightsDataLoading = true
     const request = {
       request: {
           filters: {
@@ -363,7 +366,10 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
           this.insightsData['weeklyClaps'] = this.insightsData['weekly-claps']
         }
       }
-    })
+      this.insightsDataLoading = false
+   },                                               (_error: any) => {
+      this.insightsDataLoading = false
+   })
   }
 
   getPendingRequestData() {
