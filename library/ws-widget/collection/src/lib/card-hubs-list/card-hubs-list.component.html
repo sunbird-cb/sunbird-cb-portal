@@ -24,7 +24,7 @@
               </a>
             </ng-container>
           </div>
-          <a id="menuToggle2" class="new-more flex cursor-pointer simple-hubs-link margin-left-xl" href="javascript:void(0)" role="menuitem"
+          <a id="menuToggle2" [ngClass]="visible ? 'new-more-active': 'new-more'" class="flex cursor-pointer simple-hubs-link margin-left-xl" href="javascript:void(0)" role="menuitem"
             accesskey="H" i18n-aria-label (click)="toggleVisibility()">
 
             <!-- <mat-icon class="margin-right-xs ws-mat-primary-text">more_horiz</mat-icon> -->
