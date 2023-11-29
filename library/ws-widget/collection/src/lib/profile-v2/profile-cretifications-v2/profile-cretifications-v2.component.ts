@@ -6,6 +6,7 @@ import moment from 'moment'
 import { ProfileCertificateDialogComponent } from '../profile-certificate-dialog/profile-certificate-dialog.component'
 import { IProCert } from './profile-cretifications-v2.model'
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-widget-profile-cretifications-v2',
@@ -29,8 +30,19 @@ export class ProfileCretificationsV2Component extends WidgetBaseComponent implem
     private dialog: MatDialog,
     private contentSvc: WidgetContentService,
     private tocSvc: AppTocService,
+    private translate: TranslateService,
+
   ) {
     super()
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+
+      this.translate.use(lang)
+      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        console.log('onLangChange', event);
+      });
+    }
   }
 
   ngOnInit(): void {
@@ -42,9 +54,10 @@ export class ProfileCretificationsV2Component extends WidgetBaseComponent implem
     let dat
     if (date) {
 
-      dat = `Issued on ${moment(date).format('MMM YYYY')}`
+      dat = `${this.translateTabName('Issued on')} ${moment(date).format('MMM YYYY')}`
     } else {
-      dat = 'Certificate Not issued '
+      //dat = 'Certificate Not issued '
+      dat = this.translateTabName('Certificate Not issued')
     }
     return dat
   }
@@ -99,6 +112,11 @@ if (data.length > 0) {
       // }
     })
 
+  }
+
+  translateTabName(menuName: string): string {
+    const translationKey = 'profileCretificationsV2.' + menuName.replace(/\s/g, "")
+    return this.translate.instant(translationKey);
   }
 
 }

@@ -43,7 +43,16 @@ import { UpdatePostsModule } from '@sunbird-cb/collection/src/lib/_common/update
 import { DiscussionsModule } from '@sunbird-cb/collection/src/lib/_common/discussions/discussions.module'
 import { RecentRequestsModule } from '@sunbird-cb/collection/src/lib/_common/recent-requests/recent-requests.module'
 import { PendingRequestModule } from '@sunbird-cb/collection/src/lib/_common/pending-request/pending-request.module'
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+//import { HttpLoaderFactory } from 'src/app/app.module'
+import { HttpClient } from '@angular/common/http'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+
 // import { ShareModule } from 'ngx-sharebuttons';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http)
+}
 
 @NgModule({
   declarations: [
@@ -95,6 +104,13 @@ import { PendingRequestModule } from '@sunbird-cb/collection/src/lib/_common/pen
     DiscussionsModule,
     RecentRequestsModule,
     PendingRequestModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    })
     // ShareModule
   ],
   entryComponents: [
