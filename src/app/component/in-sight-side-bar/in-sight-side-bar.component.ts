@@ -131,6 +131,7 @@ export class InsightSideBarComponent implements OnInit {
     this.discussion.loadSkeleton = true;
     this.homePageSvc.getDiscussionsData(this.userData.userName).subscribe(
       (res: any) => {
+        console.log("this.discussion",this.discussion.data);
         this.discussion.loadSkeleton = false;
         this.discussion.data = res && res.latestPosts;
       },
@@ -138,6 +139,7 @@ export class InsightSideBarComponent implements OnInit {
         if (!error.ok) {
           this.discussion.loadSkeleton = false;
           this.discussion.error = true;
+          console.log("error", error);
         }
       }
     );

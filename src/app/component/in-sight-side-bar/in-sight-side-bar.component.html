@@ -18,7 +18,16 @@
                     </mat-icon>
                 </div>
             </div>
-            <ws-widget-discussions [discussion]="discussion" [count]="2" ></ws-widget-discussions>
+            <ng-container *ngIf="!(discussion?.error) && discussion?.data?.length">
+                <ws-widget-discussions [discussion]="discussion" [count]="2" ></ws-widget-discussions>
+            </ng-container>
+            <ng-container *ngIf="discussion?.error || !discussion?.data?.length">
+                <div class="flex flex-col items-center gap-3 p-10">
+                    <mat-icon class="no-data-found">report_off</mat-icon>
+                    <div class="mat-subheading-1">No data found!</div>
+                    <div class="text-center">Unable to fetch discussion info due to some error.</div>
+                </div>
+            </ng-container>
         </div>
         
         <ws-widget-pending-request [pendingRequestData]="pendingRequestData" [isLoading]="pendingRequestSkeleton"></ws-widget-pending-request>

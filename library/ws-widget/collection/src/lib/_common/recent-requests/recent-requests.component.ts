@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+// import { HttpErrorResponse } from '@angular/common/http';
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api';
-import { MatSnackBar } from '@angular/material';
+// import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'ws-widget-recent-requests',
@@ -15,7 +15,7 @@ export class RecentRequestsComponent implements OnInit {
   userInfo: any;
 
   constructor(
-    private matSnackBar: MatSnackBar,
+    // private matSnackBar: MatSnackBar,
     private configService: ConfigurationsService
   ) { }
 
