@@ -13,3 +13,10 @@
 ::ng-deep .info-dialog-backdrop {
     background-color: rgba(0, 0, 0, 0.6);
 }
+
+@media only screen and (max-width: 768px) {
+    ::ng-deep .custom-info-dialog {
+        width: 90% !important;
+        max-width: 90vw !important;
+    }
+}

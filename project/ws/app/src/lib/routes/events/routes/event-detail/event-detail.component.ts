@@ -51,10 +51,10 @@ export class EventDetailComponent implements OnInit {
       this.eventData.creatorDetails = JSON.parse(str)
       const eventDate = this.customDateFormat(this.eventData.startDate, this.eventData.startTime)
       const eventendDate = this.customDateFormat(this.eventData.endDate, this.eventData.endTime)
-      const isToday = this.compareDate(eventDate, eventendDate, this.eventData)
-      if (isToday) {
-        this.currentEvent = true
-      }
+      // const isToday = this.compareDate(eventDate, eventendDate, this.eventData)
+      // if (isToday) {
+      //   this.currentEvent = true
+      // }
       const sDate = this.customDateFormat(this.eventData.startDate, this.eventData.startTime)
       const eDate = this.customDateFormat(this.eventData.endDate, this.eventData.endTime)
       const msDate = Math.floor(moment(sDate).valueOf() / 1000)

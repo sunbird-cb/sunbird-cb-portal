@@ -66,7 +66,7 @@
             </div>
             <div class="flex flex-row gap-2 p-4 ws-mat-default-text ws-widget-sliders justify-center" *ngIf="network.networkRecommended && network.networkRecommended.length">
                 <div class="flex justify-center items-center">
-                    <div class="flex gap-1 font-semibold cursor-pointer ws-mat-default-text" [routerLink]="['/app/network-v2/home']">
+                    <div class="flex gap-1 font-semibold cursor-pointer ws-mat-default-text" [routerLink]="['/app/network-v2/home']" [queryParams]="{page: 'people_you_may_know'}">
                         <div *ngIf="!suggestionsLoader">Show all</div>
                         <div *ngIf="suggestionsLoader"><ws-widget-skeleton-loader [width]="'163px'" [height]="'16px'"
                             [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader></div>
