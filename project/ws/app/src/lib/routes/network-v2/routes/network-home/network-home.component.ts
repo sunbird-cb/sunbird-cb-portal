@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router'
+import { Component, Inject, OnInit } from '@angular/core'
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router'
 import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { NetworkV2Service } from '../../services/network-v2.service'
 import { NsUser, ConfigurationsService } from '@sunbird-cb/utils'
 import { CardNetWorkService } from '@sunbird-cb/collection'
-
+import { DOCUMENT } from '@angular/common';
 @Component({
   selector: 'ws-app-network-home',
   templateUrl: './network-home.component.html',
@@ -32,6 +32,7 @@ export class NetworkHomeComponent implements OnInit {
     private cardNetworkService: CardNetWorkService,
     private activeRoute: ActivatedRoute,
     private configSvc: ConfigurationsService,
+    @Inject(DOCUMENT) private document: Document
   ) {
     this.currentUserDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
@@ -56,6 +57,32 @@ export class NetworkHomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.router.url.includes('/app/network-v2/home?page=people_you_may_know')) {  
+      this.route.queryParams.subscribe(params => {
+        const param = params['page'];
+        if(param === 'people_you_may_know') {
+          if(this.document.getElementById('people_you_may_know')) {
+            let element =  this.document.getElementById('people_you_may_know');
+            if(element !== null) {
+              element.scrollIntoView()
+            }     
+          }
+        }
+      }); 
+    }
+    if (this.router.url.includes('/app/network-v2/home?page=people_connection_request')) {  
+      this.route.queryParams.subscribe(params => {
+        const param = params['page'];
+        if(param === 'people_connection_request') {
+          if(this.document.getElementById('people_connection_request')) {
+            let element =  this.document.getElementById('people_connection_request');
+            if(element !== null) {
+              element.scrollIntoView()
+            }     
+          }
+        }
+      }); 
+    }
   }
 
   goToMyMdo() {
