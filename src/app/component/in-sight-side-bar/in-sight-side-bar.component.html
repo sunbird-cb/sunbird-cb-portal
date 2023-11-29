@@ -10,7 +10,7 @@
     <section class="collapsible" [@collapsDiscuss]="collapsed" [ngClass]="{'padding-top-m':!collapsed}">
         <div class="flex flex-col discussion-card " >
             <div class="flex mat-subheading-1 p-4">
-                <div class="flex gap-1 cursor-pointer" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}">
+                <div class="flex gap-1 cursor-pointer" (click)="navigate()">
                     My Discussions
                     <mat-icon class="ws-mat-default-text">
                         chevron_right
