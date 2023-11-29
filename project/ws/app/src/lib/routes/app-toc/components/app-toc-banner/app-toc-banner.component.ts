@@ -31,6 +31,7 @@ import { DatePipe } from '@angular/common'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import { EnrollQuestionnaireComponent } from '../enroll-questionnaire/enroll-questionnaire.component'
+import { TranslateService } from '@ngx-translate/core'
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 
@@ -124,8 +125,15 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     private tagSvc: TitleTagService,
     private actionSVC: ActionService,
     private logger: LoggerService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private translate: TranslateService,
   ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+      lang = lang.replace(/\"/g, "")
+      this.translate.use(lang)
+    }
     this.helpEmail = environment.helpEmail
   }
 

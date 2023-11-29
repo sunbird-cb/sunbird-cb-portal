@@ -32,7 +32,7 @@
                 </h1>
 
                 <button *ngIf="stripsResultDataMap[key]?.stripInfo?.icon" type="button" mat-icon-button
-                  (click)="toggleInfo(stripsResultDataMap[key])" i18n-matTooltip matTooltip="info"
+                  (click)="toggleInfo(stripsResultDataMap[key])" i18n-matTooltip matTooltip="{{ 'contentstripmultiple.info' | translate }}"
                   class="margin-left-xs">
                   <mat-icon>{{ stripsResultDataMap[key]?.stripInfo?.icon.icon }}</mat-icon>
                 </button>

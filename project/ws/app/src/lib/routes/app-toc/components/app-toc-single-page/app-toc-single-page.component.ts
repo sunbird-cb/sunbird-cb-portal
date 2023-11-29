@@ -18,6 +18,7 @@ import { NsContent, NsAutoComplete } from '@sunbird-cb/collection/src/public-api
 import _ from 'lodash'
 import { FormGroup, FormControl } from '@angular/forms'
 import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
+import { TranslateService } from '@ngx-translate/core'
 @Component({
   selector: 'ws-app-app-toc-single-page',
   templateUrl: './app-toc-single-page.component.html',
@@ -100,8 +101,14 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     private connectionHoverService: ConnectionHoverService,
     private eventSvc: EventService,
     private ratingSvc: RatingService,
-    // private discussionEventsService: DiscussionEventsService
+    private translate: TranslateService,
   ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+      lang = lang.replace(/\"/g, "")
+      this.translate.use(lang)
+    }
     if (this.configSvc.restrictedFeatures) {
       this.askAuthorEnabled = !this.configSvc.restrictedFeatures.has('askAuthor')
       this.trainingLHubEnabled = !this.configSvc.restrictedFeatures.has('trainingLHub')
@@ -808,5 +815,11 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
         this.fetchRatingLookup()
       }
     }
+  }
+
+  translateLabels(label: string, type: any) {
+    label = label.replace(/\s/g, "")
+    const translationKey = type + '.' +  label;
+    return this.translate.instant(translationKey);
   }
 }
