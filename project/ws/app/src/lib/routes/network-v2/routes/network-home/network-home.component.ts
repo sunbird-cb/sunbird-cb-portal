@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core'
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { NetworkV2Service } from '../../services/network-v2.service'
 import { NsUser, ConfigurationsService } from '@sunbird-cb/utils'
