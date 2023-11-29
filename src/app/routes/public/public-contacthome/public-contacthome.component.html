@@ -12,21 +12,21 @@
         <div class="flex-3">
             <mat-card class="padding-xl">
                 <!-- <h2 class="flex mat-display-1 main_title_text margin-bottom-xl">Contact Us</h2> -->
-                <h1>For any technical issues please contact,</h1>
-                <p class="mat-body-1">Email: <a (click)="preventData($event)" class="mail_link"><b>mission[dot]karmayogi[at]gov[dot]in</b></a></p>
-                <p>Helpdesk: <a href="https://servicedesk.nic.in/" target="_blank"><b>servicedesk.nic.in</b></a></p>
-                <p class="mat-body-1 margin-bottom-m">Call: <mat-icon class="custom-phone">phone</mat-icon><b> 1800 111 555</b></p>
+                <h1>{{ 'contact.headerForAnyTech' | translate }}</h1>
+                <p class="mat-body-1">{{ 'contact.Email' | translate }}: <a (click)="preventData($event)" class="mail_link"><b>mission[dot]karmayogi[at]gov[dot]in</b></a></p>
+                <p>{{ 'contact.Helpdesk' | translate }}: <a href="https://servicedesk.nic.in/" target="_blank"><b>servicedesk.nic.in</b></a></p>
+                <p class="mat-body-1 margin-bottom-m">{{ 'contact.Call' | translate }}: <mat-icon class="custom-phone">phone</mat-icon><b> 1800 111 555</b></p>
                 <!-- <p class="mat-body-1 margin-top-xl margin-bottom-m">To know more click <a href="{{karmayogiBharatLink}}" target="_blank">here.</a></p> -->
                 <div class="confrence-box">
-                    <h1>We are now available on Video Conference</h1>
-                    <p class="text-danger margin-no-bottom"><b>For any Support Required</b></p>
-                    <p><b>Monday to Friday</b></p>
+                    <h1>{{ 'contact.VideoConference' | translate }}</h1>
+                    <p class="text-danger margin-no-bottom"><b>{{ 'contact.SupportReqd' | translate }}</b></p>
+                    <p><b>{{ 'contact.WeekDays' | translate }}</b></p>
                     <p><b>9:00 AM to 5:00 PM</b> </p>
                     <!-- <p *ngIf="meetLink.length > 0">{{meetingDetail}} -->
                     
 
                         <a *ngIf="meetLink.length > 0" href="{{meetLink}}" target="_blank" class="meet_link">
-                            Join Now
+                            {{ 'contact.btnJoinNow' | translate }}
                             <!-- <img src="/assets/instances/eagle/landing-img/meet-link.jpg" /> -->
                         </a>
                     <!-- </p> -->
