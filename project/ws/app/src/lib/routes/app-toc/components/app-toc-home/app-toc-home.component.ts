@@ -30,6 +30,7 @@ import moment from 'moment'
 import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
 import { environment } from 'src/environments/environment'
 import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
+import { TranslateService } from '@ngx-translate/core'
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -180,6 +181,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private viewerSvc: ViewerUtilService,
     private ratingSvc: RatingService,
     private telemertyService: TelemetryService,
+    private translate: TranslateService,
   ) {
     this.historyData = history.state
     this.handleBreadcrumbs()
@@ -1438,5 +1440,11 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     },                                    (_err: any) => {
       this.tocSvc.changeServerDate(new Date().getTime())
     })
+  }
+
+  translateLabels(label: string, type: any) {
+    label = label.replace(/\s/g, "")
+    const translationKey = type + '.' +  label;
+    return this.translate.instant(translationKey);
   }
 }
