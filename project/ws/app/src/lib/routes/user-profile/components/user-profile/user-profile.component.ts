@@ -31,6 +31,7 @@ import { LoaderService } from '@ws/author/src/public-api'
 import _ from 'lodash'
 import { OtpService } from '../../services/otp.services';
 import { environment } from 'src/environments/environment'
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
 
 /* tslint:enable */
 
@@ -140,7 +141,17 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private loader: LoaderService,
     private eventSvc: EventService,
     private otpService: OtpService,
+    private translate: TranslateService,
   ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+
+      this.translate.use(lang)
+      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        console.log('onLangChange', event);
+      });
+    }
     this.approvalConfig = this.route.snapshot.data.pageData.data
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
     this.fetchPendingFields()
@@ -1872,5 +1883,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       WsEvents.EnumInteractSubTypes.PROFILE_EDIT_TAB,
       data,
     )
+  }
+  translateTo(menuName: string): string {
+    const translationKey = 'userProfile.' + menuName.replace(/\s/g, "")
+    return this.translate.instant(translationKey);
   }
 }
