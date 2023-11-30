@@ -12,6 +12,7 @@ import { RequestService } from './request.service'
 import { RequestSuccessDialogComponent } from './request-success-dialog/request-success-dialog.component'
 import { v4 as uuid } from 'uuid'
 import { Location } from '@angular/common'
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
 
 export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -74,7 +75,8 @@ export class PublicRequestComponent implements OnInit {
               private signupSvc: SignupService,
               private dialog: MatDialog,
               private requestSvc: RequestService,
-              private _location: Location) {
+              private _location: Location,
+              private translate: TranslateService) {
     const navigation = this.router.getCurrentNavigation()
     if (navigation) {
       const extraData = navigation.extras.state as {
@@ -116,6 +118,16 @@ export class PublicRequestComponent implements OnInit {
       // this.requestForm.controls['email'].markAsTouched()
       // this.requestForm.controls['mobile'].markAsTouched()
       // this.requestForm.controls['confirmBox'].markAsTouched()
+    }
+
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+
+      this.translate.use(lang)
+      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        console.log('onLangChange', event);
+      });
     }
    }
 

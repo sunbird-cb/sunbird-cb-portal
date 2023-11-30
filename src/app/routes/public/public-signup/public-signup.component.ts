@@ -13,6 +13,7 @@ import { DOCUMENT, isPlatformBrowser } from '@angular/common'
 import _ from 'lodash'
 import { ActivatedRoute, Router } from '@angular/router'
 import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component'
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
 
 // export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
 //   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -146,7 +147,19 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     private router: Router,
     @Inject(DOCUMENT) private _document: any,
     @Inject(PLATFORM_ID) private _platformId: any,
+    private translate: TranslateService
   ) {
+
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+
+      this.translate.use(lang)
+      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        console.log('onLangChange', event);
+      });
+    }
+
     let userData : any = {}
     this.userdataSubscription = this.signupSvc.updateSignupDataObservable.subscribe(res=> {
       userData = res
