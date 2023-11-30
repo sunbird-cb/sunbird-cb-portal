@@ -4,6 +4,7 @@ import { ConfigurationsService, EventService, ValueService } from '@sunbird-cb/u
 import { ActivatedRoute } from '@angular/router'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-learn-search',
@@ -73,7 +74,18 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
     private events: EventService,
     private activated: ActivatedRoute,
     private valueSvc: ValueService,
-  ) { }
+    private translate: TranslateService
+  ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+
+      this.translate.use(lang)
+      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        console.log('onLangChange', event);
+      });
+    }
+   }
 
   ngOnInit() {
     this.statedata = { param: this.param, path: 'Search' }
