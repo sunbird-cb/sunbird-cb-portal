@@ -104,8 +104,8 @@ export class CardHubsListComponent extends WidgetBaseComponent
     const userRoles: any  = this.configSvc.userRoles
     // console.log('this.configService.userRoles', userRoles.size, userRoles.has('1public'))
 
-    if(userRoles !== null) {
-      if(userRoles.size === 1 && userRoles.has('public')) {
+    if (userRoles !== null) {
+      if (userRoles.size === 1 && userRoles.has('public')) {
          // console.log(true);
         this.showDashboardIcon = false
       }

@@ -211,6 +211,15 @@ color:rgb(27, 76, 161)
   justify-content: left;
 }
 
+.mobile {
+  background-color: rgb(239,243,249);
+
+}
+a.mobile {
+  background: #fff;
+    padding: 16px;
+    border-radius: 4px;
+}
 .secondary-nav::-webkit-scrollbar{ width :6px; } 
 
 .secondary-nav  ::-webkit-scrollbar {
