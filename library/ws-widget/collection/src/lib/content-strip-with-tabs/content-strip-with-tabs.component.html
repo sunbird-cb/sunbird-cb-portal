@@ -13,7 +13,7 @@
                     stripsResultDataMap[key]?.showOnLoader ||
                     stripsResultDataMap[key]?.showOnError)
                   " [ngClass]="
-                    !widgetData?.isChannelStrip ? 'xs:px-8 sx:px-10ss py-2 my-2' : i > 0 ? 'mt-12' : ''
+                    !widgetData?.isChannelStrip ? 'xs:px-8 sx:px-10ss my-2' : i > 0 ? 'mt-12' : ''
                   " [id]="key" [ngClass]="!widgetData?.isChannelStrip ? margin-bottom-custom : margin-bottom-xs">
           <div [ngClass]="{ pad: stripsResultDataMap[key]?.stripBackground }"
             [ngStyle]="{ 'background-color': stripsResultDataMap[key]?.stripBackground }">
@@ -84,7 +84,7 @@
                         <!-- <ng-container [ngTemplateOutlet]="loader" *ngIf="stripsResultDataMap[key]?.showOnLoader">
                         </ng-container> -->
                         <div *ngIf="stripsResultDataMap && stripsResultDataMap[key]?.showOnLoader ||
-                        !tab?.widgets || !tab?.widgets?.length" 
+                        !tab.fetchTabStatus" 
                         class="text-center my-2">
                               <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
                                       [loadStatus]="'fetching'" [stripConfig]="stripsResultDataMap[key]?.stripConfig">
@@ -93,15 +93,24 @@
                                 </ng-container>
                               </ws-utils-horizontal-scroller-v2>
                         </div>
-                        <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig" [widgetsLength]="tab.widgets?.length"
-                          *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
-                          [loadStatus]="'done'" [defaultMaxWidgets]="tab.maxWidgets ||
-                          stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets" [stripConfig]="stripsResultDataMap[key]?.stripConfig">
-                          <ng-container *ngFor="let widget of tab.widgets| slice:0:(tab.maxWidgets ||
-                          stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets); trackBy: tracker">
-                              <ng-container [wsResolverWidget]="widget"></ng-container>
-                          </ng-container>
-                        </ws-utils-horizontal-scroller-v2>
+                        <div *ngIf="((tab.fetchTabStatus && tab.fetchTabStatus === 'done') && 
+                        (!tab?.widgets || !tab?.widgets?.length))">
+                            <div class="w-full flex flex-col items-center justify-center">
+                              <img alt="" class="mt-4 mb-4" src="assets/icons/home/nodataDefault.png">
+                              <div class="mat-subheading-1">{{tab.nodataMsg}}</div>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="tab.fetchTabStatus === 'done' || tab?.widgets?.length">
+                          <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig" [widgetsLength]="tab.widgets?.length"
+                            *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
+                            [loadStatus]="'done'" [defaultMaxWidgets]="tab.maxWidgets ||
+                            stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets" [stripConfig]="stripsResultDataMap[key]?.stripConfig">
+                            <ng-container *ngFor="let widget of tab.widgets| slice:0:(tab.maxWidgets ||
+                            stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets); trackBy: tracker">
+                                <ng-container [wsResolverWidget]="widget"></ng-container>
+                            </ng-container>
+                          </ws-utils-horizontal-scroller-v2>
+                        </ng-container>
                       </div>
                     </mat-tab>
                   </mat-tab-group>
