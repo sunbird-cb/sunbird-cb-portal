@@ -83,9 +83,9 @@ $spaceFromEnd: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  @include breakpoint-xs {
-    display: none;
-  }
+  // @include breakpoint-xs {
+  //   display: none;
+  // }
 
   .dot {
     cursor: pointer;
@@ -98,12 +98,12 @@ $spaceFromEnd: 0;
     display: inline-block;
     transition: background-color 0.5s ease !important;
 
-    @include breakpoint-xs {
-      height: 6px;
-      width: 6px;
-      margin: 0 4px;
-      display: none;
-    }
+    // @include breakpoint-xs {
+    //   height: 6px;
+    //   width: 6px;
+    //   margin: 0 4px;
+    //   display: none;
+    // }
   }
 
   .dot.active {
@@ -111,10 +111,10 @@ $spaceFromEnd: 0;
     background-color: #F3962F;
     width: 16px;
 
-    @include breakpoint-xs {
-      height: 6px;
-      width: 6px;
-      display: none;
-    }
+    // @include breakpoint-xs {
+    //   height: 6px;
+    //   width: 6px;
+    //   display: none;
+    // }
   }
 }
