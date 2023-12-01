@@ -654,6 +654,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         content,
         ...(content.batch && { batch: content.batch }),
         cardSubType: strip.stripConfig && strip.stripConfig.cardSubType,
+        cardCustomeClass: strip.customeClass ? strip.customeClass : '',
         context: { pageSection: strip.key, position: idx },
         intranetMode: strip.stripConfig && strip.stripConfig.intranetMode,
         deletedMode: strip.stripConfig && strip.stripConfig.deletedMode,
@@ -671,6 +672,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       widgetHostClass: 'mb-2',
       widgetData: {
         cardSubType: strip.loaderConfig && strip.loaderConfig.cardSubType || 'card-standard-skeleton',
+        cardCustomeClass: strip.customeClass ? strip.customeClass : '',
       },
     }))
   }
