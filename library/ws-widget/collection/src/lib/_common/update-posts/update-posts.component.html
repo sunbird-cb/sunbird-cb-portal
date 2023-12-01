@@ -1,12 +1,12 @@
 <div class="flex flex-col gap-4">
-    <div class="flex flex-row gap-3 items-center mat-subheading-1 mb-0">
-        <div class="flex flex-grow">Updates on your posts</div>
+    <div class="flex flex-row gap-3 items-center mb-0">
+        <div class="flex flex-grow mat-subheading-1">Updates on your posts</div>
         <div class="text-2xl ws-mat-default-text">
             <ng-container *ngIf="isMobile">
-                <div class="text-sm" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >Show all</div>
+                <div class="flex text-sm font-weight-400 ws-mat-default-text" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >Show all</div>
             </ng-container>
             <ng-container *ngIf="!isMobile">
-                <mat-icon class="cursor-pointer font-bold" *ngIf="!updatesPosts.loadSkeleton" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home', popup: 'show'}" >add</mat-icon>
+                <mat-icon class="cursor-pointer font-bold" *ngIf="!updatesPosts.loadSkeleton" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home', popup: 'show'}">add</mat-icon>
             </ng-container>
         </div>
     </div>
