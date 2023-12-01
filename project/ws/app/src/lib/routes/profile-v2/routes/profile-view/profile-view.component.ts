@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core'
+import { AfterViewInit, Inject, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { HttpErrorResponse } from '@angular/common/http'
 import { NSProfileDataV2 } from '../../models/profile-v2.model'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
 import { DiscussService } from '../../../discuss/services/discuss.service'
+import { DOCUMENT } from '@angular/common'
 // import { ProfileV2Service } from '../../services/profile-v2.servive'
 /* tslint:disable */
 import _ from 'lodash'
@@ -102,13 +103,15 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     private userSvc: WidgetUserService,
     private contentSvc: WidgetContentService,
     private homeSvc: HomePageService,
-    private matSnackBar: MatSnackBar
+    private matSnackBar: MatSnackBar,
+    @Inject(DOCUMENT) private document: Document
   ) {
     this.Math = Math
     this.pageData = this.route.parent && this.route.parent.snapshot.data.pageData.data
     this.currentUser = this.configSvc && this.configSvc.userProfile
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     this.selectedTabIndex = this.route.snapshot.queryParams && this.route.snapshot.queryParams.tab || 0
+
     this.tabs = this.route.data.subscribe(data => {
       if (data.profile.data.profileDetails.verifiedKarmayogi === true) {
         this.verifiedBadge = true
@@ -159,6 +162,14 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
       this.sideNavBarOpened = !isLtMedium
     })
+    if (this.selectedTabIndex) {
+      if (this.document.getElementById('activityTab')) {
+        const element =  this.document.getElementById('activityTab')
+        if (element !== null) {
+          element.scrollIntoView()
+        }
+      }
+    }
     this.getPendingRequestData()
   }
 

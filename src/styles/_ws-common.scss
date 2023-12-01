@@ -50,6 +50,15 @@
   }
 }
 
+.feed-title:hover {
+  color: #1b4ca1;
+
+  .feed-title-icon {
+    transform: translateX(10px);
+    transition: all 0.05s ease-in-out;
+  }
+}
+
 .no-data-found {
   width: 36px;
   height: 36px;

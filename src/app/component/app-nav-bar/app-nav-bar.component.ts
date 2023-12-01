@@ -247,5 +247,9 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     
   }
 
+  openExploreMenu() {
+    this.configSvc.openExploreMenuForMWeb.next(true);
+  }
+
  
 }

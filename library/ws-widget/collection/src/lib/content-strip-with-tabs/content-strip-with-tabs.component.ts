@@ -203,28 +203,28 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     return data.widgets ? data.widgets.length : 0
   }
   getLength(data: IStripUnitContentData) {
-   if(!data.tabs || !data.tabs.length) {
+   if (!data.tabs || !data.tabs.length) {
      return data.widgets ? data.widgets.length : 0
-   } else {
+   }  {
     // if tabs are there check if each tab has widgets and get the tab with max widgets
     const tabWithMaxWidgets = data.tabs.reduce(
       (prev, current) => {
-        if(!prev.widgets && !current.widgets) {
+        if (!prev.widgets && !current.widgets) {
           return current
         }
-        if(prev.widgets && current.widgets){
+        if (prev.widgets && current.widgets) {
           return (prev.widgets.length > current.widgets.length) ? prev : current
-        } 
-        if(current.widgets && !prev.widgets){
+        }
+        if (current.widgets && !prev.widgets) {
           return current
         }
-        if(!current.widgets && prev.widgets) {
+        if (!current.widgets && prev.widgets) {
           return prev
         }
         return current
         // return (prev.widgets && current.widgets && (prev.widgets.length > current.widgets.length) ) ? prev : current
-      }, data.tabs[0]
-    )
+        // tslint:disable-next-line: align
+      }, data.tabs[0])
     // if tabs has atleast 1 widgets then strip will show or else not
     return tabWithMaxWidgets.widgets ? tabWithMaxWidgets.widgets.length : 0
    }
@@ -406,7 +406,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     array.forEach((e: any, idx: number, arr: any[]) => (customFilter(e, idx, arr) ? inprogress : completed).push(e))
     return [
       { value: 'inprogress', widgets: this.transformContentsToWidgets(inprogress, strip) },
-      { value: 'completed', widgets: this.transformContentsToWidgets(completed, strip) }]
+      { value: 'completed', widgets: [] }]
   }
 
   async fetchFromSearchV6(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
@@ -731,7 +731,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       ...this.stripsResultDataMap,
       [strip.key]: stripData,
     }
-    if(!tabsResults){
+    if (!tabsResults) {
       if (
         calculateParentStatus &&
         (fetchStatus === 'done' || fetchStatus === 'error') &&
@@ -746,7 +746,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       }
     } else {
       this.contentAvailable = true
-    }    
+    }
   }
   private checkParentStatus(fetchStatus: TFetchStatus, stripWidgetsCount: number): void {
     if (fetchStatus === 'done' && !stripWidgetsCount) {
