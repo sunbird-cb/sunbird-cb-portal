@@ -223,8 +223,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         }
         return current
         // return (prev.widgets && current.widgets && (prev.widgets.length > current.widgets.length) ) ? prev : current
-      }, data.tabs[0]
-    )
+        // tslint:disable-next-line: align
+      },data.tabs[0])
     // if tabs has atleast 1 widgets then strip will show or else not
     return tabWithMaxWidgets.widgets ? tabWithMaxWidgets.widgets.length : 0
    }
@@ -406,7 +406,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     array.forEach((e: any, idx: number, arr: any[]) => (customFilter(e, idx, arr) ? inprogress : completed).push(e))
     return [
       { value: 'inprogress', widgets: this.transformContentsToWidgets(inprogress, strip) },
-      { value: 'completed', widgets: this.transformContentsToWidgets(completed, strip) }]
+      { value: 'completed', widgets: [] }]
   }
 
   async fetchFromSearchV6(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
