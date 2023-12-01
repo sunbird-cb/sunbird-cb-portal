@@ -14,7 +14,7 @@
             *ngIf="tabResults.length > 0">
             <mat-tab-group animationDuration="0ms" 
                   class="mat-tab-labels w-full strips-tabgroup" dynamicHeight
-                  (selectedTabChange)="tabClicked($event, seeAllPageConfig, seeAllPageConfig.key)">
+                  (selectedTabChange)="tabClicked($event, seeAllPageConfig, seeAllPageConfig.key)" [(selectedIndex)]="dynamicTabIndex">
             <mat-tab *ngFor="let tab of tabResults; let last = last;" [label]="tab?.label">
                 <ng-template mat-tab-label>
                     <span>{{tab?.label}} &nbsp;</span>
