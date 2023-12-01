@@ -118,6 +118,13 @@ export class CardHubsListComponent extends WidgetBaseComponent
     this.defaultMenuSubscribe = this.isLtMedium$.subscribe((isLtMedium: boolean) => {
       this.isMobile = isLtMedium
     })
+
+    this.configSvc.openExploreMenuForMWeb.subscribe((data:any)=>{
+      console.log('data-->', data);
+      if(data) {
+        this.toggleVisibility();
+      }
+    })
   }
   ngOnDestroy() {
     if (this.defaultMenuSubscribe) {

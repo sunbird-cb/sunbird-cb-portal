@@ -107,6 +107,7 @@ export class ConfigurationsService {
   cstoken = ''
 
   changeNavBarFullView = new Subject()
+  openExploreMenuForMWeb = new Subject();
   updateGlobalProfile(state: boolean) {
     this.updateProfile.next(state)
   }

@@ -6,7 +6,7 @@ import moment from 'moment'
 import { ProfileCertificateDialogComponent } from '../profile-certificate-dialog/profile-certificate-dialog.component'
 import { IProCert } from './profile-cretifications-v2.model'
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
-
+import { ConfigurationsService } from '@sunbird-cb/utils'
 @Component({
   selector: 'ws-widget-profile-cretifications-v2',
   templateUrl: './profile-cretifications-v2.component.html',
@@ -23,17 +23,23 @@ export class ProfileCretificationsV2Component extends WidgetBaseComponent implem
   @HostBinding('id')
   public id = 'profile-cert-v2'
   certData: any
+  defaultThumbnail = '';
   allCertificate: any = []
 
   constructor(
     private dialog: MatDialog,
     private contentSvc: WidgetContentService,
     private tocSvc: AppTocService,
+    private configSvc: ConfigurationsService
   ) {
     super()
   }
 
   ngOnInit(): void {
+    const instanceConfig = this.configSvc.instanceConfig
+    if (instanceConfig) {
+      this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
+    }
   }
   changeToDefaultImg($event: any) {
     $event.target.src = '/assets/instances/eagle/app_logos/default.png'
