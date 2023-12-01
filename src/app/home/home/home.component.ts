@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { ActivatedRoute } from '@angular/router';
 import { ConfigurationsService } from '@sunbird-cb/utils/src/lib/services/configurations.service';
@@ -18,7 +18,7 @@ const API_END_POINTS = {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
   widgetData = {};
   sliderData = {};
   contentStripData:any = {};
@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
   currentPosition: any;
   mobileTopHeaderVisibilityStatus: any = true;
   sectionList:any = [];
+  enableLazyLoadingFlag = true;
   constructor(private activatedRoute:ActivatedRoute,  private configSvc: ConfigurationsService, public btnSettingsSvc: BtnSettingsService, 
     private http: HttpClient, public mobileAppsService: MobileAppsService, private router: Router, private translate: TranslateService,) { 
       if (localStorage.getItem('websiteLanguage')) {
@@ -72,6 +73,7 @@ export class HomeComponent implements OnInit {
 
     this.clientList = this.activatedRoute.snapshot.data.pageData.data.clientList;
     this.widgetData = this.activatedRoute.snapshot.data.pageData.data.hubsData;
+    this.enableLazyLoadingFlag = this.activatedRoute.snapshot.data.pageData.data.enableLazyLoading;
 
     this.discussStripData = {
       "strips": [
@@ -168,14 +170,26 @@ export class HomeComponent implements OnInit {
     };
 
     this.sliderData = this.activatedRoute.snapshot.data.pageData.data.sliderData;
-
-    this.sectionList.push({'section':'slider', 'isVisible': false});
+       this.sectionList.push({'section':'slider', 'isVisible': false});
     this.sectionList.push({'section':'discuss', 'isVisible': false});
     this.sectionList.push({'section':'network', 'isVisible': false});
 
     this.handleUpdateMobileNudge();
 
     this.handleDefaultFontSetting();
+    console.log(this.sectionList);
+    
+
+    
+  }
+
+  ngAfterViewInit() {
+    console.log(this.sectionList);
+    for(let i=0; i<this.sectionList.length;i++) {
+      if(this.sectionList[i]['section'] == 'section_0' || this.sectionList[i]['section'] == 'section_1') {
+        this.sectionList[i]['isVisible'] = true;        
+      } 
+    }
   }
 
   handleButtonClick(): void {
@@ -214,62 +228,61 @@ export class HomeComponent implements OnInit {
     this.btnSettingsSvc.changeFont(fontClass);
   }
 
-  // @HostListener('window:scroll', ['$event'])
-  // scrollHandler() {
-  //   console.log('in scroll', this.sectionList);
-  //   for(let i=0; i<this.sectionList.length;i++) {
-  //     if(this.sectionList[i]['section'] !== 'section_0' && this.sectionList[i]['section'] !== 'section_1') {
-  //       this.checkSectionVisibility(this.sectionList[i]['section']);
-  //     }
-  //   }
+  @HostListener('window:scroll', ['$event'])
+  scrollHandler() {
+    console.log('in scroll', this.sectionList);
+    for(let i=0; i<this.sectionList.length;i++) {
+      if(this.sectionList[i]['section'] !== 'section_0' && this.sectionList[i]['section'] !== 'section_1') {
+       this.checkSectionVisibility(this.sectionList[i]['section']);
+      }
+    }
     
-  //   // let scroll = e.scrollTop;
-  //   // console.log('scroll');
-  //   // if (scroll > this.currentPosition) {
-  //   //   console.log("scrollDown");
-  //   // } else {
-  //   //   console.log("scrollUp");
-  //   // }
-  //   // this.currentPosition = scroll;
-  //   // // var insightsResults = document.getElementsByClassName(
-  //   // //   'insights-results'
-  //   // // )[0];
-  //   // // var childInsights = insightsResults?.scrollHeight;
-  //   // // var windowScroll = window.scrollY;
-  //   // // if (Math.floor(windowScroll) >= Math.floor(childInsights)) {
-  //   // //     this.loadMore();
-  //   // // }
-  // }
+    // let scroll = e.scrollTop;
+    // console.log('scroll');
+    // if (scroll > this.currentPosition) {
+    //   console.log("scrollDown");
+    // } else {
+    //   console.log("scrollUp");
+    // }
+    // this.currentPosition = scroll;
+    // // var insightsResults = document.getElementsByClassName(
+    // //   'insights-results'
+    // // )[0];
+    // // var childInsights = insightsResults?.scrollHeight;
+    // // var windowScroll = window.scrollY;
+    // // if (Math.floor(windowScroll) >= Math.floor(childInsights)) {
+    // //     this.loadMore();
+    // // }
+  }
 
-  // checkSectionVisibility(className:string): boolean {
-  //   var isVisible = false;
-  //   if(className === 'section_0' || className === 'section_1') {
-  //     isVisible = true;
+  checkSectionVisibility(className:string) {
+    var isVisible = false;
+    console.log('this.sectionList',this.sectionList);
+    if(className === 'section_0' || className === 'section_1') {
+      isVisible = true;
      
-  //   } 
-  //   // else {
-  //   //   for(var i=0; i<this.sectionList.length;i++) {
-      
-  //   //     if(this.sectionList[i]['section'] === className) {
-  //   //       if(document.getElementsByClassName(this.sectionList[i]['section']) 
-  //   //       && document.getElementsByClassName(this.sectionList[i]['section'])[0] 
-  //   //       && !this.sectionList[i]['isVisible']) {
-  //   //         var tect = document.getElementsByClassName(this.sectionList[i]['section'])[0].getBoundingClientRect()
-  //   //       var eleTop = tect.top
-  //   //       var eleBottom = tect.bottom
-  //   //       isVisible = (eleTop >= 0 ) && (eleBottom <= window.innerHeight)
-  //   //       this.sectionList[i]['isVisible'] = isVisible;
-  //   //       console.log(isVisible)
-  //   //       break;
-  //   //     }
+    } else {
+      if(className !== 'section_0' && className !== 'section_1') {
+      for(var i=0; i<this.sectionList.length;i++) {      
+        if(this.sectionList[i]['section'] === className) {
+          if(document.getElementsByClassName(this.sectionList[i]['section']) 
+          && document.getElementsByClassName(this.sectionList[i]['section'])[0] 
+          && !this.sectionList[i]['isVisible']) {
+            var tect = document.getElementsByClassName(this.sectionList[i]['section'])[0].getBoundingClientRect()
+          var eleTop = tect.top
+          var eleBottom = tect.bottom
+          isVisible = (eleTop >= 0 ) && (eleBottom <= window.innerHeight)
+          this.sectionList[i]['isVisible'] = isVisible;
+          console.log(isVisible)
+          break;
+        }
           
-  //   //     }
+        }
        
-  //   //   }
-  //   // }
-    
-  //   return isVisible;
-  // }
+      }}
+    }
+    console.log('this.sectionList',this.sectionList);
+  }
   
   
   //  loadMore(): void {
