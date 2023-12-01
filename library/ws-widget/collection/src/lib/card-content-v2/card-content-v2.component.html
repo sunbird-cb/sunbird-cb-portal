@@ -1063,7 +1063,7 @@
 </ng-template>
 
 <ng-template #cardPortrait>
-    <mat-card class="card-portrait mr-8">
+    <mat-card class="card-portrait" [ngClass]="widgetData.cardCustomeClass ? widgetData.cardCustomeClass : ''">
       <div class="flex">
         <div class="margin-right-s">
           <ng-container *ngIf="widgetData.content.posterImage">
@@ -1197,7 +1197,7 @@
 </ng-template>
 
 <ng-template #cardPortraitSkeleton>
-  <mat-card class="card-portrait mr-8">
+  <mat-card class="card-portrait" [ngClass]="widgetData.cardCustomeClass ? widgetData.cardCustomeClass : ''">
     <div class="flex">
       <div class="margin-right-s">
         <ng-container>
