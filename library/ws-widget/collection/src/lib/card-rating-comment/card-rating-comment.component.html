@@ -4,11 +4,11 @@
             <div class="card_inner_content flex">
                 <div class="margin-right-m">
                     <ng-container *ngIf="review?.firstName">
-                        <ws-widget-avatar-photo [name]="getFullName(review)" [size]="'m'"
+                        <ws-widget-avatar-photo [name]="getFullName(review)" [size]="'round-m'"
                             [photoUrl]=""></ws-widget-avatar-photo>
                     </ng-container>
                     <ng-container *ngIf="!review?.firstName">
-                        <ws-widget-avatar-photo [name]="review?.user_id" [size]="'m'"
+                        <ws-widget-avatar-photo [name]="review?.user_id" [size]="'round-m'"
                             [photoUrl]=""></ws-widget-avatar-photo>
                     </ng-container>
                 </div>

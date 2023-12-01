@@ -203,28 +203,28 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     return data.widgets ? data.widgets.length : 0
   }
   getLength(data: IStripUnitContentData) {
-   if(!data.tabs || !data.tabs.length) {
+   if (!data.tabs || !data.tabs.length) {
      return data.widgets ? data.widgets.length : 0
-   } else {
+   }  {
     // if tabs are there check if each tab has widgets and get the tab with max widgets
     const tabWithMaxWidgets = data.tabs.reduce(
       (prev, current) => {
-        if(!prev.widgets && !current.widgets) {
+        if (!prev.widgets && !current.widgets) {
           return current
         }
-        if(prev.widgets && current.widgets){
+        if (prev.widgets && current.widgets) {
           return (prev.widgets.length > current.widgets.length) ? prev : current
-        } 
-        if(current.widgets && !prev.widgets){
+        }
+        if (current.widgets && !prev.widgets) {
           return current
         }
-        if(!current.widgets && prev.widgets) {
+        if (!current.widgets && prev.widgets) {
           return prev
         }
         return current
         // return (prev.widgets && current.widgets && (prev.widgets.length > current.widgets.length) ) ? prev : current
         // tslint:disable-next-line: align
-      },data.tabs[0])
+      }, data.tabs[0])
     // if tabs has atleast 1 widgets then strip will show or else not
     return tabWithMaxWidgets.widgets ? tabWithMaxWidgets.widgets.length : 0
    }
@@ -729,7 +729,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       ...this.stripsResultDataMap,
       [strip.key]: stripData,
     }
-    if(!tabsResults){
+    if (!tabsResults) {
       if (
         calculateParentStatus &&
         (fetchStatus === 'done' || fetchStatus === 'error') &&
@@ -744,7 +744,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       }
     } else {
       this.contentAvailable = true
-    }    
+    }
   }
   private checkParentStatus(fetchStatus: TFetchStatus, stripWidgetsCount: number): void {
     if (fetchStatus === 'done' && !stripWidgetsCount) {
