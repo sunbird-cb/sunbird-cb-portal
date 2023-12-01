@@ -119,10 +119,10 @@ export class CardHubsListComponent extends WidgetBaseComponent
       this.isMobile = isLtMedium
     })
 
-    this.configSvc.openExploreMenuForMWeb.subscribe((data:any)=>{
-      console.log('data-->', data);
-      if(data) {
-        this.toggleVisibility();
+    this.configSvc.openExploreMenuForMWeb.subscribe((data: any) => {
+      // console.log('data-->', data)
+      if (data) {
+        this.toggleVisibility()
       }
     })
   }

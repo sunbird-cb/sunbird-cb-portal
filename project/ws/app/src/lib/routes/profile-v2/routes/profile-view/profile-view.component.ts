@@ -111,7 +111,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.currentUser = this.configSvc && this.configSvc.userProfile
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     this.selectedTabIndex = this.route.snapshot.queryParams && this.route.snapshot.queryParams.tab || 0
-   
+
     this.tabs = this.route.data.subscribe(data => {
       if (data.profile.data.profileDetails.verifiedKarmayogi === true) {
         this.verifiedBadge = true
@@ -162,7 +162,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
       this.sideNavBarOpened = !isLtMedium
     })
-    if(this.selectedTabIndex) {
+    if (this.selectedTabIndex) {
       if (this.document.getElementById('activityTab')) {
         const element =  this.document.getElementById('activityTab')
         if (element !== null) {

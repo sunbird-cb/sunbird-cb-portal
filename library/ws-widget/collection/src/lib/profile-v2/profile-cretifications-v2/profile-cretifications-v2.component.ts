@@ -23,7 +23,7 @@ export class ProfileCretificationsV2Component extends WidgetBaseComponent implem
   @HostBinding('id')
   public id = 'profile-cert-v2'
   certData: any
-  defaultThumbnail = '';
+  defaultThumbnail = ''
   allCertificate: any = []
 
   constructor(
