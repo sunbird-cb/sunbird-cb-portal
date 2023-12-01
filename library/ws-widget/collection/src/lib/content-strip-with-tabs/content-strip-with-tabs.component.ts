@@ -164,7 +164,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
 
   isStripShowing(data: any) {
     let count = 0
-    if (data && data.key === this.environment.programStripKey &&
+    if (data && data.key === this.environment.programStripKey && (!data.tabs || !data.tabs.length) &&
       data.stripTitle === this.environment.programStripName && data.widgets.length > 0) {
       data.widgets.forEach((key: any) => {
         if (key && key.widgetData.content.primaryCategory === this.environment.programStripPrimaryCategory) {
@@ -203,7 +203,31 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     return data.widgets ? data.widgets.length : 0
   }
   getLength(data: IStripUnitContentData) {
-    return data.widgets ? data.widgets.length : 0
+   if(!data.tabs || !data.tabs.length) {
+     return data.widgets ? data.widgets.length : 0
+   } else {
+    // if tabs are there check if each tab has widgets and get the tab with max widgets
+    const tabWithMaxWidgets = data.tabs.reduce(
+      (prev, current) => {
+        if(!prev.widgets && !current.widgets) {
+          return current
+        }
+        if(prev.widgets && current.widgets){
+          return (prev.widgets.length > current.widgets.length) ? prev : current
+        } 
+        if(current.widgets && !prev.widgets){
+          return current
+        }
+        if(!current.widgets && prev.widgets) {
+          return prev
+        }
+        return current
+        // return (prev.widgets && current.widgets && (prev.widgets.length > current.widgets.length) ) ? prev : current
+        // tslint:disable-next-line: align
+      },data.tabs[0])
+    // if tabs has atleast 1 widgets then strip will show or else not
+    return tabWithMaxWidgets.widgets ? tabWithMaxWidgets.widgets.length : 0
+   }
   }
 
   private getFiltersFromArray(v6filters: any) {
@@ -382,7 +406,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     array.forEach((e: any, idx: number, arr: any[]) => (customFilter(e, idx, arr) ? inprogress : completed).push(e))
     return [
       { value: 'inprogress', widgets: this.transformContentsToWidgets(inprogress, strip) },
-      { value: 'completed', widgets: this.transformContentsToWidgets(completed, strip) }]
+      { value: 'completed', widgets: [] }]
   }
 
   async fetchFromSearchV6(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
@@ -705,18 +729,22 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       ...this.stripsResultDataMap,
       [strip.key]: stripData,
     }
-    if (
-      calculateParentStatus &&
-      (fetchStatus === 'done' || fetchStatus === 'error') &&
-      stripData.widgets
-    ) {
-      this.checkParentStatus(fetchStatus, stripData.widgets.length)
-    }
-    if (calculateParentStatus && !(results && results.length > 0)) {
-      this.contentAvailable = false
-    } else if (results && results.length > 0) {
+    if(!tabsResults){
+      if (
+        calculateParentStatus &&
+        (fetchStatus === 'done' || fetchStatus === 'error') &&
+        stripData.widgets
+      ) {
+        this.checkParentStatus(fetchStatus, stripData.widgets.length)
+      }
+      if (calculateParentStatus && !(results && results.length > 0)) {
+        this.contentAvailable = false
+      } else if (results && results.length > 0) {
+        this.contentAvailable = true
+      }
+    } else {
       this.contentAvailable = true
-    }
+    }    
   }
   private checkParentStatus(fetchStatus: TFetchStatus, stripWidgetsCount: number): void {
     if (fetchStatus === 'done' && !stripWidgetsCount) {

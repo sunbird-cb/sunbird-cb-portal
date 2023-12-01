@@ -208,7 +208,7 @@
               <!-- <mat-icon class="margin-right-xs radiobtn time-icon">radio_button_unchecked </mat-icon> -->
               {{ content?.name }}
             </p>
-            <span class="content-type optional-span" *ngIf="content?.optionalReading">{{'apptoccontentcard.optional' | translate}} </span>
+            <span class="content-type optional-span" *ngIf="content?.optionalReading">{{'apptoccontentcard.optional' | translate}}</span>
             <!-- <span class="mat-body-strong content-type">{{ content?.identifier }}</span> -->
           </div>
           <div class="resicons ws-mat-black60-text">
@@ -263,7 +263,7 @@
               [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()"
               [innerStrokeColor]="'rgba(0, 0, 0, 0.16)'" [animation]="true" [animationDuration]="300" [showTitle]="false"
               [showUnits]="false" [showSubtitle]="false" [showInnerStroke]="true" [clockwise]="true"
-              [backgroundOpacity]="0" [backgroundGradient]="false" [backgroundStrokeWidth]="3" matTooltip="Completed"
+              [backgroundOpacity]="0" [backgroundGradient]="false" [backgroundStrokeWidth]="3" matTooltip="{{'apptoccontentcard.completed' | translate}}"
               [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false" [backgroundPadding]="0"
               [imageHeight]="24" [imageWidth]="24" [showBackground]="false" [outerStrokeLinecap]="'butt'">
             </circle-progress>
@@ -277,7 +277,7 @@
               [outerStrokeWidth]="3" [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor2()"
               [innerStrokeColor]="'rgba(0, 0, 0, 0.16)'" [animation]="true" [animationDuration]="300" [showTitle]="false"
               [showUnits]="false" [showSubtitle]="false" [showInnerStroke]="true" [clockwise]="true"
-              [backgroundOpacity]="0" [backgroundGradient]="false" [backgroundStrokeWidth]="3" matTooltip="In progress"
+              [backgroundOpacity]="0" [backgroundGradient]="false" [backgroundStrokeWidth]="3" matTooltip="{{'apptoccontentcard.inprogress' | translate}}"
               [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false" [backgroundPadding]="0"
               [imageHeight]="24" [imageWidth]="24" [showBackground]="false" [outerStrokeLinecap]="'butt'">
             </circle-progress>
@@ -304,7 +304,7 @@
           [backgroundPadding]="0"
           [backgroundPadding]="-9"
           [outerStrokeLinecap]="'butt'"
-          matTooltip="Not started"
+          matTooltip="{{'apptoccontentcard.notstarted' | translate}}"
           [showSubtitle]="false" 
           [showInnerStroke]="true" 
           [clockwise]="true" [imageHeight]="24" [imageWidth]="24" [showBackground]="false"></circle-progress>

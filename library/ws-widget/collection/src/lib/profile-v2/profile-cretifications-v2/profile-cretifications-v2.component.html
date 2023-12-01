@@ -62,10 +62,10 @@
             <mat-card  class="mt-2 mat-list-item dark-card" *ngIf="certificate.content" role="link" tabindex="0">
               <div (click)="openCertificateDialog(certificate)" class="flex flex-1 cursor-pointer">
                 <div *ngIf="certificate.content?.appIcon" class="float-left">
-                  <img [src]="certificate.content?.appIcon | pipeCertImageURL" class="app-icon example-header-image" [alt]="certificate.content.name || iGOT" />
+                  <img [src]="certificate.content?.appIcon | pipeCertImageURL" class="app-icon example-header-image" [alt]="certificate.content.name || iGOT" [wsUtilsDefaultThumbnail]="defaultThumbnail" />
                 </div>
                 <div *ngIf="!certificate.content?.appIcon" class="float-left">
-                  <img src="/assets/instances/eagle/app_logos/default.png"  class="app-icon example-header-image" [alt]="certificate.content.name || iGOT" />
+                  <img src="/assets/instances/eagle/app_logos/default.png"  class="app-icon example-header-image" [alt]="certificate.content.name || iGOT" [wsUtilsDefaultThumbnail]="defaultThumbnail"/>
               </div>
                 <div class="flex flex-col gap-1">
                 <div class="subheading">

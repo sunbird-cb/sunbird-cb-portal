@@ -371,7 +371,11 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         // this.contentType.push('Program')
         // queryparam.request.filters.contentType = this.contentType
       // }
-      if (queryparam.request.filters.primaryCategory.length === 0) {
+
+      if (isModeratedFilterChecked) {
+        this.primaryCategoryType.push('Course')
+        queryparam.request.filters.primaryCategory = this.primaryCategoryType
+      } else if (queryparam.request.filters.primaryCategory.length === 0 && !isModeratedFilterChecked) {
         this.primaryCategoryType.push('Course')
         this.primaryCategoryType.push('Program')
         this.primaryCategoryType.push('Standalone Assessment')
