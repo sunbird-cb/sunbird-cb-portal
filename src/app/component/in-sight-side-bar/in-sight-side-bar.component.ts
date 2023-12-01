@@ -157,7 +157,6 @@ export class InsightSideBarComponent implements OnInit {
         if (!error.ok) {
           this.discussion.loadSkeleton = false;
           this.discussion.error = true;
-          console.log("error", error);
         }
       }
     );

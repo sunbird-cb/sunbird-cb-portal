@@ -11,8 +11,8 @@
         (!homeConfig?.rightSection?.active && !homeConfig?.leftSection?.active) ? 'full' : ''" *ngIf="homeConfig?.rightSection?.active">
             <div class="flex flex-col gap-3">
                 <div class="home-container mt-8">
-                    <div class="flex flex-1 cursor-pointer" [routerLink]="'/page/learn'">
-                        <p class="mat-subheading-1 inline-block flex gap-2 items-center feed-title">
+                    <div class="flex flex-1">
+                        <p class="mat-subheading-1 inline-block flex gap-2 items-center feed-title cursor-pointer" [routerLink]="'/page/learn'">
                             Go to learn hub 
                             <mat-icon class="ws-mat-default-text mr-3 mat-icon notranslate material-icons mat-icon-no-color feed-title-icon" [color]="'accent'">navigate_next</mat-icon>
                         </p>
