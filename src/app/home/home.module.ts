@@ -32,6 +32,9 @@ import { DiscussHubComponent } from './home/discuss-hub/discuss-hub.component';
 import { NetworkHubComponent } from './home/network-hub/network-hub.component';
 import { HomePageService } from '../services/home-page.service';
 import { PendingRequestModule } from '@sunbird-cb/collection/src/lib/_common/pending-request/pending-request.module';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpLoaderFactory } from '../app.module';
+import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [HomeComponent, FeedListComponent, InsightSideBarComponent, PageContainerComponent, DiscussionInfoComponent, ClientSliderComponent, HomeOtherPortalComponent, NoDataComponent, HomeContainerComponent, DiscussHubComponent, NetworkHubComponent],
@@ -56,7 +59,14 @@ import { PendingRequestModule } from '@sunbird-cb/collection/src/lib/_common/pen
     SkeletonLoaderModule,
     PipeRelativeTimeModule,
     AvatarPhotoModule,
-    PendingRequestModule
+    PendingRequestModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   exports: [
     HeaderModule,

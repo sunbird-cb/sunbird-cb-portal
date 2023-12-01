@@ -5,6 +5,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils';
 import { HomePageService } from 'src/app/services/home-page.service';
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service';
 import {  Router } from '@angular/router'
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'ws-discuss-hub',
   templateUrl: './discuss-hub.component.html',
@@ -31,8 +32,20 @@ export class DiscussHubComponent implements OnInit {
     private homePageService: HomePageService,
     private configService: ConfigurationsService,
     private discussUtilitySvc: DiscussUtilsService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private translate: TranslateService,
+  ) { 
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+     
+      this.translate.use(lang)
+      console.log('current lang ------', this.translate.getBrowserLang())
+      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        console.log('onLangChange', event);
+      });
+    }
+  }
 
   ngOnInit() {
     this.userData = this.configService && this.configService.userProfile 
@@ -43,6 +56,11 @@ export class DiscussHubComponent implements OnInit {
     if (this.discussConfig.updatePosts.active) {
       this.fetchUpdatesOnPosts();
     }
+  }
+
+  translateHub(hubName: string): string {
+    const translationKey =  hubName;
+    return this.translate.instant(translationKey);
   }
 
   fetchTrendingDiscussions(): void {

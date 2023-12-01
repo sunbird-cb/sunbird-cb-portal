@@ -1,6 +1,6 @@
 <div class="flex items-center mt-4">
     <div class="flex flex-row gap-2 cursor-pointer mat-subheading-1" (click)="navigate()">
-        <div>Go to discuss hub</div>
+        <div> {{ 'home.gotToDiscussHubs' | translate }}</div>
         <mat-icon>
             chevron_right
         </mat-icon>
@@ -18,7 +18,7 @@
         <div class="flex-1">
             <div class="flex flex-col p-5 gap-4 trending-discussion">
                 <div class="flex flex-row gap-3 mat-subheading-1">
-                    <div class="flex flex-grow">Trending discussions</div>
+                    <div class="flex flex-grow">{{ 'home.Trending_discussions' | translate }}</div>
                 </div>
 
                 <ws-widget-discussions [discussion]="discussion" [count]="3" [trend]="true"></ws-widget-discussions>
@@ -27,7 +27,7 @@
 
         <div class="flex justify-center items-center p-4" *ngIf="!discussion.loadSkeleton && (!discussion.error || discussion.data)">
             <div class="flex gap-1 font-semibold cursor-pointer ws-mat-default-text" (click)="navigate()" >
-                <div>Show all</div>
+                <div>{{ 'common.showAll' | translate }}</div>
                 <mat-icon>
                     chevron_right
                 </mat-icon>

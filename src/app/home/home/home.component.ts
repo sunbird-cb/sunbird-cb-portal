@@ -9,6 +9,7 @@ import _ from 'lodash';
 import { BtnSettingsService } from '@sunbird-cb/collection';
 import { MobileAppsService } from '../../services/mobile-apps.service';
 import { Router } from '@angular/router'
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 const API_END_POINTS = {
   fetchProfileById: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`,
 }
@@ -31,7 +32,18 @@ export class HomeComponent implements OnInit {
   mobileTopHeaderVisibilityStatus: any = true;
   sectionList:any = [];
   constructor(private activatedRoute:ActivatedRoute,  private configSvc: ConfigurationsService, public btnSettingsSvc: BtnSettingsService, 
-    private http: HttpClient, public mobileAppsService: MobileAppsService, private router: Router) { }
+    private http: HttpClient, public mobileAppsService: MobileAppsService, private router: Router, private translate: TranslateService,) { 
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        let lang = localStorage.getItem('websiteLanguage')!
+       
+        this.translate.use(lang)
+        console.log('current lang ------', this.translate.getBrowserLang())
+        this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+          console.log('onLangChange', event);
+        });
+      }
+    }
 
   ngOnInit() {
     this.mobileAppsService.mobileTopHeaderVisibilityStatus.subscribe((status:any)=> {
@@ -169,6 +181,11 @@ export class HomeComponent implements OnInit {
   handleButtonClick(): void {
     console.log("Working!!!");
   
+  }
+
+  translateHub(hubName: string): string {
+    const translationKey =  hubName;
+    return this.translate.instant(translationKey);
   }
 
   handleUpdateMobileNudge() {

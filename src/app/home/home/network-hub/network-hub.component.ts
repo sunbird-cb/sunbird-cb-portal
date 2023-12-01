@@ -4,6 +4,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 import { MatSnackBar } from '@angular/material';
 
 import { HomePageService } from 'src/app/services/home-page.service';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'ws-network-hub',
@@ -30,8 +31,20 @@ export class NetworkHubComponent implements OnInit {
   constructor(
     private configService: ConfigurationsService,
     private homePageService: HomePageService,
-    private matSnackBar: MatSnackBar
-  ) { }
+    private matSnackBar: MatSnackBar,
+    private translate: TranslateService,
+  ) { 
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+     
+      this.translate.use(lang)
+      console.log('current lang ------', this.translate.getBrowserLang())
+      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        console.log('onLangChange', event);
+      });
+    }
+  }
 
   ngOnInit() {
     this.userInfo =  this.configService && this.configService.userProfile;
@@ -43,6 +56,11 @@ export class NetworkHubComponent implements OnInit {
       this.fetchNetworkRecommendations();
     }
 
+  }
+
+  translateHub(hubName: string): string {
+    const translationKey =  hubName;
+    return this.translate.instant(translationKey);
   }
 
   fetchNetworkRecommendations(): void {
