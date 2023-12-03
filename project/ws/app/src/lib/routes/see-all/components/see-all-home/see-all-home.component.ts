@@ -40,6 +40,8 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
   page = 1
   totalPages = 0
   tabResults: any[] = []
+  tabSelected: any
+  dynamicTabIndex: number = 0
 
   constructor(
     private activated: ActivatedRoute,
@@ -51,7 +53,10 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit() {
-    this.activated.queryParams.subscribe((res: any) => this.keyData = (res.key) ? res.key : '')
+    this.activated.queryParams.subscribe((res: any) => {
+      this.keyData = (res.key) ? res.key : ''
+      this.tabSelected = (res.tabSelected) ? res.tabSelected : ''
+  })
     const configData = await this.seeAllSvc.getSeeAllConfigJson().catch(_error => {})
     configData.homeStrips.forEach((ele: any) => {
       if (ele && ele.strips.length > 0) {
@@ -243,9 +248,9 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
             const dateB: any = new Date(b.lastContentAccessTime || 0)
             return dateB - dateA
           })
-
           if (strip.tabs && strip.tabs.length) {
             this.tabResults = this.splitEnrollmentTabsData(contentNew, strip)
+            this.dynamicTabIndex = _.findIndex(this.tabResults, (v:any) => { return v.label === this.tabSelected })
           } else {
           }
         },
@@ -275,7 +280,6 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
           if (this.seeAllPageConfig.tabs) {
             const allTabs = this.seeAllPageConfig.tabs
             const currentTabFromMap = (allTabs && allTabs.length && allTabs[0]) as NsContentStripWithTabs.IContentStripTab
-
             this.getTabDataByNewReqSearchV6(strip, 0, currentTabFromMap, calculateParentStatus)
           }
         }
@@ -360,7 +364,6 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
           if (this.seeAllPageConfig.tabs) {
             const allTabs = this.seeAllPageConfig.tabs
             const currentTabFromMap = (allTabs && allTabs.length && allTabs[0]) as NsContentStripWithTabs.IContentStripTab
-
             this.getTabDataByNewReqTrending(strip, 0, currentTabFromMap, calculateParentStatus)
           }
         }

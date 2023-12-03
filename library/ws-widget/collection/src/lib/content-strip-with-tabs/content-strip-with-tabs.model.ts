@@ -14,6 +14,7 @@ export namespace NsContentStripWithTabs {
   export interface IContentStripUnit {
     key: string
     title: string
+    customeClass?: string
     stripTitleLink?: {
         link: string,
         icon: string
