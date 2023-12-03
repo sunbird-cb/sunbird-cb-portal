@@ -2,6 +2,7 @@ import { Component, HostListener } from '@angular/core'
 import { ProgressIndicatorLocation, GuidedTour, Orientation, GuidedTourService } from 'cb-tour-guide';
 import { UtilityService, EventService, WsEvents, ConfigurationsService } from '@sunbird-cb/utils';
 import { UserProfileService } from '@ws/app/src/lib/routes/user-profile/services/user-profile.service';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-tour',
   templateUrl: './app-tour.component.html',
@@ -14,7 +15,7 @@ export class AppTourComponent {
   currentWindow: any
   videoProgressTime: number = 114;
   tourStatus: any = {visited: true, skipped: false}
-  
+
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     if (event.key === "Escape") {
       this.skipTour('','')
@@ -34,11 +35,11 @@ export class AppTourComponent {
       {
         icon: 'school',
         connectorDirection: 'left',
-        title: 'Learn',
+        title: this.translateTo("stepLearn"),
         selector: '#Learn',
         class: 'tour_learn',
         containerClass: 'tour_learn_container',
-        content: 'Drive your career forward through appropriate courses, programs and assessments.',
+        content: this.translateTo("learnContnet"),
         orientation: Orientation.BottomLeft,
         nextBtnClass: 'action-orange mat-button',
         backBtnClass: 'back',
@@ -47,11 +48,11 @@ export class AppTourComponent {
       {
         icon: 'forum',
         connectorDirection: 'left',
-        title: 'Discuss',
+        title: this.translateTo("stepDiscuss"),
         selector: '#Discuss',
         class: 'tour_discuss',
         containerClass: 'tour_discuss_container',
-        content: 'Discuss new ideas with colleagues and experts in the government.',
+        content: this.translateTo("discussContent"),
         orientation: Orientation.BottomLeft,
         nextBtnClass: 'action-orange mat-button',
         backBtnClass: 'back',
@@ -60,11 +61,11 @@ export class AppTourComponent {
       {
         icon: 'search',
         connectorDirection: 'left',
-        title: 'Search',
+        title: this.translateTo("stepSearch"),
         selector: '#app-search-bar',
         class: 'tour_search',
         containerClass: 'tour_search_container',
-        content: 'Find the perfect course and program tailor-made for you.',
+        content: this.translateTo("searchContent"),
         orientation: Orientation.BottomLeft,
         nextBtnClass: 'action-orange mat-button',
         backBtnClass: 'back',
@@ -73,11 +74,11 @@ export class AppTourComponent {
       {
         icon: 'person',
         connectorDirection: 'right',
-        title: 'My Profile',
+        title: this.translateTo("StepMyProfile"),
         selector: '#user_icon',
         class: 'tour_profile',
         containerClass: 'tour_profile_container',
-        content: 'Update your information to get the best-suited courses and programs.',
+        content: this.translateTo("myProfileContent"),
         orientation: Orientation.BottomRight,
         nextBtnClass: 'action-orange mat-button',
         backBtnClass: 'back',
@@ -86,7 +87,7 @@ export class AppTourComponent {
     ],
     preventBackdropFromAdvancing: true
   };
-  
+
   private readonly MOBILE_TOUR: GuidedTour = {
     tourId: 'purchases-tour',
     useOrb: false,
@@ -96,11 +97,11 @@ export class AppTourComponent {
         icon: 'school',
         isMobile: true,
         connectorDirection: 'top',
-        title: 'Learn',
+        title: this.translateTo("stepLearn"),
         selector: '#Learn',
         class: 'tour_learn_mobile',
         containerClass: 'tour_learn_mobile_container',
-        content: 'Drive your career forward through appropriate courses, programs and assessments.',
+        content: this.translateTo("learnContnet"),
         orientation: Orientation.BottomLeft,
         nextBtnClass: 'action-orange mat-button',
         backBtnClass: 'back',
@@ -110,11 +111,11 @@ export class AppTourComponent {
         icon: 'forum',
         isMobile: true,
         connectorDirection: 'top',
-        title: 'Discuss',
+        title: this.translateTo("stepDiscuss"),
         selector: '#Discuss',
         class: 'tour_discuss_mobile',
         containerClass: 'tour_discuss_mobile_container',
-        content: 'Discuss new ideas with colleagues and experts in the government.',
+        content: this.translateTo("discussContent"),
         orientation: Orientation.BottomLeft,
         nextBtnClass: 'action-orange mat-button',
         backBtnClass: 'back',
@@ -138,11 +139,11 @@ export class AppTourComponent {
         icon: 'person',
         isMobile: true,
         connectorDirection: 'bottom',
-        title: 'My Profile',
+        title: this.translateTo("StepMyProfile"),
         selector: '#user_icon',
         class: 'tour_profile_mobile',
         containerClass: 'tour_profile_mobile_container',
-        content: 'Update your information to get the best-suited courses and programs.',
+        content: this.translateTo("myProfileContent"),
         orientation: Orientation.Top,
         nextBtnClass: 'action-orange mat-button',
         backBtnClass: 'back',
@@ -160,7 +161,18 @@ export class AppTourComponent {
 
   constructor(private guidedTourService: GuidedTourService,
     private utilitySvc: UtilityService,private configSvc: ConfigurationsService,
-    private events: EventService, private userProfileSvc: UserProfileService) {
+    private events: EventService, private userProfileSvc: UserProfileService,
+    private translate: TranslateService) {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        let lang = localStorage.getItem('websiteLanguage')!
+
+        this.translate.use(lang)
+        console.log('current lang ------', this.translate.getBrowserLang())
+        this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+          console.log('onLangChange', event);
+        });
+      }
     this.isMobile = this.utilitySvc.isMobile;
     this.raiseGetStartedStartTelemetry()
   }
@@ -336,5 +348,10 @@ export class AppTourComponent {
 
   closeModal() {
     this.skipTour('','');
+  }
+
+  translateTo(name: string): string {
+    const translationKey =  'tour.'+name;
+    return this.translate.instant(translationKey);
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { EventService,WsEvents } from '@sunbird-cb/utils/src/public-api';
 import { environment } from 'src/environments/environment';
 
@@ -19,7 +20,18 @@ export class AppTourVideoComponent implements OnInit, OnDestroy {
   videoUrl: any
   @ViewChild('tourVideoTag', { static: false }) tourVideoTag!: ElementRef<HTMLVideoElement>
 
-  constructor(private eventService: EventService) { }
+  constructor(private eventService: EventService, private translate: TranslateService) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+
+      this.translate.use(lang)
+      console.log('current lang ------', this.translate.getBrowserLang())
+      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        console.log('onLangChange', event);
+      });
+    }
+  }
 
   ngOnInit() {
     this.environment = environment
