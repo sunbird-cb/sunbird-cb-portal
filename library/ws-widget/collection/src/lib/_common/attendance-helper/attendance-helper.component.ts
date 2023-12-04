@@ -20,8 +20,12 @@ export class AttendanceHelperComponent implements OnInit {
     this.helperConfig = this.data.helperConfig
   }
 
-  translateLabels(label: string, type: any) {
+  translateLabels(label: string, type: any, index: any) {
     label = label.replace(/\s/g, "")
+    if (index) {
+      const translationKey = type + '.' +  label + index;
+      return this.translate.instant(translationKey);
+    }
     const translationKey = type + '.' +  label;
     return this.translate.instant(translationKey);
   }
