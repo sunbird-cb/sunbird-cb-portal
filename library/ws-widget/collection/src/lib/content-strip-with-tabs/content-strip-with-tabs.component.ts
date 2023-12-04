@@ -406,7 +406,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     array.forEach((e: any, idx: number, arr: any[]) => (customFilter(e, idx, arr) ? inprogress : completed).push(e))
     return [
       { value: 'inprogress', widgets: this.transformContentsToWidgets(inprogress, strip) },
-      { value: 'completed', widgets: [] }]
+      { value: 'completed', widgets: this.transformContentsToWidgets(completed, strip) }]
   }
 
   async fetchFromSearchV6(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
@@ -646,21 +646,28 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     contents: NsContent.IContent[],
     strip: NsContentStripWithTabs.IContentStripUnit,
   ) {
-    return (contents || []).map((content, idx) => ({
-      widgetType: 'card',
-      widgetSubType: 'cardContent',
-      widgetHostClass: 'mb-2',
-      widgetData: {
-        content,
-        ...(content.batch && { batch: content.batch }),
-        cardSubType: strip.stripConfig && strip.stripConfig.cardSubType,
-        cardCustomeClass: strip.customeClass ? strip.customeClass : '',
-        context: { pageSection: strip.key, position: idx },
-        intranetMode: strip.stripConfig && strip.stripConfig.intranetMode,
-        deletedMode: strip.stripConfig && strip.stripConfig.deletedMode,
-        contentTags: strip.stripConfig && strip.stripConfig.contentTags,
-      },
-    }))
+    return (contents || []).map((content, idx) => (
+      content ?  {
+        widgetType: 'card',
+        widgetSubType: 'cardContent',
+        widgetHostClass: 'mb-2',
+        widgetData: {
+          content,
+          ...(content.batch && { batch: content.batch }),
+          cardSubType: strip.stripConfig && strip.stripConfig.cardSubType,
+          cardCustomeClass: strip.customeClass ? strip.customeClass : '',
+          context: { pageSection: strip.key, position: idx },
+          intranetMode: strip.stripConfig && strip.stripConfig.intranetMode,
+          deletedMode: strip.stripConfig && strip.stripConfig.deletedMode,
+          contentTags: strip.stripConfig && strip.stripConfig.contentTags,
+        },
+      } : {
+        widgetType: 'card',
+        widgetSubType: 'cardContent',
+        widgetHostClass: 'mb-2',    
+        widgetData: {}   
+      }
+    ))
   }
 
   private transformSkeletonToWidgets(

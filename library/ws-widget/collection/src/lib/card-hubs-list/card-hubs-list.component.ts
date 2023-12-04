@@ -91,7 +91,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
           } else if (event.url.includes('app/event-hub')) {
             this.activeRoute = 'Events'
           }
-
+          this.visible = false;
           localStorage.setItem('activeRoute', this.activeRoute)
 
       }
@@ -123,6 +123,8 @@ export class CardHubsListComponent extends WidgetBaseComponent
       // console.log('data-->', data)
       if (data) {
         this.toggleVisibility()
+      } else {
+        this.visible = false;
       }
     })
   }
