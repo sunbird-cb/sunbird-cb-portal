@@ -86,7 +86,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
             this.activeRoute = 'search'
           } else if (event.url.includes('app/careers')) {
             this.activeRoute = 'Career'
-          } else if (event.url.includes('app/my-learning')) {
+          } else if (event.url.includes('app/seeAll?key=continueLearning')) {
             this.activeRoute = 'my learnings'
           } 
 
@@ -244,7 +244,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     } else {
       this.router.navigate([pathConfig.path]);
     }
-    
+    this.configSvc.openExploreMenuForMWeb.next(false);
   }
 
   openExploreMenu() {

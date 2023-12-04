@@ -143,3 +143,12 @@
 .network_right {
   margin-left: 18px;
 }
+
+.card-with-bottom-border {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 10px;
+}
+
+.card-with-bottom-border:last-child {
+  border: none;
+}

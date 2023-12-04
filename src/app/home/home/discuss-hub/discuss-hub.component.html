@@ -26,7 +26,7 @@
         </div>
 
         <div class="flex justify-center items-center p-4" *ngIf="!discussion.loadSkeleton && (!discussion.error || discussion.data)">
-            <div class="flex gap-1 font-semibold cursor-pointer ws-mat-default-text" (click)="navigate()" >
+            <div class="flex ws-mat-default-text items-center justify-center mat-body-1 cursor-pointer" (click)="navigate()" >
                 <div>Show all</div>
                 <mat-icon>
                     chevron_right
