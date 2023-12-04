@@ -661,7 +661,12 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
           deletedMode: strip.stripConfig && strip.stripConfig.deletedMode,
           contentTags: strip.stripConfig && strip.stripConfig.contentTags,
         },
-      } : ''
+      } : {
+        widgetType: 'card',
+        widgetSubType: 'cardContent',
+        widgetHostClass: 'mb-2',    
+        widgetData: {}   
+      }
     ))
   }
 
