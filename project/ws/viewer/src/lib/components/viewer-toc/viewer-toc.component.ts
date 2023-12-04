@@ -444,6 +444,9 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       case NsContent.EDisplayContentTypes.PROGRAM:
       case NsContent.EDisplayContentTypes.COURSE:
       case NsContent.EDisplayContentTypes.MODULE:
+      case NsContent.EDisplayContentTypes.STANDALONE_ASSESSMENT:
+      case NsContent.EDisplayContentTypes.BLENDED_PROGRAM:
+      case NsContent.EDisplayContentTypes.CURATED_PROGRAM:
         if (!this.forPreview) {
           url = `${this.forPreview ? '' : '/app'}/toc/${identifier}/overview`
         } else {
