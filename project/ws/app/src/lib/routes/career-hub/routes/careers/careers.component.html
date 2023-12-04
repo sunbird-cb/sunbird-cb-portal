@@ -37,7 +37,7 @@
                 <ws-app-careers-card class="w-fix" [discuss]="discuss"></ws-app-careers-card>
             </div>
         </ng-container>
-        <h2 *ngIf="data.topics?.length<=0">{{ 'msg.no_opn_found' | translate }}</h2>
+        <h2 *ngIf="data.topics?.length<=0">{{ 'msg.noOpeningFound' | translate }}</h2>
     </div>
     <div class="flex flex-1 flex-column margin-fix pagination-container">
         <ws-app-careers-pagination [pager]="pager" (changePage)="navigateWithPage($event)"></ws-app-careers-pagination>
