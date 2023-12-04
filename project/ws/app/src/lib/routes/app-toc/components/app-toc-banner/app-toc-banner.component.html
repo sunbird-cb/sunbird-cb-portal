@@ -280,17 +280,17 @@
               <div class="flex time-wrapper">
                 <div>
                   <p class="count">{{days || 0}}</p>
-                  <p class="time-label">{{'apptocbanner.DAYS' | translate}}</p>
+                  <p class="time-label">{{'apptocbanner.capitalDays' | translate}}</p>
                 </div>
                 <span>:</span>
                 <div >
                   <p class="count">{{ minutes === 60? hours + 1 : hours}}</p>
-                  <p class="time-label">{{'apptocbanner.HOURS' | translate}}</p>
+                  <p class="time-label">{{'apptocbanner.hours' | translate}}</p>
                 </div>
                 <span>:</span>
                 <div>
                   <p class="count">{{minutes === 60? 00 : minutes }}</p>
-                  <p class="time-label">{{'apptocbanner.MINUTES' | translate}}</p>
+                  <p class="time-label">{{'apptocbanner.minutes' | translate}}</p>
                 </div>
                 <!-- <span>:</span>
                 <div>

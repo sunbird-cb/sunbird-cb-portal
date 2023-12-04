@@ -74,7 +74,7 @@ export class AppTourComponent {
       {
         icon: 'person',
         connectorDirection: 'right',
-        title: this.translateTo("StepMyProfile"),
+        title: this.translateTo("stepMyProfile"),
         selector: '#user_icon',
         class: 'tour_profile',
         containerClass: 'tour_profile_container',
@@ -139,7 +139,7 @@ export class AppTourComponent {
         icon: 'person',
         isMobile: true,
         connectorDirection: 'bottom',
-        title: this.translateTo("StepMyProfile"),
+        title: this.translateTo("stepMyProfile"),
         selector: '#user_icon',
         class: 'tour_profile_mobile',
         containerClass: 'tour_profile_mobile_container',
