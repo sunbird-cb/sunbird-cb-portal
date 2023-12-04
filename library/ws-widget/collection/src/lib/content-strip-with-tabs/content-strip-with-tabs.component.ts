@@ -406,7 +406,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     array.forEach((e: any, idx: number, arr: any[]) => (customFilter(e, idx, arr) ? inprogress : completed).push(e))
     return [
       { value: 'inprogress', widgets: this.transformContentsToWidgets(inprogress, strip) },
-      { value: 'completed', widgets: [] }]
+      { value: 'completed', widgets: this.transformContentsToWidgets(completed, strip) }]
   }
 
   async fetchFromSearchV6(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
