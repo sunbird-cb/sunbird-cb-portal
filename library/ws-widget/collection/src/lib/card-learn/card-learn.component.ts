@@ -145,9 +145,8 @@ export class CardLearnComponent extends WidgetBaseComponent
     this.router.navigate(['app', 'activities'])
   }
 
-  translateLabels(label: string, type: any, subtype: any) {
-    label = label.replace(/\s/g, "")
-    const translationKey = type + '.' + subtype +  label;
+  translateLabels(label: string, type: any) {
+    const translationKey = type + '.' +  label;
     return this.translate.instant(translationKey);
   }
 
