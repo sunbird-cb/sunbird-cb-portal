@@ -181,6 +181,15 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.menuElement) {
       this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
     }
+
+    if (this.selectedTabIndex) {
+      if (this.document.getElementById('profile_activity')) {
+        const element =  this.document.getElementById('profile_activity')
+        if (element !== null) {
+          element.scrollIntoView()
+        }
+      }
+    }
   }
 
   decideAPICall() {
