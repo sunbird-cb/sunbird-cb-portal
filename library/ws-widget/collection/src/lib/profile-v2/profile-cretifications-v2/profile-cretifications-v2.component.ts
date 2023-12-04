@@ -7,7 +7,7 @@ import { ProfileCertificateDialogComponent } from '../profile-certificate-dialog
 import { IProCert } from './profile-cretifications-v2.model'
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
-
+import { ConfigurationsService } from '@sunbird-cb/utils'
 @Component({
   selector: 'ws-widget-profile-cretifications-v2',
   templateUrl: './profile-cretifications-v2.component.html',
@@ -24,6 +24,7 @@ export class ProfileCretificationsV2Component extends WidgetBaseComponent implem
   @HostBinding('id')
   public id = 'profile-cert-v2'
   certData: any
+  defaultThumbnail = ''
   allCertificate: any = []
 
   constructor(
@@ -31,7 +32,7 @@ export class ProfileCretificationsV2Component extends WidgetBaseComponent implem
     private contentSvc: WidgetContentService,
     private tocSvc: AppTocService,
     private translate: TranslateService,
-
+    private configSvc: ConfigurationsService
   ) {
     super()
     if (localStorage.getItem('websiteLanguage')) {
@@ -46,6 +47,10 @@ export class ProfileCretificationsV2Component extends WidgetBaseComponent implem
   }
 
   ngOnInit(): void {
+    const instanceConfig = this.configSvc.instanceConfig
+    if (instanceConfig) {
+      this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
+    }
   }
   changeToDefaultImg($event: any) {
     $event.target.src = '/assets/instances/eagle/app_logos/default.png'

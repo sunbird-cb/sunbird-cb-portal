@@ -279,15 +279,6 @@
   .update-profile{
     visibility: hidden;
   }
-
-  .feed-title:hover {
-    color: #1b4ca1;
-    .feed-title-icon{
-      transform: translateX(10px);
-      transition: all 0.05s ease-in-out;
-    }
-  }
-
  
 @media only screen and (max-width: 768px) {
     .home-container {

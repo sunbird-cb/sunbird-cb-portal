@@ -51,13 +51,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.mobileTopHeaderVisibilityStatus = status; 
     })
     if(this.activatedRoute.snapshot.data.pageData) {
-      console.log('homaPageJsonData',this.activatedRoute.snapshot.data.pageData);
       this.homeConfig = this.activatedRoute.snapshot.data.pageData.data.homeConfig; 
     }
     if(this.activatedRoute.snapshot.data.pageData && this.activatedRoute.snapshot.data.pageData.data) {
       this.contentStripData = this.activatedRoute.snapshot.data.pageData.data || []
       this.contentStripData = (this.contentStripData.homeStrips || []).sort((a:any, b:any) => a.order - b.order)
-      console.log('contentStripData',this.contentStripData);
       for(var i=0; i<this.contentStripData.length;i++) {
         if(this.contentStripData[i] && 
           this.contentStripData[i]['strips'] && 
@@ -175,16 +173,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.sectionList.push({'section':'network', 'isVisible': false});
 
     this.handleUpdateMobileNudge();
-
     this.handleDefaultFontSetting();
-    console.log(this.sectionList);
-    
-
-    
   }
 
   ngAfterViewInit() {
-    console.log(this.sectionList);
     for(let i=0; i<this.sectionList.length;i++) {
       if(this.sectionList[i]['section'] == 'section_0' || this.sectionList[i]['section'] == 'section_1') {
         this.sectionList[i]['isVisible'] = true;        
@@ -230,7 +222,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:scroll', ['$event'])
   scrollHandler() {
-    console.log('in scroll', this.sectionList);
     for(let i=0; i<this.sectionList.length;i++) {
       if(this.sectionList[i]['section'] !== 'section_0' && this.sectionList[i]['section'] !== 'section_1') {
        this.checkSectionVisibility(this.sectionList[i]['section']);
@@ -257,7 +248,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   checkSectionVisibility(className:string) {
     var isVisible = false;
-    console.log('this.sectionList',this.sectionList);
     if(className === 'section_0' || className === 'section_1') {
       isVisible = true;
      
@@ -273,7 +263,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
           var eleBottom = tect.bottom
           isVisible = (eleTop >= 0 ) && (eleBottom <= window.innerHeight)
           this.sectionList[i]['isVisible'] = isVisible;
-          console.log(isVisible)
           break;
         }
           
@@ -281,7 +270,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
        
       }}
     }
-    console.log('this.sectionList',this.sectionList);
   }
   
   

@@ -13,7 +13,6 @@
 }
 
 .photo-container{
-    background: #F8F4F9;
     padding: $size-m 0;
 }
 
@@ -45,4 +44,8 @@ span.profile-badge {
     position: absolute;
     padding-top: 3px;
     padding-left: 8px;
+}
+.connect-icon {
+    margin-right: 5px;
+    vertical-align: middle;
 }

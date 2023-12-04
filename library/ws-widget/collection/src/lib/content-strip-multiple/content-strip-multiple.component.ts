@@ -1034,6 +1034,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         content,
         ...(content.batch && { batch: content.batch }),
         cardSubType: strip.stripConfig && strip.stripConfig.cardSubType,
+        cardCustomeClass: strip.customeClass ? strip.customeClass : '',
         context: { pageSection: strip.key, position: idx },
         intranetMode: strip.stripConfig && strip.stripConfig.intranetMode,
         deletedMode: strip.stripConfig && strip.stripConfig.deletedMode,

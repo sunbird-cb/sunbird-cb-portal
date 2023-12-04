@@ -34,7 +34,7 @@
   <a mat-icon-button class="width-auto" [routerLink]="prevResourceUrl" *ngIf="isTypeOfCollection && prevResourceUrl"
     [disabled]="!prevResourceUrl" queryParamsHandling="" [queryParams]="prevResourceUrlParams?.queryParams"
     accesskey="<">
-    <mat-icon>skip_previous</mat-icon><span *ngIf="logo">PREV</span>
+    <mat-icon>skip_previous</mat-icon><span *ngIf="logo">{{ 'viewertopbar.prev' | translate }}</span>
   </a>
   <h1 *ngIf="logo" class="width-expand text-center text-truncate">
     {{ resourceName }}
@@ -45,7 +45,8 @@
     [queryParams]="nextResourceUrlParams?.queryParams" *ngIf="isTypeOfCollection && nextResourceUrl"
     queryParamsHandling="" accesskey=">">
     <!-- <span *ngIf="optionalLink"></span>  -->
-    <span *ngIf="logo">{{ optionalLink ? 'SKIP' : 'NEXT' }} </span> 
+    <span *ngIf="logo && optionalLink">{{ 'viewertopbar.skip' | translate }}</span> 
+    <span *ngIf="logo && !optionalLink">{{ 'viewertopbar.next' | translate }}</span> 
     
     <!-- {{ optionalLink }} -->
     <mat-icon>skip_next</mat-icon>
@@ -53,7 +54,7 @@
   <!-- <button mat-icon-button class="width-auto mr-10" routerLink="/page/home" *ngIf="isTypeOfCollection && !nextResourceUrl" -->
   <button mat-icon-button class="width-auto mr-10" (click)="finishDialog()"
     *ngIf="isTypeOfCollection && !nextResourceUrl" accesskey=">">
-    <span *ngIf="logo" class="finish">FINISH</span>
+    <span *ngIf="logo" class="finish">{{ 'viewertopbar.finish' | translate }}</span>
   </button>
   <!-- <a mat-icon-button> -->
   <!-- <ws-widget-btn-fullscreen [widgetType]="'actionButton'" [widgetSubType]="'actionButtonFullscreen'"
