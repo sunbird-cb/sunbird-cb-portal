@@ -481,6 +481,7 @@ export namespace NsContent {
   }
   export enum EDisplayContentTypes {
     ASSESSMENT = 'ASSESSMENT',
+    STANDALONE_ASSESSMENT = 'STANDALONE ASSESSMENT',
     PRACTICE_RESOURCE = 'Practice Question Set',
     FINAL_ASSESSMENT = 'Course Assessment',
     AUDIO = 'AUDIO',
@@ -513,6 +514,8 @@ export namespace NsContent {
     LINK = 'LINK',
     KNOWLEDGE_BOARD = 'Knowledge Board',
     LEARNING_JOURNEY = 'Learning Journeys',
+    BLENDED_PROGRAM = 'BLENDED PROGRAM',
+    CURATED_PROGRAM = 'CURATED PROGRAM',
   }
   // for UI
   export enum EFilterCategory {
