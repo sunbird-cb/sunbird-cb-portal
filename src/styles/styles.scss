@@ -1066,7 +1066,11 @@ ngx-guided-tour {
 }
 
 #advwebForm .zstitlemini  {
-  white-space: nowrap;
+  white-space: initial;
+}
+
+#advwebForm .fbfpoptitle {
+  height: auto;
 }
 
 .top-connector {
