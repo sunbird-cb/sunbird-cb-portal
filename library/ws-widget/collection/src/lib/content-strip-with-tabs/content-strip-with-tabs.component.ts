@@ -654,6 +654,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         content,
         ...(content.batch && { batch: content.batch }),
         cardSubType: strip.stripConfig && strip.stripConfig.cardSubType,
+        cardCustomeClass: strip.customeClass ? strip.customeClass : '',
         context: { pageSection: strip.key, position: idx },
         intranetMode: strip.stripConfig && strip.stripConfig.intranetMode,
         deletedMode: strip.stripConfig && strip.stripConfig.deletedMode,
@@ -671,6 +672,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       widgetHostClass: 'mb-2',
       widgetData: {
         cardSubType: strip.loaderConfig && strip.loaderConfig.cardSubType || 'card-standard-skeleton',
+        cardCustomeClass: strip.customeClass ? strip.customeClass : '',
       },
     }))
   }
@@ -792,6 +794,12 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     )
     const currentTabFromMap = stripMap.tabs && stripMap.tabs[tabEvent.index]
     const currentStrip = this.widgetData.strips.find(s => s.key === stripKey)
+    if (this.stripsResultDataMap[stripKey] && currentTabFromMap) {
+      this.stripsResultDataMap[stripKey].viewMoreUrl.queryParams = {
+        ...this.stripsResultDataMap[stripKey].viewMoreUrl.queryParams,
+        tabSelected: currentTabFromMap.label
+      }
+    }
     if (currentStrip && currentTabFromMap && !currentTabFromMap.computeDataOnClick) {
       if (currentTabFromMap.requestRequired && currentTabFromMap.request) {
         // call API to get tab data and process
