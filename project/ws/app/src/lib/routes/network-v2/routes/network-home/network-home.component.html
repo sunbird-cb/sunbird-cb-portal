@@ -13,7 +13,7 @@
   <div class="flex flex-1 mb-4">
     <mat-expansion-panel class="w-full mat-elevation-z" [expanded]="true" hideToggle *ngIf="!enableFeature">
       <mat-expansion-panel-header>
-        <mat-panel-title i18n>User Search</mat-panel-title>
+        <mat-panel-title i18n>{{ 'network.userSearch' | translate }}</mat-panel-title>
 
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
@@ -77,7 +77,7 @@
       </mat-card-content>
       <mat-card-actions align="center" *ngIf="connectionRequests && connectionRequests.length > 3">
         <button mat-button color="default" type="button" class=" flex-auto-display" (click)="goToConnectionRequests()">
-          <span class="ws-mat-default-text" i18n>Show All</span>
+          <span class="ws-mat-default-text" i18n> {{ 'network.showAll' | translate }}</span>
         </button>
       </mat-card-actions>
 

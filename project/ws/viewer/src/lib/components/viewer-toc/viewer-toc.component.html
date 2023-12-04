@@ -70,7 +70,7 @@
   <mat-card *ngIf="collection && pathSet && !pathSet.has(resourceId)">
     <mat-card-content>
       <span class="width-expand flex flex-middle mat-error" i18n>
-        {{ 'viewertoc.resourcenotpartofcollection' | translate }}
+        {{ 'viewertoc.resourceNotPartOfCollection' | translate }}
       </span>
     </mat-card-content>
   </mat-card>
@@ -135,7 +135,7 @@
   </div>
   <div *ngIf="isErrorOccurred" class="flex flex-center">
     <h2 i18n class="mat-sub-heading">
-      {{ 'viewertoc.unsupportedtype' | translate }}
+      {{ 'viewertoc.unsupportedType' | translate }}
     </h2>
   </div>
 </ng-template>

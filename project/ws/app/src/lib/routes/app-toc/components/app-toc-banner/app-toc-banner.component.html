@@ -217,7 +217,7 @@
                             ({{batch.startDate | date: 'dd-MM-yyyy'}} - {{batch.endDate | date: 'dd-MM-yyyy' || 'present'}})</p>
                         </mat-option>
                       </mat-select>
-                      <mat-error *ngIf="batchControl.hasError('required')">{{'apptocbanner.pleasechoosebatch' | translate}}</mat-error>
+                      <mat-error *ngIf="batchControl.hasError('required')">{{'apptocbanner.pleaseChooseBatch' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="flex flex-wrap mt-3">
@@ -226,18 +226,18 @@
                       <button class="mat-button mat-raised-button resumeButton custom-button width-1-1 text-white" [ngClass]="{ 'disable-btn': disableEnrollBtn || batchControl.hasError('required') || !handleEnrollmentEndDate(selectedBatch) }"
                       [disabled]="disableEnrollBtn || batchControl.hasError('required')|| !handleEnrollmentEndDate(selectedBatch)" (click)="requestToEnrollDialog()">
                         <ng-container i18n>
-                          {{'apptocbanner.requesttoenroll' | translate}}
+                          {{'apptocbanner.requestToEnroll' | translate}}
                         </ng-container>
                       </button>
                     </div>
                     <div class="flex-col ml-3" *ngIf="selectedBatch && selectedBatch.enrollmentEndDate ">
-                      <p class="mat-body-2 margin-remove-bottom">{{'apptocbanner.lastenrollmentdate' | translate}}</p>
+                      <p class="mat-body-2 margin-remove-bottom">{{'apptocbanner.lastEnrollmentDate' | translate}}</p>
                       <p class="mat-body-2 font-bold-imp margin-remove-bottom">{{selectedBatch.enrollmentEndDate | date: 'dd-MM-yyyy'}}</p>
                     </div>
                   </ng-container>
                   <ng-container *ngIf="showRejected">
                     <h3 class="margin-remove-bottom mat-body-2 ws-default-text" i18n>
-                      {{'apptocbanner.yourenrollmentrequestis' | translate}} {{batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REMOVED ?'removed':'rejected'}}.
+                      {{'apptocbanner.yourEnrollmentRequest' | translate}} {{batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REMOVED ?'removed':'rejected'}}.
                     </h3>
                   </ng-container>
                 </div>
@@ -257,7 +257,7 @@
                 <button class="mat-button mat-raised-button withdrawButton  margin-top-s width-1-1 text-white"
                   (click)="!disableWithdrawnBtn && requestToWithdrawDialog()" [disabled]="disableWithdrawnBtn" [ngClass]="{ 'disable-btn': disableWithdrawnBtn }" >
                     <ng-container i18n>
-                      {{'apptocbanner.withdrawyourrequest' | translate}}
+                      {{'apptocbanner.withDrawYourRequest' | translate}}
                     </ng-container>
                   </button>
               </ng-container>
@@ -270,17 +270,17 @@
             </ng-container>
             <ng-container *ngIf="batchData && !batchData?.enrolled && !batchData?.content?.length">
               <h3 class="margin-remove-bottom mat-body-2 ws-default-text" i18n>
-                {{'apptocbanner.nobatches' | translate}}
+                {{'apptocbanner.noBatches' | translate}}
               </h3>
             </ng-container>
           </div>
           <div class="padding-m batch-timer flex" *ngIf="days >= 0">
             <div class="time-block">
-              <p class="timer-title">{{'apptocbanner.thisbatchstartsin' | translate}}</p>
+              <p class="timer-title">{{'apptocbanner.thisBatchStarts' | translate}}</p>
               <div class="flex time-wrapper">
                 <div>
                   <p class="count">{{days || 0}}</p>
-                  <p class="time-label">{{'apptocbanner.capitalDays' | translate}}</p>
+                  <p class="time-label">{{'apptocbanner.dayS' | translate}}</p>
                 </div>
                 <span>:</span>
                 <div >
@@ -303,11 +303,11 @@
               <div class="flex batch-wrapper">
                 <ng-container *ngIf="!showMsg">
                     <div class="batch-duration-wrap">
-                      <p class="timer-title">{{'apptocbanner.batchduration' | translate}}</p>
+                      <p class="timer-title">{{'apptocbanner.batchDuration' | translate}}</p>
                       <p class="duration-days">{{getBatchDuration}} {{'apptocbanner.days' | translate}}</p>
                     </div>
                 </ng-container>
-                <p class="batch-info" *ngIf="showMsg">{{'apptocbanner.kindlychecklocationdetails' | translate}}</p>
+                <p class="batch-info" *ngIf="showMsg">{{'apptocbanner.kindlyCheckLocationDetails' | translate}}</p>
               </div>
             </div>
           </div>
@@ -319,7 +319,7 @@
 </div>
 <div class="header-synopsis fixed-width margin-top-l" [ngClass]="{ 'header-synopsis-gradient': bannerUrl }" *ngIf="content && batchControl?.value?.batchAttributes?.batchLocationDetails">
   <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
-    <h2>{{'apptocbanner.batchlocation' | translate}}</h2>
+    <h2>{{'apptocbanner.batchLocation' | translate}}</h2>
     <p>{{batchControl?.value?.batchAttributes?.batchLocationDetails}}</p>
   </ng-container>
 </div>
