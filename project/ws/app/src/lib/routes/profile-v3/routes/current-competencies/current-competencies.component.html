@@ -1,18 +1,16 @@
 <div class="flex flex-col comptency_main_div margin-top-xl">
 
     <div class="flex flex-row justify-between margin-bottom-xs">
-        <h4 class="mast-h4 main_title_text margin-bottom-xs">Select competencies you’re skilled with</h4>
+        <h4 class="mast-h4 main_title_text margin-bottom-xs">{{'currentcompetencies.header' | translate}}</h4>
         <div>
         <button [disabled]="infoIcon"  mat-icon-button class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openActivityDialog()">
             <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon>
         </button>
-        What are competencies?
+        {{'currentcompetencies.whatAreCompetencies' | translate }}
     </div>
     </div>
 
-    <p class="mat-body-2 ws-mat-black60-text margin-bottom-l">Feel free to select the competency and level that you feel
-        match your current skills. This does not need to be exact. This information helps us give you a more
-        personalized experience and provide even more relevant content.</p>
+    <p class="mat-body-2 ws-mat-black60-text margin-bottom-l">{{'currentcompetencies.description' | translate }}</p>
     <!-- <ws-app-competency-card [competenciesData]="allCompetencies"
         (selectedCompetency)="updateSelectedCompetency($event)"></ws-app-competency-card> -->
     <div class="flex flex-1">
