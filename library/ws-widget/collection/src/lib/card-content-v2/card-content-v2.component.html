@@ -196,7 +196,7 @@
         <mat-icon>toc</mat-icon>
         <h3 class="margin-remove" i18n>
           <!-- View details -->
-          {{ 'cardcontentv2.viewdetails' | translate }}
+          {{ 'cardcontentv2.viewDetails' | translate }}
         </h3>
       </a>
 
@@ -619,7 +619,7 @@
           </div>
           <div class="flex flex-1">
             <div class="ws-mat-default-text">
-              <span>{{5}} {{'cardcontentv2.hoursago' | translate}}</span>
+              <span>{{5}} {{'cardcontentv2.hoursAgo' | translate}}</span>
             </div>
           </div>
         </div>
@@ -746,12 +746,12 @@
                 <mat-icon class="mr-1">star</mat-icon>
                 <span>{{widgetData.content.avgRating}}</span>
               </div>
-              <!-- <span class="most-enrolled-text margin-left-m">{{ 'cardcontentv2.mostenrolled' | translate }}</span> -->
+              <!-- <span class="most-enrolled-text margin-left-m">{{ 'cardcontentv2.mostEnrolled' | translate }}</span> -->
               <ng-container *ngIf="widgetData?.content?.additionalTags && widgetData?.content?.additionalTags.includes('mostEnrolled')">
-                <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mostenrolled' | translate }}</span>
+                <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mostEnrolled' | translate }}</span>
               </ng-container>
               <ng-container *ngIf="widgetData?.content?.additionalTags && widgetData?.content?.additionalTags.includes('mostTrending')">
-                <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mosttrending' | translate }}Most trending</span>
+                <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mostTrending' | translate }}Most trending</span>
               </ng-container>
             </div>
           </div>
@@ -1052,12 +1052,12 @@
             <mat-icon>star</mat-icon>
             <span class="rating-number">{{widgetData?.content?.avgRating}}</span>
           </div>
-          <!-- <span class="most-enrolled-text margin-left-m">{{ 'cardcontentv2.mostenrolled' | translate }}</span> -->
+          <!-- <span class="most-enrolled-text margin-left-m">{{ 'cardcontentv2.mostEnrolled' | translate }}</span> -->
           <ng-container *ngIf="widgetData?.content?.additionalTags && widgetData?.content?.additionalTags.includes('mostEnrolled')">
-            <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mostenrolled' | translate }}</span>
+            <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mostEnrolled' | translate }}</span>
           </ng-container>
           <ng-container *ngIf="widgetData?.content?.additionalTags && widgetData?.content?.additionalTags.includes('mostTrending')">
-            <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mosttrending' | translate }}</span>
+            <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mostTrending' | translate }}</span>
           </ng-container>
         </div>
       </div>

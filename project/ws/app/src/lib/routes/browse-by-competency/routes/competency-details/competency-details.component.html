@@ -21,9 +21,9 @@
     <!--====== second left text box ===============-->
     <div class="all_cbp_box">
         <div class="left_content_box">
-            <h2 class="mat-h2 margin-remove inline-block ">{{ 'competencydetails.allcbps' | translate }}</h2>
+            <h2 class="mat-h2 margin-remove inline-block ">{{ 'competencydetails.allCbps' | translate }}</h2>
             <div>
-                <p class="mat-body-2 ws-mat-black60-text"> {{courses?.length || 0 }} {{ 'competencydetails.CBPsfor' | translate }} “{{competencyData?.name || currentComp?.description}}”</p>
+                <p class="mat-body-2 ws-mat-black60-text"> {{courses?.length || 0 }} {{ 'competencydetails.cbpsFor' | translate }} “{{competencyData?.name || currentComp?.description}}”</p>
             </div>
         </div>
         <mat-sidenav-container class="custom">
@@ -46,7 +46,7 @@
                 </ng-container>
                 <ng-template #noData>
                     <h4 *ngIf="courses?.length <=0 && !(displayLoader | async)" class="w-full text-center ws-mat-black60-text ">
-                        {{ 'competencydetails.nocbps' | translate }}
+                        {{ 'competencydetails.noCbps' | translate }}
                     </h4>
                 </ng-template>
                 <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
@@ -55,7 +55,7 @@
             </mat-sidenav-content>
             <mat-sidenav mode="side" position="end" opened class="custom-sidenav" >
                 <form class="filter-form" [formGroup]="filterForm">
-                    <p class="mat-subheading-2 margin-bottom-m font-bold-imp">{{ 'competencydetails.filterby' | translate }}</p>
+                    <p class="mat-subheading-2 margin-bottom-m font-bold-imp">{{ 'competencydetails.filterBy' | translate }}</p>
                     <!-- TODO: Tags feature has to be implemented -->
                     <!-- <p class="mat-subheading-1 margin-bottom-xs font-bold-imp">Tags</p>
                 <div class="search_box">

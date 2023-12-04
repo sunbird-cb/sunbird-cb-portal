@@ -9,7 +9,7 @@
             </ng-container>
         </div>
         <h4 *ngIf="allCollections?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
-            {{ 'curatedpage.nocuratedcollection' | translate }}
+            {{ 'curatedpage.noCuratedCollection' | translate }}
         </h4>
         <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
             <mat-spinner [diameter]="30"></mat-spinner>
@@ -66,7 +66,7 @@
                                   }"></ws-widget-card-content>
                             </ng-container>
                             <h4 *ngIf="allCollections?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
-                                {{ 'curatedpage.nocuratedcollection' | translate }}
+                                {{ 'curatedpage.noCuratedCollection' | translate }}
                              </h4>
                         </div>
                     <!-- </mat-sidenav-content>
