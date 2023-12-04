@@ -548,7 +548,6 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       } else {
         try {
           const response = await this.trendingSearchRequest(strip, strip.request, calculateParentStatus)
-          console.log('response', response);
           if (response && response.results && response.results.response) {
               const content = response.results.response[strip.request.trendingSearch.responseKey] || []
             this.processStrip(
