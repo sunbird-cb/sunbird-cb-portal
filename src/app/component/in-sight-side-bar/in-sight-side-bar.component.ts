@@ -209,7 +209,7 @@ export class InsightSideBarComponent implements OnInit {
   }
   
   goToActivity(_e: any) {
-    this.router.navigateByUrl(`app/person-profile/me?tab=0`);
+    this.router.navigateByUrl(`app/person-profile/me?tab=1`);
   }
 
   navigate() {

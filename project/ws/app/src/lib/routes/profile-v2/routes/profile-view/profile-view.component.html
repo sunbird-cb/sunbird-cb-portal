@@ -82,7 +82,6 @@
               </span>
             </div>
             <!-- <div class="flex flex-1" class="text-right mobile2">
-
                 <span class="noocoments" mat-card-subtitle>Last online
                   {{discussProfileData.lastonline | pipeRelativeTime}}</span>
               </div> -->
@@ -175,11 +174,12 @@
       </div>
     </mat-card-header>
   </mat-card>
+
   <div   class=" hidden md:block">
     <ng-container [ngTemplateOutlet]="profileSection"></ng-container>
   </div>
   <div class=" block md:hidden">
-    <div class="flex flex-custom ">
+    <div class="flex flex-custom" id="profile_activity">
       <mat-tab-group class="profile-tabs" (selectedTabChange)="tabClicked($event)" [selectedIndex]="selectedTabIndex">
         <mat-tab label="Profile">
           <ng-template matTabContent>
@@ -202,19 +202,14 @@
             </div>
 
             <div class="flex flex-col margin-bottom-m mt-3 gap-3 discussion-card ">
-              <div class="flex flex-row gap-3 items-center mat-subheading-1 mb-0">
-                <div class="flex flex-grow">My Discussions</div>
+              <div class="flex flex-row gap-3 items-center">
+                <div class="flex flex-grow mat-subheading-1 mb-0">My Discussions</div>
                 <div class="text-2xl ws-mat-default-text">
                     <ng-container>
-                        <div class="text-sm" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >Show all</div>
-                    </ng-container>
-                    
+                      <div class="text-sm" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >Show all</div>
+                    </ng-container>      
                 </div>
-            </div>
-              <!-- <div class="flex flex-row">
-                <div class="flex flex-grow mat-subheading-1">My Discussions</div>
-                <div class="flex text-sm font-weight-400 ws-mat-default-text" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}">Show all</div>
-              </div> -->
+              </div>
               <ws-widget-discussions [discussion]="discussion" [count]="2"></ws-widget-discussions>
             </div>
 
