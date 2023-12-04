@@ -28,7 +28,7 @@
                     <!-- </ws-utils-horizontal-scroller-v2> -->
 
                     <ng-container *ngIf="todaysEvents && todaysEvents.length === 0">
-                        <h4 class="w-full ws-mat-black60-text">{{ 'event.No_event' | translate }}</h4>
+                        <h4 class="w-full ws-mat-black60-text">{{ 'event.noEvent' | translate }}</h4>
                     </ng-container>
                   </mat-card-content>
                   <mat-card-footer>
@@ -72,7 +72,7 @@
 
 <div class="w-full padding-top-xs event_card_main_box">
     <div class="flex flex-1 flex-column margin-fix mb-2">
-        <span class="f-medium mat-title">{{ 'event.labelAll_events' | translate }} </span>
+        <span class="f-medium mat-title">{{ 'event.labelAllEvents' | translate }} </span>
     </div>
     <div class="flex flex-1 flex-column margin-fix search">
         <form (submit)="updateQuery(queryControl.value)">
