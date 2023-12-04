@@ -123,6 +123,8 @@ export class CardHubsListComponent extends WidgetBaseComponent
       // console.log('data-->', data)
       if (data) {
         this.toggleVisibility()
+      } else {
+        this.visible = false;
       }
     })
   }
