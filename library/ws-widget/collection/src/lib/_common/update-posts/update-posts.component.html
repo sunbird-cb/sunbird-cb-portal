@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-4">
-    <div class="flex flex-row gap-3 items-center mb-0">
+    <!-- <div class="flex flex-row gap-3 items-center mb-0">
         <div class="flex flex-grow mat-subheading-1">Updates on your posts</div>
         <div class="text-2xl ws-mat-default-text">
             <ng-container *ngIf="isMobile">
@@ -9,7 +9,18 @@
                 <mat-icon class="cursor-pointer font-bold" *ngIf="!updatesPosts.loadSkeleton" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home', popup: 'show'}">add</mat-icon>
             </ng-container>
         </div>
-    </div>
+    </div> -->
+    <div class="flex flex-row gap-3 items-center mat-subheading-1 mb-0">
+        <div class="flex flex-grow">Updates on your posts</div>
+        <div class="text-2xl ws-mat-default-text">
+            <ng-container *ngIf="isMobile">
+                <div class="text-sm" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >Show all</div>
+            </ng-container>
+            <ng-container *ngIf="!isMobile">
+                <mat-icon class="cursor-pointer font-bold" *ngIf="!updatesPosts.loadSkeleton" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home', popup: 'show'}">add</mat-icon>
+            </ng-container>
+        </div>
+      </div>
 
     <ng-container *ngIf="updatesPosts.loadSkeleton">
         <div class="flex flex-col discussion-card gap-3 p-5" *ngFor="let i of [1, 2, 3]">
@@ -46,7 +57,7 @@
         
         <ng-container *ngIf="updatePosts?.error && !isMobile">
             <div class="flex flex-row gap-2 p-4 justify-center" *ngIf="!updatesPosts.loadSkeleton || !updatesPosts.error">
-                <div class="flex gap-1 font-semibold cursor-pointer ws-mat-default-text" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >
+                <div class="flex ws-mat-default-text items-center justify-center mat-body-1 cursor-pointer" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >
                     <div>Show all</div>
                     <mat-icon>
                         chevron_right

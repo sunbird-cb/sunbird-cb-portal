@@ -111,10 +111,10 @@
           <h4 class="mat-h4 margin-bottom-remove nav_sub_heading">Quick links</h4>
         </div>
         <div class="flex flex-1">
-          <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">
+          <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2 mobile-div">
             <ng-container *ngFor="let portal of environment.portals | orderBy: 'sr'">
               <ng-container *ngIf="(portal.isPublic || isAllowed(portal.id)) && portal.name !== 'Frac Dictionary'">
-                <a class="flex flex-wrap mb-4" role="menuitem" (click)="toggleVisibility()" [attr.href]="portal.uriPath" target="_blank">
+                <a class="flex flex-wrap mb-4 mobile" role="menuitem" (click)="toggleVisibility()" [attr.href]="portal.uriPath" target="_blank">
                   <div class="icon ws-mat-primary-tags">
                     <mat-icon class="m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
                       aria-hidden="true">{{portal.icon || 'info'}}</mat-icon>
