@@ -7,19 +7,19 @@
                     <ul class="sb-sidebar-menu pl-0 ng-star-inserted">
                         <li class="df-sidebar-menu-list menu-active ng-star-inserted" id="d.route"><a> {{ 'common.missionKarmyogi' | translate }}</a></li>
                         <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.accountAndAccess' | translate }}</a></li>
-                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.Learn' | translate }}</a></li>
-                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a> {{ 'common.Discuss' | translate }}</a></li>
-                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.Network' | translate }}</a></li>
-                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.Competencies' | translate }}</a></li>
+                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.learn' | translate }}</a></li>
+                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a> {{ 'common.discuss' | translate }}</a></li>
+                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.network' | translate }}</a></li>
+                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.competencies' | translate }}</a></li>
                         <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.igotMarketplace' | translate }}</a></li>
                         <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.contentProvider' | translate }}</a></li>
                         <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a> {{ 'common.fracing' | translate }}</a></li>
                     </ul>
-                   
+
                 </div>
 
                 <!-- for mobile-view -->
-                <button type="button" class="openbtn" (click)="showMenuButton()">☰</button> 
+                <button type="button" class="openbtn" (click)="showMenuButton()">☰</button>
                 <div class="overlay-sidebar" *ngIf="!showSideMenu">
                   <div class="overlay-sidebar__menu">
                       <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
@@ -27,10 +27,10 @@
                         <ul class="sb-sidebar-menu pl-0 ng-star-inserted">
                           <li class="df-sidebar-menu-list menu-active ng-star-inserted" id="d.route"><a> {{ 'common.missionKarmyogi' | translate }}</a></li>
                           <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.accountAndAccess' | translate }}</a></li>
-                          <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.Learn' | translate }}Learn</a></li>
-                          <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a> {{ 'common.Discuss' | translate }}</a></li>
-                          <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.Network' | translate }}</a></li>
-                          <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.Competencies' | translate }}</a></li>
+                          <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.learn' | translate }}Learn</a></li>
+                          <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a> {{ 'common.discuss' | translate }}</a></li>
+                          <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.network' | translate }}</a></li>
+                          <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.competencies' | translate }}</a></li>
                           <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.igotMarketplace' | translate }}</a></li>
                           <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.contentProvider' | translate }}</a></li>
                           <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a> {{ 'common.fracing' | translate }}</a></li>
@@ -38,12 +38,12 @@
                       </div>
                   </div>
                 </div>
-    
+
 
 
                 <div class="discuss-right-panel">
                     <p class="mat-display-1 main_title_text margin-bottom-xl">{{ 'faq.frequently_asked_questions' | translate }}</p>
-                   
+
                     <form class="flex-1">
                         <mat-form-field appearance="outline" class="autocomplete-form search_faq_form" color="primary" >
                           <mat-icon matPrefix class="flex items-center justify-center">search</mat-icon>
@@ -51,8 +51,8 @@
                               [placeholder]="'Find question…'" i18-aria-label aria-label="Query" matInput />
                         </mat-form-field>
                       </form>
-                      
-                    
+
+
                     <!-- =====================Mission Karmayogi =================-->
                     <div class="flex flex-column margin-bottom-xl">
                         <p class="mat-title margin-bottom-m">{{ 'common.missionKarmyogi' | translate }}</p>
@@ -63,19 +63,19 @@
                                   {{ 'faq.missionTitle' | translate }}
 
                                 </mat-panel-title>
-                              
+
                               </mat-expansion-panel-header>
                               <p class="mat-body-2 margin-remove">
                                 {{ 'faq.missionDescription' | translate }}
                                </p>
                             </mat-expansion-panel>
-    
+
                             <mat-expansion-panel class="margin-bottom-m accordian_panel">
                                 <mat-expansion-panel-header>
                                   <mat-panel-title>
                                      {{ 'faq.missionHub' | translate }}
                                   </mat-panel-title>
-                                
+
                                 </mat-expansion-panel-header>
                                 <p>
                                   {{ 'faq.hubDescription' | translate }}</p>
@@ -90,13 +90,13 @@
                     <div class="flex flex-column margin-bottom-xl">
                         <p class="mat-title margin-bottom-m">{{ 'common.accountAndAccess' | translate }}</p>
                         <mat-accordion>
-    
+
                             <mat-expansion-panel class="margin-bottom-m accordian_panel">
                                 <mat-expansion-panel-header>
                                   <mat-panel-title>
                                    {{ 'faq.accountTitle' | translate }}
                                   </mat-panel-title>
-                                
+
                                 </mat-expansion-panel-header>
                                 <p>
                                   {{ 'faq.accountDescriptionYou' | translate }}</p>
@@ -107,7 +107,7 @@
                                   <mat-panel-title>
                                      {{ 'faq.panelDetails' | translate }}
                                   </mat-panel-title>
-                                
+
                                 </mat-expansion-panel-header>
                                 <p> {{ 'faq.panelHeader' | translate }}</p>
                             </mat-expansion-panel>
@@ -115,9 +115,9 @@
                             <mat-expansion-panel class="margin-bottom-m accordian_panel">
                                 <mat-expansion-panel-header>
                                   <mat-panel-title>
-                                    {{ 'faq.portalAccessQ' | translate }} 
+                                    {{ 'faq.portalAccessQ' | translate }}
                                   </mat-panel-title>
-                                
+
                                 </mat-expansion-panel-header>
                                 <p> {{ 'faq.portalAccessA' | translate }} </p>
                             </mat-expansion-panel>
@@ -127,15 +127,15 @@
                     <!-- ================ learn ===========-->
 
                     <div class="flex flex-column margin-bottom-xl">
-                      <p class="mat-title margin-bottom-m">{{ 'common.Learn' | translate }}</p>
+                      <p class="mat-title margin-bottom-m">{{ 'common.learn' | translate }}</p>
                       <mat-accordion>
-  
+
                           <mat-expansion-panel class="margin-bottom-m accordian_panel">
                               <mat-expansion-panel-header>
                                 <mat-panel-title>
                                   {{ 'faq.learnTitle' | translate }}
                                 </mat-panel-title>
-                              
+
                               </mat-expansion-panel-header>
                               <p>{{ 'faq.learnHeader' | translate }}</p>
                           </mat-expansion-panel>
@@ -145,7 +145,7 @@
                                 <mat-panel-title>
                                   {{ 'faq.cbpTitle' | translate }}
                                 </mat-panel-title>
-                              
+
                               </mat-expansion-panel-header>
                               <p>{{ 'faq.cbpDescription' | translate }} </p>
                           </mat-expansion-panel>
@@ -155,7 +155,7 @@
                                 <mat-panel-title>
                                   {{ 'faq.cbpHowtitle' | translate }}
                                 </mat-panel-title>
-                              
+
                               </mat-expansion-panel-header>
                               <p>{{ 'faq.cbpHowDescription' | translate }} </p>
                           </mat-expansion-panel>
@@ -165,7 +165,7 @@
                               <mat-panel-title>
                                 {{ 'faq.cbpWhereTitle' | translate }}
                               </mat-panel-title>
-                            
+
                             </mat-expansion-panel-header>
                             <p>{{ 'faq.cbpWhereDesc' | translate }} </p>
                           </mat-expansion-panel>
@@ -173,9 +173,9 @@
                           <mat-expansion-panel class="margin-bottom-m accordian_panel">
                             <mat-expansion-panel-header>
                               <mat-panel-title>
-                                {{ 'faq.cbpLearning' | translate }} 
+                                {{ 'faq.cbpLearning' | translate }}
                               </mat-panel-title>
-                            
+
                             </mat-expansion-panel-header>
                             <p>{{ 'faq.cbpPanelDescription' | translate }}</p>
                           </mat-expansion-panel>
@@ -183,9 +183,9 @@
                           <mat-expansion-panel class="margin-bottom-m accordian_panel">
                             <mat-expansion-panel-header>
                               <mat-panel-title>
-                                {{ 'faq.resumePassCBPQ' | translate }} 
+                                {{ 'faq.resumePassCBPQ' | translate }}
                               </mat-panel-title>
-                            
+
                             </mat-expansion-panel-header>
                             <p>{{ 'faq.resumePassCBPA' | translate }}</p>
                           </mat-expansion-panel>
@@ -195,7 +195,7 @@
                               <mat-panel-title>
                                 {{ 'faq.assessmentQuery' | translate }}
                               </mat-panel-title>
-                            
+
                             </mat-expansion-panel-header>
                             <p>{{ 'faq.assesmentAnswer' | translate }}</p>
                           </mat-expansion-panel>
@@ -203,9 +203,9 @@
                           <mat-expansion-panel class="margin-bottom-m accordian_panel">
                             <mat-expansion-panel-header>
                               <mat-panel-title>
-                                {{ 'faq.competencyAssessment' | translate }} 
+                                {{ 'faq.competencyAssessment' | translate }}
                               </mat-panel-title>
-                            
+
                             </mat-expansion-panel-header>
                             <p>{{ 'faq.competencyAssessmentAns' | translate }}</p>
                           </mat-expansion-panel>
@@ -213,9 +213,9 @@
                           <mat-expansion-panel class="margin-bottom-m accordian_panel">
                             <mat-expansion-panel-header>
                               <mat-panel-title>
-                                {{ 'faq.cbpCreator' | translate }} 
+                                {{ 'faq.cbpCreator' | translate }}
                               </mat-panel-title>
-                            
+
                             </mat-expansion-panel-header>
                             <p>{{ 'faq.cbpCreatorAns' | translate }} </p>
                           </mat-expansion-panel>
@@ -226,7 +226,7 @@
                   <!-- =================== discuss ===================-->
 
                   <div class="flex flex-column margin-bottom-xl">
-                    <p class="mat-title margin-bottom-m">{{ 'common.Discuss' | translate }}</p>
+                    <p class="mat-title margin-bottom-m">{{ 'common.discuss' | translate }}</p>
                     <mat-accordion>
 
                         <mat-expansion-panel class="margin-bottom-m accordian_panel">
@@ -234,7 +234,7 @@
                               <mat-panel-title>
                                 {{ 'faq.discussQue' | translate }}
                               </mat-panel-title>
-                            
+
                             </mat-expansion-panel-header>
                             <p>{{ 'faq.discussQueAns' | translate }} </p>
                         </mat-expansion-panel>
@@ -244,7 +244,7 @@
                               <mat-panel-title>
                                 {{ 'faq.discussPost' | translate }}
                               </mat-panel-title>
-                            
+
                             </mat-expansion-panel-header>
                             <p>{{ 'faq.discussPostAns' | translate }} </p>
                         </mat-expansion-panel>
@@ -252,9 +252,9 @@
                         <mat-expansion-panel class="margin-bottom-m accordian_panel">
                             <mat-expansion-panel-header>
                               <mat-panel-title>
-                                {{ 'faq.discussDeletePost' | translate }} 
+                                {{ 'faq.discussDeletePost' | translate }}
                               </mat-panel-title>
-                            
+
                             </mat-expansion-panel-header>
                             <p>{{ 'faq.discussDeletePostAns' | translate }} </p>
                         </mat-expansion-panel>
@@ -262,9 +262,9 @@
                         <mat-expansion-panel class="margin-bottom-m accordian_panel">
                           <mat-expansion-panel-header>
                             <mat-panel-title>
-                              {{ 'faq.discussQuickAccessPostQ' | translate }} 
+                              {{ 'faq.discussQuickAccessPostQ' | translate }}
                             </mat-panel-title>
-                          
+
                           </mat-expansion-panel-header>
                           <p>{{ 'faq.discussQuickAccessPostA' | translate }} </p>
                       </mat-expansion-panel>
@@ -274,7 +274,7 @@
                           <mat-panel-title>
                             {{ 'faq.discussHowHubHelp' | translate }}
                           </mat-panel-title>
-                        
+
                         </mat-expansion-panel-header>
                         <p>{{ 'faq.discussHowHubHelpAns' | translate }} </p>
                     </mat-expansion-panel>
@@ -293,7 +293,7 @@
                             <mat-panel-title>
                               {{ 'common.networkConnQue' | translate }}
                             </mat-panel-title>
-                          
+
                           </mat-expansion-panel-header>
                           <p>{{ 'common.networkConnAns' | translate }}</p>
                       </mat-expansion-panel>
@@ -304,7 +304,7 @@
                  <!-- =================== Competencies ===================-->
 
                  <div class="flex flex-column margin-bottom-xl">
-                  <p class="mat-title margin-bottom-m">{{ 'common.Competencies' | translate }}</p>
+                  <p class="mat-title margin-bottom-m">{{ 'common.competencies' | translate }}</p>
                   <mat-accordion>
 
                       <mat-expansion-panel class="margin-bottom-m accordian_panel">
@@ -312,7 +312,7 @@
                             <mat-panel-title>
                               {{ 'faq.competenciesTitleWhere' | translate }}
                             </mat-panel-title>
-                          
+
                           </mat-expansion-panel-header>
                           <p> {{ 'faq.competenciesTitleWhereAns' | translate }} </p>
                       </mat-expansion-panel>
@@ -322,7 +322,7 @@
                             <mat-panel-title>
                               {{ 'faq.competenciesWhatIsHub' | translate }}
                             </mat-panel-title>
-                          
+
                           </mat-expansion-panel-header>
                           <p> {{ 'faq.competenciesHubAns' | translate }}</p>
                       </mat-expansion-panel>
@@ -332,7 +332,7 @@
                             <mat-panel-title>
                               {{ 'faq.competencyAcquire' | translate }}
                             </mat-panel-title>
-                          
+
                           </mat-expansion-panel-header>
                           <p> {{ 'faq.competencyAcquireAns' | translate }}</p>
                       </mat-expansion-panel>
@@ -340,9 +340,9 @@
                       <mat-expansion-panel class="margin-bottom-m accordian_panel">
                         <mat-expansion-panel-header>
                           <mat-panel-title>
-                            {{ 'faq.competencyQ' | translate }} 
+                            {{ 'faq.competencyQ' | translate }}
                           </mat-panel-title>
-                        
+
                         </mat-expansion-panel-header>
                         <p> {{ 'faq.competencyA' | translate }} </p>
                     </mat-expansion-panel>
@@ -350,19 +350,19 @@
                     <mat-expansion-panel class="margin-bottom-m accordian_panel">
                       <mat-expansion-panel-header>
                         <mat-panel-title>
-                          {{ 'faq.whatIsWpacs' | translate }} 
+                          {{ 'faq.whatIsWpacs' | translate }}
                         </mat-panel-title>
-                      
+
                       </mat-expansion-panel-header>
-                      <p> {{ 'faq.WpacsAnswer' | translate }}</p>
+                      <p> {{ 'faq.wpacsAnswer' | translate }}</p>
                   </mat-expansion-panel>
 
                   <mat-expansion-panel class="margin-bottom-m accordian_panel">
                     <mat-expansion-panel-header>
                       <mat-panel-title>
-                        {{ 'faq.cbpCompetencyStore' | translate }} 
+                        {{ 'faq.cbpCompetencyStore' | translate }}
                       </mat-panel-title>
-                    
+
                     </mat-expansion-panel-header>
                     <p> {{ 'faq.cbpCompetencyStoreAns' | translate }}</p>
                 </mat-expansion-panel>
@@ -379,11 +379,11 @@
                     <mat-expansion-panel class="margin-bottom-m accordian_panel">
                         <mat-expansion-panel-header>
                           <mat-panel-title>
-                            {{ 'faq.whatIsFrac' | translate }}  
+                            {{ 'faq.whatIsFrac' | translate }}
                           </mat-panel-title>
-                        
+
                         </mat-expansion-panel-header>
-                        <p> {{ 'faq.FRACAns' | translate }}</p>
+                        <p> {{ 'faq.frcCAns' | translate }}</p>
                     </mat-expansion-panel>
 
                     <mat-expansion-panel class="margin-bottom-m accordian_panel">
@@ -391,7 +391,7 @@
                         <mat-panel-title>
                           {{ 'faq.workOrderQ' | translate }}
                         </mat-panel-title>
-                      
+
                       </mat-expansion-panel-header>
                       <p> {{ 'faq.workOrderA' | translate }}</p>
                   </mat-expansion-panel>
@@ -400,10 +400,10 @@
               </div>
 
 
-                    
+
                 </div>
             </div>
-           
+
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>

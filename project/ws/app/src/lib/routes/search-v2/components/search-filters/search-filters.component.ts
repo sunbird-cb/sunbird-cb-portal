@@ -206,21 +206,22 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   }
 
   modifyUserFilters(fil: any, mainparentType: any) {
+    debugger
     const indx = this.getFilterName(fil)
     if (indx.length > 0) {
       this.userFilters.forEach((fs: any, index: number) => {
-        if (fs.name === fil.name && this.queryParams.has('t')) {
+        if (fs.name === this.translateTo(fil.name) && this.queryParams.has('t')) {
           setTimeout(() => {
             this.router.navigate(['/app/globalsearch'] , { queryParams: { q: '' } })
           },         500)
         }
 
-        if (fs.name === fil.name) {
+        if (fs.name === this.translateTo(fil.name)) {
           this.userFilters.splice(index, 1)
         }
       })
       this.myFilterArray.forEach((fs: any, index: number) => {
-        if (fs.name === fil.name) {
+        if (fs.name === this.translateTo(fil.name)) {
           this.myFilterArray.splice(index, 1)
         }
       })
@@ -228,7 +229,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
         if (fas.name === mainparentType) {
           fas.values.forEach((fasv: any) => {
             const name = fasv.name.toLowerCase()
-            if (name === fil.name) {
+            if (name === this.translateTo(fil.name)) {
               fasv.ischecked = false
             }
 
@@ -245,7 +246,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
 
       const reqfilter = {
         mainType: mainparentType,
-        name: fil.name,
+        name: this.translateTo(fil.name),
         count: fil.count,
         ischecked: true,
         qParam : '',
@@ -255,7 +256,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
         if (fas.name === mainparentType) {
           fas.values.forEach((fasv: any) => {
             const name = fasv.name.toLowerCase()
-            if (name.toLowerCase() === fil.name) {
+            if (name.toLowerCase() === this.translateTo(fil.name)) {
               fasv.ischecked = true
             }
           })
