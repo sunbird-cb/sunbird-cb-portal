@@ -158,13 +158,13 @@ TODO: edit option while preview Mode
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.PROGRAM || content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL">
               <ng-container *ngIf="!(content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId) &&
               content?.primaryCategory !== primaryCategory.MANDATORY_COURSE_GOAL">
-                <span class="mat-subheading-1" i18n>{{'apptochome.youarenotinvited' | translate}}</span>
+                <span class="mat-subheading-1" i18n>{{'apptochome.youAreNotInvited' | translate}}</span>
               </ng-container>
               <ng-container *ngIf="!isBatchInProgress && !!currentCourseBatchId && getStartDate === 'NA'">
                 <span class="mat-subheading-1" i18n>{{'apptochome.noActiveBatches' | translate}}</span>
               </ng-container>
               <ng-container *ngIf="!isBatchInProgress && currentCourseBatchId && getStartDate !== 'NA'">
-                <span class="mat-subheading-1" i18n>{{'apptochome.batchwillstart' | translate}} {{getStartDate}}!!.</span>
+                <span class="mat-subheading-1" i18n>{{'apptochome.batchWillStart' | translate}} {{getStartDate}}!!.</span>
               </ng-container>
               <!-- <ng-container *ngIf="!this.content['batches'] || this.content['batches']?.length <= 0">
                 <span class="mat-subheading-1" i18n> No Active Batches!.</span>
@@ -241,7 +241,7 @@ TODO: edit option while preview Mode
                 || batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED || batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.WITHDRAWN)">
                   <div class="ws-mat-accent-text ws-mat-accent-light-bg flex items-center justify-center statusMsg">
                     <p class="margin-remove-bottom font-bold">
-                      {{'apptochome.requestunderreview' | translate}}
+                      {{'apptochome.requestUnderReview' | translate}}
                     </p>
                   </div>
                 </ng-container>
@@ -270,16 +270,16 @@ TODO: edit option while preview Mode
         </ng-container>
         <h3 *ngIf="content?.status === 'Deleted' || content?.status === 'Expired'"
           class="margin-remove-bottom pt-4 info-msg" i18n>
-          {{'apptochome.contentexpireddeleted' | translate}}
+          {{'apptochome.contentExpiredDeleted' | translate}}
         </h3>
         <h3 class="margin-remove-bottom pt-4 info-msg" i18n *ngIf="content?.status === 'Unpublished'">
-          {{'apptochome.contentunpublished' | translate}}
+          {{'apptochome.contentUnpublished' | translate}}
         </h3>
         <h3 class="margin-remove-bottom pt-4 info-msg" i18n *ngIf="content?.status === 'Draft'">
-          {{'apptochome.contentdraft' | translate}}
+          {{'apptochome.contentDraft' | translate}}
         </h3>
         <h3 class="margin-remove-bottom pt-4 info-msg" i18n *ngIf="content?.status === 'InReview'">
-          {{'apptochome.contentreview' | translate}}
+          {{'apptochome.contentReview' | translate}}
         </h3>
       </div>
 
@@ -292,8 +292,8 @@ TODO: edit option while preview Mode
             The certificate is not issued by the trusted certificate authority. Once issued you will be able to download it
           </ng-container> -->
           <ng-container *ngIf="!certData">
-            <span class="certificate-text block">{{'apptochome.certificationtakestime' | translate}}</span>
-            <span class="certificate-text block">{{'apptochome.issuepersistsmailus' | translate}} <a>mission[dot]karmayogi[at]gov[dot]in</a></span>
+            <span class="certificate-text block">{{'apptochome.certificationTakesTime' | translate}}</span>
+            <span class="certificate-text block">{{'apptochome.issuePersistsMailus' | translate}} <a>mission[dot]karmayogi[at]gov[dot]in</a></span>
           </ng-container>
           <ng-container *ngIf="certData">
             <a class="certificate_box" (click)="openCertificateDialog()">
@@ -302,7 +302,7 @@ TODO: edit option while preview Mode
                 <!-- <p class="certificate_text mat-body-2 font-weight-bold text-center margin-bottom-xs">Completion certificate</p> -->
                 <p class="certificate_text mat-body-2 font-weight-bold text-center margin-bottom-xs">
                   <span>{{'apptochome.congratulations' | translate}}</span>
-                  <span class="block">{{'apptochome.certificatecompletionready' | translate}}</span>
+                  <span class="block">{{'apptochome.certificateCompletionReady' | translate}}</span>
                 </p>
             </a>
           </ng-container>
@@ -311,16 +311,16 @@ TODO: edit option while preview Mode
 
       <p class="mt-5 mb-5 info-msg" *ngIf="content?.isInIntranet && showIntranetMsg">
         <mat-icon class="align-bottom">info</mat-icon>&nbsp;
-        <ng-container i18n>{{'apptochome.viewedinIntranet' | translate}}</ng-container>
+        <ng-container i18n>{{'apptochome.viewedInIntranet' | translate}}</ng-container>
       </p>
       <p class="mt-5 mb-5 info-msg" *ngIf="showInstructorLedMsg">
         <mat-icon class="align-bottom">info</mat-icon>&nbsp;
-        <ng-container i18n>{{'apptochome.notavailableonline' | translate}}</ng-container>
+        <ng-container i18n>{{'apptochome.notAvailableOnline' | translate}}</ng-container>
       </p>
 
       <p class="mt-5 mb-5 info-msg" *ngIf="showStart.msg === 'youtubeForbidden'">
         <mat-icon class="align-bottom">info</mat-icon>&nbsp;
-        <ng-container i18n>{{'apptochome.youtubecontentblocked' | translate}}</ng-container>
+        <ng-container i18n>{{'apptochome.youtubeContentBlocked' | translate}}</ng-container>
       </p>
       <!-- <ng-container *ngIf="content?.completionStatus == 2">
         <p class="mat-body-2 font-bold-imp ws-mat-black60-text">Your progress</p>
@@ -330,7 +330,7 @@ TODO: edit option while preview Mode
       </ng-container> -->
 
       <div *ngIf="showBtn">
-        <a href="{{cscmsUrl}}" target="_blank" class="text-white custom-button mat-button margin-bottom-m">{{'apptochome.applyforphysicaltraining' | translate}}</a>
+        <a href="{{cscmsUrl}}" target="_blank" class="text-white custom-button mat-button margin-bottom-m">{{'apptochome.applyForPhysicalTraining' | translate}}</a>
     </div>
     <!-- <div>
       <a href="{{cscmsUrl}}" target="_blank" class="text-white custom-button mat-button margin-bottom-m">Apply for physical training</a>
@@ -352,7 +352,7 @@ TODO: edit option while preview Mode
           class="w-full text-left actbutton mat-body-2 blue-border" (click)="openFeedbackDialog(content)">
           <mat-icon class=" icon-margin mat-icon notranslate material-icons mat-icon-no-color">star_purple500</mat-icon>
           <ng-container *ngIf="!userRating">
-            <span>{{'apptochome.ratethis' | translate}}</span>
+            <span>{{'apptochome.rateThis' | translate}}</span>
             <span class="lowercase">
 
               <ng-container *ngIf="content?.primaryCategory === primaryCategory.PROGRAM">
@@ -401,8 +401,8 @@ TODO: edit option while preview Mode
             <p *ngIf="tocStructure?.course > 0" class="mat-body-2 cs-icons">
               <img src="/assets/icons/content/grey/course.svg" alt="Course" class="margin-right-xs"> {{
               tocStructure?.course }}
-              <span *ngIf="tocStructure?.course === 1" i18n> {{'apptochome.Course' | translate}}</span>
-              <span *ngIf="tocStructure?.course > 1" i18n> {{'apptochome.Courses' | translate}}</span>
+              <span *ngIf="tocStructure?.course === 1" i18n> {{'apptochome.course1' | translate}}</span>
+              <span *ngIf="tocStructure?.course > 1" i18n> {{'apptochome.courses1' | translate}}</span>
             </p>
             <p *ngIf="tocStructure?.learningModule > 0" class="mat-body-2 cs-icons">
               <img src="/assets/icons/content/grey/module.svg" alt="Module" class="margin-right-xs"> {{

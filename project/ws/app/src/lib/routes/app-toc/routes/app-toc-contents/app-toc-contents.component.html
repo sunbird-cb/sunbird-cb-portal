@@ -18,7 +18,7 @@
       <div *ngIf="!isPlayable"
         class="ws-mat-primary-default-text ws-mat-primary-lite-background px-6 py-8 font-normal text-base noChildren"
         i18n>
-        {{ 'apptocontents.previewcontentunavailable' | translate }}
+        {{ 'apptocontents.previewContentUnavailable' | translate }}
       </div>
       <ng-container *ngIf="isPlayable" [wsResolverWidget]="contentPlayWidgetConfig"></ng-container>
     </ng-template>

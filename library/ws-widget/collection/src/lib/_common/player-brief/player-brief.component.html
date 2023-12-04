@@ -67,8 +67,8 @@
       <div class="ws-mat-accent-text width-expand">
         <h3 *ngIf="tocStructure?.course > 0">
           <ng-container>{{ tocStructure?.course }}</ng-container>
-          <ng-container *ngIf="tocStructure?.course === 1" i18n> {{'apptochome.Course' | translate}}</ng-container>
-          <ng-container *ngIf="tocStructure?.course > 1" i18n> {{'apptochome.Courses' | translate}}</ng-container>
+          <ng-container *ngIf="tocStructure?.course === 1" i18n> {{'apptochome.course1' | translate}}</ng-container>
+          <ng-container *ngIf="tocStructure?.course > 1" i18n> {{'apptochome.courses1' | translate}}</ng-container>
         </h3>
         <h3 *ngIf="tocStructure?.learningModule > 0">
           <ng-container>{{ tocStructure?.learningModule }}</ng-container>

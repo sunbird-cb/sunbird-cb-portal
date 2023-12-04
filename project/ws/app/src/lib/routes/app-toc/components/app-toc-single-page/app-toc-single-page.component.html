@@ -359,7 +359,7 @@
             <section id="rating" *ngIf="!forPreview">
                 <div class="fluid-width contacts-container mb-10">
                     <div class="fixed-width flex flex-col flex-wrap">
-                        <h2 class="mat-toolbar contacts-head">{{'apptocsinglepage.ratingsreviews' | translate}}</h2>
+                        <h2 class="mat-toolbar contacts-head">{{'apptocsinglepage.ratingsReviews' | translate}}</h2>
                     </div>
                     <ws-widget-rating-summary [ratingSummary]="ratingSummaryProcessed"></ws-widget-rating-summary>
 
@@ -387,9 +387,9 @@
                                             <mat-form-field class="" appearance="outline">
                                                 <mat-select #sortBySelect formControlName="sortByControl"
                                                     i18n-placeholder placeholder="Sort by">
-                                                    <mat-option [value]="'topReviews'" slected>{{'apptocsinglepage.topreviews' | translate}}
+                                                    <mat-option [value]="'topReviews'" slected>{{'apptocsinglepage.topReviews' | translate}}
                                                     </mat-option>
-                                                    <mat-option [value]="'latestReviews'">{{'apptocsinglepage.latestreviews' | translate}}</mat-option>
+                                                    <mat-option [value]="'latestReviews'">{{'apptocsinglepage.latestReviews' | translate}}</mat-option>
                                                 </mat-select>
                                             </mat-form-field>
                                         </div>
@@ -437,7 +437,7 @@
                             <mat-spinner [diameter]="30"></mat-spinner>
                         </div>
                         <h4 *ngIf="(ratingReviews | pipeFilterV3:{ 'firstName': searchKey.value, 'review': searchKey.value } : false)?.length <=0 
-                        && (displayLoader  === false)" class="w-full text-left ws-mat-black60-text ">{{'apptocsinglepage.noreviewsfound' | translate}} </h4>
+                        && (displayLoader  === false)" class="w-full text-left ws-mat-black60-text ">{{'apptocsinglepage.noReviewsFound' | translate}} </h4>
                     </div>
                 </div>
             </section>

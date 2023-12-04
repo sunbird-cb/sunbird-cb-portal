@@ -24,11 +24,11 @@
         <div *ngIf="errorWidgetData?.widgetData?.errorType" [wsResolverWidget]="errorWidgetData"></div>
         <div *ngIf="error.errorType === errorType.mimeTypeMismatch">
           <mat-card>
-            <mat-card-title i18n>{{ 'viewercomponent.issueincontent' | translate }}</mat-card-title>
+            <mat-card-title i18n>{{ 'viewercomponent.issueInContent' | translate }}</mat-card-title>
             <mat-card-content>
               <div class="mat-caption">
                 <ng-container i18n>
-                  {{ 'viewercomponent.differentmimetype' | translate }} (
+                  {{ 'viewercomponent.differentMimetype' | translate }} (
                 </ng-container>
                 <ng-container>
                   {{ error?.mimeType }}
@@ -38,25 +38,25 @@
                 </ng-container>
               </div>
               <div>
-                <strong i18n>{{ 'viewercomponent.possiblelink' | translate }} </strong>
+                <strong i18n>{{ 'viewercomponent.possibleLink' | translate }} </strong>
                 <a [routerLink]="error.probableUrl">
                   {{ error.probableUrl }}
                 </a>
               </div>
               <div class="margin-top-m text-center">
-                <a class="ws-mat-primary-text" [routerLink]="'/feedback/bug'" i18n>{{ 'viewercomponent.reporttous' | translate }}</a>
-                <span i18n> {{ 'viewercomponent.wewillmakeitwork' | translate }}</span>
+                <a class="ws-mat-primary-text" [routerLink]="'/feedback/bug'" i18n>{{ 'viewercomponent.reportToUs' | translate }}</a>
+                <span i18n> {{ 'viewercomponent.weWillMakeItWork' | translate }}</span>
               </div>
             </mat-card-content>
           </mat-card>
         </div>
         <div *ngIf="error.errorType === errorType.previewUnAuthorised">
           <mat-card class="margin-m">
-            <mat-card-title i18n>{{ 'viewercomponent.notauthorizedtopreview' | translate }}</mat-card-title>
+            <mat-card-title i18n>{{ 'viewercomponent.notAuthorizedToPreview' | translate }}</mat-card-title>
             <mat-card-content>
               <div>
-                <a class="ws-mat-primary-text" [routerLink]="'/feedback/bug'" i18n>{{ 'viewercomponent.reporttous' | translate }}</a>
-                <span i18n> {{ 'viewercomponent.wewillmakeitwork' | translate }}</span>
+                <a class="ws-mat-primary-text" [routerLink]="'/feedback/bug'" i18n>{{ 'viewercomponent.reportToUs' | translate }}</a>
+                <span i18n> {{ 'viewercomponent.weWillMakeItWork' | translate }}</span>
               </div>
             </mat-card-content>
           </mat-card>
@@ -74,7 +74,7 @@
             <mat-icon class="cursor-pointer ws-mat-primary-text">visibility</mat-icon>
           </a>
           <span *ngIf="show" i18n class="flex flex-1 flex-center padding-xs ws-mat-primary-text mat-subheading-1 margin-0">
-            {{ 'viewercomponent.ifgovtofficial' | translate }}</span>
+            {{ 'viewercomponent.ifGovtOfficial' | translate }}</span>
         </div>
         <div class="flex flex-1 flex-column" *ngIf="show">
           <div class="flex flex-1 flex-row-c">
