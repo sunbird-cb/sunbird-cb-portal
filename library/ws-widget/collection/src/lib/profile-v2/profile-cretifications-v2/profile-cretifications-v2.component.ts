@@ -62,7 +62,7 @@ export class ProfileCretificationsV2Component extends WidgetBaseComponent implem
       dat = `${this.translateTabName('Issued on')} ${moment(date).format('MMM YYYY')}`
     } else {
       //dat = 'Certificate Not issued '
-      dat = this.translateTabName('Certificate Not issued')
+      dat = this.translateTabName('certificateNotIssued')
     }
     return dat
   }
