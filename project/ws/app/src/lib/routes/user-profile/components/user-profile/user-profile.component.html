@@ -1,5 +1,5 @@
 <ws-widget-btn-page-back
-  [widgetData]="{ url: translateTo('home'), titles: [{ title: translateTo('Network'), url: '/app/network-v2', icon: 'group' }, {title: translateTo('Update profile'), url:'none'}] }">
+  [widgetData]="{ url: translateTo('home'), titles: [{ title: translateTo('network'), url: '/app/network-v2', icon: 'group' }, {title: translateTo('updateprofile'), url:'none'}] }">
 </ws-widget-btn-page-back>
 <div class="profile-container container-balanced">
   <div class="profile-box">
@@ -229,15 +229,15 @@
                               formControlName="gender" [value]="eUserGender.MALE" i18n-aria-label
                               aria-label="Gender male input">
 
-                            <label for="{{eUserGender.MALE}}" i18n-aria-label>{{translateTo(eUserGender.MALE)}}</label>
+                            <label for="{{eUserGender.MALE}}" i18n-aria-label>{{translateTo(eUserGender.MALE.toLowerCase())}}</label>
 
                             <input type="radio" id="{{eUserGender.FEMALE}}" name="gender" formControlName="gender"
                               [value]="eUserGender.FEMALE" i18n-aria-label [attr.aria-label]="eUserGender.FEMALE">
-                            <label for="{{eUserGender.FEMALE}}" i18n-aria-label>{{translateTo(eUserGender.FEMALE)}}</label>
+                            <label for="{{eUserGender.FEMALE}}" i18n-aria-label>{{translateTo(eUserGender.FEMALE.toLowerCase())}}</label>
 
                             <input type="radio" id="{{eUserGender.OTHER}}" name="gender" formControlName="gender"
                               [value]="eUserGender.OTHER" i18n-aria-label [attr.aria-label]="eUserGender.OTHER">
-                            <label for="{{eUserGender.OTHER}}" i18n-aria-label>{{translateTo(eUserGender.OTHER)}}</label>
+                            <label for="{{eUserGender.OTHER}}" i18n-aria-label>{{translateTo(eUserGender.OTHER.toLowerCase())}}</label>
                           </div>
                         </fieldset>
 
@@ -267,13 +267,13 @@
                               formControlName="maritalStatus" [value]="eMaritalStatus.SINGLE" i18n-aria-label
                               aria-label="Marital Status single input">
                             <label for="{{eMaritalStatus.SINGLE}}" i18n-aria-label
-                              aria-label="Marital Status single label">{{translateTo(eMaritalStatus.SINGLE)}}</label>
+                              aria-label="Marital Status single label">{{translateTo(eMaritalStatus.SINGLE.toLowerCase())}}</label>
 
                             <input type="radio" id="{{eMaritalStatus.MARRIED}}" name="maritalStatus"
                               formControlName="maritalStatus" [value]="eMaritalStatus.MARRIED" i18n-aria-label
                               aria-label="Marital Status married input">
                             <label for="{{eMaritalStatus.MARRIED}}" i18n-aria-label
-                              aria-label="Marital Status married label">{{translateTo(eMaritalStatus.MARRIED)}}</label>
+                              aria-label="Marital Status married label">{{translateTo(eMaritalStatus.MARRIED.toLowerCase())}}</label>
                           </div>
                         </fieldset>
                       </div>
@@ -312,21 +312,21 @@
                               formControlName="category" [value]="eCategory.GENERAL" i18n-aria-label
                               aria-label="Category GENERAL input">
                             <label for="{{eCategory.GENERAL}}" i18n-aria-label
-                              aria-label="Category GENERAL label">{{translateTo(eCategory.GENERAL)}}</label>
+                              aria-label="Category GENERAL label">{{translateTo(eCategory.GENERAL.toLowerCase())}}</label>
 
                             <input type="radio" id="{{eCategory.OBC}}" name="category" formControlName="category"
                               [value]="eCategory.OBC" i18n-aria-label aria-label="Category OBC input">
                             <label for="{{eCategory.OBC}}" i18n-aria-label
-                              aria-label="Category OBC label">{{translateTo(eCategory.OBC)}}</label>
+                              aria-label="Category OBC label">{{translateTo(eCategory.OBC.toLowerCase())}}</label>
                             <input type="radio" id="{{eCategory.SC}}" name="category" formControlName="category"
                               [value]="eCategory.SC" i18n-aria-label aria-label="Category SC input">
                             <label for="{{eCategory.SC}}" i18n-aria-label
-                              aria-label="Category SC label">{{translateTo(eCategory.SC)}}</label>
+                              aria-label="Category SC label">{{translateTo(eCategory.SC.toLowerCase())}}</label>
 
                             <input type="radio" id="{{eCategory.ST}}" name="category" formControlName="category"
                               [value]="eCategory.ST" i18n-aria-label aria-label="Category ST input">
                             <label for="{{eCategory.ST}}" i18n-aria-label
-                              aria-label="Category ST label">{{translateTo(eCategory.ST)}}</label>
+                              aria-label="Category ST label">{{translateTo(eCategory.ST.toLowerCase())}}</label>
                           </div>
                         </fieldset>
                       </div>
