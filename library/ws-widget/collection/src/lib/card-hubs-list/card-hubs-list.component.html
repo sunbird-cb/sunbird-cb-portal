@@ -116,8 +116,20 @@
               <ng-container *ngIf="(portal.isPublic || isAllowed(portal.id)) && portal.name !== 'Frac Dictionary'">
                 <a class="flex flex-wrap mb-4 mobile" role="menuitem" (click)="toggleVisibility()" [attr.href]="portal.uriPath" target="_blank">
                   <div class="icon ws-mat-primary-tags">
-                    <mat-icon class="m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
-                      aria-hidden="true">{{portal.icon || 'info'}}</mat-icon>
+                    <!-- <mat-icon class="m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
+                      aria-hidden="true">{{portal.icon || 'info'}}</mat-icon> -->
+                      <ng-container *ngIf="portal.name === 'CBP Portal'">
+                        <img class="m-auto mat-icon" src="/assets/icons/CBP_portal.svg">
+                      </ng-container>
+                      <ng-container *ngIf="portal.name === 'MDO Portal'">
+                        <img class="m-auto mat-icon" src="/assets/icons/MDO_portal.svg">
+                      </ng-container>
+                      <ng-container *ngIf="portal.name === 'SPV Portal'">
+                        <img class="m-auto mat-icon" src="/assets/icons/SPV_portal.svg">
+                      </ng-container>
+                      <ng-container *ngIf="portal.name === 'CBC Portal'">
+                        <img class="m-auto mat-icon" src="/assets/icons/CBC_portal.svg">
+                      </ng-container>
                   </div>
                   <div class="width-expand padding-left-xs cursor-pointer">
                     <div class="margin-0 mat-subheading-2"> {{portal.name}} </div>
