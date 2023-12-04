@@ -104,7 +104,7 @@
                     <div class="w-full margin-top-xl margin-bottom-m event_card_box">
                         <ng-container *ngFor="let event of alltypeEvents |  pipeFilterV2:'eventName': searchInput.value">
                             <ws-app-events-card class="" [eventData]="event" *ngIf="event !== -1"></ws-app-events-card>
-                            <h4 class="w-full text-center ws-mat-black60-text" *ngIf="event === -1">{{ 'msg.no_search_res_found' | translate }}</h4>
+                            <h4 class="w-full text-center ws-mat-black60-text" *ngIf="event === -1">{{ 'msg.noSearchResultFound' | translate }}</h4>
                         </ng-container>
                     </div>
                 </section>
@@ -116,7 +116,7 @@
                     <div class="w-full margin-top-xl margin-bottom-m">
                         <ng-container *ngFor="let event of featuredEvents |  pipeFilterV2:'eventName': searchInput.value">
                             <ws-app-events-card class="w-fix" [eventData]="event" *ngIf="event !== -1"></ws-app-events-card>
-                            <h4 class="w-full text-center ws-mat-black60-text" *ngIf="event === -1">{{ 'msg.no_search_res_found' | translate }}</h4>
+                            <h4 class="w-full text-center ws-mat-black60-text" *ngIf="event === -1">{{ 'msg.noSearchResultFound' | translate }}</h4>
                         </ng-container>
                     </div>
                 </section>
@@ -128,7 +128,7 @@
                     <div class="w-full margin-top-xl margin-bottom-m">
                         <ng-container *ngFor="let event of curatedEvents | pipeFilterV2:'eventName': searchInput.value">
                             <ws-app-events-card class="w-fix" [eventData]="event" *ngIf="event !== -1"></ws-app-events-card>
-                            <h4 class="w-full text-center ws-mat-black60-text" *ngIf="event === -1">{{ 'msg.no_search_res_found' | translate }}</h4>
+                            <h4 class="w-full text-center ws-mat-black60-text" *ngIf="event === -1">{{ 'msg.noSearchResultFound' | translate }}</h4>
                         </ng-container>
                     </div>
                 </section>
