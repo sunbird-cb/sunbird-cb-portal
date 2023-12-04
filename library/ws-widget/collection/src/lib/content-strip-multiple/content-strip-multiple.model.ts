@@ -14,6 +14,7 @@ export namespace NsContentStripMultiple {
   export interface IContentStripUnit {
     key: string
     title: string
+    customeClass?: string
     name?: string
     mode?: 'accordion'
     info?: IStripInfo

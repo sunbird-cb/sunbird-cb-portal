@@ -3,10 +3,10 @@
     <div class="flex flex-1 flex-row-reverse flex-middle topicMainTitle">
         <a mat-button type="button" class="ws-mat-accent-border-active cursor-pointer" (click)="showPoup()">
             <span class="mat-body-2 ws-mat-default-text padding-xs" i18n>
-                Add topic
+                {{ "apptopic.topicHeader" | translate}}
             </span>
         </a>
-        <span i18n class="margin-right-s">Not finding a topic of your interest?</span>
+        <span i18n class="margin-right-s">{{ "apptopic.noTopicfound" | translate}}</span>
     </div>
     <div class="flex flex-1 flex-wrap margin-top-s flex-col">
         <ng-container *ngIf="desiredTopicsTemplate?.children?.length > 0">

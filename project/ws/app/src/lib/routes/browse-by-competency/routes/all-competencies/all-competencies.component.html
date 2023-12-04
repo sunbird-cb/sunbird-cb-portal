@@ -2,7 +2,7 @@
 </ws-widget-btn-page-back>
 <div class="container-balanced main_content_box">
   <div class="top_card_container">
-    <h2 class="mat-h1 margin-bottom-m inline-block "> Popular competencies</h2>
+    <h2 class="mat-h1 margin-bottom-m inline-block ">{{ 'allcompetencies.popularCompetencies' | translate }}</h2>
     <div class="top_card_inner_box flex">
       <ng-container *ngFor="let comp of allCompetencies | slice:0:8; let i=index">
         <ws-app-popular-competency-card [competency]="comp"></ws-app-popular-competency-card>
@@ -66,7 +66,7 @@
     </div>
     <h4 *ngIf="allCompetencies?.length <=0 && ((displayLoader | async) === false)"
       class="w-full text-left ws-mat-black60-text ">
-      No competencies found!
+      {{ 'allcompetencies.nocompetenciesfound' | translate }}
     </h4>
     <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
       <mat-spinner [diameter]="30"></mat-spinner>
@@ -75,7 +75,7 @@
 
   <!--===========  All competencies section ============= -->
   <div class="all_competency_box">
-    <h2 class="mat-h1 margin-remove inline-block "> All competencies </h2>
+    <h2 class="mat-h1 margin-remove inline-block "> {{ 'allcompetencies.allCompetencies' | translate }}</h2>
     <div class="all_competency_inner">
       <div class="left_card_box">
         <form [formGroup]="searchForm">
@@ -88,7 +88,7 @@
                   </mat-icon>
                   <!-- <mat-label>Search</mat-label> -->
                   <input type="search" name="searchKey" #searchKey class="ml-2" i18-aria-label aria-label="Search"
-                    formControlName="searchKey" i18n-placeholder="search" [placeholder]="'Search'" matInput />
+                    formControlName="searchKey" i18n-placeholder="search" [placeholder]="'allcompetencies.search' | translate" matInput />
                   <!-- (input)="updateQuery(searchKey.value)" -->
                 </mat-form-field>
               </div>
@@ -108,9 +108,9 @@
                 <div class="item">
 
                   <mat-form-field class="" appearance="outline">
-                    <mat-select #sortBySelect formControlName="sortByControl" i18n-placeholder placeholder="Sort by">
-                      <mat-option [value]="'Ascending'" slected>Ascending ( A - Z )</mat-option>
-                      <mat-option [value]="'Descending'">Descending ( Z - A )</mat-option>
+                    <mat-select #sortBySelect formControlName="sortByControl" i18n-placeholder placeholder="{{ 'allcompetencies.sortBy' | translate }}">
+                      <mat-option [value]="'Ascending'" slected>{{ 'allcompetencies.ascending' | translate }} ( A - Z )</mat-option>
+                      <mat-option [value]="'Descending'">{{ 'allcompetencies.descending' | translate }} ( Z - A )</mat-option>
                     </mat-select>
                   </mat-form-field>
 
@@ -134,7 +134,7 @@
                 </ng-container>
                 <h4 *ngIf="allCompetencies?.length <=0 && ((displayLoader | async) === false)"
                   class="w-full text-left ws-mat-black60-text ">
-                  No competencies found!
+                  {{ 'allcompetencies.nocompetenciesfound' | translate }}
                 </h4>
               </div>
             </mat-sidenav-content>

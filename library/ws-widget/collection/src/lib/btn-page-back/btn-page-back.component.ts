@@ -9,6 +9,7 @@ import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/dis
 import { environment } from 'src/environments/environment'
 // tslint:disable
 import _ from 'lodash'
+import { TranslateService } from '@ngx-translate/core'
 // tslint:enable
 
 type TUrl = undefined | 'none' | 'back' | string
@@ -47,6 +48,7 @@ export class BtnPageBackComponent extends WidgetBaseComponent
     public router: Router,
     private configSvc: ConfigurationsService,
     private discussUtilitySvc: DiscussUtilsService,
+    private translate: TranslateService
   ) {
     super()
   }
@@ -173,6 +175,16 @@ export class BtnPageBackComponent extends WidgetBaseComponent
     }
     const value = this.hasRole(roles)
     return value
+  }
+
+  translateLabels(label: string, type: any, subtype: any) {
+    label = label.replace(/\s/g, "")
+    if(subtype) {
+      const translationKey = type + '.' +  label + subtype
+      return this.translate.instant(translationKey);
+    }
+    const translationKey = type + '.' +  label
+    return this.translate.instant(translationKey);
   }
 
 }

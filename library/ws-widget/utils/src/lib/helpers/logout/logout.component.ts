@@ -3,6 +3,7 @@ import { MatDialogRef } from '@angular/material'
 import { AuthKeycloakService } from '../../services/auth-keycloak.service'
 import { ConfigurationsService } from '../../services/configurations.service'
 import { UtilityService } from '../../services/utility.service'
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-utils-logout',
@@ -18,8 +19,19 @@ export class LogoutComponent implements OnInit {
     public dialogRef: MatDialogRef<LogoutComponent>,
     private authSvc: AuthKeycloakService,
     private configSvc: ConfigurationsService,
-    private utilitySvc: UtilityService
-  ) { }
+    private utilitySvc: UtilityService,
+    private translate: TranslateService
+  ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+
+      this.translate.use(lang)
+      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        console.log('onLangChange', event);
+      });
+    }
+   }
 
   ngOnInit() {
     if (this.configSvc.restrictedFeatures) {
