@@ -548,6 +548,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       } else {
         try {
           const response = await this.trendingSearchRequest(strip, strip.request, calculateParentStatus)
+          console.log('response', response);
           if (response && response.results && response.results.response) {
               const content = response.results.response[strip.request.trendingSearch.responseKey] || []
             this.processStrip(
@@ -646,21 +647,23 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     contents: NsContent.IContent[],
     strip: NsContentStripWithTabs.IContentStripUnit,
   ) {
-    return (contents || []).map((content, idx) => ({
-      widgetType: 'card',
-      widgetSubType: 'cardContent',
-      widgetHostClass: 'mb-2',
-      widgetData: {
-        content,
-        ...(content.batch && { batch: content.batch }),
-        cardSubType: strip.stripConfig && strip.stripConfig.cardSubType,
-        cardCustomeClass: strip.customeClass ? strip.customeClass : '',
-        context: { pageSection: strip.key, position: idx },
-        intranetMode: strip.stripConfig && strip.stripConfig.intranetMode,
-        deletedMode: strip.stripConfig && strip.stripConfig.deletedMode,
-        contentTags: strip.stripConfig && strip.stripConfig.contentTags,
-      },
-    }))
+    return (contents || []).map((content, idx) => (
+      content ?  {
+        widgetType: 'card',
+        widgetSubType: 'cardContent',
+        widgetHostClass: 'mb-2',
+        widgetData: {
+          content,
+          ...(content.batch && { batch: content.batch }),
+          cardSubType: strip.stripConfig && strip.stripConfig.cardSubType,
+          cardCustomeClass: strip.customeClass ? strip.customeClass : '',
+          context: { pageSection: strip.key, position: idx },
+          intranetMode: strip.stripConfig && strip.stripConfig.intranetMode,
+          deletedMode: strip.stripConfig && strip.stripConfig.deletedMode,
+          contentTags: strip.stripConfig && strip.stripConfig.contentTags,
+        },
+      } : ''
+    ))
   }
 
   private transformSkeletonToWidgets(
