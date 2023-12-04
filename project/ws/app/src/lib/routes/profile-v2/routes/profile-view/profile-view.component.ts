@@ -166,7 +166,11 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.document.getElementById('activityTab')) {
         const element =  this.document.getElementById('activityTab')
         if (element !== null) {
-          element.scrollIntoView()
+          // element.scrollIntoView()
+          window.scrollTo({
+            top: 400,
+            behavior: 'smooth',
+          })
         }
       }
     }

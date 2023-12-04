@@ -91,7 +91,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
           } else if (event.url.includes('app/event-hub')) {
             this.activeRoute = 'Events'
           }
-
+          this.visible = false;
           localStorage.setItem('activeRoute', this.activeRoute)
 
       }
