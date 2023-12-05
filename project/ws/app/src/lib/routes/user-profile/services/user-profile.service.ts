@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import {
   IUserProfileDetails,
@@ -27,6 +27,7 @@ const API_ENDPOINTS = {
   getPendingFields: '/apis/protected/v8/workflowhandler/userWFApplicationFieldsSearch',
   getDesignation: '/apis/proxies/v8/user/v1/positions',
   editProfileDetails: '/apis/proxies/v8/user/v1/extPatch',
+  updateProfilePic: 'apis/proxies/v8/storage/profilePhotoUpload/sb-cb-ext-dev'
 }
 
 @Injectable()
@@ -79,5 +80,12 @@ export class UserProfileService {
 
   getDesignations(_req: any): Observable<IProfileMetaApiData> {
     return this.http.get<IProfileMetaApiData>(API_ENDPOINTS.getDesignation)
+  }
+
+  updateProfilePic(file: any) {
+    let headers = new HttpHeaders({
+    'Content-Type': 'multipart/form-data',
+    "Accept": "*/*" });
+    return this.http.post(API_ENDPOINTS.updateProfilePic, file, {headers: headers});
   }
 }
