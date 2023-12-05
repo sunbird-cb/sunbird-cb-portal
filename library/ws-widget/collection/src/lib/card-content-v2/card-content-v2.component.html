@@ -1147,7 +1147,7 @@
       <ng-container *ngIf="widgetData.content?.completionPercentage === 100">
         <div class="flex flex-align-end progress-wrapper flex-end margin-top-xs">
           <div class="progress-btn">
-            <button class="resume-btn flex flex-middle flex-between" [ngClass]="{'disable-btn': downloadCertificateLoading || widgetData.content.issuedCertificates.length === 0}" (click)="!downloadCertificateLoading && downloadCertificate(widgetData.content)" >
+            <button class="resume-btn flex flex-middle flex-between" [ngClass]="{'disable-btn': downloadCertificateLoading || widgetData?.content?.issuedCertificates?.length === 0}" (click)="!downloadCertificateLoading && downloadCertificate(widgetData.content)" >
               <span class="margin-right-xs">Download Certificate</span> 
               <img class="stats-icon" *ngIf="!downloadCertificateLoading" height="20" width="20" src="/assets/icons/home/download.svg">
               <div class="center "  *ngIf="downloadCertificateLoading">
