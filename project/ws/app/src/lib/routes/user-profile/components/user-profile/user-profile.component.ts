@@ -31,6 +31,7 @@ import { LoaderService } from '@ws/author/src/public-api'
 import _ from 'lodash'
 import { OtpService } from '../../services/otp.services';
 import { environment } from 'src/environments/environment'
+import { HttpErrorResponse } from '@angular/common/http'
 
 /* tslint:enable */
 
@@ -1747,12 +1748,22 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     })
 
     dialogRef.afterClosed().subscribe({
-      next: (result: File) => {
+      next: (result: File) => {        
         if (result) {
-          formdata.append('content', result, fileName)
+          formdata.append('data', result)
+          
+          // Working on Upload Profile image, still testing the API.
+          // this.userProfileSvc.updateProfilePic(formdata).subscribe(
+          //   (res: any) => {
+          //     console.log('res - ', res);
+          //   },
+          //   (error: HttpErrorResponse) => {
+          //     console.log("error - ", error);  
+          //   }
+          // );
           this.loader.changeLoad.next(true)
           const reader = new FileReader()
-          reader.readAsDataURL(result)
+          reader.readAsDataURL(result);
           reader.onload = _event => {
             this.photoUrl = reader.result
             if (this.createUserForm.get('photo') !== undefined) {
@@ -1764,6 +1775,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       },
     })
   }
+  
   sendOtp() {
     const mob = this.createUserForm.get('mobile')
     if (mob && mob.value && Math.floor(mob.value) && mob.valid) {

@@ -296,6 +296,18 @@
   }
 }
 
+@media only screen and (max-width: 960px) {
+  .circle-xxl-s {
+    width: 100px;
+    height: 100px;
+
+    .initials {
+      font-size: $size-l;
+      line-height: $size-l;
+    }
+  }
+}
+
 .circle-m-recommended {
   border-radius: 50%;
   width: 72px !important;
