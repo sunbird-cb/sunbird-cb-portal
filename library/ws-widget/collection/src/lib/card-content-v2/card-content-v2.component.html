@@ -714,7 +714,15 @@
             </div>
             <div class="duration-box right-corner" *ngIf="widgetData?.content?.duration > 0">
               <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
-              <span class=" ws-mat-white-text duration"> {{ (widgetData?.content?.duration || 120)| pipeDurationTransform: 'hms' }}</span>
+              <span class=" ws-mat-white-text duration"> 
+                {{ (widgetData?.content?.duration || 120)| pipeDurationTransform: 'hms' }}
+              </span>
+            </div>
+            <div class="duration-box right-corner" *ngIf="widgetData?.content?.programDuration > 0">
+              <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
+              <span class=" ws-mat-white-text duration"> 
+                {{widgetData?.content?.programDuration}} day(s)
+              </span>
             </div>
           </div>
           <div class="padding-m">
