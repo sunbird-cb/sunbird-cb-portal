@@ -120,6 +120,9 @@ ws-app-nav-bar {
     top:0;
   }
 
+  .mobile-download-app-desc {
+    margin-left:8px;
+  }
 
 
   .kb-symbol {
@@ -179,7 +182,7 @@ ws-app-nav-bar {
 @media (min-width : 360px) and (max-width : 360px){  
   .mobile-download-app-desc {
     margin-left:8px;
-    width:35%
+    width:43%
   }
   .download-app-chip-top-header {
     border-radius: 63px;
@@ -195,7 +198,7 @@ ws-app-nav-bar {
 @media (min-width : 375px) and (max-width : 375px){  
   .mobile-download-app-desc {
     margin-left:8px;
-    width:37%
+    width:43%
   }
   .download-app-chip-top-header {
     border-radius: 63px;
@@ -206,11 +209,12 @@ ws-app-nav-bar {
     padding: 6px 8px !important;
     list-style: none;
   }
+  
 }
 @media (min-width : 393px) and (max-width : 393px){  
   .mobile-download-app-desc {
     margin-left:8px;
-    width:40%
+    width:47%
   }
   .download-app-chip-top-header {
     border-radius: 63px;
@@ -225,7 +229,7 @@ ws-app-nav-bar {
 @media (min-width : 412px) and (max-width : 412px){  
   .mobile-download-app-desc {
     margin-left:8px;
-    width:42%
+    width:48%
   }
   .download-app-chip-top-header {
     border-radius: 63px;
@@ -240,7 +244,7 @@ ws-app-nav-bar {
 @media (min-width : 414px) and (max-width : 414px){  
   .mobile-download-app-desc {
     margin-left:8px;
-    width:42%
+    width:47%
   }
   .download-app-chip-top-header {
     border-radius: 63px;
@@ -255,7 +259,7 @@ ws-app-nav-bar {
 @media (min-width : 390px) and (max-width : 390px){  
   .mobile-download-app-desc {
     margin-left:8px;
-    width:38%
+    width:45%
   }
   .download-app-chip-top-header {
     border-radius: 63px;
@@ -270,7 +274,7 @@ ws-app-nav-bar {
 @media (min-width : 768px) and (max-width : 768px){  
   .mobile-download-app-desc {
     margin-left:8px;
-    width:65%
+    width:71%
   }
   .download-app-chip-top-header {
     border-radius: 63px;
@@ -301,7 +305,7 @@ ws-app-nav-bar {
 @media (min-width : 280px) and (max-width : 280px){  
   .mobile-download-app-desc {
     margin-left:8px;
-    width:14%
+    width:20%
   }
   .download-app-chip-top-header {
     border-radius: 63px;

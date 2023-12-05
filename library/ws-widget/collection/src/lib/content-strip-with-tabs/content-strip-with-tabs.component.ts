@@ -664,8 +664,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       } : {
         widgetType: 'card',
         widgetSubType: 'cardContent',
-        widgetHostClass: 'mb-2',    
-        widgetData: {}   
+        widgetHostClass: 'mb-2',
+        widgetData: {},
       }
     ))
   }
@@ -804,7 +804,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     if (this.stripsResultDataMap[stripKey] && currentTabFromMap) {
       this.stripsResultDataMap[stripKey].viewMoreUrl.queryParams = {
         ...this.stripsResultDataMap[stripKey].viewMoreUrl.queryParams,
-        tabSelected: currentTabFromMap.label
+        tabSelected: currentTabFromMap.label,
       }
     }
     if (currentStrip && currentTabFromMap && !currentTabFromMap.computeDataOnClick) {

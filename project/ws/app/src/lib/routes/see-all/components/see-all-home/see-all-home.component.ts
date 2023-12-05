@@ -41,7 +41,7 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
   totalPages = 0
   tabResults: any[] = []
   tabSelected: any
-  dynamicTabIndex: number = 0
+  dynamicTabIndex = 0
 
   constructor(
     private activated: ActivatedRoute,
@@ -250,7 +250,7 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
           })
           if (strip.tabs && strip.tabs.length) {
             this.tabResults = this.splitEnrollmentTabsData(contentNew, strip)
-            this.dynamicTabIndex = _.findIndex(this.tabResults, (v:any) => { return v.label === this.tabSelected })
+            this.dynamicTabIndex = _.findIndex(this.tabResults, (v: any) => v.label === this.tabSelected)
           } else {
           }
         },

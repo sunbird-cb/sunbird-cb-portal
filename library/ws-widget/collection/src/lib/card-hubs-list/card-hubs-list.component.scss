@@ -50,6 +50,7 @@
 
   .mat-icon {
     padding:18px 16px;
+    filter: grayscale(1);
   }
 }
 
@@ -232,7 +233,10 @@ a.mobile {
 
 .mobile-hub {
   overflow-y: auto;
-  height: 400px;
+  height: calc(100vh - 260px);
+}
+.new-more {
+  display: none !important;
 }
 }
 
