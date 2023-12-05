@@ -31,7 +31,7 @@ import { LoaderService } from '@ws/author/src/public-api'
 import _ from 'lodash'
 import { OtpService } from '../../services/otp.services';
 import { environment } from 'src/environments/environment'
-import { HttpErrorResponse } from '@angular/common/http'
+// import { HttpErrorResponse } from '@angular/common/http'
 
 /* tslint:enable */
 
