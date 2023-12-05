@@ -232,7 +232,7 @@ a.mobile {
 
 .mobile-hub {
   overflow-y: auto;
-  height: 400px;
+  height: calc(100vh - 260px);
 }
 }
 
