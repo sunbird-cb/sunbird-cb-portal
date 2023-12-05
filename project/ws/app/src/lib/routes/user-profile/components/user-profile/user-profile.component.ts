@@ -1753,14 +1753,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           formdata.append('data', result)
           
           // Working on Upload Profile image, still testing the API.
-          // this.userProfileSvc.updateProfilePic(formdata).subscribe(
-          //   (res: any) => {
-          //     console.log('res - ', res);
-          //   },
-          //   (error: HttpErrorResponse) => {
-          //     console.log("error - ", error);  
-          //   }
-          // );
+          this.userProfileSvc.updateProfilePic(formdata).subscribe(
+            (res: any) => {
+              console.log('res - ', res);
+            },
+            (error: HttpErrorResponse) => {
+              console.log("error - ", error);  
+            }
+          );
           this.loader.changeLoad.next(true)
           const reader = new FileReader()
           reader.readAsDataURL(result);
