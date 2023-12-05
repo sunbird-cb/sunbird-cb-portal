@@ -62,22 +62,22 @@ export class NetworkHomeComponent implements OnInit {
         const param = params['page']
         if (param === 'people_you_may_know') {
             if (this.document.getElementById('people_you_may_know')) {
-              if(navigator.userAgent.search("Firefox") < 0) {
+              if (navigator.userAgent.search('Firefox') < 0) {
                 const element =  this.document.getElementById('people_you_may_know')
                 if (element !== null) {
                   element.scrollIntoView()
                 }
               } else {
-                setTimeout(()=>{
+                setTimeout(() => {
                   const element =  this.document.getElementById('people_you_may_know')
                   if (element !== null) {
                     element.scrollIntoView()
                   }
-                },500)
+                },         500)
               }
-             
+
             }
-          
+
         }
       })
     }
@@ -86,21 +86,21 @@ export class NetworkHomeComponent implements OnInit {
         const param = params['page']
         if (param === 'people_connection_request') {
           if (this.document.getElementById('people_connection_request')) {
-            if(navigator.userAgent.search("Firefox") < 0) {
+            if (navigator.userAgent.search('Firefox') < 0) {
               const element =  this.document.getElementById('people_connection_request')
               if (element !== null) {
                 element.scrollIntoView()
               }
             } else {
-              setTimeout(()=>{
+              setTimeout(() => {
                 const element =  this.document.getElementById('people_connection_request')
                 if (element !== null) {
                   element.scrollIntoView()
                 }
-              },500)
-              
+              },         500)
+
             }
-            
+
           }
         }
       })
