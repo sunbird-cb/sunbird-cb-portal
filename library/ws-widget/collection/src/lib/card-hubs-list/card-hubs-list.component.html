@@ -39,12 +39,12 @@
 
       <div class="mobile flex flex-col" *ngIf="visible" [@enterAnimation]="visible">
         <div class="flex flex-1 margin-xs" *ngIf="inactiveHubList.length">
-          <h4 class="mat-h4 nav_sub_heading">{{ 'common.Hubs' | translate }}</h4>
+          <h4 class="mat-h4 nav_sub_heading">{{ 'common.hubs' | translate }}</h4>
         </div>
         <!-- <div class="flex"> -->
         <div class="flex flex-1">
           <h3 class="mat-error text-center" *ngIf="hubsList.length === 0" i18n>
-            {{ 'cardshublist.nohubsinfoavailable' | translate}}
+            {{ 'cardshublist.noHubs' | translate}}
           </h3>
           <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2" role="menubar">
             <ng-container *ngFor="let hubsObj of hubsList" [ngTemplateOutlet]="userIndividualNew"
@@ -56,7 +56,7 @@
         </div>
 
         <div class="flex flex-1 margin-xs">
-          <h4 class="mat-h4 nav_sub_heading">{{ 'cardshublist.domore' | translate }}</h4>
+          <h4 class="mat-h4 nav_sub_heading">{{ 'cardshublist.doMore' | translate }}</h4>
         </div>
         <div class="flex flex-1">
           <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">
@@ -66,8 +66,8 @@
                   aria-hidden="true">menu_book</mat-icon>
               </div>
               <div class="width-expand padding-left-xs cursor-pointer">
-                <div class="margin-0 mat-subheading-2"> {{ 'cardshublist.knowledgeresources' | translate }}</div>
-                <div class="mat-caption cohorts-desc ws-mat-black60-text">{{ 'cardshublist.knowledgeresourcesSubtitle' | translate }}</div>
+                <div class="margin-0 mat-subheading-2"> {{ 'cardshublist.knowledgeResources' | translate }}</div>
+                <div class="mat-caption cohorts-desc ws-mat-black60-text">{{ 'cardshublist.knowledgeResourcesSubtitle' | translate }}</div>
               </div>
             </a>
 
@@ -77,7 +77,7 @@
                   aria-label="bar_chart" aria-labelledby="bar_chart"> bar_chart </mat-icon>
               </div>
               <div class="width-expand padding-left-xs cursor-pointer">
-                <div class="margin-0 mat-subheading-2"> {{ 'cardshublist.Dashboard' | translate }} </div>
+                <div class="margin-0 mat-subheading-2"> {{ 'cardshublist.dashboard' | translate }} </div>
                 <div class="mat-caption cohorts-desc ws-mat-black60-text">{{ 'cardshublist.dashboardSubtitle' | translate }}</div>
               </div>
             </a>
@@ -88,7 +88,7 @@
                   aria-hidden="true">settings</mat-icon>
               </div>
               <div class="width-expand padding-left-xs cursor-pointer">
-                <div class="margin-0 mat-subheading-2"> {{ 'cardshublist.Settings' | translate }} </div>
+                <div class="margin-0 mat-subheading-2"> {{ 'cardshublist.settings' | translate }} </div>
                 <div class="mat-caption cohorts-desc ws-mat-black60-text">{{ 'cardshublist.settingSubtitle' | translate }}</div>
               </div>
             </a>
@@ -106,7 +106,7 @@
         </div>
 
         <div class="flex flex-1 margin-xs" *ngIf="environment.portals.length">
-          <h4 class="mat-h4 margin-bottom-remove nav_sub_heading">{{ 'cardshublist.quicklinks' | translate }}</h4>
+          <h4 class="mat-h4 margin-bottom-remove nav_sub_heading">{{ 'cardshublist.quickLinks' | translate }}</h4>
         </div>
         <div class="flex flex-1">
           <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">

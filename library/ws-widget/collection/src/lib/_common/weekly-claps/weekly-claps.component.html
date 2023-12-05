@@ -66,16 +66,16 @@
     <div class="clap-info-wrapper">
         <div class="clap-info-center flex-wrapped flex flex-middle flex-center">
             <img class="" src="assets/icons/home/clap_icon.svg" width="42" height="42" alt="">
-            <p class="w-full clap-ques">What is weekly claps?</p>
-            <p class="w-full clap-ans">Weekly Claps are a fun way to track your engagement on the platform. They reflect your commitment and activity levels.</p>
+            <p class="w-full clap-ques">{{ 'weeklyclaps.whatIsWeeklyClaps' | translate }} What is weekly claps?</p>
+            <p class="w-full clap-ans">{{ 'weeklyclaps.weeklyClapsDesc' | translate }}</p>
         </div>
         <div class="clap-info-qus-list flex flex-middle">
             <div class="img-clap-block">
                 <img class="" width="28px" height="28px" src="assets/icons/home/clap_icon.svg" alt="">
             </div>
             <div class="clap-qus-ans">
-                <p class="clap-qus">What should I do to maintain the claps?</p>
-                <p class="clap-ans">Spend at least <span class="clap-highlight"><b>60 minutes</b></span> engaging with the platform every week to maintain your claps.</p>
+                <p class="clap-qus">{{ 'weeklyclaps.whatToDo' | translate }}</p>
+                <p class="clap-ans">{{ 'weeklyclaps.spendAtLeast' | translate }} <span class="clap-highlight"><b>{{ 'weeklyclaps.60mins' | translate }}</b></span> {{ 'weeklyclaps.engageWithPlatform' | translate }}</p>
             </div>
         </div>
         <div class="clap-info-qus-list flex flex-middle">
@@ -83,8 +83,8 @@
                 <img class="" width="28px" height="28px" src="assets/icons/home/clap_disable_icon.svg" alt="">
             </div>
             <div class="clap-qus-ans">
-                <p class="clap-qus">Why did I lose my claps?</p>
-                <p class="clap-ans">If you fall short of the <span class="clap-highlight"><b>60 minutes</b></span> engagement requirement in a week, your claps count resets to zero.</p>
+                <p class="clap-qus">{{ 'weeklyclaps.whyDidILoose' | translate }}</p>
+                <p class="clap-ans">{{ 'weeklyclaps.ifYouFallShort' | translate }} <span class="clap-highlight"><b>{{ 'weeklyclaps.60mins' | translate }}</b></span> {{ 'weeklyclaps.engageRequired' | translate }}</p>
                 
             </div>
         </div>
@@ -94,12 +94,12 @@
 
 <ng-template #headder>
     <div class="flex flex-between flex-middle">
-        <p class="flex-align-start weekly-title flex flex-middle margin-remove">Weekly claps
+        <p class="flex-align-start weekly-title flex flex-middle margin-remove">{{ 'weeklyclaps.weeklyClaps' | translate }} 
             <img class="margin-left-s cursor-pointer" (click)="openInfo(myDialog)" width="20px" height="20px" src="assets/icons/home/help_icon.svg" >
         </p>
         <p class="flex weeks-count  flex-middle  margin-remove">
             <img class="margin-right-s cursor-pointer" width="34" height="34" src="assets/icons/home/clap_icon.svg" >
-            {{insightsData?.weeklyClaps?.total_claps || 0}} weeks
+            {{insightsData?.weeklyClaps?.total_claps || 0}} {{ 'weeklyclaps.weeks' | translate }}
         </p>
     </div>
 </ng-template>
