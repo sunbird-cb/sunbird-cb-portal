@@ -1764,6 +1764,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       },
     })
   }
+  
   sendOtp() {
     const mob = this.createUserForm.get('mobile')
     if (mob && mob.value && Math.floor(mob.value) && mob.valid) {

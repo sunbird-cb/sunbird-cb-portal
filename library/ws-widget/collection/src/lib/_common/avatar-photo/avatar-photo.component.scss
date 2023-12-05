@@ -295,3 +295,15 @@
     letter-spacing: 0.2625px;
   }
 }
+
+@media only screen and (max-width: 960px) {
+  .circle-xxl-s {
+    width: 100px;
+    height: 100px;
+
+    .initials {
+      font-size: $size-l;
+      line-height: $size-l;
+    }
+  }
+}
