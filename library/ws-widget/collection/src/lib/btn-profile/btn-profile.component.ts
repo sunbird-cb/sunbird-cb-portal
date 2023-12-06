@@ -106,7 +106,7 @@ export class BtnProfileComponent extends WidgetBaseComponent
       } else {
         this.givenName = `${this.configSvc.userProfile.firstName}`
       }
-      this.profileImage = this.configSvc.userProfile.profileImage ||
+      this.profileImage = this.configSvc.userProfile.profileImageUrl ||
         (this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.profileImage : null) || null
       if (!this.profileImage && localStorage.getItem(this.configSvc.userProfile.userId)) {
         this.profileImage = localStorage.getItem(this.configSvc.userProfile.userId)
