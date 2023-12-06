@@ -4,12 +4,11 @@
       <div class="flex flex-1 margin-bottom-xs margin-top-xs secondary-nav" role="menubar">
         <!-- <a id="menuToggleMobile" class="flex cursor-pointer simple-hubs-link margin-left-0 menuToggleMobile" href="javascript:void(0)" role="menuitem"
           accesskey="H" i18n-aria-label (click)="toggleVisibility()">
-
           <mat-icon class="margin-right-xs ws-mat-default-text">menu</mat-icon>
           <span class="margin-auto ws-mat-default-text mat-subheading-2">EXPLORE</span>
         </a> -->
         <ng-container [@enterAnimation]="visible">
-          <div *ngFor="let hub of hubsList" class="flex items-center">
+          <div *ngFor="let hub of hubsList" class="flex items-center nav-menu">
             <ng-container *ngIf="(hub.hubname == 'Discuss' && hub.active)">
               <a [id]="hub.hubname" class="simple-hubs-link" i18n-aria-label role="menuitem" (click)="navigate()">
                 <img  [ngClass]="activeRoute === hub.hubname ? 'active-icon': 'mat-icon-disable'" src="/assets/icons/hubs/{{hub?.icon}}.svg" id="draft" alt="draft" title="draft" />
