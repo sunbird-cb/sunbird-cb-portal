@@ -22,8 +22,8 @@ export class DiscussionsComponent implements OnInit {
     this.countArr =  this.count === 2 ? [1, 2] : [1, 2, 3]
   }
 
-  handleSelectedDiscuss(discuss_data: any, trend: boolean): void {
-    this.router.navigateByUrl(`/app/discussion-forum/topic/${ trend ? discuss_data.slug : discuss_data.topic.slug }?page=home`);
+  handleSelectedDiscuss(discussData: any, trend: boolean): void {
+    this.router.navigateByUrl(`/app/discussion-forum/topic/${ trend ? discussData.slug : discussData.topic.slug }?page=home`)
   }
 
 }
