@@ -169,8 +169,8 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
   getLink() {
     if (this.eventData && this.eventData.recordedLinks && this.eventData.recordedLinks.length > 0) {
       return this.eventData.recordedLinks[0]
-    } else {
-      return this.eventData.registrationLink
     }
+      return this.eventData.registrationLink
+
   }
 }
