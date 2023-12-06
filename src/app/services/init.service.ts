@@ -367,6 +367,7 @@ export class InitService {
             dealerCode: null,
             isManager: false,
             profileUpdateCompletion: _.get(userPidProfile, 'profileUpdateCompletion') || 0,
+            profileImageUrl: _.get(userPidProfile, 'profileDetails.profileImageUrl') || 0,
           }
 
           this.configSvc.userProfileV2 = {
@@ -491,6 +492,7 @@ export class InitService {
             dealerCode: null,
             isManager: false,
             profileUpdateCompletion: _.get(userPidProfile, 'profileUpdateCompletion') || 0,
+            profileImageUrl: _.get(userPidProfile, 'profileDetails.profileImageUrl') || 0,
           }
           this.configSvc.userProfileV2 = {
             userId: _.get(profileV2, 'userId') || userPidProfile.userId,

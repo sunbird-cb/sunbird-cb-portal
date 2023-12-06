@@ -3,12 +3,12 @@
     <mat-card-header class="flex-custom-m" *ngIf="portalProfile && portalProfile.personalDetails">
       <div mat-card-avatar class="example-header-image">
         <ng-container *ngIf="portalProfile.personalDetails?.firstname"; else elseFirstName>
-          <ws-widget-avatar-photo [photoUrl]="portalProfile.photo || null" [name]="portalProfile.personalDetails.firstname"  size="xxl-s">
+          <ws-widget-avatar-photo [photoUrl]="portalProfile?.profileImageUrl || null" [name]="portalProfile.personalDetails.firstname"  size="xxl-s">
           </ws-widget-avatar-photo>
         </ng-container>
         <ng-template #elseFirstName>
           <ng-container *ngIf="portalProfile.personalDetails.firstName">
-            <ws-widget-avatar-photo [photoUrl]="portalProfile.photo || null" [name]="
+            <ws-widget-avatar-photo [photoUrl]="portalProfile?.profileImageUrl || null" [name]="
                 portalProfile.personalDetails.firstName" size="xxl-s">
             </ws-widget-avatar-photo>
             </ng-container>

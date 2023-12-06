@@ -9,6 +9,7 @@ import { ImageCropComponent, ConfigurationsService, WsEvents, EventService } fro
 import { IMAGE_MAX_SIZE, PROFILE_IMAGE_SUPPORT_TYPES } from '@ws/author/src/lib/constants/upload'
 import { UserProfileService } from '../../services/user-profile.service'
 import { Router, ActivatedRoute } from '@angular/router'
+import { PipeCertificateImageURL } from '@sunbird-cb/utils/src/public-api'
 
 import {
   INationality,
@@ -54,6 +55,7 @@ export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
   providers: [
+    PipeCertificateImageURL,
     { provide: DateAdapter, useClass: AppDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
   ],
@@ -141,6 +143,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private loader: LoaderService,
     private eventSvc: EventService,
     private otpService: OtpService,
+    private pipeImgUrl: PipeCertificateImageURL
   ) {
     this.approvalConfig = this.route.snapshot.data.pageData.data
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
@@ -983,7 +986,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   setProfilePhotoValue(data: any) {
-    this.photoUrl = data.photo || undefined
+    this.photoUrl = data.profileImageUrl || undefined
   }
 
   setDropDownOther(organisation?: any, academics?: any) {
@@ -1397,7 +1400,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     if (Object.keys(organisations).length > 0) { professionalDetails.push(organisations) }
     // console.log(organisations, professionalDetails);
-
     this.changedProperties = {
       profileDetails: {
         ...(Object.keys(personalDetail).length > 0) && { personalDetails: personalDetail },
@@ -1405,7 +1407,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         ...(Object.keys(interests).length > 0) && { interests },
         ...(Object.keys(employmentDetails).length > 0) && { employmentDetails },
         ...(Object.keys(professionalDetails).length > 0) && { professionalDetails },
-
+        ...(this.userProfileData && this.userProfileData.profileImageUrl !==  this.photoUrl ?
+          { profileImageUrl: this.photoUrl } : null),
         academics: this.getAcademics(form),
       },
     }
@@ -1444,7 +1447,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const reqUpdates = {
       request: {
         userId: this.configSvc.unMappedUser.id,
-        avatar: this.photoUrl,
+        profileDetails:
+        {
+          profileImageUrl: this.photoUrl,
+        },
         ...this.changedProperties,
       },
 
@@ -1748,34 +1754,36 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     })
 
     dialogRef.afterClosed().subscribe({
-      next: (result: File) => {        
+      next: (result: File) => {
         if (result) {
-          formdata.append('data', result)
-          
-          // Working on Upload Profile image, still testing the API.
-          // this.userProfileSvc.updateProfilePic(formdata).subscribe(
-          //   (res: any) => {
-          //     console.log('res - ', res);
-          //   },
-          //   (error: HttpErrorResponse) => {
-          //     console.log("error - ", error);  
-          //   }
-          // );
+          formdata.append('data', result, fileName)
+          this.createUrl(result, fileName)
           this.loader.changeLoad.next(true)
-          const reader = new FileReader()
-          reader.readAsDataURL(result);
-          reader.onload = _event => {
-            this.photoUrl = reader.result
-            if (this.createUserForm.get('photo') !== undefined) {
-              // tslint:disable-next-line: no-non-null-assertion
-              this.createUserForm.get('photo')!.setValue(this.photoUrl)
-            }
-          }
+          // const reader = new FileReader()
+          // reader.readAsDataURL(result)
+          // reader.onload = _event => {
+          //   this.photoUrl = reader.result
+          //   if (this.createUserForm.get('photo') !== undefined) {
+          //     // tslint:disable-next-line: no-non-null-assertion
+          //     this.createUserForm.get('photo')!.setValue(this.photoUrl)
+          //   }
+          // }
         }
       },
     })
   }
-  
+
+  createUrl(file: File, fileName: string) {
+    const formdata = new FormData()
+    formdata.append('data', file, fileName)
+    this.userProfileSvc.uploadProfilePhoto(formdata).subscribe((res: any) => {
+      if (res && res.result) {
+        this.photoUrl =  this.pipeImgUrl.transform(res.result.url)
+        this.onSubmit(this.createUserForm)
+      }
+    })
+  }
+
   sendOtp() {
     const mob = this.createUserForm.get('mobile')
     if (mob && mob.value && Math.floor(mob.value) && mob.valid) {

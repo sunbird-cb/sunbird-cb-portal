@@ -15,7 +15,7 @@
                     />
           </svg>
           <div class="user-img" [ngClass]="{'user-img-completion': userInfo.profileUpdateCompletion === 100}">
-            <ws-widget-avatar-photo [datalen]="1" [name]="userInfo.firstName" [datalen]="" [randomColor]="true" [photoUrl]="''" size="round-m">
+            <ws-widget-avatar-photo [datalen]="1" [name]="userInfo.firstName" [datalen]="" [randomColor]="true" [photoUrl]="userInfo?.profileImageUrl" size="round-m">
             </ws-widget-avatar-photo>
             <span class="percentage-block ">{{userInfo.profileUpdateCompletion}}%</span>
           </div>
