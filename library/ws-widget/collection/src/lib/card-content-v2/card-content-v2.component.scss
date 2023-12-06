@@ -1177,7 +1177,7 @@ $title-line-count: 2;
   border: 1px solid rgba(0,0,0, 0.08);
   opacity: 1;
   width: 350px;
-  height: 146px;
+  min-height: 146px;
   padding: 16px;
   .card-image {
     border-radius: 8px;
@@ -1329,4 +1329,13 @@ $title-line-count: 2;
 .disable-btn {
   opacity: 0.6 !important;
   cursor: not-allowed !important;
+}
+
+@media only screen and (max-width:768px) {
+  .card-portrait {
+    width: auto;
+  }
+  span.portrait-org-name {
+    width: 116px !important;
+  }
 }
