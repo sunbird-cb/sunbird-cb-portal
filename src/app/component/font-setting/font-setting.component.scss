@@ -1,9 +1,12 @@
 .font-icon {
-    vertical-align: middle;
-    
+    vertical-align: middle;   
 }
 
-
+@media screen and (max-width: 768px) {
+    .mobile-margin {
+        margin-top: 6px;
+    }
+}
 
 .font-container {
     height: 50px;
