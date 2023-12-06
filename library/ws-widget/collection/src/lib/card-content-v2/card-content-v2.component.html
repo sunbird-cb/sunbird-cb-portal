@@ -1051,7 +1051,7 @@
             <img [src]="widgetData.content.creatorLogo | pipePublicURL " class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
             [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
           </div>
-          <span class="org-text">By {{widgetData.content.creator}}</span>
+          <span class="org-text">By {{widgetData?.content?.organisation[0] }}</span>
         </div>
         <div class="flex flex-middle rating-session margin-top-xs">
           <div class="flex flex-middle" *ngIf="widgetData?.content?.avgRating">
