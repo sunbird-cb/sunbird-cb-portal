@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core'
 import { FormGroup, FormControl, Validators, FormArray, FormBuilder, AbstractControl, ValidatorFn } from '@angular/forms'
+import { HttpErrorResponse } from '@angular/common/http'
 import { ENTER, COMMA } from '@angular/cdk/keycodes'
 import { Subscription, Observable, interval } from 'rxjs'
 import { startWith, map, debounceTime, distinctUntilChanged, pairwise } from 'rxjs/operators'
@@ -31,7 +32,6 @@ import { LoaderService } from '@ws/author/src/public-api'
 import _ from 'lodash'
 import { OtpService } from '../../services/otp.services';
 import { environment } from 'src/environments/environment'
-// import { HttpErrorResponse } from '@angular/common/http'
 
 /* tslint:enable */
 
