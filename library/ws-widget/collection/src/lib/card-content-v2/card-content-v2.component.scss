@@ -1196,7 +1196,7 @@ $title-line-count: 2;
     letter-spacing: 0.25px;
     text-align: left;
     line-height: 20px;
-    word-break: break-all;
+    word-break: break-word;
     white-space: initial;
     margin: 0 0 8px 0;
     position: relative;
@@ -1220,23 +1220,26 @@ $title-line-count: 2;
     }
   }
   span.portrait-org-name {
-    opacity: 1;
-    color: rgba(0,0,0,0.87);
-    font-family: "Lato-Regular";
-    font-size: 12px;
-    font-weight: 400;
-    font-style: normal;
-    letter-spacing: 0.25px;
-    text-align: left;
-    line-height: 16px;
-    white-space: nowrap;
+    width: 75%;
+    overflow: hidden;
+    word-break: break-all;
+    white-space: initial;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 150px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
   }
   .portrait_widget {
     align-items: center;
     margin-top: 0;
+
+    .course_port {
+      border: 1px solid $secondary-color;
+    padding: 4px 8px;
+    align-items: center;
+    border-radius: 16px;
+    }
     .video-icon {
       opacity: 1;
       color: rgba(239,149,30, 1);
@@ -1333,9 +1336,6 @@ $title-line-count: 2;
 
 @media only screen and (max-width:768px) {
   .card-portrait {
-    width: auto;
-  }
-  span.portrait-org-name {
-    width: 116px !important;
+    width: calc(100vw - 66px);
   }
 }
