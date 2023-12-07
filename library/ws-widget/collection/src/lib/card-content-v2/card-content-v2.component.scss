@@ -1338,4 +1338,13 @@ $title-line-count: 2;
   .card-portrait {
     width: calc(100vw - 66px);
   }
+  .card-wide-v2 { 
+    min-height: 338px;
+
+    .imageholder {
+      img {
+        border-radius: 12px 12px 0 0 !important;
+      }
+    }
+  }
 }
