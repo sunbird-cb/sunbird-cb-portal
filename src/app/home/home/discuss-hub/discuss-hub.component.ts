@@ -69,7 +69,6 @@ export class DiscussHubComponent implements OnInit {
     this.updatesPosts.loadSkeleton = true;
     this.homePageService.getDiscussionsData(this.userData.userName).subscribe(
       (res: any) => {
-        console.log("updates res - ", res);
         this.updatesPosts.loadSkeleton = false;
         this.updatesPosts.data = res && res.latestPosts && res.latestPosts.sort((x: any, y: any) => {
           return y.timestamp - x.timestamp;
@@ -111,7 +110,6 @@ export class DiscussHubComponent implements OnInit {
         //   label: 'Leader Board',
         //   enable: true,
         // },
-
       ],
       userName: (this.configService.nodebbUserProfile && this.configService.nodebbUserProfile.username) || '',
       context: {

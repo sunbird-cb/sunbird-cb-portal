@@ -3,13 +3,13 @@
     <mat-card-content role="link" tabindex="0">
       <ng-container>
         <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all" *ngIf="pastEvent">
-          <p mat-button class="flex-1 margin-top-xs margin-bottom-xs" *ngIf="!eventData?.recordedLinks">
-            <span i18n>Event is completed</span>
-          </p>
-          <p mat-button class="flex-1 margin-top-xs margin-bottom-xs" *ngIf="eventData?.recordedLinks && eventData?.recordedLinks.length > 0">
-            <a class="flex-1"  href="{{eventData?.recordedLinks[0]}}" target="_blank" (click)="raiseTelemetry('view-recording')">
+          <p mat-button class="flex-1 margin-top-xs margin-bottom-xs" *ngIf="isSpvEvent">
+            <a class="flex-1"  [href]="getLink()" target="_blank" (click)="raiseTelemetry('view-recording')">
               <span i18n>View recording</span>
             </a>
+          </p>
+          <p mat-button class="flex-1 margin-top-xs margin-bottom-xs" *ngIf="!isSpvEvent">
+            <span i18n>Event is completed</span>
           </p>
         </div>
         <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all" *ngIf="currentEvent">

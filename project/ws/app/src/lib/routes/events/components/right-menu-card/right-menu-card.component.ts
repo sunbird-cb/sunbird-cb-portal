@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core'
 import moment from 'moment'
 import { EventService, WsEvents } from '@sunbird-cb/utils'
+import { environment } from 'src/environments/environment'
 // import { ActivatedRoute } from '@angular/router'
 // import { ConfigurationsService } from '@ws-widget/utils'
 // import { NSProfileDataV2 } from '../../models/profile-v2.model'
@@ -21,6 +22,7 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
   pastEvent = false
   futureEvent = false
   currentEvent = false
+  isSpvEvent = false
   // completedPercent!: number
   // badgesSubscription: any
   // portalProfile!: NSProfileDataV2.IProfile
@@ -52,6 +54,12 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
       const today = moment(now).format('YYYY-MM-DD HH:mm')
 
       const isToday = this.compareDate(eventDate, eventendDate, this.eventData)
+
+      const spvOrgId = environment.spvorgID
+      if (this.eventData.createdFor && this.eventData.createdFor[0] === spvOrgId) {
+        this.isSpvEvent =  true
+      }
+
       if (isToday) {
         this.currentEvent = true
         this.futureEvent = false
@@ -156,5 +164,13 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
         pageIdExt: 'event',
         module: WsEvents.EnumTelemetrymodules.EVENTS,
     })
+  }
+
+  getLink() {
+    if (this.eventData && this.eventData.recordedLinks && this.eventData.recordedLinks.length > 0) {
+      return this.eventData.recordedLinks[0]
+    }
+      return this.eventData.registrationLink
+
   }
 }
