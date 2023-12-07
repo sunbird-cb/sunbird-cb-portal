@@ -5,4 +5,12 @@ $user-size: 100%;
 
 .content-type-class {
     color: rgba(0,0,0,0.87);
+    word-break: break-all;
+    white-space: initial;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
