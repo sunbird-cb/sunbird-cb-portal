@@ -247,7 +247,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     if (this.content && this.content.identifier) {
       this.fetchRatingSummary()
     }
-    let competencies = this.content && this.content.competencies_v3 || this.content && this.content.competencies
+    let competencies =  this.content && this.content.test_competencies_v4
     const isString = typeof (competencies) === 'string'
     if (competencies && isString) {
       try {
