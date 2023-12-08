@@ -166,8 +166,8 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
         if (document.getElementsByClassName('horizontal-scroll-container') &&
         document.getElementsByClassName('horizontal-scroll-container')[0]) {
           const scrollerWidth = document.getElementsByClassName('horizontal-scroll-container')[0].clientWidth
-          const totalCardsLength = cardWidth * this.widgetsLength 
-            if(totalCardsLength > scrollerWidth) {
+          const totalCardsLength = cardWidth * this.widgetsLength
+            if (totalCardsLength > scrollerWidth) {
               arrLength = (scrollerWidth / cardWidth)
               arrLength = this.defaultMaxWidgets / arrLength
               // console.log(scrollerWidth, cardWidth)
