@@ -13,6 +13,9 @@
     min-height: calc(100vh - 182px);
   }
 }
+.mat-tab-body.mat-tab-body-active {
+  overflow-y: hidden!important;
+}
 
 .flex-align {
   align-items: center;
@@ -213,6 +216,7 @@ input[type=number] {
 
   .img-column {
     flex: 100px 0 0;
+    height: 100px;
   }
 
   .input-column {
