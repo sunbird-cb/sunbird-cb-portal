@@ -338,6 +338,23 @@
                     </div>
                   </div>
 
+                  <div class="input-wrapper margin-top-s">
+                    <label for="group" class=" margin-remove-bottom form-label required"
+                      i18n="Group | Label which explains the user to enter Group" i18n-aria-label
+                      aria-label="Group Field label">
+                      Group
+                    </label>
+                    <mat-form-field appearance="outline" class="margin-top-s w-full" id="group">
+                      <mat-select placeholder="Select your group" id="group" #group i18n-placeholder="group" formControlName="group" >
+                        <mat-option *ngFor="let option of masterGroup" [value]="option">{{option}}</mat-option>
+                      </mat-select>
+                      <mat-error [hidden]="false" i18n="Group Error | Explains Group is required"
+                        *ngIf="registrationForm?.controls['group'].errors?.required" i18n-aria-label
+                        aria-label="Group is mandatory">
+                        Group is mandatory
+                      </mat-error>
+                    </mat-form-field>
+
                   <div class="flex flex-1 flex-wrap section-input margin-top-m">
                     <div class="item1" [ngClass]="{ disable: !isAllowed('designation') }">
                       <p class=" margin-remove-bottom form-label"
