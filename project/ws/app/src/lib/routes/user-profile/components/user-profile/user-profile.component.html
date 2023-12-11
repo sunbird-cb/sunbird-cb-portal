@@ -344,9 +344,10 @@
                       aria-label="Group Field label">
                       Group
                     </label>
+                    {{ masterGroup | json }}
                     <mat-form-field appearance="outline" class="margin-top-s w-full" id="group">
                       <mat-select placeholder="Select your group" id="group" #group i18n-placeholder="group" formControlName="group" >
-                        <mat-option *ngFor="let option of masterGroup" [value]="option">{{option}}</mat-option>
+                        <mat-option *ngFor="let option of masterGroup" [value]="option">{{option.name}}</mat-option>
                       </mat-select>
                       <mat-error [hidden]="false" i18n="Group Error | Explains Group is required"
                         *ngIf="registrationForm?.controls['group'].errors?.required" i18n-aria-label
@@ -448,6 +449,7 @@
               </div>
             </div>
 
+            </div>
           </div>
         </mat-tab>
         <mat-tab label="Academics" *ngIf="!isForcedUpdate">

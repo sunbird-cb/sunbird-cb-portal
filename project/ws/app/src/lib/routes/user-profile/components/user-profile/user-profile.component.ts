@@ -63,6 +63,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   createUserForm: FormGroup
   unseenCtrl!: FormControl
   unseenCtrlSub!: Subscription
+  masterGroup: any = []
+  groupsOriginal: any = []
   uploadSaveData = false
   selectedIndex = 0
   masterNationality: Observable<INation[]> | undefined
@@ -200,6 +202,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       otherDetailsOfficePinCode: new FormControl('', []),
       departmentName: new FormControl('', []),
       verifiedKarmayogi: new FormControl(this.karmayogiBadge, []),
+      group: new FormControl('', [Validators.required]),
     })
 
   }
@@ -216,14 +219,25 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       return v.approvalRequired ? { [k]: v } : null
     }))
 
+    // console.log(this.activatedRoute.snapshot.data, "this.activatedRoute.snapshot.data=====")
+    
+    // if (this.activatedRoute.snapshot.data.group.data) {
+    //   this.groupsOriginal = this.activatedRoute.snapshot.data.group.data.filter((ele:any) => ele !== 'Others')
+    //   this.masterGroup = this.groupsOriginal
+    // } else {
+    //   this.groupsOriginal = []
+    // }
+
     if (approvalData.length > 0) {
       // need to call search API
     }
+    console.log( this.masterGroup, "this.masterGroup")
 
     this.getUserDetails()
     this.init()
     this.checkIfMobileNoChanged()
     this.onPhoneChange()
+    this.onGroupChange()
   }
 
   displayFnPosition = (value: any) => {
@@ -257,6 +271,24 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       },
       (_err: any) => {
       })
+
+      this.userProfileSvc.getGroups().subscribe(
+        (data) => {
+          console.log(data, 'data--==========')
+          console.log(data.result.response, "data.result.response=")
+          debugger
+          data.result.response.map((value: any) => {
+            
+            console.log(value, "value--")
+            this.masterGroup.push(value)
+           
+            console.log(this.masterGroup, "this.masterGroup===")
+          })
+          this.onGroupChange()
+          console.log(data, 'group data==')
+        },
+        (_err: any) => {
+        })
 
     this.userProfileSvc.getMasterNationlity().subscribe(
       data => {
@@ -336,6 +368,32 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       },
       (_err: any) => {
       })
+  }
+
+    onGroupChange() {
+    // tslint:disable-next-line: no-non-null-assertion
+    this.masterGroup = this.createUserForm.get('group')!.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        startWith(''),
+        map((value: any) => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+        map((name: any) => name ? this.filterGroups(name) : this.groupsOriginal.slice())
+      )
+
+    this.masterGroup.subscribe(() => {
+      // tslint:disable-next-line: no-non-null-assertion
+      this.createUserForm.get('group')!.setValidators([Validators.required])
+      this.createUserForm.updateValueAndValidity()
+    })
+  }
+
+    private filterGroups(name: string): any {
+    if (name) {
+      const filterValue = name.toLowerCase()
+      return this.groupsOriginal.filter((option: any) => option.toLowerCase().includes(filterValue))
+    }
+    return this.groupsOriginal
   }
 
   emailVerification(emailId: string) {
