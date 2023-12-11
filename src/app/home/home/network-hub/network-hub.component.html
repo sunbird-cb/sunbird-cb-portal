@@ -1,12 +1,12 @@
 <div class="flex flex-col mt-5">
-    <div class="flex mat-subheading-1">
+    <!-- <div class="flex mat-subheading-1">
         <div class="flex flex-row gap-2 cursor-pointer feed-title" [routerLink]="['/app/network-v2/home']">
             <div>Go to Network hub</div>
             <mat-icon class="ws-mat-default-text mr-3 mat-icon notranslate material-icons mat-icon-no-color feed-title-icon">
                 chevron_right
             </mat-icon>
         </div>
-    </div>
+    </div> -->
 
     <div class="flex gap-6 network-requests">
         <div class="discussion-card flex-1" *ngIf="networkConfig?.recentRequests?.active">
@@ -17,7 +17,7 @@
             <div class="flex flex-col gap-6 p-4">
                 <div class="mat-subheading-1" *ngIf="network.suggestionsLoader"> <ws-widget-skeleton-loader [width]="'163px'" [height]="'16px'"
                     [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader></div>
-                <div class="mat-subheading-1" *ngIf="!network.suggestionsLoader">Suggested for you</div>
+                <div class="mat-subheading-1" *ngIf="!network.suggestionsLoader">Suggested for You</div>
                 <div class="flex flex-row gap-4 justify-center">
                     <!-- loader code -->
                     <ng-container *ngIf="network.suggestionsLoader">

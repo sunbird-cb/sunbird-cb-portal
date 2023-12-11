@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           "logo": "forum",
           "title": "discuss",
           "stripBackground": "assets/instances/eagle/background/discuss.svg",
-          "titleDescription": "Trending discussions",
+          "titleDescription": "Trending Discussions",
           "stripConfig": {
             "cardSubType": "cardHomeDiscuss"
           },

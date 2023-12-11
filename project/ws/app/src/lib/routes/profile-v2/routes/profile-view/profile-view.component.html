@@ -1,6 +1,17 @@
 <div class="flex flex-4 flex-column" id="activityTab">
   <mat-card class="flex-custom" [attr.id]="tabsData && tabsData[0] && tabsData[0].key">
     <mat-card-header class="flex-custom-m" *ngIf="portalProfile && portalProfile.personalDetails">
+
+      <div class="flex flex-1 flex-row-reverse absolute right-0 profile-edit-icon">
+        <div *ngIf="
+            portalProfile.id === currentUser?.userId ||
+            portalProfile.userId === currentUser?.userId
+          " class="">
+          <a  [routerLink]="'/app/user-profile/details'">
+            <mat-icon class="">edit</mat-icon>
+          </a>
+        </div>
+      </div> 
       <div mat-card-avatar class="example-header-image">
         <ng-container *ngIf="portalProfile.personalDetails?.firstname"; else elseFirstName>
           <ws-widget-avatar-photo [photoUrl]="portalProfile?.profileImageUrl || null" [name]="portalProfile.personalDetails.firstname"  size="xxl-s">
@@ -45,7 +56,7 @@
             </span>
            
           </div>
-          <div class="flex flex-1 flex-row-reverse">
+          <!-- <div class="flex flex-1 flex-row-reverse">
             <div *ngIf="
                 portalProfile.id === currentUser?.userId ||
                 portalProfile.userId === currentUser?.userId
@@ -55,7 +66,7 @@
                 <span i18n>{{ 'Edit Profile' }}</span>
               </a>
             </div>
-          </div>
+          </div> -->
         </div>
         <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
           {{ portalProfile?.employmentDetails?.departmentName }}
@@ -119,7 +130,7 @@
             </span>
            
           </div>
-          <div class="flex flex-1 flex-row-reverse">
+          <!-- <div class="flex flex-1 flex-row-reverse">
             <div *ngIf="
                 portalProfile.id === currentUser?.userId ||
                 portalProfile.userId === currentUser?.userId
@@ -129,7 +140,7 @@
                 <span i18n>{{ 'Edit Profile' }}</span>
               </a>
             </div>
-          </div>
+          </div> -->
         </div>
         <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
           {{ portalProfile?.employmentDetails?.departmentName }}
