@@ -213,6 +213,9 @@ input[type=number] {
     border-radius: 8px;
     height: 100%;
   }
+  .new-mobile {
+    overflow: hidden;
+  }
 
   .img-column {
     flex: 100px 0 0;
@@ -570,6 +573,15 @@ input.mat-input-element {
   max-width: calc(100% - 50%) !important;
 }
 
+.profile-top-col {
+  padding: 1rem 3rem;
+  margin: 0px 10px !important;
+
+      &:first-child {
+        margin: 0px 10px 0px 0px !important;
+      }
+}
+
 .otp {
   flex: 1;
   max-height: 49px;
@@ -598,6 +610,9 @@ input.mat-input-element {
       // margin-right: 0;
       // margin: 0 8px!important;
     }
+    .profile-top-col {
+      padding: 1rem;
+    }
 
     .profile-cols {
       padding: 1rem;
@@ -623,6 +638,8 @@ input.mat-input-element {
         }
       }
     }
+
+   
 
     .profile-cols-full {
       padding: 1rem;
@@ -662,8 +679,8 @@ input.mat-input-element {
 }
 .profile-pic-div {
   position: relative;
-    margin-top: 70px;
-    margin-left: 8px;
+    margin-top: 40px;
+    margin-left: 12px;
 }
 
 .info-icon {
