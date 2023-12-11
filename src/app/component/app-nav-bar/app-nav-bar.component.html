@@ -117,8 +117,8 @@
         <ng-container *ngFor="let item of primaryNavbarConfig?.smallScreen?.all">
           <!-- item?.config?.path -->
           <li *ngIf="item?.type !== 'explorerButton'" [ngClass]="activeRoute === item?.config?.label ? 'active-icon': ''" class="mobile-footer-fixed-nav-list-item" (click)="redirectToPath(item?.config)">
-            <div class="icon-container">
-              <img   src="/assets/icons/footer-nav/{{item?.config?.icon}}.svg" id="draft" alt="draft" title="draft" />
+            <div class="icon-container" [id]="item?.config?.label?.toLowerCase() === 'search' ? 'feature_mobile_search' : ''">
+              <img src="/assets/icons/footer-nav/{{item?.config?.icon}}.svg" id="draft" alt="draft" title="draft" />
               <span>{{item?.config?.label | titlecase}}</span>
             </div>
           </li>
