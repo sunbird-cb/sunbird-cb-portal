@@ -11,16 +11,11 @@
 .fix-ww {
   margin-left: auto;
   margin-right: auto;
-  // max-width: $max-width;
   max-width: $max-screen;
   display: flex;
   flex: 1;
   height: 56px;
 }
-
-// .custom {
-// height: 72px;
-// }
 
 .mobile {
   height: 56px !important;
@@ -50,17 +45,11 @@
 
 
 .app-logo {
-  // max-width: 100px;
-  // max-height: 30px;
-  // min-width: 30px;
-  // padding: 8px 0 0 0;
-
   @include breakpoint-xs {
-    max-width: 80px;
+    max-width: 120px;
+    margin-top: 4px;
   }
 }
-
-
 
 .title {
   font-size: 12px !important;
@@ -153,21 +142,11 @@
 .my-search {
   display: flex;
   margin-left: 0;
-  /* margin-right: 0; */
   text-align: center;
-  // <<<<<<< HEAD flex: 3;
-  // max-width: 500px;
   flex: 10;
   max-width: 486px;
   margin-right: 4.88rem;
-  // >>>>>>>hubs
 }
-
-// .mobile {
-//   @include breakpoint-xs {
-//     padding: $size-xs;
-//   }
-// }
 
 .mobile-download-app-desc {
   margin-left: 8px;
@@ -185,22 +164,16 @@
   }
 
   .logo-dim {
-    width:134px;
-    height: 44px;
-    margin-left:0px;
-    margin-top: 6px;
-    margin-bottom: 6px;
+    width: 132px;
+    height: 52px;
+    align-items: center;
   }
 
-  .logo-dim img {
-    // height:44px;
-  }
-
-  .app-logo {  
-    @include breakpoint-xs {
-      max-width: 100%;
-    }
-  }
+  // .app-logo {  
+  //   @include breakpoint-xs {
+  //     max-width: 100%;
+  //   }
+  // }
 
   .help-icon {
     height: 20px;
@@ -213,10 +186,12 @@
   .fix-ww {
     margin-left: auto;
     margin-right: auto;
-    max-width: 98%;
+    max-width: 100%;
     display: flex;
     flex: 1;
-    height: 56px;
+    height: 52px;
+    position: relative;
+    top: -4px;
   }
  
 
@@ -258,15 +233,17 @@
     color: rgba(0, 0, 0, 0.4);
     font-weight: 400;
   }
+
   .download-app-chip-top-header {
-    border-radius: 63px;
+    border-radius: 64px;
     background: #F3962F;
     color: #fff;
-    min-width: 129px;
+    min-width: 128px;
     text-align: center;
-    padding: 6px 16px;
+    padding: 8px 16px;
     list-style: none;
   }
+
   .mobile-footer-fixed-nav {
     height: 64px;
     margin: 0;
@@ -282,11 +259,17 @@
     margin:0;
     justify-content: center;
   }
+
   .mobile-footer-fixed-nav-list-item {
     min-width: 90px;    
     list-style: none;
-    text-align: center;    
+    text-align: center;
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
+
   .mobile-footer-fixed-nav-list-item .active {
     border-top: 1px solid rgb(27, 76, 161);
     background-color: rgba(27, 76, 161, 0.16);
@@ -295,13 +278,11 @@
   .icon-container {
     display: flex;
     flex-direction: column;
-    height: 64px;
-    margin-top: 12px;
-    margin-bottom: 28px;
-    margin-right: 35px;
-    /* text-align: center; */
-    margin-left: 35px;
+    width: 56px;
+    height: 56px;
+    justify-content: center;
     align-items: center;
+    border-radius: 50%;
   }
 
   .icon-container img {
@@ -316,17 +297,9 @@
   
   .mobile-footer-fixed-nav-list-item span {
     line-height: 16px;
-  }
-
- 
+  } 
   
 }
-
-// @media
-// 760px
-
-
-
 
 .signup_div {
   @include breakpoint-xs {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core'
-
+import { Router } from '@angular/router'
 @Component({
   selector: 'ws-widget-discussions',
   templateUrl: './discussions.component.html',
@@ -14,10 +14,16 @@ export class DiscussionsComponent implements OnInit {
   countArr: any[] = []
   dataToBind: any
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.countArr =  this.count === 2 ? [1, 2] : [1, 2, 3]
+  }
+
+  handleSelectedDiscuss(discussData: any, trend: boolean): void {
+    this.router.navigateByUrl(`/app/discussion-forum/topic/${ trend ? discussData.slug : discussData.topic.slug }?page=home`)
   }
 
 }

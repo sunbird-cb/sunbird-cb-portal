@@ -161,14 +161,17 @@ ws-app-nav-bar {
     color: rgba(0, 0, 0, 0.4);
     font-weight: 400;
   }
+
   .download-app-chip-top-header {
     border-radius: 63px;
     background: #F3962F;
     color: #fff;
-    // min-width: 129px;
+    max-width: 136px;
     text-align: center;
     padding: 6px 10px;
     list-style: none;
+    line-height: 18px;
+    margin-right: 16px;
   }
 
   .top-nav-bar {
@@ -182,8 +185,9 @@ ws-app-nav-bar {
 @media (min-width : 360px) and (max-width : 360px){  
   .mobile-download-app-desc {
     margin-left:8px;
-    width:43%
+    width: 38%
   }
+
   .download-app-chip-top-header {
     border-radius: 63px;
     background: #F3962F;
@@ -198,8 +202,9 @@ ws-app-nav-bar {
 @media (min-width : 375px) and (max-width : 375px){  
   .mobile-download-app-desc {
     margin-left:8px;
-    width:43%
+    width: 38%
   }
+
   .download-app-chip-top-header {
     border-radius: 63px;
     background: #F3962F;
@@ -214,25 +219,27 @@ ws-app-nav-bar {
 @media (min-width : 393px) and (max-width : 393px){  
   .mobile-download-app-desc {
     margin-left:8px;
-    width:47%
+    width: 38%
   }
+
   .download-app-chip-top-header {
     border-radius: 63px;
     background: #F3962F;
     color: #fff;
-    // min-width: 129px;
     text-align: center;
     padding: 6px 7px !important;
     list-style: none;
   }
 }
+
 @media (min-width : 412px) and (max-width : 412px){  
   .mobile-download-app-desc {
     margin-left:8px;
-    width:48%
+    width: 38%
   }
+
   .download-app-chip-top-header {
-    border-radius: 63px;
+    border-radius: 64px;
     background: #F3962F;
     color: #fff;
     // min-width: 129px;
@@ -247,7 +254,7 @@ ws-app-nav-bar {
     width:47%
   }
   .download-app-chip-top-header {
-    border-radius: 63px;
+    border-radius: 64px;
     background: #F3962F;
     color: #fff;
     // min-width: 129px;
@@ -262,10 +269,9 @@ ws-app-nav-bar {
     width:45%
   }
   .download-app-chip-top-header {
-    border-radius: 63px;
+    border-radius: 64px;
     background: #F3962F;
     color: #fff;
-    // min-width: 129px;
     text-align: center;
     padding: 6px 10px;
     list-style: none;
@@ -277,15 +283,14 @@ ws-app-nav-bar {
     width:71%
   }
   .download-app-chip-top-header {
-    border-radius: 63px;
+    border-radius: 64px;
     background: #F3962F;
     color: #fff;
-    // min-width: 129px;
+    min-width: 136px;
     text-align: center;
     padding: 6px 10px;
     list-style: none;
   }
- 
 }
 @media (min-width : 540px) and (max-width : 540px){  
   .mobile-download-app-desc {

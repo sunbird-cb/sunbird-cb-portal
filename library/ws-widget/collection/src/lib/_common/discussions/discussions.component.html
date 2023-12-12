@@ -18,7 +18,7 @@
         </ng-container>
 
         <ng-container *ngIf="!discussion.loadSkeleton">
-            <ng-container *ngIf="(!discussion.error && !discussion.data) || (discussion.data && !discussion?.data?.length ) ">
+            <ng-container *ngIf="!discussion?.data?.length && !discussion.error">
                 <div class="flex flex-col items-center gap-4 p-10">
                     <img src="assets/icons/home/chat.svg" alt="chat img" />
                     <div class="text-sm text-center">Do you have any questions, suggestions or, ideas in your mind? Post it.
@@ -32,7 +32,7 @@
             <ng-container *ngIf="discussion?.data?.length">
                 <div class="flex flex-col" [ngClass]="{'gap-4': trend}">
                     <ng-container *ngFor="let data of discussion.data | slice:0:count; let i = index">
-                        <div class="flex flex-col gap-2 p-4" [ngClass]="{'discuss-card': (!trend && i===0), 'discussion-card': trend}" >
+                        <div class="flex flex-col gap-2 p-4 hover-card" [ngClass]="{'discuss-card': (!trend && i===0), 'discussion-card': trend}" (click)="handleSelectedDiscuss(data, trend)"  >
                             <div class="flex flex-row gap-2 items-center">
                                 <div class="initial-circle rounded-full border-1 text-white leading-3 capitalize"
                                     [style.background]="data?.user['icon:bgColor']">
@@ -42,13 +42,13 @@
                                 <div>.</div>
                                 <div class="text-sm">{{ data?.timestamp | pipeRelativeTime }}</div>
                             </div>
-                            <div class="text-sm">{{ data?.topic?.title || data?.category?.name }}</div>
-                            <div class="flex flex-row justify-between">
+                            <div class="text-sm" [innerHtml]="data?.topic?.title || data?.title"></div>
+                            <div class="flex flex-row gap-5">
                                 <div class="flex flex-row gap-2">
                                     <mat-icon>swap_vert</mat-icon>
                                     <div class="text-xs">{{ (data?.upvotes + data?.downvotes) || 0 }} Votes</div>
                                 </div>
-                                <div class="flex flex-row gap-2">
+                                <div class="flex flex-row gap-2" *ngIf="trend" >
                                     <mat-icon>visibility</mat-icon>
                                     <div class="text-xs">{{ data?.viewcount || 0 }} Views</div>
                                 </div>

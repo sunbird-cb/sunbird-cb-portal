@@ -22,7 +22,6 @@
   width: 100vw;
   height: 100vh;
   display: flex;
-  // opacity: 0.9;
   background: rgba(0, 0, 0, 0.7);
   position: absolute;
   z-index: 99999;
@@ -204,7 +203,6 @@
           box-shadow: 0 2px 1px -1px rgba(0,0,0,1), 0 1px 1px 0 rgba(0,0,0,0.54), 0 1px 3px 0 rgba(0,0,0,0.22);
           border-top-left-radius: 10px;
           border-top-right-radius: 10px;
-          // width: 75%;
           padding: 1rem;
         }
       }
@@ -230,7 +228,6 @@
           box-shadow: none;
           border-bottom-left-radius: none;
           border-bottom-right-radius: none;
-          // width: 75%;
           padding: initial;
           width: 100%;
           .skip-btn {
@@ -250,6 +247,7 @@
         }
       }
     }
+
     .third-panel {
       width: 90vw;
       border-bottom-left-radius: none;
@@ -264,7 +262,6 @@
         box-shadow: none;
         border-bottom-left-radius: none;
         border-bottom-right-radius: none;
-        // width: 75%;
         padding: initial;
         width: 100%;
         .skip-btn {
@@ -275,6 +272,7 @@
           color: #373434 !important;
         }
       }
+
       .second-panel-action-buttons {
         background: transparent !important;
         border: none !important;
@@ -283,6 +281,7 @@
         box-shadow: none !important;
       }
     }
+
     .no-border {
       border-bottom-left-radius: unset;
       border-bottom-right-radius: unset;
@@ -290,13 +289,12 @@
   }
 
   .tour-avatar {
-    // width: 100px;
-    // height: 100px;
     position: absolute;
     left: 15%;
     bottom: -6px;
   }
 }
+
 .mobile-tour-avatar {
   display: flex;
   justify-content: center;
@@ -308,12 +306,13 @@
     object-fit: cover;
   }
 }
+
 .video-tour {
-  // height: 50vh;
   width: 50vw;
   align-items: center;
   background-color: white;
 }
+
 .tour-video-container {
   flex-direction: column;
   .skip-btn {
@@ -322,16 +321,19 @@
     opacity: 1;
   }
 }
+
 .video-header-row {
   text-align: center;
   padding: 1rem;
   background-color: #1C4CA1;
 }
+
 .video-player-row {
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
+
 .video-footer-row {
   display: flex;
   justify-content: space-between;
@@ -343,11 +345,11 @@
 }
 
 .video-tour-mobile {
-  // height: 50vh;
   width: 90vw;
   align-items: center;
   background-color: transparent;
 }
+
 .video-footer-row-mobile {
   display: flex;
   justify-content: space-between;
@@ -359,12 +361,14 @@
     background: #F3962E;
   }
 }
+
 .video-header-row-mobile {
   text-align: center;
   padding: 5px 5px 1rem 5px;
   background-color: #1C4CA1;
   border-radius: 7px;
 }
+
 @media (max-width: 768px) {
   .app-tour-popup {
     width: 80vw !important;
@@ -384,6 +388,7 @@
   align-items: center;
   width: 80vw;
 }
+
 .complete-mobile-tour {
   display: flex;
   flex-direction: column;
