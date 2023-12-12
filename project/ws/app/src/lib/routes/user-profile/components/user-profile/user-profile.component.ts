@@ -871,7 +871,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   private populateOrganisationDetails(data: any) {
-    //console.log(this.needApprovalList)
+    // console.log(this.needApprovalList)
     let org = {
       isGovtOrg: true,
       orgName: '',
