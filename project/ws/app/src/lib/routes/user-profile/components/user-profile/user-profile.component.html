@@ -331,16 +331,18 @@
                         </div>
                       </div>
     
-                      <div class="input-wrapper margin-top-s">
+                      <div class="input-wrapper margin-top-s" [ngClass]="{ disable: !isAllowed('group')}">
                         <label for="group" class=" margin-remove-bottom form-label required"
                           i18n="Group | Label which explains the user to enter Group" i18n-aria-label
                           aria-label="Group Field label">
                           Group
                         </label>
-             
                         <mat-form-field appearance="outline" class="margin-top-s w-full" id="group">
-                          <mat-select placeholder="Select your group" id="group" #group i18n-placeholder="group" formControlName="group" >
-                            <mat-option *ngFor="let option of masterGroup" [value]="option">{{option.name}}</mat-option>
+                          <mat-select placeholder="Select your group" id="group" #group i18n-placeholder="group"
+                            formControlName="group">
+                            <mat-option *ngFor="let option of groupsOriginal" [value]="option.name">
+                             <span *ngIf="option.name !== 'Others'">{{option.name}}</span>
+                            </mat-option>
                           </mat-select>
                           <mat-error [hidden]="false" i18n="Group Error | Explains Group is required"
                             *ngIf="registrationForm?.controls['group'].errors?.required" i18n-aria-label
@@ -348,10 +350,12 @@
                             Group is mandatory
                           </mat-error>
                         </mat-form-field>
+                        <span class="txt txt-review" *ngIf="!isAllowed('group')">{{inReview}}</span>
+                      </div>
     
-                      <div class="flex flex-1 flex-wrap section-input margin-top-s">
+                      <div class="input-wrapper margin-top-s">
                         <div class="item1" [ngClass]="{ disable: !isAllowed('designation') }">
-                          <p class=" margin-remove-bottom form-label"
+                          <p class=" margin-remove-bottom form-label required"
                             i18n="Designation label|Label which explains the user to enter Designation">
                             Designation
                           </p>
@@ -429,8 +433,9 @@
                   </div>
                 </div>
               </div>
-            </div>
+        
           </div>
+          <!-- </div> -->
         </mat-tab>
         <mat-tab label="Academics" *ngIf="!isForcedUpdate">
           <ng-template mat-tab-label i18n>
@@ -508,24 +513,24 @@
                   </div>
 
                   <div class="input-wrapper margin-top-s">
-                    <label for="postalAddress" class=" margin-remove-bottom form-label required"
+                    <label for="postalAddress" class=" margin-remove-bottom form-label"
                       i18n="Postal Address label|Label which explains the user to enter Postal Address" i18n-aria-label
                       aria-label="Postal Address label">
                       Postal Address
                     </label>
                     <mat-form-field appearance="outline" class="w-full margin-top-xs">
-                      <textarea id="postalAddress" matInput [matTextareaAutosize]="true" [matAutosizeMaxRows]="10"
+                      <textarea id="postalAddress" class="postal-address" matInput [matTextareaAutosize]="true" [matAutosizeMaxRows]="10"
                         [matAutosizeMinRows]="3" maxlength="200" formControlName="residenceAddress"
                         placeholder="Type Your Residence Address Here" i18n-placeholder #residenceAddress
                         i18n-aria-label aria-label="Postal Address textarea input"></textarea>
                       <!-- <input matInput #residenceAddress formControlName="residenceAddress" i18n-placeholder
       placeholder="Enter Postal Address Here" [required]="true" /> -->
                       <mat-hint align="end">{{ residenceAddress.value.length }} /200 characters</mat-hint>
-                      <mat-error [hidden]="false" i18n="Postal address error |Explains Postal address is required"
+                      <!-- <mat-error [hidden]="false" i18n="Postal address error |Explains Postal address is required"
                         *ngIf="createUserForm?.controls['residenceAddress'].errors?.required" i18n-aria-label
                         aria-label="Postal address error |Explains Postal address is required">
                         Postal Address is mandatory
-                      </mat-error>
+                      </mat-error> -->
                       <mat-error i18n *ngIf="createUserForm?.controls['residenceAddress'].errors?.maxlength"
                         i18n-aria-label aria-label="Postal address error |You have exceeded 200 characters">
                         You have exceeded 200 characters.
@@ -534,7 +539,7 @@
                   </div>
                 </div>
                 <div class="flex flex-column profile-top-col bg-grey w-full md:w-1/2">
-                  <div class="flex flex-1 flex-wrap section-input">
+                  <div class="input-wrapper">
                     <div class="item1" [ngClass]="{ disable: !isAllowed('doj') }">
                       <label for="chooseDOJ" class=" margin-remove-bottom form-label"
                         i18n="Date of Joining|Label which explains the user to enter Date of Joining">
@@ -556,7 +561,7 @@
                   </div>
 
                   <div class="input-wrapper margin-top-s">
-                    <label for="country" class=" margin-remove-bottom form-label required"
+                    <label for="country" class=" margin-remove-bottom form-label"
                       i18n="Nationality|Label which explains the user to enter Nationality" i18n-aria-label
                       aria-label="Nationality Field label">
                       Nationality
@@ -598,7 +603,7 @@
                 </mat-autocomplete> -->
                   </div>
                   <div class="input-wrapper margin-top-s">
-                    <label for="language" class=" margin-remove-bottom form-label required"
+                    <label for="language" class=" margin-remove-bottom form-label"
                       i18n="Domicile Medium|Label which explains the user to enter Domicile Medium" i18n-aria-label
                       aria-label="Domicile Medium (Mother Tongue)">
                       Mother Tongue
@@ -615,11 +620,11 @@
                         i18n-placeholder="Mother Tongue" formControlName="domicileMedium"
                         [matAutocomplete]="motherTongueAuto" i18n-aria-label
                         aria-label="Domicile Medium (Mother Tongue)" #motherTongue maxlength="30" />
-                      <mat-error [hidden]="false" i18n="domicileMedium Error|Explains Domicile Medium is required"
+                      <!-- <mat-error [hidden]="false" i18n="domicileMedium Error|Explains Domicile Medium is required"
                         *ngIf="createUserForm?.controls['domicileMedium'].errors?.required" i18n-aria-label
                         aria-label="Domicile Medium is mandatory">
                         Domicile Medium is mandatory
-                      </mat-error>
+                      </mat-error> -->
                       <mat-error *ngIf="createUserForm?.controls['domicileMedium'].errors?.forbiddenNames"
                         i18n-aria-label aria-label="Please choose a value from the list provided above.">
                         Please choose a value from the list provided above.
@@ -634,7 +639,7 @@
                   <div class="input-wrapper margin-top-s">
                     <fieldset>
                       <legend>
-                        <label class=" margin-remove-bottom form-label required"
+                        <label class=" margin-remove-bottom form-label"
                           i18n="Marital Status |Label which explains the user to enter Marital Status">
                           Marital Status
                         </label>
@@ -670,167 +675,167 @@
               </div>
 
               <div class="flex flex-col w-full profile-cols-full bg-grey margin-top-m">
-              <div class="flex flex-1 flex-wrap section-input w-full ">
-                <div class="item1" [ngClass]="{ disable: !isAllowed('name') }">
-                  <p class=" margin-remove-bottom form-label"
-                    i18n="Organisation Name label|Label which explains the user to enter Organisation Name">
-                    Organisation Name
-                  </p>
-                  <mat-form-field appearance="outline" class="margin-top-xs">
-                    <mat-select #orgNameSelect formControlName="orgName" i18n-placeholder placeholder="--Select--"
-                      (selectionChange)="otherDropDownChange(designation.value, 'orgname')">
-                      <mat-option [value]="org" *ngFor="let org of allDept">{{org}}
-                      </mat-option>
-                      <mat-option [value]="'Other'">Other</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  <span class="txt" *ngIf="!isAllowed('name')">{{inReview}}</span>
-                </div>
-                <div class="item1" *ngIf="orgNameSelect.value === 'Other' || showOrgnameOther"
-                  [ngClass]="{ disable: !isAllowed('showOrgnameOther') }">
-                  <p class=" margin-remove-bottom form-label"
-                    i18n="Other label|Label which explains the user to enter Other">
-                    Other
-                  </p>
-                  <mat-form-field appearance="outline" class="margin-top-xs">
-                    <input matInput #orgNameOther formControlName="orgNameOther" i18n-placeholder
-                      placeholder="Enter Other Organisation Name" maxlength="50" />
-                    <mat-error [hidden]="false" i18n="Other Organisation Name  Error|Explains name is required">
-                      Other Organisation Name is mandatory
-                    </mat-error>
-                  </mat-form-field>
-                  <span class="txt" *ngIf="!isAllowed('orgNameOther')">{{inReview}}</span>
-                </div>
-              </div>
-
-              <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                <div class="item1" [ngClass]="{ disable: !isAllowed('industry') }">
-                  <p class=" margin-remove-bottom form-label"
-                    i18n="Industry label|Label which explains the user to enter Industry">
-                    Industry
-                  </p>
-                  <mat-form-field appearance="outline" class="margin-top-xs">
-                    <mat-select #industrySelect formControlName="industry" i18n-placeholder placeholder="--Select--"
-                      (selectionChange)="otherDropDownChange(designation.value, 'industry')">
-                      <mat-option [value]="i.name" *ngFor="let i of industriesMeta">
-                        {{i.name}}
-                      </mat-option>
-                      <mat-option [value]="'Other'">Other</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  <span class="txt" *ngIf="!isAllowed('industry')">{{inReview}}</span>
-                </div>
-                <div class="item1" *ngIf="industrySelect.value === 'Other' || showIndustryOther"
-                  [ngClass]="{ disable: !isAllowed('showIndustryOther') }">
-                  <p class=" margin-remove-bottom form-label"
-                    i18n="Other label|Label which explains the user to enter Other">
-                    Other
-                  </p>
-                  <mat-form-field appearance="outline" class="margin-top-xs">
-                    <input matInput #industryOther formControlName="industryOther" i18n-placeholder
-                      placeholder="Enter Other Industry Name" maxlength="50" />
-                    <mat-error [hidden]="false" i18n="Other Industry Name  Error|Explains name is required">
-                      Other Industry Name is mandatory
-                    </mat-error>
-                  </mat-form-field>
-                  <span class="txt" *ngIf="!isAllowed('industryOther')">{{inReview}}</span>
-                </div>
-              </div>
-
-              <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                <div class="item1" [ngClass]="{ disable: !isAllowed('location') }">
-                  <p class=" margin-remove-bottom form-label"
-                    i18n="Location label|Label which explains the user to enter Location">
-                    Country
-                  </p>
-                  <mat-form-field appearance="outline" class="margin-top-xs">
-                    <mat-select formControlName="location" i18n-placeholder placeholder="--Select--">
-                      <mat-option [value]="loc.name" *ngFor="let loc of countries">
-                        {{loc.name}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  <span class="txt" *ngIf="!isAllowed('location')">{{inReview}}</span>
-
+                <div class="flex flex-1 flex-wrap section-input margin-top-m">
+                  <div class="item1" [ngClass]="{ disable: !isAllowed('name') }">
+                    <p class=" margin-remove-bottom form-label"
+                      i18n="Organisation Name label|Label which explains the user to enter Organisation Name">
+                      Organisation Name
+                    </p>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <mat-select #orgNameSelect formControlName="orgName" i18n-placeholder placeholder="--Select--"
+                        (selectionChange)="otherDropDownChange(designation.value, 'orgname')">
+                        <mat-option [value]="org" *ngFor="let org of allDept">{{org}}
+                        </mat-option>
+                        <mat-option [value]="'Other'">Other</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <span class="txt" *ngIf="!isAllowed('name')">{{inReview}}</span>
+                  </div>
+                  <div class="item1" *ngIf="orgNameSelect.value === 'Other' || showOrgnameOther"
+                    [ngClass]="{ disable: !isAllowed('showOrgnameOther') }">
+                    <p class=" margin-remove-bottom form-label"
+                      i18n="Other label|Label which explains the user to enter Other">
+                      Other
+                    </p>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <input matInput #orgNameOther formControlName="orgNameOther" i18n-placeholder
+                        placeholder="Enter Other Organisation Name" maxlength="50" />
+                      <mat-error [hidden]="false" i18n="Other Organisation Name  Error|Explains name is required">
+                        Other Organisation Name is mandatory
+                      </mat-error>
+                    </mat-form-field>
+                    <span class="txt" *ngIf="!isAllowed('orgNameOther')">{{inReview}}</span>
+                  </div>
                 </div>
 
-              </div>
-
-              <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                <div class="item1" [ngClass]="{ disable: !isAllowed('description') }">
-                  <label for="description" class=" margin-remove-bottom form-label"
-                    i18n="Description label|Label which explains the user to enter Description">
-                    Description
-                  </label>
-                  <mat-form-field appearance="outline" class="margin-top-xs full-width">
-                    <textarea id="description" matInput [matTextareaAutosize] [matAutosizeMaxRows]="10"
-                      [matAutosizeMinRows]="4" maxlength="500" formControlName="orgDesc"
-                      placeholder="Type Your Residence Address Here" i18n-placeholder #orgDesc></textarea>
-                    <mat-hint align="end">{{ orgDesc.value.length }} /500 characters</mat-hint>
-                    <mat-error i18n>
-                      You have exceeded 500 characters.
-                    </mat-error>
-                  </mat-form-field>
-                  <br>
-                  <span class="txt" *ngIf="!isAllowed('description')">{{inReview}}</span>
+                <div class="flex flex-1 flex-wrap section-input margin-top-m">
+                  <div class="item1" [ngClass]="{ disable: !isAllowed('industry') }">
+                    <p class=" margin-remove-bottom form-label"
+                      i18n="Industry label|Label which explains the user to enter Industry">
+                      Industry
+                    </p>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <mat-select #industrySelect formControlName="industry" i18n-placeholder placeholder="--Select--"
+                        (selectionChange)="otherDropDownChange(designation.value, 'industry')">
+                        <mat-option [value]="i.name" *ngFor="let i of industriesMeta">
+                          {{i.name}}
+                        </mat-option>
+                        <mat-option [value]="'Other'">Other</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <span class="txt" *ngIf="!isAllowed('industry')">{{inReview}}</span>
+                  </div>
+                  <div class="item1" *ngIf="industrySelect.value === 'Other' || showIndustryOther"
+                    [ngClass]="{ disable: !isAllowed('showIndustryOther') }">
+                    <p class=" margin-remove-bottom form-label"
+                      i18n="Other label|Label which explains the user to enter Other">
+                      Other
+                    </p>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <input matInput #industryOther formControlName="industryOther" i18n-placeholder
+                        placeholder="Enter Other Industry Name" maxlength="50" />
+                      <mat-error [hidden]="false" i18n="Other Industry Name  Error|Explains name is required">
+                        Other Industry Name is mandatory
+                      </mat-error>
+                    </mat-form-field>
+                    <span class="txt" *ngIf="!isAllowed('industryOther')">{{inReview}}</span>
+                  </div>
                 </div>
-              </div>
-              <p class="heading mt-10">Other Details For Government Employees (If Applicable)</p>
 
-              <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                <div class="item1">
-                  <p class=" margin-remove-bottom form-label"
-                    i18n="Service label|Label which explains the user to enter Service">
-                    Pay Band (Grade Pay)
-                  </p>
-                  <mat-form-field appearance="outline" class="margin-top-xs">
-                    <mat-select formControlName="payType" i18n-placeholder placeholder="--Select--">
-                      <mat-option [value]="pay.name" *ngFor="let pay of gradePayData">
-                        {{pay.name}}
-                      </mat-option>
-                      <!-- <mat-option [value]="pay.name" *ngFor="let pay of designationsMeta?.gradePay">
+                <div class="flex flex-1 flex-wrap section-input margin-top-m">
+                  <div class="item1" [ngClass]="{ disable: !isAllowed('location') }">
+                    <p class=" margin-remove-bottom form-label"
+                      i18n="Location label|Label which explains the user to enter Location">
+                      Country
+                    </p>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <mat-select formControlName="location" i18n-placeholder placeholder="--Select--">
+                        <mat-option [value]="loc.name" *ngFor="let loc of countries">
+                          {{loc.name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <span class="txt" *ngIf="!isAllowed('location')">{{inReview}}</span>
+
+                  </div>
+
+                </div>
+
+                <div class="flex flex-1 flex-wrap section-input margin-top-m">
+                  <div class="item1" [ngClass]="{ disable: !isAllowed('description') }">
+                    <label for="description" class=" margin-remove-bottom form-label"
+                      i18n="Description label|Label which explains the user to enter Description">
+                      Description
+                    </label>
+                    <mat-form-field appearance="outline" class="margin-top-xs full-width">
+                      <textarea id="description" matInput [matTextareaAutosize] [matAutosizeMaxRows]="10"
+                        [matAutosizeMinRows]="4" maxlength="500" formControlName="orgDesc"
+                        placeholder="Type Your Residence Address Here" i18n-placeholder #orgDesc></textarea>
+                      <mat-hint align="end">{{ orgDesc.value.length }} /500 characters</mat-hint>
+                      <mat-error i18n>
+                        You have exceeded 500 characters.
+                      </mat-error>
+                    </mat-form-field>
+                    <br>
+                    <span class="txt" *ngIf="!isAllowed('description')">{{inReview}}</span>
+                  </div>
+                </div>
+                <p class="heading mt-10">Other Details For Government Employees (If Applicable)</p>
+
+                <div class="flex flex-1 flex-wrap section-input margin-top-m">
+                  <div class="item1">
+                    <p class=" margin-remove-bottom form-label"
+                      i18n="Service label|Label which explains the user to enter Service">
+                      Pay Band (Grade Pay)
+                    </p>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <mat-select formControlName="payType" i18n-placeholder placeholder="--Select--">
+                        <mat-option [value]="pay.name" *ngFor="let pay of gradePayData">
+                          {{pay.name}}
+                        </mat-option>
+                        <!-- <mat-option [value]="pay.name" *ngFor="let pay of designationsMeta?.gradePay">
           {{pay.name}}
         </mat-option> -->
-                    </mat-select>
-                  </mat-form-field>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
                 </div>
-              </div>
-              <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                <div class="item1">
-                  <p class=" margin-remove-bottom form-label"
-                    i18n="Service label|Label which explains the user to enter Service">
-                    Service
-                  </p>
-                  <mat-form-field appearance="outline" class="margin-top-xs">
-                    <mat-select formControlName="service" i18n-placeholder placeholder="--Select--">
-                      <mat-option [value]="service.name" *ngFor="let service of govtOrgMeta?.service">
-                        {{service.name}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
+                <div class="flex flex-1 flex-wrap section-input margin-top-m">
+                  <div class="item1">
+                    <p class=" margin-remove-bottom form-label"
+                      i18n="Service label|Label which explains the user to enter Service">
+                      Service
+                    </p>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <mat-select formControlName="service" i18n-placeholder placeholder="--Select--">
+                        <mat-option [value]="service.name" *ngFor="let service of govtOrgMeta?.service">
+                          {{service.name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="item1">
+                    <p class=" margin-remove-bottom form-label"
+                      i18n="Cadre label|Label which explains the user to enter Cadre">
+                      Cadre
+                    </p>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <mat-select formControlName="cadre" i18n-placeholder placeholder="--Select--">
+                        <mat-option [value]="cad.name" *ngFor="let cad of govtOrgMeta?.cadre">
+                          {{cad.name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
                 </div>
-                <div class="item1">
-                  <p class=" margin-remove-bottom form-label"
-                    i18n="Cadre label|Label which explains the user to enter Cadre">
-                    Cadre
-                  </p>
-                  <mat-form-field appearance="outline" class="margin-top-xs">
-                    <mat-select formControlName="cadre" i18n-placeholder placeholder="--Select--">
-                      <mat-option [value]="cad.name" *ngFor="let cad of govtOrgMeta?.cadre">
-                        {{cad.name}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-              </div>
-              <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                <div class="item1">
-                  <label for="allotmentYearService" class=" margin-remove-bottom form-label"
-                    i18n="Allotment Year of Service|Label which explains the user to enter Allotment Year of Service">
-                    Allotment Year of Service
-                  </label>
-                  <mat-form-field appearance="outline" class="margin-top-xs">
-                    <!-- <input matInput #allotmentYear formControlName="allotmentYear"
+                <div class="flex flex-1 flex-wrap section-input margin-top-m">
+                  <div class="item1">
+                    <label for="allotmentYearService" class=" margin-remove-bottom form-label"
+                      i18n="Allotment Year of Service|Label which explains the user to enter Allotment Year of Service">
+                      Allotment Year of Service
+                    </label>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <!-- <input matInput #allotmentYear formControlName="allotmentYear"
         [matDatepicker]="allotmentYearPicker" i18n-placeholder
         placeholder="Choose Allotment Year of Service" [min]="" [max]="today">
       <mat-datepicker-toggle matSuffix [for]="allotmentYearPicker"></mat-datepicker-toggle>
@@ -838,99 +843,100 @@
       <mat-error [hidden]="false" i18n="Allotment Year of Service Error|Explains name is required">
         Allotment Year of Service is mandatory
       </mat-error> -->
-                    <input id="allotmentYearService" matInput #allotmentYear type="text" formControlName="allotmentYear"
-                      i18n-placeholder placeholder="1998" maxlength="4" (keypress)="numericOnly($event)" />
-                    <mat-error [hidden]="false" *ngIf="createUserForm?.controls['allotmentYear'].errors?.pattern">
-                      Please enter a valid 4 digit year
-                    </mat-error>
-                  </mat-form-field>
+                      <input id="allotmentYearService" matInput #allotmentYear type="text"
+                        formControlName="allotmentYear" i18n-placeholder placeholder="1998" maxlength="4"
+                        (keypress)="numericOnly($event)" />
+                      <mat-error [hidden]="false" *ngIf="createUserForm?.controls['allotmentYear'].errors?.pattern">
+                        Please enter a valid 4 digit year
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="item1">
+                    <label for="doj" class=" margin-remove-bottom form-label"
+                      i18n="Date of Joining|Label which explains the user to enter Date of Joining">
+                      Date of Joining
+                    </label>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <input id="doj" matInput #otherDetailsDoj formControlName="otherDetailsDoj"
+                        [matDatepicker]="otherDetailsDojPicker" i18n-placeholder placeholder="Choose Date of Joining"
+                        (focus)="otherDetailsDojPicker.open()" [min]="" [max]="today">
+                      <mat-datepicker-toggle matSuffix [for]="otherDetailsDojPicker"></mat-datepicker-toggle>
+                      <mat-datepicker #otherDetailsDojPicker (closed)="otherDetailsDoj.blur()"></mat-datepicker>
+                      <mat-error [hidden]="false" i18n="Date of Joining Error|Explains name is required">
+                        Date of Joining is mandatory
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
                 </div>
-                <div class="item1">
-                  <label for="doj" class=" margin-remove-bottom form-label"
-                    i18n="Date of Joining|Label which explains the user to enter Date of Joining">
-                    Date of Joining
-                  </label>
-                  <mat-form-field appearance="outline" class="margin-top-xs">
-                    <input id="doj" matInput #otherDetailsDoj formControlName="otherDetailsDoj"
-                      [matDatepicker]="otherDetailsDojPicker" i18n-placeholder placeholder="Choose Date of Joining"
-                      (focus)="otherDetailsDojPicker.open()" [min]="" [max]="today">
-                    <mat-datepicker-toggle matSuffix [for]="otherDetailsDojPicker"></mat-datepicker-toggle>
-                    <mat-datepicker #otherDetailsDojPicker (closed)="otherDetailsDoj.blur()"></mat-datepicker>
-                    <mat-error [hidden]="false" i18n="Date of Joining Error|Explains name is required">
-                      Date of Joining is mandatory
-                    </mat-error>
-                  </mat-form-field>
+                <div class="flex flex-1 flex-wrap section-input margin-top-m">
+                  <div class="item1">
+                    <label for="civilListNumber" class=" margin-remove-bottom form-label"
+                      i18n="Civil List Number label|Label which explains the user to enter Civil List Number">
+
+                      Civil List Number
+                    </label>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <input id="civilListNumber" matInput type="text" #civilListNo formControlName="civilListNo"
+                        i18n-placeholder placeholder="Enter Civil List Number" (keypress)="numericOnly($event)"
+                        onKeyPress="if(this.value.length === 25) return false;" />
+                      <mat-error [hidden]="false" i18n="Civil List Number  Error|Explains name is required">
+                        Civil List Number is mandatory
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="item1">
+                    <label for="empCode" class=" margin-remove-bottom form-label"
+                      i18n="Employee Code label|Label which explains the user to enter Employee Code">
+                      Employee Code
+                    </label>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <input id="empCode" matInput type="text" #employeeCode formControlName="employeeCode"
+                        i18n-placeholder placeholder="Enter Employee Code" (keypress)="numericOnly($event)"
+                        onKeyPress="if(this.value.length === 25) return false;" />
+                      <mat-error [hidden]="false" i18n="Employee Code  Error|Explains name is required">
+                        Employee Code is mandatory
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="flex flex-1 flex-wrap section-input margin-top-m">
+                  <div class="item1">
+                    <label for="officePostalAddress" class=" margin-remove-bottom form-label"
+                      i18n="Office Postal Address label|Label which explains the user to enter Office Postal Address">
+                      Office Postal Address
+                    </label>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <input id="officePostalAddress" matInput #otherDetailsOfficeAddress
+                        formControlName="otherDetailsOfficeAddress" maxlength="200" i18n-placeholder
+                        placeholder="Enter Office Postal Address" />
+                      <mat-hint align="end">{{ otherDetailsOfficeAddress.value.length }} /200 characters</mat-hint>
+                      <mat-error i18n>
+                        You have exceeded 200 characters.
+                      </mat-error>
+                      <!-- <mat-error [hidden]="false" i18n="Office Postal Address  Error|Explains name is required">
+                        Office Postal Address is mandatory
+                      </mat-error> -->
+                    </mat-form-field>
+                  </div>
+
+
+                  <div class="item1">
+                    <label class="margin-remove-bottom form-label">Tags</label>
+                    <mat-chip-list #chipListTags *ngIf="selectedtags && selectedtags.length">
+                      <mat-chip *ngFor="let tag of selectedtags" [selectable]="true" [removable]="true">
+                        {{ tag }}
+                      </mat-chip>
+                    </mat-chip-list>
+                    <p *ngIf="!selectedtags || !selectedtags.length" class="margin-top-xs mat-body-2">No tags available
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                <div class="item1">
-                  <label for="civilListNumber" class=" margin-remove-bottom form-label"
-                    i18n="Civil List Number label|Label which explains the user to enter Civil List Number">
-
-                    Civil List Number
-                  </label>
-                  <mat-form-field appearance="outline" class="margin-top-xs">
-                    <input id="civilListNumber" matInput type="text" #civilListNo formControlName="civilListNo"
-                      i18n-placeholder placeholder="Enter Civil List Number" (keypress)="numericOnly($event)"
-                      onKeyPress="if(this.value.length === 25) return false;" />
-                    <mat-error [hidden]="false" i18n="Civil List Number  Error|Explains name is required">
-                      Civil List Number is mandatory
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-                <div class="item1">
-                  <label for="empCode" class=" margin-remove-bottom form-label"
-                    i18n="Employee Code label|Label which explains the user to enter Employee Code">
-                    Employee Code
-                  </label>
-                  <mat-form-field appearance="outline" class="margin-top-xs">
-                    <input id="empCode" matInput type="text" #employeeCode formControlName="employeeCode"
-                      i18n-placeholder placeholder="Enter Employee Code" (keypress)="numericOnly($event)"
-                      onKeyPress="if(this.value.length === 25) return false;" />
-                    <mat-error [hidden]="false" i18n="Employee Code  Error|Explains name is required">
-                      Employee Code is mandatory
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-              </div>
-              <div class="flex flex-1 flex-wrap section-input margin-top-m">
-                <div class="item1">
-                  <label for="officePostalAddress" class=" margin-remove-bottom form-label"
-                    i18n="Office Postal Address label|Label which explains the user to enter Office Postal Address">
-                    Office Postal Address
-                  </label>
-                  <mat-form-field appearance="outline" class="margin-top-xs">
-                    <input id="officePostalAddress" matInput #otherDetailsOfficeAddress
-                      formControlName="otherDetailsOfficeAddress" maxlength="200" i18n-placeholder
-                      placeholder="Enter Office Postal Address" />
-                    <mat-hint align="end">{{ otherDetailsOfficeAddress.value.length }} /200 characters</mat-hint>
-                    <mat-error i18n>
-                      You have exceeded 200 characters.
-                    </mat-error>
-                    <mat-error [hidden]="false" i18n="Office Postal Address  Error|Explains name is required">
-                      Office Postal Address is mandatory
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-
-
-                <div class="item1">
-                  <label class="margin-remove-bottom form-label">Tags</label>
-                  <mat-chip-list #chipListTags *ngIf="selectedtags && selectedtags.length">
-                    <mat-chip *ngFor="let tag of selectedtags" [selectable]="true" [removable]="true">
-                      {{ tag }}
-                    </mat-chip>
-                  </mat-chip-list>
-                  <p *ngIf="!selectedtags || !selectedtags.length" class="margin-top-xs mat-body-2">No tags available
-                  </p>
-                </div>
+              <div class="w-full profile-cols-fill bg-gray" *ngIf="!isAllowed('name')">
+                <span class="mat-subheading-1">Once Your department will approve your request, System will unlock this
+                  section.</span>
               </div>
             </div>
-            <div class="w-full profile-cols-fill bg-gray" *ngIf="!isAllowed('name')">
-              <span class="mat-subheading-1">Once Your department will approve your request, System will unlock this
-                section.</span>
-            </div>
-          </div>
             <div class="w-full profile-cols-full bg-grey">
               <p class="heading">10th Standard</p>
               <div class="flex flex-wrap section-input">

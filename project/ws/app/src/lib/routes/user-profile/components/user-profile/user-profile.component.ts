@@ -65,6 +65,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   unseenCtrlSub!: Subscription
   uploadSaveData = false
   selectedIndex = 0
+  groupsOriginal: any = []
+  masterGroup: any
   masterNationality: Observable<INation[]> | undefined
   country: Observable<INation[]> | undefined
   masterLanguages: Observable<ILanguages[]> | undefined
@@ -159,13 +161,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       primaryEmail: new FormControl('', [Validators.required, Validators.email]),
       primaryEmailType: new FormControl(this.assignPrimaryEmailTypeCheckBox(this.ePrimaryEmailType.OFFICIAL), []),
       secondaryEmail: new FormControl('', []),
-      nationality: new FormControl('', [Validators.required]),
+      nationality: new FormControl('', []),
       dob: new FormControl('', [Validators.required]),
       gender: new FormControl('', [Validators.required]),
-      maritalStatus: new FormControl('', [Validators.required]),
-      domicileMedium: new FormControl('', [Validators.required]),
+      maritalStatus: new FormControl('', []),
+      domicileMedium: new FormControl('', []),
       knownLanguages: new FormControl([], []),
-      residenceAddress: new FormControl('', [Validators.required]),
+      residenceAddress: new FormControl('', []),
       category: new FormControl('', [Validators.required]),
       pincode: new FormControl('', [Validators.required, Validators.pattern(this.pincodePattern)]),
       schoolName10: new FormControl('', []),
@@ -183,7 +185,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       orgNameOther: new FormControl('', []),
       industry: new FormControl('', []),
       industryOther: new FormControl('', []),
-      designation: new FormControl('', []),
+      designation: new FormControl('', [Validators.required]),
       designationOther: new FormControl('', []),
       location: new FormControl('', []),
       locationOther: new FormControl('', []),
@@ -218,24 +220,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }))
 
     // console.log(this.activatedRoute.snapshot.data, "this.activatedRoute.snapshot.data=====")
-    
-    // if (this.activatedRoute.snapshot.data.group.data) {
-    //   this.groupsOriginal = this.activatedRoute.snapshot.data.group.data.filter((ele:any) => ele !== 'Others')
-    //   this.masterGroup = this.groupsOriginal
-    // } else {
-    //   this.groupsOriginal = []
-    // }
-
     if (approvalData.length > 0) {
       // need to call search API
     }
-
-
     this.getUserDetails()
     this.init()
     this.checkIfMobileNoChanged()
     this.onPhoneChange()
-
+    // this.onGroupChange()
   }
 
   displayFnPosition = (value: any) => {
@@ -268,8 +260,17 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.onChangesCountry()
       },
       (_err: any) => {
-      })
+    })
 
+    this.userProfileSvc.getGroups().subscribe(data => {
+        const res =  data.result.response
+        res.map((value: any) => {
+          this.groupsOriginal.push({ name: value })
+        })
+        this.onGroupChange()
+      },
+        (_err: any) => {
+    })
 
     this.userProfileSvc.getMasterNationlity().subscribe(
       data => {
@@ -290,7 +291,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.onChangesNationality()
       },
       (_err: any) => {
-      })
+    })
 
     this.userProfileSvc.getMasterLanguages().subscribe(
       data => {
@@ -321,7 +322,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         })
         this.allDept = newData.sort((a: any, b: any) => {
           return a.toLowerCase().localeCompare(b.toLowerCase())
-      })
+        })
 
       },
       (_err: any) => {
@@ -350,9 +351,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       (_err: any) => {
       })
   }
-
-
-
 
   emailVerification(emailId: string) {
     this.emailLengthVal = false
@@ -437,7 +435,30 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   public removePostDegrees(i: number) {
     this.postDegrees.removeAt(i)
   }
+  onGroupChange() {
+    // tslint:disable-next-line: no-non-null-assertion
+    this.masterGroup = this.createUserForm.get('group')!.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        startWith(''),
+        map((value: any) => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+        map((name: any) => name ? this.filterGroups(name) : this.groupsOriginal.slice())
+      )
+    // this.masterGroup.subscribe(() => {
+    //   // tslint:disable-next-line: no-non-null-assertion
+    //   this.createUserForm.get('group')!.setValidators([Validators.required])
+    //   this.createUserForm.updateValueAndValidity()
+    // })
+  }
 
+  private filterGroups(name: string): any {
+    if (name) {
+      const filterValue = name.toLowerCase()
+      return this.groupsOriginal.filter((option: any) => option.toLowerCase().includes(filterValue))
+    }
+    return this.groupsOriginal
+  }
   onChangesNationality(): void {
 
     if (this.createUserForm.get('nationality') != null) {
@@ -473,7 +494,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
         map(name => name ? this.filterCountry(name) : this.countries.slice()),
       )
-     // console.log('this.masterLanguagesEntries', this.masterLanguages)
+    // console.log('this.masterLanguagesEntries', this.masterLanguages)
   }
 
   onChangesLanuage(): void {
@@ -486,7 +507,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
         map(name => name ? this.filterLanguage(name) : this.masterLanguagesEntries.slice()),
       )
-     // console.log('this.masterLanguagesEntries', this.masterLanguages)
+    // console.log('this.masterLanguagesEntries', this.masterLanguages)
   }
 
   onChangesKnownLanuage(): void {
@@ -786,6 +807,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       orgName: '',
       industry: '',
       designation: '',
+      group: '',
       location: '',
       responsibilities: '',
       doj: '',
@@ -809,6 +831,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         // designation: isDesiAvailable ? organisation.designation : 'Other',
         designation: organisation.designation || 'Other',
         designationOther: isDesiAvailable ? '' : organisation.designation || organisation.designationOther,
+        group: organisation.group,
         location: organisation.location,
         responsibilities: organisation.responsibilities,
         doj: this.getDateFromText(organisation.doj),
@@ -933,6 +956,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       // orgName: organisation.orgName,
       industry: organisation.industry,
       designation: organisation.designation || _.get(data, 'professionalDetails.designation'),
+      group: organisation.group || _.get(data, 'professionalDetails.group'),
       location: organisation.location,
       doj: organisation.doj,
       orgDesc: organisation.orgDesc,
@@ -1309,7 +1333,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       'otherDetailsOfficeAddress', 'otherDetailsOfficePinCode', 'orgName', 'orgNameOther',
     ]
     const professionalDetailsFields = ['isGovtOrg', 'industry', 'designation', 'location',
-      'doj', 'orgDesc', 'orgNameOther', 'industryOther', 'designationOther', 'locationOther', 'orgName']
+      'doj', 'orgDesc', 'orgNameOther', 'industryOther', 'designationOther', 'locationOther', 'orgName', 'group']
     const professionalDetails: any = []
     const organisations: any = {}
     // let academics = {}
@@ -1336,7 +1360,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
               case 'knownLanguages': return personalDetail['knownLanguages'] = form.value.knownLanguages
               case 'dob': return personalDetail['dob'] = form.value.dob
-              case 'nationality': return personalDetail['nationality']  = form.value.nationality
+              case 'nationality': return personalDetail['nationality'] = form.value.nationality
               case 'secondaryEmail': return personalDetail['personalEmail'] = form.value.secondaryEmail
               case 'residenceAddress': return personalDetail['postalAddress'] = form.value.residenceAddress
               case 'telephone': return personalDetail['telephone'] = `${form.value.telephone}` || ''
@@ -1384,6 +1408,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               case 'orgNameOther': return organisations['nameOther'] = form.value.orgNameOther
               // tslint:disable-next-line
               case 'designation': return organisations['designation'] = form.value.designation === 'Other' ? form.value.designationOther : form.value.designation
+              case 'group': return organisations['group'] = form.value.group
               case 'doj': return organisations['doj'] = form.value.doj
               case 'orgDesc': return organisations['description'] = form.value.orgDesc
               case 'isGovtOrg': {
@@ -1422,7 +1447,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         ...(Object.keys(interests).length > 0) && { interests },
         ...(Object.keys(employmentDetails).length > 0) && { employmentDetails },
         ...(Object.keys(professionalDetails).length > 0) && { professionalDetails },
-        ...(this.userProfileData && this.userProfileData.profileImageUrl !==  this.photoUrl ?
+        ...(this.userProfileData && this.userProfileData.profileImageUrl !== this.photoUrl ?
           { profileImageUrl: this.photoUrl } : null),
         academics: this.getAcademics(form),
       },
@@ -1470,8 +1495,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       },
 
     }
-    reqUpdates.request.profileDetails.personalDetails['knownLanguages']  = this.selectedKnowLangs
-    reqUpdates.request.profileDetails.personalDetails['nationality']  = form.value.nationality
+    reqUpdates.request.profileDetails.personalDetails['knownLanguages'] = this.selectedKnowLangs
+    reqUpdates.request.profileDetails.personalDetails['nationality'] = form.value.nationality
     if (!this.isVerifiedAlready && form.value.verifiedKarmayogi === true) {
       reqUpdates.request.profileDetails.verifiedKarmayogi = form.value.verifiedKarmayogi
     }
@@ -1793,7 +1818,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     formdata.append('data', file, fileName)
     this.userProfileSvc.uploadProfilePhoto(formdata).subscribe((res: any) => {
       if (res && res.result) {
-        this.photoUrl =  this.pipeImgUrl.transform(res.result.url)
+        this.photoUrl = this.pipeImgUrl.transform(res.result.url)
         this.onSubmit(this.createUserForm)
       }
     })
@@ -1856,7 +1881,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               if (updateRes) {
                 this.isMobileVerified = true
               }
-            // tslint:disable-next-line:align
+              // tslint:disable-next-line:align
             }, (error: any) => {
 
               this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
