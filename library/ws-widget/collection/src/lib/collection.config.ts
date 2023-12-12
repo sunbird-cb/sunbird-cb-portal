@@ -120,6 +120,7 @@ export const ROOT_WIDGET_CONFIG = {
     departments: 'departments',
     // publications: 'publications',
     hobbies: 'hobbies',
+    karmapoints: 'karmapoints',
   },
   element: {
     _type: 'element',

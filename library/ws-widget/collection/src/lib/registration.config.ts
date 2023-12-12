@@ -174,6 +174,8 @@ import { PlayerSurveyModule } from './player-survey/player-survey.module'
 import { CardContentV2Component } from './card-content-v2/card-content-v2.component'
 import { CardContentV2Module } from './card-content-v2/card-content-v2.module'
 import { ContentStripWithTabsComponent } from './content-strip-with-tabs/content-strip-with-tabs.component'
+import { ProfileKarmapointsModule } from './profile-v2/profile-karmapoints/profile-karmapoints.module'
+import { ProfileKarmapointsComponent } from './profile-v2/profile-karmapoints/profile-karmapoints.component'
 
 export const WIDGET_REGISTERED_MODULES = [
   AvatarPhotoModule,
@@ -238,6 +240,7 @@ export const WIDGET_REGISTERED_MODULES = [
   ProfileCretificationsV2Module,
   ProfileDepartmentsModule,
   ProfileHobbiesModule,
+  ProfileKarmapointsModule,
   EmbeddedPageModule,
   SelectorResponsiveModule,
   DiscussionForumModule,
@@ -550,6 +553,11 @@ export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] 
     widgetType: ROOT_WIDGET_CONFIG.profileV2._type,
     widgetSubType: ROOT_WIDGET_CONFIG.profileV2.academics,
     component: ProfileAcademicsComponent,
+  },
+  {
+    widgetType: ROOT_WIDGET_CONFIG.profileV2._type,
+    widgetSubType: ROOT_WIDGET_CONFIG.profileV2.karmapoints,
+    component: ProfileKarmapointsComponent,
   },
   {
     widgetType: ROOT_WIDGET_CONFIG.profileV2._type,

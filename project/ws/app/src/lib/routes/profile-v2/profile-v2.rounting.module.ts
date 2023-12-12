@@ -31,6 +31,19 @@ const routes: Routes = [
         },
       },
       {
+        path: 'karma-points',
+        component: ProfileViewComponent,
+        data: {
+          pageId: 'karma-points',
+          module: 'Profile',
+        },
+        resolve: {
+          profile: Profilev2Resolve,
+          badges: Profilev2BadgesResolve,
+          // profileData: ProfileResolverService,
+        },
+      },
+      {
         path: ':userId',
         component: ProfileViewComponent,
         data: {

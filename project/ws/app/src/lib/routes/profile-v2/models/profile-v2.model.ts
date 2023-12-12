@@ -33,6 +33,15 @@ export namespace NSProfileDataV2 {
     result: any
     userName: any
     profileDetails: any
+    karmapoints? : IKarmapoints[]
+  }
+
+  export interface IKarmapoints {
+    name: string,
+    courseName: string,
+    date: string,
+    points: number,
+    bonus: number
   }
   export interface IAcademics {
     nameOfInstitute: string
