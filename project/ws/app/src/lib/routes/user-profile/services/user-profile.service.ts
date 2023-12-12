@@ -29,6 +29,7 @@ const API_ENDPOINTS = {
   editProfileDetails: '/apis/proxies/v8/user/v1/extPatch',
   updateProfilePic: '/apis/proxies/v8/storage/profilePhotoUpload/profileImage',
   GET_GROUPS: '/api/user/v1/groups',
+  getApprovalReqs: '/apis/protected/v8/workflowhandler/applicationsSearch',
 }
 
 @Injectable()
@@ -87,5 +88,8 @@ export class UserProfileService {
   }
   getGroups(): Observable<any> {
     return this.http.get<any>(API_ENDPOINTS.GET_GROUPS)
+  }
+  getApprovalReqs(data: any): Observable<any> {
+    return this.http.post<any>(API_ENDPOINTS.getApprovalReqs, data)
   }
 }

@@ -228,8 +228,8 @@
 
                       <div class="input-wrapper margin-top-s">
                         <label for="mobileNumber" class=" margin-remove-bottom form-label required"
-                          i18n="Mobile Number label|Label which explains the user to enter Mobile Number" i18n-aria-label
-                          aria-label="Mobile Number label">
+                          i18n="Mobile Number label|Label which explains the user to enter Mobile Number"
+                          i18n-aria-label aria-label="Mobile Number label">
                           Mobile Number
                         </label>
                         <div class="flex flex-align combined-field">
@@ -243,8 +243,8 @@
                               </mat-form-field>
                               <mat-form-field appearance="outline" class="margin-top-xs flex-expand w-minus-w80">
                                 <input id="mobileNumber" #mobile type="text" matInput placeholder="Mobile Number"
-                                  formControlName="mobile" i18n-aria-label aria-label="Mobile Number input" maxlength="10"
-                                  (keypress)="numericOnly($event)" (paste)="numericOnly($event)">
+                                  formControlName="mobile" i18n-aria-label aria-label="Mobile Number input"
+                                  maxlength="10" (keypress)="numericOnly($event)" (paste)="numericOnly($event)">
                                 <mat-error [hidden]="false" i18n="Mobile Number Error|Explains Mobile no is required"
                                   *ngIf="createUserForm?.controls['mobile'].errors?.required" i18n-aria-label
                                   aria-label="Please enter your mobile number">
@@ -264,7 +264,8 @@
                             </div>
                             <div *ngIf="!isMobileVerified" class="flex flex-1">
                               <button *ngIf="!otpSend" mat-raised-button type="button" (click)="sendOtp()"
-                                class="text-white btn-success btn-responsive" [disabled]="createUserForm?.mobile?.invalid">
+                                class="text-white btn-success btn-responsive"
+                                [disabled]="createUserForm?.mobile?.invalid">
                                 <a class="text-white" i18n>
                                   Send OTP
                                 </a>
@@ -291,18 +292,16 @@
                                     </span>
                                   </button>
                                 </div>
-    
-    
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-    
+
                       <div class="input-wrapper margin-top-s">
                         <label for="primaryEmail" class=" margin-remove-bottom form-label required"
-                          i18n="Primary Email label|Label which explains the user to enter Primary Email" i18n-aria-label
-                          aria-label="Primary Email label">
+                          i18n="Primary Email label|Label which explains the user to enter Primary Email"
+                          i18n-aria-label aria-label="Primary Email label">
                           Primary Email
                         </label>
                         <mat-form-field appearance="outline" class="margin-top-xs no-pb">
@@ -330,7 +329,7 @@
                           </div>
                         </div>
                       </div>
-    
+
                       <div class="input-wrapper margin-top-s" [ngClass]="{ disable: !isAllowed('group')}">
                         <label for="group" class=" margin-remove-bottom form-label required"
                           i18n="Group | Label which explains the user to enter Group" i18n-aria-label
@@ -341,7 +340,9 @@
                           <mat-select placeholder="Select your group" id="group" #group i18n-placeholder="group"
                             formControlName="group">
                             <mat-option *ngFor="let option of groupsOriginal" [value]="option.name">
-                             <span *ngIf="option.name !== 'Others'">{{option.name}}</span>
+                              <span *ngIf="option.name !== 'Others'">
+                                {{groupApprovalList?.feildName === 'group' ? groupApprovalList.value : option.name}}
+                              </span>
                             </mat-option>
                           </mat-select>
                           <mat-error [hidden]="false" i18n="Group Error | Explains Group is required"
@@ -352,7 +353,7 @@
                         </mat-form-field>
                         <span class="txt txt-review" *ngIf="!isAllowed('group')">{{inReview}}</span>
                       </div>
-    
+
                       <div class="input-wrapper margin-top-s">
                         <div class="item1" [ngClass]="{ disable: !isAllowed('designation') }">
                           <p class=" margin-remove-bottom form-label required"
@@ -360,10 +361,13 @@
                             Designation
                           </p>
                           <mat-form-field appearance="outline" class="margin-top-s w-full">
-                            <mat-select #designation formControlName="designation" i18n-placeholder placeholder="--Select--"
+                            <mat-select #designation formControlName="designation" i18n-placeholder
+                              placeholder="--Select--"
                               (selectionChange)="otherDropDownChange(designation.value, 'designation')">
                               <mat-option [value]="designation.name" *ngFor="let designation of designationsMeta">
-                                {{designation.name}}
+                                <!-- {{designation.name}} -->
+                                {{designationApprovalList?.feildName == 'designation' ? designationApprovalList?.value :
+                                designation.name}}
                               </mat-option>
                               <mat-option [value]="'Other'">Other</mat-option>
                             </mat-select>
@@ -386,6 +390,8 @@
                           <span class="txt" *ngIf="!isAllowed('designationOther')">{{inReview}}</span>
                         </div>
                       </div>
+
+
                       <div class="input-wrapper margin-top-s">
                         <label for="pinCode" class=" margin-remove-bottom form-label required"
                           i18n="Pin Code label|Label which explains the user to enter Pin Code" i18n-aria-label
@@ -393,9 +399,9 @@
                           Pin Code
                         </label>
                         <mat-form-field appearance="outline" class="margin-top-xs">
-                          <input id="pinCode" #pincode type="text" matInput placeholder="123456" formControlName="pincode"
-                            i18n-aria-label aria-label="Pin Code inpput field" autocomplete="off"
-                            (keypress)="numericOnly($event)" maxlength="6">
+                          <input id="pinCode" #pincode type="text" matInput placeholder="123456"
+                            formControlName="pincode" i18n-aria-label aria-label="Pin Code inpput field"
+                            autocomplete="off" (keypress)="numericOnly($event)" maxlength="6">
                           <mat-error [hidden]="false" i18n="Pin Code Error|Explains pincode is required"
                             *ngIf="createUserForm?.controls['pincode'].errors?.required" i18n-aria-label
                             aria-label="Pin Code Error|Explains pincode is required">
@@ -407,12 +413,13 @@
                           </mat-error>
                         </mat-form-field>
                       </div>
-    
+
                       <div class="input-wrapper margin-top-s">
                         <div class="flex flex-1 flex-middle" [ngClass]="{ disable: !isAllowed('verifiedKarmayogi') }">
-                          <mat-checkbox aria-label="Get Karmayogi badge" id="kb-badge" formControlName="verifiedKarmayogi"
-                            #verifiedKarmayogi [checked]="karmayogiBadge" (change)="verifiedKarmayogiCheck()"
-                            i18n-aria-label aria-label="Get Karmayogi badge checkbox"
+                          <mat-checkbox aria-label="Get Karmayogi badge" id="kb-badge"
+                            formControlName="verifiedKarmayogi" #verifiedKarmayogi [checked]="karmayogiBadge"
+                            (change)="verifiedKarmayogiCheck()" i18n-aria-label
+                            aria-label="Get Karmayogi badge checkbox"
                             [disabled]="userProfileData && userProfileData.verifiedKarmayogi">
                             <label class="margin-left-xs margin-remove-bottom" i18n-aria-label
                               aria-label="Get Karmayogi badge checkbox label" matTooltipPosition="right"
@@ -427,13 +434,13 @@
                           <span class="txt" *ngIf="!isAllowed('verifiedKarmayogi')">{{inReview}}</span>
                         </div>
                       </div>
-                    
-                    </div>
+
                     </div>
                   </div>
                 </div>
               </div>
-        
+            </div>
+
           </div>
           <!-- </div> -->
         </mat-tab>
@@ -519,10 +526,11 @@
                       Postal Address
                     </label>
                     <mat-form-field appearance="outline" class="w-full margin-top-xs">
-                      <textarea id="postalAddress" class="postal-address" matInput [matTextareaAutosize]="true" [matAutosizeMaxRows]="10"
-                        [matAutosizeMinRows]="3" maxlength="200" formControlName="residenceAddress"
-                        placeholder="Type Your Residence Address Here" i18n-placeholder #residenceAddress
-                        i18n-aria-label aria-label="Postal Address textarea input"></textarea>
+                      <textarea id="postalAddress" class="postal-address" matInput [matTextareaAutosize]="true"
+                        [matAutosizeMaxRows]="10" [matAutosizeMinRows]="3" maxlength="200"
+                        formControlName="residenceAddress" placeholder="Type Your Residence Address Here"
+                        i18n-placeholder #residenceAddress i18n-aria-label
+                        aria-label="Postal Address textarea input"></textarea>
                       <!-- <input matInput #residenceAddress formControlName="residenceAddress" i18n-placeholder
       placeholder="Enter Postal Address Here" [required]="true" /> -->
                       <mat-hint align="end">{{ residenceAddress.value.length }} /200 characters</mat-hint>
@@ -673,8 +681,19 @@
                   </div>
                 </div>
               </div>
+              <div class="w-full profile-cols-fill bg-gray mt-2">
+                <span class="mat-subheading-1 heading-details">Organisation details</span>
+              </div>
 
               <div class="flex flex-col w-full profile-cols-full bg-grey margin-top-m">
+                <div class="radio-toolbar flex-1" [ngClass]="{ disable: !isAllowed('isGovtOrg') }">
+                  <input type="radio" id="govtOrg" name="isGovtOrg" formControlName="isGovtOrg" [value]="true">
+                  <label for="govtOrg">Government Organisation</label>
+                  <input type="radio" id="nonGovtOrg" name="isGovtOrg" formControlName="isGovtOrg" [value]="false">
+                  <label for="nonGovtOrg">Non-Government Organisation</label>
+                  <br>
+                  <span class="txt" *ngIf="!isAllowed('isGovtOrg')">{{inReview}}</span>
+                </div>
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
                   <div class="item1" [ngClass]="{ disable: !isAllowed('name') }">
                     <p class=" margin-remove-bottom form-label"
@@ -684,7 +703,9 @@
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <mat-select #orgNameSelect formControlName="orgName" i18n-placeholder placeholder="--Select--"
                         (selectionChange)="otherDropDownChange(designation.value, 'orgname')">
-                        <mat-option [value]="org" *ngFor="let org of allDept">{{org}}
+                        <mat-option [value]="org" *ngFor="let org of allDept">
+                          <!-- {{org}} -->
+                          {{orgNameApprovalList?.feildName === 'name' ? orgNameApprovalList.value : org}}
                         </mat-option>
                         <mat-option [value]="'Other'">Other</mat-option>
                       </mat-select>
@@ -718,7 +739,7 @@
                       <mat-select #industrySelect formControlName="industry" i18n-placeholder placeholder="--Select--"
                         (selectionChange)="otherDropDownChange(designation.value, 'industry')">
                         <mat-option [value]="i.name" *ngFor="let i of industriesMeta">
-                          {{i.name}}
+                          {{industryApprovalList?.feildName === 'industry' ? industryApprovalList.value : i.name}}
                         </mat-option>
                         <mat-option [value]="'Other'">Other</mat-option>
                       </mat-select>
@@ -751,7 +772,7 @@
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <mat-select formControlName="location" i18n-placeholder placeholder="--Select--">
                         <mat-option [value]="loc.name" *ngFor="let loc of countries">
-                          {{loc.name}}
+                          {{countryApprovalList?.feildName === 'location' ? countryApprovalList.value : loc.name}}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
@@ -835,14 +856,6 @@
                       Allotment Year of Service
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <!-- <input matInput #allotmentYear formControlName="allotmentYear"
-        [matDatepicker]="allotmentYearPicker" i18n-placeholder
-        placeholder="Choose Allotment Year of Service" [min]="" [max]="today">
-      <mat-datepicker-toggle matSuffix [for]="allotmentYearPicker"></mat-datepicker-toggle>
-      <mat-datepicker #allotmentYearPicker></mat-datepicker>
-      <mat-error [hidden]="false" i18n="Allotment Year of Service Error|Explains name is required">
-        Allotment Year of Service is mandatory
-      </mat-error> -->
                       <input id="allotmentYearService" matInput #allotmentYear type="text"
                         formControlName="allotmentYear" i18n-placeholder placeholder="1998" maxlength="4"
                         (keypress)="numericOnly($event)" />
@@ -929,13 +942,18 @@
                     </mat-chip-list>
                     <p *ngIf="!selectedtags || !selectedtags.length" class="margin-top-xs mat-body-2">No tags available
                     </p>
+                    <span class="mat-subheading-2 lock-heading">Once Your department will approve your request, System will unlock this
+                      section.</span>
                   </div>
                 </div>
               </div>
-              <div class="w-full profile-cols-fill bg-gray" *ngIf="!isAllowed('name')">
+              <!-- <div class="w-full profile-cols-fill bg-gray" *ngIf="!isAllowed('name')">
                 <span class="mat-subheading-1">Once Your department will approve your request, System will unlock this
                   section.</span>
-              </div>
+              </div> -->
+            </div>
+            <div class="w-full profile-cols-fill bg-gray">
+              <span class="mat-subheading-1 heading-details">Academics details</span>
             </div>
             <div class="w-full profile-cols-full bg-grey">
               <p class="heading">10th Standard</p>
@@ -959,13 +977,6 @@
                     Year of Passsing
                   </label>
                   <mat-form-field appearance="outline" class="margin-top-xs">
-                    <!-- <input matInput #yop10 formControlName="yop10" [matDatepicker]="yop10Picker" i18n-placeholder
-                        placeholder="Choose Year of Passsing" [min]="" [max]="today">
-                      <mat-datepicker-toggle matSuffix [for]="yop10Picker"></mat-datepicker-toggle>
-                      <mat-datepicker #yop10Picker></mat-datepicker>
-                      <mat-error [hidden]="false" i18n="Year of Passsing Error|Explains name is required">
-                        Year of Passsing is mandatory
-                      </mat-error> -->
                     <input id="yearOfPassing" matInput #yop10 type="text" name="yop10" formControlName="yop10"
                       i18n-placeholder placeholder="1998" maxlength="4" (keypress)="numericOnly($event)" />
                     <mat-error [hidden]="false" *ngIf="createUserForm?.controls['yop10'].errors?.pattern">
@@ -997,13 +1008,6 @@
                     Year of Passsing
                   </label>
                   <mat-form-field appearance="outline" class="margin-top-xs">
-                    <!-- <input matInput #yop12 formControlName="yop12" [matDatepicker]="yop12Picker" i18n-placeholder
-                        placeholder="Choose Year of Passsing" [min]="" [max]="today">
-                      <mat-datepicker-toggle matSuffix [for]="yop12Picker"></mat-datepicker-toggle>
-                      <mat-datepicker #yop12Picker></mat-datepicker>
-                      <mat-error [hidden]="false" i18n="Year of Passsing Error|Explains name is required">
-                        Year of Passsing is mandatory
-                      </mat-error> -->
                     <input id="yearOfPassing12" matInput #yop12 type="text" formControlName="yop12" i18n-placeholder
                       placeholder="1998" maxlength="4" (keypress)="numericOnly($event)" />
                     <mat-error [hidden]="false" *ngIf="createUserForm?.controls['yop12'].errors?.pattern">
@@ -1022,12 +1026,6 @@
                       i18n="Degree label|Label which explains the user to enter Degree">
                       Degree
                     </p>
-                    <!-- <mat-form-field appearance="outline" class="margin-top-xs">
-                        <mat-select formControlName="degree" i18n-placeholder placeholder="--Select--">
-                          <mat-option [value]="deg.name" *ngFor="let deg of degreesMeta?.graduations">{{deg.name}}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field> -->
                     <mat-form-field appearance="outline" class="margin-top-xs w-full">
                       <input id="degree" matInput type="text" placeholder="--Select--" i18n-placeholder="Degree"
                         formControlName="degree" [matAutocomplete]="auto" i18n-aria-label aria-label="Graduation Degree"
@@ -1064,12 +1062,7 @@
                       i18n="First Name label|Label which explains the user to enter first name">
                       Institute Name
                     </label>
-                    <!-- <mat-form-field appearance="outline" class="margin-top-xs">
-                        <mat-select formControlName="instituteName" i18n-placeholder placeholder="--Select--">
-                          <mat-option [value]="name.value" *ngFor="let name of degreeInstitutes">{{name.name}}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field> -->
+
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="instituteName" matInput #instituteName formControlName="instituteName" i18n-placeholder
                         placeholder="Enter Institute Name" maxlength="50" />
@@ -1084,13 +1077,6 @@
                       Year of Passsing
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <!-- <input matInput #yop formControlName="yop" [matDatepicker]="yop" i18n-placeholder
-                          placeholder="Choose Year of Passsing" [min]="" [max]="today">
-                        <mat-datepicker-toggle matSuffix [for]="yop"></mat-datepicker-toggle>
-                        <mat-datepicker #yop></mat-datepicker>
-                        <mat-error [hidden]="false" i18n="Year of Passsing Error|Explains name is required">
-                          Year of Passsing is mandatory
-                        </mat-error> -->
                       <input id="yOP" matInput #yop type="text" formControlName="yop" i18n-placeholder
                         placeholder="1998" maxlength="4" (keypress)="numericOnly($event)" />
                       <mat-error [hidden]="false" *ngIf="degrees.get('yop').errors?.pattern">
@@ -1158,12 +1144,6 @@
                       i18n="First Name label|Label which explains the user to enter first name">
                       Institute Name
                     </label>
-                    <!-- <mat-form-field appearance="outline" class="margin-top-xs">
-                        <mat-select formControlName="instituteName" i18n-placeholder placeholder="--Select--">
-                          <mat-option [value]="name.value" *ngFor="let name of postDegreeInstitutes">{{name.name}}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field> -->
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="institute" matInput #instituteName formControlName="instituteName" i18n-placeholder
                         placeholder="Enter Institute Name" maxlength="50" />
@@ -1178,13 +1158,6 @@
                       Year of Passsing
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <!-- <input matInput #yop formControlName="yop" [matDatepicker]="yop" i18n-placeholder
-                          placeholder="Choose Year of Passsing" [min]="" [max]="today">
-                        <mat-datepicker-toggle matSuffix [for]="yop"></mat-datepicker-toggle>
-                        <mat-datepicker #yop></mat-datepicker>
-                        <mat-error [hidden]="false" i18n="Year of Passsing Error|Explains name is required">
-                          Year of Passsing is mandatory
-                        </mat-error> -->
                       <input id="yOP1" matInput #yop type="text" formControlName="yop" i18n-placeholder
                         placeholder="1998" maxlength="4" (keypress)="numericOnly($event)" />
                       <mat-error [hidden]="false" *ngIf="degrees.get('yop').errors?.pattern">

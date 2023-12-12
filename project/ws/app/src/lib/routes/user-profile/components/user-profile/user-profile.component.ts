@@ -132,6 +132,21 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   karmayogiBadge = false
   isVerifiedAlready = false
   selectedtags: any[] = []
+
+  needApprovalList: any[] = []
+
+  designationApprovalList: any
+  designationOthersApprovalList: any
+  groupApprovalList: any
+  industryApprovalList: any
+  industryOthersList: any
+  countryApprovalList: any
+  desApprovalList: any
+  dojList: any
+  orgNameApprovalList: any
+  typeApprovalList: any
+  orgTypeList: any
+
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -149,6 +164,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.approvalConfig = this.route.snapshot.data.pageData.data
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
     this.fetchPendingFields()
+    this.getApprovalRequests()
+
     // console.log('page data', this.approvalConfig)
     this.createUserForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
@@ -209,7 +226,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   async init() {
     await this.loadDesignations()
     this.fetchMeta()
-
   }
   ngOnInit() {
     // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
@@ -219,7 +235,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       return v.approvalRequired ? { [k]: v } : null
     }))
 
-    // console.log(this.activatedRoute.snapshot.data, "this.activatedRoute.snapshot.data=====")
     if (approvalData.length > 0) {
       // need to call search API
     }
@@ -250,6 +265,89 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         })
     }
   }
+
+  getApprovalRequests() {
+    const reqBody = {
+      serviceName: 'profile',
+      applicationStatus: 'SEND_FOR_APPROVAL',
+      applicationIds: [this.configSvc.unMappedUser.id],
+      // deptName: deptNameValue,
+      offset: 0,
+      limit: 100,
+    }
+    this.userProfileSvc.getApprovalReqs(reqBody).subscribe(
+      data => {
+        if (data.result.data && data.result.data[0].wfInfo) {
+          data.result.data[0].wfInfo.forEach((wf: any) => {
+            if (typeof wf.updateFieldValues === 'string') {
+              const fields = JSON.parse(wf.updateFieldValues)
+              if (fields.length > 0) {
+                fields.forEach((field: any) => {
+                  const labelKey = Object.keys(field.toValue)[0]
+                  //   const feildNameObj = this.profileData.filter(userData => userData.key === labelKey)[0]
+
+                  this.needApprovalList.push(
+                    Object.assign({
+                      wf,
+                      feildName: labelKey,
+                      label: labelKey,
+                      value: field.toValue[labelKey],
+                      fieldKey: field.fieldKey,
+                      wfId: wf.wfId,
+                    })
+                  )
+                })
+              }
+            }
+          })
+          // console.log('this.needApprovalList', this.needApprovalList)
+          this.getAllApprovalRequests(this.needApprovalList)
+        }
+      },
+      (_err: any) => {
+      })
+  }
+
+  getAllApprovalRequests(reqList: any[]) {
+    if (reqList) {
+      reqList.forEach((ele: any) => {
+        if (ele.feildName === 'designation') {
+          this.designationApprovalList = ele
+          this.createUserForm.controls['designation'].setValue(this.desApprovalList.value)
+
+        } if (ele.feildName === 'designationOther') {
+          this.designationOthersApprovalList = ele
+        } else if (ele.feildName === 'group') {
+          this.groupApprovalList = ele
+
+        } else if (ele.feildName === 'industry') {
+          this.industryApprovalList = ele
+
+        } else if (ele.feildName === 'industryOther') {
+          this.industryOthersList = ele
+
+        } else if (ele.feildName === 'location') {
+          this.countryApprovalList = ele
+
+        } else if (ele.feildName === 'description') {
+          this.desApprovalList = ele
+
+          this.createUserForm.controls['orgDesc'].setValue(this.desApprovalList.value)
+
+        } else if (ele.feildName === 'doj') {
+          this.dojList = ele
+          this.createUserForm.controls['otherDetailsDoj'].setValue(this.getDateFromText(this.dojList.value))
+
+        } else if (ele.feildName === 'organisationType') {
+          this.orgTypeList = ele
+
+        } else if (ele.feildName === 'name') {
+          this.orgNameApprovalList = ele
+        }
+      })
+    }
+  }
+
   fetchMeta() {
     this.userProfileSvc.getMasterCountries().subscribe(
       data => {
@@ -260,17 +358,17 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.onChangesCountry()
       },
       (_err: any) => {
-    })
+      })
 
     this.userProfileSvc.getGroups().subscribe(data => {
-        const res =  data.result.response
-        res.map((value: any) => {
-          this.groupsOriginal.push({ name: value })
-        })
-        this.onGroupChange()
-      },
-        (_err: any) => {
-    })
+      const res = data.result.response
+      res.map((value: any) => {
+        this.groupsOriginal.push({ name: value })
+      })
+      this.onGroupChange()
+    },
+                                              (_err: any) => {
+      })
 
     this.userProfileSvc.getMasterNationlity().subscribe(
       data => {
@@ -291,7 +389,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.onChangesNationality()
       },
       (_err: any) => {
-    })
+      })
 
     this.userProfileSvc.getMasterLanguages().subscribe(
       data => {
@@ -327,22 +425,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       },
       (_err: any) => {
       })
-
-    // const desreq = {
-    //   searches: [
-    //     {
-    //       type: 'POSITION',
-    //       field: 'name',
-    //       keyword: '',
-    //     },
-    //     {
-    //       field: 'status',
-    //       keyword: 'VERIFIED',
-    //       type: 'POSITION',
-    //     },
-    //   ],
-    // }
   }
+
   async loadDesignations() {
     await this.userProfileSvc.getDesignations({}).subscribe(
       (data: any) => {
@@ -459,6 +543,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     return this.groupsOriginal
   }
+
   onChangesNationality(): void {
 
     if (this.createUserForm.get('nationality') != null) {
@@ -771,22 +856,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         (_err: any) => {
         })
     } else {
-      // if (this.configSvc.userProfile) {
-      //   this.userProfileSvc.getUserdetails(this.configSvc.userProfile.email).subscribe(
-      //     data => {
-      //       if (data && data.length) {
-      //         this.createUserForm.patchValue({
-      //           firstname: data[0].first_name,
-      //           surname: data[0].last_name,
-      //           primaryEmail: data[0].email,
-      //           orgName: data[0].department_name,
-      //         })
-      //       }
-      //     },
-      //     () => {
-      //       // console.log('err :', err)
-      //     })
-      // }
       if (this.configSvc.userProfile) {
         const tempData = this.configSvc.userProfile
         this.userProfileData = _.get(this.configSvc, 'unMappedUser.profileDetails')
@@ -802,6 +871,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   private populateOrganisationDetails(data: any) {
+    //console.log(this.needApprovalList)
     let org = {
       isGovtOrg: true,
       orgName: '',
@@ -821,6 +891,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       // console.log("org", data.professionalDetails[0].industryOther);
       const organisation = data.professionalDetails[0]
       const isDesiAvailable = _.findIndex(this.designationsMeta, { name: organisation.designation }) !== -1
+      let pendingDesignation: any
+      if (this.designationApprovalList) {
+        pendingDesignation = this.designationApprovalList.value
+      }
+     // const pendingDesignationOther = this.designationOthersApprovalList.value
+      // console.log('pendingDesignation', pendingDesignation)
+      // console.log('isDesiAvailable', isDesiAvailable)
       org = {
         isGovtOrg: organisation.organisationType,
         orgName: organisation.name,
@@ -828,8 +905,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         industry: organisation.industry,
         industryOther: organisation.industryOther,
         // tslint:disable-next-line
-        // designation: isDesiAvailable ? organisation.designation : 'Other',
-        designation: organisation.designation || 'Other',
+      //  designation: isDesiAvailable ? organisation.designation : 'Other',
+        designation: pendingDesignation ? pendingDesignation : isDesiAvailable ? organisation.designation : 'Other',
         designationOther: isDesiAvailable ? '' : organisation.designation || organisation.designationOther,
         group: organisation.group,
         location: organisation.location,
@@ -844,7 +921,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         org.isGovtOrg = false
       }
     }
-
     return org
   }
 
@@ -953,7 +1029,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       schoolName12: academics.XII_STANDARD.schoolName12,
       yop12: academics.XII_STANDARD.yop12,
       isGovtOrg: organisation.isGovtOrg,
-      // orgName: organisation.orgName,
+      //orgName: organisation.orgName,
       industry: organisation.industry,
       designation: organisation.designation || _.get(data, 'professionalDetails.designation'),
       group: organisation.group || _.get(data, 'professionalDetails.group'),
@@ -980,7 +1056,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       {
         emitEvent: true,
       })
-
+    console.log('this.createUserForm', this.createUserForm.controls)
     if (data.verifiedKarmayogi) {
       this.isVerifiedAlready = data.verifiedKarmayogi
       this.karmayogiBadge = data.verifiedKarmayogi
@@ -1422,18 +1498,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           }
 
         })
-        // academicsFields.forEach((item)=>{
-        //   if(item === name ){
-        //     academics = this.getAcademics(form);
-        //   }
-        // })
-
-        // let obj:any = { }
-        // obj[name] = currentControl.value
-        // this.changedProperties.push(name);
-        // this.changedProperties = Object.assign({name: currentControl.value},   )
-        // this object will have dirty field key and value
-        // this.changedProperties.push(name)
       }
 
     })
