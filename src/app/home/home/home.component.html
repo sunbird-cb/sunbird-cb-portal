@@ -177,20 +177,30 @@
     <ws-download-app></ws-download-app>
 </div>
 
-<div class="footer footer-update-mobile-number" *ngIf="isNudgeOpen">
+<!-- <div class="footer footer-update-mobile-number" *ngIf="isNudgeOpen">
     <div (click)="remindlater()" class="desktop-cross">X</div>
     <div class="update-mobile-number-flex">
         <span (click)="remindlater()" class="mobile-cross">X</span>
         <img class="hand-icon" src="assets/icons/footer-nav/update-mobile-number.svg"/>
         <p class="updatetitle">Update your mobile number {{activeRoute}}</p>
-        <button class="ui fluid-button update-now" (click)="fetchProfile()" role="button">Update</button>
+        <button class="ui fluid-button update-now" (click)="fetchProfile()" role="button">Update</button> -->
         <!-- <button class="remind-later" (click)="remindlater()" role="button">Remind Later</button> -->
-        <button class="update-profile" (click)="fetchProfile()" role="button">Update</button>
+        <!-- <button class="update-profile" (click)="fetchProfile()" role="button">Update</button>
         <span class="inline-info">
             <span class='tool material-icons tooltips' matTooltip="My tooltip">error_outline</span>
             <span class="tooltip-check ws-mat-default-text">Why it is important ?
                 <span class="tooltiptext-check">Update your mobile number. This will enable you to login with your mobile number easily and receive important alerts on your mobile.</span>
             </span>
         </span>
+    </div>
+</div> -->
+
+<div class="footer footer-update-mobile-number" *ngIf="isNudgeOpen">
+    <div (click)="remindlater()" class="desktop-cross">X</div>
+    <div class="update-mobile-number-flex">
+        <span (click)="remindlater()" class="mobile-cross">X</span>
+        <img class="hand-icon" src="assets/icons/footer-nav/update-mobile-number.svg"/>
+        <p class="updatetitle">Update your profile and get it verified</p>
+        <button class="ui fluid-button update-now" (click)="fetchProfile()" role="button">Update now</button>
     </div>
 </div>

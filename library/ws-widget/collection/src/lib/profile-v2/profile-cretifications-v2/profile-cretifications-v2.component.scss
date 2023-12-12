@@ -94,3 +94,12 @@ mat-card-actions {
   width: 100px;
   padding-right: 24px;
 }
+
+@media screen and (max-width: 768px) {
+  .detais-view {
+    width: calc(100vw - 220px);
+  }
+  .detais-view > div{
+    word-break: break-word;
+  }
+}
