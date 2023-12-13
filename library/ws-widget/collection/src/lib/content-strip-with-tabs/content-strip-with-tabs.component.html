@@ -78,7 +78,7 @@
                   <mat-tab *ngFor="let tab of stripsResultDataMap[key].tabs; let last = last;">
                     <ng-template mat-tab-label>
                       <span>{{tab?.label}} &nbsp;</span> 
-                      <span *ngIf="tab?.showTabDataCount">({{tab?.widgets?.length}})</span>
+                      <span *ngIf="tab?.showTabDataCount && tab?.widgets?.length">({{tab?.widgets?.length}})</span>
                     </ng-template>
                     <div>
                       <!-- <ng-container [ngTemplateOutlet]="loader" *ngIf="stripsResultDataMap[key]?.showOnLoader">
@@ -95,10 +95,19 @@
                       </div>
                       <div *ngIf="((tab.fetchTabStatus && tab.fetchTabStatus === 'done') && 
                       (!tab?.widgets || !tab?.widgets?.length))">
-                          <div class="w-full flex flex-col items-center justify-center">
-                            <img alt="" class="mt-4 mb-4" src="assets/icons/home/nodataDefault.png">
-                            <div class="mat-subheading-1 text-center">{{tab.nodataMsg}}</div>
-                          </div>
+                      <ng-container *ngIf="tab.value === 'inprogress'; else msgTemp">
+                        <div class="w-full flex flex-col items-center justify-center">
+                          <img alt="" class="mt-4 mb-4" src="assets/icons/home/nodataDefault.svg">
+                          <div class="mat-subheading-1 text-center info-content">Get ready for your next learning adventure - 
+                            <a class="click-here" [routerLink]="'/page/learn'">Click here</a> to enroll in your next course now!</div>
+                        </div>
+                      </ng-container>
+                      <ng-template #msgTemp>
+                        <div class="w-full flex flex-col items-center justify-center">
+                          <img alt="" class="mt-4 mb-4" src="assets/icons/home/nodataDefault.png">
+                          <div class="mat-subheading-1 text-center">{{tab.nodataMsg}}</div>
+                        </div>
+                      </ng-template>
                       </div>
                       <ng-container *ngIf="tab.fetchTabStatus === 'done' || tab?.widgets?.length">
                         <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig" [widgetsLength]="tab.widgets?.length"

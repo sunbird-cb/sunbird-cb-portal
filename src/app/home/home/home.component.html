@@ -9,15 +9,15 @@
         <div class="bg-primary" [ngClass]="
         homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'right' : 
         (!homeConfig?.rightSection?.active && !homeConfig?.leftSection?.active) ? 'full' : ''" *ngIf="homeConfig?.rightSection?.active">
-            <div class="flex flex-col gap-4">
-                <div class="home-container mt-8">
+            <div class="flex flex-col gap-4 mt-8">
+                <!-- <div class="home-container mt-8">
                     <div class="flex flex-1">
                         <p class="mat-subheading-1 inline-block flex gap-2 items-center feed-title cursor-pointer" [routerLink]="'/page/learn'">
                             Go to learn hub 
                             <mat-icon class="ws-mat-default-text mr-3 mat-icon notranslate material-icons mat-icon-no-color feed-title-icon" [color]="'accent'">navigate_next</mat-icon>
                         </p>
                     </div>                    
-                </div>
+                </div> -->
                 <ng-container *ngIf="enableLazyLoadingFlag">
                     <ng-container *ngFor="let item of contentStripData; let i=index; trackBy i">  
                         <ng-container *ngFor="let vitem of sectionList;let j=index; trackBy j">
@@ -89,15 +89,15 @@
         <div class="bg-primary" [ngClass]="
         homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'right' : 
         (!homeConfig?.rightSection?.active && !homeConfig?.leftSection?.active) ? 'full' : ''" *ngIf="homeConfig?.rightSection?.active">
-            <div class="flex flex-col gap-3">
-                <div class="home-container mt-8">
+            <div class="flex flex-col gap-3 mt-8">
+                <!-- <div class="home-container mt-8">
                     <div class="flex flex-1 cursor-pointer" [routerLink]="'/page/learn'">
                         <p class="mat-subheading-1 inline-block flex gap-2 items-center feed-title">
                             Go to learn hub 
                             <mat-icon class="ws-mat-default-text mr-3 mat-icon notranslate material-icons mat-icon-no-color feed-title-icon" [color]="'accent'">navigate_next</mat-icon>
                         </p>
                     </div>                    
-                </div>
+                </div> -->
                 <ng-container *ngIf="enableLazyLoadingFlag">
                     <ng-container *ngFor="let item of contentStripData; let i=index; trackBy i">  
                         <ng-container *ngFor="let vitem of sectionList;let j=index; trackBy j">
@@ -177,20 +177,30 @@
     <ws-download-app></ws-download-app>
 </div>
 
-<div class="footer footer-update-mobile-number" *ngIf="isNudgeOpen">
+<!-- <div class="footer footer-update-mobile-number" *ngIf="isNudgeOpen">
     <div (click)="remindlater()" class="desktop-cross">X</div>
     <div class="update-mobile-number-flex">
         <span (click)="remindlater()" class="mobile-cross">X</span>
         <img class="hand-icon" src="assets/icons/footer-nav/update-mobile-number.svg"/>
         <p class="updatetitle">Update your mobile number {{activeRoute}}</p>
-        <button class="ui fluid-button update-now" (click)="fetchProfile()" role="button">Update</button>
+        <button class="ui fluid-button update-now" (click)="fetchProfile()" role="button">Update</button> -->
         <!-- <button class="remind-later" (click)="remindlater()" role="button">Remind Later</button> -->
-        <button class="update-profile" (click)="fetchProfile()" role="button">Update</button>
+        <!-- <button class="update-profile" (click)="fetchProfile()" role="button">Update</button>
         <span class="inline-info">
             <span class='tool material-icons tooltips' matTooltip="My tooltip">error_outline</span>
             <span class="tooltip-check ws-mat-default-text">Why it is important ?
                 <span class="tooltiptext-check">Update your mobile number. This will enable you to login with your mobile number easily and receive important alerts on your mobile.</span>
             </span>
         </span>
+    </div>
+</div> -->
+
+<div class="footer footer-update-mobile-number" *ngIf="isNudgeOpen">
+    <div (click)="remindlater()" class="desktop-cross">X</div>
+    <div class="update-mobile-number-flex">
+        <span (click)="remindlater()" class="mobile-cross">X</span>
+        <img class="hand-icon" src="assets/icons/footer-nav/update-mobile-number.svg"/>
+        <p class="updatetitle">Update your profile and get it verified</p>
+        <button class="ui fluid-button update-now" (click)="fetchProfile()" role="button">Update now</button>
     </div>
 </div>
