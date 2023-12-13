@@ -1339,6 +1339,10 @@ $title-line-count: 2;
 }
 .card-portrait-clickable {
   min-height: unset;
+  .right-corner-portrait {
+    right: 4px;
+    bottom: 16px;
+  }
 }
 
 .card-portrait-clickable:hover {

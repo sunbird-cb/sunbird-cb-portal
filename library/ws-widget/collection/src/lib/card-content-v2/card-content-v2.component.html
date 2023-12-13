@@ -723,7 +723,7 @@
             <div class="duration-box right-corner" *ngIf="widgetData?.content?.programDuration > 0">
               <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
               <span class=" ws-mat-white-text duration"> 
-                {{widgetData?.content?.programDuration}} day(s)
+                {{widgetData?.content?.programDuration}} {{widgetData?.content?.programDuration === 1 ? day : days}}
               </span>
             </div>
           </div>
@@ -1073,7 +1073,7 @@
 </ng-template>
 
 <ng-template #cardPortrait>
-    <mat-card class="card-portrait" [ngClass]="widgetData.cardCustomeClass ? widgetData.cardCustomeClass : ''">
+    <mat-card class="card-portrait cursor-pointer" [ngClass]="widgetData.cardCustomeClass ? widgetData.cardCustomeClass : ''" [routerLink]="['/app/toc/',widgetData.content.identifier,'overview']" [queryParams]="{primaryCategory: widgetData.content.primaryCategory}" [state]="widgetData?.stateData">
       <div class="flex">
         <div class="margin-right-s">
           <ng-container *ngIf="widgetData.content.posterImage">
@@ -1145,8 +1145,7 @@
             </div>
           </div>
           <div class="progress-btn">
-            <button class="resume-btn flex flex-middle flex-between " [routerLink]="['/app/toc/',widgetData.content.identifier,'overview']"
-            [queryParams]="{primaryCategory: widgetData.content.primaryCategory}" [state]="widgetData?.stateData">
+            <button class="resume-btn flex flex-middle flex-between">
               <span class="margin-right-s">{{!widgetData.content?.completionPercentage ? 'Start' : 'Resume'}}</span> 
               <img class="stats-icon" height="20" width="20" src="/assets/icons/home/play.svg">
             </button>
@@ -1421,11 +1420,23 @@
   role="link" i18n-aria-label>
     <mat-card class="card-portrait mr-2 card-portrait-clickable min-height-remove" [ngClass]="widgetData.cardCustomeClass ? widgetData.cardCustomeClass : ''">
         <div class="flex">
-          <div class="margin-right-s">
+          <div class="margin-right-s position-relative">
             <ng-container *ngIf="widgetData.content.posterImage">
               <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" loading="lazy"
               class="card-image ws-mat-primary-lite-background margin-remove" [wsUtilsDefaultThumbnail]="defaultThumbnail"
               [alt]="widgetData.content.name" />
+              <div class="duration-box right-corner-portrait" *ngIf="widgetData?.content?.duration > 0">
+                <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
+                <span class=" ws-mat-white-text duration"> 
+                  {{ (widgetData?.content?.duration || 120)| pipeDurationTransform: 'hms' }}
+                </span>
+              </div>
+              <div class="duration-box right-corner-portrait" *ngIf="widgetData?.content?.programDuration > 0">
+                <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
+                <span class=" ws-mat-white-text duration"> 
+                  {{widgetData?.content?.programDuration}} {{widgetData?.content?.programDuration === 1 ? day : days}}
+                </span>
+              </div>
             </ng-container>
             <ng-container *ngIf="!widgetData.content.posterImage">
               <ng-container *ngIf="widgetData.content.appIcon; else defaultImg">

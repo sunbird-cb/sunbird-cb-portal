@@ -38,7 +38,7 @@
                                     [style.background]="data?.user['icon:bgColor']">
                                     {{ data?.user['icon:text'] }}
                                 </div>
-                                <div class="text-sm">{{ data?.user?.username || 'Anonymous' }}</div>
+                                <div class="text-sm">{{ data?.user?.displayname || 'Anonymous' }}</div>
                                 <div>.</div>
                                 <div class="text-sm">{{ data?.timestamp | pipeRelativeTime }}</div>
                             </div>
