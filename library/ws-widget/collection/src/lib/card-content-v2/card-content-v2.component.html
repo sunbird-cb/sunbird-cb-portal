@@ -723,7 +723,7 @@
             <div class="duration-box right-corner" *ngIf="widgetData?.content?.programDuration > 0">
               <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
               <span class=" ws-mat-white-text duration"> 
-                {{widgetData?.content?.programDuration}} {{widgetData?.content?.programDuration === 1 ? day : days}}
+                {{widgetData?.content?.programDuration}} {{widgetData?.content?.programDuration === 1 ? 'day' : 'days'}}
               </span>
             </div>
           </div>
@@ -1434,7 +1434,7 @@
               <div class="duration-box right-corner-portrait" *ngIf="widgetData?.content?.programDuration > 0">
                 <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
                 <span class=" ws-mat-white-text duration"> 
-                  {{widgetData?.content?.programDuration}} {{widgetData?.content?.programDuration === 1 ? day : days}}
+                  {{widgetData?.content?.programDuration}} {{widgetData?.content?.programDuration === 1 ? 'day' : 'days'}}
                 </span>
               </div>
             </ng-container>
@@ -1492,10 +1492,8 @@
             <ws-widget-skeleton-loader [bindingClass]="'flex rounded width-1-1'"></ws-widget-skeleton-loader>
         </div>
         <div class="flex w-full flex-wrap flex-middle">
-          <div class=" margin-right-xs">
-            <ws-widget-skeleton-loader [width]="'24px'" [height]="'24px'"  [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
-          </div>
-          <span class=""><ws-widget-skeleton-loader [width]="'133px'" [height]="'12px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader></span>
+            <ws-widget-skeleton-loader [width]="'24px'" [height]="'24px'"  [bindingClass]="'flex rounded margin-right-xs'"></ws-widget-skeleton-loader>
+            <ws-widget-skeleton-loader [width]="'100px'" [height]="'12px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
         </div>
         <div class="portrait_widget flex margin-top-xs">
           <div class="flex flex-end flex-middle">
