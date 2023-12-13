@@ -341,11 +341,11 @@
                             formControlName="group">
                             <mat-option *ngFor="let option of groupsOriginal" [value]="option.name">
                               <span *ngIf="option.name !== 'Others'">
-                                {{groupApprovalList?.feildName === 'group' ? groupApprovalList.value : option.name}}
+                                {{grpApvlReq?.feildName === 'group' ? grpApvlReq.value : option.name}}
                               </span>
                             </mat-option>
                           </mat-select>
-                          <mat-error [hidden]="false" i18n="Group Error | Explains Group is required"
+                          <mat-error [hidden]="false" i18n="txt txt-reviewGroup Error | Explains Group is required"
                             *ngIf="registrationForm?.controls['group'].errors?.required" i18n-aria-label
                             aria-label="Group is mandatory">
                             Group is mandatory
@@ -366,8 +366,7 @@
                               (selectionChange)="otherDropDownChange(designation.value, 'designation')">
                               <mat-option [value]="designation.name" *ngFor="let designation of designationsMeta">
                                 <!-- {{designation.name}} -->
-                                {{designationApprovalList?.feildName == 'designation' ? designationApprovalList?.value :
-                                designation.name}}
+                                {{desigApvlReq?.feildName == 'designation' ? desigApvlReq?.value : designation.name}}
                               </mat-option>
                               <mat-option [value]="'Other'">Other</mat-option>
                             </mat-select>
@@ -705,7 +704,7 @@
                         (selectionChange)="otherDropDownChange(designation.value, 'orgname')">
                         <mat-option [value]="org" *ngFor="let org of allDept">
                           <!-- {{org}} -->
-                          {{orgNameApprovalList?.feildName === 'name' ? orgNameApprovalList.value : org}}
+                          {{orgNameApvlReq?.feildName === 'name' ? orgNameApvlReq.value : org}}
                         </mat-option>
                         <mat-option [value]="'Other'">Other</mat-option>
                       </mat-select>
@@ -713,7 +712,7 @@
                     <span class="txt" *ngIf="!isAllowed('name')">{{inReview}}</span>
                   </div>
                   <div class="item1" *ngIf="orgNameSelect.value === 'Other' || showOrgnameOther"
-                    [ngClass]="{ disable: !isAllowed('showOrgnameOther') }">
+                    [ngClass]="{ disable: !isAllowed('orgNameOther') }">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Other label|Label which explains the user to enter Other">
                       Other
@@ -739,7 +738,7 @@
                       <mat-select #industrySelect formControlName="industry" i18n-placeholder placeholder="--Select--"
                         (selectionChange)="otherDropDownChange(designation.value, 'industry')">
                         <mat-option [value]="i.name" *ngFor="let i of industriesMeta">
-                          {{industryApprovalList?.feildName === 'industry' ? industryApprovalList.value : i.name}}
+                          {{indApvlReq?.feildName === 'industry' ? indApvlReq.value : i.name}}
                         </mat-option>
                         <mat-option [value]="'Other'">Other</mat-option>
                       </mat-select>
@@ -747,7 +746,7 @@
                     <span class="txt" *ngIf="!isAllowed('industry')">{{inReview}}</span>
                   </div>
                   <div class="item1" *ngIf="industrySelect.value === 'Other' || showIndustryOther"
-                    [ngClass]="{ disable: !isAllowed('showIndustryOther') }">
+                    [ngClass]="{ disable: !isAllowed('industryOther') }">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Other label|Label which explains the user to enter Other">
                       Other
@@ -772,7 +771,7 @@
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <mat-select formControlName="location" i18n-placeholder placeholder="--Select--">
                         <mat-option [value]="loc.name" *ngFor="let loc of countries">
-                          {{countryApprovalList?.feildName === 'location' ? countryApprovalList.value : loc.name}}
+                          {{countryApvlReq?.feildName === 'location' ? countryApvlReq.value : loc.name}}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>

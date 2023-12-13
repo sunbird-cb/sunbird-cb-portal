@@ -134,18 +134,18 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   selectedtags: any[] = []
 
   needApprovalList: any[] = []
-
-  designationApprovalList: any
-  designationOthersApprovalList: any
-  groupApprovalList: any
-  industryApprovalList: any
-  industryOthersList: any
-  countryApprovalList: any
-  desApprovalList: any
-  dojList: any
-  orgNameApprovalList: any
-  typeApprovalList: any
-  orgTypeList: any
+  desigApvlReq: any
+  desigOtherApvlReq: any
+  grpApvlReq: any
+  indApvlReq: any
+  indOtherApvlReq: any
+  countryApvlReq: any
+  descApvlReq: any
+  dojApvlReq: any
+  orgNameApvlReq: any
+  orgOtherNameApvlReq: any
+  typeApvlReq: any
+  orgTypeApvlReq: any
 
   constructor(
     private snackBar: MatSnackBar,
@@ -166,7 +166,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.fetchPendingFields()
     this.getApprovalRequests()
 
-    // console.log('page data', this.approvalConfig)
     this.createUserForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       middlename: new FormControl('', [Validators.pattern(this.namePatern)]),
@@ -285,7 +284,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
                 fields.forEach((field: any) => {
                   const labelKey = Object.keys(field.toValue)[0]
                   //   const feildNameObj = this.profileData.filter(userData => userData.key === labelKey)[0]
-
                   this.needApprovalList.push(
                     Object.assign({
                       wf,
@@ -300,7 +298,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               }
             }
           })
-          // console.log('this.needApprovalList', this.needApprovalList)
+          // console.log('All ApprovalList', this.needApprovalList)
           this.getAllApprovalRequests(this.needApprovalList)
         }
       },
@@ -309,40 +307,39 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   getAllApprovalRequests(reqList: any[]) {
-    if (reqList) {
+    if (reqList && reqList.length > 0) {
       reqList.forEach((ele: any) => {
         if (ele.feildName === 'designation') {
-          this.designationApprovalList = ele
-          this.createUserForm.controls['designation'].setValue(this.desApprovalList.value)
-
+          this.desigApvlReq = ele
         } if (ele.feildName === 'designationOther') {
-          this.designationOthersApprovalList = ele
+          this.desigOtherApvlReq = ele
         } else if (ele.feildName === 'group') {
-          this.groupApprovalList = ele
+          this.grpApvlReq = ele
 
         } else if (ele.feildName === 'industry') {
-          this.industryApprovalList = ele
-
+          this.indApvlReq = ele
+          if (ele.value === 'Other') {
+            this.showIndustryOther = true
+          }
         } else if (ele.feildName === 'industryOther') {
-          this.industryOthersList = ele
+          this.indOtherApvlReq = ele
 
         } else if (ele.feildName === 'location') {
-          this.countryApprovalList = ele
+          this.countryApvlReq = ele
 
         } else if (ele.feildName === 'description') {
-          this.desApprovalList = ele
-
-          this.createUserForm.controls['orgDesc'].setValue(this.desApprovalList.value)
-
+          this.descApvlReq = ele
         } else if (ele.feildName === 'doj') {
-          this.dojList = ele
-          this.createUserForm.controls['otherDetailsDoj'].setValue(this.getDateFromText(this.dojList.value))
-
+          this.dojApvlReq = ele
         } else if (ele.feildName === 'organisationType') {
-          this.orgTypeList = ele
+          this.orgTypeApvlReq = ele
 
         } else if (ele.feildName === 'name') {
-          this.orgNameApprovalList = ele
+          this.orgNameApvlReq = ele
+
+        } else if (ele.feildName === 'nameOther') {
+          this.orgOtherNameApvlReq = ele
+          this.showOrgnameOther = true
         }
       })
     }
@@ -569,7 +566,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   onChangesCountry(): void {
-
     // tslint:disable-next-line: no-non-null-assertion
     this.country = this.createUserForm.get('location')!.valueChanges
       .pipe(
@@ -579,7 +575,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
         map(name => name ? this.filterCountry(name) : this.countries.slice()),
       )
-    // console.log('this.masterLanguagesEntries', this.masterLanguages)
   }
 
   onChangesLanuage(): void {
@@ -592,7 +587,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
         map(name => name ? this.filterLanguage(name) : this.masterLanguagesEntries.slice()),
       )
-    // console.log('this.masterLanguagesEntries', this.masterLanguages)
   }
 
   onChangesKnownLanuage(): void {
@@ -871,7 +865,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   private populateOrganisationDetails(data: any) {
-    // console.log(this.needApprovalList)
     let org = {
       isGovtOrg: true,
       orgName: '',
@@ -888,31 +881,26 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       designationOther: '',
     }
     if (data && data.professionalDetails && data.professionalDetails.length > 0) {
-      // console.log("org", data.professionalDetails[0].industryOther);
       const organisation = data.professionalDetails[0]
-      const isDesiAvailable = _.findIndex(this.designationsMeta, { name: organisation.designation }) !== -1
-      let pendingDesignation: any
-      if (this.designationApprovalList) {
-        pendingDesignation = this.designationApprovalList.value
-      }
-     // const pendingDesignationOther = this.designationOthersApprovalList.value
-      // console.log('pendingDesignation', pendingDesignation)
-      // console.log('isDesiAvailable', isDesiAvailable)
+      // const isDesiAvailable = _.findIndex(this.designationsMeta, { name: organisation.designation }) !== -1
       org = {
         isGovtOrg: organisation.organisationType,
-        orgName: organisation.name,
-        orgNameOther: organisation.nameOther,
-        industry: organisation.industry,
-        industryOther: organisation.industryOther,
+        orgName: this.orgNameApvlReq && this.orgNameApvlReq.value ? this.orgNameApvlReq.value : organisation.name,
+        orgNameOther: this.orgOtherNameApvlReq && this.orgOtherNameApvlReq.value ? this.orgOtherNameApvlReq.value : organisation.nameOther,
+        industry: this.indApvlReq && this.indApvlReq.value ? this.indApvlReq.value : organisation.industry || 'Other',
+        industryOther: this.indOtherApvlReq && this.indOtherApvlReq.value ? this.indOtherApvlReq.value : organisation.industryOther,
         // tslint:disable-next-line
-      //  designation: isDesiAvailable ? organisation.designation : 'Other',
-        designation: pendingDesignation ? pendingDesignation : isDesiAvailable ? organisation.designation : 'Other',
-        designationOther: isDesiAvailable ? '' : organisation.designation || organisation.designationOther,
+        // designation: pendingDesignation ? this.desigApvlReq.value : isDesiAvailable ? organisation.designation : 'Other',
+        // designationOther: isDesiAvailable ? '' : organisation.designation || organisation.designationOther,
+        designation: this.desigApvlReq && this.desigApvlReq.value ? this.desigApvlReq.value : organisation.designation || 'Other',
+        // tslint:disable-next-line: max-line-length
+        designationOther: this.desigOtherApvlReq && this.desigOtherApvlReq.value ? this.desigOtherApvlReq.value : organisation.designationOther,
         group: organisation.group,
-        location: organisation.location,
+        location: this.countryApvlReq && this.countryApvlReq.value ? this.countryApvlReq.value : organisation.location,
         responsibilities: organisation.responsibilities,
-        doj: this.getDateFromText(organisation.doj),
-        orgDesc: organisation.description,
+        // tslint:disable-next-line: max-line-length
+        doj: this.dojApvlReq && this.dojApvlReq.value ? this.getDateFromText(this.dojApvlReq.value) : this.getDateFromText(organisation.doj),
+        orgDesc: this.descApvlReq && this.descApvlReq.value ? this.descApvlReq.value : organisation.description,
         completePostalAddress: organisation.completePostalAddress,
       }
       if (organisation.organisationType === 'Government') {
@@ -1056,7 +1044,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       {
         emitEvent: true,
       })
-    console.log('this.createUserForm', this.createUserForm.controls)
     if (data.verifiedKarmayogi) {
       this.isVerifiedAlready = data.verifiedKarmayogi
       this.karmayogiBadge = data.verifiedKarmayogi
@@ -1419,7 +1406,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     Object.keys(this.createUserForm.controls).forEach(name => {
       const currentControl = this.createUserForm.controls[name]
-      // console.log(name, form.value.primaryEmailType)
       if (form.value.primaryEmailType === this.ePrimaryEmailType.OFFICIAL) {
         personalDetail['officialEmail'] = form.value.primaryEmail
       } else {
@@ -1477,7 +1463,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         professionalDetailsFields.forEach(item => {
 
           if (item === name) {
-            // console.log(name)
             switch (name) {
               case 'orgName': return organisations['name'] = form.value.orgName
               // tslint:disable-next-line
@@ -1503,7 +1488,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     })
 
     if (Object.keys(organisations).length > 0) { professionalDetails.push(organisations) }
-    // console.log(organisations, professionalDetails);
     this.changedProperties = {
       profileDetails: {
         ...(Object.keys(personalDetail).length > 0) && { personalDetails: personalDetail },
@@ -1611,7 +1595,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         }
       },
       (err: any) => {
-        // console.log('err -----', err)
         const errMsg = _.get(err, 'error.params.errmsg')
         if (errMsg) {
           this.openSnackbar(errMsg)
