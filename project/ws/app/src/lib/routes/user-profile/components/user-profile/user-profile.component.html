@@ -368,12 +368,12 @@
                                 <!-- {{designation.name}} -->
                                 {{desigApvlReq?.feildName == 'designation' ? desigApvlReq?.value : designation.name}}
                               </mat-option>
-                              <mat-option [value]="'Other'">Other</mat-option>
+                              <!-- <mat-option [value]="'Other'">Other</mat-option> -->
                             </mat-select>
                           </mat-form-field>
                           <span class="txt" *ngIf="!isAllowed('designation')">{{inReview}}</span>
                         </div>
-                        <div class="item1" *ngIf="designation.value === 'Other' || showDesignationOther"
+                        <!-- <div class="item1" *ngIf="designation.value === 'Other' || showDesignationOther"
                           [ngClass]="{ disable: !isAllowed('showDesignationOther') }">
                           <p class=" margin-remove-bottom form-label"
                             i18n="Other label|Label which explains the user to enter Other">
@@ -387,7 +387,7 @@
                             </mat-error>
                           </mat-form-field>
                           <span class="txt" *ngIf="!isAllowed('designationOther')">{{inReview}}</span>
-                        </div>
+                        </div> -->
                       </div>
 
 
