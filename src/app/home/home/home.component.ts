@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           "logo": "forum",
           "title": "discuss",
           "stripBackground": "assets/instances/eagle/background/discuss.svg",
-          "titleDescription": "Trending discussions",
+          "titleDescription": "Trending Discussions",
           "stripConfig": {
             "cardSubType": "cardHomeDiscuss"
           },
@@ -179,9 +179,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
         // if (x.profileDetails.mandatoryFieldsExists) {
         //   this.isNudgeOpen = false
         // }
-        if (x && x.profileDetails && x.profileDetails.personalDetails && x.profileDetails.personalDetails.phoneVerified) {
+        let profilePopUp = sessionStorage.getItem('hideUpdateProfilePopUp')
+        if(profilePopUp !== null){
+          this.isNudgeOpen = false
+        }else if (x && x.profileDetails && x.profileDetails.mandatoryFieldsExists) {
           this.isNudgeOpen = false
         }
+        // if (x && x.profileDetails && x.profileDetails.personalDetails && x.profileDetails.personalDetails.phoneVerified) {
+        //   this.isNudgeOpen = false
+        // }
       })
     }
   }
@@ -256,6 +262,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   // }
   
   remindlater() { 
+    sessionStorage.setItem('hideUpdateProfilePopUp', 'true')
     this.isNudgeOpen = false
   }
   

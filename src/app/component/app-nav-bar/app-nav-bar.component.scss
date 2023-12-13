@@ -259,11 +259,17 @@
     margin:0;
     justify-content: center;
   }
+
   .mobile-footer-fixed-nav-list-item {
     min-width: 90px;    
     list-style: none;
-    text-align: center;    
+    text-align: center;
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
+
   .mobile-footer-fixed-nav-list-item .active {
     border-top: 1px solid rgb(27, 76, 161);
     background-color: rgba(27, 76, 161, 0.16);
@@ -272,13 +278,11 @@
   .icon-container {
     display: flex;
     flex-direction: column;
-    height: 64px;
-    margin-top: 12px;
-    margin-bottom: 28px;
-    margin-right: 35px;
-    /* text-align: center; */
-    margin-left: 35px;
+    width: 56px;
+    height: 56px;
+    justify-content: center;
     align-items: center;
+    border-radius: 50%;
   }
 
   .icon-container img {

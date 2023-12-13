@@ -173,7 +173,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.selectedTabIndex) {
       window.scrollTo({
-        top: 420,
+        top: 360,
         behavior: 'smooth',
       })
     }

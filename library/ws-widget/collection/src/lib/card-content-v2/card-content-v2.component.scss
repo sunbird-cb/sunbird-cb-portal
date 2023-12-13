@@ -1172,6 +1172,7 @@ $title-line-count: 2;
     border-radius: 4px;
   }
 }
+
 .card-portrait {
   border-radius: 12px;
   border: 1px solid rgba(0,0,0, 0.08);
@@ -1333,7 +1334,20 @@ $title-line-count: 2;
   opacity: 0.6 !important;
   cursor: not-allowed !important;
 }
+.min-height-remove {
+  min-height: unset !important;
+}
+.card-portrait-clickable {
+  min-height: unset;
+  .right-corner-portrait {
+    right: 4px;
+    bottom: 16px;
+  }
+}
 
+.card-portrait-clickable:hover {
+  transform: scale(1.02);
+}
 @media only screen and (max-width:768px) {
   .card-portrait {
     width: calc(100vw - 66px);
