@@ -1073,7 +1073,7 @@
 </ng-template>
 
 <ng-template #cardPortrait>
-    <mat-card class="card-portrait" [ngClass]="widgetData.cardCustomeClass ? widgetData.cardCustomeClass : ''">
+    <mat-card class="card-portrait cursor-pointer" [ngClass]="widgetData.cardCustomeClass ? widgetData.cardCustomeClass : ''" [routerLink]="['/app/toc/',widgetData.content.identifier,'overview']" [queryParams]="{primaryCategory: widgetData.content.primaryCategory}" [state]="widgetData?.stateData">
       <div class="flex">
         <div class="margin-right-s">
           <ng-container *ngIf="widgetData.content.posterImage">
@@ -1145,8 +1145,7 @@
             </div>
           </div>
           <div class="progress-btn">
-            <button class="resume-btn flex flex-middle flex-between " [routerLink]="['/app/toc/',widgetData.content.identifier,'overview']"
-            [queryParams]="{primaryCategory: widgetData.content.primaryCategory}" [state]="widgetData?.stateData">
+            <button class="resume-btn flex flex-middle flex-between">
               <span class="margin-right-s">{{!widgetData.content?.completionPercentage ? 'Start' : 'Resume'}}</span> 
               <img class="stats-icon" height="20" width="20" src="/assets/icons/home/play.svg">
             </button>
