@@ -1421,11 +1421,23 @@
   role="link" i18n-aria-label>
     <mat-card class="card-portrait mr-2 card-portrait-clickable min-height-remove" [ngClass]="widgetData.cardCustomeClass ? widgetData.cardCustomeClass : ''">
         <div class="flex">
-          <div class="margin-right-s">
+          <div class="margin-right-s position-relative">
             <ng-container *ngIf="widgetData.content.posterImage">
               <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" loading="lazy"
               class="card-image ws-mat-primary-lite-background margin-remove" [wsUtilsDefaultThumbnail]="defaultThumbnail"
               [alt]="widgetData.content.name" />
+              <div class="duration-box right-corner-portrait" *ngIf="widgetData?.content?.duration > 0">
+                <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
+                <span class=" ws-mat-white-text duration"> 
+                  {{ (widgetData?.content?.duration || 120)| pipeDurationTransform: 'hms' }}
+                </span>
+              </div>
+              <div class="duration-box right-corner-portrait" *ngIf="widgetData?.content?.programDuration > 0">
+                <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
+                <span class=" ws-mat-white-text duration"> 
+                  {{widgetData?.content?.programDuration}} day(s)
+                </span>
+              </div>
             </ng-container>
             <ng-container *ngIf="!widgetData.content.posterImage">
               <ng-container *ngIf="widgetData.content.appIcon; else defaultImg">
