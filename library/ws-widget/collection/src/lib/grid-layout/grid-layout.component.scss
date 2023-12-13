@@ -35,6 +35,12 @@
   background-color: #fff;
 }
 
+@media (max-width: 768px) {
+  .new-box-hubs {
+    margin: 6px 0px;
+  }
+}
+
 .new-box-left {
   flex-direction: row-reverse;
   display: flex;
