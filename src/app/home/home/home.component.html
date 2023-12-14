@@ -1,3 +1,8 @@
+<div class="mat-body-2 karmapoints-panel" *ngIf="isKPPanelenabled">
+    <p class="margin-remove">Earn <span class="font-bold">5 Karma Points </span><img src="/assets/icons/KPIcon.svg" alt="KarmaPoints">  for your 1st course enrolment!</p>
+    <mat-icon (click)="closeKarmaPointsPanel()" class="cursor-pointer">close</mat-icon>
+</div>
+
 <div class="home-container m-auto flex flex-row gap-6" [ngClass]="mobileTopHeaderVisibilityStatus ? 'home-container':'home-container-without-mobile-header'">
     <ng-container *ngIf="!homeConfig?.insightOnRight?.active">
         <div class="bg-info" [ngClass]="

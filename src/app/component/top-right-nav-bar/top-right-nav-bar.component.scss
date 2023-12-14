@@ -91,3 +91,19 @@
     }
     
   }
+
+.karmapoints {
+  img {
+    margin-right: 4px;
+    vertical-align: top;
+  }
+
+  .text{
+    font: 700 10px/12px Lato
+  }
+
+  .points{
+    color: rgb(27, 76, 161);
+    font-weight: 700 !important;
+  }
+}

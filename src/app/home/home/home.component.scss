@@ -514,3 +514,23 @@
 }
 
 
+.karmapoints-panel {
+  background: #C9CCD1;
+  padding: 13px 0;
+  text-align: center;
+  position: relative;
+
+  img {
+    vertical-align: bottom !important;
+    width: 24px;
+  }
+
+  .mat-icon {
+    position: absolute;
+    right: 16%;
+    top: 16px;
+    color: #505254;
+    font-size: 20px;
+    height: 20px;
+  }
+}

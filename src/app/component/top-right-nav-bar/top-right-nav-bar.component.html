@@ -14,11 +14,11 @@
 
 <ul class="right-side-nav-items">
     <ng-container *ngFor="let rnc of rightNavConfig">
-        <li matTooltipClass="right-nav-tooltip" matTooltip="Karma Points" *ngIf="rnc.section === 'karmapoints' && rnc.active && item.type === 'karmapointtext'">
-            <img src="/assets/icons/top-nav/help_icon.svg" alt="Karma Points">
+        <li matTooltipClass="right-nav-tooltip" matTooltip="Karma Points" *ngIf="rnc.section === 'karmapoints' && rnc.active && item.type === 'karmapointtext'" class="karmapoints">
+            <img src="/assets/icons/KPIcon.svg" alt="Karma Points">
             <div class="display-inline-block">
-                <p class="mat-body-2 margin-remove">Karma Points</p>
-                <p class="mat-body-2 margin-remove">0</p>  
+                <p class="margin-remove text">Karma Points</p>
+                <p class="mat-body-2 margin-remove points">0</p>  
             </div>          
         </li>
         <li matTooltipClass="right-nav-tooltip" matTooltip="Download App" *ngIf="rnc.section === 'download' && rnc.active && item.type === 'downloadButton'" class="download-app-chip" (click)="openDialog()">

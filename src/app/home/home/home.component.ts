@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   mobileTopHeaderVisibilityStatus: any = true;
   sectionList:any = [];
   enableLazyLoadingFlag = true;
+  isKPPanelenabled = true
   constructor(private activatedRoute:ActivatedRoute,  private configSvc: ConfigurationsService, public btnSettingsSvc: BtnSettingsService, 
     private http: HttpClient, public mobileAppsService: MobileAppsService, private router: Router) { }
 
@@ -268,6 +269,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   
   fetchProfile() {
     this.router.navigate(['/app/user-profile/details']);
+  }
+
+  closeKarmaPointsPanel() {
+    this.isKPPanelenabled = false
   }
 
 }
