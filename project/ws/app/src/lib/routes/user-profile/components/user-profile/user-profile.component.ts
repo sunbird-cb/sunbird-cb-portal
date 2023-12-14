@@ -892,10 +892,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         // tslint:disable-next-line
         // designation: pendingDesignation ? this.desigApvlReq.value : isDesiAvailable ? organisation.designation : 'Other',
         // designationOther: isDesiAvailable ? '' : organisation.designation || organisation.designationOther,
-        designation: this.desigApvlReq && this.desigApvlReq.value ? this.desigApvlReq.value : organisation.designation || 'Other',
+        designation: this.desigApvlReq && this.desigApvlReq.value ? this.desigApvlReq.value : organisation.designation,
         // tslint:disable-next-line: max-line-length
         designationOther: this.desigOtherApvlReq && this.desigOtherApvlReq.value ? this.desigOtherApvlReq.value : organisation.designationOther,
-        group: organisation.group,
+        group: this.grpApvlReq && this.grpApvlReq.value ? this.grpApvlReq.value : organisation.group,
         location: this.countryApvlReq && this.countryApvlReq.value ? this.countryApvlReq.value : organisation.location,
         responsibilities: organisation.responsibilities,
         // tslint:disable-next-line: max-line-length
