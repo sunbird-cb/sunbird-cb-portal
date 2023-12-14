@@ -10,6 +10,10 @@
   align-content: center;
   text-align: center;
 }
+.karmapoints-icon {
+  width: 24px;
+  height: 24px;
+}
 
 .verified {
   margin-left: $size-xs;
@@ -420,7 +424,7 @@ span.profile-badge {
 ::ng-deep .mat-tab-label-active {
   color: #000000 !important;
   font-weight: 700 !important;
-} 
+}
 .profile-edit-icon {
   position: absolute;
   right: 16px;

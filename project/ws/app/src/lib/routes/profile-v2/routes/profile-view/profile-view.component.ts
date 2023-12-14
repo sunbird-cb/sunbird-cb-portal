@@ -61,6 +61,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
   orgId: any
   selectedTabIndex: any
+  karmaPoints = 10
 
   pendingRequestData: any = []
   pendingRequestSkeleton = true
@@ -152,6 +153,30 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       /** // for loged in user only */
       this.decideAPICall()
       this.getInsightsData()
+
+    this.portalProfile.karmapoints = [
+      {
+        name: "Course Completed",
+        courseName: "Practise Test: Introduction to Angular",
+        date: "19 Dec 2021",
+        points: 10,
+        bonus: 0
+      },
+      {
+        name: "Course Rating",
+        courseName: "Practise Test: Introduction to Angular",
+        date: "01 Apr 2001",
+        points: 10,
+        bonus: 0
+      },
+      {
+        name: "Course Completed",
+        courseName: "Practise Test: Introduction to RxJS",
+        date: "21 Nov 2024",
+        points: 15,
+        bonus: 5
+      },
+    ]
     })
     this.fetchDiscussionsData()
     this.fetchUserBatchList()
