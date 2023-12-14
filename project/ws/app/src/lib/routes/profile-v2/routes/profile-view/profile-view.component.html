@@ -1,6 +1,17 @@
 <div class="flex flex-4 flex-column" id="activityTab">
   <mat-card class="flex-custom" [attr.id]="tabsData && tabsData[0] && tabsData[0].key">
     <mat-card-header class="flex-custom-m" *ngIf="portalProfile && portalProfile.personalDetails">
+
+      <div class="flex flex-1 flex-row-reverse absolute right-0 profile-edit-icon">
+        <div *ngIf="
+            portalProfile.id === currentUser?.userId ||
+            portalProfile.userId === currentUser?.userId
+          " class="">
+          <a  [routerLink]="'/app/user-profile/details'">
+            <mat-icon class="">edit</mat-icon>
+          </a>
+        </div>
+      </div> 
       <div mat-card-avatar class="example-header-image">
         <ng-container *ngIf="portalProfile.personalDetails?.firstname"; else elseFirstName>
           <ws-widget-avatar-photo [photoUrl]="portalProfile?.profileImageUrl || null" [name]="portalProfile.personalDetails.firstname"  size="xxl-s">
@@ -15,7 +26,7 @@
         </ng-template>
       </div>
       <div class="block md:hidden">
-        <div class="">
+        <div class="mb-8">
           <div class="flex flex-4 justify-center">
           <ng-container *ngIf="portalProfile.personalDetails.firstname"; else elseFirstNameIcon >
             <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
@@ -45,7 +56,7 @@
             </span>
            
           </div>
-          <div class="flex flex-1 flex-row-reverse">
+          <!-- <div class="flex flex-1 flex-row-reverse">
             <div *ngIf="
                 portalProfile.id === currentUser?.userId ||
                 portalProfile.userId === currentUser?.userId
@@ -55,7 +66,7 @@
                 <span i18n>{{ 'Edit Profile' }}</span>
               </a>
             </div>
-          </div>
+          </div> -->
         </div>
         <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
           {{ portalProfile?.employmentDetails?.departmentName }}
@@ -119,7 +130,7 @@
             </span>
            
           </div>
-          <div class="flex flex-1 flex-row-reverse">
+          <!-- <div class="flex flex-1 flex-row-reverse">
             <div *ngIf="
                 portalProfile.id === currentUser?.userId ||
                 portalProfile.userId === currentUser?.userId
@@ -129,7 +140,7 @@
                 <span i18n>{{ 'Edit Profile' }}</span>
               </a>
             </div>
-          </div>
+          </div> -->
         </div>
         <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
           {{ portalProfile?.employmentDetails?.departmentName }}
@@ -218,7 +229,7 @@
             <div class="margin-bottom-m mt-4 discussion-card">
               <ws-widget-recent-requests [recentRequests]="recentRequests" (updateRequest)="handleUpdateRequest($event)"></ws-widget-recent-requests>
             </div>
-            <div class="mt-4">
+            <div class="mt-4 mb-4">
               <ws-widget-pending-request [pendingRequestData]="pendingRequestData" [isLoading]="pendingRequestSkeleton"></ws-widget-pending-request>
             </div>
 
@@ -294,28 +305,28 @@
               }"></ng-container>
           </ng-container>
         </ng-container>
-        <ng-container *ngIf="discussionList">
+        <!-- <ng-container *ngIf="discussionList">
           <div [attr.id]="discussions"
             class="flex flex-1 flex-column margin-top-xs margin-botton-xs dark-card discussion-card"
-            style="box-shadow: none">
+            style="box-shadow: none"> -->
             <!-- <mat-card [attr.id]='discussions' class="margin-left-xs margin-top-xs margin-botton-xs dark-card discussion-card"
           style="box-shadow: none;"> -->
 
             <!-- <mat-card-content> -->
-            <div class="flex flex-1">
+            <!-- <div class="flex flex-1">
               <span class="margin-bottom-xs margin-top-l mat-title flex-1">{{
                 'Discussions'
-                }}</span>
+                }}</span> -->
               <!-- <div
                 class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all ws-mat-primary-lite-background-important">
                 <a mat-button [routerLink]="'/app/discuss/my-discussions'">
                    <span i18n>{{'Go to discussion profile'}}</span>
                 </a>
               </div> -->
-            </div>
-            <ng-container>
+            <!-- </div>
+            <ng-container> -->
               <!-- <mat-card class="recent-tabs"> -->
-              <div class="w-full">
+              <!-- <div class="w-full">
                 <div class="flex flex-1 flex-column filter_outer_box">
                   <div class="flex flex-1 filter flex-wrap">
                     <a href="javascript:void(0)" class="filter-option font-normal" i18n-aria-label role="button"
@@ -346,9 +357,9 @@
                       Saved posts
                     </a>
                   </div>
-                </div>
+                </div> -->
                 <!-- </mat-card> -->
-              </div>
+              <!-- </div>
             </ng-container>
             <ng-container *ngIf="discussionList && discussionList.length > 0">
               <ng-container *ngFor="let data of discussionList">
@@ -364,11 +375,11 @@
                   <span>&nbsp;</span>
                 </mat-card-content>
               </mat-card>
-            </ng-container>
+            </ng-container> -->
             <!-- </mat-card-content> -->
             <!-- </mat-card> -->
-          </div>
-        </ng-container>
+          <!-- </div>
+        </ng-container> -->
       </div>
     </mat-sidenav-content>
 

@@ -115,35 +115,35 @@ export class AppTourComponent {
         class: 'tour_discuss_mobile',
         containerClass: 'tour_discuss_mobile_container',
         content: 'Discuss new ideas with colleagues and experts in the government.',
-        orientation: Orientation.BottomLeft,
+        orientation: Orientation.Bottom,
         nextBtnClass: 'action-orange mat-button',
         backBtnClass: 'back',
         skipBtnClass: 'skip'
       },
-      // {
-      //   icon: 'search',
-      //   isMobile: true,
-      //   connectorDirection: 'right',
-      //   title: 'Search',
-      //   selector: '#feature_search',
-      //   class: 'tour_search_mobile',
-      //   containerClass: 'tour_search_mobile_container',
-      //   content: 'Find the perfect course and program tailor-made for you.',
-      //   orientation: Orientation.BottomLeft,
-      //   nextBtnClass: 'action-orange mat-button',
-      //   backBtnClass: 'back',
-      //   skipBtnClass: 'skip'
-      // },
+      {
+        icon: 'search',
+        isMobile: true,
+        connectorDirection: 'bottom',
+        title: 'Search',
+        selector: '#feature_mobile_search',
+        class: 'tour_search_mobile',
+        containerClass: 'tour_search_mobile_container',
+        content: 'Find the perfect course and program tailor-made for you.',
+        orientation: Orientation.TopRight,
+        nextBtnClass: 'action-orange mat-button',
+        backBtnClass: 'back',
+        skipBtnClass: 'skip'
+      },
       {
         icon: 'person',
         isMobile: true,
-        connectorDirection: 'bottom',
+        connectorDirection: 'top',
         title: 'My Profile',
         selector: '#user_icon',
         class: 'tour_profile_mobile',
         containerClass: 'tour_profile_mobile_container',
         content: 'Update your information to get the best-suited courses and programs.',
-        orientation: Orientation.Top,
+        orientation: Orientation.BottomLeft,
         nextBtnClass: 'action-orange mat-button',
         backBtnClass: 'back',
         skipBtnClass: 'skip'
@@ -263,9 +263,9 @@ export class AppTourComponent {
   }
 
   nextCb(currentStep: number, stepObject:any) {
-    if (stepObject.title == 'My Profile') {
-      this.hideCloseBtn = true;
-    }
+    // if (stepObject.title == 'My Profile') {
+    //   this.hideCloseBtn = true;
+    // }
     this.currentWindow = stepObject
     let currentStepObj: any = this.TOUR.steps[currentStep - 1]
     this.raiseTemeletyInterat(`${currentStepObj.title.toLowerCase().replace(' ','-')}-next`, currentStepObj.title.toLowerCase())

@@ -1172,12 +1172,13 @@ $title-line-count: 2;
     border-radius: 4px;
   }
 }
+
 .card-portrait {
   border-radius: 12px;
   border: 1px solid rgba(0,0,0, 0.08);
   opacity: 1;
   width: 350px;
-  min-height: 146px;
+  min-height: 154px;
   padding: 16px;
   .card-image {
     border-radius: 8px;
@@ -1189,13 +1190,10 @@ $title-line-count: 2;
   .portrait-subheading {
     opacity: 1;
     color: rgba(0,0,0,0.87);
-    font-family: "Lato-Bold";
-    font-size: 14px;
     font-weight: 700;
     font-style: normal;
     letter-spacing: 0.25px;
     text-align: left;
-    line-height: 20px;
     word-break: break-word;
     white-space: initial;
     margin: 0 0 8px 0;
@@ -1333,7 +1331,20 @@ $title-line-count: 2;
   opacity: 0.6 !important;
   cursor: not-allowed !important;
 }
+.min-height-remove {
+  min-height: unset !important;
+}
+.card-portrait-clickable {
+  min-height: 112px !important;
+  .right-corner-portrait {
+    right: 4px;
+    bottom: 16px;
+  }
+}
 
+.card-portrait-clickable:hover {
+  transform: scale(1.02);
+}
 @media only screen and (max-width:768px) {
   .card-portrait {
     width: calc(100vw - 66px);

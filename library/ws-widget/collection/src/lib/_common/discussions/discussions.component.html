@@ -18,7 +18,7 @@
         </ng-container>
 
         <ng-container *ngIf="!discussion.loadSkeleton">
-            <ng-container *ngIf="(!discussion.error && !discussion.data) || (discussion.data && !discussion?.data?.length ) ">
+            <ng-container *ngIf="!discussion?.data?.length && !discussion.error">
                 <div class="flex flex-col items-center gap-4 p-10">
                     <img src="assets/icons/home/chat.svg" alt="chat img" />
                     <div class="text-sm text-center">Do you have any questions, suggestions or, ideas in your mind? Post it.
@@ -38,11 +38,11 @@
                                     [style.background]="data?.user['icon:bgColor']">
                                     {{ data?.user['icon:text'] }}
                                 </div>
-                                <div class="text-sm">{{ data?.user?.username || 'Anonymous' }}</div>
+                                <div class="text-sm">{{ data?.user?.displayname || 'Anonymous' }}</div>
                                 <div>.</div>
                                 <div class="text-sm">{{ data?.timestamp | pipeRelativeTime }}</div>
                             </div>
-                            <div class="text-sm">{{ data?.topic?.title || data?.title }}</div>
+                            <div class="text-sm" [innerHtml]="data?.topic?.title || data?.title"></div>
                             <div class="flex flex-row gap-5">
                                 <div class="flex flex-row gap-2">
                                     <mat-icon>swap_vert</mat-icon>

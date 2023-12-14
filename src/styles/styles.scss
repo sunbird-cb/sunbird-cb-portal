@@ -634,7 +634,6 @@ ngx-guided-tour {
     background-color: #1C4CA1 !important;
     color: white !important;
     box-shadow: 0px 8px 24px rgba(0,0,0, 0.24) !important;
-    // margin-top: 15px !important;
   }
 
   .tour-buttons {
@@ -741,17 +740,11 @@ body:has(.requires-no-scroll) {
   width: 480px;
 }
 
-.tour-step.left-panel:after {
+.tour-step.left-panel::after {
   border-radius: 20px 0 0 20px;
 }
 
-.tour-step.right-panel:after {
-  border-radius: 0 20px 20px 0;
-}
-.tour-step.top-panel:after {
-  border-radius: 0 20px 20px 0;
-}
-.tour-step.bottom-panel:after {
+.tour-step.right-panel::after, .tour-step.top-panel::after, .tour-step.bottom-panel::after {
   border-radius: 0 20px 20px 0;
 }
 
@@ -762,22 +755,21 @@ body:has(.requires-no-scroll) {
 
 .tour-step.right-panel:after {
   background-color: #F3962E !important;
-  // top: 15px !important;
-  // right: 0px !important;
 }
+
 .tour-step.top-panel:after {
   background-color: #F3962E !important;
   transform: rotate(270deg);
-  left: 147px;
-  height: 104% !important;
-  top: -130px !important;
+  left: 49% !important;
+  top: -118px !important;
+  height: 320px !important;
 }
+
 .tour-step.bottom-panel:after {
   background-color: #F3962E !important;
   transform: rotate(90deg);
-  right: 134px !important;
-  height: 72.8% !important;
-  top: 185px !important;
+  height: 320px !important;
+  top: 88px !important;
 }
 .tour-image {
   mat-icon {
@@ -896,10 +888,7 @@ body:has(.requires-no-scroll) {
       margin-left: -18px;
     }
   }
-
-
 }
-
 
 .tour_learn,
 .tour_discuss {
@@ -914,12 +903,6 @@ body:has(.requires-no-scroll) {
   border-radius: 50%;
   height: 55px !important;
   width: 55px !important;
-}
-
-.tour_search_mobile_container {
-  top: 2rem !important;
-  left: 12% !important;
-  width: 75% !important;
 }
 
 ngx-guided-tour {
@@ -937,6 +920,133 @@ ngx-guided-tour {
     }
     .circle-start-dot {
       margin-left: 35px;
+    }
+  }
+
+  .tour_learn_mobile_container, .tour_discuss_mobile_container, .tour_search_mobile_container, .tour_profile_mobile_container {
+    width: 320px !important;
+
+    .tour-block {
+      width: 83%;
+    }
+  }
+
+  .tour_learn_mobile_container {
+    top: 25% !important;
+
+    .arrow {
+      .circle {
+        width: 108px !important;
+        height: 96px !important;
+        top: 32px !important;
+        left: 64px !important;
+        transform: rotate(160deg) !important;
+      }
+
+      .triangle {
+        top: 32px !important;
+        left: 60px !important;
+        transform: rotate(44deg) !important;
+      }
+    }
+  }
+
+  .tour_discuss_mobile_container {
+    top: 27% !important;
+    left: 25px !important;
+
+    .arrow {
+      .circle {
+        width: 100px !important;
+        height: 88px !important;
+        top: 44px !important;
+        left: 96px !important;
+        transform: rotate(216deg) !important;
+      }
+
+      .circle-start-dot {
+        margin-top: 136px !important;
+        margin-left: 56px !important;
+      }
+
+      .triangle {
+        top: 56px !important;
+        left: 128px !important;
+        transform: rotate(-28deg);
+        margin-top: 4px !important;
+        margin-left: 36px !important;
+      }
+    }
+  }
+
+  .tour_search_mobile_container {
+    top: 86% !important;
+    left: 12% !important;
+
+    &::after {
+      left: 49% !important;
+    }
+
+    .arrow {
+      .circle {
+        width: 56px !important;
+        height: 228px !important;
+        margin-top: -24px !important;
+      }
+
+      .circle-start-dot {
+        margin-left: -51% !important;
+        margin-top: 18px !important;
+      }
+
+      .triangle {
+        margin-top: -32px !important;
+        margin-left: 16px !important;
+        transform: rotate(40deg) !important;
+      }
+    }
+  }
+
+  .tour_profile_mobile_container {
+    top: 120px !important;
+    left: 5% !important;
+
+    .tour-buttons {
+      margin-top: 16px;
+    }
+
+    .arrow {
+      .circle {
+        width: 76px !important;
+        height: 64px !important;
+        top: 108px !important;
+        left: 120% !important;
+        transform: rotate(36deg);
+      }
+
+      .circle-start-dot {
+        margin-top: 164px !important;
+        margin-left: 73% !important;
+      }
+
+      .triangle {
+        top: 116px !important;
+        left: 125% !important;
+        transform: rotate(0deg) !important;
+        margin-top: 0px !important;
+      }
+    }
+  }
+
+  @media screen and (min-width: 420px) and (max-width: 576px) {
+    .tour_profile_mobile_container {
+      left: 15% !important;
+    }
+  }
+
+  @media screen and (min-width: 577px) and (max-width: 768px) {
+    .tour_profile_mobile_container {
+      left: 51% !important;
     }
   }
 
@@ -968,8 +1078,9 @@ ngx-guided-tour {
 }
 
 .tour_learn_mobile_container.top-panel:after, .tour_discuss_mobile_container.top-panel:after {
-  height: 98% !important;
+  height: 320px !important;
   top: -134px !important;
+  left: 156px !important;
 }
 
 ngx-guided-tour {
@@ -979,8 +1090,9 @@ ngx-guided-tour {
       display: flex;
       justify-content: space-between;
       width: 100%;
-      margin-top: 1rem;
+      top: -36px;
     }
+
     .back-button {
       color: rgba(255,255,255,1) !important;
       font-family: "Lato-Bold" !important;
@@ -1017,17 +1129,14 @@ ngx-guided-tour {
 }
 
 .tour_profile_mobile_container {
-  // bottom: 0;
-  // position: sticky;
-}
-
-.tour_profile_mobile_container {
   padding: 1rem;
 }
+
 .tour_profile_mobile {
   transform: scale(2.5);
   border-radius: 50%;
 }
+
 .tour_search_mobile {
   transform: scale(1.6);
   border-radius: 50%;
@@ -1035,10 +1144,10 @@ ngx-guided-tour {
 
 .tour_search {
   border-radius: 60%;
-  height: 40rem !important;
+  height: 36rem !important;
   top: -30rem !important;
-  width: 40rem !important;
-  left: 15.5vw !important;
+  width: 50% !important;
+  left: 16.5vw !important;
 }
 
 .tour_profile {
@@ -1076,6 +1185,7 @@ ngx-guided-tour {
 .top-connector {
   left: -40px !important;
 }
+
 .bottom-connector {
   right: 80px !important;
   transform: rotate(180deg);
@@ -1164,22 +1274,18 @@ ngx-guided-tour {
   }
 }
 
-// .white-spinner .mat-progress-spinner circle, .theme-igot.day-mode .mat-spinner circle{
-//   stroke:white !important;
-// }
-
 @media only screen and (max-width: 768px) {
   .tour_learn_mobile_container .tour-block {
-    width:83%;
+    width: 85%;
   }
 
-  .circle, .circle-start-dot, .triangle, .top-connector .circle-start-dot, .bottom-connector .circle-start-dot {
-    display: none;
-  }
+  // .circle, .circle-start-dot, .triangle, .top-connector .circle-start-dot, .bottom-connector .circle-start-dot {
+  //   display: none;
+  // }
 
-  .tour_learn_mobile_container.top-panel:after, .tour_discuss_mobile_container.top-panel:after {
-    // top:0 !important;
-  }
+  // .tour_learn_mobile_container.top-panel:after, .tour_discuss_mobile_container.top-panel:after {
+    
+  // }
 }
 
 @media only screen and (max-width: 768px) {
@@ -1187,18 +1293,6 @@ ngx-guided-tour {
     width:100%;
   }
 
-  .tour_discuss_mobile_container {
-    left:15% !important
-  }
-  .tour_profile_mobile_container {
-    top:460px !important;
-    left:140px !important;
-  }
-  .tour_profile_mobile_container .tour-block {
-    width: 100%;
-    right:48%;
-
-  }
   .tour_profile_mobile_container {
   .tour-step.bottom-panel:after {
     right:178px !important;

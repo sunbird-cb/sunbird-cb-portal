@@ -111,7 +111,8 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
       widgetSubType: 'cardContent',
       widgetHostClass: 'mb-2',
       widgetData: {
-        cardSubType: strip.loaderConfig && strip.loaderConfig.cardSubType || 'card-portrait-skeleton',
+        cardSubType: strip.viewMoreUrl &&  strip.viewMoreUrl.loaderConfig
+        && strip.viewMoreUrl.loaderConfig.cardSubType || 'card-portrait-skeleton',
       },
     }))
   }
@@ -129,7 +130,8 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
         ...(content.batch && {
           batch: content.batch,
         }),
-        cardSubType: strip.stripConfig && strip.stripConfig.cardSubType,
+        cardSubType: strip.viewMoreUrl &&  strip.viewMoreUrl.stripConfig
+        && strip.viewMoreUrl.stripConfig.cardSubType,
         context: {
           pageSection: strip.key,
           position: idx,
@@ -405,6 +407,7 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
           }
           request.trendingSearch.request.filters.organisation = userRootOrgId
         }
+        request.trendingSearch['request']['limit'] = 100
         this.seeAllSvc.trendingContentSearch(request.trendingSearch).subscribe(results => {
           const showViewMore = Boolean(
             results.result &&
