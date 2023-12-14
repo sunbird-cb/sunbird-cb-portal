@@ -263,9 +263,9 @@ export class AppTourComponent {
   }
 
   nextCb(currentStep: number, stepObject:any) {
-    if (stepObject.title == 'My Profile') {
-      this.hideCloseBtn = true;
-    }
+    // if (stepObject.title == 'My Profile') {
+    //   this.hideCloseBtn = true;
+    // }
     this.currentWindow = stepObject
     let currentStepObj: any = this.TOUR.steps[currentStep - 1]
     this.raiseTemeletyInterat(`${currentStepObj.title.toLowerCase().replace(' ','-')}-next`, currentStepObj.title.toLowerCase())
