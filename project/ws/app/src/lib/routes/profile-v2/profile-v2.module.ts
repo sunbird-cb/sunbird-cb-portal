@@ -43,12 +43,14 @@ import { UpdatePostsModule } from '@sunbird-cb/collection/src/lib/_common/update
 import { DiscussionsModule } from '@sunbird-cb/collection/src/lib/_common/discussions/discussions.module'
 import { RecentRequestsModule } from '@sunbird-cb/collection/src/lib/_common/recent-requests/recent-requests.module'
 import { PendingRequestModule } from '@sunbird-cb/collection/src/lib/_common/pending-request/pending-request.module'
+import { ProfileKarmapointsComponent } from './routes/profile-karmapoints/profile-karmapoints.component'
 // import { ShareModule } from 'ngx-sharebuttons';
 
 @NgModule({
   declarations: [
     ProfileComponent,
     ProfileViewComponent,
+    ProfileKarmapointsComponent,
     LeftMenuComponent,
     RightMenuComponent,
   ],
