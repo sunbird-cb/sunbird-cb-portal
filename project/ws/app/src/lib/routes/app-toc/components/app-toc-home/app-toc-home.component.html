@@ -130,6 +130,10 @@ TODO: edit option while preview Mode
                   class="mat-button mat-button-base custom-button">
                   <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>Take Assessment</ng-container>
                 </a>
+                <div class="mat-caption karmapoints-panel margin-top-xs" *ngIf="showStart.show && !isPostAssessment">
+                  <p class="margin-remove">Nice! <img src="/assets/icons/KPIcon.svg" alt="KarmaPoints"> Earn <span class="font-bold"> 10 Karma Points </span> by completing this course. <mat-icon class="cursor-pointer ws-mat-black60-text">info_outline</mat-icon>
+                  </p>
+                </div>
               </ng-container>
               <ng-container *ngIf="
                 (actionBtnStatus === 'grant' &&
@@ -152,6 +156,10 @@ TODO: edit option while preview Mode
                         Enroll
                       </ng-container>
                     </a>
+                    <div class="mat-caption karmapoints-panel margin-top-xs">
+                      <p class="margin-remove">Earn <img src="/assets/icons/KPIcon.svg" alt="KarmaPoints"> <span class="font-bold">5 Karma Points </span> for your 1st course enrolment! <mat-icon class="cursor-pointer ws-mat-black60-text">info_outline</mat-icon>
+                      </p>
+                    </div>
                 </ng-container>
               </ng-container>
             </ng-container>
@@ -221,6 +229,10 @@ TODO: edit option while preview Mode
                   Enroll
                 </ng-container>
               </a>
+              <div class="mat-caption karmapoints-panel margin-top-xs">
+                <p class="margin-remove">Earn <img src="/assets/icons/KPIcon.svg" alt="KarmaPoints"> <span class="font-bold">5 Karma Points </span> for your 1st course enrolment! <mat-icon class="cursor-pointer ws-mat-black60-text">info_outline</mat-icon>
+                </p>
+              </div>
             </ng-container>
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT && !batchData?.enrolled">
               <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" (click)="autoBatchAssign()">
@@ -228,6 +240,10 @@ TODO: edit option while preview Mode
                   Enroll
                 </ng-container>
               </a>
+              <div class="mat-caption karmapoints-panel margin-top-xs">
+                <p class="margin-remove">Earn <img src="/assets/icons/KPIcon.svg" alt="KarmaPoints"> <span class="font-bold">5 Karma Points </span> for your 1st course enrolment! <mat-icon class="cursor-pointer ws-mat-black60-text">info_outline</mat-icon>
+                </p>
+              </div>
             </ng-container>
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT && batchData?.enrolled">
               <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white"
@@ -369,6 +385,11 @@ TODO: edit option while preview Mode
             <!-- <span class="lowercase"> {{content?.primaryCategory}} </span> -->
           </ng-container>
         </button>
+      </div>
+
+      <div *ngIf="resumeData" class="mat-caption karmapoints-panel margin-top-xs">
+        <p class="margin-remove">Earn <img src="/assets/icons/KPIcon.svg" alt="KarmaPoints"> <span class="font-bold">2 more Karma Points, </span> rate this course. <mat-icon class="cursor-pointer ws-mat-black60-text">info_outline</mat-icon>
+        </p>
       </div>
 
       <!-- action buttons -->
