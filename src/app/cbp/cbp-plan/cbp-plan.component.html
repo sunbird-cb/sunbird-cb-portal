@@ -1,0 +1,48 @@
+<div class="home-container m-auto flex flex-row gap-6" [ngClass]="mobileTopHeaderVisibilityStatus ? 'home-container':'home-container-without-mobile-header'">
+    <ng-container *ngIf="!cbpConfig?.insightOnRight?.active">
+        <div class="bg-info" [ngClass]="
+        cbpConfig?.leftSection?.active &&  cbpConfig?.rightSection?.active ? 'left' : 
+        (cbpConfig?.leftSection?.active &&  !cbpConfig?.rightSection?.active) ? 'full' : ''" *ngIf="cbpConfig?.leftSection?.active">
+           <!-- Cbp Side bar component --> 
+           <ws-cbp-side-bar></ws-cbp-side-bar>
+        </div>
+
+        <div class="bg-primary" [ngClass]="
+        cbpConfig?.leftSection?.active &&  cbpConfig?.rightSection?.active ? 'right' : 
+        (!cbpConfig?.rightSection?.active && !cbpConfig?.leftSection?.active) ? 'full' : ''" *ngIf="cbpConfig?.rightSection?.active">
+            <div class="flex flex-col gap-4 mt-8">
+                <ng-container *ngIf="enableLazyLoadingFlag">
+                    <!-- cbp plans list here-->
+                </ng-container>
+                <ng-container *ngIf="!enableLazyLoadingFlag">
+                    <!-- cbp plans list without skeleton here-->
+                    <ws-cbp-plan-feed></ws-cbp-plan-feed>
+                </ng-container>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="cbpConfig?.insightOnRight?.active">
+        <div class="bg-primary" [ngClass]="
+        cbpConfig?.leftSection?.active &&  cbpConfig?.rightSection?.active ? 'right' : 
+        (!cbpConfig?.rightSection?.active && !cbpConfig?.leftSection?.active) ? 'full' : ''" *ngIf="cbpConfig?.rightSection?.active">
+            <div class="flex flex-col gap-3 mt-8">
+                <ng-container *ngIf="enableLazyLoadingFlag">
+                    <!-- cbp plans list with skeleton here-->
+                </ng-container>
+
+                <ng-container *ngIf="!enableLazyLoadingFlag">
+                    <!-- cbp plans list without skeleton here-->
+                    <ws-cbp-plan-feed></ws-cbp-plan-feed>
+                </ng-container>
+            </div>
+        </div>
+
+        <div class="bg-info" [ngClass]="
+        cbpConfig?.leftSection?.active &&  cbpConfig?.rightSection?.active ? 'left' : 
+        (cbpConfig?.leftSection?.active &&  !cbpConfig?.rightSection?.active) ? 'full' : ''" *ngIf="cbpConfig?.leftSection?.active">
+           <!-- Cbp Side bar component -->
+           <ws-cbp-side-bar></ws-cbp-side-bar>
+        </div>
+    </ng-container>
+</div>

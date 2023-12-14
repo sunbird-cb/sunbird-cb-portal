@@ -138,7 +138,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     DialogBoxComponent,
     SocialLinkComponent,
     FooterSectionComponent,
-    AppLogoComponent,
+    AppLogoComponent
   ],
   imports: [
     FormsModule,
