@@ -723,7 +723,7 @@
             <div class="duration-box right-corner" *ngIf="widgetData?.content?.programDuration > 0">
               <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
               <span class=" ws-mat-white-text duration"> 
-                {{widgetData?.content?.programDuration}} day(s)
+                {{widgetData?.content?.programDuration}} {{widgetData?.content?.programDuration === 1 ? 'day' : 'days'}}
               </span>
             </div>
           </div>
@@ -1073,7 +1073,7 @@
 </ng-template>
 
 <ng-template #cardPortrait>
-    <mat-card class="card-portrait" [ngClass]="widgetData.cardCustomeClass ? widgetData.cardCustomeClass : ''">
+    <mat-card class="card-portrait cursor-pointer" [ngClass]="widgetData.cardCustomeClass ? widgetData.cardCustomeClass : ''" [routerLink]="['/app/toc/',widgetData.content.identifier,'overview']" [queryParams]="{primaryCategory: widgetData.content.primaryCategory}" [state]="widgetData?.stateData">
       <div class="flex">
         <div class="margin-right-s">
           <ng-container *ngIf="widgetData.content.posterImage">
@@ -1096,7 +1096,7 @@
         </div>
         <div class="width-1-1">
           <div [id]="'m-c-'+ widgetData.content?.identifier"
-              class="portrait-subheading title-text">
+              class="portrait-subheading mat-subheading-2 title-text">
               {{ widgetData.content.name }}
           </div>
           <div class="flex w-full  flex-middle">
@@ -1145,8 +1145,7 @@
             </div>
           </div>
           <div class="progress-btn">
-            <button class="resume-btn flex flex-middle flex-between " [routerLink]="['/app/toc/',widgetData.content.identifier,'overview']"
-            [queryParams]="{primaryCategory: widgetData.content.primaryCategory}" [state]="widgetData?.stateData">
+            <button class="resume-btn flex flex-middle flex-between">
               <span class="margin-right-s">{{!widgetData.content?.completionPercentage ? 'Start' : 'Resume'}}</span> 
               <img class="stats-icon" height="20" width="20" src="/assets/icons/home/play.svg">
             </button>
@@ -1421,11 +1420,23 @@
   role="link" i18n-aria-label>
     <mat-card class="card-portrait mr-2 card-portrait-clickable min-height-remove" [ngClass]="widgetData.cardCustomeClass ? widgetData.cardCustomeClass : ''">
         <div class="flex">
-          <div class="margin-right-s">
+          <div class="margin-right-s position-relative">
             <ng-container *ngIf="widgetData.content.posterImage">
               <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" loading="lazy"
               class="card-image ws-mat-primary-lite-background margin-remove" [wsUtilsDefaultThumbnail]="defaultThumbnail"
               [alt]="widgetData.content.name" />
+              <div class="duration-box right-corner-portrait" *ngIf="widgetData?.content?.duration > 0">
+                <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
+                <span class=" ws-mat-white-text duration"> 
+                  {{ (widgetData?.content?.duration || 120)| pipeDurationTransform: 'hms' }}
+                </span>
+              </div>
+              <div class="duration-box right-corner-portrait" *ngIf="widgetData?.content?.programDuration > 0">
+                <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
+                <span class=" ws-mat-white-text duration"> 
+                  {{widgetData?.content?.programDuration}} {{widgetData?.content?.programDuration === 1 ? 'day' : 'days'}}
+                </span>
+              </div>
             </ng-container>
             <ng-container *ngIf="!widgetData.content.posterImage">
               <ng-container *ngIf="widgetData.content.appIcon; else defaultImg">
@@ -1442,7 +1453,7 @@
           </div>
           <div class="width-1-1">
             <div [id]="'m-c-'+ widgetData.content?.identifier"
-                class="portrait-subheading title-text">
+                class="portrait-subheading mat-subheading-2 title-text">
                 {{ widgetData.content.name }}
             </div>
             <div class="flex w-full  flex-middle">
@@ -1481,10 +1492,8 @@
             <ws-widget-skeleton-loader [bindingClass]="'flex rounded width-1-1'"></ws-widget-skeleton-loader>
         </div>
         <div class="flex w-full flex-wrap flex-middle">
-          <div class=" margin-right-xs">
-            <ws-widget-skeleton-loader [width]="'24px'" [height]="'24px'"  [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
-          </div>
-          <span class=""><ws-widget-skeleton-loader [width]="'133px'" [height]="'12px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader></span>
+            <ws-widget-skeleton-loader [width]="'24px'" [height]="'24px'"  [bindingClass]="'flex rounded margin-right-xs'"></ws-widget-skeleton-loader>
+            <ws-widget-skeleton-loader [width]="'100px'" [height]="'12px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
         </div>
         <div class="portrait_widget flex margin-top-xs">
           <div class="flex flex-end flex-middle">

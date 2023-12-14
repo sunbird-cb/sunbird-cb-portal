@@ -407,6 +407,7 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
           }
           request.trendingSearch.request.filters.organisation = userRootOrgId
         }
+        request.trendingSearch['request']['limit'] = 100
         this.seeAllSvc.trendingContentSearch(request.trendingSearch).subscribe(results => {
           const showViewMore = Boolean(
             results.result &&
