@@ -123,6 +123,7 @@ import { AppTocSessionCardComponent } from './components/app-toc-session-card/ap
 import { EnrollQuestionnaireComponent } from './components/enroll-questionnaire/enroll-questionnaire.component'
 import { MicroSurveyModule } from '@sunbird-cb/micro-surveys'
 import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.module'
+import { KarmaPointsPanelComponent } from './components/karmapoints-panel/karmapoints-panel.component'
 
 @NgModule({
   declarations: [
@@ -152,6 +153,7 @@ import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content
     AppTocSessionsComponent,
     AppTocSessionCardComponent,
     EnrollQuestionnaireComponent,
+    KarmaPointsPanelComponent,
   ],
   imports: [
     CommonModule,

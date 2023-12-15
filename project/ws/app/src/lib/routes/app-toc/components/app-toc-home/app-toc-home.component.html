@@ -130,10 +130,19 @@ TODO: edit option while preview Mode
                   class="mat-button mat-button-base custom-button">
                   <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>Take Assessment</ng-container>
                 </a>
-                <div class="mat-caption karmapoints-panel margin-top-xs" *ngIf="showStart.show && !isPostAssessment">
-                  <p class="margin-remove">Nice! <img src="/assets/icons/KPIcon.svg" alt="KarmaPoints"> Earn <span class="font-bold"> 10 Karma Points </span> by completing this course. <mat-icon class="cursor-pointer ws-mat-black60-text">info_outline</mat-icon>
-                  </p>
+                
+                <div *ngIf="!isPostAssessment && (!content.completionPercentage || content.completionPercentage < 100) && !certData">
+                  <ws-app-karmapoints-panel [btntype]="'Resume'" [data]="kparray"></ws-app-karmapoints-panel>
                 </div>
+
+                <div *ngIf="!isPostAssessment && (content.completionPercentage === 100 || certData)">
+                  <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
+                </div>
+
+                <div *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" >
+                 <ws-app-karmapoints-panel [btntype]="'Take Assessment'" [data]="kparray"></ws-app-karmapoints-panel>
+                </div>
+                 
               </ng-container>
               <ng-container *ngIf="
                 (actionBtnStatus === 'grant' &&
@@ -156,10 +165,7 @@ TODO: edit option while preview Mode
                         Enroll
                       </ng-container>
                     </a>
-                    <div class="mat-caption karmapoints-panel margin-top-xs">
-                      <p class="margin-remove">Earn <img src="/assets/icons/KPIcon.svg" alt="KarmaPoints"> <span class="font-bold">5 Karma Points </span> for your 1st course enrolment! <mat-icon class="cursor-pointer ws-mat-black60-text">info_outline</mat-icon>
-                      </p>
-                    </div>
+                    <ws-app-karmapoints-panel [btntype]="'Enroll'" [data]="kparray"></ws-app-karmapoints-panel>
                 </ng-container>
               </ng-container>
             </ng-container>
@@ -204,6 +210,18 @@ TODO: edit option while preview Mode
                   class="mat-button mat-button-base custom-button">
                   <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>Take Assessment</ng-container>
                 </a>
+
+                <div *ngIf="!isPostAssessment && (!content.completionPercentage || content.completionPercentage < 100)">
+                  <ws-app-karmapoints-panel [btntype]="'Resume'" [data]="kparray"></ws-app-karmapoints-panel>
+                </div>
+
+                <div *ngIf="!isPostAssessment && (content.completionPercentage === 100)">
+                  <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
+                </div>
+
+                <div *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" >
+                 <ws-app-karmapoints-panel [btntype]="'Take Assessment'" [data]="kparray"></ws-app-karmapoints-panel>
+                </div>
               </ng-container>
 
             </ng-container>
@@ -229,10 +247,6 @@ TODO: edit option while preview Mode
                   Enroll
                 </ng-container>
               </a>
-              <div class="mat-caption karmapoints-panel margin-top-xs">
-                <p class="margin-remove">Earn <img src="/assets/icons/KPIcon.svg" alt="KarmaPoints"> <span class="font-bold">5 Karma Points </span> for your 1st course enrolment! <mat-icon class="cursor-pointer ws-mat-black60-text">info_outline</mat-icon>
-                </p>
-              </div>
             </ng-container>
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT && !batchData?.enrolled">
               <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" (click)="autoBatchAssign()">
@@ -240,10 +254,6 @@ TODO: edit option while preview Mode
                   Enroll
                 </ng-container>
               </a>
-              <div class="mat-caption karmapoints-panel margin-top-xs">
-                <p class="margin-remove">Earn <img src="/assets/icons/KPIcon.svg" alt="KarmaPoints"> <span class="font-bold">5 Karma Points </span> for your 1st course enrolment! <mat-icon class="cursor-pointer ws-mat-black60-text">info_outline</mat-icon>
-                </p>
-              </div>
             </ng-container>
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT && batchData?.enrolled">
               <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white"
@@ -387,9 +397,12 @@ TODO: edit option while preview Mode
         </button>
       </div>
 
-      <div *ngIf="resumeData" class="mat-caption karmapoints-panel margin-top-xs">
-        <p class="margin-remove">Earn <img src="/assets/icons/KPIcon.svg" alt="KarmaPoints"> <span class="font-bold">2 more Karma Points, </span> rate this course. <mat-icon class="cursor-pointer ws-mat-black60-text">info_outline</mat-icon>
-        </p>
+      <div *ngIf="resumeData && !userRating">
+        <ws-app-karmapoints-panel [btntype]="'Rate this course'" [data]="kparray"></ws-app-karmapoints-panel>
+      </div>
+
+      <div *ngIf="resumeData && userRating">
+        <ws-app-karmapoints-panel [btntype]="'Edit rating'" [data]="kparray"></ws-app-karmapoints-panel>
       </div>
 
       <!-- action buttons -->
