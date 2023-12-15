@@ -1143,11 +1143,18 @@ ngx-guided-tour {
 }
 
 .tour_search {
-  border-radius: 60%;
-  height: 36rem !important;
+  width: 65% !important;
+  left: 12% !important;
   top: -30rem !important;
-  width: 60% !important;
-  left: 10% !important;
+  height: 36rem !important;
+  border-radius: 60%;
+}
+
+@media only screen and (max-width: 1440px) {
+  .tour_search {
+    width: 65% !important;
+    left: 7% !important;
+  }
 }
 
 .tour_profile {
