@@ -1,6 +1,6 @@
-<div class="flex flex-col gap-4">
+<div class="flex h-full flex-col gap-4">
     <div class="flex flex-row gap-3 items-center mat-subheading-1 mb-0">
-        <div class="flex flex-grow">Updates on Your Posts</div>
+        <div class="flex flex-grow">Updates on your posts</div>
         <div class="text-2xl ws-mat-default-text">
             <ng-container *ngIf="isMobile">
                 <div class="text-sm" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >Show all</div>
@@ -18,45 +18,41 @@
         </div>
     </ng-container>
 
-    <div class="flex h-full items-center">
-        <ng-container *ngIf="!updatesPosts.loadSkeleton">
-            <ng-container *ngIf="updatesPosts?.data?.length">
-                <ng-container *ngFor="let updates of updatesPosts?.data | slice:0:3">
-                    <div class="flex flex-col discussion-card gap-2 p-5" *ngIf="updates?.upvotes || updates?.downvotes">
-                        <div class="ws-mat-default-text font-semibold">
-                            <span *ngIf="updates?.upvotes">
-                                {{ updates?.upvotes }} Upvote(s) on your posts
-                            </span>
-                            <span *ngIf="updates?.upvotes && updates?.downvotes">,&nbsp;</span>
-                            <span *ngIf="updates?.downvotes">
-                                {{ updates?.downvotes }} Downvote(s) on your posts
-                            </span>
-                        </div>
-                        <div class="text-base">{{ updates?.topic?.title }}</div>
+    <div class="flex h-full items-center" *ngIf="!updatesPosts.loadSkeleton">
+        <ng-container *ngIf="updatesPosts?.data?.length">
+            <ng-container *ngFor="let updates of updatesPosts?.data | slice:0:3">
+                <div class="flex flex-col discussion-card gap-2 p-5" *ngIf="updates?.upvotes || updates?.downvotes">
+                    <div class="ws-mat-default-text font-semibold">
+                        <span *ngIf="updates?.upvotes">
+                            {{ updates?.upvotes }} Upvote(s) on your posts
+                        </span>
+                        <span *ngIf="updates?.upvotes && updates?.downvotes">,&nbsp;</span>
+                        <span *ngIf="updates?.downvotes">
+                            {{ updates?.downvotes }} Downvote(s) on your posts
+                        </span>
                     </div>
-                </ng-container>
-            </ng-container>
-    
-            <ng-container *ngIf="updatePosts?.error || !updatesPosts?.data?.length">
-                <div class="flex flex-col items-center gap-3 p-10">
-                    <mat-icon class="no-data-found">report_off</mat-icon>
-                    <div class="mat-subheading-1">No data found!</div>
-                    <div class="text-center">Unable to fetch discussion info due to some error.</div>
-                </div>
-            </ng-container>
-            
-            <ng-container *ngIf="updatePosts?.error && !isMobile">
-                <div class="flex flex-row gap-2 p-4 justify-center" *ngIf="!updatesPosts.loadSkeleton || !updatesPosts.error">
-                    <div class="flex ws-mat-default-text items-center justify-center mat-body-1 cursor-pointer" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >
-                        <div>Show all</div>
-                        <mat-icon>
-                            chevron_right
-                        </mat-icon>
-                    </div>
+                    <div class="text-base">{{ updates?.topic?.title }}</div>
                 </div>
             </ng-container>
         </ng-container>
+
+        <ng-container *ngIf="updatePosts?.error || !updatesPosts?.data?.length">
+            <div class="flex flex-col items-center gap-3 p-4">
+                <mat-icon class="no-data-found">report_off</mat-icon>
+                <div class="mat-subheading-1">No data found!</div>
+                <div class="text-center">Unable to fetch discussion info due to some error.</div>
+            </div>
+        </ng-container>
+        
+        <ng-container *ngIf="updatePosts?.error && !isMobile">
+            <div class="flex flex-row gap-2 p-4 justify-center" *ngIf="!updatesPosts.loadSkeleton || !updatesPosts.error">
+                <div class="flex ws-mat-default-text items-center justify-center mat-body-1 cursor-pointer" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >
+                    <div>Show all</div>
+                    <mat-icon>
+                        chevron_right
+                    </mat-icon>
+                </div>
+            </div>
+        </ng-container>
     </div>
-
-
 </div>
