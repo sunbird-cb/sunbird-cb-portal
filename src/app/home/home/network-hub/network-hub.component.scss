@@ -74,8 +74,14 @@ $title-line-count: 1;
     flex-direction: row;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1200px) {
     .network-requests {
         flex-direction: column;
     }   
+}
+
+@media only screen and (max-width: 768px) {
+    .netword-card {
+        flex-direction: column;
+    }
 }
