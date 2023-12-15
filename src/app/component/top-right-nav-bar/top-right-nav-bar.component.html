@@ -14,7 +14,7 @@
 
 <ul class="right-side-nav-items">
     <ng-container *ngFor="let rnc of rightNavConfig">
-        <li matTooltipClass="right-nav-tooltip" matTooltip="Karma Points" *ngIf="rnc.section === 'karmapoints' && rnc.active && item.type === 'karmapointtext'" class="karmapoints">
+        <li matTooltipClass="right-nav-tooltip" *ngIf="rnc.section === 'karmapoints' && rnc.active && item.type === 'karmapointtext'" class="karmapoints" (click)="viewKarmapoints()">
             <img src="/assets/icons/KPIcon.svg" alt="Karma Points">
             <div class="display-inline-block">
                 <p class="margin-remove text">Karma Points</p>
