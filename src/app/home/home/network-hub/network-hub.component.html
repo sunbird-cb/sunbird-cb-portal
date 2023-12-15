@@ -4,13 +4,14 @@
             <ws-widget-recent-requests [recentRequests]="recentRequests" (updateRequest)="handleUpdateRequest($event)" ></ws-widget-recent-requests>
         </div>
 
-        <div class="discussion-card flex-1 p-4 network-suggestion" *ngIf="networkConfig?.networkSuggestions?.active">
+        <div class="discussion-card flex-1 network-suggestion" *ngIf="networkConfig?.networkSuggestions?.active">
             <div class="flex flex-col gap-4 h-full">
                 <div *ngIf="network.suggestionsLoader">
                     <ws-widget-skeleton-loader [width]="'164px'" [height]="'16px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
                 </div>
                 <div class="mat-subheading-1" *ngIf="!network.suggestionsLoader">Suggested for You</div>
-                <div class="flex flex-col h-full justify-center items-center">
+
+                <div class="flex flex-col h-full gap-4 justify-center items-center">
                     <div class="flex flex-row gap-4 justify-center">
                         <!-- loader code -->
                         <ng-container *ngIf="network.suggestionsLoader">
@@ -58,22 +59,26 @@
                             </ng-container>
                         </ng-container>
                     </div>
-                </div>
-            </div>
 
-            <div class="flex flex-row gap-2 p-4 ws-mat-default-text ws-widget-sliders justify-center" *ngIf="network.networkRecommended && network.networkRecommended.length">
-                <div class="flex justify-center items-center">
-                    <div class="flex ws-mat-default-text items-center justify-center mat-body-1 cursor-pointer" [routerLink]="['/app/network-v2/home']" [queryParams]="{page: 'people_you_may_know'}">
-                        <div *ngIf="!suggestionsLoader">Show all</div>
-                        <div *ngIf="suggestionsLoader">
-                            <ws-widget-skeleton-loader [width]="'164px'" [height]="'16px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
+                    <div class="flex flex-row gap-2 ws-mat-default-text ws-widget-sliders justify-center"
+                        *ngIf="network.networkRecommended && network.networkRecommended.length">
+                        <div class="flex justify-center items-center">
+                            <div class="flex ws-mat-default-text items-center justify-center mat-body-1 cursor-pointer"
+                                [routerLink]="['/app/network-v2/home']" [queryParams]="{page: 'people_you_may_know'}">
+                                <div *ngIf="!suggestionsLoader">Show all</div>
+                                <div *ngIf="suggestionsLoader">
+                                    <ws-widget-skeleton-loader [width]="'164px'" [height]="'16px'"
+                                        [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
+                                </div>
+                                <mat-icon>
+                                    chevron_right
+                                </mat-icon>
+                            </div>
                         </div>
-                        <mat-icon>
-                            chevron_right
-                        </mat-icon>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

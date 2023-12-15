@@ -12,16 +12,16 @@
     </div>
 
     <ng-container *ngIf="updatesPosts.loadSkeleton">
-        <div class="flex flex-col discussion-card gap-3 p-5" *ngFor="let i of [1, 2, 3]">
+        <div class="flex flex-col discussion-card gap-3 p-4" *ngFor="let i of [1, 2, 3]">
             <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-6'"></ws-widget-skeleton-loader>
             <ws-widget-skeleton-loader [bindingClass]="'flex rounded h-16'"></ws-widget-skeleton-loader>
         </div>
     </ng-container>
 
-    <div class="flex h-full items-center" *ngIf="!updatesPosts.loadSkeleton">
+    <div class="flex-1 h-full gap-4" [ngClass]="{'flex flex-col justify-center': updatePosts?.error || !updatesPosts?.data?.length}" *ngIf="!updatesPosts.loadSkeleton">
         <ng-container *ngIf="updatesPosts?.data?.length">
             <ng-container *ngFor="let updates of updatesPosts?.data | slice:0:3">
-                <div class="flex flex-col discussion-card gap-2 p-5" *ngIf="updates?.upvotes || updates?.downvotes">
+                <div class="flex flex-col discussion-card gap-2 p-4" *ngIf="updates?.upvotes || updates?.downvotes">
                     <div class="ws-mat-default-text font-semibold">
                         <span *ngIf="updates?.upvotes">
                             {{ updates?.upvotes }} Upvote(s) on your posts
@@ -43,16 +43,17 @@
                 <div class="text-center">Unable to fetch discussion info due to some error.</div>
             </div>
         </ng-container>
-        
-        <ng-container *ngIf="updatePosts?.error && !isMobile">
-            <div class="flex flex-row gap-2 p-4 justify-center" *ngIf="!updatesPosts.loadSkeleton || !updatesPosts.error">
-                <div class="flex ws-mat-default-text items-center justify-center mat-body-1 cursor-pointer" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >
-                    <div>Show all</div>
-                    <mat-icon>
-                        chevron_right
-                    </mat-icon>
-                </div>
-            </div>
-        </ng-container>
     </div>
+    
+    <ng-container *ngIf="!isMobile">
+        <div class="flex flex-row gap-2 justify-center" *ngIf="!updatesPosts.loadSkeleton && !updatesPosts.error">
+            <div class="flex ws-mat-default-text items-center justify-center mat-body-1 cursor-pointer"
+                [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}">
+                <div>Show all</div>
+                <mat-icon>
+                    chevron_right
+                </mat-icon>
+            </div>
+        </div>
+    </ng-container>
 </div>

@@ -1,78 +1,80 @@
-<div class="flex flex-col gap-4 p-4">
-    <div class="mat-subheading-1">Recent requests</div>
-
-    <ng-container *ngIf="recentRequests.loadSkeleton">
-        <div class="flex flex-col gap-3">
-            <div class="flex flex-row gap-2 discussion-card p-3" *ngFor="let i of [1, 2, 3]">
-                <div class="flex justify-center">
-                    <ws-widget-skeleton-loader [width]="'40px'" [height]="'40px'"
-                        [bindingClass]="'rounded-full'"></ws-widget-skeleton-loader>
-                </div>
-                <div class="flex-1">
-                    <div class="flex flex-col gap-2">
-                        <ws-widget-skeleton-loader [width]="'50%'"
-                            [bindingClass]="'flex rounded-sm h-2'"></ws-widget-skeleton-loader>
-                        <ws-widget-skeleton-loader [width]="'75%'"
-                            [bindingClass]="'flex rounded-sm h-2'"></ws-widget-skeleton-loader>
-                    </div>
-                </div>
-                <div class="flex flex-row gap-2 items-center">
-                    <ws-widget-skeleton-loader [width]="'24px'" [height]="'24px'"
-                        [bindingClass]="'rounded-full'"></ws-widget-skeleton-loader>
-                    <ws-widget-skeleton-loader [width]="'24px'" [height]="'24px'"
-                        [bindingClass]="'rounded-full'"></ws-widget-skeleton-loader>
-                </div>
-            </div>
-        </div>
-    </ng-container>
-
-    <ng-container *ngIf="!recentRequests.loadSkeleton">
-        <ng-container *ngIf="!recentRequests.data || !recentRequests.data.length">
-            <div class="flex flex-col gap-4 items-center p-8">
-                <img src="assets/icons/home/users.svg" alt="users icon img" />
-                <div class="text-center">Built your connections within your department and other departments.</div>
-                <button class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide" [routerLink]="['/app/network-v2']" [queryParams]="{page: 'people_connection_request'}">Find Connections</button>
-            </div>
-        </ng-container>
-
-        <ng-container *ngIf="recentRequests.data.length">
-            <div class="flex-1 h-full">
-                <div class="flex flex-row gap-3 items-center pb-3 recent-div"
-                    *ngFor="let reqData of recentRequests.data | slice:0:3">
-                    <ws-widget-avatar-photo [name]="reqData?.fullName" [photoUrl]="''"
-                        size="round-m"></ws-widget-avatar-photo>
-                    <div class="flex-1 flex-col">
-                        <div class="mat-subheading-1">{{ reqData?.fullName }}</div>
-                        <div class="text-sm">{{ reqData?.departmentName }}</div>
-                    </div>
-                    <div class="flex flex-row gap-2 justify-center items-center">
-                        <ng-container *ngIf="reqData.connecting">
-                            <div class="flex justify-center items-center">
-                                <mat-icon class="pending">cached</mat-icon>
-                            </div>
-                        </ng-container>
+<div class="flex-1">
+    <div class="flex flex-col gap-4">
+        <div class="mat-subheading-1">Recent requests</div>
     
-                        <ng-container *ngIf="!reqData.connecting">
-                            <div class="flex justify-center items-center" (click)="handleRequest(reqData, 'Rejected')">
-                                <mat-icon class="cancel">cancel</mat-icon>
-                            </div>
-                            <div class="flex justify-center items-center" (click)="handleRequest(reqData, 'Approved')">
-                                <mat-icon class="approve">check_circle</mat-icon>
-                            </div>
-                        </ng-container>
+        <ng-container *ngIf="recentRequests.loadSkeleton">
+            <div class="flex flex-col gap-3">
+                <div class="flex flex-row gap-2 discussion-card p-3" *ngFor="let i of [1, 2, 3]">
+                    <div class="flex justify-center">
+                        <ws-widget-skeleton-loader [width]="'40px'" [height]="'40px'"
+                            [bindingClass]="'rounded-full'"></ws-widget-skeleton-loader>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex flex-col gap-2">
+                            <ws-widget-skeleton-loader [width]="'50%'"
+                                [bindingClass]="'flex rounded-sm h-2'"></ws-widget-skeleton-loader>
+                            <ws-widget-skeleton-loader [width]="'75%'"
+                                [bindingClass]="'flex rounded-sm h-2'"></ws-widget-skeleton-loader>
+                        </div>
+                    </div>
+                    <div class="flex flex-row gap-2 items-center">
+                        <ws-widget-skeleton-loader [width]="'24px'" [height]="'24px'"
+                            [bindingClass]="'rounded-full'"></ws-widget-skeleton-loader>
+                        <ws-widget-skeleton-loader [width]="'24px'" [height]="'24px'"
+                            [bindingClass]="'rounded-full'"></ws-widget-skeleton-loader>
                     </div>
                 </div>
             </div>
-
-            <div class="flex justify-center items-center">
-                <div class="flex ws-mat-default-text items-center justify-center mat-body-1 cursor-pointer"
-                    [routerLink]="['/app/network-v2/home']" [queryParams]="{page: 'people_connection_request'}">
-                    <div>Show all</div>
-                    <mat-icon>
-                        chevron_right
-                    </mat-icon>
-                </div>
-            </div>
         </ng-container>
-    </ng-container>
+    
+        <ng-container *ngIf="!recentRequests.loadSkeleton">
+            <ng-container *ngIf="!recentRequests.data || !recentRequests.data.length">
+                <div class="flex flex-col gap-4 items-center p-5">
+                    <img src="assets/icons/home/users.svg" alt="users icon img" />
+                    <div class="text-center">Built your connections within your department and other departments.</div>
+                    <button class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide" [routerLink]="['/app/network-v2']" [queryParams]="{page: 'people_connection_request'}">Find Connections</button>
+                </div>
+            </ng-container>
+    
+            <ng-container *ngIf="recentRequests.data.length">
+                <div class="flex-1 h-full">
+                    <div class="flex flex-row gap-3 items-center pb-3 recent-div"
+                        *ngFor="let reqData of recentRequests.data | slice:0:3">
+                        <ws-widget-avatar-photo [name]="reqData?.fullName" [photoUrl]="''"
+                            size="round-m"></ws-widget-avatar-photo>
+                        <div class="flex-1 flex-col">
+                            <div class="mat-subheading-1">{{ reqData?.fullName }}</div>
+                            <div class="text-sm">{{ reqData?.departmentName }}</div>
+                        </div>
+                        <div class="flex flex-row gap-2 justify-center items-center">
+                            <ng-container *ngIf="reqData.connecting">
+                                <div class="flex justify-center items-center">
+                                    <mat-icon class="pending">cached</mat-icon>
+                                </div>
+                            </ng-container>
+        
+                            <ng-container *ngIf="!reqData.connecting">
+                                <div class="flex justify-center items-center" (click)="handleRequest(reqData, 'Rejected')">
+                                    <mat-icon class="cancel">cancel</mat-icon>
+                                </div>
+                                <div class="flex justify-center items-center" (click)="handleRequest(reqData, 'Approved')">
+                                    <mat-icon class="approve">check_circle</mat-icon>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="flex justify-center items-center">
+                    <div class="flex ws-mat-default-text items-center justify-center mat-body-1 cursor-pointer"
+                        [routerLink]="['/app/network-v2/home']" [queryParams]="{page: 'people_connection_request'}">
+                        <div>Show all</div>
+                        <mat-icon>
+                            chevron_right
+                        </mat-icon>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
 </div>
