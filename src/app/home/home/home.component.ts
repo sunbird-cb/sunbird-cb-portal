@@ -179,8 +179,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
         // if (x.profileDetails.mandatoryFieldsExists) {
         //   this.isNudgeOpen = false
         // }
-        debugger
-        console.log("x-x",x)
         let profilePopUp = sessionStorage.getItem('hideUpdateProfilePopUp')
         if(profilePopUp !== null){
           this.isNudgeOpen = false
