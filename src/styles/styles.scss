@@ -1274,6 +1274,9 @@ ngx-guided-tour {
   }
 }
 
+.width-unset {
+  width: unset !important;
+}
 @media only screen and (max-width: 768px) {
   .tour_learn_mobile_container .tour-block {
     width: 85%;

@@ -726,6 +726,9 @@
                 {{widgetData?.content?.programDuration}} {{widgetData?.content?.programDuration === 1 ? 'day' : 'days'}}
               </span>
             </div>
+            <ng-container>
+              <span class="absolute cbp-plan">CBP plan</span>
+            </ng-container>
           </div>
           <div class="padding-m">
             <div class="course_widget flex margin-remove">
@@ -1003,9 +1006,12 @@
         <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
         <span class=" ws-mat-white-text duration"> {{ (widgetData?.content?.duration || 120)| pipeDurationTransform: 'hms' }}</span>
       </div>
+      <ng-container>
+        <span class="absolute cbp-plan">CBP plan</span>
+      </ng-container>
     </div>
     <mat-card-content class="mat-text-box">
-      <div class="course_widget flex margin-remove">
+      <div class="course_widget flex flex-between margin-remove">
         <div class="flex flex-end course_v2">
           <ng-container *ngIf="widgetData.content.contentType === 'Resource' || widgetData.content.contentType === 'Course' || widgetData.content.contentType === 'Module'">
             <mat-icon  class="mat-icon ws-mat-default-text margin-right-xs" alt="Audio" *ngIf="widgetData.content.mimeType === 'audio/mpeg'">
@@ -1034,6 +1040,13 @@
             <span class="ws-mat-black60-text font-normal mat-caption ">
               {{widgetData.content.primaryCategory || widgetData.content.contentType}}
             </span>
+          </ng-container>
+        </div>
+        <div>
+          <ng-container>
+            <span class="cbp-danger cbp-info">Over due</span>
+            <span class="cbp-warning cbp-info">15 Dec, 2023</span>
+            <span class="cbp-success cbp-info">15 Dec, 2023</span>
           </ng-container>
         </div>
       </div>
@@ -1450,6 +1463,9 @@
                 [alt]="widgetData.content.name" />
               </ng-template>
             </ng-container> 
+            <ng-container>
+              <span class="absolute cbp-plan">CBP plan</span>
+            </ng-container>
           </div>
           <div class="width-1-1">
             <div [id]="'m-c-'+ widgetData.content?.identifier"
@@ -1472,6 +1488,9 @@
                   :widgetData.content?.primaryCategory">
                 </ws-widget-display-content-type>
               </div>
+              <!-- <div>
+                15 Dec, 2023
+              </div> -->
             </div>
           </div>
         </div>

@@ -40,6 +40,7 @@ export namespace NsContentStripWithTabs {
       search?: NSSearch.ISearchRequest
       searchV6?: NSSearch.ISearchV6Request
       enrollmentList?: any
+      cbpList?: any
       searchRegionRecommendation?: NSSearch.ISearchOrgRegionRecommendationRequest
       api?: IStripRequestApi
       networkApi?: INetworkRequestApi

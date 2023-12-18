@@ -277,6 +277,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     this.fetchFromEnrollmentList(strip, calculateParentStatus)
     this.fetchFromSearchV6(strip, calculateParentStatus)
     this.fetchFromTrendingContent(strip, calculateParentStatus)
+    this.fetchAllCbpPlans(strip,calculateParentStatus)
   }
 
   fetchFromEnrollmentList(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
@@ -407,6 +408,22 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     return [
       { value: 'inprogress', widgets: this.transformContentsToWidgets(inprogress, strip) },
       { value: 'completed', widgets: this.transformContentsToWidgets(completed, strip) }]
+  }
+
+  fetchAllCbpPlans(strip: any, calculateParentStatus = true) {
+    if (strip.request && strip.request.cbpList && Object.keys(strip.request.cbpList).length) {
+      let userId=''
+      if (this.configSvc.userProfile) {
+        userId = this.configSvc.userProfile.userId
+      }
+      this.userSvc.fetchCbpPlanList(userId).subscribe((res:any)=> {
+        console.log(res,'asdfghj')
+      },(_err: any)=> {
+        console.log(_err,'asdfghj')
+
+      })
+      console.log(strip,'asdfghj')
+    }
   }
 
   async fetchFromSearchV6(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
@@ -782,6 +799,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
           Object.keys(strip.request.searchRegionRecommendation).length) ||
         (strip.request.searchV6 && Object.keys(strip.request.searchV6).length) ||
         (strip.request.enrollmentList && Object.keys(strip.request.enrollmentList).length) ||
+        (strip.request.cbpList && Object.keys(strip.request.cbpList).length) ||
         (strip.request.trendingSearch && Object.keys(strip.request.trendingSearch).length)
       )
     ) {
